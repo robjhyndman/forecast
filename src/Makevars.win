@@ -1,0 +1,5 @@
+
+## This assume that we can call Rscript to ask Rcpp about its locations
+## Use the R_HOME indirection to support installations of multiple R version
+PKG_LIBS = $(shell ${R_HOME}/bin/Rscript.exe -e "Rcpp:::LdFlags()") $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
+

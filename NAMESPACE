@@ -1,0 +1,58 @@
+importFrom("stats", "simulate")
+importFrom("stats", "tsdiag")
+importFrom("stats", "start")
+importFrom("stats", "end")
+importFrom("stats", "frequency")
+importFrom("stats", "window")
+
+export(arfima, Arima, arima.errors, auto.arima, BoxCox, croston, 
+fitted.Arima, forecast, forecast.ar, forecast.Arima, forecast.ets, forecast.fracdiff,
+forecast.HoltWinters, forecast.lm, forecast.stl, forecast.StructTS, forecast.bats, forecast.tbats, accuracy, holt, hw, InvBoxCox,
+meanf, logLik.ets, monthdays, na.interp, ets, plot.ets, plot.forecast,
+plot.splineforecast, rwf, seasadj, seasonaldummy,naive,snaive,stlf,
+seasonaldummyf, seasonplot, ses, sindexf, splinef,tslm,fourier,fourierf,forecast.lm,
+thetaf, tsdisplay, simulate.ets, simulate.ar, simulate.Arima, simulate.fracdiff, ndiffs, nsdiffs, dm.test,
+Acf,Pacf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts)
+
+S3method(as.data.frame,forecast)
+S3method(coef,ets)
+S3method(fitted,Arima)
+S3method(fitted,fracdiff)
+S3method(forecast,default)
+S3method(forecast,ar)
+S3method(forecast,Arima)
+S3method(forecast,ets)
+S3method(forecast,fracdiff)
+S3method(forecast,HoltWinters)
+S3method(forecast,lm)
+S3method(forecast,stl)
+S3method(forecast,StructTS)
+S3method(forecast,ts)
+S3method(forecast,bats)
+S3method(forecast,tbats)
+S3method(logLik,ets)
+S3method(plot,ets)
+S3method(plot,forecast)
+S3method(plot,splineforecast)
+S3method(predict,default)
+S3method(predict,Arima)
+S3method(print,Arima)
+S3method(print,ets)
+S3method(print,forecast)
+S3method(print,msts)
+S3method(print,bats)
+S3method(print,tbats)
+S3method(window,msts)
+S3method(residuals,fracdiff)
+S3method(residuals,bats)
+S3method(simulate,ar)
+S3method(simulate,Arima)
+S3method(simulate,ets)
+S3method(simulate,fracdiff)
+S3method(summary,Arima)
+S3method(summary,ets)
+S3method(summary,forecast)
+S3method(tsdiag,ets)
+S3method(subset,ts)
+
+useDynLib(forecast)
