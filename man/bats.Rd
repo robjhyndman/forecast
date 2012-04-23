@@ -17,13 +17,13 @@
 \item{...}{Additional parameters to be passed to \code{auto.arima} when choose an ARMA(p, q) model for the errors.}
 }
 
-\description{Fits a BATS model applied to \code{y}, as described in De Livera, Hyndman & Snyder (2012). 
+\description{Fits a BATS model applied to \code{y}, as described in De Livera, Hyndman & Snyder (2011). 
 Parallel processing is used by default to speed up the computatons.}
 
 \value{An object of class "\code{bats}". The generic accessor functions \code{fitted.values} and \code{residuals} extract useful features of
 the value returned by \code{bats} and associated functions.}
 
-\references{De Livera, A.M., Hyndman, R.J., & Snyder, R. D. (2012), Forecasting time series with complex seasonal patterns using exponential smoothing, \emph{Journal of the American Statistical Association}, to appear. 
+\references{De Livera, A.M., Hyndman, R.J., & Snyder, R. D. (2011), Forecasting time series with complex seasonal patterns using exponential smoothing, \emph{Journal of the American Statistical Association}, \bold{106}(496), 1513-1527.
 }
 
 \author{Slava Razbash and Rob J Hyndman}

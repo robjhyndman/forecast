@@ -8,7 +8,7 @@ importFrom("stats", "window")
 export(arfima, Arima, arima.errors, auto.arima, BoxCox, croston, 
 fitted.Arima, forecast, forecast.ar, forecast.Arima, forecast.ets, forecast.fracdiff,
 forecast.HoltWinters, forecast.lm, forecast.stl, forecast.StructTS, forecast.bats, forecast.tbats, accuracy, holt, hw, InvBoxCox,
-meanf, logLik.ets, monthdays, na.interp, ets, plot.ets, plot.forecast,
+meanf, logLik.ets, monthdays, na.interp, ets, plot.bats, plot.tbats, plot.ets, plot.forecast,
 plot.splineforecast, rwf, seasadj, seasonaldummy,naive,snaive,stlf,
 seasonaldummyf, seasonplot, ses, sindexf, splinef,tslm,fourier,fourierf,forecast.lm,
 thetaf, tsdisplay, simulate.ets, simulate.ar, simulate.Arima, simulate.fracdiff, ndiffs, nsdiffs, dm.test,
@@ -31,6 +31,8 @@ S3method(forecast,ts)
 S3method(forecast,bats)
 S3method(forecast,tbats)
 S3method(logLik,ets)
+S3method(plot,bats)
+S3method(plot,tbats)
 S3method(plot,ets)
 S3method(plot,forecast)
 S3method(plot,splineforecast)

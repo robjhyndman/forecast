@@ -4,9 +4,16 @@
 ###############################################################################
 
 
-forecast.bats <- function(object, h=10, level=c(80,95), fan=FALSE, ...) 
+forecast.bats <- function(object, h, level=c(80,95), fan=FALSE, ...) 
 {
-	if(h<=0) {
+  if(missing(h))
+  {
+    if(is.null(object$seasonal.periods))
+      h <- 10
+    else
+      h <- 2 * max(object$seasonal.periods)
+  }
+	else if(h<=0) {
 		stop("Forecast horizon out of bounds")
 	}
 	if(fan) {

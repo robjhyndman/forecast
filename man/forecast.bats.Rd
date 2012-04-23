@@ -3,12 +3,12 @@
 \alias{forecast.tbats}
 \title{Forecasting using BATS and TBATS models}
 
-\usage{\method{forecast}{bats}(object, h=10, level=c(80,95), fan=FALSE, ...)
-\method{forecast}{tbats}(object, h=10, level=c(80,95), fan=FALSE, ...)
+\usage{\method{forecast}{bats}(object, h, level=c(80,95), fan=FALSE, ...)
+\method{forecast}{tbats}(object, h, level=c(80,95), fan=FALSE, ...)
 }
 \arguments{
 \item{object}{An object of class "\code{bats}". Usually the result of a call to \code{\link{bats}}.}
-\item{h}{Number of periods for forecasting}
+\item{h}{Number of periods for forecasting. Default value is twice the largest seasonal period (for seasonal data) or ten (for non-seasonal data).}
 \item{level}{Confidence level for prediction intervals.}
 \item{fan}{If TRUE, level is set to \code{seq(50,99,by=1)}. This is suitable for fan plots.}
 \item{...}{Other arguments, currently ignored.}
@@ -36,7 +36,7 @@ An object of class \code{"forecast"} is a list containing at least the following
 \item{fitted}{Fitted values (one-step forecasts)}
 }
 
-\references{De Livera, A.M., Hyndman, R.J., & Snyder, R. D. (2012), Forecasting time series with complex seasonal patterns using exponential smoothing, \emph{Journal of the American Statistical Association}, to appear.
+\references{De Livera, A.M., Hyndman, R.J., & Snyder, R. D. (2011), Forecasting time series with complex seasonal patterns using exponential smoothing, \emph{Journal of the American Statistical Association}, \bold{106}(496), 1513-1527.
 }
 
 \seealso{\code{\link{bats}}, \code{\link{tbats}},\code{\link{forecast.ets}}.}

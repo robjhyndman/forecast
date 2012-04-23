@@ -65,8 +65,8 @@ ets <- function(y, model="ZZZ", damped=NULL,
 
     if(m < 1)
     {
-      warning("I can't handle data with frequency less than 1. Seasonality will be ignored.")
-      seasontype=="N"
+      #warning("I can't handle data with frequency less than 1. Seasonality will be ignored.")
+      seasontype <- "N"
     }
     if(m == 1)
     {
@@ -613,7 +613,7 @@ admissible <- function(alpha,beta,gamma,phi,m)
                 return(0)
         }
     }
-    else # Seasonal model
+    else if(m > 1) # Seasonal model
     {
         if(is.null(beta))
             beta <- 0

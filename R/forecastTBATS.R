@@ -1,5 +1,13 @@
-forecast.tbats <- function(object, h=10, level=c(80,95), fan=FALSE, ...) {
-	if(h<=0) {
+forecast.tbats <- function(object, h, level=c(80,95), fan=FALSE, ...) 
+{
+  if(missing(h))
+  {
+    if(is.null(object$seasonal.periods))
+      h <- 10
+    else
+      h <- 2 * max(object$seasonal.periods)
+  }
+	else if(h<=0) {
 		stop("Forecast horizon out of bounds")
 	}
 	if(fan) {
@@ -135,7 +143,7 @@ makeTextTBATS <- function(object) {
 		name <- paste(name, " {", sep="")
     M <- length(object$seasonal.periods)
 		for(i in 1:M) {
-			name <- paste(name, "<", object$k.vector[i], ",", object$seasonal.periods[i], ">", sep="")
+			name <- paste(name, "<", object$seasonal.periods[i], ",", object$k.vector[i], ">", sep="")
 			if(i < M) {
 				name <- paste(name, ", ", sep="")
 			} else {

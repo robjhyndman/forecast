@@ -17,12 +17,12 @@
 \item{...}{Additional parameters to be passed to \code{auto.arima} when choose an ARMA(p, q) model for the errors.}
 }
 
-\description{Fits a TBATS model applied to \code{y}, as described in De Livera, Hyndman & Snyder (2012). Parallel processing is used by default to speed up the computatons.}
+\description{Fits a TBATS model applied to \code{y}, as described in De Livera, Hyndman & Snyder (2011). Parallel processing is used by default to speed up the computatons.}
 
 \value{An object with class \code{c("tbats", "bats")}. The generic accessor functions \code{fitted.values} and \code{residuals} extract useful features of
 the value returned by \code{bats} and associated functions.}
 
-\references{De Livera, A.M., Hyndman, R.J., & Snyder, R. D. (2012), Forecasting time series with complex seasonal patterns using exponential smoothing, \emph{Journal of the American Statistical Association}, to appear. 
+\references{De Livera, A.M., Hyndman, R.J., & Snyder, R. D. (2011), Forecasting time series with complex seasonal patterns using exponential smoothing, \emph{Journal of the American Statistical Association}, \bold{106}(496), 1513-1527.
 }
 
 \author{Slava Razbash and Rob J Hyndman}
@@ -31,7 +31,7 @@ the value returned by \code{bats} and associated functions.}
 fit <- tbats(USAccDeaths)
 plot(forecast(fit))
 \dontrun{
-taylor.fit<-tbats(taylor)
+taylor.fit <- tbats(taylor)
 plot(forecast(taylor.fit))
 }
 }
