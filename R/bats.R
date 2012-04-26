@@ -121,15 +121,18 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, sea
 		stop("BATS requires positive data")
 	}
   origy <- y
-	if(any(class(y) == "msts")) {
-		seasonal.periods <- attr(y,"msts")
-	} else if(class(y) == "ts") {
-		seasonal.periods <- frequency(y)
+  if(is.null(seasonal.periods))
+  {
+    if(any(class(y) == "msts")) 
+      seasonal.periods <- attr(y,"msts")
+    else if(class(y) == "ts") 
+      seasonal.periods <- frequency(y)
 	}
-	if(all((seasonal.periods == 1))) {
-		seasonal.periods <- NULL	
-	}
-	if(!is.null(seasonal.periods)) {
+	if(all(seasonal.periods == 1))
+    seasonal.periods <- NULL
+
+	if(!is.null(seasonal.periods)) 
+  {
 		seasonal.mask <- (seasonal.periods == 1)
 		seasonal.periods <- seasonal.periods[!seasonal.mask]
 	}

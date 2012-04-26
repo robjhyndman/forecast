@@ -1,8 +1,11 @@
-Version 3.21 (?? April 2012)
+Version 3.21 (26 April 2012)
   * Fixed bug in auto.arima() when lambda is non-zero and stepwise is FALSE.
+  * Fixed bug in auto.arima() in selecting d when D>0.
   * Fixed bug in ets() when seasonal period is less than 1.
+  * Turned off warnings in auto.arima() and ets() when seasonal period is less than 1.
   * Added plotting methods for bats and tbats objects.
   * Changed default forecast horizons for bats and tbats objects.
+  * Modified bats and tbats so they now use seasonal.periods when ts and msts objects are being modelled.
 
 Version 3.20 (2 April 2012)
   * Fixed bugs in forecast.lm().

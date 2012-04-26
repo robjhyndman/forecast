@@ -1,44 +1,39 @@
 tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, seasonal.periods=NULL, use.arma.errors=TRUE, use.parallel=TRUE, num.cores=NULL, ...) {
-	if(any((y <= 0))) {
+	if(any((y <= 0)))
 		stop("TBATS requires positive data")
-	}
 	origy <- y
 	non.seasonal.model <- bats(as.numeric(y), use.box.cox=use.box.cox, use.trend=use.trend, use.damped.trend=use.damped.trend, use.arma.errors=use.arma.errors, use.parallel=use.parallel, num.cores=num.cores, ...)
-	if(any(class(y) == "msts")) {
-		start.time <- start(y)
-		seasonal.periods <- attr(y,"msts")
-		y <- as.numeric(y)
-		if(all((seasonal.periods == 1))) {
-			seasonal.periods <- NULL
-		}
-	} else if(class(y) == "ts") {
-		start.time <- start(y)
-		if(frequency(y) == 1) {
-			seasonal.periods <- NULL
-		} else {
-			seasonal.periods <- frequency(y)
-		}
-		y <- as.numeric(y)
-	}  else {
-		start.time <- 1
-		y <- as.numeric(y)
-	}
-	y <- as.numeric(y)
-	if(is.null(seasonal.periods)) {
+
+  # Get start time and seasonal periods
+  if(is.null(seasonal.periods))
+  {
+    if(any(class(y) == "msts")) 
+      seasonal.periods <- attr(y,"msts")
+    else if(class(y) == "ts") 
+      seasonal.periods <- frequency(y)
+  }
+  if(all(seasonal.periods == 1))
+     seasonal.periods <- NULL
+  start.time <- start(y)
+  y <- as.numeric(y)
+
+  if(is.null(seasonal.periods)) 
+  {
 		non.seasonal.model$call <- match.call()
 		# Add ts attributes
-		if(!any(class(origy) == "ts")) {
-			if(is.null(seasonal.periods)) {
+		if(!any(class(origy) == "ts")) 
+    {
+			if(is.null(seasonal.periods)) 
 				origy <- ts(origy,start=1,frequency=1)
-			} else {
+      else 
 				origy <- msts(origy,seasonal.periods)
-			}
 		}
 		attributes(non.seasonal.model$fitted.values) <- attributes(non.seasonal.model$errors) <- attributes(origy)
 		non.seasonal.model$y <- origy
 		return(non.seasonal.model)
 	}
-	if(!is.null(seasonal.periods)) {
+	else
+  {
 		seasonal.mask <- (seasonal.periods == 1)
 		seasonal.periods <- seasonal.periods[!seasonal.mask]
 	}

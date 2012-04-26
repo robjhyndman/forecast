@@ -21,7 +21,7 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
 
     if(m < 1)
     {
-        warning("I can't handle data with frequency less than 1. Seasonality will be ignored.")
+        #warning("I can't handle data with frequency less than 1. Seasonality will be ignored.")
         m <- 1
     }
 	max.p<-ifelse(max.p <= floor(length(x)/3), max.p, floor(length(x)/3))
@@ -56,7 +56,7 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     else if(is.na(D))
         D <- nsdiffs(xx, m=m, test=seasonal.test)
     if(D > 0)
-        dx <- diff(xx,D)
+        dx <- diff(xx,differences=D,lag=m)
     else
         dx <- xx
     if(is.na(d))
