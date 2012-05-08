@@ -2,7 +2,7 @@
 # 
 # Author: srazbash
 ###############################################################################
-fitSpecificBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.periods=NULL, starting.params=NULL, x.nought=NULL, ar.coefs=NULL, ma.coefs=NULL, init.box.cox=NULL) {
+fitSpecificBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.periods=NULL, starting.params=NULL, x.nought=NULL, ar.coefs=NULL, ma.coefs=NULL, init.box.cox=NULL, bc.lower=0, bc.upper=1) {
 	if(!is.null(seasonal.periods)) {
 		seasonal.periods <- as.integer(sort(seasonal.periods))
 	}
@@ -113,6 +113,7 @@ fitSpecificBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.peri
 	##Optimise the starting values:
 	#Make the parameter vector  parameterise
 	param.vector <- parameterise(alpha=alpha, beta.v=beta.v, small.phi=small.phi, gamma.v=gamma.v, lambda=lambda, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
+	par.scale <- makeParscaleBATS(param.vector$control)
 	#if(use.box.cox) {
 		#Un-transform the seed states
 	#	x.nought.untransformed <- InvBoxCox(x.nought, lambda=lambda)
@@ -217,7 +218,7 @@ fitSpecificBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.peri
 		#x.nought.untransformed <- InvBoxCox(x.nought, lambda=lambda)
 		assign("x.nought.untransformed", InvBoxCox(x.nought, lambda=lambda), envir=opt.env)
 		#Optimise the likelihood function
-		optim.like <- optim(par=param.vector$vect, fn=calcLikelihood, method="Nelder-Mead", opt.env=opt.env, use.beta=use.beta, use.small.phi=use.damping, seasonal.periods=seasonal.periods, p=p, q=q, tau=tau, control=list(maxit=(100*length(param.vector$vect)^2)))
+		optim.like <- optim(par=param.vector$vect, fn=calcLikelihood, method="Nelder-Mead", opt.env=opt.env, use.beta=use.beta, use.small.phi=use.damping, seasonal.periods=seasonal.periods, p=p, q=q, tau=tau, bc.lower=bc.lower, bc.upper=bc.upper, control=list(maxit=(100*length(param.vector$vect)^2), parscale=par.scale))
 		#Get the parameters out of the param.vector
 		paramz <- unParameterise(optim.like$par, param.vector$control)
 		lambda <- paramz$lambda
@@ -254,9 +255,9 @@ fitSpecificBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.peri
 	} else { #else if we are not using the Box-Cox transformation
 		#Optimise the likelihood function
 		if(length(param.vector$vect) > 1) {
-			optim.like <- optim(par=param.vector$vect, fn=calcLikelihoodNOTransformed, method="Nelder-Mead", opt.env=opt.env, x.nought=x.nought, use.beta=use.beta, use.small.phi=use.damping, seasonal.periods=seasonal.periods, p=p, q=q, tau=tau, control=list(maxit=(100*length(param.vector$vect)^2)))
+			optim.like <- optim(par=param.vector$vect, fn=calcLikelihoodNOTransformed, method="Nelder-Mead", opt.env=opt.env, x.nought=x.nought, use.beta=use.beta, use.small.phi=use.damping, seasonal.periods=seasonal.periods, p=p, q=q, tau=tau, control=list(maxit=(100*length(param.vector$vect)^2), parscale=par.scale))
 		} else {
-			optim.like <- optim(par=param.vector$vect, fn=calcLikelihoodNOTransformed, method="BFGS", opt.env=opt.env, x.nought=x.nought, use.beta=use.beta, use.small.phi=use.damping, seasonal.periods=seasonal.periods, p=p, q=q, tau=tau)
+			optim.like <- optim(par=param.vector$vect, fn=calcLikelihoodNOTransformed, method="BFGS", opt.env=opt.env, x.nought=x.nought, use.beta=use.beta, use.small.phi=use.damping, seasonal.periods=seasonal.periods, p=p, q=q, tau=tau, control=list(parscale=par.scale))
 		}
 		#Get the parameters out of the param.vector
 		paramz <- unParameterise(optim.like$par, param.vector$control)
@@ -309,7 +310,7 @@ calcModel <- function(y, x.nought, F, g, w) { #w is passed as a list
 	return(list(y.hat=loop$y.hat, e=loop$e, x=loop$x))
 }
 
-calcLikelihood <- function(param.vector, opt.env, use.beta, use.small.phi, seasonal.periods, p=0, q=0, tau=0) {
+calcLikelihood <- function(param.vector, opt.env, use.beta, use.small.phi, seasonal.periods, p=0, q=0, tau=0, bc.lower=0, bc.upper=1) {
 	#param vector should be as follows: Box-Cox.parameter, alpha, beta, small.phi, gamma.vector, ar.coefs, ma.coefs 
 	#Put the components of the param.vector into meaningful individual variables
 	box.cox.parameter <- param.vector[1]
@@ -391,7 +392,7 @@ calcLikelihood <- function(param.vector, opt.env, use.beta, use.small.phi, seaso
 	assign("D", (opt.env$F - opt.env$g %*% opt.env$w.transpose), envir=opt.env)
 	#print("two 2 - AFTER")
 	#print(param.vector)
-	if(checkAdmissibility(opt.env, box.cox=box.cox.parameter, small.phi=small.phi, ar.coefs=ar.coefs, ma.coefs=ma.coefs, tau=tau)) {
+	if(checkAdmissibility(opt.env, box.cox=box.cox.parameter, small.phi=small.phi, ar.coefs=ar.coefs, ma.coefs=ma.coefs, tau=tau, bc.lower=bc.lower, bc.upper=bc.upper)) {
 		return(log.likelihood)
 	} else {
 		return(10^20)

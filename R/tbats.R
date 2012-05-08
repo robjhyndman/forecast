@@ -1,8 +1,8 @@
-tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, seasonal.periods=NULL, use.arma.errors=TRUE, use.parallel=TRUE, num.cores=NULL, ...) {
+tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, seasonal.periods=NULL, use.arma.errors=TRUE, use.parallel=TRUE, num.cores=NULL, bc.lower=0, bc.upper=1, ...) {
 	if(any((y <= 0)))
 		stop("TBATS requires positive data")
 	origy <- y
-	non.seasonal.model <- bats(as.numeric(y), use.box.cox=use.box.cox, use.trend=use.trend, use.damped.trend=use.damped.trend, use.arma.errors=use.arma.errors, use.parallel=use.parallel, num.cores=num.cores, ...)
+	non.seasonal.model <- bats(as.numeric(y), use.box.cox=use.box.cox, use.trend=use.trend, use.damped.trend=use.damped.trend, use.arma.errors=use.arma.errors, use.parallel=use.parallel, num.cores=num.cores, bc.lower=bc.lower, bc.upper=bc.upper, ...)
 
   # Get start time and seasonal periods
   if(is.null(seasonal.periods))
@@ -41,7 +41,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, se
 		use.box.cox <- c(FALSE, TRUE)
 	} 
 	if(any(use.box.cox)) {
-		init.box.cox<-BoxCox.lambda(y)
+		init.box.cox<-BoxCox.lambda(origy, lower=bc.lower, upper=bc.upper)
 	} else {
 		init.box.cox<-NULL
 	}
@@ -104,7 +104,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, se
 		clus <- makeCluster(num.cores)	
 	}
 
-	best.model <- fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, k.vector, init.box.cox=init.box.cox)
+	best.model <- fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, k.vector, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)
 	for(i in 1:length(seasonal.periods)) {
 		if(seasonal.periods[i] == 2) {
 			next
@@ -142,7 +142,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, se
 				repeat {
 					#old.k <- k.vector[i]
 					#k.vector[i] <- k.vector[i]-1
-					new.model <- fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, k.vector, init.box.cox=init.box.cox)
+					new.model <- fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, k.vector, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)
 					#print("6 or less")
 					#print(k.vector)
 					#print(i)
@@ -183,14 +183,14 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, se
 				if(use.parallel) {
 					k.control.array<-rbind(step.up.k, step.down.k, k.vector)
 					#print(k.control.array)
-					models.list <- clusterApplyLB(clus, c(1:3), parFitSpecificTBATS, y=y, box.cox=model.params[1], trend = model.params[2], damping = model.params[3], seasonal.periods = seasonal.periods, k.control.matrix=k.control.array, init.box.cox=init.box.cox)
+					models.list <- clusterApplyLB(clus, c(1:3), parFitSpecificTBATS, y=y, box.cox=model.params[1], trend = model.params[2], damping = model.params[3], seasonal.periods = seasonal.periods, k.control.matrix=k.control.array, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)
 					up.model <- models.list[[1]]
 					level.model <- models.list[[3]]
 					down.model <- models.list[[2]]
 				} else {
-					up.model <- fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, step.up.k, init.box.cox=init.box.cox)
-					level.model <- fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, k.vector, init.box.cox=init.box.cox)
-					down.model <- fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, step.down.k, init.box.cox=init.box.cox)
+					up.model <- fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, step.up.k, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)
+					level.model <- fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, k.vector, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)
+					down.model <- fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, step.down.k, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)
 				}
 				#Dcide the best model of the three and then follow that direction to find the optimal k
 				aic.vector <- c(up.model$AIC, level.model$AIC, down.model$AIC)
@@ -200,7 +200,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, se
 					k.vector[i] <- 5
 					repeat{
 						k.vector[i] <- k.vector[i]-1
-						down.model <- fitSpecificTBATS(y=y, use.box.cox=model.params[1], use.beta=model.params[2], use.damping=model.params[3], seasonal.periods=seasonal.periods, k.vector=k.vector, init.box.cox=init.box.cox)
+						down.model <- fitSpecificTBATS(y=y, use.box.cox=model.params[1], use.beta=model.params[2], use.damping=model.params[3], seasonal.periods=seasonal.periods, k.vector=k.vector, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)
 						#print("stepping down")
 						#print(k.vector)
 						#print(i)
@@ -232,7 +232,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, se
 					k.vector[i] <- 7
 					repeat {
 						k.vector[i] <- k.vector[i]+1
-						up.model <- fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, k.vector, init.box.cox=init.box.cox)
+						up.model <- fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, k.vector, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)
 						#print("stepping up")
 						#print(k.vector)
 						#print(i)
@@ -282,7 +282,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, se
 		#	num.cores <- detectCores(all.tests = FALSE, logical = TRUE)
 		#}
 		#clus <- makeCluster(num.cores)
-		models.list <- clusterApplyLB(clus, c(1:nrow(control.array)), parFilterTBATSSpecifics, y=y, control.array=control.array, model.params=model.params, seasonal.periods=seasonal.periods, k.vector=k.vector, use.arma.errors=use.arma.errors, aux.model=aux.model, init.box.cox=init.box.cox)
+		models.list <- clusterApplyLB(clus, c(1:nrow(control.array)), parFilterTBATSSpecifics, y=y, control.array=control.array, model.params=model.params, seasonal.periods=seasonal.periods, k.vector=k.vector, use.arma.errors=use.arma.errors, aux.model=aux.model, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)
 		stopCluster(clus)
 		##Choose the best model
 		####Get the AICs
@@ -301,9 +301,9 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, se
 			for(trend in use.trend) {
 				for(damping in use.damped.trend) {
 					if(all((model.params == c(box.cox, trend, damping)))) {
-						new.model <- filterTBATSSpecifics(y, box.cox, trend, damping, seasonal.periods, k.vector, use.arma.errors, aux.model=aux.model, init.box.cox=init.box.cox, ...)
+						new.model <- filterTBATSSpecifics(y, box.cox, trend, damping, seasonal.periods, k.vector, use.arma.errors, aux.model=aux.model, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper, ...)
 					} else if(!((trend == FALSE) & (damping == TRUE))) {
-						new.model <- filterTBATSSpecifics(y, box.cox, trend, damping, seasonal.periods, k.vector, use.arma.errors, init.box.cox=init.box.cox, ...)
+						new.model <- filterTBATSSpecifics(y, box.cox, trend, damping, seasonal.periods, k.vector, use.arma.errors, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper, ...)
 					}
 					if(new.model$AIC < best.model$AIC) {
 						best.model <- new.model	
@@ -331,12 +331,12 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, se
 }
 
 ######################################################################################################################################
-parFilterTBATSSpecifics <- function(control.number, y, control.array, model.params, seasonal.periods, k.vector, use.arma.errors, aux.model=NULL, init.box.cox=NULL, ...) {
+parFilterTBATSSpecifics <- function(control.number, y, control.array, model.params, seasonal.periods, k.vector, use.arma.errors, aux.model=NULL, init.box.cox=NULL, bc.lower=0, bc.upper=1, ...) {
 	box.cox <- control.array[control.number, 1]
 	trend <- control.array[control.number, 2]
 	damping <- control.array[control.number, 3]
 	if(!all((model.params == c(box.cox, trend, damping)))) {
-		first.model <- fitSpecificTBATS(y, use.box.cox=box.cox, use.beta=trend, use.damping=damping, seasonal.periods=seasonal.periods, k.vector=k.vector, init.box.cox=init.box.cox)
+		first.model <- fitSpecificTBATS(y, use.box.cox=box.cox, use.beta=trend, use.damping=damping, seasonal.periods=seasonal.periods, k.vector=k.vector, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)
 	} else {
 		first.model <- aux.model
 	} 
@@ -364,7 +364,7 @@ parFilterTBATSSpecifics <- function(control.number, y, control.array, model.para
 				}
 				starting.params <- first.model$parameters
 				
-				second.model <- fitSpecificTBATS(y, use.box.cox=box.cox, use.beta=trend, use.damping=damping, seasonal.periods=seasonal.periods, k.vector=k.vector, ar.coefs=ar.coefs, ma.coefs=ma.coefs, init.box.cox=init.box.cox)
+				second.model <- fitSpecificTBATS(y, use.box.cox=box.cox, use.beta=trend, use.damping=damping, seasonal.periods=seasonal.periods, k.vector=k.vector, ar.coefs=ar.coefs, ma.coefs=ma.coefs, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)
 				if(second.model$AIC < first.model$AIC) {
 					return(second.model)
 				} else {
@@ -382,14 +382,14 @@ parFilterTBATSSpecifics <- function(control.number, y, control.array, model.para
 }
 
 #################################################################################################
-parFitSpecificTBATS <- function(control.number, y, box.cox, trend, damping, seasonal.periods, k.control.matrix, init.box.cox=NULL) {
+parFitSpecificTBATS <- function(control.number, y, box.cox, trend, damping, seasonal.periods, k.control.matrix, init.box.cox=NULL, bc.lower=0, bc.upper=1) {
 	k.vector<-k.control.matrix[control.number,]
-	return(fitSpecificTBATS(y, box.cox, trend, damping, seasonal.periods, k.vector, init.box.cox=init.box.cox))
+	return(fitSpecificTBATS(y, box.cox, trend, damping, seasonal.periods, k.vector, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper))
 } 
 
-filterTBATSSpecifics <- function(y, box.cox, trend, damping, seasonal.periods, k.vector, use.arma.errors, aux.model=NULL, init.box.cox=NULL, ...) {
+filterTBATSSpecifics <- function(y, box.cox, trend, damping, seasonal.periods, k.vector, use.arma.errors, aux.model=NULL, init.box.cox=NULL, bc.lower=0, bc.upper=1, ...) {
 	if(is.null(aux.model)) {
-		first.model <- fitSpecificTBATS(y, use.box.cox=box.cox, use.beta=trend, use.damping=damping, seasonal.periods=seasonal.periods, k.vector=k.vector, init.box.cox=init.box.cox)
+		first.model <- fitSpecificTBATS(y, use.box.cox=box.cox, use.beta=trend, use.damping=damping, seasonal.periods=seasonal.periods, k.vector=k.vector, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)
 	} else {
 		first.model <- aux.model	
 	}
@@ -416,7 +416,7 @@ filterTBATSSpecifics <- function(y, box.cox, trend, damping, seasonal.periods, k
 				}
 				starting.params <- first.model$parameters
 	
-				second.model <- fitSpecificTBATS(y, use.box.cox=box.cox, use.beta=trend, use.damping=damping, seasonal.periods=seasonal.periods, k.vector=k.vector, ar.coefs=ar.coefs, ma.coefs=ma.coefs, init.box.cox=init.box.cox)
+				second.model <- fitSpecificTBATS(y, use.box.cox=box.cox, use.beta=trend, use.damping=damping, seasonal.periods=seasonal.periods, k.vector=k.vector, ar.coefs=ar.coefs, ma.coefs=ma.coefs, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)
 				if(second.model$AIC < first.model$AIC) {
 					return(second.model)
 				} else {

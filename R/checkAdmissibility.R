@@ -3,10 +3,10 @@
 # Author: srazbash
 ###############################################################################
 
-checkAdmissibility<-function(opt.env, box.cox=NULL, small.phi=NULL, ar.coefs=NULL, ma.coefs=NULL, tau=0) {
+checkAdmissibility<-function(opt.env, box.cox=NULL, small.phi=NULL, ar.coefs=NULL, ma.coefs=NULL, tau=0, bc.lower=0, bc.upper=1) {
 	#Check the range of the Box-Cox parameter
 	if(!is.null(box.cox)) {
-		if((box.cox < 0) | (box.cox > 1.5)) {
+		if((box.cox <= bc.lower) | (box.cox >= bc.upper)) {
 			#print("box-cox")
 			return(FALSE)
 		}

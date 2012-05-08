@@ -86,19 +86,15 @@ unParameteriseTBATS<-function(param.vector, control) {
 makeParscale<-function(control) {
 	#print(control)
 	if(control$use.box.cox) {
-		parscale<-c(1, 1)
-		gamma.start<-3
+		parscale<-c(.001, .01)
 	} else {
-		parscale<-1
-		gamma.start<-2
+		parscale<-.01
 	}
 	if(control$use.beta) {
 		if(control$use.damping) {
-			parscale<-c(parscale, 1e-2, 1e-1)
-			gamma.start<-gamma.start+2
+			parscale<-c(parscale, 1e-2, 1e-2)
 		} else {
 			parscale<-c(parscale, 1e-2)
-			gamma.start<-gamma.start+1
 		}
 	}
 	if(control$length.gamma > 0) {
@@ -111,10 +107,34 @@ makeParscale<-function(control) {
 	#print(parscale)
 	return(parscale)
 }
-
 ##############################################################################################################################################################################################
 ##BATS related stuff below
 ########################################
+makeParscaleBATS<-function(control) {
+	#print(control)
+	if(control$use.box.cox) {
+		parscale<-c(.001, .1)
+	} else {
+		parscale<-.1
+	}
+	if(control$use.beta) {
+		if(control$use.damping) {
+			parscale<-c(parscale, 1e-2, 1e-2)
+		} else {
+			parscale<-c(parscale, 1e-2)
+		}
+	}
+	if(control$length.gamma > 0) {
+		parscale<-c(parscale, rep(1e-2, control$length.gamma))	
+	}
+	
+	if((control$p != 0) | (control$q != 0)) {
+		parscale<-c(parscale, rep(1e-1, (control$p + control$q)))
+	}
+	#print(parscale)
+	return(parscale)
+}
+
 
 parameterise<-function(alpha, beta.v=NULL, small.phi=1, gamma.v=NULL, lambda=NULL, ar.coefs=NULL, ma.coefs=NULL) {
 	#print("urg")
