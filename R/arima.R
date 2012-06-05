@@ -446,6 +446,10 @@ Arima <- function(x, order=c(0, 0, 0),
       if((order[2] + seasonal$order[2]) == 1)
         include.drift <- TRUE
     }
+    else
+    {
+      include.mean <- include.drift <- FALSE
+    }
   }
     
   if(!is.null(model))

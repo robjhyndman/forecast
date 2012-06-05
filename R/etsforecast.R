@@ -2,7 +2,8 @@ forecast.ets <- function(object, h=ifelse(object$m>1, 2*object$m, 10),
     level=c(80,95), fan=FALSE, simulate=FALSE, bootstrap=FALSE, npaths=5000, PI=TRUE, lambda=object$lambda, ...)
 {
     # Check inputs
-    if(h>2000 | h<=0)
+    #if(h>2000 | h<=0)
+    if(h <= 0)
         stop("Forecast horizon out of bounds")
     if(!PI)
     {
