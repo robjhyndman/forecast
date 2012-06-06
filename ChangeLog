@@ -1,7 +1,8 @@
-Version 3.22 (05 June 2012)
+Version 3.22 (07 June 2012)
   * Increased maximum forecast horizon for ets models from 2000 to unlimited.
   * Corrected bug in Arima(). Previously include.constant=FALSE was ignored.
   * Some corrections to bats and tbats.
+  * Modified parallel implementation in auto.arima for Windows.
 
 Version 3.21 (26 April 2012)
   * Fixed bug in auto.arima() when lambda is non-zero and stepwise is FALSE.
