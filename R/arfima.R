@@ -79,7 +79,7 @@ arfima <- function(x, drange = c(0, 0.5), estim = c("mle","ls"), lambda=NULL, ..
 	
 	# Choose differencing parameter with AR(2) proxy to handle correlations
 	warn <- options(warn=-1)$warn
-	fit <- fracdiff(xx,nar=2)
+	fit <- fracdiff(xx,nar=2,drange=drange)
 	options(warn=warn)
  
 	# Choose p and q
@@ -89,7 +89,7 @@ arfima <- function(x, drange = c(0, 0.5), estim = c("mle","ls"), lambda=NULL, ..
 	
 	# Refit model using fracdiff
 	warn <- options(warn=-1)$warn
-	fit <- fracdiff(xx, nar=fit$arma[1], nma=fit$arma[2])
+	fit <- fracdiff(xx, nar=fit$arma[1], nma=fit$arma[2],drange=drange)
 	options(warn=warn)
 	
 	# Refine parameters with MLE

@@ -1,3 +1,6 @@
+Version 3.23 (?? July 2012)
+  * Fixed bug in arfima() which meant the drange argument was being ignored.
+
 Version 3.22 (07 June 2012)
   * Increased maximum forecast horizon for ets models from 2000 to unlimited.
   * Corrected bug in Arima(). Previously include.constant=FALSE was ignored.
