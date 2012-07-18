@@ -1,5 +1,6 @@
-Version 3.23 (?? July 2012)
+Version 3.23 (18 July 2012)
   * Fixed bug in arfima() which meant the drange argument was being ignored.
+  * Extended auto.arima() so it returns something sensible when the data are constant.
 
 Version 3.22 (07 June 2012)
   * Increased maximum forecast horizon for ets models from 2000 to unlimited.

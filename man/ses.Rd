@@ -16,7 +16,7 @@ hw(x, h=2*frequency(x), seasonal="additive", damped=FALSE,
 \item{seasonal}{Type of seasonality in \code{hw} model. "additive" or "multiplicative"}
 \item{level}{Confidence level for prediction intervals.}
 \item{fan}{If TRUE, level is set to seq(50,99,by=1). This is suitable for fan plots.}
-\item{...}{Other arguments passed to \code{ets}.}
+\item{...}{Other arguments passed to \code{forecast.ets}.}
 }
 
 \description{Returns forecasts and other information for exponential smoothing forecasts applied to x.

@@ -548,10 +548,10 @@ print.Arima <- function (x, digits=max(3, getOption("digits") - 3), se=TRUE,
     if (length(x$coef) > 0) {
         cat("\nCoefficients:\n")
         coef <- round(x$coef, digits=digits)
-        if (se && nrow(x$var.coef)) {
+        if (se && NROW(x$var.coef)) {
             ses <- rep(0, length(coef))
             ses[x$mask] <- round(sqrt(diag(x$var.coef)), digits=digits)
-            coef <- matrix(coef, 1, dimnames=list(NULL, names(coef)))
+            coef <- matrix(coef, 1L, dimnames=list(NULL, names(coef)))
             coef <- rbind(coef, s.e.=ses)
         }
         print.default(coef, print.gap=2)
@@ -560,14 +560,14 @@ print.Arima <- function (x, digits=max(3, getOption("digits") - 3), se=TRUE,
     if (is.null(cm) || cm != "CSS")
     {
         cat("\nsigma^2 estimated as ", format(x$sigma2, digits=digits),
-            ":  log likelihood=", format(round(x$loglik, 2)),"\n",sep="")
+            ":  log likelihood=", format(round(x$loglik, 2L)),"\n",sep="")
         npar <- length(x$coef) + 1
         nstar <- length(x$residuals) - x$arma[6] - x$arma[7]*x$arma[5]
         bic <- x$aic + npar*(log(nstar) - 2)
         aicc <- x$aic + 2*npar*(nstar/(nstar-npar-1) - 1)
-        cat("AIC=", format(round(x$aic, 2)), sep="")
-        cat("   AICc=", format(round(aicc, 2)), sep="")
-        cat("   BIC=", format(round(bic, 2)), "\n",sep="")
+        cat("AIC=", format(round(x$aic, 2L)), sep="")
+        cat("   AICc=", format(round(aicc, 2L)), sep="")
+        cat("   BIC=", format(round(bic, 2L)), "\n",sep="")
     }
     else cat("\nsigma^2 estimated as ", format(x$sigma2, digits=digits),
         ":  part log likelihood=", format(round(x$loglik, 2)),

@@ -6,351 +6,363 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     approximation=(length(x)>100 | frequency(x)>12), xreg=NULL,
     test=c("kpss","adf","pp"), seasonal.test=c("ocsb","ch"), 
     allowdrift=TRUE,lambda=NULL,
-#########################################################################
-        parallel=FALSE, num.cores=NULL)
+    parallel=FALSE, num.cores=NULL)
 {
-        if (stepwise==TRUE & parallel==TRUE){
-            warning("Parallel computer is only implemented when stepwise=FALSE, the model will be fit in serial.")
-			parallel <- FALSE
-        }
-#########################################################################
-    ic <- match.arg(ic)
-    test <- match.arg(test)
-        seasonal.test <- match.arg(seasonal.test)
-    m <- frequency(x)
+  # Only non-stepwise parallel implemented so far.
+  if (stepwise==TRUE & parallel==TRUE)
+  {
+    warning("Parallel computer is only implemented when stepwise=FALSE, the model will be fit in serial.")
+    parallel <- FALSE
+  }
 
-    if(m < 1)
-    {
-        #warning("I can't handle data with frequency less than 1. Seasonality will be ignored.")
-        m <- 1
-    }
+  # Check for constant data
+  cv <- var(x,na.rm=TRUE) / mean(x,na.rm=TRUE)
+  if(cv < 1e-10) # Data are essentially constant
+  {
+    fit <- Arima(x,order=c(0,0,0),fixed=mean(x,na.rm=TRUE))
+    fit$x <- x
+    fit$series <- deparse(substitute(x))
+    fit$call <- match.call()
+    fit$call$x <- data.frame(x=x)
+    return(fit)
+  }
+  ic <- match.arg(ic)
+  test <- match.arg(test)
+  seasonal.test <- match.arg(seasonal.test)
+  m <- frequency(x)
+
+  if(m < 1)
+  {
+    #warning("I can't handle data with frequency less than 1. Seasonality will be ignored.")
+    m <- 1
+  }
 	max.p<-ifelse(max.p <= floor(length(x)/3), max.p, floor(length(x)/3))
 	max.q<-ifelse(max.q <= floor(length(x)/3), max.q, floor(length(x)/3))
 	max.P<-ifelse(max.P <= floor((length(x)/3)/m), max.P, floor((length(x)/3)/m))
 	max.Q<-ifelse(max.Q <= floor((length(x)/3)/m), max.Q, floor((length(x)/3)/m))
 
-        orig.x <- x
-        if(!is.null(lambda))
-            x <- BoxCox(x,lambda)
+  orig.x <- x
+  if(!is.null(lambda))
+    x <- BoxCox(x,lambda)
     
-    # Choose order of differencing
-    if(!is.null(xreg))
-    {
-        nmxreg <- deparse(substitute(xreg))
-        xreg <- as.matrix(xreg)
-        if(ncol(xreg)==1 & length(nmxreg) > 1)
-            nmxreg <- "xreg"
-        if (is.null(colnames(xreg))) 
-            colnames(xreg) <- if (ncol(xreg) == 1) nmxreg
-                              else paste(nmxreg, 1:ncol(xreg), sep = "")
-        j <- !is.na(x) & !is.na(rowSums(xreg))
-        xx <- x
-        xx[j] <- residuals(lm(x ~ xreg))
-    }
+  # Choose order of differencing
+  if(!is.null(xreg))
+  {
+    nmxreg <- deparse(substitute(xreg))
+    xreg <- as.matrix(xreg)
+    if(ncol(xreg)==1 & length(nmxreg) > 1)
+      nmxreg <- "xreg"
+    if (is.null(colnames(xreg))) 
+        colnames(xreg) <- if (ncol(xreg) == 1) nmxreg
+                          else paste(nmxreg, 1:ncol(xreg), sep = "")
+    j <- !is.na(x) & !is.na(rowSums(xreg))
+    xx <- x
+    xx[j] <- residuals(lm(x ~ xreg))
+  }
+  else
+    xx <- x
+  if(stationary)
+    d <- D <- 0
+  if(m == 1)
+    D <- max.P <- max.Q <- 0
+  else if(is.na(D))
+    D <- nsdiffs(xx, m=m, test=seasonal.test)
+  if(D > 0)
+    dx <- diff(xx,differences=D,lag=m)
+  else
+    dx <- xx
+  if(is.na(d))
+    d <- ndiffs(dx,test=test)
+
+  if(m > 1)
+  {
+    if(max.P > 0)
+      max.p <- min(max.p, m-1)
+    if(max.Q > 0)
+      max.q <- min(max.q, m-1)
+  }
+
+  # Find constant offset for AIC calculation using simple AR(1) model
+  if(approximation)
+  {
+    if(D==0)
+      fit <- try(arima(x,order=c(1,d,0),xreg=xreg))
     else
-        xx <- x
-    if(stationary)
-        d <- D <- 0
-    if(m == 1)
-        D <- max.P <- max.Q <- 0
-    else if(is.na(D))
-        D <- nsdiffs(xx, m=m, test=seasonal.test)
-    if(D > 0)
-        dx <- diff(xx,differences=D,lag=m)
+      fit <- try(arima(x,order=c(1,d,0),seasonal=list(order=c(0,D,0),period=m,xreg=xreg)))
+    if(class(fit) != "try-error")
+      offset <- -2*fit$loglik - length(x)*log(fit$sigma2)
     else
-        dx <- xx
-    if(is.na(d))
-        d <- ndiffs(dx,test=test)
+    {
+      warning("Unable to calculate AIC offset")
+      offset <- 0
+    }
+  }
+  else
+    offset <- 0
 
-    if(m > 1)
-    {
-        if(max.P > 0)
-            max.p <- min(max.p, m-1)
-        if(max.Q > 0)
-            max.q <- min(max.q, m-1)
-    }
-
-    # Find constant offset for AIC calculation using simple AR(1) model
-    if(approximation)
-    {
-        if(D==0)
-            fit <- try(arima(x,order=c(1,d,0),xreg=xreg))
-        else
-            fit <- try(arima(x,order=c(1,d,0),seasonal=list(order=c(0,D,0),period=m,xreg=xreg)))
-        if(class(fit) != "try-error")
-            offset <- -2*fit$loglik - length(x)*log(fit$sigma2)
-        else
-        {
-            warning("Unable to calculate AIC offset")
-            offset <- 0
-        }
-    }
-    else
-        offset <- 0
-#########################################################################
-    if(!stepwise)
-    {
-              bestfit <- search.arima(x,d,D,max.p,max.q,max.P,max.Q,max.order,stationary,ic,trace,approximation,xreg=xreg,offset=offset,allowdrift=allowdrift,parallel=parallel, num.cores=num.cores)
-              bestfit$call <- match.call()
-              bestfit$call$x <- data.frame(x=x)
-            bestfit$lamba <- lambda
-            bestfit$x <- orig.x
-            bestfit$series <- deparse(substitute(x))
-            bestfit$fitted <- fitted(bestfit)
-            if(!is.null(lambda))
-            {
-                bestfit$fitted <- InvBoxCox(bestfit$fitted,lambda)
-                bestfit$lambda <- lambda
-            }
-              return(bestfit)
-    }
-#########################################################################
-    # Starting model
-    p <- start.p <- min(start.p,max.p)
-    q <- start.q <- min(start.q,max.q)
-    P <- start.P <- min(start.P,max.P)
-    Q <- start.Q <- min(start.Q,max.Q)
-    if(allowdrift)
-        constant <- (d+D <= 1)
-    else 
-        constant <- ((d+D) == 0)
-        
-    results <- matrix(NA,nrow=100,ncol=8)
-   
-    oldwarn <- options()$warn
-    options(warn=-1)
-    on.exit(options(warn=oldwarn))
-
-    bestfit <- myarima(x,order=c(p,d,q),seasonal=c(P,D,Q),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
-    results[1,] <- c(p,d,q,P,D,Q,constant,bestfit$ic)
-    # Null model
-    fit <- myarima(x,order=c(0,d,0),seasonal=c(0,D,0),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
-    results[2,] <- c(0,d,0,0,D,0,constant,fit$ic)
-    if(fit$ic < bestfit$ic)
-    {
-        bestfit <- fit
-        p <- q <- P <- Q <- 0
-    }
-    # Basic AR model
-    if(max.p > 0 | max.P > 0)
-    {
-        fit <- myarima(x,order=c(max.p>0,d,0),seasonal=c((m>1)&(max.P>0),D,0),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
-        results[3,] <- c(1,d,0,m>1,D,0,constant,fit$ic)
-        if(fit$ic < bestfit$ic)
-        {
-            bestfit <- fit
-            p <- (max.p>0)
-            P <- (m>1) & (max.P>0)
-            q <- Q <- 0
-        }
-    }
-    # Basic MA model
-    if(max.q > 0 | max.Q > 0)
-    {
-        fit <- myarima(x,order=c(0,d,max.q>0),seasonal=c(0,D,(m>1)&(max.Q>0)),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
-        results[4,] <- c(0,d,1,0,D,m>1,constant,fit$ic)
-        if(fit$ic < bestfit$ic)
-        {
-            bestfit <- fit
-            p <- P <- 0
-            Q <- (m>1) & (max.Q>0)
-            q <- (max.q>0)
-        }
-    }
-     k <- 4
-
-    startk <- 0
-    while(startk < k & k < 94)
-    {
-        startk <- k
-        if(P > 0 & newmodel(p,d,q,P-1,D,Q,constant,results[1:k,]))
-        {
-            k <- k + 1
-            fit <- myarima(x,order=c(p,d,q),seasonal=c(P-1,D,Q),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
-            results[k,] <- c(p,d,q,P-1,D,Q,constant,fit$ic)
-            if(fit$ic < bestfit$ic)
-            {
-                bestfit <- fit
-                P <- (P-1)
-            }
-        }
-        if(P < max.P & newmodel(p,d,q,P+1,D,Q,constant,results[1:k,]))
-        {
-            k <- k + 1
-            fit <- myarima(x,order=c(p,d,q),seasonal=c(P+1,D,Q),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
-            results[k,] <- c(p,d,q,P+1,D,Q,constant,fit$ic)
-            if(fit$ic < bestfit$ic)
-            {
-                bestfit <- fit
-                P <- (P+1)
-            }
-        }
-        if(Q > 0 & newmodel(p,d,q,P,D,Q-1,constant,results[1:k,]))
-        {
-            k <- k + 1
-            fit <- myarima(x,order=c(p,d,q),seasonal=c(P,D,Q-1),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
-            results[k,] <- c(p,d,q,P,D,Q-1,constant,fit$ic)
-            if(fit$ic < bestfit$ic)
-            {
-                bestfit <- fit
-                Q <- (Q-1)
-            }
-        }
-        if(Q < max.Q & newmodel(p,d,q,P,D,Q+1,constant,results[1:k,]))
-        {
-            k <- k + 1
-            fit <- myarima(x,order=c(p,d,q),seasonal=c(P,D,Q+1),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
-            results[k,] <- c(p,d,q,P,D,Q+1,constant,fit$ic)
-            if(fit$ic < bestfit$ic)
-            {
-                bestfit <- fit
-                Q <- (Q+1)
-            }
-        }
-        if(Q > 0 & P > 0 & newmodel(p,d,q,P-1,D,Q-1,constant,results[1:k,]))
-        {
-            k <- k + 1
-            fit <- myarima(x,order=c(p,d,q),seasonal=c(P-1,D,Q-1),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
-            results[k,] <- c(p,d,q,P-1,D,Q-1,constant,fit$ic)
-            if(fit$ic < bestfit$ic)
-            {
-                bestfit <- fit
-                Q <- (Q-1)
-                P <- (P-1)
-            }
-        }
-        if(Q < max.Q & P < max.P & newmodel(p,d,q,P+1,D,Q+1,constant,results[1:k,]))
-        {
-            k <- k + 1
-            fit <- myarima(x,order=c(p,d,q),seasonal=c(P+1,D,Q+1),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
-            results[k,] <- c(p,d,q,P+1,D,Q+1,constant,fit$ic)
-            if(fit$ic < bestfit$ic)
-            {
-                bestfit <- fit
-                Q <- (Q+1)
-                P <- (P+1)
-            }
-        }
-
-        if(p > 0 & newmodel(p-1,d,q,P,D,Q,constant,results[1:k,]))
-        {
-            k <- k + 1
-            fit <- myarima(x,order=c(p-1,d,q),seasonal=c(P,D,Q),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
-            results[k,] <- c(p-1,d,q,P,D,Q,constant,fit$ic)
-            if(fit$ic < bestfit$ic)
-            {
-                bestfit <- fit
-                p <- (p-1)
-            }
-        }
-        if(p < max.p & newmodel(p+1,d,q,P,D,Q,constant,results[1:k,]))
-        {
-            k <- k + 1
-            fit <- myarima(x,order=c(p+1,d,q),seasonal=c(P,D,Q),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
-            results[k,] <- c(p+1,d,q,P,D,Q,constant,fit$ic)
-            if(fit$ic < bestfit$ic)
-            {
-                bestfit <- fit
-                p <- (p+1)
-            }
-        }
-        if(q > 0 & newmodel(p,d,q-1,P,D,Q,constant,results[1:k,]))
-        {
-            k <- k + 1
-            fit <- myarima(x,order=c(p,d,q-1),seasonal=c(P,D,Q),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
-            results[k,] <- c(p,d,q-1,P,D,Q,constant,fit$ic)
-            if(fit$ic < bestfit$ic)
-            {
-                bestfit <- fit
-                q <- (q-1)
-            }
-        }
-        if(q < max.q & newmodel(p,d,q+1,P,D,Q,constant,results[1:k,]))
-        {
-            k <- k + 1
-            fit <- myarima(x,order=c(p,d,q+1),seasonal=c(P,D,Q),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
-            results[k,] <- c(p,d,q+1,P,D,Q,constant,fit$ic)
-            if(fit$ic < bestfit$ic)
-            {
-                bestfit <- fit
-                q <- (q+1)
-            }
-        }
-        if(q > 0 & p > 0 & newmodel(p-1,d,q-1,P,D,Q,constant,results[1:k,]))
-        {
-            k <- k + 1
-            fit <- myarima(x,order=c(p-1,d,q-1),seasonal=c(P,D,Q),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
-            results[k,] <- c(p-1,d,q-1,P,D,Q,constant,fit$ic)
-            if(fit$ic < bestfit$ic)
-            {
-                bestfit <- fit
-                q <- (q-1)
-                p <- (p-1)
-            }
-        }
-        if(q < max.q & p < max.p & newmodel(p+1,d,q+1,P,D,Q,constant,results[1:k,]))
-        {
-            k <- k + 1
-            fit <- myarima(x,order=c(p+1,d,q+1),seasonal=c(P,D,Q),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
-            results[k,] <- c(p+1,d,q+1,P,D,Q,constant,fit$ic)
-            if(fit$ic < bestfit$ic)
-            {
-                bestfit <- fit
-                q <- (q+1)
-                p <- (p+1)
-            }
-        }
-        if(allowdrift | (d+D)==0)
-        {
-            if(newmodel(p,d,q,P,D,Q,!constant,results[1:k,]))
-            {
-                k <- k + 1
-                fit <- myarima(x,order=c(p,d,q),seasonal=c(P,D,Q),constant=!constant,ic,trace,approximation,offset=offset,xreg=xreg)
-                results[k,] <- c(p,d,q,P,D,Q,!constant,fit$ic)
-                if(fit$ic < bestfit$ic)
-                {
-                    bestfit <- fit
-                    constant <- !constant
-                }
-            }
-        }
-    }
-
-    # Refit using ML if approximation used for IC
-    if(approximation)
-    {
-        #constant <- length(bestfit$coef) > sum(bestfit$arma[1:4])
-        newbestfit <- myarima(x,order=bestfit$arma[c(1,6,2)],
-            seasonal=bestfit$arma[c(3,7,4)],constant=constant,ic,trace=FALSE,approximation=FALSE,xreg=xreg)
-        if(newbestfit$ic > 1e19)
-        {
-            options(warn=oldwarn)
-            warning("Unable to fit final model using maximum likelihood. AIC value approximated")
-        }
-        else
-            bestfit <- newbestfit            
-    }
-
-    if(bestfit$ic > 1e19)
-    {
-        cat("\n")
-        stop("No suitable ARIMA model found")
-    }
-    
-    # Return best fit
-        
-    bestfit$x <- orig.x
-    bestfit$series <- deparse(substitute(x))
-    bestfit$ic <- NULL
+  if(!stepwise)
+  {
+    bestfit <- search.arima(x,d,D,max.p,max.q,max.P,max.Q,max.order,stationary,ic,trace,approximation,xreg=xreg,offset=offset,allowdrift=allowdrift,parallel=parallel, num.cores=num.cores)
     bestfit$call <- match.call()
     bestfit$call$x <- data.frame(x=x)
+    bestfit$lamba <- lambda
+    bestfit$x <- orig.x
+    bestfit$series <- deparse(substitute(x))
+    bestfit$fitted <- fitted(bestfit)
+    if(!is.null(lambda))
+    {
+      bestfit$fitted <- InvBoxCox(bestfit$fitted,lambda)
       bestfit$lambda <- lambda
-      #bestfit$fitted <- fitted(bestfit)
-
-    if(trace)
-        cat("\n\n Best model:",arima.string(bestfit),"\n\n")
-
+    }
     return(bestfit)
+  }
+
+  # Starting model
+  p <- start.p <- min(start.p,max.p)
+  q <- start.q <- min(start.q,max.q)
+  P <- start.P <- min(start.P,max.P)
+  Q <- start.Q <- min(start.Q,max.Q)
+  if(allowdrift)
+    constant <- (d+D <= 1)
+  else 
+    constant <- ((d+D) == 0)
+      
+  results <- matrix(NA,nrow=100,ncol=8)
+ 
+  oldwarn <- options()$warn
+  options(warn=-1)
+  on.exit(options(warn=oldwarn))
+
+  bestfit <- myarima(x,order=c(p,d,q),seasonal=c(P,D,Q),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
+  results[1,] <- c(p,d,q,P,D,Q,constant,bestfit$ic)
+  # Null model
+  fit <- myarima(x,order=c(0,d,0),seasonal=c(0,D,0),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
+  results[2,] <- c(0,d,0,0,D,0,constant,fit$ic)
+  if(fit$ic < bestfit$ic)
+  {
+    bestfit <- fit
+    p <- q <- P <- Q <- 0
+  }
+  # Basic AR model
+  if(max.p > 0 | max.P > 0)
+  {
+    fit <- myarima(x,order=c(max.p>0,d,0),seasonal=c((m>1)&(max.P>0),D,0),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
+    results[3,] <- c(1,d,0,m>1,D,0,constant,fit$ic)
+    if(fit$ic < bestfit$ic)
+    {
+      bestfit <- fit
+      p <- (max.p>0)
+      P <- (m>1) & (max.P>0)
+      q <- Q <- 0
+    }
+  }
+  # Basic MA model
+  if(max.q > 0 | max.Q > 0)
+  {
+    fit <- myarima(x,order=c(0,d,max.q>0),seasonal=c(0,D,(m>1)&(max.Q>0)),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
+    results[4,] <- c(0,d,1,0,D,m>1,constant,fit$ic)
+    if(fit$ic < bestfit$ic)
+    {
+      bestfit <- fit
+      p <- P <- 0
+      Q <- (m>1) & (max.Q>0)
+      q <- (max.q>0)
+    }
+  }
+   k <- 4
+
+  startk <- 0
+  while(startk < k & k < 94)
+  {
+    startk <- k
+    if(P > 0 & newmodel(p,d,q,P-1,D,Q,constant,results[1:k,]))
+    {
+      k <- k + 1
+      fit <- myarima(x,order=c(p,d,q),seasonal=c(P-1,D,Q),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
+      results[k,] <- c(p,d,q,P-1,D,Q,constant,fit$ic)
+      if(fit$ic < bestfit$ic)
+      {
+        bestfit <- fit
+        P <- (P-1)
+      }
+    }
+    if(P < max.P & newmodel(p,d,q,P+1,D,Q,constant,results[1:k,]))
+    {
+      k <- k + 1
+      fit <- myarima(x,order=c(p,d,q),seasonal=c(P+1,D,Q),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
+      results[k,] <- c(p,d,q,P+1,D,Q,constant,fit$ic)
+      if(fit$ic < bestfit$ic)
+      {
+        bestfit <- fit
+        P <- (P+1)
+      }
+    }
+    if(Q > 0 & newmodel(p,d,q,P,D,Q-1,constant,results[1:k,]))
+    {
+      k <- k + 1
+      fit <- myarima(x,order=c(p,d,q),seasonal=c(P,D,Q-1),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
+      results[k,] <- c(p,d,q,P,D,Q-1,constant,fit$ic)
+      if(fit$ic < bestfit$ic)
+      {
+        bestfit <- fit
+        Q <- (Q-1)
+      }
+    }
+    if(Q < max.Q & newmodel(p,d,q,P,D,Q+1,constant,results[1:k,]))
+    {
+      k <- k + 1
+      fit <- myarima(x,order=c(p,d,q),seasonal=c(P,D,Q+1),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
+      results[k,] <- c(p,d,q,P,D,Q+1,constant,fit$ic)
+      if(fit$ic < bestfit$ic)
+      {
+        bestfit <- fit
+        Q <- (Q+1)
+      }
+    }
+    if(Q > 0 & P > 0 & newmodel(p,d,q,P-1,D,Q-1,constant,results[1:k,]))
+    {
+      k <- k + 1
+      fit <- myarima(x,order=c(p,d,q),seasonal=c(P-1,D,Q-1),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
+      results[k,] <- c(p,d,q,P-1,D,Q-1,constant,fit$ic)
+      if(fit$ic < bestfit$ic)
+      {
+        bestfit <- fit
+        Q <- (Q-1)
+        P <- (P-1)
+      }
+    }
+    if(Q < max.Q & P < max.P & newmodel(p,d,q,P+1,D,Q+1,constant,results[1:k,]))
+    {
+      k <- k + 1
+      fit <- myarima(x,order=c(p,d,q),seasonal=c(P+1,D,Q+1),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
+      results[k,] <- c(p,d,q,P+1,D,Q+1,constant,fit$ic)
+      if(fit$ic < bestfit$ic)
+      {
+        bestfit <- fit
+        Q <- (Q+1)
+        P <- (P+1)
+      }
+    }
+
+    if(p > 0 & newmodel(p-1,d,q,P,D,Q,constant,results[1:k,]))
+    {
+      k <- k + 1
+      fit <- myarima(x,order=c(p-1,d,q),seasonal=c(P,D,Q),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
+      results[k,] <- c(p-1,d,q,P,D,Q,constant,fit$ic)
+      if(fit$ic < bestfit$ic)
+      {
+        bestfit <- fit
+        p <- (p-1)
+      }
+    }
+    if(p < max.p & newmodel(p+1,d,q,P,D,Q,constant,results[1:k,]))
+    {
+      k <- k + 1
+      fit <- myarima(x,order=c(p+1,d,q),seasonal=c(P,D,Q),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
+      results[k,] <- c(p+1,d,q,P,D,Q,constant,fit$ic)
+      if(fit$ic < bestfit$ic)
+      {
+        bestfit <- fit
+        p <- (p+1)
+      }
+    }
+    if(q > 0 & newmodel(p,d,q-1,P,D,Q,constant,results[1:k,]))
+    {
+      k <- k + 1
+      fit <- myarima(x,order=c(p,d,q-1),seasonal=c(P,D,Q),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
+      results[k,] <- c(p,d,q-1,P,D,Q,constant,fit$ic)
+      if(fit$ic < bestfit$ic)
+      {
+        bestfit <- fit
+        q <- (q-1)
+      }
+    }
+    if(q < max.q & newmodel(p,d,q+1,P,D,Q,constant,results[1:k,]))
+    {
+      k <- k + 1
+      fit <- myarima(x,order=c(p,d,q+1),seasonal=c(P,D,Q),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
+      results[k,] <- c(p,d,q+1,P,D,Q,constant,fit$ic)
+      if(fit$ic < bestfit$ic)
+      {
+        bestfit <- fit
+        q <- (q+1)
+      }
+    }
+    if(q > 0 & p > 0 & newmodel(p-1,d,q-1,P,D,Q,constant,results[1:k,]))
+    {
+      k <- k + 1
+      fit <- myarima(x,order=c(p-1,d,q-1),seasonal=c(P,D,Q),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
+      results[k,] <- c(p-1,d,q-1,P,D,Q,constant,fit$ic)
+      if(fit$ic < bestfit$ic)
+      {
+        bestfit <- fit
+        q <- (q-1)
+        p <- (p-1)
+      }
+    }
+    if(q < max.q & p < max.p & newmodel(p+1,d,q+1,P,D,Q,constant,results[1:k,]))
+    {
+      k <- k + 1
+      fit <- myarima(x,order=c(p+1,d,q+1),seasonal=c(P,D,Q),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
+      results[k,] <- c(p+1,d,q+1,P,D,Q,constant,fit$ic)
+      if(fit$ic < bestfit$ic)
+      {
+        bestfit <- fit
+        q <- (q+1)
+        p <- (p+1)
+      }
+    }
+    if(allowdrift | (d+D)==0)
+    {
+      if(newmodel(p,d,q,P,D,Q,!constant,results[1:k,]))
+      {
+        k <- k + 1
+        fit <- myarima(x,order=c(p,d,q),seasonal=c(P,D,Q),constant=!constant,ic,trace,approximation,offset=offset,xreg=xreg)
+        results[k,] <- c(p,d,q,P,D,Q,!constant,fit$ic)
+        if(fit$ic < bestfit$ic)
+        {
+          bestfit <- fit
+          constant <- !constant
+        }
+      }
+    }
+  }
+
+  # Refit using ML if approximation used for IC
+  if(approximation)
+  {
+    #constant <- length(bestfit$coef) > sum(bestfit$arma[1:4])
+    newbestfit <- myarima(x,order=bestfit$arma[c(1,6,2)],
+      seasonal=bestfit$arma[c(3,7,4)],constant=constant,ic,trace=FALSE,approximation=FALSE,xreg=xreg)
+    if(newbestfit$ic > 1e19)
+    {
+      options(warn=oldwarn)
+      warning("Unable to fit final model using maximum likelihood. AIC value approximated")
+    }
+    else
+      bestfit <- newbestfit            
+  }
+
+  if(bestfit$ic > 1e19)
+  {
+    cat("\n")
+    stop("No suitable ARIMA model found")
+  }
+  
+  # Return best fit
+      
+  bestfit$x <- orig.x
+  bestfit$series <- deparse(substitute(x))
+  bestfit$ic <- NULL
+  bestfit$call <- match.call()
+  bestfit$call$x <- data.frame(x=x)
+  bestfit$lambda <- lambda
+  #bestfit$fitted <- fitted(bestfit)
+
+  if(trace)
+    cat("\n\n Best model:",arima.string(bestfit),"\n\n")
+
+  return(bestfit)
 }
 
 
