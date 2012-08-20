@@ -1,3 +1,10 @@
+Version 3.25 (?? September 2012)
+  * Fixed bug in simulate.Arima.
+
+Version 3.24 (23 July 2012
+  * Fixed bug in auto.arima() introduced in v3.23 which meant a ARIMA(0,0,0) model was 
+    returned about half the time.
+
 Version 3.23 (18 July 2012)
   * Fixed bug in arfima() which meant the drange argument was being ignored.
   * Extended auto.arima() so it returns something sensible when the data are constant.

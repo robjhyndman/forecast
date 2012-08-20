@@ -16,7 +16,9 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   }
 
   # Check for constant data
-  cv <- var(x,na.rm=TRUE) / mean(x,na.rm=TRUE)
+  # arbitrary small constant added to scaling denominator to avoid problem of all zeros
+  # Very unlikely for all values to be equal to -.039483049578.
+  cv <- var(x,na.rm=TRUE) / mean(abs(x+.039483049578),na.rm=TRUE)
   if(cv < 1e-10) # Data are essentially constant
   {
     fit <- Arima(x,order=c(0,0,0),fixed=mean(x,na.rm=TRUE))

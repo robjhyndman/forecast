@@ -3,8 +3,8 @@ Title: Forecasting functions for time series and linear models
 Description: Methods and tools for displaying and analysing 
 	univariate time series forecasts including exponential smoothing 
 	via state space models and automatic ARIMA modelling.
-Version: 3.23
-Date: 2012-07-18
+Version: 3.25
+Date: 2012-09-??
 Depends: R (>= 2.14.0), graphics, stats, parallel, tseries, fracdiff, zoo, Rcpp (>= 0.9.10), RcppArmadillo (>= 0.2.35)
 LinkingTo: Rcpp, RcppArmadillo
 LazyData: yes
