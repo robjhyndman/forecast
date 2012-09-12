@@ -3,7 +3,7 @@
 ###############################################
 
 # Optimal smoothing paramter denoted by beta
-# beta is Box-Cox parameter.
+# lambda is Box-Cox parameter.
 
 ################# FUNCTIONS ##################
 
@@ -32,7 +32,7 @@ spline.matrices <- function(n,beta,cc=1e2,n0=0)
 
 ## Compute smoothing splines
 ## Return -loglikelihood
-# beta multiplied by 1e4 to avoid numerical difficulties in optimization
+# beta multiplied by 1e6 to avoid numerical difficulties in optimization
 spline.loglik <- function(beta,y,cc=1e2)
 {
     n <- length(y)
@@ -42,33 +42,43 @@ spline.loglik <- function(beta,y,cc=1e2)
 }
 
 # Spline forecasts
-splinef <- function(x, h=10, level=c(80,95), fan=FALSE, lambda=NULL)
+splinef <- function(x, h=10, level=c(80,95), fan=FALSE, lambda=NULL, method=c("gcv","mle"))
 {
+    method <- match.arg(method)
     if(!is.ts(x))
         x <- ts(x)
     n <- length(x)
     freq <- frequency(x)
     xname <- deparse(substitute(x))
 
-		if(!is.null(lambda))
-		{	
-			origx <- x
-			x <- BoxCox(x,lambda)
-		}
-			
-    # Find optimal beta
-    if(n > 100) # Use only last 100 observations to get beta
-        xx <- x[(n-99):n]
-    else
-        xx <- x
-    beta.est <- optimize(spline.loglik, interval=c(1e-6,1e7),y = xx)$minimum/1e6
+	if(!is.null(lambda))
+	{
+		origx <- x
+		x <- BoxCox(x,lambda)
+	}
 
-    # Compute fitted values
-    r <- 256 * smooth.spline(1:n,x,spar=0)$beta
-    lss <- beta.est*n^3 /(n-1)^3
-    spar <- (log(lss/r) / log(256) + 1) /3
-    splinefit <- smooth.spline(1:n,x,spar=spar)
-    sfits <- splinefit$y
+    # Find optimal beta using likelihood approach in Hyndman et al paper.
+
+    if(method=="mle")
+    {
+        if(n > 100) # Use only last 100 observations to get beta
+            xx <- x[(n-99):n]
+        else
+            xx <- x
+        beta.est <- optimize(spline.loglik, interval=c(1e-6,1e7),y = xx)$minimum/1e6
+        # Compute spar which is equivalent to beta
+        r <- 256 * smooth.spline(1:n,x,spar=0)$lambda
+        lss <- beta.est*n^3 /(n-1)^3
+        spar <- (log(lss/r) / log(256) + 1) /3
+        splinefit <- smooth.spline(1:n,x,spar=spar)
+        sfits <- splinefit$y
+    }
+    else # Use GCV
+    {
+        splinefit <- smooth.spline(1:n,x,cv=FALSE,spar=NULL)
+        sfits <- splinefit$y
+        beta.est <- splinefit$lambda * (n-1)^3/n^3
+    }
 
     # Compute matrices for optimal beta
     mat <- spline.matrices(n,beta.est)
@@ -118,18 +128,18 @@ splinef <- function(x, h=10, level=c(80,95), fan=FALSE, lambda=NULL)
     }
     lower <- ts(lower,start=tsp(x)[2]+1/freq,frequency=freq)
     upper <- ts(upper,start=tsp(x)[2]+1/freq,frequency=freq)
-		
+
 	res <- ts(x - yfit,start=start(x),frequency=freq)
-	
-		if(!is.null(lambda))
-		{
-			Yhat <- InvBoxCox(Yhat,lambda)
-			upper <- InvBoxCox(upper,lambda)
-			lower <- InvBoxCox(lower,lambda)
-			yfit <- InvBoxCox(yfit,lambda)
-			sfits <- InvBoxCox(sfits,lambda)
-			x <- origx
-		}
+
+	if(!is.null(lambda))
+	{
+		Yhat <- InvBoxCox(Yhat,lambda)
+		upper <- InvBoxCox(upper,lambda)
+		lower <- InvBoxCox(lower,lambda)
+		yfit <- InvBoxCox(yfit,lambda)
+		sfits <- InvBoxCox(sfits,lambda)
+		x <- origx
+	}
 
     return(structure(list(method="Cubic Smoothing Spline",level=level,x=x,mean=ts(Yhat,frequency=freq,start=tsp(x)[2]+1/freq),
             upper=ts(upper,start=tsp(x)[2]+1/freq,frequency=freq),
@@ -138,7 +148,7 @@ splinef <- function(x, h=10, level=c(80,95), fan=FALSE, lambda=NULL)
             fitted =ts(sfits,start=start(x),frequency=freq), residuals = res,
 			standardizedresiduals=ts(e,start=start(x),frequency=freq),
             onestepf = ts(yfit,start=start(x),frequency=freq)),
-			lambda=lambda, 
+			lambda=lambda,
             class=c("splineforecast","forecast")))
 }
 

@@ -15,7 +15,7 @@ forecast.ts <- function(object, h=ifelse(frequency(object)>1, 2*frequency(object
     else
       stlf(object,h=h,level=level,fan=fan,...)
   }
-  else 
+  else
     meanf(object,h=h,level=level,fan=fan,...)
 }
 
@@ -30,11 +30,11 @@ as.data.frame.forecast <- function(x,...)
         attributes(out)$tsp <- attributes(x$mean)$tsp
     }
     names <- c("Point Forecast")
-    if (!is.null(x$lower) & !is.null(x$upper) & !is.null(x$level)) 
+    if (!is.null(x$lower) & !is.null(x$upper) & !is.null(x$level))
     {
         x$upper <- as.matrix(x$upper)
         x$lower <- as.matrix(x$lower)
-        for (i in 1:nconf) 
+        for (i in 1:nconf)
         {
             out <- cbind(out, x$lower[, i], x$upper[, i])
             names <- c(names, paste("Lo", x$level[i]), paste("Hi", x$level[i]))
@@ -50,46 +50,46 @@ as.data.frame.forecast <- function(x,...)
     fr.x <- frequency(x)
     calendar <- any(fr.x == c(4, 12)) && length(start(x)) ==  2L
     Tsp <- tsp(x)
-    if (is.null(Tsp)) 
+    if (is.null(Tsp))
     {
         warning("series is corrupt, with no 'tsp' attribute")
         print(unclass(x))
         return(invisible(x))
     }
     nn <- 1 + round((Tsp[2L] - Tsp[1L]) * Tsp[3L])
-    if (NROW(x) != nn) 
+    if (NROW(x) != nn)
     {
         warning(gettextf("series is corrupt: length %d with 'tsp' implying %d", NROW(x), nn), domain=NA, call.=FALSE)
         calendar <- FALSE
     }
-    if (NCOL(x) == 1) 
+    if (NCOL(x) == 1)
     {
-        if (calendar) 
+        if (calendar)
         {
-            if (fr.x > 1) 
+            if (fr.x > 1)
             {
-                dn2 <- if (fr.x == 12) 
+                dn2 <- if (fr.x == 12)
                   month.abb
-                else if (fr.x == 4) 
+                else if (fr.x == 4)
                   c("Qtr1", "Qtr2", "Qtr3", "Qtr4")
                 else paste("p", 1L:fr.x, sep="")
-                if (NROW(x) <= fr.x && start(x)[1L] == end(x)[1L]) 
+                if (NROW(x) <= fr.x && start(x)[1L] == end(x)[1L])
                 {
                   dn1 <- start(x)[1L]
                   dn2 <- dn2[1 + (start(x)[2L] - 2 + seq_along(x))%%fr.x]
-                  x <- matrix(format(x, ...), nrow=1L, byrow=TRUE, 
+                  x <- matrix(format(x, ...), nrow=1L, byrow=TRUE,
                     dimnames=list(dn1, dn2))
                 }
-                else 
+                else
                 {
                   start.pad <- start(x)[2L] - 1
                   end.pad <- fr.x - end(x)[2L]
                   dn1 <- start(x)[1L]:end(x)[1L]
-                  x <- matrix(c(rep.int("", start.pad), format(x, ...), rep.int("", end.pad)), ncol=fr.x, 
+                  x <- matrix(c(rep.int("", start.pad), format(x, ...), rep.int("", end.pad)), ncol=fr.x,
                     byrow=TRUE, dimnames=list(dn1, dn2))
                 }
             }
-            else 
+            else
             {
                 tx <- time(x)
                 attributes(x) <- NULL
@@ -99,16 +99,16 @@ as.data.frame.forecast <- function(x,...)
         else
             attr(x, "class") <- attr(x, "tsp") <- attr(x, "na.action") <- NULL
     }
-    else 
+    else
     {
-        if (calendar && fr.x > 1) 
+        if (calendar && fr.x > 1)
         {
             tm <- time(x)
             t2 <- 1 + round(fr.x * ((tm + 0.001)%%1))
             p1 <- format(floor(zapsmall(tm)))
-            rownames(x) <- if (fr.x == 12) 
+            rownames(x) <- if (fr.x == 12)
                 paste(month.abb[t2], p1, sep=" ")
-            else paste(p1, if (fr.x == 4) 
+            else paste(p1, if (fr.x == 4)
                 c("Q1", "Q2", "Q3", "Q4")[t2]
             else format(t2), sep=" ")
         }
@@ -142,7 +142,7 @@ summary.forecast <- function(object,...)
     }
 }
 
-plotlmforecast <- function(object, plot.conf, shaded, shadecols, col, fcol, pi.col, pi.lty, 
+plotlmforecast <- function(object, plot.conf, shaded, shadecols, col, fcol, pi.col, pi.lty,
   xlim=NULL, ylim, main, ylab, xlab, ...)
 {
   xvar <- attributes(terms(object$model))$term.labels
@@ -162,7 +162,19 @@ plotlmforecast <- function(object, plot.conf, shaded, shadecols, col, fcol, pi.c
     nint <- length(object$level)
     idx <- rev(order(object$level))
     if(is.null(shadecols))
-      shadecols <- heat.colors(nint+2)[switch(1+(nint>1),2,nint:1)+1]
+    {
+      require(colorspace)
+      if(min(object$level) < 50) # Using very small confidence levels.
+        shadecols <- rev(sequential_hcl(100)[object$level])
+      else # This should happen almost all the time. Colors mapped to levels.
+        shadecols <- rev(sequential_hcl(52)[object$level-49])
+    }
+    if(length(shadecols)==1)
+    {
+      if(shadecols=="oldstyle") # Default behaviour up to v3.25.
+        shadecols <- heat.colors(nint+2)[switch(1+(nint>1),2,nint:1)+1]
+    }
+
     for(i in 1:nf)
     {
       for(j in 1:nint)
@@ -178,7 +190,8 @@ plotlmforecast <- function(object, plot.conf, shaded, shadecols, col, fcol, pi.c
 }
 
 plot.forecast <- function(x, include, plot.conf=TRUE, shaded=TRUE, shadebars=(length(x$mean)<5),
-        shadecols=NULL, col=1, fcol=4, pi.col=1, pi.lty=2, ylim=NULL, main=NULL, ylab="",xlab="", type="l", ...)
+        shadecols=NULL, col=1, fcol=4, pi.col=1, pi.lty=2, ylim=NULL, main=NULL, ylab="",
+        xlab="", type="l",  flty = 1, flwd = 2, ...)
 {
   if(is.element("x",names(x))) # Assume stored as x
     data <- x$x
@@ -202,14 +215,14 @@ plot.forecast <- function(x, include, plot.conf=TRUE, shaded=TRUE, shadebars=(le
 
   if(is.element("lm",class(x$model)) & !is.element("ts",class(x$mean))) # Non time series linear model
   {
-    plotlmforecast(x, plot.conf=plot.conf, shaded=shaded, shadecols=shadecols, col=col, fcol=fcol, pi.col=pi.col, pi.lty=pi.lty, 
+    plotlmforecast(x, plot.conf=plot.conf, shaded=shaded, shadecols=shadecols, col=col, fcol=fcol, pi.col=pi.col, pi.lty=pi.lty,
       ylim=ylim, main=main, xlab=xlab, ylab=ylab, ...)
     if(plot.conf)
       return(invisible(list(mean=x$mean,lower=as.matrix(x$lower),upper=as.matrix(x$upper))))
     else
       return(invisible(list(mean=x$mean)))
   }
-      
+
   # Otherwise assume x is from a time series forecast
   if(length(data) > 0)
     data <- as.ts(data)
@@ -240,11 +253,22 @@ plot.forecast <- function(x, include, plot.conf=TRUE, shaded=TRUE, shadebars=(le
     xlab=xlab,ylim=ylim,ylab=ylab,main=main,col=col,type=type, ...)
   if(plot.conf)
   {
-    xxx <- tsp(pred.mean)[1] - 1/freq + (1:npred)/freq            
+    xxx <- tsp(pred.mean)[1] - 1/freq + (1:npred)/freq
     idx <- rev(order(x$level))
     nint <- length(x$level)
-      if(is.null(shadecols))
+    if(is.null(shadecols))
+    {
+      require(colorspace)
+      if(min(x$level) < 50) # Using very small confidence levels.
+        shadecols <- rev(sequential_hcl(100)[x$level])
+      else # This should happen almost all the time. Colors mapped to levels.
+        shadecols <- rev(sequential_hcl(52)[x$level-49])
+    }
+    if(length(shadecols)==1)
+    {
+      if(shadecols=="oldstyle") # Default behaviour up to v3.25.
         shadecols <- heat.colors(nint+2)[switch(1+(nint>1),2,nint:1)+1]
+    }
     for(i in 1:nint)
     {
       if(shadebars)
@@ -273,7 +297,7 @@ plot.forecast <- function(x, include, plot.conf=TRUE, shaded=TRUE, shadebars=(le
     }
   }
   if(npred > 1 & !shadebars & tsx)
-    lines(pred.mean, lty=1,col=fcol)
+    lines(pred.mean, lty = flty, lwd=flwd, col = fcol)
   else
     points(pred.mean, col=fcol, pch=19)
   if(plot.conf)

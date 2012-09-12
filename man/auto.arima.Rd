@@ -4,9 +4,9 @@
 \title{Fit best ARIMA model to univariate time series}
 \usage{
 auto.arima(x, d=NA, D=NA, max.p=5, max.q=5,
-     max.P=2, max.Q=2, max.order=5, start.p=2, start.q=2, 
-     start.P=1, start.Q=1, stationary=FALSE, 
-     ic=c("aicc","aic", "bic"), stepwise=TRUE, trace=FALSE, 
+     max.P=2, max.Q=2, max.order=5, start.p=2, start.q=2,
+     start.P=1, start.Q=1, stationary=FALSE, seasonal=TRUE,
+     ic=c("aicc","aic", "bic"), stepwise=TRUE, trace=FALSE,
      approximation=(length(x)>100 | frequency(x)>12), xreg=NULL,
      test=c("kpss","adf","pp"), seasonal.test=c("ocsb","ch"),
      allowdrift=TRUE, lambda=NULL, parallel=FALSE, num.cores=NULL)
@@ -26,6 +26,7 @@ auto.arima(x, d=NA, D=NA, max.p=5, max.q=5,
 \item{start.P}{Starting value of P in stepwise procedure.}
 \item{start.Q}{Starting value of Q in stepwise procedure.}
 \item{stationary}{If \code{TRUE}, restricts search to stationary models.}
+\item{seasonal}{If \code{FALSE}, restricts search to non-seasonal models.}
 \item{ic}{Information criterion to be used in model selection.}
 \item{stepwise}{If \code{TRUE}, will do stepwise selection (faster). Otherwise, it searches over all models. Non-stepwise selection can be very slow, especially for seasonal models.}
 \item{trace}{If \code{TRUE}, the list of ARIMA models considered will be reported.}

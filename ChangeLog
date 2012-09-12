@@ -1,8 +1,15 @@
-Version 3.25 (?? September 2012)
+Version 3.26 (?? October 2012)
+  * More robust handling of degenerate ARIMA models.
+  * New defaults for shaded colors used for prediction intervals in plots.
+
+Version 3.25 (11 September 2012)
   * Fixed bug in simulate.Arima.
+  * Improved handling of short seasonal time series in auto.arima().
+  * Added seasonal argument to auto.arima().
+  * Fixed bug in splinef() and added gcv method for estimating smoothing parameter.
 
 Version 3.24 (23 July 2012
-  * Fixed bug in auto.arima() introduced in v3.23 which meant a ARIMA(0,0,0) model was 
+  * Fixed bug in auto.arima() introduced in v3.23 which meant a ARIMA(0,0,0) model was
     returned about half the time.
 
 Version 3.23 (18 July 2012)
@@ -35,7 +42,7 @@ Version 3.19 (22 February 2012)
   * Modified definition of MASE for seasonal time series to use seasonal naive insample scaling.
   * Modified meanf() to allow it to be used with cross-sectional data.
   * Updated accuracy() to allow it to be used with cross-sectional data, lm forecasts and lm objects.
- 
+
 Version 3.18 (17 February 2012)
   * Added method for plotting non-time-series forecasts to plot.forecast().
   * Removed partial arg matching.
@@ -45,7 +52,7 @@ Version 3.18 (17 February 2012)
   * Improved handling of msts objects in BoxCox.lambda()
   * Fixed some minor bugs in tbats() and bats()
   * Improved speed of bats() and tbats().
-  
+
 Version 3.17 (2 February 2012)
   * Improved forecast.lm() so it is more likely to find the original data from an lm object.
   * Parallel processing now available in auto.arima() when stepwise=FALSE
@@ -62,7 +69,7 @@ Version 3.15 (22 December 2011)
   * bats() and tbats() use parallel processing when possible.
   * Minor improvements to bats() and forecast.bats().
   * decompose() removed as the function in the stats package has now been fixed.
-  
+
 Version 3.14 (9 December 2011)
   * Improved documentation for forecast.ts()
   * Corrected bug in dshw() when applied to a non-ts object.
@@ -135,7 +142,7 @@ Version 3.00 (24 August 2011)
   * Modified selection of seasonal differencing in auto.arima().
 	* Better error message if seasonal factor used in tslm() with non-seasonal data.
 	* Added PI argument to forecast.ets() to allow only point forecasts to be computed.
-	* Added include.constant argument to Arima(). 
+	* Added include.constant argument to Arima().
 	* Added subset.ts() function.
 	* Upgraded seasonplot() function to allow colors and to fix some bugs.
 	* Fixed fitted values returned by forecast.HoltWinters()
@@ -151,17 +158,17 @@ Version 2.19 (4 June 2011)
 
 Version 2.18 (19 May 2011)
   * Fixed bug in seasonplot() where year labels were sometimes incorrect.
-	
+
 Version 2.17 (6 April 2011)
   * Modified simulate.Arima() to handle seasonal ARIMA models.
   * Modified ets() to handle missing values. The largest continuous section of data is now modelled.
   * Improved plot.forecast() to handle missing values at the end of the observed series.
   * Added replacement decompose() to avoid truncation of seasonal term and seasonally adjusted series.
   * Fixed bug in seasadj() to handle multiplicative decomposition, and to avoid missing values at ends.
-  
+
 Version 2.16 (6 March 2011)
   * Changed the way missing values are handled in tslm()
-    
+
 Version 2.15 (5 March 2011)
   * Added fourier(), fourierf(), tslm()
   * Improved forecast.lm() to allow trend and seasonal terms.
@@ -177,15 +184,15 @@ Version 2.13 (16 February 2011)
   * Modified forecast.ts() to use stlf() if frequency > 12.
   * Made BoxCox() and InvBoxCox() robust to negative values
   * Fixed bug in simulate.Arima() when future=TRUE. There was a bias in the sample paths.
-    
+
 Version 2.12 (19 January 2011)
   * Added naive() and snaive() functions.
   * Improved handling of seasonal data with frequency < 1.
   * Added lambda argument to accuracy().
-    
+
 Version 2.11 (5 November 2010)
   * If MLE in arfima() fails (usually because the series is non-stationary), the LS estimate is now returned.
-    
+
 Version 2.10 (4 November 2010)
   * Fixed bug in arfima() where the MA parameters were of the wrong sign if estim="mle" chosen.
   * arfima() now allowed to have a sequence of missing values at the start of the series and end of the series (but not within the series)
@@ -210,7 +217,7 @@ Version 2.06 (29 July 2010)
 Version 2.05 (11 May 2010)
   * Added arfima() and a forecast method to handle ARFIMA models from arfima() and fracdiff().
   * Added residuals and fitted methods for fracdiff objects.
-	
+
 Version 2.04 (16 April 2010)
   * Fixed bug in auto.arima() that occurred rarely.
 

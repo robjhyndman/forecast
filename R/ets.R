@@ -1,5 +1,5 @@
 ets <- function(y, model="ZZZ", damped=NULL,
-    alpha=NULL, beta=NULL, gamma=NULL, phi=NULL, additive.only=FALSE, lambda=NULL, 
+    alpha=NULL, beta=NULL, gamma=NULL, phi=NULL, additive.only=FALSE, lambda=NULL,
     lower=c(rep(0.0001,3), 0.8), upper=c(rep(0.9999,3),0.98),
     opt.crit=c("lik","amse","mse","sigma","mae"), nmse=3, bounds=c("both","usual","admissible"),
     ic=c("aic","aicc","bic"),restrict=TRUE)
@@ -8,11 +8,11 @@ ets <- function(y, model="ZZZ", damped=NULL,
     opt.crit <- match.arg(opt.crit)
     bounds <- match.arg(bounds)
     ic <- match.arg(ic)
-      
+
     #if(max(y,na.rm=TRUE) > 1e6)
     #    warning("Very large numbers which may cause numerical problems. Try scaling the data first")
 
-    if(class(y)=="data.frame" | class(y)=="list" | class(y)=="matrix" | is.element("mts",class(y)))
+    if(any(class(y) %in% c("data.frame","list","matrix","mts")))
         stop("y should be a univariate time series")
     y <- as.ts(y)
     # Remove missing values near ends
@@ -27,7 +27,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
     y <- BoxCox(y,lambda)
     additive.only=TRUE
   }
-    
+
     if(nmse < 1 | nmse > 10)
         stop("nmse out of range")
     m <- frequency(y)
@@ -95,7 +95,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
             (additive.only & (errortype=="M" | trendtype=="M" | seasontype=="M")))
         stop("Forbidden model combination")
     }
-    
+
     data.positive <- (min(y) > 0)
 
     if(!data.positive & errortype=="M")
@@ -172,7 +172,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
   {
     model$fitted <- InvBoxCox(model$fitted,lambda)
   }
-  
+
     #model$call$data <- dataname
 
     return(structure(model,class="ets"))
@@ -296,7 +296,7 @@ initparam <- function(alpha,beta,gamma,phi,trendtype,seasontype,damped,lower,upp
             alpha <- beta+0.001
         else if(is.null(beta))
             alpha <- 0.999-gamma
-        else 
+        else
             alpha <- 0.5*(beta - gamma + 1)
         if(alpha < lower[1] | alpha > upper[1])
             stop("Inconsistent parameter limits")
@@ -401,7 +401,7 @@ initstate <- function(y,trendtype,seasontype)
     }
     else
     {
-        m <- 1 
+        m <- 1
         init.seas <- NULL
         y.sa <- y
     }
@@ -592,7 +592,7 @@ pegelsresid.C <- function(y,m,init.state,errortype,trendtype,seasontype,damped,a
     }
     tsp.y <- tsp(y)
     e <- ts(Cout[[12]])
-    tsp(e) <- tsp.y 
+    tsp(e) <- tsp.y
 
     return(list(lik=Cout[[13]], amse=Cout[[14]], e=e, states=matrix(Cout[[3]], nrow=n+1, ncol=p, byrow=TRUE)))
 }

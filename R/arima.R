@@ -6,7 +6,7 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     #dataname <- substitute(x)
     ic <- match.arg(ic)
     m <- frequency(x)
-         
+
     oldwarn <- options()$warn
     options(warn=-1)
     on.exit(options(warn=oldwarn))
@@ -52,7 +52,7 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     if (parallel==TRUE){
 
 		to.check <- WhichModels(max.p, max.q, max.P, max.Q, maxK)
-		
+
             par.all.arima <- function(l){
                 .tmp <- UndoWhichModels(l)
                 i <- .tmp[1]; j <- .tmp[2]; I <- .tmp[3]; J <- .tmp[4]; K <- .tmp[5]==1
@@ -64,11 +64,11 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
                     return(cbind(fit, K))
                 } else return(NULL)
             }
-			
+
 			if(is.null(num.cores)) {
 				num.cores <- detectCores()
 			}
-			
+
             # clusterApplyLB() for Windows, mclapply() for POSIX
             if (Sys.info()[1] == "Windows"){
                 cl <- makeCluster(num.cores)
@@ -105,7 +105,7 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
                 warning("Unable to fit final model using maximum likelihood. AIC value approximated")
             }
             else
-                bestfit <- newbestfit            
+                bestfit <- newbestfit
         }
     }
     else
@@ -131,6 +131,10 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"))
     require(tseries)
     x <- c(na.omit(c(x)))
     d <- 0
+
+  if(is.constant(x))
+    return(0)
+
     oldwarn <- options(warn=-1)
     if(test=="kpss")
         dodiff <- kpss.test(x)$p.value < alpha
@@ -267,7 +271,7 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
         else # object from arima() rather than Arima()
         {
             xr <- object$call$xreg
-            object$call$xreg <- if (!is.null(xr))         
+            object$call$xreg <- if (!is.null(xr))
                                     eval.parent(xr)
                                 else NULL
         }
@@ -288,7 +292,7 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
         pred$pred <- ts(pred$pred,frequency=tspx[3],start=start.f)
         pred$se <- ts(pred$se,frequency=tspx[3],start=start.f)
     }
-        
+
     if(fan)
         level <- seq(51,99,by=3)
     else
@@ -351,7 +355,7 @@ forecast.ar <- function(object,h=10,level=c(80,95),fan=FALSE, lambda=NULL, ...)
     f <- frequency(x)
     res <- ts(object$resid[-(1:object$order)],start=tsp(x)[1]+object$order/f,frequency=f)
     fits <- x-res
-    
+
     if(!is.null(lambda))
     {
       pred$pred <- InvBoxCox(pred$pred,lambda)
@@ -425,7 +429,7 @@ Arima <- function(x, order=c(0, 0, 0),
     #    warning("Missing values encountered. Using longest contiguous portion of time series")
 
   series <- deparse(substitute(x))
-  
+
   origx <- x
   if(!is.null(lambda))
     x <- BoxCox(x,lambda)
@@ -434,10 +438,10 @@ Arima <- function(x, order=c(0, 0, 0),
   {
     nmxreg <- deparse(substitute(xreg))
     xreg <- as.matrix(xreg)
-    if (is.null(colnames(xreg))) 
+    if (is.null(colnames(xreg)))
         colnames(xreg) <- if (ncol(xreg) == 1) nmxreg else paste(nmxreg, 1:ncol(xreg), sep="")
   }
-  
+
   if(!missing(include.constant))
   {
     if(include.constant)
@@ -451,7 +455,7 @@ Arima <- function(x, order=c(0, 0, 0),
       include.mean <- include.drift <- FALSE
     }
   }
-    
+
   if(!is.null(model))
   {
     tmp <- arima2(x,model,xreg=xreg)
@@ -476,7 +480,7 @@ Arima <- function(x, order=c(0, 0, 0),
   tmp$call <- match.call()
   tmp$lambda <- lambda
   tmp$x <- origx
-  
+
   return(tmp)
 }
 
@@ -496,7 +500,7 @@ arima2 <- function (x, model, xreg)
         xreg <- as.matrix(data.frame(drift=newxreg))
       use.xreg <- TRUE
     }
-   
+
     if(model$arma[5]>1 & sum(abs(model$arma[c(3,4,7)]))>0) # Seasonal model
     {
         if(use.xreg)
@@ -577,9 +581,9 @@ print.Arima <- function (x, digits=max(3, getOption("digits") - 3), se=TRUE,
 
 # Modified version of function in stats package
 
-predict.Arima <- function(object, n.ahead=1, newxreg=NULL, se.fit=TRUE, ...) 
+predict.Arima <- function(object, n.ahead=1, newxreg=NULL, se.fit=TRUE, ...)
 {
-    myNCOL <- function(x) if (is.null(x)) 
+    myNCOL <- function(x) if (is.null(x))
         0
     else NCOL(x)
     rsd <- object$residuals
@@ -588,11 +592,11 @@ predict.Arima <- function(object, n.ahead=1, newxreg=NULL, se.fit=TRUE, ...)
         object$call$xreg <- object$xreg
     ## END ADDITION
     xr <- object$call$xreg
-    xreg <- if (!is.null(xr)) 
+    xreg <- if (!is.null(xr))
         eval.parent(xr)
     else NULL
     ncxreg <- myNCOL(xreg)
-    if (myNCOL(newxreg) != ncxreg) 
+    if (myNCOL(newxreg) != ncxreg)
         stop("'xreg' and 'newxreg' have different numbers of columns: ", ncxreg, " != ", myNCOL(newxreg))
     class(xreg) <- NULL
     xtsp <- tsp(rsd)
@@ -606,25 +610,25 @@ predict.Arima <- function(object, n.ahead=1, newxreg=NULL, se.fit=TRUE, ...)
             newxreg <- cbind(intercept=rep(1, n.ahead), newxreg)
             ncxreg <- ncxreg + 1
         }
-        xm <- if (narma == 0) 
+        xm <- if (narma == 0)
             drop(as.matrix(newxreg) %*% coefs)
         else drop(as.matrix(newxreg) %*% coefs[-(1:narma)])
     }
     else xm <- 0
     if (arma[2] > 0) {
         ma <- coefs[arma[1] + 1:arma[2]]
-        if (any(Mod(polyroot(c(1, ma))) < 1)) 
+        if (any(Mod(polyroot(c(1, ma))) < 1))
             warning("MA part of model is not invertible")
     }
     if (arma[4] > 0) {
         ma <- coefs[sum(arma[1:3]) + 1:arma[4]]
-        if (any(Mod(polyroot(c(1, ma))) < 1)) 
+        if (any(Mod(polyroot(c(1, ma))) < 1))
             warning("seasonal MA part of model is not invertible")
     }
     z <- KalmanForecast(n.ahead, object$model)
     pred <- ts(z[[1]] + xm, start=xtsp[2] + deltat(rsd), frequency=xtsp[3])
     if (se.fit) {
-        se <- ts(sqrt(z[[2]] * object$sigma2), start=xtsp[2] + 
+        se <- ts(sqrt(z[[2]] * object$sigma2), start=xtsp[2] +
             deltat(rsd), frequency=xtsp[3])
         return(list(pred=pred, se=se))
     }
