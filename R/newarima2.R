@@ -15,13 +15,14 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     parallel <- FALSE
   }
 
+  series <- deparse(substitute(x))
 
   # Check for constant data
   if(is.constant(x))
   {
     fit <- Arima(x,order=c(0,0,0),fixed=mean(x,na.rm=TRUE))
     fit$x <- x
-    fit$series <- deparse(substitute(x))
+    fit$series <- series
     fit$call <- match.call()
     fit$call$x <- data.frame(x=x)
     return(fit)
@@ -87,7 +88,7 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     else
       fit <- Arima(x,order=c(0,d,0),fixed=mean(dx,na.rm=TRUE),include.constant=TRUE)
     fit$x <- x
-    fit$series <- deparse(substitute(x))
+    fit$series <- series
     fit$call <- match.call()
     fit$call$x <- data.frame(x=x)
     return(fit)
@@ -127,7 +128,7 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     bestfit$call$x <- data.frame(x=x)
     bestfit$lamba <- lambda
     bestfit$x <- orig.x
-    bestfit$series <- deparse(substitute(x))
+    bestfit$series <- series
     bestfit$fitted <- fitted(bestfit)
     if(!is.null(lambda))
     {
@@ -372,7 +373,7 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   # Return best fit
 
   bestfit$x <- orig.x
-  bestfit$series <- deparse(substitute(x))
+  bestfit$series <- series
   bestfit$ic <- NULL
   bestfit$call <- match.call()
   bestfit$call$x <- data.frame(x=x)

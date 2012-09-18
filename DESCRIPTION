@@ -5,7 +5,7 @@ Description: Methods and tools for displaying and analysing
 	via state space models and automatic ARIMA modelling.
 Version: 3.26
 Date: 2012-09-11
-Depends: R (>= 2.14.0), graphics, stats, parallel, tseries, fracdiff, zoo, Rcpp (>= 0.9.10), RcppArmadillo (>= 0.2.35)
+Depends: R (>= 2.14.0), graphics, stats, parallel, tseries, fracdiff, zoo, Rcpp (>= 0.9.10), RcppArmadillo (>= 0.2.35), colorspace
 LinkingTo: Rcpp, RcppArmadillo
 LazyData: yes
 ByteCompile: TRUE

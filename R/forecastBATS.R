@@ -6,6 +6,7 @@
 
 forecast.bats <- function(object, h, level=c(80,95), fan=FALSE, ...) 
 {
+	#Set up the variables
   if(missing(h))
   {
     if(is.null(object$seasonal.periods))
@@ -28,6 +29,8 @@ forecast.bats <- function(object, h, level=c(80,95), fan=FALSE, ...)
 	#if(!is.null(object$lambda)) {
 	#	y <- BoxCox(y, lambda=object$lambda)
 	#}
+	
+	#Set up the matrices
 	x <- matrix(0,nrow=nrow(object$x), ncol=h)
 	y.forecast <- numeric(h)
 	#w <- makeWMatrix(small.phi=object$damping.parameter, seasonal.periods=object$seasonal.periods, ar.coefs=object$ar.coefficients, ma.coefs=object$ma.coefficients)
@@ -37,14 +40,16 @@ forecast.bats <- function(object, h, level=c(80,95), fan=FALSE, ...)
 	
 	F <- makeFMatrix(alpha=object$alpha, beta=object$beta, small.phi=object$damping.parameter, seasonal.periods=object$seasonal.periods, gamma.bold.matrix=g$gamma.bold.matrix, ar.coefs=object$ar.coefficients, ma.coefs=object$ma.coefficients)
 	
+	#Do the forecast
 	y.forecast[1] <- w$w.transpose %*% object$x[,ncol(object$x)]
 	x[,1] <- F %*% object$x[,ncol(object$x)] + g$g %*% object$errors[length(object$errors)]
 	
-	for(t in 2:h) {
-		x[,t] <- F %*% x[,(t-1)]
-		y.forecast[t] <- w$w.transpose %*% x[,(t-1)]
+	if(h > 1) {
+		for(t in 2:h) {
+			x[,t] <- F %*% x[,(t-1)]
+			y.forecast[t] <- w$w.transpose %*% x[,(t-1)]
+		}
 	}
-	
 	##Make prediction intervals here
 	lower.bounds <- upper.bounds <- matrix(NA,ncol=length(level),nrow=h)
 	variance.multiplier <- numeric(h)

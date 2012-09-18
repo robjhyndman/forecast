@@ -1,6 +1,7 @@
 Version 3.26 (?? October 2012)
   * More robust handling of degenerate ARIMA models.
   * New defaults for shaded colors used for prediction intervals in plots.
+  * auto.arima() now remembers the name of the series when a Box-Cox transformation is used.
 
 Version 3.25 (11 September 2012)
   * Fixed bug in simulate.Arima.

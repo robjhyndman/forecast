@@ -1,5 +1,6 @@
 forecast.tbats <- function(object, h, level=c(80,95), fan=FALSE, ...) 
 {
+	#Set up variables
   if(missing(h))
   {
     if(is.null(object$seasonal.periods))
@@ -31,6 +32,7 @@ forecast.tbats <- function(object, h, level=c(80,95), fan=FALSE, ...)
 		adj.beta <- 0
 	}
 	
+	#Set up the matrices
 	w <- .Call("makeTBATSWMatrix", smallPhi_s = object$damping.parameter, kVector_s=as.integer(object$k.vector), arCoefs_s = object$ar.coefficients, maCoefs_s = object$ma.coefficients, tau_s=as.integer(tau), PACKAGE = "forecast")
 	
 	if(!is.null(object$seasonal.periods)) {
@@ -52,14 +54,16 @@ forecast.tbats <- function(object, h, level=c(80,95), fan=FALSE, ...)
 	
 	F <- makeTBATSFMatrix(alpha=object$alpha, beta=object$beta, small.phi=object$damping.parameter, seasonal.periods=object$seasonal.periods, k.vector=as.integer(object$k.vector), gamma.bold.matrix=gamma.bold, ar.coefs=object$ar.coefficients, ma.coefs=object$ma.coefficients)
 	
+	#Do the forecast
 	y.forecast[1] <- w$w.transpose %*% object$x[,ncol(object$x)]
 	x[,1] <-  F %*% object$x[,ncol(object$x)] + g %*% object$errors[length(object$errors)]
 	
-	for(t in 2:h) {
-		x[,t] <- F %*% x[,(t-1)]
-		y.forecast[t] <- w$w.transpose %*% x[,(t-1)]
+	if(h > 1) {
+		for(t in 2:h) {
+			x[,t] <- F %*% x[,(t-1)]
+			y.forecast[t] <- w$w.transpose %*% x[,(t-1)]
+		}
 	}
-	
 	##Make prediction intervals here
 	lower.bounds  <-  upper.bounds  <-  matrix(NA,ncol=length(level),nrow=h)
 	variance.multiplier <- numeric(h)
