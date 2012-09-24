@@ -15,7 +15,7 @@ auto.arima(x, d=NA, D=NA, max.p=5, max.q=5,
 \arguments{
 \item{x}{a univariate time series}
 \item{d}{Order of first-differencing. If missing, will choose a value based on KPSS test.}
-\item{D}{Order of seasonal-differencing. If missing, will choose a value based on CH test.}
+\item{D}{Order of seasonal-differencing. If missing, will choose a value based on OCSB test.}
 \item{max.p}{Maximum value of p}
 \item{max.q}{Maximum value of q}
 \item{max.P}{Maximum value of P}
