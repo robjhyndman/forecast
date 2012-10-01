@@ -49,7 +49,9 @@ HoltWintersNew <-
 			stop ("need at least 2 periods to compute seasonal start values.")
 	}
 	
-	## initialization
+	
+	
+	## initialise l0, b0, s0
 	if(!is.null(gamma) && is.logical(gamma) && !gamma) {
 		if(is.null(l.start))
 			l.start <- x[1L]
@@ -159,10 +161,9 @@ HoltWintersNew <-
 		
 		return(par)
 	}
-	
-	
+		
 	check.param <- function(alpha,beta,gamma,phi,lower,upper,bounds,m)
-	{
+	{	
 		if(bounds != "admissible")
 		{
 			if(!is.null(alpha))
@@ -192,6 +193,7 @@ HoltWintersNew <-
 				return(0)
 		}
 		return(1)
+		
 	}
 		
 	###################################################################################
@@ -212,6 +214,18 @@ HoltWintersNew <-
 		season0 <- s.start
 		
 		SSE = 0
+		
+		if(dotrend==FALSE){
+			beta<-0
+			b.start<-0
+		}
+		
+		if(doseasonal==FALSE){
+			gamma<-0
+			for(i in 1:length(s.start))
+				s.start[i]<-0
+		}
+		
 		
 		for(i in start.time:lenx){
 			# definel l(t-1)
@@ -255,20 +269,40 @@ HoltWintersNew <-
 	}
 	###################################################################################
 	
-	########################
+	
+	
+	################################
 	## initialise smoothing parameter
 	if(is.null(optim.start))
-		optim.start <- initparam(alpha = alpha,beta = beta, gamma=gamma,phi=1,trendtype=trendtype,seasontype=seasontype,damped=FALSE,lower=lower,upper=upper,m=f)
+		optim.start <- initparam(alpha = alpha, beta = beta, gamma=gamma,phi=1,trendtype=trendtype,seasontype=seasontype,damped=FALSE,lower=lower,upper=upper,m=f)
 	
-	if(!check.param(alpha,beta,gamma,phi=1,lower,upper,bounds="haha",m=f))
-	{
-		print(paste("Model: ETS(",errortype,",",trendtype,ifelse(damped,"d",""),",",seasontype,")",sep=""))
-		stop("Parameters out of range")
-	}	
+	if(!is.na(optim.start["alpha"]))
+		alpha2 <- optim.start["alpha"]
+	else
+		alpha2 <- alpha
+	if(!is.na(optim.start["beta"]))
+		beta2 <- optim.start["beta"]
+	else
+		beta2 <- beta
+	if(!is.na(optim.start["gamma"]))
+		gamma2 <- optim.start["gamma"]
+	else
+		gamma2 <- gamma
+	
+	
+	
+	
+#	if(!check.param(alpha = alpha2,beta = beta2, gamma = gamma2,phi=1,lower,upper,bounds="haha",m=f))
+#	{
+#		print(paste("alpha=", alpha2, "beta=",beta2, "gamma=",gamma2))
+#		stop("Parameters out of range")
+#	}	
 	###################################################################################
 	#optimisation: alpha, beta, gamma, if any of them is null, then optimise them
 	optimiseStr <- "none"
 
+	
+	
 	#all null
 	if((is.null(alpha))&&(is.null(beta))&&(is.null(gamma))){
 		error <- function (p) hw(x,lenx=lenx, alpha = p[1L], beta=p[2L], gamma = p[3L], start.time=start.time, seasonal=seasonal, f=f, dotrend=(!is.logical(beta) || beta), doseasonal=(!is.logical(gamma) || gamma), l.start=l.start,b.start=b.start,s.start=s.start)$SSE
@@ -421,4 +455,41 @@ HoltWintersNew <-
 	
 
 	
+}
+
+admissible <- function(alpha,beta,gamma,phi,m)
+{
+	if(is.null(phi))
+		phi <- 1
+	if(phi < 0 | phi > 1+1e-8)
+		return(0)
+	if(is.null(gamma))
+	{
+		if(alpha < 1-1/phi | alpha > 1+1/phi)
+			return(0)
+		if(!is.null(beta))
+		{
+			if(beta < alpha * (phi-1) | beta > (1+phi)*(2-alpha))
+				return(0)
+		}
+	}
+	else if(m > 1) # Seasonal model
+	{
+		if(is.null(beta))
+			beta <- 0
+		if(gamma < max(1-1/phi-alpha,0) | gamma > 1+1/phi-alpha)
+			return(0)
+		if(alpha < 1-1/phi-gamma*(1-m+phi+phi*m)/(2*phi*m))
+			return(0)
+		if(beta < -(1-phi)*(gamma/m+alpha))
+			return(0)
+		
+		# End of easy tests. Now use characteristic equation
+		P <- c(phi*(1-alpha-gamma),alpha+beta-alpha*phi+gamma-1,rep(alpha+beta-alpha*phi,m-2),(alpha+beta-phi),1)
+		roots <- polyroot(P)
+		if(max(abs(roots)) > 1+1e-10)
+			return(0)
+	}
+	# Passed all tests
+	return(1)
 }
