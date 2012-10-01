@@ -1,4 +1,5 @@
-
+#########################################
+## additive
 ###########################################
 ## alpha = number
 
@@ -62,5 +63,52 @@ the elements of the fitted time series are all NA
 
 * HoltWintersNew(austourists, alpha=1, beta=0.2, gamma=FALSE) ok
 
- 
+#######################################################################################
+## multipilicative
   
+############################################
+## alpha = number
+#beta=number
+* HoltWintersNew(austourists,alpha=0.3, beta=0.2, gamma =0.4, seasonal="multiplicative") ok
+  
+* HoltWintersNew(austourists,alpha=0.3, beta=0.2, gamma =FALSE, seasonal="multiplicative") ok
+  
+* HoltWintersNew(austourists,alpha=0.3, beta=0.2, seasonal="multiplicative") ok
+  
+#beta=FALSE
+* HoltWintersNew(austourists,alpha=0.3, beta=FALSE, gamma=0.4, seasonal="multiplicative") ok
+ 
+* HoltWintersNew(austourists,alpha=0.3, beta=FALSE, gamma=FALSE, seasonal="multiplicative") ok
+ 
+* HoltWintersNew(austourists,alpha=0.3, beta=FALSE, seasonal="multiplicative") ok
+ 
+#beta = NULL
+* HoltWintersNew(austourists,alpha=0.3, gamma=0.4, seasonal="multiplicative") ok 
+  
+* HoltWintersNew(austourists,alpha=0.3, gamma=FALSE, seasonal="multiplicative") ok
+
+* HoltWintersNew(austourists,alpha=0.3, seasonal="multiplicative")
+
+########################################
+## alpha = NULL
+#beta = number
+* HoltWintersNew(austourists, beta=0.2, gamma=0.4, seasonal="multiplicative") ok
+
+* HoltWintersNew(austourists, beta=0.2, gamma=FALSE, seasonal="multiplicative") ok
+
+* HoltWintersNew(austourists, beta=0.2, seasonal="multiplicative")
+
+# beta = FALSE
+* HoltWintersNew(austourists, beta=FALSE, gamma=0.4, seasonal="multiplicative") ok
+
+* HoltWintersNew(austourists, beta=FALSE, gamma=FALSE, seasonal="multiplicative")
+
+* HoltWintersNew(austourists, beta=FALSE, seasonal="multiplicative")
+
+#beta = NULL
+* HoltWintersNew(austourists, gamma=0.4, seasonal="multiplicative") ok
+
+* HoltWintersNew(austourists, gamma=FALSE, seasonal="multiplicative") ok
+
+* HoltWintersNew(austourists, seasonal="multiplicative") ok
+

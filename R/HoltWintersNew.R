@@ -63,7 +63,10 @@ HoltWintersNew <-
 					b.start <- x[2L]/x[1L]	
 			}
 		start.time <- 1
-		s.start    <- 0
+		if(seasonal!="multiplicative")
+			s.start    <- 0
+		else
+			s.start <- 1
 	} else {
 		## seasonal Holt-Winters
 		if (is.null(l.start)) {
@@ -262,7 +265,7 @@ HoltWintersNew <-
 			else
 				lastseason <- season0[i]	
 			if(is.na(lastseason)){
-				if(addtive)
+				if(additive)
 					lastseason<-0
 				else
 					lastseason<-1
