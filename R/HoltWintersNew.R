@@ -215,9 +215,7 @@ HoltWintersNew <-
 		# periodicity
 		m=f
 		
-		level0 <- l.start
-		trend0 <- b.start
-		season0 <- s.start
+
 		
 		SSE = 0
 		
@@ -232,7 +230,11 @@ HoltWintersNew <-
 				s.start[i]<-0
 		}
 		
-			
+		level0 <- l.start
+		trend0 <- b.start
+		season0 <- s.start
+		
+		
 		for(i in start.time:lenx){
 			# definel l(t-1)
 			if(i>1)
@@ -251,6 +253,8 @@ HoltWintersNew <-
 				lastseason <- season0[i]	
 			if(is.na(lastseason))
 				lastseason<-0
+			
+	
 			
 			#forecast for this period i
 			xhat <- lastlevel + lasttrend + lastseason	
