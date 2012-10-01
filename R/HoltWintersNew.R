@@ -84,6 +84,10 @@ HoltWintersNew <-
 		}
 		start.time <- 1	
 	}
+	
+	
+	
+	
 	#initialise smoothing parameters
 	lower=c(rep(0.0001,3), 0.8)
 	upper=c(rep(0.9999,3),0.98)
@@ -96,6 +100,7 @@ HoltWintersNew <-
 	else
 		seasontype="A"
 	
+		
 	initparam <- function(alpha,beta,gamma,phi,trendtype,seasontype,damped,lower,upper,m)
 	{
 		# Set up initial parameters
@@ -200,6 +205,7 @@ HoltWintersNew <-
 	#filter function	
 	hw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, start.time=1, seasonal="additive", f, dotrend=FALSE, doseasonal=FALSE, l.start=NULL, b.start=NULL, s.start=NULL){
 		
+				
 		#initialise array of l, b, s
 		level = array(0, dim=c(lenx))
 		trend = array(0, dim=c(lenx))
@@ -226,7 +232,7 @@ HoltWintersNew <-
 				s.start[i]<-0
 		}
 		
-		
+			
 		for(i in start.time:lenx){
 			# definel l(t-1)
 			if(i>1)
@@ -243,10 +249,13 @@ HoltWintersNew <-
 				lastseason <- season[i-m]
 			else
 				lastseason <- season0[i]	
+			if(is.na(lastseason))
+				lastseason<-0
 			
 			#forecast for this period i
 			xhat <- lastlevel + lasttrend + lastseason	
 			
+						
 			xfit[i]=xhat
 			
 			res <- xhat - x[i]			
@@ -255,12 +264,14 @@ HoltWintersNew <-
 			#calculate level[i]
 			level[i] <- alpha * (x[i]-lastseason) + (1 - alpha)*(lastlevel + lasttrend)
 			
+						
 			#calculate trend[i]
 			trend[i] <- beta*(level[i] - lastlevel) + (1 - beta)* lasttrend
 			
+						
 			#calculate season[i]
 			season[i] <- gamma*(x[i] - lastlevel-lasttrend) + (1 - gamma) * lastseason
-										
+					
 		}
 		
 		xfit <- ts(xfit, start = start.time, frequency=4)
@@ -271,11 +282,12 @@ HoltWintersNew <-
 	
 	
 	
-	############################################
+	########################
 	## initialise smoothing parameter
 	if(is.null(optim.start))
 		optim.start <- initparam(alpha = alpha, beta = beta, gamma=gamma,phi=1,trendtype=trendtype,seasontype=seasontype,damped=FALSE,lower=lower,upper=upper,m=f)
 	
+		
 	if(!is.na(optim.start["alpha"]))
 		alpha2 <- optim.start["alpha"]
 	else
@@ -336,7 +348,7 @@ HoltWintersNew <-
 		}
 		alpha <- sol$par[1L]
 		#beta  <- sol$par[2L]
-		gamma <- sol$par[3L]
+		gamma <- sol$par[2L]
 		
 		optimiseStr <- "101"
 	}	
@@ -354,8 +366,8 @@ HoltWintersNew <-
 			} else stop("optimization failure")
 		}
 		#alpha <- sol$par[1L]
-		beta  <- sol$par[2L]
-		gamma <- sol$par[3L]
+		beta  <- sol$par[1L]
+		gamma <- sol$par[2L]
 		
 		optimiseStr <- "011"
 	}	
@@ -399,6 +411,7 @@ HoltWintersNew <-
 	}
 	else
 	#beta is null
+	
 	if((!is.null(alpha))&&(is.null(beta))&&(!is.null(gamma))){
 		error <- function (p) hw(x,lenx=lenx, alpha = alpha, beta=p[1L], gamma = gamma, start.time=start.time, seasonal=seasonal, f=f, dotrend=(!is.logical(beta) || beta), doseasonal=(!is.logical(gamma) || gamma), l.start=l.start,b.start=b.start,s.start=s.start)$SSE
 		sol   <- optim(optim.start, error, method = "L-BFGS-B",
@@ -411,10 +424,10 @@ HoltWintersNew <-
 			} else stop("optimization failure")
 		}
 		#alpha <- sol$par[1L]
-		beta  <- sol$par[2L]
+		beta  <- sol$par[1L]
 		#gamma <- sol$par[3L]
-	
 		optimiseStr<-"010"
+		
 	}
 	else
 	#gamma is null
@@ -431,10 +444,11 @@ HoltWintersNew <-
 		}
 		#alpha <- sol$par[1L]
 		#beta  <- sol$par[2L]
-		gamma <- sol$par[3L]
+		gamma <- sol$par[1L]
 		
 		optimiseStr <- "001"
 	}
+		
 	
 	final.fit<-hw(x,lenx=lenx, alpha = alpha, beta=beta, gamma = gamma, start.time=start.time, seasonal=seasonal, f=f, dotrend=(!is.logical(beta) || beta), doseasonal=(!is.logical(gamma) || gamma), l.start=l.start,b.start=b.start,s.start=s.start)
 	
