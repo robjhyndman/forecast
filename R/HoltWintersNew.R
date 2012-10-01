@@ -96,16 +96,25 @@ HoltWintersNew <-
 	
 	
 	#initialise smoothing parameters
-	lower=c(rep(0.0001,3), 0.8)
-	upper=c(rep(0.9999,3),0.98)
+	#lower=c(rep(0.0001,3), 0.8)
+	#upper=c(rep(0.9999,3),0.98)
+
+	lower = c(0,0,0,0)
+	upper = c(1,1,1,1)
+	
 	if(!is.null(beta) && is.logical(beta) && !beta)
 		trendtype="N"
-	else
+	else if(seasonal!="multiplicative")
 		trendtype="A"
+	else
+		trendtype="M"
+
 	if(!is.null(gamma) && is.logical(gamma) && !gamma)
 		seasontype="N"
-	else
+	else if(seasonal!="multiplicative")
 		seasontype="A"
+	else 
+		seasontype="M"
 	
 		
 	initparam <- function(alpha,beta,gamma,phi,trendtype,seasontype,damped,lower,upper,m)
@@ -208,6 +217,49 @@ HoltWintersNew <-
 		
 	}
 		
+	
+	initstate <- function(y,trendtype,seasontype)
+	{
+		if(seasontype!="N")
+		{
+			# Do decomposition
+			m <- frequency(y)
+			if(length(y)>=3*m)
+				y.d <- decompose(y,type=switch(seasontype,A="additive",M="multiplicative"))
+			else
+				y.d <- list(seasonal= switch(seasontype,A=y-mean(y),M=y/mean(y)))
+			init.seas <- rev(y.d$seasonal[2:m])
+			names(init.seas) <- paste("s",0:(m-2),sep="")
+			if(seasontype=="A")
+				y.sa <- y-y.d$seasonal
+			else
+				y.sa <- y/y.d$seasonal
+		}
+		else
+		{
+			m <- 1 
+			init.seas <- NULL
+			y.sa <- y
+		}
+		maxn <- min(max(10,2*m),length(y.sa))
+		fit <- lsfit(1:maxn,y.sa[1:maxn])
+		l0 <- fit$coef[1]
+		if(trendtype=="A")
+			b0 <- fit$coef[2]
+		else if(trendtype=="M")
+		{
+			b0 <- 1+fit$coef[2]/fit$coef[1]
+			if(abs(b0) > 1e10) # Avoid infinite slopes
+				b0 <- sign(b0)*1e10
+		}
+		else
+			b0 <- NULL
+		names(l0) <- "l"
+		if(!is.null(b0))
+			names(b0) <- "b"
+		return(c(l0,b0,init.seas))
+	}
+	
 	###################################################################################
 	#filter function	
 	hw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, start.time=1, seasonal="additive", f, dotrend=FALSE, doseasonal=FALSE, l.start=NULL, b.start=NULL, s.start=NULL){
@@ -315,6 +367,8 @@ HoltWintersNew <-
 	if(is.null(optim.start))
 		optim.start <- initparam(alpha = alpha, beta = beta, gamma=gamma,phi=1,trendtype=trendtype,seasontype=seasontype,damped=FALSE,lower=lower,upper=upper,m=f)
 	
+	#if(is.null(optim.start))
+	#	optim.start <- initstate(x, trendtype=trendtype, seasontype=seasontype)
 		
 	if(!is.na(optim.start["alpha"]))
 		alpha2 <- optim.start["alpha"]
@@ -332,11 +386,15 @@ HoltWintersNew <-
 	
 	
 	
-#	if(!check.param(alpha = alpha2,beta = beta2, gamma = gamma2,phi=1,lower,upper,bounds="haha",m=f))
-#	{
-#		print(paste("alpha=", alpha2, "beta=",beta2, "gamma=",gamma2))
-#		stop("Parameters out of range")
-#	}	
+	if(!check.param(alpha = alpha2,beta = beta2, gamma = gamma2,phi=1,lower,upper,bounds="haha",m=f))
+	{
+		print(paste("alpha=", alpha2, "beta=",beta2, "gamma=",gamma2))
+		stop("Parameters out of range")
+	}	
+
+
+
+
 	###################################################################################
 	#optimisation: alpha, beta, gamma, if any of them is null, then optimise them
 	optimiseStr <- "none"

@@ -112,3 +112,7 @@ the elements of the fitted time series are all NA
 
 * HoltWintersNew(austourists, seasonal="multiplicative") ok
 
+#############################################
+# bug
+
+* bug: (fixed) parameter out of range if uncomment (checkpara)
