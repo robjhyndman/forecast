@@ -79,8 +79,12 @@ HoltWintersNew <-
 			b.start = temp/f
 		}
 		if (is.null(s.start)) {
-			for(i in 1:f)
-				s.start[i] = x[i]-l.start
+			for(i in 1:f){
+				if(seasonal!="multiplicative")
+					s.start[i] <- x[i]-l.start
+				else
+					s.start[i] <- x[i]/l.start
+			}
 		}
 		start.time <- 1	
 	}
@@ -215,7 +219,10 @@ HoltWintersNew <-
 		# periodicity
 		m=f
 		
-
+		if(seasonal=="multiplicative")
+			additive <- FALSE
+		else
+			additive <- TRUE
 		
 		SSE = 0
 		
@@ -227,7 +234,10 @@ HoltWintersNew <-
 		if(doseasonal==FALSE){
 			gamma<-0
 			for(i in 1:length(s.start))
-				s.start[i]<-0
+				if(additive)
+					s.start[i]<-0
+				else
+					s.start[i]<-1
 		}
 		
 		level0 <- l.start
@@ -251,13 +261,18 @@ HoltWintersNew <-
 				lastseason <- season[i-m]
 			else
 				lastseason <- season0[i]	
-			if(is.na(lastseason))
-				lastseason<-0
-			
-	
+			if(is.na(lastseason)){
+				if(addtive)
+					lastseason<-0
+				else
+					lastseason<-1
+			}
 			
 			#forecast for this period i
-			xhat <- lastlevel + lasttrend + lastseason	
+			if(additive)
+				xhat <- lastlevel + lasttrend + lastseason
+			else
+				xhat <- (lastlevel + lasttrend)*lastseason
 			
 						
 			xfit[i]=xhat
@@ -266,7 +281,10 @@ HoltWintersNew <-
 			SSE <- SSE + res*res			
 					
 			#calculate level[i]
-			level[i] <- alpha * (x[i]-lastseason) + (1 - alpha)*(lastlevel + lasttrend)
+			if(additive)
+				level[i] <- alpha * (x[i]-lastseason) + (1 - alpha)*(lastlevel + lasttrend)
+			else
+				level[i] <- alpha * (x[i]/lastseason) + (1 - alpha)*(lastlevel + lasttrend)
 			
 						
 			#calculate trend[i]
@@ -274,7 +292,10 @@ HoltWintersNew <-
 			
 						
 			#calculate season[i]
-			season[i] <- gamma*(x[i] - lastlevel-lasttrend) + (1 - gamma) * lastseason
+			if(additive)
+				season[i] <- gamma*(x[i] - lastlevel-lasttrend) + (1 - gamma) * lastseason
+			else
+				season[i] <- gamma*(x[i]/(lastlevel+lasttrend)) + (1 - gamma) * lastseason
 					
 		}
 		
