@@ -271,7 +271,7 @@ HoltWintersNew <-
 	
 	
 	
-	##################################
+	############################################
 	## initialise smoothing parameter
 	if(is.null(optim.start))
 		optim.start <- initparam(alpha = alpha, beta = beta, gamma=gamma,phi=1,trendtype=trendtype,seasontype=seasontype,damped=FALSE,lower=lower,upper=upper,m=f)
