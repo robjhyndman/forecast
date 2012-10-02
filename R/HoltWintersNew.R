@@ -551,7 +551,7 @@ hw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, start.time=1, seasona
 		
 	}
 	
-	xfit <- ts(xfit, start = start.time, frequency=4)
+	xfit <- ts(xfit, start = start.time, frequency=f)
 	list(SSE=SSE,
 			xfit=xfit)
 }
