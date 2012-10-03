@@ -12,7 +12,7 @@ meanf, logLik.ets, monthdays, na.interp, ets, plot.bats, plot.tbats, plot.ets, p
 plot.splineforecast, rwf, seasadj, seasonaldummy,naive,snaive,stlf,
 seasonaldummyf, seasonplot, ses, sindexf, splinef,tslm,fourier,fourierf,forecast.lm,
 thetaf, tsdisplay, simulate.ets, simulate.ar, simulate.Arima, simulate.fracdiff, ndiffs, nsdiffs, dm.test,
-Acf,Pacf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts)
+Acf,Pacf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts, HoltWintersNew)
 
 S3method(as.data.frame,forecast)
 S3method(coef,ets)
@@ -24,6 +24,7 @@ S3method(forecast,Arima)
 S3method(forecast,ets)
 S3method(forecast,fracdiff)
 S3method(forecast,HoltWinters)
+S3method(forecast,HoltWintersNew)
 S3method(forecast,lm)
 S3method(forecast,nnetar)
 S3method(forecast,stl)
