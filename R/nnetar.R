@@ -5,7 +5,7 @@
 
 nnetar <- function(x, p, P=1, size, repeats=20)
 {
-  require(nnet)
+  require(caret)
   # Scale data
   scale <- max(abs(x))
   xx <- x/scale
@@ -38,10 +38,8 @@ nnetar <- function(x, p, P=1, size, repeats=20)
   lags.X <- matrix(NA,ncol=nlag,nrow=n-maxlag)
   for(i in 1:nlag)
     lags.X[,i] <- xx[(maxlag-lags[i]+1):(n-lags[i])]
-  # Fit ANN a number of times
-  fits <- list()
-  for(i in 1:repeats)
-    fits[[i]] <- nnet(lags.X,y,size=size,linout=1,trace=FALSE)
+  # Fit average ANN
+  fit <- avNNet(lags.X,y,size=size,linout=1,trace=FALSE,repeats=repeats)
   # Return results
   out <- list()
   out$x <- as.ts(x)
@@ -50,16 +48,14 @@ nnetar <- function(x, p, P=1, size, repeats=20)
   out$P <- P
   out$scale <- scale
   out$size <- size
-  out$fits <- fits
-  out$fitted <- rep(0,length(out$x))
-  for(j in 1:repeats)
-    out$fitted <- out$fitted + c(rep(NA,maxlag),fits[[j]]$fitted.values)/repeats
+  out$model <- fit
+  out$fitted <- c(rep(NA,maxlag),predict(fit))
   out$fitted <- ts(out$fitted*scale)
   tsp(out$fitted) <- tsp(out$x)
   out$residuals <- out$x - out$fitted
   out$lags <- lags
   out$series <- deparse(substitute(x))
-  out$method <- paste("ANN-AR(",p,sep="")
+  out$method <- paste("NNAR(",p,sep="")
   if(P>0)
     out$method <- paste(out$method,",",P,")",sep="")
   else
@@ -71,19 +67,14 @@ nnetar <- function(x, p, P=1, size, repeats=20)
 forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), ...)
 {
   require(nnet)
-  out <- list(method = object$method, x = object$x, model = object)
-  out$fitted <- object$fitted
-  out$residuals <- object$residuals
-  out$model$fitted <- out$model$residuals <- out$model$method <- out$model$x <- NULL
+  out <- object
   tspx <- tsp(out$x)
 
   fcast <- numeric(h)
   flag <- tail(object$x/object$scale, n=max(object$lags))
-  rpts <- length(object$fits)
   for(i in 1:h)
   {
-    for(j in 1:rpts)
-      fcast[i] <- fcast[i] + predict(object$fits[[j]], newdata=flag)/rpts
+    fcast[i] <- predict(object$model, newdata=flag)
     flag <- c(flag[-1],fcast[i])
   }
   out$mean <- ts(fcast*object$scale,start=tspx[2]+1/tspx[3],frequency=tspx[3])
@@ -97,9 +88,30 @@ print.nnetar <- function(x, digits = max(3, getOption("digits") - 3), ...)
     #cat("  one hidden layer with",x$size,"nodes\n")
     cat("Call:   ")
     print(x$call)
-    print(x$fits[[1]])
-    cat("Average of",length(x$fits),"networks\n")
+    print(x$model)
     cat("\nsigma^2 estimated as ", format(mean(residuals(x)^2,na.rm=TRUE), digits = digits),
             "\n", sep = "")
     invisible(x)
+}
+
+
+
+fitted.train <- function(object, ...)
+{
+  predict(object)
+}
+
+residuals.train <- function(object, ...)
+{
+  object$trainingData[,".outcome"] - predict(object)
+}
+
+fitted.avNNet <- function(object, ...)
+{
+  predict(object)
+}
+
+residuals.avNNet <- function(object, ...)
+{
+  object$model[[1]]$fitted.values + object$model[[1]]$residuals - predict(object)
 }
