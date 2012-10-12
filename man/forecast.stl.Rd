@@ -5,7 +5,8 @@
 \title{Forecasting using stl objects}
 \usage{\method{forecast}{stl}(object, method=c("ets","arima", "naive", "rwdrift"), etsmodel="ZZN",
     h=frequency(object$time.series)*2, level=c(80,95), fan=FALSE, lambda=NULL, ...)
-stlf(x, h=frequency(x)*2, s.window=7, robust=FALSE, method=c("ets","arima", "naive", "rwdrift"), etsmodel="ZZN",
+stlf(x, h=frequency(x)*2, s.window=7, robust=FALSE, 
+    method=c("ets","arima", "naive", "rwdrift"), etsmodel="ZZN",
     level=c(80,95), fan=FALSE, lambda=NULL, ...)
 }
 

@@ -18,7 +18,7 @@
 \arguments{
 \item{object}{An object of class "\code{ets}", "\code{Arima}" or "\code{ar}".}
 \item{nsim}{Number of periods for the simulated series}
-\item{seed}{Either NULL or an integer that will be used in a call to \code{\link{set.seed}} before simulating the time series.
+\item{seed}{Either NULL or an integer that will be used in a call to \code{\link[base]{set.seed}} before simulating the time series.
     The default, NULL will not change the random generator state.}
 \item{future}{Produce sample paths that are future to and conditional on the data in \code{object}.}
 \item{bootstrap}{If TRUE, simulation uses resampled errors rather than normally distributed errors.}

@@ -3,7 +3,8 @@
 
 \title{BATS model (Exponential smoothing state space model with Box-Cox transformation, ARMA errors, Trend and Seasonal components)}
 \usage{bats(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, 
-  seasonal.periods=NULL, use.arma.errors=TRUE, use.parallel=TRUE, num.cores=NULL, bc.lower=0, bc.upper=1, ...)}
+  seasonal.periods=NULL, use.arma.errors=TRUE, use.parallel=TRUE, num.cores=NULL, 
+  bc.lower=0, bc.upper=1, ...)}
 
 \arguments{
 \item{y}{The time series to be forecast. Can be \code{numeric}, \code{msts} or \code{ts}. Only univariate time series are supported.}
