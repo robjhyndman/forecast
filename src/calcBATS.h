@@ -1,9 +1,40 @@
 #ifndef _forecast_CALCBATS
 #define _forecast_CALCBATS
 
-#include <cmath>
-#include <RcppArmadillo.h>
+/////////////////////////////////////
+// if unable to compile, please comment these lines
+#define __GXX_EXPERIMENTAL_CXX0X__ 1
 
+#ifndef HAVE_ERRNO_T
+typedef int errno_t;
+#endif
+
+#if __WORDSIZE == 64
+# ifndef __intptr_t_defined
+typedef long int      intptr_t;
+#  define __intptr_t_defined
+# endif
+typedef unsigned long int   uintptr_t;
+#else
+# ifndef __intptr_t_defined
+typedef int         intptr_t;
+#  define __intptr_t_defined
+# endif
+typedef unsigned int      uintptr_t;
+#endif
+
+
+#include <inttypes.h>
+#include <stdint.h>
+#include <cstdint>
+#include <errno.h>
+#include <cstddef>
+
+// if unable to compile, please comment these lines
+/////////////////////////////////////
+
+#include <RcppArmadillo.h>
+#include <cmath>
 
 RcppExport SEXP calcBATS(SEXP ys, SEXP yHats, SEXP wTransposes, SEXP Fs, SEXP xs, SEXP gs, SEXP es ) ;
 
