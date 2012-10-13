@@ -18,7 +18,7 @@ HoltWintersNew  <-
 				alpha    = NULL, # level
 				beta     = NULL, # trend
 				gamma    = NULL, # seasonal component
-				seasonal = c("additive", "multiplicative","exponential"),
+				seasonal = c("additive", "multiplicative"),
 				start.periods = 2,
 				
 				exponential = NULL, # exponential
@@ -37,22 +37,25 @@ HoltWintersNew  <-
 {
 	x <- as.ts(x)
 	seasonal <- match.arg(seasonal)
-	is(is.null(seasonal))
-	seasonal<-"additive"
+	
+	
+	if(seasonal!="multiplicative")
+		seasonal<-"additive"
+	
+	
+	
 	f <- frequency(x) 
 	lenx=length(x)
 	
-	if(exponential!=TRUE)
+	if(exponential!=TRUE||is.null(exponential))
 		exponential <- FALSE
 	
-	if(is.null(phi))
-		damp = FALSE
-	else if (phi==0)
-		damp = FALSE
-	else
-		damp = TRUE
+	if(is.null(phi)||!is.numeric(phi))
+		phi = 1
 	
-	if(!is.null(alpha) && (alpha == 0))
+	
+	
+	if(!is.null(alpha) && !is.numeric(alpha))
 		stop ("cannot fit models without level ('alpha' must not be 0 or FALSE).")
 	if(!all(is.null(c(alpha, beta, gamma))) &&
 			any(c(alpha, beta, gamma) < 0 || c(alpha, beta, gamma) > 1))
@@ -305,7 +308,7 @@ HoltWintersNew  <-
 		optimiseStr <- "001"
 	}
 	
-	
+	#stop(seasonal)
 	final.fit <- zzhw(x,lenx=lenx, alpha = alpha, beta=beta, gamma = gamma, start.time=start.time, seasonal=seasonal, f=f, dotrend=(!is.logical(beta) || beta), doseasonal=(!is.logical(gamma) || gamma), exponential=exponential, phi=phi,  l.start=l.start,b.start=b.start,s.start=s.start)
 	
 	#stop(final.fit$xfit[12])
@@ -336,15 +339,12 @@ HoltWintersNew  <-
 #filter function	
 zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, start.time=1, seasonal="additive", f, dotrend=FALSE, doseasonal=FALSE, l.start=NULL, exponential = NULL, phi=NULL, b.start=NULL, s.start=NULL){
 	
-	if(exponential!=TRUE)
+	if(exponential!=TRUE||is.null(exponential))
 		exponential <- FALSE
 	
-	if(is.null(phi))
-		damp = FALSE
-	else if (phi==0)
-		damp = FALSE
-	else
-		damp = TRUE
+	if(is.null(phi)||!is.numeric(phi))
+		damp = 1
+	
 	
 	#initialise array of l, b, s
 	level = array(0, dim=c(lenx))
@@ -381,6 +381,10 @@ zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, start.time=1, seaso
 	season0 <- s.start
 	
 	
+	
+	
+	#stop(seasonal)
+	
 	for(i in start.time:lenx){
 		# definel l(t-1)
 		if(i>1)
@@ -404,57 +408,64 @@ zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, start.time=1, seaso
 				lastseason <- 1
 		}
 		
+		#stop((lastlevel + phi*lasttrend)*lastseason)
+		
 		#forecast for this period i
 		if(seasonal=="additive"){
 			if(!exponential)
-				xhat <- lastlevel + lasttrend + lastseason
+				xhat <- lastlevel + phi*lasttrend + lastseason
 			else
-				xhat <- lastlevel * lasttrend + lastseason
-		}else if(seasonal=="multipicative"){
+				xhat <- lastlevel * lasttrend^phi + lastseason
+		}else {
 			if(!exponential)
-				xhat <- (lastlevel + lasttrend)*lastseason
+				xhat <- (lastlevel + phi*lasttrend)*lastseason
 			else
-				xhat <- lastlevel * lasttrend * lastseason
+				xhat <- lastlevel * lasttrend^phi * lastseason
 		}
+		
 		
 		
 		
 		xfit[i]=xhat
 		
+		
 		res <- xhat - x[i]			
 		SSE <- SSE + res*res			
 		
 		#calculate level[i]
-		if(seasonal=="additive")
+		if(seasonal=="additive"){
 			if(!exponential)
-				level[i] <- alpha * (x[i]-lastseason) + (1 - alpha)*(lastlevel + lasttrend)
+				level[i] <- alpha * (x[i]-lastseason) + (1 - alpha)*(lastlevel + phi*lasttrend)
 			else
-				level[i] <- alpha * (x[i]-lastseason) + (1 - alpha)*(lastlevel*lasttrend)
-		else if(seasonal=="multipicative")
+				level[i] <- alpha * (x[i]-lastseason) + (1 - alpha)*(lastlevel*lasttrend^phi)
+		}
+		else {
 			if(!exponential)
-				level[i] <- alpha * (x[i]/lastseason) + (1 - alpha)*(lastlevel + lasttrend)
+				level[i] <- alpha * (x[i]/lastseason) + (1 - alpha)*(lastlevel + phi*lasttrend)
 			else
-				level[i] <- alpha * (x[i]/lastseason) + (1 - alpha)*(lastlevel * lasttrend)
+				level[i] <- alpha * (x[i]/lastseason) + (1 - alpha)*(lastlevel * lasttrend^phi)
+		}
+		
 		
 		
 		#calculate trend[i]
 		if(!exponential)
-			trend[i] <- beta*(level[i] - lastlevel) + (1 - beta)* lasttrend
+			trend[i] <- beta*(level[i] - lastlevel) + (1 - beta)* phi* lasttrend
 		else
-			trend[i] <- beta*(level[i]/lastlevel) + (1 - beta)* lasttrend
+			trend[i] <- beta*(level[i]/lastlevel) + (1 - beta)* lasttrend^phi
 		
 		
 		#calculate season[i]
 		if(seasonal=="additive"){
 			if(!exponential)
-				season[i] <- gamma*(x[i] - lastlevel-lasttrend) + (1 - gamma) * lastseason
+				season[i] <- gamma*(x[i] - lastlevel- phi*lasttrend) + (1 - gamma) * lastseason
 			else
-				season[i] <- gamma*(x[i] - lastlevel*lasttrend) + (1 - gamma) * lastseason
+				season[i] <- gamma*(x[i] - lastlevel*lasttrend^phi) + (1 - gamma) * lastseason
 		}else{
 			if(!exponential)
-				season[i] <- gamma*(x[i]/(lastlevel+lasttrend)) + (1 - gamma) * lastseason
+				season[i] <- gamma*(x[i]/(lastlevel+phi*lasttrend)) + (1 - gamma) * lastseason
 			else
-				season[i] <- gamma*(x[i]/(lastlevel*lasttrend)) + (1 - gamma) * lastseason
+				season[i] <- gamma*(x[i]/(lastlevel*lasttrend^phi)) + (1 - gamma) * lastseason
 		}
 		
 		
