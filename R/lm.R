@@ -54,7 +54,7 @@ tslm <- function(formula,data,lambda=NULL,...)
   return(fit)
 }
 
-forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, ...)
+forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, ts=TRUE, ...)
 {
   if (fan) 
     level <- seq(51, 99, by = 3)
@@ -72,8 +72,8 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
   else
     origdata <- as.data.frame(fitted(object) + residuals(object))
     
-  
-  if(is.element("ts",class(origdata)))
+  # Check if the forecasts will be time series
+  if(ts & is.element("ts",class(origdata)))
   {
     tspx <- tsp(origdata)
     timesx <- time(origdata)

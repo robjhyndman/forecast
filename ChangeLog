@@ -4,6 +4,7 @@ Version 3.26 (?? October 2012)
   * auto.arima() now remembers the name of the series when a Box-Cox transformation is used.
   * New function nnetar() for automatic neural network forecasting of time series.
   * arfima() now tries harder to ensure the ARMA part is stationary.
+  * ts control added for forecast of linear models in forecast.lm().
 
 Version 3.25 (11 September 2012)
   * Fixed bug in simulate.Arima.

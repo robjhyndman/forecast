@@ -2,16 +2,17 @@
 \alias{forecast.lm}
 \title{Forecast a linear model with possible time series components}
 \usage{\method{forecast}{lm}(object, newdata, h=10, level=c(80,95), fan=FALSE, 
-    lambda=object$lambda, ...)
+    lambda=object$lambda, ts=TRUE, ...)
 }
 
 \arguments{
 \item{object}{Object of class "lm", usually the result of a call to \code{\link[stats]{lm}} or \code{\link{tslm}}.}
 \item{newdata}{An optional data frame in which to look for variables with which to predict. If omitted, it is assumed that the only variables are trend and season, and \code{h} forecasts are produced.}
 \item{level}{Confidence level for prediction intervals.}
-\item{fan}{If TRUE, level is set to seq(50,99,by=1). This is suitable for fan plots.}
+\item{fan}{If \code{TRUE}, level is set to seq(50,99,by=1). This is suitable for fan plots.}
 \item{h}{Number of periods for forecasting. Ignored if \code{newdata} present.}
-\item{lambda}{Box-Cox transformation parameter. Ignored if NULL. Otherwise, forecasts back-transformed via an inverse Box-Cox transformation.}
+\item{lambda}{Box-Cox transformation parameter. Ignored if \code{NULL}. Otherwise, forecasts back-transformed via an inverse Box-Cox transformation.}
+\item{ts}{If \code{TRUE}, the forecasts will be treated as time series provided the original data is a time series; the \code{newdata} will be interpreted as related to the subsequent time periods. If \code{FALSE}, any time series attributes of the original data will be ignored.}
 \item{...}{Other arguments passed to \code{\link[stats]{predict.lm}()}.}
 }
 
