@@ -3,12 +3,18 @@
 #For seasonal data, p=3 and P=1.
 #size set to average of number of inputs and number of outputs: (p+P+1)/2
 
-nnetar <- function(x, p, P=1, size, repeats=20)
+nnetar <- function(x, p, P=1, size, repeats=20, lambda=NULL)
 {
   require(caret)
+  # Transform data
+  if(!is.null(lambda))
+    xx <- BoxCox(x,lambda)
+  else
+    xx <- x
+
   # Scale data
-  scale <- max(abs(x))
-  xx <- x/scale
+  scale <- max(abs(xx))
+  xx <- xx/scale
   # Set up lagged matrix
   n <- length(xx)
   xx <- as.ts(xx)
@@ -48,9 +54,12 @@ nnetar <- function(x, p, P=1, size, repeats=20)
   out$P <- P
   out$scale <- scale
   out$size <- size
+  out$lambda <- lambda
   out$model <- fit
   out$fitted <- c(rep(NA,maxlag),predict(fit))
   out$fitted <- ts(out$fitted*scale)
+  if(!is.null(lambda))
+    out$fitted <- InvBoxCox(out$fitted,lambda)
   tsp(out$fitted) <- tsp(out$x)
   out$residuals <- out$x - out$fitted
   out$lags <- lags
@@ -64,20 +73,26 @@ nnetar <- function(x, p, P=1, size, repeats=20)
   return(structure(out,class=c("nnetar")))
 }
 
-forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), ...)
+forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), lambda=object$lambda, ...)
 {
   require(nnet)
   out <- object
   tspx <- tsp(out$x)
 
   fcast <- numeric(h)
-  flag <- tail(object$x/object$scale, n=max(object$lags))
+  xx <- object$x
+  if(!is.null(lambda))
+    xx <- BoxCox(xx,lambda)
+  flag <- tail(xx/object$scale, n=max(object$lags))
   for(i in 1:h)
   {
     fcast[i] <- predict(object$model, newdata=flag)
     flag <- c(flag[-1],fcast[i])
   }
   out$mean <- ts(fcast*object$scale,start=tspx[2]+1/tspx[3],frequency=tspx[3])
+  if(!is.null(lambda))
+    out$mean <- InvBoxCox(out$mean,lambda)
+
   return(structure(out,class="forecast"))
 }
 
@@ -108,7 +123,10 @@ residuals.train <- function(object, ...)
 
 fitted.avNNet <- function(object, ...)
 {
-  predict(object)
+  fit <- predict(object)
+  if(!is.null(object$lambda))
+    fit <- InvBoxCox(fit,object$lambda)
+  return(fit)
 }
 
 residuals.avNNet <- function(object, ...)

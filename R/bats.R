@@ -136,6 +136,11 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, sea
 		seasonal.mask <- (seasonal.periods == 1)
 		seasonal.periods <- seasonal.periods[!seasonal.mask]
 	}
+	#Check if there is anything to parallelise
+	if(is.null(seasonal.periods) & !is.null(use.box.cox) & !is.null(use.trend)) {
+		use.parallel <- FALSE
+	}
+	
   y <- as.numeric(y)
 	best.aic <- NULL
 	if(is.null(use.box.cox)) {
