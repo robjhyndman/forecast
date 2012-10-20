@@ -163,12 +163,12 @@ HoltWintersNew  <-
 	
 	
 	
-	if(!check.param(alpha = alpha2,beta = beta2, gamma = gamma2,phi=1,lower,upper,bounds="haha",m=f))
-	{
-		print(paste("alpha=", alpha2, "beta=",beta2, "gamma=",gamma2))
-		stop("Parameters out of range")
-	}	
-	
+#	if(!check.param(alpha = alpha2,beta = beta2, gamma = gamma2,phi=1,lower,upper,bounds="haha",m=f))
+#	{
+#		print(paste("alpha=", alpha2, "beta=",beta2, "gamma=",gamma2))
+#		stop("Parameters out of range")
+#	}	
+#	
 	
 	
 	
@@ -338,7 +338,11 @@ HoltWintersNew  <-
 							s = if (!is.logical(gamma) || gamma) final.fit$season[len - f + 1L:f]),
 					seasonal  = seasonal,
 					SSE       = final.fit$SSE,
-					call      = match.call()
+					call      = match.call(),
+					level0 = final.fit$level0,
+					trend0 = final.fit$trend0,
+					season0 = final.fit$season0,
+					phi = phi
 			),
 			class = "HoltWinters"
 	)
@@ -498,7 +502,8 @@ zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, start.time=1, seaso
 			season=season,
 			level0 = level0,
 			trend0 = trend0,
-			season0 = season0
+			season0 = season0,
+			phi = phi
 			)
 }
 ###################################################################################
