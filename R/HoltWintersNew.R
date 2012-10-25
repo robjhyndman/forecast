@@ -19,15 +19,15 @@ HoltWintersNew  <-
 				beta     = NULL, # trend
 				gamma    = NULL, # seasonal component
 				seasonal = c("additive", "multiplicative"),
-				start.periods = 2,
+				#start.periods = 2,
 				
 				exponential = NULL, # exponential
 				phi = NULL, # damp
 				
 				# starting values
-				l.start  = NULL, # level
-				b.start  = NULL, # trend
-				s.start  = NULL, # seasonal components vector of length `period'
+				#l.start  = NULL, # level
+				#b.start  = NULL, # trend
+				#s.start  = NULL, # seasonal components vector of length `period'
 				
 				# starting values for optim
 				optim.start = NULL,
@@ -35,9 +35,12 @@ HoltWintersNew  <-
 				optim.control = list()
 )
 {
+	
 	x <- as.ts(x)
 	seasonal <- match.arg(seasonal)
-	
+	l.start = NULL;
+	b.start = NULL;
+	s.start = NULL;
 	
 	if(seasonal!="multiplicative")
 		seasonal<-"additive"
@@ -46,6 +49,7 @@ HoltWintersNew  <-
 	
 	f <- frequency(x) 
 	lenx=length(x)
+	len<-lenx
 	
 	if(exponential!=TRUE||is.null(exponential))
 		exponential <- FALSE
@@ -63,8 +67,8 @@ HoltWintersNew  <-
 	if((is.null(gamma) || gamma > 0)) {
 		if (seasonal == "multiplicative" && any(x == 0))
 			stop ("data must be non-zero for multiplicative Holt-Winters.")
-		if (start.periods < 2)
-			stop ("need at least 2 periods to compute seasonal start values.")
+#		if (start.periods < 2)
+#			stop ("need at least 2 periods to compute seasonal start values.")
 	}
 	
 	
@@ -159,12 +163,12 @@ HoltWintersNew  <-
 	
 	
 	
-	if(!check.param(alpha = alpha2,beta = beta2, gamma = gamma2,phi=1,lower,upper,bounds="haha",m=f))
-	{
-		print(paste("alpha=", alpha2, "beta=",beta2, "gamma=",gamma2))
-		stop("Parameters out of range")
-	}	
-	
+#	if(!check.param(alpha = alpha2,beta = beta2, gamma = gamma2,phi=1,lower,upper,bounds="haha",m=f))
+#	{
+#		print(paste("alpha=", alpha2, "beta=",beta2, "gamma=",gamma2))
+#		stop("Parameters out of range")
+#	}	
+#	
 	
 	
 	
@@ -173,13 +177,16 @@ HoltWintersNew  <-
 	optimiseStr <- "none"
 	
 	
-	
+	#stop(optim.start)
 	#all null
 	if((is.null(alpha))&&(is.null(beta))&&(is.null(gamma))){
+		
 		error <- function (p) zzhw(x,lenx=lenx, alpha = p[1L], beta=p[2L], gamma = p[3L], start.time=start.time, seasonal=seasonal, f=f, dotrend=(!is.logical(beta) || beta), doseasonal=(!is.logical(gamma) || gamma), exponential=exponential, phi=phi,  l.start=l.start,b.start=b.start,s.start=s.start)$SSE
+		
 		sol   <- optim(optim.start, error, method = "L-BFGS-B",
 				lower = c(0, 0, 0), upper = c(1, 1, 1),
 				control = optim.control)
+		
 		if(sol$convergence || any(sol$par < 0 | sol$par > 1)) {
 			if (sol$convergence > 50) {
 				warning(gettextf("optimization difficulties: %s",
@@ -311,27 +318,34 @@ HoltWintersNew  <-
 	#stop(seasonal)
 	final.fit <- zzhw(x,lenx=lenx, alpha = alpha, beta=beta, gamma = gamma, start.time=start.time, seasonal=seasonal, f=f, dotrend=(!is.logical(beta) || beta), doseasonal=(!is.logical(gamma) || gamma), exponential=exponential, phi=phi,  l.start=l.start,b.start=b.start,s.start=s.start)
 	
-	#stop(final.fit$xfit[12])
+	fitted <- ts(cbind(xhat   = final.fit$fitted[1:len],
+					level  = final.fit$level[1:len],
+					trend  = if (!is.logical(beta) || beta)
+						final.fit$trend[1:len],
+					season = if (!is.logical(gamma) || gamma)
+						final.fit$season[1L:len]),
+			start = start(lag(x, k = 1 - start.time)),
+			frequency  = frequency(x)
+	)
 	
-	structure(list(fitted    = final.fit$xfit,
+	structure(list(fitted    = fitted,
 					x         = x,
 					alpha     = alpha,
 					beta      = beta,
 					gamma     = gamma,
-					l.start = l.start,
-					b.start = b.start,
-					s.start = s.start,
+					coefficients = c(a = final.fit$level[len],
+							b = if (!is.logical(beta) || beta) final.fit$trend[len],
+							s = if (!is.logical(gamma) || gamma) final.fit$season[len - f + 1L:f]),
 					seasonal  = seasonal,
 					SSE       = final.fit$SSE,
-					level = final.fit$level,
-					trend = final.fit$trend,
-					season = final.fit$season
-			
+					call      = match.call(),
+					level0 = final.fit$level0,
+					trend0 = final.fit$trend0,
+					season0 = final.fit$season0,
+					phi = phi
 			),
-			class = "HoltWintersNew"
+			class = "HoltWinters"
 	)
-	
-	
 	
 }
 
@@ -351,6 +365,7 @@ zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, start.time=1, seaso
 	trend = array(0, dim=c(lenx))
 	season = array(0, dim=c(lenx))
 	xfit = array(0, dim=c(lenx))
+	residuals = array(0, dim=c(lenx))
 	
 	# periodicity
 	m=f
@@ -430,6 +445,7 @@ zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, start.time=1, seaso
 		
 		
 		res <- xhat - x[i]			
+		residuals[i]<-res
 		SSE <- SSE + res*res			
 		
 		#calculate level[i]
@@ -477,10 +493,24 @@ zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, start.time=1, seaso
 	
 	
 	xfit <- ts(xfit, start = start.time, frequency=f)
+	residuals <- ts(residuals, start = start.time, frequency=f)
 	list(SSE=SSE,
-			xfit=xfit,
+			fitted=xfit,
+			residuals = residuals,
 			level = level,
 			trend=trend,
-			season=season)
+			season=season,
+			level0 = level0,
+			trend0 = trend0,
+			season0 = season0,
+			phi = phi
+			)
 }
 ###################################################################################
+#print.HoltWintersNew <- function(x, ...){
+#	cat(paste("hohohohohoh"))
+#}
+plot.HoltWintersNew <- function(x, ...){
+	y<-x$fitted
+	plot(y)
+}
