@@ -5,6 +5,8 @@ Version 3.26 (?? October 2012)
   * New function nnetar() for automatic neural network forecasting of time series.
   * arfima() now tries harder to ensure the ARMA part is stationary.
   * ts control added for forecast of linear models in forecast.lm().
+  * Fixed bug in bats() which caused an error when use.box.cox=FALSE and use.trend=FALSE.
+  * Added residuals and fitted methods for train and avNNet objects from caret package.
 
 Version 3.25 (11 September 2012)
   * Fixed bug in simulate.Arima.
