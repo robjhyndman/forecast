@@ -23,7 +23,7 @@
 
 \details{A feed-forward neural network is fitted with lagged values of \code{x} as inputs and a single hidden layer with \code{size} nodes. The inputs are for lags 1 to \code{p}, and lags \code{m} to \code{mP} where \code{m=frequency(x)}. A total of \code{repeats} networks are fitted, each with random starting weights. These are then averaged when computing forecasts. The network is trained for one-step forecasting. Multi-step forecasts are computed recursively. The fitted model is called an NNAR(p,P) model and is analogous to an ARIMA(p,0,0)(P,0,0) model but with nonlinear functions.
 
-The function calls the \code{\link[nnet]{nnet}} function from the \code{nnet} package to train the networks.
+The function calls the \code{\link[caret]{avNNet}} function from the \code{caret} package to train the networks.
 }
 
 
