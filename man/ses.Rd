@@ -3,10 +3,13 @@
 \alias{holt}
 \alias{hw}
 \title{Exponential smoothing forecasts}
-\usage{ses(x, h=10, level=c(80,95), fan=FALSE, ...)
-holt(x, h=10, damped=FALSE, level=c(80,95), fan=FALSE, ...)
+\usage{ses(x, h=10, level=c(80,95), fan=FALSE, 
+    initial=c("optimal","simple"), alpha=NULL, ...)
+holt(x, h=10, damped=FALSE, level=c(80,95), fan=FALSE, 
+    initial=c("optimal","simple"), alpha=NULL, beta=NULL, ...)
 hw(x, h=2*frequency(x), seasonal="additive", damped=FALSE, 
-   level=c(80,95), fan=FALSE, ...)
+    level=c(80,95), fan=FALSE, initial=c("optimal","simple"), 
+    alpha=NULL, beta=NULL, gamma=NULL, ...)
 }
 
 \arguments{
@@ -16,6 +19,10 @@ hw(x, h=2*frequency(x), seasonal="additive", damped=FALSE,
 \item{seasonal}{Type of seasonality in \code{hw} model. "additive" or "multiplicative"}
 \item{level}{Confidence level for prediction intervals.}
 \item{fan}{If TRUE, level is set to seq(50,99,by=1). This is suitable for fan plots.}
+\item{initial}{Method used for selecting initial state values. If \code{optimal}, the initial values are optimized along with the smoothing parameters using \code{\link{ets}}. If \code{simple}, the initial values are set to values obtained using simple calculations on the first few observations. See Hyndman & Athanasopoulos (2012) for details.}
+\item{alpha}{Value of smoothing parameter for the level. If \code{NULL}, it will be estimated.}
+\item{beta}{Value of smoothing parameter for the trend. If \code{NULL}, it will be estimated.}
+\item{gamma}{Value of smoothing parameter for the seasonal component. If \code{NULL}, it will be estimated.}
 \item{...}{Other arguments passed to \code{forecast.ets}.}
 }
 
@@ -46,15 +53,10 @@ An object of class \code{"forecast"} is a list containing at least the following
 }
 
 
-\references{Hyndman, R.J., Koehler, A.B., Snyder,
-R.D., Grose, S. (2002) "A state space framework for automatic
-forecasting using exponential smoothing methods",
-\emph{International J. Forecasting}, \bold{18}(3), 439--454.
+\references{Hyndman, R.J., Koehler, A.B., Ord, J.K., Snyder, R.D. (2008) \emph{Forecasting with exponential smoothing: the state space approach}, Springer-Verlag: New York. \url{http://www.exponentialsmoothing.net}.
 
-Hyndman, R.J., Akram, Md., and Archibald, B. (2008) "The
-admissible parameter space for exponential smoothing models".
-\emph{Annals of Statistical Mathematics}, \bold{60}(2),
-407--426.}
+Hyndman, R.J., Athanasopoulos (2012) \emph{Forecasting: principles and practice}, OTexts: Melbourne, Australia. \url{http://otexts.com/fpp}.
+}
 
 
 

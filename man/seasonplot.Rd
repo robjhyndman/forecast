@@ -18,14 +18,14 @@
 \item{col}{Colour}
 \item{labelgap}{Distance between year labels and plotted lines}
 \item{\dots}{additional arguments to \code{\link[graphics]{plot}}.} }
-\description{Plots a seasonal plot as described in Makridakis, Wheelwright and Hyndman (1998, chapter 2).
+\description{Plots a seasonal plot as described in Hyndman and Athanasopoulos (2012, chapter 2).
 }
 
 \value{None.
 }
-\references{  Makridakis, Wheelwright and Hyndman (1998) \emph{Forecasting:
-methods and applications}, Wiley: New York. \url{http://robjhyndman.com/forecasting/}
+\references{  Hyndman and Athanasopoulos (2012) \emph{Forecasting: principles and practice}, OTexts: Melbourne, Australia. \url{http://otexts.com/fpp/}
 }
+
 \author{Rob J Hyndman}
 \seealso{\code{\link[stats]{monthplot}}}
 \examples{seasonplot(AirPassengers,col=rainbow(12),year.labels=TRUE)

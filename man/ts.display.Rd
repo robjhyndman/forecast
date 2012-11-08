@@ -23,8 +23,8 @@
 }
 \value{  None.
 }
-\references{  Makridakis, Wheelwright and Hyndman (1998) \emph{Forecasting:
-methods and applications}, Wiley: New York. \url{http://robjhyndman.com/forecasting/}
+
+\references{  Hyndman and Athanasopoulos (2012) \emph{Forecasting: principles and practice}, OTexts: Melbourne, Australia. \url{http://otexts.com/fpp/}
 }
 \author{Rob J Hyndman}
 \seealso{\code{\link[stats]{plot.ts}}, \code{\link[stats]{acf}}}

@@ -27,6 +27,8 @@
 }
 
 \description{Returns a time series based on the model object \code{object}.}
+\details{With \code{simulate.Arima()}, the \code{object} should be produced by \code{\link{Arima}} or \code{\link{auto.arima}}, rather than \code{\link[stats]{arima}}.
+}
 
 \value{An object of class "\code{ts}".}
 

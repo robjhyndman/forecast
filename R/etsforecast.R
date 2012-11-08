@@ -206,37 +206,37 @@ class3 <- function(h,last.state,trendtype,seasontype,damped,m,sigma2,par)
     return(list(mu=mu,var=var))
 }
 
-ses <- function(x,h=10,level=c(80,95),fan=FALSE,...)
-{
-    fcast <- forecast(ets(x,"ANN"),h,level=level,fan=fan,...)
-    fcast$method <- "Simple exponential smoothing"
-    fcast$model$call <- match.call()
-    return(fcast)
-}
+# ses <- function(x,h=10,level=c(80,95),fan=FALSE,...)
+# {
+#     fcast <- forecast(ets(x,"ANN"),h,level=level,fan=fan,...)
+#     fcast$method <- "Simple exponential smoothing"
+#     fcast$model$call <- match.call()
+#     return(fcast)
+# }
 
-holt <- function(x,h=10, damped=FALSE, level=c(80,95), fan=FALSE, ...)
-{
-    junk <- forecast(ets(x,"AAN",damped=damped),h,level=level,fan=fan,...)
-    if(damped)
-        junk$method <- "Damped Holt's method"
-    else
-        junk$method <- "Holt's method"
-    junk$model$call <- match.call()
-    return(junk)
-}
+# holt <- function(x,h=10, damped=FALSE, level=c(80,95), fan=FALSE, ...)
+# {
+#     junk <- forecast(ets(x,"AAN",damped=damped),h,level=level,fan=fan,...)
+#     if(damped)
+#         junk$method <- "Damped Holt's method"
+#     else
+#         junk$method <- "Holt's method"
+#     junk$model$call <- match.call()
+#     return(junk)
+# }
 
-hw <- function(x,h=2*frequency(x),seasonal="additive",damped=FALSE,level=c(80,95), fan=FALSE, ...)
-{
-    if(seasonal=="additive")
-    {
-        junk <- forecast(ets(x,"AAA",damped=damped),h,level=level,fan=fan,...)
-        junk$method <- "Holt-Winters' additive method"
-    }
-    else
-    {
-        junk <- forecast(ets(x,"MAM",damped=damped),h,level=level,fan=fan,...)
-        junk$method <- "Holt-Winters' multiplicative method"
-    }
-    junk$model$call <- match.call()
-    return(junk)
-}
+# hw <- function(x,h=2*frequency(x),seasonal="additive",damped=FALSE,level=c(80,95), fan=FALSE, ...)
+# {
+#     if(seasonal=="additive")
+#     {
+#         junk <- forecast(ets(x,"AAA",damped=damped),h,level=level,fan=fan,...)
+#         junk$method <- "Holt-Winters' additive method"
+#     }
+#     else
+#     {
+#         junk <- forecast(ets(x,"MAM",damped=damped),h,level=level,fan=fan,...)
+#         junk$method <- "Holt-Winters' multiplicative method"
+#     }
+#     junk$model$call <- match.call()
+#     return(junk)
+# }

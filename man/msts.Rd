@@ -2,7 +2,8 @@
 \alias{msts}
 
 \title{Multi-Seasonal Time Series}
-\usage{msts(data, seasonal.periods, ts.frequency=floor(max(seasonal.periods)), ... )}
+\usage{msts(data, seasonal.periods, ts.frequency=floor(max(seasonal.periods)), 
+    ... )}
 
 \description{msts is an S3 class for multi seasonal time series objects, intended to be used for models that support multiple seasonal periods. The msts class inherits from the ts class and has an additional "msts" attribute which contains the vector of seasonal periods. All methods that work on a ts class, should also work on a msts class.}
 

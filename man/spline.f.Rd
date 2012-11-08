@@ -1,7 +1,8 @@
 \name{splinef}
 \alias{splinef}
 \title{Cubic Spline Forecast}
-\usage{splinef(x, h=10, level=c(80,95), fan=FALSE, lambda=NULL, method=c("gcv","mle"))}
+\usage{splinef(x, h=10, level=c(80,95), fan=FALSE, lambda=NULL, 
+    method=c("gcv","mle"))}
 
 \arguments{
 \item{x}{a numeric vector or time series}

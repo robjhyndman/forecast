@@ -1,64 +1,28 @@
-#  This program is free software; you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation; either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  A copy of the GNU General Public License is available at
-#  http://www.r-project.org/Licenses/
+# Modelled on the HoltWinters() function but with more conventional
+# initialization.
+# Written by Zhenyu Zhou. 21 October 2012
 
-HoltWintersNew  <- 
-		function (x,
-				
+HoltWintersZZ  <- function (x,
 				# smoothing parameters
 				alpha    = NULL, # level
 				beta     = NULL, # trend
 				gamma    = NULL, # seasonal component
 				seasonal = c("additive", "multiplicative"),
-				#start.periods = 2,
-				
 				exponential = NULL, # exponential
-				phi = NULL, # damp
-				
-				# starting values
-				#l.start  = NULL, # level
-				#b.start  = NULL, # trend
-				#s.start  = NULL, # seasonal components vector of length `period'
-				
-				# starting values for optim
-				optim.start = NULL,
-				#optim.start = c(alpha = 0.3, beta = 0.1, gamma = 0.1),
-				optim.control = list()
+				phi = NULL # damp
 )
 {
-	
 	x <- as.ts(x)
 	seasonal <- match.arg(seasonal)
-	l.start = NULL;
-	b.start = NULL;
-	s.start = NULL;
-	
-	if(seasonal!="multiplicative")
-		seasonal<-"additive"
-	
-	
-	
-	f <- frequency(x) 
-	lenx=length(x)
-	len<-lenx
-	
-	if(exponential!=TRUE||is.null(exponential))
+	if(seasonal != "multiplicative")
+		seasonal <- "additive"	
+	m <- frequency(x) 
+	lenx <- length(x)
+
+	if(exponential!=TRUE || is.null(exponential))
 		exponential <- FALSE
-	
-	if(is.null(phi)||!is.numeric(phi))
+	if(is.null(phi) || !is.numeric(phi))
 		phi = 1
-	
-	
-	
 	if(!is.null(alpha) && !is.numeric(alpha))
 		stop ("cannot fit models without level ('alpha' must not be 0 or FALSE).")
 	if(!all(is.null(c(alpha, beta, gamma))) &&
@@ -67,361 +31,179 @@ HoltWintersNew  <-
 	if((is.null(gamma) || gamma > 0)) {
 		if (seasonal == "multiplicative" && any(x == 0))
 			stop ("data must be non-zero for multiplicative Holt-Winters.")
-#		if (start.periods < 2)
-#			stop ("need at least 2 periods to compute seasonal start values.")
 	}
-	
-	
-	
+
 	## initialise l0, b0, s0
 	if(!is.null(gamma) && is.logical(gamma) && !gamma) {
-		if(is.null(l.start))
-			l.start <- x[1L]
-		if(is.null(b.start))
-			if(is.null(beta) || !is.logical(beta) || beta){
-				if(seasonal=="additive"&&!exponential)
-					b.start <- x[2L] - x[1L]
-				else
-					b.start <- x[2L]/x[1L]	
-			}
-		start.time <- 1
-		if(seasonal=="additive")
-			s.start    <- 0
-		else
-			s.start <- 1
+		l.start <- x[1L]
+		if(is.null(beta) || !is.logical(beta) || beta){
+			if(seasonal=="additive" && !exponential)
+				b.start <- x[2L] - x[1L]
+			else
+				b.start <- x[2L]/x[1L]	
+		}
+		s.start <- ifelse(seasonal=="multiplicative",1,0)
 	} else {
 		## seasonal Holt-Winters
-		if (is.null(l.start)) {
-			temp <- 0
-			for(i in 1:f)
-				temp <- temp+x[i]
-			l.start = temp/f
-		}
-		if (is.null(b.start)) {
-			temp <- 0
-			for(i in 1:f)
-				temp <- temp+(x[i+f]-x[i])/f
-			b.start = temp/f
-		}
-		if (is.null(s.start)) {
-			for(i in 1:f){
-				if(seasonal=="additive")
-					s.start[i] <- x[i]-l.start
-				else
-					s.start[i] <- x[i]/l.start
-			}
-		}
-		start.time <- 1	
+		l.start <- mean(x[1:m])
+		b.start <- (mean(x[m+(1:m)]) - l.start)/m
+		if(seasonal=="additive")
+			s.start <- x[1:m]-l.start
+		else
+			s.start <- x[1:m]/l.start
 	}
-	
-	
 	
 	#initialise smoothing parameters
 	#lower=c(rep(0.0001,3), 0.8)
 	#upper=c(rep(0.9999,3),0.98)
-	
-	lower = c(0,0,0,0)
-	upper = c(1,1,1,1)
+	lower <- c(0,0,0,0)
+	upper <- c(1,1,1,1)
 	
 	if(!is.null(beta) && is.logical(beta) && !beta)
-		trendtype="N"
-	else if(seasonal!="multiplicative")
-		trendtype="A"
+		trendtype <- "N"
+	else if(seasonal=="multiplicative")
+		trendtype <- "M"
 	else
-		trendtype="M"
+		trendtype <- "A"
 	
 	if(!is.null(gamma) && is.logical(gamma) && !gamma)
-		seasontype="N"
-	else if(seasonal!="multiplicative")
-		seasontype="A"
+		seasontype <- "N"
+	else if(seasonal=="multiplicative")
+		seasontype <- "M"
 	else 
-		seasontype="M"
+		seasontype <- "A"
 	
-	
-	
-	########################
 	## initialise smoothing parameter
-	if(is.null(optim.start))
-		optim.start <- initparam(alpha = alpha, beta = beta, gamma=gamma,phi=1,trendtype=trendtype,seasontype=seasontype,damped=FALSE,lower=lower,upper=upper,m=f)
+	optim.start <- initparam(alpha = alpha, beta = beta, gamma=gamma, phi=1,
+			trendtype=trendtype, seasontype=seasontype, damped=FALSE, lower=lower, upper=upper, m=m)
+
+	# if(!is.na(optim.start["alpha"]))
+	# 	alpha2 <- optim.start["alpha"]
+	# else
+	# 	alpha2 <- alpha
+	# if(!is.na(optim.start["beta"]))
+	# 	beta2 <- optim.start["beta"]
+	# else
+	# 	beta2 <- beta
+	# if(!is.na(optim.start["gamma"]))
+	# 	gamma2 <- optim.start["gamma"]
+	# else
+	# 	gamma2 <- gamma
 	
-	#if(is.null(optim.start))
-	#	optim.start <- initstate(x, trendtype=trendtype, seasontype=seasontype)
-	
-	if(!is.na(optim.start["alpha"]))
-		alpha2 <- optim.start["alpha"]
-	else
-		alpha2 <- alpha
-	if(!is.na(optim.start["beta"]))
-		beta2 <- optim.start["beta"]
-	else
-		beta2 <- beta
-	if(!is.na(optim.start["gamma"]))
-		gamma2 <- optim.start["gamma"]
-	else
-		gamma2 <- gamma
-	
-	
-	
-	
-#	if(!check.param(alpha = alpha2,beta = beta2, gamma = gamma2,phi=1,lower,upper,bounds="haha",m=f))
+#	if(!check.param(alpha = alpha2,beta = beta2, gamma = gamma2,phi=1,lower,upper,bounds="haha",m=m))
 #	{
 #		print(paste("alpha=", alpha2, "beta=",beta2, "gamma=",gamma2))
 #		stop("Parameters out of range")
-#	}	
-#	
-	
-	
+#	}
 	
 	###################################################################################
 	#optimisation: alpha, beta, gamma, if any of them is null, then optimise them
-	optimiseStr <- "none"
-	
-	
-	#stop(optim.start)
-	#all null
-	if((is.null(alpha))&&(is.null(beta))&&(is.null(gamma))){
-		
-		error <- function (p) zzhw(x,lenx=lenx, alpha = p[1L], beta=p[2L], gamma = p[3L], start.time=start.time, seasonal=seasonal, f=f, dotrend=(!is.logical(beta) || beta), doseasonal=(!is.logical(gamma) || gamma), exponential=exponential, phi=phi,  l.start=l.start,b.start=b.start,s.start=s.start)$SSE
-		
-		sol   <- optim(optim.start, error, method = "L-BFGS-B",
-				lower = c(0, 0, 0), upper = c(1, 1, 1),
-				control = optim.control)
-		
-		if(sol$convergence || any(sol$par < 0 | sol$par > 1)) {
-			if (sol$convergence > 50) {
-				warning(gettextf("optimization difficulties: %s",
-								sol$message), domain = NA)
-			} else stop("optimization failure")
-		}
-		alpha <- sol$par[1L]
-		beta  <- sol$par[2L]
-		gamma <- sol$par[3L]
-		
-		optimiseStr <- "111"
+	error <- function (p, select)
+	{
+		if(select[1]>0)
+			alpha <- p[1L]
+		if(select[2]>0)
+			beta <- p[1L+select[1]]
+		if(select[3]>0)
+			gamma <- p[1L+select[1]+select[2]]
+
+		zzhw(x,lenx=lenx, alpha = alpha, beta=beta, gamma=gamma, seasonal=seasonal, m=m,
+			dotrend=(!is.logical(beta) || beta), doseasonal=(!is.logical(gamma) || gamma),
+			exponential=exponential, phi=phi, l.start=l.start, b.start=b.start, s.start=s.start)$SSE
 	}
-	else
-	#alpha, gamma are null
-	if((is.null(alpha))&&(!is.null(beta))&&(is.null(gamma))){
-		error <- function (p) zzhw(x,lenx=lenx, alpha = p[1L], beta=beta, gamma = p[2L], start.time=start.time, seasonal=seasonal, f=f, dotrend=(!is.logical(beta) || beta), doseasonal=(!is.logical(gamma) || gamma), exponential=exponential, phi=phi,  l.start=l.start,b.start=b.start,s.start=s.start)$SSE
-		sol   <- optim(optim.start, error, method = "L-BFGS-B",
-				lower = c(0, 0), upper = c(1, 1),
-				control = optim.control)
+	select <- as.numeric(c(is.null(alpha),is.null(beta),is.null(gamma)))
+
+	if(sum(select)>0) # There are parameters to optimize
+	{
+		sol <- optim(optim.start, error, method = "L-BFGS-B", lower = lower[select], upper = upper[select], select=select)
 		if(sol$convergence || any(sol$par < 0 | sol$par > 1)) {
 			if (sol$convergence > 50) {
-				warning(gettextf("optimization difficulties: %s",
-								sol$message), domain = NA)
+				warning(gettextf("optimization difficulties: %s", sol$message), domain = NA)
 			} else stop("optimization failure")
 		}
-		alpha <- sol$par[1L]
-		#beta  <- sol$par[2L]
-		gamma <- sol$par[2L]
-		
-		optimiseStr <- "101"
-	}	
-	else
-	#beta, gamma are null
-	if((!is.null(alpha))&&(is.null(beta))&&(is.null(gamma))){
-		error <- function (p) zzhw(x,lenx=lenx, alpha = alpha, beta=p[1L], gamma = p[2L], start.time=start.time, seasonal=seasonal, f=f, dotrend=(!is.logical(beta) || beta), doseasonal=(!is.logical(gamma) || gamma), exponential=exponential, phi=phi,  l.start=l.start,b.start=b.start,s.start=s.start)$SSE
-		sol   <- optim(optim.start, error, method = "L-BFGS-B",
-				lower = c(0, 0), upper = c(1, 1),
-				control = optim.control)
-		if(sol$convergence || any(sol$par < 0 | sol$par > 1)) {
-			if (sol$convergence > 50) {
-				warning(gettextf("optimization difficulties: %s",
-								sol$message), domain = NA)
-			} else stop("optimization failure")
-		}
-		#alpha <- sol$par[1L]
-		beta  <- sol$par[1L]
-		gamma <- sol$par[2L]
-		
-		optimiseStr <- "011"
-	}	
-	else
-	#alpha, beta are null
-	if((is.null(alpha))&&(is.null(beta))&&(!is.null(gamma))){
-		error <- function (p) zzhw(x,lenx=lenx, alpha = p[1L], beta=p[2L], gamma = gamma, start.time=start.time, seasonal=seasonal, f=f, dotrend=(!is.logical(beta) || beta), doseasonal=(!is.logical(gamma) || gamma), exponential=exponential, phi=phi,  l.start=l.start,b.start=b.start,s.start=s.start)$SSE
-		sol   <- optim(optim.start, error, method = "L-BFGS-B",
-				lower = c(0, 0), upper = c(1, 1),
-				control = optim.control)
-		if(sol$convergence || any(sol$par < 0 | sol$par > 1)) {
-			if (sol$convergence > 50) {
-				warning(gettextf("optimization difficulties: %s",
-								sol$message), domain = NA)
-			} else stop("optimization failure")
-		}
-		alpha <- sol$par[1L]
-		beta  <- sol$par[2L]
-		#gamma <- sol$par[3L]
-		
-		optimiseStr <- "110"
-	}
-	else
-	#alpha is null
-	if((is.null(alpha))&&(!is.null(beta))&&(!is.null(gamma))){
-		error <- function (p) zzhw(x,lenx=lenx, alpha = p[1L], beta=beta, gamma = gamma, start.time=start.time, seasonal=seasonal, f=f, dotrend=(!is.logical(beta) || beta), doseasonal=(!is.logical(gamma) || gamma), exponential=exponential, phi=phi,  l.start=l.start,b.start=b.start,s.start=s.start)$SSE
-		sol   <- optim(optim.start, error, method = "L-BFGS-B",
-				lower = c(0), upper = c(1),
-				control = optim.control)
-		if(sol$convergence || any(sol$par < 0 | sol$par > 1)) {
-			if (sol$convergence > 50) {
-				warning(gettextf("optimization difficulties: %s",
-								sol$message), domain = NA)
-			} else stop("optimization failure")
-		}
-		alpha <- sol$par[1L]
-		#beta  <- sol$par[2L]
-		#gamma <- sol$par[3L]
-		
-		optimiseStr <- "100"
-	}
-	else
-	#beta is null
-	
-	if((!is.null(alpha))&&(is.null(beta))&&(!is.null(gamma))){
-		error <- function (p) zzhw(x,lenx=lenx, alpha = alpha, beta=p[1L], gamma = gamma, start.time=start.time, seasonal=seasonal, f=f, dotrend=(!is.logical(beta) || beta), doseasonal=(!is.logical(gamma) || gamma), exponential=exponential, phi=phi,  l.start=l.start,b.start=b.start,s.start=s.start)$SSE
-		sol   <- optim(optim.start, error, method = "L-BFGS-B",
-				lower = c(0), upper = c(1),
-				control = optim.control)
-		if(sol$convergence || any(sol$par < 0 | sol$par > 1)) {
-			if (sol$convergence > 50) {
-				warning(gettextf("optimization difficulties: %s",
-								sol$message), domain = NA)
-			} else stop("optimization failure")
-		}
-		#alpha <- sol$par[1L]
-		beta  <- sol$par[1L]
-		#gamma <- sol$par[3L]
-		optimiseStr <- "010"
-		
-	}
-	else
-	#gamma is null
-	if((!is.null(alpha))&&(!is.null(beta))&&(is.null(gamma))){
-		error <- function (p) zzhw(x,lenx=lenx, alpha = alpha, beta=beta, gamma = p[1L], start.time=start.time, seasonal=seasonal, f=f, dotrend=(!is.logical(beta) || beta), doseasonal=(!is.logical(gamma) || gamma), exponential=exponential, phi=phi,  l.start=l.start,b.start=b.start,s.start=s.start)$SSE
-		sol   <- optim(optim.start, error, method = "L-BFGS-B",
-				lower = c(0), upper = c(1),
-				control = optim.control)
-		if(sol$convergence || any(sol$par < 0 | sol$par > 1)) {
-			if (sol$convergence > 50) {
-				warning(gettextf("optimization difficulties: %s",
-								sol$message), domain = NA)
-			} else stop("optimization failure")
-		}
-		#alpha <- sol$par[1L]
-		#beta  <- sol$par[2L]
-		gamma <- sol$par[1L]
-		
-		optimiseStr <- "001"
+		if(select[1]>0)
+			alpha <- sol$p[1L]
+		if(select[2]>0)
+			beta <- sol$p[1L+select[1]]
+		if(select[3]>0)
+			gamma <- sol$p[1L+select[1]+select[2]]
 	}
 	
-	#stop(seasonal)
-	final.fit <- zzhw(x,lenx=lenx, alpha = alpha, beta=beta, gamma = gamma, start.time=start.time, seasonal=seasonal, f=f, dotrend=(!is.logical(beta) || beta), doseasonal=(!is.logical(gamma) || gamma), exponential=exponential, phi=phi,  l.start=l.start,b.start=b.start,s.start=s.start)
+	final.fit <- zzhw(x, lenx=lenx, alpha = alpha, beta=beta, gamma=gamma, seasonal=seasonal, m=m, 
+			dotrend=(!is.logical(beta) || beta), doseasonal=(!is.logical(gamma) || gamma), 
+			exponential=exponential, phi=phi, l.start=l.start, b.start=b.start, s.start=s.start)
 	
-	fitted <- ts(cbind(xhat   = final.fit$fitted[1:len],
-					level  = final.fit$level[1:len],
-					trend  = if (!is.logical(beta) || beta)
-						final.fit$trend[1:len],
-					season = if (!is.logical(gamma) || gamma)
-						final.fit$season[1L:len]),
-			start = start(lag(x, k = 1 - start.time)),
-			frequency  = frequency(x)
+	fitted <- ts(cbind(xhat = final.fit$fitted[1:lenx], 
+					level=final.fit$level[1:lenx],
+					trend=if(!is.logical(beta) || beta) final.fit$trend[1:lenx],
+					season = if (!is.logical(gamma) || gamma) final.fit$season[1L:lenx]),
+				start = start(lag(x, k = 0)),
+				frequency = frequency(x)
 	)
 	
 	structure(list(fitted    = fitted,
-					x         = x,
-					alpha     = alpha,
-					beta      = beta,
-					gamma     = gamma,
-					coefficients = c(a = final.fit$level[len],
-							b = if (!is.logical(beta) || beta) final.fit$trend[len],
-							s = if (!is.logical(gamma) || gamma) final.fit$season[len - f + 1L:f]),
+					x        = x,
+					alpha    = alpha,
+					beta     = beta,
+					gamma    = gamma,
+					coefficients = c(a = final.fit$level[lenx],
+							b = if (!is.logical(beta) || beta) final.fit$trend[lenx],
+							s = if (!is.logical(gamma) || gamma) final.fit$season[lenx - m + 1L:m]),
 					seasonal  = seasonal,
 					SSE       = final.fit$SSE,
 					call      = match.call(),
-					level0 = final.fit$level0,
-					trend0 = final.fit$trend0,
-					season0 = final.fit$season0,
+					level = final.fit$level,
+					trend = final.fit$trend,
+					season = final.fit$season,
 					phi = phi
 			),
 			class = "HoltWinters"
-	)
-	
+	)	
 }
 
 ###################################################################################
 #filter function	
-zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, start.time=1, seasonal="additive", f, dotrend=FALSE, doseasonal=FALSE, l.start=NULL, exponential = NULL, phi=NULL, b.start=NULL, s.start=NULL){
+zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, seasonal="additive", m, 
+	dotrend=FALSE, doseasonal=FALSE, l.start=NULL, exponential = NULL, phi=NULL, 
+	b.start=NULL, s.start=NULL)
+{
 	
-	if(exponential!=TRUE||is.null(exponential))
+	if(exponential!=TRUE || is.null(exponential))
 		exponential <- FALSE
 	
-	if(is.null(phi)||!is.numeric(phi))
-		damp = 1
-	
+	if(is.null(phi) || !is.numeric(phi))
+		phi <- 1
 	
 	#initialise array of l, b, s
-	level = array(0, dim=c(lenx))
-	trend = array(0, dim=c(lenx))
-	season = array(0, dim=c(lenx))
-	xfit = array(0, dim=c(lenx))
-	residuals = array(0, dim=c(lenx))
+	level <- trend <- season <- xfit <- residuals <- numeric(lenx)
+	SSE <- 0
 	
-	# periodicity
-	m=f
-	
-#	if(seasonal=="multiplicative")
-#		additive <- FALSE
-#	else
-#		additive <- TRUE
-	
-	SSE = 0
-	
-	if(dotrend==FALSE){
+	if(!dotrend){
 		beta <- 0
 		b.start <- 0
 	}
-	
-	if(doseasonal==FALSE){
+	if(!doseasonal){
 		gamma <- 0
-		for(i in 1:length(s.start))
-			if(seasonal=="additive")
-				s.start[i] <- 0
-			else
-				s.start[i] <- 1
+		s.start[1:length(s.start)] <- ifelse(seasonal=="additive",0,1)
 	}
-	
-	level0 <- l.start
-	trend0 <- b.start
+	lastlevel <- level0 <- l.start
+	lasttrend <- trend0 <- b.start
 	season0 <- s.start
-	
-	
-	
-	
-	#stop(seasonal)
-	
-	for(i in start.time:lenx){
+
+	for(i in 1:lenx){
 		# definel l(t-1)
 		if(i>1)
 			lastlevel <- level[i-1]
-		else
-			lastlevel <- level0
 		#define b(t-1)
 		if(i>1)
 			lasttrend <- trend[i-1]
-		else
-			lasttrend <- trend0
 		#define s(t-m)
 		if(i>m)
 			lastseason <- season[i-m]
 		else
-			lastseason <- season0[i]	
-		if(is.na(lastseason)){
-			if(seasonal=="additive")
-				lastseason <- 0
-			else
-				lastseason <- 1
-		}
+			lastseason <- season0[i]
+		if(is.na(lastseason))
+			lastseason <- ifelse(seasonal=="additive",0,1)
 		
 		#stop((lastlevel + phi*lasttrend)*lastseason)
 		
@@ -438,14 +220,9 @@ zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, start.time=1, seaso
 				xhat <- lastlevel * lasttrend^phi * lastseason
 		}
 		
-		
-		
-		
-		xfit[i]=xhat
-		
-		
+		xfit[i] <- xhat
 		res <- xhat - x[i]			
-		residuals[i]<-res
+		residuals[i] <- res
 		SSE <- SSE + res*res			
 		
 		#calculate level[i]
@@ -462,15 +239,12 @@ zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, start.time=1, seaso
 				level[i] <- alpha * (x[i]/lastseason) + (1 - alpha)*(lastlevel * lasttrend^phi)
 		}
 		
-		
-		
 		#calculate trend[i]
 		if(!exponential)
 			trend[i] <- beta*(level[i] - lastlevel) + (1 - beta)* phi* lasttrend
 		else
 			trend[i] <- beta*(level[i]/lastlevel) + (1 - beta)* lasttrend^phi
-		
-		
+
 		#calculate season[i]
 		if(seasonal=="additive"){
 			if(!exponential)
@@ -483,34 +257,77 @@ zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, start.time=1, seaso
 			else
 				season[i] <- gamma*(x[i]/(lastlevel*lasttrend^phi)) + (1 - gamma) * lastseason
 		}
-		
-		
-		
-#		if(i==2)
-#			stop(trend[2])
 	}
 	
-	
-	
-	xfit <- ts(xfit, start = start.time, frequency=f)
-	residuals <- ts(residuals, start = start.time, frequency=f)
 	list(SSE=SSE,
-			fitted=xfit,
+			fitted= xfit, 
 			residuals = residuals,
-			level = level,
-			trend=trend,
-			season=season,
-			level0 = level0,
-			trend0 = trend0,
-			season0 = season0,
+			level = c(level0,level),
+			trend=c(trend0,trend),
+			season=c(season0,season),
 			phi = phi
 			)
 }
-###################################################################################
-#print.HoltWintersNew <- function(x, ...){
-#	cat(paste("hohohohohoh"))
-#}
-plot.HoltWintersNew <- function(x, ...){
-	y<-x$fitted
-	plot(y)
+
+ses <- function (x, h = 10, level = c(80, 95), fan = FALSE, initial=c("optimal","simple"),
+  alpha=NULL, ...)
+{
+  initial <- match.arg(initial)
+  
+  if(initial=="optimal")
+    fcast <- forecast(ets(x, "ANN", alpha=alpha), h, level = level, fan = fan, ...)
+  else
+    fcast <- forecast(HoltWintersZZ(x, alpha=alpha, beta=FALSE, gamma=FALSE), h, level = level, fan = fan, ...)
+
+  fcast$method <- "Simple exponential smoothing"
+  fcast$model$call <- match.call()
+  return(fcast)
+}
+
+holt <- function (x, h = 10, damped = FALSE, level = c(80, 95), fan = FALSE,
+          initial=c("optimal","simple"), alpha=NULL, beta=NULL, ...)
+{
+  initial <- match.arg(initial)
+  if(initial=="optimal" | damped)
+    fcast <- forecast(ets(x, "AAN", alpha=alpha, beta=beta, damped = damped), h, level = level, fan = fan, ...)
+  else
+    fcast <- forecast(HoltWintersZZ(x, alpha=alpha, beta=beta, gamma=FALSE), h, level = level, fan = fan, ...)
+  if (damped)
+  {
+    fcast$method <- "Damped Holt's method"
+    if(initial=="heuristic")
+      warning("Damped Holt's method requires optimal initialization")
+  }
+  else
+    fcast$method <- "Holt's method"
+  fcast$model$call <- match.call()
+  return(fcast)
+}
+
+hw <- function(x, h = 2 * frequency(x), seasonal = "additive", damped = FALSE,
+    level = c(80, 95), fan = FALSE, initial=c("optimal","simple"),
+    alpha=NULL, beta=NULL,gamma=NULL,...)
+{
+  initial <- match.arg(initial)
+  if(initial=="optimal" | damped)
+  {
+    if (seasonal == "additive")
+      fcast <- forecast(ets(x, "AAA", alpha=alpha, beta=beta, gamma=gamma, damped = damped), h, level = level,  fan = fan, ...)
+    else
+      fcast <- forecast(ets(x, "MAM", alpha=alpha, beta=beta, gamma=gamma, damped = damped), h, level = level, fan = fan, ...)
+  }
+  else
+    fcast <- forecast(HoltWintersZZ(x, alpha=alpha, beta=beta, gamma=gamma, seasonal=seasonal), h, level = level, fan = fan, ...)
+  if (seasonal == "additive")
+    fcast$method <- "Holt-Winters' additive method"
+  else
+    fcast$method <- "Holt-Winters' multiplicative method"
+  if (damped)
+  {
+    fcast$method <- paste("Damped",fcast$method)
+    if(initial=="heuristic")
+      warning("Damped methods requires optimal initialization")
+  }
+  fcast$model$call <- match.call()
+  return(fcast)
 }
