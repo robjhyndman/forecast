@@ -16,13 +16,23 @@ forecasterrors <- function(f,x,test="all")
     if(is.element("x",names(f)))
       data.x <- f$x
     if(is.element("mean",names(f)))
-      f = f$mean
+      f <- f$mean
     else
       stop("Unknown list structure")
+  }
+  if(is.ts(x) & is.ts(f))
+  {
+    tspf <- tsp(f)
+    tspx <- tsp(x)
+    start <- max(tspf[1],tspx[1])
+    end <- min(tspf[2],tspx[2])
+    f <- window(f,start=start,end=end)
+    x <- window(x,start=start,end=end)
   }
   n <- length(x)
   if(test=="all")
     test <- 1:n
+
   ff <- f
   xx <- x
   dx <- data.x

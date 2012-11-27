@@ -3,32 +3,32 @@
 
 /////////////////////////////////////
 // if unable to compile, please comment these lines
-#define __GXX_EXPERIMENTAL_CXX0X__ 1
+// #define __GXX_EXPERIMENTAL_CXX0X__ 1
 
-#ifndef HAVE_ERRNO_T
-typedef int errno_t;
-#endif
+// #ifndef HAVE_ERRNO_T
+// typedef int errno_t;
+// #endif
 
-#if __WORDSIZE == 64
-# ifndef __intptr_t_defined
-typedef long int      intptr_t;
-#  define __intptr_t_defined
-# endif
-typedef unsigned long int   uintptr_t;
-#else
-# ifndef __intptr_t_defined
-typedef int         intptr_t;
-#  define __intptr_t_defined
-# endif
-typedef unsigned int      uintptr_t;
-#endif
+// #if __WORDSIZE == 64
+// # ifndef __intptr_t_defined
+// typedef long int      intptr_t;
+// #  define __intptr_t_defined
+// # endif
+// typedef unsigned long int   uintptr_t;
+// #else
+// # ifndef __intptr_t_defined
+// typedef int         intptr_t;
+// #  define __intptr_t_defined
+// # endif
+// typedef unsigned int      uintptr_t;
+// #endif
 
 
-#include <inttypes.h>
-#include <stdint.h>
-#include <cstdint>
-#include <errno.h>
-#include <cstddef>
+// #include <inttypes.h>
+// #include <stdint.h>
+// #include <cstdint>
+// #include <errno.h>
+// #include <cstddef>
 
 // if unable to compile, please comment these lines
 /////////////////////////////////////

@@ -112,7 +112,7 @@ rwf <- function(x,h=10,drift=FALSE,level=c(80,95),fan=FALSE,lambda=NULL)
   }
   if(drift)
   {
-    fit <- summary(lm(diff(x) ~ 1))
+    fit <- summary(lm(diff(x) ~ 1,na.action=na.exclude))
     b <- fit$coefficients[1,1]
     b.se <- fit$coefficients[1,2]
     s <- fit$sigma
@@ -245,10 +245,15 @@ forecast.StructTS <- function(object,h=ifelse(object$coef["epsilon"]>1e-10, 2*ob
         class="forecast"))
 }
 
-forecast.HoltWinters <- function(object,h=ifelse(frequency(object$x)>1,2*frequency(object$x),10),level=c(80,95),fan=FALSE,lambda=NULL,...)
+forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x)>1,2*frequency(object$x),10),
+  level=c(80,95), fan=FALSE, lambda=NULL,...)
 {
     xname <- deparse(substitute(x))
     x <- object$x
+    if(!is.null(object$exponential))
+      if(object$exponential)
+        stop("Forecasting for exponential trend not yet implemented.")
+
     pred <- predict(object,n.ahead=h,prediction.interval=TRUE,level=level[1]/100)
     pmean <- pred[,1]
     if(fan)

@@ -541,10 +541,13 @@ print.ets <- function(x,...)
 
     cat("\n  sigma:  ")
     cat(round(sqrt(x$sigma2),4))
-    stats <- c(x$aic,x$aicc,x$bic)
-    names(stats) <- c("AIC","AICc","BIC")
-    cat("\n\n")
-    print(stats)
+    if(!is.null(x$aic))
+    {
+        stats <- c(x$aic,x$aicc,x$bic)
+        names(stats) <- c("AIC","AICc","BIC")
+        cat("\n\n")
+        print(stats)
+    }
 #    cat("\n  AIC:    ")
 #    cat(round(x$aic,4))
 #    cat("\n  AICc:   ")

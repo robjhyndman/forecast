@@ -6,7 +6,7 @@
 
 \arguments{
 \item{f}{An object of class \code{"forecast"}, or a numerical vector containing forecasts. It will also work with \code{Arima}, \code{ets} and \code{lm} objects if \code{x} is omitted -- in which case in-sample accuracy measures are returned.}
-\item{x}{An optional numerical vector containing actual values of the same length as object.}
+\item{x}{An optional numerical vector containing actual values of the same length as object, or a time series overlapping with the times of \code{f}.}
 \item{test}{Indicator of which elements of x and f to test. If \code{test=="all"}, all elements are used. Otherwise test is a numeric vector containing the indices of the elements to use in the test.}
 }
 
