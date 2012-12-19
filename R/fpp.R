@@ -23,7 +23,7 @@ Acf <- function(x, lag.max=NULL, type=c("correlation","partial"), plot=TRUE, mai
   else
 	axis(1)
   if(type=="correlation")
-	junk1$acf[1, 1, 1] <- 1
+	 junk1$acf[1, 1, 1] <- 1
   return(invisible(junk1))
 }
 

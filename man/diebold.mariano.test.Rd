@@ -1,38 +1,38 @@
 \name{dm.test}
 \alias{dm.test}
 \title{Diebold-Mariano test for predictive accuracy}
-\description{The Diebold-Mariano test 
-compares the forecast accuracy of two forecast methods. The null hypothesis is that they have the same
-forecast accuracy.}
+\description{The Diebold-Mariano test
+compares the forecast accuracy of two forecast methods.}
 
 \usage{
-dm.test(e1, e2, alternative=c("two.sided","less","greater"), 
+dm.test(e1, e2, alternative=c("two.sided","less","greater"),
     h=1, power=2)
 }
 \arguments{
   \item{e1}{Forecast errors from method 1.}
   \item{e2}{Forecast errors from method 2.}
-  \item{alternative}{a character string specifying the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"less"}. 
-    You can specify just the initial letter.}
+  \item{alternative}{a character string specifying the alternative hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"} or \code{"less"}.  You can specify just the initial letter.}
   \item{h}{The forecast horizon used in calculating \code{e1} and \code{e2}.}
   \item{power}{The power used in the loss function. Usually 1 or 2.}
 }
 
 \value{
-A list with class \code{"htest"} containing the following components: 
+A list with class \code{"htest"} containing the following components:
 \item{statistic}{the value of the DM-statistic.}
-\item{parameter}{the forecast horizon and loss function power used in the test.} 
+\item{parameter}{the forecast horizon and loss function power used in the test.}
 \item{alternative}{a character string describing the alternative hypothesis.}
 \item{p.value}{the p-value for the test.}
-\item{method}{a character string with the value "Diebold-Mariano Test".} 
+\item{method}{a character string with the value "Diebold-Mariano Test".}
 \item{data.name}{a character vector giving the names of the two error series.}
 }
 
+\details{The null hypothesis is that they have the same forecast accuracy. For \code{alternative="less"}, the alternative hypothesis is that method 1 is less accurate than method 2. For \code{alternative="greater"}, the alternative hypothesis is that method 1 is more accurate than method 2. For \code{alternative="two.sided"}, the alternative hypothesis is that method 1 and method 2 have different levels of accuracy.
+}
 \references{
 Diebold, F.X. and Mariano, R.S. (1995) Comparing predictive accuracy. \emph{Journal of Business
 and Economic Statistics}, \bold{13}, 253-263.}
 
-\author{George Athanasopoulos and Rob Hyndman}
+\author{George Athanasopoulos, Yousaf Khan and Rob Hyndman}
 
 \examples{
 # Test on in-sample one-step forecasts

@@ -670,7 +670,7 @@ plot.ets <- function(x,...)
 summary.ets <- function(object,...)
 {
    print(object)
-   cat("\nIn-sample error measures:\n")
+   cat("\nTraining set error measures:\n")
    print(accuracy(object))
 }
 

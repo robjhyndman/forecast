@@ -527,7 +527,7 @@ arima.string <- function(object)
 summary.Arima <- function(object,...)
 {
     print(object)
-    cat("\nIn-sample error measures:\n")
+    cat("\nTraining set error measures:\n")
     print(accuracy(object))
 }
 

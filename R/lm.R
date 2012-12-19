@@ -56,13 +56,13 @@ tslm <- function(formula,data,lambda=NULL,...)
 
 forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, ts=TRUE, ...)
 {
-  if (fan) 
+  if (fan)
     level <- seq(51, 99, by = 3)
-  else 
+  else
   {
-    if (min(level) > 0 & max(level) < 1) 
+    if (min(level) > 0 & max(level) < 1)
       level <- 100 * level
-    else if (min(level) < 0 | max(level) > 99.99) 
+    else if (min(level) < 0 | max(level) > 99.99)
       stop("Confidence limit out of range")
   }
   if(!is.null(object$data))
@@ -71,7 +71,7 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
     origdata <- eval(object$call$data)
   else
     origdata <- as.data.frame(fitted(object) + residuals(object))
-    
+
   # Check if the forecasts will be time series
   if(ts & is.element("ts",class(origdata)))
   {
@@ -108,6 +108,12 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
       newdata <- data.frame(trend,season)
   }
   newdata <- as.data.frame(newdata)
+
+  # Check regressors included in newdata.
+  xreg <- attributes(terms(object$model))$term.labels
+  if(any(!is.element(xreg,colnames(newdata))))
+    stop("Predictor variables not included")
+
   responsevar <- as.character(formula(object$model))[2]
   responsevar <- gsub("`","",responsevar)
   object$x <- model.frame(object$model)[,responsevar]
@@ -119,10 +125,10 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
   nl <- length(level)
   for(i in 1:nl)
     out[[i]] <- predict(object, newdata=newdata, se.fit=TRUE, interval="prediction", level=level[i]/100, ...)
-    
+
   if(nrow(newdata) != length(out[[1]]$fit[,1]))
     stop("Variables not found in newdata")
-    
+
   fcast <- list(model=object,mean=out[[1]]$fit[,1],lower=out[[1]]$fit[,2],upper=out[[1]]$fit[,3],
     level=level,x=object$x)
   fcast$method <- "Linear regression model"

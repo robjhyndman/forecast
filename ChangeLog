@@ -1,3 +1,9 @@
+Version 4.01 (?? December 2012)
+  * Error now trapped when newxreg variables not passed to forecast.lm()
+  * Corrected help file for dshw() to remove references to prediction intervals.
+  * Improved help file for dm.test() to give more information about the alternative hypotheses.
+  * Improved dm.test() performance for small samples by using a t-distribution instead of normal.
+
 Version 4.00 (27 November 2012)
   * More robust handling of degenerate ARIMA models.
   * New defaults for shaded colors used for prediction intervals in plots.
@@ -9,6 +15,7 @@ Version 4.00 (27 November 2012)
   * Added residuals and fitted methods for train and avNNet objects from caret package.
   * accuracy() can now figure out overlapping times for x and f.
   * rwf() now handles missing values.
+  * Revised ses(), holt() and hw() so that they can optionally use traditional initialization.
 
 Version 3.25 (11 September 2012)
   * Fixed bug in simulate.Arima.

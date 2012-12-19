@@ -19,7 +19,7 @@
 \item{armethod}{If TRUE, the forecasts are adjusted using an AR(1) model for the errors.}
 }
 
-\description{Returns forecasts and prediction intervals using Taylor's (2003) Double-Seasonal Holt-Winters method.}
+\description{Returns forecasts using Taylor's (2003) Double-Seasonal Holt-Winters method.}
 
 \details{Taylor's (2003) double-seasonal Holt-Winters method uses additive trend and multiplicative seasonality, where there are two seasonal components which are multiplied together. For example, with a series of half-hourly data, one would set \code{period1=48} for the daily period and \code{period2=336} for the weekly period. The smoothing parameter notation used here is different from that in Taylor (2003); instead it matches that used in Hyndman et al (2008) and that used for the \code{\link{ets}} function.}
 
@@ -27,7 +27,7 @@
 \value{An object of class "\code{forecast}".
 
 The function \code{summary} is used to obtain and print a summary of the
-results, while the function \code{plot} produces a plot of the forecasts and prediction intervals.
+results, while the function \code{plot} produces a plot of the forecasts.
 
 The generic accessor functions \code{fitted.values} and \code{residuals} extract useful features of
 the value returned by \code{meanf}.
@@ -36,9 +36,6 @@ An object of class \code{"forecast"} is a list containing at least the following
 \item{model}{A list containing information about the fitted model}
 \item{method}{The name of the forecasting method as a character string}
 \item{mean}{Point forecasts as a time series}
-\item{lower}{Lower limits for prediction intervals}
-\item{upper}{Upper limits for prediction intervals}
-\item{level}{The confidence values associated with the prediction intervals}
 \item{x}{The original time series (either \code{object} itself or the time series used to create the model stored as \code{object}).}
 \item{residuals}{Residuals from the fitted model. That is x minus fitted values.}
 \item{fitted}{Fitted values (one-step forecasts)}

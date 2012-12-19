@@ -87,7 +87,7 @@ splinef <- function(x, h=10, level=c(80,95), fan=FALSE, lambda=NULL, method=c("g
     # Get one-step predictors
     yfit <- e <- rep(NA,n)
     if(n > 1000)
-        warning("Series too long to compute in-sample fits and residuals")
+        warning("Series too long to compute training set fits and residuals")
     else  # This is probably grossly inefficient but I can't think of a better way right now
     {
         for(i in 1:(n-1))
