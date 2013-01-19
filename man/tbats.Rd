@@ -31,7 +31,7 @@ the value returned by \code{bats} and associated functions.}
 \author{Slava Razbash and Rob J Hyndman}
 
 \examples{
-fit <- tbats(USAccDeaths)
+fit <- tbats(USAccDeaths, use.parallel=FALSE)
 plot(forecast(fit))
 \dontrun{
 taylor.fit <- tbats(taylor)
