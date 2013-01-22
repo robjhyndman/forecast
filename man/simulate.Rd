@@ -6,28 +6,29 @@
 \title{Simulation from a time series model}
 \usage{
 \method{simulate}{ets}(object, nsim=length(object$x), seed=NULL, future=TRUE, 
-    bootstrap=FALSE, ...)
+    bootstrap=FALSE, innov=NULL, ...)
 \method{simulate}{ar}(object, nsim=object$n.used, seed=NULL, future=TRUE, 
-    bootstrap=FALSE, ...)
+    bootstrap=FALSE,  innov=NULL, ...)
 \method{simulate}{Arima}(object, nsim=length(object$x), seed=NULL, xreg=NULL, future=TRUE, 
-    bootstrap=FALSE, ...)
+    bootstrap=FALSE,  innov=NULL, ...)
 \method{simulate}{fracdiff}(object, nsim=object$n, seed=NULL, future=TRUE, 
-    bootstrap=FALSE, ...)
+    bootstrap=FALSE,  innov=NULL, ...)
 }
 
 \arguments{
 \item{object}{An object of class "\code{ets}", "\code{Arima}" or "\code{ar}".}
 \item{nsim}{Number of periods for the simulated series}
-\item{seed}{Either NULL or an integer that will be used in a call to \code{\link[base]{set.seed}} before simulating the time series.
-    The default, NULL will not change the random generator state.}
+\item{seed}{Either NULL or an integer that will be used in a call to \code{\link[base]{set.seed}} 
+before simulating the time series. The default, NULL will not change the random generator state.}
 \item{future}{Produce sample paths that are future to and conditional on the data in \code{object}.}
 \item{bootstrap}{If TRUE, simulation uses resampled errors rather than normally distributed errors.}
+\item{innov}{A vector of innovations to use as the error series. If present, \code{bootstrap} and \code{seed} are ignored.}
 \item{xreg}{New values of xreg to be used for forecasting. Must have nsim rows.}
 \item{...}{Other arguments.}
 }
 
 \description{Returns a time series based on the model object \code{object}.}
-\details{With \code{simulate.Arima()}, the \code{object} should be produced by \code{\link{Arima}} or \code{\link{auto.arima}}, rather than \code{\link[stats]{arima}}.
+\details{With \code{simulate.Arima()}, the \code{object} should be produced by \code{\link{Arima}} or \code{\link{auto.arima}}, rather than \code{\link[stats]{arima}}. By default, the error series is assumed normally distributed and generated using \code{\link[stats]{rnorm}}. If \code{innov} is present, it is used instead. If \code{bootstrap=TRUE} and \code{innov=NULL}, the residuals are resampled instead.
 }
 
 \value{An object of class "\code{ts}".}

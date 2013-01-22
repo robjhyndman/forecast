@@ -5,10 +5,10 @@
 \title{Forecasting using stl objects}
 \usage{\method{forecast}{stl}(object, method=c("ets","arima","naive","rwdrift"), 
     etsmodel="ZZN", h=frequency(object$time.series)*2, level=c(80,95), 
-    fan=FALSE, lambda=NULL, ...)
+    fan=FALSE, lambda=NULL, xreg=NULL, newxreg=NULL, ...)
 stlf(x, h=frequency(x)*2, s.window=7, robust=FALSE, 
     method=c("ets","arima", "naive", "rwdrift"), etsmodel="ZZN",
-    level=c(80,95), fan=FALSE, lambda=NULL, ...)
+    level=c(80,95), fan=FALSE, lambda=NULL, xreg=NULL, newxreg=NULL, ...)
 }
 
 \arguments{
@@ -22,6 +22,8 @@ stlf(x, h=frequency(x)*2, s.window=7, robust=FALSE,
 \item{lambda}{Box-Cox transformation parameter. Ignored if NULL. Otherwise, data transformed before model is estimated and back-transformed after forecasts are computed.}
 \item{s.window}{Either the character string "periodic" or the span (in lags) of the loess window for seasonal extraction.}
 \item{robust}{If \code{TRUE}, robust fitting will used in the loess procedure within \code{\link[stats]{stl}}.}
+\item{xreg}{Historical regressors to be used in \code{\link[forecast]{auto.arima}()}.}
+\item{newxreg}{Future regressors to be used in \code{\link[forecast]{forecast.Arima}()}.}
 \item{...}{Other arguments passed to \code{\link[forecast]{ets}()} or \code{\link[forecast]{auto.arima}()}.}
 }
 

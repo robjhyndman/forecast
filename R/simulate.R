@@ -1,29 +1,35 @@
-simulate.ets <- function(object, nsim=length(object$x), seed=NULL, future=TRUE, bootstrap=FALSE,...)
+simulate.ets <- function(object, nsim=length(object$x), seed=NULL, future=TRUE, bootstrap=FALSE, innov=NULL, ...)
 {
-  if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE))
-    runif(1)
-  if (is.null(seed))
-    RNGstate <- get(".Random.seed", envir = .GlobalEnv)
-  else
+  if(is.null(innov))
   {
-    R.seed <- get(".Random.seed", envir = .GlobalEnv)
-    set.seed(seed)
-    RNGstate <- structure(seed, kind = as.list(RNGkind()))
-    on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
+    if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE))
+      runif(1)
+    if (is.null(seed))
+      RNGstate <- get(".Random.seed", envir = .GlobalEnv)
+    else
+    {
+      R.seed <- get(".Random.seed", envir = .GlobalEnv)
+      set.seed(seed)
+      RNGstate <- structure(seed, kind = as.list(RNGkind()))
+      on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
+    }
   }
   if(is.null(tsp(object$x)))
     object$x <- ts(object$x,frequency=1,start=1)
 
   if(future)
     initstate <- object$state[length(object$x)+1,]
-
   else # choose a random starting point
     initstate <- object$state[sample(1:length(object$x),1),]
 
   if(bootstrap)
     e <- sample(object$residuals,nsim,replace=TRUE)
-  else
+  else if(is.null(innov))
     e <- rnorm(nsim,0,sqrt(object$sigma))
+  else if(length(innov)==nsim)
+    e <- innov
+  else
+    stop("Length of innov must be equal to nsim")
   if(object$components[1]=="M")
     e <- pmax(-1,e)
   tmp <- ts(.C("etssimulate",
@@ -209,7 +215,7 @@ myarima.sim <- function (model, n, x, e, ...)
   return(x)
 }
 
-simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, future=TRUE, bootstrap=FALSE, ...)
+simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, future=TRUE, bootstrap=FALSE, innov=NULL, ...)
 {
   #Error check:
   if(object$arma[7] < 0)
@@ -223,16 +229,19 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
 
   ####
   #Random Seed Code
-  if (!exists(".Random.seed", envir = .GlobalEnv))
-    runif(1)
-  if (is.null(seed))
-    RNGstate <- .Random.seed
-  else
+  if(is.null(innov))
   {
-    R.seed <- .Random.seed
-    set.seed(seed)
-    RNGstate <- structure(seed, kind = as.list(RNGkind()))
-    on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
+    if (!exists(".Random.seed", envir = .GlobalEnv))
+      runif(1)
+    if (is.null(seed))
+      RNGstate <- .Random.seed
+    else
+    {
+      R.seed <- .Random.seed
+      set.seed(seed)
+      RNGstate <- structure(seed, kind = as.list(RNGkind()))
+      on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
+    }
   }
   #############End Random seed code
 
@@ -301,11 +310,7 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
   }
 
 
-
-  if (is.element("x", names(object)))
-    x <- object$x
-  else
-    x <- object$x <- eval.parent(parse(text = object$series))
+  x <- object$x <- getResponse(object)
 
   if(is.null(tsp(x)))
     x <- ts(x,frequency=1,start=1)
@@ -317,8 +322,13 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
   d <- order[2]
   if(bootstrap)
     e <- sample(model$residuals,nsim+d,replace=TRUE)
-  else
+  else if(is.null(innov))
     e <- rnorm(nsim+d, 0, model$sd)
+  else if(length(innov)==nsim)
+    e <- innov
+  else
+    stop("Length of innov must be equal to nsim")
+
 
   use.drift <- is.element("drift", names(object$coef))
   usexreg <- (!is.null(xreg) | use.drift)
@@ -382,18 +392,21 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
   return(sim)
 }
 
-simulate.ar <- function(object, nsim=object$n.used, seed=NULL, future=TRUE, bootstrap=FALSE, ...)
+simulate.ar <- function(object, nsim=object$n.used, seed=NULL, future=TRUE, bootstrap=FALSE, innov=NULL, ...)
 {
-  if (!exists(".Random.seed", envir = .GlobalEnv))
-    runif(1)
-  if (is.null(seed))
-    RNGstate <- .Random.seed
-  else
+  if(is.null(innov))
   {
-    R.seed <- .Random.seed
-    set.seed(seed)
-    RNGstate <- structure(seed, kind = as.list(RNGkind()))
-    on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
+    if (!exists(".Random.seed", envir = .GlobalEnv))
+      runif(1)
+    if (is.null(seed))
+      RNGstate <- .Random.seed
+    else
+    {
+      R.seed <- .Random.seed
+      set.seed(seed)
+      RNGstate <- structure(seed, kind = as.list(RNGkind()))
+      on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
+    }
   }
   if(future)
   {
@@ -404,29 +417,25 @@ simulate.ar <- function(object, nsim=object$n.used, seed=NULL, future=TRUE, boot
     model <- list(ar=object$ar,sd=sqrt(object$var.pred),residuals=object$resid)
   }
   x.mean <- object$x.mean
-  if (!is.element("x", names(object)))
-    object$x <- eval.parent(parse(text = object$series))
-  if(is.null(tsp(object$x)))
-    object$x <- ts(object$x,frequency=1,start=1)
-  object$x <- eval.parent(parse(text = object$series)) - x.mean
+  object$x <- getResponse(object)
+  object$x <- object$x - x.mean
   if(bootstrap)
-    e <- sample(model$residuals,nsim,replace=TRUE)
-  else
+    e <- sample(na.omit(model$residuals),nsim,replace=TRUE)
+  else if(is.null(innov))
     e <- rnorm(nsim, 0, model$sd)
+  else if(length(innov)==nsim)
+    e <- innov
+  else
+    stop("Length of innov must be equal to nsim")  
   if(future)
     return(myarima.sim(model,nsim,x=object$x,e=e) + x.mean)
   else
     return(arima.sim(model,nsim,innov=e) + x.mean)
 }
 
-simulate.fracdiff <- function(object, nsim=object$n, seed=NULL, future=TRUE, bootstrap=FALSE, ...)
+simulate.fracdiff <- function(object, nsim=object$n, seed=NULL, future=TRUE, bootstrap=FALSE, innov=NULL, ...)
 {
-  if (is.element("x", names(object)))
-    x <- object$x
-  else
-    x <- object$x <- eval.parent(parse(text = as.character(object$call)[2]))
-  if(is.null(tsp(x)))
-    x <- ts(x,frequency=1,start=1)
+  x <- object$x <- getResponse(object)
 
   # Strip initial and final missing values
   xx <- na.ends(x)
@@ -440,7 +449,7 @@ simulate.fracdiff <- function(object, nsim=object$n, seed=NULL, future=TRUE, boo
   fit <- arima(y, order = c(length(object$ar), 0, length(object$ma)),
     include.mean = FALSE, fixed = c(object$ar, -object$ma))
   # Simulate ARMA
-  ysim <- simulate(fit,nsim,seed,future=future,bootstrap=bootstrap)
+  ysim <- simulate(fit,nsim,seed,future=future,bootstrap=bootstrap,innov=innov)
   # Undo differencing
   return(unfracdiff(xx,ysim,n,nsim,object$d))
   # bin.c <- (-1)^(0:(n + nsim)) * choose(object$d, (0:(n + nsim)))

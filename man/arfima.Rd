@@ -39,6 +39,7 @@ Hyndman, R.J. and Khandakar, Y. (2008) "Automatic time series forecasting: The f
 \seealso{\code{\link[fracdiff]{fracdiff}}, \code{\link{auto.arima}}, \code{\link{forecast.fracdiff}}.}
 
 \examples{
+library(fracdiff)
 x <- fracdiff.sim( 100, ma=-.4, d=.3)$series
 fit <- arfima(x)
 tsdisplay(residuals(fit))

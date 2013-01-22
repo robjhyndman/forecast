@@ -153,15 +153,15 @@ dshw.mse <- function(par, y, period1, period2, pars)
 ### Calculating seasonal indexes
 seasindex <- function(y,p)
 {
-  require(zoo)
+  #require(zoo)
   n <- length(y)
   n2 <- 2*p
   shorty <- y[1:n2]
   average <- numeric(n)
-  simplema <- rollmean(shorty, p)
+  simplema <- zoo:::rollmean.default(shorty, p)
   if (identical(p%%2,0)) # Even order
   {
-    centeredma <- rollmean(simplema[1:(n2-p+1)],2)
+    centeredma <- zoo:::rollmean.default(simplema[1:(n2-p+1)],2)
     average[p/2 + 1:p] <- shorty[p/2 + 1:p]/centeredma[1:p]
     si <- average[c(p+(1:(p/2)),(1+p/2):p)]
   }

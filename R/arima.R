@@ -128,7 +128,7 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
 ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"))
 {
     test <- match.arg(test)
-    require(tseries)
+    #require(tseries)
     x <- c(na.omit(c(x)))
     d <- 0
 
@@ -137,11 +137,11 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"))
 
     oldwarn <- options(warn=-1)
     if(test=="kpss")
-        dodiff <- kpss.test(x)$p.value < alpha
+        dodiff <- tseries:::kpss.test(x)$p.value < alpha
     else if(test=="adf")
-        dodiff <- adf.test(x)$p.value > alpha
+        dodiff <- tseries:::adf.test(x)$p.value > alpha
     else if(test=="pp")
-        dodiff <- pp.test(x)$p.value > alpha
+        dodiff <- tseries:::pp.test(x)$p.value > alpha
   else
     stop("This shouldn't happen")
     if(is.na(dodiff))
@@ -154,11 +154,11 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"))
         x <- diff(x)
         d <- d+1
         if(test=="kpss")
-            dodiff <- kpss.test(x)$p.value < alpha
+            dodiff <- tseries:::kpss.test(x)$p.value < alpha
     else if(test=="adf")
-      dodiff <- adf.test(x)$p.value > alpha
+      dodiff <- tseries:::adf.test(x)$p.value > alpha
     else if(test=="pp")
-      dodiff <- pp.test(x)$p.value > alpha
+      dodiff <- tseries:::pp.test(x)$p.value > alpha
     else
       stop("This shouldn't happen")
         if(is.na(dodiff))
@@ -238,14 +238,11 @@ SD.test <- function (wts, s=frequency(wts))
 
 
 forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma[5], 10),
-    level=c(80, 95), fan=FALSE, xreg=NULL, lambda=object$lambda, ...)
+    level=c(80, 95), fan=FALSE, xreg=NULL, lambda=object$lambda,  bootstrap=FALSE, npaths=5000,...)
 {
 #    use.constant <- is.element("constant",names(object$coef))
     use.drift <- is.element("drift", names(object$coef))
-    if (is.element("x", names(object)))
-        x <- object$x
-    else
-        x <- object$x <- eval.parent(parse(text=object$series))
+    x <- object$x <- getResponse(object)
     usexreg <- (!is.null(xreg) | use.drift | is.element("xreg",names(object)))# | use.constant)
 #    if(use.constant)
 #        xreg <- as.matrix(rep(1,h))
@@ -281,6 +278,14 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
     }
     else
         pred <- predict(object, n.ahead=h)
+
+    if(bootstrap) # Recompute se using simulations
+    {
+        sim <- matrix(NA,nrow=npaths,ncol=h)
+        for(i in 1:npaths)
+            sim[i,] <- simulate(object, nsim=h, bootstrap=TRUE, xreg=xreg)
+        pred$se <- apply(sim,2,sd)
+    }
 
     # Fix time series characteristics if there are missing values at end of series.
     tspx <- tsp(x)
@@ -328,9 +333,16 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
 }
 
 
-forecast.ar <- function(object,h=10,level=c(80,95),fan=FALSE, lambda=NULL, ...)
+forecast.ar <- function(object,h=10,level=c(80,95),fan=FALSE, lambda=NULL,  bootstrap=FALSE, npaths=5000,...)
 {
     pred <- predict(object,n.ahead=h)
+    if(bootstrap) # Recompute se using simulations
+    {
+        sim <- matrix(NA,nrow=npaths,ncol=h)
+        for(i in 1:npaths)
+            sim[i,] <- simulate(object, nsim=h, bootstrap=TRUE)
+        pred$se <- apply(sim,2,sd)
+    }
     if(fan)
         level <- seq(51,99,by=3)
     else
@@ -351,7 +363,7 @@ forecast.ar <- function(object,h=10,level=c(80,95),fan=FALSE, lambda=NULL, ...)
     }
     colnames(lower)=colnames(upper)=paste(level,"%",sep="")
     method <- paste("AR(",object$order,")",sep="")
-    x <- as.ts(eval.parent(parse(text=object$series)))
+    x <- getResponse(object)
     f <- frequency(x)
     res <- ts(object$resid[-(1:object$order)],start=tsp(x)[1]+object$order/f,frequency=f)
     fits <- x-res
@@ -375,15 +387,7 @@ arima.errors <- function(z)
 {
   if(!is.list(z))
     stop("z must be a list")
-  if(is.element("x",names(z)))
-    x <- z$x
-  else
-  {
-    series.name <- z$series
-    if(is.null(series.name))
-      stop("missing component series in argument z\n")
-    x <- eval.parent(parse(text=series.name))
-  }
+    x <- getResponse(z)
   if(!is.element("xreg",names(z)))
   {
     if(!is.element("xreg",names(z$coef)))
@@ -402,14 +406,11 @@ arima.errors <- function(z)
 # Return one-step fits
 fitted.Arima <- function(object,...)
 {
-  if(is.element("x",names(object)))
-    x <- object$x
-  else
-  x <- eval.parent(parse(text=object$series))
-  if(is.null(object$lambda))
-  return(x - object$residuals)
-  else
-    return(InvBoxCox(BoxCox(x,object$lambda) - object$residuals, object$lambda))
+    x <- getResponse(object)
+    if(is.null(object$lambda))
+        return(x - object$residuals)
+    else
+        return(InvBoxCox(BoxCox(x,object$lambda) - object$residuals, object$lambda))
 }
 
 # Calls arima from stats package and adds data to the returned object
@@ -531,13 +532,10 @@ arima2 <- function (x, model, xreg)
 print.Arima <- function (x, digits=max(3, getOption("digits") - 3), se=TRUE,
     ...)
 {
-#    if (!is.element("x", names(x)))
-#        x$x <- eval.parent(parse(text=x$series))
-
     cat("Series:",x$series,"\n")
     cat(arima.string(x),"\n")
-  if(!is.null(x$lambda))
-    cat("Box Cox transformation: lambda=",x$lambda,"\n")
+    if(!is.null(x$lambda))
+        cat("Box Cox transformation: lambda=",x$lambda,"\n")
     #cat("\nCall:", deparse(x$call, width.cutoff=75), "\n", sep=" ")
 #    if(!is.null(x$xreg))
 #    {

@@ -6,16 +6,16 @@
     lambda=NULL, armethod=TRUE)}
 
 \arguments{
-\item{y}{a numeric vector or time series}
-\item{period1}{Period of the shorter seasonal period.}
-\item{period2}{Period of the longer seasonal period.}
-\item{h}{Number of periods for forecasting}
-\item{alpha}{Smoothing parameter for the level.}
-\item{beta}{Smoothing parameter for the slope.}
-\item{gamma}{Smoothing parameter for the first seasonal period.}
-\item{omega}{Smoothing parameter for the second seasonal period.}
-\item{phi}{Autoregressive parameter.}
-\item{lambda}{Box-Cox transformation parameter. Ignored if NULL. Otherwise, data transformed before model is estimated.}
+\item{y}{Either an \code{\link{msts}} object with two seasonal periods or a numeric vector.}
+\item{period1}{Period of the shorter seasonal period. Only used if \code{y} is not an \code{\link{msts}} object.}
+\item{period2}{Period of the longer seasonal period.  Only used if \code{y} is not an \code{\link{msts}} object.}
+\item{h}{Number of periods for forecasting.}
+\item{alpha}{Smoothing parameter for the level. If \code{NULL}, the parameter is estimated using least squares.}
+\item{beta}{Smoothing parameter for the slope. If \code{NULL}, the parameter is estimated using least squares.}
+\item{gamma}{Smoothing parameter for the first seasonal period. If \code{NULL}, the parameter is estimated using least squares.}
+\item{omega}{Smoothing parameter for the second seasonal period. If \code{NULL}, the parameter is estimated using least squares.}
+\item{phi}{Autoregressive parameter. If \code{NULL}, the parameter is estimated using least squares.}
+\item{lambda}{Box-Cox transformation parameter. Ignored if \code{NULL}. Otherwise, data transformed before model is estimated.}
 \item{armethod}{If TRUE, the forecasts are adjusted using an AR(1) model for the errors.}
 }
 

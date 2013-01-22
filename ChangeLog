@@ -1,8 +1,14 @@
-Version 4.01 (?? December 2012)
+Version 4.01 (22 January 2013)
   * Error now trapped when newxreg variables not passed to forecast.lm()
   * Corrected help file for dshw() to remove references to prediction intervals.
   * Improved help file for dm.test() to give more information about the alternative hypotheses.
   * Improved dm.test() performance for small samples by using a t-distribution instead of normal.
+  * Modified bats() and tbats() examples to follow CRAN policies on parallel processing.
+  * Moved some packages from Depends to Imports.
+  * Added getResponse() function to return the historical time series from various time series model objects.
+  * Modified accuracy() to use getResponse().
+  * Allowed user-generated innovations in simulate.ets(), simulate.Arima(), etc.
+  * Allowed xreg argument in forecast.stl() and stlf() when ARIMA model used.
 
 Version 4.00 (27 November 2012)
   * More robust handling of degenerate ARIMA models.

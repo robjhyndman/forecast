@@ -4,6 +4,12 @@ importFrom("stats", "start")
 importFrom("stats", "end")
 importFrom("stats", "frequency")
 importFrom("stats", "window")
+importFrom(caret,avNNet,predict.avNNet)
+importFrom(colorspace,sequential_hcl)
+importFrom(fracdiff,fracdiff,diffseries,fracdiff.sim)
+importFrom(tseries,adf.test,pp.test,kpss.test)
+importFrom(zoo,rollmean)
+import(parallel)
 
 export(arfima, Arima, arima.errors, auto.arima, BoxCox, croston,
 fitted.Arima, forecast, forecast.ar, forecast.Arima, forecast.ets, forecast.fracdiff,
@@ -12,7 +18,7 @@ meanf, logLik.ets, monthdays, na.interp, ets, plot.bats, plot.tbats, plot.ets, p
 plot.splineforecast, rwf, seasadj, seasonaldummy,naive,snaive,stlf,
 seasonaldummyf, seasonplot, ses, sindexf, splinef,tslm,fourier,fourierf,forecast.lm,
 thetaf, tsdisplay, simulate.ets, simulate.ar, simulate.Arima, simulate.fracdiff, ndiffs, nsdiffs, dm.test,
-Acf,Pacf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts)
+Acf,Pacf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts, getResponse)
 
 S3method(as.data.frame,forecast)
 S3method(coef,ets)
@@ -31,6 +37,11 @@ S3method(forecast,StructTS)
 S3method(forecast,ts)
 S3method(forecast,bats)
 S3method(forecast,tbats)
+S3method(getResponse,default)
+S3method(getResponse,ar)
+S3method(getResponse,Arima)
+S3method(getResponse,fracdiff)
+S3method(getResponse,lm)
 S3method(logLik,ets)
 S3method(plot,bats)
 S3method(plot,tbats)

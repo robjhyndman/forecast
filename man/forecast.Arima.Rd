@@ -4,8 +4,8 @@
 \alias{forecast.fracdiff}
 \title{Forecasting using ARIMA or ARFIMA models}
 \usage{\method{forecast}{Arima}(object, h=ifelse(object$arma[5]>1,2*object$arma[5],10),
-    level=c(80,95), fan=FALSE, xreg=NULL, lambda=object$lambda, ...)
-\method{forecast}{ar}(object, h=10, level=c(80,95), fan=FALSE, lambda=NULL, ...)
+    level=c(80,95), fan=FALSE, xreg=NULL, lambda=object$lambda, bootstrap=FALSE, npaths=5000, ...)
+\method{forecast}{ar}(object, h=10, level=c(80,95), fan=FALSE, lambda=NULL, bootstrap=FALSE, npaths=5000, ...)
 \method{forecast}{fracdiff}(object, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, ...)
 }
 
@@ -18,6 +18,8 @@ set to the number of rows of \code{xreg}.}
 \item{fan}{If \code{TRUE}, level is set to \code{seq(50,99,by=1)}. This is suitable for fan plots.}
 \item{xreg}{Future values of an regression variables (for class \code{Arima} objects only).}
 \item{lambda}{Box-Cox transformation parameter. Ignored if NULL. Otherwise, forecasts back-transformed via an inverse Box-Cox transformation.}
+\item{bootstrap}{If \code{TRUE}, then prediction intervals computed using simulation with resampled errors.}
+\item{npaths}{Number of sample paths used in computing simulated prediction intervals when \code{bootstrap=TRUE}.}
 \item{...}{Other arguments.}
 }
 
@@ -59,6 +61,7 @@ An object of class "\code{forecast}" is a list containing at least the following
 \examples{fit <- Arima(WWWusage,c(3,1,0))
 plot(forecast(fit))
 
+library(fracdiff)
 x <- fracdiff.sim( 100, ma=-.4, d=.3)$series
 fit <- arfima(x)
 plot(forecast(fit,h=30))
