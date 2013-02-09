@@ -1,3 +1,6 @@
+Version 4.02 (?? February 2013)
+  * Fixed error in the prediction intervals returned by forecast.ets() when simulation was used and a Box-Cox transformation was specified.
+
 Version 4.01 (22 January 2013)
   * Error now trapped when newxreg variables not passed to forecast.lm()
   * Corrected help file for dshw() to remove references to prediction intervals.
@@ -9,6 +12,7 @@ Version 4.01 (22 January 2013)
   * Modified accuracy() to use getResponse().
   * Allowed user-generated innovations in simulate.ets(), simulate.Arima(), etc.
   * Allowed xreg argument in forecast.stl() and stlf() when ARIMA model used.
+  * Removed reliance on caret, and associated fitted and residuals functions.
 
 Version 4.00 (27 November 2012)
   * More robust handling of degenerate ARIMA models.

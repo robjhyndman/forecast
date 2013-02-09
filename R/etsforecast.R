@@ -80,6 +80,7 @@ forecast.ets <- function(object, h=ifelse(object$m>1, 2*object$m, 10),
 pegelsfcast.C <- function(h,obj,npaths,level,bootstrap)
 {
     y.paths <- matrix(NA,nrow=npaths,ncol=h)
+    obj$lambda <- NULL # No need to transform these here as we do it later.
     for(i in 1:npaths)
         y.paths[i,] <- simulate.ets(obj, h, future=TRUE, bootstrap=bootstrap)
     y.f <- .C("etsforecast",

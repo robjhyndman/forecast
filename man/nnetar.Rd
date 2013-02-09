@@ -23,16 +23,14 @@
 \description{Feed-forward neural networks with a single hidden layer and lagged inputs for forecasting univariate time series.}
 
 \details{A feed-forward neural network is fitted with lagged values of \code{x} as inputs and a single hidden layer with \code{size} nodes. The inputs are for lags 1 to \code{p}, and lags \code{m} to \code{mP} where \code{m=frequency(x)}. A total of \code{repeats} networks are fitted, each with random starting weights. These are then averaged when computing forecasts. The network is trained for one-step forecasting. Multi-step forecasts are computed recursively. The fitted model is called an NNAR(p,P) model and is analogous to an ARIMA(p,0,0)(P,0,0) model but with nonlinear functions.
-
-The function calls the \code{\link[caret]{avNNet}} function from the \code{caret} package to train the networks.
 }
 
 
-\value{\code{nnetar} returns an object of class "\code{nnetar}".
-An object of class "\code{forecast}".
+\value{\code{nnetar} returns an object of class "\code{nnetar}". \code{forecast.nnetar} 
+returns an object of class "\code{forecast}".
 
 The function \code{summary} is used to obtain and print a summary of the
-results, while the function \code{plot} produces a plot of the forecasts and prediction intervals.
+results, while the function \code{plot} produces a plot of the forecasts.
 
 The generic accessor functions \code{fitted.values} and \code{residuals} extract useful features of the value returned by \code{nnetar}.
 
@@ -40,9 +38,6 @@ An object of class \code{"forecast"} is a list containing at least the following
 \item{model}{A list containing information about the fitted model}
 \item{method}{The name of the forecasting method as a character string}
 \item{mean}{Point forecasts as a time series}
-\item{lower}{Lower limits for prediction intervals}
-\item{upper}{Upper limits for prediction intervals}
-\item{level}{The confidence values associated with the prediction intervals}
 \item{x}{The original time series (either \code{object} itself or the time series used to create the model stored as \code{object}).}
 \item{residuals}{Residuals from the fitted model. That is x minus fitted values.}
 \item{fitted}{Fitted values (one-step forecasts)}
