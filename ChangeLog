@@ -1,5 +1,7 @@
 Version 4.02 (?? February 2013)
   * Fixed error in the prediction intervals returned by forecast.ets() when simulation was used and a Box-Cox transformation was specified.
+  * Fixed bug in accuracy() when a numerical f vector was passed.
+  * Fixed man file for Diebold-Mariano test.
 
 Version 4.01 (22 January 2013)
   * Error now trapped when newxreg variables not passed to forecast.lm()

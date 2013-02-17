@@ -26,7 +26,7 @@ A list with class \code{"htest"} containing the following components:
 \item{data.name}{a character vector giving the names of the two error series.}
 }
 
-\details{The null hypothesis is that they have the same forecast accuracy. For \code{alternative="less"}, the alternative hypothesis is that method 1 is less accurate than method 2. For \code{alternative="greater"}, the alternative hypothesis is that method 1 is more accurate than method 2. For \code{alternative="two.sided"}, the alternative hypothesis is that method 1 and method 2 have different levels of accuracy.
+\details{The null hypothesis is that the two methods have the same forecast accuracy. For \code{alternative="less"}, the alternative hypothesis is that method 2 is less accurate than method 1. For \code{alternative="greater"}, the alternative hypothesis is that method 2 is more accurate than method 1. For \code{alternative="two.sided"}, the alternative hypothesis is that method 1 and method 2 have different levels of accuracy.
 }
 \references{
 Diebold, F.X. and Mariano, R.S. (1995) Comparing predictive accuracy. \emph{Journal of Business

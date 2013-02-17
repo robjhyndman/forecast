@@ -1,6 +1,11 @@
 getResponse <- function(object,...) UseMethod("getResponse")
 
-getResponse.default <- function(object,...){object$x}
+getResponse.default <- function(object,...){
+	if(is.list(object))
+		return(object$x)
+	else
+		return(NULL)
+}
 
 getResponse.lm <- function(object,...) {
 	responsevar <- as.character(formula(object$model))[2]
