@@ -6,6 +6,7 @@ Version 4.02 (6 March 2013)
   * Added warning to nsdiffs when series too short for seasonal differencing.
   * Fixed problem in getResponse.Arima when Arima object created by stats::arima() from within a function.
   * Added tbats.components() and extended seasadj() to allow tbats objects.
+  * Added undocumented functions for forecasting, printing and plotting output from vars::VAR.
 
 Version 4.01 (22 January 2013)
   * Error now trapped when newxreg variables not passed to forecast.lm()
