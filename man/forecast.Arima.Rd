@@ -4,8 +4,10 @@
 \alias{forecast.fracdiff}
 \title{Forecasting using ARIMA or ARFIMA models}
 \usage{\method{forecast}{Arima}(object, h=ifelse(object$arma[5]>1,2*object$arma[5],10),
-    level=c(80,95), fan=FALSE, xreg=NULL, lambda=object$lambda, bootstrap=FALSE, npaths=5000, ...)
-\method{forecast}{ar}(object, h=10, level=c(80,95), fan=FALSE, lambda=NULL, bootstrap=FALSE, npaths=5000, ...)
+    level=c(80,95), fan=FALSE, xreg=NULL, lambda=object$lambda, 
+    bootstrap=FALSE, npaths=5000, ...)
+\method{forecast}{ar}(object, h=10, level=c(80,95), fan=FALSE, lambda=NULL, 
+    bootstrap=FALSE, npaths=5000, ...)
 \method{forecast}{fracdiff}(object, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, ...)
 }
 

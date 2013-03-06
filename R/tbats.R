@@ -504,6 +504,13 @@ print.tbats <- function(x, ...) {
 
 plot.tbats <- function (x, main="Decomposition by TBATS model", ...) 
 {
+	out <- tbats.components(x)  
+	plot(out, main=main, nc=1, ...)
+}
+
+
+tbats.components <- function(x)
+{
   # Get original data, transform if necessary
   if (!is.null(x$lambda)) 
     y <- BoxCox(x$y, x$lambda)
@@ -532,9 +539,5 @@ plot.tbats <- function (x, main="Decomposition by TBATS model", ...)
   # Add time series characteristics
   out <- ts(out)
   tsp(out) <- tsp(y)
-  
-  # Do the plot
-  plot(out, main=main, nc=1, ...)
+  return(out)
 }
-
-

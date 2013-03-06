@@ -50,14 +50,23 @@ sindexf <- function(object,h)
 
 seasadj <- function(object)
 {
-    if(class(object)=="stl")
+    if(is.element("stl",class(object)))
         return(object$time.series[,2]+object$time.series[,3])
-    else if(class(object)=="decomposed.ts")
+    else if(is.element("decomposed.ts",class(object)))
     {
         if(object$type=="additive")
             return(object$x-object$seasonal)
         else
             return(object$x/object$seasonal)
+    }
+    else if(is.element("tbats",class(object)))
+    {
+      comp <- tbats.components(object)
+      sa <- comp[,"observed"]-comp[,"season"]
+      # Back transform if necessary
+      if (!is.null(object$lambda)) 
+        sa <- InvBoxCox(sa, object$lambda)
+      return(sa)
     }
     else
         stop("Object of unknown class")

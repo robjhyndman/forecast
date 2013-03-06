@@ -22,7 +22,11 @@ getResponse.Arima <- function(object,...) {
     	if(is.null(series.name))
     		stop("missing component series in Arima model")
     	else
-	    	x <- eval.parent(parse(text = series.name))
+    	{
+	    	x <- try(eval.parent(parse(text = series.name)),silent=TRUE)
+	    	if(class(x)=="try-error") # Try one level further up the chain
+	    		x <- eval.parent(parse(text = series.name),2)
+    	}
 	}
 	if(is.null(tsp(x)))
 		x <- ts(x,frequency=1,start=1)

@@ -1,7 +1,11 @@
-Version 4.02 (?? February 2013)
+Version 4.02 (6 March 2013)
   * Fixed error in the prediction intervals returned by forecast.ets() when simulation was used and a Box-Cox transformation was specified.
   * Fixed bug in accuracy() when a numerical f vector was passed.
   * Fixed man file for Diebold-Mariano test.
+  * Corrected references in nsdiffs() help page.
+  * Added warning to nsdiffs when series too short for seasonal differencing.
+  * Fixed problem in getResponse.Arima when Arima object created by stats::arima() from within a function.
+  * Added tbats.components() and extended seasadj() to allow tbats objects.
 
 Version 4.01 (22 January 2013)
   * Error now trapped when newxreg variables not passed to forecast.lm()

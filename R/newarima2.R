@@ -587,7 +587,8 @@ OCSBtest <- function(time.series, period)
 {
     if(length(time.series) < (2*period+5))
     {
-        return(0)
+      warning("Time series too short for seasonal differencing")
+      return(0)
     }
 
     seas.diff.series <- diff(time.series, lag = period, differences=1)

@@ -29,7 +29,7 @@ Kwiatkowski D, Phillips PCB, Schmidt P and Shin Y (1992) "Testing the Null Hypot
 
 Osborn DR, Chui APL, Smith J, and Birchenhall CR (1988) "Seasonality and the order of integration for consumption", \emph{Oxford Bulletin of Economics and Statistics} \bold{50}(4):361-377.
 
-Osborn, D.R. (1990) "Seasonality and the order of integration in consumption", \emph{International Journal of Forecasting}, \bold{6}:327-336.
+Osborn, D.R. (1990) "A survey of seasonality in UK macroeconomic variables", \emph{International Journal of Forecasting}, \bold{6}:327-336.
 
 Said E and Dickey DA (1984), "Testing for Unit Roots in Autoregressive Moving Average Models of Unknown Order", \emph{Biometrika} \bold{71}:599-607.
 }
