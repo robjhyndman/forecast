@@ -1,3 +1,7 @@
+Version 4.03 (14 March 2013)
+  * forecast.lm now guesses the variable name if there is only one predictor variable.
+  * Removed error trap in forecast.lm when no xreg variables passed as it was catching legitimate calls.
+
 Version 4.02 (6 March 2013)
   * Fixed error in the prediction intervals returned by forecast.ets() when simulation was used and a Box-Cox transformation was specified.
   * Fixed bug in accuracy() when a numerical f vector was passed.
