@@ -2,7 +2,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
     alpha=NULL, beta=NULL, gamma=NULL, phi=NULL, additive.only=FALSE, lambda=NULL,
     lower=c(rep(0.0001,3), 0.8), upper=c(rep(0.9999,3),0.98),
     opt.crit=c("lik","amse","mse","sigma","mae"), nmse=3, bounds=c("both","usual","admissible"),
-    ic=c("aic","aicc","bic"),restrict=TRUE)
+    ic=c("aic","aicc","bic"),restrict=TRUE, control=list(method="optim", maxit=2000))
 {
     #dataname <- substitute(y)
     opt.crit <- match.arg(opt.crit)
@@ -139,7 +139,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
                     if(!data.positive & errortype[i]=="M")
                         next
                     fit <- etsmodel(y,errortype[i],trendtype[j],seasontype[k],damped[l],alpha,beta,gamma,phi,
-                        lower=lower,upper=upper,opt.crit=opt.crit,nmse=nmse,bounds=bounds)
+                        lower=lower,upper=upper,opt.crit=opt.crit,nmse=nmse,bounds=bounds, control=control)
                     fit.ic <- switch(ic,aic=fit$aic,bic=fit$bic,aicc=fit$aicc)
                     if(!is.na(fit.ic))
                     {
@@ -180,7 +180,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
 
 etsmodel <- function(y, errortype, trendtype, seasontype, damped,
   alpha=NULL, beta=NULL, gamma=NULL, phi=NULL,
-  lower, upper, opt.crit, nmse, bounds)
+  lower, upper, opt.crit, nmse, bounds, control)
 {
     tsp.y <- tsp(y)
     if(is.null(tsp.y))
@@ -224,21 +224,78 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
     if(np >= length(y)-1) # Not enough data to continue
         return(list(aic=Inf,bic=Inf,aicc=Inf,mse=Inf,amse=Inf,fit=NULL,par=par,states=init.state))
 
+#-------------------------------------------------
+  
+  if(control$method=="malschains") {
+    
+    is.installed <- function(mypkg) is.element(mypkg, installed.packages()[,1])
+    
+    if(!is.installed("Rmalschains")) stop("Package Rmalschains needed but not installed")
+    require("Rmalschains")
+    
+    myOptimFunc <- function(myPar) {
+      names(myPar) <- names(par)
+      res <- lik(myPar,y=y,nstate=nstate, errortype=errortype, trendtype=trendtype,
+          seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
+          opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt))
+      res
+    }
+    
+    myLower <- NULL
+    myUpper <- NULL
+    
+    if("alpha" %in% names(par)) {
+      myLower <- c(myLower, lower[1])
+      myUpper <- c(myUpper, upper[1])
+    }
+    if("beta" %in% names(par)) {
+      myLower <- c(myLower, lower[2])
+      myUpper <- c(myUpper, upper[2])
+    }
+    if("gamma" %in% names(par)) {
+      myLower <- c(myLower, lower[3])
+      myUpper <- c(myUpper, upper[3])
+    }
+    if("phi" %in% names(par)) {
+      myLower <- c(myLower, lower[4])
+      myUpper <- c(myUpper, upper[4])
+    }
+    
+    myLower <- c(myLower,rep(-1000000,nstate))
+    myUpper <- c(myUpper,rep(1000000,nstate))
+    
+    fredTmp <- malschains(myOptimFunc, lower=myLower, upper=myUpper, maxEvals=control$maxEvals, initialpop=par, 
+        control=malschains.control(popsize=50, ls="cmaes", istep=500, 
+            effort=0.5, alpha=0.5, optimum=0, threshold=1e-08))
+    
+    fred <- NULL
+    fred$par <- fredTmp$sol
+    
+    fit.par <- fred$par
+    
+    names(fit.par) <- names(par)
+    
+  } else { #if(control$method=="optim")
+    
     # Optimize parameters and state
     if(length(par)==1)
-        tmp <- options(warn=-1)$warn # Turn off warning on 1-d Nelder-Mead.
-
+      tmp <- options(warn=-1)$warn # Turn off warning on 1-d Nelder-Mead.
+    
+    #    fred <- optim(par,lik,method="BFGS",y=y,nstate=nstate, errortype=errortype, trendtype=trendtype,
     fred <- optim(par,lik,method="Nelder-Mead",y=y,nstate=nstate, errortype=errortype, trendtype=trendtype,
-#    fred <- optim(par,lik,method="BFGS",y=y,nstate=nstate, errortype=errortype, trendtype=trendtype,
-            seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
+        seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
         opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt),
-        control=list(maxit=2000))
+        control=list(maxit=control$maxit))
+    
     fit.par <- fred$par
-
+    
     names(fit.par) <- names(par)
-
+    
     if(length(par)==1)
-        options(warn=tmp)
+      options(warn=tmp)
+  }
+#-------------------------------------------------
+
 
     init.state <- fit.par[(np-nstate+1):np]
     # Add extra state
@@ -428,6 +485,9 @@ initstate <- function(y,trendtype,seasontype)
 lik <- function(par,y,nstate,errortype,trendtype,seasontype,damped,par.noopt,lowerb,upperb,
     opt.crit,nmse,bounds,m,pnames,pnames2)
 {
+  
+#  cat("lik called\n")
+  
     names(par) <- pnames
     names(par.noopt) <- pnames2
     alpha <- c(par["alpha"],par.noopt["alpha"])["alpha"]
