@@ -140,7 +140,13 @@ HoltWintersZZ  <- function (x,
 	if(trendtype!="N")
 		states <- cbind(states,b=final.fit$trend)
 	if(seasontype!="N")
-		states <- cbind(states,s=final.fit$season)
+  {
+    nr <- nrow(states)
+    nc <- ncol(states)
+    for(i in 1:m)
+  		states <- cbind(states,final.fit$season[i+(1:nr)-1])
+    colnames(states)[nc+(1:m)] <- paste("s",1:m,sep="")
+  }
 	states <- ts(states,frequency=m,start=tspx[1]-1/m)
 
 	# Package output as HoltWinters class
@@ -178,11 +184,20 @@ HoltWintersZZ  <- function (x,
   param <- alpha
   names(param) <- "alpha"
   if(trendtype!="N")
+  {
   	param <- c(param,beta=beta)
+    names(param)[length(param)] <- "beta"
+  }
   if(seasontype!="N")
+  {
   	param <- c(param,gamma=gamma)
+    names(param)[length(param)] <- "gamma"
+  }
   if(damped)
+  {
   	param <- c(param,phi=phi)
+    names(param)[length(param)] <- "phi"
+  }
 
   if(components[1]=="A")
   	sigma2 <- mean(final.fit$residuals^2)

@@ -1,3 +1,14 @@
+Version 4.05 (?? May 2013)
+  * Fixed bug in hw() so it works when initial="simple"
+
+Version 4.04 (22 April 2013)
+  * Added ylim argument to Acf()
+  * Avoided clash with the signal package when using auto.arima().
+  * Fixed problem in plot.forecast() when all historical data are NA or when there is no available historical data.
+  * forecast.Arima() is now a little more robust if a zoo object is passed instead of a ts object.
+  * CV() now handles missing values in the residuals.
+  * Fixed bug in holt() and hw() so that the printed model no longer contains missing values.
+  
 Version 4.03 (14 March 2013)
   * forecast.lm now guesses the variable name if there is only one predictor variable.
   * Removed error trap in forecast.lm when no xreg variables passed as it was catching legitimate calls.

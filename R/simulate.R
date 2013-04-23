@@ -105,7 +105,7 @@ myarima.sim <- function (model, n, x, e, ...)
   if (length(model$ma))
   {
     #MA filtering
-    x <- filter(x, c(1, model$ma), method="convolution", sides = 1L)
+    x <- stats:::filter(x, c(1, model$ma), method="convolution", sides = 1L)
     x[seq_along(model$ma)] <- 0
   }
   ##AR "filtering"
@@ -145,7 +145,7 @@ myarima.sim <- function (model, n, x, e, ...)
   else if (length(model$ar)) # but data too short
   {
     #AR filtering for all other cases where AR is used.
-    x <- filter(x, model$ar, method = "recursive")
+    x <- stats:::filter(x, model$ar, method = "recursive")
   }
   if((d == 0) && (model$seasonal.difference == 0) && (flag.noadjust==FALSE)) # Adjust to ensure end matches approximately
   {

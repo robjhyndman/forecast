@@ -1,5 +1,5 @@
 # Replacement for the acf() function.
-Acf <- function(x, lag.max=NULL, type=c("correlation","partial"), plot=TRUE, main=NULL, ...)
+Acf <- function(x, lag.max=NULL, type=c("correlation","partial"), plot=TRUE, main=NULL, ylim=NULL, ...)
 {
   type <- match.arg(type)
   if(is.null(main))
@@ -15,8 +15,11 @@ Acf <- function(x, lag.max=NULL, type=c("correlation","partial"), plot=TRUE, mai
     return(junk1)
   if(type=="correlation")
 	junk1$acf[1, 1, 1] <- 0
-  ylim <- c(-1, 1) * 3/sqrt(length(x))
-  ylim <- range(ylim, junk1$acf[,1,1])
+  if(is.null(ylim))
+  {
+    ylim <- c(-1, 1) * 3/sqrt(length(x))
+    ylim <- range(ylim, junk1$acf[,1,1])
+  }
   stats:::plot.acf(junk1, ylim = ylim, xlim = c(1, dim(junk1$acf)[1]-1), xaxt="n", main=main, ...)
   if(dim(junk1$acf)[1] < 25)
 	axis(1,at=1:(dim(junk1$acf)[1]-1))
@@ -38,11 +41,11 @@ Pacf <- function (x, main=NULL, ...)
 CV <- function(obj)
 {
     n <- length(obj$residuals)
-    k <- extractAIC(obj)[1]-1 # number of predictors (constant removed
+    k <- extractAIC(obj)[1]-1 # number of predictors (constant removed)
     aic <- extractAIC(obj)[2]+2 # add 2 for the variance estimate
     aicc <- aic + 2*(k+2)*(k+3)/(n-k-1) 
     bic <- aic + (k+2)*(log(n)-2)
-    cv <- mean((residuals(obj)/(1-hatvalues(obj)))^2)
+    cv <- mean((residuals(obj)/(1-hatvalues(obj)))^2, na.rm=TRUE)
     adjr2 <- summary(obj)$adj
     out <- c(cv,aic,aicc,bic,adjr2)
     names(out) <- c("CV","AIC","AICc","BIC","AdjR2")

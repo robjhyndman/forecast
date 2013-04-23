@@ -288,14 +288,17 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
     }
 
     # Fix time series characteristics if there are missing values at end of series.
-    tspx <- tsp(x)
-    nx <- max(which(!is.na(x)))
-    if(nx != length(x))
+    if(!is.null(x))
     {
+      tspx <- tsp(x)
+      nx <- max(which(!is.na(x)))
+      if(nx != length(x))
+      {
         tspx[2] <- time(x)[nx]
         start.f <- tspx[2]+1/tspx[3]
         pred$pred <- ts(pred$pred,frequency=tspx[3],start=start.f)
         pred$se <- ts(pred$se,frequency=tspx[3],start=start.f)
+      }
     }
 
     if(fan)
@@ -407,6 +410,11 @@ arima.errors <- function(z)
 fitted.Arima <- function(object,...)
 {
     x <- getResponse(object)
+    if(is.null(x))
+    {
+        #warning("Fitted values are unavailable due to missing historical data")
+        return(NULL)
+    }
     if(is.null(object$lambda))
         return(x - object$residuals)
     else

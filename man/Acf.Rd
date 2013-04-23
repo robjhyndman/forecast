@@ -4,7 +4,7 @@
 \title{(Partial) Autocorrelation Function Estimation}
 \usage{
 Acf(x, lag.max=NULL, type=c("correlation", "partial"), 
-   plot=TRUE, main=NULL, ...)
+   plot=TRUE, main=NULL, ylim=NULL, ...)
 Pacf(x, main=NULL, ...) }
 
 
@@ -14,6 +14,7 @@ Pacf(x, main=NULL, ...) }
 \item{type}{character string giving the type of acf to be computed. Allowed values are "\code{correlation}" (the default) or "\code{partial}".}
 \item{plot}{logical. If TRUE (the default) the acf is plotted.}
 \item{main}{Title for plot}
+\item{ylim}{The y limits of the plot}
 \item{...}{Additional arguments passed to \code{\link[stats]{acf}}.}
 }
 

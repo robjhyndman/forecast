@@ -25,12 +25,12 @@ getResponse.Arima <- function(object,...) {
     	{
 	    	x <- try(eval.parent(parse(text = series.name)),silent=TRUE)
 	    	if(class(x)=="try-error") # Try one level further up the chain
-	    		x <- eval.parent(parse(text = series.name),2)
+	    		x <- try(eval.parent(parse(text = series.name),2),silent=TRUE)
+        if(class(x)=="try-error") # give up
+          return(NULL)
     	}
 	}
-	if(is.null(tsp(x)))
-		x <- ts(x,frequency=1,start=1)
-	return(x)
+	return(as.ts(x))
 }
 
 getResponse.fracdiff <- function(object, ...) {

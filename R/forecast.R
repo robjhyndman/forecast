@@ -154,7 +154,7 @@ plotlmforecast <- function(object, plot.conf, shaded, shadecols, col, fcol, pi.c
     xlim <- range(object$newdata[,xvar],model.frame(object$model)[,xvar])
   if(is.null(ylim))
     ylim <- range(object$upper,object$lower,fitted(object$model)+residuals(object$model))
-  plot(formula(object$model),data=model.frame(object$model),xlim=xlim,ylim=ylim,xlab=xlab,ylab=ylab,main=main,col=col,...)
+  plot(formula(object$model),xx=model.frame(object$model),xlim=xlim,ylim=ylim,xlab=xlab,ylab=ylab,main=main,col=col,...)
   abline(object$model)
   nf <- length(object$mean)
   if(plot.conf)
@@ -194,13 +194,9 @@ plot.forecast <- function(x, include, plot.conf=TRUE, shaded=TRUE, shadebars=(le
         xlab="", type="l",  flty = 1, flwd = 2, ...)
 {
   if(is.element("x",names(x))) # Assume stored as x
-    data <- x$x
+    xx <- x$x
   else
-    data=NULL
-  if(length(data)==0)
-    include <- 0
-  else if(missing(include))
-    include <- length(data)
+    xx=NULL
   if(is.null(x$lower) | is.null(x$upper) | is.null(x$level))
     plot.conf=FALSE
   if(!shaded)
@@ -224,18 +220,36 @@ plot.forecast <- function(x, include, plot.conf=TRUE, shaded=TRUE, shadebars=(le
   }
 
   # Otherwise assume x is from a time series forecast
-  if(length(data) > 0)
-    data <- as.ts(data)
-  freq <- frequency(data)
-  strt <- start(data)
-  n <- length(data)
-  pred.mean <- x$mean
-  xx <- data
+  n <- length(xx)
+  if(n==0)
+    include <- 0
+  else if(missing(include))
+    include <- length(xx)
 
-  # Remove final missing values
-  nx <- max(which(!is.na(xx)))
-  xxx <- xx[1:nx]
-  include <- min(include,nx)
+  # Check if all historical values are missing
+  if(n > 0)
+  {
+    if(sum(is.na(xx))==length(xx))
+      n <- 0
+  }
+  if(n > 0)
+  {
+    xx <- as.ts(xx)
+    freq <- frequency(xx)
+    strt <- start(xx)
+    nx <- max(which(!is.na(xx)))
+    xxx <- xx[1:nx]
+    include <- min(include,nx)
+  }
+  else
+  {
+    freq <- frequency(x$mean)
+    strt <- start(x$mean)
+    nx <- include <- 1
+    xx <- xxx <- ts(NA,frequency=freq,end=tsp(x$mean)[1]-1/freq)
+  }
+  pred.mean <- x$mean
+
   if(is.null(ylim))
   {
     ylim <- range(c(xx[(n-include+1):n],pred.mean),na.rm=TRUE)

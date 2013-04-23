@@ -10,7 +10,7 @@ Arima(x, order=c(0,0,0), seasonal=list(order=c(0,0,0), period=NA),
 }
 
 \arguments{
-\item{x}{a univariate time series}
+\item{x}{a univariate time series of class \code{ts}.}
 \item{order}{A specification of the non-seasonal part of the ARIMA model: the three components (p, d, q) are the AR order, the degree of differencing, and the MA order.}
 \item{seasonal}{A specification of the seasonal part of the ARIMA model, plus the period (which defaults to frequency(x)). This should be a list with components order and period, but a specification of just a numeric vector of length 3 will be turned into a suitable list with the specification as the order.}
 \item{xreg}{Optionally, a vector or matrix of external regressors, which must have the same number of rows as x.}
