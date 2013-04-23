@@ -144,7 +144,7 @@ HoltWintersZZ  <- function (x,
     nr <- nrow(states)
     nc <- ncol(states)
     for(i in 1:m)
-  		states <- cbind(states,final.fit$season[i+(1:nr)-1])
+  		states <- cbind(states,final.fit$season[(m-i)+(1:nr)])
     colnames(states)[nc+(1:m)] <- paste("s",1:m,sep="")
   }
 	states <- ts(states,frequency=m,start=tspx[1]-1/m)
