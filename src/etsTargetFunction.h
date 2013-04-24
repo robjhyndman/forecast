@@ -8,6 +8,9 @@ extern "C" {
 // Functions called by R
 void etscalc(double *, int *, double *, int *, int *, int *, int *,
 		double *, double *, double *, double *, double *, double *, double *);
+
+void cpolyroot(double *opr, double *opi, int *degree,
+			double *zeror, double *zeroi, Rboolean *fail);
 }
 
 class EtsTargetFunction {
@@ -33,16 +36,9 @@ public:
 	//double* funceval(SEXP p_var);
 
 	double getLik() { return(lik); };
+
 	/*
-
-	double getMAD() { return(mad); };
-	double getSMAPE() { return(smape); };
-	double getU1() { return(U1); };
-
 	std::vector<double>* gete() { return(&e); };
-	std::vector<double>* getF() { return(&F); };
-	std::vector<double>* geti() { return(&i); };
-	std::vector<double>* getb() { return(&b); };
 
 	double objval, restrictions[4], objval_res[5];
 	 */
@@ -50,7 +46,7 @@ public:
 private:
 
 	bool check_params();
-	//	double rmse, mad, smape, U1;
+	bool admissible();
 
 	static EtsTargetFunction *EtsTargetFunctionSingleton;
 
@@ -85,21 +81,6 @@ private:
 	bool useBeta;
 	bool useGamma;
 	bool usePhi;
-
-	/*
-	std::vector<double> e;
-	std::vector<double> e_mas;
-	std::vector<double> F;
-	std::vector<double> b;
-	std::vector<double> i;
-
-	std::vector<double> fpe;
-	std::vector<double> ape;
-	std::vector<double> var;
-
-	int n, p, medida;
-	bool additive;
-	 */
 
 };
 

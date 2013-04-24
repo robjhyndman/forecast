@@ -40,11 +40,11 @@ void EtsTargetFunction::init(std::vector<double> & p_y, int p_nstate, int p_erro
 		double alpha, double beta, double gamma, double phi) {
 
 	//	---------show params----------
-//	Rprintf("EtsInit, par: ");
-//	for(int j=0;j < p_par.size();j++) {
-//		Rprintf("%f ", p_par[j]);
-//	}
-//	Rprintf("\n");
+	//	Rprintf("EtsInit, par: ");
+	//	for(int j=0;j < p_par.size();j++) {
+	//		Rprintf("%f ", p_par[j]);
+	//	}
+	//	Rprintf("\n");
 	//	---------show params----------
 
 	//Rprintf("1\n");
@@ -85,16 +85,16 @@ void EtsTargetFunction::init(std::vector<double> & p_y, int p_nstate, int p_erro
 	this->useGamma = p_useGamma;
 	this->usePhi = p_usePhi;
 
-//	Rprintf("useAlpha: %d\n", useAlpha);
-//	Rprintf("useBeta: %d\n", useBeta);
-//	Rprintf("useGamma: %d\n", useGamma);
-//	Rprintf("usePhi: %d\n", usePhi);
+	//	Rprintf("useAlpha: %d\n", useAlpha);
+	//	Rprintf("useBeta: %d\n", useBeta);
+	//	Rprintf("useGamma: %d\n", useGamma);
+	//	Rprintf("usePhi: %d\n", usePhi);
 
-//	int j=0;
-//	if(useAlpha) this->alpha = par[j++];
-//	if(useBeta) this->beta = par[j++];
-//	if(useGamma) this->gamma = par[j++];
-//	if(usePhi) this->phi = par[j++];
+	//	int j=0;
+	//	if(useAlpha) this->alpha = par[j++];
+	//	if(useBeta) this->beta = par[j++];
+	//	if(useGamma) this->gamma = par[j++];
+	//	if(usePhi) this->phi = par[j++];
 
 	this->alpha = alpha;
 	this->beta = beta;
@@ -102,8 +102,8 @@ void EtsTargetFunction::init(std::vector<double> & p_y, int p_nstate, int p_erro
 	this->phi = phi;
 
 	this->lik = 0;
-//	for(int i=0; i < 10; i++) this->amse.push_back(0);
-//	for(int i=0; i < n; i++) this->e.push_back(0);
+	//	for(int i=0; i < 10; i++) this->amse.push_back(0);
+	//	for(int i=0; i < n; i++) this->e.push_back(0);
 
 	this->amse.resize(10, 0);
 	this->e.resize(n, 0);
@@ -134,11 +134,11 @@ void EtsTargetFunction::eval(const double* p_par, int p_par_length) {
 	//Rprintf("\nEtsTargetFunction: 2,%d\n", par.size());
 
 	//	---------show params----------
-//	Rprintf("par: ");
-//	for(int j=0;j < p_par_length;j++) {
-//		Rprintf("%f ", p_par[j]);
-//	}
-//	Rprintf(" lik: %f\n", this->lik);
+	//	Rprintf("par: ");
+	//	for(int j=0;j < p_par_length;j++) {
+	//		Rprintf("%f ", p_par[j]);
+	//	}
+	//	Rprintf(" lik: %f\n", this->lik);
 	//Rprintf("\n");
 	//	---------show params----------
 
@@ -172,7 +172,7 @@ void EtsTargetFunction::eval(const double* p_par, int p_par_length) {
 	if(useGamma) this->gamma = par[j++];
 	if(usePhi) this->phi = par[j++];
 
-//	Rprintf(" 1: %f\n", this->lik);
+	//	Rprintf(" 1: %f\n", this->lik);
 
 	if(!this->check_params()) {
 		//TODO: What happens for other measures?
@@ -180,7 +180,7 @@ void EtsTargetFunction::eval(const double* p_par, int p_par_length) {
 		return;
 	}
 
-//	Rprintf(" 2: %f\n", this->lik);
+	//	Rprintf(" 2: %f\n", this->lik);
 
 	//int np = par.size();
 	//std::vector<double> init_state;
@@ -297,8 +297,16 @@ x[j++] = par[i];
 	//TODO: isnan() is a C99 function
 	if (isnan(this->lik)) this->lik = 1e8;
 
+	//TODO: is this code correct translation of the R fragment?
+	if(abs(this->lik+99999) < 1e-7) this->lik = 1e8;
+	//    if(!is.na(Cout[[13]]))
+	//    {
+	//        if(abs(Cout[[13]]+99999) < 1e-7)
+	//            Cout[[13]] <- NA
+	//    }
 
-//	Rprintf(" lik: %f\n", this->lik);
+
+	//	Rprintf(" lik: %f\n", this->lik);
 
 
 
@@ -391,31 +399,132 @@ bool EtsTargetFunction::check_params() {
 		if(useAlpha)
 		{
 			if(alpha < lower[0] || alpha > upper[0])
-				return(FALSE);
+				return(false);
 		}
 		if(useBeta)
 		{
 			if(beta < lower[1] || beta > alpha || beta > upper[1])
-				return(FALSE);
+				return(false);
 		}
 		if(usePhi)
 		{
 			if(phi < lower[3] || phi > upper[3])
-				return(FALSE);
+				return(false);
 		}
 		if(useGamma)
 		{
 			if(gamma < lower[2] || gamma > 1-alpha || gamma > upper[2])
-				return(FALSE);
+				return(false);
 		}
 	}
 	if(bounds != "usual")
 	{
-		//        if(!admissible(alpha,beta,gamma,phi,m))
-		//          return(FALSE);
+		if(!admissible()) return(false);
 	}
 	return(TRUE);
 
 }
 
 
+bool EtsTargetFunction::admissible() {
+
+	if(phi < 0 || phi > 1+1e-8) return(false);
+
+	//TODO: What happens if gamma was set by user?
+	if(!useGamma) {
+		if(alpha < 1-1/phi || alpha > 1+1/phi) return(false);
+
+		if(useBeta)
+		{
+			if(beta < alpha * (phi-1) || beta > (1+phi)*(2-alpha)) return(false);
+		}
+	}
+
+	else if(m > 1) //Seasonal model
+	{
+		//TODO: What happens if beta was set by user?
+		if(!useBeta) beta = 0;
+
+
+		//max(1-1/phi-alpha,0)
+		double d = 1-1/phi-alpha;
+		if(gamma < ((d > 0) ? d : 0) || gamma > 1+1/phi-alpha) return(false);
+
+		if(alpha < 1-1/phi-gamma*(1-m+phi+phi*m)/(2*phi*m)) return(false);
+		if(beta < -(1-phi)*(gamma/m+alpha)) return(false);
+
+		// End of easy tests. Now use characteristic equation
+
+		std::vector<double> opr;
+		opr.push_back(1);
+		opr.push_back(alpha+beta-phi);
+
+		for(int i=0;i<m-2;i++) opr.push_back(alpha+beta-alpha*phi);
+
+		opr.push_back(alpha+beta-alpha*phi+gamma-1);
+		opr.push_back(phi*(1-alpha-gamma));
+
+		int degree = opr.size()-1;
+
+		std::vector<double> opi;
+		opi.resize(opr.size(),0);
+
+		std::vector<double> zeror(degree);
+		std::vector<double> zeroi(degree);
+
+		Rboolean fail;
+
+		cpolyroot(&opr[0], &opi[0], &degree, &zeror[0], &zeroi[0], &fail);
+
+		double max = 0;
+		for(int i=0;i<zeror.size();i++) {
+			if(abs(zeror[i])>max) max = abs(zeror[i]);
+		}
+
+		//Rprintf("maxpolyroot: %f\n", max);
+
+		if(max > 1+1e-10) return(false);
+
+		// P <- c(phi*(1-alpha-gamma),alpha+beta-alpha*phi+gamma-1,rep(alpha+beta-alpha*phi,m-2),(alpha+beta-phi),1)
+		// roots <- polyroot(P)
+		// if(max(abs(roots)) > 1+1e-10) return(false);
+	}
+	return(true);
+}
+
+//admissible <- function(alpha,beta,gamma,phi,m)
+//{
+//    if(is.null(phi))
+//        phi <- 1
+//    if(phi < 0 | phi > 1+1e-8)
+//        return(0)
+//    if(is.null(gamma))
+//    {
+//        if(alpha < 1-1/phi | alpha > 1+1/phi)
+//            return(0)
+//        if(!is.null(beta))
+//        {
+//            if(beta < alpha * (phi-1) | beta > (1+phi)*(2-alpha))
+//                return(0)
+//        }
+//    }
+//    else if(m > 1) # Seasonal model
+//    {
+//        if(is.null(beta))
+//            beta <- 0
+//        if(gamma < max(1-1/phi-alpha,0) | gamma > 1+1/phi-alpha)
+//            return(0)
+//        if(alpha < 1-1/phi-gamma*(1-m+phi+phi*m)/(2*phi*m))
+//            return(0)
+//        if(beta < -(1-phi)*(gamma/m+alpha))
+//            return(0)
+//
+//        # End of easy tests. Now use characteristic equation
+//        P <- c(phi*(1-alpha-gamma),alpha+beta-alpha*phi+gamma-1,rep(alpha+beta-alpha*phi,m-2),(alpha+beta-phi),1)
+//        roots <- polyroot(P)
+//        if(max(abs(roots)) > 1+1e-10)
+//            return(0)
+//    }
+//    # Passed all tests
+//    return(1)
+//}

@@ -862,6 +862,9 @@ admissible <- function(alpha,beta,gamma,phi,m)
         # End of easy tests. Now use characteristic equation
         P <- c(phi*(1-alpha-gamma),alpha+beta-alpha*phi+gamma-1,rep(alpha+beta-alpha*phi,m-2),(alpha+beta-phi),1)
         roots <- polyroot(P)
+        
+        #cat("maxpolyroots: ", max(abs(roots)), "\n")
+        
         if(max(abs(roots)) > 1+1e-10)
             return(0)
     }
