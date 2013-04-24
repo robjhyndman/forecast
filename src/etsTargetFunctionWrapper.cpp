@@ -101,7 +101,7 @@ RcppExport SEXP targetFunctionRmalschains(SEXP p_par)
 	return res;
 	 */
 
-	return Rcpp::wrap(sp->getLik());
+	return Rcpp::wrap(sp->getObjVal());
 
 }
 
@@ -128,7 +128,7 @@ RcppExport SEXP targetFunctionRdonlp2(SEXP p_var)
 
 	if(mode == 0) {
 		if(fun_id == 0) {
-			return Rcpp::wrap(sp->getLik());
+			return Rcpp::wrap(sp->getObjVal());
 		} else {
 			return Rcpp::wrap(0);
 			//return Rcpp::wrap(sp->restrictions[fun_id-1]);

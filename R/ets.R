@@ -455,15 +455,15 @@ etsTargetFunctionInit <- function(par,y,nstate,errortype,trendtype,seasontype,da
   if(seasontype == "N")
     gamma <- 0;
   
-  cat("alpha: ", alpha)
-  cat(" beta: ", beta)
-  cat(" gamma: ", gamma)
-  cat(" phi: ", phi, "\n")
-  
-  cat("useAlpha: ", useAlpha)
-  cat(" useBeta: ", useBeta)
-  cat(" useGamma: ", useGamma)
-  cat(" usePhi: ", usePhi, "\n")
+#  cat("alpha: ", alpha)
+#  cat(" beta: ", beta)
+#  cat(" gamma: ", gamma)
+#  cat(" phi: ", phi, "\n")
+#  
+#  cat("useAlpha: ", useAlpha)
+#  cat(" useBeta: ", useBeta)
+#  cat(" useGamma: ", useGamma)
+#  cat(" usePhi: ", usePhi, "\n")
   
   .Call("EtsTargetFunctionInit", y=y, nstate=nstate, errortype=switch(errortype,"A"=1,"M"=2), 
       trendtype=switch(trendtype,"N"=0,"A"=1,"M"=2), seasontype=switch(seasontype,"N"=0,"A"=1,"M"=2), 

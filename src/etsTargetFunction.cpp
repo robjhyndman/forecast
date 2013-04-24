@@ -76,6 +76,7 @@ void EtsTargetFunction::init(std::vector<double> & p_y, int p_nstate, int p_erro
 	this->phi = phi;
 
 	this->lik = 0;
+	this->objval = 0;
 	//	for(int i=0; i < 10; i++) this->amse.push_back(0);
 	//	for(int i=0; i < n; i++) this->e.push_back(0);
 
@@ -93,7 +94,7 @@ void EtsTargetFunction::eval(const double* p_par, int p_par_length) {
 	//	for(int j=0;j < p_par_length;j++) {
 	//		Rprintf("%f ", p_par[j]);
 	//	}
-	//	Rprintf(" lik: %f\n", this->lik);
+	//	Rprintf(" objval: %f\n", this->objval);
 	//Rprintf("\n");
 	//	---------show params----------
 
@@ -124,8 +125,7 @@ void EtsTargetFunction::eval(const double* p_par, int p_par_length) {
 	if(usePhi) this->phi = par[j++];
 
 	if(!this->check_params()) {
-		//TODO: What happens for other measures?
-		this->lik = 1e12;
+		this->objval = 1e12;
 		return;
 	}
 
@@ -164,8 +164,7 @@ void EtsTargetFunction::eval(const double* p_par, int p_par_length) {
 		}
 
 		if(min < 0) {
-			//TODO: What happens for other measures?
-			this->lik = 1e8;
+			this->objval = 1e8;
 			return;
 		}
 
@@ -174,7 +173,7 @@ void EtsTargetFunction::eval(const double* p_par, int p_par_length) {
 		//  return(1e8)
 	};
 
-	//Rprintf(" 3: %f\n", this->lik);
+	//Rprintf(" 3: %f\n", this->objval);
 
 	int p = state.size();
 
@@ -183,18 +182,52 @@ void EtsTargetFunction::eval(const double* p_par, int p_par_length) {
 	etscalc(&this->y[0], &this->n, &this->state[0], &this->m, &this->errortype, &this->trendtype, &this->seasontype,
 			&this->alpha, &this->beta, &this->gamma, &this->phi, &this->e[0], &this->lik, &this->amse[0]);
 
-	if (this->lik < -1e10) this->lik = -1e10; // Avoid perfect fits
+
+	//TODO: I don't really understand what this is for..
+	// Avoid perfect fits
+	if (this->lik < -1e10) this->lik = -1e10;
 
 	//TODO: isnan() is a C99 function
 	if (isnan(this->lik)) this->lik = 1e8;
 
-	//TODO: is this code correct translation of the R fragment?
 	if(abs(this->lik+99999) < 1e-7) this->lik = 1e8;
-	//    if(!is.na(Cout[[13]]))
-	//    {
-	//        if(abs(Cout[[13]]+99999) < 1e-7)
-	//            Cout[[13]] <- NA
-	//    }
+
+	  if(this->opt_crit=="lik") this->objval = this->lik;
+	  else if(this->opt_crit=="mse") this->objval = this->amse[0];
+	  else if(this->opt_crit=="amse") {
+
+		  //return(mean(e$amse[1:nmse]))
+		  double mean=0;
+		  for(int i=0;i<nmse;i++) {
+			  mean+=amse[i]/nmse;
+		  }
+		  this->objval=mean;
+
+	  }
+	  else if(this->opt_crit=="sigma") {
+		  //return(mean(e$e^2))
+		  double mean=0;
+		  int ne=e.size();
+		  for(int i=0;i<ne;i++) {
+			  mean+=e[i]*e[i]/ne;
+		  }
+		  this->objval=mean;
+
+	  }
+	  else if(this->opt_crit=="mae") {
+		  //return(mean(abs(e$e)))
+
+		  double mean=0;
+		  int ne=e.size();
+		  for(int i=0;i<ne;i++) {
+			  mean+=abs(e[i])/ne;
+		  }
+		  this->objval=mean;
+
+	  }
+
+
+
 
 
 	//	Rprintf(" lik: %f\n", this->lik);

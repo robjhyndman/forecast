@@ -28,7 +28,8 @@ public:
 	static EtsTargetFunction* getTargetFunctionSingleton();
 	static void deleteTargetFunctionSingleton();
 
-	double getLik() { return(lik); };
+	//double getLik() { return(lik); };
+	double getObjVal() { return(objval); };
 
 	/*
 	std::vector<double>* gete() { return(&e); };
@@ -64,8 +65,9 @@ private:
 	double alpha, beta, gamma, phi;
 
 	std::vector<double> e;
-	double lik;
 	std::vector<double> amse;
+
+	double lik, objval;
 
 	bool useAlpha;
 	bool useBeta;
