@@ -264,6 +264,8 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
 
 #-------------------------------------------------
   
+#browser()
+
   if(control$method=="malschains") {
     
     malschains <- NULL
@@ -444,9 +446,21 @@ etsTargetFunctionInit <- function(par,y,nstate,errortype,trendtype,seasontype,da
   else
     phi <- NULL
   
-  np <- length(par)
+  #np <- length(par)
+  #init.state <- par[(np-nstate+1):np]
   
-  init.state <- par[(np-nstate+1):np]
+  #browser()
+  
+  #determine which values to optimize and which ones are given by the user/not needed
+  useAlpha <- !is.null(alpha)
+  useBeta <- !is.null(beta)
+  useGamma <- !is.null(gamma)
+  usePhi <- !is.null(phi)
+  
+  if(!is.null(par.noopt["alpha"])) if(!is.na(par.noopt["alpha"])) useAlpha <- FALSE
+  if(!is.null(par.noopt["beta"])) if(!is.na(par.noopt["beta"])) useBeta <- FALSE
+  if(!is.null(par.noopt["gamma"])) if(!is.na(par.noopt["gamma"])) useGamma <- FALSE
+  if(!is.null(par.noopt["phi"])) if(!is.na(par.noopt["phi"])) usePhi <- FALSE
   
   #myPar <- NULL
   #if(!is.null(alpha)) myPar <- c(myPar, alpha)
@@ -459,18 +473,32 @@ if(trendtype == "N")
 if(seasontype == "N")
   gamma <- 0;
 
+#browser()
 
-  myPar <- alpha
-  if(!is.null(beta)) myPar <- c(myPar, beta)
-  if(!is.null(gamma)) myPar <- c(myPar, gamma)
-  if(!is.null(phi)) myPar <- c(myPar, phi)
-  myPar <- c(myPar, init.state)
-  
-  .Call("EtsTargetFunctionInit", par=myPar, y=y, nstate=nstate, errortype=switch(errortype,"A"=1,"M"=2), 
+cat("alpha: ", alpha)
+cat(" beta: ", beta)
+cat(" gamma: ", gamma)
+cat(" phi: ", phi, "\n")
+
+cat("useAlpha: ", useAlpha)
+cat(" useBeta: ", useBeta)
+cat(" useGamma: ", useGamma)
+cat(" usePhi: ", usePhi, "\n")
+
+#  myPar <- alpha
+#  if(!is.null(beta)) myPar <- c(myPar, beta)
+#  if(!is.null(gamma)) myPar <- c(myPar, gamma)
+#  if(!is.null(phi)) myPar <- c(myPar, phi)
+#  myPar <- c(myPar, init.state)
+
+#par=myPar, 
+#par.noopt=par.noopt, 
+
+  .Call("EtsTargetFunctionInit", y=y, nstate=nstate, errortype=switch(errortype,"A"=1,"M"=2), 
       trendtype=switch(trendtype,"N"=0,"A"=1,"M"=2), seasontype=switch(seasontype,"N"=0,"A"=1,"M"=2), 
-      damped=damped, par.noopt=par.noopt, lowerb=lowerb, upperb=upperb,
-      opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m, pnames=pnames,pnames2=pnames2,    
-      is.null(alpha), is.null(beta), is.null(gamma), is.null(phi), package="forecast")
+      damped=damped, lowerb=lowerb, upperb=upperb,
+      opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m, pnames=pnames,pnames2=pnames2,
+      useAlpha, useBeta, useGamma, usePhi, alpha, beta, gamma, phi, package="forecast")
   
 }
 
@@ -625,7 +653,7 @@ lik <- function(par,y,nstate,errortype,trendtype,seasontype,damped,par.noopt,low
   
   #browser()
   
-#  cat("lik called\n")
+  #cat("par: ", par, "\n")
   
     names(par) <- pnames
     names(par.noopt) <- pnames2
@@ -684,6 +712,7 @@ lik <- function(par,y,nstate,errortype,trendtype,seasontype,damped,par.noopt,low
     if(e$lik < -1e10) # Avoid perfect fits
         return(-1e10)
 
+#      cat("lik: ", e$lik, "\n")
 #    points(alpha,e$lik,col=2)
 
     if(opt.crit=="lik")

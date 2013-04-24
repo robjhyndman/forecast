@@ -29,11 +29,14 @@ RcppExport SEXP EtsTargetFunctionObjectFactory(){
 
 //lik <- function(par,y,nstate,errortype,trendtype,seasontype,damped,par.noopt,lower,upper,
 //    opt.crit,nmse,bounds,m,pnames,pnames2)
+//SEXP p_par,
+//SEXP p_par_noopt,
 
-RcppExport SEXP EtsTargetFunctionInit(SEXP p_par, SEXP p_y, SEXP p_nstate, SEXP p_errortype, SEXP p_trendtype, 
-		SEXP p_seasontype, SEXP p_damped, SEXP p_par_noopt, SEXP p_lower, SEXP p_upper, 
+RcppExport SEXP EtsTargetFunctionInit(SEXP p_y, SEXP p_nstate, SEXP p_errortype, SEXP p_trendtype,
+		SEXP p_seasontype, SEXP p_damped, SEXP p_lower, SEXP p_upper,
 		SEXP p_opt_crit, SEXP p_nmse, SEXP p_bounds, SEXP p_m, SEXP p_pnames, SEXP p_pnames2, 
-                SEXP p_useAlpha, SEXP p_useBeta, SEXP p_useGamma, SEXP p_usePhi, SEXP p_alpha, SEXP p_beta, SEXP p_gamma, SEXP p_phi) {
+		SEXP p_useAlpha, SEXP p_useBeta, SEXP p_useGamma, SEXP p_usePhi,
+		SEXP p_alpha, SEXP p_beta, SEXP p_gamma, SEXP p_phi) {
 
 	BEGIN_RCPP;
 
@@ -43,78 +46,81 @@ RcppExport SEXP EtsTargetFunctionInit(SEXP p_par, SEXP p_y, SEXP p_nstate, SEXP 
 
 	//Rcpp::NumericVector par(p_par);
 	//Rcpp::NumericVector y(p_y);
-	
-//TODO: Add some more checks for NULL etc.
 
-//Rprintf("1\n");
+	//TODO: Add some more checks for NULL etc.
 
-	std::vector<double> par = Rcpp::as< std::vector<double> >(p_par);
+	//Rprintf("1\n");
+
+	//std::vector<double> par = Rcpp::as< std::vector<double> >(p_par);
 	std::vector<double> y = Rcpp::as< std::vector<double> >(p_y);
 
-//Rprintf("2\n");
-	
-	int nstate = Rcpp::as<int>(p_nstate);
-	
-int errortype = Rcpp::as<int>(p_errortype);
-int trendtype = Rcpp::as<int>(p_trendtype);
-int seasontype = Rcpp::as<int>(p_seasontype);
+	//Rprintf("2\n");
 
-//	std::string errortype = Rcpp::as<std::string>(p_errortype);
-//	std::string trendtype = Rcpp::as<std::string>(p_trendtype);
-//	std::string seasontype = Rcpp::as<std::string>(p_seasontype);
-//Rprintf("3\n");
-	
+	int nstate = Rcpp::as<int>(p_nstate);
+
+	int errortype = Rcpp::as<int>(p_errortype);
+	int trendtype = Rcpp::as<int>(p_trendtype);
+	int seasontype = Rcpp::as<int>(p_seasontype);
+
+	//	std::string errortype = Rcpp::as<std::string>(p_errortype);
+	//	std::string trendtype = Rcpp::as<std::string>(p_trendtype);
+	//	std::string seasontype = Rcpp::as<std::string>(p_seasontype);
+	//Rprintf("3\n");
+
 	bool damped = Rcpp::as<bool>(p_damped);
-//Rprintf("4\n");	
+	//Rprintf("4\n");
 	//Rcpp::NumericVector par_noopt(p_par_noopt);
 	//Rcpp::NumericVector lower(p_lower);
 	//Rcpp::NumericVector upper(p_upper);
 
-        std::vector<double> par_noopt;
-//Rprintf("4a\n");
-        if (p_par_noopt != R_NilValue)	
-          par_noopt = Rcpp::as< std::vector<double> >(p_par_noopt);
-//Rprintf("4b\n");
+	//std::vector<double> par_noopt;
+	//Rprintf("4a\n");
+	//if (p_par_noopt != R_NilValue)
+	//	par_noopt = Rcpp::as< std::vector<double> >(p_par_noopt);
+	//Rprintf("4b\n");
 	std::vector<double> lower = Rcpp::as< std::vector<double> >(p_lower);
-//Rprintf("4c\n");
+	//Rprintf("4c\n");
 	std::vector<double> upper = Rcpp::as< std::vector<double> >(p_upper);
-//Rprintf("5\n");
-	
+	//Rprintf("5\n");
+
 	std::string opt_crit = Rcpp::as<std::string>(p_opt_crit);
-//Rprintf("6\n");	
+	//Rprintf("6\n");
 	double nmse = Rcpp::as<double>(p_nmse);
-//Rprintf("7\n");	
-	
+	//Rprintf("7\n");
+
 	std::string bounds = Rcpp::as< std::string >(p_bounds);
 	int m = Rcpp::as<int>(p_m);
-//Rprintf("8\n");	
+	//Rprintf("8\n");
 
-std::vector<std::string> pnames;
-std::vector<std::string> pnames2;
+	std::vector<std::string> pnames;
+	std::vector<std::string> pnames2;
 
-if (p_pnames != R_NilValue)
- pnames = Rcpp::as< std::vector<std::string> >(p_pnames);
+	if (p_pnames != R_NilValue)
+		pnames = Rcpp::as< std::vector<std::string> >(p_pnames);
 
-if (p_pnames2 != R_NilValue)
-	pnames2 = Rcpp::as< std::vector<std::string> >(p_pnames2);
+	if (p_pnames2 != R_NilValue)
+		pnames2 = Rcpp::as< std::vector<std::string> >(p_pnames2);
 
-//Rprintf("9\n");	
+	//Rprintf("9\n");
 	bool useAlpha = Rcpp::as<bool>(p_useAlpha);
 	bool useBeta = Rcpp::as<bool>(p_useBeta);
 	bool useGamma = Rcpp::as<bool>(p_useGamma);
 	bool usePhi = Rcpp::as<bool>(p_usePhi);
 
-//        double alpha = Rcpp::as<double>(p_alpha);
-//        double beta = Rcpp::as<double>(p_beta);
-//        double gamma = Rcpp::as<double>(p_gamma);
-//        double phi = Rcpp::as<double>(p_phi);
+	double alpha = Rcpp::as<double>(p_alpha);
+	double beta = Rcpp::as<double>(p_beta);
+	double gamma = Rcpp::as<double>(p_gamma);
+	double phi = Rcpp::as<double>(p_phi);
 
-//Rprintf("10\n");	
-	sp->init(par, y, nstate, errortype, trendtype, seasontype, damped, par_noopt, lower, upper, opt_crit,
-			nmse, bounds, m, pnames, pnames2, useAlpha, useBeta, useGamma, usePhi);
-//Rprintf("11\n");
+	//Rprintf("10\n");
+	//par,
+	//par_noopt,
+
+	sp->init(y, nstate, errortype, trendtype, seasontype, damped, lower, upper, opt_crit,
+			nmse, bounds, m, pnames, pnames2, useAlpha, useBeta, useGamma, usePhi, alpha, beta, gamma, phi);
+	//Rprintf("11\n");
 	return R_NilValue;
-	
+
 	END_RCPP;
 }
 
@@ -126,7 +132,7 @@ RcppExport SEXP targetFunctionRmalschains(SEXP p_par)
 
 	sp->eval(par.begin(), par.size());
 
-/*
+	/*
 	Rcpp::NumericVector res(5);
 
 	res[0] = sp->objval;
@@ -137,11 +143,11 @@ RcppExport SEXP targetFunctionRmalschains(SEXP p_par)
 	res[4] = sp->restrictions[3];
 
 	return res;
-*/
+	 */
 
-//Rprintf("I'm here, returning 1...");
+	//Rprintf("I'm here, returning 1...");
 
-        return Rcpp::wrap(sp->getLik());
+	return Rcpp::wrap(sp->getLik());
 
 }
 
@@ -170,11 +176,11 @@ RcppExport SEXP targetFunctionRdonlp2(SEXP p_var)
 		if(fun_id == 0) {
 			return Rcpp::wrap(sp->getLik());
 		} else {
-                        return Rcpp::wrap(0);
+			return Rcpp::wrap(0);
 			//return Rcpp::wrap(sp->restrictions[fun_id-1]);
 		}
 	} else if(mode==1) {
-//		error("Gradients are not implemented, exiting.");
+		//		error("Gradients are not implemented, exiting.");
 	};
 
 	return R_NilValue;
