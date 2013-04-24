@@ -178,6 +178,44 @@ ets <- function(y, model="ZZZ", damped=NULL,
     return(structure(model,class="ets"))
 }
 
+
+myRequire <- function(libName) {
+  
+  req.suc <- require(libName, quietly=TRUE, character.only=TRUE)
+  if(!req.suc) stop("The ",libName," package is not available.")
+  
+  req.suc
+}
+
+getNewBounds <- function(par, lower, upper, nstate) {
+  
+  myLower <- NULL
+  myUpper <- NULL
+  
+  if("alpha" %in% names(par)) {
+    myLower <- c(myLower, lower[1])
+    myUpper <- c(myUpper, upper[1])
+  }
+  if("beta" %in% names(par)) {
+    myLower <- c(myLower, lower[2])
+    myUpper <- c(myUpper, upper[2])
+  }
+  if("gamma" %in% names(par)) {
+    myLower <- c(myLower, lower[3])
+    myUpper <- c(myUpper, upper[3])
+  }
+  if("phi" %in% names(par)) {
+    myLower <- c(myLower, lower[4])
+    myUpper <- c(myUpper, upper[4])
+  }
+  
+  myLower <- c(myLower,rep(-1000000,nstate))
+  myUpper <- c(myUpper,rep(1000000,nstate))
+  
+  list(lower=myLower, upper=myUpper)
+}
+
+
 etsmodel <- function(y, errortype, trendtype, seasontype, damped,
   alpha=NULL, beta=NULL, gamma=NULL, phi=NULL,
   lower, upper, opt.crit, nmse, bounds, control)
@@ -228,10 +266,8 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
   
   if(control$method=="malschains") {
     
-    is.installed <- function(mypkg) is.element(mypkg, installed.packages()[,1])
-    
-    if(!is.installed("Rmalschains")) stop("Package Rmalschains needed but not installed")
-    require("Rmalschains")
+    malschains <- NULL
+    myRequire("Rmalschains")
     
     myOptimFunc <- function(myPar) {
       names(myPar) <- names(par)
@@ -240,37 +276,66 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
           opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt))
       res
     }
+
+    myBounds <- getNewBounds(par, lower, upper, nstate)
     
-    myLower <- NULL
-    myUpper <- NULL
+    fredTmp <- malschains(myOptimFunc, lower=myBounds$lower, upper=myBounds$upper, maxEvals=control$maxEvals, trace=control$trace, 
+        initialpop=par, control=malschains.control(popsize=50, ls="cmaes", istep=500, 
+            effort=0.5, alpha=0.5, optimum=0, threshold=1e-08))
     
-    if("alpha" %in% names(par)) {
-      myLower <- c(myLower, lower[1])
-      myUpper <- c(myUpper, upper[1])
-    }
-    if("beta" %in% names(par)) {
-      myLower <- c(myLower, lower[2])
-      myUpper <- c(myUpper, upper[2])
-    }
-    if("gamma" %in% names(par)) {
-      myLower <- c(myLower, lower[3])
-      myUpper <- c(myUpper, upper[3])
-    }
-    if("phi" %in% names(par)) {
-      myLower <- c(myLower, lower[4])
-      myUpper <- c(myUpper, upper[4])
-    }
+    fred <- NULL
+    fred$par <- fredTmp$sol
     
-    myLower <- c(myLower,rep(-1000000,nstate))
-    myUpper <- c(myUpper,rep(1000000,nstate))
+    fit.par <- fred$par
     
-    fredTmp <- malschains(myOptimFunc, lower=myLower, upper=myUpper, maxEvals=control$maxEvals, initialpop=par, 
+    names(fit.par) <- names(par)
+    
+  } else if(control$method=="test") {
+    
+    malschains <- NULL
+    myRequire("Rmalschains")
+    
+    myBounds <- getNewBounds(par, lower, upper, nstate)
+    
+#----------------------------------
+  
+    etsTargetFunctionInit(par=par, y=y, nstate=nstate, errortype=errortype, trendtype=trendtype,
+        seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
+        opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt))
+  
+  #-------------------------------------
+    
+    #browser()
+    
+    myOptimFunc <- .Call("EtsGetTargetFunctionRmalschainsPtr", package="forecast")
+
+    fredTmp <- malschains(myOptimFunc, lower=myBounds$lower, upper=myBounds$upper, maxEvals=control$maxEvals, trace=control$trace, initialpop=par, 
         control=malschains.control(popsize=50, ls="cmaes", istep=500, 
             effort=0.5, alpha=0.5, optimum=0, threshold=1e-08))
     
     fred <- NULL
     fred$par <- fredTmp$sol
     
+    fit.par <- fred$par
+    
+    names(fit.par) <- names(par)
+    
+  } else if (control$method=="Rdonlp2") {
+    
+    donlp2 <- NULL
+    myRequire("Rdonlp2")
+
+    etsTargetFunctionInit(par=par, y=y, nstate=nstate, errortype=errortype, trendtype=trendtype,
+        seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
+        opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt))
+    
+    
+    func <- .Call("EtsGetTargetFunctionRdonlp2Ptr", package="forecast")
+    
+    myBounds <- getNewBounds(par, lower, upper, nstate)
+    
+    fred <- donlp2(par, func, par.lower=myBounds$lower, par.upper=myBounds$upper)#, nlin.lower=c(-1), nlin.upper=c(1)) #nlin.lower=c(0,-Inf, -Inf, -Inf), nlin.upper=c(0,0,0,0))
+
     fit.par <- fred$par
     
     names(fit.par) <- names(par)
@@ -338,6 +403,78 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
     return(list(loglik=-0.5*e$lik,aic=aic,bic=bic,aicc=aicc,mse=mse,amse=amse,fit=fred,residuals=ts(e$e,frequency=tsp.y[3],start=tsp.y[1]),fitted=ts(fits,frequency=tsp.y[3],start=tsp.y[1]),
         states=states,par=fit.par))
 }
+
+
+#---------------------------------------------------------
+#---------------------------------------------------------
+etsTargetFunctionInit <- function(par,y,nstate,errortype,trendtype,seasontype,damped,par.noopt,lowerb,upperb,
+    opt.crit,nmse,bounds,m,pnames,pnames2)
+{
+  
+  names(par) <- pnames
+  names(par.noopt) <- pnames2
+  alpha <- c(par["alpha"],par.noopt["alpha"])["alpha"]
+  if(is.na(alpha))
+    stop("alpha problem!")
+  if(trendtype!="N")
+  {
+    beta <- c(par["beta"],par.noopt["beta"])["beta"]
+    if(is.na(beta))
+      stop("beta Problem!")
+  }
+  else
+    beta <- NULL
+  if(seasontype!="N")
+  {
+    gamma <- c(par["gamma"],par.noopt["gamma"])["gamma"]
+    if(is.na(gamma))
+      stop("gamma Problem!")
+  }
+  else
+  {
+    m <- 1
+    gamma <- NULL
+  }
+  if(damped)
+  {
+    phi <- c(par["phi"],par.noopt["phi"])["phi"]
+    if(is.na(phi))
+      stop("phi Problem!")
+  }
+  else
+    phi <- NULL
+  
+  np <- length(par)
+  
+  init.state <- par[(np-nstate+1):np]
+  
+  #myPar <- NULL
+  #if(!is.null(alpha)) myPar <- c(myPar, alpha)
+
+#TODO: is this here the right place for this?
+if(!damped)
+  phi <- 1;
+if(trendtype == "N")
+  beta <- 0;
+if(seasontype == "N")
+  gamma <- 0;
+
+
+  myPar <- alpha
+  if(!is.null(beta)) myPar <- c(myPar, beta)
+  if(!is.null(gamma)) myPar <- c(myPar, gamma)
+  if(!is.null(phi)) myPar <- c(myPar, phi)
+  myPar <- c(myPar, init.state)
+  
+  .Call("EtsTargetFunctionInit", par=myPar, y=y, nstate=nstate, errortype=switch(errortype,"A"=1,"M"=2), 
+      trendtype=switch(trendtype,"N"=0,"A"=1,"M"=2), seasontype=switch(seasontype,"N"=0,"A"=1,"M"=2), 
+      damped=damped, par.noopt=par.noopt, lowerb=lowerb, upperb=upperb,
+      opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m, pnames=pnames,pnames2=pnames2,    
+      is.null(alpha), is.null(beta), is.null(gamma), is.null(phi), package="forecast")
+  
+}
+
+
 
 initparam <- function(alpha,beta,gamma,phi,trendtype,seasontype,damped,lower,upper,m)
 {
@@ -486,6 +623,8 @@ lik <- function(par,y,nstate,errortype,trendtype,seasontype,damped,par.noopt,low
     opt.crit,nmse,bounds,m,pnames,pnames2)
 {
   
+  #browser()
+  
 #  cat("lik called\n")
   
     names(par) <- pnames
@@ -558,6 +697,10 @@ lik <- function(par,y,nstate,errortype,trendtype,seasontype,damped,par.noopt,low
     else if(opt.crit=="mae")
       return(mean(abs(e$e)))
 }
+
+
+
+
 
 print.ets <- function(x,...)
 {
