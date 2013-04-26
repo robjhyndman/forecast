@@ -1,7 +1,8 @@
-//#include <cmath>
+#include <cmath>
+#include <R.h>
 
 //for isnan, math.h is needed
-#include <math.h>
+//#include <math.h>
 
 #include "etsTargetFunction.h"
 
@@ -187,8 +188,9 @@ void EtsTargetFunction::eval(const double* p_par, int p_par_length) {
 	// Avoid perfect fits
 	if (this->lik < -1e10) this->lik = -1e10;
 
-	//TODO: isnan() is a C99 function
-	if (isnan(this->lik)) this->lik = 1e8;
+	// isnan() is a C99 function
+	//if (isnan(this->lik)) this->lik = 1e8;
+	if (ISNAN(this->lik)) this->lik = 1e8;
 
 	if(abs(this->lik+99999) < 1e-7) this->lik = 1e8;
 

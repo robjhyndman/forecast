@@ -2,7 +2,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
     alpha=NULL, beta=NULL, gamma=NULL, phi=NULL, additive.only=FALSE, lambda=NULL,
     lower=c(rep(0.0001,3), 0.8), upper=c(rep(0.9999,3),0.98),
     opt.crit=c("lik","amse","mse","sigma","mae"), nmse=3, bounds=c("both","usual","admissible"),
-    ic=c("aic","aicc","bic"),restrict=TRUE, control=list(method="optim", maxit=2000))
+    ic=c("aic","aicc","bic"),restrict=TRUE, solver="optim", ...)
 {
   #dataname <- substitute(y)
   opt.crit <- match.arg(opt.crit)
@@ -139,7 +139,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
           if(!data.positive & errortype[i]=="M")
             next
           fit <- etsmodel(y,errortype[i],trendtype[j],seasontype[k],damped[l],alpha,beta,gamma,phi,
-              lower=lower,upper=upper,opt.crit=opt.crit,nmse=nmse,bounds=bounds, control=control)
+              lower=lower,upper=upper,opt.crit=opt.crit,nmse=nmse,bounds=bounds, solver=solver, ...)
           fit.ic <- switch(ic,aic=fit$aic,bic=fit$bic,aicc=fit$aicc)
           if(!is.na(fit.ic))
           {
@@ -218,8 +218,9 @@ getNewBounds <- function(par, lower, upper, nstate) {
 
 etsmodel <- function(y, errortype, trendtype, seasontype, damped,
     alpha=NULL, beta=NULL, gamma=NULL, phi=NULL,
-    lower, upper, opt.crit, nmse, bounds, control)
+    lower, upper, opt.crit, nmse, bounds, solver, ...)
 {
+  
   tsp.y <- tsp(y)
   if(is.null(tsp.y))
     tsp.y <- c(1,length(y),1)
@@ -264,24 +265,50 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
   
 #-------------------------------------------------
   
-  if(control$method=="malschains") {
+  if(solver=="malschains" || solver=="malschains_c") {
     
     malschains <- NULL
     myRequire("Rmalschains")
     
-    func <- function(myPar) {
-      names(myPar) <- names(par)
-      res <- lik(myPar,y=y,nstate=nstate, errortype=errortype, trendtype=trendtype,
+    func <- NULL
+    
+    if(solver=="malschains") {
+      
+      func <- function(myPar) {
+        names(myPar) <- names(par)
+        res <- lik(myPar,y=y,nstate=nstate, errortype=errortype, trendtype=trendtype,
+            seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
+            opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt))
+        res
+      }
+      
+    } else {
+      
+      etsTargetFunctionInit(par=par, y=y, nstate=nstate, errortype=errortype, trendtype=trendtype,
           seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
           opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt))
-      res
+      
+      func <- .Call("EtsGetTargetFunctionRmalschainsPtr", package="forecast")
+      
     }
     
     myBounds <- getNewBounds(par, lower, upper, nstate)
     
-    fredTmp <- malschains(func, lower=myBounds$lower, upper=myBounds$upper, maxEvals=control$maxEvals, trace=control$trace, 
-        initialpop=par, control=malschains.control(popsize=50, ls="cmaes", istep=500, 
-            effort=0.5, alpha=0.5, optimum=0, threshold=1e-08))
+    dots<-substitute(list(...))
+    
+    if(is.null(dots$control)) 
+      dots$control <- malschains.control(popsize=10, ls="simplex", istep=100, 
+          effort=0.2, alpha=0.5, optimum=0, threshold=1e-08)
+    
+#    dots$control <- malschains.control(popsize=50, ls="cmaes", istep=500, 
+#        effort=0.5, alpha=0.5, optimum=0, threshold=1e-08)
+    
+    if(is.null(dots$maxEvals)) dots$maxEvals <- 2000
+    if(is.null(dots$trace)) dots$trace <- FALSE
+    
+    
+    fredTmp <- malschains(func, lower=myBounds$lower, upper=myBounds$upper, 
+        maxEvals=dots$maxEvals, trace=dots$trace, initialpop=par, control=dots$control)
     
     fred <- NULL
     fred$par <- fredTmp$sol
@@ -290,32 +317,7 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
     
     names(fit.par) <- names(par)
     
-  } else if(control$method=="test") {
-    
-    malschains <- NULL
-    myRequire("Rmalschains")
-    
-    myBounds <- getNewBounds(par, lower, upper, nstate)
-    
-    etsTargetFunctionInit(par=par, y=y, nstate=nstate, errortype=errortype, trendtype=trendtype,
-        seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
-        opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt))
-    
-    func <- .Call("EtsGetTargetFunctionRmalschainsPtr", package="forecast")
-    
-    fredTmp <- malschains(func, lower=myBounds$lower, upper=myBounds$upper, maxEvals=control$maxEvals, 
-        trace=control$trace, initialpop=par, 
-        control=malschains.control(popsize=50, ls="cmaes", istep=500, 
-            effort=0.5, alpha=0.5, optimum=0, threshold=1e-08))
-    
-    fred <- NULL
-    fred$par <- fredTmp$sol
-    
-    fit.par <- fred$par
-    
-    names(fit.par) <- names(par)
-    
-  } else if (control$method=="Rdonlp2") {
+  } else if (solver=="Rdonlp2") {
     
     donlp2 <- NULL
     myRequire("Rdonlp2")
@@ -323,7 +325,6 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
     etsTargetFunctionInit(par=par, y=y, nstate=nstate, errortype=errortype, trendtype=trendtype,
         seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
         opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt))
-    
     
     func <- .Call("EtsGetTargetFunctionRdonlp2Ptr", package="forecast")
     
@@ -337,6 +338,10 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
     
   } else { #if(control$method=="optim")
     
+    dots<-substitute(list(...))
+    
+    if(is.null(dots$maxit)) dots$maxit <- 2000
+    
     # Optimize parameters and state
     if(length(par)==1)
       tmp <- options(warn=-1)$warn # Turn off warning on 1-d Nelder-Mead.
@@ -345,7 +350,7 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
     fred <- optim(par,lik,method="Nelder-Mead",y=y,nstate=nstate, errortype=errortype, trendtype=trendtype,
         seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
         opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt),
-        control=list(maxit=control$maxit))
+        control=list(maxit=dots$maxit))
     
     fit.par <- fred$par
     
