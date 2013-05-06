@@ -22,11 +22,10 @@ public:
 	void init(std::vector<double> & p_y, int p_nstate, int p_errortype,
 			int p_trendtype, int p_seasontype, bool p_damped,
 			std::vector<double> & p_lower, std::vector<double> & p_upper, std::string p_opt_crit,
-			double p_nmse, std::string p_bounds, int p_m, bool p_useAlpha, bool p_useBeta, bool p_useGamma,
-			bool p_usePhi, double alpha, double beta, double gamma, double phi);
-
-	static EtsTargetFunction* getTargetFunctionSingleton();
-	static void deleteTargetFunctionSingleton();
+			double p_nmse, std::string p_bounds, int p_m,
+			bool p_optAlpha, bool p_optBeta, bool p_optGamma, bool p_optPhi,
+			bool p_givenAlpha, bool p_givenBeta, bool p_givenGamma, bool p_givenPhi,
+			double alpha, double beta, double gamma, double phi);
 
 	//double getLik() { return(lik); };
 	double getObjVal() { return(objval); };
@@ -41,8 +40,6 @@ private:
 
 	bool check_params();
 	bool admissible();
-
-	static EtsTargetFunction *EtsTargetFunctionSingleton;
 
 	std::vector<double> par;
 	std::vector<double> y;
@@ -69,10 +66,7 @@ private:
 
 	double lik, objval;
 
-	bool useAlpha;
-	bool useBeta;
-	bool useGamma;
-	bool usePhi;
+	bool optAlpha, optBeta, optGamma, optPhi, givenAlpha, givenBeta, givenGamma, givenPhi;
 
 };
 

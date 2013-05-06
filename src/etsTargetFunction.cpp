@@ -8,31 +8,12 @@
 
 #include <R_ext/Print.h>
 
-//using namespace std;
-
-EtsTargetFunction* EtsTargetFunction::EtsTargetFunctionSingleton = 0;
-
-void EtsTargetFunction::deleteTargetFunctionSingleton() {
-	if( EtsTargetFunctionSingleton == 0 ) return;
-	else {
-		delete EtsTargetFunctionSingleton;
-		EtsTargetFunctionSingleton = 0;
-	}
-	return;
-}
-
-EtsTargetFunction* EtsTargetFunction::getTargetFunctionSingleton() {
-	if( EtsTargetFunctionSingleton == 0 )
-		EtsTargetFunctionSingleton = new EtsTargetFunction();
-	return EtsTargetFunctionSingleton;
-}
-
-
 void EtsTargetFunction::init(std::vector<double> & p_y, int p_nstate, int p_errortype,
 		int p_trendtype, int p_seasontype, bool p_damped,
 		std::vector<double> & p_lower, std::vector<double> & p_upper, std::string p_opt_crit,
 		double p_nmse, std::string p_bounds, int p_m,
-		bool p_useAlpha, bool p_useBeta, bool p_useGamma, bool p_usePhi,
+		bool p_optAlpha, bool p_optBeta, bool p_optGamma, bool p_optPhi,
+		bool p_givenAlpha, bool p_givenBeta, bool p_givenGamma, bool p_givenPhi,
 		double alpha, double beta, double gamma, double phi) {
 
 	//this->par = p_par;
@@ -55,15 +36,26 @@ void EtsTargetFunction::init(std::vector<double> & p_y, int p_nstate, int p_erro
 
 	this->m = p_m;
 
-	this->useAlpha = p_useAlpha;
-	this->useBeta = p_useBeta;
-	this->useGamma = p_useGamma;
-	this->usePhi = p_usePhi;
+	this->optAlpha = p_optAlpha;
+	this->optBeta = p_optBeta;
+	this->optGamma = p_optGamma;
+	this->optPhi = p_optPhi;
 
-	//	Rprintf("useAlpha: %d\n", useAlpha);
-	//	Rprintf("useBeta: %d\n", useBeta);
-	//	Rprintf("useGamma: %d\n", useGamma);
-	//	Rprintf("usePhi: %d\n", usePhi);
+	this->givenAlpha = p_givenAlpha;
+	this->givenBeta = p_givenBeta;
+	this->givenGamma = p_givenGamma;
+	this->givenPhi = p_givenPhi;
+
+/*		Rprintf("optAlpha: %d\n", optAlpha);
+		Rprintf("optBeta: %d\n", optBeta);
+		Rprintf("optGamma: %d\n", optGamma);
+		Rprintf("optPhi: %d\n", optPhi);
+
+		Rprintf("givenAlpha: %d\n", givenAlpha);
+		Rprintf("givenBeta: %d\n", givenBeta);
+		Rprintf("givenGamma: %d\n", givenGamma);
+		Rprintf("givenPhi: %d\n", givenPhi);
+*/
 
 	//	int j=0;
 	//	if(useAlpha) this->alpha = par[j++];
@@ -120,10 +112,10 @@ void EtsTargetFunction::eval(const double* p_par, int p_par_length) {
 	}
 
 	int j=0;
-	if(useAlpha) this->alpha = par[j++];
-	if(useBeta) this->beta = par[j++];
-	if(useGamma) this->gamma = par[j++];
-	if(usePhi) this->phi = par[j++];
+	if(optAlpha) this->alpha = par[j++];
+	if(optBeta) this->beta = par[j++];
+	if(optGamma) this->gamma = par[j++];
+	if(optPhi) this->phi = par[j++];
 
 	if(!this->check_params()) {
 		this->objval = 1e12;
@@ -184,7 +176,6 @@ void EtsTargetFunction::eval(const double* p_par, int p_par_length) {
 			&this->alpha, &this->beta, &this->gamma, &this->phi, &this->e[0], &this->lik, &this->amse[0]);
 
 
-	//TODO: I don't really understand what this is for..
 	// Avoid perfect fits
 	if (this->lik < -1e10) this->lik = -1e10;
 
@@ -194,47 +185,43 @@ void EtsTargetFunction::eval(const double* p_par, int p_par_length) {
 
 	if(abs(this->lik+99999) < 1e-7) this->lik = 1e8;
 
-	  if(this->opt_crit=="lik") this->objval = this->lik;
-	  else if(this->opt_crit=="mse") this->objval = this->amse[0];
-	  else if(this->opt_crit=="amse") {
+	if(this->opt_crit=="lik") this->objval = this->lik;
+	else if(this->opt_crit=="mse") this->objval = this->amse[0];
+	else if(this->opt_crit=="amse") {
 
-		  //return(mean(e$amse[1:nmse]))
-		  double mean=0;
-		  for(int i=0;i<nmse;i++) {
-			  mean+=amse[i]/nmse;
-		  }
-		  this->objval=mean;
+		//return(mean(e$amse[1:nmse]))
+		double mean=0;
+		for(int i=0;i<nmse;i++) {
+			mean+=amse[i]/nmse;
+		}
+		this->objval=mean;
 
-	  }
-	  else if(this->opt_crit=="sigma") {
-		  //return(mean(e$e^2))
-		  double mean=0;
-		  int ne=e.size();
-		  for(int i=0;i<ne;i++) {
-			  mean+=e[i]*e[i]/ne;
-		  }
-		  this->objval=mean;
+	}
+	else if(this->opt_crit=="sigma") {
+		//return(mean(e$e^2))
+		double mean=0;
+		int ne=e.size();
+		for(int i=0;i<ne;i++) {
+			mean+=e[i]*e[i]/ne;
+		}
+		this->objval=mean;
 
-	  }
-	  else if(this->opt_crit=="mae") {
-		  //return(mean(abs(e$e)))
+	}
+	else if(this->opt_crit=="mae") {
+		//return(mean(abs(e$e)))
 
-		  double mean=0;
-		  int ne=e.size();
-		  for(int i=0;i<ne;i++) {
-			  mean+=abs(e[i])/ne;
-		  }
-		  this->objval=mean;
+		double mean=0;
+		int ne=e.size();
+		for(int i=0;i<ne;i++) {
+			mean+=abs(e[i])/ne;
+		}
+		this->objval=mean;
 
-	  }
-
-
-
-
+	}
 
 	//	Rprintf(" lik: %f\n", this->lik);
 
-    //return(list(lik=Cout[[13]], amse=Cout[[14]], e=e, states=matrix(Cout[[3]], nrow=n+1, ncol=p, byrow=TRUE)))
+	//return(list(lik=Cout[[13]], amse=Cout[[14]], e=e, states=matrix(Cout[[3]], nrow=n+1, ncol=p, byrow=TRUE)))
 
 }
 
@@ -244,22 +231,22 @@ bool EtsTargetFunction::check_params() {
 
 	if(bounds != "admissible")
 	{
-		if(useAlpha)
+		if(optAlpha)
 		{
 			if(alpha < lower[0] || alpha > upper[0])
 				return(false);
 		}
-		if(useBeta)
+		if(optBeta)
 		{
 			if(beta < lower[1] || beta > alpha || beta > upper[1])
 				return(false);
 		}
-		if(usePhi)
+		if(optPhi)
 		{
 			if(phi < lower[3] || phi > upper[3])
 				return(false);
 		}
-		if(useGamma)
+		if(optGamma)
 		{
 			if(gamma < lower[2] || gamma > 1-alpha || gamma > upper[2])
 				return(false);
@@ -278,11 +265,11 @@ bool EtsTargetFunction::admissible() {
 
 	if(phi < 0 || phi > 1+1e-8) return(false);
 
-	//TODO: What happens if gamma was set by user?
-	if(!useGamma) {
+	//If gamma was set by the user or it is optimized, the bounds need to be enforced
+	if(!optGamma && !givenGamma) {
 		if(alpha < 1-1/phi || alpha > 1+1/phi) return(false);
 
-		if(useBeta)
+		if(optBeta || givenBeta)
 		{
 			if(beta < alpha * (phi-1) || beta > (1+phi)*(2-alpha)) return(false);
 		}
@@ -290,8 +277,8 @@ bool EtsTargetFunction::admissible() {
 
 	else if(m > 1) //Seasonal model
 	{
-		//TODO: What happens if beta was set by user?
-		if(!useBeta) beta = 0;
+
+		if(!optBeta && !givenBeta) beta = 0;
 
 
 		//max(1-1/phi-alpha,0)

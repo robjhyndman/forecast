@@ -2,7 +2,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
     alpha=NULL, beta=NULL, gamma=NULL, phi=NULL, additive.only=FALSE, lambda=NULL,
     lower=c(rep(0.0001,3), 0.8), upper=c(rep(0.9999,3),0.98),
     opt.crit=c("lik","amse","mse","sigma","mae"), nmse=3, bounds=c("both","usual","admissible"),
-    ic=c("aic","aicc","bic"),restrict=TRUE, solver="optim", ...)
+    ic=c("aic","aicc","bic"),restrict=TRUE, ...)
 {
   #dataname <- substitute(y)
   opt.crit <- match.arg(opt.crit)
@@ -139,7 +139,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
           if(!data.positive & errortype[i]=="M")
             next
           fit <- etsmodel(y,errortype[i],trendtype[j],seasontype[k],damped[l],alpha,beta,gamma,phi,
-              lower=lower,upper=upper,opt.crit=opt.crit,nmse=nmse,bounds=bounds, solver=solver, ...)
+              lower=lower,upper=upper,opt.crit=opt.crit,nmse=nmse,bounds=bounds, ...)
           fit.ic <- switch(ic,aic=fit$aic,bic=fit$bic,aicc=fit$aicc)
           if(!is.na(fit.ic))
           {
@@ -209,8 +209,8 @@ getNewBounds <- function(par, lower, upper, nstate) {
     myUpper <- c(myUpper, upper[4])
   }
   
-  myLower <- c(myLower,rep(-1000000,nstate))
-  myUpper <- c(myUpper,rep(1000000,nstate))
+  myLower <- c(myLower,rep(-1e8,nstate))
+  myUpper <- c(myUpper,rep(1e8,nstate))
   
   list(lower=myLower, upper=myUpper)
 }
@@ -218,7 +218,7 @@ getNewBounds <- function(par, lower, upper, nstate) {
 
 etsmodel <- function(y, errortype, trendtype, seasontype, damped,
     alpha=NULL, beta=NULL, gamma=NULL, phi=NULL,
-    lower, upper, opt.crit, nmse, bounds, solver, ...)
+    lower, upper, opt.crit, nmse, bounds, solver="optim", maxit=2000, control=NULL, seed=NULL, trace=FALSE)
 {
   
   tsp.y <- tsp(y)
@@ -264,6 +264,8 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
     return(list(aic=Inf,bic=Inf,aicc=Inf,mse=Inf,amse=Inf,fit=NULL,par=par,states=init.state))
   
 #-------------------------------------------------
+
+  if(is.null(seed)) seed <- 1000*runif(1)
   
   if(solver=="malschains" || solver=="malschains_c") {
     
@@ -271,6 +273,7 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
     myRequire("Rmalschains")
     
     func <- NULL
+    #env <- NULL
     
     if(solver=="malschains") {
       
@@ -282,33 +285,28 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
         res
       }
       
+      env <- new.env()
+      
     } else {
       
-      etsTargetFunctionInit(par=par, y=y, nstate=nstate, errortype=errortype, trendtype=trendtype,
+      env <- etsTargetFunctionInit(par=par, y=y, nstate=nstate, errortype=errortype, trendtype=trendtype,
           seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
           opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt))
       
-      func <- .Call("EtsGetTargetFunctionRmalschainsPtr", package="forecast")
+      func <- .Call("etsGetTargetFunctionRmalschainsPtr", package="forecast")
       
     }
     
     myBounds <- getNewBounds(par, lower, upper, nstate)
     
-    dots<-substitute(list(...))
+    if(is.null(control)) {
+      control <- malschains.control(ls="simplex", lsOnly=TRUE)
+    }    
     
-    if(is.null(dots$control)) 
-      dots$control <- malschains.control(popsize=10, ls="simplex", istep=100, 
-          effort=0.2, alpha=0.5, optimum=0, threshold=1e-08)
+    control$optimum <- if(opt.crit=="lik") -1e12 else 0
     
-#    dots$control <- malschains.control(popsize=50, ls="cmaes", istep=500, 
-#        effort=0.5, alpha=0.5, optimum=0, threshold=1e-08)
-    
-    if(is.null(dots$maxEvals)) dots$maxEvals <- 2000
-    if(is.null(dots$trace)) dots$trace <- FALSE
-    
-    
-    fredTmp <- malschains(func, lower=myBounds$lower, upper=myBounds$upper, 
-        maxEvals=dots$maxEvals, trace=dots$trace, initialpop=par, control=dots$control)
+    fredTmp <- malschains(func, env=env, lower=myBounds$lower, upper=myBounds$upper, 
+        maxEvals=maxit, trace=trace, seed=seed, initialpop=par, control=control)
     
     fred <- NULL
     fred$par <- fredTmp$sol
@@ -322,25 +320,21 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
     donlp2 <- NULL
     myRequire("Rdonlp2")
     
-    etsTargetFunctionInit(par=par, y=y, nstate=nstate, errortype=errortype, trendtype=trendtype,
+    env <- etsTargetFunctionInit(par=par, y=y, nstate=nstate, errortype=errortype, trendtype=trendtype,
         seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
         opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt))
     
-    func <- .Call("EtsGetTargetFunctionRdonlp2Ptr", package="forecast")
+    func <- .Call("etsGetTargetFunctionRdonlp2Ptr", package="forecast")
     
     myBounds <- getNewBounds(par, lower, upper, nstate)
     
-    fred <- donlp2(par, func, par.lower=myBounds$lower, par.upper=myBounds$upper)#, nlin.lower=c(-1), nlin.upper=c(1)) #nlin.lower=c(0,-Inf, -Inf, -Inf), nlin.upper=c(0,0,0,0))
+    fred <- donlp2(par, func, env=env, par.lower=myBounds$lower, par.upper=myBounds$upper)#, nlin.lower=c(-1), nlin.upper=c(1)) #nlin.lower=c(0,-Inf, -Inf, -Inf), nlin.upper=c(0,0,0,0))
     
     fit.par <- fred$par
     
     names(fit.par) <- names(par)
     
   } else { #if(control$method=="optim")
-    
-    dots<-substitute(list(...))
-    
-    if(is.null(dots$maxit)) dots$maxit <- 2000
     
     # Optimize parameters and state
     if(length(par)==1)
@@ -350,7 +344,7 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
     fred <- optim(par,lik,method="Nelder-Mead",y=y,nstate=nstate, errortype=errortype, trendtype=trendtype,
         seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
         opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt),
-        control=list(maxit=dots$maxit))
+        control=list(maxit=maxit))
     
     fit.par <- fred$par
     
@@ -443,15 +437,33 @@ etsTargetFunctionInit <- function(par,y,nstate,errortype,trendtype,seasontype,da
     phi <- NULL
   
   #determine which values to optimize and which ones are given by the user/not needed
-  useAlpha <- !is.null(alpha)
-  useBeta <- !is.null(beta)
-  useGamma <- !is.null(gamma)
-  usePhi <- !is.null(phi)
+  optAlpha <- !is.null(alpha)
+  optBeta <- !is.null(beta)
+  optGamma <- !is.null(gamma)
+  optPhi <- !is.null(phi)
   
-  if(!is.null(par.noopt["alpha"])) if(!is.na(par.noopt["alpha"])) useAlpha <- FALSE
-  if(!is.null(par.noopt["beta"])) if(!is.na(par.noopt["beta"])) useBeta <- FALSE
-  if(!is.null(par.noopt["gamma"])) if(!is.na(par.noopt["gamma"])) useGamma <- FALSE
-  if(!is.null(par.noopt["phi"])) if(!is.na(par.noopt["phi"])) usePhi <- FALSE
+  givenAlpha <- FALSE
+  givenBeta <- FALSE
+  givenGamma <- FALSE
+  givenPhi <- FALSE
+  
+  if(!is.null(par.noopt["alpha"])) if(!is.na(par.noopt["alpha"])) {
+      optAlpha <- FALSE
+      givenAlpha <- TRUE
+    }
+  if(!is.null(par.noopt["beta"])) if(!is.na(par.noopt["beta"])) {
+      optBeta <- FALSE
+      givenBeta <- TRUE      
+    }
+  if(!is.null(par.noopt["gamma"])) if(!is.na(par.noopt["gamma"])) {
+      optGamma <- FALSE
+      givenGamma <- TRUE      
+    }
+  if(!is.null(par.noopt["phi"])) if(!is.na(par.noopt["phi"])) {
+      optPhi <- FALSE
+      givenPhi <- TRUE      
+    } 
+      
   
   if(!damped)
     phi <- 1;
@@ -470,13 +482,16 @@ etsTargetFunctionInit <- function(par,y,nstate,errortype,trendtype,seasontype,da
 #  cat(" useGamma: ", useGamma)
 #  cat(" usePhi: ", usePhi, "\n")
   
-  .Call("EtsTargetFunctionInit", y=y, nstate=nstate, errortype=switch(errortype,"A"=1,"M"=2), 
+  env <- new.env()
+
+  res <- .Call("etsTargetFunctionInit", y=y, nstate=nstate, errortype=switch(errortype,"A"=1,"M"=2), 
       trendtype=switch(trendtype,"N"=0,"A"=1,"M"=2), seasontype=switch(seasontype,"N"=0,"A"=1,"M"=2), 
       damped=damped, lowerb=lowerb, upperb=upperb,
       opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,
-      useAlpha, useBeta, useGamma, usePhi, 
-      alpha, beta, gamma, phi, package="forecast")
-  
+      optAlpha, optBeta, optGamma, optPhi, 
+      givenAlpha, givenBeta, givenGamma, givenPhi,
+      alpha, beta, gamma, phi, env, package="forecast")
+  res
 }
 
 
