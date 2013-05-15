@@ -4,6 +4,9 @@
 
 #include <R_ext/Error.h>
 
+//For R's Nelder-Mead solver
+#include <R_ext/Applic.h>
+
 #include <Rcpp.h>
 
 #include "etsTargetFunction.h"
@@ -34,8 +37,6 @@ RcppExport SEXP etsTargetFunctionInit(SEXP p_y, SEXP p_nstate, SEXP p_errortype,
 
 	bool damped = Rcpp::as<bool>(p_damped);
 
-	//if (p_par_noopt != R_NilValue)
-	//	par_noopt = Rcpp::as< std::vector<double> >(p_par_noopt);
 	std::vector<double> lower = Rcpp::as< std::vector<double> >(p_lower);
 	std::vector<double> upper = Rcpp::as< std::vector<double> >(p_upper);
 
@@ -66,14 +67,10 @@ RcppExport SEXP etsTargetFunctionInit(SEXP p_y, SEXP p_nstate, SEXP p_errortype,
 			givenAlpha, givenBeta, givenGamma, givenPhi,
 			alpha, beta, gamma, phi);
 
-	//return Rcpp::XPtr<EtsTargetFunction>( sp, true );
-
 	Rcpp::Environment e(p_rho);
 	e["ets.xptr"] = Rcpp::XPtr<EtsTargetFunction>( sp, true );
 
 	return Rcpp::wrap(e);
-
-	//return R_NilValue;
 
 	END_RCPP;
 }
@@ -87,19 +84,6 @@ RcppExport double targetFunctionRmalschains(SEXP p_par, SEXP p_env)
 
 	sp->eval(par.begin(), par.size());
 
-	/*
-	Rcpp::NumericVector res(5);
-
-	res[0] = sp->objval;
-
-	res[1] = sp->restrictions[0];
-	res[2] = sp->restrictions[1];
-	res[3] = sp->restrictions[2];
-	res[4] = sp->restrictions[3];
-
-	return res;
-	 */
-
 	//return Rcpp::wrap(sp->getObjVal());
 	return sp->getObjVal();
 
@@ -111,7 +95,7 @@ RcppExport SEXP etsGetTargetFunctionRmalschainsPtr() {
 	return (Rcpp::XPtr<funcPtr>(new funcPtr(&targetFunctionRmalschains)));
 }
 
-
+/*
 RcppExport SEXP targetFunctionRdonlp2(SEXP p_var, SEXP p_env)
 {
 
@@ -144,3 +128,54 @@ RcppExport SEXP etsGetTargetFunctionRdonlp2Ptr() {
 	typedef SEXP (*funcPtr)(SEXP, SEXP);
 	return (Rcpp::XPtr<funcPtr>(new funcPtr(&targetFunctionRdonlp2)));
 }
+*/
+
+
+double targetFunctionEtsNelderMead(int n, double *par, void *ex)
+{
+	EtsTargetFunction* sp = (EtsTargetFunction*) ex;
+
+	sp->eval(par, n);
+	return sp->getObjVal();
+
+}
+
+
+RcppExport SEXP etsNelderMead(SEXP p_var, SEXP p_env, SEXP p_abstol, 
+		SEXP p_intol, SEXP p_alpha, SEXP p_beta, SEXP p_gamma,
+		SEXP p_trace, SEXP p_maxit)
+{
+
+	double abstol = Rcpp::as<double>(p_abstol);
+	double intol = Rcpp::as<double>(p_intol);
+	double alpha = Rcpp::as<double>(p_alpha);
+	double beta= Rcpp::as<double>(p_beta);
+	double gamma= Rcpp::as<double>(p_gamma);
+
+	int trace = Rcpp::as<int>(p_trace);
+	int maxit = Rcpp::as<int>(p_maxit);
+
+	int fncount = 0, fail=0;
+	double Fmin = 0.0;
+
+	Rcpp::NumericVector dpar(p_var);
+	Rcpp::NumericVector opar(dpar.size());
+
+	Rcpp::Environment e(p_env);
+	Rcpp::XPtr<EtsTargetFunction> sp(e.get("ets.xptr"));
+
+	double (*funcPtr)(int n, double *par, void *ex) = targetFunctionEtsNelderMead;
+
+	nmmin(dpar.size(), dpar.begin(), opar.begin(), &Fmin, funcPtr,
+			&fail, abstol, intol, sp, alpha, beta, gamma, trace, &fncount, maxit);
+
+	return Rcpp::List::create(Rcpp::Named("value") = Fmin,
+			Rcpp::Named("par") = opar,
+			Rcpp::Named("fail") = fail,
+			Rcpp::Named("fncount") = fncount);
+
+}
+
+
+
+

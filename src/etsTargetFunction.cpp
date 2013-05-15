@@ -16,7 +16,6 @@ void EtsTargetFunction::init(std::vector<double> & p_y, int p_nstate, int p_erro
 		bool p_givenAlpha, bool p_givenBeta, bool p_givenGamma, bool p_givenPhi,
 		double alpha, double beta, double gamma, double phi) {
 
-	//this->par = p_par;
 	this->y = p_y;
 	this->n = this->y.size();
 	this->nstate = p_nstate;
@@ -26,7 +25,6 @@ void EtsTargetFunction::init(std::vector<double> & p_y, int p_nstate, int p_erro
 	this->seasontype = p_seasontype;
 	this->damped = p_damped;
 
-	//this->par_noopt = p_par_noopt;
 	this->lower = p_lower;
 	this->upper = p_upper;
 
@@ -57,12 +55,6 @@ void EtsTargetFunction::init(std::vector<double> & p_y, int p_nstate, int p_erro
 		Rprintf("givenPhi: %d\n", givenPhi);
 */
 
-	//	int j=0;
-	//	if(useAlpha) this->alpha = par[j++];
-	//	if(useBeta) this->beta = par[j++];
-	//	if(useGamma) this->gamma = par[j++];
-	//	if(usePhi) this->phi = par[j++];
-
 	this->alpha = alpha;
 	this->beta = beta;
 	this->gamma = gamma;
@@ -70,9 +62,9 @@ void EtsTargetFunction::init(std::vector<double> & p_y, int p_nstate, int p_erro
 
 	this->lik = 0;
 	this->objval = 0;
+
 	//	for(int i=0; i < 10; i++) this->amse.push_back(0);
 	//	for(int i=0; i < n; i++) this->e.push_back(0);
-
 	this->amse.resize(10, 0);
 	this->e.resize(n, 0);
 
@@ -166,8 +158,6 @@ void EtsTargetFunction::eval(const double* p_par, int p_par_length) {
 		//  return(1e8)
 	};
 
-	//Rprintf(" 3: %f\n", this->objval);
-
 	int p = state.size();
 
 	for(int i=0; i <= p*this->y.size(); i++) state.push_back(0);
@@ -218,10 +208,6 @@ void EtsTargetFunction::eval(const double* p_par, int p_par_length) {
 		this->objval=mean;
 
 	}
-
-	//	Rprintf(" lik: %f\n", this->lik);
-
-	//return(list(lik=Cout[[13]], amse=Cout[[14]], e=e, states=matrix(Cout[[3]], nrow=n+1, ncol=p, byrow=TRUE)))
 
 }
 

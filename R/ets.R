@@ -315,26 +315,39 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
     
     names(fit.par) <- names(par)
     
-  } else if (solver=="Rdonlp2") {
+#  } else if (solver=="Rdonlp2") {
+#    
+#    donlp2 <- NULL
+#    myRequire("Rdonlp2")
+#    
+#    env <- etsTargetFunctionInit(par=par, y=y, nstate=nstate, errortype=errortype, trendtype=trendtype,
+#        seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
+#        opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt))
+#    
+#    func <- .Call("etsGetTargetFunctionRdonlp2Ptr", package="forecast")
+#    
+#    myBounds <- getNewBounds(par, lower, upper, nstate)
+#    
+#    fred <- donlp2(par, func, env=env, par.lower=myBounds$lower, par.upper=myBounds$upper)#, nlin.lower=c(-1), nlin.upper=c(1)) #nlin.lower=c(0,-Inf, -Inf, -Inf), nlin.upper=c(0,0,0,0))
+#    
+#    fit.par <- fred$par
+#    
+#    names(fit.par) <- names(par)
     
-    donlp2 <- NULL
-    myRequire("Rdonlp2")
+  } else if(solver=="optim_c"){
     
     env <- etsTargetFunctionInit(par=par, y=y, nstate=nstate, errortype=errortype, trendtype=trendtype,
         seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
         opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt))
     
-    func <- .Call("etsGetTargetFunctionRdonlp2Ptr", package="forecast")
-    
-    myBounds <- getNewBounds(par, lower, upper, nstate)
-    
-    fred <- donlp2(par, func, env=env, par.lower=myBounds$lower, par.upper=myBounds$upper)#, nlin.lower=c(-1), nlin.upper=c(1)) #nlin.lower=c(0,-Inf, -Inf, -Inf), nlin.upper=c(0,0,0,0))
+    fred <- .Call("etsNelderMead", par, env, -Inf, 
+        sqrt(.Machine$double.eps), 1.0, 0.5, 2.0, trace, maxit, package="forecast")
     
     fit.par <- fred$par
     
-    names(fit.par) <- names(par)
+    names(fit.par) <- names(par)    
     
-  } else { #if(control$method=="optim")
+  } else { #if(solver=="optim")
     
     # Optimize parameters and state
     if(length(par)==1)
@@ -345,6 +358,8 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
         seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
         opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt),
         control=list(maxit=maxit))
+    
+    #browser()
     
     fit.par <- fred$par
     

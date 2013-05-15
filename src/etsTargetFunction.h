@@ -15,9 +15,6 @@ class EtsTargetFunction {
 
 public:
 
-	//EtsTargetFunction();
-	//~EtsTargetFunction();
-
 	void eval(const double* p_var, int p_var_length);
 	void init(std::vector<double> & p_y, int p_nstate, int p_errortype,
 			int p_trendtype, int p_seasontype, bool p_damped,
@@ -27,14 +24,8 @@ public:
 			bool p_givenAlpha, bool p_givenBeta, bool p_givenGamma, bool p_givenPhi,
 			double alpha, double beta, double gamma, double phi);
 
-	//double getLik() { return(lik); };
 	double getObjVal() { return(objval); };
 
-	/*
-	std::vector<double>* gete() { return(&e); };
-
-	double restrictions[4];
-	 */
 
 private:
 
