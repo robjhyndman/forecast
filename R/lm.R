@@ -68,7 +68,7 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
   if(!is.null(object$data))
     origdata <- object$data
   else if(!is.null(object$call$data))
-    origdata <- eval(object$call$data)
+    origdata <- object$data <- eval(object$call$data)
   else
     origdata <- as.data.frame(fitted(object) + residuals(object))
 
@@ -118,9 +118,10 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
   #if(any(!is.element(xreg,colnames(newdata))))
   #  stop("Predictor variables not included")
 
-  responsevar <- as.character(formula(object$model))[2]
-  responsevar <- gsub("`","",responsevar)
-  object$x <- model.frame(object$model)[,responsevar]
+  object$x <- getResponse(object)
+  #responsevar <- as.character(formula(object$model))[2]
+  #responsevar <- gsub("`","",responsevar)
+  #object$x <- model.frame(object$model)[,responsevar]
 
   out <- list()
   nl <- length(level)

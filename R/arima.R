@@ -283,7 +283,7 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
     {
         sim <- matrix(NA,nrow=npaths,ncol=h)
         for(i in 1:npaths)
-            sim[i,] <- simulate(object, nsim=h, bootstrap=TRUE, xreg=xreg)
+            sim[i,] <- simulate(object, nsim=h, bootstrap=TRUE, xreg=xreg, lambda=NULL)
         pred$se <- apply(sim,2,sd)
     }
 

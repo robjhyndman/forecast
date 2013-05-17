@@ -8,7 +8,7 @@ ets(y, model="ZZZ", damped=NULL, alpha=NULL, beta=NULL, gamma=NULL,
     lower=c(rep(0.0001,3), 0.8), upper=c(rep(0.9999,3),0.98), 
     opt.crit=c("lik","amse","mse","sigma","mae"), nmse=3, 
     bounds=c("both","usual","admissible"), ic=c("aic","aicc","bic"),
-    restrict=TRUE)
+    restrict=TRUE, ...)
 }
 
 \arguments{
@@ -44,6 +44,7 @@ admissible space; \code{"both"} (default) takes the intersection of these region
 \item{ic}{Information criterion to be used in model selection.}
 \item{restrict}{If TRUE, the models with infinite variance will not
     be allowed.}
+\item{...}{Other undocumented arguments.}
 }
 
 \description{Returns ets model applied to \code{y}.

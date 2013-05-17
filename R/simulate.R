@@ -215,7 +215,7 @@ myarima.sim <- function (model, n, x, e, ...)
   return(x)
 }
 
-simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, future=TRUE, bootstrap=FALSE, innov=NULL, ...)
+simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, future=TRUE, bootstrap=FALSE, innov=NULL, lambda=object$lambda, ...)
 {
   #Error check:
   if(object$arma[7] < 0)
@@ -315,8 +315,8 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
   if(is.null(tsp(x)))
     x <- ts(x,frequency=1,start=1)
 
-  if(!is.null(object$lambda))
-    x <- BoxCox(x,object$lambda)
+  if(!is.null(lambda))
+    x <- BoxCox(x,lambda)
 
   n <- length(x)
   d <- order[2]
@@ -387,8 +387,8 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
       sim <- arima.sim(model,nsim,innov=e) + xm
     }
   }
-  if(!is.null(object$lambda))
-    sim <- InvBoxCox(sim,object$lambda)
+  if(!is.null(lambda))
+    sim <- InvBoxCox(sim,lambda)
   return(sim)
 }
 

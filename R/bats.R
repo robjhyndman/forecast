@@ -15,7 +15,7 @@ filterSpecifics<-function(y, box.cox, trend, damping, seasonal.periods, use.arma
 	if((trend == FALSE) & (damping == TRUE)) {
 		return(list(AIC=Inf))
 	}
-	
+
 
 	first.model <- fitSpecificBATS(y, use.box.cox=box.cox, use.beta=trend, use.damping=damping, seasonal.periods=seasonal.periods, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)
 	if((!is.null(seasonal.periods)) & (!force.seasonality)) {
@@ -25,7 +25,7 @@ filterSpecifics<-function(y, box.cox, trend, damping, seasonal.periods, use.arma
 			first.model <- non.seasonal.model
 		}
 	}
-	if(use.arma.errors) { 
+	if(use.arma.errors) {
 		##Turn off warnings
 		old.warning.level <- options()$warn
 		options(warn=-1)
@@ -62,16 +62,16 @@ filterSpecifics<-function(y, box.cox, trend, damping, seasonal.periods, use.arma
 }
 
 parFilterSpecifics<-function(control.number, control.array, y, seasonal.periods, use.arma.errors, force.seasonality=FALSE, init.box.cox=NULL, bc.lower=0, bc.upper=1, ...) {
-	box.cox <- control.array[control.number, 1] 
+	box.cox <- control.array[control.number, 1]
 	trend <- control.array[control.number, 2]
 	damping <- control.array[control.number, 3]
-	
-	
+
+
 	if((trend == FALSE) & (damping == TRUE)) {
 		return(list(AIC=Inf))
 	}
-	
-	
+
+
 	first.model <- fitSpecificBATS(y, use.box.cox=box.cox, use.beta=trend, use.damping=damping, seasonal.periods=seasonal.periods, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)
 	if((!is.null(seasonal.periods)) & (!force.seasonality)) {
 		non.seasonal.model <- fitSpecificBATS(y, use.box.cox=box.cox, use.beta=trend, use.damping=damping, seasonal.periods=NULL, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)
@@ -80,7 +80,7 @@ parFilterSpecifics<-function(control.number, control.array, y, seasonal.periods,
 			first.model <- non.seasonal.model
 		}
 	}
-	if(use.arma.errors) { 
+	if(use.arma.errors) {
 		##Turn off warnings
 		old.warning.level <- options()$warn
 		options(warn=-1)
@@ -117,21 +117,24 @@ parFilterSpecifics<-function(control.number, control.array, y, seasonal.periods,
 }
 
 bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, seasonal.periods=NULL, use.arma.errors=TRUE, use.parallel=TRUE, num.cores=NULL, bc.lower=0, bc.upper=1, ...) {
+
+	# Check for non-positive data
 	if(any((y <= 0))) {
-		stop("BATS requires positive data")
+		use.box.cox <- FALSE
+		#stop("BATS requires positive data")
 	}
   origy <- y
   if(is.null(seasonal.periods))
   {
-    if(any(class(y) == "msts")) 
+    if(any(class(y) == "msts"))
       seasonal.periods <- attr(y,"msts")
-    else if(class(y) == "ts") 
+    else if(class(y) == "ts")
       seasonal.periods <- frequency(y)
 	}
 	if(all(seasonal.periods == 1))
     seasonal.periods <- NULL
 
-	if(!is.null(seasonal.periods)) 
+	if(!is.null(seasonal.periods))
   {
 		seasonal.mask <- (seasonal.periods == 1)
 		seasonal.periods <- seasonal.periods[!seasonal.mask]
@@ -140,7 +143,7 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, sea
 	if(is.null(seasonal.periods) & !is.null(use.box.cox) & !is.null(use.trend)) {
 		use.parallel <- FALSE
 	}
-	
+
   y <- as.numeric(y)
 	best.aic <- NULL
 	if(is.null(use.box.cox)) {
@@ -215,18 +218,18 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, sea
 	if(best.model$optim.return.code != 0) {
 		warning("optim() did not converge.")
 	}
-  
+
   # Add ts attributes
   if(!any(class(origy) == "ts"))
   {
     if(is.null(seasonal.periods))
       origy <- ts(origy,start=1,frequency=1)
-    else 
+    else
       origy <- msts(origy,seasonal.periods)
   }
   attributes(best.model$fitted.values) <- attributes(best.model$errors) <- attributes(origy)
   best.model$y <- origy
-  
+
 	return(best.model)
 }
 
@@ -268,24 +271,24 @@ print.bats <- function(x,...) {
 	cat("\n")
 	cat("\nSeed States:\n")
 	print(x$seed.states)
-	
+
 	cat("\nSigma: ")
 	cat(sqrt(x$variance))
-	
+
 	cat("\nAIC: ")
 	cat(x$AIC)
-	cat("\n")	
+	cat("\n")
 }
 residuals.bats <- function(object, ...) {
 	object$errors
 }
 
-plot.bats <- function (x, main="Decomposition by BATS model", ...) 
+plot.bats <- function (x, main="Decomposition by BATS model", ...)
 {
   # Get original data, transform if necessary
-  if (!is.null(x$lambda)) 
+  if (!is.null(x$lambda))
     y <- BoxCox(x$y, x$lambda)
-  else 
+  else
     y <- x$y
 
   # Extract states
@@ -303,11 +306,11 @@ plot.bats <- function (x, main="Decomposition by BATS model", ...)
     if(nseas > 1)
       colnames(out)[nonseas + 1:nseas] <- paste("season",1:nseas,sep="")
   }
-  
+
   # Add time series characteristics
   out <- ts(out)
   tsp(out) <- tsp(y)
-  
+
   # Do the plot
   plot(out, main=main, nc=1, ...)
 }

@@ -13,7 +13,7 @@ guer.cv <- function(lam, x, nonseasonal.length=2)
   period <- max(nonseasonal.length,frequency(x))
   nobsf <- length(x)
   nyr <- floor(nobsf/period)
-  nobst <- nyr*period
+  nobst <- floor(nyr*period)
   x.mat <- matrix(x[(nobsf-nobst+1):nobsf],period,nyr)
   x.mean <- apply(x.mat,2,mean,na.rm=TRUE)
   x.sd <- apply(x.mat,2,sd,na.rm=TRUE)
@@ -61,10 +61,12 @@ bcloglik <- function(x, lower=-1, upper=2)
   return(xl[which.max(loglik)])
 }
 
-BoxCox.lambda <- function(x,method=c("guerrero","loglik"),lower=-1,upper=2)
+BoxCox.lambda <- function(x, method=c("guerrero","loglik"), lower=-1, upper=2)
 {
   if(any(x <= 0))
 	lower <- 0
+  if(length(x) <= 2*frequency(x))
+    return(1) # Not enough data to do much more than this
  #   stop("All values must be positive")
   method <- match.arg(method)
   if(method=="loglik")

@@ -10,7 +10,7 @@
 \method{simulate}{ar}(object, nsim=object$n.used, seed=NULL, future=TRUE, 
     bootstrap=FALSE,  innov=NULL, ...)
 \method{simulate}{Arima}(object, nsim=length(object$x), seed=NULL, xreg=NULL, future=TRUE, 
-    bootstrap=FALSE,  innov=NULL, ...)
+    bootstrap=FALSE,  innov=NULL, lambda=object$lambda, ...)
 \method{simulate}{fracdiff}(object, nsim=object$n, seed=NULL, future=TRUE, 
     bootstrap=FALSE,  innov=NULL, ...)
 }
@@ -24,6 +24,7 @@ before simulating the time series. The default, NULL will not change the random 
 \item{bootstrap}{If TRUE, simulation uses resampled errors rather than normally distributed errors.}
 \item{innov}{A vector of innovations to use as the error series. If present, \code{bootstrap} and \code{seed} are ignored.}
 \item{xreg}{New values of xreg to be used for forecasting. Must have nsim rows.}
+\item{lambda}{Box-Cox parameter. If not \code{NULL}, the simulated series is transformed using an inverse Box-Cox transformation with parameter \code{lamda}.}
 \item{...}{Other arguments.}
 }
 

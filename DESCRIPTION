@@ -7,12 +7,12 @@ Description: Methods and tools for displaying and analysing
              via state space models and automatic ARIMA modelling.
 Depends: R (>= 2.14.0), stats, graphics
 Imports: tseries, fracdiff, zoo, Rcpp (>= 0.9.10), RcppArmadillo (>= 0.2.35), nnet, colorspace, parallel
-Suggests: fracdiff
+Suggests: fracdiff, Rmalschains
 LinkingTo: Rcpp, RcppArmadillo
 LazyData: yes
 ByteCompile: TRUE
 Author: Rob J Hyndman <Rob.Hyndman@monash.edu> with contributions from
-	George Athanasopoulos, Slava Razbash, Drew Schmidt, Zhenyu Zhou and Yousaf Khan
+	George Athanasopoulos, Slava Razbash, Drew Schmidt, Zhenyu Zhou, Yousaf Khan, Christoph Bergmeir
 Maintainer: Rob J Hyndman <Rob.Hyndman@monash.edu>
 License: GPL (>= 2)
 URL: http://robjhyndman.com/software/forecast/

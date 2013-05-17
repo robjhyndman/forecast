@@ -1,5 +1,12 @@
 Version 4.05 (?? May 2013)
   * Fixed bug in hw() so it works when initial="simple"
+  * Allowed bats() and tbats() to take non-positive values.
+  * Added Rmalschains as a possible optimizer in ets(). Not documented.
+  * ets() now calls optim direct via c code making ets() run much faster.
+  * Modified forecast.lm so it is more likely that the original data are stored in the returned object.
+  * Corrected bug in forecast.Arima that occurred when a Box-Cox transformation was used with bootstrap=TRUE.
+  * accuracy() updated so that it gives more information, and returns a matrix of both test and training measures.
+  * Corrected training error measures for splinef() forecasts.
 
 Version 4.04 (22 April 2013)
   * Added ylim argument to Acf()
@@ -8,7 +15,7 @@ Version 4.04 (22 April 2013)
   * forecast.Arima() is now a little more robust if a zoo object is passed instead of a ts object.
   * CV() now handles missing values in the residuals.
   * Fixed bug in holt() and hw() so that the printed model no longer contains missing values.
-  
+
 Version 4.03 (14 March 2013)
   * forecast.lm now guesses the variable name if there is only one predictor variable.
   * Removed error trap in forecast.lm when no xreg variables passed as it was catching legitimate calls.

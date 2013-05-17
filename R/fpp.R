@@ -7,7 +7,7 @@ Acf <- function(x, lag.max=NULL, type=c("correlation","partial"), plot=TRUE, mai
   if (is.null(lag.max))
     lag.max <- floor(10 * log10(length(x))) - (type!="partial")
   lag.max <- min(lag.max, length(x) - 1)
-  if (lag.max < 0) 
+  if (lag.max < 0)
         stop("'lag.max' must be at least 0")
   junk1 <- acf(c(x), lag.max=lag.max, type=type, plot=FALSE, ...)
   junk1$series <- deparse(substitute(x))
@@ -30,7 +30,7 @@ Acf <- function(x, lag.max=NULL, type=c("correlation","partial"), plot=TRUE, mai
   return(invisible(junk1))
 }
 
-Pacf <- function (x, main=NULL, ...) 
+Pacf <- function (x, main=NULL, ...)
 {
   if(is.null(main))
       main <- paste("Series:",deparse(substitute(x)))
@@ -43,7 +43,7 @@ CV <- function(obj)
     n <- length(obj$residuals)
     k <- extractAIC(obj)[1]-1 # number of predictors (constant removed)
     aic <- extractAIC(obj)[2]+2 # add 2 for the variance estimate
-    aicc <- aic + 2*(k+2)*(k+3)/(n-k-1) 
+    aicc <- aic + 2*(k+2)*(k+3)/(n-k-1)
     bic <- aic + (k+2)*(log(n)-2)
     cv <- mean((residuals(obj)/(1-hatvalues(obj)))^2, na.rm=TRUE)
     adjr2 <- summary(obj)$adj
@@ -65,7 +65,7 @@ ma <- function(x,order,centre=TRUE)
     }
     else
     {
-        temp1 <- ksmooth(tt,x, x.points=tt+0.5,bandwidth = order-1)$y
+        temp1 <- ts(ksmooth(tt,x, x.points=tt+0.5,bandwidth = order-1)$y)
         j <- trunc(order/2)
         temp1[c(1:(j-1),length(x)-(1:j)+1)] <- NA
         if(centre)

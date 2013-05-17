@@ -3,13 +3,16 @@
 ## Actual values in x
 # dx = response variable in historical data
 ## test enables a subset of x and f to be tested.
-forecasterrors <- function(f,x,test="all")
+testaccuracy <- function(f,x,test="all")
 {
   dx <- getResponse(f)
   if(is.data.frame(x))
   {
     responsevar <- as.character(formula(f$model))[2]
-    x <- x[,responsevar]
+    if(is.element(responsevar, colnames(x)))
+      x <- x[,responsevar]
+    else
+      stop("I can't figure out what data to use.")
   }
   if(is.list(f))
   {
@@ -35,24 +38,26 @@ forecasterrors <- function(f,x,test="all")
   xx <- x
 
   error <- (xx-ff[1:n])[test]
-  me <- mean(error)
-  mse <- mean(error^2)
-  mae <- mean(abs(error))
-  mape <- mean(100*abs(error/xx[test]))
-  mpe <-  mean(100*error/xx[test])
-  junk <- c(me,sqrt(mse),mae,mpe,mape)
-  names(junk) <- c("ME","RMSE","MAE","MPE","MAPE")
+  pe <- error/xx[test] * 100
+
+  me <- mean(error, na.rm=TRUE)
+  mse <- mean(error^2, na.rm=TRUE)
+  mae <- mean(abs(error), na.rm=TRUE)
+  mape <- mean(abs(pe), na.rm=TRUE)
+  mpe <-  mean(pe, na.rm=TRUE)
+  out <- c(me,sqrt(mse),mae,mpe,mape)
+  names(out) <- c("ME","RMSE","MAE","MPE","MAPE")
 
   # Compute MASE if historical data available
   if(!is.null(dx))
   {
     if(!is.null(tsp(dx)))
-      scale <- mean(abs(diff(dx,lag=frequency(dx))),na.rm=TRUE)
+      scale <- mean(abs(diff(dx,lag=max(1,frequency(dx)))),na.rm=TRUE)
     else # not time series
       scale <- mean(abs(dx-mean(dx)),na.rm=TRUE)
     mase <- mean(abs(error/scale))
-    junk <- c(junk,mase)
-    names(junk)[length(junk)] <- "MASE"
+    out <- c(out,mase)
+    names(out)[length(out)] <- "MASE"
   }
 
   # Additional time series measures
@@ -61,42 +66,100 @@ forecasterrors <- function(f,x,test="all")
     fpe <- (c(ff[2:n])/c(xx[1:(n-1)]) - 1)[test-1]
     ape <- (c(xx[2:n])/c(xx[1:(n-1)]) - 1)[test-1]
     theil <- sqrt(sum((fpe - ape)^2)/sum(ape^2))
-    r1 <- acf(error,plot=FALSE,lag.max=2)$acf[2,1,1]
-    nj <- length(junk)
-    junk <- c(junk,r1,theil)
-    names(junk)[nj+(1:2)] <- c("ACF1","Theil's U")
+    r1 <- acf(error,plot=FALSE,lag.max=2,na.action=na.pass)$acf[2,1,1]
+    nj <- length(out)
+    out <- c(out,r1,theil)
+    names(out)[nj+(1:2)] <- c("ACF1","Theil's U")
   }
 
-  return(junk)
+  return(out)
 }
 
 
+trainingaccuracy <- function(f,test="all")
+{
+  # Make sure x is an element of f when f is a fitted model rather than a forecast
+  #if(!is.list(f))
+  #  stop("f must be a forecast object or a time series model object.")
+  dx <- getResponse(f)
+  if(is.element("splineforecast",class(f)))
+    fits <- f$onestepf
+  else
+    fits <- fitted(f)    # Don't use f$resid as this may contain multiplicative errors.
+
+  res <- dx-fits
+  if(is.numeric(test))
+  {
+    res <- res[test]
+    dx <- dx[test]
+  }
+  pe <- res/dx * 100 # Percentage error
+
+  me <- mean(res,na.rm=TRUE)
+  mse <- mean(res^2,na.rm=TRUE)
+  mae <- mean(abs(res),na.rm=TRUE)
+  mape <- mean(100*abs(pe),na.rm=TRUE)
+  mpe <-  mean(100*pe,na.rm=TRUE)
+  out <- c(me,sqrt(mse),mae,mpe,mape)
+  names(out) <- c("ME","RMSE","MAE","MPE","MAPE")
+
+  # Compute MASE if historical data available
+  if(!is.null(dx))
+  {
+    if(!is.null(tsp(dx)))
+      scale <- mean(abs(diff(dx,lag=max(1,frequency(dx)))),na.rm=TRUE)
+    else # not time series
+      scale <- mean(abs(dx-mean(dx)),na.rm=TRUE)
+    mase <- mean(abs(res/scale), na.rm=TRUE)
+    out <- c(out,mase)
+    names(out)[length(out)] <- "MASE"
+  }
+
+  # Additional time series measures
+  if(!is.null(tsp(dx)))
+  {
+    r1 <- acf(res,plot=FALSE,lag.max=2,na.action=na.pass)$acf[2,1,1]
+    nj <- length(out)
+    out <- c(out,r1)
+    names(out)[nj+1] <- "ACF1"
+  }
+
+  return(out)
+}
+
 accuracy <- function(f,x,test="all")
 {
-    if(!missing(x))
-        return(forecasterrors(f,x,test))
-    # Make sure x is an element of f when f is a fitted model rather than a forecast
-    if(!is.list(f))
-      stop("If no x argument, then f must be a forecast object or a time series model object.")
-    f$x <- getResponse(f)
-    
-    ff <- f$x
-    fits <- fitted(f)    # Don't use f$resid as this may contain multiplicative errors.
-    res <- ff-fits
-    if(is.numeric(test))
-    {
-      res <- res[test]
-      ff <- ff[test]
-    }
+  trainset <- (is.list(f))
+  testset <- (!missing(x))
+  if(!trainset & !testset)
+    stop("Unable to compute forecast accuracy measures")
+  if(trainset)
+  {
+    trainout <- trainingaccuracy(f,test)
+    trainnames <- names(trainout)
+  }
+  else
+    trainnames <- NULL
+  if(testset)
+  {
+    testout <- testaccuracy(f,x,test)
+    testnames <- names(testout)
+  }
+  else
+    testnames <- NULL
+  outnames <- unique(c(trainnames,testnames))
 
-    pe <- res/ff * 100 # Percentage error
-    out <- c(mean(res,na.rm=TRUE), sqrt(mean(res^2,na.rm=TRUE)), mean(abs(res),na.rm=TRUE), mean(pe,na.rm=TRUE), mean(abs(pe),na.rm=TRUE))
-    names(out) <- c("ME","RMSE","MAE","MPE","MAPE")
-    if(!is.null(tsp(f$x)))
-    {
-        scale <- mean(abs(diff(f$x)),na.rm=TRUE)
-        out <- c(out, mean(abs(res/scale),na.rm=TRUE))
-        names(out)[6] <- "MASE"
-    }
-    return(out)
+  out <- matrix(NA,nrow=2,ncol=length(outnames))
+  colnames(out) <- outnames
+  rownames(out) <- c("Training set","Test set")
+  if(trainset)
+    out[1,names(trainout)] <- trainout
+  if(testset)
+    out[2,names(testout)] <- testout
+
+  if(!testset)
+    out <- out[1,,drop=FALSE]
+  if(!trainset)
+    out <- out[2,,drop=FALSE]
+  return(out)
 }
