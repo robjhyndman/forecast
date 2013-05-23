@@ -140,11 +140,11 @@ void EtsTargetFunction::eval(const double* p_par, int p_par_length) {
 	if(seasontype==2)
 	{
 
-		double min = state[0];
-		int leaveOut = 1;
-		if(trendtype!=0) leaveOut++;
+		double min = 1e12;
+		int start = 1;
+		if(trendtype!=0) start=2;
 
-		for(int i=0; i<(state.size()-leaveOut); i++) {
+		for(int i=start; i<state.size(); i++) {
 			if(state[i] < min) min = state[i];
 		}
 
@@ -300,7 +300,8 @@ bool EtsTargetFunction::admissible() {
 
 		double max = 0;
 		for(int i=0;i<zeror.size();i++) {
-			if(abs(zeror[i])>max) max = abs(zeror[i]);
+		  double abs_val = sqrt(zeror[i]*zeror[i] + zeroi[i]*zeroi[i]);
+		  if(abs_val>max) max = abs_val;
 		}
 
 		//Rprintf("maxpolyroot: %f\n", max);
