@@ -302,7 +302,8 @@ croston <- function(x,h=10,alpha=0.1)
     out <- croston2(x,h,alpha)
     out$x <- x
     out$xname <- deparse(substitute(x))
-    out$residuals <- x-out$fitted
+    if(!is.null(out$fitted))
+      out$residuals <- x-out$fitted
     out$method <- "Croston's method"
     return(structure(out,class="forecast"))
 }
@@ -311,24 +312,29 @@ croston2 <- function(x,h=10,alpha=0.1,nofits=FALSE)
 {
     x <- as.ts(x)
     y <- x[x>0]
-    tt <- diff(c(0,(1:length(x))[x>0]))
-    if(length(y)==1 & length(tt)==1)
-        return(rep(y/tt,h))
-    else if(length(y)<=1 | length(tt)<=1)
-        return(rep(NA,h))
-    y.f <- forecast(HoltWinters(y,beta=FALSE,gamma=FALSE,alpha=alpha),h=h)
-    p.f <- forecast(HoltWinters(tt,beta=FALSE,gamma=FALSE,alpha=alpha),h=h)
-    freq <- frequency(x)
     tsp.x <- tsp(x)
-    if (!is.null(tsp.x)) 
+    freq.x <- tsp.x[3]
+    start.f <- tsp.x[2] + 1/freq.x
+    if(length(y)==0) # All historical values are equal to zero
     {
-        start.f <- tsp.x[2] + 1/tsp.x[3]
-        freq.x <- tsp.x[3]
+      fc <- ts(rep(0,h), start=start.f, frequency=freq.x)
+      if(nofits)
+        return(fc)
+      else
+        return(list(mean=fc, fitted=ts(x*0, start=tsp.x[1], frequency=freq.x)))
     }
-    else 
+    tt <- diff(c(0,(1:length(x))[x>0])) # Times between non-zero observations
+    if(length(y)==1 & length(tt)==1) # Only one non-zero observation
     {
-        start.f <- length(x) + 1
-        freq.x <- 1
+      y.f <- list(mean=ts(rep(y,h), start=start.f, frequency=freq.x))
+      p.f <- list(mean=ts(rep(tt,h), start=start.f, frequency=freq.x))
+    }
+    else if(length(y)<=1 | length(tt)<=1) # length(tt)==0 but length(y)>0. How does that happen?
+        return(list(mean=ts(rep(NA,h), start=start.f, frequency=freq.x)))
+    else
+    {
+      y.f <- ses(y,alpha=alpha,initial="simple",h=h)
+      p.f <- ses(tt,alpha=alpha,initial="simple",h=h)
     }
     ratio <- ts(y.f$mean/p.f$mean,start=start.f, frequency = freq.x)
     if(nofits)
@@ -337,8 +343,13 @@ croston2 <- function(x,h=10,alpha=0.1,nofits=FALSE)
     {
         n <- length(x)
         junk <- x*NA
-        for(i in 1:(n-1))
-            junk[i+1] <- croston2(x[1:i],h=1,alpha=alpha,nofits=TRUE)
+        if(n > 1)
+        {
+          for(i in 1:(n-1))
+              junk[i+1] <- croston2(x[1:i],h=1,alpha=alpha,nofits=TRUE)
+        }
+        junk <- ts(junk)
+        tsp(junk) <- tsp.x
         return(list(mean = ratio, fitted = junk, model=list(demand=y.f,period=p.f)))
     }
 }
