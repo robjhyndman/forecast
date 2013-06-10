@@ -1,16 +1,5 @@
 # Author: srazbash
 ###############################################################################
-#setwd("/Volumes/NO\ NAME/SlavaBATS/")
-#setwd("E:/SlavaBATS")
-#source("fitBATS.R", verbose=TRUE)
-#source("forecastBATS.R", verbose=TRUE)
-#source("makeMatrices.R", verbose=TRUE)
-#source("checkAdmissibility.R", verbose=TRUE)
-#source("makeParamVector.R", verbose=TRUE)
-#source("adjustSeasonalSeeds.R", verbose=TRUE)
-#source("getBATS.R", verbose=TRUE)
-
-
 filterSpecifics<-function(y, box.cox, trend, damping, seasonal.periods, use.arma.errors, force.seasonality=FALSE, init.box.cox=NULL, bc.lower=0, bc.upper=1, ...) {
 	if((trend == FALSE) & (damping == TRUE)) {
 		return(list(AIC=Inf))
@@ -122,6 +111,15 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, sea
 	if(any((y <= 0))) {
 		use.box.cox <- FALSE
 		#stop("BATS requires positive data")
+	}
+	if((!is.null(use.box.cox)) & (!is.null(use.trend)) & (use.parallel)) {
+		if((use.trend == TRUE) & (!is.null(use.damped.trend)) ) {
+			#In the this case, there is only one alternative.
+			use.parallel <- FALSE	
+		} else if(use.trend == FALSE) {
+			#As above, in the this case, there is only one alternative.
+			use.parallel <- FALSE	
+		}	
 	}
   origy <- y
   if(is.null(seasonal.periods))

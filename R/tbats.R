@@ -259,7 +259,17 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, se
 	if(non.seasonal.model$AIC < best.model$AIC) {
 		best.model <- non.seasonal.model
 	}
-
+	
+	if((length(use.box.cox) == 1) & (use.trend[1] == TRUE) & (length(use.trend) == 1) & (length(use.damped.trend) == 1) & (use.parallel)) {
+		#In the this case, there is only one alternative.
+		use.parallel <- FALSE
+		stopCluster(clus)
+	} else if((length(use.box.cox) == 1) & (use.trend[1] == FALSE) & (length(use.trend) == 1) & (use.parallel)) {
+		#As above, in the this case, there is only one alternative.
+		use.parallel <- FALSE
+		stopCluster(clus)
+	}
+	
 	if(use.parallel) {
 		#Set up the control array
 		control.array <- NULL
