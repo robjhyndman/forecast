@@ -620,7 +620,7 @@ initstate <- function(y,trendtype,seasontype)
     if(length(y)>=3*m)
       y.d <- decompose(y,type=switch(seasontype,A="additive",M="multiplicative"))
     else
-      y.d <- list(seasonal= switch(seasontype,A=y-mean(y),M=y/mean(y)))
+      y.d <- list(seasonal= switch(seasontype,A=y-mean(y[1:m]),M=y/mean(y[1:m])))
     init.seas <- rev(y.d$seasonal[2:m])
     names(init.seas) <- paste("s",0:(m-2),sep="")
     if(seasontype=="A")
