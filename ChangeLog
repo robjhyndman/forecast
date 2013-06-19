@@ -1,8 +1,8 @@
-Version 4.05 (?? May 2013)
+Version 4.05 (19 June 2013)
   * Fixed bug in hw() so it works when initial="simple"
   * Allowed bats() and tbats() to take non-positive values.
-  * Added Rmalschains as a possible optimizer in ets(). Not documented.
   * ets() now calls optim direct via c code making ets() run much faster.
+  * Added Rmalschains as a possible optimizer in ets(). Not documented.
   * Modified forecast.lm so it is more likely that the original data are stored in the returned object.
   * Corrected bug in forecast.Arima that occurred when a Box-Cox transformation was used with bootstrap=TRUE.
   * accuracy() updated so that it gives more information, and returns a matrix of both test and training measures.
