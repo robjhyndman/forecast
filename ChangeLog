@@ -1,3 +1,6 @@
+Version 4.06 (30 June 2013)
+  * accuracy() was returning a mape and mpe 100 times too large for in-sample errors.
+
 Version 4.05 (19 June 2013)
   * Fixed bug in hw() so it works when initial="simple"
   * Allowed bats() and tbats() to take non-positive values.
