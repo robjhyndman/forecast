@@ -200,7 +200,7 @@ SD.test <- function (wts, s=frequency(wts))
     frec <- rep(1, as.integer((s+1)/2))
     ltrunc <- round(s * (N/100)^0.25)
     R1 <- as.matrix(SeasDummy(wts))
-    lmch <- lm(wts ~ R1,na.action=na.exclude)   # run the regression : y(i)=mu+f(i)'gamma(i)+e(i)
+    lmch <- lm(wts ~ R1, na.action=na.exclude)   # run the regression : y(i)=mu+f(i)'gamma(i)+e(i)
     Fhat <- Fhataux <- matrix(nrow=N, ncol=s-1)
     for (i in 1:(s-1))
         Fhataux[, i] <- R1[,i] * residuals(lmch)
@@ -232,7 +232,12 @@ SD.test <- function (wts, s=frequency(wts))
         A[i, j] <- 1
         ifelse(frecob[i] == 1, j <- j + 1, j <- j)
     }
-    stL <- (1/N^2) * sum(diag(solve(t(A) %*% Omfhat %*% A, tol=1e-25) %*% t(A) %*% t(Fhat) %*% Fhat %*% A))
+    tmp <- t(A) %*% Omfhat %*% A
+    problems <- (min(svd(tmp)$d) < .Machine$double.eps)
+    if(problems)
+        stL <- 0
+    else
+        stL <- (1/N^2) * sum(diag(solve(tmp, tol=1e-25) %*% t(A) %*% t(Fhat) %*% Fhat %*% A))
     return(stL)
 }
 
