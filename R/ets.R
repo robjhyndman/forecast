@@ -658,25 +658,36 @@ initstate <- function(y,trendtype,seasontype)
     y.sa <- y
   }
 
-  # Simple linear regression on seasonally adjusted data
   maxn <- min(max(10,2*m),length(y.sa))
-  fit <- lsfit(1:maxn,y.sa[1:maxn])
 
-  if(trendtype=="A")
+  if(trendtype=="N")
   {
-    l0 <- fit$coef[1]
-    b0 <- fit$coef[2]
-  }
-  else if(trendtype=="M")
-  {
-    l0 <- fit$coef[1]+fit$coef[2] # First fitted value
-    b0 <- (fit$coef[1] + 2*fit$coef[2])/l0 # Ratio of first two fitted values
-    l0 <- l0/b0 # First fitted value divided by b0
-    if(abs(b0) > 1e10) # Avoid infinite slopes
-      b0 <- sign(b0)*1e10
-  }  
-  else
+    l0 <- mean(y.sa[1:maxn])
     b0 <- NULL
+  }
+  else  # Simple linear regression on seasonally adjusted data
+  {
+    fit <- lsfit(1:maxn,y.sa[1:maxn])
+    if(trendtype=="A")
+    {
+      l0 <- fit$coef[1]
+      b0 <- fit$coef[2]
+    }
+    else #if(trendtype=="M")
+    {
+      l0 <- fit$coef[1]+fit$coef[2] # First fitted value
+      b0 <- (fit$coef[1] + 2*fit$coef[2])/l0 # Ratio of first two fitted values
+      l0 <- l0/b0 # First fitted value divided by b0
+      if(abs(b0) > 1e10) # Avoid infinite slopes
+        b0 <- sign(b0)*1e10
+      if(l0 < 0 | b0 < 0) # Simple linear approximation didn't work.
+      {
+        l0 <- max(y.sa[1],1e-3)
+        b0 <- max(y.sa[2]/y.sa[1],1e-3)
+      }
+    }
+  }
+
   names(l0) <- "l"
   if(!is.null(b0))
     names(b0) <- "b"
