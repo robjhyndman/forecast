@@ -57,7 +57,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, lambda=NULL)
   out$size <- size
   out$lambda <- lambda
   out$model <- fit
-  fits <- c(rep(NA,maxlag), rowMeans(matrix(unlist(lapply(fit, nnet:::predict.nnet)),ncol=length(fit))))
+  fits <- c(rep(NA,maxlag), rowMeans(matrix(unlist(lapply(fit, predict)),ncol=length(fit))))
   fits <- ts(fits*scale)
   if(!is.null(lambda))
     fits <- InvBoxCox(fits,lambda)
@@ -82,7 +82,7 @@ avnnet <- function(x,y,repeats,...)
 {
   mods <- list()
   for(i in 1:repeats)
-    mods[[i]] <- nnet:::nnet(x, y, ...)
+    mods[[i]] <- nnet::nnet(x, y, ...)
   return(structure(mods,class="nnetarmodels"))
 }
 
@@ -106,7 +106,7 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), la
   flag <- tail(xx/object$scale, n=max(object$lags))
   for(i in 1:h)
   {
-    fcast[i] <- mean(unlist(lapply(object$model, nnet:::predict.nnet, newdata=flag)))
+    fcast[i] <- mean(unlist(lapply(object$model, predict, newdata=flag)))
     flag <- c(flag[-1],fcast[i])
   }
   out$mean <- ts(fcast*object$scale,start=tspx[2]+1/tspx[3],frequency=tspx[3])
@@ -133,12 +133,12 @@ print.nnetar <- function(x, digits = max(3, getOption("digits") - 3), ...)
 
 # fitted.train <- function(object, ...)
 # {
-#   caret:::predict.train(object)
+#   caret::predict.train(object)
 # }
 
 # residuals.train <- function(object, ...)
 # {
-#   object$trainingData[,".outcome"] - caret:::predict.train(object)
+#   object$trainingData[,".outcome"] - caret::predict.train(object)
 # }
 
 # fitted.avNNet <- function(object, ...)
@@ -151,5 +151,5 @@ print.nnetar <- function(x, digits = max(3, getOption("digits") - 3), ...)
 
 # residuals.avNNet <- function(object, ...)
 # {
-#   object$model[[1]]$fitted.values + object$model[[1]]$residuals - caret:::predict.avNNet(object)
+#   object$model[[1]]$fitted.values + object$model[[1]]$residuals - caret::predict.avNNet(object)
 # }

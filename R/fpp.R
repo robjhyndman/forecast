@@ -20,7 +20,7 @@ Acf <- function(x, lag.max=NULL, type=c("correlation","partial"), plot=TRUE, mai
     ylim <- c(-1, 1) * 3/sqrt(length(x))
     ylim <- range(ylim, junk1$acf[,1,1])
   }
-  stats:::plot.acf(junk1, ylim = ylim, xlim = c(1, dim(junk1$acf)[1]-1), xaxt="n", main=main, ...)
+  plot(junk1, ylim = ylim, xlim = c(1, dim(junk1$acf)[1]-1), xaxt="n", main=main, ...)
   if(dim(junk1$acf)[1] < 25)
 	axis(1,at=1:(dim(junk1$acf)[1]-1))
   else

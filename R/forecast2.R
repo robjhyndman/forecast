@@ -9,7 +9,10 @@ meanf <- function(x,h=10,level=c(80,95),fan=FALSE, lambda=NULL)
 		origx <- x
 		x <- BoxCox(x,lambda)
 	}
-  f <- rep(mean(x,na.rm=TRUE),h)
+  meanx <- mean(x, na.rm=TRUE)
+  fits <- rep(meanx,length(x))
+  res <- x-fits
+  f <- rep(meanx,h)
   if(fan)
     level <- seq(51,99,by=3)
   else
@@ -35,23 +38,20 @@ meanf <- function(x,h=10,level=c(80,95),fan=FALSE, lambda=NULL)
   colnames(lower) <- colnames(upper) <- paste(level,"%",sep="")
   if(is.ts(x))
   {
+    fits <- ts(fits)
+    res <- ts(res)
+    tsp(fits) <- tsp(res) <- tsp(x)
     freq <- frequency(x)
     f <- ts(f,start=tsp(x)[2]+1/freq,frequency=freq)
     lower <- ts(lower,start=tsp(x)[2]+1/freq,frequency=freq)
     upper <- ts(upper,start=tsp(x)[2]+1/freq,frequency=freq)
-    fits <- ts(rep(NA,n))
-    tsp(fits) <- tsp(x)
-    if(n > 1)
-    {
-      for(i in 2:n)
-        fits[i] <- mean(x[1:(i-1)],na.rm=TRUE)
-    }
-    res <- x - fits	
-  }
-  else
-  {
-     fits <- rep(mean(x,na.rm=TRUE),length(x))
-     res <- x-fits
+    #fits <- ts(rep(NA,n))
+    #if(n > 1)
+    #{
+    #  for(i in 2:n)
+    #    fits[i] <- mean(x[1:(i-1)],na.rm=TRUE)
+    #}
+    #res <- x - fits	
   }
   
 	if(!is.null(lambda))
@@ -122,7 +122,7 @@ rwf <- function(x,h=10,drift=FALSE,level=c(80,95),fan=FALSE,lambda=NULL)
     b <- fit$coefficients[1,1]
     b.se <- fit$coefficients[1,2]
     s <- fit$sigma
-    res <- ts(c(NA,residuals(fit)))
+#    res <- ts(c(NA,residuals(fit)))
     method <- "Random walk with drift"
   }
   else
@@ -130,10 +130,12 @@ rwf <- function(x,h=10,drift=FALSE,level=c(80,95),fan=FALSE,lambda=NULL)
     b <- b.se <- 0
     s <- sd(diff(x),na.rm=TRUE)
 #    fits <- ts(x[-n],start=tsp(x)[1]+1/freq,frequency=freq)
-    res <- ts(c(NA,diff(x)))
+#    res <- ts(c(NA,diff(x)))
     method <- "Random walk"
   }
-  tsp(res) <- tsp(x)
+  fits <- ts(c(NA,x[-n]) + b)
+  res <- x - fits
+  tsp(res) <- tsp(fits) <- tsp(x)
   f <- x[n] + nn*b
   se <- sqrt((nn*s^2) + (nn*b.se)^2)
 
@@ -158,7 +160,7 @@ rwf <- function(x,h=10,drift=FALSE,level=c(80,95),fan=FALSE,lambda=NULL)
   upper <- ts(upper,start=tsp(x)[2]+1/freq,frequency=freq)
   colnames(lower) <- colnames(upper) <- paste(level,"%",sep="")
   fcast <- ts(f,start=tsp(x)[2]+1/freq,frequency=freq)
-  fits <- x - res
+  #fits <- x - res
   if(!is.null(lambda))
   {
     x <- origx

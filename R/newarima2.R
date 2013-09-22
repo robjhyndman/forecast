@@ -85,8 +85,10 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   {
     if(D>0)
       fit <- Arima(x,order=c(0,d,0),seasonal=list(order=c(0,D,0),period=m), fixed=mean(dx,na.rm=TRUE), include.constant=TRUE)
-    else
+    else if(d < 2)
       fit <- Arima(x,order=c(0,d,0),fixed=mean(dx,na.rm=TRUE),include.constant=TRUE)
+    else
+      stop("Data follow a simple polynomial and are not suitable for ARIMA modelling.")
     fit$x <- x
     fit$series <- series
     fit$call <- match.call()
@@ -404,16 +406,16 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
     {
         xreg <- cbind(drift=1:length(x),xreg)
         if(use.season)
-            fit <- try(stats:::arima(x=x,order=order,seasonal=list(order=seasonal,period=m),xreg=xreg,method=method),silent=TRUE)
+            fit <- try(stats::arima(x=x,order=order,seasonal=list(order=seasonal,period=m),xreg=xreg,method=method),silent=TRUE)
         else
-            fit <- try(stats:::arima(x=x,order=order,xreg=xreg,method=method),silent=TRUE)
+            fit <- try(stats::arima(x=x,order=order,xreg=xreg,method=method),silent=TRUE)
     }
     else
     {
         if(use.season)
-            fit <- try(stats:::arima(x=x,order=order,seasonal=list(order=seasonal,period=m),include.mean=constant,method=method,xreg=xreg),silent=TRUE)
+            fit <- try(stats::arima(x=x,order=order,seasonal=list(order=seasonal,period=m),include.mean=constant,method=method,xreg=xreg),silent=TRUE)
         else
-            fit <- try(stats:::arima(x=x,order=order,include.mean=constant,method=method,xreg=xreg),silent=TRUE)
+            fit <- try(stats::arima(x=x,order=order,include.mean=constant,method=method,xreg=xreg),silent=TRUE)
     }
     if(is.null(xreg))
       nxreg <- 0
@@ -657,6 +659,7 @@ OCSBtest <- function(time.series, period)
 is.constant <- function(x)
 {
   y <- rep(x[1],length(x))
-  identical(c(x),y)
+  isequal <- all.equal(c(x),y)
+  return(isequal==TRUE)
 }
 

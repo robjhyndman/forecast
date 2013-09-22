@@ -79,23 +79,23 @@ arfima <- function(x, drange = c(0, 0.5), estim = c("mle","ls"), lambda=NULL, ..
 	
 	# Choose differencing parameter with AR(2) proxy to handle correlations
 	warn <- options(warn=-1)$warn
-	fit <- fracdiff:::fracdiff(xx,nar=2,drange=drange)
+	fit <- fracdiff::fracdiff(xx,nar=2,drange=drange)
 	options(warn=warn)
  
 	# Choose p and q
 	d <- fit$d
-	y <- fracdiff:::diffseries(xx, d=d)
+	y <- fracdiff::diffseries(xx, d=d)
 	fit <- auto.arima(y, max.P=0, max.Q=0, stationary=TRUE, ...)
 	
 	# Refit model using fracdiff
 	warn <- options(warn=-1)$warn
-	fit <- fracdiff:::fracdiff(xx, nar=fit$arma[1], nma=fit$arma[2],drange=drange)
+	fit <- fracdiff::fracdiff(xx, nar=fit$arma[1], nma=fit$arma[2],drange=drange)
 	options(warn=warn)
 	
 	# Refine parameters with MLE
 	if(estim=="mle")
 	{
-		y <- fracdiff:::diffseries(xx, d=fit$d)
+		y <- fracdiff::diffseries(xx, d=fit$d)
 		p <- length(fit$ar)
 		q <- length(fit$ma)
 		fit2 <- try(Arima(y,order=c(p,0,q),include.mean=FALSE))
@@ -141,7 +141,7 @@ forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=ob
 	xx <- xx - meanx
 	
 	# Construct ARMA part of model and forecast with it
-	y <- fracdiff:::diffseries(xx, d=object$d)
+	y <- fracdiff::diffseries(xx, d=object$d)
 	fit <- Arima(y, order=c(length(object$ar),0,length(object$ma)), include.mean=FALSE, fixed=c(object$ar,-object$ma))
 	fcast.y <- forecast(fit, h=h, level=level)
 
@@ -255,7 +255,7 @@ residuals.fracdiff <- function(object, ...)
 			x <- eval.parent(parse(text=as.character(object$call)[2]))
 		if(!is.null(object$lambda))
 			x <- BoxCox(x,object$lambda)
-		y <- fracdiff:::diffseries(x - mean(x), d=object$d)
+		y <- fracdiff::diffseries(x - mean(x), d=object$d)
 		fit <- arima(y, order=c(length(object$ar),0,length(object$ma)), include.mean=FALSE, fixed=c(object$ar,object$ma))
 		return(residuals(fit))
 	}

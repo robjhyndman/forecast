@@ -1,4 +1,13 @@
-tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, seasonal.periods=NULL, use.arma.errors=TRUE, use.parallel=TRUE, num.cores=NULL, bc.lower=0, bc.upper=1, ...) {
+tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, seasonal.periods=NULL, use.arma.errors=TRUE, use.parallel=TRUE, num.cores=NULL, bc.lower=0, bc.upper=1, ...) 
+{
+  if (any(class(y) %in% c("data.frame", "list", "matrix", "mts"))) 
+    stop("y should be a univariate time series")
+  y <- as.ts(y)
+  ny <- length(y)
+  y <- na.contiguous(y)
+  if (ny != length(y)) 
+    warning("Missing values encountered. Using longest contiguous portion of time series")
+ 
 	if(any((y <= 0)))
 		use.box.cox <- FALSE
 		#stop("TBATS requires positive data")
