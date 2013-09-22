@@ -325,3 +325,12 @@ predict.default <- function(object, ...)
 {
     forecast(object, ...)
 }
+
+# The following function is for when users don't realise they already have the forecasts. 
+# e.g., with the dshw(), meanf() or rwf() functions.
+
+forecast.forecast <- function(object, ...)
+{
+  return(object)
+}
+

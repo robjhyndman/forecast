@@ -1,4 +1,5 @@
 Version 4.7 (22 September 2013)
+  * Added forecast.forecast() to simply return the object that is passed.
   * Removed leading zero in package number. i.e., 4.7 instead of 4.07.
   * better handling of nearly constant time series, and nearly linear time series
   * improved handling of missing values in rwf()

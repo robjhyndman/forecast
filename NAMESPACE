@@ -74,5 +74,6 @@ S3method(subset,ts)
 S3method(plot,mforecast)
 S3method(print,mforecast)
 S3method(forecast,varest)
+S3method(forecast,forecast)
 
 useDynLib(forecast)
