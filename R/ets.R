@@ -63,7 +63,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
   if(!is.element(seasontype,c("N","A","M","Z")))
     stop("Invalid season type")
 
-  if(m < 1)
+  if(m < 1 | length(y) <= m)
   {
     #warning("I can't handle data with frequency less than 1. Seasonality will be ignored.")
     seasontype <- "N"

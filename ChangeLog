@@ -1,6 +1,11 @@
-Version 4.07
+Version 4.07 (22 September 2013)
+  * better handling of very short time series
   * initial states for ets() modified for very short time series (less than 3 years).
   * nsdiffs with CH test now handles degenerate cases without returning an error.
+  * nnetar now handles missing values
+  * Fixed bug in forecast.varest() so residuals and fitted values computed correctly.
+  * Added accuracy() calculation for VAR models
+  * Fixed a bug in simulate.fracdiff() when future=TRUE. Sometimes the future argument was being ignored.
 
 Version 4.06 (30 June 2013)
   * accuracy() was returning a mape and mpe 100 times too large for in-sample errors.

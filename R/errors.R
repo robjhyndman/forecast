@@ -129,6 +129,9 @@ trainingaccuracy <- function(f,test="all")
 
 accuracy <- function(f,x,test="all")
 {
+  if(class(f) == "mforecast")
+    return(accuracy.mforecast(f,x,test))
+
   trainset <- (is.list(f))
   testset <- (!missing(x))
   if(!trainset & !testset)
@@ -161,5 +164,30 @@ accuracy <- function(f,x,test="all")
     out <- out[1,,drop=FALSE]
   if(!trainset)
     out <- out[2,,drop=FALSE]
+  return(out)
+}
+
+# Compute accuracy for a VAR model (from the vars package)
+accuracy.mforecast <- function(object, x, test="all")
+{
+  fc <- object
+  class(fc) <- "forecast"
+  vnames <- names(object$mean)
+  nox <- missing(x)
+  for(i in 1:length(object$mean))
+  {
+    fc$mean <- object$mean[[i]]
+    fc$x <- object$x[,i]
+    fc$fitted <- object$fitted[,i]
+    if(nox)
+      out1 <- accuracy(fc, test=test)
+    else
+      out1 <- accuracy(fc, x[,i], test)
+    rownames(out1) <- paste(vnames[i],rownames(out1))
+    if(i==1)
+      out <- out1
+    else
+      out <- rbind(out, out1)
+  }
   return(out)
 }

@@ -1,7 +1,15 @@
 # forecast function for varest, just a wrapper for predict.varest
 forecast.varest <- function(object, h=10, level=c(80,95), fan=FALSE, ...)
 {
-	out <- list(model=object,level=level,x=object$y,residuals=residuals(var), fitted=fitted(var))
+	out <- list(model=object,level=level,x=object$y)
+	# Get residuals and fitted values and fix the times
+	out$res <- out$fitted <- ts(matrix(NA,nrow=nrow(out$x),ncol=ncol(out$x)))
+	tsp(out$res) <- tsp(out$fitted) <- tsp(out$x)
+	vres <- residuals(object)
+	vfits <- fitted(object)
+	out$res[ (nrow(out$res)-nrow(vres)+1):nrow(out$res), ] <- vres
+	out$fitted[ (nrow(out$fitted)-nrow(vfits)+1):nrow(out$fitted), ] <- vfits
+	# Add forecasts with prediction intervals
 	out$mean <- out$lower <- out$upper <- vector("list",object$K)
 	for(i in 1:(length(level)))
 	{

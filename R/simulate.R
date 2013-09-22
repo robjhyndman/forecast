@@ -446,7 +446,7 @@ simulate.fracdiff <- function(object, nsim=object$n, seed=NULL, future=TRUE, boo
   xx <- xx - meanx
 
   y <- undo.na.ends(x,diffseries(xx, d = object$d))
-  fit <- arima(y, order = c(length(object$ar), 0, length(object$ma)),
+  fit <- Arima(y, order = c(length(object$ar), 0, length(object$ma)),
     include.mean = FALSE, fixed = c(object$ar, -object$ma))
   # Simulate ARMA
   ysim <- simulate(fit,nsim,seed,future=future,bootstrap=bootstrap,innov=innov)

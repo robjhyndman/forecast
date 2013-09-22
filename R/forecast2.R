@@ -24,7 +24,10 @@ meanf <- function(x,h=10,level=c(80,95),fan=FALSE, lambda=NULL)
   s <- sd(x,na.rm=TRUE)
   for(i in 1:nconf)
   {
-    tfrac <- qt( 0.5 - level[i]/200, n-1)
+    if(n > 1)
+      tfrac <- qt( 0.5 - level[i]/200, n-1)
+    else
+      tfrac <- -Inf
     w <- -tfrac * s*sqrt(1+1/n)
     lower[,i] <- f-w
     upper[,i] <- f+w
@@ -38,8 +41,11 @@ meanf <- function(x,h=10,level=c(80,95),fan=FALSE, lambda=NULL)
     upper <- ts(upper,start=tsp(x)[2]+1/freq,frequency=freq)
     fits <- ts(rep(NA,n))
     tsp(fits) <- tsp(x)
-    for(i in 2:n)
-      fits[i] <- mean(x[1:(i-1)],na.rm=TRUE)
+    if(n > 1)
+    {
+      for(i in 2:n)
+        fits[i] <- mean(x[1:(i-1)],na.rm=TRUE)
+    }
     res <- x - fits	
   }
   else
