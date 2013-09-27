@@ -1,13 +1,13 @@
 Package: forecast
 Version: 4.7
-Date: 2013-09-22
+Date: 2013-09-26
 Title: Forecasting functions for time series and linear models
 Description: Methods and tools for displaying and analysing
              univariate time series forecasts including exponential smoothing
              via state space models and automatic ARIMA modelling.
 Depends: R (>= 2.14.0), stats, graphics
 Imports: tseries, fracdiff, zoo, Rcpp (>= 0.9.10), RcppArmadillo (>= 0.2.35), nnet, colorspace, parallel
-Suggests: fracdiff, Rmalschains
+Suggests: Rmalschains
 LinkingTo: Rcpp, RcppArmadillo
 LazyData: yes
 ByteCompile: TRUE

@@ -12,22 +12,17 @@ msts <- function(data, seasonal.periods, ts.frequency=floor(max(seasonal.periods
 }
 
 print.msts <- function(x, ...) {
-	if(length(attr(x, "msts")) == 1) {
-		attr(x, "msts") <- NULL
-		print.ts(x)
-	} else {
-		cat("Multi-Seasonal Time Series:\n")
-		cat("Start: ")
-		cat(start(x))
-		#cat("\nEnd: ")
-		#cat(x$end)
-		cat("\nSeasonal Periods: ")
-		cat(attr(x,"msts"))
-		cat("\nData:\n")
-		print(as.numeric(x))
-		#print(matrix(x, ncol=length(x)), nrow=1)
-		cat("\n")
-	}
+	cat("Multi-Seasonal Time Series:\n")
+	cat("Start: ")
+	cat(start(x))
+	#cat("\nEnd: ")
+	#cat(x$end)
+	cat("\nSeasonal Periods: ")
+	cat(attr(x,"msts"))
+	cat("\nData:\n")
+	print(as.numeric(x))
+	#print(matrix(x, ncol=length(x)), nrow=1)
+	cat("\n")
 }
 
 window.msts <- function(x, ...) {
