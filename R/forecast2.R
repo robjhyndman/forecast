@@ -133,9 +133,9 @@ rwf <- function(x,h=10,drift=FALSE,level=c(80,95),fan=FALSE,lambda=NULL)
 #    res <- ts(c(NA,diff(x)))
     method <- "Random walk"
   }
-  fits <- ts(c(NA,x[-n]) + b)
+  fits <- ts(c(NA,x[-n]) + b, start=tsp(x)[1], frequency=freq)
   res <- x - fits
-  tsp(res) <- tsp(fits) <- tsp(x)
+  #tsp(res) <- tsp(fits) <- tsp(x)
   f <- x[n] + nn*b
   se <- sqrt((nn*s^2) + (nn*b.se)^2)
 

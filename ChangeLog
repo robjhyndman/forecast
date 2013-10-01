@@ -1,3 +1,6 @@
+Version 4.8 (30 September 2013)
+  * Fixed bug in rwf() that was introduced in v4.7
+
 Version 4.7 (26 September 2013)
   * Added forecast.forecast() to simply return the object that is passed.
   * Removed leading zero in package number. i.e., 4.7 instead of 4.07.
