@@ -125,10 +125,9 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
 }
 
 
-ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"))
+ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), max.d=2)
 {
   test <- match.arg(test)
-  #require(tseries)
   x <- c(na.omit(c(x)))
   d <- 0
 
@@ -149,7 +148,7 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"))
   {
     return(d)
   }
-  while(dodiff & d<2)
+  while(dodiff & d < max.d)
   {
     d <- d+1
     x <- diff(x)

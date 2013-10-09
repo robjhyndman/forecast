@@ -1,6 +1,6 @@
 Package: forecast
-Version: 4.8
-Date: 2013-09-30
+Version: 4.9
+Date: 2013-??
 Title: Forecasting functions for time series and linear models
 Description: Methods and tools for displaying and analysing
              univariate time series forecasts including exponential smoothing

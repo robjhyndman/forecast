@@ -1,5 +1,5 @@
 auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
-    max.P=2, max.Q=2, max.order=5,
+    max.P=2, max.Q=2, max.order=5, max.d=2, max.D=1, 
     start.p=2, start.q=2, start.P=1, start.Q=1,
     stationary=FALSE, seasonal=TRUE, ic=c("aicc","aic","bic"),
     stepwise=TRUE, trace=FALSE,
@@ -16,6 +16,7 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   }
 
   series <- deparse(substitute(x))
+  x <- as.ts(x)
 
   # Check for constant data
   if(is.constant(x))
@@ -71,13 +72,13 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   if(m == 1)
     D <- max.P <- max.Q <- 0
   else if(is.na(D))
-    D <- nsdiffs(xx, m=m, test=seasonal.test)
+    D <- nsdiffs(xx, m=m, test=seasonal.test, max.D=max.D)
   if(D > 0)
     dx <- diff(xx,differences=D,lag=m)
   else
     dx <- xx
   if(is.na(d))
-    d <- ndiffs(dx,test=test)
+    d <- ndiffs(dx,test=test, max.d=max.d)
   if(d>0)
     dx <- diff(dx,differences=d,lag=1)
 
@@ -536,26 +537,39 @@ summary.Arima <- function(object,...)
 
 
 # Number of seasonal differences
-nsdiffs <- function(x, m=frequency(x), test=c("ocsb", "ch"))
+nsdiffs <- function(x, m=frequency(x), test=c("ocsb", "ch"), max.D=1)
 {
 
   if(is.constant(x))
     return(0)
 
   test <- match.arg(test)
-    if(m==1)
-            stop("Non seasonal data")
-    else if(m < 1)
-    {
-            warning("I can't handle data with frequency less than 1. Seasonality will be ignored.")
-            return(0)
-    }
+  if(m==1)
+    stop("Non seasonal data")
+  else if(m < 1)
+  {
+    warning("I can't handle data with frequency less than 1. Seasonality will be ignored.")
+    return(0)
+  }
 
+  D <- 0
+  if(test=="ch")
+    dodiff <- CHtest(x,m)
+  else
+    dodiff <- OCSBtest(x,m)
+
+  while(dodiff==1 & D < max.D)
+  {
+    D <- D + 1
+    x <- diff(x, lag=m)
+    if(is.constant(x))
+      return(D)
     if(test=="ch")
-        return(CHtest(x,m))
+      dodiff <- CHtest(x,m)
     else
-        return(OCSBtest(x,m))
-
+      dodiff <- OCSBtest(x,m)
+  }
+  return(D)
 }
 
 CHtest <- function(x,m)
@@ -658,6 +672,7 @@ OCSBtest <- function(time.series, period)
 
 is.constant <- function(x)
 {
+  x <- as.numeric(x)
   y <- rep(x[1],length(x))
   isequal <- all.equal(c(x),y)
   return(isequal==TRUE)

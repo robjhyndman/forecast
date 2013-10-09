@@ -4,8 +4,9 @@
 \title{Fit best ARIMA model to univariate time series}
 \usage{
 auto.arima(x, d=NA, D=NA, max.p=5, max.q=5,
-     max.P=2, max.Q=2, max.order=5, start.p=2, start.q=2,
-     start.P=1, start.Q=1, stationary=FALSE, seasonal=TRUE,
+     max.P=2, max.Q=2, max.order=5, max.d=2, max.D=1, 
+     start.p=2, start.q=2, start.P=1, start.Q=1, 
+     stationary=FALSE, seasonal=TRUE,
      ic=c("aicc","aic", "bic"), stepwise=TRUE, trace=FALSE,
      approximation=(length(x)>100 | frequency(x)>12), xreg=NULL,
      test=c("kpss","adf","pp"), seasonal.test=c("ocsb","ch"),
@@ -21,6 +22,8 @@ auto.arima(x, d=NA, D=NA, max.p=5, max.q=5,
 \item{max.P}{Maximum value of P}
 \item{max.Q}{Maximum value of Q}
 \item{max.order}{Maximum value of p+q+P+Q if model selection is not stepwise.}
+\item{max.d}{Maximum number of non-seasonal differences}
+\item{max.D}{Maximum number of seasonal differences}
 \item{start.p}{Starting value of p in stepwise procedure.}
 \item{start.q}{Starting value of q in stepwise procedure.}
 \item{start.P}{Starting value of P in stepwise procedure.}

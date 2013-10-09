@@ -2,14 +2,16 @@
 \alias{ndiffs}
 \alias{nsdiffs}
 \title{Number of differences required for a stationary series}
-\usage{ndiffs(x, alpha=0.05, test=c("kpss","adf", "pp"))
-nsdiffs(x, m=frequency(x), test=c("ocsb","ch"))
+\usage{ndiffs(x, alpha=0.05, test=c("kpss","adf", "pp"), max.d=2)
+nsdiffs(x, m=frequency(x), test=c("ocsb","ch"), max.D=1)
 }
 \arguments{
 \item{x}{A univariate time series}
 \item{alpha}{Level of the test}
 \item{m}{Length of seasonal period}
 \item{test}{Type of unit root test to use}
+\item{max.d}{Maximum number of non-seasonal differences allowed}
+\item{max.D}{Maximum number of seasonal differences allowed}
 }
 
 \description{Functions to estimate the number of differences required to make a given time series stationary. \code{ndiffs} estimates the number of first differences and \code{nsdiffs} estimates the number of seasonal differences.}
