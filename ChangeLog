@@ -1,6 +1,14 @@
 Version 4.9
   * Added arguments max.D and max.d to auto.arima(), ndiffs() and nsdiffs()
   * Made several functions more robust to zoo objects.
+  * Corrected an error in the calculation of AICc when using CV().
+  * Made minimum default p in nnetar equal to 1.
+  * Added tsoutliers() and tsclean() for identifying and replacing outliers
+  * Improved na.interp() to handle seasonality
+  * Added robust option to forecast.ts() to allow outliers and missing values
+  * Improved output from snaive() and naive() to better reflect user expectations
+  * Allowed Acf() to handle missing values by using na.contiguous
+  * 
 
 Version 4.8 (30 September 2013)
   * Fixed bug in rwf() that was introduced in v4.7

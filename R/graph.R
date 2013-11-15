@@ -52,15 +52,6 @@ tsdisplay <- function(x,plot.type="partial",points=TRUE,ci.type="white",
   invisible()
 }
 
-na.interp <- function(x)
-{ # interpolates missing values
-  n <- length(x)
-  nas <- is.na(x)
-  idx <- (1:n)[!nas]
-  xx <- as.ts(approx(idx,x[idx],1:n)$y)
-  tsp(xx) <- tsp(x)
-  return(xx)
-}
 
 seasonplot <- function(x, s, season.labels=NULL, year.labels=FALSE, year.labels.left=FALSE,
     type="o", main, ylab="", xlab=NULL, col=1, labelgap=0.1, ...)

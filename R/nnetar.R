@@ -21,7 +21,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, lambda=NULL)
   if(m==1)
   {
     if(missing(p))
-      p <- length(ar(na.interp(xx))$ar)
+      p <- max(length(ar(na.interp(xx))$ar),1)
     lags <- 1:p
     P <- 0
   }
@@ -30,7 +30,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, lambda=NULL)
     if(missing(p))
     {
       x.sa <- seasadj(stl(na.interp(xx),s.window=7))
-      p <- length(ar(x.sa)$ar)
+      p <- max(length(ar(x.sa)$ar),1)
     }
     if(P > 0)
       lags <- sort(unique(c(1:p,m*(1:P))))

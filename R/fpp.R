@@ -9,7 +9,7 @@ Acf <- function(x, lag.max=NULL, type=c("correlation","partial"), plot=TRUE, mai
   lag.max <- min(lag.max, length(x) - 1)
   if (lag.max < 0)
         stop("'lag.max' must be at least 0")
-  junk1 <- acf(c(x), lag.max=lag.max, type=type, plot=FALSE, ...)
+  junk1 <- acf(c(x), lag.max=lag.max, type=type, plot=FALSE, na.action=na.contiguous, ...)
   junk1$series <- deparse(substitute(x))
   if(!plot)
     return(junk1)
@@ -43,7 +43,7 @@ CV <- function(obj)
     n <- length(obj$residuals)
     k <- extractAIC(obj)[1]-1 # number of predictors (constant removed)
     aic <- extractAIC(obj)[2]+2 # add 2 for the variance estimate
-    aicc <- aic + 2*(k+2)*(k+3)/(n-k-1)
+    aicc <- aic + 2*(k+2)*(k+3)/(n-k-3)
     bic <- aic + (k+2)*(log(n)-2)
     cv <- mean((residuals(obj)/(1-hatvalues(obj)))^2, na.rm=TRUE)
     adjr2 <- summary(obj)$adj

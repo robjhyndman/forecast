@@ -365,10 +365,21 @@ croston2 <- function(x,h=10,alpha=0.1,nofits=FALSE)
 
 snaive <- function(x,h=2*frequency(x),level=c(80,95),fan=FALSE, lambda=NULL)
 {
-    forecast(Arima(x,seasonal=list(order=c(0,1,0),period=frequency(x)), lambda=lambda),h=h,level=level,fan=fan)
+    fc <- forecast(Arima(x,seasonal=list(order=c(0,1,0),period=frequency(x)), lambda=lambda),h=h,level=level,fan=fan)
+    # Remove initial fitted values and error
+    m <- frequency(x)
+    fc$fitted[1:m] <- NA
+    fc$residuals[1:m] <- NA
+    fc$method <- "Seasonal naive method"
+    return(fc)
 }
 
 naive <- function(x,h=10,level=c(80,95),fan=FALSE, lambda=NULL)
 {
-    forecast(Arima(x,order=c(0,1,0),lambda=lambda),h,level=level,fan=fan)
+    fc <- forecast(Arima(x,order=c(0,1,0),lambda=lambda),h,level=level,fan=fan)
+    # Remove initial fitted values and error
+    fc$fitted[1] <- NA
+    fc$residuals[1] <- NA
+    fc$method <- "Naive method"
+    return(fc)
 }

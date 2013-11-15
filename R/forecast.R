@@ -5,9 +5,13 @@ forecast <- function(object,...) UseMethod("forecast")
 
 forecast.default <- function(object,...) forecast.ts(object,...)
 
-forecast.ts <- function(object, h=ifelse(frequency(object)>1, 2*frequency(object), 10), level=c(80,95), fan=FALSE, ...)
+forecast.ts <- function(object, h=ifelse(frequency(object)>1, 2*frequency(object), 10), 
+  level=c(80,95), fan=FALSE, robust=FALSE, ...)
 {
   n <- length(object)
+  if(robust)
+    object <- tsclean(object, replace.missing=TRUE)
+
   if(n > 3)
   {
     if(frequency(object) < 13)
