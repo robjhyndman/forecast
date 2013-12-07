@@ -8,7 +8,8 @@ Version 4.9
   * Added robust option to forecast.ts() to allow outliers and missing values
   * Improved output from snaive() and naive() to better reflect user expectations
   * Allowed Acf() to handle missing values by using na.contiguous
-  * 
+  * Changed default information criterion in ets() to AICc.
+  * Removed drift term in Arima() when d+D>1.
 
 Version 4.8 (30 September 2013)
   * Fixed bug in rwf() that was introduced in v4.7
