@@ -494,6 +494,12 @@ Arima <- function(x, order=c(0, 0, 0),
       tmp <- stats::arima(x=x,order=order,seasonal=seasonal,xreg=xreg,include.mean=include.mean,
              transform.pars=transform.pars,fixed=fixed,init=init,method=method,n.cond=n.cond,optim.control=optim.control,kappa=kappa)
   }
+
+  # Calculate aicc & bic based on tmp$aic
+  npar <- length(tmp$coef) + 1
+  nstar <- length(tmp$residuals) - tmp$arma[6] - tmp$arma[7]*tmp$arma[5]
+  tmp$aicc <- tmp$aic + 2*npar*(nstar/(nstar-npar-1) - 1)
+  tmp$bic <- tmp$aic + npar*(log(nstar) - 2)
   tmp$series <- series
   tmp$xreg <- xreg
   tmp$call <- match.call()
