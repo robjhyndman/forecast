@@ -70,8 +70,11 @@ forecast.ets <- function(object, h=ifelse(object$m>1, 2*object$m, 10),
 	#out$x <- InvBoxCox(object$x,lambda)
 	#out$fitted <- InvBoxCox(out$fitted,lambda)
     out$mean <- InvBoxCox(out$mean,lambda)
-    out$lower <- InvBoxCox(out$lower,lambda)
-    out$upper <- InvBoxCox(out$upper,lambda)
+	  if(exists("out$lower"))  # PI = TRUE
+	  {
+		out$lower <- InvBoxCox(out$lower,lambda)
+		out$upper <- InvBoxCox(out$upper,lambda)
+	  }
   }
 	
     return(structure(out,class="forecast"))
