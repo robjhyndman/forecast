@@ -19,7 +19,8 @@ meanf, logLik.ets, monthdays, na.interp, ets, plot.bats, plot.tbats, plot.ets, p
 plot.splineforecast, rwf, seasadj, seasonaldummy,naive,snaive,stlf,
 seasonaldummyf, seasonplot, ses, sindexf, splinef,tslm,fourier,fourierf,forecast.lm,
 thetaf, tsdisplay, simulate.ets, simulate.ar, simulate.Arima, simulate.fracdiff, ndiffs, nsdiffs, dm.test,tbats.components,
-Acf,Pacf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts, getResponse)
+Acf,Pacf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts, getResponse, tsoutliers,
+tsclean)
 
 S3method(as.data.frame,forecast)
 S3method(coef,ets)
