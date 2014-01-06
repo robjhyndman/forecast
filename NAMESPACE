@@ -8,9 +8,10 @@ importFrom("stats", "filter")
 importFrom(colorspace,sequential_hcl)
 importFrom(fracdiff,fracdiff,diffseries,fracdiff.sim)
 importFrom(tseries,adf.test,pp.test,kpss.test)
-importFrom(zoo,rollmean)
+importFrom(zoo,rollmean, as.Date, as.yearqtr)
 importFrom(nnet,nnet)
 import(parallel,Rcpp,RcppArmadillo)
+import(timeDate)
 
 export(arfima, Arima, arima.errors, auto.arima, BoxCox, croston,
 fitted.Arima, forecast, forecast.ar, forecast.Arima, forecast.ets, forecast.fracdiff,
@@ -20,7 +21,7 @@ plot.splineforecast, rwf, seasadj, seasonaldummy,naive,snaive,stlf,
 seasonaldummyf, seasonplot, ses, sindexf, splinef,tslm,fourier,fourierf,forecast.lm,
 thetaf, tsdisplay, simulate.ets, simulate.ar, simulate.Arima, simulate.fracdiff, ndiffs, nsdiffs, dm.test,tbats.components,
 Acf,Pacf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts, getResponse, tsoutliers,
-tsclean)
+tsclean, bizdays, easter)
 
 S3method(as.data.frame,forecast)
 S3method(coef,ets)

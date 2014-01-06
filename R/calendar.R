@@ -82,7 +82,7 @@ easter <- function(x, easter.mon = FALSE) {
   hdays <- unlist(apply(span, 1, unique))
   dummies <- ifelse(yr.mon %in% hdays, 1L, 0L)
   # Allow fractional results
-  denominator <- easter0 - gd.fri0 + 1L
+  denominator <- (easter0 - gd.fri0 + 1L)[1L]
   last.mar <- as.timeDate(paste0(yr.span, "-03-31"))
   dif <- difftimeDate(last.mar, gd.fri0, units = "days") + 1L
   # Remove easter out of date range
@@ -92,18 +92,18 @@ easter <- function(x, easter.mon = FALSE) {
   if (date[length(yr.mon)] < as.character(last.mar[length(last.mar)])) {
     dif <- dif[-length(dif)]
   }
-  replace <- dif > denominator[1L] | dif <= 0L
-  dif[replace] <- denominator[1L]  # Easter in the same month
+  replace <- dif > denominator | dif <= 0L
+  dif[replace] <- denominator  # Easter in the same month
   # Start to insert the remaining part falling in Apr
-  index <- which(dif != denominator[1L])
+  index <- which(dif != denominator)
   if (length(index) != 0L) {
-    values <- denominator[1L] - dif[index]
+    values <- denominator - dif[index]
     new.index <- index[1L]
     for (i in 1L:length(index)) {
       dif <- append(dif, values = values[i], new.index)
       new.index <- index[i + 1L] + i
     }
-    dummies[dummies == 1L] <- dif/unclass(denominator[1L])
+    dummies[dummies == 1L] <- dif/unclass(denominator)
   }
   out <- ts(dummies, start = tsp(x)[1L], frequency = freq)
   return(out)
