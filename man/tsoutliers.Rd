@@ -18,7 +18,7 @@
 
 \author{Rob J Hyndman}
 \seealso{
-  \code{\linek[forecast]{na.interp}}, \code{\line[forecast]}{tsoutliers}
+  \code{\link[forecast]{na.interp}}, \code{\link[forecast]{tsoutliers}}
 }
 \examples{
 data(gold)

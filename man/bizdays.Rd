@@ -5,15 +5,14 @@
 
 \arguments{
 \item{x}{Monthly or quarterly time series}
-\item{FinCenter}{A string indicating the financial center. More details on \code{\link[timeDate]finCenter}.}
+\item{FinCenter}{A string indicating the financial center. More details on \code{\link[timeDate]{finCenter}}.}
 }
 \description{Returns number of trading days in each month or quarter of the observed time period.}
 
 \details{Useful for trading days length adjustments. More on how to define "business days",
-please refer to \code{\link[timeDate]isBizday}.}
-
+please refer to \code{\link[timeDate]{isBizday}}.} 
 \value{Time series}
-
+\seealso{\code{\link[forecast]{monthdays}}}
 
 \author{Yiru Wang}
 \examples{

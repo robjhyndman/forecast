@@ -11,6 +11,7 @@
 \details{Useful for month length adjustments}
 
 \value{Time series}
+\seealso{\code{\link[forecast]{bizdays}}}
 
 
 \author{Rob J Hyndman}
