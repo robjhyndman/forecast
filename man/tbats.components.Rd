@@ -18,6 +18,8 @@
 
 \author{Slava Razbash and Rob J Hyndman}
 
+\seealso{\code{\link{tbats}}.}
+
 \examples{
 fit <- tbats(USAccDeaths, use.parallel=FALSE)
 components <- tbats.components(fit)
