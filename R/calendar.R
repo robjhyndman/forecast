@@ -103,7 +103,7 @@ easter <- function(x, easter.mon = FALSE) {
       dif <- append(dif, values = values[i], new.index)
       new.index <- index[i + 1L] + i
     }
-    dummies[dummies == 1L] <- dif/unclass(denominator)
+    dummies[dummies == 1L] <- round(dif/unclass(denominator), digits = 2)
   }
   out <- ts(dummies, start = tsp(x)[1L], frequency = freq)
   return(out)
