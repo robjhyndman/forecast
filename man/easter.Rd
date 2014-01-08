@@ -10,7 +10,7 @@
 \description{Returns a vector of 0's and 1's or fractional results if Easter
   spans March and April in the observed time period.}
 
-\details{Useful for adjusting calendar effects.}
+\details{Useful for time series involving Easter holidays}
 
 \value{Time series}
 

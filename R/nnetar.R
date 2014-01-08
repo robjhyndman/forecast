@@ -3,7 +3,7 @@
 #For seasonal data, p=3 and P=1.
 #size set to average of number of inputs and number of outputs: (p+P+1)/2
 
-nnetar <- function(x, p, P=1, size, repeats=20, lambda=NULL, model = NULL)
+nnetar <- function(x, p, P=1, size, repeats=20, lambda=NULL)
 {
   # Transform data
   if(!is.null(lambda))
@@ -18,35 +18,25 @@ nnetar <- function(x, p, P=1, size, repeats=20, lambda=NULL, model = NULL)
   n <- length(xx)
   xx <- as.ts(xx)
   m <- frequency(xx)
-  if(is.null(model)) 
+  if(m==1)
   {
-    if(m==1)
-    {
-      if(missing(p))
-        p <- max(length(ar(na.interp(xx))$ar),1)
-      lags <- 1:p
-      P <- 0
-    }
-    else
-    {
-      if(missing(p))
-      {
-        x.sa <- seasadj(stl(na.interp(xx),s.window=7))
-        p <- max(length(ar(x.sa)$ar),1)
-      }
-      if(P > 0)
-        lags <- sort(unique(c(1:p,m*(1:P))))
-    }
-    if(missing(size))
-      size <- round((p+P+1)/2)
-  } 
-  else 
-  {
-    p <- model$p
-    P <- model$P
-    size <- model$size
-    lags <- model$lags
+    if(missing(p))
+      p <- max(length(ar(na.interp(xx))$ar),1)
+    lags <- 1:p
+    P <- 0
   }
+  else
+  {
+    if(missing(p))
+    {
+      x.sa <- seasadj(stl(na.interp(xx),s.window=7))
+      p <- max(length(ar(x.sa)$ar),1)
+    }
+    if(P > 0)
+      lags <- sort(unique(c(1:p,m*(1:P))))
+  }
+  if(missing(size))
+    size <- round((p+P+1)/2)
   maxlag <- max(lags)
   nlag <- length(lags)
   y <- xx[-(1:maxlag)]
