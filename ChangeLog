@@ -1,4 +1,5 @@
 Version 4.9
+  * Added argument model to nnetar().
   * Added bizdays() and easter() for calendar variables.
   * Added arguments max.D and max.d to auto.arima(), ndiffs() and nsdiffs().
   * Made several functions more robust to zoo objects.
