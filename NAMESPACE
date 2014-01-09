@@ -9,7 +9,7 @@ importFrom(colorspace,sequential_hcl)
 importFrom(fracdiff,fracdiff,diffseries,fracdiff.sim)
 importFrom(tseries,adf.test,pp.test,kpss.test)
 importFrom(zoo,rollmean, as.Date, as.yearqtr)
-importFrom(timeDate, as.timeDate, isBizday)
+importFrom(timeDate, as.timeDate, isBizday, difftimeDate)
 importFrom(nnet,nnet)
 import(parallel,Rcpp,RcppArmadillo)
 

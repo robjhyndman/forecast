@@ -4,11 +4,14 @@
 ## y can be an msts object, or periods can be passed explicitly.
 ####################################################################
 
-dshw <- function(y, period1=NULL, period2=NULL, h=2*max(period1,period2), alpha=NULL, beta=NULL, gamma=NULL, omega=NULL, phi=NULL, lambda=NULL, armethod=TRUE)
+dshw <- function(y, period1=NULL, period2=NULL, h=2*max(period1,period2), alpha=NULL, beta=NULL, gamma=NULL, omega=NULL, phi=NULL, lambda=NULL, armethod=TRUE, model = NULL)
 {
   if(min(y,na.rm=TRUE) <= 0)
     stop("dshw not suitable when data contain zeros or negative numbers")
-  if(any(class(y) == "msts") & (length(attr(y, "msts")) == 2)) {
+  if (!is.null(model) && model$method == "DSHW") {
+    period1 <- model$period1
+    period2 <- model$period2
+  } else if(any(class(y) == "msts") & (length(attr(y, "msts")) == 2)) {
 	  period1<-as.integer(sort(attr(y, "msts"))[1])
 	  period2<-as.integer(sort(attr(y, "msts"))[2])
   } else if(is.null(period1) | is.null(period2)) {
@@ -34,23 +37,36 @@ dshw <- function(y, period1=NULL, period2=NULL, h=2*max(period1,period2), alpha=
   if(ratio-trunc(ratio) > 1e-10)
     stop("Seasonal periods are not nested")
 
+  if (!is.null(model)) {
+    lambda <- model$model$lambda
+  }
+
   if (!is.null(lambda))
   {
     origy <- y
     y <- BoxCox(y, lambda)
   }
 
-  pars <- rep(NA,5)
-  if(!is.null(alpha))
-    pars[1] <- alpha
-  if(!is.null(beta))
-    pars[2] <- beta
-  if(!is.null(gamma))
-    pars[3] <- gamma
-  if(!is.null(omega))
-    pars[4] <- omega
-  if(!is.null(phi))
-    pars[5] <- phi
+  if (!is.null(model)) {
+    pars <- model$model
+    alpha <- pars$alpha
+    beta <- pars$beta
+    gamma <- pars$gamma
+    omega <- pars$omega
+    phi <- pars$phi
+  } else {
+    pars <- rep(NA,5)
+    if(!is.null(alpha))
+      pars[1] <- alpha
+    if(!is.null(beta))
+      pars[2] <- beta
+    if(!is.null(gamma))
+      pars[3] <- gamma
+    if(!is.null(omega))
+      pars[4] <- omega
+    if(!is.null(phi))
+      pars[5] <- phi
+  }
 
   # Estimate parameters
   if(sum(is.na(pars)) > 0)
@@ -127,7 +143,8 @@ dshw <- function(y, period1=NULL, period2=NULL, h=2*max(period1,period2), alpha=
 
   return(structure(list(mean=fcast,method="DSHW",x=y,residuals=e,fitted=yhat,
               model=list(mape=mape,mse=mse,alpha=alpha,beta=beta, gamma=gamma,omega=omega,phi=phi,
-                     l0=s.start,b0=t.start,s10=wstart,s20=I)),class="forecast"))
+                         lambda = lambda, l0=s.start,b0=t.start,s10=wstart,s20=I), period1 = period1,
+                         period2 = period2),class="forecast"))
 
 }
 
