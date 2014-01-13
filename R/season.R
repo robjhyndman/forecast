@@ -68,8 +68,15 @@ seasadj <- function(object)
         sa <- InvBoxCox(sa, object$lambda)
       return(sa)
     }
-    else
+    else if(is.element("bats"),class(object))
+    {
+      if(is.null(object$gamma.values))
         stop("There's no seasonal components in the series.")
+      else
+        stop("No seasonal adjustment available for BATS models")
+    }
+    else
+      stop("I don't know how to seasonally adjust objects of this type")
 }
 
 seasonaldummy <- function(x)
