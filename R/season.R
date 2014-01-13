@@ -69,7 +69,7 @@ seasadj <- function(object)
       return(sa)
     }
     else
-        stop("Object of unknown class")
+        stop("There's no seasonal components in the series.")
 }
 
 seasonaldummy <- function(x)

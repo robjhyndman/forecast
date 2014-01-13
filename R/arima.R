@@ -289,7 +289,12 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
         sim <- matrix(NA,nrow=npaths,ncol=h)
         for(i in 1:npaths)
             sim[i,] <- simulate(object, nsim=h, bootstrap=TRUE, xreg=xreg, lambda=NULL)
-        pred$se <- apply(sim,2,sd)
+        lower <- apply(sim, 2, quantile, 0.5 - level/200, type = 8)
+        upper <- apply(sim, 2, quantile, 0.5 + level/200, type = 8)
+        if (length(level) > 1L) {
+          lower <- t(lower)
+          upper <- t(upper)
+        }
     }
 
     # Fix time series characteristics if there are missing values at end of series.
@@ -317,13 +322,15 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
     }
 
     nint <- length(level)
-    lower <- matrix(NA, ncol=nint, nrow=length(pred$pred))
-    upper <- lower
-    for (i in 1:nint)
-    {
-        qq <- qnorm(0.5 * (1 + level[i]/100))
-        lower[, i] <- pred$pred - qq * pred$se
-        upper[, i] <- pred$pred + qq * pred$se
+    if (!bootstrap) {
+      lower <- matrix(NA, ncol=nint, nrow=length(pred$pred))
+      upper <- lower
+      for (i in 1:nint)
+      {
+          qq <- qnorm(0.5 * (1 + level[i]/100))
+          lower[, i] <- pred$pred - qq * pred$se
+          upper[, i] <- pred$pred + qq * pred$se
+      }
     }
     colnames(lower)=colnames(upper)=paste(level, "%", sep="")
     method <- arima.string(object)
