@@ -1,4 +1,4 @@
-Version 4.9
+Version 5.0 (?? January 2014)
   * Added argument model to dshw().
   * Added bizdays() and easter() for calendar variables.
   * Added arguments max.D and max.d to auto.arima(), ndiffs() and nsdiffs().
@@ -6,13 +6,13 @@ Version 4.9
   * Corrected an error in the calculation of AICc when using CV().
   * Made minimum default p in nnetar equal to 1.
   * Added tsoutliers() and tsclean() for identifying and replacing outliers
-  * Improved na.interp() to handle seasonality and added argument lambda to
-	na.interp()
+  * Improved na.interp() to handle seasonality and added argument lambda to na.interp()
   * Added robust option to forecast.ts() to allow outliers and missing values
   * Improved output from snaive() and naive() to better reflect user expectations
   * Allowed Acf() to handle missing values by using na.contiguous
   * Changed default information criterion in ets() to AICc.
   * Removed drift term in Arima() when d+D>1.
+  * Added bootstrap option to forecast.Arima()
 
 Version 4.8 (30 September 2013)
   * Fixed bug in rwf() that was introduced in v4.7

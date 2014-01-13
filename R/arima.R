@@ -284,19 +284,6 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
     else
         pred <- predict(object, n.ahead=h)
 
-    if(bootstrap) # Recompute se using simulations
-    {
-        sim <- matrix(NA,nrow=npaths,ncol=h)
-        for(i in 1:npaths)
-            sim[i,] <- simulate(object, nsim=h, bootstrap=TRUE, xreg=xreg, lambda=NULL)
-        lower <- apply(sim, 2, quantile, 0.5 - level/200, type = 8)
-        upper <- apply(sim, 2, quantile, 0.5 + level/200, type = 8)
-        if (length(level) > 1L) {
-          lower <- t(lower)
-          upper <- t(upper)
-        }
-    }
-
     # Fix time series characteristics if there are missing values at end of series.
     if(!is.null(x))
     {
@@ -321,8 +308,21 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
             stop("Confidence limit out of range")
     }
 
+    # Compute prediction intervals
     nint <- length(level)
-    if (!bootstrap) {
+    if(bootstrap) # Compute prediction intervals using simulations
+    {
+        sim <- matrix(NA,nrow=npaths,ncol=h)
+        for(i in 1:npaths)
+            sim[i,] <- simulate(object, nsim=h, bootstrap=TRUE, xreg=xreg, lambda=lambda)
+        lower <- apply(sim, 2, quantile, 0.5 - level/200, type = 8)
+        upper <- apply(sim, 2, quantile, 0.5 + level/200, type = 8)
+        if (nint > 1L) {
+          lower <- t(lower)
+          upper <- t(upper)
+        }
+    }
+    else { # Compute prediction intervals via the normal distribution
       lower <- matrix(NA, ncol=nint, nrow=length(pred$pred))
       upper <- lower
       for (i in 1:nint)
@@ -335,12 +335,13 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
     colnames(lower)=colnames(upper)=paste(level, "%", sep="")
     method <- arima.string(object)
     fits <- fitted(object)
-    if(!is.null(lambda))
-    {
+    if(!is.null(lambda)) { # Back-transform point forecasts and prediction intervals
       pred$pred <- InvBoxCox(pred$pred,lambda)
-      lower <- InvBoxCox(lower,lambda)
-      upper <- InvBoxCox(upper,lambda)
-  }
+      if(!bootstrap) { # Bootstrapped intervals already back-transformed
+        lower <- InvBoxCox(lower,lambda)
+        upper <- InvBoxCox(upper,lambda)
+      }
+    }
     return(structure(list(method=method, model=object, level=level,
         mean=pred$pred, lower=lower, upper=upper, x=x,
         xname=deparse(substitute(x)), fitted=fits, residuals=residuals(object)),

@@ -1,6 +1,6 @@
 Package: forecast
-Version: 4.9
-Date: 2014-??
+Version: 5.0
+Date: 2014-01-??
 Title: Forecasting functions for time series and linear models
 Description: Methods and tools for displaying and analysing
              univariate time series forecasts including exponential smoothing
@@ -12,7 +12,7 @@ LinkingTo: Rcpp, RcppArmadillo (>= 0.2.35)
 LazyData: yes
 ByteCompile: TRUE
 Author: Rob J Hyndman <Rob.Hyndman@monash.edu> with contributions from
-	George Athanasopoulos, Slava Razbash, Drew Schmidt, Zhenyu Zhou, Yousaf Khan, Christoph Bergmeir
+	George Athanasopoulos, Slava Razbash, Drew Schmidt, Zhenyu Zhou, Yousaf Khan, Christoph Bergmeir, Earo Wang
 Maintainer: Rob J Hyndman <Rob.Hyndman@monash.edu>
 License: GPL (>= 2)
 URL: http://robjhyndman.com/software/forecast/
