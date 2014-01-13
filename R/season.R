@@ -71,7 +71,7 @@ seasadj <- function(object)
     else if(is.element("bats",class(object)))
     {
       if(is.null(object$gamma.values))
-        stop("There's no seasonal components in the series.")
+        stop("There are no seasonal components in the series.")
       else
         stop("No seasonal adjustment available for BATS models")
     }

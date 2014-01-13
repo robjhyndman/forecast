@@ -23,8 +23,9 @@ dshw <- function(y, period1=NULL, period2=NULL, h=2*max(period1,period2), alpha=
       period2 <- period1
       period1 <- tmp
     }
-    y <- msts(y, c(period1, period2))
   }
+  if(any(class(y) != "msts"))
+    y <- msts(y, c(period1, period2))
 	
   if(!armethod)
   {
