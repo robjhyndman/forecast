@@ -62,7 +62,8 @@ seasadj <- function(object)
     else if(is.element("tbats",class(object)))
     {
       comp <- tbats.components(object)
-      sa <- comp[,"observed"]-comp[,"season"]
+      scols <- grep("season",colnames(comp))
+      sa <- comp[,"observed"]-rowSums(comp[,scols,drop=FALSE])
       # Back transform if necessary
       if (!is.null(object$lambda)) 
         sa <- InvBoxCox(sa, object$lambda)
