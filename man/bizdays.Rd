@@ -19,7 +19,6 @@ please refer to \code{\link[timeDate]{isBizday}}.}
 
 \author{Earo Wang}
 \examples{
-  library(zoo)
   bizdays(wineind, FinCenter = "Sydney")
 }
 \keyword{ts}

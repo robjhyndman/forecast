@@ -17,7 +17,6 @@
 
 \author{Earo Wang}
 \examples{
-  library(zoo)
   easter(wineind, easter.mon = TRUE)
 }
 \keyword{ts}
