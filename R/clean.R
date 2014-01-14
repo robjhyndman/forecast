@@ -8,23 +8,27 @@
 
 na.interp <- function(x, lambda = NULL)
 {
+  missng <- is.na(x) 
+  # Do nothing if no missing values
+  if(sum(missng)==0)
+    return(x)
+
   if(is.null(tsp(x)))
     x <- ts(x)
   freq <- frequency(x)
   n <- length(x)
   tt <- 1:n
 
-  missng <- is.na(x) 
   idx <- tt[!missng]
-  if(freq <= 1) # Non-seasonal -- use linear interpolation
+  if(freq <= 1 | n <= 2*freq) # Non-seasonal -- use linear interpolation
   {
-	if(!is.null(lambda))
-	{
-	  x[idx] <- BoxCox(x[idx], lambda = lambda)
-	  xx <- as.ts(approx(idx,x[idx],1:n, rule=2)$y)
-	  xx <- InvBoxCox(xx, lambda = lambda)  # back-transformed
-	} else
-	  xx <- as.ts(approx(idx,x[idx],1:n, rule=2)$y)
+  	if(!is.null(lambda)) {
+  	  x[idx] <- BoxCox(x[idx], lambda = lambda)
+  	  xx <- as.ts(approx(idx,x[idx],1:n, rule=2)$y)
+  	  xx <- InvBoxCox(xx, lambda = lambda)  # back-transformed
+  	} 
+    else
+  	  xx <- as.ts(approx(idx,x[idx],1:n, rule=2)$y)
     tsp(xx) <- tsp(x)
     return(xx)
   }
@@ -35,10 +39,9 @@ na.interp <- function(x, lambda = NULL)
   {
     # Fit Fourier series for seasonality and a cubic polynomial for the trend, 
     #just to get something reasonable to start with
-	if(!is.null(lambda))
-	{
-	  x <- BoxCox(x, lambda = lambda)
-	}
+  	if(!is.null(lambda)) {
+  	  x <- BoxCox(x, lambda = lambda)
+  	}
     X <- cbind(fourier(x,3),poly(tt,degree=3))
     fit <- lm(x ~ X, na.action=na.exclude)
     pred <- predict(fit, newdata =data.frame(X))
@@ -50,10 +53,10 @@ na.interp <- function(x, lambda = NULL)
     sa <- approx(idx,sa[idx],1:n, rule=2)$y
     # Replace original missing values
     x[missng] <- sa[missng] + fit$time.series[missng,"seasonal"]
-	if(!is.null(lambda))
-	{
-	  x <- InvBoxCox(x, lambda = lambda)
-	}
+  	if(!is.null(lambda))
+  	{
+  	  x <- InvBoxCox(x, lambda = lambda)
+  	}
     return(x)
   }
 }
