@@ -1,2 +1,7 @@
 *.o
 *.so
+symbols.rds
+.Rhistory
+.Rproj.user
+forecast.Rproj
+.Rbuildignore
