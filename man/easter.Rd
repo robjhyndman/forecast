@@ -15,8 +15,9 @@
 \value{Time series}
 
 
-\author{Yiru Wang}
+\author{Earo Wang}
 \examples{
+  library(zoo)
   easter(wineind, easter.mon = TRUE)
 }
 \keyword{ts}

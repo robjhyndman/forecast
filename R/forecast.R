@@ -6,21 +6,21 @@ forecast <- function(object,...) UseMethod("forecast")
 forecast.default <- function(object,...) forecast.ts(object,...)
 
 forecast.ts <- function(object, h=ifelse(frequency(object)>1, 2*frequency(object), 10), 
-  level=c(80,95), fan=FALSE, robust=FALSE, ...)
+  level=c(80,95), fan=FALSE, robust=FALSE, lambda = NULL, ...)
 {
   n <- length(object)
   if(robust)
-    object <- tsclean(object, replace.missing=TRUE)
+    object <- tsclean(object, replace.missing=TRUE, lambda = lambda)
 
   if(n > 3)
   {
     if(frequency(object) < 13)
-      forecast(ets(object,...),h=h,level=level,fan=fan)
+      forecast(ets(object,lambda = lambda, ...),h=h,level=level,fan=fan)
     else
-      stlf(object,h=h,level=level,fan=fan,...)
+      stlf(object,h=h,level=level,fan=fan,lambda = lambda, ...)
   }
   else
-    meanf(object,h=h,level=level,fan=fan,...)
+    meanf(object,h=h,level=level,fan=fan,lambda = lambda, ...)
 }
 
 as.data.frame.forecast <- function(x,...)

@@ -22,10 +22,11 @@ that is modelled with the AR and MA terms. If you want the
 
 \seealso{\code{\link[stats]{arima}}, \code{\link[stats]{residuals}}}
 
-\examples{ukdeaths.fit <- Arima(UKDriverDeaths,c(1,0,1),c(0,1,1),xreg=Seatbelts[,"law"])
-ukdeaths.errors <- arima.errors(ukdeaths.fit)
+\examples{
+www.fit <- auto.arima(WWWusage)
+www.errors <- arima.errors(www.fit)
 par(mfrow=c(2,1))
-plot(UKDriverDeaths)
-plot(ukdeaths.errors)
+plot(WWWusage)
+plot(www.errors)
 }
 \keyword{ts}

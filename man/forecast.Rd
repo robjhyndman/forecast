@@ -17,13 +17,16 @@ The function \code{\link{forecast.ts}} makes forecasts using \code{\link{ets}} m
 }
 
 \usage{forecast(object,...)
-\method{forecast}{ts}(object, h, level=c(80,95), fan=FALSE, ...)}
+\method{forecast}{ts}(object, h = ifelse(frequency(object) > 1, 2 * frequency(object), 10) , 
+         level=c(80,95), fan=FALSE, robust = FALSE, lambda = NULL, ...)}
 
 \arguments{
 \item{object}{a time series or time series model for which forecasts are required}
 \item{h}{Number of periods for forecasting}
 \item{level}{Confidence level for prediction intervals.}
 \item{fan}{If TRUE, level is set to seq(50,99,by=1). This is suitable for fan plots.}
+\item{robust}{If TRUE, robustness of missing values and outliers in the object.}
+\item{lambda}{Box-Cox transformation parameter.}
 \item{...}{Additional arguments affecting the forecasts produced. \code{forecast.ts} passes these to \code{\link{forecast.ets}} or \code{\link{stlf}} depending on the frequency of the time series.}
 }
 \value{An object of class "\code{forecast}".
@@ -32,7 +35,7 @@ The function \code{summary} is used to obtain
 and print a summary of the
 results, while the function \code{plot} produces a plot of the forecasts and prediction intervals.
 
-The generic accessor functions \code{fitted.values} and \code{residuals} extract various useful features of
+The generic accessors functions \code{fitted.values} and \code{residuals} extract various useful features of
 the value returned by \code{forecast$model}.
 
 An object of class \code{"forecast"} is a list containing at least the following elements:

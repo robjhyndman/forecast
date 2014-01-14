@@ -3,7 +3,7 @@ bizdays <- function(x, FinCenter) {
   #
   # Args:
   #   x: a ts object
-  #   FinCenter: inherents "FinCenter" from "timeDate" package
+  #   FinCenter: inherits "FinCenter" from "timeDate" package
   #
   # Returns:
   #   A matrix contains the number of trading days
