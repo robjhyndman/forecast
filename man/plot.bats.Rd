@@ -20,10 +20,8 @@
 
 \author{Rob J Hyndman}
 \examples{
-fit <- bats(USAccDeaths)
-plot(fit)
-
-fit2 <- tbats(USAccDeaths)
-plot(fit2)
+\dontrun{
+fit <- tbats(USAccDeaths)
+plot(fit)}
 }
 \keyword{hplot}

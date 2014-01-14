@@ -32,12 +32,12 @@ the value returned by \code{bats} and associated functions.}
 \author{Slava Razbash and Rob J Hyndman}
 
 \examples{
+\dontrun{
 fit <- bats(USAccDeaths, use.parallel=FALSE)
 plot(forecast(fit))
-\dontrun{
+
 taylor.fit <- bats(taylor)
-plot(forecast(taylor.fit))
-}
+plot(forecast(taylor.fit))}
 }
 
 \keyword{ts}

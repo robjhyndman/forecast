@@ -33,12 +33,12 @@ the value returned by \code{bats} and associated functions.}
 \seealso{\code{\link{tbats.components}}.}
 
 \examples{
+\dontrun{
 fit <- tbats(USAccDeaths, use.parallel=FALSE)
 plot(forecast(fit))
-\dontrun{
+
 taylor.fit <- tbats(taylor)
-plot(forecast(taylor.fit))
-}
+plot(forecast(taylor.fit))}
 }
 
 \keyword{ts}
