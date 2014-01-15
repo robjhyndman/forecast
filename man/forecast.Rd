@@ -24,8 +24,8 @@ The function \code{\link{forecast.ts}} makes forecasts using \code{\link{ets}} m
 \item{object}{a time series or time series model for which forecasts are required}
 \item{h}{Number of periods for forecasting}
 \item{level}{Confidence level for prediction intervals.}
-\item{fan}{If TRUE, level is set to seq(50,99,by=1). This is suitable for fan plots.}
-\item{robust}{If TRUE, robustness of missing values and outliers in the object.}
+\item{fan}{If TRUE, \code{level} is set to \code{seq(50,99,by=1)}. This is suitable for fan plots.}
+\item{robust}{If TRUE, the function is robust to missing values and outliers in \code{object}. This argument is only valid when \code{object} is of class \code{ts}.}
 \item{lambda}{Box-Cox transformation parameter.}
 \item{...}{Additional arguments affecting the forecasts produced. \code{forecast.ts} passes these to \code{\link{forecast.ets}} or \code{\link{stlf}} depending on the frequency of the time series.}
 }
@@ -38,7 +38,7 @@ results, while the function \code{plot} produces a plot of the forecasts and pre
 The generic accessors functions \code{fitted.values} and \code{residuals} extract various useful features of
 the value returned by \code{forecast$model}.
 
-An object of class \code{"forecast"} is a list containing at least the following elements:
+An object of class \code{"forecast"} is a list usually containing at least the following elements:
 \item{model}{A list containing information about the fitted model}
 \item{method}{The name of the forecasting method as a character string}
 \item{mean}{Point forecasts as a time series}
