@@ -5,14 +5,13 @@
 
 \arguments{  
 \item{x}{time series}
-\item{replace.missing}{If TRUE, it not only replace outliers, but also interpolate
-missing values}
-\item{lambda}{a numeric value suggesting Box-Cox transformation}
+\item{replace.missing}{If TRUE, it not only replaces outliers, but also interpolates missing values}
+\item{lambda}{a numeric value giving the Box-Cox transformation parameter}
 }
 \description{Uses loess for non-seasonal series and a periodic stl decompostion
-  with seasonal series to identify and replace outliers. As formissing values, 
-  linear interpolation for non-seasonal series and a periodic stl decompostion
-  with seasonal series to replace missing values.}
+  with seasonal series to identify and replace outliers. To estimate missing values, 
+  linear interpolation is used for non-seasonal series, and a periodic stl decompostion is used
+  with seasonal series.}
 
 \value{Time series}
 
