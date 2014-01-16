@@ -343,7 +343,7 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
   if (use.drift)
   {
     dft <- as.matrix(1:nsim) + n
-    xreg <- cbind(xreg, dft)
+    xreg <- cbind(dft,xreg)
   }
   narma <- sum(object$arma[1L:4L])
   if(length(object$coef) > narma)
