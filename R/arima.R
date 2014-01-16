@@ -253,9 +253,11 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
 #        xreg <- as.matrix(rep(1,h))
     if(!is.null(xreg))
     {
-        xreg <- as.matrix(xreg)
+        origxreg <- xreg <- as.matrix(xreg)
         h <- nrow(xreg)
     }
+    else
+      origxreg <- NULL
     if (use.drift)
     {
         n <- length(x)
@@ -314,7 +316,7 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
     {
         sim <- matrix(NA,nrow=npaths,ncol=h)
         for(i in 1:npaths)
-            sim[i,] <- simulate(object, nsim=h, bootstrap=TRUE, xreg=xreg, lambda=lambda)
+            sim[i,] <- simulate(object, nsim=h, bootstrap=TRUE, xreg=origxreg, lambda=lambda)
         lower <- apply(sim, 2, quantile, 0.5 - level/200, type = 8)
         upper <- apply(sim, 2, quantile, 0.5 + level/200, type = 8)
         if (nint > 1L) {
