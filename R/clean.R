@@ -79,15 +79,16 @@ tsoutliers <- function(x, iterate=2, lambda = NULL)
   # Identify missing values
   missng <- is.na(x)
   n <- length(x)
+  freq <- frequency(x)
 
   # Seasonal data
-  if(frequency(x)>1)
+  if(freq > 1 & n > 2*freq)
   {
-	xx <- na.interp(x, lambda = lambda)
+	  xx <- na.interp(x, lambda = lambda)
     if(!is.null(lambda))
-	{
-	  xx <- BoxCox(xx, lambda = lambda)
-	}
+	  {
+	    xx <- BoxCox(xx, lambda = lambda)
+	  }
     fit <- stl(xx, s.window="periodic", robust=TRUE)
     resid <- fit$time.series[,"remainder"]
     # Make sure missing values are not interpeted as outliers

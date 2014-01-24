@@ -1,4 +1,7 @@
-Version 5.0 (?? January 2014)
+Version 5.1 (?? 2014)
+  * Fixed bug in tsoutliers() and tsclean() with very short seasonal series.
+
+Version 5.0 (17 January 2014)
   * Added argument model to dshw().
   * Added bizdays() and easter() for calendar variables.
   * Added arguments max.D and max.d to auto.arima(), ndiffs() and nsdiffs().
