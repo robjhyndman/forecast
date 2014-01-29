@@ -440,7 +440,7 @@ fitted.Arima <- function(object,...)
 # Also allows refitting to new data
 # and drift terms to be included.
 Arima <- function(x, order=c(0, 0, 0),
-      seasonal=list(order=c(0, 0, 0), period=NA),
+      seasonal=c(0, 0, 0), 
       xreg=NULL, include.mean=TRUE, include.drift=FALSE, include.constant, lambda=model$lambda,
     transform.pars=TRUE,
       fixed=NULL, init=NULL, method=c("CSS-ML", "ML", "CSS"),
@@ -464,6 +464,14 @@ Arima <- function(x, order=c(0, 0, 0),
     xreg <- as.matrix(xreg)
     if (is.null(colnames(xreg)))
         colnames(xreg) <- if (ncol(xreg) == 1) nmxreg else paste(nmxreg, 1:ncol(xreg), sep="")
+  }
+
+  if(!is.list(seasonal))
+  {
+    if(frequency(x) <= 1)
+      seasonal <- list(order=c(0,0,0), period=NA)
+  	else
+      seasonal <- list(order=seasonal, period=frequency(x))
   }
 
   if(!missing(include.constant))
