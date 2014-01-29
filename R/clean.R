@@ -46,6 +46,8 @@ na.interp <- function(x, lambda = NULL)
     fit <- lm(x ~ X, na.action=na.exclude)
     pred <- predict(fit, newdata =data.frame(X))
     x[missng] <- pred[missng]
+    if(!is.null(dim(x)))
+      stop("The time series is not univariate.")
     # Now re-do it with stl to get better results
     fit <- stl(x,s.window=11,robust=TRUE)
     # Interpolate seasonally adjusted values

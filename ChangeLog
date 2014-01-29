@@ -1,6 +1,7 @@
 Version 5.1 (?? 2014)
   * Fixed bug in tsoutliers() and tsclean() with very short seasonal series.
   * Fixed bug in Arima() when seasonal order is specified numerically instead of via a list.
+  * Removed dimension attribution from output of arima.errors()
 
 Version 5.0 (17 January 2014)
   * Added argument model to dshw().

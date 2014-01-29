@@ -418,7 +418,7 @@ arima.errors <- function(z)
   norder <- sum(z$arma[1:4])
   if(is.element("intercept",names(z$coef)))
     xreg <- cbind(rep(1,length(x)),xreg)
-  return(ts(x - xreg %*% as.matrix(z$coef[(norder+1):length(z$coef)]),frequency=frequency(x),start=start(x)))
+  return(ts(c(x - xreg %*% as.matrix(z$coef[(norder+1):length(z$coef)])),frequency=frequency(x),start=start(x)))
 }
 
 # Return one-step fits
