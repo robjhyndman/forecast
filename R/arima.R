@@ -68,13 +68,9 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
 			if(is.null(num.cores)) {
 				num.cores <- detectCores()
 			}
-
-            # clusterApplyLB() for Windows, mclapply() for POSIX
-            if (Sys.info()[1] == "Windows"){
-                cl <- makeCluster(num.cores)
-                all.models <- parLapply(cl=cl, X=to.check, fun=par.all.arima)
-                stopCluster(cl=cl)
-            } else all.models <- mclapply(X=to.check, FUN=par.all.arima, mc.cores=num.cores)
+            cl <- makeCluster(num.cores)
+            all.models <- parLapply(cl=cl, X=to.check, fun=par.all.arima)
+            stopCluster(cl=cl)
 
             # Removing null elements
             all.models <- all.models[!sapply(all.models, is.null)]
