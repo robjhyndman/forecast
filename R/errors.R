@@ -3,7 +3,7 @@
 ## Actual values in x
 # dx = response variable in historical data
 ## test enables a subset of x and f to be tested.
-testaccuracy <- function(f,x,test="all")
+testaccuracy <- function(f,x,test)
 {
   dx <- getResponse(f)
   if(is.data.frame(x))
@@ -31,8 +31,13 @@ testaccuracy <- function(f,x,test="all")
     x <- window(x,start=start,end=end)
   }
   n <- length(x)
-  if(test=="all")
+  if(is.null(test))
     test <- 1:n
+  else if(min(test) < 1 | max(test) > n)
+  {
+    warning("test elements must be within sample")
+    test <- test[test >= 1 & test <= n]
+  }
 
   ff <- f
   xx <- x
@@ -66,7 +71,10 @@ testaccuracy <- function(f,x,test="all")
     fpe <- (c(ff[2:n])/c(xx[1:(n-1)]) - 1)[test-1]
     ape <- (c(xx[2:n])/c(xx[1:(n-1)]) - 1)[test-1]
     theil <- sqrt(sum((fpe - ape)^2)/sum(ape^2))
-    r1 <- acf(error,plot=FALSE,lag.max=2,na.action=na.pass)$acf[2,1,1]
+    if(length(error) > 1) 
+      r1 <- acf(error,plot=FALSE,lag.max=2,na.action=na.pass)$acf[2,1,1]
+    else
+      r1 <- NA
     nj <- length(out)
     out <- c(out,r1,theil)
     names(out)[nj+(1:2)] <- c("ACF1","Theil's U")
@@ -76,7 +84,7 @@ testaccuracy <- function(f,x,test="all")
 }
 
 
-trainingaccuracy <- function(f,test="all")
+trainingaccuracy <- function(f,test)
 {
   # Make sure x is an element of f when f is a fitted model rather than a forecast
   #if(!is.list(f))
@@ -88,11 +96,17 @@ trainingaccuracy <- function(f,test="all")
     fits <- fitted(f)    # Don't use f$resid as this may contain multiplicative errors.
 
   res <- dx-fits
-  if(is.numeric(test))
+  n <- length(res)
+  if(is.null(test))
+    test <- 1:n
+  if(min(test) < 1 | max(test) > n)
   {
-    res <- res[test]
-    dx <- dx[test]
+    warning("test elements must be within sample")
+    test <- test[test >= 1 & test <= n]
   }
+
+  res <- res[test]
+  dx <- dx[test]
   pe <- res/dx * 100 # Percentage error
 
   me <- mean(res,na.rm=TRUE)
@@ -127,7 +141,7 @@ trainingaccuracy <- function(f,test="all")
   return(out)
 }
 
-accuracy <- function(f,x,test="all")
+accuracy <- function(f,x,test=NULL)
 {
   if(class(f) == "mforecast")
     return(accuracy.mforecast(f,x,test))
