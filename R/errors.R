@@ -143,7 +143,7 @@ trainingaccuracy <- function(f,test)
 
 accuracy <- function(f,x,test=NULL)
 {
-  if(class(f) == "mforecast")
+  if(is.element("mforecast", class(f)))
     return(accuracy.mforecast(f,x,test))
 
   trainset <- (is.list(f))
@@ -182,7 +182,7 @@ accuracy <- function(f,x,test=NULL)
 }
 
 # Compute accuracy for a VAR model (from the vars package)
-accuracy.mforecast <- function(object, x, test="all")
+accuracy.mforecast <- function(object, x, test=NULL)
 {
   fc <- object
   class(fc) <- "forecast"
