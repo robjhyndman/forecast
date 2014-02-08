@@ -2,7 +2,7 @@
 \alias{Arima}
 \title{Fit ARIMA model to univariate time series}
 \usage{
-Arima(x, order=c(0,0,0), seasonal=list(order=c(0,0,0), period=NA),
+Arima(x, order=c(0,0,0), seasonal=c(0,0,0),
     xreg=NULL, include.mean=TRUE, include.drift=FALSE, 
     include.constant, lambda=model$lambda, transform.pars=TRUE, 
     fixed=NULL, init=NULL, method=c("CSS-ML","ML","CSS"), n.cond, 
