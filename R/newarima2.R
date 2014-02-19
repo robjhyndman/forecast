@@ -603,7 +603,7 @@ OCSBtest <- function(time.series, period)
 {
     if(length(time.series) < (2*period+5))
     {
-      warning("Time series too short for seasonal differencing")
+      #warning("Time series too short for seasonal differencing")
       return(0)
     }
 
