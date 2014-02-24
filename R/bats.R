@@ -105,7 +105,7 @@ parFilterSpecifics<-function(control.number, control.array, y, seasonal.periods,
 	}
 }
 
-bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, seasonal.periods=NULL, use.arma.errors=TRUE, use.parallel=TRUE, num.cores=NULL, bc.lower=0, bc.upper=1, ...) 
+bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, seasonal.periods=NULL, use.arma.errors=TRUE, use.parallel=TRUE, num.cores=2, bc.lower=0, bc.upper=1, ...) 
 {
   if (any(class(y) %in% c("data.frame", "list", "matrix", "mts"))) 
     stop("y should be a univariate time series")
@@ -211,7 +211,7 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, sea
 		##Fit the models
 		if(is.null(num.cores)) 
 		{
-			num.cores<-detectCores(all.tests = FALSE, logical = TRUE)
+			num.cores <- detectCores(all.tests = FALSE, logical = TRUE)
 		}
 		clus <- makeCluster(num.cores)
 		models.list <- clusterApplyLB(clus, c(1:nrow(control.array)), parFilterSpecifics, y=y, control.array=control.array, seasonal.periods=seasonal.periods, use.arma.errors=use.arma.errors, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)

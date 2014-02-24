@@ -10,7 +10,7 @@ auto.arima(x, d=NA, D=NA, max.p=5, max.q=5,
      ic=c("aicc","aic", "bic"), stepwise=TRUE, trace=FALSE,
      approximation=(length(x)>100 | frequency(x)>12), xreg=NULL,
      test=c("kpss","adf","pp"), seasonal.test=c("ocsb","ch"),
-     allowdrift=TRUE, lambda=NULL, parallel=FALSE, num.cores=NULL)
+     allowdrift=TRUE, lambda=NULL, parallel=FALSE, num.cores=2)
 }
 
 \arguments{
@@ -40,7 +40,7 @@ auto.arima(x, d=NA, D=NA, max.p=5, max.q=5,
 \item{allowdrift}{If \code{TRUE}, models with drift terms are considered.}
 \item{lambda}{Box-Cox transformation parameter. Ignored if NULL. Otherwise, data transformed before model is estimated.}
 \item{parallel}{If \code{TRUE} and \code{stepwise = FALSE}, then the specification search is done in parallel. This can give a significant speedup on mutlicore machines.}
-\item{num.cores}{Allows the user to specify the amount of parallel processes to be used if \code{parallel = TRUE} and \code{stepwise = FALSE}. If \code{NULL}, then the number of logical cores is automatically detected.}
+\item{num.cores}{Allows the user to specify the amount of parallel processes to be used if \code{parallel = TRUE} and \code{stepwise = FALSE}. If \code{NULL}, then the number of logical cores is automatically detected and all available cores are used.}
 }
 \description{Returns best ARIMA model according to either AIC, AICc or BIC value.
 The function conducts a search over

@@ -6,7 +6,7 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     approximation=(length(x)>100 | frequency(x)>12), xreg=NULL,
     test=c("kpss","adf","pp"), seasonal.test=c("ocsb","ch"),
     allowdrift=TRUE,lambda=NULL,
-    parallel=FALSE, num.cores=NULL)
+    parallel=FALSE, num.cores=2)
 {
   # Only non-stepwise parallel implemented so far.
   if (stepwise==TRUE & parallel==TRUE)

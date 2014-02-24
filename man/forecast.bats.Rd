@@ -44,12 +44,12 @@ An object of class \code{"forecast"} is a list containing at least the following
 \author{Slava Razbash and Rob J Hyndman}
 
 \examples{
+\dontrun{
 fit <- bats(USAccDeaths)
 plot(forecast(fit))
-\dontrun{
+
 taylor.fit <- bats(taylor)
 plot(forecast(taylor.fit))
-}
 }
 
 
