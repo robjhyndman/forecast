@@ -51,6 +51,7 @@ plot(forecast(fit))
 taylor.fit <- bats(taylor)
 plot(forecast(taylor.fit))
 }
+}
 
 
 \keyword{ts}
