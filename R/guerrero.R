@@ -10,7 +10,7 @@
 
 guer.cv <- function(lam, x, nonseasonal.length=2)
 {
-  period <- max(nonseasonal.length,frequency(x))
+  period <- round(max(nonseasonal.length,frequency(x)))
   nobsf <- length(x)
   nyr <- floor(nobsf/period)
   nobst <- floor(nyr*period)
