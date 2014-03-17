@@ -279,7 +279,7 @@ zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, seasonal="additive"
 		}
 
 		xfit[i] <- xhat
-		res <- xhat - x[i]
+		res <- x[i] - xhat
 		residuals[i] <- res
 		SSE <- SSE + res*res
 

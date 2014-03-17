@@ -10,7 +10,7 @@ CV(obj)
 \item{obj}{output from \code{\link[stats]{lm}} or \code{\link{tslm}}}
 }
 
-\description{Computes cross-validation statistic, AIC, corrected AIC, BIC and adjusted R^2 values for a linear model.}
+\description{Computes the leave-one-out cross-validation statistic (also known as PRESS -- prediction residual sum of squares), AIC, corrected AIC, BIC and adjusted R^2 values for a linear model.}
 
 \value{Numerical vector containing CV, AIC, AICc, BIC and AdjR2 values.}
 
