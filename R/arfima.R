@@ -78,9 +78,7 @@ arfima <- function(x, drange = c(0, 0.5), estim = c("mle","ls"), lambda=NULL, ..
 	xx <- xx - meanx
 	
 	# Choose differencing parameter with AR(2) proxy to handle correlations
-	warn <- options(warn=-1)$warn
-	fit <- fracdiff::fracdiff(xx,nar=2,drange=drange)
-	options(warn=warn)
+	suppressWarnings(fit <- fracdiff::fracdiff(xx,nar=2,drange=drange))
  
 	# Choose p and q
 	d <- fit$d
@@ -88,9 +86,7 @@ arfima <- function(x, drange = c(0, 0.5), estim = c("mle","ls"), lambda=NULL, ..
 	fit <- auto.arima(y, max.P=0, max.Q=0, stationary=TRUE, ...)
 	
 	# Refit model using fracdiff
-	warn <- options(warn=-1)$warn
-	fit <- fracdiff::fracdiff(xx, nar=fit$arma[1], nma=fit$arma[2],drange=drange)
-	options(warn=warn)
+	suppressWarnings(fit <- fracdiff::fracdiff(xx, nar=fit$arma[1], nma=fit$arma[2],drange=drange))
 	
 	# Refine parameters with MLE
 	if(estim=="mle")

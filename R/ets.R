@@ -411,25 +411,20 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
 
     # Optimize parameters and state
     if(length(par)==1)
-      tmp <- options(warn=-1)$warn # Turn off warning on 1-d Nelder-Mead.
+      method <- "Brent"
+    else
+    	method <- "Nelder-Mead"
 
-    #    fred <- optim(par,lik,method="BFGS",y=y,nstate=nstate, errortype=errortype, trendtype=trendtype,
-    fred <- optim(par,lik,method="Nelder-Mead",y=y,nstate=nstate, errortype=errortype, trendtype=trendtype,
+    fred <- optim(par,lik,method=method,y=y,nstate=nstate, errortype=errortype, trendtype=trendtype,
         seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
         opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt),
         control=list(maxit=maxit))
 
-    #browser()
-
     fit.par <- fred$par
-
     names(fit.par) <- names(par)
-
-    if(length(par)==1)
-      options(warn=tmp)
   }
-#-------------------------------------------------
 
+#-------------------------------------------------
 
   init.state <- fit.par[(np-nstate+1):np]
   # Add extra state

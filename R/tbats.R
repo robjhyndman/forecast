@@ -362,12 +362,7 @@ parFilterTBATSSpecifics <- function(control.number, y, control.array, model.para
 	}
 
 	if(use.arma.errors) {
-		##Turn off warnings
-		old.warning.level  <-  options()$warn
-		options(warn=-1)
 		arma <- try(auto.arima(as.numeric(first.model$errors), d=0, ...), silent=TRUE)
-		###Re-enable warnings
-		options(warn=old.warning.level)
 		if(class(arma) != "try-error") {
 			p <- arma$arma[1]
 			q <- arma$arma[2]
@@ -414,12 +409,7 @@ filterTBATSSpecifics <- function(y, box.cox, trend, damping, seasonal.periods, k
 		first.model <- aux.model
 	}
 	if(use.arma.errors) {
-		##Turn off warnings
-		old.warning.level  <-  options()$warn
-		options(warn=-1)
 		arma <- try(auto.arima(as.numeric(first.model$errors), d=0, ...), silent=TRUE)
-		###Re-enable warnings
-		options(warn=old.warning.level)
 		if(class(arma) != "try-error") {
 			p <- arma$arma[1]
 			q <- arma$arma[2]

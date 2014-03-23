@@ -153,10 +153,6 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
 
   results <- matrix(NA,nrow=100,ncol=8)
 
-  oldwarn <- options()$warn
-  options(warn=-1)
-  on.exit(options(warn=oldwarn))
-
   bestfit <- myarima(x,order=c(p,d,q),seasonal=c(P,D,Q),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg)
   results[1,] <- c(p,d,q,P,D,Q,constant,bestfit$ic)
   # Null model
@@ -360,7 +356,6 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
       seasonal=bestfit$arma[c(3,7,4)],constant=constant,ic,trace=FALSE,approximation=FALSE,xreg=xreg)
     if(newbestfit$ic > 1e19)
     {
-      options(warn=oldwarn)
       warning("Unable to fit final model using maximum likelihood. AIC value approximated")
     }
     else
@@ -407,16 +402,16 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
     {
         xreg <- cbind(drift=1:length(x),xreg)
         if(use.season)
-            fit <- try(stats::arima(x=x,order=order,seasonal=list(order=seasonal,period=m),xreg=xreg,method=method),silent=TRUE)
+            suppressWarnings(fit <- try(stats::arima(x=x,order=order,seasonal=list(order=seasonal,period=m),xreg=xreg,method=method),silent=TRUE))
         else
-            fit <- try(stats::arima(x=x,order=order,xreg=xreg,method=method),silent=TRUE)
+            suppressWarnings(fit <- try(stats::arima(x=x,order=order,xreg=xreg,method=method),silent=TRUE))
     }
     else
     {
         if(use.season)
-            fit <- try(stats::arima(x=x,order=order,seasonal=list(order=seasonal,period=m),include.mean=constant,method=method,xreg=xreg),silent=TRUE)
+            suppressWarnings(fit <- try(stats::arima(x=x,order=order,seasonal=list(order=seasonal,period=m),include.mean=constant,method=method,xreg=xreg),silent=TRUE))
         else
-            fit <- try(stats::arima(x=x,order=order,include.mean=constant,method=method,xreg=xreg),silent=TRUE)
+            suppressWarnings(fit <- try(stats::arima(x=x,order=order,include.mean=constant,method=method,xreg=xreg),silent=TRUE))
     }
     if(is.null(xreg))
       nxreg <- 0
@@ -623,24 +618,22 @@ OCSBtest <- function(time.series, period)
 
     x.reg <- cbind(y.one, y.two)
     diff.series <- ts(data = diff.series, frequency=period)
-    ##Turn off warnings
-    old.warning.level <- options()$warn
-    options(warn=-1)
+
     regression <- try(Arima(diff.series, order=c(3,0,0), seasonal=list(order=c(1,0,0),period=period), xreg=x.reg), silent=TRUE)
 
-    if(class(regression) == "try-error" | tryCatch(any(is.nan(sqrt(diag(regression$var.coef)))), error=function(e) TRUE))
+    if(class(regression) == "try-error" | tryCatch(checkarima(regression), error=function(e) TRUE))
     {
         regression <- try(Arima(diff.series, order=c(3,0,0), seasonal=list(order=c(0,0,0),period=period), xreg=x.reg), silent=TRUE)
 
-        if(class(regression) == "try-error" | tryCatch(any(is.nan(sqrt(diag(regression$var.coef)))), error=function(e) TRUE))
+        if(class(regression) == "try-error" | tryCatch(checkarima(regression), error=function(e) TRUE))
         {
             regression <- try(Arima(diff.series, order=c(2,0,0), seasonal=list(order=c(0,0,0),period=period), xreg=x.reg), silent=TRUE)
 
-            if(class(regression) == "try-error" | tryCatch(any(is.nan(sqrt(diag(regression$var.coef)))), error=function(e) TRUE))
+            if(class(regression) == "try-error" | tryCatch(checkarima(regression), error=function(e) TRUE))
             {
                 regression <- try(Arima(diff.series, order=c(1,0,0), seasonal=list(order=c(0,0,0),period=period), xreg=x.reg), silent=TRUE)
 
-                if(class(regression) == "try-error" | tryCatch(any(is.nan(sqrt(diag(regression$var.coef)))), error=function(e) TRUE))
+                if(class(regression) == "try-error" | tryCatch(checkarima(regression), error=function(e) TRUE))
                 {
                     regression <- try(lm(contingent.series ~ y.one + y.two - 1, na.action=NULL), silent=TRUE)
                     reg.summary <- summary(regression)
@@ -651,9 +644,6 @@ OCSBtest <- function(time.series, period)
                     else
                       t.two <- NA
 
-                    ###Re-enable warnings
-                    options(warn=old.warning.level)
-
                     if((is.nan(t.two)) | (is.infinite(t.two)) | (is.na(t.two)) | (class(regression) == "try-error"))
                       return(1)
                     else
@@ -663,11 +653,17 @@ OCSBtest <- function(time.series, period)
         }
     }
 
-    se <- sqrt(diag(regression$var.coef))
+    suppressWarnings(se <- sqrt(diag(regression$var.coef)))
     t.two <- regression$coef[names(regression$coef)=="y.two"]/se[names(se)=="y.two"]
-	###Re-enable warnings
-	options(warn=old.warning.level)
+
     return(as.numeric(t.two >= calcOCSBCritVal(period)))
+}
+
+# Check that Arima object has positive coefficient variances without returning warnings
+checkarima <- function(object)
+{
+  suppressWarnings(test <- any(is.nan(sqrt(diag(object$var.coef)))))
+  return(test)
 }
 
 is.constant <- function(x)

@@ -7,10 +7,6 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     ic <- match.arg(ic)
     m <- frequency(x)
 
-    oldwarn <- options()$warn
-    options(warn=-1)
-    on.exit(options(warn=oldwarn))
-
     if(allowdrift)
         maxK <- (d+D <= 1)
     else
@@ -97,7 +93,6 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
                 seasonal=bestfit$arma[c(3,7,4)],constant=constant,ic,trace=FALSE,approximation=FALSE,xreg=xreg)
             if(newbestfit$ic > 1e19)
             {
-                options(warn=oldwarn)
                 warning("Unable to fit final model using maximum likelihood. AIC value approximated")
             }
             else
@@ -130,14 +125,12 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), max.d=2)
   if(is.constant(x))
     return(d)
 
-  oldwarn <- options(warn=-1)
-  on.exit(options(warn=oldwarn$warn))
   if(test=="kpss")
-    dodiff <- tseries::kpss.test(x)$p.value < alpha
+    suppressWarnings(dodiff <- tseries::kpss.test(x)$p.value < alpha)
   else if(test=="adf")
-    dodiff <- tseries::adf.test(x)$p.value > alpha
+    suppressWarnings(dodiff <- tseries::adf.test(x)$p.value > alpha)
   else if(test=="pp")
-    dodiff <- tseries::pp.test(x)$p.value > alpha
+    suppressWarnings(dodiff <- tseries::pp.test(x)$p.value > alpha)
   else
     stop("This shouldn't happen")
   if(is.na(dodiff))
@@ -151,11 +144,11 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), max.d=2)
     if(is.constant(x))
       return(d)
     if(test=="kpss")
-      dodiff <- tseries::kpss.test(x)$p.value < alpha
+      suppressWarnings(dodiff <- tseries::kpss.test(x)$p.value < alpha)
     else if(test=="adf")
-      dodiff <- tseries::adf.test(x)$p.value > alpha
+      suppressWarnings(dodiff <- tseries::adf.test(x)$p.value > alpha)
     else if(test=="pp")
-      dodiff <- tseries::pp.test(x)$p.value > alpha
+      suppressWarnings(dodiff <- tseries::pp.test(x)$p.value > alpha)
     else
       stop("This shouldn't happen")
     if(is.na(dodiff))
@@ -502,11 +495,11 @@ Arima <- function(x, order=c(0, 0, 0),
       xreg <- cbind(drift=drift,xreg)
     }
     if(is.null(xreg))
-      tmp <- stats::arima(x=x,order=order,seasonal=seasonal,include.mean=include.mean,
-          transform.pars=transform.pars,fixed=fixed,init=init,method=method,n.cond=n.cond,optim.control=optim.control,kappa=kappa)
+      suppressWarnings(tmp <- stats::arima(x=x,order=order,seasonal=seasonal,include.mean=include.mean,
+          transform.pars=transform.pars,fixed=fixed,init=init,method=method,n.cond=n.cond,optim.control=optim.control,kappa=kappa))
     else
-      tmp <- stats::arima(x=x,order=order,seasonal=seasonal,xreg=xreg,include.mean=include.mean,
-             transform.pars=transform.pars,fixed=fixed,init=init,method=method,n.cond=n.cond,optim.control=optim.control,kappa=kappa)
+      suppressWarnings(tmp <- stats::arima(x=x,order=order,seasonal=seasonal,xreg=xreg,include.mean=include.mean,
+             transform.pars=transform.pars,fixed=fixed,init=init,method=method,n.cond=n.cond,optim.control=optim.control,kappa=kappa))
   }
 
   # Calculate aicc & bic based on tmp$aic
@@ -669,4 +662,27 @@ predict.Arima <- function(object, n.ahead=1, newxreg=NULL, se.fit=TRUE, ...)
         return(list(pred=pred, se=se))
     }
     else return(pred)
+}
+
+arimaorder <- function (object) 
+{
+	if(class(object) == "Arima")
+	{
+		order <- object$arma[c(1, 6, 2, 3, 7, 4, 5)]
+		seasonal <- (order[7] > 1 & sum(order[4:6]) > 0)
+		if(seasonal)
+			return(order)
+		else
+			return(order[1:3])
+	}
+	else if(class(object) == "ar")
+	{
+		return(c(object$order,0,0))	
+	}
+	else if(class(object) == "fracdiff")
+	{
+		return(c(length(object$ar), object$d, length(object$ma)))
+	}
+	else
+		stop("object not of class Arima, ar or fracdiff")
 }
