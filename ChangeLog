@@ -1,3 +1,10 @@
+Version 5.3 (?? March 2014)
+  * Unit tests added
+  * Fixed bug in zzhw() which reversed the sign of the residuals.
+  * Updated help file for CV() to specify it is only leave-one-out.
+  * Fixed guer.cv() to allow non-integer periods without warning.
+  * Added use.initial.values argument in ets().
+
 Version 5.2 (25 February 2014)
   * Changed default number of cores to 2 for all functions that use parallel processing.
   * Removed remaining call to bats() from examples that are run.

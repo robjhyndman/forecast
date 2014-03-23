@@ -2,7 +2,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
     alpha=NULL, beta=NULL, gamma=NULL, phi=NULL, additive.only=FALSE, lambda=NULL,
     lower=c(rep(0.0001,3), 0.8), upper=c(rep(0.9999,3),0.98),
     opt.crit=c("lik","amse","mse","sigma","mae"), nmse=3, bounds=c("both","usual","admissible"),
-    ic=c("aicc","aic","bic"),restrict=TRUE, ...)
+    ic=c("aicc","aic","bic"),restrict=TRUE, use.initial.values=FALSE, ...)
 {
   #dataname <- substitute(y)
   opt.crit <- match.arg(opt.crit)
@@ -22,6 +22,8 @@ ets <- function(y, model="ZZZ", damped=NULL,
     warning("Missing values encountered. Using longest contiguous portion of time series")
 
   orig.y <- y
+  if(class(model)=="ets" & is.null(lambda))
+    lambda <- model$lambda
   if(!is.null(lambda))
   {
     y <- BoxCox(y,lambda)
@@ -35,21 +37,67 @@ ets <- function(y, model="ZZZ", damped=NULL,
   if(sum((upper-lower)>0)<4)
     stop("Lower limits must be less than upper limits")
 
-  # Define model
+  # If model is an ets object, re-fit model to new data
   if(class(model)=="ets")
   {
-    alpha=model$par["alpha"]
-    beta=model$par["beta"]
+    alpha <- model$par["alpha"]
+    beta <- model$par["beta"]
     if(is.na(beta))
       beta <- NULL
-    gamma=model$par["gamma"]
+    gamma <- model$par["gamma"]
     if(is.na(gamma))
       gamma <- NULL
-    phi=model$par["phi"]
+    phi <- model$par["phi"]
     if(is.na(phi))
       phi <- NULL
-    damped=(model$components[4]=="TRUE")
-    model=paste(model$components[1],model$components[2],model$components[3],sep="")
+    modelcomponents <- paste(model$components[1],model$components[2],model$components[3],sep="")
+    damped <- (model$components[4]=="TRUE")
+    if(use.initial.values)
+    {
+      errortype  <- substr(modelcomponents,1,1)
+      trendtype  <- substr(modelcomponents,2,2)
+      seasontype <- substr(modelcomponents,3,3)
+
+      # Recompute errors from pegelsresid.C
+      e <- pegelsresid.C(y, m, model$initstate, errortype, trendtype, seasontype, damped, alpha, beta, gamma, phi)
+
+      # Compute error measures
+      np <- length(model$par)
+      model$loglik <- -0.5*e$lik
+      model$aic <- e$lik + 2*np
+      model$bic <- e$lik + log(ny)*np
+      model$aicc <- e$lik + 2*ny*np/(ny-np-1)
+      model$mse <- e$amse[1]
+      model$amse <- mean(e$amse[1:nmse])
+
+      # Compute states, fitted values and residuals
+      tsp.y <- tsp(y)
+      model$states=ts(e$states,frequency=tsp.y[3],start=tsp.y[1]-1/tsp.y[3])
+      colnames(model$states)[1] <- "l"
+      if(trendtype!="N")
+        colnames(model$states)[2] <- "b"
+      if(seasontype!="N")
+        colnames(model$states)[(2+(trendtype!="N")):ncol(model$states)] <- paste("s",1:m,sep="")
+      if(errortype=="A")
+        model$fitted <- ts(y-e$e,frequency=tsp.y[3],start=tsp.y[1])
+      else
+        model$fitted <- ts(y/(1+e$e),frequency=tsp.y[3],start=tsp.y[1])
+      model$residuals <- ts(e$e,frequency=tsp.y[3],start=tsp.y[1])
+      model$sigma2 <- mean(model$residuals^2,na.rm=TRUE)
+      model$x <- orig.y
+      if(!is.null(lambda))
+      {
+        model$fitted <- InvBoxCox(model$fitted,lambda)
+      }
+      model$lambda <- lambda
+
+      # Return model object
+      return(model)
+    }
+    else
+    {
+      model <- modelcomponents
+    }
   }
 
   errortype  <- substr(model,1,1)
