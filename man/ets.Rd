@@ -19,9 +19,9 @@ The first letter denotes the error type ("A", "M" or "Z"); the second letter den
 type ("N","A","M" or "Z"); and the third letter denotes the season type ("N","A","M" or "Z").
 In all cases, "N"=none, "A"=additive, "M"=multiplicative and "Z"=automatically selected.
 So, for example, "ANN" is simple exponential  smoothing with additive errors,
-"MAM" is multiplicative Holt-Winters' method with multiplicative errors, and so on. It is also possible for the model
-to be equal to the output from a previous call to \code{ets}. In this case, the same model is fitted to \code{y} without re-estimating any
-parameters.}
+"MAM" is multiplicative Holt-Winters' method with multiplicative errors, and so on. 
+
+It is also possible for the model to be of class \code{"ets"}, and equal to the output from a previous call to \code{ets}. In this case, the same model is fitted to \code{y} without re-estimating any smoothing parameters. See also the \code{use.initial.values} argument.}
 \item{damped}{If TRUE, use a damped trend (either additive or multiplicative). If NULL,
     both damped and non-damped trends will be tried and the best model (according to the
     information criterion \code{ic}) returned.}
@@ -44,7 +44,7 @@ admissible space; \code{"both"} (default) takes the intersection of these region
 \item{ic}{Information criterion to be used in model selection.}
 \item{restrict}{If TRUE, the models with infinite variance will not
     be allowed.}
-\item{use.initial.values}{If \code{TRUE} and \code{model} is of class \code{"ets"}, then the initial values in the model are not re-estimated.}
+\item{use.initial.values}{If \code{TRUE} and \code{model} is of class \code{"ets"}, then the initial values in the model are also not re-estimated.}
 \item{...}{Other undocumented arguments.}
 }
 
