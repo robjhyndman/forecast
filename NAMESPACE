@@ -11,7 +11,7 @@ importFrom(tseries,adf.test,pp.test,kpss.test)
 importFrom(zoo,rollmean, as.Date, as.yearqtr)
 importFrom(timeDate, as.timeDate, isBizday, difftimeDate, Easter)
 importFrom(nnet,nnet)
-import(parallel,Rcpp,RcppArmadillo)
+import(parallel,Rcpp)
 
 export(arfima, Arima, arima.errors, arimaorder, auto.arima, BoxCox, croston,
 fitted.Arima, forecast, forecast.ar, forecast.Arima, forecast.ets, forecast.fracdiff,

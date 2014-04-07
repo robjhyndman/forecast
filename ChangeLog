@@ -1,3 +1,6 @@
+Version 5.4 (?? April 2014)
+  * Fixed bug in forecast.tbats() and forecast.bats() when ts.frequency does not match seasonal.periods.
+
 Version 5.3 (24 March 2014)
   * Unit tests added
   * Fixed bug in zzhw() which reversed the sign of the residuals.
