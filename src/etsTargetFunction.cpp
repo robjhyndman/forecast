@@ -110,7 +110,7 @@ void EtsTargetFunction::eval(const double* p_par, int p_par_length) {
 	if(optPhi) this->phi = par[j++];
 
 	if(!this->check_params()) {
-		this->objval = 1e12;
+		this->objval = R_PosInf;
 		return;
 	}
 
@@ -140,7 +140,7 @@ void EtsTargetFunction::eval(const double* p_par, int p_par_length) {
 	if(seasontype==2)
 	{
 
-		double min = 1e12;
+		double min = R_PosInf;
 		int start = 1;
 		if(trendtype!=0) start=2;
 
@@ -149,7 +149,7 @@ void EtsTargetFunction::eval(const double* p_par, int p_par_length) {
 		}
 
 		if(min < 0) {
-			this->objval = 1e8;
+			this->objval = R_PosInf;
 			return;
 		}
 
@@ -171,9 +171,9 @@ void EtsTargetFunction::eval(const double* p_par, int p_par_length) {
 
 	// isnan() is a C99 function
 	//if (isnan(this->lik)) this->lik = 1e8;
-	if (ISNAN(this->lik)) this->lik = 1e8;
+	if (ISNAN(this->lik)) this->lik = R_PosInf;
 
-	if(abs(this->lik+99999) < 1e-7) this->lik = 1e8;
+	if(abs(this->lik+99999) < 1e-7) this->lik = R_PosInf;
 
 	if(this->opt_crit=="lik") this->objval = this->lik;
 	else if(this->opt_crit=="mse") this->objval = this->amse[0];
