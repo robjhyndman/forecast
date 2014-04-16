@@ -1,6 +1,7 @@
 Version 5.4 (?? April 2014)
   * Fixed bug in forecast.tbats() and forecast.bats() when ts.frequency does not match seasonal.periods.
 	* Fixed bug in getResponse.lm() when there's a logged dependent variable.
+  * Modified ets() to avoid problems when data contains large numbers.
 
 Version 5.3 (24 March 2014)
   * Unit tests added
