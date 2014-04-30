@@ -473,6 +473,8 @@ Arima <- function(x, order=c(0, 0, 0),
   {
     nmxreg <- deparse(substitute(xreg))
     xreg <- as.matrix(xreg)
+    if (ncol(xreg) == 1 & length(nmxreg) > 1)
+        nmxreg <- "xreg"
     if (is.null(colnames(xreg)))
         colnames(xreg) <- if (ncol(xreg) == 1) nmxreg else paste(nmxreg, 1:ncol(xreg), sep="")
   }
