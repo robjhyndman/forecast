@@ -259,15 +259,16 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
     {
         if(is.null(xreg))
           stop("No regressors provided")
-        if(!is.null(object$xreg))
-            object$call$xreg <- object$xreg
-        else # object from arima() rather than Arima()
-        {
-            xr <- object$call$xreg
-            object$call$xreg <- if (!is.null(xr))
-                                    eval.parent(xr)
-                                else NULL
-        }
+        object$call$xreg <- getxreg(object)
+        # if(!is.null(object$xreg))
+        #     object$call$xreg <- object$xreg
+        # else # object from arima() rather than Arima()
+        # {
+        #     xr <- object$call$xreg
+        #     object$call$xreg <- if (!is.null(xr))
+        #                             eval.parent(xr)
+        #                         else NULL
+        # }
         if(ncol(xreg) != ncol(object$call$xreg))
           stop("Number of regressors does not match fitted model")
         pred <- predict(object, n.ahead=h, newxreg=xreg)
@@ -389,21 +390,42 @@ forecast.ar <- function(object,h=10,level=c(80,95),fan=FALSE, lambda=NULL,  boot
         ,class="forecast"))
 }
 
+# Find xreg matrix in an Arima object
+
+getxreg <- function(z)
+{
+  # Look in the obvious place first
+  if(is.element("xreg",names(z))) {
+    return(z$xreg)
+  }
+  # Next most obvious place
+  else if(is.element("xreg",names(z$coef))) {
+    return(eval.parent(z$coef$xreg))
+  }
+  # Now check under call
+  else if(is.element("xreg",names(z$call))) {
+    return(eval.parent(z$call$xreg))
+  }
+  # Otherwise check if it exists
+  else {
+    armapar <- sum(z$arma[1:4]) + is.element("intercept",names(z$coef))
+    npar <- length(z$coef)
+    if(npar > armapar)
+      stop("It looks like you have an xreg component but I don't know what it is.\n  Please use Arima() or auto.arima() rather than arima().")
+    else # No xreg used
+      return(NULL)
+  }
+}
+
 # Extract errors from ARIMA model (as distinct from residuals)
 arima.errors <- function(z)
 {
   if(!is.list(z))
     stop("z must be a list")
     x <- getResponse(z)
-  if(!is.element("xreg",names(z)))
-  {
-    if(!is.element("xreg",names(z$coef)))
-      return(x)
-    else
-      xreg <- eval.parent(z$coef$xreg)
-  }
-  else
-    xreg <- z$xreg
+  xreg <- getxreg(z)
+  if(is.null(xreg))
+    return(x)
   norder <- sum(z$arma[1:4])
   if(is.element("intercept",names(z$coef)))
     xreg <- cbind(rep(1,length(x)),xreg)

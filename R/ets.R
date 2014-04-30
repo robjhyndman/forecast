@@ -15,6 +15,11 @@ ets <- function(y, model="ZZZ", damped=NULL,
   if(any(class(y) %in% c("data.frame","list","matrix","mts")))
     stop("y should be a univariate time series")
   y <- as.ts(y)
+
+  # Check if data is constant
+  if (is.constant(y)) 
+    return(ses(y, alpha=0.99999, initial='simple')$model)
+
   # Remove missing values near ends
   ny <- length(y)
   y <- na.contiguous(y)
