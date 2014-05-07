@@ -1,5 +1,2 @@
-library(testthat)
-library(forecast)
-library(fpp)
-
-test_package("forecast")
+if(require(testthat) & require(fpp))
+  test_package("forecast")
