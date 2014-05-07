@@ -1,6 +1,6 @@
-Version 5.4 (?? April 2014)
+Version 5.4 (8 May 2014)
   * Fixed bug in forecast.tbats() and forecast.bats() when ts.frequency does not match seasonal.periods.
-	* Fixed bug in getResponse.lm() when there's a logged dependent variable.
+  * Fixed bug in getResponse.lm() when there's a logged dependent variable.
   * Modified ets() to avoid problems when data contains large numbers.
   * Modified ets() to produce forecasts when the data are constant.
   * Improved arima.errors() to find xreg more often, and to return an error if it can't be found.
@@ -245,35 +245,35 @@ Version 3.04 (23 September 2011)
 Version 3.03 (2 September 2011)
   * Bug fix in dshw() which was using slightly incorrect seasonal estimates for the forecasts
   * Bug fix in forecast.StructTS due to change in structure of StructTS object.
-	* Better error capture in tslm when seasonal dummies are specified for non-seasonal data.
+  * Better error capture in tslm when seasonal dummies are specified for non-seasonal data.
   * Re-formatted some help files to prevent viewing problems with the pdf manual.
 
 Version 3.02 (25 August 2011)
   * Bug fixes
 
 Version 3.00 (24 August 2011)
-	* Added Box-Cox parameter as argument to Arima(), ets(), arfima(), stlf(), rwf(), meanf(), splinef()
-	* Added Box-Cox parameter as argument to forecast.Arima(), forecast.ets(), forecast.fracdiff(), forecast.ar(), forecast.StructTS, forecast.HoltWinters().
-	* Removed lambda argument from plot.forecast() and accuracy().
+  * Added Box-Cox parameter as argument to Arima(), ets(), arfima(), stlf(), rwf(), meanf(), splinef()
+  * Added Box-Cox parameter as argument to forecast.Arima(), forecast.ets(), forecast.fracdiff(), forecast.ar(), forecast.StructTS, forecast.HoltWinters().
+  * Removed lambda argument from plot.forecast() and accuracy().
   * Added BoxCox.lambda() function to allow automatic choice for Box-Cox parameter using Guerrero's method or the profile log likelihood method.
-	* Modified BoxCox and InvBoxCox to return missing values when lambda < 0 and data < 0.
+  * Modified BoxCox and InvBoxCox to return missing values when lambda < 0 and data < 0.
   * Add nsdiffs() function for selecting the number of seasonal differences.
   * Modified selection of seasonal differencing in auto.arima().
-	* Better error message if seasonal factor used in tslm() with non-seasonal data.
-	* Added PI argument to forecast.ets() to allow only point forecasts to be computed.
-	* Added include.constant argument to Arima().
-	* Added subset.ts() function.
-	* Upgraded seasonplot() function to allow colors and to fix some bugs.
-	* Fixed fitted values returned by forecast.HoltWinters()
-	* Modified simulate.Arima() because of undocumented changes in filter() function in stats package.
-	* Changed residuals returned by splinef() to be ordinary residuals. The standardized residuals are now returned as standardizedresiduals.
-	* Added dshw() function for double-seasonal Holt-Winters method based on Taylor (2003).
+  * Better error message if seasonal factor used in tslm() with non-seasonal data.
+  * Added PI argument to forecast.ets() to allow only point forecasts to be computed.
+  * Added include.constant argument to Arima().
+  * Added subset.ts() function.
+  * Upgraded seasonplot() function to allow colors and to fix some bugs.
+  * Fixed fitted values returned by forecast.HoltWinters()
+  * Modified simulate.Arima() because of undocumented changes in filter() function in stats package.
+  * Changed residuals returned by splinef() to be ordinary residuals. The standardized residuals are now returned as standardizedresiduals.
+  * Added dshw() function for double-seasonal Holt-Winters method based on Taylor (2003).
   * Fixed further bugs in the decompose() function that caused the results to be incorrect with odd frequencies.
 
 Version 2.19 (4 June 2011)
   * Added xreg information to the object returned by auto.arima().
-	* Added Acf(), Pacf(), ma() and CV() functions.
-	* Fixed bugs in re-fitting ARIMA models to new data.
+  * Added Acf(), Pacf(), ma() and CV() functions.
+  * Fixed bugs in re-fitting ARIMA models to new data.
 
 Version 2.18 (19 May 2011)
   * Fixed bug in seasonplot() where year labels were sometimes incorrect.
@@ -323,7 +323,7 @@ Version 2.09 (15 October 2010)
 
 Version 2.08 (22 September 2010)
   * Added pp test option for auto.arima() and ndiffs().
-	* Fixed bug in simulate.ets() which was causing problems when forecasting from some ETS models including ETS(M,M,N).
+  * Fixed bug in simulate.ets() which was causing problems when forecasting from some ETS models including ETS(M,M,N).
 
 Version 2.07 (9 September 2010)
   * Fixed bug in simulate.Arima(). Previous sample paths when d=2 and future=TRUE were incorrect.
