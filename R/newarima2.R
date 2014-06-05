@@ -443,7 +443,11 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
         if(order[1] + seasonal[1] > 0)
         {
             testvec <- fit$model$phi
-            last.nonzero <- max(which(abs(testvec)>1e-8))
+            k <- abs(testvec) > 1e-8
+            if(sum(k) > 0)
+              last.nonzero <- max(which(k))
+            else
+              last.nonzero <- 0
             if(last.nonzero > 0)
             {
                 testvec <- testvec[1:last.nonzero]
@@ -456,7 +460,11 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
         if(order[3] + seasonal[3] > 0)
         {
             testvec <- fit$model$theta
-            last.nonzero <- max(which(abs(testvec)>1e-8))
+            k <- abs(testvec) > 1e-8
+            if(sum(k) > 0)
+              last.nonzero <- max(which(k))
+            else
+              last.nonzero <- 0
             if(last.nonzero > 0)
             {
                 testvec <- testvec[1:last.nonzero]
