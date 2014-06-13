@@ -179,31 +179,56 @@ rwf <- function(x,h=10,drift=FALSE,level=c(80,95),fan=FALSE,lambda=NULL)
 
 BoxCox <- function(x,lambda)
 {
-  if(lambda < 0)
-	x[x < 0] <- NA
-  if(lambda==0)
-    out <- log(x)
-  else
-    out <- (sign(x)*abs(x)^lambda - 1)/lambda
-  if(!is.null(colnames(x)))
-	colnames(out) <- colnames(x)
-  return(out)	
+  ##if(lambda < 0)
+##	x[x < 0] <- NA
+  ##if(lambda==0)
+    ##out <- log(x)
+  ##else
+    ##out <- (sign(x)*abs(x)^lambda - 1)/lambda
+  ##if(!is.null(colnames(x)))
+	##colnames(out) <- colnames(x)
+  ##return(out)
+  return(YeoJohn(x,lambda))
 }
+
+##################################################################
+YeoJohn<- function(x,lambda)
+{
+	out<- x
+	if ((any(x>=0))&(lambda!=0)) {out[x>=0]<- ((((out[x>=0]+1)^(lambda))-1)/lambda)}
+	if ((any(x>=0))&(lambda==0)) {out[x>=0]<- log(out[x>=0]+1)}
+	if ((any(x<0))&(lambda!=2)) {out[x<0]<- -((((1-out[x<0])^(2-lambda))-1)/(2-lambda))}
+	if ((any(x<0))&(lambda==2)) {out[x<0]<- -log(1-out[x<0])}
+	return(out)
+}
+##################################################################
+##################################################################
+YeoJohnInv<- function(x,lambda)
+{
+	out<- x
+	if ((any(x>=0))&(lambda!=0)) {out[x>=0]<- ((out[x>=0]*lambda+1)^(1/lambda))-1}
+	if ((any(x>=0))&(lambda==0)) {out[x>=0]<- exp(out[x>=0])-1}
+	if ((any(x<0))&(lambda!=2)) {out[x<0]<- 1-((1-out[x<0]*(2-lambda))^(1/(2-lambda)))}
+	if ((any(x<0))&(lambda==2)) {out[x<0]<- 1-exp(-out[x<0])}
+	return(out)
+}
+##################################################################
 
 InvBoxCox <- function(x,lambda)
 {
-	if(lambda < 0)
-		x[x > -1/lambda] <- NA
-    if(lambda==0)
-        out <- exp(x)
-    else
-    {
-        xx <- x*lambda + 1
-        out <- sign(xx)*abs(xx)^(1/lambda)
-    }
-    if(!is.null(colnames(x)))
-	  colnames(out) <- colnames(x)
-    return(out)	
+	##if(lambda < 0)
+	##	x[x > -1/lambda] <- NA
+    ##if(lambda==0)
+      ##  out <- exp(x)
+    ##else
+    ##{
+      ##  xx <- x*lambda + 1
+       ## out <- sign(xx)*abs(xx)^(1/lambda)
+    ##}
+    ##if(!is.null(colnames(x)))
+##	  colnames(out) <- colnames(x)
+  ##  return(out)
+  return(YeoJohnInv(x,lambda))
 }
 
 forecast.StructTS <- function(object,h=ifelse(object$coef["epsilon"]>1e-10, 2*object$xtsp[3], 10),level=c(80,95),fan=FALSE,lambda=NULL,...)
