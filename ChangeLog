@@ -1,3 +1,6 @@
+Version 5.5 (?? 2014)
+  * Improved document for croston()
+
 Version 5.4 (8 May 2014)
   * Fixed bug in forecast.tbats() and forecast.bats() when ts.frequency does not match seasonal.periods.
   * Fixed bug in getResponse.lm() when there's a logged dependent variable.
