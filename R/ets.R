@@ -697,7 +697,12 @@ initstate <- function(y,trendtype,seasontype)
     if(seasontype=="A")
       y.sa <- y-y.d$seasonal
     else
-      y.sa <- y/y.d$seasonal
+    {
+      init.seas <- pmax(init.seas, 1e-2) # We do not want negative seasonal indexes
+      if(sum(init.seas) > m)
+      	init.seas <- init.seas/sum(init.seas + 1e-2)
+      y.sa <- y/pmax(y.d$seasonal, 1e-2)
+    }
   }
   else # non-seasonal model
   {
