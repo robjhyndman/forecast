@@ -4,10 +4,12 @@
 \alias{stl}
 \title{Forecasting using stl objects}
 \usage{\method{forecast}{stl}(object, method=c("ets","arima","naive","rwdrift"), 
-    etsmodel="ZZN", h=frequency(object$time.series)*2, level=c(80,95), 
+    etsmodel="ZZN", forecastfunction=NULL,
+    h=frequency(object$time.series)*2, level=c(80,95), 
     fan=FALSE, lambda=NULL, xreg=NULL, newxreg=NULL, ...)
 stlf(x, h=frequency(x)*2, s.window=7, robust=FALSE, 
     method=c("ets","arima", "naive", "rwdrift"), etsmodel="ZZN",
+    forecastfunction=NULL,
     level=c(80,95), fan=FALSE, lambda=NULL, xreg=NULL, newxreg=NULL, ...)
 }
 
@@ -16,6 +18,8 @@ stlf(x, h=frequency(x)*2, s.window=7, robust=FALSE,
 \item{x}{A univariate numeric time series of class "\code{ts}"}
 \item{method}{Method to use for forecasting the seasonally adjusted series.}
 \item{etsmodel}{The ets model specification passed to \code{\link[forecast]{ets}}. By default it allows any non-seasonal model. If \code{method!="ets"}, this argument is ignored.}
+\item{forecastfunction}{An alternative way of specifying the function for forecasting the seasonally adjusted series. If \code{forecastfunction} is not \code{NULL}, then \code{method} is
+ignored. Otherwise \code{method} is used to specify the forecasting method to be used.}
 \item{h}{Number of periods for forecasting.}
 \item{level}{Confidence level for prediction intervals.}
 \item{fan}{If \code{TRUE}, level is set to seq(50,99,by=1). This is suitable for fan plots.}
@@ -24,12 +28,16 @@ stlf(x, h=frequency(x)*2, s.window=7, robust=FALSE,
 \item{robust}{If \code{TRUE}, robust fitting will used in the loess procedure within \code{\link[stats]{stl}}.}
 \item{xreg}{Historical regressors to be used in \code{\link[forecast]{auto.arima}()}.}
 \item{newxreg}{Future regressors to be used in \code{\link[forecast]{forecast.Arima}()}.}
-\item{...}{Other arguments passed to \code{\link[forecast]{ets}()} or \code{\link[forecast]{auto.arima}()}.}
+\item{...}{Other arguments passed to \code{forecastfunction}.}
 }
 
 \description{Returns forecasts obtained by either ETS or ARIMA models applied to the seasonally adjusted data from an STL decomposition.}
 
-\details{\code{forecast.stl} seasonally adjusts the data from an STL decomposition, then uses either ETS or ARIMA models to forecast the result. The seasonal component from the last year of data is added back in to the forecasts. Note that the prediction intervals ignore the uncertainty associated with the seasonal component.
+\details{\code{forecast.stl} seasonally adjusts the data from an STL decomposition, then forecasts the seasonally adjusted data, and re-seasonalizes the results by adding back the last year of the estimated seasonal component.
+
+Note that the prediction intervals ignore the uncertainty associated with the seasonal component.
+
+The forecasting method for the seasonally adjusted data can be specified either using \code{method} or using \code{forecastfunction}. The \code{method} argument provides a shorthand way of specifying \code{forecastfunction} for a few special cases. More generally, \code{forecastfunction} can be any function that takes arguments \code{x}, \code{h} and \code{level} and returns an object of class \code{\link{forecast}}. For example, \code{forecastfunction=thetaf} uses the \code{\link{thetaf}} function for forecasting the seasonally adjusted series.
 
 \code{stlf} takes a \code{ts} argument and applies a stl decomposition before calling \code{forecast.stl}.
 }
