@@ -6,22 +6,23 @@
 \alias{forecast.stlm}
 \title{Forecasting using stl objects}
 \usage{
-stlm(object, method=c("ets","arima"), 
-     modelfunction=NULL, etsmodel="ZZN", xreg=NULL, ...)
-\method{forecast}{stlm}(object, h = frequency(object$stl$time.series)*2, 
-	level = c(80, 95), fan = FALSE, lambda=NULL, newxreg=NULL, ...)
-\method{forecast}{stl}(object, method=c("ets","arima","naive","rwdrift"), 
-    etsmodel="ZZN", forecastfunction=NULL,
-    h=frequency(object$time.series)*2, level=c(80,95), 
-    fan=FALSE, lambda=NULL, xreg=NULL, newxreg=NULL, ...)
+stlm(x, s.window=7, robust=FALSE, method=c("ets","arima"), 
+     modelfunction=NULL, etsmodel="ZZN", xreg=NULL, lambda=NULL, ...)
 stlf(x, h=frequency(x)*2, s.window=7, robust=FALSE, 
     method=c("ets","arima", "naive", "rwdrift"), etsmodel="ZZN",
     forecastfunction=NULL,
     level=c(80,95), fan=FALSE, lambda=NULL, xreg=NULL, newxreg=NULL, ...)
+\method{forecast}{stlm}(object, h = 2*object$m, 
+	level = c(80, 95), fan = FALSE, lambda=object$lambda, newxreg=NULL, ...)
+\method{forecast}{stl}(object, method=c("ets","arima","naive","rwdrift"), 
+    etsmodel="ZZN", forecastfunction=NULL,
+    h=frequency(object$time.series)*2, level=c(80,95), 
+    fan=FALSE, lambda=NULL, xreg=NULL, newxreg=NULL, ...)
 }
 
 \arguments{
-\item{object}{An object of class "\code{stl}". Usually the result of a call to \code{\link[stats]{stl}}.}
+\item{x}{A univariate numeric time series of class \code{ts}}
+\item{object}{An object of class \code{stl} or \code{stlm}. Usually the result of a call to \code{\link[stats]{stl}} or \code{stlm}.}
 \item{method}{Method to use for forecasting the seasonally adjusted series.}
 \item{modelfunction}{An alternative way of specifying the function for modelling the seasonally adjusted series. If \code{modelfunction} is not \code{NULL}, then \code{method} is
 ignored. Otherwise \code{method} is used to specify the time series model to be used.}
@@ -34,9 +35,8 @@ ignored. Otherwise \code{method} is used to specify the forecasting method to be
 \item{h}{Number of periods for forecasting.}
 \item{level}{Confidence level for prediction intervals.}
 \item{fan}{If \code{TRUE}, level is set to seq(50,99,by=1). This is suitable for fan plots.}
-\item{lambda}{Box-Cox transformation parameter. Ignored if NULL. Otherwise, data transformed before decomposition and back-transformed after forecasts are computed.}
-\item{x}{A univariate numeric time series of class "\code{ts}"}
-\item{s.window}{Either the character string "periodic" or the span (in lags) of the loess window for seasonal extraction.}
+\item{lambda}{Box-Cox transformation parameter. Ignored if \code{NULL}. Otherwise, data transformed before decomposition and back-transformed after forecasts are computed.}
+\item{s.window}{Either the character string ``periodic'' or the span (in lags) of the loess window for seasonal extraction.}
 \item{robust}{If \code{TRUE}, robust fitting will used in the loess procedure within \code{\link[stats]{stl}}.}
 \item{...}{Other arguments passed to either \code{modelfunction} or \code{forecastfunction}.}
 }
@@ -45,15 +45,15 @@ ignored. Otherwise \code{method} is used to specify the forecasting method to be
 to the seasonally adjusted data and re-seasonalizing using the last year of the seasonal component.
 }
 
-\details{\code{stlm} takes the STL decomposition \code{object} and models the seasonally adjusted data using the model passed as \code{modelfunction} or specified using \code{method}. It returns an object that includes the original STL decomposition and a time series model fitted to the seasonally adjusted data. This object can be passed to the \code{forecast.stlm} for forecasting.
+\details{\code{stlm} takes a time series \code{x}, applies an STL decomposition, and models the seasonally adjusted data using the model passed as \code{modelfunction} or specified using \code{method}. It returns an object that includes the original STL decomposition and a time series model fitted to the seasonally adjusted data. This object can be passed to the \code{forecast.stlm} for forecasting.
 
 \code{forecast.stlm} forecasts the seasonally adjusted data, then re-seasonalizes the results by adding back the last year of the estimated seasonal component.
 
-\code{forecast.stl} combines \code{stlm} and \code{forecast.stlm} in one function. However, it allows more general forecasting methods to be specified via \code{forecastfunction}.
+\code{stlf} combines \code{stlm} and \code{forecast.stlm}. It takes a \code{ts} argument, applies an STL decomposition, models the seasonally adjusted data, reseasonalizes, and returns the forecasts. However, it allows more general forecasting methods to be specified via \code{forecastfunction}.
 
-\code{stlf} combines \code{stl} and \code{forecast.stl}. It takes a \code{ts} argument, applies an STL decomposition, models the seasonally adjusted data, reseasonalizes, and returns the forecasts.
+\code{forecast.stl} is similar to \code{stlf} except that it takes the STL decomposition as the first argument, instead of the time series. 
 
-Note that the prediction intervals ignore the uncertainty associated with the seasonal component.
+Note that the prediction intervals ignore the uncertainty associated with the seasonal component. THey are computed using the prediction intervals from the seasonally adjusted series, which are then reseasonalized using the last year of the seasonal component. The uncertainty in the seasonal component is ignored.
 
 The time series model for the seasonally adjusted data can be specified in \code{stlm} using either \code{method} or \code{modelfunction}. The \code{method} argument provides a shorthand way of specifying \code{modelfunction} for a few special cases. More generally, \code{modelfunction} can be any function with first argument a \code{ts} object, that returns an object that can be passed to \code{\link{forecast}}. For example, \code{forecastfunction=ar} uses the \code{\link{ar}} function for modelling the seasonally adjusted series.
 
@@ -74,12 +74,15 @@ The generic accessor functions \code{fitted.values} and \code{residuals} extract
 
 \author{Rob J Hyndman}
 
-\examples{decomp <- stl(USAccDeaths,s.window="periodic")
+\examples{
+tsmod <- stlm(USAccDeaths, modelfunction=ar)
+plot(forecast(tsmod, h=36))
+
+plot(stlf(AirPassengers, lambda=0))
+
+decomp <- stl(USAccDeaths,s.window="periodic")
 plot(forecast(decomp))
 
-plot(stlf(AirPassengers, lambda=BoxCox.lambda(AirPassengers)))
 
-tsmod <- stlm(decomp, modelfunction=ar)
-plot(forecast(tsmod, h=36))
 }
 \keyword{ts}

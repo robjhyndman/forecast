@@ -195,12 +195,21 @@ forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsm
    return(fcast)
 }
 
-# Function takes stl object and fits a model to seasonally adjusted series
+
+# Function takes time series, does STL decomposition, and fits a model to seasonally adjusted series
 # But it does not forecast. Instead, the result can be passed to forecast().
-stlm <- function(object, method=c("ets","arima"), 
-     modelfunction=NULL, etsmodel="ZZN", xreg=NULL, ...)
+stlm <- function(x ,s.window=7, robust=FALSE, method=c("ets","arima"), 
+     modelfunction=NULL, etsmodel="ZZN", xreg=NULL, lambda=NULL, ...)
 {
   method <- match.arg(method)
+
+  # Transform data if necessary
+  origx <- x
+  if (!is.null(lambda)) 
+    x <- BoxCox(x, lambda)
+
+  # Do STL decomposition
+  stld <- stl(x,s.window=s.window,robust=robust)
 
   # Construct modelfunction if not passed as an argument
   if(is.null(modelfunction))
@@ -222,17 +231,17 @@ stlm <- function(object, method=c("ets","arima"),
   }
 
   # De-seasonalize
-  x.sa <- seasadj(object)
+  x.sa <- seasadj(stld)
   
   # Model seasonally adjusted data
   fit <- modelfunction(x.sa, ...)
   fit$x <- x.sa
 
-  return(structure(list(stl=object,model=fit),class="stlm"))
+  return(structure(list(stl=stld,model=fit, lambda=lambda, x=origx, m=frequency(origx)),class="stlm"))
 }
 
-forecast.stlm <- function(object, h = frequency(object$stl$time.series)*2, level = c(80, 95), fan = FALSE, 
-     lambda=NULL, newxreg=NULL, ...)
+forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE, 
+     lambda=object$lambda, newxreg=NULL, ...)
 {
   if(!is.null(newxreg))
   {
@@ -256,8 +265,6 @@ forecast.stlm <- function(object, h = frequency(object$stl$time.series)*2, level
   fcast$mean <- fcast$mean + lastseas
   fcast$upper <- fcast$upper + lastseas
   fcast$lower <- fcast$lower + lastseas
-  fcast$x <- ts(rowSums(object$stl$time.series))
-  tsp(fcast$x) <- tsp(object$stl$time.series)
   fcast$method <- paste("STL + ",fcast$method)
   fcast$seasonal <- ts(lastseas[1:m],frequency=m,start=tsp(object$stl$time.series)[2]-1+1/m)
   fcast$fitted <- fitted(fcast)+object$stl$time.series[,1]
@@ -265,13 +272,13 @@ forecast.stlm <- function(object, h = frequency(object$stl$time.series)*2, level
   
   if (!is.null(lambda)) 
   {
-    fcast$x <- InvBoxCox(fcast$x,lambda)
     fcast$fitted <- InvBoxCox(fcast$fitted, lambda)
     fcast$mean <- InvBoxCox(fcast$mean, lambda)
     fcast$lower <- InvBoxCox(fcast$lower, lambda)
     fcast$upper <- InvBoxCox(fcast$upper, lambda)
     fcast$lambda <- lambda
   }
+  fcast$x <- object$x
   
   return(fcast)
 }
