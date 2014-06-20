@@ -195,6 +195,87 @@ forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsm
    return(fcast)
 }
 
+# Function takes stl object and fits a model to seasonally adjusted series
+# But it does not forecast. Instead, the result can be passed to forecast().
+stlm <- function(object, method=c("ets","arima"), 
+     modelfunction=NULL, etsmodel="ZZN", xreg=NULL, ...)
+{
+  method <- match.arg(method)
+
+  # Construct modelfunction if not passed as an argument
+  if(is.null(modelfunction))
+  {
+    if(method!="arima" & !is.null(xreg))
+      stop("xreg arguments can only be used with ARIMA models")
+    if(method=="ets")
+    {
+      # Ensure non-seasonal model
+      if(substr(etsmodel,3,3) != "N")
+      {
+        warning("The ETS model must be non-seasonal. I'm ignoring the seasonal component specified.")
+        substr(etsmodel,3,3) <- "N"
+      }
+      modelfunction <- function(x,...){return(ets(x,model=etsmodel,...))}
+    }
+    else if(method=="arima")
+      modelfunction <- function(x,...){return(auto.arima(x,xreg=xreg,seasonal=FALSE,...))}
+  }
+
+  # De-seasonalize
+  x.sa <- seasadj(object)
+  
+  # Model seasonally adjusted data
+  fit <- modelfunction(x.sa, ...)
+  fit$x <- x.sa
+
+  return(structure(list(stl=object,model=fit),class="stlm"))
+}
+
+forecast.stlm <- function(object, h = frequency(object$stl$time.series)*2, level = c(80, 95), fan = FALSE, 
+     lambda=NULL, newxreg=NULL, ...)
+{
+  if(!is.null(newxreg))
+  {
+    if(nrow(as.matrix(newxreg))!=h)
+      stop("newxreg should have the same number of rows as the forecast horizon h")
+  }
+  if(fan)
+    level <- seq(51, 99, by = 3)
+
+  m <- frequency(object$stl$time.series)
+  n <- nrow(object$stl$time.series)
+  lastseas <- rep(object$stl$time.series[n-(m:1)+1,"seasonal"],trunc(1+(h-1)/m))[1:h]
+ 
+  # Forecast seasonally adjusted series
+  if(class(object$model)=="Arima" & !is.null(newxreg))
+    fcast <- forecast(object$model, h=h, level=level, xreg=newxreg, ...)
+  else
+    fcast <- forecast(object$model, h=h, level=level, ...)
+
+  # Reseasonalize
+  fcast$mean <- fcast$mean + lastseas
+  fcast$upper <- fcast$upper + lastseas
+  fcast$lower <- fcast$lower + lastseas
+  fcast$x <- ts(rowSums(object$stl$time.series))
+  tsp(fcast$x) <- tsp(object$stl$time.series)
+  fcast$method <- paste("STL + ",fcast$method)
+  fcast$seasonal <- ts(lastseas[1:m],frequency=m,start=tsp(object$stl$time.series)[2]-1+1/m)
+  fcast$fitted <- fitted(fcast)+object$stl$time.series[,1]
+  fcast$residuals <- fcast$x - fcast$fitted
+  
+  if (!is.null(lambda)) 
+  {
+    fcast$x <- InvBoxCox(fcast$x,lambda)
+    fcast$fitted <- InvBoxCox(fcast$fitted, lambda)
+    fcast$mean <- InvBoxCox(fcast$mean, lambda)
+    fcast$lower <- InvBoxCox(fcast$lower, lambda)
+    fcast$upper <- InvBoxCox(fcast$upper, lambda)
+    fcast$lambda <- lambda
+  }
+  
+  return(fcast)
+}
+
 stlf <- function(x ,h=frequency(x)*2, s.window=7, robust=FALSE, method=c("ets","arima","naive","rwdrift"), 
   etsmodel="ZZN", forecastfunction=NULL, level = c(80, 95), fan = FALSE, lambda=NULL, 
   xreg=NULL, newxreg=NULL, ...)
