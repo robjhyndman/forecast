@@ -343,7 +343,8 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
 
 forecast.ar <- function(object,h=10,level=c(80,95),fan=FALSE, lambda=NULL,  bootstrap=FALSE, npaths=5000,...)
 {
-    pred <- predict(object,n.ahead=h)
+     x <- getResponse(object)
+     pred <- predict(object,newdata=x,n.ahead=h)
     if(bootstrap) # Recompute se using simulations
     {
         sim <- matrix(NA,nrow=npaths,ncol=h)
@@ -371,7 +372,6 @@ forecast.ar <- function(object,h=10,level=c(80,95),fan=FALSE, lambda=NULL,  boot
     }
     colnames(lower)=colnames(upper)=paste(level,"%",sep="")
     method <- paste("AR(",object$order,")",sep="")
-    x <- getResponse(object)
     f <- frequency(x)
     res <- ts(object$resid[-(1:object$order)],start=tsp(x)[1]+object$order/f,frequency=f)
     fits <- x-res
