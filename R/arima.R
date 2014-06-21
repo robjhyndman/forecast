@@ -16,7 +16,7 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     #Serial - technically could be combined with the code below
     if (parallel==FALSE)
     {
-        best.ic <- 1e20
+        best.ic <- Inf
         for(i in 0:max.p)
         {
             for(j in 0:max.q)
@@ -72,7 +72,7 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
             all.models <- all.models[!sapply(all.models, is.null)]
 
             # Choosing best model
-            best.ic <- 1e20
+            best.ic <- Inf
             for (i in 1:length(all.models)){
                 if(!is.null(all.models[[i]][, 1]$ic) && all.models[[i]][, 1]$ic < best.ic){
                     bestfit <- all.models[[i]][, 1]
@@ -91,7 +91,7 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
             #constant <- length(bestfit$coef) - ncol(xreg) > sum(bestfit$arma[1:4])
             newbestfit <- myarima(x,order=bestfit$arma[c(1,6,2)],
                 seasonal=bestfit$arma[c(3,7,4)],constant=constant,ic,trace=FALSE,approximation=FALSE,xreg=xreg)
-            if(newbestfit$ic > 1e19)
+            if(newbestfit$ic == Inf)
             {
                 warning("Unable to fit final model using maximum likelihood. AIC value approximated")
             }
