@@ -206,27 +206,65 @@ stlf <- function(x ,h=frequency(x)*2, s.window=7, robust=FALSE, method=c("ets","
 fourier <- function(x, K)
 {
     n <- length(x)
-    period <- frequency(x)
-    X <- matrix(,nrow=n,ncol=2*K)
-    for(i in 1:K)
-    {
-        X[,2*i-1] <- sin(2*pi*i*(1:n)/period)
-        X[,2*i] <- cos(2*pi*i*(1:n)/period)
+    if (any(class(x) == "msts")) { # "msts" object
+      periods <- attr(x, "msts")
+      len.p <- length(periods)
+      len.K <- length(K)
+      if (len.K != len.p) {
+        warning("The length of K should be the same as the number of seasonal periods of x.")
+      }
+      X <- vector(length = len.K, mode = "list")
+      for (i in 1L:len.K) {
+        X[[i]] <- matrix(, nrow = n, ncol = 2*K[i])
+        for (j in 1L:K[i]) {
+          X[[i]][, 2*j - 1] <- sin(2*pi*j*(1:n)/periods[i])
+          X[[i]][, 2*j] <- cos(2*pi*j*(1:n)/periods[i])
+        }
+        colnames(X[[i]]) <- paste0(c("S", "C"), rep(1:K[[i]], rep(2, K[[i]])))
+      }
+      names(X) <- paste0("ms", 1L:len.p)
+    } else { # a "ts" object
+      period <- frequency(x)
+      X <- matrix(,nrow=n,ncol=2*K)
+      for(i in 1:K)
+      {
+          X[,2*i-1] <- sin(2*pi*i*(1:n)/period)
+          X[,2*i] <- cos(2*pi*i*(1:n)/period)
+      }
+      colnames(X) <- paste(c("S","C"),rep(1:K,rep(2,K)),sep="")
     }
-    colnames(X) <- paste(c("S","C"),rep(1:K,rep(2,K)),sep="")
     return(X)
 }
 
 fourierf <- function(x, K, h)
 {
     n <- length(x)
-    period <- frequency(x)
-    X <- matrix(,nrow=h,ncol=2*K)
-    for(i in 1:K)
-    {
-        X[,2*i-1] <- sin(2*pi*i*((n+1):(n+h))/period)
-        X[,2*i] <- cos(2*pi*i*((n+1):(n+h))/period)
+    if (any(class(x) == "msts")) { # a "msts" object
+      periods <- attr(x, "msts")
+      len.p <- length(periods)
+      len.K <- length(K)
+      if (len.K != len.p) {
+        warning("The length of K should be the same as the number of seasonal periods of x.")
+      }
+      X <- vector(length = len.K, mode = "list")
+      for (i in 1L:len.K) {
+        X[[i]] <- matrix(, nrow = n, ncol = 2*K[i])
+        for (j in 1L:K[i]) {
+          X[[i]][, 2*j - 1] <- sin(2*pi*j*((n + 1):(n + h))/periods[i])
+          X[[i]][, 2*j] <- cos(2*pi*j*((n + 1):(n + h))/periods[i])
+        }
+        colnames(X[[i]]) <- paste0(c("S", "C"), rep(1:K[[i]], rep(2, K[[i]])))
+      }
+      names(X) <- paste0("ms", 1L:len.p)
+    } else { # a "ts" object
+      period <- frequency(x)
+      X <- matrix(,nrow=h,ncol=2*K)
+      for(i in 1:K)
+      {
+          X[,2*i-1] <- sin(2*pi*i*((n+1):(n+h))/period)
+          X[,2*i] <- cos(2*pi*i*((n+1):(n+h))/period)
+      }
+      colnames(X) <- paste(c("S","C"),rep(1:K,rep(2,K)),sep="")
     }
-    colnames(X) <- paste(c("S","C"),rep(1:K,rep(2,K)),sep="")
     return(X)
 }
