@@ -7,6 +7,7 @@ Version 5.5 (?? 2014)
   * Improved handling of ARIMA models with seasonality greater than 48
   * Improved handling of some degenerate regression models in nsdiffs()
   * Changed AIC for poor models from 1e20 to Inf.
+	* Update fourier() and fourierf() to work with msts object.
 
 Version 5.4 (8 May 2014)
   * Fixed bug in forecast.tbats() and forecast.bats() when ts.frequency does not match seasonal.periods.

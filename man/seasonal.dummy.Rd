@@ -11,9 +11,9 @@ fourierf(x,K,h)
 }
 
 \arguments{
-\item{x}{Seasonal time series}
+\item{x}{Seasonal time series or a \code{msts} object}
 \item{h}{Number of periods ahead to forecast}
-\item{K}{Maximum order of Fourier terms}
+\item{K}{Maximum order(s) of Fourier terms}
 }
 \description{\code{seasonaldummy} and \code{seasonaldummyf} return matrices of dummy variables suitable for use in \code{\link[stats]{arima}}, \code{\link[stats]{lm}} or \code{\link{tslm}}. The last season is omitted and used as the control.
 
@@ -47,5 +47,11 @@ ldeaths.fcast <- forecast(deaths.lm,
   data.frame(X=I(fourierf(ldeaths,3,36))))
 plot(ldeaths.fcast)
 
+# Using Fourier series to a "msts" object
+Y <- fourier(taylor, K = c(3, 3))
+taylor.lm <- tslm(taylor ~ Y)
+taylor.fcast <- forecast(taylor.lm, 
+                         data.frame(Y = fourierf(taylor, K = c(3, 3), h = 36)))
+plot(taylor.fcast)
 }
 \keyword{ts}

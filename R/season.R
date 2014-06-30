@@ -313,27 +313,47 @@ stlf <- function(x ,h=frequency(x)*2, s.window=7, robust=FALSE, method=c("ets","
 fourier <- function(x, K)
 {
     n <- length(x)
-    period <- frequency(x)
-    X <- matrix(,nrow=n,ncol=2*K)
-    for(i in 1:K)
-    {
-        X[,2*i-1] <- sin(2*pi*i*(1:n)/period)
-        X[,2*i] <- cos(2*pi*i*(1:n)/period)
+    if (any(class(x) == "msts")) {
+      period <- attr(x, "msts")
+    } else {
+      period <- frequency(x)
     }
-    colnames(X) <- paste(c("S","C"),rep(1:K,rep(2,K)),sep="")
+    len <- 2*sum(K)
+    X <- matrix(,nrow=n,ncol=len)
+    labels <- character(length = len) # column names
+    cs.K <- cumsum(2*c(0, K))
+    for (j in 1:length(period)) {
+      for(i in 1L:K[j]) {
+        X[,cs.K[j] + 2*i-1] <- sin(2*pi*i*(1:n)/period[j])
+        X[,cs.K[j] + 2*i] <- cos(2*pi*i*(1:n)/period[j])
+      }
+      labels[(cs.K[j] + 1):cs.K[j + 1]] <- paste(paste0(c("S","C"),rep(1:K[j],rep(2,K[j]))), 
+                                                  period[j], sep = "-")
+    }
+    colnames(X) <- labels
     return(X)
 }
 
 fourierf <- function(x, K, h)
 {
     n <- length(x)
-    period <- frequency(x)
-    X <- matrix(,nrow=h,ncol=2*K)
-    for(i in 1:K)
-    {
-        X[,2*i-1] <- sin(2*pi*i*((n+1):(n+h))/period)
-        X[,2*i] <- cos(2*pi*i*((n+1):(n+h))/period)
+    if (any(class(x) == "msts")) {
+      period <- attr(x, "msts")
+    } else {
+      period <- frequency(x)
     }
-    colnames(X) <- paste(c("S","C"),rep(1:K,rep(2,K)),sep="")
+    len <- 2*sum(K)
+    X <- matrix(,nrow=n,ncol=len)
+    labels <- character(length = len) # column names
+    cs.K <- cumsum(2*c(0, K))
+    for (j in 1:length(period)) {
+      for(i in 1L:K[j]) {
+        X[,cs.K[j] + 2*i-1] <- sin(2*pi*i*((n+1):(n+h))/period[j])
+        X[,cs.K[j] + 2*i] <- cos(2*pi*i*((n+1):(n+h))/period[j])
+      }
+      labels[(cs.K[j] + 1):cs.K[j + 1]] <- paste(paste0(c("S","C"),rep(1:K[j],rep(2,K[j]))), 
+                                                  period[j], sep = "-")
+    }
+    colnames(X) <- labels
     return(X)
 }
