@@ -343,7 +343,7 @@ fourierf <- function(x, K, h)
       period <- frequency(x)
     }
     len <- 2*sum(K)
-    X <- matrix(,nrow=n,ncol=len)
+    X <- matrix(,nrow=h,ncol=len)
     labels <- character(length = len) # column names
     cs.K <- cumsum(2*c(0, K))
     for (j in 1:length(period)) {
