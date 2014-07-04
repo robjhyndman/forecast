@@ -240,7 +240,7 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
   check <- user.args %in% all.args
   if (!all(check)) {
     error.args <- user.args[!check]
-    warning(sprintf("The %s arguments doesn't exist.", error.args))
+    warning(sprintf("The non-existent %s arguments will be ignored.", error.args))
   }
   
 #    use.constant <- is.element("constant",names(object$coef))
