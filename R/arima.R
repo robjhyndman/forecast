@@ -234,6 +234,15 @@ SD.test <- function (wts, s=frequency(wts))
 forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma[5], 10),
     level=c(80, 95), fan=FALSE, xreg=NULL, lambda=object$lambda,  bootstrap=FALSE, npaths=5000,...)
 {
+  # Check whether there're non-existent arguments
+  all.args <- names(formals())
+  user.args <- names(match.call())[-1L] # including arguments passed to 3 dots
+  check <- user.args %in% all.args
+  if (!all(check)) {
+    error.args <- user.args[!check]
+    warning(sprintf("The non-existent %s arguments will be ignored.", error.args))
+  }
+  
 #    use.constant <- is.element("constant",names(object$coef))
     use.drift <- is.element("drift", names(object$coef))
     x <- object$x <- getResponse(object)
