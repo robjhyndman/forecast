@@ -20,7 +20,9 @@ print.msts <- function(x, ...) {
 	cat("\nSeasonal Periods: ")
 	cat(attr(x,"msts"))
 	cat("\nData:\n")
-	print(as.numeric(x))
+  xx <- unclass(x) # handles both univariate and multivariate ts
+  attr(xx, "tsp") <- attr(xx, "msts") <- NULL
+	print(xx)
 	#print(matrix(x, ncol=length(x)), nrow=1)
 	cat("\n")
 }
