@@ -51,7 +51,7 @@ plot(ldeaths.fcast)
 Y <- fourier(taylor, K = c(3, 3))
 taylor.lm <- tslm(taylor ~ Y)
 taylor.fcast <- forecast(taylor.lm, 
-                         data.frame(Y = fourierf(taylor, K = c(3, 3), h = 36)))
+  data.frame(Y = I(fourierf(taylor, K = c(3, 3), h = 36))))
 plot(taylor.fcast)
 }
 \keyword{ts}
