@@ -9,6 +9,7 @@ Version 5.5 (?? 2014)
   * Changed AIC for poor models from 1e20 to Inf.
 	* Update fourier() and fourierf() to work with msts object.
 	* Added a new argument find.frequency to forecast.ts().
+	* Added new arguments d and D to accuracy() for MASE.
 
 Version 5.4 (8 May 2014)
   * Fixed bug in forecast.tbats() and forecast.bats() when ts.frequency does not match seasonal.periods.
