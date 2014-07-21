@@ -105,6 +105,8 @@ trainingaccuracy <- function(f,test)
     test <- test[test >= 1 & test <= n]
   }
 
+  tspdx <- tsp(dx)
+
   res <- res[test]
   dx <- dx[test]
   pe <- res/dx * 100 # Percentage error
@@ -120,8 +122,8 @@ trainingaccuracy <- function(f,test)
   # Compute MASE if historical data available
   if(!is.null(dx))
   {
-    if(!is.null(tsp(dx)))
-      scale <- mean(abs(diff(dx,lag=max(1,frequency(dx)))),na.rm=TRUE)
+    if(!is.null(tspdx))
+      scale <- mean(abs(diff(dx,lag=max(1,tspdx[3]))),na.rm=TRUE)
     else # not time series
       scale <- mean(abs(dx-mean(dx)),na.rm=TRUE)
     mase <- mean(abs(res/scale), na.rm=TRUE)
@@ -130,7 +132,7 @@ trainingaccuracy <- function(f,test)
   }
 
   # Additional time series measures
-  if(!is.null(tsp(dx)))
+  if(!is.null(tspdx))
   {
     r1 <- acf(res,plot=FALSE,lag.max=2,na.action=na.pass)$acf[2,1,1]
     nj <- length(out)
@@ -148,6 +150,8 @@ accuracy <- function(f,x,test=NULL)
 
   trainset <- (is.list(f))
   testset <- (!missing(x))
+  if(testset & !is.null(test))
+    trainset <- FALSE
   if(!trainset & !testset)
     stop("Unable to compute forecast accuracy measures")
   if(trainset)
