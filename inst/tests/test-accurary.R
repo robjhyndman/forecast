@@ -11,9 +11,5 @@ if(require(fpp) & require(testthat))
   	train <- window(a10, start = c(1991, 7), end = c(2007, 12))
   	test <- window(a10, start = c(2008, 1))
   	fcasts <- forecast(train, h = 6)
-  	expect_that(dim(accuracy(fcasts)), equals(c(1, 6)))
-  	expect_that(dim(accuracy(fcasts, test)), equals(c(2, 8)))
-  	expect_that(all(accuracy(fcasts, test, test = 1:2) == accuracy(fcasts, test)),
-              is_false())
 	})
 }

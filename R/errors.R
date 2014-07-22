@@ -168,8 +168,8 @@ trainingaccuracy <- function(f,test,d, D)
   return(out)
 }
 
-accuracy <- function(f,x,test=NULL,d=as.numeric(frequency(x) == 1), 
-                     D=as.numeric(frequency(x) > 1))
+accuracy <- function(f,x,test=NULL,d=as.numeric(frequency(f) == 1), 
+                     D=as.numeric(frequency(f) > 1))
 {
   if(is.element("mforecast", class(f)))
     return(accuracy.mforecast(f,x,test,d,D))

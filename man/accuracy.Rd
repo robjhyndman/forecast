@@ -1,8 +1,8 @@
 \name{accuracy}
 \alias{accuracy}
 \title{Accuracy measures for forecast model}
-\usage{accuracy(f, x, test=NULL,d=as.numeric(frequency(x) == 1),
-  D=as.numeric(frequency(x) > 1))
+\usage{accuracy(f, x, test=NULL,d=as.numeric(frequency(f) == 1),
+  D=as.numeric(frequency(f) > 1))
 }
 
 \arguments{
