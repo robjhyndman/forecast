@@ -11,7 +11,7 @@ fourierf(x,K,h)
 }
 
 \arguments{
-\item{x}{Seasonal time series or a \code{msts} object}
+\item{x}{Seasonal time series: a \code{ts} or a \code{msts} object}
 \item{h}{Number of periods ahead to forecast}
 \item{K}{Maximum order(s) of Fourier terms}
 }
@@ -20,7 +20,14 @@ fourierf(x,K,h)
 \code{fourier} and \code{fourierf} return matrices containing terms from a Fourier series, up to order \code{K}, suitable for use in \code{\link[stats]{arima}}, \code{\link[stats]{lm}} or \code{\link{tslm}}. 
 }
 
-\value{Numerical matrix with number of rows equal to the \code{length(x)} and number of columns equal to \code{frequency(x)-1} (for \code{seasonaldummy} and \code{seasonaldummyf} or \code{2*K} (for \code{fourier} or \code{fourierf}).
+\details{The number of dummy variables, or the period of the Fourier terms, is determined from the time series characteristics of \code{x}. The length of \code{x} also determines the number of rows for the matrices returned by \code{seasonaldummy} and \code{fourier}. The value of \code{h} determines the number of rows for the matrices returned by \code{seasonaldummyf} and \code{fourierf}. The values within \code{x} are not used in any function.
+
+When \code{x} is a \code{ts} object, the value of \code{K} should be an integer and specifies the number of sine and cosine terms to return. Thus, the matrix returned has \code{2*K} columns.
+
+When \code{x} is a \code{msts} object, then \code{K} should be a vector of integers specifying the number of sine and cosine terms for each of the seasonal periods. Then the matrix returned will have \code{2*sum(K)} columns.  
+}
+
+\value{Numerical matrix.
 }
 
 \author{Rob J Hyndman}
@@ -47,11 +54,11 @@ ldeaths.fcast <- forecast(deaths.lm,
   data.frame(X=I(fourierf(ldeaths,3,36))))
 plot(ldeaths.fcast)
 
-# Using Fourier series to a "msts" object
-Y <- fourier(taylor, K = c(3, 3))
-taylor.lm <- tslm(taylor ~ Y)
+# Using Fourier series for a "msts" object
+Z <- fourier(taylor, K = c(3, 3))
+taylor.lm <- tslm(taylor ~ Z)
 taylor.fcast <- forecast(taylor.lm, 
-  data.frame(Y = I(fourierf(taylor, K = c(3, 3), h = 36))))
+  data.frame(Z = I(fourierf(taylor, K = c(3, 3), h = 270))))
 plot(taylor.fcast)
 }
 \keyword{ts}

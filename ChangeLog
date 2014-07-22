@@ -1,5 +1,5 @@
 Version 5.5 (?? 2014)
-  * Improved document for croston()
+  * Improved documentation for croston()
   * Added stlm() and forecast.stlm() functions, and added forecastfunction as a way of specifying
     a forecast method in stlf() and forecast.stl().
   * Improved forecast.ar() so that it is more likely to work if ar() and forecast.ar() are
