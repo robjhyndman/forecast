@@ -315,20 +315,27 @@ fourier <- function(x, K)
     n <- length(x)
     if (any(class(x) == "msts")) {
       period <- attr(x, "msts")
+      len.p <- length(period)
+      len.K <- length(K)
+      if (len.p != len.K) {
+        msg <- sprintf("Since it's msts object, the arg K needs %i more input(s)", len.p - len.K)
+        stop(msg)
+      }
     } else {
       period <- frequency(x)
+      len.p <- length(period)
     }
     len <- 2*sum(K)
     X <- matrix(,nrow=n,ncol=len)
     labels <- character(length = len) # column names
     cs.K <- cumsum(2*c(0, K))
-    for (j in 1:length(period)) {
+    for (j in 1:len.p) {
       for(i in 1L:K[j]) {
         X[,cs.K[j] + 2*i-1] <- sin(2*pi*i*(1:n)/period[j])
         X[,cs.K[j] + 2*i] <- cos(2*pi*i*(1:n)/period[j])
       }
       labels[(cs.K[j] + 1):cs.K[j + 1]] <- paste(paste0(c("S","C"),rep(1:K[j],rep(2,K[j]))), 
-                                                  period[j], sep = "-")
+                                                  round(period[j]), sep = "-")
     }
     colnames(X) <- labels
     return(X)
@@ -339,20 +346,27 @@ fourierf <- function(x, K, h)
     n <- length(x)
     if (any(class(x) == "msts")) {
       period <- attr(x, "msts")
+      len.p <- length(period)
+      len.K <- length(K)
+      if (len.p != len.K) {
+        msg <- sprintf("Since it's msts object, the arg K needs %i more input(s)", len.p - len.K)
+        stop(msg)
+      }
     } else {
       period <- frequency(x)
+      len.p <- length(period)
     }
     len <- 2*sum(K)
     X <- matrix(,nrow=h,ncol=len)
     labels <- character(length = len) # column names
     cs.K <- cumsum(2*c(0, K))
-    for (j in 1:length(period)) {
+    for (j in 1:len.p) {
       for(i in 1L:K[j]) {
         X[,cs.K[j] + 2*i-1] <- sin(2*pi*i*((n+1):(n+h))/period[j])
         X[,cs.K[j] + 2*i] <- cos(2*pi*i*((n+1):(n+h))/period[j])
       }
       labels[(cs.K[j] + 1):cs.K[j + 1]] <- paste(paste0(c("S","C"),rep(1:K[j],rep(2,K[j]))), 
-                                                  period[j], sep = "-")
+                                                  round(period[j]), sep = "-")
     }
     colnames(X) <- labels
     return(X)
