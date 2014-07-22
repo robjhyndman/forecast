@@ -58,9 +58,10 @@ testaccuracy <- function(f,x,test,d,D)
   # Compute MASE if historical data available
   if(!is.null(dx))
   {
-    if (!is.null(tsp(dx))) {
+    tspdx <- tsp(dx)
+    if (!is.null(tspdx)) {
       if (D > 0) { # seasonal differencing
-        nsd <- diff(dx, lag = frequency(dx), differences = D)
+        nsd <- diff(dx, lag = tspdx[3L], differences = D)
       } else { # non seasonal differencing
         nsd <- dx
       }
@@ -73,10 +74,6 @@ testaccuracy <- function(f,x,test,d,D)
     } else { # not time series
       scale <- mean(abs(dx-mean(dx)),na.rm=TRUE)
     }
-    # if(!is.null(tsp(dx)))
-    #   scale <- mean(abs(diff(dx,lag=max(1,frequency(dx)))),na.rm=TRUE)
-    # else # not time series
-    #   scale <- mean(abs(dx-mean(dx)),na.rm=TRUE)
     mase <- mean(abs(error/scale))
     out <- c(out,mase)
     names(out)[length(out)] <- "MASE"
@@ -122,6 +119,8 @@ trainingaccuracy <- function(f,test,d, D)
     test <- test[test >= 1 & test <= n]
   }
 
+  tspdx <- tsp(dx)
+
   res <- res[test]
   dx <- dx[test]
   pe <- res/dx * 100 # Percentage error
@@ -137,9 +136,9 @@ trainingaccuracy <- function(f,test,d, D)
   # Compute MASE if historical data available
   if(!is.null(dx))
   {
-    if (!is.null(tsp(dx))) {
+    if (!is.null(tspdx)) {
       if (D > 0) { # seasonal differencing
-        nsd <- diff(dx, lag = frequency(dx), differences = D)
+        nsd <- diff(dx, lag = tspdx[3L], differences = D)
       } else { # non seasonal differencing
         nsd <- dx
       }
@@ -152,17 +151,13 @@ trainingaccuracy <- function(f,test,d, D)
     } else { # not time series
       scale <- mean(abs(dx-mean(dx)),na.rm=TRUE)
     }
-    # if(!is.null(tsp(dx)))
-    #   scale <- mean(abs(diff(dx,lag=max(1,frequency(dx)))),na.rm=TRUE)
-    # else # not time series
-    #   scale <- mean(abs(dx-mean(dx)),na.rm=TRUE)
     mase <- mean(abs(res/scale), na.rm=TRUE)
     out <- c(out,mase)
     names(out)[length(out)] <- "MASE"
   }
 
   # Additional time series measures
-  if(!is.null(tsp(dx)))
+  if(!is.null(tspdx))
   {
     r1 <- acf(res,plot=FALSE,lag.max=2,na.action=na.pass)$acf[2,1,1]
     nj <- length(out)
@@ -181,6 +176,8 @@ accuracy <- function(f,x,test=NULL,d=as.numeric(frequency(x) == 1),
 
   trainset <- (is.list(f))
   testset <- (!missing(x))
+  if(testset & !is.null(test))
+    trainset <- FALSE
   if(!trainset & !testset)
     stop("Unable to compute forecast accuracy measures")
   if(trainset)
