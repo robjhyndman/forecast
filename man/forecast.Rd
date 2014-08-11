@@ -18,7 +18,7 @@ The function \code{\link{forecast.ts}} makes forecasts using \code{\link{ets}} m
 
 \usage{forecast(object,...)
 \method{forecast}{ts}(object, h = ifelse(frequency(object) > 1, 2 * frequency(object), 10) , 
-         level=c(80,95), fan=FALSE, robust = FALSE, lambda = NULL, find.frequency = FALSE, ...)}
+         level=c(80,95), fan=FALSE, robust=FALSE, lambda=NULL, find.frequency=FALSE, ...)}
 
 \arguments{
 \item{object}{a time series or time series model for which forecasts are required}
