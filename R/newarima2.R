@@ -84,19 +84,28 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
 
   if(is.constant(dx))
   {
-    if(D>0)
-      fit <- Arima(x,order=c(0,d,0),seasonal=list(order=c(0,D,0),period=m), fixed=mean(dx,na.rm=TRUE), include.constant=TRUE)
-    else if(d < 2)
-      fit <- Arima(x,order=c(0,d,0),fixed=mean(dx,na.rm=TRUE),include.constant=TRUE)
-    else
-      stop("Data follow a simple polynomial and are not suitable for ARIMA modelling.")
-    fit$x <- x
+    if(is.null(xreg))
+    {
+      if(D>0)
+        fit <- Arima(x,order=c(0,d,0),seasonal=list(order=c(0,D,0),period=m), fixed=mean(dx,na.rm=TRUE), include.constant=TRUE)
+      else if(d < 2)
+        fit <- Arima(x,order=c(0,d,0),fixed=mean(dx,na.rm=TRUE),include.constant=TRUE)
+      else
+        stop("Data follow a simple polynomial and are not suitable for ARIMA modelling.")
+    }
+    else # Perfect regression
+    {
+      if(D>0)
+        fit <- Arima(x,order=c(0,d,0),seasonal=list(order=c(0,D,0),period=m), xreg=xreg)
+      else
+        fit <- Arima(x,order=c(0,d,0),xreg=xreg)
+    }
+    fit$x <- orig.x
     fit$series <- series
     fit$call <- match.call()
     fit$call$x <- data.frame(x=x)
     return(fit)
   }
-
 
   if(m > 1)
   {
