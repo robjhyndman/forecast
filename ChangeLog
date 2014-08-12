@@ -1,4 +1,4 @@
-Version 5.5 (?? 2014)
+Version 5.5 (12 August 2014)
   * Improved documentation for croston()
   * Added stlm() and forecast.stlm() functions, and added forecastfunction argument as a way of
     specifying a forecast method in stlf() and forecast.stl().
@@ -12,6 +12,7 @@ Version 5.5 (?? 2014)
 	* Added new arguments d and D to accuracy() for MASE.
   * Corrected bugs in accuracy().
   * Better handling of regression models with perfect fit in auto.arima().
+  * Fixed bug in tbats.components() when there are no seasonal components.
 
 Version 5.4 (8 May 2014)
   * Fixed bug in forecast.tbats() and forecast.bats() when ts.frequency does not match seasonal.periods.

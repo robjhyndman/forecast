@@ -168,8 +168,7 @@ trainingaccuracy <- function(f,test,d, D)
   return(out)
 }
 
-accuracy <- function(f,x,test=NULL,d=as.numeric(frequency(x) == 1), 
-                     D=as.numeric(frequency(x) > 1))
+accuracy <- function(f,x,test=NULL,d=NULL,D=NULL)
 {
   if(is.element("mforecast", class(f)))
     return(accuracy.mforecast(f,x,test,d,D))
@@ -180,6 +179,25 @@ accuracy <- function(f,x,test=NULL,d=as.numeric(frequency(x) == 1),
     trainset <- FALSE
   if(!trainset & !testset)
     stop("Unable to compute forecast accuracy measures")
+
+  # Find d and D
+  if(testset)
+  {
+    d <- as.numeric(frequency(x) == 1)
+    D <- as.numeric(frequency(x) > 1)
+  }
+  else if(trainset)
+  {
+    d <- as.numeric(frequency(f$mean) == 1)
+    D <- as.numeric(frequency(f$mean) > 1)
+  }
+  else
+  {
+    d <- as.numeric(frequency(f)==1)
+    D <- as.numeric(frequency(f) > 1)
+  }
+
+
   if(trainset)
   {
     trainout <- trainingaccuracy(f,test,d,D)
