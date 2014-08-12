@@ -1,5 +1,5 @@
 Package: forecast
-Version: 5.5
+Version: 5.6
 Title: Forecasting functions for time series and linear models
 Description: Methods and tools for displaying and analysing
              univariate time series forecasts including exponential smoothing

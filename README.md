@@ -22,7 +22,7 @@ install_github("forecast", "robjhyndman")
 ## Usage
 
 ```s
-# library(forecast)
+library(forecast)
 
 # ETS forecasts
 fit <- ets(USAccDeaths)

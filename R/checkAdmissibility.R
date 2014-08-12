@@ -28,7 +28,7 @@ checkAdmissibility<-function(opt.env, box.cox=NULL, small.phi=NULL, ar.coefs=NUL
 			p <- max(which(c(1, -ar) != 0)) - 1
 			if (!p)
 				return(TRUE)
-			all(Mod(polyroot(c(1, -ar[1L:p]))) > 1)
+			all(Mod(polyroot(c(1, -ar[1L:p]))) > 1 + 1e-3)
 		}
 		if(!arCheck(ar.coefs)) {
 			#print("ar")
@@ -45,7 +45,7 @@ checkAdmissibility<-function(opt.env, box.cox=NULL, small.phi=NULL, ar.coefs=NUL
 			if (!q0)
 				return(ma)
 			roots <- polyroot(c(1, ma[1L:q0]))
-			ind <- Mod(roots) < 1
+			ind <- Mod(roots) < 1 + 1e-3
 			if (all(!ind))
 				return(ma)
 			if (q0 == 1)
