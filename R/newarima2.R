@@ -653,11 +653,13 @@ OCSBtest <- function(time.series, period)
                     regression <- try(lm(contingent.series ~ y.one + y.two - 1, na.action=NULL), silent=TRUE)
                     if(class(regression) == "try-error")
                       stop("The OCSB regression model cannot be estimated")
-                    if(mean(abs(regression$residuals),na.rm=TRUE)/mean(abs(contingent.series), na.rm=TRUE) < 1e-10)
-                    {
-                      # Perfect regression. Safest to do no differencing
+                    # Check if perfect regression. In that case, safest to do no differencing
+                    meanratio <- mean(abs(regression$residuals),na.rm=TRUE)/mean(abs(contingent.series), na.rm=TRUE)
+                    if(is.nan(meanratio))
                       return(0)
-                    }  
+                    if(meanratio < 1e-10)
+                      return(0)
+                    # Proceed to do OCSB test.
                     reg.summary <- summary(regression)
                     reg.coefs <- reg.summary$coefficients
                     t.two.pos <- grep("t.two", rownames(reg.coefs), fixed = TRUE)
