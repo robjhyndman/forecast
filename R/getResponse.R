@@ -44,11 +44,6 @@ getResponse.fracdiff <- function(object, ...) {
 }
 
 getResponse.ar <- function(object, ...) {
-	if (is.element("x", names(object))) 
-        x <- object$x
-    else
-		x <- eval.parent(parse(text=object$series))
-	if(is.null(tsp(x)))
-		x <- ts(x,frequency=1,start=1)
-	return(x)
+  getResponse.Arima(object)
 }
+

@@ -358,7 +358,7 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   }
 
   # Refit using ML if approximation used for IC
-  if(approximation)
+  if(approximation & !is.null(bestfit$arma))
   {
     #constant <- length(bestfit$coef) > sum(bestfit$arma[1:4])
     newbestfit <- myarima(x,order=bestfit$arma[c(1,6,2)],
@@ -371,6 +371,7 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
       bestfit <- newbestfit
   }
 
+  # Nothing fitted
   if(bestfit$ic == Inf)
   {
     cat("\n")

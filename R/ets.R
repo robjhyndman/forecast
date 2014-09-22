@@ -725,15 +725,24 @@ initstate <- function(y,trendtype,seasontype)
     {
       l0 <- fit$coef[1]
       b0 <- fit$coef[2]
+      # If error type is "M", then we don't want l0+b0=0.
+      # So perturb just in case.
+      if(abs(l0+b0) < 1e-8)
+      {
+        l0 <- l0*(1+1e-3)
+        b0 <- b0*(1-1e-3)
+      }
     }
     else #if(trendtype=="M")
     {
       l0 <- fit$coef[1]+fit$coef[2] # First fitted value
+      if(abs(l0) < 1e-8)
+        l0 <- 1e-7
       b0 <- (fit$coef[1] + 2*fit$coef[2])/l0 # Ratio of first two fitted values
       l0 <- l0/b0 # First fitted value divided by b0
       if(abs(b0) > 1e10) # Avoid infinite slopes
         b0 <- sign(b0)*1e10
-      if(l0 < 0 | b0 < 0) # Simple linear approximation didn't work.
+      if(l0 < 1e-8 | b0 < 1e-8) # Simple linear approximation didn't work.
       {
         l0 <- max(y.sa[1],1e-3)
         b0 <- max(y.sa[2]/y.sa[1],1e-3)
