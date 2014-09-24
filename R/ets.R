@@ -283,7 +283,7 @@ getNewBounds <- function(par, lower, upper, nstate) {
 
 etsmodel <- function(y, errortype, trendtype, seasontype, damped,
     alpha=NULL, beta=NULL, gamma=NULL, phi=NULL,
-    lower, upper, opt.crit, nmse, bounds, solver="optim_c", maxit=2000, control=NULL, seed=NULL, trace=FALSE)
+    lower, upper, opt.crit, nmse, bounds, maxit=2000, control=NULL, seed=NULL, trace=FALSE)
 {
 
   tsp.y <- tsp(y)
@@ -330,55 +330,56 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
 
 #-------------------------------------------------
 
-  if(is.null(seed)) seed <- 1000*runif(1)
+#  if(is.null(seed)) seed <- 1000*runif(1)
 
-  if(solver=="malschains" || solver=="malschains_c") {
+  # if(solver=="malschains" || solver=="malschains_c") {
 
-    malschains <- NULL
-    myRequire("Rmalschains")
+  #   malschains <- NULL
+  #   if(!myRequire("Rmalschains"))
+  #     stop("malschains optimizer unavailable")
 
-    func <- NULL
-    #env <- NULL
+  #   func <- NULL
+  #   #env <- NULL
 
-    if(solver=="malschains") {
+  #   if(solver=="malschains") {
 
-      func <- function(myPar) {
-        names(myPar) <- names(par)
-        res <- lik(myPar,y=y,nstate=nstate, errortype=errortype, trendtype=trendtype,
-            seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
-            opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt))
-        res
-      }
+  #     func <- function(myPar) {
+  #       names(myPar) <- names(par)
+  #       res <- lik(myPar,y=y,nstate=nstate, errortype=errortype, trendtype=trendtype,
+  #           seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
+  #           opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt))
+  #       res
+  #     }
 
-      env <- new.env()
+  #     env <- new.env()
 
-    } else {
+  #   } else {
 
-      env <- etsTargetFunctionInit(par=par, y=y, nstate=nstate, errortype=errortype, trendtype=trendtype,
-          seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
-          opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt))
+  #     env <- etsTargetFunctionInit(par=par, y=y, nstate=nstate, errortype=errortype, trendtype=trendtype,
+  #         seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
+  #         opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt))
 
-      func <- .Call("etsGetTargetFunctionRmalschainsPtr", package="forecast")
+  #     func <- .Call("etsGetTargetFunctionRmalschainsPtr", package="forecast")
 
-    }
+  #   }
 
-    myBounds <- getNewBounds(par, lower, upper, nstate)
+  #   myBounds <- getNewBounds(par, lower, upper, nstate)
 
-    if(is.null(control)) {
-      control <- malschains.control(ls="simplex", lsOnly=TRUE)
-    }
+  #   if(is.null(control)) {
+  #     control <- Rmalschains::malschains.control(ls="simplex", lsOnly=TRUE)
+  #   }
 
-    control$optimum <- if(opt.crit=="lik") -1e12 else 0
+  #   control$optimum <- if(opt.crit=="lik") -1e12 else 0
 
-    fredTmp <- malschains(func, env=env, lower=myBounds$lower, upper=myBounds$upper,
-        maxEvals=maxit, trace=trace, seed=seed, initialpop=par, control=control)
+  #   fredTmp <- Rmalschains::malschains(func, env=env, lower=myBounds$lower, upper=myBounds$upper,
+  #       maxEvals=maxit, seed=seed, initialpop=par, control=control)
 
-    fred <- NULL
-    fred$par <- fredTmp$sol
+  #   fred <- NULL
+  #   fred$par <- fredTmp$sol
 
-    fit.par <- fred$par
+  #   fit.par <- fred$par
 
-    names(fit.par) <- names(par)
+  #   names(fit.par) <- names(par)
 
 #  } else if (solver=="Rdonlp2") {
 #
@@ -399,7 +400,7 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
 #
 #    names(fit.par) <- names(par)
 
-  } else if(solver=="optim_c"){
+#  } else if(solver=="optim_c"){
 
     env <- etsTargetFunctionInit(par=par, y=y, nstate=nstate, errortype=errortype, trendtype=trendtype,
         seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
@@ -412,22 +413,22 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
 
     names(fit.par) <- names(par)
 
-  } else { #if(solver=="optim")
+  # } else { #if(solver=="optim")
 
-    # Optimize parameters and state
-    if(length(par)==1)
-      method <- "Brent"
-    else
-    	method <- "Nelder-Mead"
+  #   # Optimize parameters and state
+  #   if(length(par)==1)
+  #     method <- "Brent"
+  #   else
+  #   	method <- "Nelder-Mead"
 
-    fred <- optim(par,lik,method=method,y=y,nstate=nstate, errortype=errortype, trendtype=trendtype,
-        seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
-        opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt),
-        control=list(maxit=maxit))
+  #   fred <- optim(par,lik,method=method,y=y,nstate=nstate, errortype=errortype, trendtype=trendtype,
+  #       seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
+  #       opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt),
+  #       control=list(maxit=maxit))
 
-    fit.par <- fred$par
-    names(fit.par) <- names(par)
-  }
+  #   fit.par <- fred$par
+  #   names(fit.par) <- names(par)
+  # }
 
 #-------------------------------------------------
 

@@ -75,25 +75,25 @@ RcppExport SEXP etsTargetFunctionInit(SEXP p_y, SEXP p_nstate, SEXP p_errortype,
 	END_RCPP;
 }
 
-RcppExport double targetFunctionRmalschains(SEXP p_par, SEXP p_env)
-{
-	Rcpp::NumericVector par(p_par);
+// RcppExport double targetFunctionRmalschains(SEXP p_par, SEXP p_env)
+// {
+// 	Rcpp::NumericVector par(p_par);
 
-	Rcpp::Environment e(p_env);
-	Rcpp::XPtr<EtsTargetFunction> sp(e.get("ets.xptr"));
+// 	Rcpp::Environment e(p_env);
+// 	Rcpp::XPtr<EtsTargetFunction> sp(e.get("ets.xptr"));
 
-	sp->eval(par.begin(), par.size());
+// 	sp->eval(par.begin(), par.size());
 
-	//return Rcpp::wrap(sp->getObjVal());
-	return sp->getObjVal();
+// 	//return Rcpp::wrap(sp->getObjVal());
+// 	return sp->getObjVal();
 
-}
+// }
 
-RcppExport SEXP etsGetTargetFunctionRmalschainsPtr() {
+// RcppExport SEXP etsGetTargetFunctionRmalschainsPtr() {
 
-	typedef double (*funcPtr)(SEXP, SEXP);
-	return (Rcpp::XPtr<funcPtr>(new funcPtr(&targetFunctionRmalschains)));
-}
+// 	typedef double (*funcPtr)(SEXP, SEXP);
+// 	return (Rcpp::XPtr<funcPtr>(new funcPtr(&targetFunctionRmalschains)));
+// }
 
 /*
 RcppExport SEXP targetFunctionRdonlp2(SEXP p_var, SEXP p_env)

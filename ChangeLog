@@ -1,10 +1,12 @@
-Version 5.6 (22 September 2014)
+Version 5.6 (23 September 2014)
   * Improved tbats and bats by ensuring ARMA coefficients are not close to the
     boundary of invertibility and stationarity.
   * Improved nsdiffs() handling of degenerate series (e.g., all zeros).
   * Improved forecast.ar() when function buried within other functions.
   * Improved handling of degenerate ARIMA models when xreg used.
   * More robust ets() initialization.
+  * Fixed problem in na.interp() with seasonal data having frequency <= 5.
+  * Removed undocumented option to use Rmalschains for optimization of ets().
 
 Version 5.5 (12 August 2014)
   * Improved documentation for croston()
