@@ -42,7 +42,8 @@ na.interp <- function(x, lambda = NULL)
   	if(!is.null(lambda)) {
   	  x <- BoxCox(x, lambda = lambda)
   	}
-    X <- cbind(fourier(x,3),poly(tt,degree=3))
+    K <- min(trunc(freq/2),3)
+    X <- cbind(fourier(x,K),poly(tt,degree=3))
     fit <- lm(x ~ X, na.action=na.exclude)
     pred <- predict(fit, newdata =data.frame(X))
     x[missng] <- pred[missng]
