@@ -302,7 +302,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, se
 		#	num.cores <- detectCores(all.tests = FALSE, logical = TRUE)
 		#}
 		#clus <- makeCluster(num.cores)
-		models.list <- clusterApplyLB(clus, c(1:nrow(control.array)), parFilterTBATSSpecifics, y=y, control.array=control.array, model.params=model.params, seasonal.periods=seasonal.periods, k.vector=k.vector, use.arma.errors=use.arma.errors, aux.model=aux.model, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)
+		models.list <- clusterApplyLB(clus, c(1:nrow(control.array)), parFilterTBATSSpecifics, y=y, control.array=control.array, model.params=model.params, seasonal.periods=seasonal.periods, k.vector=k.vector, use.arma.errors=use.arma.errors, aux.model=aux.model, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper, ...)
 		stopCluster(clus)
 		##Choose the best model
 		####Get the AICs

@@ -17,7 +17,7 @@
 \item{num.cores}{The number of parallel processes to be used if using parallel processing. If \code{NULL} then the number of logical cores is detected and all available cores are used.}
 \item{bc.lower}{The lower limit (inclusive) for the Box-Cox transformation.}
 \item{bc.upper}{The upper limit (inclusive) for the Box-Cox transformation.}
-\item{...}{Additional parameters to be passed to \code{auto.arima} when choose an ARMA(p, q) model for the errors.}
+\item{...}{Additional arguments to be passed to \code{auto.arima} when choose an ARMA(p, q) model for the errors. (Note that xreg will be ignored, as will any arguments concerning seasonality, but arguments controlling the values of p and q will be used.)}
 }
 
 \description{Fits a BATS model applied to \code{y}, as described in De Livera, Hyndman & Snyder (2011). 

@@ -204,7 +204,7 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, sea
 			num.cores <- detectCores(all.tests = FALSE, logical = TRUE)
 		}
 		clus <- makeCluster(num.cores)
-		models.list <- clusterApplyLB(clus, c(1:nrow(control.array)), parFilterSpecifics, y=y, control.array=control.array, seasonal.periods=seasonal.periods, use.arma.errors=use.arma.errors, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)
+		models.list <- clusterApplyLB(clus, c(1:nrow(control.array)), parFilterSpecifics, y=y, control.array=control.array, seasonal.periods=seasonal.periods, use.arma.errors=use.arma.errors, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper, ...)
 		stopCluster(clus)
 		##Choose the best model
 		####Get the AICs
