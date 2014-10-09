@@ -1,5 +1,8 @@
 Version 5.7 (??)
   * Fixed bug in tbats/bats where optional arguments were not being passed to auto.arima().
+  * Revised fourier() and fourierf() to avoid large orders, and to avoid zero columns.
+  * Improved accuracy of fourier() and fourierf(), while simplifying the code.
+  * Removed duplicate columns returned by fourier/fourierf with multiple seasonal periods.
 
 Version 5.6 (23 September 2014)
   * Improved tbats and bats by ensuring ARMA coefficients are not close to the

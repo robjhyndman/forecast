@@ -312,62 +312,48 @@ stlf <- function(x ,h=frequency(x)*2, s.window=7, robust=FALSE, method=c("ets","
 
 fourier <- function(x, K)
 {
-    n <- length(x)
-    if (any(class(x) == "msts")) {
-      period <- attr(x, "msts")
-      len.p <- length(period)
-      len.K <- length(K)
-      if (len.p != len.K) {
-        msg <- sprintf("Since it's msts object, the arg K needs %i more input(s)", len.p - len.K)
-        stop(msg)
-      }
-    } else {
-      period <- frequency(x)
-      len.p <- length(period)
-    }
-    len <- 2*sum(K)
-    X <- matrix(,nrow=n,ncol=len)
-    labels <- character(length = len) # column names
-    cs.K <- cumsum(2*c(0, K))
-    for (j in 1:len.p) {
-      for(i in 1L:K[j]) {
-        X[,cs.K[j] + 2*i-1] <- sin(2*pi*i*(1:n)/period[j])
-        X[,cs.K[j] + 2*i] <- cos(2*pi*i*(1:n)/period[j])
-      }
-      labels[(cs.K[j] + 1):cs.K[j + 1]] <- paste(paste0(c("S","C"),rep(1:K[j],rep(2,K[j]))), 
-                                                  round(period[j]), sep = "-")
-    }
-    colnames(X) <- labels
-    return(X)
+    return(...fourier(x, K, 1:length(x)))
 }
 
 fourierf <- function(x, K, h)
 {
-    n <- length(x)
-    if (any(class(x) == "msts")) {
-      period <- attr(x, "msts")
-      len.p <- length(period)
-      len.K <- length(K)
-      if (len.p != len.K) {
-        msg <- sprintf("Since it's msts object, the arg K needs %i more input(s)", len.p - len.K)
-        stop(msg)
-      }
-    } else {
-      period <- frequency(x)
-      len.p <- length(period)
+    return(...fourier(x, K, length(x)+(1:h)))
+}
+
+
+# Function to do the work.
+...fourier <- function(x, K, times)
+{
+  if (any(class(x) == "msts")) {
+    period <- attr(x, "msts")
+  } else {
+    period <- frequency(x)
+  }
+
+  len.p <- length(period)
+  if(len.p != length(K))
+    stop("Number of periods does not match number of orders")
+  if(any(2*K > period))
+    stop("K must be not be greater than period/2")
+
+  len <- 2*sum(K)
+  X <- matrix(0,nrow=length(times),ncol=len)*NA
+  labels <- character(length = len) # column names
+  cs.K <- cumsum(2*c(0, K))
+  for (j in 1:len.p) {
+    for(i in 1L:K[j]) {
+      if(2*i < period[j])
+        X[,cs.K[j] + 2*i-1] <- sinpi(2*i*times/period[j])
+      X[,cs.K[j] + 2*i] <- cospi(2*i*times/period[j])
     }
-    len <- 2*sum(K)
-    X <- matrix(,nrow=h,ncol=len)
-    labels <- character(length = len) # column names
-    cs.K <- cumsum(2*c(0, K))
-    for (j in 1:len.p) {
-      for(i in 1L:K[j]) {
-        X[,cs.K[j] + 2*i-1] <- sin(2*pi*i*((n+1):(n+h))/period[j])
-        X[,cs.K[j] + 2*i] <- cos(2*pi*i*((n+1):(n+h))/period[j])
-      }
-      labels[(cs.K[j] + 1):cs.K[j + 1]] <- paste(paste0(c("S","C"),rep(1:K[j],rep(2,K[j]))), 
+    labels[(cs.K[j] + 1):cs.K[j + 1]] <- paste(paste0(c("S","C"),rep(1:K[j],rep(2,K[j]))), 
                                                   round(period[j]), sep = "-")
-    }
-    colnames(X) <- labels
-    return(X)
+  }
+  colnames(X) <- labels
+  # Remove missing columns
+  X <- X[,!is.na(colSums(X))]
+  # Remove equal columns
+  X <- unique(X, MARGIN=2)
+
+  return(X)
 }
