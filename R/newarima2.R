@@ -32,6 +32,11 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   test <- match.arg(test)
   seasonal.test <- match.arg(seasonal.test)
 
+  # Use AIC if npar <= 3
+  # AICc won't work for tiny samples.
+  if(length(x) <= 3L)
+    ic <- "aic"
+
   # Only consider non-seasonal models
   if(seasonal)
     m <- frequency(x)
@@ -443,7 +448,7 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
         if(!is.na(fit$aic))
         {
             fit$bic <- fit$aic + npar*(log(nstar) - 2)
-            fit$aicc <- fit$aic + 2*npar*(nstar/(nstar-npar-1) - 1)
+            fit$aicc <- fit$aic + 2*npar*(npar+1)/(nstar-npar-1)
             fit$ic <- switch(ic,bic=fit$bic,aic=fit$aic,aicc=fit$aicc)
         }
         else
