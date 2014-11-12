@@ -226,6 +226,11 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
   {
     stop("Invalid value for seasonal period")
   }
+  if(!is.null(xreg))
+  {
+    xreg <- as.matrix(xreg)
+    nsim <- nrow(xreg)
+  }
 
   ####
   #Random Seed Code
@@ -272,7 +277,9 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
 
     if(future)
     {
-      model <- list(order=order, ar=ar, ma=ma,sd=sqrt(object$sigma2),residuals=residuals(object), seasonal.difference=object$arma[7], seasonal.period=object$arma[5], flag.seasonal.arma=flag.s.arma, seasonal.order=object$arma[c(3,7,4)])
+      model <- list(order=order, ar=ar, ma=ma,sd=sqrt(object$sigma2),residuals=residuals(object), 
+        seasonal.difference=object$arma[7], seasonal.period=object$arma[5], flag.seasonal.arma=flag.s.arma, 
+        seasonal.order=object$arma[c(3,7,4)])
     }
     else
     {
@@ -299,7 +306,8 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
 
     if(future)
     {
-      model <- list(order=object$arma[c(1, 6, 2)],ar=ar,ma=ma,sd=sqrt(object$sigma2),residuals=residuals(object), seasonal.difference=0, flag.seasonal.arma=flag.s.arma, seasonal.order=c(0,0,0), seasonal.period=1)
+      model <- list(order=object$arma[c(1, 6, 2)],ar=ar,ma=ma,sd=sqrt(object$sigma2),residuals=residuals(object), 
+        seasonal.difference=0, flag.seasonal.arma=flag.s.arma, seasonal.order=c(0,0,0), seasonal.period=1)
     }
     else
     {
@@ -332,6 +340,8 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
 
   use.drift <- is.element("drift", names(object$coef))
   usexreg <- (!is.null(xreg) | use.drift)
+  xm <- oldxm <- 0
+
   if (!is.null(xreg))
   {
     xreg <- as.matrix(xreg)
@@ -365,10 +375,6 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
             drop(as.matrix(object$xreg) %*% object$coef[-(1L:narma)])
     }
   }
-  else
-  {
-    xm <- oldxm <- 0
-  }
   if(future)
   {
     sim <- myarima.sim(model,nsim,x-oldxm,e=e) + xm
@@ -380,15 +386,21 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
       zeros <- object$arma[5]*object$arma[7]
       sim <- arima.sim(model,nsim,innov=e)
       sim <- diffinv(sim, lag=object$arma[5], differences=object$arma[7])[-(1:zeros)]
-      sim <- sim + xm
+      sim <- ts(tail(sim,nsim) + xm)
     }
     else
     {
-      sim <- arima.sim(model,nsim,innov=e) + xm
+      sim <- ts(tail(arima.sim(model,nsim,innov=e),nsim) + xm)
     }
+    tsp(sim) <- tsp(x)
+    # If model is non-stationary, then condition simulated data on first observation
+    if(model$order[2] > 0 | flag.seasonal.diff)
+      sim <- sim - sim[1] + x[1]
   }
   if(!is.null(lambda))
     sim <- InvBoxCox(sim,lambda)
+
+
   return(sim)
 }
 

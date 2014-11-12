@@ -30,6 +30,8 @@ before simulating the time series. The default, NULL will not change the random 
 
 \description{Returns a time series based on the model object \code{object}.}
 \details{With \code{simulate.Arima()}, the \code{object} should be produced by \code{\link{Arima}} or \code{\link{auto.arima}}, rather than \code{\link[stats]{arima}}. By default, the error series is assumed normally distributed and generated using \code{\link[stats]{rnorm}}. If \code{innov} is present, it is used instead. If \code{bootstrap=TRUE} and \code{innov=NULL}, the residuals are resampled instead.
+
+When \code{future=TRUE}, the sample paths are conditional on the data. When \code{future=FALSE} and the model is stationary, the sample paths do not depend on the data at all. When \code{future=FALSE} and the model is non-stationary, the location of the sample paths is arbitrary, so they all start at the value of the first observation. 
 }
 
 \value{An object of class "\code{ts}".}

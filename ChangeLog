@@ -3,6 +3,8 @@ Version 5.7 (??)
   * Revised fourier() and fourierf() to avoid large orders, and to avoid zero columns.
   * Improved accuracy of fourier() and fourierf(), while simplifying the code.
   * Removed duplicate columns returned by fourier/fourierf with multiple seasonal periods.
+  * Corrected some bugs in simulate.Arima for models involving xreg.
+  * Centred simulations from simulate.Arima for non-stationary models by conditioning on first observation.
 
 Version 5.6 (23 September 2014)
   * Improved tbats and bats by ensuring ARMA coefficients are not close to the
