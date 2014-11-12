@@ -7,32 +7,36 @@ forecast.default <- function(object,...) forecast.ts(object,...)
 
 ## A function determining the appropriate period, if the data is of unknown period
 ## Written by Rob Hyndman
-find.freq <- function(x)
+findfrequency <- function(x)
 {
   n <- length(x)
+  x <- as.ts(x)
+  # Remove trend from data
+  x <- residuals(tslm(x ~ trend))
+  # Compute spectrum by fitting ar model to largest section of x
   spec <- spec.ar(c(na.contiguous(x)),plot=FALSE)
   if(max(spec$spec)>10) # Arbitrary threshold chosen by trial and error.
   {
-    period <- round(1/spec$freq[which.max(spec$spec)])
+    period <- floor(1/spec$freq[which.max(spec$spec)] + 0.5)
     if(period==Inf) # Find next local maximum
     {
       j <- which(diff(spec$spec)>0)
       if(length(j)>0)
       {
-        nextmax <- j[1] + which.max(spec$spec[j[1]:500])
-        if(nextmax <= length(spec$freq))
-          period <- round(1/spec$freq[nextmax])
+        nextmax <- j[1] + which.max(spec$spec[(j[1]+1):500])
+        if(nextmax < length(spec$freq))
+          period <- floor(1/spec$freq[nextmax] + 0.5)
         else
-          period <- 1
+          period <- 1L
       }
       else
-        period <- 1
+        period <- 1L
     }
   }
   else
-    period <- 1
+    period <- 1L
  
-  return(period)
+  return(as.integer(period))
 }
 
 forecast.ts <- function(object, h=ifelse(frequency(object)>1, 2*frequency(object), 10), 
@@ -40,7 +44,7 @@ forecast.ts <- function(object, h=ifelse(frequency(object)>1, 2*frequency(object
 {
   n <- length(object)
   if (find.frequency) {
-    object <- ts(object, frequency = find.freq(object))
+    object <- ts(object, frequency = findfrequency(object))
     obj.freq <- frequency(object)
   } else {
     obj.freq <- frequency(object)

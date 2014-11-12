@@ -22,8 +22,8 @@ tslm <- function(formula,data,lambda=NULL,...)
     if("season" %in% attr(terms(formula), "term.labels"))
       stop("Non-seasonal data cannot be modelled using a seasonal factor")
   }
-  if(sum(is.na(x))>0)
-    warning("This function may not work correctly when the data contains missing values")
+  #if(sum(is.na(x))>0)
+  #  warning("This function may not work correctly when the data contains missing values")
   orig.x <- x
   if(!is.null(lambda))
     x <- data[,1] <- BoxCox(data[,1],lambda)
@@ -37,7 +37,7 @@ tslm <- function(formula,data,lambda=NULL,...)
   j <- is.element(data$trend,names(fit$res))
   if(!is.null(fit$call$subset))
     j <- j & eval(fit$call$subset)
-  data <- data[j,]
+  #data <- data[j,]
   # Try to figure out times for subset. Assume they are contiguous.
   timesx <- time(x)[j]
   tspx <- c(min(timesx),max(timesx),tspx[3])
