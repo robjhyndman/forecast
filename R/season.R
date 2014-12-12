@@ -267,8 +267,8 @@ forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE
   fcast$lower <- fcast$lower + lastseas
   fcast$method <- paste("STL + ",fcast$method)
   fcast$seasonal <- ts(lastseas[1:m],frequency=m,start=tsp(object$stl$time.series)[2]-1+1/m)
+  #fcast$residuals <- residuals()
   fcast$fitted <- fitted(fcast)+object$stl$time.series[,1]
-  fcast$residuals <- fcast$x - fcast$fitted
   
   if (!is.null(lambda)) 
   {
