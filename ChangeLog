@@ -5,6 +5,11 @@ Version 5.7 (??)
   * Removed duplicate columns returned by fourier/fourierf with multiple seasonal periods.
   * Corrected some bugs in simulate.Arima for models involving xreg.
   * Centred simulations from simulate.Arima for non-stationary models by conditioning on first observation.
+  * Added findfrequency() function.
+  * Fixed error in computed residuals from forecast.stl().
+  * Improved handling of very short series in auto.arima().
+  * Fixed error in forecasting with additive damped models. Damping previously applied only from second forecast horizon.
+  * Fixed misuse of abs() in two places in C code.
 
 Version 5.6 (23 September 2014)
   * Improved tbats and bats by ensuring ARMA coefficients are not close to the
