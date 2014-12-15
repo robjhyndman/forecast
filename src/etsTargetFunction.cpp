@@ -173,7 +173,7 @@ void EtsTargetFunction::eval(const double* p_par, int p_par_length) {
 	//if (isnan(this->lik)) this->lik = 1e8;
 	if (ISNAN(this->lik)) this->lik = R_PosInf;
 
-	if(abs(this->lik+99999) < 1e-7) this->lik = R_PosInf;
+	if(fabs(this->lik+99999) < 1e-7) this->lik = R_PosInf;
 
 	if(this->opt_crit=="lik") this->objval = this->lik;
 	else if(this->opt_crit=="mse") this->objval = this->amse[0];
@@ -203,7 +203,7 @@ void EtsTargetFunction::eval(const double* p_par, int p_par_length) {
 		double mean=0;
 		int ne=e.size();
 		for(int i=0;i<ne;i++) {
-			mean+=abs(e[i])/ne;
+			mean+=fabs(e[i])/ne;
 		}
 		this->objval=mean;
 

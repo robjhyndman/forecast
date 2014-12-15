@@ -8,7 +8,7 @@ SEXP makeTBATSWMatrix(SEXP smallPhi_s, SEXP kVector_s, SEXP arCoefs_s, SEXP maCo
 	int *kVector, *tau;
 	int adjustPhi = 0;
 	R_len_t numSeasonal = 0, numCols = 1, p = 0, q = 0;
-	int lengthSeasonal = 0;
+	
 	if(!Rf_isNull(smallPhi_s)) {
 		smallPhi = REAL(smallPhi_s);
 		adjustPhi = 1;
