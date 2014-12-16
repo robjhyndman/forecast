@@ -1,5 +1,6 @@
 # Replacement for the acf() function.
-Acf <- function(x, lag.max=NULL, type=c("correlation","partial"), plot=TRUE, main=NULL, ylim=NULL, ...)
+Acf <- function(x, lag.max=NULL, type=c("correlation","partial"), plot=TRUE, main=NULL, ylim=NULL, 
+  na.action=na.pass, ...)
 {
   type <- match.arg(type)
   if(is.null(main))
@@ -9,7 +10,7 @@ Acf <- function(x, lag.max=NULL, type=c("correlation","partial"), plot=TRUE, mai
   lag.max <- min(lag.max, length(x) - 1)
   if (lag.max < 0)
         stop("'lag.max' must be at least 0")
-  junk1 <- acf(c(x), lag.max=lag.max, type=type, plot=FALSE, na.action=na.contiguous, ...)
+  junk1 <- acf(c(x), lag.max=lag.max, type=type, plot=FALSE, na.action=na.action, ...)
   junk1$series <- deparse(substitute(x))
   if(!plot)
     return(junk1)
