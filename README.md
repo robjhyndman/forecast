@@ -16,7 +16,7 @@ You can also install the **development** version from
 ```s
 # install.packages("devtools")
 library(devtools)
-install_github("forecast", "robjhyndman") 
+install_github("robjhyndman/forecast") 
 ```
 
 ## Usage
