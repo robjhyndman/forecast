@@ -18,12 +18,12 @@
 \item{col}{Colour}
 \item{labelgap}{Distance between year labels and plotted lines}
 \item{\dots}{additional arguments to \code{\link[graphics]{plot}}.} }
-\description{Plots a seasonal plot as described in Hyndman and Athanasopoulos (2012, chapter 2).
+\description{Plots a seasonal plot as described in Hyndman and Athanasopoulos (2014, chapter 2).
 }
 
 \value{None.
 }
-\references{  Hyndman and Athanasopoulos (2012) \emph{Forecasting: principles and practice}, OTexts: Melbourne, Australia. \url{http://otexts.com/fpp/}
+\references{Hyndman and Athanasopoulos (2014) \emph{Forecasting: principles and practice}, OTexts: Melbourne, Australia. \url{http://www.otexts.org/fpp/}
 }
 
 \author{Rob J Hyndman}

@@ -1,13 +1,21 @@
 ### Time series graphics and transformations
 
 tsdisplay <- function(x,plot.type="partial",points=TRUE,ci.type="white",
-                lag.max, na.action=na.pass, main=NULL,ylab="",xlab="",
+                lag.max, na.action, main=NULL,ylab="",xlab="",
                 pch=1,cex=0.5, ...)
 
 {
   itype <- charmatch(plot.type, c("partial", "scatter", "spectrum"), nomatch = 0)
   switch(itype + 1,stop("desired type of plot is unknown"),
   plot.type <- "partial",plot.type <- "scatter",plot.type <- "spectrum")
+  if(missing(na.action))
+  {
+    na.action.acf <- na.pass
+    na.action.pacf <- na.contiguous
+  }
+  else
+    na.action.acf <- na.action.pacf <- na.action
+
 
   def.par <- par(no.readonly = TRUE)# save default, for resetting...
   nf <- layout(matrix(c(1,1,2,3), 2, 2, byrow = TRUE))
@@ -25,14 +33,14 @@ tsdisplay <- function(x,plot.type="partial",points=TRUE,ci.type="white",
   xx <- na.action(x)
   ylim <- c(-1,1)*3/sqrt(length(xx))
 
-  junk1 <- acf(c(xx),lag.max=lag.max,plot=FALSE,na.action=na.action)
+  junk1 <- acf(c(xx),lag.max=lag.max,plot=FALSE,na.action=na.action.acf)
   junk1$acf[1,1,1]<-0
   if(ci.type=="ma")
     ylim <- range(ylim,0.66*ylim * max(sqrt(cumsum(c(1, 2 * junk1$acf[-1, 1, 1]^2)))))
   ylim <- range(ylim,junk1$acf)
   if(plot.type == "partial")
   {
-    junk2 <- pacf(c(xx),lag.max=lag.max,plot=FALSE,na.action=na.action)
+    junk2 <- pacf(c(xx),lag.max=lag.max,plot=FALSE,na.action=na.action.pacf)
     ylim <- range(ylim,junk2$acf)
   }
 

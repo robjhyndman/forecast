@@ -20,7 +20,7 @@ hw(x, h=2*frequency(x), seasonal="additive", damped=FALSE,
 \item{seasonal}{Type of seasonality in \code{hw} model. "additive" or "multiplicative"}
 \item{level}{Confidence level for prediction intervals.}
 \item{fan}{If TRUE, level is set to seq(50,99,by=1). This is suitable for fan plots.}
-\item{initial}{Method used for selecting initial state values. If \code{optimal}, the initial values are optimized along with the smoothing parameters using \code{\link{ets}}. If \code{simple}, the initial values are set to values obtained using simple calculations on the first few observations. See Hyndman & Athanasopoulos (2012) for details.}
+\item{initial}{Method used for selecting initial state values. If \code{optimal}, the initial values are optimized along with the smoothing parameters using \code{\link{ets}}. If \code{simple}, the initial values are set to values obtained using simple calculations on the first few observations. See Hyndman & Athanasopoulos (2014) for details.}
 \item{exponential}{If TRUE, an exponential trend is fitted. Otherwise, the trend is (locally) linear.}
 \item{alpha}{Value of smoothing parameter for the level. If \code{NULL}, it will be estimated.}
 \item{beta}{Value of smoothing parameter for the trend. If \code{NULL}, it will be estimated.}
@@ -57,7 +57,7 @@ An object of class \code{"forecast"} is a list containing at least the following
 
 \references{Hyndman, R.J., Koehler, A.B., Ord, J.K., Snyder, R.D. (2008) \emph{Forecasting with exponential smoothing: the state space approach}, Springer-Verlag: New York. \url{http://www.exponentialsmoothing.net}.
 
-Hyndman, R.J., Athanasopoulos (2012) \emph{Forecasting: principles and practice}, OTexts: Melbourne, Australia. \url{http://otexts.com/fpp}.
+Hyndman, R.J., Athanasopoulos (2014) \emph{Forecasting: principles and practice}, OTexts: Melbourne, Australia. \url{http://www.otexts.org/fpp}.
 }
 
 

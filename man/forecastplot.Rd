@@ -38,7 +38,7 @@
 
 \value{None.
 }
-\references{  Hyndman and Athanasopoulos (2012) \emph{Forecasting: principles and practice}, OTexts: Melbourne, Australia. \url{http://otexts.com/fpp/}
+\references{Hyndman and Athanasopoulos (2014) \emph{Forecasting: principles and practice}, OTexts: Melbourne, Australia. \url{http://www.otexts.org/fpp/}
 }
 \author{Rob J Hyndman}
 \seealso{\code{\link[stats]{plot.ts}}}
