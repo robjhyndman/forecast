@@ -1,4 +1,4 @@
-Version 5.7 (16 December 2014)
+Version 5.7 (17 December 2014)
   * Fixed bug in tbats/bats where optional arguments were not being passed to auto.arima().
   * Revised fourier() and fourierf() to avoid large orders, and to avoid zero columns.
   * Improved accuracy of fourier() and fourierf(), while simplifying the code.

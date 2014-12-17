@@ -11,7 +11,7 @@
 \item{points}{logical flag indicating whether to show the individual points or not in the time plot.}
 \item{ci.type}{type of confidence limits for ACF. Possible values are as for \code{\link[stats]{acf}}.}
 \item{lag.max}{the maximum lag to plot for the acf and pacf. A suitable value is selected by default if the argument is missing.}
-\item{na.action}{how to handle missing values in acf, pacf and spectrum calculations. The default is \code{\link[stats]{na.contiguous}}.}
+\item{na.action}{function to handle missing values in acf, pacf and spectrum calculations. The default is \code{\link[stats]{na.contiguous}}. Useful alternatives are \code{\link[stats]{na.pass}} and \code{\link{na.interp}}.}
 \item{main}{Main title.}
 \item{ylab}{Y-axis label}
 \item{xlab}{X-axis label}

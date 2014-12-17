@@ -15,11 +15,12 @@ Pacf(x, main=NULL, ...) }
 \item{plot}{logical. If TRUE (the default) the acf is plotted.}
 \item{main}{Title for plot}
 \item{ylim}{The y limits of the plot}
-\item{na.action}{function to be called to handle missing values. Default is \code{\link[stats]{na.contiguous}}.}
+\item{na.action}{function to handle missing values. Default is \code{\link[stats]{na.contiguous}}.  Useful alternatives are \code{\link[stats]{na.pass}} and \code{\link{na.interp}}.}
 \item{...}{Additional arguments passed to \code{\link[stats]{acf}}.}
 }
 
-\description{Largely wrappers for the \code{\link[stats]{acf}} function in the stats package. The main difference is that \code{Acf} does not plot a spike at lag 0 (which is redundant). \code{Pacf} is included for consistency.} 
+\description{Largely wrappers for the \code{\link[stats]{acf}} function in the stats package. The main differences are that \code{Acf} does not plot a spike at lag 0 (which is redundant)
+and the horizontal axes show lags in time units rather than seasonal units. \code{Pacf} is included for consistency.} 
 
 \details{See the \code{\link[stats]{acf}} function in the stats package.}
 
