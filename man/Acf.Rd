@@ -4,7 +4,7 @@
 \title{(Partial) Autocorrelation Function Estimation}
 \usage{
 Acf(x, lag.max=NULL, type=c("correlation", "partial"), 
-   plot=TRUE, main=NULL, ylim=NULL, na.action, ...)
+   plot=TRUE, main=NULL, ylim=NULL, na.action=na.contiguous, ...)
 Pacf(x, main=NULL, ...) }
 
 
@@ -15,7 +15,7 @@ Pacf(x, main=NULL, ...) }
 \item{plot}{logical. If TRUE (the default) the acf is plotted.}
 \item{main}{Title for plot}
 \item{ylim}{The y limits of the plot}
-\item{na.action}{function to be called to handle missing values. If missing, \code{na.pass} is used for the ACF and \code{na.contiguous} is used for the PACF.}}
+\item{na.action}{function to be called to handle missing values. Default is \code{\link[stats]{na.contiguous}}.}
 \item{...}{Additional arguments passed to \code{\link[stats]{acf}}.}
 }
 

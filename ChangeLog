@@ -11,7 +11,6 @@ Version 5.7 (16 December 2014)
   * Fixed error in forecasting with additive damped models. Damping previously applied only from second forecast horizon.
   * Fixed misuse of abs() in two places in C code.
   * Added na.action argument to Acf() and fixed na.action argument in tsdisplay().
-  * Changed default na.action to na.pass for ACF and na.contiguous for PACF.
 
 Version 5.6 (23 September 2014)
   * Improved tbats and bats by ensuring ARMA coefficients are not close to the

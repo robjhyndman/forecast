@@ -1,21 +1,11 @@
 ### Time series graphics and transformations
 
-tsdisplay <- function(x,plot.type="partial",points=TRUE,ci.type="white",
-                lag.max, na.action, main=NULL,ylab="",xlab="",
+tsdisplay <- function(x,plot.type=c("partial", "scatter", "spectrum"),points=TRUE,ci.type="white",
+                lag.max, na.action=na.contiguous, main=NULL,ylab="",xlab="",
                 pch=1,cex=0.5, ...)
 
 {
-  itype <- charmatch(plot.type, c("partial", "scatter", "spectrum"), nomatch = 0)
-  switch(itype + 1,stop("desired type of plot is unknown"),
-  plot.type <- "partial",plot.type <- "scatter",plot.type <- "spectrum")
-  if(missing(na.action))
-  {
-    na.action.acf <- na.pass
-    na.action.pacf <- na.contiguous
-  }
-  else
-    na.action.acf <- na.action.pacf <- na.action
-
+  plot.type <- match.arg(plot.type)
 
   def.par <- par(no.readonly = TRUE)# save default, for resetting...
   nf <- layout(matrix(c(1,1,2,3), 2, 2, byrow = TRUE))
@@ -30,17 +20,16 @@ tsdisplay <- function(x,plot.type="partial",points=TRUE,ci.type="white",
   plot.ts(x,main=main,ylab=ylab,xlab=xlab,ylim=range(x,na.rm=TRUE),...)
   if(points)
     points(x,pch=pch,cex=cex,...)
-  xx <- na.action(x)
-  ylim <- c(-1,1)*3/sqrt(length(xx))
+  ylim <- c(-1,1)*3/sqrt(length(x))
 
-  junk1 <- acf(c(xx),lag.max=lag.max,plot=FALSE,na.action=na.action.acf)
+  junk1 <- acf(c(x),lag.max=lag.max,plot=FALSE,na.action=na.action)
   junk1$acf[1,1,1]<-0
   if(ci.type=="ma")
     ylim <- range(ylim,0.66*ylim * max(sqrt(cumsum(c(1, 2 * junk1$acf[-1, 1, 1]^2)))))
   ylim <- range(ylim,junk1$acf)
   if(plot.type == "partial")
   {
-    junk2 <- pacf(c(xx),lag.max=lag.max,plot=FALSE,na.action=na.action.pacf)
+    junk2 <- pacf(c(x),lag.max=lag.max,plot=FALSE,na.action=na.action)
     ylim <- range(ylim,junk2$acf)
   }
 
@@ -52,7 +41,7 @@ tsdisplay <- function(x,plot.type="partial",points=TRUE,ci.type="white",
     plot(x[1:(n-1)],x[2:n],xlab=expression(Y[t-1]),ylab=expression(Y[t]), ...)
   }
   else if(plot.type == "spectrum")
-    spec.ar(xx,main="")
+    spec.ar(x,main="",na.action=na.action)
   else
     plot(junk2,ylim=ylim,xlim=c(1,lag.max),ylab="PACF",main="",...)
   par(def.par)
