@@ -1,13 +1,13 @@
 \name{tsdisplay}
 \alias{tsdisplay}
 \title{Time series display}
-\usage{tsdisplay(x, plot.type="partial", points=TRUE, ci.type="white", 
+\usage{tsdisplay(x, plot.type=c("partial","scatter","spectrum"), points=TRUE, ci.type="white", 
     lag.max, na.action=na.contiguous, 
     main=NULL, ylab="", xlab="", pch=1, cex=0.5, ...)
 }
 
 \arguments{  \item{x}{a numeric vector or time series.}
-\item{plot.type}{type of plot to include in lower right corner. Possible values are "partial", "scatter" or "spectrum".}
+\item{plot.type}{type of plot to include in lower right corner.}
 \item{points}{logical flag indicating whether to show the individual points or not in the time plot.}
 \item{ci.type}{type of confidence limits for ACF. Possible values are as for \code{\link[stats]{acf}}.}
 \item{lag.max}{the maximum lag to plot for the acf and pacf. A suitable value is selected by default if the argument is missing.}

@@ -1,15 +1,8 @@
 # Replacement for the acf() function.
 Acf <- function(x, lag.max=NULL, type=c("correlation","partial"), plot=TRUE, main=NULL, ylim=NULL, 
-  na.action, ...)
+  na.action=na.contiguous, ...)
 {
   type <- match.arg(type)
-  if(missing(na.action))
-  {
-    if(type=="correlation")
-      na.action <- na.pass
-    else
-      na.action <- na.contiguous
-  }
   if(is.null(main))
     main <- paste("Series:",deparse(substitute(x)))
   if (is.null(lag.max))
