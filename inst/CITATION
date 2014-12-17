@@ -1,0 +1,22 @@
+
+year <- sub("-.*", "", meta$Date)
+vers <- paste("R package version", meta$Version)
+
+citHeader("To cite the forecast package, use:")
+
+bibentry(bibtype = "Manual",
+  title = "{forecast}: Forecasting functions for time series and linear models",
+  author = as.person("Rob J Hyndman"),
+  year = year,
+  note = vers,
+  url = "http://github.com/robjhyndman/forecast")
+
+bibentry(bibtype = "Article",
+  title     = "Automatic time series forecasting: the forecast package for {R}",
+  author    = personList(as.person("Rob J Hyndman"),as.person("Yeasmin Khandakar")),
+  journal   = "Journal of Statistical Software",
+  volume    =  26,
+  number    =  3,
+  pages     = "1--22",
+  year      =  2008,
+  url       = "http://ideas.repec.org/a/jss/jstsof/27i03.html")
