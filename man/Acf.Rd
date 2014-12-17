@@ -19,15 +19,16 @@ Pacf(x, main=NULL, ...) }
 \item{...}{Additional arguments passed to \code{\link[stats]{acf}}.}
 }
 
-\description{Largely wrappers for the \code{\link[stats]{acf}} function in the stats package. The main differences are that \code{Acf} does not plot a spike at lag 0 (which is redundant)
-and the horizontal axes show lags in time units rather than seasonal units. \code{Pacf} is included for consistency.} 
+\description{The function \code{Acf} computes (and by default plots) an estimate of the autocorrelation function of a univariate time series. Function \code{Pacf} computes (and by default plots) an estimate of the partial autocorrelation function of a univariate time series. These improve the \code{\link[stats]{acf}} and \code{\link[stats]{pacf}} functions when applied to univariate time series. 
+The main differences are that \code{Acf} does not plot a spike at lag 0 (which is redundant)
+and the horizontal axes show lags in time units rather than seasonal units.} 
 
 \details{See the \code{\link[stats]{acf}} function in the stats package.}
 
 \value{See the \code{\link[stats]{acf}} function in the stats package. 
 }
 
-\seealso{\code{\link[stats]{acf}}}
+\seealso{\code{\link[stats]{acf}}, \code{\link[stats]{pacf}}, \code{\link{tsdisplay}}}
 
 \author{Rob J Hyndman}
 \examples{

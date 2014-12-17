@@ -27,7 +27,7 @@
 \references{Hyndman and Athanasopoulos (2014) \emph{Forecasting: principles and practice}, OTexts: Melbourne, Australia. \url{http://www.otexts.org/fpp/}
 }
 \author{Rob J Hyndman}
-\seealso{\code{\link[stats]{plot.ts}}, \code{\link[stats]{acf}}}
+\seealso{\code{\link[stats]{plot.ts}}, \code{\link{Acf}}, \code{\link[stats]{spec.ar}}}
 \examples{tsdisplay(diff(WWWusage))
 }
 \keyword{ts}
