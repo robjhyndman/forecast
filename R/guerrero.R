@@ -36,12 +36,12 @@ guerrero <- function(x, lower=-1, upper=2, nonseasonal.length=2)
 bcloglik <- function(x, lower=-1, upper=2)
 {
   n <- length(x)
-  if (any(x <= 0)) 
+  if (any(x <= 0, na.rm=TRUE)) 
     stop("x must be positive")
-  logx <- log(x)
+  logx <- log(na.omit(c(x)))
   xdot <- exp(mean(logx))
   if(all(class(x)!="ts"))
-    fit <- lm(x ~ 1, data=data.frame(x=x))
+    fit <- lm(x ~ 1, data=data.frame(x=x), na.action=na.exclude)
   else if(frequency(x)>1)
     fit <- tslm(x ~ trend + season, data=data.frame(x=x))
   else
@@ -50,6 +50,7 @@ bcloglik <- function(x, lower=-1, upper=2)
   lambda <- seq(lower,upper,by=.05)
   xl <- loglik <- as.vector(lambda)
   m <- length(xl)
+  x <- na.omit(c(x))
   for (i in 1L:m) 
   {
     if (abs(la <- xl[i]) > 0.02) 
@@ -63,8 +64,8 @@ bcloglik <- function(x, lower=-1, upper=2)
 
 BoxCox.lambda <- function(x, method=c("guerrero","loglik"), lower=-1, upper=2)
 {
-  if(any(x <= 0))
-	lower <- 0
+  if(any(x <= 0, na.rm=TRUE))
+    lower <- max(lower, 0)
   if(length(x) <= 2*frequency(x))
     return(1) # Not enough data to do much more than this
  #   stop("All values must be positive")

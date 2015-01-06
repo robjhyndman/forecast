@@ -1,3 +1,7 @@
+Version 5.8 (6 January 2015)
+  * Fixed bug in versions of R before 3.10 when using fourier and fourierf.
+  * Made BoxCox.lambda() robust to missing values.
+
 Version 5.7 (17 December 2014)
   * Fixed bug in tbats/bats where optional arguments were not being passed to auto.arima().
   * Revised fourier() and fourierf() to avoid large orders, and to avoid zero columns.
