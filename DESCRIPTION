@@ -1,7 +1,7 @@
 Package: forecast
 Version: 5.8
 Date: 2015-01-06
-Title: Forecasting functions for time series and linear models
+Title: Forecasting Functions for Time Series and Linear Models
 Description: Methods and tools for displaying and analysing
              univariate time series forecasts including exponential smoothing
              via state space models and automatic ARIMA modelling.
