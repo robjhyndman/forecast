@@ -15,13 +15,31 @@
 \description{Returns range of summary measures of the forecast accuracy. If \code{x} is provided, the function measures out-of-sample (test set) forecast accuracy
 based on x-f. If \code{x} is not provided, the function only produces in-sample (training set) accuracy measures of the forecasts based on f["x"]-fitted(f).
 All measures are defined and discussed in Hyndman and Koehler (2006).}
-\details{By default, MASE calculation is scaled using MAE of in-sample naive forecasts for non-seasonal time series, in-sample seasonal naive forecasts for seasonal time series and in-sample mean forecasts for non-time series data.}
+
+\details{
+The measures calculated are:
+\itemize{
+\item ME: Mean Error
+\item RMSE: Root Mean Absolute Error
+\item MAE: Mean Absolute Error
+\item MPE: Mean Percentage Error
+\item MAPE: Mean Absolute Percentage Error
+\item MASE: Mean Absolute Scaled Error
+\item ACF1: Autocorrelation of errors at lag 1.
+}
+By default, the MASE calculation is scaled using MAE of in-sample naive forecasts for non-seasonal time series, in-sample seasonal naive forecasts for seasonal time series and in-sample mean forecasts for non-time series data.
+
+See Hyndman and Koehler (2006) and Hyndman and Athanasopoulos (2014, Section 2.5) for further details.
+}
+
+
 
 \value{Matrix giving forecast accuracy measures.
 }
 
-\references{Hyndman, R.J. and Koehler, A.B. (2006) "Another look at measures of forecast accuracy". \emph{International Journal of Forecasting},
-\bold{22}(4).}
+\references{Hyndman, R.J. and Koehler, A.B. (2006) "Another look at measures of forecast accuracy". \emph{International Journal of Forecasting}, \bold{22}(4), 679-688.
+Hyndman, R.J. and Athanasopoulos, G. (2014) "Forecasting: principles and practice", OTexts. Section 2.5 "Evaluating forecast accuracy". \url{http://www.otexts.org/fpp/2/5}.
+}
 
 \author{Rob J Hyndman}
 \examples{
