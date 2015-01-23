@@ -1,3 +1,6 @@
+Version 5.8 (?? ?? 2015)
+  * Improved Acf() to give better handling of horizontal axis for seasonal data or when ... is passed.
+
 Version 5.7 (17 December 2014)
   * Fixed bug in tbats/bats where optional arguments were not being passed to auto.arima().
   * Revised fourier() and fourierf() to avoid large orders, and to avoid zero columns.

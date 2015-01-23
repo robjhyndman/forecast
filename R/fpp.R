@@ -6,7 +6,7 @@ Acf <- function(x, lag.max=NULL, type=c("correlation","partial"), plot=TRUE, mai
   if(is.null(main))
     main <- paste("Series:",deparse(substitute(x)))
   if (is.null(lag.max))
-    lag.max <- floor(10 * log10(length(x))) 
+    lag.max <- max(floor(10 * log10(length(x))), 2*frequency(x))
   lag.max <- min(lag.max, length(x) - 1)
   if (lag.max < 0)
     stop("'lag.max' must be at least 0")
@@ -22,10 +22,31 @@ Acf <- function(x, lag.max=NULL, type=c("correlation","partial"), plot=TRUE, mai
     ylim <- range(ylim, junk1$acf[,1,1])
   }
   plot(junk1, ylim = ylim, xlim = c(1, dim(junk1$acf)[1]-(type=="correlation")), xaxt="n", main=main, ...)
-  if(dim(junk1$acf)[1] < 25)
-    axis(1,at=1:(dim(junk1$acf)[1]-1))
-  else
-    axis(1)
+
+  # Make nice horizontal axis
+  nlags <- dim(junk1$acf)[1]
+  freqx <- frequency(x)
+  if(freqx==1)
+  {
+    if(nlags <= 16)
+      axis(1, at=(1:(nlags-1)), ...)
+    else
+      axis(1, ...)
+  }
+  else 
+  {
+    # Compute number of seasonal periods
+    np <- nlags/freqx
+    if(nlags <= 16)
+    {
+      axis(1, at=(1:(nlags-1)),tcl=-0.2,...)
+      axis(1, at=freqx*(1:np), labels=FALSE, tcl=-0.6, ...)
+    }
+    else if(np <= 16)
+      axis(1,at=freqx*(1:np), ...)
+    else
+      axis(1, ...)
+  }
   if(type=="correlation")
     junk1$acf[1, 1, 1] <- 1
   return(invisible(junk1))
