@@ -488,7 +488,7 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
         if(trace)
             cat("\n",arima.string(fit),":",fit$ic)
         fit$xreg <- xreg
-        return(fit)
+        return(structure(fit,class=c("ARIMA","Arima")))
     }
     else
     {

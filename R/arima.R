@@ -546,7 +546,7 @@ Arima <- function(x, order=c(0, 0, 0),
   tmp$lambda <- lambda
   tmp$x <- origx
 
-  return(tmp)
+  return(structure(tmp, class=c("ARIMA","Arima")))
 }
 
 # Refits the model to new data x
@@ -593,7 +593,7 @@ arima2 <- function (x, model, xreg)
 
 # Modified version of function in stats package
 
-print.Arima <- function (x, digits=max(3, getOption("digits") - 3), se=TRUE,
+print.ARIMA <- function (x, digits=max(3, getOption("digits") - 3), se=TRUE,
     ...)
 {
     cat("Series:",x$series,"\n")
@@ -644,59 +644,59 @@ print.Arima <- function (x, digits=max(3, getOption("digits") - 3), se=TRUE,
 
 # Modified version of function in stats package
 
-predict.Arima <- function(object, n.ahead=1, newxreg=NULL, se.fit=TRUE, ...)
-{
-    myNCOL <- function(x) if (is.null(x))
-        0
-    else NCOL(x)
-    rsd <- object$residuals
-    ## LINES ADDED
-    if(!is.null(object$xreg))
-        object$call$xreg <- object$xreg
-    ## END ADDITION
-    xr <- object$call$xreg
-    xreg <- if (!is.null(xr))
-        eval.parent(xr)
-    else NULL
-    ncxreg <- myNCOL(xreg)
-    if (myNCOL(newxreg) != ncxreg)
-        stop("'xreg' and 'newxreg' have different numbers of columns: ", ncxreg, " != ", myNCOL(newxreg))
-    class(xreg) <- NULL
-    xtsp <- tsp(rsd)
-    n <- length(rsd)
-    arma <- object$arma
-    coefs <- object$coef
-    narma <- sum(arma[1:4])
-    if (length(coefs) > narma) {
-        if (names(coefs)[narma + 1] == "intercept") {
-            xreg <- cbind(intercept=rep(1, n), xreg)
-            newxreg <- cbind(intercept=rep(1, n.ahead), newxreg)
-            ncxreg <- ncxreg + 1
-        }
-        xm <- if (narma == 0)
-            drop(as.matrix(newxreg) %*% coefs)
-        else drop(as.matrix(newxreg) %*% coefs[-(1:narma)])
-    }
-    else xm <- 0
-    if (arma[2] > 0) {
-        ma <- coefs[arma[1] + 1:arma[2]]
-        if (any(Mod(polyroot(c(1, ma))) < 1))
-            warning("MA part of model is not invertible")
-    }
-    if (arma[4] > 0) {
-        ma <- coefs[sum(arma[1:3]) + 1:arma[4]]
-        if (any(Mod(polyroot(c(1, ma))) < 1))
-            warning("seasonal MA part of model is not invertible")
-    }
-    z <- KalmanForecast(n.ahead, object$model)
-    pred <- ts(z[[1]] + xm, start=xtsp[2] + deltat(rsd), frequency=xtsp[3])
-    if (se.fit) {
-        se <- ts(sqrt(z[[2]] * object$sigma2), start=xtsp[2] +
-            deltat(rsd), frequency=xtsp[3])
-        return(list(pred=pred, se=se))
-    }
-    else return(pred)
-}
+# predict.Arima <- function(object, n.ahead=1, newxreg=NULL, se.fit=TRUE, ...)
+# {
+#     myNCOL <- function(x) if (is.null(x))
+#         0
+#     else NCOL(x)
+#     rsd <- object$residuals
+#     ## LINES ADDED
+#     if(!is.null(object$xreg))
+#         object$call$xreg <- object$xreg
+#     ## END ADDITION
+#     xr <- object$call$xreg
+#     xreg <- if (!is.null(xr))
+#         eval.parent(xr)
+#     else NULL
+#     ncxreg <- myNCOL(xreg)
+#     if (myNCOL(newxreg) != ncxreg)
+#         stop("'xreg' and 'newxreg' have different numbers of columns: ", ncxreg, " != ", myNCOL(newxreg))
+#     class(xreg) <- NULL
+#     xtsp <- tsp(rsd)
+#     n <- length(rsd)
+#     arma <- object$arma
+#     coefs <- object$coef
+#     narma <- sum(arma[1:4])
+#     if (length(coefs) > narma) {
+#         if (names(coefs)[narma + 1] == "intercept") {
+#             xreg <- cbind(intercept=rep(1, n), xreg)
+#             newxreg <- cbind(intercept=rep(1, n.ahead), newxreg)
+#             ncxreg <- ncxreg + 1
+#         }
+#         xm <- if (narma == 0)
+#             drop(as.matrix(newxreg) %*% coefs)
+#         else drop(as.matrix(newxreg) %*% coefs[-(1:narma)])
+#     }
+#     else xm <- 0
+#     if (arma[2] > 0) {
+#         ma <- coefs[arma[1] + 1:arma[2]]
+#         if (any(Mod(polyroot(c(1, ma))) < 1))
+#             warning("MA part of model is not invertible")
+#     }
+#     if (arma[4] > 0) {
+#         ma <- coefs[sum(arma[1:3]) + 1:arma[4]]
+#         if (any(Mod(polyroot(c(1, ma))) < 1))
+#             warning("seasonal MA part of model is not invertible")
+#     }
+#     z <- KalmanForecast(n.ahead, object$model)
+#     pred <- ts(z[[1]] + xm, start=xtsp[2] + deltat(rsd), frequency=xtsp[3])
+#     if (se.fit) {
+#         se <- ts(sqrt(z[[2]] * object$sigma2), start=xtsp[2] +
+#             deltat(rsd), frequency=xtsp[3])
+#         return(list(pred=pred, se=se))
+#     }
+#     else return(pred)
+# }
 
 arimaorder <- function (object) 
 {
