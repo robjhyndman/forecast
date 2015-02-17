@@ -29,6 +29,9 @@ testaccuracy <- function(f,x,test,d,D)
     tspx <- tsp(x)
     start <- max(tspf[1],tspx[1])
     end <- min(tspf[2],tspx[2])
+    # Adjustment to allow for floating point issues
+    start <- min(start,end)
+    end <- max(start,end)
     f <- window(f,start=start,end=end)
     x <- window(x,start=start,end=end)
   }
