@@ -2,6 +2,9 @@ Version 5.9 (?? ?? 2015)
   * Improved documentation of accuracy() function.
   * Fixed occasional bug in accuracy() when test set is a single observation.
   * Improved Acf() to give better handling of horizontal axis for seasonal data or when ... is passed.
+  * Removed print.Arima and predict.Arima and added print.ARIMA
+  * method argument now passed when re-fitting an ARIMA model.
+  * Fixed error when CH test applied to short series
 
 Version 5.8 (6 January 2015)
   * Fixed bug in versions of R before 3.10 when using fourier and fourierf.
