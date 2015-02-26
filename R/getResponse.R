@@ -24,9 +24,9 @@ getResponse.Arima <- function(object,...) {
     	else
     	{
 	    	x <- try(eval.parent(parse(text = series.name)),silent=TRUE)
-	    	if(is.element("try-error",class(x)) # Try one level further up the chain
+	    	if(is.element("try-error",class(x))) # Try one level further up the chain
 	    		x <- try(eval.parent(parse(text = series.name),2),silent=TRUE)
-        if(is.element("try-error",class(x)) # Give up
+        if(is.element("try-error",class(x))) # Give up
           return(NULL)
     	}
 	}

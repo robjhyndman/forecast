@@ -127,7 +127,7 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
       fit <- try(arima(x,order=c(1,d,0),xreg=xreg))
     else
       fit <- try(arima(x,order=c(1,d,0),seasonal=list(order=c(0,D,0),period=m,xreg=xreg)))
-    if(!is.element("try-error",class(fit))
+    if(!is.element("try-error",class(fit)))
       offset <- -2*fit$loglik - length(x)*log(fit$sigma2)
     else
     {
@@ -432,7 +432,7 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
       nxreg <- 0
     else
       nxreg <- ncol(as.matrix(xreg))
-    if(!is.element("try-error",class(fit))
+    if(!is.element("try-error",class(fit)))
     {
         nstar <- n - order[2] - seasonal[2]*m
         if(diffs==1 & constant)
