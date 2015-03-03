@@ -1,3 +1,7 @@
+Version 5.10 (?? 2015)
+  * Modified dm.test to give error when variance is zero
+  * Corrected help file for splinef().
+
 Version 5.9 (26 February 2015)
   * Improved documentation of accuracy() function.
   * Fixed occasional bug in accuracy() when test set is a single observation.
