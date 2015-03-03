@@ -32,7 +32,7 @@ results, while the function \code{plot} produces a plot of the forecasts and pre
 
 The generic accessor functions \code{fitted.values} and \code{residuals} extract useful features of the value returned by \code{splinef}.
 
-An object of class \code{"forecast"} is a list containing at least the following elements:
+An object of class \code{"forecast"} containing the following elements:
 \item{model}{A list containing information about the fitted model}
 \item{method}{The name of the forecasting method as a character string}
 \item{mean}{Point forecasts as a time series}
@@ -40,8 +40,9 @@ An object of class \code{"forecast"} is a list containing at least the following
 \item{upper}{Upper limits for prediction intervals}
 \item{level}{The confidence values associated with the prediction intervals}
 \item{x}{The original time series (either \code{object} itself or the time series used to create the model stored as \code{object}).}
-\item{residuals}{Residuals from the fitted model. That is x minus fitted values.}
-\item{fitted}{Fitted values (one-step forecasts)}
+\item{onestepf}{One-step forecasts from the fitted model.}
+\item{fitted}{Smooth estimates of the fitted trend using all data.}
+\item{residuals}{Residuals from the fitted model. That is x minus one-step forecasts.}
 }
 
 \references{Hyndman, King, Pitrun and Billah (2005) Local linear forecasts using cubic smoothing
