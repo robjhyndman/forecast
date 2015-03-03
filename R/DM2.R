@@ -7,8 +7,12 @@ dm.test <- function (e1, e2, alternative = c("two.sided", "less", "greater"), h 
   d <- c(abs(e1))^power - c(abs(e2))^power
   d.cov <- acf(d, na.action = na.omit, lag.max = h - 1, type = "covariance", plot = FALSE)$acf[, , 1]
   d.var <- sum(c(d.cov[1], 2 * d.cov[-1]))/length(d)
-  dv <- max(1e-8,d.var)
-  STATISTIC <- mean(d, na.rm = TRUE) / sqrt(dv)
+  dv <- d.var#max(1e-8,d.var)
+  if(dv > 0)
+    STATISTIC <- mean(d, na.rm = TRUE) / sqrt(dv)
+  else 
+    stop("Variance of DM statistic is zero")
+  
   n <- length(d)
   k <- ((n + 1 - 2 * h + (h/n) * (h-1))/n)^(1/2)
   STATISTIC <- STATISTIC * k

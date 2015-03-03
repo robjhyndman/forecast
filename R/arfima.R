@@ -95,9 +95,9 @@ arfima <- function(x, drange = c(0, 0.5), estim = c("mle","ls"), lambda=NULL, ..
 		p <- length(fit$ar)
 		q <- length(fit$ma)
 		fit2 <- try(Arima(y,order=c(p,0,q),include.mean=FALSE))
-		if(class(fit2) == "try-error")
-			fit2 <- try(Arima(y,order=c(p,0,q),include.mean=FALSE,method="ML"))
-		if(class(fit2) != "try-error")
+		if(is.element("try-error",class(fit2)))
+      fit2 <- try(Arima(y,order=c(p,0,q),include.mean=FALSE,method="ML"))
+		if(!is.element("try-error",class(fit2)))
 		{
 			if(p>0)
 				fit$ar <- fit2$coef[1:p]

@@ -363,7 +363,7 @@ parFilterTBATSSpecifics <- function(control.number, y, control.array, model.para
 
 	if(use.arma.errors) {
 		arma <- try(auto.arima(as.numeric(first.model$errors), d=0, ...), silent=TRUE)
-		if(class(arma) != "try-error") {
+		if(!is.element("try-error",class(arma))) {
 			p <- arma$arma[1]
 			q <- arma$arma[2]
 			if((p != 0) | (q != 0)) { #Did auto.arima() find any AR() or MA() coefficients?
@@ -410,7 +410,7 @@ filterTBATSSpecifics <- function(y, box.cox, trend, damping, seasonal.periods, k
 	}
 	if(use.arma.errors) {
 		arma <- try(auto.arima(as.numeric(first.model$errors), d=0, ...), silent=TRUE)
-		if(class(arma) != "try-error") {
+		if(!is.element("try-error",class(arma))) {
 			p <- arma$arma[1]
 			q <- arma$arma[2]
 			if((p != 0) | (q != 0)) { #Did auto.arima() find any AR() or MA() coefficients?

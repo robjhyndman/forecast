@@ -127,7 +127,7 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
       fit <- try(arima(x,order=c(1,d,0),xreg=xreg))
     else
       fit <- try(arima(x,order=c(1,d,0),seasonal=list(order=c(0,D,0),period=m,xreg=xreg)))
-    if(class(fit) != "try-error")
+    if(!is.element("try-error",class(fit)))
       offset <- -2*fit$loglik - length(x)*log(fit$sigma2)
     else
     {
@@ -432,7 +432,7 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
       nxreg <- 0
     else
       nxreg <- ncol(as.matrix(xreg))
-    if(class(fit) != "try-error")
+    if(!is.element("try-error",class(fit)))
     {
         nstar <- n - order[2] - seasonal[2]*m
         if(diffs==1 & constant)
@@ -645,22 +645,22 @@ OCSBtest <- function(time.series, period)
 
     regression <- try(Arima(diff.series, order=c(3,0,0), seasonal=list(order=c(1,0,0),period=period), xreg=x.reg), silent=TRUE)
 
-    if(class(regression) == "try-error" | tryCatch(checkarima(regression), error=function(e) TRUE))
+    if(is.element("try-error",class(regression)) | tryCatch(checkarima(regression), error=function(e) TRUE))
     {
         regression <- try(Arima(diff.series, order=c(3,0,0), seasonal=list(order=c(0,0,0),period=period), xreg=x.reg), silent=TRUE)
 
-        if(class(regression) == "try-error" | tryCatch(checkarima(regression), error=function(e) TRUE))
+        if(is.element("try-error",class(regression)) | tryCatch(checkarima(regression), error=function(e) TRUE))
         {
             regression <- try(Arima(diff.series, order=c(2,0,0), seasonal=list(order=c(0,0,0),period=period), xreg=x.reg), silent=TRUE)
 
-            if(class(regression) == "try-error" | tryCatch(checkarima(regression), error=function(e) TRUE))
+            if(is.element("try-error",class(regression)) | tryCatch(checkarima(regression), error=function(e) TRUE))
             {
                 regression <- try(Arima(diff.series, order=c(1,0,0), seasonal=list(order=c(0,0,0),period=period), xreg=x.reg), silent=TRUE)
 
-                if(class(regression) == "try-error" | tryCatch(checkarima(regression), error=function(e) TRUE))
+                if(is.element("try-error",class(regression)) | tryCatch(checkarima(regression), error=function(e) TRUE))
                 {
                     regression <- try(lm(contingent.series ~ y.one + y.two - 1, na.action=NULL), silent=TRUE)
-                    if(class(regression) == "try-error")
+                    if(is.element("try-error",class(regression)))
                       stop("The OCSB regression model cannot be estimated")
                     # Check if perfect regression. In that case, safest to do no differencing
                     meanratio <- mean(abs(regression$residuals),na.rm=TRUE)/mean(abs(contingent.series), na.rm=TRUE)
@@ -677,7 +677,7 @@ OCSBtest <- function(time.series, period)
                     else
                       t.two <- NA
 
-                    if((is.nan(t.two)) | (is.infinite(t.two)) | (is.na(t.two)) | (class(regression) == "try-error"))
+                    if((is.nan(t.two)) | (is.infinite(t.two)) | (is.na(t.two)) | (is.element("try-error",class(regression))))
                       return(1)
                     else
                       return(as.numeric(t.two >= calcOCSBCritVal(period)))
