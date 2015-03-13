@@ -483,7 +483,7 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
                 minroot <- min(minroot,abs(polyroot(c(1,testvec))))
             }
         }
-        if(minroot < 1 + 1e-3)
+        if(minroot < 1 + 1e-2) # Previously 1+1e-3
             fit$ic <- Inf # Don't like this model
         if(trace)
             cat("\n",arima.string(fit),":",fit$ic)
