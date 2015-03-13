@@ -432,13 +432,21 @@ arima.errors <- function(z)
   if(!is.list(z))
     stop("z must be a list")
     x <- getResponse(z)
+  if(!is.null(z$lambda))
+    x <- BoxCox(x,z$lambda)
   xreg <- getxreg(z)
-  if(is.null(xreg))
-    return(x)
-  norder <- sum(z$arma[1:4])
+  # Remove intercept
   if(is.element("intercept",names(z$coef)))
     xreg <- cbind(rep(1,length(x)),xreg)
-  return(ts(c(x - xreg %*% as.matrix(z$coef[(norder+1):length(z$coef)])),frequency=frequency(x),start=start(x)))
+  # Return errors
+  if(is.null(xreg))
+    return(x)
+  else
+  {
+    norder <- sum(z$arma[1:4])
+    return(ts(c(x - xreg %*% as.matrix(z$coef[(norder+1):length(z$coef)])),
+      frequency=frequency(x),start=start(x)))
+  }
 }
 
 # Return one-step fits
