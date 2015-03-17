@@ -20,7 +20,7 @@ All measures are defined and discussed in Hyndman and Koehler (2006).}
 The measures calculated are:
 \itemize{
 \item ME: Mean Error
-\item RMSE: Root Mean Absolute Error
+\item RMSE: Root Mean Squared Error
 \item MAE: Mean Absolute Error
 \item MPE: Mean Percentage Error
 \item MAPE: Mean Absolute Percentage Error
