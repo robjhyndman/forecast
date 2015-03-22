@@ -234,7 +234,7 @@ SD.test <- function (wts, s=frequency(wts))
 forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma[5], 10),
     level=c(80, 95), fan=FALSE, xreg=NULL, lambda=object$lambda,  bootstrap=FALSE, npaths=5000,...)
 {
-  # Check whether there're non-existent arguments
+  # Check whether there are non-existent arguments
   all.args <- names(formals())
   user.args <- names(match.call())[-1L] # including arguments passed to 3 dots
   check <- user.args %in% all.args
@@ -242,111 +242,109 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
     error.args <- user.args[!check]
     warning(sprintf("The non-existent %s arguments will be ignored.", error.args))
   }
-  
-#    use.constant <- is.element("constant",names(object$coef))
-    use.drift <- is.element("drift", names(object$coef))
-    x <- object$x <- getResponse(object)
-    usexreg <- (!is.null(xreg) | use.drift | is.element("xreg",names(object)))# | use.constant)
-#    if(use.constant)
-#        xreg <- as.matrix(rep(1,h))
+
+  use.drift <- is.element("drift", names(object$coef))
+  x <- object$x <- getResponse(object)
+  usexreg <- (!is.null(xreg) | use.drift | is.element("xreg",names(object)))# | use.constant)
+
+  if(!is.null(xreg))
+  {
+    origxreg <- xreg <- as.matrix(xreg)
+    h <- nrow(xreg)
+  }
+  else
+    origxreg <- NULL
+
+  if(fan)
+    level <- seq(51,99,by=3)
+  else
+  {
+    if(min(level) > 0 & max(level) < 1)
+      level <- 100*level
+    else if(min(level) < 0 | max(level) > 99.99)
+      stop("Confidence limit out of range")
+  }
+  if(use.drift)
+  {
+    n <- length(x)
     if(!is.null(xreg))
-    {
-        origxreg <- xreg <- as.matrix(xreg)
-        h <- nrow(xreg)
-    }
+      xreg <- cbind((1:h)+n,xreg)
     else
-      origxreg <- NULL
-    if (use.drift)
-    {
-        n <- length(x)
-        if(!is.null(xreg))
-            xreg <- cbind((1:h)+n,xreg)
-        else
-            xreg <- as.matrix((1:h)+n)
-    }
-    if(usexreg)
-    {
-        if(is.null(xreg))
-          stop("No regressors provided")
-        object$call$xreg <- getxreg(object)
-        # if(!is.null(object$xreg))
-        #     object$call$xreg <- object$xreg
-        # else # object from arima() rather than Arima()
-        # {
-        #     xr <- object$call$xreg
-        #     object$call$xreg <- if (!is.null(xr))
-        #                             eval.parent(xr)
-        #                         else NULL
-        # }
-        if(ncol(xreg) != ncol(object$call$xreg))
-          stop("Number of regressors does not match fitted model")
-        pred <- predict(object, n.ahead=h, newxreg=xreg)
-    }
+      xreg <- as.matrix((1:h)+n)
+  }
+
+  # Check if data is constant
+  if(!is.null(object$constant))
+  {
+    if(object$constant)
+      pred <- list(pred=rep(x[1], h), se=rep(0,h))
     else
-        pred <- predict(object, n.ahead=h)
+      stop("Strange value of object$constant")
+  }
+  else if(usexreg)
+  {
+    if(is.null(xreg))
+      stop("No regressors provided")
+    object$call$xreg <- getxreg(object)
+    if(ncol(xreg) != ncol(object$call$xreg))
+      stop("Number of regressors does not match fitted model")
+    pred <- predict(object, n.ahead=h, newxreg=xreg)
+  }
+  else
+      pred <- predict(object, n.ahead=h)
 
-    # Fix time series characteristics if there are missing values at end of series.
-    if(!is.null(x))
+  # Fix time series characteristics if there are missing values at end of series.
+  if(!is.null(x))
+  {
+    tspx <- tsp(x)
+    nx <- max(which(!is.na(x)))
+    if(nx != length(x))
     {
-      tspx <- tsp(x)
-      nx <- max(which(!is.na(x)))
-      if(nx != length(x))
-      {
-        tspx[2] <- time(x)[nx]
-        start.f <- tspx[2]+1/tspx[3]
-        pred$pred <- ts(pred$pred,frequency=tspx[3],start=start.f)
-        pred$se <- ts(pred$se,frequency=tspx[3],start=start.f)
-      }
+      tspx[2] <- time(x)[nx]
+      start.f <- tspx[2]+1/tspx[3]
+      pred$pred <- ts(pred$pred,frequency=tspx[3],start=start.f)
+      pred$se <- ts(pred$se,frequency=tspx[3],start=start.f)
     }
+  }
 
-    if(fan)
-        level <- seq(51,99,by=3)
-    else
+  # Compute prediction intervals
+  nint <- length(level)
+  if(bootstrap) # Compute prediction intervals using simulations
+  {
+    sim <- matrix(NA,nrow=npaths,ncol=h)
+    for(i in 1:npaths)
+      sim[i,] <- simulate(object, nsim=h, bootstrap=TRUE, xreg=origxreg, lambda=lambda)
+    lower <- apply(sim, 2, quantile, 0.5 - level/200, type = 8)
+    upper <- apply(sim, 2, quantile, 0.5 + level/200, type = 8)
+    if (nint > 1L) {
+      lower <- t(lower)
+      upper <- t(upper)
+    }
+  }
+  else { # Compute prediction intervals via the normal distribution
+    lower <- matrix(NA, ncol=nint, nrow=length(pred$pred))
+    upper <- lower
+    for (i in 1:nint)
     {
-        if(min(level) > 0 & max(level) < 1)
-            level <- 100*level
-        else if(min(level) < 0 | max(level) > 99.99)
-            stop("Confidence limit out of range")
+      qq <- qnorm(0.5 * (1 + level[i]/100))
+      lower[, i] <- pred$pred - qq * pred$se
+      upper[, i] <- pred$pred + qq * pred$se
     }
-
-    # Compute prediction intervals
-    nint <- length(level)
-    if(bootstrap) # Compute prediction intervals using simulations
-    {
-        sim <- matrix(NA,nrow=npaths,ncol=h)
-        for(i in 1:npaths)
-            sim[i,] <- simulate(object, nsim=h, bootstrap=TRUE, xreg=origxreg, lambda=lambda)
-        lower <- apply(sim, 2, quantile, 0.5 - level/200, type = 8)
-        upper <- apply(sim, 2, quantile, 0.5 + level/200, type = 8)
-        if (nint > 1L) {
-          lower <- t(lower)
-          upper <- t(upper)
-        }
+  }
+  colnames(lower)=colnames(upper)=paste(level, "%", sep="")
+  method <- arima.string(object)
+  fits <- fitted(object)
+  if(!is.null(lambda) & is.null(object$constant))  { # Back-transform point forecasts and prediction intervals
+    pred$pred <- InvBoxCox(pred$pred,lambda)
+    if(!bootstrap) { # Bootstrapped intervals already back-transformed
+      lower <- InvBoxCox(lower,lambda)
+      upper <- InvBoxCox(upper,lambda)
     }
-    else { # Compute prediction intervals via the normal distribution
-      lower <- matrix(NA, ncol=nint, nrow=length(pred$pred))
-      upper <- lower
-      for (i in 1:nint)
-      {
-          qq <- qnorm(0.5 * (1 + level[i]/100))
-          lower[, i] <- pred$pred - qq * pred$se
-          upper[, i] <- pred$pred + qq * pred$se
-      }
-    }
-    colnames(lower)=colnames(upper)=paste(level, "%", sep="")
-    method <- arima.string(object)
-    fits <- fitted(object)
-    if(!is.null(lambda)) { # Back-transform point forecasts and prediction intervals
-      pred$pred <- InvBoxCox(pred$pred,lambda)
-      if(!bootstrap) { # Bootstrapped intervals already back-transformed
-        lower <- InvBoxCox(lower,lambda)
-        upper <- InvBoxCox(upper,lambda)
-      }
-    }
-    return(structure(list(method=method, model=object, level=level,
-        mean=pred$pred, lower=lower, upper=upper, x=x,
-        xname=deparse(substitute(x)), fitted=fits, residuals=residuals(object)),
-        class="forecast"))
+  }
+  return(structure(list(method=method, model=object, level=level,
+      mean=pred$pred, lower=lower, upper=upper, x=x,
+      xname=deparse(substitute(x)), fitted=fits, residuals=residuals(object)),
+      class="forecast"))
 }
 
 

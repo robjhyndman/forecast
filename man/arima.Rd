@@ -41,7 +41,7 @@ take an ARIMA model from a previous call to \code{Arima} and re-apply it to the 
 \item{xreg}{The regressors used in fitting (when relevant).}
 }
 
-\seealso{\code{\link[stats]{arima}}}
+\seealso{\code{\link[stats]{arima}}, \code{\link{forecast.Arima}}.}
 
 \author{Rob J Hyndman}
 \examples{fit <- Arima(WWWusage,order=c(3,1,0))

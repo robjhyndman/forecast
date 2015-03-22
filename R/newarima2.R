@@ -26,6 +26,7 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     fit$series <- series
     fit$call <- match.call()
     fit$call$x <- data.frame(x=x)
+    fit$constant <- TRUE
     return(fit)
   }
   ic <- match.arg(ic)
