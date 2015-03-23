@@ -2,8 +2,8 @@
 \alias{seasonplot}
 \title{Seasonal plot}
 \usage{seasonplot(x, s, season.labels=NULL, year.labels=FALSE,
-    year.labels.left=FALSE, type="o", main, ylab="",
-    xlab=NULL, col=1, labelgap=0.1, ...)
+    year.labels.left=FALSE, type="o", main, xlab=NULL, ylab="",
+    col=1, labelgap=0.1, ...)
 }
 \arguments{
 \item{x}{a numeric vector or time series.}
@@ -13,8 +13,8 @@
 \item{year.labels.left}{Logical flag indicating whether labels for each year of data should be plotted on the left.}
 \item{type}{plot type (as for \code{\link[graphics]{plot}})}
 \item{main}{Main title.}
-\item{ylab}{Y-axis label}
-\item{xlab}{X-axis label}
+\item{xlab}{X-axis label.}
+\item{ylab}{Y-axis label.}
 \item{col}{Colour}
 \item{labelgap}{Distance between year labels and plotted lines}
 \item{\dots}{additional arguments to \code{\link[graphics]{plot}}.} }

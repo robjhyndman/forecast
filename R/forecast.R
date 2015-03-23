@@ -235,8 +235,8 @@ plotlmforecast <- function(object, plot.conf, shaded, shadecols, col, fcol, pi.c
 }
 
 plot.forecast <- function(x, include, plot.conf=TRUE, shaded=TRUE, shadebars=(length(x$mean)<5),
-        shadecols=NULL, col=1, fcol=4, pi.col=1, pi.lty=2, ylim=NULL, main=NULL, ylab="",
-        xlab="", type="l",  flty = 1, flwd = 2, ...)
+        shadecols=NULL, col=1, fcol=4, pi.col=1, pi.lty=2, ylim=NULL, main=NULL, xlab="",
+        ylab="", type="l",  flty = 1, flwd = 2, ...)
 {
   if(is.element("x",names(x))) # Assume stored as x
     xx <- x$x

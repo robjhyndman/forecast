@@ -1,0 +1,36 @@
+\name{plot.Arima}
+\alias{plot.Arima}
+\alias{plot.ar}
+\title{Plot characteristic roots from ARIMA model}
+\usage{\method{plot}{Arima}(x, type=c("both","ar","ma"), 
+  main, xlab="Real", ylab="Imaginary", ...)
+\method{plot}{ar}(x, main, xlab="Real", ylab="Imaginary", ...)
+}
+
+\arguments{
+\item{x}{Object of class \dQuote{Arima} or \dQuote{ar}.}
+\item{type}{Determines if both AR and MA roots are plotted, of if just one set is plotted.}
+\item{main}{Main title. Default is "Inverse AR roots" or "Inverse MA roots".}
+\item{xlab}{X-axis label.}
+\item{ylab}{Y-axis label.}
+\item{...}{Other plotting parameters passed to \code{\link[graphics]{par}}.}
+}
+
+\description{Produces a plot of the inverse AR and MA roots of an ARIMA model. Inverse roots outside the unit circle are shown in red.}
+
+\value{None. Function produces a plot}
+
+\seealso{\code{\link{Arima}}, \code{\link[stats]{ar}}}
+
+\author{Rob J Hyndman}
+\examples{
+fit <- Arima(WWWusage, order=c(3,1,0))
+plot(fit)
+
+fit <- Arima(woolyrnq,order=c(2,0,0),seasonal=c(2,1,1))
+plot(fit)
+
+plot(ar.ols(gold[1:61]))
+
+}
+\keyword{hplot}

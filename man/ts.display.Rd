@@ -3,7 +3,7 @@
 \title{Time series display}
 \usage{tsdisplay(x, plot.type=c("partial","scatter","spectrum"), points=TRUE, ci.type="white", 
     lag.max, na.action=na.contiguous, 
-    main=NULL, ylab="", xlab="", pch=1, cex=0.5, ...)
+    main=NULL, xlab="", ylab="", pch=1, cex=0.5, ...)
 }
 
 \arguments{  \item{x}{a numeric vector or time series.}
@@ -13,10 +13,10 @@
 \item{lag.max}{the maximum lag to plot for the acf and pacf. A suitable value is selected by default if the argument is missing.}
 \item{na.action}{function to handle missing values in acf, pacf and spectrum calculations. The default is \code{\link[stats]{na.contiguous}}. Useful alternatives are \code{\link[stats]{na.pass}} and \code{\link{na.interp}}.}
 \item{main}{Main title.}
-\item{ylab}{Y-axis label}
-\item{xlab}{X-axis label}
-\item{pch}{Plotting character}
-\item{cex}{Character size}
+\item{xlab}{X-axis label.}
+\item{ylab}{Y-axis label.}
+\item{pch}{Plotting character.}
+\item{cex}{Character size.}
 \item{\dots}{additional arguments to \code{\link[stats]{acf}}.}
 }
 \description{Plots a time series along with its acf and either its pacf, lagged scatterplot or spectrum.

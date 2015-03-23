@@ -1,7 +1,7 @@
 ### Time series graphics and transformations
 
 tsdisplay <- function(x,plot.type=c("partial", "scatter", "spectrum"),points=TRUE,ci.type="white",
-                lag.max, na.action=na.contiguous, main=NULL,ylab="",xlab="",
+                lag.max, na.action=na.contiguous, main=NULL,xlab="",ylab="",
                 pch=1,cex=0.5, ...)
 
 {
@@ -51,7 +51,7 @@ tsdisplay <- function(x,plot.type=c("partial", "scatter", "spectrum"),points=TRU
 
 
 seasonplot <- function(x, s, season.labels=NULL, year.labels=FALSE, year.labels.left=FALSE,
-    type="o", main, ylab="", xlab=NULL, col=1, labelgap=0.1, ...)
+    type="o", main, xlab=NULL, ylab="", col=1, labelgap=0.1, ...)
 {
   if(missing(main))
     main = paste("Seasonal plot:", deparse(substitute(x)))

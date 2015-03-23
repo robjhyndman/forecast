@@ -16,7 +16,7 @@ import(parallel,Rcpp)
 
 export(arfima, Arima, arima.errors, arimaorder, auto.arima, BoxCox, croston,
 fitted.Arima, forecast, forecast.ar, forecast.Arima, forecast.ets, forecast.fracdiff,findfrequency,
-forecast.HoltWinters, forecast.lm, forecast.stl, forecast.StructTS, forecast.bats, forecast.tbats, accuracy, holt, hw, InvBoxCox, nnetar, forecast.nnetar,
+forecast.HoltWinters, forecast.lm, forecast.stl, forecast.StructTS, forecast.bats, forecast.tbats, accuracy, holt, hw, InvBoxCox, nnetar, forecast.nnetar, plot.Arima, plot.ar, 
 meanf, logLik.ets, monthdays, na.interp, ets, plot.bats, plot.tbats, plot.ets, plot.forecast,
 plot.splineforecast, rwf, seasadj, seasonaldummy,naive,snaive,stlf,
 seasonaldummyf, seasonplot, ses, sindexf, splinef,tslm,fourier,fourierf,forecast.lm,
@@ -54,6 +54,8 @@ S3method(plot,tbats)
 S3method(plot,ets)
 S3method(plot,forecast)
 S3method(plot,splineforecast)
+S3method(plot,Arima)
+S3method(plot,ar)
 S3method(predict,default)
 S3method(print,ARIMA)
 S3method(print,ets)
