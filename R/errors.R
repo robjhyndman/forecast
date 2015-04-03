@@ -88,7 +88,7 @@ testaccuracy <- function(f,x,test,d,D)
     fpe <- (c(ff[2:n])/c(xx[1:(n-1)]) - 1)[test-1]
     ape <- (c(xx[2:n])/c(xx[1:(n-1)]) - 1)[test-1]
     theil <- sqrt(sum((fpe - ape)^2)/sum(ape^2))
-    if(length(error) > 1) 
+    if(length(error) > 1)
       r1 <- acf(error,plot=FALSE,lag.max=2,na.action=na.pass)$acf[2,1,1]
     else
       r1 <- NA
@@ -173,7 +173,7 @@ trainingaccuracy <- function(f,test,d, D)
 
 accuracy <- function(f,x,test=NULL,d=NULL,D=NULL)
 {
-  if(!any(is.element(class(f), c("mforecast","forecast","ts","integer","numeric")))
+  if(!any(is.element(class(f), c("mforecast","forecast","ts","integer","numeric"))))
     stop("First argument should be a forecast object or a time series.")
   if(is.element("mforecast", class(f)))
     return(accuracy.mforecast(f,x,test,d,D))
