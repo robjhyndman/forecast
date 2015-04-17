@@ -727,3 +727,8 @@ arimaorder <- function (object)
 	else
 		stop("object not of class Arima, ar or fracdiff")
 }
+
+as.character.Arima <- function(object)
+{
+  arima.string(object)
+}
