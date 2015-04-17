@@ -8,6 +8,13 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, se
   if (ny != length(y)) 
     warning("Missing values encountered. Using longest contiguous portion of time series")
  
+  if(is.constant(y))
+  {
+    fit <- list(y=y,x=matrix(y,nrow=1,ncol=ny),errors=y*0,fitted.values=y,seed.states=matrix(y[1]),
+      AIC=-Inf,likelihood=-Inf,variance=0,alpha=0.9999, call=match.call())
+    return(structure(fit,class='bats'))
+  }
+
 	if(any((y <= 0)))
 		use.box.cox <- FALSE
 		#stop("TBATS requires positive data")

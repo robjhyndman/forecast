@@ -95,7 +95,8 @@ parFilterSpecifics<-function(control.number, control.array, y, seasonal.periods,
 	}
 }
 
-bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, seasonal.periods=NULL, use.arma.errors=TRUE, use.parallel=TRUE, num.cores=2, bc.lower=0, bc.upper=1, ...) 
+bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, seasonal.periods=NULL, 
+  use.arma.errors=TRUE, use.parallel=TRUE, num.cores=2, bc.lower=0, bc.upper=1, ...) 
 {
   if (any(class(y) %in% c("data.frame", "list", "matrix", "mts"))) 
     stop("y should be a univariate time series")
@@ -109,13 +110,9 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, sea
   # Check for constancy
   if(is.constant(y))
   {
-    # Add some noise to avoid errors
-    fit <- bats(y + rnorm(ny,0,1e-8), FALSE, FALSE, FALSE)
-    fit$AIC <- -Inf
-    fit$likelihood <- -Inf
-    fit$variance <- 0
-    fit$y <- y
-    return(fit)
+    fit <- list(y=y,x=matrix(y,nrow=1,ncol=ny),errors=y*0,fitted.values=y,seed.states=matrix(y[1]),
+      AIC=-Inf,likelihood=-Inf,variance=0,alpha=0.9999, call=match.call())
+    return(structure(fit,class='bats'))
   }
 
 	# Check for non-positive data
