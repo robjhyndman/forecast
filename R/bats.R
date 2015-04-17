@@ -99,12 +99,25 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, sea
 {
   if (any(class(y) %in% c("data.frame", "list", "matrix", "mts"))) 
     stop("y should be a univariate time series")
+
   y <- as.ts(y)
   ny <- length(y)
   y <- na.contiguous(y)
   if (ny != length(y)) 
     warning("Missing values encountered. Using longest contiguous portion of time series")
  
+  # Check for constancy
+  if(is.constant(y))
+  {
+    # Add some noise to avoid errors
+    fit <- bats(y + rnorm(ny,0,1e-8), FALSE, FALSE, FALSE)
+    fit$AIC <- -Inf
+    fit$likelihood <- -Inf
+    fit$variance <- 0
+    fit$y <- y
+    return(fit)
+  }
+
 	# Check for non-positive data
 	if(any((y <= 0))) 
 	{
