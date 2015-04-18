@@ -5,7 +5,7 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     stepwise=TRUE, trace=FALSE,
     approximation=(length(x)>100 | frequency(x)>12), xreg=NULL,
     test=c("kpss","adf","pp"), seasonal.test=c("ocsb","ch"),
-    allowdrift=TRUE,lambda=NULL,
+    allowdrift=TRUE,allowmean=TRUE,lambda=NULL,
     parallel=FALSE, num.cores=2)
 {
   # Only non-stepwise parallel implemented so far.
@@ -161,10 +161,11 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   q <- start.q <- min(start.q,max.q)
   P <- start.P <- min(start.P,max.P)
   Q <- start.Q <- min(start.Q,max.Q)
-  if(allowdrift)
-    constant <- (d+D <= 1)
-  else
-    constant <- ((d+D) == 0)
+
+  allowdrift <- allowdrift & (d+D)==1
+  allowmean <- allowmean & (d+D)==0
+
+  constant <- allowdrift | allowmean
 
   results <- matrix(NA,nrow=100,ncol=8)
 
@@ -347,7 +348,7 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
         p <- (p+1)
       }
     }
-    if(allowdrift | (d+D)==0)
+    if(allowdrift | allowmean)
     {
       if(newmodel(p,d,q,P,D,Q,!constant,results[1:k,]))
       {
