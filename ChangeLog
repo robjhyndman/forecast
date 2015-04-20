@@ -1,14 +1,15 @@
 Version 5.10 (?? 2015)
   * Modified dm.test to give error when variance is zero
   * Corrected help file for splinef().
+  * Fixed typo in accuracy help file regarding RMSE
   * Fixed arima.errors() to handle Box-Cox transformed models.
   * Modified auto.arima() to be stricter on near-unit-roots.
-  * Fixed typo in accuracy help file regarding RMSE
   * Improved handling of constant series in Arima() and forecast.Arima().
   * Added plot.Arima() and plot.ar() functions.
+  * Added as.character.Arima()
   * Captured problem in bats/tbats where data are constant.
   * Fixed bug in forecasts from bats which labelled them as TBATS.
-  * Added as.character.Arima()
+  * Modified TBATS and BATS estimation to avoid occasional instabilities.
 
 Version 5.9 (26 February 2015)
   * Improved documentation of accuracy() function.
