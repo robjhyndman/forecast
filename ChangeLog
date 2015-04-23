@@ -11,6 +11,7 @@ Version 5.10 (?? 2015)
   * Captured problem in bats/tbats where data are constant.
   * Fixed bug in forecasts from bats which labelled them as TBATS.
   * Modified TBATS and BATS estimation to avoid occasional instabilities.
+  * Added allow.multiplicative.trend argument to ets().
 
 Version 5.9 (26 February 2015)
   * Improved documentation of accuracy() function.

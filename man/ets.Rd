@@ -44,6 +44,7 @@ admissible space; \code{"both"} (default) takes the intersection of these region
 \item{ic}{Information criterion to be used in model selection.}
 \item{restrict}{If TRUE, the models with infinite variance will not
     be allowed.}
+\item{allow.multiplicative.trend}{If \code{TRUE}, models with multiplicative trend are allowed. Otherwise, the model space excludes them.}
 \item{use.initial.values}{If \code{TRUE} and \code{model} is of class \code{"ets"}, then the initial values in the model are also not re-estimated.}
 \item{...}{Other undocumented arguments.}
 }
