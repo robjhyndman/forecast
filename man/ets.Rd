@@ -43,7 +43,7 @@ upper bounds; \code{"admissible"} indicates parameters must lie in the
 admissible space; \code{"both"} (default) takes the intersection of these regions.}
 \item{ic}{Information criterion to be used in model selection.}
 \item{restrict}{If \code{TRUE} (default), the models with infinite variance will not be allowed.}
-\item{allow.multiplicative.trend}{If \code{TRUE} (default), models with multiplicative trend are allowed. Otherwise, the model space excludes them.}
+\item{allow.multiplicative.trend}{If \code{TRUE} (default), models with multiplicative trend are allowed when searching for a model. Otherwise, the model space excludes them. This argument is ignored if a multiplicative trend model is explicitly requested (e.g., using \code{model="MMN"}).}
 \item{use.initial.values}{If \code{TRUE} and \code{model} is of class \code{"ets"}, then the initial values in the model are also not re-estimated.}
 \item{...}{Other undocumented arguments.}
 }

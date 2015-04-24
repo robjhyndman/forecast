@@ -55,7 +55,7 @@ forecast.ts <- function(object, h=ifelse(frequency(object)>1, 2*frequency(object
   if(n > 3)
   {
     if(obj.freq < 13)
-      forecast(ets(object,lambda = lambda, ...),h=h,level=level,fan=fan)
+      forecast(ets(object,lambda = lambda, allow.multiplicative.trend=FALSE, ...),h=h,level=level,fan=fan)
     else
       stlf(object,h=h,level=level,fan=fan,lambda = lambda, ...)
   }
