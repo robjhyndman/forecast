@@ -82,7 +82,7 @@ Springer-Verlag. \url{http://www.exponentialsmoothing.net}.
 
 
 
-\seealso{\code{\link[stats]{HoltWinters}}, \code{\link{rwf}}, \code{\link[stats]{arima}}.}
+\seealso{\code{\link[stats]{HoltWinters}}, \code{\link{rwf}}, \code{\link{Arima}}.}
 
 \author{Rob J Hyndman}
 \examples{fit <- ets(USAccDeaths)

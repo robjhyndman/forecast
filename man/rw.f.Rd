@@ -41,7 +41,7 @@ An object of class \code{"forecast"} is a list containing at least the following
 \item{fitted}{Fitted values (one-step forecasts)}
 }
 
-\seealso{\code{\link[stats]{arima}}, \code{\link{meanf}}}
+\seealso{\code{\link{Arima}}, \code{\link{meanf}}}
 
 \author{Rob J Hyndman}
 \examples{gold.fcast <- rwf(gold[1:60],h=50)
