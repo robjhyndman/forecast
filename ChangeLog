@@ -1,4 +1,4 @@
-Version 5.10 (?? 2015)
+Version 6.0 (?? 2015)
   * Modified dm.test to give error when variance is zero
   * Corrected help file for splinef().
   * Fixed arima.errors() to handle Box-Cox transformed models.
@@ -10,6 +10,9 @@ Version 5.10 (?? 2015)
   * Captured problem in bats/tbats where data are constant.
   * Fixed bug in forecasts from bats which labelled them as TBATS.
   * Fixed typo in accuracy help file regarding RMSE
+  * Fixed bug in accuracy() which occurred with Arima and ets objects.
+  * Added taperedacf and taperedpacf functions
+  * Added functions for bootstrapping time series
 
 Version 5.9 (26 February 2015)
   * Improved documentation of accuracy() function.
