@@ -18,7 +18,8 @@ The function \code{\link{forecast.ts}} makes forecasts using \code{\link{ets}} m
 
 \usage{forecast(object,...)
 \method{forecast}{ts}(object, h = ifelse(frequency(object) > 1, 2 * frequency(object), 10) , 
-         level=c(80,95), fan=FALSE, robust=FALSE, lambda=NULL, find.frequency=FALSE, ...)}
+         level=c(80,95), fan=FALSE, robust=FALSE, lambda=NULL, find.frequency=FALSE, 
+         allow.multiplicative.trend=FALSE, ...)}
 
 \arguments{
 \item{object}{a time series or time series model for which forecasts are required}
@@ -28,6 +29,7 @@ The function \code{\link{forecast.ts}} makes forecasts using \code{\link{ets}} m
 \item{robust}{If TRUE, the function is robust to missing values and outliers in \code{object}. This argument is only valid when \code{object} is of class \code{ts}.}
 \item{lambda}{Box-Cox transformation parameter.}
 \item{find.frequency}{If TRUE, the function determines the appropriate period, if the data is of unknown period.}
+\item{allow.multiplicative.trend}{If TRUE, then ETS models with multiplicative trends are allowed. Otherwise, only additive or no trend ETS models are permitted.}
 \item{...}{Additional arguments affecting the forecasts produced. \code{forecast.ts} passes these to \code{\link{forecast.ets}} or \code{\link{stlf}} depending on the frequency of the time series.}
 }
 \value{An object of class "\code{forecast}".

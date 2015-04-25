@@ -28,7 +28,7 @@ checkAdmissibility<-function(opt.env, box.cox=NULL, small.phi=NULL, ar.coefs=NUL
 			p <- max(which(c(1, -ar) != 0)) - 1
 			if (!p)
 				return(TRUE)
-			all(Mod(polyroot(c(1, -ar[1L:p]))) > 1 + 1e-3)
+			all(Mod(polyroot(c(1, -ar[1L:p]))) > 1 + 1e-2)
 		}
 		if(!arCheck(ar.coefs)) {
 			#print("ar")
@@ -45,7 +45,7 @@ checkAdmissibility<-function(opt.env, box.cox=NULL, small.phi=NULL, ar.coefs=NUL
 			if (!q0)
 				return(ma)
 			roots <- polyroot(c(1, ma[1L:q0]))
-			ind <- Mod(roots) < 1 + 1e-3
+			ind <- Mod(roots) < 1 + 1e-2
 			if (all(!ind))
 				return(ma)
 			if (q0 == 1)
@@ -55,7 +55,7 @@ checkAdmissibility<-function(opt.env, box.cox=NULL, small.phi=NULL, ar.coefs=NUL
 			for (r in roots) x <- c(x, 0) - c(0, x)/r
 			c(Re(x[-1L]), rep(0, q - q0))
 		}
-		inverted.ma<-maInvert(ma.coefs)
+		inverted.ma <- maInvert(ma.coefs)
 		if(all(inverted.ma != ma.coefs)) {
 			#print("ma")
 			return(FALSE)
@@ -65,7 +65,6 @@ checkAdmissibility<-function(opt.env, box.cox=NULL, small.phi=NULL, ar.coefs=NUL
 	#Check the eigen values of the D matrix
 	D.eigen.values<-eigen(opt.env$D, symmetric=FALSE, only.values=TRUE)$values
 
-	return(all(abs(D.eigen.values) < 1+1e-10))
-
-
+	#return(all(abs(D.eigen.values) < 1+1e-10))
+	return(all(abs(D.eigen.values) < 1+1e-5))
 }

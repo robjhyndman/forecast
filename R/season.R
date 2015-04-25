@@ -113,7 +113,7 @@ seasonaldummyf <- function(x, h)
 forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsmodel="ZZN", 
      forecastfunction=NULL,
      h = frequency(object$time.series)*2, level = c(80, 95), fan = FALSE, 
-     lambda=NULL, xreg=NULL, newxreg=NULL, ...)
+     lambda=NULL, xreg=NULL, newxreg=NULL, allow.multiplicative.trend=FALSE, ...)
 {
   method <- match.arg(method)
   if(is.null(forecastfunction))
@@ -129,7 +129,7 @@ forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsm
         substr(etsmodel,3,3) <- "N"
       }
       forecastfunction <- function(x,h,level,...){
-        fit <- ets(x,model=etsmodel,...)
+        fit <- ets(x,model=etsmodel, allow.multiplicative.trend=allow.multiplicative.trend, ...)
         return(forecast(fit,h=h,level=level))
       }
     }
@@ -199,7 +199,7 @@ forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsm
 # Function takes time series, does STL decomposition, and fits a model to seasonally adjusted series
 # But it does not forecast. Instead, the result can be passed to forecast().
 stlm <- function(x ,s.window=7, robust=FALSE, method=c("ets","arima"), 
-     modelfunction=NULL, etsmodel="ZZN", xreg=NULL, lambda=NULL, ...)
+     modelfunction=NULL, etsmodel="ZZN", lambda=NULL, xreg=NULL, allow.multiplicative.trend=FALSE, ...)
 {
   method <- match.arg(method)
 
@@ -224,7 +224,8 @@ stlm <- function(x ,s.window=7, robust=FALSE, method=c("ets","arima"),
         warning("The ETS model must be non-seasonal. I'm ignoring the seasonal component specified.")
         substr(etsmodel,3,3) <- "N"
       }
-      modelfunction <- function(x,...){return(ets(x,model=etsmodel,...))}
+      modelfunction <- function(x,...){return(ets(x,model=etsmodel,
+        allow.multiplicative.trend=allow.multiplicative.trend,...))}
     }
     else if(method=="arima")
       modelfunction <- function(x,...){return(auto.arima(x,xreg=xreg,seasonal=FALSE,...))}
@@ -241,7 +242,7 @@ stlm <- function(x ,s.window=7, robust=FALSE, method=c("ets","arima"),
 }
 
 forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE, 
-     lambda=object$lambda, newxreg=NULL, ...)
+     lambda=object$lambda, newxreg=NULL, allow.multiplicative.trend=FALSE, ...)
 {
   if(!is.null(newxreg))
   {
@@ -256,8 +257,11 @@ forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE
   lastseas <- rep(object$stl$time.series[n-(m:1)+1,"seasonal"],trunc(1+(h-1)/m))[1:h]
  
   # Forecast seasonally adjusted series
-  if(class(object$model)=="Arima" & !is.null(newxreg))
+  if(is.element("Arima",class(object$model)) & !is.null(newxreg))
     fcast <- forecast(object$model, h=h, level=level, xreg=newxreg, ...)
+  else if(is.element("ets",class(object$model)))
+    fcast <- forecast(object$model, h=h, level=level, 
+      allow.multiplicative.trend=allow.multiplicative.trend, ...)
   else
     fcast <- forecast(object$model, h=h, level=level, ...)
 
@@ -283,9 +287,7 @@ forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE
   return(fcast)
 }
 
-stlf <- function(x ,h=frequency(x)*2, s.window=7, robust=FALSE, method=c("ets","arima","naive","rwdrift"), 
-  etsmodel="ZZN", forecastfunction=NULL, level = c(80, 95), fan = FALSE, lambda=NULL, 
-  xreg=NULL, newxreg=NULL, ...)
+stlf <- function(x, h=frequency(x)*2, s.window=7, robust=FALSE, lambda=NULL, ...)
 {
 	if (!is.null(lambda)) 
 	{
@@ -294,8 +296,7 @@ stlf <- function(x ,h=frequency(x)*2, s.window=7, robust=FALSE, method=c("ets","
 	}
 
 	fit <- stl(x,s.window=s.window,robust=robust)
-	fcast <- forecast(fit,h=h,method=method,etsmodel=etsmodel, forecastfunction=forecastfunction,
-    level=level,fan=fan,xreg=xreg,newxreg=newxreg,lambda=lambda, ...)
+	fcast <- forecast(fit,h=h,lambda=lambda, ...)
 
 	# if (!is.null(lambda)) 
 	# {

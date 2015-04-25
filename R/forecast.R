@@ -40,7 +40,8 @@ findfrequency <- function(x)
 }
 
 forecast.ts <- function(object, h=ifelse(frequency(object)>1, 2*frequency(object), 10), 
-  level=c(80,95), fan=FALSE, robust=FALSE, lambda = NULL, find.frequency = FALSE, ...)
+  level=c(80,95), fan=FALSE, robust=FALSE, lambda = NULL, find.frequency = FALSE, 
+  allow.multiplicative.trend=FALSE, ...)
 {
   n <- length(object)
   if (find.frequency) {
@@ -55,9 +56,11 @@ forecast.ts <- function(object, h=ifelse(frequency(object)>1, 2*frequency(object
   if(n > 3)
   {
     if(obj.freq < 13)
-      forecast(ets(object,lambda = lambda, ...),h=h,level=level,fan=fan)
+      forecast(ets(object,lambda = lambda, allow.multiplicative.trend=allow.multiplicative.trend, ...),
+        h=h,level=level,fan=fan)
     else
-      stlf(object,h=h,level=level,fan=fan,lambda = lambda, ...)
+      stlf(object,h=h,level=level,fan=fan,lambda = lambda, 
+        allow.multiplicative.trend=allow.multiplicative.trend,...)
   }
   else
     meanf(object,h=h,level=level,fan=fan,lambda = lambda, ...)

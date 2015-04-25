@@ -42,7 +42,7 @@ An object of class \code{"forecast"} is a list containing at least the following
 \item{fitted}{Fitted values (one-step forecasts)}
 }
 
-\seealso{\code{\link{ets}}, \code{ses}, \code{holt}, \code{hw}.}
+\seealso{\code{\link{ets}}, \code{\link{ses}}, \code{\link{holt}}, \code{\link{hw}}.}
 
 \author{Rob J Hyndman}
 
