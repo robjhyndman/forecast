@@ -287,7 +287,7 @@ forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE
   return(fcast)
 }
 
-stlf <- function(x, h=frequency(x)*2, s.window=7, robust=FALSE, lambda=NULL, ...)
+stlf <- function(x, h=frequency(x)*2, s.window=7, t.window=NULL, robust=FALSE, lambda=NULL, ...)
 {
 	if (!is.null(lambda)) 
 	{
@@ -295,7 +295,7 @@ stlf <- function(x, h=frequency(x)*2, s.window=7, robust=FALSE, lambda=NULL, ...
 		x <- BoxCox(x, lambda)
 	}
 
-	fit <- stl(x,s.window=s.window,robust=robust)
+	fit <- stl(x,s.window=s.window,t.window=t.window,robust=robust)
 	fcast <- forecast(fit,h=h,lambda=lambda, ...)
 
 	# if (!is.null(lambda)) 
