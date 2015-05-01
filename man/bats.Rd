@@ -20,11 +20,10 @@
 \item{...}{Additional arguments to be passed to \code{auto.arima} when choose an ARMA(p, q) model for the errors. (Note that xreg will be ignored, as will any arguments concerning seasonality and differencing, but arguments controlling the values of p and q will be used.)}
 }
 
-\description{Fits a BATS model applied to \code{y}, as described in De Livera, Hyndman & Snyder (2011). 
-Parallel processing is used by default to speed up the computatons.}
+\description{Fits a BATS model applied to \code{y}, as described in De Livera, Hyndman & Snyder (2011). Parallel processing is used by default to speed up the computations.}
 
 \value{An object of class "\code{bats}". The generic accessor functions \code{fitted.values} and \code{residuals} extract useful features of
-the value returned by \code{bats} and associated functions.}
+the value returned by \code{bats} and associated functions. The fitted model is designated BATS(omega, {p,q}, phi, {m1,...mJ}) where omega is the Box-Cox parameter and phi is the damping parameter; the error is modelled as an ARMA(p,q) process and {m1,...,mJ} list the seasonal periods used in the model.}
 
 \references{De Livera, A.M., Hyndman, R.J., & Snyder, R. D. (2011), Forecasting time series with complex seasonal patterns using exponential smoothing, \emph{Journal of the American Statistical Association}, \bold{106}(496), 1513-1527.
 }
