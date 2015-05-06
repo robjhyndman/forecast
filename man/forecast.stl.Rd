@@ -37,7 +37,7 @@ ignored. Otherwise \code{method} is used to specify the forecasting method to be
 \item{fan}{If \code{TRUE}, level is set to seq(50,99,by=1). This is suitable for fan plots.}
 \item{lambda}{Box-Cox transformation parameter. Ignored if \code{NULL}. Otherwise, data transformed before decomposition and back-transformed after forecasts are computed.}
 \item{s.window}{Either the character string ``periodic'' or the span (in lags) of the loess window for seasonal extraction.}
-\item{t.window}{A number to control the smoothness of the trend. See \code{\link[stats]{stl}}} for details.}
+\item{t.window}{A number to control the smoothness of the trend. See \code{\link[stats]{stl}} for details.}
 \item{robust}{If \code{TRUE}, robust fitting will used in the loess procedure within \code{\link[stats]{stl}}.}
 \item{allow.multiplicative.trend}{If TRUE, then ETS models with multiplicative trends are allowed. Otherwise, only additive or no trend ETS models are permitted.}
 \item{...}{Other arguments passed to \code{forecast.stl}, \code{modelfunction} or \code{forecastfunction}.}
