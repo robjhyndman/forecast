@@ -1,3 +1,6 @@
+Version 6.1 (11 May 2015)
+  * Made auto.arima more robust
+
 Version 6.0 (9 May 2015)
   * Modified dm.test to give error when variance is zero
   * Corrected help file for splinef().
