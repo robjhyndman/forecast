@@ -78,13 +78,38 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   if(m == 1)
     D <- max.P <- max.Q <- 0
   else if(is.na(D))
+  {
     D <- nsdiffs(xx, m=m, test=seasonal.test, max.D=max.D)
+    # Make sure xreg is not null after differencing
+    if(D > 0 & !is.null(xreg))
+    {
+      diffxreg <- diff(xreg, differences=D, lag=m)
+      if(any(apply(diffxreg, 2, is.constant)))
+        D <- D-1
+    }
+  }
   if(D > 0)
     dx <- diff(xx,differences=D,lag=m)
   else
     dx <- xx
+  if(!is.null(xreg))
+  {
+    if(D > 0)
+      diffxreg <- diff(xreg, differences=D, lag=m)
+    else
+      diffxreg <- xreg
+  }
   if(is.na(d))
+  {
     d <- ndiffs(dx,test=test, max.d=max.d)
+    # Make sure xreg is not null after differencing
+    if(d > 0 & !is.null(xreg))
+    {
+      diffxreg <- diff(diffxreg, differences=d, lag=1)
+      if(any(apply(diffxreg, 2, is.constant)))
+        d <- d-1
+    }
+  }
   if(d>0)
     dx <- diff(dx,differences=d,lag=1)
 
