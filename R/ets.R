@@ -689,7 +689,8 @@ initstate <- function(y,trendtype,seasontype)
       stop("You've got to be joking (not enough data).")
     else if(n < 3*m) # Fit simple Fourier model.
     {
-      fit <- tslm(y ~ trend + fourier(y,1))
+      fouriery <- fourier(y,1)
+      fit <- tslm(y ~ trend + fouriery)
       if(seasontype=="A")
         y.d <- list(seasonal=y -fit$coef[1] - fit$coef[2]*(1:n))
       else # seasontype=="M". Biased method, but we only need a starting point
