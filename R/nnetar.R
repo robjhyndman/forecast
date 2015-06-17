@@ -103,7 +103,7 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), la
   xx <- object$x
   if(!is.null(lambda))
     xx <- BoxCox(xx,lambda)
-  flag <- tail(xx/object$scale, n=max(object$lags))
+  flag <- rev(tail(xx/object$scale, n=max(object$lags)))
   for(i in 1:h)
   {
     fcast[i] <- mean(unlist(lapply(object$model, predict, newdata=flag)))

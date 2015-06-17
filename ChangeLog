@@ -1,5 +1,6 @@
 Version 6.2
   * Fixed bug in ets when very short seasonal series were passed in a data frame.
+  * Fixed bug in nnetar where the initial predictor vector was reversed.
 
 Version 6.1 (11 May 2015)
   * Made auto.arima more robust
