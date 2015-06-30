@@ -11,7 +11,7 @@ LinkingTo: Rcpp (>= 0.11.0), RcppArmadillo (>= 0.2.35)
 LazyData: yes
 ByteCompile: TRUE
 Author: Rob J Hyndman <Rob.Hyndman@monash.edu> with contributions from
-	George Athanasopoulos, Slava Razbash, Drew Schmidt, Zhenyu Zhou, Yousaf Khan, 
+	George Athanasopoulos, Slava Razbash, Drew Schmidt, Zhenyu Zhou, Yousaf Khan,
   Christoph Bergmeir, Earo Wang
 Maintainer: Rob J Hyndman <Rob.Hyndman@monash.edu>
 BugReports: https://github.com/robjhyndman/forecast/issues
