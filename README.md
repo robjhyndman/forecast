@@ -1,4 +1,6 @@
 #forecast
+[![Travis-CI Build Status](https://travis-ci.org/zachmayer/forecast.svg?branch=master)](https://travis-ci.org/zachmayer/forecast)
+[![Coverage Status](https://img.shields.io/coveralls/zachmayer/forecast.svg)](https://coveralls.io/r/zachmayer/forecast?branch=master)
 
 The R package *forecast* provides methods and tools for displaying and analysing univariate time series forecasts including exponential smoothing via state space models and automatic ARIMA modelling.
 
