@@ -69,9 +69,8 @@ nnetar <- function(x, p, P=1, size, repeats=20, lambda=NULL)
   out$series <- deparse(substitute(x))
   out$method <- paste("NNAR(",p,sep="")
   if(P>0)
-    out$method <- paste(out$method,",",P,")",sep="")
-  else
-    out$method <- paste(out$method,")",sep="")
+    out$method <- paste(out$method,",",P,sep="")
+  out$method <- paste(out$method,",",size,")",sep="")
   out$call <- match.call()
   return(structure(out,class=c("nnetar")))
 }

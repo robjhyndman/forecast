@@ -5,7 +5,7 @@ warnings_are_errors: true
 sudo: required
 
 r_github_packages:
-  - jimhester/covr
+  - robjhyndman/forecast
 
 env:
  global:
@@ -17,4 +17,4 @@ notifications:
     on_failure: change
 
 after_success:
-  - Rscript -e 'library(covr);coveralls()'
+  - Rscript -e 'library(forecast);coveralls()'
