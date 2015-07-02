@@ -64,7 +64,7 @@ testaccuracy <- function(f,x,test,d,D)
     tspdx <- tsp(dx)
     if (!is.null(tspdx)) {
       if (D > 0) { # seasonal differencing
-        nsd <- diff(dx, lag = tspdx[3L], differences = D)
+        nsd <- diff(dx, lag = round(tspdx[3L]), differences = D)
       } else { # non seasonal differencing
         nsd <- dx
       }
@@ -141,7 +141,7 @@ trainingaccuracy <- function(f,test,d, D)
   {
     if (!is.null(tspdx)) {
       if (D > 0) { # seasonal differencing
-        nsd <- diff(dx, lag = tspdx[3L], differences = D)
+        nsd <- diff(dx, lag = round(tspdx[3L]), differences = D)
       } else { # non seasonal differencing
         nsd <- dx
       }
