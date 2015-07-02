@@ -48,6 +48,9 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     #warning("I can't handle data with frequency less than 1. Seasonality will be ignored.")
     m <- 1
   }
+  else
+    m <- round(m) # Avoid non-integer seasonal periods
+    
 	max.p<-ifelse(max.p <= floor(length(x)/3), max.p, floor(length(x)/3))
 	max.q<-ifelse(max.q <= floor(length(x)/3), max.q, floor(length(x)/3))
 	max.P<-ifelse(max.P <= floor((length(x)/3)/m), max.P, floor((length(x)/3)/m))
@@ -626,7 +629,7 @@ nsdiffs <- function(x, m=frequency(x), test=c("ocsb", "ch"), max.D=1)
 
 CHtest <- function(x,m)
 {
-
+    m <- round(m) # Avoid non-integer seasonal period
     if(length(x) < 2*m + 5)
       return(0)
     chstat <- SD.test(x, m)
@@ -656,6 +659,7 @@ calcOCSBCritVal <- function(seasonal.period)
 
 OCSBtest <- function(time.series, period)
 {
+    period <- round(period) # Avoid non-integer seasonal period
     if(length(time.series) < (2*period+5))
     {
       #warning("Time series too short for seasonal differencing")
