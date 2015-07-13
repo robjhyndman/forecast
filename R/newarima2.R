@@ -167,9 +167,16 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   else
     offset <- 0
 
+  allowdrift <- allowdrift & (d+D)==1
+  allowmean <- allowmean & (d+D)==0
+
+  constant <- allowdrift | allowmean
+
   if(!stepwise)
   {
-    bestfit <- search.arima(x,d,D,max.p,max.q,max.P,max.Q,max.order,stationary,ic,trace,approximation,xreg=xreg,offset=offset,allowdrift=allowdrift,parallel=parallel, num.cores=num.cores)
+    bestfit <- search.arima(x,d,D,max.p,max.q,max.P,max.Q,max.order,stationary,
+      ic,trace,approximation,xreg=xreg,offset=offset,allowdrift=allowdrift,allowmean=allowmean,
+      parallel=parallel, num.cores=num.cores)
     bestfit$call <- match.call()
     bestfit$call$x <- data.frame(x=x)
     bestfit$lamba <- lambda
@@ -189,11 +196,6 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   q <- start.q <- min(start.q,max.q)
   P <- start.P <- min(start.P,max.P)
   Q <- start.Q <- min(start.Q,max.Q)
-
-  allowdrift <- allowdrift & (d+D)==1
-  allowmean <- allowmean & (d+D)==0
-
-  constant <- allowdrift | allowmean
 
   results <- matrix(NA,nrow=100,ncol=8)
 
