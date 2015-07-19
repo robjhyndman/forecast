@@ -66,5 +66,5 @@ checkAdmissibility<-function(opt.env, box.cox=NULL, small.phi=NULL, ar.coefs=NUL
 	D.eigen.values<-eigen(opt.env$D, symmetric=FALSE, only.values=TRUE)$values
 
 	#return(all(abs(D.eigen.values) < 1+1e-10))
-	return(all(abs(D.eigen.values) < 1+1e-5))
+	return(all(abs(D.eigen.values) < 1+1e-2))
 }
