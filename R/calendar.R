@@ -1,36 +1,47 @@
-bizdays <- function(x, FinCenter) {
+bizdays <- function(x, FinCenter = c("New York", "London", "NERC", "Tokyo",
+                                     "Zurich")) {
   # Return the number of trading days corresponding to the input ts
   #
   # Args:
   #   x: a ts object
-  #   FinCenter: inherits "FinCenter" from "timeDate" package
+  #   FinCenter: inherits holiday calendar from "timeDate" package
   #
   # Returns:
   #   A matrix contains the number of trading days
   if (is.null(tsp(x))) {
     stop("We cannot handle a time series without time attributes.")
   }
-  if (missing(FinCenter)) {
-    FinCenter <- "GMT"
-  }
   # Convert tsp to date
   freq <- frequency(x)
+  years <- start(x)[1L]:end(x)[1L]
+  # Grab the holidays from years and financial center
+  FinCenter <- match.arg(FinCenter)
+  if (FinCenter == "New York") {
+    holidays <- timeDate::holidayNYSE(years)
+  } else if (FinCenter == "London") {
+    holidays <- timeDate::holidayLONDON(years)
+  } else if (FinCenter == "NERC") {
+    holidays <- timeDate::holidayNERC(years)
+  } else if (FinCenter == "Tokyo") {
+    holidays <- timeDate::holidayTSX(years)
+  } else if (FinCenter == "Zurich") {
+    holidays <- timeDate::holidayZURICH(years)
+  }
   if (freq == 12L) {  # monthly data
     date <- zoo::as.Date(time(x))
     start <- date[1L]
     end <- seq(date[length(date)], length = 2L, by = "month")[2L] - 1L
-    days.len <- as.timeDate(seq(start, end, by = "days"), FinCenter = FinCenter)
+    days.len <- timeDate::timeSequence(from = start, to = end)
     # Grab business days
-    biz <- days.len[isBizday(days.len, 
-                             holidays = unique(format(days.len, "%Y")))]
-    bizdays <- format(biz, format = "%Y %b")
+    biz <- days.len[timeDate::isBizday(days.len, holidays = holidays)]
+    bizdays <- format(biz, format = "%Y-%m")
   } else if (freq == 4L) {  # Quarterly data
     date <- zoo::as.Date(time(x))
     start <- date[1L]
     end <- seq(date[length(date)], length = 2L, by = "3 month")[2L] - 1L
-    days.len <- as.timeDate(seq(start, end, by = "days"), FinCenter = FinCenter)
-    biz <- days.len[isBizday(days.len, 
-                             holidays = unique(format(days.len, "%Y")))]
+    days.len <- timeDate::timeSequence(from = start, to = end)
+    # Grab business days
+    biz <- days.len[timeDate::isBizday(days.len, holidays = holidays)]
     bizdays <- format(as.yearqtr(biz), format = "%Y Qtr%q")
     
   } # else if (freq == 52L) {  # Weekly data
