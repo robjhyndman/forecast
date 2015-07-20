@@ -1,16 +1,13 @@
 \name{bizdays}
 \alias{bizdays}
 \title{Number of trading days in each season}
-\usage{bizdays(x, FinCenter)}
+\usage{bizdays(x, FinCenter = c("New York", "London", "NERC", "Tokyo", "Zurich"))}
 
 \arguments{
 \item{x}{Monthly or quarterly time series}
-\item{FinCenter}{A character with the the location of the financial center named as "continent/city". 
-  This concept allows to handle data records collected in different time zones and mix them up to have
-  always the proper time stamps with respect to your personal financial center, or alternatively to the
-  GMT reference time. More details on \code{\link[timeDate]{finCenter}}.}
+\item{FinCenter}{Major financial center.}
 }
-\description{Returns number of trading days in each month or quarter of the observed time period.}
+\description{Returns number of trading days in each month or quarter of the observed time period in a major financial center.}
 
 \details{Useful for trading days length adjustments. More on how to define "business days",
 please refer to \code{\link[timeDate]{isBizday}}.} 
@@ -19,6 +16,7 @@ please refer to \code{\link[timeDate]{isBizday}}.}
 
 \author{Earo Wang}
 \examples{
-  bizdays(wineind, FinCenter = "Sydney")
+  x <-  ts(rnorm(30), start = c(2013, 2), frequency = 12)
+  bizdays(x, FinCenter = "New York")
 }
 \keyword{ts}
