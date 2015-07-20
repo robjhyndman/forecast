@@ -105,8 +105,10 @@ tsoutliers <- function(x, iterate=2, lambda = NULL)
 	  xx <- BoxCox(x, lambda = lambda)
 	} else
 	  xx <- x
-    mod <- loess(xx ~ tt, na.action=na.exclude, family="symmetric", degree=1, span=min(20/n, 0.75))
-    resid <- xx-fitted(mod)
+    #mod <- loess(xx ~ tt, na.action=na.exclude, family="symmetric", degree=1, span=min(20/n, 0.75))
+    #resid <- xx-fitted(mod)
+    mod <- lowess(tt, xx, f=min(20/n, 0.75))
+    resid <- xx - mod$y
   }
 
   # Limits of acceptable residuals
