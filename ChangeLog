@@ -5,6 +5,7 @@ Version 6.2
   * Fixed bug in accuracy() when non-integer seasonality used.
   * Made auto.arima() robust to non-integer seasonality.
   * Fixed bug in auto.arima where allowmean was ignored when stepwise=FALSE.
+	* Fixed bug in bizdays().
 
 Version 6.1 (11 May 2015)
   * Made auto.arima more robust
