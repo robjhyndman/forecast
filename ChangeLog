@@ -6,6 +6,7 @@ Version 6.2
   * Made auto.arima() robust to non-integer seasonality.
   * Fixed bug in auto.arima where allowmean was ignored when stepwise=FALSE.
 	* Fixed bug in bizdays().
+  * Improved robustness of forecast.ets() for explosive models with multiplicative trends.
 
 Version 6.1 (11 May 2015)
   * Made auto.arima more robust
