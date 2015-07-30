@@ -1,6 +1,9 @@
 #forecast
 [![Travis-CI Build Status](https://travis-ci.org/robjhyndman/forecast.svg?branch=master)](https://travis-ci.org/robjhyndman/forecast)
 [![Coverage Status](https://img.shields.io/coveralls/robjhyndman/forecast.svg)](https://coveralls.io/r/robjhyndman/forecast?branch=master)
+[![Downloads](http://cranlogs.r-pkg.org/badges/forecast)](http://cran.rstudio.com/package=forecast)
+[![Github Issues](https://img.shields.io/github/issues/badges/shields.svg?style=flat)](https://github.com/robjhyndman/forecast/issues)
+[![Pending Pull-Requests](http://githubbadges.herokuapp.com/zachmayer/caretEnsemble/pulls.svg?style=flat)](https://github.com/robjhyndman/forecast/pulls)
 
 The R package *forecast* provides methods and tools for displaying and analysing univariate time series forecasts including exponential smoothing via state space models and automatic ARIMA modelling.
 
