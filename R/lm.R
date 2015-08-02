@@ -10,7 +10,12 @@ tslm <- function(formula,data,lambda=NULL,...)
   else
   {
     dataname <- substitute(data)
-    x <- data[,1]
+    # check to see if data is univariate time series
+    if(is.null(dim(data)) & length(data)!=0){
+      x <- data
+    } else{
+      x <- data[,1]
+    }
   }
   if(!is.ts(x))
     stop("Not time series data")
