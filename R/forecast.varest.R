@@ -13,7 +13,7 @@ forecast.varest <- function(object, h=10, level=c(80,95), fan=FALSE, ...)
 	out$mean <- out$lower <- out$upper <- vector("list",object$K)
 	for(i in 1:(length(level)))
 	{
-		pr <- predict(object, n.ahead=h, ci=level[i]/100)
+		pr <- predict(object, n.ahead=h, ci=level[i]/100, ...)
 		for(j in 1:object$K)
 		{
 			if(i==1)
