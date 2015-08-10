@@ -410,7 +410,7 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
 
     env <- etsTargetFunctionInit(par=par, y=y, nstate=nstate, errortype=errortype, trendtype=trendtype,
         seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
-        opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt))
+        opt.crit=opt.crit, nmse=as.integer(nmse), bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt))
 
     fred <- .Call("etsNelderMead", par, env, -Inf,
         sqrt(.Machine$double.eps), 1.0, 0.5, 2.0, trace, maxit, package="forecast")
@@ -569,7 +569,7 @@ etsTargetFunctionInit <- function(par,y,nstate,errortype,trendtype,seasontype,da
   res <- .Call("etsTargetFunctionInit", y=y, nstate=nstate, errortype=switch(errortype,"A"=1,"M"=2),
       trendtype=switch(trendtype,"N"=0,"A"=1,"M"=2), seasontype=switch(seasontype,"N"=0,"A"=1,"M"=2),
       damped=damped, lowerb=lowerb, upperb=upperb,
-      opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,
+      opt.crit=opt.crit, nmse=as.integer(nmse), bounds=bounds, m=m,
       optAlpha, optBeta, optGamma, optPhi,
       givenAlpha, givenBeta, givenGamma, givenPhi,
       alpha, beta, gamma, phi, env, package="forecast")

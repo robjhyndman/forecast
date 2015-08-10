@@ -5,7 +5,7 @@
 extern "C" {
 
 void etscalc(double *, int *, double *, int *, int *, int *, int *,
-		double *, double *, double *, double *, double *, double *, double *);
+		double *, double *, double *, double *, double *, double *, double *, int *);
 
 void cpolyroot(double *opr, double *opi, int *degree,
 			double *zeror, double *zeroi, Rboolean *fail);
@@ -19,7 +19,7 @@ public:
 	void init(std::vector<double> & p_y, int p_nstate, int p_errortype,
 			int p_trendtype, int p_seasontype, bool p_damped,
 			std::vector<double> & p_lower, std::vector<double> & p_upper, std::string p_opt_crit,
-			double p_nmse, std::string p_bounds, int p_m,
+			int p_nmse, std::string p_bounds, int p_m,
 			bool p_optAlpha, bool p_optBeta, bool p_optGamma, bool p_optPhi,
 			bool p_givenAlpha, bool p_givenBeta, bool p_givenGamma, bool p_givenPhi,
 			double alpha, double beta, double gamma, double phi);
@@ -44,7 +44,7 @@ private:
 	std::vector<double> lower;
 	std::vector<double> upper;
 	std::string opt_crit;
-	double nmse;
+	int nmse;
 	std::string bounds;
 	int m;
 	int n;

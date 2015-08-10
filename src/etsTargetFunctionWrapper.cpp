@@ -41,7 +41,7 @@ RcppExport SEXP etsTargetFunctionInit(SEXP p_y, SEXP p_nstate, SEXP p_errortype,
 	std::vector<double> upper = Rcpp::as< std::vector<double> >(p_upper);
 
 	std::string opt_crit = Rcpp::as<std::string>(p_opt_crit);
-	double nmse = Rcpp::as<double>(p_nmse);
+	int nmse = Rcpp::as<int>(p_nmse);
 
 	std::string bounds = Rcpp::as< std::string >(p_bounds);
 	int m = Rcpp::as<int>(p_m);
