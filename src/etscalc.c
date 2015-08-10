@@ -10,7 +10,7 @@
 
 // Functions called by R
 void etscalc(double *, int *, double *, int *, int *, int *, int *,
-    double *, double *, double *, double *, double *, double *, double *);
+    double *, double *, double *, double *, double *, double *, double *, int*);
 void etssimulate(double *, int *, int *, int *, int *,
     double *, double *, double *, double *, int *, double *, double *);
 void etsforecast(double *, int *, int *, int *, double *, int *, double *);
