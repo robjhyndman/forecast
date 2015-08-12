@@ -21,4 +21,12 @@ if(require(fpp) & require(testthat))
 	  expect_that(ets(a10, model=fit, alpha=0.1611, phi=NA), not(throws_error()))
 	  expect_that(ets(a10, model=fit, alpha=0.1611, use.initial.values=TRUE), not(throws_error()))
 	})
+	
+	test_that("class methods for ets work", {
+	  fit <- ets(a10, model = "MAM", alpha = 0.1611)
+	  expect_that(summary(fit), not(throws_error()))
+	  expect_that(coef(fit), not(throws_error()))
+	  expect_that(logLik(fit), not(throws_error()))
+	  expect_that(plot(fit), not(throws_error()))
+	})
 }
