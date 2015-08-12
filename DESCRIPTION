@@ -12,7 +12,7 @@ LazyData: yes
 ByteCompile: TRUE
 Author: Rob J Hyndman <Rob.Hyndman@monash.edu> with contributions from
 	George Athanasopoulos, Slava Razbash, Drew Schmidt, Zhenyu Zhou, Yousaf Khan,
-  Christoph Bergmeir, Earo Wang
+  Christoph Bergmeir, Earo Wang, and Yuan Tang.
 Maintainer: Rob J Hyndman <Rob.Hyndman@monash.edu>
 BugReports: https://github.com/robjhyndman/forecast/issues
 License: GPL (>= 2)

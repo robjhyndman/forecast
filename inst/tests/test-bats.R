@@ -9,5 +9,12 @@ if(require(testthat))
   	fit$lambda
   	expect_that(fit$lambda == 0, is_false())
 	})
+	
+	test_that("functionalities and exceptions of bats", {
+	  expect_that(bats(abc, use.box.cox = TRUE, use.parallel = TRUE), not(throws_error()))
+	  expect_that(bats(1, use.box.cox = TRUE, use.parallel = FALSE), not(throws_error()))
+	  
+	})
+	
 }
 
