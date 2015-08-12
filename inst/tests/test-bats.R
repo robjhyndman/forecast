@@ -16,9 +16,11 @@ if(require(testthat))
 	  expect_that(print(fit), not(throws_error()))
 	  expect_that(residuals(fit), not(throws_error()))
 	  expect_that(plot(fit), not(throws_error()))
-	  expect_that(bats(abc, use.box.cox = TRUE, use.parallel = TRUE), not(throws_error()))
 	  expect_that(bats(1, use.box.cox = TRUE, use.parallel = FALSE), not(throws_error()))
 	  expect_that(bats(-1, use.box.cox = TRUE, use.parallel = FALSE), not(throws_error()))
+	  skip_on_cran()
+	  skip_on_travis()
+	  expect_that(bats(abc, use.box.cox = TRUE, use.parallel = TRUE), not(throws_error()))
 	})
 	
 }
