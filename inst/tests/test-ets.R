@@ -12,4 +12,13 @@ if(require(fpp) & require(testthat))
 	  fit <- ets(a10, model = "MAM", alpha = 0.1611)
 	  expect_that(as.numeric(fit$par["alpha"]), equals(0.1611))
 	})
+	
+	test_that("refit ets model to new data", {
+	  fit <- ets(a10, model = "MAM", alpha = 0.1611)
+	  expect_that(ets(a10, model=fit, alpha=0.1611), not(throws_error()))
+	  expect_that(ets(a10, model=fit, alpha=0.1611, beta=NA), not(throws_error()))
+	  expect_that(ets(a10, model=fit, alpha=0.1611, gamma=NA), not(throws_error()))
+	  expect_that(ets(a10, model=fit, alpha=0.1611, phi=NA), not(throws_error()))
+	  expect_that(ets(a10, model=fit, alpha=0.1611, use.initial.values=TRUE), not(throws_error()))
+	})
 }
