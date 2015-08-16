@@ -10,7 +10,7 @@
 
 // Functions called by R
 void etscalc(double *, int *, double *, int *, int *, int *, int *,
-    double *, double *, double *, double *, double *, double *, double *);
+    double *, double *, double *, double *, double *, double *, double *, int*);
 void etssimulate(double *, int *, int *, int *, int *,
     double *, double *, double *, double *, int *, double *, double *);
 void etsforecast(double *, int *, int *, int *, double *, int *, double *);
@@ -23,15 +23,18 @@ void update(double *, double *, double *, double *, double *, double *, int, int
 // ******************************************************************
 
 void etscalc(double *y, int *n, double *x, int *m, int *error, int *trend, int *season,
-    double *alpha, double *beta, double *gamma, double *phi, double *e, double *lik, double *amse)
+    double *alpha, double *beta, double *gamma, double *phi, double *e, double *lik, double *amse, int *nmse)
 {
     int i, j, nstates;
-    double oldl, l, oldb, b, olds[24], s[24], f[10], lik2, tmp;
+    double oldl, l, oldb, b, olds[24], s[24], f[30], lik2, tmp;
 
     if((*m > 24) & (*season > NONE))
         return;
     else if(*m < 1)
         *m = 1;
+
+    if(*nmse > 30)
+        *nmse = 30;
 
     nstates = (*m)*(*season>NONE) + 1 + (*trend>NONE);
 
@@ -47,7 +50,7 @@ void etscalc(double *y, int *n, double *x, int *m, int *error, int *trend, int *
 
     *lik = 0.0;
     lik2 = 0.0;
-    for(j=0; j<10; j++)
+    for(j=0; j<(*nmse); j++)
         amse[j] = 0.0;
 
     for (i=0; i<(*n); i++)
@@ -63,7 +66,7 @@ void etscalc(double *y, int *n, double *x, int *m, int *error, int *trend, int *
         }
 
         // ONE STEP FORECAST
-        forecast(oldl, oldb, olds, *m, *trend, *season, *phi, f, 10);
+        forecast(oldl, oldb, olds, *m, *trend, *season, *phi, f, *nmse);
         if(fabs(f[0]-NA) < TOL)
         {
             *lik = NA;
@@ -74,7 +77,7 @@ void etscalc(double *y, int *n, double *x, int *m, int *error, int *trend, int *
             e[i] = y[i] - f[0];
         else
             e[i] = (y[i] - f[0])/f[0];
-        for(j=0; j<10; j++)
+        for(j=0; j<(*nmse); j++)
         {
             if(i+j<(*n))
             {

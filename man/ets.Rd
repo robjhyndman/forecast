@@ -36,7 +36,7 @@ It is also possible for the model to be of class \code{"ets"}, and equal to the 
 \item{opt.crit}{Optimization criterion. One of "mse" (Mean Square Error),
     "amse" (Average MSE over first \code{nmse} forecast horizons), "sigma"
     (Standard deviation of residuals), "mae" (Mean of absolute residuals), or "lik" (Log-likelihood, the default).}
-\item{nmse}{Number of steps for average multistep MSE (1<=\code{nmse}<=10).}
+\item{nmse}{Number of steps for average multistep MSE (1<=\code{nmse}<=30).}
 \item{bounds}{Type of parameter space to impose: \code{"usual" }
 indicates all parameters must lie between specified lower and
 upper bounds; \code{"admissible"} indicates parameters must lie in the

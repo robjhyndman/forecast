@@ -11,7 +11,7 @@
 void EtsTargetFunction::init(std::vector<double> & p_y, int p_nstate, int p_errortype,
 		int p_trendtype, int p_seasontype, bool p_damped,
 		std::vector<double> & p_lower, std::vector<double> & p_upper, std::string p_opt_crit,
-		double p_nmse, std::string p_bounds, int p_m,
+		int p_nmse, std::string p_bounds, int p_m,
 		bool p_optAlpha, bool p_optBeta, bool p_optGamma, bool p_optPhi,
 		bool p_givenAlpha, bool p_givenBeta, bool p_givenGamma, bool p_givenPhi,
 		double alpha, double beta, double gamma, double phi) {
@@ -65,7 +65,7 @@ void EtsTargetFunction::init(std::vector<double> & p_y, int p_nstate, int p_erro
 
 	//	for(int i=0; i < 10; i++) this->amse.push_back(0);
 	//	for(int i=0; i < n; i++) this->e.push_back(0);
-	this->amse.resize(10, 0);
+	this->amse.resize(30, 0);
 	this->e.resize(n, 0);
 
 }
@@ -163,7 +163,7 @@ void EtsTargetFunction::eval(const double* p_par, int p_par_length) {
 	for(int i=0; i <= p*this->y.size(); i++) state.push_back(0);
 
 	etscalc(&this->y[0], &this->n, &this->state[0], &this->m, &this->errortype, &this->trendtype, &this->seasontype,
-			&this->alpha, &this->beta, &this->gamma, &this->phi, &this->e[0], &this->lik, &this->amse[0]);
+			&this->alpha, &this->beta, &this->gamma, &this->phi, &this->e[0], &this->lik, &this->amse[0], &this->nmse);
 
 
 	// Avoid perfect fits
@@ -181,8 +181,8 @@ void EtsTargetFunction::eval(const double* p_par, int p_par_length) {
 
 		//return(mean(e$amse[1:nmse]))
 		double mean=0;
-		for(int i=0;i<nmse;i++) {
-			mean+=amse[i]/nmse;
+		for(int i=0;i < this->nmse;i++) {
+			mean+=amse[i]/this->nmse;
 		}
 		this->objval=mean;
 

@@ -36,7 +36,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
     additive.only=TRUE
   }
 
-  if(nmse < 1 | nmse > 10)
+  if(nmse < 1 | nmse > 30)
     stop("nmse out of range")
   m <- frequency(y)
 
@@ -65,7 +65,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
       seasontype <- substr(modelcomponents,3,3)
 
       # Recompute errors from pegelsresid.C
-      e <- pegelsresid.C(y, m, model$initstate, errortype, trendtype, seasontype, damped, alpha, beta, gamma, phi)
+      e <- pegelsresid.C(y, m, model$initstate, errortype, trendtype, seasontype, damped, alpha, beta, gamma, phi, nmse)
 
       # Compute error measures
       np <- length(model$par)
@@ -74,7 +74,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
       model$bic <- e$lik + log(ny)*np
       model$aicc <- e$lik + 2*ny*np/(ny-np-1)
       model$mse <- e$amse[1]
-      model$amse <- mean(e$amse[1:nmse])
+      model$amse <- mean(e$amse)
 
       # Compute states, fitted values and residuals
       tsp.y <- tsp(y)
@@ -410,7 +410,7 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
 
     env <- etsTargetFunctionInit(par=par, y=y, nstate=nstate, errortype=errortype, trendtype=trendtype,
         seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
-        opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt))
+        opt.crit=opt.crit, nmse=as.integer(nmse), bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt))
 
     fred <- .Call("etsNelderMead", par, env, -Inf,
         sqrt(.Machine$double.eps), 1.0, 0.5, 2.0, trace, maxit, package="forecast")
@@ -451,7 +451,7 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
     gamma <- fit.par["gamma"]
   if(!is.na(fit.par["phi"]))
     phi <- fit.par["phi"]
-  e <- pegelsresid.C(y,m,init.state,errortype,trendtype,seasontype,damped,alpha,beta,gamma,phi)
+  e <- pegelsresid.C(y,m,init.state,errortype,trendtype,seasontype,damped,alpha,beta,gamma,phi,nmse)
 
   n <- length(y)
   aic <- e$lik + 2*np
@@ -459,7 +459,7 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
   aicc <- e$lik + 2*n*np/(n-np-1)
 
   mse <- e$amse[1]
-  amse <- mean(e$amse[1:nmse])
+  amse <- mean(e$amse)
 
   states=ts(e$states,frequency=tsp.y[3],start=tsp.y[1]-1/tsp.y[3])
   colnames(states)[1] <- "l"
@@ -569,7 +569,7 @@ etsTargetFunctionInit <- function(par,y,nstate,errortype,trendtype,seasontype,da
   res <- .Call("etsTargetFunctionInit", y=y, nstate=nstate, errortype=switch(errortype,"A"=1,"M"=2),
       trendtype=switch(trendtype,"N"=0,"A"=1,"M"=2), seasontype=switch(seasontype,"N"=0,"A"=1,"M"=2),
       damped=damped, lowerb=lowerb, upperb=upperb,
-      opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,
+      opt.crit=opt.crit, nmse=as.integer(nmse), bounds=bounds, m=m,
       optAlpha, optBeta, optGamma, optPhi,
       givenAlpha, givenBeta, givenGamma, givenPhi,
       alpha, beta, gamma, phi, env, package="forecast")
@@ -823,7 +823,7 @@ lik <- function(par,y,nstate,errortype,trendtype,seasontype,damped,par.noopt,low
       return(Inf)
   }
 
-  e <- pegelsresid.C(y,m,init.state,errortype,trendtype,seasontype,damped,alpha,beta,gamma,phi)
+  e <- pegelsresid.C(y,m,init.state,errortype,trendtype,seasontype,damped,alpha,beta,gamma,phi,nmse)
 
   if(is.na(e$lik))
     return(Inf)
@@ -838,7 +838,7 @@ lik <- function(par,y,nstate,errortype,trendtype,seasontype,damped,par.noopt,low
   else if(opt.crit=="mse")
     return(e$amse[1])
   else if(opt.crit=="amse")
-    return(mean(e$amse[1:nmse]))
+    return(mean(e$amse))
   else if(opt.crit=="sigma")
     return(mean(e$e^2))
   else if(opt.crit=="mae")
@@ -907,7 +907,7 @@ print.ets <- function(x,...)
 }
 
 
-pegelsresid.C <- function(y,m,init.state,errortype,trendtype,seasontype,damped,alpha,beta,gamma,phi)
+pegelsresid.C <- function(y,m,init.state,errortype,trendtype,seasontype,damped,alpha,beta,gamma,phi,nmse)
 {
   n <- length(y)
   p <- length(init.state)
@@ -921,6 +921,8 @@ pegelsresid.C <- function(y,m,init.state,errortype,trendtype,seasontype,damped,a
     beta <- 0;
   if(seasontype == "N")
     gamma <- 0;
+
+  amse <- numeric(nmse)
 
   Cout <- .C("etscalc",
       as.double(y),
@@ -936,7 +938,8 @@ pegelsresid.C <- function(y,m,init.state,errortype,trendtype,seasontype,damped,a
       as.double(phi),
       as.double(e),
       as.double(lik),
-      as.double(numeric(10)),
+      as.double(amse),
+      as.integer(nmse),
       PACKAGE="forecast")
   if(!is.na(Cout[[13]]))
   {

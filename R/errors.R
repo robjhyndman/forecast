@@ -162,7 +162,10 @@ trainingaccuracy <- function(f,test,d, D)
   # Additional time series measures
   if(!is.null(tspdx))
   {
-    r1 <- acf(res,plot=FALSE,lag.max=2,na.action=na.pass)$acf[2,1,1]
+    if(length(res) > 1)
+      r1 <- acf(res,plot=FALSE,lag.max=2,na.action=na.pass)$acf[2,1,1]
+    else
+      r1 <- NA
     nj <- length(out)
     out <- c(out,r1)
     names(out)[nj+1] <- "ACF1"

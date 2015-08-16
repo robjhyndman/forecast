@@ -100,8 +100,8 @@ pegelsfcast.C <- function(h,obj,npaths,level,bootstrap)
   if(abs(y.f[1]+99999) < 1e-7)
     stop("Problem with multiplicative damped trend")
 
-  lower <- apply(y.paths,2,quantile,0.5 - level/200,type=8)
-  upper <- apply(y.paths,2,quantile,0.5 + level/200,type=8)
+  lower <- apply(y.paths,2,quantile,0.5 - level/200, type=8, na.rm=TRUE)
+  upper <- apply(y.paths,2,quantile,0.5 + level/200, type=8, na.rm=TRUE)
   if(length(level)>1)
   {
     lower <- t(lower)
