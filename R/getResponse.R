@@ -52,3 +52,15 @@ getResponse.ar <- function(object, ...) {
   getResponse.Arima(object)
 }
 
+getResponse.tbats <- function(object,..){
+  if(is.element("y", names(object))){
+    y <- object$y
+  } else {
+    return(NULL)
+  }
+  return(as.ts(y))
+}
+
+getResponse.bats <- function(object,...){
+  return(getResponse.tbats(object,...))
+}
