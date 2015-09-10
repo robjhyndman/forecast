@@ -6,49 +6,45 @@
 # Adds seasonality based on a periodic stl decomposition with seasonal series
 # Argument lambda allows for Box-cox transformation
 
-na.interp <- function(x, lambda = NULL)
+na.interp <- function(x, lambda=NULL)
 {
-  missng <- is.na(x) 
+  missng <- is.na(x)
   # Do nothing if no missing values
-  if(sum(missng)==0)
+  if(sum(missng)==0L)
     return(x)
 
+  # Convert to ts
   if(is.null(tsp(x)))
     x <- ts(x)
+  if(!is.null(dim(x)))
+    stop("The time series is not univariate.")
+
+  #Transform if requested
+  if(!is.null(lambda))
+    x <- BoxCox(x, lambda=lambda)
+
   freq <- frequency(x)
+  tspx <- tsp(x)
   n <- length(x)
   tt <- 1:n
-
   idx <- tt[!missng]
+
   if(freq <= 1 | n <= 2*freq) # Non-seasonal -- use linear interpolation
   {
-  	if(!is.null(lambda)) {
-  	  x[idx] <- BoxCox(x[idx], lambda = lambda)
-  	  xx <- as.ts(approx(idx,x[idx],1:n, rule=2)$y)
-  	  xx <- InvBoxCox(xx, lambda = lambda)  # back-transformed
-  	} 
-    else
-  	  xx <- as.ts(approx(idx,x[idx],1:n, rule=2)$y)
-    tsp(xx) <- tsp(x)
-    return(xx)
+    x <- ts(approx(idx, x[idx], tt, rule=2)$y)
   }
   # Otherwise a seasonal series
   # Estimate seasonal component robustly
   # Then add to linear interpolation of seasonally adjusted series
   else
   {
-    # Fit Fourier series for seasonality and a cubic polynomial for the trend, 
+    # Fit Fourier series for seasonality and a cubic polynomial for the trend,
     #just to get something reasonable to start with
-  	if(!is.null(lambda)) {
-  	  x <- BoxCox(x, lambda = lambda)
-  	}
     K <- min(trunc(freq/2),3)
     X <- cbind(fourier(x,K),poly(tt,degree=3))
     fit <- lm(x ~ X, na.action=na.exclude)
     pred <- predict(fit, newdata =data.frame(X))
     x[missng] <- pred[missng]
-    if(!is.null(dim(x)))
-      stop("The time series is not univariate.")
     # Now re-do it with stl to get better results
     fit <- stl(x,s.window=11,robust=TRUE)
     # Interpolate seasonally adjusted values
@@ -56,12 +52,15 @@ na.interp <- function(x, lambda = NULL)
     sa <- approx(idx,sa[idx],1:n, rule=2)$y
     # Replace original missing values
     x[missng] <- sa[missng] + fit$time.series[missng,"seasonal"]
-  	if(!is.null(lambda))
-  	{
-  	  x <- InvBoxCox(x, lambda = lambda)
-  	}
-    return(x)
   }
+
+  # Backtransform if required
+  if(!is.null(lambda))
+    x <- InvBoxCox(x, lambda=lambda)
+
+  # Ensure time series characteristics not lost
+  tsp(x) <- tspx
+  return(x)
 }
 
 # Function to identify outliers and replace them with better values
@@ -77,62 +76,65 @@ tsclean <- function(x, replace.missing=TRUE, lambda = NULL)
 }
 
 # Function to identify time series outlieres
-tsoutliers <- function(x, iterate=2, lambda = NULL)
+tsoutliers <- function(x, iterate=2, lambda=NULL)
 {
-  # Identify missing values
-  missng <- is.na(x)
   n <- length(x)
   freq <- frequency(x)
 
-  # Seasonal data
+  # Identify and fill missing values
+  missng <- is.na(x)
+  nmiss <- sum(missng)
+  if(nmiss > 0L)
+    xx <- na.interp(x, lambda=lambda)
+  else
+    xx <- x
+
+  #Transform if requested
+  if(!is.null(lambda))
+    xx <- BoxCox(xx, lambda = lambda)
+
+  # Seasonally adjust data if necessary
   if(freq > 1 & n > 2*freq)
   {
-	  xx <- na.interp(x, lambda = lambda)
-    if(!is.null(lambda))
-	  {
-	    xx <- BoxCox(xx, lambda = lambda)
-	  }
     fit <- stl(xx, s.window="periodic", robust=TRUE)
-    resid <- fit$time.series[,"remainder"]
-    # Make sure missing values are not interpeted as outliers
+    # Check if seasonality is sufficient to use these results
+    rem <- fit$time.series[,"remainder"]
+    detrend <- rem + fit$time.series[,"seasonal"]
+    strength <- 1 - var(rem) / var(detrend)
+    if(strength > 0.05)
+      xx <- seasadj(fit)
+  }
+  # Use super-smoother on the (seasonally adjusted) data
+  tt <- 1:n
+  mod <- supsmu(tt,xx)
+  resid <- xx - mod$y
+
+  # Make sure missing values are not interpeted as outliers
+  if(nmiss > 0L)
     resid[missng] <- NA
-  }
-  else # Non-seasonal data
-  {
-    tt <- 1:n
-    if(!is.null(lambda))
-	{
-	  xx <- BoxCox(x, lambda = lambda)
-	} else
-	  xx <- x
-    #mod <- loess(xx ~ tt, na.action=na.exclude, family="symmetric", degree=1, span=min(20/n, 0.75))
-    #resid <- xx-fitted(mod)
-    mod <- lowess(tt, xx, f=min(20/n, 0.75))
-    resid <- xx - mod$y
-  }
 
   # Limits of acceptable residuals
   resid.q <- quantile(resid, prob=c(0.1,0.9), na.rm=TRUE)
   iqr <- diff(resid.q)
-  limits <- resid.q + 2*iqr*c(-1,1)
+  limits <- resid.q + 1.5*iqr*c(-1,1)
 
   # Find residuals outside limits
   outliers <- which((resid < limits[1]) | (resid > limits[2]))
 
   # Replace all missing values including outliers
   x[outliers] <- NA
-  x <- na.interp(x, lambda = lambda)
+  x <- na.interp(x, lambda=lambda)
 
   # Iterate only for non-seasonal data as stl includes iteration
   # Do no more than 2 iterations regardless of the value of iterate
   if(iterate > 1 & frequency(x)<=1)
   {
-    tmp <- tsoutliers(x, iterate=1, lambda = lambda)
+    tmp <- tsoutliers(x, iterate=1, lambda=lambda)
     if(length(tmp$index) > 0) # Found some more
     {
       outliers <- sort(c(outliers,tmp$index))
       x[outliers] <- NA
-      x <- na.interp(x, lambda = lambda)
+      x <- na.interp(x, lambda=lambda)
     }
   }
 
