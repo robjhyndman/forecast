@@ -17,4 +17,27 @@ if(require(fpp) & require(testthat))
               is_false())
     expect_that(accuracy(fcasts, test = 1:198), equals(accuracy(fcasts)))
 	})
+	test_that("tests for accuracy",{
+	# Test arima
+	fitarima <- auto.arima(austa)
+	accuracyarima <- accuracy(fitarima)[1, "RMSE"]
+	accuracyarimasim <- accuracy(auto.arima(simulate(fitarima, seed = 123)))[1, "RMSE"]
+	expect_more_than(accuracyarima, accuracyarimasim)
+	# Test ets
+	fitets <- ets(austa)
+	accuracyets <- accuracy(fitets)[1, "RMSE"]
+	accuracyetssim <- accuracy(ets(simulate(fitets, seed = 123)))[1, "RMSE"]
+	expect_more_than(accuracyets, accuracyetssim)
+	# Test lm
+	month <- factor(rep(1:12, 14))
+	fitlm <- lm(wineind[1:168] ~ month)
+	accuracylm <- accuracy(fitlm)[1, "RMSE"]
+	accuracylmsim <- accuracy(lm(simulate(fitlm, seed = 123)[, 1] ~ month))[1, "RMSE"]
+	expect_more_than(accuracylm, accuracylmsim)
+	# Test tbats
+	fittbats <- tbats(vn[, "Sydney"])
+	accuracytbats <- accuracy(fittbats)
+	accuracytbatssim <- accuracy(tbats(simulate(fittbats, see = 123)))[1, "RMSE"]
+	expect_more_than(accuracytbats, accuracytbatsssim)
+	})
 }
