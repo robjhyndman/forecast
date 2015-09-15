@@ -19,7 +19,7 @@ hw(x, h=2*frequency(x), seasonal="additive", damped=FALSE,
 \item{damped}{If TRUE, use a damped trend.}
 \item{seasonal}{Type of seasonality in \code{hw} model. "additive" or "multiplicative"}
 \item{level}{Confidence level for prediction intervals.}
-\item{fan}{If TRUE, level is set to seq(51,99,by=1). This is suitable for fan plots.}
+\item{fan}{If TRUE, level is set to seq(51,99,by=3). This is suitable for fan plots.}
 \item{initial}{Method used for selecting initial state values. If \code{optimal}, the initial values are optimized along with the smoothing parameters using \code{\link{ets}}. If \code{simple}, the initial values are set to values obtained using simple calculations on the first few observations. See Hyndman & Athanasopoulos (2014) for details.}
 \item{exponential}{If TRUE, an exponential trend is fitted. Otherwise, the trend is (locally) linear.}
 \item{alpha}{Value of smoothing parameter for the level. If \code{NULL}, it will be estimated.}
