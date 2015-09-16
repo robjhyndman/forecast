@@ -50,7 +50,7 @@ if(require(fpp) & require(testthat))
   
   test_that("tests for ma",{
   testseries <- ts(1:20, f = 4)
-  expect_true(frequency(testseries, order = 4) == frequency(testseries))
+  expect_true(frequency(ma(testseries, order = 4)) == frequency(testseries))
   maseries <- ma(testseries, order = 3)
   expect_true(all(is.na(maseries)[c(1, 20)]))
   expect_true(all(maseries[2:19] == 2:19))
