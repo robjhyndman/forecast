@@ -57,14 +57,6 @@ if(require(fpp) & require(testthat))
 	expect_true(accuracy(fit5)[1, "MAPE"] < accuracy(Arima(wineind, model = fit5))[1, "MAPE"])
 	})
 	
-
-	test_that("tests for forecast.ar", {
-	set.seed(55)
-	simseries <- arima.sim(model = list(ar = c(-.42, .832, .1, -.34)), n = 400)
-	arfit <- ar(simseries)
-	expect_true(all.equal(forecast.ar(arfit)$mean, forecast.ar(arfit, bootstrap = TRUE, npaths = 100, fan = TRUE)$mean))
-	})
-	
 	test_that("tests for search.arima", {
 	set.seed(444)
 	arimasim <- arima.sim(n = 300, model = list(ar = runif(8, -.1, 0.1), ma = runif(8, -0.1, 0.1), sd = 0.1))
