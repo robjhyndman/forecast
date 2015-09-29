@@ -332,6 +332,9 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
       lower[, i] <- pred$pred - qq * pred$se
       upper[, i] <- pred$pred + qq * pred$se
     }
+    if(!is.finite(max(upper))){
+    	warning("Upper prediction intervals are not finite.")
+    }
   }
   colnames(lower)=colnames(upper)=paste(level, "%", sep="")
   method <- arima.string(object)

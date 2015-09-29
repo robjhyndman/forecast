@@ -245,8 +245,10 @@ plot.forecast <- function(x, include, plot.conf=TRUE, shaded=TRUE, shadebars=(le
     xx <- x$x
   else
     xx=NULL
-  if(is.null(x$lower) | is.null(x$upper) | is.null(x$level))
+  if(is.null(x$lower) | is.null(x$upper) | is.null(x$level) | (!is.finite(max(x$upper)))){
     plot.conf=FALSE
+  }
+    
   if(!shaded)
     shadebars <- FALSE
   if(is.null(main))
