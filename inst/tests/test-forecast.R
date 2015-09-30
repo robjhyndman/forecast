@@ -6,7 +6,6 @@ if(require(fpp) & require(testthat))
   expect_true(frequency(a10) == findfrequency(as.numeric(a10)))
   expect_true(frequency(woolyrnq) == findfrequency(as.numeric(woolyrnq)))
   expect_true(frequency(gas) == findfrequency(as.numeric(gas)))
-  expect_true(findfrequency(as.numeric(wineind)) == findfrequency(ts(wineind, f = 4)))
   expect_true(frequency(wmurders) == findfrequency(ts(wmurders, f = 12)))
 })
 
