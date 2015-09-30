@@ -22,6 +22,10 @@ if(require(fpp) & require(testthat))
     
   })
   
+  test_that("test parallel = TRUE and stepwise = FALSE for auto.arima()", {
+    expect_output(auto.arima(austa, parallel = TRUE, stepwise = FALSE), regexp = "Call:")
+  })
+  
   test_that("tests for nsdiffs()", {
     expect_true(nsdiffs(wineind) == 1)
     expect_true(nsdiffs(cafe) == 1)
