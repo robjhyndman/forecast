@@ -23,6 +23,7 @@ if(require(fpp) & require(testthat))
   })
   
   test_that("test parallel = TRUE and stepwise = FALSE for auto.arima()", {
+    skip_on_travis()
     expect_output(auto.arima(austa, parallel = TRUE, stepwise = FALSE), regexp = "Call:")
   })
   
