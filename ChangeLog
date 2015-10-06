@@ -11,6 +11,7 @@ Version 6.2
   * Increased maximum nmse in ets() to 30.
   * Made tsoutliers() more robust to weak seasonality
   * Changed tsoutliers() to use supsmu on non-seasonal and seasonally adjusted data.
+  * Fixed bug in tbats() when seasonal period 1 is a small multiple of seasonal period 2.
 
 Version 6.1 (11 May 2015)
   * Made auto.arima more robust
