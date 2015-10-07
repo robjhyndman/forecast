@@ -39,6 +39,14 @@ if(require(fpp) & require(testthat))
     expect_true(all(hwfc == hwbcfc))
   })
   
+  test_that("test for forecast.StructTS()", {
+    structtsmod <- stats::StructTS(a10)
+    fc1 <- forecast(structtsmod)$mean
+    expect_true(all(fc1 == forecast(structtsmod, fan = TRUE)$mean))
+    expect_error(forecast(structtsmod, level = -10))
+    expect_error(forecast(structtsmod, level = 110))
+  })
+  
   test_that("test croston()", {
     set.seed(1234)
     expect_error(croston(rnorm(100)))
