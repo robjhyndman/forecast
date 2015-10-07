@@ -35,7 +35,8 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
 
   # Use AIC if npar <= 3
   # AICc won't work for tiny samples.
-  if(length(x) <= 3L)
+  serieslength <- length(x)
+  if(serieslength <= 3L)
     ic <- "aic"
 
   # Only consider non-seasonal models
@@ -51,10 +52,10 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   else
     m <- round(m) # Avoid non-integer seasonal periods
     
-	max.p<-ifelse(max.p <= floor(length(x)/3), max.p, floor(length(x)/3))
-	max.q<-ifelse(max.q <= floor(length(x)/3), max.q, floor(length(x)/3))
-	max.P<-ifelse(max.P <= floor((length(x)/3)/m), max.P, floor((length(x)/3)/m))
-	max.Q<-ifelse(max.Q <= floor((length(x)/3)/m), max.Q, floor((length(x)/3)/m))
+	max.p<-ifelse(max.p <= floor(serieslength/3), max.p, floor(serieslength/3))
+	max.q<-ifelse(max.q <= floor(serieslength/3), max.q, floor(serieslength/3))
+	max.P<-ifelse(max.P <= floor((serieslength/3)/m), max.P, floor((serieslength/3)/m))
+	max.Q<-ifelse(max.Q <= floor((serieslength/3)/m), max.Q, floor((serieslength/3)/m))
 
   orig.x <- x
   if(!is.null(lambda))
@@ -157,7 +158,7 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     else
       fit <- try(arima(x,order=c(1,d,0),seasonal=list(order=c(0,D,0),period=m,xreg=xreg)))
     if(!is.element("try-error",class(fit)))
-      offset <- -2*fit$loglik - length(x)*log(fit$sigma2)
+      offset <- -2*fit$loglik - serieslength*log(fit$sigma2)
     else
     {
       warning("Unable to calculate AIC offset")
@@ -748,8 +749,7 @@ checkarima <- function(object)
 is.constant <- function(x)
 {
   x <- as.numeric(x)
-  y <- rep(x[1],length(x))
-  isequal <- all.equal(c(x),y)
-  return(isequal==TRUE)
+  y <- rep(x[1], length(x))
+  return(identical(x, y))
 }
 

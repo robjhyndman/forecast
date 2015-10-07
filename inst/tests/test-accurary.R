@@ -34,10 +34,5 @@ if(require(fpp) & require(testthat))
 	accuracylm <- accuracy(fitlm)[1, "RMSE"]
 	accuracylmsim <- accuracy(lm(simulate(fitlm, seed = 123)[, 1] ~ month))[1, "RMSE"]
 	expect_more_than(accuracylm, accuracylmsim)
-	# Test tbats
-	fittbats <- tbats(vn[, "Sydney"])
-	accuracytbats <- accuracy(fittbats)
-	accuracytbatssim <- accuracy(tbats(simulate(fittbats, see = 123)))[1, "RMSE"]
-	expect_more_than(accuracytbats, accuracytbatsssim)
 	})
 }

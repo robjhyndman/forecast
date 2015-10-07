@@ -159,7 +159,10 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, se
 				repeat {
 					#old.k <- k.vector[i]
 					#k.vector[i] <- k.vector[i]-1
-					new.model <- fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, k.vector, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)
+					new.model <- try(fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, k.vector, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper),
+						silent=TRUE)
+					if(is.element("try-error",class(new.model)))
+						new.model <- list(AIC=Inf)
 					#print("6 or less")
 					#print(k.vector)
 					#print(i)
@@ -205,11 +208,20 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, se
 					level.model <- models.list[[3]]
 					down.model <- models.list[[2]]
 				} else {
-					up.model <- fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, step.up.k, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)
-					level.model <- fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, k.vector, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)
-					down.model <- fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, step.down.k, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)
+					up.model <- try(fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, step.up.k, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper),
+						silent=TRUE)
+  				if(is.element("try-error",class(up.model)))
+						up.model <- list(AIC=Inf)
+					level.model <- try(fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, k.vector, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper),
+						silent=TRUE)
+  				if(is.element("try-error",class(level.model)))
+						level.model <- list(AIC=Inf)
+					down.model <- try(fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, step.down.k, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper),
+						silent=TRUE)
+  				if(is.element("try-error",class(down.model)))
+						down.model <- list(AIC=Inf)
 				}
-				#Dcide the best model of the three and then follow that direction to find the optimal k
+				#Decide the best model of the three and then follow that direction to find the optimal k
 				aic.vector <- c(up.model$AIC, level.model$AIC, down.model$AIC)
 				##If shifting down
 				if(min(aic.vector) == down.model$AIC) {
@@ -217,10 +229,10 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, se
 					k.vector[i] <- 5
 					repeat{
 						k.vector[i] <- k.vector[i]-1
-						down.model <- fitSpecificTBATS(y=y, use.box.cox=model.params[1], use.beta=model.params[2], use.damping=model.params[3], seasonal.periods=seasonal.periods, k.vector=k.vector, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)
-						#print("stepping down")
-						#print(k.vector)
-						#print(i)
+						down.model <- try(fitSpecificTBATS(y=y, use.box.cox=model.params[1], use.beta=model.params[2], use.damping=model.params[3], seasonal.periods=seasonal.periods, k.vector=k.vector, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper),
+  						silent=TRUE)
+	  				if(is.element("try-error",class(down.model)))
+							down.model <- list(AIC=Inf)
 						if(down.model$AIC > best.model$AIC) {
 							k.vector[i] <- k.vector[i]+1
 							break
@@ -249,7 +261,10 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, se
 					k.vector[i] <- 7
 					repeat {
 						k.vector[i] <- k.vector[i]+1
-						up.model <- fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, k.vector, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)
+						up.model <- try(fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, k.vector, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper),
+  						silent=TRUE)
+    				if(is.element("try-error",class(up.model)))
+	  					up.model <- list(AIC=Inf)
 						#print("stepping up")
 						#print(k.vector)
 						#print(i)

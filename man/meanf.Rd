@@ -7,7 +7,7 @@
 \item{x}{a numeric vector or time series}
 \item{h}{Number of periods for forecasting}
 \item{level}{Confidence levels for prediction intervals.}
-\item{fan}{If TRUE, level is set to seq(50,99,by=1). This is suitable for fan plots.}
+\item{fan}{If TRUE, level is set to seq(51,99,by=3). This is suitable for fan plots.}
 \item{lambda}{Box-Cox transformation parameter. Ignored if NULL. Otherwise, forecasts back-transformed via an inverse Box-Cox transformation.}
 }
 \description{Returns forecasts and prediction intervals for an iid model applied to x.

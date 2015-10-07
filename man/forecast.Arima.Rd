@@ -17,7 +17,7 @@
 \item{h}{Number of periods for forecasting. If \code{xreg} is used, \code{h} is ignored and the number of forecast periods is 
 set to the number of rows of \code{xreg}.}
 \item{level}{Confidence level for prediction intervals.}
-\item{fan}{If \code{TRUE}, level is set to \code{seq(50,99,by=1)}. This is suitable for fan plots.}
+\item{fan}{If \code{TRUE}, level is set to \code{seq(51,99,by=3)}. This is suitable for fan plots.}
 \item{xreg}{Future values of an regression variables (for class \code{Arima} objects only).}
 \item{lambda}{Box-Cox transformation parameter. Ignored if NULL. Otherwise, forecasts back-transformed via an inverse Box-Cox transformation.}
 \item{bootstrap}{If \code{TRUE}, then prediction intervals computed using simulation with resampled errors.}

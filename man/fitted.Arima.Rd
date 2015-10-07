@@ -11,7 +11,7 @@
 
 \description{Returns one-step forecasts for the data used in fitting the ARIMA model.}
 
-\value{An time series of the one-step forecasts.}
+\value{A time series of the one-step forecasts.}
 
 \seealso{\code{\link{forecast.Arima}}.}
 

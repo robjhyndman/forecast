@@ -25,7 +25,7 @@ The function \code{\link{forecast.ts}} makes forecasts using \code{\link{ets}} m
 \item{object}{a time series or time series model for which forecasts are required}
 \item{h}{Number of periods for forecasting}
 \item{level}{Confidence level for prediction intervals.}
-\item{fan}{If TRUE, \code{level} is set to \code{seq(50,99,by=1)}. This is suitable for fan plots.}
+\item{fan}{If TRUE, \code{level} is set to \code{seq(51,99,by=3)}. This is suitable for fan plots.}
 \item{robust}{If TRUE, the function is robust to missing values and outliers in \code{object}. This argument is only valid when \code{object} is of class \code{ts}.}
 \item{lambda}{Box-Cox transformation parameter.}
 \item{find.frequency}{If TRUE, the function determines the appropriate period, if the data is of unknown period.}

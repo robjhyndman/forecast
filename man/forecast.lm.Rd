@@ -9,7 +9,7 @@
 \item{object}{Object of class "lm", usually the result of a call to \code{\link[stats]{lm}} or \code{\link{tslm}}.}
 \item{newdata}{An optional data frame in which to look for variables with which to predict. If omitted, it is assumed that the only variables are trend and season, and \code{h} forecasts are produced.}
 \item{level}{Confidence level for prediction intervals.}
-\item{fan}{If \code{TRUE}, level is set to seq(50,99,by=1). This is suitable for fan plots.}
+\item{fan}{If \code{TRUE}, level is set to seq(51,99,by=3). This is suitable for fan plots.}
 \item{h}{Number of periods for forecasting. Ignored if \code{newdata} present.}
 \item{lambda}{Box-Cox transformation parameter. Ignored if \code{NULL}. Otherwise, forecasts back-transformed via an inverse Box-Cox transformation.}
 \item{ts}{If \code{TRUE}, the forecasts will be treated as time series provided the original data is a time series; the \code{newdata} will be interpreted as related to the subsequent time periods. If \code{FALSE}, any time series attributes of the original data will be ignored.}
