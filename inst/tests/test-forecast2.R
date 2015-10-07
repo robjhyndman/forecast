@@ -1,6 +1,7 @@
 # A unit test for forecast2.R
 if(require(fpp) & require(testthat))
 {
+  context("Test functions in forecast2.R)
   test_that("test meanf()", {
     meanfc <- mean(wineind)
     expect_true(all(meanf(wineind)$mean == meanfc))
@@ -37,6 +38,14 @@ if(require(fpp) & require(testthat))
     hwfc <- forecast(hwmodbc, lambda = 0.2)$mean
     hwbcfc <- InvBoxCox(forecast(hwmodbc)$mean, lambda = 0.2)
     expect_true(all(hwfc == hwbcfc))
+  })
+  
+  test_that("test forecast.StructTS()", {
+    structtsmod <- stats::StructTS(a10)
+    fc1 <- forecast(structtsmod)$mean
+    expect_true(all(fc1 == forecast(structtsmod, fan = TRUE)$mean))
+    expect_error(forecast(structtsmod, level = -10))
+    expect_error(forecast(structtsmod, level = 110))
   })
   
   test_that("test croston()", {
