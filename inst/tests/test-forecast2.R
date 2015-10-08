@@ -1,6 +1,7 @@
 # A unit test for forecast2.R
 if(require(fpp) & require(testthat))
 {
+  context("Test forecast2.R")
   test_that("test meanf()", {
     meanfc <- mean(wineind)
     expect_true(all(meanf(wineind)$mean == meanfc))
@@ -57,6 +58,15 @@ if(require(fpp) & require(testthat))
     set.seed(1234)
     expect_error(croston(rnorm(100)))
     expect_true(all(croston(rep(0, 100))$mean == 0))
+  })
+  
+  test_that("test hw()", {
+    expect_output(summary(holt(a10)), regexp = "Forecast method: Holt's method")
+    expect_output(summary(holt(a10, damped = TRUE)), regexp = "Forecast method: Damped Holt's method")
+  })
+  
+  test_that("test holt()", {
+    expect_output(summary(hw(a10)), regexp = "Forecast method: Holt-Winters' additive method")
   })
   
   test_that("test naive() and snaive()", {
