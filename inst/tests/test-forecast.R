@@ -30,6 +30,7 @@ if(require(fpp) & require(testthat))
     nnetfc<- forecast(nnetmod)
     batsfc <- forecast(batsmod)
     tslmfc <- forecast(tslmmod)
+    skip_on_travis()
     # Plot the forecasts
     expect_that(plot(nnetfc), not(throws_error()))
     expect_that(plot(batsfc), not(throws_error()))
