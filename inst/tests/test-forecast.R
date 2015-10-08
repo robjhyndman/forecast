@@ -22,20 +22,20 @@ if(require(fpp) & require(testthat))
     expect_true(all(predict(austaforecast)$mean == forecast(austaforecast)$mean))
   })
   
-  test_that("tests plot.forecast()", {
-    # Fit several types of models for plotting
-    batsmod <- bats(cafe)
-    nnetmod <- nnetar(cafe)
-    tslmmod <- tslm(cafe ~ trend + season)
-    nnetfc<- forecast(nnetmod)
-    batsfc <- forecast(batsmod)
-    tslmfc <- forecast(tslmmod)
-    skip_on_travis()
-    # Plot the forecasts
-    expect_that(plot(nnetfc), not(throws_error()))
-    expect_that(plot(batsfc), not(throws_error()))
-    expect_that(plot(batsfc, shaded = FALSE), not(throws_error()))
-    expect_that(plot(tslmfc, plot.conf = FALSE), not(throws_error()))
-    expect_that(plot(forecast(tslmmod, h = 0)), not(throws_error()))
-  })
+# test_that("tests plot.forecast()", {
+#   # Fit several types of models for plotting
+#   batsmod <- bats(cafe)
+#   nnetmod <- nnetar(cafe)
+#   tslmmod <- tslm(cafe ~ trend + season)
+#   nnetfc<- forecast(nnetmod)
+#   batsfc <- forecast(batsmod)
+#   tslmfc <- forecast(tslmmod)
+#   skip_on_travis()
+#   # Plot the forecasts
+#   expect_that(plot(nnetfc), not(throws_error()))
+#   expect_that(plot(batsfc), not(throws_error()))
+#   expect_that(plot(batsfc, shaded = FALSE), not(throws_error()))
+#   expect_that(plot(tslmfc, plot.conf = FALSE), not(throws_error()))
+#   expect_that(plot(forecast(tslmmod, h = 0)), not(throws_error()))
+# })
 }
