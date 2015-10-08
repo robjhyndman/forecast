@@ -45,6 +45,12 @@ if(require(fpp) & require(testthat))
     expect_true(all(fc1 == forecast(structtsmod, fan = TRUE)$mean))
     expect_error(forecast(structtsmod, level = -10))
     expect_error(forecast(structtsmod, level = 110))
+    # Forecasts transformed manually with Box-Cox should match
+    # forecasts when lambda is passed as an argument
+    bcseries <- BoxCox(cafe, lambda = 0.19)
+    fc2 <- InvBoxCox(forecast(stats::StructTS(bcseries))$mean, lambda = 0.19)
+    fc3 <- forecast(stats::StructTS(bcseries), lambda = 0.19)$mean
+    expect_true(all(fc2 == fc3))
   })
   
   test_that("test croston()", {
