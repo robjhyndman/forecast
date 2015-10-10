@@ -8,7 +8,7 @@
 holt(x, h=10, damped=FALSE, level=c(80,95), fan=FALSE, 
     initial=c("optimal","simple"), exponential=FALSE,
     alpha=NULL, beta=NULL, ...)
-hw(x, h=2*frequency(x), seasonal="additive", damped=FALSE, 
+hw(x, h=2*frequency(x), seasonal=c("additive","multiplicative"), damped=FALSE, 
     level=c(80,95), fan=FALSE, initial=c("optimal","simple"), 
     exponential=FALSE, alpha=NULL, beta=NULL, gamma=NULL, ...)
 }
