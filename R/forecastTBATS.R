@@ -13,7 +13,14 @@ forecast.tbats <- function(object, h, level=c(80,95), fan=FALSE, ...)
 	}
 	if(fan) {
 		level <- seq(51,99,by=3)
+	} else {
+		if(min(level) > 0 & max(level) < 1)
+			level <- 100*level
+		else if(min(level) < 0 | max(level) > 99.99)
+			stop("Confidence limit out of range")
 	}
+	
+	
 	if(any(class(object$y) == "ts")) {
 		ts.frequency <- frequency(object$y)
 	} else {

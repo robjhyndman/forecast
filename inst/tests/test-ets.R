@@ -29,4 +29,10 @@ if(require(fpp) & require(testthat))
 	  expect_that(logLik(fit), not(throws_error()))
 	  expect_that(plot(fit), not(throws_error()))
 	})
+	
+	test_that("test ets() for errors", {
+	  expect_warning(ets(taylor))
+	  expect_that(ets(oil, lambda = 0.15), not(throws_error()))
+	  expect_error(ets(taylor, model = "ZZA"))
+	})
 }
