@@ -14,6 +14,11 @@ if(require(testthat) & require(fpp))
     tbatsfit2 <- tbats(austa, use.parallel = FALSE)
     tbatsfit3 <- tbats(as.numeric(woolyrnq), seasonal.periods = frequency(woolyrnq), use.parallel = FALSE)
     tbatsfit4 <- tbats(oil, use.box.cox = FALSE, use.parallel = FALSE)
+    # Test tbats.components
+    expect_that(tbats.components(tbatsfit1), not(throws_error()))
+    expect_that(tbats.components(tbatsfit2), not(throws_error()))
+    expect_that(tbats.components(tbatsfit3), not(throws_error()))
+    expect_that(tbats.components(tbatsfit4), not(throws_error()))
     # Test accuracy.tbats() function
     expect_output(accuracy(tbatsfit1), regexp = "ME")
     expect_output(accuracy(tbatsfit2), regexp = "ME")
@@ -35,9 +40,15 @@ if(require(testthat) & require(fpp))
     #expect_true(length(forecast(tbatsfit3)$mean) == 2 * frequency(woolyrnq))
     expect_true(length(forecast(tbatsfit4)$mean) == 10)
     # Test inappropriate levels
-    #expect_error(forecast(tbatsfit1, level = -10))
-    #expect_error(forecast(tbatsfit1, level = 110))
+    expect_error(forecast(tbatsfit1, level = -10))
+    expect_error(forecast(tbatsfit1, level = 110))
     # Test forecasts with fan = TRUE
     expect_true(all(forecast(tbatsfit1, fan = TRUE)$mean == forecast(tbatsfit1)$mean))
+  })
+  
+  test_that("Test tbats() with parallel", {
+    # Tests will not run on Travis in parallel
+    #expect_output(print(tbats(cafe, num.cores = 1)), regexp = "TBATS")
+    #expect_output(print(tbats(elecsales, num.cores = 1, use.trend = FALSE)), regexp = "BATS")
   })
 }
