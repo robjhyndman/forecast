@@ -262,8 +262,6 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x)>1,2*freque
       if(object$exponential)
         stop("Forecasting for exponential trend not yet implemented.")
 
-    pred <- predict(object,n.ahead=h,prediction.interval=TRUE,level=level[1]/100)
-    pmean <- pred[,1]
     if(fan)
         level <- seq(51,99,by=3)
     else
@@ -274,6 +272,9 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x)>1,2*freque
             stop("Confidence limit out of range")
     }
     nint <- length(level)
+
+    pred <- predict(object,n.ahead=h,prediction.interval=TRUE,level=level[1]/100)
+    pmean <- pred[,1]
     upper <- lower <- matrix(NA,ncol=nint,nrow=length(pred[,1]))
     se <- (pred[,2]-pred[,3])/(2*qnorm(0.5*(1+level[1]/100)))
     for(i in 1:nint)
