@@ -1,11 +1,3 @@
-importFrom("stats", "simulate")
-importFrom("stats", "tsdiag")
-importFrom("stats", "start")
-importFrom("stats", "end")
-importFrom("stats", "frequency")
-importFrom("stats", "window")
-importFrom("stats", "filter")
-importFrom("stats", "na.contiguous", "spec.ar")
 importFrom(colorspace,sequential_hcl)
 importFrom(fracdiff,fracdiff,diffseries,fracdiff.sim)
 importFrom(tseries,adf.test,pp.test,kpss.test)
@@ -13,6 +5,22 @@ importFrom(zoo,rollmean, as.Date, as.yearqtr)
 importFrom(timeDate, as.timeDate, isBizday, difftimeDate, Easter)
 importFrom(nnet,nnet)
 import(parallel,Rcpp)
+
+importFrom("grDevices", "gray", "heat.colors")
+importFrom("graphics", "abline", "axis", "grid", "layout", "lines",
+             "mtext", "par", "plot", "points", "polygon", "text",
+             "title")
+importFrom("stats", "Box.test", "acf", "approx", "ar", "arima",
+             "arima.sim", "as.ts", "complete.cases", "cycle",
+             "decompose", "diffinv", "end", "extractAIC", "fitted", "formula",
+             "frequency","window","filter","na.contiguous","spec.ar",
+             "hatvalues", "is.ts", "ksmooth", "lm", "lsfit",
+             "model.frame", "na.exclude", "na.omit", "na.pass", "optim",
+             "optimize", "pf", "plot.ts", "poly", "predict", "pt",
+             "qnorm", "qt", "quantile", "residuals", "rnorm", "runif",
+             "sd", "simulate", "smooth.spline", "start", "stl", "supsmu", 
+             "terms", "time", "ts", "tsp", "tsp<-", "tsdiag", "var")
+importFrom("utils", "packageVersion", "tail")
 
 export(arfima, Arima, arima.errors, arimaorder, auto.arima, BoxCox, croston,
 fitted.Arima, forecast, forecast.ar, forecast.Arima, forecast.ets, forecast.fracdiff,findfrequency,
