@@ -1,11 +1,12 @@
 ### Time series graphics and transformations
 
-tsdisplay <- function(x,plot.type=c("partial", "scatter", "spectrum"),points=TRUE,ci.type="white",
+tsdisplay <- function(x,plot.type=c("partial", "scatter", "spectrum"),points=TRUE,ci.type=c("white", "ma"),
                 lag.max, na.action=na.contiguous, main=NULL,xlab="",ylab="",
                 pch=1,cex=0.5, ...)
 
 {
   plot.type <- match.arg(plot.type)
+  ci.type <- match.arg(ci.type)
 
   def.par <- par(no.readonly = TRUE)# save default, for resetting...
   nf <- layout(matrix(c(1,1,2,3), 2, 2, byrow = TRUE))
