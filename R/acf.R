@@ -1,5 +1,5 @@
 # Replacement for the acf() function.
-Acf <- function(x, lag.max=NULL, type=c("correlation","partial"), plot=TRUE, main=NULL, 
+Acf <- function(x, lag.max=NULL, type=c("correlation","partial"), plot=TRUE, main=NULL,
   xlim=NULL, ylim=NULL, xlab="Lag", ylab=NULL, na.action=na.contiguous, ...)
 {
   type <- match.arg(type)
@@ -10,7 +10,7 @@ Acf <- function(x, lag.max=NULL, type=c("correlation","partial"), plot=TRUE, mai
   lag.max <- min(lag.max, length(x) - 1)
   if (lag.max < 0)
     stop("'lag.max' must be at least 0")
-  junk1 <- acf(c(x), lag.max=lag.max, type=type, plot=FALSE, na.action=na.action, ...)
+  junk1 <- stats::acf(c(x), lag.max=lag.max, type=type, plot=FALSE, na.action=na.action, ...)
   junk1$series <- deparse(substitute(x))
   if(!plot)
     return(junk1)
@@ -37,7 +37,7 @@ Acf <- function(x, lag.max=NULL, type=c("correlation","partial"), plot=TRUE, mai
     else
       axis(1, ...)
   }
-  else 
+  else
   {
     # Compute number of seasonal periods
     np <- nlags/freqx
@@ -75,17 +75,17 @@ kappa <- function(x)
 
 # McMurray-Politis estimate of ACF
 
-wacf <- function (x, lag.max = length(x)-1) 
+wacf <- function (x, lag.max = length(x)-1)
 {
   n <- length(x)
   lag.max <- min(lag.max, n-1)
-  if (lag.max < 0) 
+  if (lag.max < 0)
     stop("'lag.max' must be at least 0")
 
   # Standard estimator
-  acfest <- acf(c(x), lag.max = lag.max, plot = FALSE, na.action = na.contiguous)
+  acfest <- stats::acf(c(x), lag.max = lag.max, plot = FALSE, na.action = na.contiguous)
   acfest$series <- deparse(substitute(x))
-  
+
   # Taper estimates
   s <- 1:length(acfest$acf[,,1])
   upper <- 2*sqrt(log(n, 10)/n)
@@ -162,15 +162,15 @@ wpacf  <- function(x, lag.max=length(x)-1)
     }
   }
   out$acf[,,1] <- pacf
-  
+
   return(out)
 }
 
 
 # Function to produce new style plot of ACF or PACF with CI
 # x = time series
-taperedacf <- function(x, lag.max=NULL, type=c("correlation","partial"), 
-  plot=TRUE, calc.ci=TRUE, level=95, nsim=100, xlim=NULL, ylim=NULL, 
+taperedacf <- function(x, lag.max=NULL, type=c("correlation","partial"),
+  plot=TRUE, calc.ci=TRUE, level=95, nsim=100, xlim=NULL, ylim=NULL,
   xlab="Lag",  ylab=NULL, ...)
 {
   type <- match.arg(type)
@@ -234,7 +234,7 @@ plot.mpacf <- function(object, xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, ...)
     xlim <- c(1,object$lag)
   if(is.null(ylim))
     ylim <- range(object$z, object$upper, object$lower)
-  
+
   plot(lagx, object$z, type="n", xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, xaxt="n", ...)
 
   grid(col=gray(.80), nx=NA, ny=NULL, lty=1)
