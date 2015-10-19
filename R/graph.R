@@ -1,6 +1,6 @@
 ### Time series graphics and transformations
 
-tsdisplay <- function(x,plot.type=c("partial", "scatter", "spectrum"),points=TRUE,ci.type=c("white", "ma")
+tsdisplay <- function(x,plot.type=c("partial", "scatter", "spectrum"),points=TRUE,ci.type=c("white", "ma"),
                 lag.max, na.action=na.contiguous, main=NULL,xlab="",ylab="",
                 pch=1,cex=0.5, ...)
 
