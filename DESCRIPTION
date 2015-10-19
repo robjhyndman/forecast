@@ -10,9 +10,10 @@ Suggests: testthat, fpp
 LinkingTo: Rcpp (>= 0.11.0), RcppArmadillo (>= 0.2.35)
 LazyData: yes
 ByteCompile: TRUE
-Author: Rob J Hyndman <Rob.Hyndman@monash.edu> with contributions from
-	George Athanasopoulos, Slava Razbash, Drew Schmidt, Zhenyu Zhou, Yousaf Khan,
-  Christoph Bergmeir, Earo Wang, and Yuan Tang.
+Author: Rob J Hyndman <Rob.Hyndman@monash.edu>. 
+  Contributors include George Athanasopoulos, Christoph Bergmeir, 
+  Carlos Cinelli, Yousaf Khan, Zach Mayer, Slava Razbash, 
+  Drew Schmidt, David Shaub, Yuan Tang, Earo Wang, Zhenyu Zhou.
 Maintainer: Rob J Hyndman <Rob.Hyndman@monash.edu>
 BugReports: https://github.com/robjhyndman/forecast/issues
 License: GPL (>= 2)
