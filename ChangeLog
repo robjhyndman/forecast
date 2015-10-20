@@ -1,3 +1,6 @@
+Version 6.3
+  * Documentation improvements
+
 Version 6.2 (20 October 2015)
   * Many unit tests added using testthat.
   * Fixed bug in ets when very short seasonal series were passed in a data frame.
