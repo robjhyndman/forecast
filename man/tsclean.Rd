@@ -18,6 +18,7 @@
 \seealso{
   \code{\link[forecast]{na.interp}}, \code{\link[forecast]{tsoutliers}}, \code{\link[stats]{supsmu}}
 }
+
 \examples{
 data(gold)
 tsclean(gold)
