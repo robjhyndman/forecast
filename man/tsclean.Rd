@@ -3,7 +3,7 @@
 \title{Identify and replace outliers and missing values in a time series}
 \usage{tsclean(x, replace.missing = TRUE, lambda = NULL)}
 
-\arguments{  
+\arguments{
 \item{x}{time series}
 \item{replace.missing}{If TRUE, it not only replaces outliers, but also interpolates missing values}
 \item{lambda}{a numeric value giving the Box-Cox transformation parameter}
@@ -16,7 +16,7 @@
 \author{Rob J Hyndman}
 
 \seealso{
-  \code{\link[forecast]{na.interp}}, \code{\link[forecast]{tsoutliers}, \code{\link[stats]{supsmu}}}
+  \code{\link[forecast]{na.interp}}, \code{\link[forecast]{tsoutliers}}, \code{\link[stats]{supsmu}}
 }
 \examples{
 data(gold)
