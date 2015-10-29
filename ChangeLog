@@ -1,4 +1,8 @@
-Version 6.2
+Version 6.3
+  * Documentation improvements
+
+Version 6.2 (20 October 2015)
+  * Many unit tests added using testthat.
   * Fixed bug in ets when very short seasonal series were passed in a data frame.
   * Fixed bug in nnetar where the initial predictor vector was reversed.
   * Corrected model name returned in nnetar().

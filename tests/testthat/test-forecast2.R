@@ -34,9 +34,9 @@ if(require(fpp) & require(testthat))
     expect_error(forecast(hwmod, level = 110))
     # Forecasts transformed manually with Box-Cox should match
     # forecasts when lambda is passed as an argument
-    hwmodbc <- stats::HoltWinters(BoxCox(cafe, lambda = 0.2))
-    hwfc <- forecast(hwmodbc, lambda = 0.2)$mean
-    hwbcfc <- InvBoxCox(forecast(hwmodbc)$mean, lambda = 0.2)
+    hwmodbc <- stats::HoltWinters(BoxCox(cafe, lambda = 0.25))
+    hwfc <- forecast(hwmodbc, lambda = 0.25)$mean
+    hwbcfc <- InvBoxCox(forecast(hwmodbc)$mean, lambda = 0.25)
     expect_true(all(hwfc == hwbcfc))
   })
   
