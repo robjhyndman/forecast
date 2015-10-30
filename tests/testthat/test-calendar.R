@@ -5,7 +5,6 @@ if(require(testthat) & require(fpp))
 	test_that("Tests for bizdays()", {
 		expect_error(bizdays(1:20))
 		expect_that(bizdays(euretail, FinCenter = "New York"), not(throws_error()))
-		expect_that(bizdays(euretail, FinCenter = "Sydney"), not(throws_error()))
 		expect_that(bizdays(euretail, FinCenter = "London"), not(throws_error()))
 		expect_that(bizdays(h02, FinCenter = "NERC"), not(throws_error()))
 		expect_that(bizdays(h02, FinCenter = "Tokyo"), not(throws_error()))
