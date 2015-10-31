@@ -1,4 +1,4 @@
-tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, seasonal.periods=NULL, use.arma.errors=TRUE, use.parallel=TRUE, num.cores=2, bc.lower=0, bc.upper=1, ...) 
+tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, seasonal.periods=NULL, use.arma.errors=TRUE, use.parallel=TRUE, num.cores=2, bc.lower=0, bc.upper=1, model=NULL, ...) 
 {
   if (any(class(y) %in% c("data.frame", "list", "matrix", "mts"))) 
     stop("y should be a univariate time series")
@@ -8,6 +8,17 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, se
   if (ny != length(y)) 
     warning("Missing values encountered. Using longest contiguous portion of time series")
  
+  if(is.null(model) == FALSE) {
+    refitModel <- NULL
+    if (is.element("tbats", class(fit))) {
+      refitModel <- try(fitSpecificTBATS(y, model$parameters$control$use.box.cox, model$parameters$control$use.beta, model$parameters$control$use.damping, model$seasonal.periods, model$k.vector, starting.params=model$parameters, x.nought=model$seed.states, ar.coefs=model$ar.coefficients, ma.coefs=model$ma.coefficients, init.box.cox=model$lambda, bc.lower=model$bc.lower, bc.upper=model$bc.upper),
+                        silent=TRUE)
+    } else if(is.element("bats", class(fit))){
+      refitModel <- bats(y, model=model)
+    }
+    return (refitModel)
+  }
+  
   if(is.constant(y))
   {
     fit <- list(y=y,x=matrix(y,nrow=1,ncol=ny),errors=y*0,fitted.values=y,seed.states=matrix(y[1]),

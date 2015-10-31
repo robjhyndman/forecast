@@ -289,7 +289,7 @@ fitSpecificBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.peri
 	
 	
 	#Make a list object
-	model.for.output <- list(lambda=lambda, alpha=alpha, beta=beta.v, damping.parameter=small.phi, gamma.values=gamma.v, ar.coefficients=ar.coefs, ma.coefficients=ma.coefs, likelihood=likelihood, optim.return.code=optim.like$convergence, variance=variance, AIC=aic, parameters=list(vect=optim.like$par, control=param.vector$control), seed.states=x.nought, fitted.values=c(fitted.values), errors=c(e), x=fitted.values.and.errors$x, seasonal.periods=seasonal.periods, y=y)
+	model.for.output <- list(lambda=lambda, alpha=alpha, beta=beta.v, damping.parameter=small.phi, gamma.values=gamma.v, ar.coefficients=ar.coefs, ma.coefficients=ma.coefs, likelihood=likelihood, optim.return.code=optim.like$convergence, variance=variance, AIC=aic, parameters=list(vect=optim.like$par, control=param.vector$control), seed.states=x.nought, fitted.values=c(fitted.values), errors=c(e), x=fitted.values.and.errors$x, seasonal.periods=seasonal.periods, y=y, bc.lower=bc.lower, bc.upper=bc.upper)
 	class(model.for.output) <- "bats"
 	####
 	return(model.for.output)

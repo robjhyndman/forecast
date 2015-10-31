@@ -279,7 +279,7 @@ fitSpecificTBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.per
 	
 	
 	#Make a list object
-	model.for.output <- list(lambda=lambda, alpha=alpha, beta=beta.v, damping.parameter=small.phi, gamma.one.values=gamma.one.v, gamma.two.values=gamma.two.v, ar.coefficients=ar.coefs, ma.coefficients=ma.coefs, likelihood=likelihood, optim.return.code=optim.like$convergence, variance=variance, AIC=aic, parameters=list(vect=optim.like$par, control=param.vector$control), seed.states=x.nought, fitted.values=c(fitted.values), errors=c(e), x=fitted.values.and.errors$x, seasonal.periods=seasonal.periods, k.vector=k.vector, y=y, p=p, q=q)
+	model.for.output <- list(lambda=lambda, alpha=alpha, beta=beta.v, damping.parameter=small.phi, gamma.one.values=gamma.one.v, gamma.two.values=gamma.two.v, ar.coefficients=ar.coefs, ma.coefficients=ma.coefs, likelihood=likelihood, optim.return.code=optim.like$convergence, variance=variance, AIC=aic, parameters=list(vect=optim.like$par, control=param.vector$control), seed.states=x.nought, fitted.values=c(fitted.values), errors=c(e), x=fitted.values.and.errors$x, seasonal.periods=seasonal.periods, k.vector=k.vector, y=y, p=p, q=q, bc.lower=bc.lower, bc.upper=bc.upper)
 	class(model.for.output) <- c("tbats","bats")
 	return(model.for.output)
 }
