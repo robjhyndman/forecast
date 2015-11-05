@@ -1,5 +1,6 @@
 Version 6.3
   * Documentation improvements
+  * subset.ts() more robust, and captures some errors.
 
 Version 6.2 (20 October 2015)
   * Many unit tests added using testthat.
