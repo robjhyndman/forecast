@@ -2,6 +2,49 @@
 # 
 # Author: srazbash
 ###############################################################################
+
+fitPreviousBATSModel <- function (y, model) {
+  paramz <- unParameterise(model$parameters$vect, model$parameters$control)
+  lambda <- paramz$lambda
+  alpha <- paramz$alpha
+  beta.v <- paramz$beta
+  small.phi <- paramz$small.phi
+  gamma.v <- paramz$gamma.v
+  ar.coefs <- paramz$ar.coefs
+  ma.coefs <- paramz$ma.coefs
+  
+  p <- length(ar.coefs)
+  q <- length(ma.coefs)
+  
+  ##Calculate the variance:
+  #1. Re-set up the matrices
+  #w <- makeWMatrix(small.phi=small.phi, seasonal.periods=seasonal.periods, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
+  w <- .Call("makeBATSWMatrix", smallPhi_s = small.phi, sPeriods_s = model$seasonal.periods, arCoefs_s = ar.coefs, maCoefs_s = ma.coefs, PACKAGE = "forecast")
+  #g <- makeGMatrix(alpha=alpha, beta=beta.v, gamma.vector=gamma, seasonal.periods=seasonal.periods, p=p, q=q)
+  g <- .Call("makeBATSGMatrix", as.numeric(alpha), beta.v, gamma.v, model$seasonal.periods, as.integer(p), as.integer(q), PACKAGE="forecast")
+  F <- makeFMatrix(alpha=alpha, beta=beta.v, small.phi <- small.phi, seasonal.periods=model$seasonal.periods, gamma.bold.matrix=g$gamma.bold.matrix, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
+  #2. Calculate!
+  y.touse <- y
+  if (is.null(lambda) == FALSE) {
+    y.touse <- BoxCox(y, lambda=lambda)
+  }
+  fitted.values.and.errors <- calcModel(y.touse, model$seed.states, F, g$g, w)
+  e <- fitted.values.and.errors$e
+  fitted.values <- fitted.values.and.errors$y.hat
+  if (is.null(lambda) == FALSE) {
+    fitted.values <- InvBoxCox(fitted.values, lambda=lambda)
+  }
+  variance <- sum((e*e))/length(y)
+  
+  model.for.output <- model
+  model.for.output$variance = variance
+  model.for.output$fitted.values = c(fitted.values)
+  model.for.output$errors=c(e)
+  model.for.output$x=fitted.values.and.errors$x
+  model.for.output$y=y
+  return(model.for.output)
+}
+
 fitSpecificBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.periods=NULL, starting.params=NULL, x.nought=NULL, ar.coefs=NULL, ma.coefs=NULL, init.box.cox=NULL, bc.lower=0, bc.upper=1) {
 	if(!is.null(seasonal.periods)) {
 		seasonal.periods <- as.integer(sort(seasonal.periods))
@@ -289,7 +332,7 @@ fitSpecificBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.peri
 	
 	
 	#Make a list object
-	model.for.output <- list(lambda=lambda, alpha=alpha, beta=beta.v, damping.parameter=small.phi, gamma.values=gamma.v, ar.coefficients=ar.coefs, ma.coefficients=ma.coefs, likelihood=likelihood, optim.return.code=optim.like$convergence, variance=variance, AIC=aic, parameters=list(vect=optim.like$par, control=param.vector$control), seed.states=x.nought, fitted.values=c(fitted.values), errors=c(e), x=fitted.values.and.errors$x, seasonal.periods=seasonal.periods, y=y, bc.lower=bc.lower, bc.upper=bc.upper)
+	model.for.output <- list(lambda=lambda, alpha=alpha, beta=beta.v, damping.parameter=small.phi, gamma.values=gamma.v, ar.coefficients=ar.coefs, ma.coefficients=ma.coefs, likelihood=likelihood, optim.return.code=optim.like$convergence, variance=variance, AIC=aic, parameters=list(vect=optim.like$par, control=param.vector$control), seed.states=x.nought, fitted.values=c(fitted.values), errors=c(e), x=fitted.values.and.errors$x, seasonal.periods=seasonal.periods, y=y)
 	class(model.for.output) <- "bats"
 	####
 	return(model.for.output)

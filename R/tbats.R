@@ -10,10 +10,9 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, se
  
   if(is.null(model) == FALSE) {
     refitModel <- NULL
-    if (is.element("tbats", class(fit))) {
-      refitModel <- try(fitSpecificTBATS(y, model$parameters$control$use.box.cox, model$parameters$control$use.beta, model$parameters$control$use.damping, model$seasonal.periods, model$k.vector, starting.params=model$parameters, x.nought=model$seed.states, ar.coefs=model$ar.coefficients, ma.coefs=model$ma.coefficients, init.box.cox=model$lambda, bc.lower=model$bc.lower, bc.upper=model$bc.upper),
-                        silent=TRUE)
-    } else if(is.element("bats", class(fit))){
+    if (is.element("tbats", class(model))) {
+      refitModel <- try(fitPreviousTBATSModel(y, model=model), silent=TRUE)
+    } else if(is.element("bats", class(model))){
       refitModel <- bats(y, model=model)
     }
     return (refitModel)

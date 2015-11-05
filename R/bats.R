@@ -109,8 +109,7 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, sea
  
   
   if(is.null(model) == FALSE) {
-    refitModel <- try(fitSpecificBATS(y, model$parameters$control$use.box.cox, model$parameters$control$use.beta, model$parameters$control$use.damping, model$seasonal.periods, ar.coefs=model$ar.coefficients, ma.coefs=model$ma.coefficients, init.box.cox=model$lambda, bc.lower=model$bc.lower, bc.upper=model$bc.upper),
-                      silent=TRUE)
+    refitModel <- try(fitPreviousBATSModel(y, model=model), silent=TRUE)
     return (refitModel)
   }
   
