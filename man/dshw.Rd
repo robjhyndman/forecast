@@ -30,8 +30,7 @@
 The function \code{summary} is used to obtain and print a summary of the
 results, while the function \code{plot} produces a plot of the forecasts.
 
-The generic accessor functions \code{fitted.values} and \code{residuals} extract useful features of
-the value returned by \code{meanf}.
+The generic accessor functions \code{fitted.values} and \code{residuals} extract useful features of the value returned by \code{dshw}.
 
 An object of class \code{"forecast"} is a list containing at least the following elements:
 \item{model}{A list containing information about the fitted model}
