@@ -1,6 +1,8 @@
 fitPreviousTBATSModel <- function (y, model) {
-  
-  
+  seasonal.periods <- model$seasonal.periods
+  if (is.null(seasonal.periods) == FALSE) {
+    seasonal.periods <- as.integer(sort(seasonal.periods))
+  }
   #Get the parameters out of the param.vector
   paramz <- unParameteriseTBATS(model$parameters$vect, model$parameters$control)
   lambda <- paramz$lambda
@@ -29,7 +31,7 @@ fitPreviousTBATSModel <- function (y, model) {
     q <- 0
   }
   
-  if(!is.null(model$seasonal.periods)) {
+  if(!is.null(seasonal.periods)) {
     tau <- as.integer(2*sum(model$k.vector))
     gamma.bold <- matrix(0,nrow=1,ncol=(2*sum(model$k.vector)))
   } else {
@@ -57,7 +59,7 @@ fitPreviousTBATSModel <- function (y, model) {
     .Call("updateTBATSGammaBold", gammaBold_s=gamma.bold, kVector_s=model$k.vector, gammaOne_s=gamma.one.v, gammaTwo_s=gamma.two.v, PACKAGE = "forecast")
   }
   .Call("updateTBATSGMatrix", g_s=g, gammaBold_s=gamma.bold, alpha_s=alpha, beta_s=beta.v, PACKAGE = "forecast")
-  F <- makeTBATSFMatrix(alpha=alpha, beta=beta.v, small.phi=small.phi, seasonal.periods=model$seasonal.periods, k.vector=model$k.vector, gamma.bold.matrix=gamma.bold, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
+  F <- makeTBATSFMatrix(alpha=alpha, beta=beta.v, small.phi=small.phi, seasonal.periods=seasonal.periods, k.vector=model$k.vector, gamma.bold.matrix=gamma.bold, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
   .Call("updateFMatrix", F, small.phi, alpha, beta.v, gamma.bold, ar.coefs, ma.coefs, tau, PACKAGE="forecast")
   #2. Calculate!
   fitted.values.and.errors <- calcModel(y.touse, model$seed.states, F, g, w)

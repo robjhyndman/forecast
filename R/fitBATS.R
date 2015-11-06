@@ -4,6 +4,10 @@
 ###############################################################################
 
 fitPreviousBATSModel <- function (y, model) {
+  seasonal.periods <- model$seasonal.periods
+  if (is.null(seasonal.periods) == FALSE) {
+    seasonal.periods <- as.integer(sort(seasonal.periods))
+  }
   paramz <- unParameterise(model$parameters$vect, model$parameters$control)
   lambda <- paramz$lambda
   alpha <- paramz$alpha
@@ -18,11 +22,9 @@ fitPreviousBATSModel <- function (y, model) {
   
   ##Calculate the variance:
   #1. Re-set up the matrices
-  #w <- makeWMatrix(small.phi=small.phi, seasonal.periods=seasonal.periods, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
-  w <- .Call("makeBATSWMatrix", smallPhi_s = small.phi, sPeriods_s = model$seasonal.periods, arCoefs_s = ar.coefs, maCoefs_s = ma.coefs, PACKAGE = "forecast")
-  #g <- makeGMatrix(alpha=alpha, beta=beta.v, gamma.vector=gamma, seasonal.periods=seasonal.periods, p=p, q=q)
-  g <- .Call("makeBATSGMatrix", as.numeric(alpha), beta.v, gamma.v, model$seasonal.periods, as.integer(p), as.integer(q), PACKAGE="forecast")
-  F <- makeFMatrix(alpha=alpha, beta=beta.v, small.phi <- small.phi, seasonal.periods=model$seasonal.periods, gamma.bold.matrix=g$gamma.bold.matrix, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
+  w <- .Call("makeBATSWMatrix", smallPhi_s = small.phi, sPeriods_s = seasonal.periods, arCoefs_s = ar.coefs, maCoefs_s = ma.coefs, PACKAGE = "forecast")
+  g <- .Call("makeBATSGMatrix", as.numeric(alpha), beta.v, gamma.v, seasonal.periods, as.integer(p), as.integer(q), PACKAGE="forecast")
+  F <- makeFMatrix(alpha=alpha, beta=beta.v, small.phi <- small.phi, seasonal.periods=seasonal.periods, gamma.bold.matrix=g$gamma.bold.matrix, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
   #2. Calculate!
   y.touse <- y
   if (is.null(lambda) == FALSE) {
