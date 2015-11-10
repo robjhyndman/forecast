@@ -2,6 +2,51 @@
 # 
 # Author: srazbash
 ###############################################################################
+
+fitPreviousBATSModel <- function (y, model) {
+  seasonal.periods <- model$seasonal.periods
+  if (is.null(seasonal.periods) == FALSE) {
+    seasonal.periods <- as.integer(sort(seasonal.periods))
+  }
+  paramz <- unParameterise(model$parameters$vect, model$parameters$control)
+  lambda <- paramz$lambda
+  alpha <- paramz$alpha
+  beta.v <- paramz$beta
+  small.phi <- paramz$small.phi
+  gamma.v <- paramz$gamma.v
+  ar.coefs <- paramz$ar.coefs
+  ma.coefs <- paramz$ma.coefs
+  
+  p <- length(ar.coefs)
+  q <- length(ma.coefs)
+  
+  ##Calculate the variance:
+  #1. Re-set up the matrices
+  w <- .Call("makeBATSWMatrix", smallPhi_s = small.phi, sPeriods_s = seasonal.periods, arCoefs_s = ar.coefs, maCoefs_s = ma.coefs, PACKAGE = "forecast")
+  g <- .Call("makeBATSGMatrix", as.numeric(alpha), beta.v, gamma.v, seasonal.periods, as.integer(p), as.integer(q), PACKAGE="forecast")
+  F <- makeFMatrix(alpha=alpha, beta=beta.v, small.phi <- small.phi, seasonal.periods=seasonal.periods, gamma.bold.matrix=g$gamma.bold.matrix, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
+  #2. Calculate!
+  y.touse <- y
+  if (is.null(lambda) == FALSE) {
+    y.touse <- BoxCox(y, lambda=lambda)
+  }
+  fitted.values.and.errors <- calcModel(y.touse, model$seed.states, F, g$g, w)
+  e <- fitted.values.and.errors$e
+  fitted.values <- fitted.values.and.errors$y.hat
+  if (is.null(lambda) == FALSE) {
+    fitted.values <- InvBoxCox(fitted.values, lambda=lambda)
+  }
+  variance <- sum((e*e))/length(y)
+  
+  model.for.output <- model
+  model.for.output$variance = variance
+  model.for.output$fitted.values = c(fitted.values)
+  model.for.output$errors=c(e)
+  model.for.output$x=fitted.values.and.errors$x
+  model.for.output$y=y
+  return(model.for.output)
+}
+
 fitSpecificBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.periods=NULL, starting.params=NULL, x.nought=NULL, ar.coefs=NULL, ma.coefs=NULL, init.box.cox=NULL, bc.lower=0, bc.upper=1) {
 	if(!is.null(seasonal.periods)) {
 		seasonal.periods <- as.integer(sort(seasonal.periods))
