@@ -73,10 +73,11 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
   
   if(!is.null(object$data))
     origdata <- object$data
-  else if(!is.null(object$call$data))
+  else if(!is.null(object$call$data)){
     origdata <- try(object$data <- eval(object$call$data), silent = TRUE)
     if (is.element("try-error", class(origdata)))
       stop("Could not find data. Try training your model using tslm() or attach data directly to the object via object$data<-modeldata for some object<-lm(formula,modeldata).")
+  }
   else
     origdata <- as.data.frame(fitted(object) + residuals(object))
 
