@@ -20,10 +20,10 @@ tslm <- function(formula,data,lambda=NULL,...)
   if(!is.ts(x))
     stop("Not time series data")
   tspx <- tsp(x)
-
+  if(!("formula" %in% class(formula)))
+    formula <- as.formula(formula)
   if(tspx[3]==1) # Nonseasonal data
   {
-    f <- as.character(formula)
     if("season" %in% attr(terms(formula), "term.labels"))
       stop("Non-seasonal data cannot be modelled using a seasonal factor")
   }
@@ -70,10 +70,14 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
     else if (min(level) < 0 | max(level) > 99.99)
       stop("Confidence limit out of range")
   }
+  
   if(!is.null(object$data))
     origdata <- object$data
-  else if(!is.null(object$call$data))
-    origdata <- object$data <- eval(object$call$data)
+  else if(!is.null(object$call$data)){
+    origdata <- try(object$data <- eval(object$call$data), silent = TRUE)
+    if (is.element("try-error", class(origdata)))
+      stop("Could not find data. Try training your model using tslm() or attach data directly to the object via object$data<-modeldata for some object<-lm(formula,modeldata).")
+  }
   else
     origdata <- as.data.frame(fitted(object) + residuals(object))
 
