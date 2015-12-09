@@ -33,12 +33,15 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL, ...
     season <- na.omit(season)
     if(length(season) == 0L)
       stop("No recognizable quarters")
-    if(min(season) < 1 | max(season) > 4)
+    if(min(season) < 1L | max(season) > 4L)
       stop("Quarters must be between 1 and 4")
   }
   else if(is.null(season))
     stop("No subset specified")
-
+  else
+    if(min(season) < 1L | max(season) > 12L)
+      stop("Seasons must be between 1 and 12")
+  
   start <- head(time(x)[is.element(cycle(x), season)],1)
   x <- subset.default(x, is.element(cycle(x), season))
     return(ts(x, frequency=length(season), start=start))
