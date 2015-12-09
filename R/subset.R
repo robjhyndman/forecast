@@ -39,8 +39,8 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL, ...
   else if(is.null(season))
     stop("No subset specified")
   else
-    if(min(season) < 1L | max(season) > 12L)
-      stop("Seasons must be between 1 and 12")
+    if(min(season) < 1L | max(season) > frequency(x))
+      stop(paste("Seasons must be between 1 and", frequency(x)))
   
   start <- head(time(x)[is.element(cycle(x), season)],1)
   x <- subset.default(x, is.element(cycle(x), season))
