@@ -38,6 +38,7 @@ if(require(fpp) & require(testthat))
 	test_that("test for bad input", {
 	  expect_error(subset.ts(mtcars,quarter=1), "Data must be seasonal")
 	  expect_error(subset(a10,subset=c(1,2)), "subset must be the same length as x")
+	  expect_error(subset(fred, fred<.5), "subset must be a vector of rows to keep")
 	  expect_error(subset(a10,month="Jaan"), "No recognizable months")
 	  expect_error(subset(a10,season=1:14), "Seasons must be between 1 and 12")
 	  expect_error(subset(a10,month=1:14), "Months must be between 1 and 12")

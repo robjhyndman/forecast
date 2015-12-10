@@ -2,8 +2,10 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL, ...
 {
   if(!is.null(subset))
   {
-    if(length(subset) != NROW(x))
+    if(NROW(subset) != NROW(x))
       stop("subset must be the same length as x")
+    if(NCOL(subset) != 1)
+      stop("subset must be a vector of rows to keep")
     if("mts" %in% class(x)){
       return(subset.matrix(x,subset))
     }
