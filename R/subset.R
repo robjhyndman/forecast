@@ -2,9 +2,14 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL, ...
 {
   if(!is.null(subset))
   {
-    if(length(subset) != length(x))
+    if(length(subset) != NROW(x))
       stop("subset must be the same length as x")
-    return(subset.default(x,subset))
+    if("mts" %in% class(x)){
+      return(subset.matrix(x,subset))
+    }
+    else{
+      return(subset.default(x,subset))
+    }
   }
   else if(frequency(x) <= 1)
     stop("Data must be seasonal")
@@ -43,6 +48,11 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL, ...
       stop(paste("Seasons must be between 1 and", frequency(x)))
   
   start <- head(time(x)[is.element(cycle(x), season)],1)
-  x <- subset.default(x, is.element(cycle(x), season))
+  if("mts" %in% class(x)){
+    x <- subset.matrix(x, is.element(cycle(x), season))
+  }
+  else{
+    x <- subset.default(x, is.element(cycle(x), season))
+  }
     return(ts(x, frequency=length(season), start=start))
 }

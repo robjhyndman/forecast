@@ -21,6 +21,13 @@ if(require(fpp) & require(testthat))
 	  sub<-subset(a10,subset=a10<10)
 	  expect_that(round(sum(sub)), equals(670))
 	  expect_that(length(sub), equals(109))
+	  fred<-ts(matrix(rnorm(200),ncol=2),freq=4)
+	  sub<-subset(fred, c(1,1,rep(0,98))==1)
+	  expect_that(ncol(sub), equals(2))
+	  expect_that(nrow(sub), equals(2))
+	  sub<-subset(fred, quarter=1)
+	  expect_that(ncol(sub), equals(2))
+	  expect_that(nrow(sub), equals(25))
 	})
 	
 	test_that("tests specifying wrong argument", {
