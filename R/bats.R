@@ -96,7 +96,7 @@ parFilterSpecifics<-function(control.number, control.array, y, seasonal.periods,
 }
 
 bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, seasonal.periods=NULL, 
-  use.arma.errors=TRUE, use.parallel=TRUE, num.cores=2, bc.lower=0, bc.upper=1, ...) 
+  use.arma.errors=TRUE, use.parallel=TRUE, num.cores=2, bc.lower=0, bc.upper=1, model=NULL, ...) 
 {
   if (any(class(y) %in% c("data.frame", "list", "matrix", "mts"))) 
     stop("y should be a univariate time series")
@@ -107,6 +107,12 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, sea
   if (ny != length(y)) 
     warning("Missing values encountered. Using longest contiguous portion of time series")
  
+  
+  if(is.null(model) == FALSE) {
+    refitModel <- try(fitPreviousBATSModel(y, model=model), silent=TRUE)
+    return (refitModel)
+  }
+  
   # Check for constancy
   if(is.constant(y))
   {

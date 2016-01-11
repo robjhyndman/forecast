@@ -1,3 +1,85 @@
+fitPreviousTBATSModel <- function (y, model) {
+  seasonal.periods <- model$seasonal.periods
+  if (is.null(seasonal.periods) == FALSE) {
+    seasonal.periods <- as.integer(sort(seasonal.periods))
+  }
+  #Get the parameters out of the param.vector
+  paramz <- unParameteriseTBATS(model$parameters$vect, model$parameters$control)
+  lambda <- paramz$lambda
+  alpha <- paramz$alpha
+  beta.v <- paramz$beta
+  if(!is.null(beta.v)) {
+    adj.beta <- 1
+  } else {
+    adj.beta <- 0
+  }
+  small.phi <- paramz$small.phi
+  gamma.one.v <- paramz$gamma.one.v
+  gamma.two.v <- paramz$gamma.two.v
+  if(!is.null(paramz$ar.coefs)) {
+    p <- length(paramz$ar.coefs)	
+    ar.coefs <- matrix(paramz$ar.coefs,nrow=1,ncol=p)
+  } else {
+    ar.coefs <- NULL
+    p <- 0
+  }
+  if(!is.null(paramz$ma.coefs)) {
+    q <- length(paramz$ma.coefs)
+    ma.coefs <- matrix(paramz$ma.coefs, nrow=1, ncol=q)
+  } else {
+    ma.coefs <- NULL
+    q <- 0
+  }
+  
+  if(!is.null(seasonal.periods)) {
+    tau <- as.integer(2*sum(model$k.vector))
+    gamma.bold <- matrix(0,nrow=1,ncol=(2*sum(model$k.vector)))
+  } else {
+    tau <- as.integer(0)
+    gamma.bold <- NULL	
+  }
+  
+  g <- matrix(0, nrow=((2*sum(model$k.vector))+1+adj.beta+p+q), ncol=1)
+  if(p != 0) {
+    g[(1+adj.beta+tau+1),1] <- 1
+  }
+  if(q != 0) {
+    g[(1+adj.beta+tau+p+1),1] <- 1
+  }
+  
+  y.touse <- y
+  if (is.null(lambda) == FALSE) {
+    y.touse <- BoxCox(y, lambda=lambda)
+  }
+  
+  ##Calculate the variance:
+  #1. Re-set up the matrices
+  w <- .Call("makeTBATSWMatrix", smallPhi_s=small.phi, kVector_s=model$k.vector, arCoefs_s=ar.coefs, maCoefs_s=ma.coefs, tau_s=tau, PACKAGE="forecast")
+  if(!is.null(gamma.bold)) {
+    .Call("updateTBATSGammaBold", gammaBold_s=gamma.bold, kVector_s=model$k.vector, gammaOne_s=gamma.one.v, gammaTwo_s=gamma.two.v, PACKAGE = "forecast")
+  }
+  .Call("updateTBATSGMatrix", g_s=g, gammaBold_s=gamma.bold, alpha_s=alpha, beta_s=beta.v, PACKAGE = "forecast")
+  F <- makeTBATSFMatrix(alpha=alpha, beta=beta.v, small.phi=small.phi, seasonal.periods=seasonal.periods, k.vector=model$k.vector, gamma.bold.matrix=gamma.bold, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
+  .Call("updateFMatrix", F, small.phi, alpha, beta.v, gamma.bold, ar.coefs, ma.coefs, tau, PACKAGE="forecast")
+  #2. Calculate!
+  fitted.values.and.errors <- calcModel(y.touse, model$seed.states, F, g, w)
+  e <- fitted.values.and.errors$e
+  fitted.values <- fitted.values.and.errors$y.hat
+  if (is.null(lambda) == FALSE) {
+    fitted.values <- InvBoxCox(fitted.values, lambda=lambda)
+  }
+  variance <- sum((e*e))/length(y)
+  
+  model.for.output <- model
+  model.for.output$variance = variance
+  model.for.output$fitted.values = c(fitted.values)
+  model.for.output$errors=c(e)
+  model.for.output$x=fitted.values.and.errors$x
+  model.for.output$y=y
+  return(model.for.output)
+  
+}
+
 
 fitSpecificTBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.periods=NULL, k.vector=NULL, starting.params=NULL, x.nought=NULL, ar.coefs=NULL, ma.coefs=NULL, init.box.cox=NULL, bc.lower=0, bc.upper=1) {
 	if(!is.null(seasonal.periods)) {
@@ -197,8 +279,8 @@ fitSpecificTBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.per
 			p <- 0
 		}
 		if(!is.null(paramz$ma.coefs)) {
+		  q <- length(paramz$ma.coefs)
 			ma.coefs <- matrix(paramz$ma.coefs, nrow=1, ncol=q)
-			q <- length(ma.coefs)
 		} else {
 			ma.coefs <- NULL
 			q <- 0
@@ -251,8 +333,8 @@ fitSpecificTBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.per
 			p <- 0
 		}
 		if(!is.null(paramz$ma.coefs)) {
+		  q <- length(paramz$ma.coefs)
 			ma.coefs <- matrix(paramz$ma.coefs, nrow=1, ncol=q)
-			q <- length(ma.coefs)
 		} else {
 			ma.coefs <- NULL
 			q <- 0
@@ -306,8 +388,8 @@ calcLikelihoodTBATS <- function(param.vector, opt.env, use.beta, use.small.phi, 
 		p <- 0
 	}
 	if(!is.null(paramz$ma.coefs)) {
+	  q <- length(paramz$ma.coefs)
 		ma.coefs <- matrix(paramz$ma.coefs, nrow=1, ncol=q)
-		q <- length(ma.coefs)
 	} else {
 		ma.coefs <- NULL
 		q <- 0
@@ -363,16 +445,14 @@ calcLikelihoodNOTransformedTBATS <- function(param.vector, opt.env, x.nought, us
 	if(!is.null(paramz$ar.coefs)) {
 		p <- length(paramz$ar.coefs)	
 		ar.coefs <- matrix(paramz$ar.coefs,nrow=1,ncol=p)
-		
 	} else {
 		ar.coefs <- NULL
 		p <- 0
 	}
 
 	if(!is.null(paramz$ma.coefs)) {
+	  q <- length(paramz$ma.coefs)
 		ma.coefs <- matrix(paramz$ma.coefs, nrow=1, ncol=q)
-		q <- length(ma.coefs)
-		
 	} else {
 		ma.coefs <- NULL
 		q <- 0
