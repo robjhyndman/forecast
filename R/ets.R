@@ -1039,3 +1039,7 @@ logLik.ets <- function(object,...)
 {
   structure(object$loglik,df=length(object$par),class="logLik")
 }
+
+is.ets <- function(x){
+  inherits(x, "ets")
+}

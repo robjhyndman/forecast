@@ -264,3 +264,7 @@ plot.mpacf <- function(object, xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, ...)
   points(lagx[j], object$z[j], pch=1, cex=0.5)
   points(lagx[!j], object$z[!j], pch=19)
 }
+
+is.acf <- function(x){
+  inherits(x, "acf")
+}
