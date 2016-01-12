@@ -391,3 +391,7 @@ ma <- function(x,order,centre=TRUE)
   tsp(temp1) <- tsp(x)
   return(temp1)
 }
+
+is.stlm <- function(x){
+  inherits(x, "stlm")
+}

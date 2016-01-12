@@ -385,3 +385,7 @@ forecast.forecast <- function(object, ...)
 {
   return(object)
 }
+
+is.forecast <- function(x){
+  inherits(x, "forecast")
+}

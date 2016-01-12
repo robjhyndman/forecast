@@ -30,3 +30,7 @@ dm.test <- function (e1, e2, alternative = c("two.sided", "less", "greater"), h 
                  data.name = c(deparse(substitute(e1)), deparse(substitute(e2)))),
             class = "htest")
 }
+
+is.htest <- function(x){
+  inherits(x, "htest")
+}

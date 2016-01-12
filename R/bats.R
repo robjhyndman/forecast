@@ -350,3 +350,6 @@ plot.bats <- function (x, main="Decomposition by BATS model", ...)
   plot(out, main=main, nc=1, ...)
 }
 
+is.bats <- function(x){
+  inherits(x, "bats")
+}

@@ -128,7 +128,13 @@ print.nnetar <- function(x, digits = max(3, getOption("digits") - 3), ...)
     invisible(x)
 }
 
+is.nnetar <- function(x){
+  inherits(x, "nnetar")
+}
 
+is.nnetarmodels <- function(x){
+  inherits(x, "nnetarmodels")
+}
 
 # fitted.train <- function(object, ...)
 # {

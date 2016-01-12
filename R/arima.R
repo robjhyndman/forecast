@@ -740,3 +740,7 @@ as.character.Arima <- function(x, ...)
 {
   arima.string(x)
 }
+
+is.Arima <- function(x){
+  inherits(x, "Arima")
+}

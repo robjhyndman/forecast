@@ -157,3 +157,7 @@ plot.splineforecast <- function(x,fitcol=2,type="o",pch=19,...)
     plot.forecast(x,type=type,pch=pch,...)
     lines(x$fitted,col=fitcol)
 }
+
+is.splineforecast <- function(x){
+  inherits(x, "splineforecast")
+}
