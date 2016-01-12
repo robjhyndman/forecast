@@ -55,7 +55,7 @@ to the seasonally adjusted data and re-seasonalizing using the last year of the 
 
 \code{forecast.stl} is similar to \code{stlf} except that it takes the STL decomposition as the first argument, instead of the time series. 
 
-Note that the prediction intervals ignore the uncertainty associated with the seasonal component. THey are computed using the prediction intervals from the seasonally adjusted series, which are then reseasonalized using the last year of the seasonal component. The uncertainty in the seasonal component is ignored.
+Note that the prediction intervals ignore the uncertainty associated with the seasonal component. They are computed using the prediction intervals from the seasonally adjusted series, which are then reseasonalized using the last year of the seasonal component. The uncertainty in the seasonal component is ignored.
 
 The time series model for the seasonally adjusted data can be specified in \code{stlm} using either \code{method} or \code{modelfunction}. The \code{method} argument provides a shorthand way of specifying \code{modelfunction} for a few special cases. More generally, \code{modelfunction} can be any function with first argument a \code{ts} object, that returns an object that can be passed to \code{\link{forecast}}. For example, \code{forecastfunction=ar} uses the \code{\link{ar}} function for modelling the seasonally adjusted series.
 
