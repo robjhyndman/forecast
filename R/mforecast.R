@@ -2,7 +2,7 @@ is.mforecast <- function(x){
   inherits(x, "mforecast")
 }
 
-mlmsplit <- function(x, index=NULL, ts=FALSE){
+mlmsplit <- function(x, index=NULL){
   if(is.null(index)){
     stop("Must select lm using index=integer(1)")
   }
@@ -12,11 +12,7 @@ mlmsplit <- function(x, index=NULL, ts=FALSE){
   }
   class(x) <- "lm"
   y<-attr(x$terms,"response")
-  if (y == 0){
-    stop("No response variable found")
-  }
   
-  #tspx <- tsp(x$residuals)
   cn <- colnames(x$model)
   x$model <- as.data.frame(cbind(x$model[,y][,index],x$model[,-y]))
   colnames(x$model) <- cn
@@ -35,6 +31,37 @@ forecast.mlm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambd
 {
   K <- NCOL(object$coefficients)
   y<-attr(object$terms,"response")
+  
+  # Check if the forecasts will be time series
+  if(ts & is.element("ts",class(fit$x))){
+    tspx <- tsp(fit$x)
+    timesx <- time(fit$x)
+  }
+  else{
+    tspx <- NULL
+  }
+  #Add trend and seasonality to data frame
+  if(!missing(newdata))
+  {
+    newdata <- as.data.frame(newdata)
+    h <- nrow(newdata)
+  }
+  if(!is.null(tspx) & is.element("trend",colnames(fit$model)))
+  {
+    x <- ts(1:h, start=tspx[2]+1/tspx[3], frequency=tspx[3])
+    trend <- max(fit$model[,"trend"]) + (1:h)
+    season <- as.factor(cycle(x))
+    if(!missing(newdata))
+      newdata <- data.frame(as.data.frame(newdata),trend,season)
+    else
+      newdata <- data.frame(trend,season)
+  }
+  newdata <- as.data.frame(newdata)
+  
+  # If only one column, assume its name.
+  if(NCOL(newdata)==1 & colnames(newdata)[1]=="newdata")
+    colnames(newdata) <- as.character(formula(object$model))[3]
+  
   out <- list(model=object,level=level,newdata=newdata)
   if(!is.null(object$x) & !is.list(object$x)){
     out$x <- object$x
