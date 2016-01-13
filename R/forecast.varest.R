@@ -30,38 +30,3 @@ forecast.varest <- function(object, h=10, level=c(80,95), fan=FALSE, ...)
 	return(structure(out,class="mforecast"))
 }
 
-print.mforecast <- function(x, ...)
-{
-	for(i in 1:length(x$mean))
-	{
-		cat(names(x$mean)[i],"\n")
-		fcst <- x
-		fcst$mean <- x$mean[[i]]
-		fcst$lower <- x$lower[[i]]
-		fcst$upper <- x$upper[[i]]
-		class(fcst) <- "forecast"
-		print(fcst)
-		if(i < length(x$mean))
-			cat("\n")
-	}
-}
-
-plot.mforecast <- function(x, main=paste("Forecasts from",x$method),xlab="time",...)
-{
-	K <- length(x$mean)
-	oldpar <- par(mfrow=c(K,1),mar=c(0,5.1,0,2.1),oma=c(6,0,5,0))
-	on.exit(par(oldpar))
-	for(i in 1:K)
-	{
-		fcst <- x
-		fcst$mean <- x$mean[[i]]
-		fcst$lower <- x$lower[[i]]
-		fcst$upper <- x$upper[[i]]
-		fcst$x <- x$x[,i]
-		class(fcst) <- "forecast"
-		plot(fcst,main="",xaxt="n",ylab=names(x$mean)[i],...)
-	}
-	axis(1)
-	mtext(xlab,outer=TRUE,side=1,line=3)
-	title(main=main,outer=TRUE)
-}
