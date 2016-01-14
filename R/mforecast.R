@@ -33,9 +33,9 @@ forecast.mlm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambd
   y<-attr(object$terms,"response")
   
   # Check if the forecasts will be time series
-  if(ts & is.element("ts",class(fit$x))){
-    tspx <- tsp(fit$x)
-    timesx <- time(fit$x)
+  if(ts & is.element("ts",class(object$x))){
+    tspx <- tsp(object$x)
+    timesx <- time(object$x)
   }
   else{
     tspx <- NULL
@@ -46,10 +46,10 @@ forecast.mlm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambd
     newdata <- as.data.frame(newdata)
     h <- nrow(newdata)
   }
-  if(!is.null(tspx) & is.element("trend",colnames(fit$model)))
+  if(!is.null(tspx) & is.element("trend",colnames(object$model)))
   {
     x <- ts(1:h, start=tspx[2]+1/tspx[3], frequency=tspx[3])
-    trend <- max(fit$model[,"trend"]) + (1:h)
+    trend <- max(object$model[,"trend"]) + (1:h)
     season <- as.factor(cycle(x))
     if(!missing(newdata))
       newdata <- data.frame(as.data.frame(newdata),trend,season)
