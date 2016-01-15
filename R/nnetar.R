@@ -64,7 +64,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL)
   out$xreg <- xreg
   out$lambda <- lambda
   out$model <- fit
-  fits <- c(rep(NA,maxlag), rowMeans(matrix(unlist(lapply(fit, predict)),ncol=length(fit))))
+  fits <- c(rep(NA,maxlag), rowMeans(sapply(fit, predict)))
   fits <- ts(fits*scale)
   if(!is.null(lambda))
     fits <- InvBoxCox(fits,lambda)
