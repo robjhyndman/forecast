@@ -11,6 +11,8 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL)
   else
     xx <- x
 
+  if(!is.null(xreg))
+    xreg <- as.matrix(xreg)
   # Scale data
   scale <- max(abs(xx),na.rm=TRUE)
   xx <- xx/scale
@@ -45,7 +47,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL)
   lags.X <- matrix(NA,ncol=nlag,nrow=n-maxlag)
   for(i in 1:nlag)
     lags.X[,i] <- xx[(maxlag-lags[i]+1):(n-lags[i])]
-  # Add xreg into matrix
+  # Add xreg into lags matrix
   lags.X <- cbind(lags.X, xreg[-(1:maxlag), ])
   # Remove missing values if present
   j <- complete.cases(lags.X,y)
