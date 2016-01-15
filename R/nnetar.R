@@ -37,8 +37,6 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, ...)
     else
       lags <- 1:p
   }
-  if(missing(size))
-    size <- round((p+P+1)/2)
   maxlag <- max(lags)
   nlag <- length(lags)
   y <- xx[-(1:maxlag)]
@@ -49,6 +47,8 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, ...)
   if(!is.null(xreg))
     xreg <- as.matrix(xreg)
   lags.X <- cbind(lags.X, xreg[-(1:maxlag), ])
+  if(missing(size))                            #GAC add
+    size <- round((ncol(lags.X)+1)/2)          #GAC add
   # Remove missing values if present
   j <- complete.cases(lags.X,y)
   # Fit average ANN.
