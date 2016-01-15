@@ -107,12 +107,15 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), xr
   out <- object
   tspx <- tsp(out$x)
 
+  if(!is.null(xreg))
+  {
+    xreg <- as.matrix(xreg)
+    h <- nrow(xreg)
+  }
   fcast <- numeric(h)
   xx <- object$x
   if(!is.null(lambda))
     xx <- BoxCox(xx,lambda)
-  if(!is.null(xreg))
-    xreg <- as.matrix(xreg)
   flag <- rev(tail(xx/object$scale, n=max(object$lags)))
   for(i in 1:h)
   {
