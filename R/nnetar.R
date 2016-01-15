@@ -11,8 +11,6 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL)
   else
     xx <- x
 
-  if(!is.null(xreg))
-    xreg <- as.matrix(xreg)
   # Scale data
   scale <- max(abs(xx),na.rm=TRUE)
   xx <- xx/scale
@@ -47,7 +45,9 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL)
   lags.X <- matrix(NA,ncol=nlag,nrow=n-maxlag)
   for(i in 1:nlag)
     lags.X[,i] <- xx[(maxlag-lags[i]+1):(n-lags[i])]
-  # Add xreg into lags matrix
+  # Add xreg into lagged matrix
+  if(!is.null(xreg))
+    xreg <- as.matrix(xreg)
   lags.X <- cbind(lags.X, xreg[-(1:maxlag), ])
   # Remove missing values if present
   j <- complete.cases(lags.X,y)
@@ -99,7 +99,7 @@ print.nnetarmodels <- function(x, ...)
 }
 
 
-forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), lambda=object$lambda, ...)
+forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), xreg=NULL, lambda=object$lambda, ...)
 {
 #  require(nnet)
   out <- object
@@ -112,7 +112,7 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), la
   flag <- rev(tail(xx/object$scale, n=max(object$lags)))
   for(i in 1:h)
   {
-    fcast[i] <- mean(unlist(lapply(object$model, predict, newdata=flag[object$lags])))
+    fcast[i] <- mean(sapply(object$model, predict, newdata=c(flag[object$lags], newxreg[i, ])))
     flag <- c(fcast[i],flag[-length(flag)])
   }
   out$mean <- ts(fcast*object$scale,start=tspx[2]+1/tspx[3],frequency=tspx[3])
