@@ -1,7 +1,9 @@
 # Defaults:
 #For non-seasonal data, p chosen using AIC from linear AR(p) model
-#For seasonal data, p=3 and P=1.
+#For seasonal data, p chosen using AIC from linear AR(p) model after
+#    seasonally adjusting with STL decomposition, and P=1
 #size set to average of number of inputs and number of outputs: (p+P+1)/2
+#if xreg is included then size = (p+P+ncol(xreg)+1)/2
 
 nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, ...)
 {
