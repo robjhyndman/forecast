@@ -34,6 +34,8 @@ nnetar <- function(x, p, P=1, size, repeats=20, lambda=NULL)
     }
     if(P > 0)
       lags <- sort(unique(c(1:p,m*(1:P))))
+    else
+      lags <- 1:p
   }
   if(missing(size))
     size <- round((p+P+1)/2)
@@ -45,7 +47,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, lambda=NULL)
     lags.X[,i] <- xx[(maxlag-lags[i]+1):(n-lags[i])]
   # Remove missing values if present
   j <- complete.cases(lags.X,y)
-  # Fit average ANN. 
+  # Fit average ANN.
   fit <- avnnet(lags.X[j,],y[j],size=size,linout=1,trace=FALSE,repeats=repeats)
   # Return results
   out <- list()
