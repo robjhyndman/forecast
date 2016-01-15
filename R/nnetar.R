@@ -3,7 +3,7 @@
 #For seasonal data, p=3 and P=1.
 #size set to average of number of inputs and number of outputs: (p+P+1)/2
 
-nnetar <- function(x, p, P=1, size, repeats=20, lambda=NULL)
+nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL)
 {
   # Transform data
   if(!is.null(lambda))
@@ -45,6 +45,8 @@ nnetar <- function(x, p, P=1, size, repeats=20, lambda=NULL)
   lags.X <- matrix(NA,ncol=nlag,nrow=n-maxlag)
   for(i in 1:nlag)
     lags.X[,i] <- xx[(maxlag-lags[i]+1):(n-lags[i])]
+  # Add xreg into matrix
+  lags.X <- cbind(lags.X, xreg[-(1:maxlag), ])
   # Remove missing values if present
   j <- complete.cases(lags.X,y)
   # Fit average ANN.
@@ -57,6 +59,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, lambda=NULL)
   out$P <- P
   out$scale <- scale
   out$size <- size
+  out$lambda <- xreg
   out$lambda <- lambda
   out$model <- fit
   fits <- c(rep(NA,maxlag), rowMeans(matrix(unlist(lapply(fit, predict)),ncol=length(fit))))
