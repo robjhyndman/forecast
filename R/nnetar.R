@@ -3,7 +3,7 @@
 #For seasonal data, p=3 and P=1.
 #size set to average of number of inputs and number of outputs: (p+P+1)/2
 
-nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL)
+nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, ...)
 {
   # Transform data
   if(!is.null(lambda))
@@ -52,7 +52,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL)
   # Remove missing values if present
   j <- complete.cases(lags.X,y)
   # Fit average ANN.
-  fit <- avnnet(lags.X[j,],y[j],size=size,linout=1,trace=FALSE,repeats=repeats)
+  fit <- avnnet(lags.X[j,],y[j],size=size,linout=1,trace=FALSE,repeats=repeats, ...)
   # Return results
   out <- list()
   out$x <- as.ts(x)
@@ -84,7 +84,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL)
 
 # Aggregate several neural network models
 
-avnnet <- function(x,y,repeats,...)
+avnnet <- function(x,y,repeats, ...)
 {
   mods <- list()
   for(i in 1:repeats)
