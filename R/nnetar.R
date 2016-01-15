@@ -112,7 +112,7 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), xr
   flag <- rev(tail(xx/object$scale, n=max(object$lags)))
   for(i in 1:h)
   {
-    fcast[i] <- mean(sapply(object$model, predict, newdata=c(flag[object$lags], newxreg[i, ])))
+    fcast[i] <- mean(sapply(object$model, predict, newdata=c(flag[object$lags], xreg[i, ])))
     flag <- c(fcast[i],flag[-length(flag)])
   }
   out$mean <- ts(fcast*object$scale,start=tspx[2]+1/tspx[3],frequency=tspx[3])
