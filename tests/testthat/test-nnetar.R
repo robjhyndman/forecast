@@ -28,7 +28,7 @@ if(require(testthat) & require(fpp))
                               fixed=TRUE)
                 expect_output(print(uscnnet), regexp = "5-3-1 network",
                               fixed=TRUE)
-expect_true(uscnnet$size == 3)
+                expect_true(uscnnet$size == 3)
                 # Test P=0 when m>1
                 uscnnet <- nnetar(usconsumption[, "consumption"], p=4, P=0)
                 expect_true(uscnnet$size == 2)
