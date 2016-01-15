@@ -59,7 +59,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL)
   out$P <- P
   out$scale <- scale
   out$size <- size
-  out$lambda <- xreg
+  out$xreg <- xreg
   out$lambda <- lambda
   out$model <- fit
   fits <- c(rep(NA,maxlag), rowMeans(matrix(unlist(lapply(fit, predict)),ncol=length(fit))))
