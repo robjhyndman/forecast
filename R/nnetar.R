@@ -13,6 +13,13 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, ...)
   else
     xx <- x
 
+  # Check xreg class & dim
+  if(!is.null(xreg))
+  {
+    xreg <- as.matrix(xreg)
+    if(length(x) != nrow(xreg))
+      stop("Number of rows in xreg does not match series length")
+  }
   # Scale data
   scale <- max(abs(xx),na.rm=TRUE)
   xx <- xx/scale
@@ -46,8 +53,6 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, ...)
   for(i in 1:nlag)
     lags.X[,i] <- xx[(maxlag-lags[i]+1):(n-lags[i])]
   # Add xreg into lagged matrix
-  if(!is.null(xreg))
-    xreg <- as.matrix(xreg)
   lags.X <- cbind(lags.X, xreg[-(1:maxlag), ])
   if(missing(size))
     size <- round((ncol(lags.X)+1)/2)
@@ -107,9 +112,20 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), xr
   out <- object
   tspx <- tsp(out$x)
 
-  if(!is.null(xreg))
+  # Check if xreg was used in fitted model
+  if(is.null(object$xreg))
   {
+    if(!is.null(xreg))
+      warning("External regressors were not used in fitted model, xreg will be ignored")
+    xreg <- NULL
+  }
+  else
+  {
+    if(is.null(xreg))
+      stop("No external regressors provided")
     xreg <- as.matrix(xreg)
+    if(ncol(xreg) != ncol(object$xreg))
+      stop("Number of external regressors does not match fitted model")
     h <- nrow(xreg)
   }
   fcast <- numeric(h)
