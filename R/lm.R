@@ -94,7 +94,7 @@ tslm <- function(formula,data,subset,lambda=NULL,...){
       subsetTF <- subset
     }
     else{
-      subsetTF <- eval(substitute(subset)[[2]])%in%subset
+      subsetTF <- eval.parent(substitute(subset)[[2]])%in%subset
     }
     if(NCOL(subset)!=1){
       subsetTF <- rowSums(matrix(data=subsetTF, ncol=2))==NCOL(subset) #TODO
