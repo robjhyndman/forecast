@@ -40,7 +40,7 @@ tslm <- function(formula,data,subset,lambda=NULL,...){
   
   if(length(vars)>1){
     # Grab variables missing from data
-    vars[[1]] <- quote(datamat)
+    vars[[1]] <- quote(forecast:::datamat)
     if(!missing(data)){
       vars[[length(vars)+1]] <- dataname
     }
