@@ -80,34 +80,40 @@ seasadj <- function(object)
       stop("I don't know how to seasonally adjust objects of this type")
 }
 
-seasonaldummy <- function(x)
+seasonaldummy <- function(x, h=NULL)
 {
-    if(!is.ts(x))
-        stop("Not a time series")
-    else
-        fr.x <- frequency(x)
+  if(!is.ts(x))
+    stop("Not a time series")
+  else
+    fr.x <- frequency(x)
+  if(is.null(h)){    
     if(fr.x==1)
-        stop("Non-seasonal time series")
+      stop("Non-seasonal time series")
     dummy <- as.factor(cycle(x))
     dummy.mat <- matrix(0,ncol=frequency(x)-1,nrow=length(x))
     nrow <- 1:length(x)
     for(i in 1:(frequency(x)-1))
-        dummy.mat[dummy==paste(i),i] =1
+      dummy.mat[dummy==paste(i),i] = 1
     colnames(dummy.mat) <- if (fr.x == 12)
-                month.abb[1:11]
-            else if(fr.x == 4)
-                c("Q1", "Q2", "Q3")
-            else paste("S",1:(fr.x-1),sep="")
-
+      month.abb[1:11]
+    else if(fr.x == 4)
+      c("Q1", "Q2", "Q3")
+    else paste("S",1:(fr.x-1),sep="")
+    
     return(dummy.mat)
+  }
+  else{
+    return(seasonaldummy(ts(rep(0,h),start=tsp(x)[2]+1/fr.x,frequency=fr.x)))
+  }
 }
 
 seasonaldummyf <- function(x, h)
 {
-    if(!is.ts(x))
-        stop("Not a time series")
-    f <- frequency(x)
-    return(seasonaldummy(ts(rep(0,h),start=tsp(x)[2]+1/f,frequency=f)))
+  warning("seasonaldummyf() is deprecated, please use seasonaldummy()")
+  if(!is.ts(x))
+    stop("Not a time series")
+  f <- frequency(x)
+  return(seasonaldummy(ts(rep(0,h),start=tsp(x)[2]+1/f,frequency=f)))
 }
 
 forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsmodel="ZZN", 
@@ -311,14 +317,20 @@ stlf <- function(x, h=frequency(x)*2, s.window=7, t.window=NULL, robust=FALSE, l
 	return(fcast)
 }
 
-fourier <- function(x, K)
+fourier <- function(x, K, h=NULL)
 {
+  if(is.null(h)){
     return(...fourier(x, K, 1:length(x)))
+  }
+  else{
+    return(...fourier(x, K, length(x)+(1:h)))
+  }
 }
 
 fourierf <- function(x, K, h)
 {
-    return(...fourier(x, K, length(x)+(1:h)))
+  warning("fourierf() is deprecated, please use fourier()")
+  return(...fourier(x, K, length(x)+(1:h)))
 }
 
 
