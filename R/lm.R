@@ -40,14 +40,14 @@ tslm <- function(formula,data,subset,lambda=NULL,...){
   
   if(length(vars)>1){
     # Grab variables missing from data
-    vars[[1]] <- quote(forecast:::datamat)
+    vars[[1]] <- quote(datamat)
     if(!missing(data)){
       vars[[length(vars)+1]] <- dataname
     }
     data <- eval.parent(vars)
   }
   else{
-    data <- forecast:::datamat(data)
+    data <- datamat(data)
   }
   
   # Check to see if data is univariate time series
@@ -235,15 +235,27 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
     newdata <- tmpdata
     h <- nrow(newdata)
   }
-  if(!is.null(tspx) & is.element("trend",colnames(origdata)))
+  if(!is.null(tspx) & any(is.element(c("trend","season"),colnames(origdata))))
   {
-    x <- ts(1:h, start=tspx[2]+1/tspx[3], frequency=tspx[3])
-    trend <- max(origdata[,"trend"]) + (1:h)
-    season <- as.factor(cycle(x))
-    if(!missing(newdata))
-      newdata <- data.frame(as.data.frame(newdata),trend,season)
-    else
-      newdata <- data.frame(trend,season)
+    if(is.element("trend",colnames(origdata))){
+      trend <- max(origdata[,"trend"]) + (1:h)
+      if(!missing(newdata)){
+        newdata <- cbind(newdata, trend)
+      }
+      else{
+        newdata <- datamat(trend)
+      }
+    }
+    if(is.element("season",colnames(origdata))){
+      x <- ts(1:h, start=tspx[2]+1/tspx[3], frequency=tspx[3])
+      season <- as.factor(cycle(x))
+      if(!missing(newdata)){
+        newdata <- cbind(newdata, season)
+      }
+      else{
+        newdata <- datamat(season)
+      }
+    }
   }
   newdata <- as.data.frame(newdata)
   # If only one column, assume its name.
