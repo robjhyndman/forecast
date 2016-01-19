@@ -191,7 +191,7 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
   # Add trend and seasonal to data frame
   if(!missing(newdata))
   {
-    reqvars <- as.character(attr(fit$terms,"variables")[-1])[-attr(fit$terms,"response")]
+    reqvars <- as.character(attr(object$terms,"variables")[-1])[-attr(object$terms,"response")]
     newvars <- make.names(colnames(newdata))
     misvar <- match(make.names(reqvars), newvars, 0L)
     if (any(misvar != 0)){
