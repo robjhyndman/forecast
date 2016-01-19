@@ -154,9 +154,9 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   if(approximation)
   {
     if(D==0)
-      fit <- try(arima(x,order=c(1,d,0),xreg=xreg))
+      fit <- try(arima(x,order=c(1,d,0),xreg=xreg), silent=TRUE)
     else
-      fit <- try(arima(x,order=c(1,d,0),seasonal=list(order=c(0,D,0),period=m,xreg=xreg)))
+      fit <- try(arima(x,order=c(1,d,0),seasonal=list(order=c(0,D,0),period=m,xreg=xreg)), silent=TRUE)
     if(!is.element("try-error",class(fit)))
       offset <- -2*fit$loglik - serieslength*log(fit$sigma2)
     else
