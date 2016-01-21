@@ -42,7 +42,7 @@ spline.loglik <- function(beta,y,cc=1e2)
 }
 
 # Spline forecasts
-splinef <- function(x, h=10, level=c(80,95), fan=FALSE, lambda=NULL, method=c("gcv","mle"))
+splinef <- function(x, h=10, level=c(80,95), fan=FALSE, lambda=NULL, biasadj=FALSE, method=c("gcv","mle"))
 {
     method <- match.arg(method)
     if(!is.ts(x))
@@ -133,7 +133,12 @@ splinef <- function(x, h=10, level=c(80,95), fan=FALSE, lambda=NULL, method=c("g
 
 	if(!is.null(lambda))
 	{
-		Yhat <- InvBoxCox(Yhat,lambda)
+	  if(biasadj){
+	    Yhat <- InvBoxCoxf(x = list(level = level, mean = Yhat, upper = upper, lower = lower), lambda = lambda)
+	  }
+	  else{
+	    Yhat <- InvBoxCox(Yhat,lambda)
+	  }
 		upper <- InvBoxCox(upper,lambda)
 		lower <- InvBoxCox(lower,lambda)
 		yfit <- InvBoxCox(yfit,lambda)

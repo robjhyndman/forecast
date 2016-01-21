@@ -1,7 +1,7 @@
 \name{splinef}
 \alias{splinef}
 \title{Cubic Spline Forecast}
-\usage{splinef(x, h=10, level=c(80,95), fan=FALSE, lambda=NULL, 
+\usage{splinef(x, h=10, level=c(80,95), fan=FALSE, lambda=NULL, biasadj=FALSE,
     method=c("gcv","mle"))}
 
 \arguments{
@@ -10,6 +10,7 @@
 \item{level}{Confidence level for prediction intervals.}
 \item{fan}{If TRUE, level is set to seq(51,99,by=3). This is suitable for fan plots.}
 \item{lambda}{Box-Cox transformation parameter. Ignored if NULL. Otherwise, forecasts back-transformed via an inverse Box-Cox transformation.}
+\item{biasadj}{Use adjusted back-transformed mean for Box-Cox transformations. If TRUE, point forecasts and fitted values are mean forecast. Otherwise, these points can be considered the median of the forecast densities.}
 \item{method}{Method for selecting the smoothing parameter. If \code{method="gcv"}, the generalized cross-validation method from \code{\link[stats]{smooth.spline}} is used. If \code{method="mle"}, the maximum likelihood method from Hyndman et al (2002) is used.}
 }
 

@@ -119,7 +119,7 @@ seasonaldummyf <- function(x, h)
 forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsmodel="ZZN", 
      forecastfunction=NULL,
      h = frequency(object$time.series)*2, level = c(80, 95), fan = FALSE, 
-     lambda=NULL, xreg=NULL, newxreg=NULL, allow.multiplicative.trend=FALSE, ...)
+     lambda=NULL, biasadj=FALSE, xreg=NULL, newxreg=NULL, allow.multiplicative.trend=FALSE, ...)
 {
   method <- match.arg(method)
   if(is.null(forecastfunction))
@@ -192,7 +192,12 @@ forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsm
 	{
 		fcast$x <- InvBoxCox(fcast$x,lambda)
 		fcast$fitted <- InvBoxCox(fcast$fitted, lambda)
-		fcast$mean <- InvBoxCox(fcast$mean, lambda)
+		if(biasadj){
+		  fcast$mean <- InvBoxCoxf(fcast, lambda = lambda)
+		}
+		else{
+		  fcast$mean <- InvBoxCox(fcast$mean, lambda)
+		}
 		fcast$lower <- InvBoxCox(fcast$lower, lambda)
 		fcast$upper <- InvBoxCox(fcast$upper, lambda)
 		fcast$lambda <- lambda
@@ -248,7 +253,7 @@ stlm <- function(x ,s.window=7, robust=FALSE, method=c("ets","arima"),
 }
 
 forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE, 
-     lambda=object$lambda, newxreg=NULL, allow.multiplicative.trend=FALSE, ...)
+     lambda=object$lambda, biasadj=FALSE, newxreg=NULL, allow.multiplicative.trend=FALSE, ...)
 {
   if(!is.null(newxreg))
   {
@@ -283,7 +288,12 @@ forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE
   if (!is.null(lambda)) 
   {
     fcast$fitted <- InvBoxCox(fcast$fitted, lambda)
-    fcast$mean <- InvBoxCox(fcast$mean, lambda)
+    if(biasadj){
+      fcast$mean <- InvBoxCoxf(fcast, lambda = lambda)
+    }
+    else{
+      fcast$mean <- InvBoxCox(fcast$mean, lambda)
+    }
     fcast$lower <- InvBoxCox(fcast$lower, lambda)
     fcast$upper <- InvBoxCox(fcast$upper, lambda)
     fcast$lambda <- lambda
@@ -293,7 +303,7 @@ forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE
   return(fcast)
 }
 
-stlf <- function(x, h=frequency(x)*2, s.window=7, t.window=NULL, robust=FALSE, lambda=NULL, ...)
+stlf <- function(x, h=frequency(x)*2, s.window=7, t.window=NULL, robust=FALSE, lambda=NULL, biasadj=FALSE, ...)
 {
 	if (!is.null(lambda)) 
 	{
@@ -302,7 +312,7 @@ stlf <- function(x, h=frequency(x)*2, s.window=7, t.window=NULL, robust=FALSE, l
 	}
 
 	fit <- stl(x,s.window=s.window,t.window=t.window,robust=robust)
-	fcast <- forecast(fit,h=h,lambda=lambda, ...)
+	fcast <- forecast(fit,h=h,lambda=lambda,biasadj=biasadj, ...)
 
 	# if (!is.null(lambda)) 
 	# {

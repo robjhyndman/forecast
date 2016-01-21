@@ -61,17 +61,18 @@ unfracdiff <- function(x,y,n,h,d)
 
 ## Automatic ARFIMA modelling
 ## Will return Arima object if d < 0.01 to prevent estimation problems
-arfima <- function(x, drange = c(0, 0.5), estim = c("mle","ls"), lambda=NULL, ...)
+arfima <- function(x, drange = c(0, 0.5), estim = c("mle","ls"), lambda = NULL, biasadj = FALSE, ...)
 {
 	estim <- match.arg(estim)
 #	require(fracdiff)
     
 	orig.x <- x
-	if (!is.null(lambda)) 
+	if (!is.null(lambda)){
 		x <- BoxCox(x, lambda)
-		
+	}
+	
 	# Strip initial and final missing values
-	xx <- na.ends(x)
+	xx <- forecast:::na.ends(x)
 	
 	# Remove mean
 	meanx <- mean(xx)
@@ -111,10 +112,15 @@ arfima <- function(x, drange = c(0, 0.5), estim = c("mle","ls"), lambda=NULL, ..
 	
 	# Add things to model that will be needed by forecast.fracdiff
 	fit$x <- orig.x
-	fit$residuals <- undo.na.ends(x,residuals(fit))
+	fit$residuals <- forecast:::undo.na.ends(x,residuals(fit))
 	fit$fitted <- x - fit$residuals
 	if(!is.null(lambda))
-		fit$fitted <- InvBoxCox(fit$fitted,lambda)
+	  if(biasadj){
+	    fit$fitted <- InvBoxCoxf(fit$fitted, fvar = var(fit$residuals), lambda=lambda)
+	  }
+	  else{
+	    fit$fitted <- InvBoxCox(fit$fitted,lambda)
+	  }
 	fit$lambda <- lambda
 	fit$call$data <- data.frame(x=x)
 	return(fit)
@@ -122,15 +128,16 @@ arfima <- function(x, drange = c(0, 0.5), estim = c("mle","ls"), lambda=NULL, ..
 
 # Forecast the output of fracdiff() or arfima()
 
-forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, ...) 
+forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, biasadj=FALSE, ...) 
 {
 	# Extract data
 	x <- object$x <- getResponse(object)
 	
-	if(!is.null(lambda))
+	if(!is.null(lambda)){
 		x <- BoxCox(x,lambda)
-		
-	xx <- na.ends(x)
+	}
+	
+	xx <- forecast:::na.ends(x)
 	n <- length(xx)
 	
 	meanx <- mean(xx)
@@ -142,7 +149,7 @@ forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=ob
 	fcast.y <- forecast(fit, h=h, level=level)
 
 	# Undifference
-	fcast.x <- unfracdiff(xx,fcast.y$mean,n,h,object$d)
+	fcast.x <- forecast:::unfracdiff(xx,fcast.y$mean,n,h,object$d)
 	
 	# Binomial coefficient for expansion of d
 	bin.c <- (-1)^(0:(n+h)) * choose(object$d,(0:(n+h)))
@@ -211,7 +218,7 @@ forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=ob
 	}
 	colnames(lower) = colnames(upper) = paste(level, "%", sep = "")
 
-	res <- undo.na.ends(x,residuals(fit))
+	res <- forecast:::undo.na.ends(x,residuals(fit))
 	fits <- x-res
 	data.tsp <- tsp(x)
 	if(is.null(data.tsp))
@@ -225,7 +232,12 @@ forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=ob
 	{
 		x <- InvBoxCox(x,lambda)
 		fits <- InvBoxCox(fits,lambda)
-		mean.fcast <- InvBoxCox(mean.fcast,lambda)
+		if(biasadj){
+		  mean.fcast <- InvBoxCoxf(list(level = level, mean = mean.fcast, upper=upper, lower=lower),lambda=lambda)
+		}
+		else{
+		  mean.fcast <- InvBoxCox(mean.fcast,lambda)
+		}
 		lower <- InvBoxCox(lower,lambda)
 		upper <- InvBoxCox(upper,lambda)
 	}
