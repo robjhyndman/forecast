@@ -131,7 +131,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, se
 		clus <- makeCluster(num.cores)
 	}
 
-	best.model <- fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, k.vector, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)
+	best.model <- fitSpecificTBATS(y, use.box.cox = model.params[1], use.beta = model.params[2], use.damping = model.params[3], seasonal.periods = seasonal.periods, k.vector = k.vector, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper)
 	for(i in 1:length(seasonal.periods)) {
 		if(seasonal.periods[i] == 2) {
 			next
@@ -169,7 +169,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, se
 				repeat {
 					#old.k <- k.vector[i]
 					#k.vector[i] <- k.vector[i]-1
-					new.model <- try(fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, k.vector, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper),
+					new.model <- try(fitSpecificTBATS(y, use.box.cox = model.params[1], use.beta = model.params[2], use.damping = model.params[3], seasonal.periods = seasonal.periods, k.vector = k.vector, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper),
 						silent=TRUE)
 					if(is.element("try-error",class(new.model)))
 						new.model <- list(AIC=Inf)
@@ -218,15 +218,15 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, se
 					level.model <- models.list[[3]]
 					down.model <- models.list[[2]]
 				} else {
-					up.model <- try(fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, step.up.k, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper),
+					up.model <- try(fitSpecificTBATS(y, use.box.cox = model.params[1], use.beta = model.params[2], use.damping = model.params[3], seasonal.periods = seasonal.periods, k.vector = step.up.k, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper),
 						silent=TRUE)
   				if(is.element("try-error",class(up.model)))
 						up.model <- list(AIC=Inf)
-					level.model <- try(fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, k.vector, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper),
+					level.model <- try(fitSpecificTBATS(y, use.box.cox = model.params[1], use.beta = model.params[2], use.damping = model.params[3], seasonal.periods = seasonal.periods, k.vector = k.vector, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper),
 						silent=TRUE)
   				if(is.element("try-error",class(level.model)))
 						level.model <- list(AIC=Inf)
-					down.model <- try(fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, step.down.k, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper),
+					down.model <- try(fitSpecificTBATS(y, use.box.cox = model.params[1], use.beta = model.params[2], use.damping = model.params[3], seasonal.periods = seasonal.periods, k.vector = step.down.k, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper),
 						silent=TRUE)
   				if(is.element("try-error",class(down.model)))
 						down.model <- list(AIC=Inf)
@@ -431,7 +431,7 @@ parFilterTBATSSpecifics <- function(control.number, y, control.array, model.para
 #################################################################################################
 parFitSpecificTBATS <- function(control.number, y, box.cox, trend, damping, seasonal.periods, k.control.matrix, init.box.cox=NULL, bc.lower=0, bc.upper=1) {
 	k.vector<-k.control.matrix[control.number,]
-	return(fitSpecificTBATS(y, box.cox, trend, damping, seasonal.periods, k.vector, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper))
+	return(fitSpecificTBATS(y, use.box.cox = box.cox, use.beta = trend, use.damping = damping, seasonal.periods = seasonal.periods, k.vector = k.vector, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper))
 }
 
 filterTBATSSpecifics <- function(y, box.cox, trend, damping, seasonal.periods, k.vector, use.arma.errors, aux.model=NULL, init.box.cox=NULL, bc.lower=0, bc.upper=1, ...) {

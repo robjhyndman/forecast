@@ -86,7 +86,7 @@ fitPreviousTBATSModel <- function (y, model, biasadj=FALSE) {
 }
 
 
-fitSpecificTBATS <- function(y, use.box.cox, biasadj=FALSE, use.beta, use.damping, seasonal.periods=NULL, k.vector=NULL, starting.params=NULL, x.nought=NULL, ar.coefs=NULL, ma.coefs=NULL, init.box.cox=NULL, bc.lower=0, bc.upper=1) {
+fitSpecificTBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.periods=NULL, k.vector=NULL, starting.params=NULL, x.nought=NULL, ar.coefs=NULL, ma.coefs=NULL, init.box.cox=NULL, bc.lower=0, bc.upper=1, biasadj=FALSE) {
 	if(!is.null(seasonal.periods)) {
 		seasonal.periods <- sort(seasonal.periods)
 	}
