@@ -9,7 +9,8 @@
 stlm(x, s.window=7, robust=FALSE, method=c("ets","arima"), 
      modelfunction=NULL, etsmodel="ZZN", lambda=NULL, xreg=NULL, 
      allow.multiplicative.trend=FALSE, ...)
-stlf(x, h=frequency(x)*2, s.window=7, t.window=NULL, robust=FALSE, lambda=NULL, biasadj=FALSE, ...)
+stlf(x, h=frequency(x)*2, s.window=7, t.window=NULL, robust=FALSE,
+    lambda=NULL, biasadj=FALSE, ...)
 \method{forecast}{stlm}(object, h = 2*object$m, 
 	level = c(80, 95), fan = FALSE, lambda=object$lambda, biasadj=FALSE, newxreg=NULL,
   allow.multiplicative.trend=FALSE, ...)
