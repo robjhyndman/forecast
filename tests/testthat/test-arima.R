@@ -56,7 +56,7 @@ if(require(fpp) & require(testthat))
 	fit5 <- Arima(wineind[1:150], order = c(1, 1, 2), seasonal = c(0, 1, 1), method = "ML")
 	expect_true(accuracy(fit5)[1, "MAPE"] < accuracy(Arima(wineind, model = fit5))[1, "MAPE"])
 	
-	fit6 <- Arima(wineind, order = c(1, 1, 2), seasonal = c(0, 1, 1), method = "CSS", lambda=5, biasadj=FALSE)
+	fit6 <- Arima(wineind, order = c(1, 1, 2), seasonal = c(0, 1, 1), method = "CSS", lambda=5)
 	expect_false(identical(fit1$coef, fit6$coef))
 	})
 	
