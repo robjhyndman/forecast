@@ -20,7 +20,9 @@ if(require(testthat) & require(fpp))
     expect_true(all(fit1 == fit2))
     # Test fits with lambda specified and armethod = FALSE
     y <- x + 1
-    expect_that(dshw(y, period1 = 5, period2 = 20, lambda = 1.0), not(throws_error()))
+    expect_that(fit3 <- dshw(y, period1 = 5, period2 = 20, lambda = 2, biasadj = FALSE), not(throws_error()))
+    expect_that(fit4 <- dshw(y, period1 = 5, period2 = 20, lambda = 2, biasadj = TRUE), not(throws_error()))
+    expect_false(identical(fit3$mean, fit4$mean))
     expect_that(dshw(x, period1 = 5, period2 = 20, armethod = FALSE), not(throws_error()))
     # Test fits with inappropriate periods specified
     expect_error(dshw(x, period1 = 5, period2 = 5))

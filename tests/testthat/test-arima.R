@@ -55,6 +55,9 @@ if(require(fpp) & require(testthat))
 	
 	fit5 <- Arima(wineind[1:150], order = c(1, 1, 2), seasonal = c(0, 1, 1), method = "ML")
 	expect_true(accuracy(fit5)[1, "MAPE"] < accuracy(Arima(wineind, model = fit5))[1, "MAPE"])
+	
+	fit6 <- Arima(wineind, order = c(1, 1, 2), seasonal = c(0, 1, 1), method = "CSS", lambda=5, biasadj=FALSE)
+	expect_false(identical(fit1$coef, fit6$coef))
 	})
 	
 	test_that("tests for search.arima", {
@@ -71,6 +74,9 @@ if(require(fpp) & require(testthat))
 	expect_error(forecast.ar(fitar, level = -10))
 	expect_error(forecast.ar(fitar, level = 110))
 	expect_true(all(arfc + 1 == forecast.ar(fitar, lambda = 1)$mean))
+	arfcbc <- forecast.ar(fitar, lambda=2)
+	arfcabc <- forecast.ar(fitar, lambda=2, biasadj = TRUE)
+	expect_false(identical(arfcbc$mean, arfcabc$mean))
 	})
 	
 	test_that("tests for as.character.Arima()", {

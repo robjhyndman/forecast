@@ -25,6 +25,7 @@ if(require(fpp) & require(testthat))
     expect_true(all(rwfc < rwf(oil, drift = TRUE)$mean))
     expect_true(all(rwf(oil, fan = TRUE)$mean == rwfc))
     expect_true(length(rwf(oil, lambda = 0.15)$mean) == 10)
+    expect_false(identical(rwf(oil, lambda = 0.15, biasadj = FALSE)$mean, rwf(oil, lambda = 0.15, biasadj = TRUE)$mean))
   })
   
   test_that("test forecast.HoltWinters()", {
@@ -35,9 +36,11 @@ if(require(fpp) & require(testthat))
     # Forecasts transformed manually with Box-Cox should match
     # forecasts when lambda is passed as an argument
     hwmodbc <- stats::HoltWinters(BoxCox(cafe, lambda = 0.25))
-    hwfc <- forecast(hwmodbc, lambda = 0.25)$mean
+    hwfc <- forecast(hwmodbc, lambda = 0.25, biasadj=FALSE)$mean
+    hwfc2 <- forecast(hwmodbc, lambda = 0.25, biasadj=TRUE)$mean
     hwbcfc <- InvBoxCox(forecast(hwmodbc)$mean, lambda = 0.25)
     expect_true(all(hwfc == hwbcfc))
+    expect_false(identical(hwfc,hwfc2))
   })
   
   test_that("test for forecast.StructTS()", {
@@ -50,8 +53,10 @@ if(require(fpp) & require(testthat))
     # forecasts when lambda is passed as an argument
     bcseries <- BoxCox(cafe, lambda = 0.19)
     fc2 <- InvBoxCox(forecast(stats::StructTS(bcseries))$mean, lambda = 0.19)
-    fc3 <- forecast(stats::StructTS(bcseries), lambda = 0.19)$mean
+    fc3 <- forecast(stats::StructTS(bcseries), lambda = 0.19, biasadj=FALSE)$mean
+    fc4 <- forecast(stats::StructTS(bcseries), lambda = 0.19, biasadj=TRUE)$mean
     expect_true(all(fc2 == fc3))
+    expect_false(identical(fc3,fc4))
   })
   
   test_that("test croston()", {

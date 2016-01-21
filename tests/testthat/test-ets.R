@@ -32,7 +32,9 @@ if(require(fpp) & require(testthat))
 	
 	test_that("test ets() for errors", {
 	  expect_warning(ets(taylor))
-	  expect_that(ets(oil, lambda = 0.15), not(throws_error()))
+	  expect_that(fit1<-ets(oil, lambda = 0.15, biasadj=FALSE), not(throws_error()))
+	  expect_that(fit2<-ets(oil, lambda = 0.15, biasadj = TRUE), not(throws_error()))
+	  expect_false(identical(fit1$fitted, fit2$fitted))
 	  expect_error(ets(taylor, model = "ZZA"))
 	})
 }
