@@ -238,6 +238,9 @@ InvBoxCoxf <- function(x=NULL, fvar=NULL, lambda=NULL){
   else{
     x <- list(mean=x)
   }
+  if("matrix"%in%class(fvar)){
+    fvar <- diag(fvar)
+  }
   return(InvBoxCox(x$mean,lambda) * (1 + 0.5*fvar*(1-lambda)/(x$mean)^(2*lambda)))
 }
 
