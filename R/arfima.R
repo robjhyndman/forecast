@@ -72,7 +72,7 @@ arfima <- function(x, drange = c(0, 0.5), estim = c("mle","ls"), lambda = NULL, 
 	}
 	
 	# Strip initial and final missing values
-	xx <- forecast:::na.ends(x)
+	xx <- na.ends(x)
 	
 	# Remove mean
 	meanx <- mean(xx)
@@ -112,7 +112,7 @@ arfima <- function(x, drange = c(0, 0.5), estim = c("mle","ls"), lambda = NULL, 
 	
 	# Add things to model that will be needed by forecast.fracdiff
 	fit$x <- orig.x
-	fit$residuals <- forecast:::undo.na.ends(x,residuals(fit))
+	fit$residuals <- undo.na.ends(x,residuals(fit))
 	fit$fitted <- x - fit$residuals
 	if(!is.null(lambda))
 	  if(biasadj){
@@ -137,7 +137,7 @@ forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=ob
 		x <- BoxCox(x,lambda)
 	}
 	
-	xx <- forecast:::na.ends(x)
+	xx <- na.ends(x)
 	n <- length(xx)
 	
 	meanx <- mean(xx)
@@ -149,7 +149,7 @@ forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=ob
 	fcast.y <- forecast(fit, h=h, level=level)
 
 	# Undifference
-	fcast.x <- forecast:::unfracdiff(xx,fcast.y$mean,n,h,object$d)
+	fcast.x <- unfracdiff(xx,fcast.y$mean,n,h,object$d)
 	
 	# Binomial coefficient for expansion of d
 	bin.c <- (-1)^(0:(n+h)) * choose(object$d,(0:(n+h)))
@@ -218,7 +218,7 @@ forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=ob
 	}
 	colnames(lower) = colnames(upper) = paste(level, "%", sep = "")
 
-	res <- forecast:::undo.na.ends(x,residuals(fit))
+	res <- undo.na.ends(x,residuals(fit))
 	fits <- x-res
 	data.tsp <- tsp(x)
 	if(is.null(data.tsp))
