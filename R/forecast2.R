@@ -238,7 +238,7 @@ InvBoxCoxf <- function(x=NULL, fvar=NULL, lambda=NULL){
   else{
     x <- list(mean=x)
   }
-  return(x$mean * (1 + 0.5*fvar*(1-lambda)/(x$mean)^(2*lambda)))
+  return(InvBoxCox(x$mean,lambda) * (1 + 0.5*fvar*(1-lambda)/(x$mean)^(2*lambda)))
 }
 
 forecast.StructTS <- function(object,h=ifelse(object$coef["epsilon"]>1e-10, 2*object$xtsp[3], 10),level=c(80,95),fan=FALSE,lambda=NULL,biasadj=FALSE,...)
