@@ -100,7 +100,7 @@ forecast.tbats <- function(object, h, level=c(80,95), fan=FALSE, biasadj=FALSE, 
 	if(!is.null(object$lambda))
 	{
 	  if(biasadj){
-	    y.forecast <- InvBoxCoxf(x = list(level = level, mean = y.forecast, upper = upper, lower = lower), lambda = object$lambda)
+	    y.forecast <- InvBoxCoxf(x = list(level = level, mean = y.forecast, upper = upper.bounds, lower = lower.bounds), lambda = object$lambda)
 	  }
 	  else{
 	    y.forecast <- InvBoxCox(y.forecast,object$lambda)
