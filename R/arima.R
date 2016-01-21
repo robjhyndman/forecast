@@ -338,7 +338,7 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
   }
   colnames(lower)=colnames(upper)=paste(level, "%", sep="")
   method <- arima.string(object)
-  fits <- fitted(object)
+  fits <- fitted(object, biasadj)
   if(!is.null(lambda) & is.null(object$constant))  { # Back-transform point forecasts and prediction intervals
     if(biasadj){
       pred$pred <- InvBoxCoxf(x = pred$pred, fvar = var(residuals(object)), lambda = lambda)
@@ -463,7 +463,7 @@ arima.errors <- function(z)
 }
 
 # Return one-step fits
-fitted.Arima <- function(object,...)
+fitted.Arima <- function(object, biasadj = FALSE, ...)
 {
   x <- getResponse(object)
   if(is.null(x))
@@ -475,14 +475,12 @@ fitted.Arima <- function(object,...)
     return(x - object$residuals)
   }
   else{    
-    biasadj <- FALSE
     if(biasadj){
-      InvBoxCoxf(x = (BoxCox(x,object$lambda) - object$residuals), fvar = var(object$residuals), lambda = object$lambda)
+      return(InvBoxCoxf(x = (BoxCox(x,object$lambda) - object$residuals), fvar = var(object$residuals), lambda = object$lambda))
     }
     else{
-      
+      return(InvBoxCox(BoxCox(x,object$lambda) - object$residuals, object$lambda))
     }
-    return(InvBoxCox(BoxCox(x,object$lambda) - object$residuals, object$lambda))
   }
 
 }
