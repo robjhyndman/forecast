@@ -20,6 +20,9 @@ if(require(fpp) & require(testthat))
     expect_output(summary(auto.arima(testseries2, xreg = xregmat, approximation = TRUE, stepwise = FALSE)), regexp = "Series: testseries2")
     expect_output(auto.arima(ts(testseries2, f = 4), approximation = TRUE, trace = TRUE), regexp = "ARIMA")
     
+    fit1 <- auto.arima(testseries1, stepwise=FALSE, lambda=2, biasadj=FALSE)
+    fit2 <- auto.arima(testseries1, stepwise=FALSE, lambda=2, biasadj=TRUE)
+    expect_false(identical(fit1$fitted, fit2$fitted))
   })
   
   test_that("test parallel = TRUE and stepwise = FALSE for auto.arima()", {

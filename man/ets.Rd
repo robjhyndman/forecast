@@ -4,7 +4,7 @@
 \title{Exponential smoothing state space model}
 \usage{
 ets(y, model="ZZZ", damped=NULL, alpha=NULL, beta=NULL, gamma=NULL,
-    phi=NULL, additive.only=FALSE, lambda=NULL,
+    phi=NULL, additive.only=FALSE, lambda=NULL, biasadj=FALSE,
     lower=c(rep(0.0001,3), 0.8), upper=c(rep(0.9999,3),0.98),
     opt.crit=c("lik","amse","mse","sigma","mae"), nmse=3,
     bounds=c("both","usual","admissible"), ic=c("aicc","aic","bic"),
@@ -31,6 +31,7 @@ It is also possible for the model to be of class \code{"ets"}, and equal to the 
 \item{phi}{Value of phi. If NULL, it is estimated.}
 \item{additive.only}{If TRUE, will only consider additive models. Default is FALSE.}
 \item{lambda}{Box-Cox transformation parameter. Ignored if NULL. Otherwise, data transformed before model is estimated. When \code{lambda=TRUE}, \code{additive.only} is set to FALSE.}
+\item{biasadj}{Use adjusted back-transformed mean for Box-Cox transformations. If TRUE, point forecasts and fitted values are mean forecast. Otherwise, these points can be considered the median of the forecast densities.}
 \item{lower}{Lower bounds for the parameters (alpha, beta, gamma, phi)}
 \item{upper}{Upper bounds for the parameters (alpha, beta, gamma, phi)}
 \item{opt.crit}{Optimization criterion. One of "mse" (Mean Square Error),

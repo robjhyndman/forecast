@@ -1,4 +1,4 @@
-# A unit test for tslm function
+# A unit test for wrangling functions
 if(require(testthat))
 {
   context("Tests joining data.frames")

@@ -2,7 +2,7 @@
 \alias{forecast.lm}
 \title{Forecast a linear model with possible time series components}
 \usage{\method{forecast}{lm}(object, newdata, h=10, level=c(80,95), fan=FALSE, 
-    lambda=object$lambda, ts=TRUE, ...)
+    lambda=object$lambda, biasadj=FALSE, ts=TRUE, ...)
 }
 
 \arguments{
@@ -12,6 +12,7 @@
 \item{fan}{If \code{TRUE}, level is set to seq(51,99,by=3). This is suitable for fan plots.}
 \item{h}{Number of periods for forecasting. Ignored if \code{newdata} present.}
 \item{lambda}{Box-Cox transformation parameter. Ignored if \code{NULL}. Otherwise, forecasts back-transformed via an inverse Box-Cox transformation.}
+\item{biasadj}{Use adjusted back-transformed mean for Box-Cox transformations. If TRUE, point forecasts and fitted values are mean forecast. Otherwise, these points can be considered the median of the forecast densities.}
 \item{ts}{If \code{TRUE}, the forecasts will be treated as time series provided the original data is a time series; the \code{newdata} will be interpreted as related to the subsequent time periods. If \code{FALSE}, any time series attributes of the original data will be ignored.}
 \item{...}{Other arguments passed to \code{\link[stats]{predict.lm}()}.}
 }

@@ -3,14 +3,15 @@
 \alias{forecast.tbats}
 \title{Forecasting using BATS and TBATS models}
 
-\usage{\method{forecast}{bats}(object, h, level=c(80,95), fan=FALSE, ...)
-\method{forecast}{tbats}(object, h, level=c(80,95), fan=FALSE, ...)
+\usage{\method{forecast}{bats}(object, h, level=c(80,95), fan=FALSE, biasadj=FALSE, ...)
+\method{forecast}{tbats}(object, h, level=c(80,95), fan=FALSE, biasadj=FALSE, ...)
 }
 \arguments{
 \item{object}{An object of class "\code{bats}". Usually the result of a call to \code{\link{bats}}.}
 \item{h}{Number of periods for forecasting. Default value is twice the largest seasonal period (for seasonal data) or ten (for non-seasonal data).}
 \item{level}{Confidence level for prediction intervals.}
 \item{fan}{If TRUE, level is set to \code{seq(51,99,by=3)}. This is suitable for fan plots.}
+\item{biasadj}{Use adjusted back-transformed mean for Box-Cox transformations. If TRUE, point forecasts and fitted values are mean forecast. Otherwise, these points can be considered the median of the forecast densities.}
 \item{...}{Other arguments, currently ignored.}
 }
 

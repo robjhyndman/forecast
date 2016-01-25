@@ -2,7 +2,7 @@
 if(require(fpp) & require(testthat))
 {
   context("Test forecast.R")
-  test_that("tests for findfrequency()t", {
+  test_that("tests for findfrequency()", {
     expect_true(frequency(oil) == findfrequency(as.numeric(oil)))
     expect_true(frequency(a10) == findfrequency(as.numeric(a10)))
     expect_true(frequency(woolyrnq) == findfrequency(as.numeric(woolyrnq)))

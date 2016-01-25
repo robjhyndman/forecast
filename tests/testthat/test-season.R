@@ -64,6 +64,9 @@ if(require(fpp) & require(testthat))
   test_that("tests for stlf",{
   expect_true(all(forecast.stlm(stlm(wineind))$mean == stlf(wineind)$mean))
   expect_true(all(forecast.stlm(stlm(wineind, lambda = .5))$mean == stlf(wineind, lambda = .5)$mean))
+  fit1 <- stlf(wineind,lambda=.2,biasadj=FALSE)
+  fit2 <- stlf(wineind,lambda=.2,biasadj=TRUE)
+  expect_false(identical(fit1$mean, fit2$mean))
   })
   
   test_that("tests for ma",{
@@ -72,5 +75,5 @@ if(require(fpp) & require(testthat))
   maseries <- ma(testseries, order = 3)
   expect_true(all(is.na(maseries)[c(1, 20)]))
   expect_true(all(maseries[2:19] == 2:19))
-})
+  })
 }

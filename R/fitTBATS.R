@@ -1,4 +1,4 @@
-fitPreviousTBATSModel <- function (y, model) {
+fitPreviousTBATSModel <- function (y, model, biasadj=FALSE) {
   seasonal.periods <- model$seasonal.periods
   if (is.null(seasonal.periods) == FALSE) {
     seasonal.periods <- as.integer(sort(seasonal.periods))
@@ -66,7 +66,12 @@ fitPreviousTBATSModel <- function (y, model) {
   e <- fitted.values.and.errors$e
   fitted.values <- fitted.values.and.errors$y.hat
   if (is.null(lambda) == FALSE) {
-    fitted.values <- InvBoxCox(fitted.values, lambda=lambda)
+    if(biasadj){
+      fitted.values <- InvBoxCoxf(fitted.values, fvar = var(e), lambda = lambda)
+    }
+    else{
+      fitted.values <- InvBoxCox(fitted.values, lambda=lambda)
+    }
   }
   variance <- sum((e*e))/length(y)
   
@@ -81,7 +86,7 @@ fitPreviousTBATSModel <- function (y, model) {
 }
 
 
-fitSpecificTBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.periods=NULL, k.vector=NULL, starting.params=NULL, x.nought=NULL, ar.coefs=NULL, ma.coefs=NULL, init.box.cox=NULL, bc.lower=0, bc.upper=1) {
+fitSpecificTBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.periods=NULL, k.vector=NULL, starting.params=NULL, x.nought=NULL, ar.coefs=NULL, ma.coefs=NULL, init.box.cox=NULL, bc.lower=0, bc.upper=1, biasadj=FALSE) {
 	if(!is.null(seasonal.periods)) {
 		seasonal.periods <- sort(seasonal.periods)
 	}
@@ -304,7 +309,12 @@ fitSpecificTBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.per
 		fitted.values.and.errors <- calcModel(y.transformed, x.nought, F, g, w)
 		e <- fitted.values.and.errors$e
 		fitted.values <- fitted.values.and.errors$y.hat
-		fitted.values <- InvBoxCox(fitted.values, lambda=lambda)
+		if(biasadj){
+		  fitted.values <- InvBoxCoxf(fitted.values, fvar = var(e), lambda = lambda)
+		}
+		else{
+		  fitted.values <- InvBoxCox(fitted.values, lambda=lambda)
+		}
 		variance <- sum((e*e))/length(y)
 		#e <- InvBoxCox(e, lambda=lambda)
 		ee <- y-fitted.values

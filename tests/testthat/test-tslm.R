@@ -12,6 +12,9 @@ if(require(fpp) & require(testthat))
   
   test_that("tests on model building with univariate time series", {
     fit1 <- tslm(v_y ~ trend + season, data=data)
+    fit2 <- tslm(v_y ~ trend + season, data=data, lambda=2, biasadj = FALSE)
+    fit3 <- tslm(v_y ~ trend + season, data=data, lambda=2, biasadj = TRUE)
+    expect_false(identical(fit2$fitted.values, fit3$fitted.values))
     fit2 <- tslm(v_y ~ trend + season, data=data.frame(trend=rnorm(120)))
     expect_false(identical(fit1$model, fit2$model))
     fit2 <- tslm(v_y ~ trend + season)
@@ -55,8 +58,10 @@ if(require(fpp) & require(testthat))
   
   test_that("tests on model building with multivariate time series", {
     fit1 <- tslm(mv_y ~ trend + season)
-    fit2 <- tslm(mv_y ~ trend + season, lambda=.5)
+    fit2 <- tslm(mv_y ~ trend + season, lambda=0.5)
     expect_false(identical(fit1$coefficients, fit2$coefficients))
+    fit3 <- tslm(mv_y ~ trend + season, lambda=0.5, biasadj = TRUE)
+    expect_false(identical(fit2$fitted.values, fit3$fitted.values))
     fit2 <- tslm(mv_y ~ trend + season, data=data)
     expect_that(names(fit1), equals(names(fit2)))
     expect_that(fit1$model, equals(fit2$model))
@@ -73,4 +78,11 @@ if(require(fpp) & require(testthat))
     expect_error(tslm(tmp2 ~ trend + season + trend*season, subset = subset(tmp2, month="January"), "Non-seasonal data cannot be modelled using a seasonal factor"))
   })
 
+  test_that("forecast.lm", {
+    fit1 <- tslm(v_y ~ trend + season, lambda=2, biasadj = FALSE)
+    fit2 <- tslm(v_y ~ trend + season, lambda=2, biasadj = TRUE)
+    fcast1 <- forecast(fit1, h=60, biasadj=FALSE)
+    fcast2 <- forecast(fit2, h=60, biasadj=TRUE)
+    expect_false(identical(fcast1$mean, fcast2$mean))
+    })
 }

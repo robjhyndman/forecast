@@ -5,7 +5,7 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     stepwise=TRUE, trace=FALSE,
     approximation=(length(x)>100 | frequency(x)>12), xreg=NULL,
     test=c("kpss","adf","pp"), seasonal.test=c("ocsb","ch"),
-    allowdrift=TRUE,allowmean=TRUE,lambda=NULL,
+    allowdrift=TRUE,allowmean=TRUE,lambda=NULL, biasadj=FALSE,
     parallel=FALSE, num.cores=2)
 {
   # Only non-stepwise parallel implemented so far.
@@ -180,15 +180,10 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
       parallel=parallel, num.cores=num.cores)
     bestfit$call <- match.call()
     bestfit$call$x <- data.frame(x=x)
-    bestfit$lamba <- lambda
+    bestfit$lambda <- lambda
     bestfit$x <- orig.x
     bestfit$series <- series
-    bestfit$fitted <- fitted(bestfit)
-    if(!is.null(lambda))
-    {
-      bestfit$fitted <- InvBoxCox(bestfit$fitted,lambda)
-      bestfit$lambda <- lambda
-    }
+    bestfit$fitted <- fitted(bestfit, biasadj)
     return(bestfit)
   }
 

@@ -1,4 +1,4 @@
-tslm <- function(formula,data,subset,lambda=NULL,...){
+tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
   cl <- match.call()
   if(!("formula" %in% class(formula))){
     formula <- as.formula(formula)
@@ -139,12 +139,17 @@ tslm <- function(formula,data,subset,lambda=NULL,...){
   }
   if(!is.null(lambda)){
     fit$lambda <- lambda
-    fit$fitted.values <- InvBoxCox(fit$fitted.values,lambda)
+    if(biasadj){
+      fit$fitted.values <- InvBoxCoxf(fit$fitted.values, fvar = var(fit$residuals), lambda = lambda)
+    }
+    else{
+      fit$fitted.values <- InvBoxCox(fit$fitted.values,lambda)
+    }
   }
   return(fit)
 }
 
-forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, ts=TRUE, ...)
+forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, biasadj=FALSE, ts=TRUE, ...)
 {
   if (fan)
     level <- seq(51, 99, by = 3)
@@ -316,7 +321,12 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
   if(!is.null(lambda))
   {
     fcast$x <- InvBoxCox(fcast$x,lambda)
-    fcast$mean <- InvBoxCox(fcast$mean,lambda)
+    if(biasadj){
+      fcast$mean <- InvBoxCoxf(fcast, lambda = lambda)
+    }
+    else{
+      fcast$mean <- InvBoxCox(fcast$mean,lambda)
+    }
     fcast$lower <- InvBoxCox(fcast$lower,lambda)
     fcast$upper <- InvBoxCox(fcast$upper,lambda)
   }
