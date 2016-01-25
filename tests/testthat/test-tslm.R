@@ -78,4 +78,11 @@ if(require(fpp) & require(testthat))
     expect_error(tslm(tmp2 ~ trend + season + trend*season, subset = subset(tmp2, month="January"), "Non-seasonal data cannot be modelled using a seasonal factor"))
   })
 
+  test_that("forecast.lm", {
+    fit1 <- tslm(v_y ~ trend + season, lambda=2, biasadj = FALSE)
+    fit2 <- tslm(v_y ~ trend + season, lambda=2, biasadj = TRUE)
+    fcast1 <- forecast(fit1, h=60, biasadj=FALSE)
+    fcast2 <- forecast(fit2, h=60, biasadj=TRUE)
+    expect_false(identical(fcast1$mean, fcast2$mean))
+    })
 }

@@ -37,4 +37,15 @@ if(require(fpp) & require(testthat))
 	  expect_false(identical(fit1$fitted, fit2$fitted))
 	  expect_error(ets(taylor, model = "ZZA"))
 	})
+	
+	test_that("forecast.ets()", {
+	  expect_that(fit<-ets(oil, lambda = 0.15, biasadj = TRUE), not(throws_error()))
+	  expect_that(fcast1 <- forecast(fit, PI=FALSE), not(throws_error()))
+	  expect_true(is.null(fcast1$upper) & is.null(fcast1$lower))
+	  expect_that(fcast1 <- forecast(fit, biasadj=FALSE), not(throws_error()))
+	  expect_that(fcast2 <- forecast(fit, biasadj=TRUE), not(throws_error()))
+	  expect_false(identical(fcast1$mean, fcast2$mean))
+	  expect_that(fcast <- forecast(fit, simulate=TRUE), not(throws_error()))
+	  expect_true(!is.null(fcast$upper) & !is.null(fcast$lower))
+	})
 }
