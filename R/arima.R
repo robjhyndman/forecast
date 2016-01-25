@@ -466,6 +466,9 @@ arima.errors <- function(z)
 fitted.Arima <- function(object, biasadj = FALSE, ...)
 {
   x <- getResponse(object)
+  if(!is.null(object$fitted)){
+    return(object$fitted)
+  }
   if(is.null(x))
   {
     #warning("Fitted values are unavailable due to missing historical data")

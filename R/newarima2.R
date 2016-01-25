@@ -183,17 +183,7 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     bestfit$lamba <- lambda
     bestfit$x <- orig.x
     bestfit$series <- series
-    bestfit$fitted <- fitted(bestfit)
-    if(!is.null(lambda))
-    {
-      if(biasadj){
-        bestfit$fitted <- InvBoxCoxf(bestfit$fitted, fvar = var(bestfit$residuals), lambda = lambda)
-      }
-      else{
-        bestfit$fitted <- InvBoxCox(bestfit$fitted,lambda)
-      }
-      bestfit$lambda <- lambda
-    }
+    bestfit$fitted <- fitted(bestfit, biasadj)
     return(bestfit)
   }
 
