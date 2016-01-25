@@ -180,7 +180,7 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
       parallel=parallel, num.cores=num.cores)
     bestfit$call <- match.call()
     bestfit$call$x <- data.frame(x=x)
-    bestfit$lamba <- lambda
+    bestfit$lambda <- lambda
     bestfit$x <- orig.x
     bestfit$series <- series
     bestfit$fitted <- fitted(bestfit, biasadj)
