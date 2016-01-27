@@ -15,7 +15,7 @@ fourier(x,K,h)
 }
 \description{\code{seasonaldummy} returns matrices of dummy variables suitable for use in \code{\link[stats]{arima}}, \code{\link[stats]{lm}} or \code{\link{tslm}}. The last season is omitted and used as the control.
 
-\code{fourier} returns matrices containing terms from a Fourier series, up to order \code{K}, suitable for use in \code{\link[stats]{arima}}, \code{\link[stats]{lm}} or \code{\link{tslm}}. 
+\code{fourier} returns matrices containing terms from a Fourier series, up to order \code{K}, suitable for use in \code{\link[stats]{arima}}, \code{\link[stats]{lm}} or \code{\link{tslm}}.
 
 \code{fourierf} and \code{seasonaldummyf} are deprecated, instead use the \code{h} argument in \code{fourier} and \code{seasonaldummy}.
 }
@@ -24,7 +24,7 @@ fourier(x,K,h)
 
 When \code{x} is a \code{ts} object, the value of \code{K} should be an integer and specifies the number of sine and cosine terms to return. Thus, the matrix returned has \code{2*K} columns.
 
-When \code{x} is a \code{msts} object, then \code{K} should be a vector of integers specifying the number of sine and cosine terms for each of the seasonal periods. Then the matrix returned will have \code{2*sum(K)} columns.  
+When \code{x} is a \code{msts} object, then \code{K} should be a vector of integers specifying the number of sine and cosine terms for each of the seasonal periods. Then the matrix returned will have \code{2*sum(K)} columns.
 }
 
 \value{Numerical matrix.}
@@ -37,7 +37,7 @@ plot(ldeaths)
 month <- seasonaldummy(ldeaths)
 deaths.lm  <- tslm(ldeaths ~ month)
 tsdisplay(residuals(deaths.lm))
-ldeaths.fcast <- forecast(deaths.lm, 
+ldeaths.fcast <- forecast(deaths.lm,
   data.frame(month=I(seasonaldummy(ldeaths,36))))
 plot(ldeaths.fcast)
 
@@ -47,17 +47,14 @@ ldeaths.fcast <- forecast(deaths.lm, h=36)
 plot(ldeaths.fcast)
 
 # Using Fourier series
-X <- fourier(ldeaths,3)
-deaths.lm  <- tslm(ldeaths ~ X)
-ldeaths.fcast <- forecast(deaths.lm, 
-  data.frame(X=I(fourier(ldeaths,3,36))))
+deaths.lm  <- tslm(ldeaths ~ fourier(ldeaths,3))
+ldeaths.fcast <- forecast(deaths.lm, fourier(ldeaths,3,36))
 plot(ldeaths.fcast)
 
 # Using Fourier series for a "msts" object
-Z <- fourier(taylor, K = c(3, 3))
-taylor.lm <- tslm(taylor ~ Z)
-taylor.fcast <- forecast(taylor.lm, 
-  data.frame(Z = I(fourier(taylor, K = c(3, 3), h = 270))))
+taylor.lm <- tslm(taylor ~ fourier(taylor, K = c(3, 3)))
+taylor.fcast <- forecast(taylor.lm,
+                  data.frame(fourier(taylor, K = c(3, 3), h = 270)))
 plot(taylor.fcast)
 }
 \keyword{ts}
