@@ -3,11 +3,11 @@ forecast.varest <- function(object, h=10, level=c(80,95), fan=FALSE, ...)
 {
 	out <- list(model=object,level=level,x=object$y)
 	# Get residuals and fitted values and fix the times
-	out$res <- out$fitted <- ts(matrix(NA,nrow=nrow(out$x),ncol=ncol(out$x)))
-	tsp(out$res) <- tsp(out$fitted) <- tsp(out$x)
+	out$residuals <- out$fitted <- ts(matrix(NA,nrow=nrow(out$x),ncol=ncol(out$x)))
+	tsp(out$residuals) <- tsp(out$fitted) <- tsp(out$x)
 	vres <- residuals(object)
 	vfits <- fitted(object)
-	out$res[ (nrow(out$res)-nrow(vres)+1):nrow(out$res), ] <- vres
+	out$residuals[ (nrow(out$residuals)-nrow(vres)+1):nrow(out$residuals), ] <- vres
 	out$fitted[ (nrow(out$fitted)-nrow(vfits)+1):nrow(out$fitted), ] <- vfits
 	# Add forecasts with prediction intervals
 	out$mean <- out$lower <- out$upper <- vector("list",object$K)
