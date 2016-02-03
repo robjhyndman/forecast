@@ -108,10 +108,7 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
     else{
       warning("Subset has been assumed contiguous")
       timesx <- time(data[,1])[subsetTF]
-      freq <- sort(unique(round(timesx[1:tspx[3]]%%1,digits=6))) #The subset cannot increase frequency
-      tspx[3] <- length(freq)
-      #tspx <- c(min(timesx),floor(max(timesx)) + (match(round(max(timesx)%%1,digits=6),freq)-1)/tspx[3],tspx[3])
-      tspx <- c(min(timesx),min(timesx)+(sum(subsetTF)-1)/tspx[3],tspx[3])
+      tspx <- recoverTSP(timesx)
     }
     if(tspx[3]==1 & tsdat[2]==0 & tsvar[2]!=0){
       stop("Non-seasonal data cannot be modelled using a seasonal factor")
