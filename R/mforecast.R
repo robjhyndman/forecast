@@ -74,7 +74,7 @@ forecast.mlm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambd
   else {
     stop("Response not found")
   }
-  out$res <- residuals(object)
+  out$residuals <- residuals(object)
   out$fitted <- fitted(object)
   out$mean <- out$lower <- out$upper <- vector("list",K)
   names(out$mean) <- names(out$lower) <- names(out$upper) <- colnames(object$coefficients)
@@ -117,7 +117,9 @@ plot.mforecast <- function(x, main=paste("Forecasts from",x$method),xlab="time",
     fcst$lower <- x$lower[[i]]
     fcst$upper <- x$upper[[i]]
     fcst$x <- x$x[,i]
-    fcst$model <- mlmsplit(fcst$model, index=i)
+    if("mlm" %in% class(fcst$model)){
+      fcst$model <- mlmsplit(fcst$model, index=i)
+    }
     class(fcst) <- "forecast"
     plot(fcst,main="",xaxt="n",ylab=names(x$mean)[i],...)
   }
