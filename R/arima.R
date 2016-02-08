@@ -477,7 +477,7 @@ fitted.Arima <- function(object, biasadj = FALSE, ...)
   if(is.null(object$lambda)){
     return(x - object$residuals)
   }
-  else{    
+  else{
     if(biasadj){
       return(InvBoxCoxf(x = (BoxCox(x,object$lambda) - object$residuals), fvar = var(object$residuals), lambda = object$lambda))
     }
@@ -492,7 +492,7 @@ fitted.Arima <- function(object, biasadj = FALSE, ...)
 # Also allows refitting to new data
 # and drift terms to be included.
 Arima <- function(x, order=c(0, 0, 0),
-      seasonal=c(0, 0, 0), 
+      seasonal=c(0, 0, 0),
       xreg=NULL, include.mean=TRUE, include.drift=FALSE, include.constant, lambda=model$lambda,
     transform.pars=TRUE,
       fixed=NULL, init=NULL, method=c("CSS-ML", "ML", "CSS"),
@@ -549,6 +549,13 @@ Arima <- function(x, order=c(0, 0, 0),
 
   if(!is.null(model))
   {
+    if(!is.null(model$xreg))
+    {
+      if(is.null(xreg))
+        stop("No regressors provided")
+      if(ncol(xreg) != ncol(model$xreg))
+        stop("Number of regressors does not match fitted model")
+    }
     tmp <- arima2(x,model,xreg=xreg,method=method)
     xreg <- tmp$xreg
   }
@@ -734,7 +741,7 @@ print.ARIMA <- function (x, digits=max(3, getOption("digits") - 3), se=TRUE,
 #     else return(pred)
 # }
 
-arimaorder <- function (object) 
+arimaorder <- function (object)
 {
 	if(is.element("Arima",class(object)))
 	{
@@ -747,7 +754,7 @@ arimaorder <- function (object)
 	}
 	else if(is.element("ar",class(object)))
 	{
-		return(c(object$order,0,0))	
+		return(c(object$order,0,0))
 	}
 	else if(is.element("fracdiff",class(object)))
 	{
