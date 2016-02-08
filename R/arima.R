@@ -549,13 +549,6 @@ Arima <- function(x, order=c(0, 0, 0),
 
   if(!is.null(model))
   {
-    if(!is.null(model$xreg))
-    {
-      if(is.null(xreg))
-        stop("No regressors provided")
-      if(ncol(xreg) != ncol(model$xreg))
-        stop("Number of regressors does not match fitted model")
-    }
     tmp <- arima2(x,model,xreg=xreg,method=method)
     xreg <- tmp$xreg
   }
@@ -606,6 +599,14 @@ arima2 <- function (x, model, xreg, method)
         xreg <- as.matrix(data.frame(drift=newxreg))
       }
       use.xreg <- TRUE
+    }
+
+    if(!is.null(model$xreg))
+    {
+      if(is.null(xreg))
+        stop("No regressors provided")
+      if(ncol(xreg) != ncol(model$xreg))
+        stop("Number of regressors does not match fitted model")
     }
 
     if(model$arma[5]>1 & sum(abs(model$arma[c(3,4,7)]))>0) # Seasonal model
