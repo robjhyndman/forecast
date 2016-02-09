@@ -2,7 +2,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
     alpha=NULL, beta=NULL, gamma=NULL, phi=NULL, additive.only=FALSE, lambda=NULL, biasadj=FALSE,
     lower=c(rep(0.0001,3), 0.8), upper=c(rep(0.9999,3),0.98),
     opt.crit=c("lik","amse","mse","sigma","mae"), nmse=3, bounds=c("both","usual","admissible"),
-    ic=c("aicc","aic","bic"),restrict=TRUE, allow.multiplicative.trend=FALSE, 
+    ic=c("aicc","aic","bic"),restrict=TRUE, allow.multiplicative.trend=FALSE,
     use.initial.values=FALSE, ...)
 {
   #dataname <- substitute(y)
@@ -18,7 +18,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
   y <- as.ts(y)
 
   # Check if data is constant
-  if (is.constant(y)) 
+  if (is.constant(y))
     return(ses(y, alpha=0.99999, initial='simple')$model)
 
   # Remove missing values near ends
@@ -169,7 +169,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
   # Check we have enough data to fit a model
   n <- length(y)
   npars <- 2L # alpha + l0
-  if(trendtype=="A" | trendtype=="M") 
+  if(trendtype=="A" | trendtype=="M")
     npars <- npars + 2L # beta + b0
   if(seasontype=="A" | seasontype=="M")
     npars <- npars + m # gamma + s
@@ -597,7 +597,7 @@ initparam <- function(alpha,beta,gamma,phi,trendtype,seasontype,damped,lower,upp
     if(m > 12)
       alpha <- 0.0002
     if(is.null(beta) & is.null(gamma))
-      alpha <- lower[1] + .5*(upper[1]-lower[1])
+      alpha <- lower[1] + .1*(upper[1]-lower[1])
     else if(is.null(gamma))
       alpha <- beta+0.001
     else if(is.null(beta))
