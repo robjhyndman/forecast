@@ -1,9 +1,11 @@
 # Defaults:
 #For non-seasonal data, p chosen using AIC from linear AR(p) model
-#For seasonal data, p=3 and P=1.
+#For seasonal data, p chosen using AIC from linear AR(p) model after
+#    seasonally adjusting with STL decomposition, and P=1
 #size set to average of number of inputs and number of outputs: (p+P+1)/2
+#if xreg is included then size = (p+P+ncol(xreg)+1)/2
 
-nnetar <- function(x, p, P=1, size, repeats=20, lambda=NULL)
+nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, ...)
 {
   # Transform data
   if(!is.null(lambda))
@@ -11,6 +13,13 @@ nnetar <- function(x, p, P=1, size, repeats=20, lambda=NULL)
   else
     xx <- x
 
+  # Check xreg class & dim
+  if(!is.null(xreg))
+  {
+    xreg <- as.matrix(xreg)
+    if(length(x) != nrow(xreg))
+      stop("Number of rows in xreg does not match series length")
+  }
   # Scale data
   scale <- max(abs(xx),na.rm=TRUE)
   xx <- xx/scale
@@ -34,19 +43,23 @@ nnetar <- function(x, p, P=1, size, repeats=20, lambda=NULL)
     }
     if(P > 0)
       lags <- sort(unique(c(1:p,m*(1:P))))
+    else
+      lags <- 1:p
   }
-  if(missing(size))
-    size <- round((p+P+1)/2)
   maxlag <- max(lags)
   nlag <- length(lags)
   y <- xx[-(1:maxlag)]
   lags.X <- matrix(NA,ncol=nlag,nrow=n-maxlag)
   for(i in 1:nlag)
     lags.X[,i] <- xx[(maxlag-lags[i]+1):(n-lags[i])]
+  # Add xreg into lagged matrix
+  lags.X <- cbind(lags.X, xreg[-(1:maxlag), ])
+  if(missing(size))
+    size <- round((ncol(lags.X)+1)/2)
   # Remove missing values if present
   j <- complete.cases(lags.X,y)
-  # Fit average ANN. 
-  fit <- avnnet(lags.X[j,],y[j],size=size,linout=1,trace=FALSE,repeats=repeats)
+  # Fit average ANN.
+  fit <- avnnet(lags.X[j,],y[j],size=size,linout=1,trace=FALSE,repeats=repeats, ...)
   # Return results
   out <- list()
   out$x <- as.ts(x)
@@ -55,9 +68,10 @@ nnetar <- function(x, p, P=1, size, repeats=20, lambda=NULL)
   out$P <- P
   out$scale <- scale
   out$size <- size
+  out$xreg <- xreg
   out$lambda <- lambda
   out$model <- fit
-  fits <- c(rep(NA,maxlag), rowMeans(matrix(unlist(lapply(fit, predict)),ncol=length(fit))))
+  fits <- c(rep(NA,maxlag), rowMeans(sapply(fit, predict)))
   fits <- ts(fits*scale)
   if(!is.null(lambda))
     fits <- InvBoxCox(fits,lambda)
@@ -77,7 +91,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, lambda=NULL)
 
 # Aggregate several neural network models
 
-avnnet <- function(x,y,repeats,...)
+avnnet <- function(x,y,repeats, ...)
 {
   mods <- list()
   for(i in 1:repeats)
@@ -92,12 +106,28 @@ print.nnetarmodels <- function(x, ...)
 }
 
 
-forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), lambda=object$lambda, ...)
+forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), xreg=NULL, lambda=object$lambda, ...)
 {
 #  require(nnet)
   out <- object
   tspx <- tsp(out$x)
 
+  # Check if xreg was used in fitted model
+  if(is.null(object$xreg))
+  {
+    if(!is.null(xreg))
+      warning("External regressors were not used in fitted model, xreg will be ignored")
+    xreg <- NULL
+  }
+  else
+  {
+    if(is.null(xreg))
+      stop("No external regressors provided")
+    xreg <- as.matrix(xreg)
+    if(ncol(xreg) != ncol(object$xreg))
+      stop("Number of external regressors does not match fitted model")
+    h <- nrow(xreg)
+  }
   fcast <- numeric(h)
   xx <- object$x
   if(!is.null(lambda))
@@ -105,7 +135,7 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), la
   flag <- rev(tail(xx/object$scale, n=max(object$lags)))
   for(i in 1:h)
   {
-    fcast[i] <- mean(unlist(lapply(object$model, predict, newdata=flag[object$lags])))
+    fcast[i] <- mean(sapply(object$model, predict, newdata=c(flag[object$lags], xreg[i, ])))
     flag <- c(fcast[i],flag[-length(flag)])
   }
   out$mean <- ts(fcast*object$scale,start=tspx[2]+1/tspx[3],frequency=tspx[3])
