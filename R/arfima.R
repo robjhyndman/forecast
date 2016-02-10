@@ -115,11 +115,9 @@ arfima <- function(x, drange = c(0, 0.5), estim = c("mle","ls"), lambda = NULL, 
 	fit$residuals <- undo.na.ends(x,residuals(fit))
 	fit$fitted <- x - fit$residuals
 	if(!is.null(lambda))
+	  fit$fitted <- InvBoxCox(fit$fitted,lambda)
 	  if(biasadj){
 	    fit$fitted <- InvBoxCoxf(fit$fitted, fvar = var(fit$residuals), lambda=lambda)
-	  }
-	  else{
-	    fit$fitted <- InvBoxCox(fit$fitted,lambda)
 	  }
 	fit$lambda <- lambda
 	fit$call$data <- data.frame(x=x)
@@ -232,11 +230,9 @@ forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=ob
 	{
 		x <- InvBoxCox(x,lambda)
 		fits <- InvBoxCox(fits,lambda)
+		mean.fcast <- InvBoxCox(mean.fcast,lambda)
 		if(biasadj){
 		  mean.fcast <- InvBoxCoxf(list(level = level, mean = mean.fcast, upper=upper, lower=lower),lambda=lambda)
-		}
-		else{
-		  mean.fcast <- InvBoxCox(mean.fcast,lambda)
 		}
 		lower <- InvBoxCox(lower,lambda)
 		upper <- InvBoxCox(upper,lambda)

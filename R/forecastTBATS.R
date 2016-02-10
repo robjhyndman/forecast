@@ -99,11 +99,9 @@ forecast.tbats <- function(object, h, level=c(80,95), fan=FALSE, biasadj=FALSE, 
 	#Inv Box Cox transform if required
 	if(!is.null(object$lambda))
 	{
+	  y.forecast <- InvBoxCox(y.forecast,object$lambda)
 	  if(biasadj){
 	    y.forecast <- InvBoxCoxf(x = list(level = level, mean = y.forecast, upper = upper.bounds, lower = lower.bounds), lambda = object$lambda)
-	  }
-	  else{
-	    y.forecast <- InvBoxCox(y.forecast,object$lambda)
 	  }
 		y.forecast  <-  InvBoxCox(y.forecast,object$lambda)
 		lower.bounds  <-  InvBoxCox(lower.bounds,object$lambda)

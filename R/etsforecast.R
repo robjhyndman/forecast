@@ -71,11 +71,9 @@ forecast.ets <- function(object, h=ifelse(object$m>1, 2*object$m, 10),
   {
 	  #out$x <- InvBoxCox(object$x,lambda)
 	  #out$fitted <- InvBoxCox(out$fitted,lambda)
+    out$mean <- InvBoxCox(out$mean,lambda)
     if(biasadj){
       out$mean <- InvBoxCoxf(x = out, lambda = lambda)
-    }
-    else{
-      out$mean <- InvBoxCox(out$mean,lambda)
     }
 	  if(PI)  # PI = TRUE
 	  {

@@ -340,11 +340,9 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
   method <- arima.string(object)
   fits <- fitted(object, biasadj)
   if(!is.null(lambda) & is.null(object$constant))  { # Back-transform point forecasts and prediction intervals
+    pred$pred <- InvBoxCox(pred$pred,lambda)
     if(biasadj){
       pred$pred <- InvBoxCoxf(x = pred$pred, fvar = var(residuals(object)), lambda = lambda)
-    }
-    else{
-      pred$pred <- InvBoxCox(pred$pred,lambda)
     }
     if(!bootstrap) { # Bootstrapped intervals already back-transformed
       lower <- InvBoxCox(lower,lambda)
@@ -395,11 +393,9 @@ forecast.ar <- function(object,h=10,level=c(80,95),fan=FALSE, lambda=NULL,  boot
 
     if(!is.null(lambda))
     {
+      pred$pred <- InvBoxCox(pred$pred,lambda)
       if(biasadj){
         pred$pred <- InvBoxCoxf(x=list(level = level, mean = pred$pred, upper = upper, lower = lower), lambda=lambda)
-      }
-      else{
-        pred$pred <- InvBoxCox(pred$pred,lambda)
       }
       lower <- InvBoxCox(lower,lambda)
       upper <- InvBoxCox(upper,lambda)
@@ -478,14 +474,14 @@ fitted.Arima <- function(object, biasadj = FALSE, ...)
     return(x - object$residuals)
   }
   else{
+    fits <- InvBoxCox(BoxCox(x,object$lambda) - object$residuals, object$lambda)
     if(biasadj){
-      return(InvBoxCoxf(x = (BoxCox(x,object$lambda) - object$residuals), fvar = var(object$residuals), lambda = object$lambda))
+      return(InvBoxCoxf(x = fits, fvar = var(object$residuals), lambda = object$lambda))
     }
     else{
-      return(InvBoxCox(BoxCox(x,object$lambda) - object$residuals, object$lambda))
+      return(fits)
     }
   }
-
 }
 
 # Calls arima from stats package and adds data to the returned object
