@@ -93,11 +93,9 @@ ets <- function(y, model="ZZZ", damped=NULL,
       model$x <- orig.y
       if(!is.null(lambda))
       {
+        model$fitted <- InvBoxCox(model$fitted,lambda)
         if(biasadj){
           model$fitted <- InvBoxCoxf(x = model$fitted, fvar = var(model$residuals), lambda = lambda)
-        }
-        else{
-          model$fitted <- InvBoxCox(model$fitted,lambda)
         }
       }
       model$lambda <- lambda
@@ -246,11 +244,9 @@ ets <- function(y, model="ZZZ", damped=NULL,
   model$lambda <- lambda
   if(!is.null(lambda))
   {
+    model$fitted <- InvBoxCox(model$fitted,lambda)
     if(biasadj){
       model$fitted <- InvBoxCoxf(x = model$fitted, fvar = var(model$residuals), lambda = lambda)
-    }
-    else{
-      model$fitted <- InvBoxCox(model$fitted,lambda)
     }
   }
 

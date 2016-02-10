@@ -192,11 +192,9 @@ forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsm
 	{
 		fcast$x <- InvBoxCox(fcast$x,lambda)
 		fcast$fitted <- InvBoxCox(fcast$fitted, lambda)
+		fcast$mean <- InvBoxCox(fcast$mean, lambda)
 		if(biasadj){
 		  fcast$mean <- InvBoxCoxf(fcast, lambda = lambda)
-		}
-		else{
-		  fcast$mean <- InvBoxCox(fcast$mean, lambda)
 		}
 		fcast$lower <- InvBoxCox(fcast$lower, lambda)
 		fcast$upper <- InvBoxCox(fcast$upper, lambda)
@@ -288,11 +286,9 @@ forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE
   if (!is.null(lambda)) 
   {
     fcast$fitted <- InvBoxCox(fcast$fitted, lambda)
+    fcast$mean <- InvBoxCox(fcast$mean, lambda)
     if(biasadj){
       fcast$mean <- InvBoxCoxf(fcast, lambda = lambda)
-    }
-    else{
-      fcast$mean <- InvBoxCox(fcast$mean, lambda)
     }
     fcast$lower <- InvBoxCox(fcast$lower, lambda)
     fcast$upper <- InvBoxCox(fcast$upper, lambda)
