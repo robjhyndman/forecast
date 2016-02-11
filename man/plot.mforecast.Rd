@@ -21,5 +21,11 @@
 fit <- tslm(lungDeaths ~ trend + season)
 fcast <- forecast(fit, h=10)
 plot(fcast)
+
+carPower <- as.matrix(mtcars[,c("qsec","hp")])
+carmpg <- mtcars[,"mpg"]
+fit <- lm(carPower ~ carmpg)
+fcast <- forecast(fit, newdata=data.frame(carmpg=30))
+plot(fcast, xlab="Year")
 }
 \keyword{ts}
