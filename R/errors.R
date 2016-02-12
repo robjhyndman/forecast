@@ -258,7 +258,7 @@ accuracy.mforecast <- function(object, x, test=NULL, d, D)
     fc$x <- object$x[,i]
     fc$fitted <- object$fitted[,i]
     if(nox)
-      out1 <- accuracy(fc, test=test, d, D)
+      out1 <- accuracy(fc, test=test, d=d, D=D)
     else
       out1 <- accuracy(fc, x[,i], test, d, D)
     rownames(out1) <- paste(vnames[i],rownames(out1))
