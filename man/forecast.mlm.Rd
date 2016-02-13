@@ -1,8 +1,8 @@
 \name{forecast.mlm}
 \alias{forecast.mlm}
 \title{Forecast a multiple linear model with possible time series components}
-\usage{\method{forecast}{mlm}(object, newdata, h=10, level=c(80,95), fan=FALSE, 
-    lambda=object$lambda, biasadj=FALSE, ts=TRUE, ...)
+\usage{\method{forecast}{mlm}(object, newdata, h = 10, level = c(80, 95), 
+    fan = FALSE, lambda = object$lambda, ts = TRUE, ...)
 }
 
 \arguments{
