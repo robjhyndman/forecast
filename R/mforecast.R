@@ -42,29 +42,7 @@ forecast.mlm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambd
   else{
     tspx <- NULL
   }
-  #Add trend and seasonality to data frame
-  if(!missing(newdata))
-  {
-    newdata <- as.data.frame(newdata)
-    h <- nrow(newdata)
-  }
-  if(!is.null(tspx) & is.element("trend",colnames(object$model)))
-  {
-    x <- ts(1:h, start=tspx[2]+1/tspx[3], frequency=tspx[3])
-    trend <- max(object$model[,"trend"]) + (1:h)
-    season <- as.factor(cycle(x))
-    if(!missing(newdata))
-      newdata <- data.frame(as.data.frame(newdata),trend,season)
-    else
-      newdata <- data.frame(trend,season)
-  }
-  newdata <- as.data.frame(newdata)
-  
-  # If only one column, assume its name.
-  if(NCOL(newdata)==1 & colnames(newdata)[1]=="newdata")
-    colnames(newdata) <- as.character(formula(object$model))[3]
-  
-  out <- list(model=object,level=level,newdata=newdata)
+  out <- list(model=object,level=level)
   if(!is.null(object$x) & !is.list(object$x)){
     out$x <- object$x
   }
@@ -80,12 +58,20 @@ forecast.mlm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambd
   names(out$mean) <- names(out$lower) <- names(out$upper) <- colnames(object$coefficients)
   out$method <- "Multiple linear regression model"
   for (i in 1:K){
-    fcst <- forecast(object = mlmsplit(object,index=i), newdata=newdata, h=h, level = level, fan = fan, ts = TRUE)
+    if(missing(newdata)){
+      fcst <- forecast(object = mlmsplit(object,index=i),
+                       h=h, level = level, fan = fan, ts = !is.null(tspx), ...)
+      newdata <- fcst$newdata
+    }
+    else{
+      fcst <- forecast(object = mlmsplit(object,index=i), newdata=newdata,
+                       h=h, level = level, fan = fan, ts = !is.null(tspx), ...)
+    }
     out$mean[[i]] <- fcst$mean
     out$lower[[i]] <- fcst$lower
     out$upper[[i]] <- fcst$upper
-     #forecast(object = model, newdata = newdata, level = level, fan = fan, lambda = lambda, ts = ts, ...)
   }
+  out$newdata <- newdata
   return(structure(out,class="mforecast"))
 }
 
@@ -126,4 +112,19 @@ plot.mforecast <- function(x, main=paste("Forecasts from",x$method),xlab="time",
   axis(1)
   mtext(xlab,outer=TRUE,side=1,line=3)
   title(main=main,outer=TRUE)
+}
+
+summary.mforecast <- function(object){
+  cat(paste("\nForecast method:",object$method))
+  cat(paste("\n\nModel Information:\n"))
+  print(object$model)
+  cat("\nError measures:\n")
+  print(accuracy(object))
+  if(is.null(object$mean))
+    cat("\n No forecasts\n")
+  else
+  {
+    cat("\nForecasts:\n")
+    print(object)
+  }
 }
