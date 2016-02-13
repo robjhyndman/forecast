@@ -114,7 +114,7 @@ plot.mforecast <- function(x, main=paste("Forecasts from",x$method),xlab="time",
   title(main=main,outer=TRUE)
 }
 
-summary.mforecast <- function(object){
+summary.mforecast <- function(object, ...){
   cat(paste("\nForecast method:",object$method))
   cat(paste("\n\nModel Information:\n"))
   print(object$model)

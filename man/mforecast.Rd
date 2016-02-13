@@ -13,14 +13,17 @@ For example, the function \code{\link{forecast.mlm}} makes multivariate forecast
 }
 
 \usage{forecast(object,...)
-\method{forecast}{mlm}(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, ts=TRUE, ...)}
+\method{forecast}{mlm}(object, newdata, h = 10, level = c(80, 95), 
+    fan = FALSE, lambda = object$lambda, ts = TRUE, ...)}
 
 \arguments{
 \item{object}{a multivariate time series or multivariate time series model for which forecasts are required}
+\item{newdata}{An optional data frame in which to look for variables with which to predict. If omitted, it is assumed that the only variables are trend and season, and h forecasts are produced.}
 \item{h}{Number of periods for forecasting}
 \item{level}{Confidence level for prediction intervals.}
 \item{fan}{If TRUE, \code{level} is set to \code{seq(51,99,by=3)}. This is suitable for fan plots.}
 \item{lambda}{Box-Cox transformation parameter.}
+\item{ts}{If TRUE, the forecasts will be treated as time series provided the original data is a time series; the newdata will be interpreted as related to the subsequent time periods. If FALSE, any time series attributes of the original data will be ignored.}
 \item{...}{Additional arguments affecting the forecasts produced.}
 }
 \value{An object of class "\code{mforecast}".
@@ -42,7 +45,7 @@ An object of class \code{"mforecast"} is a list usually containing at least the 
 }
 
 \seealso{Other functions which return objects of class \code{"mforecast"} are
-\code{\link{forecast.mlm}}, \code{\link{forecast.varest}}.
+\code{\link{forecast.mlm}}, \code{forecast.varest}.
 }
 
 \author{Rob J Hyndman & Mitchell O'Hara-Wild}
