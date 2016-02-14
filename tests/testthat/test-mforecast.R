@@ -43,6 +43,15 @@ if(require(fpp) & require(testthat))
     expect_equal(fcast$res[,1], fcast2$residuals)
   })  
   
+  test_that("tests for forecast.mts()", {
+    lungDeaths <- cbind(mdeaths, fdeaths)
+    fcast_b <- forecast(lungDeaths)
+    fcast_m <- forecast(mdeaths)
+    fcast_f <- forecast(fdeaths)
+    expect_true(all.equal(fcast_b$mean[[1]], fcast_m$mean))
+    expect_true(all.equal(fcast_b$mean[[2]], fcast_f$mean))
+  })  
+  
   test_that("tests for print.mforecast()", {
     fit <- lm(mv_y ~ v_x)
     fcast <- forecast(fit, newdata=data.frame(v_x=30))
