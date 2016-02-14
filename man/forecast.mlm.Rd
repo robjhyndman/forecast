@@ -32,9 +32,9 @@ The generic accessor functions \code{fitted.values} and \code{residuals} extract
 An object of class \code{"mforecast"} is a list containing at least the following elements:
 \item{model}{A list containing information about the fitted model}
 \item{method}{The name of the forecasting method as a character string}
-\item{mean}{Point forecasts as a time series}
-\item{lower}{Lower limits for prediction intervals}
-\item{upper}{Upper limits for prediction intervals}
+\item{mean}{Point forecasts as a multivariate time series}
+\item{lower}{Lower limits for prediction intervals of each series}
+\item{upper}{Upper limits for prediction intervals of each series}
 \item{level}{The confidence values associated with the prediction intervals}
 \item{x}{The historical data for the response variable.}
 \item{residuals}{Residuals from the fitted model. That is x minus fitted values.}
