@@ -1,5 +1,6 @@
 \name{mforecast}
 \alias{mforecast}
+\alias{forecast.mts}
 \alias{print.mforecast}
 \alias{summary.mforecast}
 \title{Forecasting time series}
@@ -12,18 +13,20 @@ The function invokes particular \emph{methods} which depend on the class of the 
 For example, the function \code{\link{forecast.mlm}} makes multivariate forecasts based on the results produced by \code{\link{tslm}}.
 }
 
-\usage{forecast(object,...)
-\method{forecast}{mlm}(object, newdata, h = 10, level = c(80, 95), 
-    fan = FALSE, lambda = object$lambda, ts = TRUE, ...)}
+\usage{
+\method{forecast}{mts}(object, h=ifelse(frequency(object)>1, 2*frequency(object), 10),
+        level=c(80,95), fan=FALSE, robust=FALSE, lambda = NULL, find.frequency = FALSE,
+        allow.multiplicative.trend=FALSE, ...)}
 
 \arguments{
 \item{object}{a multivariate time series or multivariate time series model for which forecasts are required}
-\item{newdata}{An optional data frame in which to look for variables with which to predict. If omitted, it is assumed that the only variables are trend and season, and h forecasts are produced.}
 \item{h}{Number of periods for forecasting}
 \item{level}{Confidence level for prediction intervals.}
 \item{fan}{If TRUE, \code{level} is set to \code{seq(51,99,by=3)}. This is suitable for fan plots.}
+\item{robust}{If TRUE, the function is robust to missing values and outliers in \code{object}. This argument is only valid when \code{object} is of class \code{mts}.}
 \item{lambda}{Box-Cox transformation parameter.}
-\item{ts}{If TRUE, the forecasts will be treated as time series provided the original data is a time series; the newdata will be interpreted as related to the subsequent time periods. If FALSE, any time series attributes of the original data will be ignored.}
+\item{find.frequency}{If TRUE, the function determines the appropriate period, if the data is of unknown period.}
+\item{allow.multiplicative.trend}{If TRUE, then ETS models with multiplicative trends are allowed. Otherwise, only additive or no trend ETS models are permitted.}
 \item{...}{Additional arguments affecting the forecasts produced.}
 }
 \value{An object of class "\code{mforecast}".

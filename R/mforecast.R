@@ -29,7 +29,7 @@ mlmsplit <- function(x, index=NULL){
   return(x)
 }
 
-forecast.mlm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, ts=TRUE, ...)
+forecast.mlm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, biasadj=FALSE, ts=TRUE, ...)
 {
   K <- NCOL(object$coefficients)
   y<-attr(object$terms,"response")
@@ -60,18 +60,46 @@ forecast.mlm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambd
   for (i in 1:K){
     if(missing(newdata)){
       fcst <- forecast(object = mlmsplit(object,index=i),
-                       h=h, level = level, fan = fan, ts = !is.null(tspx), ...)
+                       h=h, level = level, fan = fan, lambda=lambda,
+                       biasadj=biasadj, ts = !is.null(tspx), ...)
       newdata <- fcst$newdata
     }
     else{
       fcst <- forecast(object = mlmsplit(object,index=i), newdata=newdata,
-                       h=h, level = level, fan = fan, ts = !is.null(tspx), ...)
+                       h=h, level = level, fan = fan, lambda=lambda,
+                       biasadj=biasadj, ts = !is.null(tspx), ...)
     }
     out$mean[[i]] <- fcst$mean
     out$lower[[i]] <- fcst$lower
     out$upper[[i]] <- fcst$upper
   }
   out$newdata <- newdata
+  return(structure(out,class="mforecast"))
+}
+
+forecast.mts <- function(object, h=ifelse(frequency(object)>1, 2*frequency(object), 10), 
+                         level=c(80,95), fan=FALSE, robust=FALSE, lambda = NULL, find.frequency = FALSE, 
+                         allow.multiplicative.trend=FALSE, ...){
+  out <- list(level=level, x=object)
+  for(i in 1:NCOL(object)){
+    fcast <- forecast.ts(object[,i], h=h, level=level, fan=fan, robust=robust, lambda=lambda, find.frequency=find.frequency,
+                allow.multiplicative.trend = allow.multiplicative.trend, ...)
+    out$model[[i]] <- fcast$model
+    out$mean[[i]] <- fcast$mean
+    out$lower[[i]] <- fcast$lower
+    out$upper[[i]] <- fcast$upper
+    out$method[[i]] <- fcast$method
+    if(i==1){
+      out$residuals <- residuals(fcast)
+      out$fitted <- fitted(fcast)
+    }
+    else{
+      out$residuals <- cbind(out$residuals, residuals(fcast))
+      out$fitted <- cbind(out$fitted, fitted(fcast))
+    }
+  }
+  
+  names(out$model) <- names(out$mean) <- names(out$lower) <- names(out$upper) <- names(out$method) <- colnames(out$fitted) <- colnames(out$residuals) <- colnames(object)
   return(structure(out,class="mforecast"))
 }
 
