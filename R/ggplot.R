@@ -474,7 +474,7 @@ autoplot.splineforecast <- function (x=NULL, plot.conf=TRUE, main=NULL, xlab=NUL
   return(p)
 }
 
-autoplot.stl <- function (x=NULL, labels = NULL, main=NULL, xlab="Date", ylab="", ...){
+autoplot.stl <- function (x=NULL, labels = NULL, main=NULL, xlab="Time", ylab="", ...){
   if (require("ggplot2")){
     if (!inherits(x, "stl")){
       stop("autoplot.stl requires a stl object, use x=object")
