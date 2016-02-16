@@ -509,7 +509,7 @@ autoplot.stl <- function (x=NULL, labels = NULL, main=NULL, xlab="Date", ylab=""
   }
 }
 
-autoplot.ts <- function(x, main=NULL, xlab="Date", ylab=substitute(x)){
+autoplot.ts <- function(x, main=NULL, xlab="Time", ylab=substitute(x)){
   if(require("ggplot2")){
     if(!is.ts(x)){
       stop("autoplot.ts requires a ts object, use x=object")
@@ -531,7 +531,7 @@ autoplot.ts <- function(x, main=NULL, xlab="Date", ylab=substitute(x)){
   }
 }
 
-autoplot.mts <- function(x, main=NULL, xlab="Date", ylab=substitute(x)){
+autoplot.mts <- function(x, main=NULL, xlab="Time", ylab=substitute(x)){
   if(require("ggplot2")){
     if(!is.mts(x)){
       stop("autoplot.mts requires a mts object, use x=object")
