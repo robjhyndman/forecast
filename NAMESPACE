@@ -24,15 +24,28 @@ importFrom("utils", "packageVersion", "tail")
 
 export(arfima, Arima, arima.errors, arimaorder, auto.arima, BoxCox, croston,
 fitted.Arima, forecast, forecast.ar, forecast.Arima, forecast.ets, forecast.fracdiff,findfrequency,
-forecast.HoltWinters, forecast.lm, forecast.stl, forecast.StructTS, forecast.bats, forecast.tbats, accuracy, holt, hw, InvBoxCox, nnetar, forecast.nnetar, plot.Arima, plot.ar, taperedacf, taperedpacf,
+forecast.HoltWinters, forecast.lm, forecast.stl, forecast.StructTS, forecast.bats, forecast.tbats, accuracy, holt, hw, InvBoxCox,
+is.acf, is.Arima, is.bats, is.constant, is.ets, is.forecast, is.mforecast, is.nnetar, is.nnetarmodels, is.splineforecast, is.stlm,
+nnetar, forecast.nnetar, plot.Arima, plot.ar, taperedacf, taperedpacf,
 meanf, logLik.ets, monthdays, na.interp, ets, plot.bats, plot.tbats, plot.ets, plot.forecast,
 plot.splineforecast, rwf, seasadj, seasonaldummy,naive,snaive,stlf,subset.ts, 
-seasonaldummyf, seasonplot, ses, sindexf, splinef,tslm,fourier,fourierf,forecast.lm,
+seasonaldummyf, ggseasonplot, seasonplot, ses, sindexf, splinef,tslm,fourier,fourierf,forecast.lm,
 thetaf, tsdisplay, simulate.ets, simulate.ar, simulate.Arima, simulate.fracdiff, ndiffs, nsdiffs, dm.test,tbats.components,
 Acf,Pacf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts, getResponse, tsoutliers,
-tsclean, bizdays, easter,
-stlm, forecast.stlm)
+tsclean, bizdays, easter,stlm, forecast.stlm, stat_forecast, geom_forecast)
 
+S3method(autoplot, acf)
+S3method(autoplot, Arima)
+S3method(autoplot, decomposed.ts)
+S3method(autoplot, ets)
+S3method(autoplot, forecast)
+S3method(autoplot, mforecast)
+S3method(autoplot, splineforecast)
+S3method(autoplot, stl)
+S3method(autoplot, ts)
+S3method(autoplot, mts)
+S3method(fortify, ts)
+S3method(fortify, forecast)
 S3method(as.character, Arima)
 S3method(as.data.frame,forecast)
 S3method(coef,ets)

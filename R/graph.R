@@ -52,15 +52,21 @@ tsdisplay <- function(x,plot.type=c("partial", "scatter", "spectrum"),points=TRU
 
 
 seasonplot <- function(x, s, season.labels=NULL, year.labels=FALSE, year.labels.left=FALSE,
-    type="o", main, xlab=NULL, ylab="", col=1, labelgap=0.1, ...)
+    type="o", main, xlab=NULL, ylab="", col=1, labelgap=0.1, ggplot=FALSE, ...)
 {
   if(missing(main))
     main = paste("Seasonal plot:", deparse(substitute(x)))
+  if(ggplot){
+    cl <- match.call()
+    cl[[1]] <- quote(ggseasonplot)
+    cl[[match("ggplot", names(cl))]] <- NULL
+    return(eval(cl))
+  }
   if(missing(s))
     s = frequency(x)
   if(s<=1)
     stop("Frequency must be > 1")
-
+  
   # Pad series
   tsx <- x
   if(start(x)[2]>1)
