@@ -16,7 +16,7 @@
 
 \value{None. Function produces a ggplot graph.}
 
-\seealso{\code{\link[stats]{decompose}}, \link[stats]{stl}}}
+\seealso{\code{\link[stats]{decompose}}, \link[stats]{stl}}
 
 \author{Mitchell O'Hara-Wild}
 \examples{

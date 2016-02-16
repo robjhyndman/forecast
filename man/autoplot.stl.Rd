@@ -17,7 +17,7 @@
 
 \value{None. Function produces a ggplot graph.}
 
-\seealso{\code{\link[stats]{stl}}, \link[stats]{plot.stl}}}
+\seealso{\code{\link[stats]{stl}}, \link[stats]{plot.stl}}
 
 \author{Mitchell O'Hara-Wild}
 \examples{plot(stl(nottem, "per"))
