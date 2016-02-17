@@ -578,7 +578,6 @@ fortify.forecast <- function(model, data=as.data.frame(model), CI=TRUE){
   return(data.frame(x=as.numeric(time(model$mean)), y=data[,1], level=rep(-Inf,NROW(data))))
 }
 
-if(require(ggplot2)){
 StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
   required_aes = c("x","y"),
   compute_group = function(data, scales, params, plot.conf=TRUE, h=NULL,
@@ -588,23 +587,15 @@ StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
     if(is.null(h)){
       h <- ifelse(tspx[3] > 1, 2 * tspx[3], 10)
     }
-    test(data,tspx)
     tsdat <- ts(data = data$y, start = tspx[1], frequency = tspx[3])
-    #test(tsdat)
     fcast <- forecast(tsdat, h=h, level=level, fan=fan, robust=robust,
                       lambda=lambda, find.frequency=find.frequency,
                       allow.multiplicative.trend=allow.multiplicative.trend)
     fcast <- fortify(fcast, CI=plot.conf)
-    #test(fcast,data)
     suppressWarnings(fcast <- cbind(fcast,data[1,!colnames(data)%in%colnames(fcast)]))
-    #test(fcast)
     fcast
   }
 )
-
-test <- function(fcast, data=NULL){
-  return(fcast)
-}
 
 GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom,
   required_aes = c("x","y"),
@@ -699,17 +690,24 @@ stat_forecast <- function(mapping = NULL, data = NULL, geom = "forecast",
                   na.rm = na.rm, ...))
 }
 
-geom_forecast <- function(mapping = NULL, data = NULL, stat = "identity",
+geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
                           position = "identity", na.rm = FALSE, show.legend = NA, 
-                          inherit.aes = TRUE, plot.conf=TRUE, series=NA, ...) {
+                          inherit.aes = TRUE, plot.conf=TRUE, h=NULL, level=c(80,95), fan=FALSE,
+                          robust=FALSE, lambda=NULL, find.frequency=FALSE, 
+                          allow.multiplicative.trend=FALSE, series, ...) {
   if(is.forecast(mapping)){
-    data <- fortify(mapping, CI=plot.conf)
-    data <- transform(data, series=series)
-    if(plot.conf){
-      mapping <- aes(x = x, y = y, ymin = ymin, ymax = ymax, level = level, group = -level, colour=series)
+    if(stat=="forecast"){
+      stat <- "identity"
     }
-    else{
-      mapping <- aes(x = x, y = y, level = level, group = -level, colour=series)
+    data <- fortify(mapping, CI=plot.conf)
+    mapping <- aes(x = x, y = y, level = level, group = -level)
+    if(plot.conf){
+      mapping$ymin <- quote(ymin)
+      mapping$ymax <- quote(ymax)
+    }
+    if(!missing(series)){
+      data <- transform(data, series=series)
+      mapping$colour <- quote(series)
     }
   }
   if(is.mforecast(mapping)){
@@ -717,10 +715,21 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "identity",
     #return lapply of geom_forecast with params on list
     stop("mforecast objects not yet supported. Try calling geom_forecast() for several forecast objects")
   }
-  ggplot2::layer(
-    geom = GeomForecast, mapping = mapping, data = data, stat = stat, 
-    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
-    params = list(na.rm = na.rm, ...)
-  )
-}
+  if(stat=="forecast"){
+    ggplot2::layer(
+      geom = GeomForecast, mapping = mapping, data = data, stat = stat, 
+      position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+      params = list(plot.conf=plot.conf, h=h, level=level, fan=fan, robust=robust,
+                    lambda=lambda, find.frequency=find.frequency,
+                    allow.multiplicative.trend=allow.multiplicative.trend,
+                    na.rm = na.rm, ...)
+    )
+  }
+  else{
+    ggplot2::layer(
+      geom = GeomForecast, mapping = mapping, data = data, stat = stat, 
+      position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+      params = list(na.rm = na.rm, ...)
+    )
+  }
 }
