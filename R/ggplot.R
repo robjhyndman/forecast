@@ -1,3 +1,5 @@
+autoplot <- ggplot2::autoplot
+
 autoplot.acf <- function (x=NULL, ci=0.95, main=NULL, xlab=NULL, ylab=NULL, ...){
   if (require("ggplot2")){
     if (!inherits(x, "acf")){
