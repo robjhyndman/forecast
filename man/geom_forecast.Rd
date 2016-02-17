@@ -1,5 +1,6 @@
 \name{geom_forecast}
 \alias{geom_forecast}
+\alias{GeomForecast}
 \title{Forecast plot}
 \usage{geom_forecast(mapping = NULL, data = NULL, stat = "forecast",
     position = "identity", na.rm = FALSE, show.legend = NA, 
@@ -28,7 +29,7 @@ plot. You must supply \code{mapping} if there is no plot mapping.}
    the plot data. The return value must be a \code{data.frame}, and
    will be used as the layer data.}
 
-\item{geom}{The geometric object to use display the data}
+\item{stat}{The stat object to use calculate the data.}
 
 \item{position}{Position adjustment, either as a string, or the result of
 a call to a position adjustment function.}
