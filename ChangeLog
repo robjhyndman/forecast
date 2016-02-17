@@ -1,4 +1,4 @@
-Version 7.0
+Version 7.0 (February 2016)
   * subset.ts() more robust, and captures some errors.
   * Added xreg argument to nnetar()
   * Improved labels in seasonplot()
@@ -8,6 +8,7 @@ Version 7.0
   * More unit tests added
   * Documentation improvements
   * Bug fixes
+  * Added ggplot2 graphics 
 
 Version 6.2 (20 October 2015)
   * Many unit tests added using testthat.

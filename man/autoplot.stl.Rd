@@ -1,5 +1,5 @@
-\name{autoplot.acf}
-\alias{autoplot.acf}
+\name{autoplot.stl}
+\alias{autoplot.stl}
 \title{ggplot STL object}
 \usage{\method{autoplot}{stl}(x=NULL, labels = NULL, main=NULL, xlab="Date", ylab="", ...)
 }
@@ -17,9 +17,9 @@
 
 \value{None. Function produces a ggplot graph.}
 
-\seealso{\code{\link[stats]{stl}}, \link[stats]{plot.stl}}}
+\seealso{\code{\link[stats]{stl}}, \link[stats]{plot.stl}}
 
 \author{Mitchell O'Hara-Wild}
-\examples{plot(stl(nottem, "per"))
-autoplot(stl(nottem, "per"))
+\examples{plot(stl(nottem, "periodic"))
+autoplot(stl(nottem, "periodic"))
 }

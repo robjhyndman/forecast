@@ -21,6 +21,7 @@ importFrom("stats", "Box.test", "acf", "approx", "ar", "arima",
              "sd", "simulate", "smooth.spline", "start", "stl", "supsmu", 
              "terms", "time", "ts", "tsp", "tsp<-", "tsdiag", "var")
 importFrom("utils", "packageVersion", "tail")
+importFrom("ggplot2","autoplot","fortify")
 
 export(arfima, Arima, arima.errors, arimaorder, auto.arima, BoxCox, croston,
 fitted.Arima, forecast, forecast.ar, forecast.Arima, forecast.ets, forecast.fracdiff,findfrequency,

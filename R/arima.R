@@ -337,7 +337,7 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
     }
   }
   colnames(lower)=colnames(upper)=paste(level, "%", sep="")
-  method <- arima.string(object)
+  method <- arima.string(object, padding=FALSE)
   fits <- fitted(object, biasadj)
   if(!is.null(lambda) & is.null(object$constant))  { # Back-transform point forecasts and prediction intervals
     pred$pred <- InvBoxCox(pred$pred,lambda)
@@ -636,7 +636,7 @@ print.ARIMA <- function (x, digits=max(3, getOption("digits") - 3), se=TRUE,
     ...)
 {
     cat("Series:",x$series,"\n")
-    cat(arima.string(x),"\n")
+    cat(arima.string(x, padding=TRUE),"\n")
     if(!is.null(x$lambda))
         cat("Box Cox transformation: lambda=",x$lambda,"\n")
 
@@ -763,7 +763,7 @@ arimaorder <- function (object)
 
 as.character.Arima <- function(x, ...)
 {
-  arima.string(x)
+  arima.string(x, padding=FALSE)
 }
 
 is.Arima <- function(x){

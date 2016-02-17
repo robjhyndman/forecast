@@ -435,7 +435,7 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   #bestfit$fitted <- fitted(bestfit)
 
   if(trace)
-    cat("\n\n Best model:",arima.string(bestfit),"\n\n")
+    cat("\n\n Best model:",arima.string(bestfit, padding=TRUE),"\n\n")
 
   return(bestfit)
 }
@@ -527,7 +527,7 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
         if(minroot < 1 + 1e-2) # Previously 1+1e-3
             fit$ic <- Inf # Don't like this model
         if(trace)
-            cat("\n",arima.string(fit),":",fit$ic)
+            cat("\n",arima.string(fit, padding=TRUE),":",fit$ic)
         fit$xreg <- xreg
         return(structure(fit,class=c("ARIMA","Arima")))
     }
@@ -563,7 +563,7 @@ newmodel <- function(p,d,q,P,D,Q,constant,results)
     return(TRUE)
 }
 
-arima.string <- function(object)
+arima.string <- function(object, padding=FALSE)
 {
     order <- object$arma[c(1,6,2,3,7,4,5)]
     result <- paste("ARIMA(",order[1],",",order[2],",",order[3],")",sep="")
@@ -577,6 +577,9 @@ arima.string <- function(object)
         result <- paste(result,"with zero mean    ")
     else
         result <- paste(result,"                  ")
+    if(!padding) 
+      #Strip trailing spaces
+      result <- gsub("[ ]*$","",result)
     return(result)
 }
 

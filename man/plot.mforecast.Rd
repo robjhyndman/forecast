@@ -5,7 +5,6 @@
 
 \usage{
 \method{plot}{mforecast}(x, main=paste("Forecasts from",x$method),xlab="time",...)
-}
 \method{autoplot}{mforecast}(x=NULL, plot.conf=TRUE, main=NULL, xlab=NULL, ylab=NULL, gridlayout=NULL, ...)
 }
 \arguments{
