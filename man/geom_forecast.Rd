@@ -1,9 +1,11 @@
 \name{geom_forecast}
 \alias{geom_forecast}
 \title{Forecast plot}
-\usage{geom_forecast(mapping = NULL, data = NULL, stat = "identity",
+\usage{geom_forecast(mapping = NULL, data = NULL, stat = "forecast",
     position = "identity", na.rm = FALSE, show.legend = NA, 
-    inherit.aes = TRUE, plot.conf=TRUE, series=NA, ...)
+    inherit.aes = TRUE, plot.conf=TRUE, h=NULL, level=c(80,95), fan=FALSE,
+    robust=FALSE, lambda=NULL, find.frequency=FALSE, 
+    allow.multiplicative.trend=FALSE, series, ...)
 }
 
 \arguments{
@@ -43,6 +45,13 @@ that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link{borders}}.}
 
 \item{plot.conf}{If \code{FALSE}, confidence intervals will not be plotted, giving only the forecast line.}
+\item{h}{Number of periods for forecasting}
+\item{level}{Confidence level for prediction intervals.}
+\item{fan}{If TRUE, \code{level} is set to \code{seq(51,99,by=3)}. This is suitable for fan plots.}
+\item{robust}{If TRUE, the function is robust to missing values and outliers in \code{object}. This argument is only valid when \code{object} is of class \code{ts}.}
+\item{lambda}{Box-Cox transformation parameter.}
+\item{find.frequency}{If TRUE, the function determines the appropriate period, if the data is of unknown period.}
+\item{allow.multiplicative.trend}{If TRUE, then ETS models with multiplicative trends are allowed. Otherwise, only additive or no trend ETS models are permitted.}
 
 \item{series}{Matches an unidentified forecast layer with a coloured object on the plot.}
 
@@ -52,7 +61,13 @@ often aesthetics, used to set an aesthetic to a fixed value, like
 to the paired geom/stat.}
 }
 
-\description{\code{geom_forecast} takes a \code{forecast} object as a mapping and adds it to the plot.}
+\description{Generates forecasts from \code{forecast.ts} and adds them to the plot. Forecasts can be modified via sending forecast specific arguments above.
+
+Multivariate forecasting is supported by having each time series on a different group.
+
+You can also pass \code{geom_forecast} a \code{forecast} object to add it to the plot.
+
+The aesthetics required for the forecasting to work includes forecast observations on the y axis, and the \code{time} of the observations on the x axis. Refer to the examples below. To automatically set up aesthetics, use \code{autoplot}.}
 
 \value{A layer for a ggplot graph.}
 
@@ -60,6 +75,27 @@ to the paired geom/stat.}
 
 \author{Mitchell O'Hara-Wild}
 \examples{
+autoplot(USAccDeaths) + geom_forecast()
+
+lungDeaths <- cbind(mdeaths, fdeaths)
+autoplot(lungDeaths) + geom_forecast()
+
+# Using fortify.ts
+p <- ggplot(aes(x=x, y=y), data=USAccDeaths)
+p <- p + geom_line()
+p + geom_forecast()
+
+# Without fortify.ts
+data <- data.frame(USAccDeaths=as.numeric(USAccDeaths), time=as.numeric(time(USAccDeaths)))
+p <- ggplot(aes(x=time, y=USAccDeaths), data=data)
+p <- p + geom_line()
+p + geom_forecast()
+
+p + geom_forecast(h=60)
+p + geom_forecast(level=c(70,98))
+p + geom_forecast(level=c(70,98),colour="lightblue")
+
+#Add forecasts to multivariate series with colour groups
 lungDeaths <- cbind(mdeaths, fdeaths)
 autoplot(lungDeaths) + geom_forecast(forecast(mdeaths), series="mdeaths")
 }
