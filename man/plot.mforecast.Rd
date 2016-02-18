@@ -12,6 +12,8 @@
 \item{main}{Main title. Default is the forecast method. For autoplot, specify a vector of titles for each plot.}
 \item{xlab}{X-axis label. For autoplot, specify a vector of labels for each plot.}
 \item{ylab}{Y-axis label. For autoplot, specify a vector of labels for each plot.}
+\item{plot.conf}{If \code{FALSE}, confidence intervals will not be plotted, giving only the forecast line.}
+\item{gridlayout}{A matrix of positions for the each forecast plot to be positioned.}
 \item{\dots}{additional arguments to each individual \code{plot}.} }
 
 \description{Plots historical data with multivariate forecasts and prediction intervals.

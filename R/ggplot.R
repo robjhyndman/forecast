@@ -1,7 +1,7 @@
 autoplot <- ggplot2::autoplot
 
 autoplot.acf <- function (x=NULL, ci=0.95, main=NULL, xlab=NULL, ylab=NULL, ...){
-  if (require("ggplot2")){
+  if (requireNamespace("ggplot2")){
     if (!inherits(x, "acf")){
       stop("autoplot.acf requires a acf object, use x=object")
     }
@@ -12,7 +12,7 @@ autoplot.acf <- function (x=NULL, ci=0.95, main=NULL, xlab=NULL, ylab=NULL, ...)
     }
     
     #Initialise ggplot object
-    p <- ggplot2::ggplot(ggplot2::aes(x = Lag, xend = Lag, y = 0, yend = ACF),
+    p <- ggplot2::ggplot(ggplot2::aes_(x = ~Lag, xend = ~Lag, y = 0, yend = ~ACF),
                          data=data)
     p <- p + ggplot2::geom_hline(yintercept = 0)
     
@@ -50,7 +50,7 @@ autoplot.acf <- function (x=NULL, ci=0.95, main=NULL, xlab=NULL, ylab=NULL, ...)
 }
 
 autoplot.Arima <- function (x=NULL, type = c("both", "ar", "ma"), main=NULL, xlab="Real", ylab="Imaginary", ...){
-  if (require("ggplot2")){
+  if (requireNamespace("ggplot2")){
     if (!is.Arima(x)){
       stop("autoplot.Arima requires an Arima object, use x=object")
     }
@@ -81,7 +81,7 @@ autoplot.Arima <- function (x=NULL, type = c("both", "ar", "ma"), main=NULL, xla
       stop("No roots to plot")
     }
     if (type == "both") {
-      if (require("grid")){
+      if (requireNamespace("grid")){
         type <- c("ar", "ma")
       }
       else{
@@ -101,10 +101,10 @@ autoplot.Arima <- function (x=NULL, type = c("both", "ar", "ma"), main=NULL, xla
     
     for (i in 1:length(type)){
       if (type[i] == "ma"){
-        allroots[[i]] <- data.frame(roots = 1/forecast:::maroots(x)$roots)
+        allroots[[i]] <- data.frame(roots = 1/forecast::maroots(x)$roots)
       }
       else if (type[i] == "ar"){
-        allroots[[i]] <- data.frame(roots = 1/forecast:::arroots(x)$roots)
+        allroots[[i]] <- data.frame(roots = 1/forecast::arroots(x)$roots)
       }
       else{
         stop(paste("Unknown type:", type[i]))
@@ -114,24 +114,24 @@ autoplot.Arima <- function (x=NULL, type = c("both", "ar", "ma"), main=NULL, xla
     
     #Add data
     if (length(type)==1){
-      p <- p + ggplot2::geom_point(aes(x=Re(roots), y=Im(roots), colour=UnitCircle), data=allroots[[1]], size=3)
+      p <- p + ggplot2::geom_point(ggplot2::aes_(x=~Re(roots), y=~Im(roots), colour=~UnitCircle), data=allroots[[1]], size=3)
       p <- p + ggplot2::labs(title = paste("Inverse",toupper(type[1]),"roots"),
                              x = xlab, y = ylab)
       return(p)
     }
     else{
       gridlayout <- matrix(seq(1, length(type)), ncol = length(type), nrow = 1)
-      grid.newpage()
-      pushViewport(viewport(layout = grid.layout(nrow(gridlayout), ncol(gridlayout))))
+      grid::grid.newpage()
+      grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow(gridlayout), ncol(gridlayout))))
       
       for (i in 1:length(type)){
-        m <- p + ggplot2::geom_point(aes(x=Re(roots), y=Im(roots), colour=UnitCircle), data=allroots[[i]], size=3)
+        m <- p + ggplot2::geom_point(ggplot2::aes_(x=~Re(roots), y=~Im(roots), colour=~UnitCircle), data=allroots[[i]], size=3)
         m <- m + ggplot2::labs(title = paste("Inverse",toupper(type[i]),"roots"),
                                x = xlab, y = ylab)
         
         matchidx <- as.data.frame(which(gridlayout == i, arr.ind = TRUE))
         
-        print(m, vp = viewport(layout.pos.row = matchidx$row,
+        print(m, vp = grid::viewport(layout.pos.row = matchidx$row,
                                layout.pos.col = matchidx$col))
       }
     }
@@ -139,7 +139,7 @@ autoplot.Arima <- function (x=NULL, type = c("both", "ar", "ma"), main=NULL, xla
 }
 
 autoplot.decomposed.ts <- function (x, main=NULL, xlab=NULL, ylab=NULL, ...){
-  if (require("ggplot2")){
+  if (requireNamespace("ggplot2")){
     data <- data.frame(datetime=rep(time(x$x),4), y=c(x$x, x$trend, x$seasonal, x$random),
                        decomposed=factor(rep(c("observed","trend","seasonal","random"),each=NROW(x$x)),
                                          levels=c("observed","trend","seasonal","random")))
@@ -173,7 +173,7 @@ autoplot.decomposed.ts <- function (x, main=NULL, xlab=NULL, ylab=NULL, ...){
 }
 
 autoplot.ets <- function (x=NULL, main=NULL, xlab=NULL, ylab=NULL, ...){
-  if (require("ggplot2")){
+  if (requireNamespace("ggplot2")){
     if (!is.ets(x)){
       stop("autoplot.ets requires an ets object, use x=object")
     }
@@ -216,7 +216,7 @@ autoplot.ets <- function (x=NULL, main=NULL, xlab=NULL, ylab=NULL, ...){
 
 autoplot.forecast <- function (x=NULL, plot.conf=TRUE, shadecols=c("#868FBD","#BEC1D4"), fcol="#0000FF", flwd=1, main=NULL, xlab=NULL, ylab=NULL, ...){
   fcast <- x
-  if (require("ggplot2")){
+  if (requireNamespace("ggplot2")){
     if (!is.forecast(fcast)){
       stop("autoplot.forecast requires a forecast object, use x=object")
     }
@@ -354,7 +354,7 @@ autoplot.forecast <- function (x=NULL, plot.conf=TRUE, shadecols=c("#868FBD","#B
 }
 
 autoplot.mforecast <- function (x=NULL, plot.conf=TRUE, main=NULL, xlab=NULL, ylab=NULL, gridlayout=NULL, ...){
-  if (require("ggplot2") & require("grid")){
+  if (requireNamespace("ggplot2") & requireNamespace("grid")){
     if (!is.mforecast(x)){
       stop("autoplot.mforecast requires a mforecast object, use x=object")
     }
@@ -406,7 +406,7 @@ autoplot.mforecast <- function (x=NULL, plot.conf=TRUE, main=NULL, xlab=NULL, yl
 }
 
 ggseasonplot <- function (x=NULL, year.labels=FALSE, year.labels.left=FALSE, type=NULL, main=NULL, xlab="Season", ylab="", col=NULL, labelgap=0.04, ggplot=TRUE,...){
-  if (require("ggplot2")){
+  if (requireNamespace("ggplot2")){
     if (!inherits(x, "ts")){
       stop("autoplot.seasonplot requires a ts object, use x=object")
     }
@@ -477,7 +477,7 @@ autoplot.splineforecast <- function (x=NULL, plot.conf=TRUE, main=NULL, xlab=NUL
 }
 
 autoplot.stl <- function (x=NULL, labels = NULL, main=NULL, xlab="Time", ylab="", ...){
-  if (require("ggplot2")){
+  if (requireNamespace("ggplot2")){
     if (!inherits(x, "stl")){
       stop("autoplot.stl requires a stl object, use x=object")
     }
@@ -512,7 +512,7 @@ autoplot.stl <- function (x=NULL, labels = NULL, main=NULL, xlab="Time", ylab=""
 }
 
 autoplot.ts <- function(x, main=NULL, xlab="Time", ylab=substitute(x)){
-  if(require("ggplot2")){
+  if(requireNamespace("ggplot2")){
     if(!is.ts(x)){
       stop("autoplot.ts requires a ts object, use x=object")
     }
@@ -534,7 +534,7 @@ autoplot.ts <- function(x, main=NULL, xlab="Time", ylab=substitute(x)){
 }
 
 autoplot.mts <- function(x, main=NULL, xlab="Time", ylab=substitute(x)){
-  if(require("ggplot2")){
+  if(requireNamespace("ggplot2")){
     if(!is.mts(x)){
       stop("autoplot.mts requires a mts object, use x=object")
     }
