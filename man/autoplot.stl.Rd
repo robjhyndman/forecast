@@ -1,7 +1,7 @@
 \name{autoplot.stl}
 \alias{autoplot.stl}
 \title{ggplot STL object}
-\usage{\method{autoplot}{stl}(x=NULL, labels = NULL, main=NULL, xlab="Date", ylab="", ...)
+\usage{\method{autoplot}{stl}(x=NULL, labels = NULL, main=NULL, xlab="Time", ylab="", ...)
 }
 
 \arguments{

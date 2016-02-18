@@ -1,4 +1,5 @@
 \name{is.constant}
+\alias{is.constant}
 \title{Is an object constant?}
 \usage{is.constant(x)
 }

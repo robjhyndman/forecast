@@ -1,5 +1,6 @@
 \name{stat_forecast}
 \alias{stat_forecast}
+\alias{StatForecast}
 \title{Forecast plot}
 \usage{stat_forecast(mapping = NULL, data = NULL, geom = "forecast",
    position = "identity", na.rm = FALSE, show.legend = NA, 

@@ -3,7 +3,6 @@
 \alias{is.acf}
 \alias{is.Arima}
 \alias{is.bats}
-\alias{is.stlf}
 \alias{is.nnetar}
 \alias{is.nnetarmodels}
 \alias{is.stlm}
@@ -15,7 +14,6 @@ is.bats(x)
 is.Arima(x)
 is.bats(x)
 is.ets(x)
-is.stlf(x)
 is.nnetar(x)
 is.nnetarmodels(x)
 is.stlm(x)
