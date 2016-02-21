@@ -20,6 +20,7 @@
 
 \author{Mitchell O'Hara-Wild}
 \examples{
+library(ggplot2)
 m <- decompose(co2)
 autoplot(m)
 }

@@ -1,5 +1,3 @@
-autoplot <- ggplot2::autoplot
-
 autoplot.acf <- function (x=NULL, ci=0.95, main=NULL, xlab=NULL, ylab=NULL, ...){
   if (requireNamespace("ggplot2")){
     if (!inherits(x, "acf")){
@@ -101,10 +99,10 @@ autoplot.Arima <- function (x=NULL, type = c("both", "ar", "ma"), main=NULL, xla
     
     for (i in 1:length(type)){
       if (type[i] == "ma"){
-        allroots[[i]] <- data.frame(roots = 1/forecast::maroots(x)$roots)
+        allroots[[i]] <- data.frame(roots = 1/maroots(x)$roots)
       }
       else if (type[i] == "ar"){
-        allroots[[i]] <- data.frame(roots = 1/forecast::arroots(x)$roots)
+        allroots[[i]] <- data.frame(roots = 1/arroots(x)$roots)
       }
       else{
         stop(paste("Unknown type:", type[i]))
@@ -145,7 +143,7 @@ autoplot.decomposed.ts <- function (x, main=NULL, xlab=NULL, ylab=NULL, ...){
                                          levels=c("observed","trend","seasonal","random")))
     
     #Initialise ggplot object
-    p <- ggplot2::ggplot(aes(x=datetime, y=y), data=data)
+    p <- ggplot2::ggplot(ggplot2::aes_(x=~datetime, y=~y), data=data)
     
     #Add data
     p <- p + ggplot2::geom_line(na.rm=TRUE)
@@ -188,7 +186,7 @@ autoplot.ets <- function (x=NULL, main=NULL, xlab=NULL, ylab=NULL, ...){
                        parts=factor(rep(cn, each=NROW(data)), levels=cn))
     
     #Initialise ggplot object
-    p <- ggplot2::ggplot(aes(x=datetime, y=y), data=data, ylab="")
+    p <- ggplot2::ggplot(ggplot2::aes_(x=~datetime, y=~y), data=data, ylab="")
     
     #Add data
     p <- p + ggplot2::geom_line(na.rm=TRUE)
@@ -261,7 +259,7 @@ autoplot.forecast <- function (x=NULL, plot.conf=TRUE, shadecols=c("#868FBD","#B
       flwd <- 2*flwd # Scale for points
       
       #Data points
-      p <- p + ggplot2::geom_point(aes(x=xvar, y=yvar), data=data)
+      p <- p + ggplot2::geom_point(ggplot2::aes_(x=~xvar, y=~yvar), data=data)
       p <- p + ggplot2::labs(y=vars["yvar"], x=vars["xvar"])
       
       #Forecasted intervals
@@ -269,7 +267,7 @@ autoplot.forecast <- function (x=NULL, plot.conf=TRUE, shadecols=c("#868FBD","#B
         levels <- NROW(fcast$level)
         interval <- data.frame(xpred=rep(fcast$newdata[[1]],levels),lower=c(fcast$lower),upper=c(fcast$upper),level=fcast$level)
         interval<-interval[order(interval$level,decreasing = TRUE),] #Must be ordered for gg z-index
-        p <- p + ggplot2::geom_linerange(aes(x=xpred, ymin=lower, ymax=upper, colour=level),data=interval, size=flwd)
+        p <- p + ggplot2::geom_linerange(ggplot2::aes(x=~xpred, ymin=~lower, ymax=~upper, colour=~level),data=interval, size=flwd)
         if(length(fcast$level)<=5){
           p <- p + ggplot2::scale_colour_gradientn(breaks=fcast$level, colours = shadecols, guide="legend")
         }
@@ -281,7 +279,7 @@ autoplot.forecast <- function (x=NULL, plot.conf=TRUE, shadecols=c("#868FBD","#B
       #Forecasted points
       predicted <- data.frame(fcast$newdata, fcast$mean)
       colnames(predicted) <- c("xpred", "ypred")
-      p <- p + ggplot2::geom_point(aes(x=xpred, y=ypred), data=predicted, color=fcol, size=flwd)
+      p <- p + ggplot2::geom_point(ggplot2::aes_(x=~xpred, y=~ypred), data=predicted, color=fcol, size=flwd)
       
       #Line of best fit
       coef <- data.frame(int=0,m=0)
@@ -311,7 +309,7 @@ autoplot.forecast <- function (x=NULL, plot.conf=TRUE, shadecols=c("#868FBD","#B
       }
       data <- data.frame(yvar = as.numeric(data$yvar), datetime = as.numeric(timex))
       p <- p + scale_x_continuous()
-      p <- p + ggplot2::geom_line(aes(x=datetime, y=yvar), data=data) +
+      p <- p + ggplot2::geom_line(ggplot2::aes(x=~datetime, y=~yvar), data=data) +
         labs(y=vars["yvar"], x="Time")
       
       #Forecasted intervals
@@ -321,7 +319,7 @@ autoplot.forecast <- function (x=NULL, plot.conf=TRUE, shadecols=c("#868FBD","#B
         levels <- NROW(fcast$level)
         interval <- data.frame(datetime=rep(predicted$datetime,levels),lower=c(fcast$lower),upper=c(fcast$upper),level=rep(fcast$level,each=NROW(fcast$mean)))
         interval <- interval[order(interval$level,decreasing = TRUE),] #Must be ordered for gg z-index
-        p <- p + ggplot2::geom_ribbon(aes(x=datetime, ymin=lower, ymax=upper, group=-level, fill=level),data=interval)
+        p <- p + ggplot2::geom_ribbon(ggplot2::aes_(x=~datetime, ymin=~lower, ymax=~upper, group=-~level, fill=level),data=interval)
         if(length(fcast$level)<=5){
           p <- p + ggplot2::scale_fill_gradientn(breaks=fcast$level, colours=shadecols, guide="legend")
         }
@@ -332,7 +330,7 @@ autoplot.forecast <- function (x=NULL, plot.conf=TRUE, shadecols=c("#868FBD","#B
       }
       
       #Forecasted points
-      p <- p + ggplot2::geom_line(aes(x=datetime,y=ypred), data=predicted, color=fcol, size=flwd)
+      p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime,y=~ypred), data=predicted, color=fcol, size=flwd)
     }
     
     #Graph title
@@ -386,8 +384,8 @@ autoplot.mforecast <- function (x=NULL, plot.conf=TRUE, main=NULL, xlab=NULL, yl
       gridlayout <- matrix(seq(1, K), ncol = 1, nrow = K)
     }
     
-    grid.newpage()
-    pushViewport(viewport(layout = grid.layout(nrow(gridlayout), ncol(gridlayout))))
+    grid::grid.newpage()
+    grid::pushViewport(grid::viewport(layout = grid.layout(nrow(gridlayout), ncol(gridlayout))))
     
     for (i in 1:K){
       partialfcast <- list(x=x$x[,i],mean=x$mean[[i]],method=x$method,
@@ -399,7 +397,7 @@ autoplot.mforecast <- function (x=NULL, plot.conf=TRUE, main=NULL, xlab=NULL, yl
       matchidx <- as.data.frame(which(gridlayout == i, arr.ind = TRUE))
       print(autoplot(structure(partialfcast,class="forecast"),
                      plot.conf=plot.conf[i], main=main[i], xlab=xlab[i], ylab=ylab[i], ...),
-            vp = viewport(layout.pos.row = matchidx$row,
+            vp = grid::viewport(layout.pos.row = matchidx$row,
                           layout.pos.col = matchidx$col))
     }
   }
@@ -425,7 +423,7 @@ ggseasonplot <- function (x=NULL, year.labels=FALSE, year.labels.left=FALSE, typ
     data <- data.frame(y=as.numeric(x),year=factor(trunc(time(x))),time=as.numeric(round(time(x)%%1,digits = 6)))
     
     #Initialise ggplot object
-    p <- ggplot2::ggplot(ggplot2::aes(x=time, y=y, group=year, colour=year), data=data, na.rm=TRUE)
+    p <- ggplot2::ggplot(ggplot2::aes_(x=~time, y=~y, group=~year, colour=~year), data=data, na.rm=TRUE)
     p <- p + ggplot2::scale_x_continuous()
     
     #Add data
@@ -453,7 +451,7 @@ ggseasonplot <- function (x=NULL, year.labels=FALSE, year.labels.left=FALSE, typ
       }
       yrlab <- merge(yrlab, data)
       p <- p + ggplot2::guides(colour=FALSE)
-      p <- p + ggplot2::geom_text(aes(x=time, y=y, label=year), colour = col, nudge_x=offset, data=yrlab)
+      p <- p + ggplot2::geom_text(ggplot2::aes_(x=~time, y=~y, label=~year), colour = col, nudge_x=offset, data=yrlab)
     }
     
     #Graph title
@@ -472,7 +470,7 @@ autoplot.splineforecast <- function (x=NULL, plot.conf=TRUE, main=NULL, xlab=NUL
   }
   p <- autoplot.forecast(x, plot.conf=plot.conf, main=main, xlab=xlab, ylab=ylab, ...)
   fit <- data.frame(datetime=as.numeric(time(x$fitted)),y=as.numeric(x$fitted))
-  p <- p + ggplot2::geom_point(ggplot2::aes(x=datetime,y=y),data=fit,size=2)
+  p <- p + ggplot2::geom_point(ggplot2::aes_(x=~datetime,y=~y),data=fit,size=2)
   return(p)
 }
 
@@ -491,14 +489,14 @@ autoplot.stl <- function (x=NULL, labels = NULL, main=NULL, xlab="Time", ylab=""
                        parts=factor(rep(cn, each=NROW(data)), levels=cn))
     
     #Initialise ggplot object
-    p <- ggplot2::ggplot(ggplot2::aes(x=datetime, y=y), data=data)
+    p <- ggplot2::ggplot(ggplot2::aes_(x=~datetime, y=~y), data=data)
     
     #Add data
-    p <- p + ggplot2::geom_line(ggplot2::aes(x=datetime, y=y), data=subset(data,parts!="remainder"), na.rm=TRUE)
-    p <- p + ggplot2::geom_segment(ggplot2::aes(x = datetime, xend = datetime, y = 0, yend = y),
+    p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~y), data=subset(data,parts!="remainder"), na.rm=TRUE)
+    p <- p + ggplot2::geom_segment(ggplot2::aes_(x = ~datetime, xend = ~datetime, y = 0, yend = ~y),
                                    data=subset(data,parts=="remainder"), lineend = "butt")
     p <- p + ggplot2::facet_grid(parts ~ ., scales="free_y", switch="y")
-    p <- p + ggplot2::geom_hline(ggplot2::aes(yintercept = y), data=data.frame(y = 0, parts = "remainder"))
+    p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = 0, parts = "remainder"))
     
     
     #Graph title
@@ -518,7 +516,7 @@ autoplot.ts <- function(x, main=NULL, xlab="Time", ylab=substitute(x)){
     }
     data <- data.frame(y = as.numeric(x), x = as.numeric(time(x)))
     #Initialise ggplot object
-    p <- ggplot2::ggplot(aes(y=y, x=x), data=data)
+    p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x), data=data)
     
     #Add data
     p <- p + ggplot2::geom_line()
@@ -541,7 +539,7 @@ autoplot.mts <- function(x, main=NULL, xlab="Time", ylab=substitute(x)){
     data <- data.frame(y=as.numeric(c(x)), x=rep(as.numeric(time(x)),NCOL(x)),
                        series=rep(colnames(x), each=NROW(x)))
     #Initialise ggplot object
-    p <- ggplot2::ggplot(aes(y=y, x=x, group=series, colour=series), data=data)
+    p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x, group=~series, colour=~series), data=data)
     
     #Add data
     p <- p + ggplot2::geom_line()
@@ -674,7 +672,7 @@ stat_forecast <- function(mapping = NULL, data = NULL, geom = "forecast",
     else if(is.ts(mapping)){
       data <- data.frame(y = as.numeric(mapping), x = as.numeric(time(mapping)))
       #Initialise ggplot object
-      mapping <- aes(y=y, x=x)
+      mapping <- ggplot2::aes_(y=~y, x=~x)
     }
     else if(!"uneval"%in%class(mapping)){
       fcast <- forecast(mapping, h=h, level=level, fan=fan, robust=robust,
@@ -702,7 +700,7 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
       stat <- "identity"
     }
     data <- fortify(mapping, CI=plot.conf)
-    mapping <- aes(x = x, y = y, level = level, group = -level)
+    mapping <- ggplot2::aes_(x = ~x, y = ~y, level = ~level, group = ~-level)
     if(plot.conf){
       mapping$ymin <- quote(ymin)
       mapping$ymax <- quote(ymax)

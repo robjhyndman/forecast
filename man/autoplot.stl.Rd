@@ -21,5 +21,7 @@
 
 \author{Mitchell O'Hara-Wild}
 \examples{plot(stl(nottem, "periodic"))
+
+library(ggplot2)
 autoplot(stl(nottem, "periodic"))
 }

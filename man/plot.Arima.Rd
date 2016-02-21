@@ -29,6 +29,8 @@
 
 \author{Rob J Hyndman & Mitchell O'Hara-Wild}
 \examples{
+library(ggplot2)
+
 fit <- Arima(WWWusage, order=c(3,1,0))
 plot(fit)
 autoplot(fit)
