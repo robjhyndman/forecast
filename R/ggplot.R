@@ -318,7 +318,7 @@ autoplot.forecast <- function (object, plot.conf=TRUE, shadecols=c("#868FBD","#B
         levels <- NROW(object$level)
         interval <- data.frame(datetime=rep(predicted$datetime,levels),lower=c(object$lower),upper=c(object$upper),level=rep(object$level,each=NROW(object$mean)))
         interval <- interval[order(interval$level,decreasing = TRUE),] #Must be ordered for gg z-index
-        p <- p + ggplot2::geom_ribbon(ggplot2::aes_(x=~datetime, ymin=~lower, ymax=~upper, group=-~level, fill=~level),data=interval)
+        p <- p + ggplot2::geom_ribbon(ggplot2::aes_(x=~datetime, ymin=~lower, ymax=~upper, group=~-level, fill=~level),data=interval)
         if(length(object$level)<=5){
           p <- p + ggplot2::scale_fill_gradientn(breaks=object$level, colours=shadecols, guide="legend")
         }
