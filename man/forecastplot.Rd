@@ -49,11 +49,13 @@
 }
 \author{Rob J Hyndman & Mitchell O'Hara-Wild}
 \seealso{\code{\link[stats]{plot.ts}}}
-\examples{deaths.fit <- hw(USAccDeaths,h=48)
+\examples{library(ggplot2)
+library(fpp)
+
+deaths.fit <- hw(USAccDeaths,h=48)
 plot(deaths.fit)
 autoplot(deaths.fit)
 
-library(fpp)
 fit <- lm(Carbon ~ City, data=fuel)
 fcast <- forecast(fit, newdata=data.frame(City=30))
 plot(fcast, xlab="City (mpg)", ylab="Carbon footprint (tons per year)")
