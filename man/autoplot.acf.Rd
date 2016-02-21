@@ -21,5 +21,6 @@
 
 \author{Mitchell O'Hara-Wild}
 \examples{
+library(ggplot2)
 autoplot(Acf(wineind, plot=FALSE))
 }

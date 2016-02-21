@@ -24,7 +24,9 @@
 }
 \author{Mitchell O'Hara-Wild}
 \seealso{\code{\link[forecast]{plot.forecast}}, \code{\link[stats]{plot.ts}}}
-\examples{lungDeaths <- cbind(mdeaths, fdeaths)
+\examples{library(ggplot2)
+
+lungDeaths <- cbind(mdeaths, fdeaths)
 fit <- tslm(lungDeaths ~ trend + season)
 fcast <- forecast(fit, h=10)
 plot(fcast)
