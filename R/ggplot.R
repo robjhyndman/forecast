@@ -179,7 +179,7 @@ autoplot.ets <- function (x=NULL, main=NULL, xlab=NULL, ylab=NULL, ...){
     names <- c(y="observed", l="level", b="slope", s1="season")
     data <- cbind(x$x, x$states[,colnames(x$states)%in%names(names)])
     cn <- c("y",c(colnames(x$states)))
-    colnames(data) <- cn <- names[na.remove(match(cn, names(names)))]
+    colnames(data) <- cn <- names[stats::na.exclude(match(cn, names(names)))]
     
     #Convert to longform
     data <- data.frame(datetime=rep(time(data),NCOL(data)), y=c(data),
@@ -308,9 +308,9 @@ autoplot.forecast <- function (x=NULL, plot.conf=TRUE, shadecols=c("#868FBD","#B
         timex <- time(fcast$model$residuals)
       }
       data <- data.frame(yvar = as.numeric(data$yvar), datetime = as.numeric(timex))
-      p <- p + scale_x_continuous()
+      p <- p + ggplot2::scale_x_continuous()
       p <- p + ggplot2::geom_line(ggplot2::aes(x=~datetime, y=~yvar), data=data) +
-        labs(y=vars["yvar"], x="Time")
+        ggplot2::labs(y=vars["yvar"], x="Time")
       
       #Forecasted intervals
       predicted <- data.frame(xvar = time(fcast$mean), yvar = fcast$mean)
@@ -319,7 +319,7 @@ autoplot.forecast <- function (x=NULL, plot.conf=TRUE, shadecols=c("#868FBD","#B
         levels <- NROW(fcast$level)
         interval <- data.frame(datetime=rep(predicted$datetime,levels),lower=c(fcast$lower),upper=c(fcast$upper),level=rep(fcast$level,each=NROW(fcast$mean)))
         interval <- interval[order(interval$level,decreasing = TRUE),] #Must be ordered for gg z-index
-        p <- p + ggplot2::geom_ribbon(ggplot2::aes_(x=~datetime, ymin=~lower, ymax=~upper, group=-~level, fill=level),data=interval)
+        p <- p + ggplot2::geom_ribbon(ggplot2::aes_(x=~datetime, ymin=~lower, ymax=~upper, group=-~level, fill=~level),data=interval)
         if(length(fcast$level)<=5){
           p <- p + ggplot2::scale_fill_gradientn(breaks=fcast$level, colours=shadecols, guide="legend")
         }
@@ -385,7 +385,7 @@ autoplot.mforecast <- function (x=NULL, plot.conf=TRUE, main=NULL, xlab=NULL, yl
     }
     
     grid::grid.newpage()
-    grid::pushViewport(grid::viewport(layout = grid.layout(nrow(gridlayout), ncol(gridlayout))))
+    grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow(gridlayout), ncol(gridlayout))))
     
     for (i in 1:K){
       partialfcast <- list(x=x$x[,i],mean=x$mean[[i]],method=x$method,
@@ -495,7 +495,7 @@ autoplot.stl <- function (x=NULL, labels = NULL, main=NULL, xlab="Time", ylab=""
     p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~y), data=subset(data,parts!="remainder"), na.rm=TRUE)
     p <- p + ggplot2::geom_segment(ggplot2::aes_(x = ~datetime, xend = ~datetime, y = 0, yend = ~y),
                                    data=subset(data,parts=="remainder"), lineend = "butt")
-    p <- p + ggplot2::facet_grid(parts ~ ., scales="free_y", switch="y")
+    p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
     p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = 0, parts = "remainder"))
     
     
