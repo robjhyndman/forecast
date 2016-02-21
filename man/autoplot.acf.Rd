@@ -1,11 +1,11 @@
 \name{autoplot.acf}
 \alias{autoplot.acf}
 \title{ggplot autocovariance and autocorrelation functions}
-\usage{\method{autoplot}{acf}(x, ci=0.95, main=NULL, xlab=NULL, ylab=NULL, ...)
+\usage{\method{autoplot}{acf}(object, ci=0.95, main=NULL, xlab=NULL, ylab=NULL, ...)
 }
 
 \arguments{
-\item{x}{Object of class \dQuote{acf}.}
+\item{object}{Object of class \dQuote{acf}.}
 \item{ci}{coverage probability for confidence interval. Plotting of the confidence interval is suppressed if ci is zero or negative.}
 \item{main}{Main title. Default is the series name.}
 \item{xlab}{X-axis label.}

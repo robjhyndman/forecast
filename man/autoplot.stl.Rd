@@ -1,11 +1,11 @@
 \name{autoplot.stl}
 \alias{autoplot.stl}
 \title{ggplot STL object}
-\usage{\method{autoplot}{stl}(x=NULL, labels = NULL, main=NULL, xlab="Time", ylab="", ...)
+\usage{\method{autoplot}{stl}(object, labels = NULL, main=NULL, xlab="Time", ylab="", ...)
 }
 
 \arguments{
-\item{x}{Object of class \dQuote{acf}.}
+\item{object}{Object of class \dQuote{acf}.}
 \item{labels}{Labels to replace "seasonal", "trend", and "remainder".}
 \item{main}{Main title.}
 \item{xlab}{X-axis label.}
