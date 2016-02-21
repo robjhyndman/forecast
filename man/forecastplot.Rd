@@ -10,13 +10,14 @@
     shadebars=(length(x$mean)<5), shadecols=NULL, col=1, fcol=4,
     pi.col=1, pi.lty=2, ylim=NULL, main=NULL, xlab="", ylab="", type="l",
     flty=1, flwd=2, ...)
-\method{autoplot}{forecast}(x=NULL, plot.conf=TRUE, shadecols=c("#868FBD","#BEC1D4"),
+\method{autoplot}{forecast}(object, plot.conf=TRUE, shadecols=c("#868FBD","#BEC1D4"),
     fcol="#0000FF", flwd=1, main=NULL, xlab=NULL, ylab=NULL, ...)
 \method{plot}{splineforecast}(x, fitcol=2, type="o", pch=19, ...)
-\method{autoplot}{splineforecast}(x=NULL, plot.conf=TRUE, main=NULL, xlab=NULL, ylab=NULL, ...)
+\method{autoplot}{splineforecast}(object, plot.conf=TRUE, main=NULL, xlab=NULL, ylab=NULL, ...)
 }
 \arguments{
 \item{x}{Forecast object produced by \code{\link{forecast}}.}
+\item{object}{Forecast object produced by \code{\link{forecast}}. Used for ggplot graphics (S3 method consistency).}
 \item{include}{number of values from time series to include in plot}
 \item{plot.conf}{Logical flag indicating whether to plot prediction intervals.}
 \item{shaded}{Logical flag indicating whether prediction intervals should be shaded (TRUE) or lines (FALSE)}

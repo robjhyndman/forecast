@@ -3,8 +3,8 @@
 \alias{fortify.ts}
 \alias{autoplot.mts}
 \title{Automatically create a ggplot for time series objects}
-\usage{\method{autoplot}{ts}(object, main=NULL, xlab="Time", ylab=substitute(x))
-\method{autoplot}{mts}(object, main=NULL, xlab="Time", ylab=substitute(x))
+\usage{\method{autoplot}{ts}(object, main=NULL, xlab="Time", ylab=substitute(x), ...)
+\method{autoplot}{mts}(object, main=NULL, xlab="Time", ylab=substitute(x), ...)
 \method{fortify}{ts}(model,data)
 }
 

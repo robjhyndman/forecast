@@ -482,7 +482,7 @@ autoplot.stl <- function (object, labels = NULL, main=NULL, xlab="Time", ylab=""
       labels <- colnames(object$time.series)
     }
     
-    data <- x$time.series
+    data <- object$time.series
     cn <- c("data",labels)
     data <- data.frame(datetime=rep(time(data),NCOL(data)+1), y=c(rowSums(data),data),
                        parts=factor(rep(cn, each=NROW(data)), levels=cn))
@@ -491,12 +491,11 @@ autoplot.stl <- function (object, labels = NULL, main=NULL, xlab="Time", ylab=""
     p <- ggplot2::ggplot(ggplot2::aes_(x=~datetime, y=~y), data=data)
     
     #Add data
-    p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~y), data=subset(data,parts!="remainder"), na.rm=TRUE)
+    p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~y), data=subset(data,data$parts!="remainder"), na.rm=TRUE)
     p <- p + ggplot2::geom_segment(ggplot2::aes_(x = ~datetime, xend = ~datetime, y = 0, yend = ~y),
-                                   data=subset(data,parts=="remainder"), lineend = "butt")
+                                   data=subset(data,data$parts=="remainder"), lineend = "butt")
     p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
     p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = 0, parts = "remainder"))
-    
     
     #Graph title
     p <- p + ggplot2::ggtitle(main)
