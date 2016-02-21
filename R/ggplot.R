@@ -308,7 +308,7 @@ autoplot.forecast <- function (object, plot.conf=TRUE, shadecols=c("#868FBD","#B
       }
       data <- data.frame(yvar = as.numeric(data$yvar), datetime = as.numeric(timex))
       p <- p + ggplot2::scale_x_continuous()
-      p <- p + ggplot2::geom_line(ggplot2::aes(x=~datetime, y=~yvar), data=data) +
+      p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~yvar), data=data) +
         ggplot2::labs(y=vars["yvar"], x="Time")
       
       #Forecasted intervals
