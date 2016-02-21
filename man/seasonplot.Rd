@@ -5,7 +5,8 @@
 \usage{seasonplot(x, s, season.labels=NULL, year.labels=FALSE,
     year.labels.left=FALSE, type="o", main, xlab=NULL, ylab="",
     col=1, labelgap=0.1, ggplot=FALSE, ...)
-    ggseasonplot(x=NULL, year.labels=FALSE, year.labels.left=FALSE, 
+
+ggseasonplot(x, year.labels=FALSE, year.labels.left=FALSE, 
     type=NULL, main=NULL, xlab="Season", ylab="", col=NULL, labelgap=0.04,
     ggplot=TRUE,...)
 }

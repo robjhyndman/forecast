@@ -5,13 +5,14 @@
 \title{Plot characteristic roots from ARIMA model}
 \usage{\method{plot}{Arima}(x, type=c("both","ar","ma"), 
   main, xlab="Real", ylab="Imaginary", ...)
-\method{autoplot}{Arima}(x=NULL, type=c("both","ar","ma"), 
+\method{autoplot}{Arima}(object, type=c("both","ar","ma"), 
   main=NULL, xlab="Real", ylab="Imaginary", ...)
 \method{plot}{ar}(x, main, xlab="Real", ylab="Imaginary", ...)
 }
 
 \arguments{
 \item{x}{Object of class \dQuote{Arima} or \dQuote{ar}.}
+\item{object}{Object of class \dQuote{Arima} or \dQuote{ar}. Used for ggplot graphics (S3 method consistency).}
 \item{type}{Determines if both AR and MA roots are plotted, of if just one set is plotted.}
 \item{main}{Main title. Default is "Inverse AR roots" or "Inverse MA roots".}
 \item{xlab}{X-axis label.}

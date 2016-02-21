@@ -5,10 +5,11 @@
 
 \usage{
 \method{plot}{mforecast}(x, main=paste("Forecasts from",x$method),xlab="time",...)
-\method{autoplot}{mforecast}(x=NULL, plot.conf=TRUE, main=NULL, xlab=NULL, ylab=NULL, gridlayout=NULL, ...)
+\method{autoplot}{mforecast}(object, plot.conf=TRUE, main=NULL, xlab=NULL, ylab=NULL, gridlayout=NULL, ...)
 }
 \arguments{
 \item{x}{Multivariate forecast object of class \code{mforecast}.}
+\item{object}{Multivariate forecast object of class \code{mforecast}. Used for ggplot graphics (S3 method consistency).}
 \item{main}{Main title. Default is the forecast method. For autoplot, specify a vector of titles for each plot.}
 \item{xlab}{X-axis label. For autoplot, specify a vector of labels for each plot.}
 \item{ylab}{Y-axis label. For autoplot, specify a vector of labels for each plot.}

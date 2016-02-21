@@ -1,10 +1,10 @@
-autoplot.acf <- function (x=NULL, ci=0.95, main=NULL, xlab=NULL, ylab=NULL, ...){
+autoplot.acf <- function (object, ci=0.95, main=NULL, xlab=NULL, ylab=NULL, ...){
   if (requireNamespace("ggplot2")){
-    if (!inherits(x, "acf")){
-      stop("autoplot.acf requires a acf object, use x=object")
+    if (!inherits(object, "acf")){
+      stop("autoplot.acf requires a acf object, use object=object")
     }
     
-    data <- data.frame(Lag=x$lag,ACF=x$acf)
+    data <- data.frame(Lag=object$lag,ACF=object$acf)
     if (data$Lag[1] == 0){
       data <- data[-1,]
     }
@@ -18,7 +18,7 @@ autoplot.acf <- function (x=NULL, ci=0.95, main=NULL, xlab=NULL, ylab=NULL, ...)
     p <- p + ggplot2::geom_segment(lineend = "butt")
     
     #Add ci lines (assuming white noise input)
-    ci <- qnorm((1 + ci)/2)/sqrt(x$n.used)
+    ci <- qnorm((1 + ci)/2)/sqrt(object$n.used)
     p <- p + ggplot2::geom_hline(yintercept=c(-ci, ci), colour="blue", linetype="dashed")
     
     #Change ticks to be seasonal
@@ -26,7 +26,7 @@ autoplot.acf <- function (x=NULL, ci=0.95, main=NULL, xlab=NULL, ylab=NULL, ...)
     
     #Graph title
     if (is.null(main)){
-      main <- paste("Series:",x$series)
+      main <- paste("Series:",object$series)
     }
     p <- p + ggplot2::ggtitle(main)
     
@@ -35,7 +35,7 @@ autoplot.acf <- function (x=NULL, ci=0.95, main=NULL, xlab=NULL, ylab=NULL, ...)
       p <- p + ggplot2::xlab(xlab)
     }
     if (is.null(ylab)){
-      if(x$type == "correlation"){
+      if(object$type == "correlation"){
         ylab <- "ACF"
       }
       else{
@@ -47,23 +47,23 @@ autoplot.acf <- function (x=NULL, ci=0.95, main=NULL, xlab=NULL, ylab=NULL, ...)
   }
 }
 
-autoplot.Arima <- function (x=NULL, type = c("both", "ar", "ma"), main=NULL, xlab="Real", ylab="Imaginary", ...){
+autoplot.Arima <- function (object, type = c("both", "ar", "ma"), main=NULL, xlab="Real", ylab="Imaginary", ...){
   if (requireNamespace("ggplot2")){
-    if (!is.Arima(x)){
-      stop("autoplot.Arima requires an Arima object, use x=object")
+    if (!is.Arima(object)){
+      stop("autoplot.Arima requires an Arima object, use object=object")
     }
     
     #Prepare data
     type <- match.arg(type)
     q <- p <- 0
-    if (length(x$model$phi) > 0) {
-      test <- abs(x$model$phi) > 1e-09
+    if (length(object$model$phi) > 0) {
+      test <- abs(object$model$phi) > 1e-09
       if (any(test)){
         p <- max(which(test))
       }
     }
-    if (length(x$model$theta) > 0) {
-      test <- abs(x$model$theta) > 1e-09
+    if (length(object$model$theta) > 0) {
+      test <- abs(object$model$theta) > 1e-09
       if (any(test)) {
         q <- max(which(test))
       }
@@ -99,10 +99,10 @@ autoplot.Arima <- function (x=NULL, type = c("both", "ar", "ma"), main=NULL, xla
     
     for (i in 1:length(type)){
       if (type[i] == "ma"){
-        allroots[[i]] <- data.frame(roots = 1/maroots(x)$roots)
+        allroots[[i]] <- data.frame(roots = 1/maroots(object)$roots)
       }
       else if (type[i] == "ar"){
-        allroots[[i]] <- data.frame(roots = 1/arroots(x)$roots)
+        allroots[[i]] <- data.frame(roots = 1/arroots(object)$roots)
       }
       else{
         stop(paste("Unknown type:", type[i]))
@@ -136,10 +136,10 @@ autoplot.Arima <- function (x=NULL, type = c("both", "ar", "ma"), main=NULL, xla
   }
 }
 
-autoplot.decomposed.ts <- function (x, main=NULL, xlab=NULL, ylab=NULL, ...){
+autoplot.decomposed.ts <- function (object, main=NULL, xlab=NULL, ylab=NULL, ...){
   if (requireNamespace("ggplot2")){
-    data <- data.frame(datetime=rep(time(x$x),4), y=c(x$x, x$trend, x$seasonal, x$random),
-                       decomposed=factor(rep(c("observed","trend","seasonal","random"),each=NROW(x$x)),
+    data <- data.frame(datetime=rep(time(object$x),4), y=c(object$x, object$trend, object$seasonal, object$random),
+                       decomposed=factor(rep(c("observed","trend","seasonal","random"),each=NROW(object$x)),
                                          levels=c("observed","trend","seasonal","random")))
     
     #Initialise ggplot object
@@ -151,7 +151,7 @@ autoplot.decomposed.ts <- function (x, main=NULL, xlab=NULL, ylab=NULL, ...){
     
     #Graph title
     if (is.null(main)){
-      main <- paste("Decomposition of",x$type,"time series")
+      main <- paste("Decomposition of",object$type,"time series")
     }
     p <- p + ggplot2::ggtitle(main)
     
@@ -170,16 +170,16 @@ autoplot.decomposed.ts <- function (x, main=NULL, xlab=NULL, ylab=NULL, ...){
   }
 }
 
-autoplot.ets <- function (x=NULL, main=NULL, xlab=NULL, ylab=NULL, ...){
+autoplot.ets <- function (object, main=NULL, xlab=NULL, ylab=NULL, ...){
   if (requireNamespace("ggplot2")){
-    if (!is.ets(x)){
-      stop("autoplot.ets requires an ets object, use x=object")
+    if (!is.ets(object)){
+      stop("autoplot.ets requires an ets object, use object=object")
     }
     
     names <- c(y="observed", l="level", b="slope", s1="season")
-    data <- cbind(x$x, x$states[,colnames(x$states)%in%names(names)])
-    cn <- c("y",c(colnames(x$states)))
-    colnames(data) <- cn <- names[na.remove(match(cn, names(names)))]
+    data <- cbind(object$x, object$states[,colnames(object$states)%in%names(names)])
+    cn <- c("y",c(colnames(object$states)))
+    colnames(data) <- cn <- names[stats::na.exclude(match(cn, names(names)))]
     
     #Convert to longform
     data <- data.frame(datetime=rep(time(data),NCOL(data)), y=c(data),
@@ -194,7 +194,7 @@ autoplot.ets <- function (x=NULL, main=NULL, xlab=NULL, ylab=NULL, ...){
     
     #Graph title
     if (is.null(main)){
-      main <- paste("Decomposition by",x$method,"method")
+      main <- paste("Decomposition by",object$method,"method")
     }
     p <- p + ggplot2::ggtitle(main)
     
@@ -212,31 +212,30 @@ autoplot.ets <- function (x=NULL, main=NULL, xlab=NULL, ylab=NULL, ...){
   }
 }
 
-autoplot.forecast <- function (x=NULL, plot.conf=TRUE, shadecols=c("#868FBD","#BEC1D4"), fcol="#0000FF", flwd=1, main=NULL, xlab=NULL, ylab=NULL, ...){
-  fcast <- x
+autoplot.forecast <- function (object, plot.conf=TRUE, shadecols=c("#868FBD","#BEC1D4"), fcol="#0000FF", flwd=1, main=NULL, xlab=NULL, ylab=NULL, ...){
   if (requireNamespace("ggplot2")){
-    if (!is.forecast(fcast)){
-      stop("autoplot.forecast requires a forecast object, use x=object")
+    if (!is.forecast(object)){
+      stop("autoplot.forecast requires a forecast object, use object=object")
     }
-    if(is.null(fcast$lower) | is.null(fcast$upper) | is.null(fcast$level) | (!is.finite(max(fcast$upper)))){
+    if(is.null(object$lower) | is.null(object$upper) | is.null(object$level) | (!is.finite(max(object$upper)))){
       plot.conf=FALSE
     }
     
-    if (!is.null(fcast$model$terms) && !is.null(fcast$model$model)){
+    if (!is.null(object$model$terms) && !is.null(object$model$model)){
       #Initialise original dataset
-      mt <- fcast$model$terms
+      mt <- object$model$terms
       yvar <- deparse(mt[[2]]) # Perhaps a better way to do this
       xvar <- attr(mt,"term.labels")
       vars <- c(yvar=yvar, xvar=xvar)
-      data <- fcast$model$model
+      data <- object$model$model
       colnames(data) <- names(vars)[match(colnames(data), vars)]
     }
-    else if (!is.null(fcast$x)){
-      data <- data.frame(yvar=fcast$x)
+    else if (!is.null(object$x)){
+      data <- data.frame(yvar=object$x)
       vars <- c(yvar="y")
     }
-    else if (!is.null(fcast$residuals) && !is.null(fcast$fitted)){
-      data <- data.frame(yvar=fcast$residuals+fcast$fitted)
+    else if (!is.null(object$residuals) && !is.null(object$fitted)){
+      data <- data.frame(yvar=object$residuals+object$fitted)
       vars <- c(yvar="y")
     }
     else{
@@ -249,12 +248,12 @@ autoplot.forecast <- function (x=NULL, plot.conf=TRUE, shadecols=c("#868FBD","#B
     
     
     # Cross sectional forecasts
-    if (!is.element("ts",class(fcast$mean))){
+    if (!is.element("ts",class(object$mean))){
       if (length(xvar) > 1){
         stop("Forecast plot for regression models only available for a single predictor")
       }
-      if(NCOL(fcast$newdata)==1){ # Make sure column has correct name
-        colnames(fcast$newdata) <- xvar
+      if(NCOL(object$newdata)==1){ # Make sure column has correct name
+        colnames(object$newdata) <- xvar
       }
       flwd <- 2*flwd # Scale for points
       
@@ -264,12 +263,12 @@ autoplot.forecast <- function (x=NULL, plot.conf=TRUE, shadecols=c("#868FBD","#B
       
       #Forecasted intervals
       if (plot.conf){
-        levels <- NROW(fcast$level)
-        interval <- data.frame(xpred=rep(fcast$newdata[[1]],levels),lower=c(fcast$lower),upper=c(fcast$upper),level=fcast$level)
+        levels <- NROW(object$level)
+        interval <- data.frame(xpred=rep(object$newdata[[1]],levels),lower=c(object$lower),upper=c(object$upper),level=object$level)
         interval<-interval[order(interval$level,decreasing = TRUE),] #Must be ordered for gg z-index
         p <- p + ggplot2::geom_linerange(ggplot2::aes(x=~xpred, ymin=~lower, ymax=~upper, colour=~level),data=interval, size=flwd)
-        if(length(fcast$level)<=5){
-          p <- p + ggplot2::scale_colour_gradientn(breaks=fcast$level, colours = shadecols, guide="legend")
+        if(length(object$level)<=5){
+          p <- p + ggplot2::scale_colour_gradientn(breaks=object$level, colours = shadecols, guide="legend")
         }
         else{
           p <- p + ggplot2::scale_colour_gradientn(colours = shadecols, guide="colourbar")
@@ -277,22 +276,22 @@ autoplot.forecast <- function (x=NULL, plot.conf=TRUE, shadecols=c("#868FBD","#B
       }
       
       #Forecasted points
-      predicted <- data.frame(fcast$newdata, fcast$mean)
+      predicted <- data.frame(object$newdata, object$mean)
       colnames(predicted) <- c("xpred", "ypred")
       p <- p + ggplot2::geom_point(ggplot2::aes_(x=~xpred, y=~ypred), data=predicted, color=fcol, size=flwd)
       
       #Line of best fit
       coef <- data.frame(int=0,m=0)
-      i <- match("(Intercept)",names(fcast$model$coefficients))
+      i <- match("(Intercept)",names(object$model$coefficients))
       if (i!=0){
-        coef$int <- fcast$model$coefficients[i]
-        if (NROW(fcast$model$coefficients)==2){
-          coef$m <- fcast$model$coefficients[-i]
+        coef$int <- object$model$coefficients[i]
+        if (NROW(object$model$coefficients)==2){
+          coef$m <- object$model$coefficients[-i]
         }
       }
       else{
-        if (NROW(fcast$model$coefficients)==1){
-          coef$m <- fcast$model$coefficients
+        if (NROW(object$model$coefficients)==1){
+          coef$m <- object$model$coefficients
         }
       }
       p <- p + ggplot2::geom_abline(intercept = coef$int, slope=coef$m)
@@ -301,27 +300,27 @@ autoplot.forecast <- function (x=NULL, plot.conf=TRUE, shadecols=c("#868FBD","#B
       # Time series objects (assumed)
       
       #Data points
-      if(!is.null(time(fcast$x))){
-        timex <- time(fcast$x)
+      if(!is.null(time(object$x))){
+        timex <- time(object$x)
       }
-      else if (!is.null(time(fcast$model$residuals))){
-        timex <- time(fcast$model$residuals)
+      else if (!is.null(time(object$model$residuals))){
+        timex <- time(object$model$residuals)
       }
       data <- data.frame(yvar = as.numeric(data$yvar), datetime = as.numeric(timex))
-      p <- p + scale_x_continuous()
-      p <- p + ggplot2::geom_line(ggplot2::aes(x=~datetime, y=~yvar), data=data) +
-        labs(y=vars["yvar"], x="Time")
+      p <- p + ggplot2::scale_x_continuous()
+      p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~yvar), data=data) +
+        ggplot2::labs(y=vars["yvar"], x="Time")
       
       #Forecasted intervals
-      predicted <- data.frame(xvar = time(fcast$mean), yvar = fcast$mean)
+      predicted <- data.frame(xvar = time(object$mean), yvar = object$mean)
       colnames(predicted) <- c("datetime","ypred")
       if (plot.conf){
-        levels <- NROW(fcast$level)
-        interval <- data.frame(datetime=rep(predicted$datetime,levels),lower=c(fcast$lower),upper=c(fcast$upper),level=rep(fcast$level,each=NROW(fcast$mean)))
+        levels <- NROW(object$level)
+        interval <- data.frame(datetime=rep(predicted$datetime,levels),lower=c(object$lower),upper=c(object$upper),level=rep(object$level,each=NROW(object$mean)))
         interval <- interval[order(interval$level,decreasing = TRUE),] #Must be ordered for gg z-index
-        p <- p + ggplot2::geom_ribbon(ggplot2::aes_(x=~datetime, ymin=~lower, ymax=~upper, group=-~level, fill=level),data=interval)
-        if(length(fcast$level)<=5){
-          p <- p + ggplot2::scale_fill_gradientn(breaks=fcast$level, colours=shadecols, guide="legend")
+        p <- p + ggplot2::geom_ribbon(ggplot2::aes_(x=~datetime, ymin=~lower, ymax=~upper, group=~-level, fill=~level),data=interval)
+        if(length(object$level)<=5){
+          p <- p + ggplot2::scale_fill_gradientn(breaks=object$level, colours=shadecols, guide="legend")
         }
         else{
           p <- p + ggplot2::scale_fill_gradientn(colours=shadecols)
@@ -335,7 +334,7 @@ autoplot.forecast <- function (x=NULL, plot.conf=TRUE, shadecols=c("#868FBD","#B
     
     #Graph title
     if (is.null(main)){
-      main <- paste("Forecasts from ",fcast$method,sep="")
+      main <- paste("Forecasts from ",object$method,sep="")
     }
     p <- p + ggplot2::ggtitle(main)
     
@@ -351,13 +350,13 @@ autoplot.forecast <- function (x=NULL, plot.conf=TRUE, shadecols=c("#868FBD","#B
   }
 }
 
-autoplot.mforecast <- function (x=NULL, plot.conf=TRUE, main=NULL, xlab=NULL, ylab=NULL, gridlayout=NULL, ...){
+autoplot.mforecast <- function (object, plot.conf=TRUE, main=NULL, xlab=NULL, ylab=NULL, gridlayout=NULL, ...){
   if (requireNamespace("ggplot2") & requireNamespace("grid")){
-    if (!is.mforecast(x)){
-      stop("autoplot.mforecast requires a mforecast object, use x=object")
+    if (!is.mforecast(object)){
+      stop("autoplot.mforecast requires a mforecast object, use object=object")
     }
     
-    K <- NCOL(x$x)
+    K <- NCOL(object$x)
     if (K<2){
       warning("Expected at least two plots but forecast required less.")
     }
@@ -367,13 +366,13 @@ autoplot.mforecast <- function (x=NULL, plot.conf=TRUE, main=NULL, xlab=NULL, yl
       plot.conf <- rep(TRUE, K)
     }
     if (missing(main)){
-      main <- rep(paste("Forecasts from",x$method), K)
+      main <- rep(paste("Forecasts from",object$method), K)
     }
     if (missing(xlab)){
       xlab <- rep(NULL, K)
     }
     if (missing(ylab)){
-      ylab <- colnames(x$x)
+      ylab <- colnames(object$x)
     }
     
     #Set up grid
@@ -385,13 +384,13 @@ autoplot.mforecast <- function (x=NULL, plot.conf=TRUE, main=NULL, xlab=NULL, yl
     }
     
     grid::grid.newpage()
-    grid::pushViewport(grid::viewport(layout = grid.layout(nrow(gridlayout), ncol(gridlayout))))
+    grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow(gridlayout), ncol(gridlayout))))
     
     for (i in 1:K){
-      partialfcast <- list(x=x$x[,i],mean=x$mean[[i]],method=x$method,
-                           upper=x$upper[[i]], lower=x$lower[[i]], level=x$level, newdata=x$newdata)
-      if (!is.null(x$model) &   inherits(x$model, "mlm")){
-        partialfcast$model <- mlmsplit(x$model,index=i)
+      partialfcast <- list(x=object$x[,i],mean=object$mean[[i]],method=object$method,
+                           upper=object$upper[[i]], lower=object$lower[[i]], level=object$level, newdata=object$newdata)
+      if (!is.null(object$model) &   inherits(object$model, "mlm")){
+        partialfcast$model <- mlmsplit(object$model,index=i)
         
       }
       matchidx <- as.data.frame(which(gridlayout == i, arr.ind = TRUE))
@@ -403,7 +402,7 @@ autoplot.mforecast <- function (x=NULL, plot.conf=TRUE, main=NULL, xlab=NULL, yl
   }
 }
 
-ggseasonplot <- function (x=NULL, year.labels=FALSE, year.labels.left=FALSE, type=NULL, main=NULL, xlab="Season", ylab="", col=NULL, labelgap=0.04, ggplot=TRUE,...){
+ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NULL, main=NULL, xlab="Season", ylab="", col=NULL, labelgap=0.04, ggplot=TRUE, ...){
   if (requireNamespace("ggplot2")){
     if (!inherits(x, "ts")){
       stop("autoplot.seasonplot requires a ts object, use x=object")
@@ -464,26 +463,26 @@ ggseasonplot <- function (x=NULL, year.labels=FALSE, year.labels.left=FALSE, typ
   }
 }
 
-autoplot.splineforecast <- function (x=NULL, plot.conf=TRUE, main=NULL, xlab=NULL, ylab=NULL, ...){
+autoplot.splineforecast <- function (object, plot.conf=TRUE, main=NULL, xlab=NULL, ylab=NULL, ...){
   if (is.null(ylab)){
-    ylab <- deparse(x$model$call$x)
+    ylab <- deparse(object$model$call$x)
   }
-  p <- autoplot.forecast(x, plot.conf=plot.conf, main=main, xlab=xlab, ylab=ylab, ...)
-  fit <- data.frame(datetime=as.numeric(time(x$fitted)),y=as.numeric(x$fitted))
-  p <- p + ggplot2::geom_point(ggplot2::aes_(x=~datetime,y=~y),data=fit,size=2)
+  p <- autoplot.forecast(object, plot.conf=plot.conf, main=main, xlab=xlab, ylab=ylab, ...)
+  fit <- data.frame(datetime=as.numeric(time(object$fitted)),y=as.numeric(object$fitted))
+  p <- p + ggplot2::geom_point(ggplot2::aes_(object=~datetime,y=~y),data=fit,size=2)
   return(p)
 }
 
-autoplot.stl <- function (x=NULL, labels = NULL, main=NULL, xlab="Time", ylab="", ...){
+autoplot.stl <- function (object, labels = NULL, main=NULL, xlab="Time", ylab="", ...){
   if (requireNamespace("ggplot2")){
-    if (!inherits(x, "stl")){
+    if (!inherits(object, "stl")){
       stop("autoplot.stl requires a stl object, use x=object")
     }
     if(is.null(labels)){
-      labels <- colnames(x$time.series)
+      labels <- colnames(object$time.series)
     }
     
-    data <- x$time.series
+    data <- object$time.series
     cn <- c("data",labels)
     data <- data.frame(datetime=rep(time(data),NCOL(data)+1), y=c(rowSums(data),data),
                        parts=factor(rep(cn, each=NROW(data)), levels=cn))
@@ -492,12 +491,11 @@ autoplot.stl <- function (x=NULL, labels = NULL, main=NULL, xlab="Time", ylab=""
     p <- ggplot2::ggplot(ggplot2::aes_(x=~datetime, y=~y), data=data)
     
     #Add data
-    p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~y), data=subset(data,parts!="remainder"), na.rm=TRUE)
+    p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~y), data=subset(data,data$parts!="remainder"), na.rm=TRUE)
     p <- p + ggplot2::geom_segment(ggplot2::aes_(x = ~datetime, xend = ~datetime, y = 0, yend = ~y),
-                                   data=subset(data,parts=="remainder"), lineend = "butt")
-    p <- p + ggplot2::facet_grid(parts ~ ., scales="free_y", switch="y")
+                                   data=subset(data,data$parts=="remainder"), lineend = "butt")
+    p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
     p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = 0, parts = "remainder"))
-    
     
     #Graph title
     p <- p + ggplot2::ggtitle(main)
@@ -509,12 +507,12 @@ autoplot.stl <- function (x=NULL, labels = NULL, main=NULL, xlab="Time", ylab=""
   }
 }
 
-autoplot.ts <- function(x, main=NULL, xlab="Time", ylab=substitute(x)){
+autoplot.ts <- function(object, main=NULL, xlab="Time", ylab=substitute(object), ...){
   if(requireNamespace("ggplot2")){
-    if(!is.ts(x)){
-      stop("autoplot.ts requires a ts object, use x=object")
+    if(!is.ts(object)){
+      stop("autoplot.ts requires a ts object, use object=object")
     }
-    data <- data.frame(y = as.numeric(x), x = as.numeric(time(x)))
+    data <- data.frame(y = as.numeric(object), x = as.numeric(time(object)))
     #Initialise ggplot object
     p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x), data=data)
     
@@ -531,13 +529,13 @@ autoplot.ts <- function(x, main=NULL, xlab="Time", ylab=substitute(x)){
   }
 }
 
-autoplot.mts <- function(x, main=NULL, xlab="Time", ylab=substitute(x)){
+autoplot.mts <- function(object, main=NULL, xlab="Time", ylab=substitute(object), ...){
   if(requireNamespace("ggplot2")){
-    if(!is.mts(x)){
+    if(!is.mts(object)){
       stop("autoplot.mts requires a mts object, use x=object")
     }
-    data <- data.frame(y=as.numeric(c(x)), x=rep(as.numeric(time(x)),NCOL(x)),
-                       series=rep(colnames(x), each=NROW(x)))
+    data <- data.frame(y=as.numeric(c(object)), x=rep(as.numeric(time(object)),NCOL(object)),
+                       series=rep(colnames(object), each=NROW(object)))
     #Initialise ggplot object
     p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x, group=~series, colour=~series), data=data)
     
