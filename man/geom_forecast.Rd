@@ -3,9 +3,9 @@
 \alias{GeomForecast}
 \title{Forecast plot}
 \usage{geom_forecast(mapping = NULL, data = NULL, stat = "forecast",
-    position = "identity", na.rm = FALSE, show.legend = NA, 
+    position = "identity", na.rm = FALSE, show.legend = NA,
     inherit.aes = TRUE, plot.conf=TRUE, h=NULL, level=c(80,95), fan=FALSE,
-    robust=FALSE, lambda=NULL, find.frequency=FALSE, 
+    robust=FALSE, lambda=NULL, find.frequency=FALSE,
     allow.multiplicative.trend=FALSE, series, ...)
 }
 
@@ -76,6 +76,7 @@ The aesthetics required for the forecasting to work includes forecast observatio
 
 \author{Mitchell O'Hara-Wild}
 \examples{
+library(ggplot2)
 autoplot(USAccDeaths) + geom_forecast()
 
 lungDeaths <- cbind(mdeaths, fdeaths)
