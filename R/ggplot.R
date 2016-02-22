@@ -469,7 +469,7 @@ autoplot.splineforecast <- function (object, plot.conf=TRUE, main=NULL, xlab=NUL
   }
   p <- autoplot.forecast(object, plot.conf=plot.conf, main=main, xlab=xlab, ylab=ylab, ...)
   fit <- data.frame(datetime=as.numeric(time(object$fitted)),y=as.numeric(object$fitted))
-  p <- p + ggplot2::geom_point(ggplot2::aes_(object=~datetime,y=~y),data=fit,size=2)
+  p <- p + ggplot2::geom_point(ggplot2::aes_(x=~datetime,y=~y),data=fit,size=2)
   return(p)
 }
 
