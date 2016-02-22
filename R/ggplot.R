@@ -266,7 +266,7 @@ autoplot.forecast <- function (object, plot.conf=TRUE, shadecols=c("#868FBD","#B
         levels <- NROW(object$level)
         interval <- data.frame(xpred=rep(object$newdata[[1]],levels),lower=c(object$lower),upper=c(object$upper),level=object$level)
         interval<-interval[order(interval$level,decreasing = TRUE),] #Must be ordered for gg z-index
-        p <- p + ggplot2::geom_linerange(ggplot2::aes(x=~xpred, ymin=~lower, ymax=~upper, colour=~level),data=interval, size=flwd)
+        p <- p + ggplot2::geom_linerange(ggplot2::aes_(x=~xpred, ymin=~lower, ymax=~upper, colour=~level), data=interval, size=flwd)
         if(length(object$level)<=5){
           p <- p + ggplot2::scale_colour_gradientn(breaks=object$level, colours = shadecols, guide="legend")
         }
