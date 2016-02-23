@@ -5,24 +5,37 @@
 #size set to average of number of inputs and number of outputs: (p+P+1)/2
 #if xreg is included then size = (p+P+ncol(xreg)+1)/2
 
-nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, ...)
+nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, scale.inputs=TRUE, ...)
 {
   # Transform data
   if(!is.null(lambda))
     xx <- BoxCox(x,lambda)
   else
     xx <- x
-
+  # Scale series
+  scalex <- NULL
+  if(scale.inputs){
+      xx <- scale(xx, center = TRUE, scale = TRUE)
+      scalex <- list(mean = attr(xx,"scaled:center"),
+                     sd = attr(xx,"scaled:scale"))
+  }
   # Check xreg class & dim
+  xxreg <- NULL
+  scalexreg <- NULL
   if(!is.null(xreg))
   {
     xreg <- as.matrix(xreg)
     if(length(x) != nrow(xreg))
       stop("Number of rows in xreg does not match series length")
+    ## Scale xreg
+    if(scale.inputs){
+        xxreg <- scale(xreg, center = TRUE, scale = TRUE)
+        scalexreg <- list(mean = attr(xxreg,"scaled:center"),
+                       sd = attr(xxreg,"scaled:scale"))
+    } else {
+        xxreg <- xreg
+    }
   }
-  # Scale data
-  scale <- max(abs(xx),na.rm=TRUE)
-  xx <- xx/scale
   # Set up lagged matrix
   n <- length(xx)
   xx <- as.ts(xx)
@@ -53,7 +66,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, ...)
   for(i in 1:nlag)
     lags.X[,i] <- xx[(maxlag-lags[i]+1):(n-lags[i])]
   # Add xreg into lagged matrix
-  lags.X <- cbind(lags.X, xreg[-(1:maxlag), ])
+  lags.X <- cbind(lags.X, xxreg[-(1:maxlag), ])
   if(missing(size))
     size <- round((ncol(lags.X)+1)/2)
   # Remove missing values if present
@@ -66,13 +79,17 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, ...)
   out$m <- m
   out$p <- p
   out$P <- P
-  out$scale <- scale
+  out$scalex <- scalex
+  out$scalexreg <- scalexreg
   out$size <- size
   out$xreg <- xreg
   out$lambda <- lambda
   out$model <- fit
   fits <- c(rep(NA,maxlag), rowMeans(sapply(fit, predict)))
-  fits <- ts(fits*scale)
+  if(scale.inputs){
+      fits <- fits * scalex$sd + scalex$mean
+  }
+  fits <- ts(fits)
   if(!is.null(lambda))
     fits <- InvBoxCox(fits,lambda)
   out$fitted <- ts(numeric(length(out$x)))
@@ -131,17 +148,25 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), xr
   fcast <- numeric(h)
   xx <- object$x
   if(!is.null(lambda))
-    xx <- BoxCox(xx,lambda)
-  flag <- rev(tail(xx/object$scale, n=max(object$lags)))
+      xx <- BoxCox(xx,lambda)
+  if(!is.null(object$scalex)){
+      xx <- scale(xx, center = object$scalex$mean, scale = object$scalex$sd)
+      if(!is.null(xreg)){
+          xreg <- scale(xreg, center = object$scalexreg$mean, scale = object$scalexreg$sd)
+      }
+  }
+  flag <- rev(tail(xx, n=max(object$lags)))
   for(i in 1:h)
   {
     fcast[i] <- mean(sapply(object$model, predict, newdata=c(flag[object$lags], xreg[i, ])))
     flag <- c(fcast[i],flag[-length(flag)])
   }
-  out$mean <- ts(fcast*object$scale,start=tspx[2]+1/tspx[3],frequency=tspx[3])
+  if(!is.null(object$scalex)){
+      fcast <- fcast * object$scalex$sd + object$scalex$mean
+  }
+  out$mean <- ts(fcast,start=tspx[2]+1/tspx[3],frequency=tspx[3])
   if(!is.null(lambda))
     out$mean <- InvBoxCox(out$mean,lambda)
-
   return(structure(out,class="forecast"))
 }
 
