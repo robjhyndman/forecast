@@ -14,10 +14,11 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, scale.in
     xx <- x
   # Scale series
   scalex <- NULL
-  if(scale.inputs){
-      xx <- scale(xx, center = TRUE, scale = TRUE)
-      scalex <- list(mean = attr(xx,"scaled:center"),
-                     sd = attr(xx,"scaled:scale"))
+  if(scale.inputs)
+  {
+    xx <- scale(xx, center = TRUE, scale = TRUE)
+    scalex <- list(mean = attr(xx,"scaled:center"),
+                   sd = attr(xx,"scaled:scale"))
   }
   # Check xreg class & dim
   xxreg <- NULL
@@ -28,12 +29,15 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, scale.in
     if(length(x) != nrow(xreg))
       stop("Number of rows in xreg does not match series length")
     ## Scale xreg
-    if(scale.inputs){
-        xxreg <- scale(xreg, center = TRUE, scale = TRUE)
-        scalexreg <- list(mean = attr(xxreg,"scaled:center"),
-                       sd = attr(xxreg,"scaled:scale"))
-    } else {
-        xxreg <- xreg
+    if(scale.inputs)
+    {
+      xxreg <- scale(xreg, center = TRUE, scale = TRUE)
+      scalexreg <- list(mean = attr(xxreg,"scaled:center"),
+                        sd = attr(xxreg,"scaled:scale"))
+    }
+    else
+    {
+      xxreg <- xreg
     }
   }
   # Set up lagged matrix
@@ -86,9 +90,8 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, scale.in
   out$lambda <- lambda
   out$model <- fit
   fits <- c(rep(NA,maxlag), rowMeans(sapply(fit, predict)))
-  if(scale.inputs){
-      fits <- fits * scalex$sd + scalex$mean
-  }
+  if(scale.inputs)
+    fits <- fits * scalex$sd + scalex$mean
   fits <- ts(fits)
   if(!is.null(lambda))
     fits <- InvBoxCox(fits,lambda)
@@ -118,8 +121,8 @@ avnnet <- function(x,y,repeats, ...)
 
 print.nnetarmodels <- function(x, ...)
 {
-    cat(paste("\nAverage of",length(x),"networks, each of which is\n"))
-    print(x[[1]])
+  cat(paste("\nAverage of",length(x),"networks, each of which is\n"))
+  print(x[[1]])
 }
 
 
@@ -148,12 +151,12 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), xr
   fcast <- numeric(h)
   xx <- object$x
   if(!is.null(lambda))
-      xx <- BoxCox(xx,lambda)
-  if(!is.null(object$scalex)){
-      xx <- scale(xx, center = object$scalex$mean, scale = object$scalex$sd)
-      if(!is.null(xreg)){
-          xreg <- scale(xreg, center = object$scalexreg$mean, scale = object$scalexreg$sd)
-      }
+    xx <- BoxCox(xx,lambda)
+  if(!is.null(object$scalex))
+  {
+    xx <- scale(xx, center = object$scalex$mean, scale = object$scalex$sd)
+    if(!is.null(xreg))
+      xreg <- scale(xreg, center = object$scalexreg$mean, scale = object$scalexreg$sd)
   }
   flag <- rev(tail(xx, n=max(object$lags)))
   for(i in 1:h)
@@ -161,9 +164,8 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), xr
     fcast[i] <- mean(sapply(object$model, predict, newdata=c(flag[object$lags], xreg[i, ])))
     flag <- c(fcast[i],flag[-length(flag)])
   }
-  if(!is.null(object$scalex)){
-      fcast <- fcast * object$scalex$sd + object$scalex$mean
-  }
+  if(!is.null(object$scalex))
+    fcast <- fcast * object$scalex$sd + object$scalex$mean
   out$mean <- ts(fcast,start=tspx[2]+1/tspx[3],frequency=tspx[3])
   if(!is.null(lambda))
     out$mean <- InvBoxCox(out$mean,lambda)
@@ -172,15 +174,15 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), xr
 
 print.nnetar <- function(x, digits = max(3, getOption("digits") - 3), ...)
 {
-    cat("Series:", x$series, "\n")
-    cat("Model: ", x$method, "\n")
-    #cat("  one hidden layer with",x$size,"nodes\n")
-    cat("Call:   ")
-    print(x$call)
-    print(x$model)
-    cat("\nsigma^2 estimated as ", format(mean(residuals(x)^2,na.rm=TRUE), digits = digits),
-            "\n", sep = "")
-    invisible(x)
+  cat("Series:", x$series, "\n")
+  cat("Model: ", x$method, "\n")
+  #cat("  one hidden layer with",x$size,"nodes\n")
+  cat("Call:   ")
+  print(x$call)
+  print(x$model)
+  cat("\nsigma^2 estimated as ", format(mean(residuals(x)^2,na.rm=TRUE), digits = digits),
+      "\n", sep = "")
+  invisible(x)
 }
 
 is.nnetar <- function(x){
