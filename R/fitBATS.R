@@ -3,7 +3,7 @@
 # Author: srazbash
 ###############################################################################
 
-fitPreviousBATSModel <- function (y, model) {
+fitPreviousBATSModel <- function (y, model, biasadj=FALSE) {
   seasonal.periods <- model$seasonal.periods
   if (is.null(seasonal.periods) == FALSE) {
     seasonal.periods <- as.integer(sort(seasonal.periods))
@@ -35,6 +35,9 @@ fitPreviousBATSModel <- function (y, model) {
   fitted.values <- fitted.values.and.errors$y.hat
   if (is.null(lambda) == FALSE) {
     fitted.values <- InvBoxCox(fitted.values, lambda=lambda)
+    if(biasadj){
+      fitted.values <- InvBoxCoxf(fitted.values, fvar=var(e), lambda=lambda)
+    }
   }
   variance <- sum((e*e))/length(y)
   
@@ -47,7 +50,7 @@ fitPreviousBATSModel <- function (y, model) {
   return(model.for.output)
 }
 
-fitSpecificBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.periods=NULL, starting.params=NULL, x.nought=NULL, ar.coefs=NULL, ma.coefs=NULL, init.box.cox=NULL, bc.lower=0, bc.upper=1) {
+fitSpecificBATS <- function(y, use.box.cox, biasadj=FALSE, use.beta, use.damping, seasonal.periods=NULL, starting.params=NULL, x.nought=NULL, ar.coefs=NULL, ma.coefs=NULL, init.box.cox=NULL, bc.lower=0, bc.upper=1) {
 	if(!is.null(seasonal.periods)) {
 		seasonal.periods <- as.integer(sort(seasonal.periods))
 	}
@@ -291,8 +294,10 @@ fitSpecificBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.peri
 		y.transformed <- BoxCox(y, lambda=lambda)
 		fitted.values.and.errors <- calcModel(y.transformed, x.nought, F, g$g, w)
 		e <- fitted.values.and.errors$e
-		fitted.values <- fitted.values.and.errors$y.hat
-		fitted.values <- InvBoxCox(fitted.values, lambda=lambda)
+		fitted.values <- InvBoxCox(fitted.values.and.errors$y.hat, lambda=lambda)
+		if(biasadj){
+		  fitted.values <- InvBoxCoxf(fitted.values, fvar = var(e), lambda = lambda)
+		}
 		variance <- sum((e*e))/length(y)
 		#e <- InvBoxCox(e, lambda=lambda)
 		#ee <- y-fitted.values

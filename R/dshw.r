@@ -4,7 +4,7 @@
 ## y can be an msts object, or periods can be passed explicitly.
 ####################################################################
 
-dshw <- function(y, period1=NULL, period2=NULL, h=2*max(period1,period2), alpha=NULL, beta=NULL, gamma=NULL, omega=NULL, phi=NULL, lambda=NULL, armethod=TRUE, model = NULL)
+dshw <- function(y, period1=NULL, period2=NULL, h=2*max(period1,period2), alpha=NULL, beta=NULL, gamma=NULL, omega=NULL, phi=NULL, lambda=NULL, biasadj=FALSE, armethod=TRUE, model = NULL)
 {
   if(min(y,na.rm=TRUE) <= 0)
     stop("dshw not suitable when data contain zeros or negative numbers")
@@ -139,6 +139,10 @@ dshw <- function(y, period1=NULL, period2=NULL, h=2*max(period1,period2), alpha=
   {
     y <- origy
     fcast <- InvBoxCox(fcast,lambda)
+    if(biasadj){
+      fcast <- InvBoxCoxf(x = fcast, fvar = var(e), lambda = lambda)
+    }
+    #Does this also need a biasadj backtransform?
     yhat <- InvBoxCox(yhat,lambda)
   }
 

@@ -21,18 +21,32 @@ importFrom("stats", "Box.test", "acf", "approx", "ar", "arima",
              "sd", "simulate", "smooth.spline", "start", "stl", "supsmu", 
              "terms", "time", "ts", "tsp", "tsp<-", "tsdiag", "var")
 importFrom("utils", "packageVersion", "tail")
+importFrom("ggplot2","autoplot","fortify")
 
 export(arfima, Arima, arima.errors, arimaorder, auto.arima, BoxCox, croston,
 fitted.Arima, forecast, forecast.ar, forecast.Arima, forecast.ets, forecast.fracdiff,findfrequency,
-forecast.HoltWinters, forecast.lm, forecast.stl, forecast.StructTS, forecast.bats, forecast.tbats, accuracy, holt, hw, InvBoxCox, nnetar, forecast.nnetar, plot.Arima, plot.ar, taperedacf, taperedpacf,
+forecast.HoltWinters, forecast.lm, forecast.stl, forecast.StructTS, forecast.bats, forecast.tbats, accuracy, holt, hw, InvBoxCox,
+is.acf, is.Arima, is.bats, is.constant, is.ets, is.forecast, is.mforecast, is.nnetar, is.nnetarmodels, is.splineforecast, is.stlm,
+nnetar, forecast.nnetar, plot.Arima, plot.ar, taperedacf, taperedpacf,
 meanf, logLik.ets, monthdays, na.interp, ets, plot.bats, plot.tbats, plot.ets, plot.forecast,
 plot.splineforecast, rwf, seasadj, seasonaldummy,naive,snaive,stlf,subset.ts, 
-seasonaldummyf, seasonplot, ses, sindexf, splinef,tslm,fourier,fourierf,forecast.lm,
+seasonaldummyf, ggseasonplot, seasonplot, ses, sindexf, splinef,tslm,fourier,fourierf,forecast.lm,
 thetaf, tsdisplay, simulate.ets, simulate.ar, simulate.Arima, simulate.fracdiff, ndiffs, nsdiffs, dm.test,tbats.components,
 Acf,Pacf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts, getResponse, tsoutliers,
-tsclean, bizdays, easter,
-stlm, forecast.stlm)
+tsclean, bizdays, easter,stlm, forecast.stlm, stat_forecast, StatForecast, geom_forecast, GeomForecast)
 
+S3method(autoplot, acf)
+S3method(autoplot, Arima)
+S3method(autoplot, decomposed.ts)
+S3method(autoplot, ets)
+S3method(autoplot, forecast)
+S3method(autoplot, mforecast)
+S3method(autoplot, splineforecast)
+S3method(autoplot, stl)
+S3method(autoplot, ts)
+S3method(autoplot, mts)
+S3method(fortify, ts)
+S3method(fortify, forecast)
 S3method(as.character, Arima)
 S3method(as.data.frame,forecast)
 S3method(coef,ets)
@@ -47,12 +61,14 @@ S3method(forecast,forecast)
 S3method(forecast,fracdiff)
 S3method(forecast,HoltWinters)
 S3method(forecast,lm)
+S3method(forecast,mlm)
 S3method(forecast,nnetar)
 S3method(forecast,stl)
 S3method(forecast,stlm)
 S3method(forecast,StructTS)
 S3method(forecast,tbats)
 S3method(forecast,ts)
+S3method(forecast,mts)
 S3method(forecast,varest)
 S3method(getResponse,ar)
 S3method(getResponse,Arima)
@@ -88,6 +104,7 @@ S3method(subset,ts)
 S3method(summary,Arima)
 S3method(summary,ets)
 S3method(summary,forecast)
+S3method(summary,mforecast)
 S3method(tsdiag,ets)
 S3method(window,msts)
 

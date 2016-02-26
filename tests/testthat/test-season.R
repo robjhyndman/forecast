@@ -22,9 +22,27 @@ if(require(fpp) & require(testthat))
   
   test_that("tests for seasonaldummyf", {
   expect_error(seasonaldummyf(1))
+  expect_warning(seasonaldummyf(wineind, 4), "deprecated")
   dummymat <- seasonaldummyf(wineind, 4)
   expect_true(nrow(dummymat) == 4)
   expect_true(ncol(dummymat) == 11)
+  })
+  
+  test_that("tests for fourier",{
+    expect_error(fourier(1))
+    testseries <- ts(rep(1:7, 5), f = 7)
+    fouriermat <- fourier(testseries, 3)
+    expect_true(length(testseries) == nrow(fouriermat))
+    expect_true(ncol(fouriermat) == 6)
+    expect_true(all(grep("-7", colnames(fouriermat))))
+  })
+  
+  test_that("tests for fourierf", {
+    expect_error(fourierf(1))
+    expect_warning(fourierf(wineind, 4, 10), "deprecated")
+    fouriermat <- fourierf(wineind, 4, 10)
+    expect_true(nrow(fouriermat) == 10)
+    expect_true(ncol(fouriermat) == 8)
   })
   
   test_that("tests for stlm",{
@@ -46,6 +64,9 @@ if(require(fpp) & require(testthat))
   test_that("tests for stlf",{
   expect_true(all(forecast.stlm(stlm(wineind))$mean == stlf(wineind)$mean))
   expect_true(all(forecast.stlm(stlm(wineind, lambda = .5))$mean == stlf(wineind, lambda = .5)$mean))
+  fit1 <- stlf(wineind,lambda=.2,biasadj=FALSE)
+  fit2 <- stlf(wineind,lambda=.2,biasadj=TRUE)
+  expect_false(identical(fit1$mean, fit2$mean))
   })
   
   test_that("tests for ma",{
@@ -54,5 +75,5 @@ if(require(fpp) & require(testthat))
   maseries <- ma(testseries, order = 3)
   expect_true(all(is.na(maseries)[c(1, 20)]))
   expect_true(all(maseries[2:19] == 2:19))
-})
+  })
 }

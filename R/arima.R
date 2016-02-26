@@ -234,7 +234,7 @@ SD.test <- function (wts, s=frequency(wts))
 
 
 forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma[5], 10),
-    level=c(80, 95), fan=FALSE, xreg=NULL, lambda=object$lambda,  bootstrap=FALSE, npaths=5000,...)
+    level=c(80, 95), fan=FALSE, xreg=NULL, lambda=object$lambda,  bootstrap=FALSE, npaths=5000, biasadj=FALSE, ...)
 {
   # Check whether there are non-existent arguments
   all.args <- names(formals())
@@ -337,10 +337,13 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
     }
   }
   colnames(lower)=colnames(upper)=paste(level, "%", sep="")
-  method <- arima.string(object)
-  fits <- fitted(object)
+  method <- arima.string(object, padding=FALSE)
+  fits <- fitted(object, biasadj)
   if(!is.null(lambda) & is.null(object$constant))  { # Back-transform point forecasts and prediction intervals
     pred$pred <- InvBoxCox(pred$pred,lambda)
+    if(biasadj){
+      pred$pred <- InvBoxCoxf(x = pred$pred, fvar = var(residuals(object)), lambda = lambda)
+    }
     if(!bootstrap) { # Bootstrapped intervals already back-transformed
       lower <- InvBoxCox(lower,lambda)
       upper <- InvBoxCox(upper,lambda)
@@ -353,7 +356,7 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
 }
 
 
-forecast.ar <- function(object,h=10,level=c(80,95),fan=FALSE, lambda=NULL,  bootstrap=FALSE, npaths=5000,...)
+forecast.ar <- function(object,h=10,level=c(80,95),fan=FALSE, lambda=NULL,  bootstrap=FALSE, npaths=5000, biasadj=FALSE, ...)
 {
      x <- getResponse(object)
      pred <- predict(object,newdata=x,n.ahead=h)
@@ -391,6 +394,9 @@ forecast.ar <- function(object,h=10,level=c(80,95),fan=FALSE, lambda=NULL,  boot
     if(!is.null(lambda))
     {
       pred$pred <- InvBoxCox(pred$pred,lambda)
+      if(biasadj){
+        pred$pred <- InvBoxCoxf(x=list(level = level, mean = pred$pred, upper = upper, lower = lower), lambda=lambda)
+      }
       lower <- InvBoxCox(lower,lambda)
       upper <- InvBoxCox(upper,lambda)
       fits <- InvBoxCox(fits,lambda)
@@ -453,25 +459,36 @@ arima.errors <- function(z)
 }
 
 # Return one-step fits
-fitted.Arima <- function(object,...)
+fitted.Arima <- function(object, biasadj = FALSE, ...)
 {
-    x <- getResponse(object)
-    if(is.null(x))
-    {
-        #warning("Fitted values are unavailable due to missing historical data")
-        return(NULL)
+  x <- getResponse(object)
+  if(!is.null(object$fitted)){
+    return(object$fitted)
+  }
+  if(is.null(x))
+  {
+    #warning("Fitted values are unavailable due to missing historical data")
+    return(NULL)
+  }
+  if(is.null(object$lambda)){
+    return(x - object$residuals)
+  }
+  else{
+    fits <- InvBoxCox(BoxCox(x,object$lambda) - object$residuals, object$lambda)
+    if(biasadj){
+      return(InvBoxCoxf(x = fits, fvar = var(object$residuals), lambda = object$lambda))
     }
-    if(is.null(object$lambda))
-        return(x - object$residuals)
-    else
-        return(InvBoxCox(BoxCox(x,object$lambda) - object$residuals, object$lambda))
+    else{
+      return(fits)
+    }
+  }
 }
 
 # Calls arima from stats package and adds data to the returned object
 # Also allows refitting to new data
 # and drift terms to be included.
 Arima <- function(x, order=c(0, 0, 0),
-      seasonal=c(0, 0, 0), 
+      seasonal=c(0, 0, 0),
       xreg=NULL, include.mean=TRUE, include.drift=FALSE, include.constant, lambda=model$lambda,
     transform.pars=TRUE,
       fixed=NULL, init=NULL, method=c("CSS-ML", "ML", "CSS"),
@@ -580,6 +597,14 @@ arima2 <- function (x, model, xreg, method)
       use.xreg <- TRUE
     }
 
+    if(!is.null(model$xreg))
+    {
+      if(is.null(xreg))
+        stop("No regressors provided")
+      if(ncol(xreg) != ncol(model$xreg))
+        stop("Number of regressors does not match fitted model")
+    }
+
     if(model$arma[5]>1 & sum(abs(model$arma[c(3,4,7)]))>0) # Seasonal model
     {
         if(use.xreg)
@@ -611,7 +636,7 @@ print.ARIMA <- function (x, digits=max(3, getOption("digits") - 3), se=TRUE,
     ...)
 {
     cat("Series:",x$series,"\n")
-    cat(arima.string(x),"\n")
+    cat(arima.string(x, padding=TRUE),"\n")
     if(!is.null(x$lambda))
         cat("Box Cox transformation: lambda=",x$lambda,"\n")
 
@@ -713,7 +738,7 @@ print.ARIMA <- function (x, digits=max(3, getOption("digits") - 3), se=TRUE,
 #     else return(pred)
 # }
 
-arimaorder <- function (object) 
+arimaorder <- function (object)
 {
 	if(is.element("Arima",class(object)))
 	{
@@ -726,7 +751,7 @@ arimaorder <- function (object)
 	}
 	else if(is.element("ar",class(object)))
 	{
-		return(c(object$order,0,0))	
+		return(c(object$order,0,0))
 	}
 	else if(is.element("fracdiff",class(object)))
 	{
@@ -738,5 +763,9 @@ arimaorder <- function (object)
 
 as.character.Arima <- function(x, ...)
 {
-  arima.string(x)
+  arima.string(x, padding=FALSE)
+}
+
+is.Arima <- function(x){
+  inherits(x, "Arima")
 }
