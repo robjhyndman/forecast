@@ -64,3 +64,8 @@ getResponse.tbats <- function(object,..){
 getResponse.bats <- function(object,...){
   return(getResponse.tbats(object,...))
 }
+
+getResponse.nnetar <- function(object,...){
+  return(object$fitted)
+}
+
