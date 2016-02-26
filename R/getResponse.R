@@ -66,6 +66,6 @@ getResponse.bats <- function(object,...){
 }
 
 getResponse.nnetar <- function(object,...){
-  return(object$fitted)
+  return(object$x)
 }
 
