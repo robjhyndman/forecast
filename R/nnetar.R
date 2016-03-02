@@ -19,6 +19,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, scale.in
     xx <- scale(xx, center = TRUE, scale = TRUE)
     scalex <- list(mean = attr(xx,"scaled:center"),
                    sd = attr(xx,"scaled:scale"))
+    xx <- xx[,1]
   }
   # Check xreg class & dim
   xxreg <- NULL
@@ -193,25 +194,11 @@ is.nnetarmodels <- function(x){
   inherits(x, "nnetarmodels")
 }
 
-# fitted.train <- function(object, ...)
-# {
-#   caret::predict.train(object)
-# }
-
-# residuals.train <- function(object, ...)
-# {
-#   object$trainingData[,".outcome"] - caret::predict.train(object)
-# }
-
-# fitted.avNNet <- function(object, ...)
-# {
-#   fit <- mean(unlist(lapply(object$model, predict.nnet)))
-#   if(!is.null(object$lambda))
-#     fit <- InvBoxCox(fit,object$lambda)
-#   return(fit)
-# }
-
-# residuals.avNNet <- function(object, ...)
-# {
-#   object$model[[1]]$fitted.values + object$model[[1]]$residuals - caret::predict.avNNet(object)
-# }
+# Scale a univariate time series
+scale.ts <- function(x, center=TRUE, scale=TRUE)
+{
+  tspx <- tsp(x)
+  x <- as.ts(scale.default(x, center=center, scale=scale))
+  tsp(x) <- tspx
+  return(x)
+}

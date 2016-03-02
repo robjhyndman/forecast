@@ -176,7 +176,8 @@ trainingaccuracy <- function(f,test,d, D)
 
 accuracy <- function(f,x,test=NULL,d=NULL,D=NULL)
 {
-  if(!any(is.element(class(f), c("mforecast","forecast","ts","integer","numeric","Arima","ets","lm","bats","tbats"))))
+  if(!any(is.element(class(f), c("mforecast","forecast","ts","integer","numeric",
+      "Arima","ets","lm","bats","tbats","nnetar"))))
     stop("First argument should be a forecast object or a time series.")
   if(is.element("mforecast", class(f)))
     return(accuracy.mforecast(f,x,test,d,D))
