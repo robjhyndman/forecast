@@ -21,7 +21,7 @@
 
 \seealso{\code{\link{forecast.lm}}, \code{\link[stats]{lm}}.}
 
-\author{Rob J Hyndman}
+\author{Mitchell O'Hara-Wild and Rob J Hyndman}
 
 \examples{
 y <- ts(rnorm(120,0,3) + 1:120 + 20*sin(2*pi*(1:120)/12), frequency=12)
