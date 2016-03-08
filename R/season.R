@@ -65,7 +65,7 @@ seasadj <- function(object)
       scols <- grep("season",colnames(comp))
       sa <- comp[,"observed"]-rowSums(comp[,scols,drop=FALSE])
       # Back transform if necessary
-      if (!is.null(object$lambda)) 
+      if (!is.null(object$lambda))
         sa <- InvBoxCox(sa, object$lambda)
       return(sa)
     }
@@ -86,7 +86,7 @@ seasonaldummy <- function(x, h=NULL)
     stop("Not a time series")
   else
     fr.x <- frequency(x)
-  if(is.null(h)){    
+  if(is.null(h)){
     if(fr.x==1)
       stop("Non-seasonal time series")
     dummy <- as.factor(cycle(x))
@@ -99,7 +99,7 @@ seasonaldummy <- function(x, h=NULL)
     else if(fr.x == 4)
       c("Q1", "Q2", "Q3")
     else paste("S",1:(fr.x-1),sep="")
-    
+
     return(dummy.mat)
   }
   else{
@@ -116,9 +116,9 @@ seasonaldummyf <- function(x, h)
   return(seasonaldummy(ts(rep(0,h),start=tsp(x)[2]+1/f,frequency=f)))
 }
 
-forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsmodel="ZZN", 
+forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsmodel="ZZN",
      forecastfunction=NULL,
-     h = frequency(object$time.series)*2, level = c(80, 95), fan = FALSE, 
+     h = frequency(object$time.series)*2, level = c(80, 95), fan = FALSE,
      lambda=NULL, biasadj=FALSE, xreg=NULL, newxreg=NULL, allow.multiplicative.trend=FALSE, ...)
 {
   method <- match.arg(method)
@@ -145,7 +145,7 @@ forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsm
         fit <- auto.arima(x,xreg=xreg,seasonal=FALSE,...)
         return(forecast(fit,h=h,level=level,xreg=newxreg))
       }
-    }    
+    }
     else if(method=="naive")
     {
       forecastfunction <- function(x, h,level,...){
@@ -187,8 +187,8 @@ forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsm
   fcast$seasonal <- ts(lastseas[1:m],frequency=m,start=tsp(object$time.series)[2]-1+1/m)
   fcast$fitted <- fitted(fcast)+object$time.series[,1]
   fcast$residuals <- fcast$x - fcast$fitted
-  
-	if (!is.null(lambda)) 
+
+	if (!is.null(lambda))
 	{
 		fcast$x <- InvBoxCox(fcast$x,lambda)
 		fcast$fitted <- InvBoxCox(fcast$fitted, lambda)
@@ -200,21 +200,21 @@ forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsm
 		fcast$upper <- InvBoxCox(fcast$upper, lambda)
 		fcast$lambda <- lambda
 	}
-  
+
    return(fcast)
 }
 
 
 # Function takes time series, does STL decomposition, and fits a model to seasonally adjusted series
 # But it does not forecast. Instead, the result can be passed to forecast().
-stlm <- function(x ,s.window=7, robust=FALSE, method=c("ets","arima"), 
+stlm <- function(x ,s.window=7, robust=FALSE, method=c("ets","arima"),
      modelfunction=NULL, etsmodel="ZZN", lambda=NULL, xreg=NULL, allow.multiplicative.trend=FALSE, ...)
 {
   method <- match.arg(method)
 
   # Transform data if necessary
   origx <- x
-  if (!is.null(lambda)) 
+  if (!is.null(lambda))
     x <- BoxCox(x, lambda)
 
   # Do STL decomposition
@@ -242,7 +242,7 @@ stlm <- function(x ,s.window=7, robust=FALSE, method=c("ets","arima"),
 
   # De-seasonalize
   x.sa <- seasadj(stld)
-  
+
   # Model seasonally adjusted data
   fit <- modelfunction(x.sa, ...)
   fit$x <- x.sa
@@ -250,7 +250,7 @@ stlm <- function(x ,s.window=7, robust=FALSE, method=c("ets","arima"),
   return(structure(list(stl=stld,model=fit, lambda=lambda, x=origx, m=frequency(origx)),class="stlm"))
 }
 
-forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE, 
+forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE,
      lambda=object$lambda, biasadj=FALSE, newxreg=NULL, allow.multiplicative.trend=FALSE, ...)
 {
   if(!is.null(newxreg))
@@ -264,12 +264,12 @@ forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE
   m <- frequency(object$stl$time.series)
   n <- nrow(object$stl$time.series)
   lastseas <- rep(object$stl$time.series[n-(m:1)+1,"seasonal"],trunc(1+(h-1)/m))[1:h]
- 
+
   # Forecast seasonally adjusted series
   if(is.element("Arima",class(object$model)) & !is.null(newxreg))
     fcast <- forecast(object$model, h=h, level=level, xreg=newxreg, ...)
   else if(is.element("ets",class(object$model)))
-    fcast <- forecast(object$model, h=h, level=level, 
+    fcast <- forecast(object$model, h=h, level=level,
       allow.multiplicative.trend=allow.multiplicative.trend, ...)
   else
     fcast <- forecast(object$model, h=h, level=level, ...)
@@ -282,8 +282,8 @@ forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE
   fcast$seasonal <- ts(lastseas[1:m],frequency=m,start=tsp(object$stl$time.series)[2]-1+1/m)
   #fcast$residuals <- residuals()
   fcast$fitted <- fitted(fcast)+object$stl$time.series[,1]
-  
-  if (!is.null(lambda)) 
+
+  if (!is.null(lambda))
   {
     fcast$fitted <- InvBoxCox(fcast$fitted, lambda)
     fcast$mean <- InvBoxCox(fcast$mean, lambda)
@@ -295,13 +295,13 @@ forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE
     fcast$lambda <- lambda
   }
   fcast$x <- object$x
-  
+
   return(fcast)
 }
 
 stlf <- function(x, h=frequency(x)*2, s.window=7, t.window=NULL, robust=FALSE, lambda=NULL, biasadj=FALSE, ...)
 {
-	if (!is.null(lambda)) 
+	if (!is.null(lambda))
 	{
 		origx <- x
 		x <- BoxCox(x, lambda)
@@ -310,7 +310,7 @@ stlf <- function(x, h=frequency(x)*2, s.window=7, t.window=NULL, robust=FALSE, l
 	fit <- stl(x,s.window=s.window,t.window=t.window,robust=robust)
 	fcast <- forecast(fit,h=h,lambda=lambda,biasadj=biasadj, ...)
 
-	# if (!is.null(lambda)) 
+	# if (!is.null(lambda))
 	# {
 	# 	fcast$x <- origx
 	# 	fcast$fitted <- InvBoxCox(fcast$fitted, lambda)
@@ -372,7 +372,7 @@ fourierf <- function(x, K, h)
         X[,cs.K[j] + 2*i-1] <- sinpi(2*i*times/period[j])
       X[,cs.K[j] + 2*i] <- cospi(2*i*times/period[j])
     }
-    labels[(cs.K[j] + 1):cs.K[j + 1]] <- paste(paste0(c("S","C"),rep(1:K[j],rep(2,K[j]))), 
+    labels[(cs.K[j] + 1):cs.K[j + 1]] <- paste(paste0(c("S","C"),rep(1:K[j],rep(2,K[j]))),
                                                   round(period[j]), sep = "-")
   }
   colnames(X) <- labels
@@ -384,30 +384,17 @@ fourierf <- function(x, K, h)
   return(X)
 }
 
-
-ma <- function(x,order,centre=TRUE)
+ma <- function(x, order, centre=TRUE)
 {
-  tt <- 1:length(x)
-  if(order%%2) #odd
-  {
-    temp1 <- ts(ksmooth(tt,x, x.points=tt,bandwidth = order-1)$y)
-    j <- trunc(order/2)
-    temp1[c(1:j,length(x)-(1:j)+1)] <- NA
-  }
-  else
-  {
-    temp1 <- ts(ksmooth(tt,x, x.points=tt+0.5,bandwidth = order-1)$y)
-    j <- trunc(order/2)
-    temp1[c(1:(j-1),length(x)-(1:j)+1)] <- NA
-    if(centre)
-    {
-      temp2 <- ksmooth(tt,x, x.points=tt-0.5,bandwidth = order-1)$y
-      temp2[c(1:j,length(x)-(1:(j-1))+1)] <- NA
-      temp1 <- ts((temp1+temp2)/2)
-    }
-  }
-  tsp(temp1) <- tsp(x)
-  return(temp1)
+  if(abs(order - round(order)) > 1e-8)
+    stop("order must be an integer")
+
+  if(order%%2 == 0 & centre) #centred and even
+    w <- c(0.5,rep(1,order-1),0.5)/order
+  else # odd or not centred
+    w <- rep(1,order)/order
+
+  return(filter(x, w))
 }
 
 is.stlm <- function(x){

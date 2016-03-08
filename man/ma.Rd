@@ -21,7 +21,7 @@ where \eqn{k=\frac{m-1}{2}}{k=(m-1)/2}
 
 When an even \code{order} is specified, the observations averaged will include one more observation from the future than the past (k is rounded up). If centre is TRUE, the value from two moving averages (where k is rounded up and down respectively) are averaged, centering the moving average.}
 
-\seealso{\code{\link[stats]{ksmooth}}, \code{\link[stats]{decompose}}}
+\seealso{\code{\link[stats]{decompose}}}
 
 \author{Rob J Hyndman}
 \examples{
