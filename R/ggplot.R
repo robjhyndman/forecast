@@ -212,7 +212,7 @@ autoplot.ets <- function (object, main=NULL, xlab=NULL, ylab=NULL, ...){
   }
 }
 
-autoplot.forecast <- function (object, include=NULL, plot.conf=TRUE, shadecols=c("#868FBD","#BEC1D4"), fcol="#0000FF", flwd=1, main=NULL, xlab=NULL, ylab=NULL,
+autoplot.forecast <- function (object, include, plot.conf=TRUE, shadecols=c("#868FBD","#BEC1D4"), fcol="#0000FF", flwd=1, main=NULL, xlab=NULL, ylab=NULL,
 ...){
   if (requireNamespace("ggplot2")){
     if (!is.forecast(object)){
@@ -311,7 +311,7 @@ autoplot.forecast <- function (object, include=NULL, plot.conf=TRUE, shadecols=c
         timex <- time(object$model$residuals)
       }
       data <- data.frame(yvar = as.numeric(data$yvar), datetime = as.numeric(timex))
-      if(!is.null(include))
+      if(!missing(include))
         data <- tail(data, include)
       p <- p + ggplot2::scale_x_continuous()
       p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~yvar), data=data) +
