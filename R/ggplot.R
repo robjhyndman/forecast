@@ -212,7 +212,8 @@ autoplot.ets <- function (object, main=NULL, xlab=NULL, ylab=NULL, ...){
   }
 }
 
-autoplot.forecast <- function (object, plot.conf=TRUE, shadecols=c("#868FBD","#BEC1D4"), fcol="#0000FF", flwd=1, main=NULL, xlab=NULL, ylab=NULL, ...){
+autoplot.forecast <- function (object, include=NULL, plot.conf=TRUE, shadecols=c("#868FBD","#BEC1D4"), fcol="#0000FF", flwd=1, main=NULL, xlab=NULL, ylab=NULL,
+...){
   if (requireNamespace("ggplot2")){
     if (!is.forecast(object)){
       stop("autoplot.forecast requires a forecast object, use object=object")
@@ -310,6 +311,8 @@ autoplot.forecast <- function (object, plot.conf=TRUE, shadecols=c("#868FBD","#B
         timex <- time(object$model$residuals)
       }
       data <- data.frame(yvar = as.numeric(data$yvar), datetime = as.numeric(timex))
+      if(!is.null(include))
+        data <- tail(data, include)
       p <- p + ggplot2::scale_x_continuous()
       p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~yvar), data=data) +
         ggplot2::labs(y=vars["yvar"], x="Time")
@@ -515,7 +518,11 @@ autoplot.ts <- function(object, main=NULL, xlab="Time", ylab=substitute(object),
     if(!is.ts(object)){
       stop("autoplot.ts requires a ts object, use object=object")
     }
+
+    # Create data frame with time as a column labelled x
+    # and time series as a column labelled y.
     data <- data.frame(y = as.numeric(object), x = as.numeric(time(object)))
+
     #Initialise ggplot object
     p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x), data=data)
 
