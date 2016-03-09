@@ -7,7 +7,7 @@ if(require(testthat) & require(fpp))
     expect_warning(tbats(c(1:5, NA, 7:9), use.parallel = FALSE))
     expect_true(all(forecast(tbats(rep(1, 100), use.parallel = FALSE))$mean == 1))
   })
-  
+
   test_that("Test tbats() and forecasts", {
     # Fit tbats models
     tbatsfit1 <- tbats(wineind, use.parallel = FALSE)
@@ -20,15 +20,15 @@ if(require(testthat) & require(fpp))
     expect_that(tbats.components(tbatsfit3), not(throws_error()))
     expect_that(tbats.components(tbatsfit4), not(throws_error()))
     # Test accuracy.tbats() function
-    expect_output(accuracy(tbatsfit1), regexp = "ME")
-    expect_output(accuracy(tbatsfit2), regexp = "ME")
-    expect_output(accuracy(tbatsfit3), regexp = "ME")
-    expect_output(accuracy(tbatsfit4), regexp = "ME")
+    expect_output(print(accuracy(tbatsfit1)), regexp = "ME")
+    expect_output(print(accuracy(tbatsfit2)), regexp = "ME")
+    expect_output(print(accuracy(tbatsfit3)), regexp = "ME")
+    expect_output(print(accuracy(tbatsfit4)), regexp = "ME")
     # Test summary.tbats()
-    expect_output(summary(tbatsfit1), regexp = "Length")
-    expect_output(summary(tbatsfit2), regexp = "Length")
-    expect_output(summary(tbatsfit3), regexp = "Length")
-    expect_output(summary(tbatsfit4), regexp = "Length")
+    expect_output(print(summary(tbatsfit1)), regexp = "Length")
+    expect_output(print(summary(tbatsfit2)), regexp = "Length")
+    expect_output(print(summary(tbatsfit3)), regexp = "Length")
+    expect_output(print(summary(tbatsfit4)), regexp = "Length")
     #Test fitted length
     expect_true(length(fitted(tbatsfit1)) == length(wineind))
     expect_true(length(fitted(tbatsfit2)) == length(austa))
@@ -45,7 +45,7 @@ if(require(testthat) & require(fpp))
     # Test forecasts with fan = TRUE
     expect_true(all(forecast(tbatsfit1, fan = TRUE)$mean == forecast(tbatsfit1)$mean))
   })
-  
+
   test_that("Test tbats() with parallel", {
     # Tests will not run on Travis in parallel
     #expect_output(print(tbats(cafe, num.cores = 1)), regexp = "TBATS")
