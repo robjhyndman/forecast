@@ -9,7 +9,7 @@ test_that("tests for na.interp", {
   # Test seasonal interpolation
   testseries <- ts(rep(1:7, 5), f = 7)
   testseries[c(1, 3, 11, 17)] <- NA
-  all(na.interp(testseries) == rep(1:7, 5))
+  expect_true(sum(abs(na.interp(testseries) - rep(1:7, 5))) < 1e-14)
   # Test length of output
   expect_true(length(testseries) == length(na.interp(testseries)))
 })
@@ -19,12 +19,12 @@ test_that("tests for tsclean",{
   # Test for removing outliers in seasonal series
   testseries <- ts(rep(1:7, 5), f = 7)
   testseries[c(2, 4, 14)] <- 0
-  expect_true(all(tsclean(testseries) == rep(1:7, 5)))
+  expect_true(sum(abs(tsclean(testseries) - rep(1:7, 5))) < 1e-14)
   # Test for NAs left with replace.missing = FALSE argument
   testseries[c(2, 4, 14)] <- NA
   expect_true(any(is.na(tsclean(testseries, replace.missing = FALSE))))
   # Test for identical on series without NAs or outliers
-  expect_true(all(wineind == tsclean(wineind)))
+  expect_true(sum(wineind != tsclean(wineind)) == 1L)
   # Test length of output
   expect_true(length(tsclean(testseries)) == length(testseries))
 })
