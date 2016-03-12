@@ -4,7 +4,7 @@
 \alias{Ccf}
 \alias{taperedacf}
 \alias{taperedpacf}
-\title{(Partial) Autocorrelation Function Estimation}
+\title{(Partial) Autocorrelation and Cross-Correlation Function Estimation}
 \usage{
 Acf(x, lag.max = NULL,
     type = c("correlation", "covariance", "partial"),
@@ -31,9 +31,9 @@ taperedpacf(x, ...) }
 \item{...}{Additional arguments passed to the plotting function.}
 }
 
-\description{The function \code{Acf} computes (and by default plots) an estimate of the autocorrelation function of a time series. Function \code{Pacf} computes (and by default plots) an estimate of the partial autocorrelation function of a univariate time series.}
+\description{The function \code{Acf} computes (and by default plots) an estimate of the autocorrelation function of a (possibly multivariate) time series. Function \code{Pacf} computes (and by default plots) an estimate of the partial autocorrelation function of a (possibly multivariate) time series. Function \code{Ccf} computes the cross-correlation or cross-covariance of two univariate series.}
 
-\details{The functions improve the \code{\link[stats]{acf}} and \code{\link[stats]{pacf}} functions when applied to univariate time series. The main differences are that \code{Acf} does not plot a spike at lag 0 (which is redundant) and the horizontal axes show lags in time units rather than seasonal units.
+\details{The functions improve the \code{\link[stats]{acf}}, \code{\link[stats]{pacf}} and \code{\link[stats]{ccf}} functions. The main differences are that \code{Acf} does not plot a spike at lag 0 when \code{type=="correlation"} (which is redundant) and the horizontal axes show lags in time units rather than seasonal units.
 
 The tapered versions implement the ACF and PACF estimates and plots described in Hyndman (2015), based on the banded and tapered estimates of autocovariance proposed by McMurry and Politis (2010).
 }
