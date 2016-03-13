@@ -1,5 +1,5 @@
 auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
-    max.P=2, max.Q=2, max.order=5, max.d=2, max.D=1, 
+    max.P=2, max.Q=2, max.order=5, max.d=2, max.D=1,
     start.p=2, start.q=2, start.P=1, start.Q=1,
     stationary=FALSE, seasonal=TRUE, ic=c("aicc","aic","bic"),
     stepwise=TRUE, trace=FALSE,
@@ -51,7 +51,7 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   }
   else
     m <- round(m) # Avoid non-integer seasonal periods
-    
+
 	max.p<-ifelse(max.p <= floor(serieslength/3), max.p, floor(serieslength/3))
 	max.q<-ifelse(max.q <= floor(serieslength/3), max.q, floor(serieslength/3))
 	max.P<-ifelse(max.P <= floor((serieslength/3)/m), max.P, floor((serieslength/3)/m))
@@ -154,9 +154,9 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   if(approximation)
   {
     if(D==0)
-      fit <- try(arima(x,order=c(1,d,0),xreg=xreg), silent=TRUE)
+      fit <- try(stats::arima(x,order=c(1,d,0),xreg=xreg), silent=TRUE)
     else
-      fit <- try(arima(x,order=c(1,d,0),seasonal=list(order=c(0,D,0),period=m,xreg=xreg)), silent=TRUE)
+      fit <- try(stats::arima(x,order=c(1,d,0),seasonal=list(order=c(0,D,0),period=m,xreg=xreg)), silent=TRUE)
     if(!is.element("try-error",class(fit)))
       offset <- -2*fit$loglik - serieslength*log(fit$sigma2)
     else
@@ -494,6 +494,9 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
         }
         else
             fit$aic <- fit$bic <- fit$aicc <- fit$ic <- Inf
+        # Adjust residual variance to be unbiased
+        fit$sigma2 <- sum(fit$residuals^2) / (nstar - npar + 1)
+
         # Check for unit roots
         minroot <- 2
         if(order[1] + seasonal[1] > 0)
@@ -529,6 +532,7 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
         if(trace)
             cat("\n",arima.string(fit, padding=TRUE),":",fit$ic)
         fit$xreg <- xreg
+
         return(structure(fit,class=c("ARIMA","Arima")))
     }
     else
@@ -577,7 +581,7 @@ arima.string <- function(object, padding=FALSE)
         result <- paste(result,"with zero mean    ")
     else
         result <- paste(result,"                  ")
-    if(!padding) 
+    if(!padding)
       #Strip trailing spaces
       result <- gsub("[ ]*$","",result)
     return(result)
