@@ -385,14 +385,14 @@ forecast.forecast <- function(object, ...)
 {
   input_names <- as.list(substitute(list(...)))
   # Read level argument
-  if(is.element("level",names(input_list)))
+  if(is.element("level",names(input_names)))
   {
     level <- list(...)[["level"]]
     if(!is.identical(level,object$level))
       stop("Please set the level argument when the forecasts are first computed")
   }
   # Read h argument
-  if(is.element("h",names(input_list)))
+  if(is.element("h",names(input_names)))
   {
     h <- list(...)[["h"]]
     object$mean <- object$mean[1:h]
