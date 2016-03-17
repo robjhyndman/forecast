@@ -395,6 +395,8 @@ forecast.forecast <- function(object, ...)
   if(is.element("h",names(input_names)))
   {
     h <- list(...)[["h"]]
+    if(h > length(object$mean))
+      stop("Please select a longer horizon when the forecasts are first computed")
     object$mean <- object$mean[1:h]
     object$upper <- object$upper[1:h,]
     object$lower <- object$lower[1:h,]

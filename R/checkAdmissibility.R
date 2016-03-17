@@ -24,9 +24,10 @@ checkAdmissibility<-function(opt.env, box.cox=NULL, small.phi=NULL, ar.coefs=NUL
 	#Check AR part for stationarity
 	if(!is.null(ar.coefs))
 	{
-		p <- max(which(abs(ar.coefs) > 1e-08))
-		if (p > 0L)
+		arlags <- which(abs(ar.coefs) > 1e-08)
+		if(length(arlags) > 0L)
 		{
+			p <- max(arlags)
 		  if(min(Mod(polyroot(c(1, -ar.coefs[1L:p])))) < 1 + 1e-2)
 			  return(FALSE)
 		}
@@ -35,35 +36,14 @@ checkAdmissibility<-function(opt.env, box.cox=NULL, small.phi=NULL, ar.coefs=NUL
 	#Check MA part for invertibility
 	if(!is.null(ma.coefs))
 	{
-		q <- max(which(abs(ma.coefs) > 1e-08))
-		if(q > 0L)
+		malags <- which(abs(ma.coefs) > 1e-08)
+		if(length(malags) > 0L)
 		{
+			q <- max(malags)
 			if(min(Mod(polyroot(c(1, ma.coefs[1L:q])))) < 1 + 1e-2)
 				return(FALSE)
 		}
 	}
-		# maInvert <- function(ma) {
-		# 	q <- length(ma)
-		# 	q0 <- max(which(ma != 0))
-		# 	if (!q0)
-		# 		return(ma)
-		# 	roots <- polyroot(c(1, ma[1L:q0]))
-		# 	ind <- Mod(roots) < 1 + 1e-2
-		# 	if (all(!ind))
-		# 		return(ma)
-		# 	if (q0 == 1)
-		# 		return(c(1/ma[1L], rep(0, q - q0)))
-		# 	roots[ind] <- 1/roots[ind]
-		# 	x <- 1
-		# 	for (r in roots) x <- c(x, 0) - c(0, x)/r
-		# 	c(Re(x[-1L]), rep(0, q - q0))
-		# }
-		# inverted.ma <- maInvert(ma.coefs)
-		# if(all(inverted.ma != ma.coefs)) {
-		# 	#print("ma")
-		# 	return(FALSE)
-		# }
-	  # }
 
 	#Check the eigen values of the D matrix
 	D.eigen.values<-eigen(opt.env$D, symmetric=FALSE, only.values=TRUE)$values

@@ -1,6 +1,7 @@
 # Author: srazbash
 ###############################################################################
-filterSpecifics<-function(y, box.cox, trend, damping, seasonal.periods, use.arma.errors, force.seasonality=FALSE, init.box.cox=NULL, bc.lower=0, bc.upper=1, ...) {
+filterSpecifics<-function(y, box.cox, trend, damping, seasonal.periods, use.arma.errors,
+  force.seasonality=FALSE, init.box.cox=NULL, bc.lower=0, bc.upper=1, ...) {
 	if((trend == FALSE) & (damping == TRUE)) {
 		return(list(AIC=Inf))
 	}
@@ -95,24 +96,24 @@ parFilterSpecifics<-function(control.number, control.array, y, seasonal.periods,
 	}
 }
 
-bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, seasonal.periods=NULL, 
-  use.arma.errors=TRUE, use.parallel=TRUE, num.cores=2, bc.lower=0, bc.upper=1, model=NULL, ...) 
+bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, seasonal.periods=NULL,
+  use.arma.errors=TRUE, use.parallel=TRUE, num.cores=2, bc.lower=0, bc.upper=1, model=NULL, ...)
 {
-  if (any(class(y) %in% c("data.frame", "list", "matrix", "mts"))) 
+  if (any(class(y) %in% c("data.frame", "list", "matrix", "mts")))
     stop("y should be a univariate time series")
 
   y <- as.ts(y)
   ny <- length(y)
   y <- na.contiguous(y)
-  if (ny != length(y)) 
+  if (ny != length(y))
     warning("Missing values encountered. Using longest contiguous portion of time series")
- 
-  
+
+
   if(is.null(model) == FALSE) {
     refitModel <- try(fitPreviousBATSModel(y, model=model), silent=TRUE)
     return (refitModel)
   }
-  
+
   # Check for constancy
   if(is.constant(y))
   {
@@ -122,23 +123,23 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, sea
   }
 
 	# Check for non-positive data
-	if(any((y <= 0))) 
+	if(any((y <= 0)))
 	{
 		use.box.cox <- FALSE
 		#stop("BATS requires positive data")
 	}
-	if((!is.null(use.box.cox)) & (!is.null(use.trend)) & (use.parallel)) 
+	if((!is.null(use.box.cox)) & (!is.null(use.trend)) & (use.parallel))
 	{
-		if((use.trend == TRUE) & (!is.null(use.damped.trend)) ) 
+		if((use.trend == TRUE) & (!is.null(use.damped.trend)) )
 		{
 			#In the this case, there is only one alternative.
-			use.parallel <- FALSE	
-		} 
-		else if(use.trend == FALSE) 
+			use.parallel <- FALSE
+		}
+		else if(use.trend == FALSE)
 		{
 			#As above, in the this case, there is only one alternative.
-			use.parallel <- FALSE	
-		}	
+			use.parallel <- FALSE
+		}
 	}
   origy <- y
   if(is.null(seasonal.periods))
@@ -157,57 +158,57 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, sea
 		seasonal.periods <- seasonal.periods[!seasonal.mask]
 	}
 	#Check if there is anything to parallelise
-	if(is.null(seasonal.periods) & !is.null(use.box.cox) & !is.null(use.trend)) 
+	if(is.null(seasonal.periods) & !is.null(use.box.cox) & !is.null(use.trend))
 	{
 		use.parallel <- FALSE
 	}
 
   y <- as.numeric(y)
 	best.aic <- NULL
-	if(is.null(use.box.cox)) 
+	if(is.null(use.box.cox))
 	{
 		use.box.cox <- c(FALSE, TRUE)
 	}
-	if(any(use.box.cox)) 
+	if(any(use.box.cox))
 	{
 		init.box.cox<-BoxCox.lambda(origy, lower=bc.lower, upper=bc.upper)
-	} 
-	else 
+	}
+	else
 	{
 		init.box.cox<-NULL
 	}
-	if(is.null(use.trend)) 
+	if(is.null(use.trend))
 	{
 		use.trend <- c(FALSE, TRUE)
-	} 
-	else if(use.trend == FALSE) 
+	}
+	else if(use.trend == FALSE)
 	{
 		use.damped.trend <- FALSE
 	}
-	if(is.null(use.damped.trend)) 
+	if(is.null(use.damped.trend))
 	{
 		use.damped.trend <- c(FALSE, TRUE)
 	}
-	if(use.parallel) 
+	if(use.parallel)
 	{
 		#Set up the control array
 		control.array <- NULL
-		for(box.cox in use.box.cox) 
+		for(box.cox in use.box.cox)
 		{
-			for(trend in use.trend) 
+			for(trend in use.trend)
 			{
-				for(damping in use.damped.trend) 
+				for(damping in use.damped.trend)
 				{
-					if((trend == FALSE) & (damping == TRUE)) 
+					if((trend == FALSE) & (damping == TRUE))
 					{
 						next
 					}
 					control.line <- c(box.cox, trend, damping)
-					if(!is.null(control.array)) 
+					if(!is.null(control.array))
 					{
 						control.array <- rbind(control.array, control.line)
-					} 
-					else 
+					}
+					else
 					{
 						control.array <- control.line
 					}
@@ -215,7 +216,7 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, sea
 			}
 		}
 		##Fit the models
-		if(is.null(num.cores)) 
+		if(is.null(num.cores))
 		{
 			num.cores <- detectCores(all.tests = FALSE, logical = TRUE)
 		}
