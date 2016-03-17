@@ -388,7 +388,7 @@ forecast.forecast <- function(object, ...)
   if(is.element("level",names(input_names)))
   {
     level <- list(...)[["level"]]
-    if(!is.identical(level,object$level))
+    if(!identical(level,object$level))
       stop("Please set the level argument when the forecasts are first computed")
   }
   # Read h argument
