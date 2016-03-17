@@ -1,13 +1,11 @@
-# TODO: Add comment
-
-msts <- function(data, seasonal.periods, ts.frequency=floor(max(seasonal.periods)), ...) {
-	tsp.data <- tsp(data)	
+msts <- function(data, seasonal.periods, ts.frequency=floor(max(seasonal.periods)), ...) 
+{
 	object <- ts(data=data, frequency=ts.frequency, ...)
-	if(!is.null(tsp.data)) {
-		tsp(object) <- tsp.data	
+	if(length(seasonal.periods) > 1L)
+	{
+		class(object) <- c("msts", "ts")
+		attr(object, "msts") <- seasonal.periods
 	}
-	class(object) <- c("msts", "ts")
-	attr(object, "msts") <- seasonal.periods
 	return(object)
 }
 
