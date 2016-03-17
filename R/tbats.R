@@ -1,9 +1,14 @@
+# Author: srazbash
+###############################################################################
+
 tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
 	seasonal.periods=NULL, use.arma.errors=TRUE, use.parallel=FALSE, num.cores=2,
 	bc.lower=0, bc.upper=1, model=NULL, ...)
 {
   if (any(class(y) %in% c("data.frame", "list", "matrix", "mts")))
     stop("y should be a univariate time series")
+
+  origy <- y
 
   # Get seasonal periods
   if(is.null(seasonal.periods))
@@ -28,7 +33,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
     seasonal.periods <- NULL
 
   ny <- length(y)
-  origy <- y <- na.contiguous(y)
+  y <- na.contiguous(y)
   if (ny != length(y))
     warning("Missing values encountered. Using longest contiguous portion of time series")
 
@@ -38,7 +43,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
     if (is.element("tbats", class(model)))
       refitModel <- try(fitPreviousTBATSModel(y, model=model), silent=TRUE)
     else if(is.element("bats", class(model)))
-      refitModel <- bats(y, model=model)
+      refitModel <- bats(origy, model=model)
     return (refitModel)
   }
 
@@ -79,7 +84,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
 		use.box.cox <- c(FALSE, TRUE)
 	}
 	if(any(use.box.cox)) {
-		init.box.cox <- BoxCox.lambda(origy, lower=bc.lower, upper=bc.upper)
+		init.box.cox <- BoxCox.lambda(y, lower=bc.lower, upper=bc.upper)
 	} else {
 		init.box.cox <- NULL
 	}
@@ -179,7 +184,6 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
 				###if(use.parallel) then do parallel
 				if(use.parallel) {
 					k.control.array <- rbind(step.up.k, step.down.k, k.vector)
-					#print(k.control.array)
 					models.list <- clusterApplyLB(clus, c(1:3), parFitSpecificTBATS, y=y,
 					                              box.cox=model.params[1], trend = model.params[2],
 					                              damping = model.params[3], seasonal.periods = seasonal.periods,
@@ -332,15 +336,6 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
 	}
 
 	best.model$call <- match.call()
-	#best.model$start.time <- start.time
-	# Add ts attributes
-	if(!any(class(origy) == "ts")) {
-		if(is.null(seasonal.periods)) {
-			origy <- ts(origy,start=1,frequency=1)
-		} else {
-			origy <- msts(origy,seasonal.periods)
-		}
-	}
 	attributes(best.model$fitted.values) <- attributes(best.model$errors) <- attributes(origy)
 	best.model$y <- origy
 
