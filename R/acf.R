@@ -50,7 +50,10 @@ Acf <- function(x, lag.max = NULL,
         plot(plot.out, ylim=ylim, xaxt="n", ...)
       }
       # Make nice horizontal axis
-      seasonalaxis(frequency(x), nlags, type="acf")
+      if(is.element("msts", class(x)))
+        seasonalaxis(attributes(x)$msts, nlags, type="acf")
+      else
+        seasonalaxis(frequency(x), nlags, type="acf")
     }
     return(invisible(acf.out))
   }
@@ -61,48 +64,63 @@ Acf <- function(x, lag.max = NULL,
 # Make nice horizontal axis with ticks at seasonal lags
 seasonalaxis <- function(frequency,nlags,type)
 {
-  if(frequency==1)
+  # Check for non-seasonal data
+  if(length(frequency)==1)
   {
-    if(type=="acf" & nlags <= 16)
-      axis(1, at=1:(nlags-1))
-    else if(type=="ccf" & nlags <= 8)
-      axis(1, at=(-nlags:nlags))
+    if(frequency==1)
+    {
+      if(type=="acf" & nlags <= 16)
+        axis(1, at=1:(nlags-1))
+      else if(type=="ccf" & nlags <= 8)
+        axis(1, at=(-nlags:nlags))
+      else
+      {
+        axis(1)
+        if(nlags <= 30 & type=="acf")
+          axis(1, at=(1:nlags),tcl=-0.2,labels=FALSE)
+        else if(nlags <= 15 & type=="ccf")
+          axis(1, at=(-nlags:nlags),tcl=-0.2,labels=FALSE)
+      }
+    }
     else
     {
-      axis(1)
-      if(nlags <= 30 & type=="acf")
+      # Compute number of seasonal periods
+      np <- trunc(nlags/frequency+0.5)
+      evenfreq <- (frequency %% 2L)==0L
+      if(type=="acf" & nlags <= 40)
+      {
         axis(1, at=(1:nlags),tcl=-0.2,labels=FALSE)
-      else if(nlags <= 15 & type=="ccf")
+        axis(1, at=frequency*(1:np), labels=TRUE, tcl=-0.6)
+        if(nlags <= 30 & evenfreq & np <= 3)
+          axis(1, at=frequency*((1:np)-0.5), labels=TRUE, tcl=-0.3)
+      }
+      else if(type=="ccf" & nlags <= 20)
+      {
         axis(1, at=(-nlags:nlags),tcl=-0.2,labels=FALSE)
+        axis(1, at=frequency*(-np:np), labels=TRUE, tcl=-0.6)
+        if(nlags <= 15 & evenfreq & np <= 3)
+          axis(1, at=frequency*((-np:np)+0.5), labels=TRUE, tcl=-0.3)
+      }
+      else
+      {
+        np <- trunc(nlags/frequency)
+        if(np < (12 - 4*(type=="ccf")))
+          axis(1,at=frequency*(-np:np))
+        else
+          axis(1)
+      }
     }
   }
   else
   {
-    # Compute number of seasonal periods
-    np <- trunc(nlags/frequency+0.5)
-    evenfreq <- (frequency %% 2L)==0L
-    if(type=="acf" & nlags <= 40)
-    {
-      axis(1, at=(1:nlags),tcl=-0.2,labels=FALSE)
-      axis(1, at=frequency*(1:np), labels=TRUE, tcl=-0.6)
-      if(nlags <= 30 & evenfreq & np <= 3)
-        axis(1, at=frequency*((1:np)-0.5), labels=TRUE, tcl=-0.3)
-    }
-    else if(type=="ccf" & nlags <= 20)
-    {
-      axis(1, at=(-nlags:nlags),tcl=-0.2,labels=FALSE)
-      axis(1, at=frequency*(-np:np), labels=TRUE, tcl=-0.6)
-      if(nlags <= 15 & evenfreq & np <= 3)
-        axis(1, at=frequency*((-np:np)+0.5), labels=TRUE, tcl=-0.3)
-    }
+    # Determine which frequency to show
+    np <- trunc(nlags/frequency)
+    frequency <- frequency[which(np <= 16)]
+    if(length(frequency)>0L)
+      frequency <- min(frequency)
     else
-    {
-      np <- trunc(nlags/frequency)
-      if(np < (11 - 4*(type=="ccf")))
-        axis(1,at=frequency*(-np:np))
-      else
-        axis(1)
-    }
+      frequency <- 1
+    seasonalaxis(frequency, nlags, type)
   }
 }
 
