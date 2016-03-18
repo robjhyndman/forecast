@@ -408,7 +408,7 @@ autoplot.mforecast <- function (object, plot.conf=TRUE, main=NULL, xlab=NULL, yl
   }
 }
 
-ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NULL, main=NULL, xlab="Season", ylab="", col=NULL, labelgap=0.04, ggplot=TRUE, ...){
+ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NULL, main=NULL, xlab="Season", ylab="", col=NULL, labelgap=0.04, ...){
   if (requireNamespace("ggplot2")){
     if (!inherits(x, "ts")){
       stop("autoplot.seasonplot requires a ts object, use x=object")
@@ -440,18 +440,22 @@ ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NUL
     }
 
 
-    if(year.labels){
-      if(year.labels.left){
-        yrlab <- aggregate(time ~ year, data=data, FUN = min)
-        offset <- -labelgap
+    if(year.labels){        
+      yrlab <- aggregate(time ~ year, data=data, FUN = max)
+      yrlab <- cbind(yrlab, offset=labelgap)
+    }
+    if(year.labels.left){
+      yrlabL <- aggregate(time ~ year, data=data, FUN = min)
+      yrlabL <- cbind(yrlabL, offset=-labelgap)
+      if(year.labels){
+        yrlab <- rbind(yrlab, yrlabL)
       }
-      else{
-        yrlab <- aggregate(time ~ year, data=data, FUN = max)
-        offset <- +labelgap
-      }
+    }
+    if(year.labels | year.labels.left){
       yrlab <- merge(yrlab, data)
+      yrlab$time <- yrlab$time+yrlab$offset
       p <- p + ggplot2::guides(colour=FALSE)
-      p <- p + ggplot2::geom_text(ggplot2::aes_(x=~time, y=~y, label=~year), colour = col, nudge_x=offset, data=yrlab)
+      p <- p + ggplot2::geom_text(ggplot2::aes_(x=~time, y=~y, label=~year), data=yrlab)
     }
 
     #Graph title

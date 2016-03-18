@@ -18,7 +18,7 @@ importFrom("stats", "Box.test", "acf", "approx", "ar", "arima",
              "model.frame", "na.exclude", "na.omit", "na.pass", "optim",
              "optimize", "pf", "plot.ts", "poly", "predict", "pt",
              "qnorm", "qt", "quantile", "residuals", "rnorm", "runif",
-             "sd", "simulate", "smooth.spline", "start", "stl", "supsmu", 
+             "sd", "simulate", "smooth.spline", "start", "stl", "supsmu",
              "terms", "time", "ts", "tsp", "tsp<-", "tsdiag", "var")
 importFrom("utils", "packageVersion", "tail")
 importFrom("ggplot2","autoplot","fortify")
@@ -29,11 +29,16 @@ forecast.HoltWinters, forecast.lm, forecast.stl, forecast.StructTS, forecast.bat
 is.acf, is.Arima, is.bats, is.constant, is.ets, is.forecast, is.mforecast, is.nnetar, is.nnetarmodels, is.splineforecast, is.stlm,
 nnetar, forecast.nnetar, plot.Arima, plot.ar, taperedacf, taperedpacf,
 meanf, logLik.ets, monthdays, na.interp, ets, plot.bats, plot.tbats, plot.ets, plot.forecast,
-plot.splineforecast, rwf, seasadj, seasonaldummy,naive,snaive,stlf,subset.ts, 
+plot.splineforecast, rwf, seasadj, seasonaldummy,naive,snaive,stlf,subset.ts,
 seasonaldummyf, ggseasonplot, seasonplot, ses, sindexf, splinef,tslm,fourier,fourierf,forecast.lm,
 thetaf, tsdisplay, simulate.ets, simulate.ar, simulate.Arima, simulate.fracdiff, ndiffs, nsdiffs, dm.test,tbats.components,
+<<<<<<< HEAD
 Acf,Pacf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts, getResponse, tsoutliers,
 tsclean, bizdays, easter,stlm, forecast.stlm, StatForecast, geom_forecast, GeomForecast)
+=======
+Acf,Pacf,Ccf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts, getResponse, tsoutliers,
+tsclean, bizdays, easter,stlm, forecast.stlm, stat_forecast, StatForecast, geom_forecast, GeomForecast)
+>>>>>>> master
 
 S3method(autoplot, acf)
 S3method(autoplot, Arima)

@@ -4,11 +4,11 @@
 \title{Seasonal plot}
 \usage{seasonplot(x, s, season.labels=NULL, year.labels=FALSE,
     year.labels.left=FALSE, type="o", main, xlab=NULL, ylab="",
-    col=1, labelgap=0.1, ggplot=FALSE, ...)
+    col=1, labelgap=0.1, ...)
 
 ggseasonplot(x, year.labels=FALSE, year.labels.left=FALSE, 
     type=NULL, main=NULL, xlab="Season", ylab="", col=NULL, labelgap=0.04,
-    ggplot=TRUE,...)
+    ...)
 }
 \arguments{
 \item{x}{a numeric vector or time series.}
@@ -22,7 +22,6 @@ ggseasonplot(x, year.labels=FALSE, year.labels.left=FALSE,
 \item{ylab}{Y-axis label.}
 \item{col}{Colour}
 \item{labelgap}{Distance between year labels and plotted lines}
-\item{ggplot}{Create the seasonplot in \code{ggplot2}}
 \item{\dots}{additional arguments to \code{\link[graphics]{plot}}.} }
 \description{Plots a seasonal plot as described in Hyndman and Athanasopoulos (2014, chapter 2).
 }
