@@ -1,5 +1,6 @@
 \name{geom_forecast}
 \alias{geom_forecast}
+\alias{StatForecast}
 \alias{GeomForecast}
 \title{Forecast plot}
 \usage{geom_forecast(mapping = NULL, data = NULL, stat = "forecast",
@@ -72,7 +73,7 @@ The aesthetics required for the forecasting to work includes forecast observatio
 
 \value{A layer for a ggplot graph.}
 
-\seealso{\code{\link{forecast}}, \code{\link{stat_forecast}}, \code{\link[ggplot2]{ggproto}}}
+\seealso{\code{\link{forecast}}, \code{\link[ggplot2]{ggproto}}}
 
 \author{Mitchell O'Hara-Wild}
 \examples{
