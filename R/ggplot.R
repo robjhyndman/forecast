@@ -419,11 +419,6 @@ ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NUL
     if (missing(main)){
       main <- paste("Seasonal plot:", deparse(substitute(x)))
     }
-    if (!ggplot){
-      cl <- match.call()
-      cl[[1]] <- quote(seasonplot)
-      return(eval(cl))
-    }
 
     data <- data.frame(y=as.numeric(x),year=factor(trunc(time(x))),time=as.numeric(round(time(x)%%1,digits = 6)))
 
@@ -669,39 +664,6 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom,
   }
 )
 
-stat_forecast <- function(mapping = NULL, data = NULL, geom = "forecast",
-                       position = "identity", na.rm = FALSE, show.legend = NA,
-                       inherit.aes = TRUE, plot.conf=TRUE, h=NULL, level=c(80,95), fan=FALSE,
-                       robust=FALSE, lambda=NULL, find.frequency=FALSE,
-                       allow.multiplicative.trend=FALSE, ...) {
-  if(!is.null(mapping)){
-    if(is.forecast(mapping)){
-      message("forecast/fit object detected, using geom_forecast()")
-      cl <- match.call()
-      cl[[1]] <- quote(geom_forecast)
-      return(eval(cl))
-    }
-    else if(is.ts(mapping)){
-      data <- data.frame(y = as.numeric(mapping), x = as.numeric(time(mapping)))
-      #Initialise ggplot object
-      mapping <- ggplot2::aes_(y=~y, x=~x)
-    }
-    else if(!"uneval"%in%class(mapping)){
-      fcast <- forecast(mapping, h=h, level=level, fan=fan, robust=robust,
-                        lambda=lambda, find.frequency=find.frequency,
-                        allow.multiplicative.trend=allow.multiplicative.trend)
-      return(geom_forecast(fcast))
-    }
-  }
-  ggplot2::layer(
-    stat = StatForecast, data = data, mapping = mapping, geom = geom,
-    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
-    params = list(plot.conf=plot.conf, h=h, level=level, fan=fan, robust=robust,
-                  lambda=lambda, find.frequency=find.frequency,
-                  allow.multiplicative.trend=allow.multiplicative.trend,
-                  na.rm = na.rm, ...))
-}
-
 geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
                           position = "identity", na.rm = FALSE, show.legend = NA,
                           inherit.aes = TRUE, plot.conf=TRUE, h=NULL, level=c(80,95), fan=FALSE,
@@ -726,6 +688,10 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
     #Convert mforecast to list of forecast
     #return lapply of geom_forecast with params on list
     stop("mforecast objects not yet supported. Try calling geom_forecast() for several forecast objects")
+  }
+  if(is.ts(mapping)){
+    data <- data.frame(y = as.numeric(mapping), x = as.numeric(time(mapping)))
+    mapping <- ggplot2::aes_(y=~y, x=~x)
   }
   if(stat=="forecast"){
     ggplot2::layer(
