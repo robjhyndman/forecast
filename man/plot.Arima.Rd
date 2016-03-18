@@ -41,6 +41,7 @@ plot(fit)
 autoplot(fit)
 
 plot(ar.ols(gold[1:61]))
+autoplot(ar.ols(gold[1:61]))
 
 }
 \keyword{hplot}
