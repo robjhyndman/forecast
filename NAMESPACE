@@ -32,13 +32,8 @@ meanf, logLik.ets, monthdays, na.interp, ets, plot.bats, plot.tbats, plot.ets, p
 plot.splineforecast, rwf, seasadj, seasonaldummy,naive,snaive,stlf,subset.ts,
 seasonaldummyf, ggseasonplot, seasonplot, ses, sindexf, splinef,tslm,fourier,fourierf,forecast.lm,
 thetaf, tsdisplay, simulate.ets, simulate.ar, simulate.Arima, simulate.fracdiff, ndiffs, nsdiffs, dm.test,tbats.components,
-<<<<<<< HEAD
-Acf,Pacf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts, getResponse, tsoutliers,
-tsclean, bizdays, easter,stlm, forecast.stlm, StatForecast, geom_forecast, GeomForecast)
-=======
 Acf,Pacf,Ccf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts, getResponse, tsoutliers,
-tsclean, bizdays, easter,stlm, forecast.stlm, stat_forecast, StatForecast, geom_forecast, GeomForecast)
->>>>>>> master
+tsclean, bizdays, easter,stlm, forecast.stlm, geom_forecast)
 
 S3method(autoplot, acf)
 S3method(autoplot, Arima)
