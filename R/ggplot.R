@@ -49,35 +49,40 @@ autoplot.acf <- function (object, ci=0.95, main=NULL, xlab=NULL, ylab=NULL, ...)
 
 autoplot.Arima <- function (object, type = c("both", "ar", "ma"), main=NULL, xlab="Real", ylab="Imaginary", ...){
   if (requireNamespace("ggplot2")){
-    if (!is.Arima(object)){
+    if (is.Arima(object)){
+      #Detect type
+      type <- match.arg(type)
+      q <- p <- 0
+      if (length(object$model$phi) > 0) {
+        test <- abs(object$model$phi) > 1e-09
+        if (any(test)){
+          p <- max(which(test))
+        }
+      }
+      if (length(object$model$theta) > 0) {
+        test <- abs(object$model$theta) > 1e-09
+        if (any(test)) {
+          q <- max(which(test))
+        }
+      }
+  
+      if (type == "both") {
+        if (p == 0)
+          type <- "ma"
+        else if (q == 0)
+          type <- "ar"
+      }
+      if ((p == 0 & q == 0) | (type == "ar" & (p == 0)) | (type == "ma" & (q == 0))){
+        stop("No roots to plot")
+      }
+    }
+    else if (inherits(object, "ar")){
+      type <- "ar"
+    }
+    else{
       stop("autoplot.Arima requires an Arima object, use object=object")
     }
-
-    #Prepare data
-    type <- match.arg(type)
-    q <- p <- 0
-    if (length(object$model$phi) > 0) {
-      test <- abs(object$model$phi) > 1e-09
-      if (any(test)){
-        p <- max(which(test))
-      }
-    }
-    if (length(object$model$theta) > 0) {
-      test <- abs(object$model$theta) > 1e-09
-      if (any(test)) {
-        q <- max(which(test))
-      }
-    }
-
-    if (type == "both") {
-      if (p == 0)
-        type <- "ma"
-      else if (q == 0)
-        type <- "ar"
-    }
-    if ((p == 0 & q == 0) | (type == "ar" & (p == 0)) | (type == "ma" & (q == 0))){
-      stop("No roots to plot")
-    }
+    
     if (type == "both") {
       if (requireNamespace("grid")){
         type <- c("ar", "ma")
@@ -134,6 +139,10 @@ autoplot.Arima <- function (object, type = c("both", "ar", "ma"), main=NULL, xla
       }
     }
   }
+}
+
+autoplot.ar <- function(object, ...){
+  autoplot.Arima(object, ...)
 }
 
 autoplot.decomposed.ts <- function (object, main=NULL, xlab=NULL, ylab=NULL, ...){
