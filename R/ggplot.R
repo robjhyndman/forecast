@@ -419,11 +419,6 @@ ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NUL
     if (missing(main)){
       main <- paste("Seasonal plot:", deparse(substitute(x)))
     }
-    if (!ggplot){
-      cl <- match.call()
-      cl[[1]] <- quote(seasonplot)
-      return(eval(cl))
-    }
 
     data <- data.frame(y=as.numeric(x),year=factor(trunc(time(x))),time=as.numeric(round(time(x)%%1,digits = 6)))
 
