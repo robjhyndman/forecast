@@ -34,7 +34,7 @@ the value returned by \code{bats} and associated functions. The fitted model is 
 
 \examples{
 \dontrun{
-fit <- bats(USAccDeaths, use.parallel=FALSE)
+fit <- bats(USAccDeaths)
 plot(forecast(fit))
 
 taylor.fit <- bats(taylor)

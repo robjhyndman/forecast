@@ -56,12 +56,7 @@ seasonplot <- function(x, s, season.labels=NULL, year.labels=FALSE, year.labels.
 {
   if(missing(main))
     main = paste("Seasonal plot:", deparse(substitute(x)))
-  # if(ggplot){
-  #   cl <- match.call()
-  #   cl[[1]] <- quote(ggseasonplot)
-  #   cl[[match("ggplot", names(cl))]] <- NULL
-  #   return(eval(cl))
-  # }
+  
   if(missing(s))
     s = frequency(x)
   if(s<=1)
