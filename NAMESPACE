@@ -33,7 +33,7 @@ plot.splineforecast, rwf, seasadj, seasonaldummy,naive,snaive,stlf,subset.ts,
 seasonaldummyf, ggseasonplot, seasonplot, ses, sindexf, splinef,tslm,fourier,fourierf,forecast.lm,
 thetaf, tsdisplay, simulate.ets, simulate.ar, simulate.Arima, simulate.fracdiff, ndiffs, nsdiffs, dm.test,tbats.components,
 Acf,Pacf,Ccf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts, getResponse, tsoutliers,
-tsclean, bizdays, easter,stlm, forecast.stlm, geom_forecast)
+tsclean, bizdays, easter,stlm, forecast.stlm, StatForecast, GeomForecast, geom_forecast)
 
 S3method(autoplot, acf)
 S3method(autoplot, Arima)
