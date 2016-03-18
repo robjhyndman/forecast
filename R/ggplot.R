@@ -212,7 +212,7 @@ autoplot.ets <- function (object, main=NULL, xlab=NULL, ylab=NULL, ...){
   }
 }
 
-autoplot.forecast <- function (object, include, plot.conf=TRUE, shadecols=c("#868FBD","#BEC1D4"), fcol="#0000FF", flwd=1, main=NULL, xlab=NULL, ylab=NULL,
+autoplot.forecast <- function (object, include, plot.conf=TRUE, shadecols=c("#868FBD","#BEC1D4"), fcol="#0000FF", flwd=0.5, main=NULL, xlab=NULL, ylab=NULL,
 ...){
   if (requireNamespace("ggplot2")){
     if (!is.forecast(object)){
@@ -405,6 +405,56 @@ autoplot.mforecast <- function (object, plot.conf=TRUE, main=NULL, xlab=NULL, yl
             vp = grid::viewport(layout.pos.row = matchidx$row,
                           layout.pos.col = matchidx$col))
     }
+  }
+}
+
+ggmonthplot <- function (x, labels = NULL, times = time(x), phase = cycle(x), ylab = deparse(substitute(x)), ...){
+  if (requireNamespace("ggplot2")){
+    if (!inherits(x, "ts")){
+      stop("ggmonthplot requires a ts object, use x=object")
+    }
+    
+    data <- data.frame(y=as.numeric(x),year=factor(trunc(time(x))),season=as.numeric(phase))
+    avgLines <- aggregate(data$y, by=list(data$season), FUN=mean)
+    colnames(avgLines) <- c("season", "avg")
+    data <- merge(data, avgLines, by="season")
+    
+    #Initialise ggplot object
+    p <- ggplot2::ggplot(ggplot2::aes_(x=~interaction(year, season), y=~y, group=~season), data=data, na.rm=TRUE)
+    
+    #Remove vertical break lines
+    p <- p + ggplot2::theme(panel.grid.major.x = ggplot2::element_blank())
+    
+    #Add data
+    p <- p + ggplot2::geom_line()
+    
+    #Add average lines
+    p <- p + ggplot2::geom_line(ggplot2::aes_(y=~avg), col="red")
+    
+    
+    #Create x-axis labels
+    xfreq <- frequency(x)
+    if(xfreq==4){
+      xbreaks <- c("Q1","Q2","Q3","Q4")
+    }
+    else if (xfreq==7){
+      xbreaks <- c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", 
+                   "Friday", "Saturday")
+    }
+    else if(xfreq==12){
+      xbreaks <- month.abb
+    }
+    else{
+      xbreaks <- 1:frequency(x)
+    }
+    
+    midYear <- sort(levels(data$year))[length(levels(data$year))%/%2]
+    p <- p + ggplot2::scale_x_discrete(breaks=paste(midYear,".",1:xfreq,sep=""), labels=xbreaks)
+    
+    #Graph labels
+    p <- p + ggplot2::ylab(ylab)
+    p <- p + ggplot2::xlab(NULL)
+    return(p)
   }
 }
 
