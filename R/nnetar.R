@@ -7,6 +7,9 @@
 
 nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, scale.inputs=TRUE, ...)
 {
+  # Check for NAs in x
+  if (any(is.na(x)))
+    warning("Missing values in x, omitting rows")
   # Transform data
   if(!is.null(lambda))
     xx <- BoxCox(x,lambda)
@@ -29,7 +32,10 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, scale.in
     xreg <- as.matrix(xreg)
     if(length(x) != nrow(xreg))
       stop("Number of rows in xreg does not match series length")
-    ## Scale xreg
+    # Check for NAs in xreg
+    if(any(is.na(xreg)))
+      warning("Missing values in xreg, omitting rows")
+    # Scale xreg
     if(scale.inputs)
     {
       xxreg <- scale(xreg, center = TRUE, scale = TRUE)
