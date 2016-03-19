@@ -97,7 +97,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, scale.in
   if(!is.null(lambda))
     fits <- InvBoxCox(fits,lambda)
   out$fitted <- ts(numeric(length(out$x)))
-  out$fitted[j] <- fits
+  out$fitted[c(rep(TRUE, maxlag), j)] <- fits
   tsp(out$fitted) <- tsp(out$x)
   out$residuals <- out$x - out$fitted
   out$lags <- lags
