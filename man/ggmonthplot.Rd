@@ -9,7 +9,6 @@
 \item{labels}{A vector of labels to use for each 'season'}
 \item{times}{A vector of times for each observation}
 \item{phase}{A vector of seasonal components}
-\item{main}{Main title.}
 \item{ylab}{Y-axis label.}
 \item{\dots}{Not used (for consistency with monthplot)}
 }

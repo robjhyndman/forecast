@@ -11,7 +11,7 @@
     pi.col=1, pi.lty=2, ylim=NULL, main=NULL, xlab="", ylab="", type="l",
     flty=1, flwd=2, ...)
 \method{autoplot}{forecast}(object, include, plot.conf=TRUE, shadecols=c("#868FBD","#BEC1D4"),
-    fcol="#0000FF", flwd=1, main=NULL, xlab=NULL, ylab=NULL, ...)
+    fcol="#0000FF", flwd=0.5, main=NULL, xlab=NULL, ylab=NULL, ...)
 \method{plot}{splineforecast}(x, fitcol=2, type="o", pch=19, ...)
 \method{autoplot}{splineforecast}(object, plot.conf=TRUE, main=NULL, xlab=NULL, ylab=NULL, ...)
 }

@@ -36,6 +36,7 @@ Acf,Pacf,Ccf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts, getResponse, tsoutlier
 tsclean, bizdays, easter,stlm, forecast.stlm, StatForecast, GeomForecast, geom_forecast)
 
 S3method(autoplot, acf)
+S3method(autoplot, ar)
 S3method(autoplot, Arima)
 S3method(autoplot, decomposed.ts)
 S3method(autoplot, ets)
