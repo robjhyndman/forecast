@@ -12,15 +12,22 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     ## Use previously fitted model
     useoldmodel <- TRUE
     ## Check for conflicts between new and old data
-    ##
+    if (!is.nnetar(model))
+      stop("Model not of class 'nnetar'")
+    if (!is.null(model$xreg))
+    {
+      if (is.null(xreg))
+        stop("No external regressors provided")
+      if (NCOL(xreg) != NCOL(model$xreg))
+        stop("Number of external regressors does not match fitted model")
+    }
     ## Update parameters with previous model
     lambda <- model$lambda
     size <- model$size
     p <- model$p
     P <- model$P
-    ## if (!is.null(model$xreg) && is.null(xreg)){
-    ##   stop()
-    ## }
+    if (is.null(model$scalex))
+      scale.inputs <- FALSE
   }
   # Check for NAs in x
   if (any(is.na(x)))
