@@ -5,8 +5,23 @@
 #size set to average of number of inputs and number of outputs: (p+P+1)/2
 #if xreg is included then size = (p+P+ncol(xreg)+1)/2
 
-nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, scale.inputs=TRUE, ...)
+nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NULL, scale.inputs=TRUE, ...)
 {
+  useoldmodel <- FALSE
+  if (!is.null(model)){
+    ## Use previously fitted model
+    useoldmodel <- TRUE
+    ## Check for conflicts between new and old data
+    ##
+    ## Update parameters with previous model
+    lambda <- model$lambda
+    size <- model$size
+    p <- model$p
+    P <- model$P
+    ## if (!is.null(model$xreg) && is.null(xreg)){
+    ##   stop()
+    ## }
+  }
   # Check for NAs in x
   if (any(is.na(x)))
     warning("Missing values in x, omitting rows")
@@ -82,8 +97,11 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, scale.in
     size <- round((ncol(lags.X)+1)/2)
   # Remove missing values if present
   j <- complete.cases(lags.X,y)
-  # Fit average ANN.
-  fit <- avnnet(lags.X[j,],y[j],size=size,linout=1,trace=FALSE,repeats=repeats, ...)
+  ## Fit average ANN.
+  if(useoldmodel)
+    fit <- oldmodel_avnnet(lags.X[j,],y[j],size=size, model)
+  else
+    fit <- avnnet(lags.X[j,],y[j],size=size,linout=1,trace=FALSE,repeats=repeats, ...)
   # Return results
   out <- list()
   out$x <- as.ts(x)
@@ -118,12 +136,30 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, scale.in
 }
 
 # Aggregate several neural network models
-
 avnnet <- function(x,y,repeats, ...)
 {
   mods <- list()
   for(i in 1:repeats)
     mods[[i]] <- nnet::nnet(x, y, ...)
+  return(structure(mods,class="nnetarmodels"))
+}
+
+## Fit old model to new data
+oldmodel_avnnet <- function(x, y, size, model)
+{
+  repeats <- length(model$model)
+  args <- list(x=x, y=y, size=size, linout=1, trace=FALSE)
+  ## include additional nnet arguments
+  args <- c(args, model$nnetargs)
+  ## set iterations to zero (i.e. weights stay fixed)
+  args$maxit <- 0
+  ##
+  mods <- list()
+  for(i in 1:repeats)
+  {
+    args$Wts <- model$model[[i]]$wts
+    mods[[i]] <- do.call(nnet, args)
+  }
   return(structure(mods,class="nnetarmodels"))
 }
 
