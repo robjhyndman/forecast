@@ -10,11 +10,11 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   useoldmodel <- FALSE
   if (!is.null(model))
   {
-    ## Use previously fitted model
+    # Use previously fitted model
     useoldmodel <- TRUE
-    ## Check for conflicts between new and old data
+    # Check for conflicts between new and old data
     if (!is.nnetar(model))
-      stop("Model not of class 'nnetar'")
+      stop("Model is not of class 'nnetar'")
     if (!is.null(model$xreg))
     {
       if (is.null(xreg))
@@ -22,7 +22,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
       if (NCOL(xreg) != NCOL(model$xreg))
         stop("Number of external regressors does not match fitted model")
     }
-    ## Update parameters with previous model
+    # Update parameters with previous model
     lambda <- model$lambda
     size <- model$size
     p <- model$p
@@ -170,16 +170,15 @@ avnnet <- function(x,y,repeats, ...)
   return(structure(mods,class="nnetarmodels"))
 }
 
-## Fit old model to new data
+# Fit old model to new data
 oldmodel_avnnet <- function(x, y, size, model)
 {
   repeats <- length(model$model)
   args <- list(x=x, y=y, size=size, linout=1, trace=FALSE)
-  ## include additional nnet arguments
+  # include additional nnet arguments
   args <- c(args, model$nnetargs)
-  ## set iterations to zero (i.e. weights stay fixed)
+  # set iterations to zero (i.e. weights stay fixed)
   args$maxit <- 0
-  ##
   mods <- list()
   for(i in 1:repeats)
   {
