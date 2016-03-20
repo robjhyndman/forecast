@@ -14,7 +14,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     useoldmodel <- TRUE
     # Check for conflicts between new and old data
     if (!is.nnetar(model))
-      stop("Model is not of class 'nnetar'")
+      stop("Model must be a nnetar object")
     if (!is.null(model$xreg))
     {
       if (is.null(xreg))
