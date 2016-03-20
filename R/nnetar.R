@@ -8,7 +8,8 @@
 nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NULL, scale.inputs=TRUE, ...)
 {
   useoldmodel <- FALSE
-  if (!is.null(model)){
+  if (!is.null(model))
+  {
     ## Use previously fitted model
     useoldmodel <- TRUE
     ## Check for conflicts between new and old data
@@ -52,7 +53,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   if(!is.null(xreg))
   {
     xreg <- as.matrix(xreg)
-    if(length(x) != nrow(xreg))
+    if(length(x) != NROW(xreg))
       stop("Number of rows in xreg does not match series length")
     # Check for NAs in xreg
     if(any(is.na(xreg)))
@@ -95,13 +96,13 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   maxlag <- max(lags)
   nlag <- length(lags)
   y <- xx[-(1:maxlag)]
-  lags.X <- matrix(NA,ncol=nlag,nrow=n-maxlag)
+  lags.X <- matrix(NA_real_,ncol=nlag,nrow=n-maxlag)
   for(i in 1:nlag)
     lags.X[,i] <- xx[(maxlag-lags[i]+1):(n-lags[i])]
   # Add xreg into lagged matrix
   lags.X <- cbind(lags.X, xxreg[-(1:maxlag), ])
   if(missing(size))
-    size <- round((ncol(lags.X)+1)/2)
+    size <- round((NCOL(lags.X)+1)/2)
   # Remove missing values if present
   j <- complete.cases(lags.X,y)
   ## Fit average ANN.
@@ -122,13 +123,13 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   out$lambda <- lambda
   out$model <- fit
   out$nnetargs <- list(...)
-  fits <- c(rep(NA,maxlag), rowMeans(sapply(fit, predict)))
+  fits <- c(rep(NA_real_,maxlag), rowMeans(sapply(fit, predict)))
   if(scale.inputs)
     fits <- fits * scalex$sd + scalex$mean
   fits <- ts(fits)
   if(!is.null(lambda))
     fits <- InvBoxCox(fits,lambda)
-  out$fitted <- ts(rep(NA, length(out$x)))
+  out$fitted <- ts(rep(NA_real_, length(out$x)))
   out$fitted[c(rep(TRUE, maxlag), j)] <- fits
   tsp(out$fitted) <- tsp(out$x)
   out$residuals <- out$x - out$fitted
@@ -195,9 +196,9 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), xr
     if(is.null(xreg))
       stop("No external regressors provided")
     xreg <- as.matrix(xreg)
-    if(ncol(xreg) != ncol(object$xreg))
+    if(NCOL(xreg) != NCOL(object$xreg))
       stop("Number of external regressors does not match fitted model")
-    h <- nrow(xreg)
+    h <- NROW(xreg)
   }
   fcast <- numeric(h)
   xx <- object$x
