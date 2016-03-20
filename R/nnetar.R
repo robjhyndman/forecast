@@ -42,9 +42,18 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   scalex <- NULL
   if(scale.inputs)
   {
-    xx <- scale(xx, center = TRUE, scale = TRUE)
-    scalex <- list(mean = attr(xx,"scaled:center"),
-                   sd = attr(xx,"scaled:scale"))
+    if (useoldmodel)
+    {
+      xx <- scale(xx, center = model$scalex$mean, scale = model$scalex$sd)
+      scalex <- list(mean = attr(xx,"scaled:center"),
+                     sd = attr(xx,"scaled:scale"))
+    }
+    else
+    {
+      xx <- scale(xx, center = TRUE, scale = TRUE)
+      scalex <- list(mean = attr(xx,"scaled:center"),
+                     sd = attr(xx,"scaled:scale"))
+    }
     xx <- xx[,1]
   }
   # Check xreg class & dim
@@ -61,9 +70,18 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     # Scale xreg
     if(scale.inputs)
     {
-      xxreg <- scale(xreg, center = TRUE, scale = TRUE)
-      scalexreg <- list(mean = attr(xxreg,"scaled:center"),
-                        sd = attr(xxreg,"scaled:scale"))
+      if (useoldmodel)
+      {
+        xxreg <- scale(xreg, center = model$scalexreg$mean, scale = model$scalexreg$sd)
+        scalexreg <- list(mean = attr(xxreg,"scaled:center"),
+                          sd = attr(xxreg,"scaled:scale"))
+      }
+      else
+      {
+        xxreg <- scale(xreg, center = TRUE, scale = TRUE)
+        scalexreg <- list(mean = attr(xxreg,"scaled:center"),
+                          sd = attr(xxreg,"scaled:scale"))
+      }
     }
     else
     {
