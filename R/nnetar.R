@@ -141,6 +141,8 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   out$lambda <- lambda
   out$model <- fit
   out$nnetargs <- list(...)
+  if (useoldmodel)
+    out$nnetargs <- model$nnetargs
   fits <- c(rep(NA_real_,maxlag), rowMeans(sapply(fit, predict)))
   if(scale.inputs)
     fits <- fits * scalex$sd + scalex$mean
