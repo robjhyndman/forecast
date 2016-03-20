@@ -2,7 +2,7 @@
 ###############################################################################
 
 bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
-  seasonal.periods=NULL, use.arma.errors=TRUE, use.parallel=FALSE, num.cores=2,
+  seasonal.periods=NULL, use.arma.errors=TRUE, use.parallel=length(y)>1000, num.cores=2,
   bc.lower=0, bc.upper=1, model=NULL, ...)
 {
   if (any(class(y) %in% c("data.frame", "list", "matrix", "mts")))
@@ -70,16 +70,6 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
     }
   }
 
-  if(is.null(seasonal.periods))
-  {
-    if(any(class(y) == "msts"))
-      seasonal.periods <- attr(y,"msts")
-    else if(class(y) == "ts")
-      seasonal.periods <- frequency(y)
-  }
-  if(all(seasonal.periods == 1))
-    seasonal.periods <- NULL
-
   if(!is.null(seasonal.periods))
   {
     seasonal.mask <- (seasonal.periods == 1)
@@ -91,8 +81,6 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
     use.parallel <- FALSE
   }
 
-  y <- as.numeric(y)
-  best.aic <- NULL
   if(is.null(use.box.cox))
   {
     use.box.cox <- c(FALSE, TRUE)
@@ -117,6 +105,10 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
   {
     use.damped.trend <- c(FALSE, TRUE)
   }
+
+  y <- as.numeric(y)
+  best.aic <- NULL
+
   if(use.parallel)
   {
     #Set up the control array
@@ -164,7 +156,9 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
     for(box.cox in use.box.cox) {
       for(trend in use.trend) {
         for(damping in use.damped.trend) {
-          current.model <- filterSpecifics(y, box.cox=box.cox, trend=trend, damping=damping, seasonal.periods=seasonal.periods, use.arma.errors=use.arma.errors, init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper, ...)
+          current.model <- filterSpecifics(y, box.cox=box.cox, trend=trend, damping=damping,
+                seasonal.periods=seasonal.periods, use.arma.errors=use.arma.errors,
+                init.box.cox=init.box.cox, bc.lower=bc.lower, bc.upper=bc.upper, ...)
           if(!is.null(best.aic)) {
             if(current.model$AIC < best.aic) {
               best.aic <- current.model$AIC
