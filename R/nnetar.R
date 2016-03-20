@@ -183,7 +183,7 @@ oldmodel_avnnet <- function(x, y, size, model)
   for(i in 1:repeats)
   {
     args$Wts <- model$model[[i]]$wts
-    mods[[i]] <- do.call(nnet, args)
+    mods[[i]] <- do.call(nnet::nnet, args)
   }
   return(structure(mods,class="nnetarmodels"))
 }
