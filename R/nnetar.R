@@ -5,8 +5,31 @@
 #size set to average of number of inputs and number of outputs: (p+P+1)/2
 #if xreg is included then size = (p+P+ncol(xreg)+1)/2
 
-nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, scale.inputs=TRUE, ...)
+nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NULL, scale.inputs=TRUE, ...)
 {
+  useoldmodel <- FALSE
+  if (!is.null(model))
+  {
+    # Use previously fitted model
+    useoldmodel <- TRUE
+    # Check for conflicts between new and old data
+    if (!is.nnetar(model))
+      stop("Model must be a nnetar object")
+    if (!is.null(model$xreg))
+    {
+      if (is.null(xreg))
+        stop("No external regressors provided")
+      if (NCOL(xreg) != NCOL(model$xreg))
+        stop("Number of external regressors does not match fitted model")
+    }
+    # Update parameters with previous model
+    lambda <- model$lambda
+    size <- model$size
+    p <- model$p
+    P <- model$P
+    if (is.null(model$scalex))
+      scale.inputs <- FALSE
+  }
   # Check for NAs in x
   if (any(is.na(x)))
     warning("Missing values in x, omitting rows")
@@ -19,9 +42,18 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, scale.in
   scalex <- NULL
   if(scale.inputs)
   {
-    xx <- scale(xx, center = TRUE, scale = TRUE)
-    scalex <- list(mean = attr(xx,"scaled:center"),
-                   sd = attr(xx,"scaled:scale"))
+    if (useoldmodel)
+    {
+      xx <- scale(xx, center = model$scalex$mean, scale = model$scalex$sd)
+      scalex <- list(mean = attr(xx,"scaled:center"),
+                     sd = attr(xx,"scaled:scale"))
+    }
+    else
+    {
+      xx <- scale(xx, center = TRUE, scale = TRUE)
+      scalex <- list(mean = attr(xx,"scaled:center"),
+                     sd = attr(xx,"scaled:scale"))
+    }
     xx <- xx[,1]
   }
   # Check xreg class & dim
@@ -30,7 +62,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, scale.in
   if(!is.null(xreg))
   {
     xreg <- as.matrix(xreg)
-    if(length(x) != nrow(xreg))
+    if(length(x) != NROW(xreg))
       stop("Number of rows in xreg does not match series length")
     # Check for NAs in xreg
     if(any(is.na(xreg)))
@@ -38,9 +70,18 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, scale.in
     # Scale xreg
     if(scale.inputs)
     {
-      xxreg <- scale(xreg, center = TRUE, scale = TRUE)
-      scalexreg <- list(mean = attr(xxreg,"scaled:center"),
-                        sd = attr(xxreg,"scaled:scale"))
+      if (useoldmodel)
+      {
+        xxreg <- scale(xreg, center = model$scalexreg$mean, scale = model$scalexreg$sd)
+        scalexreg <- list(mean = attr(xxreg,"scaled:center"),
+                          sd = attr(xxreg,"scaled:scale"))
+      }
+      else
+      {
+        xxreg <- scale(xreg, center = TRUE, scale = TRUE)
+        scalexreg <- list(mean = attr(xxreg,"scaled:center"),
+                          sd = attr(xxreg,"scaled:scale"))
+      }
     }
     else
     {
@@ -73,17 +114,20 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, scale.in
   maxlag <- max(lags)
   nlag <- length(lags)
   y <- xx[-(1:maxlag)]
-  lags.X <- matrix(NA,ncol=nlag,nrow=n-maxlag)
+  lags.X <- matrix(NA_real_,ncol=nlag,nrow=n-maxlag)
   for(i in 1:nlag)
     lags.X[,i] <- xx[(maxlag-lags[i]+1):(n-lags[i])]
   # Add xreg into lagged matrix
   lags.X <- cbind(lags.X, xxreg[-(1:maxlag), ])
   if(missing(size))
-    size <- round((ncol(lags.X)+1)/2)
+    size <- round((NCOL(lags.X)+1)/2)
   # Remove missing values if present
   j <- complete.cases(lags.X,y)
-  # Fit average ANN.
-  fit <- avnnet(lags.X[j,],y[j],size=size,linout=1,trace=FALSE,repeats=repeats, ...)
+  ## Fit average ANN.
+  if(useoldmodel)
+    fit <- oldmodel_avnnet(lags.X[j,],y[j],size=size, model)
+  else
+    fit <- avnnet(lags.X[j,],y[j],size=size,linout=1,trace=FALSE,repeats=repeats, ...)
   # Return results
   out <- list()
   out$x <- as.ts(x)
@@ -96,13 +140,16 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, scale.in
   out$xreg <- xreg
   out$lambda <- lambda
   out$model <- fit
-  fits <- c(rep(NA,maxlag), rowMeans(sapply(fit, predict)))
+  out$nnetargs <- list(...)
+  if (useoldmodel)
+    out$nnetargs <- model$nnetargs
+  fits <- c(rep(NA_real_,maxlag), rowMeans(sapply(fit, predict)))
   if(scale.inputs)
     fits <- fits * scalex$sd + scalex$mean
   fits <- ts(fits)
   if(!is.null(lambda))
     fits <- InvBoxCox(fits,lambda)
-  out$fitted <- ts(rep(NA, length(out$x)))
+  out$fitted <- ts(rep(NA_real_, length(out$x)))
   out$fitted[c(rep(TRUE, maxlag), j)] <- fits
   tsp(out$fitted) <- tsp(out$x)
   out$residuals <- out$x - out$fitted
@@ -117,12 +164,29 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, scale.in
 }
 
 # Aggregate several neural network models
-
 avnnet <- function(x,y,repeats, ...)
 {
   mods <- list()
   for(i in 1:repeats)
     mods[[i]] <- nnet::nnet(x, y, ...)
+  return(structure(mods,class="nnetarmodels"))
+}
+
+# Fit old model to new data
+oldmodel_avnnet <- function(x, y, size, model)
+{
+  repeats <- length(model$model)
+  args <- list(x=x, y=y, size=size, linout=1, trace=FALSE)
+  # include additional nnet arguments
+  args <- c(args, model$nnetargs)
+  # set iterations to zero (i.e. weights stay fixed)
+  args$maxit <- 0
+  mods <- list()
+  for(i in 1:repeats)
+  {
+    args$Wts <- model$model[[i]]$wts
+    mods[[i]] <- do.call(nnet::nnet, args)
+  }
   return(structure(mods,class="nnetarmodels"))
 }
 
@@ -151,9 +215,9 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), xr
     if(is.null(xreg))
       stop("No external regressors provided")
     xreg <- as.matrix(xreg)
-    if(ncol(xreg) != ncol(object$xreg))
+    if(NCOL(xreg) != NCOL(object$xreg))
       stop("Number of external regressors does not match fitted model")
-    h <- nrow(xreg)
+    h <- NROW(xreg)
   }
   fcast <- numeric(h)
   xx <- object$x
