@@ -197,12 +197,22 @@ print.nnetarmodels <- function(x, ...)
 }
 
 
-forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), xreg=NULL, lambda=object$lambda, ...)
+forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), xreg=NULL, lambda=object$lambda, newx=NULL, ...)
 {
-#  require(nnet)
+  if (!is.null(newx))
+  {
+    if(!is.null(xreg))
+    {
+      xreg <- as.matrix(xreg)
+      newxreg <- xreg[1:length(newx), ]
+      xreg <- xreg[(length(newx)+1):nrow(xreg), ]
+    }
+    else
+      newxreg <- NULL
+    object <- nnetar(newx, model = object, xreg = newxreg)
+  }
   out <- object
   tspx <- tsp(out$x)
-
   # Check if xreg was used in fitted model
   if(is.null(object$xreg))
   {
