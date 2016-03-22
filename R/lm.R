@@ -4,7 +4,7 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
     formula <- as.formula(formula)
   }
   mt <- terms(formula)
-  
+
   vars <- attr(mt,"variables")
   #Check for time series variables
   tsvar <- match(c("trend", "season"), as.character(vars), 0L)
@@ -20,7 +20,7 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
 #         colnames(data)[floc] <- paste("\U0192",term[[1]],"(\U2026)",sep="")
         #formula[[3]][[i+1]]
         attr(mt,"variables")[[i]] <- as.symbol(paste("FN.",term[[1]],"_",sep=""))
-        attr(mt,"term.labels") <- gsub(deparse(term), paste("FN.",term[[1]],"_",sep=""), attr(mt,"term.labels"), fixed = TRUE) 
+        attr(mt,"term.labels") <- gsub(deparse(term), paste("FN.",term[[1]],"_",sep=""), attr(mt,"term.labels"), fixed = TRUE)
         #fnvar <- c(fnvar, i)
       }
     }
@@ -31,13 +31,13 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
     #Remove variables not needed in data (trend+season+functions)
     vars <- vars[-c(tsvar, fnvar)]
   }
-  
+
   if(!missing(data)){
     #Check for any missing variables in data
     vars <- vars[c(TRUE, !as.character(vars[-1])%in%colnames(data))]
     dataname <- substitute(data)
   }
-  
+
   if(length(vars)>1){
     # Grab variables missing from data
     vars[[1]] <- quote(forecast:::datamat)
@@ -49,7 +49,7 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
   else{
     data <- datamat(data)
   }
-  
+
   # Check to see if data is univariate time series
   if(is.null(dim(data)) & length(data)!=0){
     #cn <- as.character(vars)[2:length(vars)]
@@ -155,7 +155,7 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
     else if (min(level) < 0 | max(level) > 99.99)
       stop("Confidence limit out of range")
   }
-  
+
   if(!is.null(object$data))
     origdata <- object$data
   else if(!is.null(object$call$data)){
@@ -165,6 +165,12 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
   }
   else
     origdata <- as.data.frame(fitted(object) + residuals(object))
+  if(!is.element("data.frame", class(origdata)))
+  {
+    origdata <- as.data.frame(origdata)
+    if(!is.element("data.frame", class(origdata)))
+      stop("Could not find data.  Try training your model using tslm() or attach data directly to the object via object$data<-modeldata for some object<-lm(formula,modeldata).")
+  }
 
   # Check if the forecasts will be time series
   if(ts & is.element("ts",class(origdata))){
