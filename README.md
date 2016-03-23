@@ -8,20 +8,19 @@
 The R package *forecast* provides methods and tools for displaying and analysing univariate time series forecasts including exponential smoothing via state space models and automatic ARIMA modelling.
 
 ## Installation
-You can install the **stable** version on 
+You can install the **stable** version on
 [R CRAN](http://cran.r-project.org/package=forecast).
 
 ```s
 install.packages('forecast', dependencies = TRUE)
 ```
 
-You can also install the **development** version from
+You can install the **development** version from
 [Github](https://github.com/robjhyndman/forecast)
 
 ```s
 # install.packages("devtools")
-library(devtools)
-install_github("robjhyndman/forecast") 
+devtools::install_github("robjhyndman/forecast")
 ```
 
 ## Usage
@@ -53,7 +52,7 @@ decomp <- stl(USAccDeaths,s.window="periodic")
 plot(forecast(decomp))
 
 # TBATS forecasts
-fit <- tbats(USAccDeaths, use.parallel=FALSE)
+fit <- tbats(USAccDeaths)
 plot(forecast(fit))
 
 taylor.fit <- tbats(taylor)
