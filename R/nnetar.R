@@ -12,9 +12,22 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   {
     # Use previously fitted model
     useoldmodel <- TRUE
-    # Check for conflicts between new and old data
+    # Check for conflicts between new and old data:
+    # Check model class
     if (!is.nnetar(model))
       stop("Model must be a nnetar object")
+    # Check new data
+    m <- frequency(model$x)
+    minlength <- max(c(model$p, model$P*m))
+    if (length(x) < minlength)
+      stop(paste("Series must be at least of length", minlength, "to use fitted model"))
+    x <- as.ts(x)
+    if (tsp(x)[3] != m)
+    {
+      warning(paste("Data frequency doesn't match fitted model, coercing to frequency =", m))
+      x <- ts(x, frequency=m)
+    }
+    # Check xreg
     if (!is.null(model$xreg))
     {
       if (is.null(xreg))
