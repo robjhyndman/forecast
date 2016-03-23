@@ -388,8 +388,8 @@ forecast.ar <- function(object,h=10,level=c(80,95),fan=FALSE, lambda=NULL,  boot
     colnames(lower)=colnames(upper)=paste(level,"%",sep="")
     method <- paste("AR(",object$order,")",sep="")
     f <- frequency(x)
-    res <- ts(object$resid[-(1:object$order)],start=tsp(x)[1]+object$order/f,frequency=f)
-    fits <- x-res
+    res <- residuals(object)
+    fits <- fitted(object)
 
     if(!is.null(lambda))
     {
@@ -716,3 +716,14 @@ as.character.Arima <- function(x, ...)
 is.Arima <- function(x){
   inherits(x, "Arima")
 }
+
+residuals.ar <- function(object, ...)
+{
+  object$resid
+}
+
+fitted.ar <- function(object, ...)
+{
+  getResponse(object)-residuals(object)
+}
+
