@@ -247,7 +247,12 @@ stlm <- function(x ,s.window=7, robust=FALSE, method=c("ets","arima"),
   fit <- modelfunction(x.sa, ...)
   fit$x <- x.sa
 
-  return(structure(list(stl=stld,model=fit, lambda=lambda, x=origx, m=frequency(origx)),class="stlm"))
+  # Fitted values and residuals
+  fits <- fitted(fit) + stld$time.series[,"seasonal"]
+  res <- residuals(fit)
+
+  return(structure(list(stl=stld,model=fit, lambda=lambda, x=origx, m=frequency(origx),
+     fitted=fits, residuals=res),class="stlm"))
 }
 
 forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE,

@@ -144,7 +144,8 @@ splinef <- function(x, h=10, level=c(80,95), fan=FALSE, lambda=NULL, biasadj=FAL
 		x <- origx
 	}
 
-    return(structure(list(method="Cubic Smoothing Spline",level=level,x=x,mean=ts(Yhat,frequency=freq,start=tsp(x)[2]+1/freq),
+    return(structure(list(method="Cubic Smoothing Spline",level=level,x=x,
+            mean=ts(Yhat,frequency=freq,start=tsp(x)[2]+1/freq),
             upper=ts(upper,start=tsp(x)[2]+1/freq,frequency=freq),
             lower=ts(lower,start=tsp(x)[2]+1/freq,frequency=freq),
             model=list(beta=beta.est*n^3,call=match.call()),
