@@ -397,9 +397,10 @@ forecast.forecast <- function(object, ...)
     h <- list(...)[["h"]]
     if(h > length(object$mean))
       stop("Please select a longer horizon when the forecasts are first computed")
-    object$mean <- object$mean[1:h]
-    object$upper <- object$upper[1:h,]
-    object$lower <- object$lower[1:h,]
+    tspf <- tsp(object$mean)
+    object$mean <- ts(object$mean[1:h], start=tspf[1], frequency=tspf[3])
+    object$upper <- ts(object$upper[1:h,], start=tspf[1], frequency=tspf[3])
+    object$lower <- ts(object$lower[1:h,], start=tspf[1], frequency=tspf[3])
   }
   return(object)
 }
