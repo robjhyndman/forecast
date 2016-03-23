@@ -3,7 +3,8 @@
 \alias{forecast.nnetar}
 
 \title{Neural Network Time Series Forecasts}
-\usage{nnetar(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NULL, scale.inputs=TRUE, ...)
+\usage{nnetar(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NULL,
+    scale.inputs=TRUE, ...)
 \method{forecast}{nnetar}(object, h=ifelse(object$m > 1, 2 * object$m, 10),
     xreg=NULL, lambda=object$lambda, ...)
 }
