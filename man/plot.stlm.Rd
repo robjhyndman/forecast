@@ -2,7 +2,6 @@
 \alias{plot.stlm}
 \title{Plot the STL decomposition and seasonally-adjusted ETS/ARIMA model from a stlm model}
 \usage{\method{plot}{stlm}(x, ...)
-\method{autoplot}{stlm}(object, ...)
 }
 
 \arguments{
@@ -21,6 +20,5 @@
 \examples{
 fit <- stlm(USAccDeaths)
 plot(fit)
-plot(fit,plot.type="single",ylab="",col=1:3)
 }
 \keyword{hplot}
