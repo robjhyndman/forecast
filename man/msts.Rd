@@ -15,13 +15,13 @@
 \item{...}{Arguments to be passed to the underlying call to \code{ts()}. For example \code{start=c(1987,5)}.}
 }
 
-\value{An object of class \code{c("msts", "ts")}.}
+\value{An object of class \code{c("msts", "ts")}. If there is only one seasonal period (i.e., \code{length(seasonal.periods)==1}), then the object is of class \code{"ts"}.}
 
 \author{Slava Razbash and Rob J Hyndman}
 
 \examples{
-x <- msts(taylor, seasonal.periods=c(48,336), ts.frequency=48, start=2000+22/52)
-y <- msts(USAccDeaths, seasonal.periods=12, ts.frequency=12, start=1949)  
+x <- msts(taylor, seasonal.periods=c(48,336), start=2000+22/52)
+y <- msts(USAccDeaths, seasonal.periods=12, start=1949)  
 }
 
 \keyword{ts}

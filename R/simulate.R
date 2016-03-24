@@ -327,11 +327,10 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
     x <- BoxCox(x,lambda)
 
   n <- length(x)
-  d <- order[2]
   if(bootstrap)
-    e <- sample(model$residuals,nsim+d,replace=TRUE)
+    e <- sample(model$residuals,nsim,replace=TRUE)
   else if(is.null(innov))
-    e <- rnorm(nsim+d, 0, model$sd)
+    e <- rnorm(nsim, 0, model$sd)
   else if(length(innov)==nsim)
     e <- innov
   else

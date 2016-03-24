@@ -5,3 +5,5 @@ symbols.rds
 .Rproj.user
 forecast.Rproj
 .Rbuildignore
+.travis.yml
+revdep

@@ -8,8 +8,8 @@
 \item{iterate}{the number of iteration only for non-seasonal series}
 \item{lambda}{Allowing Box-cox transformation}
 }
-\description{Uses loess for non-seasonal series and a periodic stl decompostion
-  with seasonal series to identify and replace outliers.}
+\description{Uses supsmu for non-seasonal series and a periodic stl decompostion
+  with seasonal series to identify outliers and estimate their replacements.}
 
 \value{
   \item{index}{Indicating the index of outlier(s)}

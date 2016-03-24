@@ -1,7 +1,7 @@
 \name{meanf}
 \alias{meanf}
 \title{Mean Forecast}
-\usage{meanf(x, h=10, level=c(80,95), fan=FALSE, lambda=NULL)}
+\usage{meanf(x, h=10, level=c(80,95), fan=FALSE, lambda=NULL, biasadj=FALSE)}
 
 \arguments{
 \item{x}{a numeric vector or time series}
@@ -9,6 +9,7 @@
 \item{level}{Confidence levels for prediction intervals.}
 \item{fan}{If TRUE, level is set to seq(51,99,by=3). This is suitable for fan plots.}
 \item{lambda}{Box-Cox transformation parameter. Ignored if NULL. Otherwise, forecasts back-transformed via an inverse Box-Cox transformation.}
+\item{biasadj}{Use adjusted back-transformed mean for Box-Cox transformations. If TRUE, point forecasts and fitted values are mean forecast. Otherwise, these points can be considered the median of the forecast densities.}
 }
 \description{Returns forecasts and prediction intervals for an iid model applied to x.
 }

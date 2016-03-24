@@ -1,5 +1,5 @@
 forecast.ets <- function(object, h=ifelse(object$m>1, 2*object$m, 10),
-  level=c(80,95), fan=FALSE, simulate=FALSE, bootstrap=FALSE, npaths=5000, PI=TRUE, lambda=object$lambda, ...)
+  level=c(80,95), fan=FALSE, simulate=FALSE, bootstrap=FALSE, npaths=5000, PI=TRUE, lambda=object$lambda, biasadj=FALSE, ...)
 {
   # Check inputs
   #if(h>2000 | h<=0)
@@ -72,6 +72,9 @@ forecast.ets <- function(object, h=ifelse(object$m>1, 2*object$m, 10),
 	  #out$x <- InvBoxCox(object$x,lambda)
 	  #out$fitted <- InvBoxCox(out$fitted,lambda)
     out$mean <- InvBoxCox(out$mean,lambda)
+    if(biasadj){
+      out$mean <- InvBoxCoxf(x = out, lambda = lambda)
+    }
 	  if(PI)  # PI = TRUE
 	  {
 		out$lower <- InvBoxCox(out$lower,lambda)

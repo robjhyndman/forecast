@@ -9,14 +9,15 @@
 stlm(x, s.window=7, robust=FALSE, method=c("ets","arima"), 
      modelfunction=NULL, etsmodel="ZZN", lambda=NULL, xreg=NULL, 
      allow.multiplicative.trend=FALSE, ...)
-stlf(x, h=frequency(x)*2, s.window=7, t.window=NULL, robust=FALSE, lambda=NULL, ...)
+stlf(x, h=frequency(x)*2, s.window=7, t.window=NULL, robust=FALSE,
+    lambda=NULL, biasadj=FALSE, ...)
 \method{forecast}{stlm}(object, h = 2*object$m, 
-	level = c(80, 95), fan = FALSE, lambda=object$lambda, newxreg=NULL,
+	level = c(80, 95), fan = FALSE, lambda=object$lambda, biasadj=FALSE, newxreg=NULL,
   allow.multiplicative.trend=FALSE, ...)
 \method{forecast}{stl}(object, method=c("ets","arima","naive","rwdrift"), 
     etsmodel="ZZN", forecastfunction=NULL,
     h=frequency(object$time.series)*2, level=c(80,95), 
-    fan=FALSE, lambda=NULL, xreg=NULL, newxreg=NULL, 
+    fan=FALSE, lambda=NULL, biasadj=FALSE, xreg=NULL, newxreg=NULL, 
     allow.multiplicative.trend=FALSE, ...)
 }
 
@@ -36,6 +37,7 @@ ignored. Otherwise \code{method} is used to specify the forecasting method to be
 \item{level}{Confidence level for prediction intervals.}
 \item{fan}{If \code{TRUE}, level is set to seq(51,99,by=3). This is suitable for fan plots.}
 \item{lambda}{Box-Cox transformation parameter. Ignored if \code{NULL}. Otherwise, data transformed before decomposition and back-transformed after forecasts are computed.}
+\item{biasadj}{Use adjusted back-transformed mean for Box-Cox transformations. If TRUE, point forecasts and fitted values are mean forecast. Otherwise, these points can be considered the median of the forecast densities.}
 \item{s.window}{Either the character string ``periodic'' or the span (in lags) of the loess window for seasonal extraction.}
 \item{t.window}{A number to control the smoothness of the trend. See \code{\link[stats]{stl}} for details.}
 \item{robust}{If \code{TRUE}, robust fitting will used in the loess procedure within \code{\link[stats]{stl}}.}
@@ -55,7 +57,7 @@ to the seasonally adjusted data and re-seasonalizing using the last year of the 
 
 \code{forecast.stl} is similar to \code{stlf} except that it takes the STL decomposition as the first argument, instead of the time series. 
 
-Note that the prediction intervals ignore the uncertainty associated with the seasonal component. THey are computed using the prediction intervals from the seasonally adjusted series, which are then reseasonalized using the last year of the seasonal component. The uncertainty in the seasonal component is ignored.
+Note that the prediction intervals ignore the uncertainty associated with the seasonal component. They are computed using the prediction intervals from the seasonally adjusted series, which are then reseasonalized using the last year of the seasonal component. The uncertainty in the seasonal component is ignored.
 
 The time series model for the seasonally adjusted data can be specified in \code{stlm} using either \code{method} or \code{modelfunction}. The \code{method} argument provides a shorthand way of specifying \code{modelfunction} for a few special cases. More generally, \code{modelfunction} can be any function with first argument a \code{ts} object, that returns an object that can be passed to \code{\link{forecast}}. For example, \code{forecastfunction=ar} uses the \code{\link{ar}} function for modelling the seasonally adjusted series.
 

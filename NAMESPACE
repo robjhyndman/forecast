@@ -1,11 +1,3 @@
-importFrom("stats", "simulate")
-importFrom("stats", "tsdiag")
-importFrom("stats", "start")
-importFrom("stats", "end")
-importFrom("stats", "frequency")
-importFrom("stats", "window")
-importFrom("stats", "filter")
-importFrom("stats", "na.contiguous", "spec.ar")
 importFrom(colorspace,sequential_hcl)
 importFrom(fracdiff,fracdiff,diffseries,fracdiff.sim)
 importFrom(tseries,adf.test,pp.test,kpss.test)
@@ -14,22 +6,54 @@ importFrom(timeDate, as.timeDate, isBizday, difftimeDate, Easter)
 importFrom(nnet,nnet)
 import(parallel,Rcpp)
 
+importFrom("grDevices", "gray", "heat.colors")
+importFrom("graphics", "abline", "axis", "grid", "layout", "lines",
+             "mtext", "par", "plot", "points", "polygon", "text",
+             "title")
+importFrom("stats", "Box.test", "acf", "approx", "ar", "arima",
+             "arima.sim", "as.ts", "complete.cases", "cycle",
+             "decompose", "diffinv", "end", "extractAIC", "fitted", "formula",
+             "frequency","window","filter","na.contiguous","spec.ar",
+             "hatvalues", "is.ts", "ksmooth", "lm", "lsfit",
+             "model.frame", "na.exclude", "na.omit", "na.pass", "optim",
+             "optimize", "pf", "plot.ts", "poly", "predict", "pt",
+             "qnorm", "qt", "quantile", "residuals", "rnorm", "runif",
+             "sd", "simulate", "smooth.spline", "start", "stl", "supsmu",
+             "terms", "time", "ts", "tsp", "tsp<-", "tsdiag", "var")
+importFrom("utils", "packageVersion", "tail")
+importFrom("ggplot2","autoplot","fortify")
+
 export(arfima, Arima, arima.errors, arimaorder, auto.arima, BoxCox, croston,
 fitted.Arima, forecast, forecast.ar, forecast.Arima, forecast.ets, forecast.fracdiff,findfrequency,
-forecast.HoltWinters, forecast.lm, forecast.stl, forecast.StructTS, forecast.bats, forecast.tbats, accuracy, holt, hw, InvBoxCox, nnetar, forecast.nnetar, plot.Arima, plot.ar, taperedacf, taperedpacf,
+forecast.HoltWinters, forecast.lm, forecast.stl, forecast.StructTS, forecast.bats, forecast.tbats, accuracy, holt, hw, InvBoxCox,
+is.acf, is.Arima, is.bats, is.constant, is.ets, is.forecast, is.mforecast, is.nnetar, is.nnetarmodels, is.splineforecast, is.stlm,
+nnetar, forecast.nnetar, plot.Arima, plot.ar, taperedacf, taperedpacf,
 meanf, logLik.ets, monthdays, na.interp, ets, plot.bats, plot.tbats, plot.ets, plot.forecast,
-plot.splineforecast, rwf, seasadj, seasonaldummy,naive,snaive,stlf,
-seasonaldummyf, seasonplot, ses, sindexf, splinef,tslm,fourier,fourierf,forecast.lm,
+plot.splineforecast, rwf, seasadj, seasonaldummy,naive,snaive,stlf,subset.ts,
+seasonaldummyf, ggmonthplot, ggseasonplot, seasonplot, ses, sindexf, splinef,tslm,fourier,fourierf,forecast.lm,
 thetaf, tsdisplay, simulate.ets, simulate.ar, simulate.Arima, simulate.fracdiff, ndiffs, nsdiffs, dm.test,tbats.components,
-Acf,Pacf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts, getResponse, tsoutliers,
-tsclean, bizdays, easter,
-stlm, forecast.stlm)
+Acf,Pacf,Ccf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts, getResponse, tsoutliers,
+tsclean, bizdays, easter,stlm, forecast.stlm, StatForecast, GeomForecast, geom_forecast)
 
+S3method(autoplot, acf)
+S3method(autoplot, ar)
+S3method(autoplot, Arima)
+S3method(autoplot, decomposed.ts)
+S3method(autoplot, ets)
+S3method(autoplot, forecast)
+S3method(autoplot, mforecast)
+S3method(autoplot, splineforecast)
+S3method(autoplot, stl)
+S3method(autoplot, ts)
+S3method(autoplot, mts)
+S3method(fortify, ts)
+S3method(fortify, forecast)
 S3method(as.character, Arima)
 S3method(as.data.frame,forecast)
 S3method(coef,ets)
 S3method(fitted,Arima)
 S3method(fitted,fracdiff)
+S3method(fitted,ar)
 S3method(forecast,ar)
 S3method(forecast,Arima)
 S3method(forecast,bats)
@@ -39,12 +63,14 @@ S3method(forecast,forecast)
 S3method(forecast,fracdiff)
 S3method(forecast,HoltWinters)
 S3method(forecast,lm)
+S3method(forecast,mlm)
 S3method(forecast,nnetar)
 S3method(forecast,stl)
 S3method(forecast,stlm)
 S3method(forecast,StructTS)
 S3method(forecast,tbats)
 S3method(forecast,ts)
+S3method(forecast,mts)
 S3method(forecast,varest)
 S3method(getResponse,ar)
 S3method(getResponse,Arima)
@@ -72,6 +98,7 @@ S3method(print,nnetarmodels)
 S3method(print,tbats)
 S3method(residuals,bats)
 S3method(residuals,fracdiff)
+S3method(residuals, ar)
 S3method(simulate,ar)
 S3method(simulate,Arima)
 S3method(simulate,ets)
@@ -80,6 +107,7 @@ S3method(subset,ts)
 S3method(summary,Arima)
 S3method(summary,ets)
 S3method(summary,forecast)
+S3method(summary,mforecast)
 S3method(tsdiag,ets)
 S3method(window,msts)
 

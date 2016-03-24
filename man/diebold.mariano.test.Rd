@@ -32,7 +32,7 @@ A list with class \code{"htest"} containing the following components:
 Diebold, F.X. and Mariano, R.S. (1995) Comparing predictive accuracy. \emph{Journal of Business
 and Economic Statistics}, \bold{13}, 253-263.}
 
-\author{George Athanasopoulos, Yousaf Khan and Rob Hyndman}
+\author{George Athanasopoulos}
 
 \examples{
 # Test on in-sample one-step forecasts

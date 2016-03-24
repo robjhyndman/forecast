@@ -88,6 +88,7 @@ SEXP makeTBATSWMatrix(SEXP smallPhi_s, SEXP kVector_s, SEXP arCoefs_s, SEXP maCo
 SEXP makeCIMatrix(SEXP k_s, SEXP m_s) {
 	BEGIN_RCPP
 
+  double pi = arma::datum::pi;
 	double lambda, *m;
 	int *k;
 
@@ -95,7 +96,7 @@ SEXP makeCIMatrix(SEXP k_s, SEXP m_s) {
 	m = &REAL(m_s)[0];
 	NumericMatrix C(*k, *k);
 	for(int j = 1; j<=*k; j++) {
-		lambda = (2 * arma::math::pi() * j) / *m;
+		lambda = (2 * pi * j) / *m;
 		C((j-1),(j-1)) = std::cos(lambda);
 	}
 	return wrap(C);
@@ -106,6 +107,7 @@ SEXP makeCIMatrix(SEXP k_s, SEXP m_s) {
 SEXP makeSIMatrix(SEXP k_s, SEXP m_s) {
 	BEGIN_RCPP
 
+  double pi = arma::datum::pi;
 	double lambda, *m;
 	int *k;
 	k = &INTEGER(k_s)[0];
@@ -113,7 +115,7 @@ SEXP makeSIMatrix(SEXP k_s, SEXP m_s) {
 
 	NumericMatrix S(*k, *k);
 	for(int j = 1; j<=*k; j++) {
-		lambda = (2 * arma::math::pi() * j) / *m;
+		lambda = (2 * pi * j) / *m;
 		S((j-1),(j-1)) = std::sin(lambda);
 	}
 	return wrap(S);

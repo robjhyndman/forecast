@@ -176,7 +176,8 @@ trainingaccuracy <- function(f,test,d, D)
 
 accuracy <- function(f,x,test=NULL,d=NULL,D=NULL)
 {
-  if(!any(is.element(class(f), c("mforecast","forecast","ts","integer","numeric","Arima","ets","lm","bats","tbats"))))
+  if(!any(is.element(class(f), c("mforecast","forecast","ts","integer","numeric",
+      "Arima","ets","lm","bats","tbats","nnetar","stlm"))))
     stop("First argument should be a forecast object or a time series.")
   if(is.element("mforecast", class(f)))
     return(accuracy.mforecast(f,x,test,d,D))
@@ -258,7 +259,7 @@ accuracy.mforecast <- function(object, x, test=NULL, d, D)
     fc$x <- object$x[,i]
     fc$fitted <- object$fitted[,i]
     if(nox)
-      out1 <- accuracy(fc, test=test, d, D)
+      out1 <- accuracy(fc, test=test, d=d, D=D)
     else
       out1 <- accuracy(fc, x[,i], test, d, D)
     rownames(out1) <- paste(vnames[i],rownames(out1))

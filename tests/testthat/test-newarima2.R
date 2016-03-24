@@ -9,19 +9,27 @@ if(require(fpp) & require(testthat))
     expect_true(frequency(forecast(auto.arima(testseries1))) == 1)
     fit1 <- auto.arima(testseries1, xreg = xregmat, allowdrift = FALSE)
     expect_true(all(xregmat == fit1$xreg))
-    
+
     testseries2 <- ts(rep(100, 120), f = 12)
     xregmat <- matrix(runif(240), ncol = 2)
-    expect_output(auto.arima(testseries2, xreg = xregmat), regexp = "Series: testseries2")
-    
+    expect_output(print(auto.arima(testseries2, xreg = xregmat)), regexp = "Series: testseries2")
+
     testseries3 <- 1:100
     xregmat <- testseries3 * 2
     expect_error(auto.arima(testseries3, xreg = xregmat))
     expect_output(summary(auto.arima(testseries2, xreg = xregmat, approximation = TRUE, stepwise = FALSE)), regexp = "Series: testseries2")
-    expect_output(auto.arima(ts(testseries2, f = 4), approximation = TRUE, trace = TRUE), regexp = "ARIMA")
-    
+    expect_output(print(auto.arima(ts(testseries2, f = 4), approximation = TRUE, trace = TRUE)), regexp = "ARIMA")
+
+    fit1 <- auto.arima(testseries1, stepwise=FALSE, lambda=2, biasadj=FALSE)
+    fit2 <- auto.arima(testseries1, stepwise=FALSE, lambda=2, biasadj=TRUE)
+    expect_false(identical(fit1$fitted, fit2$fitted))
   })
-  
+
+  test_that("test parallel = TRUE and stepwise = FALSE for auto.arima()", {
+    skip_on_travis()
+    expect_output(print(auto.arima(austa, parallel = TRUE, stepwise = FALSE)), regexp = "Call:")
+  })
+
   test_that("tests for nsdiffs()", {
     expect_true(nsdiffs(wineind) == 1)
     expect_true(nsdiffs(cafe) == 1)

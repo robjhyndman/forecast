@@ -1,27 +1,26 @@
 #forecast
 [![Travis-CI Build Status](https://travis-ci.org/robjhyndman/forecast.svg?branch=master)](https://travis-ci.org/robjhyndman/forecast)
 [![Coverage Status](https://coveralls.io/repos/robjhyndman/forecast/badge.svg?branch=master&service=github)](https://coveralls.io/r/robjhyndman/forecast?branch=master)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/forecast)](http://cran.r-project.org/web/packages/forecast)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/forecast)](http://cran.r-project.org/package=forecast)
 [![Downloads](http://cranlogs.r-pkg.org/badges/forecast)](http://cran.rstudio.com/package=forecast)
 [![Pending Pull-Requests](http://githubbadges.herokuapp.com/robjhyndman/forecast/pulls.svg?style=flat)](https://github.com/robjhyndman/forecast/pulls)
 
 The R package *forecast* provides methods and tools for displaying and analysing univariate time series forecasts including exponential smoothing via state space models and automatic ARIMA modelling.
 
 ## Installation
-You can install the **stable** version on 
+You can install the **stable** version on
 [R CRAN](http://cran.r-project.org/package=forecast).
 
 ```s
 install.packages('forecast', dependencies = TRUE)
 ```
 
-You can also install the **development** version from
+You can install the **development** version from
 [Github](https://github.com/robjhyndman/forecast)
 
 ```s
 # install.packages("devtools")
-library(devtools)
-install_github("robjhyndman/forecast") 
+devtools::install_github("robjhyndman/forecast")
 ```
 
 ## Usage
@@ -53,7 +52,7 @@ decomp <- stl(USAccDeaths,s.window="periodic")
 plot(forecast(decomp))
 
 # TBATS forecasts
-fit <- tbats(USAccDeaths, use.parallel=FALSE)
+fit <- tbats(USAccDeaths)
 plot(forecast(fit))
 
 taylor.fit <- tbats(taylor)

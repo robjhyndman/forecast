@@ -1,7 +1,8 @@
 \name{tsdisplay}
 \alias{tsdisplay}
 \title{Time series display}
-\usage{tsdisplay(x, plot.type=c("partial","scatter","spectrum"), points=TRUE, ci.type="white", 
+\usage{tsdisplay(x, plot.type=c("partial","scatter","spectrum"),
+    points=TRUE, ci.type=c("white", "ma"), 
     lag.max, na.action=na.contiguous, 
     main=NULL, xlab="", ylab="", pch=1, cex=0.5, ...)
 }
@@ -9,7 +10,8 @@
 \arguments{  \item{x}{a numeric vector or time series.}
 \item{plot.type}{type of plot to include in lower right corner.}
 \item{points}{logical flag indicating whether to show the individual points or not in the time plot.}
-\item{ci.type}{type of confidence limits for ACF. Possible values are as for \code{\link[stats]{acf}}.}
+\item{ci.type}{type of confidence limits for ACF that is passed to \code{\link[stats]{acf}}. Should the confidence limits assume a white noise
+                 input or for lag \eqn{k} an MA(\eqn{k-1}) input?}
 \item{lag.max}{the maximum lag to plot for the acf and pacf. A suitable value is selected by default if the argument is missing.}
 \item{na.action}{function to handle missing values in acf, pacf and spectrum calculations. The default is \code{\link[stats]{na.contiguous}}. Useful alternatives are \code{\link[stats]{na.pass}} and \code{\link{na.interp}}.}
 \item{main}{Main title.}

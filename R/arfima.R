@@ -61,15 +61,16 @@ unfracdiff <- function(x,y,n,h,d)
 
 ## Automatic ARFIMA modelling
 ## Will return Arima object if d < 0.01 to prevent estimation problems
-arfima <- function(x, drange = c(0, 0.5), estim = c("mle","ls"), lambda=NULL, ...)
+arfima <- function(x, drange = c(0, 0.5), estim = c("mle","ls"), lambda = NULL, biasadj = FALSE, ...)
 {
 	estim <- match.arg(estim)
 #	require(fracdiff)
     
 	orig.x <- x
-	if (!is.null(lambda)) 
+	if (!is.null(lambda)){
 		x <- BoxCox(x, lambda)
-		
+	}
+	
 	# Strip initial and final missing values
 	xx <- na.ends(x)
 	
@@ -114,7 +115,10 @@ arfima <- function(x, drange = c(0, 0.5), estim = c("mle","ls"), lambda=NULL, ..
 	fit$residuals <- undo.na.ends(x,residuals(fit))
 	fit$fitted <- x - fit$residuals
 	if(!is.null(lambda))
-		fit$fitted <- InvBoxCox(fit$fitted,lambda)
+	  fit$fitted <- InvBoxCox(fit$fitted,lambda)
+	  if(biasadj){
+	    fit$fitted <- InvBoxCoxf(fit$fitted, fvar = var(fit$residuals), lambda=lambda)
+	  }
 	fit$lambda <- lambda
 	fit$call$data <- data.frame(x=x)
 	return(fit)
@@ -122,14 +126,15 @@ arfima <- function(x, drange = c(0, 0.5), estim = c("mle","ls"), lambda=NULL, ..
 
 # Forecast the output of fracdiff() or arfima()
 
-forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, ...) 
+forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, biasadj=FALSE, ...) 
 {
 	# Extract data
 	x <- object$x <- getResponse(object)
 	
-	if(!is.null(lambda))
+	if(!is.null(lambda)){
 		x <- BoxCox(x,lambda)
-		
+	}
+	
 	xx <- na.ends(x)
 	n <- length(xx)
 	
@@ -226,6 +231,9 @@ forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=ob
 		x <- InvBoxCox(x,lambda)
 		fits <- InvBoxCox(fits,lambda)
 		mean.fcast <- InvBoxCox(mean.fcast,lambda)
+		if(biasadj){
+		  mean.fcast <- InvBoxCoxf(list(level = level, mean = mean.fcast, upper=upper, lower=lower),lambda=lambda)
+		}
 		lower <- InvBoxCox(lower,lambda)
 		upper <- InvBoxCox(upper,lambda)
 	}

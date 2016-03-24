@@ -35,12 +35,12 @@ findfrequency <- function(x)
   }
   else
     period <- 1L
- 
+
   return(as.integer(period))
 }
 
-forecast.ts <- function(object, h=ifelse(frequency(object)>1, 2*frequency(object), 10), 
-  level=c(80,95), fan=FALSE, robust=FALSE, lambda = NULL, find.frequency = FALSE, 
+forecast.ts <- function(object, h=ifelse(frequency(object)>1, 2*frequency(object), 10),
+  level=c(80,95), fan=FALSE, robust=FALSE, lambda = NULL, find.frequency = FALSE,
   allow.multiplicative.trend=FALSE, ...)
 {
   n <- length(object)
@@ -59,7 +59,7 @@ forecast.ts <- function(object, h=ifelse(frequency(object)>1, 2*frequency(object
       forecast(ets(object,lambda = lambda, allow.multiplicative.trend=allow.multiplicative.trend, ...),
         h=h,level=level,fan=fan)
     else
-      stlf(object,h=h,level=level,fan=fan,lambda = lambda, 
+      stlf(object,h=h,level=level,fan=fan,lambda = lambda,
         allow.multiplicative.trend=allow.multiplicative.trend,...)
   }
   else
@@ -201,7 +201,7 @@ plotlmforecast <- function(object, plot.conf, shaded, shadecols, col, fcol, pi.c
     xlim <- range(object$newdata[,xvar],model.frame(object$model)[,xvar])
   if(is.null(ylim))
     ylim <- range(object$upper,object$lower,fitted(object$model)+residuals(object$model))
-  plot(formula(object$model),data=model.frame(object$model), 
+  plot(formula(object$model),data=model.frame(object$model),
     xlim=xlim,ylim=ylim,xlab=xlab,ylab=ylab,main=main,col=col,...)
   abline(object$model)
   nf <- length(object$mean)
@@ -245,8 +245,13 @@ plot.forecast <- function(x, include, plot.conf=TRUE, shaded=TRUE, shadebars=(le
     xx <- x$x
   else
     xx=NULL
-  if(is.null(x$lower) | is.null(x$upper) | is.null(x$level))
-    plot.conf=FALSE
+  if(is.null(x$lower) | is.null(x$upper) | is.null(x$level)){
+    plot.conf <- FALSE
+  }
+  else if(!is.finite(max(x$upper))){
+    plot.conf <- FALSE
+  }
+
   if(!shaded)
     shadebars <- FALSE
   if(is.null(main))
@@ -373,11 +378,33 @@ predict.default <- function(object, ...)
     forecast(object, ...)
 }
 
-# The following function is for when users don't realise they already have the forecasts. 
+# The following function is for when users don't realise they already have the forecasts.
 # e.g., with the dshw(), meanf() or rwf() functions.
 
 forecast.forecast <- function(object, ...)
 {
+  input_names <- as.list(substitute(list(...)))
+  # Read level argument
+  if(is.element("level",names(input_names)))
+  {
+    level <- list(...)[["level"]]
+    if(!identical(level,object$level))
+      stop("Please set the level argument when the forecasts are first computed")
+  }
+  # Read h argument
+  if(is.element("h",names(input_names)))
+  {
+    h <- list(...)[["h"]]
+    if(h > length(object$mean))
+      stop("Please select a longer horizon when the forecasts are first computed")
+    tspf <- tsp(object$mean)
+    object$mean <- ts(object$mean[1:h], start=tspf[1], frequency=tspf[3])
+    object$upper <- ts(object$upper[1:h,], start=tspf[1], frequency=tspf[3])
+    object$lower <- ts(object$lower[1:h,], start=tspf[1], frequency=tspf[3])
+  }
   return(object)
 }
 
+is.forecast <- function(x){
+  inherits(x, "forecast")
+}

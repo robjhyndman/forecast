@@ -4,7 +4,9 @@
 ## y can be an msts object, or periods can be passed explicitly.
 ####################################################################
 
-dshw <- function(y, period1=NULL, period2=NULL, h=2*max(period1,period2), alpha=NULL, beta=NULL, gamma=NULL, omega=NULL, phi=NULL, lambda=NULL, armethod=TRUE, model = NULL)
+dshw <- function(y, period1=NULL, period2=NULL, h=2*max(period1,period2), 
+  alpha=NULL, beta=NULL, gamma=NULL, omega=NULL, phi=NULL, lambda=NULL, biasadj=FALSE, 
+  armethod=TRUE, model = NULL)
 {
   if(min(y,na.rm=TRUE) <= 0)
     stop("dshw not suitable when data contain zeros or negative numbers")
@@ -12,8 +14,8 @@ dshw <- function(y, period1=NULL, period2=NULL, h=2*max(period1,period2), alpha=
     period1 <- model$period1
     period2 <- model$period2
   } else if(any(class(y) == "msts") & (length(attr(y, "msts")) == 2)) {
-	  period1<-as.integer(sort(attr(y, "msts"))[1])
-	  period2<-as.integer(sort(attr(y, "msts"))[2])
+	  period1 <- as.integer(sort(attr(y, "msts"))[1])
+	  period2 <- as.integer(sort(attr(y, "msts"))[2])
   } else if(is.null(period1) | is.null(period2)) {
 	  stop("Error in dshw(): y must either be an msts object with two seasonal periods OR the seasonal periods should be specified with period1= and period2=")
   } else {
@@ -28,9 +30,7 @@ dshw <- function(y, period1=NULL, period2=NULL, h=2*max(period1,period2), alpha=
     y <- msts(y, c(period1, period2))
 	
   if(!armethod)
-  {
     phi <- 0
-  }
   
   if(period1 < 1 | period1 == period2)
     stop("Inappropriate periods") 
@@ -112,9 +112,9 @@ dshw <- function(y, period1=NULL, period2=NULL, h=2*max(period1,period2), alpha=
   # Calculate MSE and MAPE
   yhat <- ts(yhat)
   tsp(yhat) <- tsp(y)
-  yhat<-msts(yhat, c(period1, period2))
+  yhat <- msts(yhat, c(period1, period2))
   e <- y - yhat
-  e<-msts(e, c(period1, period2))
+  e <- msts(e, c(period1, period2))
   if(armethod)
 	{
 		yhat <- yhat + phi * c(0,e[-n])
@@ -127,10 +127,10 @@ dshw <- function(y, period1=NULL, period2=NULL, h=2*max(period1,period2), alpha=
 
   end.y <- end(y)
   if(end.y[2] == frequency(y)) {
-	  end.y[1]<-end.y[1]+1
-	  end.y[2]<-1
+	  end.y[1] <- end.y[1]+1
+	  end.y[2] <- 1
   } else {
-	  end.y[2]<-end.y[2]+1
+	  end.y[2] <- end.y[2]+1
   }
   
   fcast <- msts(fcast, c(period1, period2))
@@ -139,6 +139,10 @@ dshw <- function(y, period1=NULL, period2=NULL, h=2*max(period1,period2), alpha=
   {
     y <- origy
     fcast <- InvBoxCox(fcast,lambda)
+    if(biasadj){
+      fcast <- InvBoxCoxf(x = fcast, fvar = var(e), lambda = lambda)
+    }
+    #Does this also need a biasadj backtransform?
     yhat <- InvBoxCox(yhat,lambda)
   }
 

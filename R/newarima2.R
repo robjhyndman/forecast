@@ -1,11 +1,11 @@
 auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
-    max.P=2, max.Q=2, max.order=5, max.d=2, max.D=1, 
+    max.P=2, max.Q=2, max.order=5, max.d=2, max.D=1,
     start.p=2, start.q=2, start.P=1, start.Q=1,
     stationary=FALSE, seasonal=TRUE, ic=c("aicc","aic","bic"),
     stepwise=TRUE, trace=FALSE,
     approximation=(length(x)>100 | frequency(x)>12), xreg=NULL,
     test=c("kpss","adf","pp"), seasonal.test=c("ocsb","ch"),
-    allowdrift=TRUE,allowmean=TRUE,lambda=NULL,
+    allowdrift=TRUE,allowmean=TRUE,lambda=NULL, biasadj=FALSE,
     parallel=FALSE, num.cores=2)
 {
   # Only non-stepwise parallel implemented so far.
@@ -51,7 +51,7 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   }
   else
     m <- round(m) # Avoid non-integer seasonal periods
-    
+
 	max.p<-ifelse(max.p <= floor(serieslength/3), max.p, floor(serieslength/3))
 	max.q<-ifelse(max.q <= floor(serieslength/3), max.q, floor(serieslength/3))
 	max.P<-ifelse(max.P <= floor((serieslength/3)/m), max.P, floor((serieslength/3)/m))
@@ -154,9 +154,9 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   if(approximation)
   {
     if(D==0)
-      fit <- try(arima(x,order=c(1,d,0),xreg=xreg))
+      fit <- try(stats::arima(x,order=c(1,d,0),xreg=xreg), silent=TRUE)
     else
-      fit <- try(arima(x,order=c(1,d,0),seasonal=list(order=c(0,D,0),period=m,xreg=xreg)))
+      fit <- try(stats::arima(x,order=c(1,d,0),seasonal=list(order=c(0,D,0),period=m,xreg=xreg)), silent=TRUE)
     if(!is.element("try-error",class(fit)))
       offset <- -2*fit$loglik - serieslength*log(fit$sigma2)
     else
@@ -180,15 +180,10 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
       parallel=parallel, num.cores=num.cores)
     bestfit$call <- match.call()
     bestfit$call$x <- data.frame(x=x)
-    bestfit$lamba <- lambda
+    bestfit$lambda <- lambda
     bestfit$x <- orig.x
     bestfit$series <- series
-    bestfit$fitted <- fitted(bestfit)
-    if(!is.null(lambda))
-    {
-      bestfit$fitted <- InvBoxCox(bestfit$fitted,lambda)
-      bestfit$lambda <- lambda
-    }
+    bestfit$fitted <- fitted(bestfit, biasadj)
     return(bestfit)
   }
 
@@ -440,7 +435,7 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   #bestfit$fitted <- fitted(bestfit)
 
   if(trace)
-    cat("\n\n Best model:",arima.string(bestfit),"\n\n")
+    cat("\n\n Best model:",arima.string(bestfit, padding=TRUE),"\n\n")
 
   return(bestfit)
 }
@@ -499,6 +494,9 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
         }
         else
             fit$aic <- fit$bic <- fit$aicc <- fit$ic <- Inf
+        # Adjust residual variance to be unbiased
+        fit$sigma2 <- sum(fit$residuals^2) / (nstar - npar + 1)
+
         # Check for unit roots
         minroot <- 2
         if(order[1] + seasonal[1] > 0)
@@ -532,8 +530,9 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
         if(minroot < 1 + 1e-2) # Previously 1+1e-3
             fit$ic <- Inf # Don't like this model
         if(trace)
-            cat("\n",arima.string(fit),":",fit$ic)
+            cat("\n",arima.string(fit, padding=TRUE),":",fit$ic)
         fit$xreg <- xreg
+
         return(structure(fit,class=c("ARIMA","Arima")))
     }
     else
@@ -568,7 +567,7 @@ newmodel <- function(p,d,q,P,D,Q,constant,results)
     return(TRUE)
 }
 
-arima.string <- function(object)
+arima.string <- function(object, padding=FALSE)
 {
     order <- object$arma[c(1,6,2,3,7,4,5)]
     result <- paste("ARIMA(",order[1],",",order[2],",",order[3],")",sep="")
@@ -582,6 +581,9 @@ arima.string <- function(object)
         result <- paste(result,"with zero mean    ")
     else
         result <- paste(result,"                  ")
+    if(!padding)
+      #Strip trailing spaces
+      result <- gsub("[ ]*$","",result)
     return(result)
 }
 

@@ -2,9 +2,9 @@
 \alias{bats}
 
 \title{BATS model (Exponential smoothing state space model with Box-Cox transformation, ARMA errors, Trend and Seasonal components)}
-\usage{bats(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL, 
-  seasonal.periods=NULL, use.arma.errors=TRUE, use.parallel=TRUE, 
-  num.cores=2, bc.lower=0, bc.upper=1, ...)}
+\usage{bats(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
+  seasonal.periods=NULL, use.arma.errors=TRUE, use.parallel=length(y)>1000,
+  num.cores=2, bc.lower=0, bc.upper=1, model=NULL, ...)}
 
 \arguments{
 \item{y}{The time series to be forecast. Can be \code{numeric}, \code{msts} or \code{ts}. Only univariate time series are supported.}
@@ -17,6 +17,8 @@
 \item{num.cores}{The number of parallel processes to be used if using parallel processing. If \code{NULL} then the number of logical cores is detected and all available cores are used.}
 \item{bc.lower}{The lower limit (inclusive) for the Box-Cox transformation.}
 \item{bc.upper}{The upper limit (inclusive) for the Box-Cox transformation.}
+\item{model}{Output from a previous call to \code{bats}. If model is passed, this same model is fitted to
+\code{y} without re-estimating any parameters.}
 \item{...}{Additional arguments to be passed to \code{auto.arima} when choose an ARMA(p, q) model for the errors. (Note that xreg will be ignored, as will any arguments concerning seasonality and differencing, but arguments controlling the values of p and q will be used.)}
 }
 
@@ -32,7 +34,7 @@ the value returned by \code{bats} and associated functions. The fitted model is 
 
 \examples{
 \dontrun{
-fit <- bats(USAccDeaths, use.parallel=FALSE)
+fit <- bats(USAccDeaths)
 plot(forecast(fit))
 
 taylor.fit <- bats(taylor)

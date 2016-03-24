@@ -4,7 +4,7 @@
 ###############################################################################
 
 
-forecast.bats <- function(object, h, level=c(80,95), fan=FALSE, ...) 
+forecast.bats <- function(object, h, level=c(80,95), fan=FALSE, biasadj=FALSE, ...) 
 {
 	#Set up the variables
   if(missing(h))
@@ -78,7 +78,10 @@ forecast.bats <- function(object, h, level=c(80,95), fan=FALSE, ...)
 	#Inv Box Cox transform if required
 	if(!is.null(object$lambda))
 	{
-		y.forecast <- InvBoxCox(y.forecast,object$lambda)
+	  y.forecast <- InvBoxCox(y.forecast,object$lambda)
+	  if(biasadj){
+	    y.forecast <- InvBoxCoxf(x = list(level = level, mean = y.forecast, upper = upper.bounds, lower = lower.bounds), lambda = object$lambda)
+	  }
 		lower.bounds <- InvBoxCox(lower.bounds,object$lambda)
 		if(object$lambda < 1) {
 			lower.bounds<-pmax(lower.bounds, 0)	

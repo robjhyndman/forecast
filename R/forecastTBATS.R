@@ -1,4 +1,4 @@
-forecast.tbats <- function(object, h, level=c(80,95), fan=FALSE, ...) 
+forecast.tbats <- function(object, h, level=c(80,95), fan=FALSE, biasadj=FALSE, ...) 
 {
 	#Set up variables
   if(missing(h))
@@ -13,7 +13,14 @@ forecast.tbats <- function(object, h, level=c(80,95), fan=FALSE, ...)
 	}
 	if(fan) {
 		level <- seq(51,99,by=3)
+	} else {
+		if(min(level) > 0 & max(level) < 1)
+			level <- 100*level
+		else if(min(level) < 0 | max(level) > 99.99)
+			stop("Confidence limit out of range")
 	}
+	
+	
 	if(any(class(object$y) == "ts")) {
 		ts.frequency <- frequency(object$y)
 	} else {
@@ -92,7 +99,10 @@ forecast.tbats <- function(object, h, level=c(80,95), fan=FALSE, ...)
 	#Inv Box Cox transform if required
 	if(!is.null(object$lambda))
 	{
-		y.forecast  <-  InvBoxCox(y.forecast,object$lambda)
+	  y.forecast <- InvBoxCox(y.forecast,object$lambda)
+	  if(biasadj){
+	    y.forecast <- InvBoxCoxf(x = list(level = level, mean = y.forecast, upper = upper.bounds, lower = lower.bounds), lambda = object$lambda)
+	  }
 		lower.bounds  <-  InvBoxCox(lower.bounds,object$lambda)
 		if(object$lambda < 1) {
 			lower.bounds<-pmax(lower.bounds, 0)

@@ -1,14 +1,16 @@
 \name{tslm}
 \alias{tslm}
 \title{Fit a linear model with time series components}
-\usage{tslm(formula, data, lambda=NULL, ...)
+\usage{tslm(formula, data, subset, lambda=NULL, biasadj=FALSE, ...)
 }
 
 \arguments{
 \item{formula}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted.}
 \item{data}{an optional data frame, list or environment (or object coercible by as.data.frame to a data frame) containing the variables in the model. If not found in data, the variables are taken from environment(formula), typically the environment from which lm is called.}
+\item{subset}{an optional subset containing rows of data to keep. For best results, pass a logical vector of rows to keep. Also supports \code{\link[base]{subset}()} functions.}
 \item{lambda}{Box-Cox transformation parameter. Ignored if NULL. Otherwise, data are transformed via a Box-Cox transformation.}
-\item{...}{Other arguments passed to \code{\link[stats]{lm}()}.}
+\item{biasadj}{Use adjusted back-transformed mean for Box-Cox transformations. If TRUE, point forecasts and fitted values are mean forecast. Otherwise, these points can be considered the median of the forecast densities.}
+\item{...}{Other arguments passed to \code{\link[stats]{lm}()}}.
 }
 
 \description{\code{tslm} is used to fit linear models to time series including trend and seasonality components.}
@@ -19,7 +21,7 @@
 
 \seealso{\code{\link{forecast.lm}}, \code{\link[stats]{lm}}.}
 
-\author{Rob J Hyndman}
+\author{Mitchell O'Hara-Wild and Rob J Hyndman}
 
 \examples{
 y <- ts(rnorm(120,0,3) + 1:120 + 20*sin(2*pi*(1:120)/12), frequency=12)

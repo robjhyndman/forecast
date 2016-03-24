@@ -42,7 +42,7 @@ spline.loglik <- function(beta,y,cc=1e2)
 }
 
 # Spline forecasts
-splinef <- function(x, h=10, level=c(80,95), fan=FALSE, lambda=NULL, method=c("gcv","mle"))
+splinef <- function(x, h=10, level=c(80,95), fan=FALSE, lambda=NULL, biasadj=FALSE, method=c("gcv","mle"))
 {
     method <- match.arg(method)
     if(!is.ts(x))
@@ -133,7 +133,10 @@ splinef <- function(x, h=10, level=c(80,95), fan=FALSE, lambda=NULL, method=c("g
 
 	if(!is.null(lambda))
 	{
-		Yhat <- InvBoxCox(Yhat,lambda)
+	  Yhat <- InvBoxCox(Yhat,lambda)
+	  if(biasadj){
+	    Yhat <- InvBoxCoxf(x = list(level = level, mean = Yhat, upper = upper, lower = lower), lambda = lambda)
+	  }
 		upper <- InvBoxCox(upper,lambda)
 		lower <- InvBoxCox(lower,lambda)
 		yfit <- InvBoxCox(yfit,lambda)
@@ -141,7 +144,8 @@ splinef <- function(x, h=10, level=c(80,95), fan=FALSE, lambda=NULL, method=c("g
 		x <- origx
 	}
 
-    return(structure(list(method="Cubic Smoothing Spline",level=level,x=x,mean=ts(Yhat,frequency=freq,start=tsp(x)[2]+1/freq),
+    return(structure(list(method="Cubic Smoothing Spline",level=level,x=x,
+            mean=ts(Yhat,frequency=freq,start=tsp(x)[2]+1/freq),
             upper=ts(upper,start=tsp(x)[2]+1/freq,frequency=freq),
             lower=ts(lower,start=tsp(x)[2]+1/freq,frequency=freq),
             model=list(beta=beta.est*n^3,call=match.call()),
@@ -156,4 +160,8 @@ plot.splineforecast <- function(x,fitcol=2,type="o",pch=19,...)
 {
     plot.forecast(x,type=type,pch=pch,...)
     lines(x$fitted,col=fitcol)
+}
+
+is.splineforecast <- function(x){
+  inherits(x, "splineforecast")
 }

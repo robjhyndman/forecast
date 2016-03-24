@@ -101,7 +101,7 @@ tsoutliers <- function(x, iterate=2, lambda=NULL)
     rem <- fit$time.series[,"remainder"]
     detrend <- rem + fit$time.series[,"seasonal"]
     strength <- 1 - var(rem) / var(detrend)
-    if(strength > 0.05)
+    if(strength >= 0.05)
       xx <- seasadj(fit)
   }
   # Use super-smoother on the (seasonally adjusted) data
@@ -114,20 +114,22 @@ tsoutliers <- function(x, iterate=2, lambda=NULL)
     resid[missng] <- NA
 
   # Limits of acceptable residuals
-  resid.q <- quantile(resid, prob=c(0.1,0.9), na.rm=TRUE)
+  resid.q <- quantile(resid, prob=c(0.25,0.75), na.rm=TRUE)
   iqr <- diff(resid.q)
-  limits <- resid.q + 1.5*iqr*c(-1,1)
+  limits <- resid.q + 3*iqr*c(-1,1)
 
   # Find residuals outside limits
-  outliers <- which((resid < limits[1]) | (resid > limits[2]))
+  if((limits[2]-limits[1]) > 1e-14)
+    outliers <- which((resid < limits[1]) | (resid > limits[2]))
+  else
+    outliers <- numeric(0)
 
   # Replace all missing values including outliers
   x[outliers] <- NA
   x <- na.interp(x, lambda=lambda)
 
-  # Iterate only for non-seasonal data as stl includes iteration
   # Do no more than 2 iterations regardless of the value of iterate
-  if(iterate > 1 & frequency(x)<=1)
+  if(iterate > 1)
   {
     tmp <- tsoutliers(x, iterate=1, lambda=lambda)
     if(length(tmp$index) > 0) # Found some more
