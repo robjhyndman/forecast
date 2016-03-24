@@ -266,12 +266,11 @@ plot.stlm <- function(x, ...){
 		stop("No ETS/ARIMA model detected")
 	}
 
-	# Plot the STL and ETS/ARIMA models one at a time, like plot.lm()
-	cat("Hit <Return> to see the next plot:")
+	# Plot the STL and ETS/ARIMA models one at a time
 	plot(x$stl, ...)
-	buffer <- readline()
 	plot(x$model, ...)
 }
+
 
 forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE,
      lambda=object$lambda, biasadj=FALSE, newxreg=NULL, allow.multiplicative.trend=FALSE, ...)
