@@ -255,6 +255,24 @@ stlm <- function(x ,s.window=7, robust=FALSE, method=c("ets","arima"),
      fitted=fits, residuals=res),class="stlm"))
 }
 
+# Plot method for stlm objects
+plot.stlm <- function(x, ...){
+	# Verify input
+	if(class(x) != "stlm"){
+		stop("This function is for objects of class 'stlm'")
+	} else if(class(x$stl) != "stl"){
+		stop("No STL model detected")
+	} else if(!is.element(c("Arima", "ARIMA"), class(x$model)) && class(x$model) != "ets"){
+		stop("No ETS/ARIMA model detected")
+	}
+
+	# Plot the STL and ETS/ARIMA models one at a time, like plot.lm()
+	cat("Hit <Return> to see the next plot:")
+	plot(x$stl, ...)
+	buffer <- readline()
+	plot(x$model, ...)
+}
+
 forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE,
      lambda=object$lambda, biasadj=FALSE, newxreg=NULL, allow.multiplicative.trend=FALSE, ...)
 {
