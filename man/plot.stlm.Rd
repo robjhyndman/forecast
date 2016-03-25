@@ -19,6 +19,6 @@
 \author{David Shaub}
 \examples{
 fit <- stlm(USAccDeaths)
-plot(fit)
+plot.stlm(fit)
 }
 \keyword{hplot}
