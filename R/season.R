@@ -267,7 +267,7 @@ plot.stlm <- function(x, ...){
 	}
 
 	# Plot the STL and ETS/ARIMA models one at a time
-	plot(x$stl, ...)
+	plot.stl(x$stl, ...)
 	plot(x$model, ...)
 }
 
