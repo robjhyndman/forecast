@@ -309,7 +309,7 @@ autoplot.ets <- function (object, main=NULL, xlab=NULL, ylab=NULL, ...){
   }
 }
 
-autoplot.forecast <- function (object, include, plot.conf=TRUE, shadecols=c("#868FBD","#BEC1D4"), fcol="#0000FF", flwd=0.5, main=NULL, xlab=NULL, ylab=NULL,
+autoplot.forecast <- function (object, include, plot.conf=TRUE, shadecols=c("#475ED5","#AAB8FF"), fcol="#0000AA", flwd=0.5, main=NULL, xlab=NULL, ylab=NULL,
 ...){
   if (requireNamespace("ggplot2")){
     if (!is.forecast(object)){
@@ -808,7 +808,7 @@ StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
 
 GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom,
   required_aes = c("x","y"),
-  default_aes = ggplot2::aes(colour = "#BEC1D4", fill = "grey60", size = .5,
+  default_aes = ggplot2::aes(colour = "#868FBD", fill = "grey60", size = .5,
     linetype = 1, weight = 1, alpha = 1),
   draw_key = function(data, params, size){
     lwd <- min(data$size, min(size) / 4)
@@ -842,8 +842,8 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom,
 
     if(all(is.finite(data$level))){
       plot.ci <- TRUE
-      altcol1 <- colorspace::hex(colorspace::HSV(altcol[1]*360, altcol[2], altcol[3]*(2/3)))
-      altcol2 <- colorspace::hex(colorspace::HSV(altcol[1]*360, altcol[2], 1-(1-altcol[3])*(1/3)))
+      altcol1 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 2/3, 5/6))
+      altcol2 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1/3, 1))
       intervalpred <- transform(data[,-match("y", colnames(data))], colour = NA,
                                 fill = scales::gradient_n_pal(c(altcol1,altcol2))(data$scalefill[1]))
     }
@@ -851,11 +851,8 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom,
       plot.ci <- FALSE
       if(any(c("ymax","ymin")%in%colnames(data))){
         data <- data[,-match(c("level","ymax","ymin"), colnames(data))]
-        linecol <- "#FFFFFF"
       }
-      else{
-        linecol <- colorspace::hex(colorspace::HSV(altcol[1]*360, altcol[2], altcol[3]*(2/3)))
-      }
+      linecol <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1, 2/3))
       pointpred <- transform(data, group = -1, fill = NA, colour = linecol)
     }
     #Draw forecasted points and intervals
