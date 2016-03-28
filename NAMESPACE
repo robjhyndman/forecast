@@ -34,7 +34,7 @@ seasonaldummyf, ggAcf, ggPacf, ggCcf, ggtaperedacf, ggtaperedpacf, ggtsdisplay, 
 ggseasonplot, seasonplot, ses, sindexf, splinef, tslm, fourier, fourierf,forecast.lm,
 thetaf, tsdisplay, simulate.ets, simulate.ar, simulate.Arima, simulate.fracdiff, ndiffs, nsdiffs, dm.test,tbats.components,
 Acf,Pacf,Ccf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts, getResponse, tsoutliers,
-tsclean, bizdays, easter,stlm, forecast.stlm, StatForecast, GeomForecast, geom_forecast)
+tsclean, bizdays, easter,stlm, forecast.stlm, plot.stlm, StatForecast, GeomForecast, geom_forecast)
 
 S3method(autoplot, acf)
 S3method(autoplot, ar)
@@ -87,6 +87,7 @@ S3method(plot,ets)
 S3method(plot,forecast)
 S3method(plot,mforecast)
 S3method(plot,splineforecast)
+S3method(plot,stlm)
 S3method(plot,tbats)
 S3method(predict,default)
 S3method(print,ARIMA)
