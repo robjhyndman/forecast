@@ -13,7 +13,7 @@ autoplot.acf <- function (object, ...){
     }
 
     data <- data.frame(Lag=object$lag,ACF=object$acf)
-    if (data$Lag[1] == 0){
+    if (data$Lag[1] == 0 & object$type == "correlation"){
       data <- data[-1,]
     }
 
@@ -39,8 +39,14 @@ autoplot.acf <- function (object, ...){
     if(object$type == "correlation"){
       ylab <- "ACF"
     }
-    else{
+    else if(object$type == "partial"){
       ylab <- "Partial ACF"
+    }
+    else if(object$type == "correlation"){
+      ylab <- "CCF"
+    }
+    else{
+      ylab <- NULL
     }
     p <- p + ggplot2::ylab(ylab)
     return(p)
@@ -496,6 +502,61 @@ autoplot.mforecast <- function (object, plot.conf=TRUE, main=NULL, xlab=NULL, yl
             vp = grid::viewport(layout.pos.row = matchidx$row,
                           layout.pos.col = matchidx$col))
     }
+  }
+}
+
+ggtsdisplay <- function(x, plot.type=c("partial","scatter","spectrum"),
+                        points=TRUE, lag.max, na.action=na.contiguous, ...){
+  if (requireNamespace("ggplot2") & requireNamespace("grid")){
+    plot.type <- match.arg(plot.type)
+    
+    if(!is.ts(x)){
+      x <- ts(x)
+    }
+    if(missing(lag.max)){
+      lag.max <- round(min(max(10*log10(length(x)), 3*frequency(x)), length(x)/3))
+    }
+    
+    #Set up grid for plots
+    gridlayout <- matrix(c(1,2,1,3), nrow=2)
+    grid::grid.newpage()
+    grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow(gridlayout), ncol(gridlayout))))
+    
+    #Add ts plot with points
+    matchidx <- as.data.frame(which(gridlayout == 1, arr.ind = TRUE))
+    tsplot <- ggplot2::autoplot(x) + ggplot2::ggtitle(substitute(x))
+    if(points){
+      tsplot <- tsplot + ggplot2::geom_point()
+    }
+    print(tsplot,
+          vp = grid::viewport(layout.pos.row = matchidx$row,
+                              layout.pos.col = matchidx$col))
+    
+    #Add Acf plot
+    matchidx <- as.data.frame(which(gridlayout == 2, arr.ind = TRUE))
+    print(ggAcf(x, lag.max=lag.max, na.action=na.action, ...) + ggplot2::ggtitle(NULL),
+          vp = grid::viewport(layout.pos.row = matchidx$row,
+                              layout.pos.col = matchidx$col))
+    
+    #Add last plot (variable)
+    matchidx <- as.data.frame(which(gridlayout == 3, arr.ind = TRUE))
+    if(plot.type == "partial"){
+      lastplot <- ggPacf(x, lag.max=lag.max, na.action=na.action) + ggplot2::ggtitle(NULL)
+    }
+    else if(plot.type == "scatter"){
+      scatterData <- data.frame(y = x[2:NROW(x)], x = x[1:NROW(x)-1])
+      lastplot <- ggplot2::ggplot(ggplot2::aes_(y = ~y, x = ~x), data=scatterData) +
+        ggplot2::geom_point() + ggplot2::labs(x = expression(Y[t-1]), y = expression(Y[t]))
+    }
+    else if(plot.type == "spectrum"){
+      specData <- spec.ar(x, plot=FALSE)
+      specData <- data.frame(spectrum = specData$spec, frequency = specData$freq)
+      lastplot <- ggplot2::ggplot(ggplot2::aes_(y = ~spectrum, x = ~frequency), data=specData)+
+        ggplot2::geom_line() + ggplot2::scale_y_log10()
+    }
+    print(lastplot,
+          vp = grid::viewport(layout.pos.row = matchidx$row,
+                              layout.pos.col = matchidx$col))
   }
 }
 
