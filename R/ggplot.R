@@ -1,7 +1,15 @@
-autoplot.acf <- function (object, ci=0.95, main=NULL, xlab=NULL, ylab=NULL, ...){
+autoplot.acf <- function (object, ...){
   if (requireNamespace("ggplot2")){
     if (!inherits(object, "acf")){
       stop("autoplot.acf requires a acf object, use object=object")
+    }
+    
+    dots <- list(...)
+    if(is.null(dots$ci)){
+      ci <- 0.95
+    }
+    else{
+      ci <- dots$ci
     }
 
     data <- data.frame(Lag=object$lag,ACF=object$acf)
@@ -22,29 +30,103 @@ autoplot.acf <- function (object, ci=0.95, main=NULL, xlab=NULL, ylab=NULL, ...)
     p <- p + ggplot2::geom_hline(yintercept=c(-ci, ci), colour="blue", linetype="dashed")
 
     #Change ticks to be seasonal
-    p <- p + ggplot2::scale_x_continuous(breaks = (1:NROW(data)%/%4)*4)
+    p <- p + ggplot2::scale_x_continuous(breaks = unique(data$Lag%/%4)*4)
 
     #Graph title
-    if (is.null(main)){
-      main <- paste("Series:",object$series)
-    }
-    p <- p + ggplot2::ggtitle(main)
+    p <- p + ggplot2::ggtitle(paste("Series:",object$series))
 
     #Graph labels
-    if (!is.null(xlab)){
-      p <- p + ggplot2::xlab(xlab)
+    if(object$type == "correlation"){
+      ylab <- "ACF"
     }
-    if (is.null(ylab)){
-      if(object$type == "correlation"){
-        ylab <- "ACF"
-      }
-      else{
-        ylab <- "Partial ACF"
-      }
+    else{
+      ylab <- "Partial ACF"
     }
     p <- p + ggplot2::ylab(ylab)
     return(p)
   }
+}
+
+ggAcf <- function(x, lag.max = NULL,
+                  type = c("correlation", "covariance", "partial"),
+                  plot = TRUE, na.action = na.contiguous, demean=TRUE, ...){
+  cl <- match.call()
+  if(plot==TRUE){
+    cl$plot=FALSE
+  }
+  cl[[1]] <- quote(Acf)
+  object <- eval.parent(cl)
+  if(plot==TRUE){
+    return(autoplot(object,  ...))
+  }
+  else{
+    return(object)
+  }
+}
+
+ggPacf <- function(x, ...){
+  ggAcf(x, type="partial", ...)
+}
+
+ggCcf <- function(x, y, lag.max=NULL, type=c("correlation","covariance"),
+                  plot=TRUE, na.action=na.contiguous, ...){
+  cl <- match.call()
+  if(plot==TRUE){
+    cl$plot=FALSE
+  }
+  cl[[1]] <- quote(Ccf)
+  object <- eval.parent(cl)
+  if(plot==TRUE){
+    return(autoplot(object, ...))
+  }
+  else{
+    return(object)
+  }
+}
+
+autoplot.mpacf <- function(object, ...){
+  if (requireNamespace("ggplot2")){
+    if (!inherits(object, "mpacf")){
+      stop("autoplot.mpacf requires a mpacf object, use object=object")
+    }
+    
+    data <- data.frame(Lag=1:object$lag, z=object$z, upper=object$upper, lower=object$lower, sig=(object$lower<0 & object$upper>0))
+    cidata <- data.frame(Lag=rep(1:object$lag,each=2) + c(-0.5,0.5), z=rep(object$z, each=2), upper=rep(object$upper, each=2), lower=rep(object$lower, each=2))
+    #Initialise ggplot object
+    p <- ggplot2::ggplot()
+    p <- p + ggplot2::geom_hline(ggplot2::aes(yintercept=0), size=0.2)
+    
+    #Add data
+    p <- p + ggplot2::geom_ribbon(ggplot2::aes_(x = ~Lag, ymin = ~lower, ymax = ~upper), data=cidata, fill="grey50")
+    
+    p <- p + ggplot2::geom_line(ggplot2::aes_(x = ~Lag, y = ~z), data=data)
+    p <- p + ggplot2::geom_point(ggplot2::aes_(x = ~Lag, y = ~z, shape = ~sig), data=data)
+    
+    #Change ticks to be seasonal
+    p <- p + ggplot2::scale_x_continuous(breaks = unique(data$Lag%/%frequency(object$x))*frequency(object$x))
+    
+    return(p)
+  }
+}
+
+ggtaperedacf <- function(x, lag.max=NULL, type=c("correlation", "partial"),
+                         plot=TRUE, calc.ci=TRUE, level=95, nsim=100, ...){
+  cl <- match.call()
+  if(plot==TRUE){
+    cl$plot=FALSE
+  }
+  cl[[1]] <- quote(taperedacf)
+  object <- eval.parent(cl)
+  if(plot==TRUE){
+    return(autoplot(object, ...))
+  }
+  else{
+    return(object)
+  }
+}
+
+ggtaperedpacf <- function(x, ...){
+  ggtaperedacf(x, type="partial", ...)
 }
 
 autoplot.Arima <- function (object, type = c("both", "ar", "ma"), main=NULL, xlab="Real", ylab="Imaginary", ...){
