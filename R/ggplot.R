@@ -13,7 +13,7 @@ autoplot.acf <- function (object, ...){
     }
 
     data <- data.frame(Lag=object$lag,ACF=object$acf)
-    if (data$Lag[1] == 0){
+    if (data$Lag[1] == 0 & object$type == "correlation"){
       data <- data[-1,]
     }
 
@@ -39,8 +39,14 @@ autoplot.acf <- function (object, ...){
     if(object$type == "correlation"){
       ylab <- "ACF"
     }
-    else{
+    else if(object$type == "partial"){
       ylab <- "Partial ACF"
+    }
+    else if(object$type == "correlation"){
+      ylab <- "CCF"
+    }
+    else{
+      ylab <- NULL
     }
     p <- p + ggplot2::ylab(ylab)
     return(p)
