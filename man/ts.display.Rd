@@ -1,10 +1,14 @@
 \name{tsdisplay}
 \alias{tsdisplay}
+\alias{ggtsdisplay}
 \title{Time series display}
 \usage{tsdisplay(x, plot.type=c("partial","scatter","spectrum"),
     points=TRUE, ci.type=c("white", "ma"), 
     lag.max, na.action=na.contiguous, 
     main=NULL, xlab="", ylab="", pch=1, cex=0.5, ...)
+    
+ggtsdisplay(x, plot.type=c("partial","scatter","spectrum"),
+    points=TRUE, lag.max, na.action=na.contiguous, ...)
 }
 
 \arguments{  \item{x}{a numeric vector or time series.}
@@ -22,6 +26,8 @@
 \item{\dots}{additional arguments to \code{\link[stats]{acf}}.}
 }
 \description{Plots a time series along with its acf and either its pacf, lagged scatterplot or spectrum.
+
+\code{ggtsdisplay} will produce the equivelant plot using ggplot graphics.
 }
 \value{  None.
 }
@@ -31,5 +37,6 @@
 \author{Rob J Hyndman}
 \seealso{\code{\link[stats]{plot.ts}}, \code{\link{Acf}}, \code{\link[stats]{spec.ar}}}
 \examples{tsdisplay(diff(WWWusage))
+ggtsdisplay(USAccDeaths, plot.type="scatter")
 }
 \keyword{ts}

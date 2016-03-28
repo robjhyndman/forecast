@@ -1,11 +1,19 @@
-autoplot.acf <- function (object, ci=0.95, main=NULL, xlab=NULL, ylab=NULL, ...){
+autoplot.acf <- function (object, ...){
   if (requireNamespace("ggplot2")){
     if (!inherits(object, "acf")){
       stop("autoplot.acf requires a acf object, use object=object")
     }
+    
+    dots <- list(...)
+    if(is.null(dots$ci)){
+      ci <- 0.95
+    }
+    else{
+      ci <- dots$ci
+    }
 
     data <- data.frame(Lag=object$lag,ACF=object$acf)
-    if (data$Lag[1] == 0){
+    if (data$Lag[1] == 0 & object$type == "correlation"){
       data <- data[-1,]
     }
 
@@ -22,29 +30,109 @@ autoplot.acf <- function (object, ci=0.95, main=NULL, xlab=NULL, ylab=NULL, ...)
     p <- p + ggplot2::geom_hline(yintercept=c(-ci, ci), colour="blue", linetype="dashed")
 
     #Change ticks to be seasonal
-    p <- p + ggplot2::scale_x_continuous(breaks = (1:NROW(data)%/%4)*4)
+    p <- p + ggplot2::scale_x_continuous(breaks = unique(data$Lag%/%4)*4)
 
     #Graph title
-    if (is.null(main)){
-      main <- paste("Series:",object$series)
-    }
-    p <- p + ggplot2::ggtitle(main)
+    p <- p + ggplot2::ggtitle(paste("Series:",object$series))
 
     #Graph labels
-    if (!is.null(xlab)){
-      p <- p + ggplot2::xlab(xlab)
+    if(object$type == "correlation"){
+      ylab <- "ACF"
     }
-    if (is.null(ylab)){
-      if(object$type == "correlation"){
-        ylab <- "ACF"
-      }
-      else{
-        ylab <- "Partial ACF"
-      }
+    else if(object$type == "partial"){
+      ylab <- "Partial ACF"
+    }
+    else if(object$type == "correlation"){
+      ylab <- "CCF"
+    }
+    else{
+      ylab <- NULL
     }
     p <- p + ggplot2::ylab(ylab)
     return(p)
   }
+}
+
+ggAcf <- function(x, lag.max = NULL,
+                  type = c("correlation", "covariance", "partial"),
+                  plot = TRUE, na.action = na.contiguous, demean=TRUE, ...){
+  cl <- match.call()
+  if(plot==TRUE){
+    cl$plot=FALSE
+  }
+  cl[[1]] <- quote(Acf)
+  object <- eval.parent(cl)
+  if(plot==TRUE){
+    return(autoplot(object,  ...))
+  }
+  else{
+    return(object)
+  }
+}
+
+ggPacf <- function(x, ...){
+  ggAcf(x, type="partial", ...)
+}
+
+ggCcf <- function(x, y, lag.max=NULL, type=c("correlation","covariance"),
+                  plot=TRUE, na.action=na.contiguous, ...){
+  cl <- match.call()
+  if(plot==TRUE){
+    cl$plot=FALSE
+  }
+  cl[[1]] <- quote(Ccf)
+  object <- eval.parent(cl)
+  if(plot==TRUE){
+    return(autoplot(object, ...))
+  }
+  else{
+    return(object)
+  }
+}
+
+autoplot.mpacf <- function(object, ...){
+  if (requireNamespace("ggplot2")){
+    if (!inherits(object, "mpacf")){
+      stop("autoplot.mpacf requires a mpacf object, use object=object")
+    }
+    
+    data <- data.frame(Lag=1:object$lag, z=object$z, upper=object$upper, lower=object$lower, sig=(object$lower<0 & object$upper>0))
+    cidata <- data.frame(Lag=rep(1:object$lag,each=2) + c(-0.5,0.5), z=rep(object$z, each=2), upper=rep(object$upper, each=2), lower=rep(object$lower, each=2))
+    #Initialise ggplot object
+    p <- ggplot2::ggplot()
+    p <- p + ggplot2::geom_hline(ggplot2::aes(yintercept=0), size=0.2)
+    
+    #Add data
+    p <- p + ggplot2::geom_ribbon(ggplot2::aes_(x = ~Lag, ymin = ~lower, ymax = ~upper), data=cidata, fill="grey50")
+    
+    p <- p + ggplot2::geom_line(ggplot2::aes_(x = ~Lag, y = ~z), data=data)
+    p <- p + ggplot2::geom_point(ggplot2::aes_(x = ~Lag, y = ~z, shape = ~sig), data=data)
+    
+    #Change ticks to be seasonal
+    p <- p + ggplot2::scale_x_continuous(breaks = unique(data$Lag%/%frequency(object$x))*frequency(object$x))
+    
+    return(p)
+  }
+}
+
+ggtaperedacf <- function(x, lag.max=NULL, type=c("correlation", "partial"),
+                         plot=TRUE, calc.ci=TRUE, level=95, nsim=100, ...){
+  cl <- match.call()
+  if(plot==TRUE){
+    cl$plot=FALSE
+  }
+  cl[[1]] <- quote(taperedacf)
+  object <- eval.parent(cl)
+  if(plot==TRUE){
+    return(autoplot(object, ...))
+  }
+  else{
+    return(object)
+  }
+}
+
+ggtaperedpacf <- function(x, ...){
+  ggtaperedacf(x, type="partial", ...)
 }
 
 autoplot.Arima <- function (object, type = c("both", "ar", "ma"), main=NULL, xlab="Real", ylab="Imaginary", ...){
@@ -414,6 +502,61 @@ autoplot.mforecast <- function (object, plot.conf=TRUE, main=NULL, xlab=NULL, yl
             vp = grid::viewport(layout.pos.row = matchidx$row,
                           layout.pos.col = matchidx$col))
     }
+  }
+}
+
+ggtsdisplay <- function(x, plot.type=c("partial","scatter","spectrum"),
+                        points=TRUE, lag.max, na.action=na.contiguous, ...){
+  if (requireNamespace("ggplot2") & requireNamespace("grid")){
+    plot.type <- match.arg(plot.type)
+    
+    if(!is.ts(x)){
+      x <- ts(x)
+    }
+    if(missing(lag.max)){
+      lag.max <- round(min(max(10*log10(length(x)), 3*frequency(x)), length(x)/3))
+    }
+    
+    #Set up grid for plots
+    gridlayout <- matrix(c(1,2,1,3), nrow=2)
+    grid::grid.newpage()
+    grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow(gridlayout), ncol(gridlayout))))
+    
+    #Add ts plot with points
+    matchidx <- as.data.frame(which(gridlayout == 1, arr.ind = TRUE))
+    tsplot <- ggplot2::autoplot(x) + ggplot2::ggtitle(substitute(x))
+    if(points){
+      tsplot <- tsplot + ggplot2::geom_point()
+    }
+    print(tsplot,
+          vp = grid::viewport(layout.pos.row = matchidx$row,
+                              layout.pos.col = matchidx$col))
+    
+    #Add Acf plot
+    matchidx <- as.data.frame(which(gridlayout == 2, arr.ind = TRUE))
+    print(ggAcf(x, lag.max=lag.max, na.action=na.action, ...) + ggplot2::ggtitle(NULL),
+          vp = grid::viewport(layout.pos.row = matchidx$row,
+                              layout.pos.col = matchidx$col))
+    
+    #Add last plot (variable)
+    matchidx <- as.data.frame(which(gridlayout == 3, arr.ind = TRUE))
+    if(plot.type == "partial"){
+      lastplot <- ggPacf(x, lag.max=lag.max, na.action=na.action) + ggplot2::ggtitle(NULL)
+    }
+    else if(plot.type == "scatter"){
+      scatterData <- data.frame(y = x[2:NROW(x)], x = x[1:NROW(x)-1])
+      lastplot <- ggplot2::ggplot(ggplot2::aes_(y = ~y, x = ~x), data=scatterData) +
+        ggplot2::geom_point() + ggplot2::labs(x = expression(Y[t-1]), y = expression(Y[t]))
+    }
+    else if(plot.type == "spectrum"){
+      specData <- spec.ar(x, plot=FALSE)
+      specData <- data.frame(spectrum = specData$spec, frequency = specData$freq)
+      lastplot <- ggplot2::ggplot(ggplot2::aes_(y = ~spectrum, x = ~frequency), data=specData)+
+        ggplot2::geom_line() + ggplot2::scale_y_log10()
+    }
+    print(lastplot,
+          vp = grid::viewport(layout.pos.row = matchidx$row,
+                              layout.pos.col = matchidx$col))
   }
 }
 
