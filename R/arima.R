@@ -82,7 +82,7 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
                     constant <- unlist(all.models[[i]][1, 2])
                 }
             }
-            class(bestfit) <- "Arima"
+            class(bestfit) <- c("ARIMA","Arima")
         }
 ################################################################################
     if(exists("bestfit"))
