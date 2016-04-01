@@ -83,6 +83,7 @@ autoplot(USAccDeaths) + geom_forecast()
 lungDeaths <- cbind(mdeaths, fdeaths)
 autoplot(lungDeaths) + geom_forecast()
 
+\dontrun{
 # Using fortify.ts
 p <- ggplot(aes(x=x, y=y), data=USAccDeaths)
 p <- p + geom_line()
@@ -97,6 +98,7 @@ p + geom_forecast()
 p + geom_forecast(h=60)
 p + geom_forecast(level=c(70,98))
 p + geom_forecast(level=c(70,98),colour="lightblue")
+}
 
 #Add forecasts to multivariate series with colour groups
 lungDeaths <- cbind(mdeaths, fdeaths)
