@@ -131,22 +131,39 @@ autoplot.mpacf <- function(object, ...){
     if (!inherits(object, "mpacf")){
       stop("autoplot.mpacf requires a mpacf object, use object=object")
     }
-
-    data <- data.frame(Lag=1:object$lag, z=object$z, upper=object$upper, lower=object$lower, sig=(object$lower<0 & object$upper>0))
-    cidata <- data.frame(Lag=rep(1:object$lag,each=2) + c(-0.5,0.5), z=rep(object$z, each=2), upper=rep(object$upper, each=2), lower=rep(object$lower, each=2))
+    if(!is.null(object$lower)){
+      data <- data.frame(Lag=1:object$lag, z=object$z, sig=(object$lower<0 & object$upper>0))
+      cidata <- data.frame(Lag=rep(1:object$lag,each=2) + c(-0.5,0.5), z=rep(object$z, each=2), upper=rep(object$upper, each=2), lower=rep(object$lower, each=2))
+      plotci <- TRUE
+    }
+    else{
+      data <- data.frame(Lag=1:object$lag, z=object$z)
+      plotci <- FALSE
+    }
     #Initialise ggplot object
     p <- ggplot2::ggplot()
     p <- p + ggplot2::geom_hline(ggplot2::aes(yintercept=0), size=0.2)
 
     #Add data
-    p <- p + ggplot2::geom_ribbon(ggplot2::aes_(x = ~Lag, ymin = ~lower, ymax = ~upper), data=cidata, fill="grey50")
-
+    if(plotci){
+      p <- p + ggplot2::geom_ribbon(ggplot2::aes_(x = ~Lag, ymin = ~lower, ymax = ~upper), data=cidata, fill="grey50")
+    }
     p <- p + ggplot2::geom_line(ggplot2::aes_(x = ~Lag, y = ~z), data=data)
-    p <- p + ggplot2::geom_point(ggplot2::aes_(x = ~Lag, y = ~z, colour = ~sig), data=data)
-
+    if(plotci){
+      p <- p + ggplot2::geom_point(ggplot2::aes_(x = ~Lag, y = ~z, colour = ~sig), data=data)
+    }
     #Change ticks to be seasonal
     p <- p + ggplot2::scale_x_continuous(breaks = seasonalaxis(frequency(object$x), length(data$Lag), type="acf", plot=FALSE))
 
+    if(object$type=="partial"){
+      ylab <- "PACF"
+    }
+    else if(object$type=="correlation"){
+      ylab <- "ACF"
+    }
+    
+    p <- p + ggAddExtras(ylab=ylab)
+    
     return(p)
   }
 }
