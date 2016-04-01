@@ -316,7 +316,7 @@ autoplot.ets <- function (object, ...){
   }
 }
 
-autoplot.forecast <- function (object, include, plot.conf=TRUE, shadecols=c("#475ED5","#AAB8FF"), fcol="#0000AA", flwd=0.5, ...){
+autoplot.forecast <- function (object, include, plot.conf=TRUE, shadecols=c("#596DD5","#D5DBFF"), fcol="#0000AA", flwd=0.5, ...){
   if (requireNamespace("ggplot2")){
     if (!is.forecast(object)){
       stop("autoplot.forecast requires a forecast object, use object=object")
@@ -426,11 +426,17 @@ autoplot.forecast <- function (object, include, plot.conf=TRUE, shadecols=c("#47
         interval <- data.frame(datetime=rep(predicted$datetime,levels),lower=c(object$lower),upper=c(object$upper),level=rep(object$level,each=NROW(object$mean)))
         interval <- interval[order(interval$level,decreasing = TRUE),] #Must be ordered for gg z-index
         p <- p + ggplot2::geom_ribbon(ggplot2::aes_(x=~datetime, ymin=~lower, ymax=~upper, group=~-level, fill=~level),data=interval)
-        if(length(object$level)<=5){
-          p <- p + ggplot2::scale_fill_gradientn(breaks=object$level, colours=shadecols, guide="legend")
+        if(min(object$level)<50){
+          scalelimit <- c(1,99)
         }
         else{
-          p <- p + ggplot2::scale_fill_gradientn(colours=shadecols)
+          scalelimit <- c(50,99)
+        }
+        if(length(object$level)<=5){
+          p <- p + ggplot2::scale_fill_gradientn(breaks=object$level, colours=shadecols, limit=scalelimit, guide="legend")
+        }
+        else{
+          p <- p + ggplot2::scale_fill_gradientn(colours=shadecols, limit=scalelimit)
         }
         #Negative group is a work around for missing z-index
       }
@@ -795,7 +801,13 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom,
   setup_data = function(data, params){
     data$group <- -as.numeric(factor(interaction(data$group, data$level)))
     if(any(is.finite(data$level))){
-      data$scalefill <- scales::rescale(suppressWarnings(as.numeric(data$level)))
+      levels <- suppressWarnings(as.numeric(data$level))
+      if(min(levels[is.finite(levels)])<50){
+        data$scalefill <- scales::rescale(levels, from = c(1,99))
+      }
+      else{
+        data$scalefill <- scales::rescale(levels, from = c(50,99))
+      }
     }
     data
   },
@@ -807,8 +819,8 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom,
 
     if(all(is.finite(data$level))){
       plot.ci <- TRUE
-      altcol1 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 2/3, 5/6))
-      altcol2 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1/3, 1))
+      altcol1 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 7/12, 5/6))
+      altcol2 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1/6, 1))
       intervalpred <- transform(data[,-match("y", colnames(data))], colour = NA,
                                 fill = scales::gradient_n_pal(c(altcol1,altcol2))(data$scalefill[1]))
     }
