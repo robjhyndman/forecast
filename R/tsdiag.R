@@ -7,7 +7,7 @@ tsdiag.ets <- function (object, gof.lag = 10, ...)
     plot(stdres, type = "h", main = "Standardized Residuals", 
         ylab = "")
     abline(h = 0)
-    acf(object$residuals, plot = TRUE, main = "ACF of Residuals", 
+    Acf(object$residuals, plot = TRUE, main = "ACF of Residuals", 
         na.action = na.pass)
     nlag <- gof.lag
     pval <- numeric(nlag)
