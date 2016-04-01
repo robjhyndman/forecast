@@ -27,7 +27,7 @@ if(require(fpp) & require(testthat))
 
   test_that("test parallel = TRUE and stepwise = FALSE for auto.arima()", {
     skip_on_travis()
-    expect_output(print(auto.arima(austa, parallel = TRUE, stepwise = FALSE)), regexp = "Call:")
+    expect_output(print(auto.arima(austa, parallel = TRUE, stepwise = FALSE)), regexp = "austa")
   })
 
   test_that("tests for nsdiffs()", {
