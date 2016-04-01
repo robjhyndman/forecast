@@ -411,7 +411,16 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
       seasonal=bestfit$arma[c(3,7,4)],constant=constant,ic,trace=FALSE,approximation=FALSE,xreg=xreg)
     if(newbestfit$ic == Inf)
     {
-      warning("Unable to fit final model using maximum likelihood. AIC value approximated")
+      # Final model is lousy. Better try again without approximation
+      #warning("Unable to fit final model using maximum likelihood. AIC value approximated")
+      bestfit <- auto.arima(x, d=d, D=D, max.p=max.p, max.q=max.q,
+          max.P=max.P, max.Q=max.Q, max.order=max.order, max.d=max.d, max.D=max.D,
+          start.p=start.p, start.q=start.q, start.P=1, start.Q=1,
+          stationary=stationary, seasonal=seasonal, ic=ic,
+          stepwise=TRUE, trace=trace, approximation=FALSE, xreg=xreg,
+          allowdrift=allowdrift,allowmean=allowmean,lambda=lambda, biasadj=biasadj,
+          parallel=FALSE)
+      bestfit$ic <- switch(ic,bic=bestfit$bic,aic=bestfit$aic,aicc=bestfit$aicc)
     }
     else
       bestfit <- newbestfit
@@ -495,7 +504,7 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
         else
             fit$aic <- fit$bic <- fit$aicc <- fit$ic <- Inf
         # Adjust residual variance to be unbiased
-        fit$sigma2 <- sum(fit$residuals^2) / (nstar - npar + 1)
+        fit$sigma2 <- sum(fit$residuals^2, na.rm=TRUE) / (nstar - npar + 1)
 
         # Check for unit roots
         minroot <- 2
@@ -754,4 +763,3 @@ is.constant <- function(x)
   y <- rep(x[1], length(x))
   return(identical(x, y))
 }
-
