@@ -10,7 +10,7 @@
     shadebars=(length(x$mean)<5), shadecols=NULL, col=1, fcol=4,
     pi.col=1, pi.lty=2, ylim=NULL, main=NULL, xlab="", ylab="", type="l",
     flty=1, flwd=2, ...)
-\method{autoplot}{forecast}(object, include, plot.conf=TRUE, shadecols=c("#475ED5","#AAB8FF"), fcol="#0000AA", flwd=0.5, ...)
+\method{autoplot}{forecast}(object, include, plot.conf=TRUE, shadecols=c("#596DD5","#D5DBFF"), fcol="#0000AA", flwd=0.5, ...)
 \method{plot}{splineforecast}(x, fitcol=2, type="o", pch=19, ...)
 \method{autoplot}{splineforecast}(object, plot.conf=TRUE, ...)
 }
