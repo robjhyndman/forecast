@@ -7,7 +7,7 @@
     col=1, labelgap=0.1, ...)
 
 ggseasonplot(x, year.labels=FALSE, year.labels.left=FALSE, 
-    type=NULL, main=NULL, xlab="Season", ylab="", col=NULL, labelgap=0.04,
+    type=NULL, col=NULL, labelgap=0.04,
     ...)
 }
 \arguments{

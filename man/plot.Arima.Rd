@@ -5,8 +5,7 @@
 \title{Plot characteristic roots from ARIMA model}
 \usage{\method{plot}{Arima}(x, type=c("both","ar","ma"), 
   main, xlab="Real", ylab="Imaginary", ...)
-\method{autoplot}{Arima}(object, type=c("both","ar","ma"), 
-  main=NULL, xlab="Real", ylab="Imaginary", ...)
+\method{autoplot}{Arima}(object, type=c("both","ar","ma"), ...)
 \method{plot}{ar}(x, main, xlab="Real", ylab="Imaginary", ...)
 }
 
