@@ -50,7 +50,7 @@ autoplot.acf <- function(object, ci=0.95, ...){
     #Add ci lines (assuming white noise input)
     ci <- qnorm((1 + ci)/2)/sqrt(object$n.used)
     p <- p + ggplot2::geom_hline(yintercept=c(-ci, ci), colour="blue", linetype="dashed")
-    
+
     #Prepare graph labels
     if(object$series == "X"){
       ylab <- "CCF"
@@ -58,7 +58,7 @@ autoplot.acf <- function(object, ci=0.95, ...){
       main <- paste("Series:",object$snames)
     }
     else if(object$type == "partial"){
-      ylab <- "Partial ACF"
+      ylab <- "PACF"
       ticktype <- "acf"
       main <- paste("Series:",object$series)
     }
@@ -70,19 +70,19 @@ autoplot.acf <- function(object, ci=0.95, ...){
     else{
       ylab <- NULL
     }
-    
+
     #Change ticks to be seasonal and prepare default title
     if(!is.null(object$series)){
       seriesname <- object$series
       if(object$series == "X"){
         seriesname <- strsplit(object$snames, " ")[[1]][1]
       }
-      tspx <- tsp(eval.parent(call(seriesname)[[1]]))
-      p <- p + ggplot2::scale_x_continuous(breaks = seasonalaxis(tspx[3], length(data$Lag), type=ticktype, breaks=TRUE))
+      freq <- frequency(eval.parent(call(seriesname)[[1]]))
+    } else{
+      freq <- 1
     }
-    else{
-      p <- p + ggplot2::scale_x_continuous(breaks = unique(data$Lag%/%4)*4)
-    }
+    p <- p + ggplot2::scale_x_continuous(breaks = seasonalaxis(freq,
+      length(data$Lag), type=ticktype, plot=FALSE))
     p <- p + ggAddExtras(ylab=ylab, xlab="Lag", main=main)
     return(p)
   }
@@ -131,22 +131,22 @@ autoplot.mpacf <- function(object, ...){
     if (!inherits(object, "mpacf")){
       stop("autoplot.mpacf requires a mpacf object, use object=object")
     }
-    
+
     data <- data.frame(Lag=1:object$lag, z=object$z, upper=object$upper, lower=object$lower, sig=(object$lower<0 & object$upper>0))
     cidata <- data.frame(Lag=rep(1:object$lag,each=2) + c(-0.5,0.5), z=rep(object$z, each=2), upper=rep(object$upper, each=2), lower=rep(object$lower, each=2))
     #Initialise ggplot object
     p <- ggplot2::ggplot()
     p <- p + ggplot2::geom_hline(ggplot2::aes(yintercept=0), size=0.2)
-    
+
     #Add data
     p <- p + ggplot2::geom_ribbon(ggplot2::aes_(x = ~Lag, ymin = ~lower, ymax = ~upper), data=cidata, fill="grey50")
-    
+
     p <- p + ggplot2::geom_line(ggplot2::aes_(x = ~Lag, y = ~z), data=data)
     p <- p + ggplot2::geom_point(ggplot2::aes_(x = ~Lag, y = ~z, colour = ~sig), data=data)
-    
+
     #Change ticks to be seasonal
-    p <- p + ggplot2::scale_x_continuous(breaks = seasonalaxis(frequency(object$x), length(data$Lag), type="acf", breaks=TRUE))
-    
+    p <- p + ggplot2::scale_x_continuous(breaks = seasonalaxis(frequency(object$x), length(data$Lag), type="acf", plot=FALSE))
+
     return(p)
   }
 }
@@ -189,7 +189,7 @@ autoplot.Arima <- function (object, type = c("both", "ar", "ma"), ...){
           q <- max(which(test))
         }
       }
-  
+
       if (type == "both") {
         if (p == 0)
           type <- "ma"
@@ -206,7 +206,7 @@ autoplot.Arima <- function (object, type = c("both", "ar", "ma"), ...){
     else{
       stop("autoplot.Arima requires an Arima object, use object=object")
     }
-    
+
     if (type == "both") {
       if (requireNamespace("grid")){
         type <- c("ar", "ma")
@@ -310,7 +310,7 @@ autoplot.ets <- function (object, ...){
     #Add data
     p <- p + ggplot2::geom_line(na.rm=TRUE)
     p <- p + ggplot2::facet_grid(parts ~ ., scales="free_y", switch="y")
-    
+
     p <- p + ggAddExtras(xlab = NULL, ylab = "", main = paste("Decomposition by",object$method,"method"))
     return(p)
   }
@@ -490,19 +490,19 @@ ggtsdisplay <- function(x, plot.type=c("partial","scatter","spectrum"),
                         points=TRUE, lag.max, na.action=na.contiguous, ...){
   if (requireNamespace("ggplot2") & requireNamespace("grid")){
     plot.type <- match.arg(plot.type)
-    
+
     if(!is.ts(x)){
       x <- ts(x)
     }
     if(missing(lag.max)){
       lag.max <- round(min(max(10*log10(length(x)), 3*frequency(x)), length(x)/3))
     }
-    
+
     #Set up grid for plots
     gridlayout <- matrix(c(1,2,1,3), nrow=2)
     grid::grid.newpage()
     grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow(gridlayout), ncol(gridlayout))))
-    
+
     #Add ts plot with points
     matchidx <- as.data.frame(which(gridlayout == 1, arr.ind = TRUE))
     tsplot <- ggplot2::autoplot(x, ylab=NULL) + ggplot2::ggtitle(substitute(x))
@@ -512,10 +512,10 @@ ggtsdisplay <- function(x, plot.type=c("partial","scatter","spectrum"),
     print(tsplot,
           vp = grid::viewport(layout.pos.row = matchidx$row,
                               layout.pos.col = matchidx$col))
-    
+
     #Prepare Acf plot
     acfplot <- ggAcf(x, lag.max=lag.max, na.action=na.action, ...) + ggplot2::ggtitle(NULL)
-    
+
     #Prepare last plot (variable)
     if(plot.type == "partial"){
       lastplot <- ggPacf(x, lag.max=lag.max, na.action=na.action) + ggplot2::ggtitle(NULL)
@@ -537,13 +537,13 @@ ggtsdisplay <- function(x, plot.type=c("partial","scatter","spectrum"),
       lastplot <- ggplot2::ggplot(ggplot2::aes_(y = ~spectrum, x = ~frequency), data=specData)+
         ggplot2::geom_line() + ggplot2::scale_y_log10()
     }
-    
+
     #Add ACF plot
     matchidx <- as.data.frame(which(gridlayout == 2, arr.ind = TRUE))
     print(acfplot,
           vp = grid::viewport(layout.pos.row = matchidx$row,
                               layout.pos.col = matchidx$col))
-    
+
     #Add last plot
     matchidx <- as.data.frame(which(gridlayout == 3, arr.ind = TRUE))
     print(lastplot,
@@ -557,31 +557,31 @@ ggmonthplot <- function (x, labels = NULL, times = time(x), phase = cycle(x), ..
     if (!inherits(x, "ts")){
       stop("ggmonthplot requires a ts object, use x=object")
     }
-    
+
     data <- data.frame(y=as.numeric(x),year=factor(trunc(time(x))),season=as.numeric(phase))
     avgLines <- aggregate(data$y, by=list(data$season), FUN=mean)
     colnames(avgLines) <- c("season", "avg")
     data <- merge(data, avgLines, by="season")
-    
+
     #Initialise ggplot object
     p <- ggplot2::ggplot(ggplot2::aes_(x=~interaction(year, season), y=~y, group=~season), data=data, na.rm=TRUE)
-    
+
     #Remove vertical break lines
     p <- p + ggplot2::theme(panel.grid.major.x = ggplot2::element_blank())
-    
+
     #Add data
     p <- p + ggplot2::geom_line()
-    
+
     #Add average lines
     p <- p + ggplot2::geom_line(ggplot2::aes_(y=~avg), col="#0000AA")
-    
+
     #Create x-axis labels
     xfreq <- frequency(x)
     if(xfreq==4){
       xbreaks <- c("Q1","Q2","Q3","Q4")
     }
     else if (xfreq==7){
-      xbreaks <- c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", 
+      xbreaks <- c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
                    "Friday", "Saturday")
     }
     else if(xfreq==12){
@@ -590,10 +590,10 @@ ggmonthplot <- function (x, labels = NULL, times = time(x), phase = cycle(x), ..
     else{
       xbreaks <- 1:frequency(x)
     }
-    
+
     midYear <- sort(levels(data$year))[length(levels(data$year))%/%2]
     p <- p + ggplot2::scale_x_discrete(breaks=paste(midYear,".",1:xfreq,sep=""), labels=xbreaks)
-    
+
     #Graph labels
     p <- p + ggAddExtras(ylab = deparse(substitute(x)), xlab = NULL)
     return(p)
@@ -628,7 +628,7 @@ ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NUL
       }
     }
 
-    if(year.labels){        
+    if(year.labels){
       yrlab <- aggregate(time ~ year, data=data, FUN = max)
       yrlab <- cbind(yrlab, offset=labelgap)
     }

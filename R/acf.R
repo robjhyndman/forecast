@@ -4,14 +4,14 @@ Acf <- function(x, lag.max = NULL,
                 plot = TRUE, na.action = na.contiguous, demean=TRUE, ...)
 {
   type <- match.arg(type)
-  
+
   # Set maximum lag
   nseries <- NCOL(x)
   if (is.null(lag.max))
     lag.max <- as.integer(max(floor(10 * (log10(NROW(x)) - log10(nseries))), 2*frequency(x)))
-  
+
   acf.out <- stats::acf(x, plot=FALSE, lag.max=lag.max, type=type, na.action=na.action, demean=demean)
-  
+
   if(nseries==1)
   {
     vname <- deparse(substitute(x))
@@ -20,7 +20,7 @@ Acf <- function(x, lag.max = NULL,
   # Make lags in integer units
   nlags <- dim(acf.out$lag)[1] - 1L
   acf.out$lag[,,] <- 0:nlags
-  
+
   # Plot if required
   if(plot)
   {
@@ -62,112 +62,59 @@ Acf <- function(x, lag.max = NULL,
 }
 
 # Make nice horizontal axis with ticks at seasonal lags
-seasonalaxis <- function(frequency,nlags,type,breaks=FALSE)
+# Return tick points if breaks=TRUE
+seasonalaxis <- function(frequency, nlags, type, plot=TRUE)
 {
+  # List of unlabelled tick points
+  out2 <- NULL
   # Check for non-seasonal data
-  if(breaks){
-    out <- NULL
-  }
   if(length(frequency)==1)
   {
-    if(frequency < 1)
-    {
-      axis(1)
-    }
-    else if(frequency==1)
+    # Compute number of seasonal periods
+    np <- trunc(nlags/frequency)
+    evenfreq <- (frequency %% 2L)==0L
+
+    # Defaults for labelled tick points
+    if(type=="acf")
+      out <- pretty(1:nlags)
+    else
+      out <- pretty(-nlags:nlags)
+
+    if(frequency == 1)
     {
       if(type=="acf" & nlags <= 16)
-        if(breaks){
-          out <- c(out, 1:(nlags-1))
-        }
-      else{
-        axis(1, at=1:(nlags-1))
-      }
+        out <- 1:nlags
       else if(type=="ccf" & nlags <= 8)
-        if(breaks){
-          out <- c(out, (-nlags:nlags))
-        }
-      else{
-        axis(1, at=(-nlags:nlags))
-      }
+        out <- (-nlags:nlags)
       else
       {
-        if(nlags <= 30 & type=="acf"){
-          if(breaks){
-            out <- c(out, (1:nlags))
-          }
-          else{
-            axis(1)
-            axis(1, at=(1:nlags),tcl=-0.2,labels=FALSE)
-          }
-        }
-        else if(nlags <= 15 & type=="ccf"){
-          if(breaks){
-            out <- c(out, (-nlags:nlags))
-          }
-          else{
-            axis(1)
-            axis(1, at=(-nlags:nlags),tcl=-0.2,labels=FALSE)
-          }
-        }
+        if(nlags <= 30 & type=="acf")
+          out2 <- 1:nlags
+        else if(nlags <= 15 & type=="ccf")
+          out2 <- (-nlags:nlags)
+        out <- pretty(out2)
       }
     }
-    else
+    else if(frequency > 1 & ((type=="acf" & np >= 2L) | (type=="ccf" & np >= 1L)))
     {
-      # Compute number of seasonal periods
-      np <- trunc(nlags/frequency+0.5)
-      evenfreq <- (frequency %% 2L)==0L
       if(type=="acf" & nlags <= 40)
       {
-        if(breaks){
-          out <- c(out, frequency*(1:np))
-        }
-        else{
-          axis(1, at=(1:nlags),tcl=-0.2,labels=FALSE)
-          axis(1, at=frequency*(1:np), labels=TRUE, tcl=-0.6)
-        }
-        if(nlags <= 30 & evenfreq & np <= 3){
-          if(breaks){
-            out <- c(out, frequency*((1:np)-0.5))
-          }
-          else{
-            axis(1, at=frequency*((1:np)-0.5), labels=TRUE, tcl=-0.3)
-          }
-        }
+        out <- frequency*(1:np)
+        out2 <- 1:nlags
+        # Add half-years
+        if(nlags <= 30 & evenfreq & np <= 3)
+          out <- c(out,frequency*((1:np)-0.5))
       }
       else if(type=="ccf" & nlags <= 20)
       {
-        if(breaks){
-          out <- c(out, frequency*(-np:np))
-        }
-        else{
-          axis(1, at=(-nlags:nlags),tcl=-0.2,labels=FALSE)
-          axis(1, at=frequency*(-np:np), labels=TRUE, tcl=-0.6)
-        }
-        if(nlags <= 15 & evenfreq & np <= 3){
-          if(breaks){
-            out <- c(out, frequency*((-np:np)+0.5))
-          }
-          else{
-            axis(1, at=frequency*((-np:np)+0.5), labels=TRUE, tcl=-0.3)
-          }
-        }
+        out <- frequency*(-np:np)
+        out2 <- (-nlags:nlags)
+        # Add half-years
+        if(nlags <= 15 & evenfreq & np <= 3)
+          out <- c(out, frequency*((-np:np)+0.5))
       }
-      else
-      {
-        np <- trunc(nlags/frequency)
-        if(np < (12 - 4*(type=="ccf"))){
-          if(breaks){
-            out <- c(out, frequency*(-np:np))
-          }
-          else{
-            axis(1,at=frequency*(-np:np))
-          }
-        }
-        else{
-          axis(1)
-        }
-      }
+      else if(np < (12 - 4*(type=="ccf")))
+          out <- frequency*(-np:np)
     }
   }
   else
@@ -175,15 +122,20 @@ seasonalaxis <- function(frequency,nlags,type,breaks=FALSE)
     # Determine which frequency to show
     np <- trunc(nlags/frequency)
     frequency <- frequency[which(np <= 16)]
-    if(length(frequency)>0L)
+    if(length(frequency) > 0L)
       frequency <- min(frequency)
     else
       frequency <- 1
-    seasonalaxis(frequency, nlags, type)
+    out <- seasonalaxis(frequency, nlags, type, plot=FALSE)
   }
-  if(breaks){
+  if(plot)
+  {
+    axis(1, at=out)
+    if(!is.null(out2))
+      axis(1, at=out2, tcl=-0.2,labels=FALSE)
+  }
+  else
     return(out)
-  }
 }
 
 
@@ -196,12 +148,12 @@ Ccf <- function (x, y, lag.max=NULL, type=c("correlation","covariance"),
                  plot=TRUE, na.action=na.contiguous, ...)
 {
   type <- match.arg(type)
-  
+
   if (is.null(lag.max))
     lag.max <- as.integer(max(floor(10 * log10(NROW(x))), 2*frequency(x)))
-  
+
   ccf.out <- stats::ccf(x, y, plot=FALSE, type=type, lag.max=lag.max, na.action=na.action)
-  
+
   # Make lags in integer units
   nlags <- (dim(ccf.out$lag)[1]-1)/2
   ccf.out$lag[,1,1] <- -nlags:nlags
@@ -235,11 +187,11 @@ wacf <- function (x, lag.max = length(x)-1)
   lag.max <- min(lag.max, n-1)
   if (lag.max < 0)
     stop("'lag.max' must be at least 0")
-  
+
   # Standard estimator
   acfest <- stats::acf(c(x), lag.max = lag.max, plot = FALSE, na.action = na.contiguous)
   acfest$series <- deparse(substitute(x))
-  
+
   # Taper estimates
   s <- 1:length(acfest$acf[,,1])
   upper <- 2*sqrt(log(n, 10)/n)
@@ -258,7 +210,7 @@ wacf <- function (x, lag.max = length(x)-1)
   }
   acfest$acf[,,1] <- acfest$acf[,,1] * kappa(s/l)
   # End of Tapering
-  
+
   # Now do some shrinkage towards white noise using eigenvalues
   # Construct covariance matrix
   gamma <- acfest$acf[,,1]
@@ -280,7 +232,7 @@ wacf <- function (x, lag.max = length(x)-1)
     gamma[i] <- mean(Gamma2[d==(i-1)])
   acfest$acf[,,1] <- gamma
   ############### end of shrinkage
-  
+
   return(acfest)
 }
 
@@ -292,7 +244,7 @@ wpacf  <- function(x, lag.max=length(x)-1)
   out <- Pacf(x, lag.max=lag.max, plot=FALSE)
   # Compute acf using tapered estimate
   acvf <- wacf(x, lag.max=lag.max)$acf[,,1]
-  
+
   # Durbin-Levinson recursions
   # Modified from http://faculty.washington.edu/dbp/s519/R-code/LD-recursions.R
   p <- length(acvf) - 1
@@ -316,7 +268,7 @@ wpacf  <- function(x, lag.max=length(x)-1)
     }
   }
   out$acf[,,1] <- pacf
-  
+
   return(out)
 }
 
@@ -327,17 +279,17 @@ taperedacf <- function(x, lag.max=NULL, type=c("correlation","partial"),
                        plot=TRUE, calc.ci=TRUE, level=95, nsim=100, ...)
 {
   type <- match.arg(type)
-  
+
   if (is.null(lag.max))
     lag.max <- max(floor(20 * log10(length(x))), 4*frequency(x))
   lag <- min(lag.max, length(x)-1)
-  
+
   if(type=="correlation")
     z <- wacf(x, )$acf[2:(lag+1),,1]
   else
     z <- wpacf(x, )$acf[1:lag,,1]
   out <- list(z=z, lag=lag, type=type, x=x)
-  
+
   if(calc.ci)
   {
     # Get confidence intervals for plots
@@ -358,7 +310,7 @@ taperedacf <- function(x, lag.max=NULL, type=c("correlation","partial"),
     out$lower <- apply(s1, 1, quantile, prob=prob)
   }
   out <- structure(out, class="mpacf")
-  
+
   if(!plot)
     return(out)
   else
@@ -379,16 +331,16 @@ taperedpacf <- function (x, ...)
 plot.mpacf <- function(object, xlim=NULL, ylim=NULL, xlab="Lag", ylab="", ...)
 {
   lagx <- 1:object$lag
-  
+
   if(is.null(xlim))
     xlim <- c(1,object$lag)
   if(is.null(ylim))
     ylim <- range(object$z, object$upper, object$lower)
   if(ylab=="")
     ylab <- ifelse(object$type=="partial","PACF","ACF")
-  
+
   plot(lagx, object$z, type="n", xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, xaxt="n", ...)
-  
+
   grid(col=gray(.80), nx=NA, ny=NULL, lty=1)
   abline(h=0, col=gray(.4))
   if(frequency(object$x) > 1)
