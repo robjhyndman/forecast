@@ -14,9 +14,6 @@ if(require(fpp) & require(testthat))
     xregmat <- matrix(runif(240), ncol = 2)
     expect_output(print(auto.arima(testseries2, xreg = xregmat)), regexp = "Series: testseries2")
 
-    testseries3 <- 1:100
-    xregmat <- testseries3 * 2
-    expect_error(auto.arima(testseries3, xreg = xregmat))
     expect_output(summary(auto.arima(testseries2, xreg = xregmat, approximation = TRUE, stepwise = FALSE)), regexp = "Series: testseries2")
     expect_output(print(auto.arima(ts(testseries2, f = 4), approximation = TRUE, trace = TRUE)), regexp = "ARIMA")
 
@@ -27,7 +24,8 @@ if(require(fpp) & require(testthat))
 
   test_that("test parallel = TRUE and stepwise = FALSE for auto.arima()", {
     skip_on_travis()
-    expect_output(print(auto.arima(austa, parallel = TRUE, stepwise = FALSE)), regexp = "Call:")
+    expect_output(print(auto.arima(austa, parallel = TRUE, stepwise = FALSE)),
+      regexp = "with drift")
   })
 
   test_that("tests for nsdiffs()", {

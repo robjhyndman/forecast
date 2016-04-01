@@ -44,14 +44,16 @@ If \code{autoplot} is given an \code{acf} or \code{mpacf} function, then an appr
 
 \value{None. Function produces a ggplot graph.}
 
-\seealso{\code{\link[stats]{plot.acf}}, \code{\link{Acf}}, \code{\link[stats]{acf}}}
+\seealso{\code{\link[stats]{plot.acf}}, \code{\link{Acf}}, \code{\link[stats]{acf}},
+\code{\link{taperedacf}}}
 
 \author{Mitchell O'Hara-Wild}
 \examples{
 library(ggplot2)
 autoplot(Acf(wineind, plot=FALSE))
-autoplot(taperedacf(wineind, plot=FALSE))
+autoplot(taperedacf(wineind, plot=FALSE, calc.ci=FALSE))
 ggAcf(wineind)
-ggtaperedacf(wineind)
+ggtaperedacf(wineind, calc.ci=FALSE)
 ggCcf(mdeaths, fdeaths)
+\dontrun{ggtaperedacf(wineind, calc.ci=FALSE)}
 }
