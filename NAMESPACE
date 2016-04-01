@@ -38,7 +38,7 @@ tsclean, bizdays, easter,stlm, forecast.stlm, StatForecast, GeomForecast, geom_f
 
 S3method(autoplot, acf)
 S3method(autoplot, ar)
-S3method(autoplot, Arima)
+S3method(autoplot, ARIMA)
 S3method(autoplot, decomposed.ts)
 S3method(autoplot, ets)
 S3method(autoplot, forecast)
