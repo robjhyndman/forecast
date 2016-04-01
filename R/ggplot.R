@@ -161,9 +161,9 @@ autoplot.mpacf <- function(object, ...){
     else if(object$type=="correlation"){
       ylab <- "ACF"
     }
-    
+
     p <- p + ggAddExtras(ylab=ylab)
-    
+
     return(p)
   }
 }
@@ -188,7 +188,7 @@ ggtaperedpacf <- function(x, ...){
   ggtaperedacf(x, type="partial", ...)
 }
 
-autoplot.ARIMA <- function (object, type = c("both", "ar", "ma"), ...){
+autoplot.Arima <- function (object, type = c("both", "ar", "ma"), ...){
   if (requireNamespace("ggplot2")){
     if (is.Arima(object)){
       #Detect type
@@ -213,16 +213,18 @@ autoplot.ARIMA <- function (object, type = c("both", "ar", "ma"), ...){
         else if (q == 0)
           type <- "ar"
       }
-      if ((p == 0 & q == 0) | (type == "ar" & (p == 0)) | (type == "ma" & (q == 0))){
-        stop("No roots to plot")
-      }
     }
     else if (inherits(object, "ar")){
       type <- "ar"
+      p <- length(arroots(object)$roots)
+      q <- 0
     }
     else{
       stop("autoplot.Arima requires an Arima object, use object=object")
     }
+
+    #Check if no roots
+    emptyplot <- ((p == 0 & q == 0) | (type == "ar" & (p == 0)) | (type == "ma" & (q == 0)))
 
     if (type == "both") {
       if (requireNamespace("grid")){
@@ -240,6 +242,10 @@ autoplot.ARIMA <- function (object, type = c("both", "ar", "ma"), ...){
                                y=sin(seq(0,2*pi,length.out=100)))
     p <- p + ggplot2::geom_vline(xintercept = 0)
     p <- p + ggplot2::geom_hline(yintercept = 0)
+    p <- p + ggAddExtras(xlab = "Real", ylab="Imaginary")
+
+    if(emptyplot)
+      return(p + ggAddExtras(main = "No AR or MA roots"))
 
     allroots <- vector("list", length(type))
 
@@ -259,8 +265,7 @@ autoplot.ARIMA <- function (object, type = c("both", "ar", "ma"), ...){
     #Add data
     if (length(type)==1){
       p <- p + ggplot2::geom_point(ggplot2::aes_(x=~Re(roots), y=~Im(roots), colour=~UnitCircle), data=allroots[[1]], size=3)
-      p <- p + ggAddExtras(main = paste("Inverse",toupper(type[1]),"roots"),
-                             xlab = "Real", ylab = "Imaginary")
+      p <- p + ggAddExtras(main = paste("Inverse",toupper(type[1]),"roots"))
       return(p)
     }
     else{
@@ -270,8 +275,7 @@ autoplot.ARIMA <- function (object, type = c("both", "ar", "ma"), ...){
 
       for (i in 1:length(type)){
         m <- p + ggplot2::geom_point(ggplot2::aes_(x=~Re(roots), y=~Im(roots), colour=~UnitCircle), data=allroots[[i]], size=3)
-        m <- m + ggAddExtras(main = paste("Inverse",toupper(type[i]),"roots"),
-                             xlab = "Real", ylab = "Imaginary")
+        m <- m + ggAddExtras(main = paste("Inverse",toupper(type[i]),"roots"))
 
         matchidx <- as.data.frame(which(gridlayout == i, arr.ind = TRUE))
 
@@ -283,7 +287,7 @@ autoplot.ARIMA <- function (object, type = c("both", "ar", "ma"), ...){
 }
 
 autoplot.ar <- function(object, ...){
-  autoplot.ARIMA(object, ...)
+  autoplot.Arima(object, ...)
 }
 
 autoplot.decomposed.ts <- function (object, ...){
