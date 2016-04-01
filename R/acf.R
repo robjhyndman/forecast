@@ -67,7 +67,11 @@ seasonalaxis <- function(frequency,nlags,type)
   # Check for non-seasonal data
   if(length(frequency)==1)
   {
-    if(frequency==1)
+    if(frequency < 1)
+    {
+      axis(1)
+    }
+    else if(frequency==1)
     {
       if(type=="acf" & nlags <= 16)
         axis(1, at=1:(nlags-1))
