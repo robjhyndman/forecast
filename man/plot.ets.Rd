@@ -3,15 +3,12 @@
 \alias{autoplot.ets}
 \title{Plot components from ETS model}
 \usage{\method{plot}{ets}(x, ...)
-\method{autoplot}{ets}(object, main=NULL, xlab=NULL, ylab=NULL, ...)
+\method{autoplot}{ets}(object, ...)
 }
 
 \arguments{
 \item{x}{Object of class \dQuote{ets}.}
 \item{object}{Object of class \dQuote{ets}. Used for ggplot graphics (S3 method consistency).}
-\item{main}{Main title. Default is the decomposition method.}
-\item{xlab}{X-axis label.}
-\item{ylab}{Y-axis label.}
 \item{...}{Other plotting parameters to affect the plot.}
 }
 

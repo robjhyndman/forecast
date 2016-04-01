@@ -7,7 +7,7 @@
 \alias{ggtaperedacf}
 \alias{ggtaperedpacf}
 \title{ggplot (Partial) Autocorrelation and Cross-Correlation Function Estimation}
-\usage{\method{autoplot}{acf}(object, ...)
+\usage{\method{autoplot}{acf}(object, ci=0.95, ...)
 \method{autoplot}{mpacf}(object, ...)
 
 ggAcf(x, lag.max = NULL,
@@ -25,6 +25,7 @@ ggtaperedpacf(x, ...)
 \item{object}{Object of class \dQuote{acf}.}
 \item{x}{a univariate or multivariate (not Ccf) numeric time series object or a numeric vector or matrix.}
 \item{y}{a univariate numeric time series object or a numeric vector.}
+\item{ci}{coverage probability for confidence interval. Plotting of the confidence interval is suppressed if ci is zero or negative.}
 \item{lag.max}{maximum lag at which to calculate the acf.}
 \item{type}{character string giving the type of acf to be computed. Allowed values are
 "\code{correlation}" (the default), "\code{covariance}"  or "\code{partial}".}

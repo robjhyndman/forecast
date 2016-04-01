@@ -1,15 +1,37 @@
-autoplot.acf <- function (object, ...){
+ggAddExtras <- function(xlab=NA, ylab=NA, main=NA){
+  dots <- eval.parent(quote(list(...)))
+  extras <- list()
+  if("xlab"%in%names(dots) || is.null(xlab) || !is.na(xlab)){
+    if("xlab"%in%names(dots)){
+      extras[[length(extras)+1]] <- ggplot2::xlab(dots$xlab)
+    }
+    else{
+      extras[[length(extras)+1]] <- ggplot2::xlab(xlab)
+    }
+  }
+  if("ylab"%in%names(dots) || is.null(ylab) || !is.na(ylab)){
+    if("ylab"%in%names(dots)){
+      extras[[length(extras)+1]] <- ggplot2::ylab(dots$ylab)
+    }
+    else{
+      extras[[length(extras)+1]] <- ggplot2::ylab(ylab)
+    }
+  }
+  if("main"%in%names(dots) || is.null(main) || !is.na(main)){
+    if("main"%in%names(dots)){
+      extras[[length(extras)+1]] <- ggplot2::ggtitle(dots$main)
+    }
+    else{
+      extras[[length(extras)+1]] <- ggplot2::ggtitle(main)
+    }
+  }
+  return(extras)
+}
+
+autoplot.acf <- function(object, ci=0.95, ...){
   if (requireNamespace("ggplot2")){
     if (!inherits(object, "acf")){
       stop("autoplot.acf requires a acf object, use object=object")
-    }
-    
-    dots <- list(...)
-    if(is.null(dots$ci)){
-      ci <- 0.95
-    }
-    else{
-      ci <- dots$ci
     }
 
     data <- data.frame(Lag=object$lag,ACF=object$acf)
@@ -28,27 +50,40 @@ autoplot.acf <- function (object, ...){
     #Add ci lines (assuming white noise input)
     ci <- qnorm((1 + ci)/2)/sqrt(object$n.used)
     p <- p + ggplot2::geom_hline(yintercept=c(-ci, ci), colour="blue", linetype="dashed")
-
-    #Change ticks to be seasonal
-    p <- p + ggplot2::scale_x_continuous(breaks = unique(data$Lag%/%4)*4)
-
-    #Graph title
-    p <- p + ggplot2::ggtitle(paste("Series:",object$series))
-
-    #Graph labels
-    if(object$type == "correlation"){
-      ylab <- "ACF"
+    
+    #Prepare graph labels
+    if(object$series == "X"){
+      ylab <- "CCF"
+      ticktype <- "ccf"
+      main <- paste("Series:",object$snames)
     }
     else if(object$type == "partial"){
       ylab <- "Partial ACF"
+      ticktype <- "acf"
+      main <- paste("Series:",object$series)
     }
     else if(object$type == "correlation"){
-      ylab <- "CCF"
+      ylab <- "ACF"
+      ticktype <- "acf"
+      main <- paste("Series:",object$series)
     }
     else{
       ylab <- NULL
     }
-    p <- p + ggplot2::ylab(ylab)
+    
+    #Change ticks to be seasonal and prepare default title
+    if(!is.null(object$series)){
+      seriesname <- object$series
+      if(object$series == "X"){
+        seriesname <- strsplit(object$snames, " ")[[1]][1]
+      }
+      tspx <- tsp(eval.parent(call(seriesname)[[1]]))
+      p <- p + ggplot2::scale_x_continuous(breaks = seasonalaxis(tspx[3], length(data$Lag), type=ticktype, breaks=TRUE))
+    }
+    else{
+      p <- p + ggplot2::scale_x_continuous(breaks = unique(data$Lag%/%4)*4)
+    }
+    p <- p + ggAddExtras(ylab=ylab, xlab="Lag", main=main)
     return(p)
   }
 }
@@ -78,10 +113,11 @@ ggCcf <- function(x, y, lag.max=NULL, type=c("correlation","covariance"),
                   plot=TRUE, na.action=na.contiguous, ...){
   cl <- match.call()
   if(plot==TRUE){
-    cl$plot=FALSE
+    cl$plot <- FALSE
   }
   cl[[1]] <- quote(Ccf)
   object <- eval.parent(cl)
+  object$snames <- paste(substitute(x), "&", substitute(y))
   if(plot==TRUE){
     return(autoplot(object, ...))
   }
@@ -106,10 +142,10 @@ autoplot.mpacf <- function(object, ...){
     p <- p + ggplot2::geom_ribbon(ggplot2::aes_(x = ~Lag, ymin = ~lower, ymax = ~upper), data=cidata, fill="grey50")
     
     p <- p + ggplot2::geom_line(ggplot2::aes_(x = ~Lag, y = ~z), data=data)
-    p <- p + ggplot2::geom_point(ggplot2::aes_(x = ~Lag, y = ~z, shape = ~sig), data=data)
+    p <- p + ggplot2::geom_point(ggplot2::aes_(x = ~Lag, y = ~z, colour = ~sig), data=data)
     
     #Change ticks to be seasonal
-    p <- p + ggplot2::scale_x_continuous(breaks = unique(data$Lag%/%frequency(object$x))*frequency(object$x))
+    p <- p + ggplot2::scale_x_continuous(breaks = seasonalaxis(frequency(object$x), length(data$Lag), type="acf", breaks=TRUE))
     
     return(p)
   }
@@ -135,7 +171,7 @@ ggtaperedpacf <- function(x, ...){
   ggtaperedacf(x, type="partial", ...)
 }
 
-autoplot.Arima <- function (object, type = c("both", "ar", "ma"), main=NULL, xlab="Real", ylab="Imaginary", ...){
+autoplot.Arima <- function (object, type = c("both", "ar", "ma"), ...){
   if (requireNamespace("ggplot2")){
     if (is.Arima(object)){
       #Detect type
@@ -206,8 +242,8 @@ autoplot.Arima <- function (object, type = c("both", "ar", "ma"), main=NULL, xla
     #Add data
     if (length(type)==1){
       p <- p + ggplot2::geom_point(ggplot2::aes_(x=~Re(roots), y=~Im(roots), colour=~UnitCircle), data=allroots[[1]], size=3)
-      p <- p + ggplot2::labs(title = paste("Inverse",toupper(type[1]),"roots"),
-                             x = xlab, y = ylab)
+      p <- p + ggAddExtras(main = paste("Inverse",toupper(type[1]),"roots"),
+                             xlab = "Real", ylab = "Imaginary")
       return(p)
     }
     else{
@@ -217,8 +253,8 @@ autoplot.Arima <- function (object, type = c("both", "ar", "ma"), main=NULL, xla
 
       for (i in 1:length(type)){
         m <- p + ggplot2::geom_point(ggplot2::aes_(x=~Re(roots), y=~Im(roots), colour=~UnitCircle), data=allroots[[i]], size=3)
-        m <- m + ggplot2::labs(title = paste("Inverse",toupper(type[i]),"roots"),
-                               x = xlab, y = ylab)
+        m <- m + ggAddExtras(main = paste("Inverse",toupper(type[i]),"roots"),
+                             xlab = "Real", ylab = "Imaginary")
 
         matchidx <- as.data.frame(which(gridlayout == i, arr.ind = TRUE))
 
@@ -233,7 +269,7 @@ autoplot.ar <- function(object, ...){
   autoplot.Arima(object, ...)
 }
 
-autoplot.decomposed.ts <- function (object, main=NULL, xlab=NULL, ylab=NULL, ...){
+autoplot.decomposed.ts <- function (object, ...){
   if (requireNamespace("ggplot2")){
     data <- data.frame(datetime=rep(time(object$x),4), y=c(object$x, object$trend, object$seasonal, object$random),
                        decomposed=factor(rep(c("observed","trend","seasonal","random"),each=NROW(object$x)),
@@ -246,28 +282,14 @@ autoplot.decomposed.ts <- function (object, main=NULL, xlab=NULL, ylab=NULL, ...
     p <- p + ggplot2::geom_line(na.rm=TRUE)
     p <- p + ggplot2::facet_grid(decomposed ~ ., scales="free_y", switch="y")
 
-    #Graph title
-    if (is.null(main)){
-      main <- paste("Decomposition of",object$type,"time series")
-    }
-    p <- p + ggplot2::ggtitle(main)
-
-    #Graph labels
-    if (!is.null(xlab)){
-      p <- p + ggplot2::xlab(xlab)
-    }
-    if (!is.null(ylab)){
-      p <- p + ggplot2::ylab(ylab)
-    }
-    else{
-      p <- p + ggplot2::ylab("")
-    }
+    p <- p + ggAddExtras(main = paste("Decomposition of",object$type,"time series"), xlab=NULL,
+                         ylab="")
 
     return(p)
   }
 }
 
-autoplot.ets <- function (object, main=NULL, xlab=NULL, ylab=NULL, ...){
+autoplot.ets <- function (object, ...){
   if (requireNamespace("ggplot2")){
     if (!is.ets(object)){
       stop("autoplot.ets requires an ets object, use object=object")
@@ -288,29 +310,13 @@ autoplot.ets <- function (object, main=NULL, xlab=NULL, ylab=NULL, ...){
     #Add data
     p <- p + ggplot2::geom_line(na.rm=TRUE)
     p <- p + ggplot2::facet_grid(parts ~ ., scales="free_y", switch="y")
-
-    #Graph title
-    if (is.null(main)){
-      main <- paste("Decomposition by",object$method,"method")
-    }
-    p <- p + ggplot2::ggtitle(main)
-
-    #Graph labels
-    if (!is.null(xlab)){
-      p <- p + ggplot2::xlab(xlab)
-    }
-    if (!is.null(ylab)){
-      p <- p + ggplot2::ylab(ylab)
-    }
-    else{
-      p <- p + ggplot2::ylab("")
-    }
+    
+    p <- p + ggAddExtras(xlab = NULL, ylab = "", main = paste("Decomposition by",object$method,"method"))
     return(p)
   }
 }
 
-autoplot.forecast <- function (object, include, plot.conf=TRUE, shadecols=c("#475ED5","#AAB8FF"), fcol="#0000AA", flwd=0.5, main=NULL, xlab=NULL, ylab=NULL,
-...){
+autoplot.forecast <- function (object, include, plot.conf=TRUE, shadecols=c("#475ED5","#AAB8FF"), fcol="#0000AA", flwd=0.5, ...){
   if (requireNamespace("ggplot2")){
     if (!is.forecast(object)){
       stop("autoplot.forecast requires a forecast object, use object=object")
@@ -345,8 +351,6 @@ autoplot.forecast <- function (object, include, plot.conf=TRUE, shadecols=c("#47
 
     #Initialise ggplot object
     p <- ggplot2::ggplot()
-
-
 
     # Cross sectional forecasts
     if (!is.element("ts",class(object$mean))){
@@ -435,25 +439,12 @@ autoplot.forecast <- function (object, include, plot.conf=TRUE, shadecols=c("#47
       p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime,y=~ypred), data=predicted, color=fcol, size=flwd)
     }
 
-    #Graph title
-    if (is.null(main)){
-      main <- paste("Forecasts from ",object$method,sep="")
-    }
-    p <- p + ggplot2::ggtitle(main)
-
-    #Graph labels
-    if (!is.null(xlab)){
-      p <- p + ggplot2::xlab(xlab)
-    }
-    if (!is.null(ylab)){
-      p <- p + ggplot2::ylab(ylab)
-    }
-
+    p <- p + ggAddExtras(main=paste("Forecasts from ",object$method,sep=""))
     return(p)
   }
 }
 
-autoplot.mforecast <- function (object, plot.conf=TRUE, main=NULL, xlab=NULL, ylab=NULL, gridlayout=NULL, ...){
+autoplot.mforecast <- function (object, plot.conf=TRUE, gridlayout=NULL, ...){
   if (requireNamespace("ggplot2") & requireNamespace("grid")){
     if (!is.mforecast(object)){
       stop("autoplot.mforecast requires a mforecast object, use object=object")
@@ -467,15 +458,6 @@ autoplot.mforecast <- function (object, plot.conf=TRUE, main=NULL, xlab=NULL, yl
     #Set up vector arguments
     if (missing(plot.conf)){
       plot.conf <- rep(TRUE, K)
-    }
-    if (missing(main)){
-      main <- rep(paste("Forecasts from",object$method), K)
-    }
-    if (missing(xlab)){
-      xlab <- rep(NULL, K)
-    }
-    if (missing(ylab)){
-      ylab <- colnames(object$x)
     }
 
     #Set up grid
@@ -494,11 +476,10 @@ autoplot.mforecast <- function (object, plot.conf=TRUE, main=NULL, xlab=NULL, yl
                            upper=object$upper[[i]], lower=object$lower[[i]], level=object$level, newdata=object$newdata)
       if (!is.null(object$model) &   inherits(object$model, "mlm")){
         partialfcast$model <- mlmsplit(object$model,index=i)
-
       }
       matchidx <- as.data.frame(which(gridlayout == i, arr.ind = TRUE))
       print(autoplot(structure(partialfcast,class="forecast"),
-                     plot.conf=plot.conf[i], main=main[i], xlab=xlab[i], ylab=ylab[i], ...),
+                     plot.conf=plot.conf[i], ...) + ggAddExtras(ylab=colnames(object$x)[i]),
             vp = grid::viewport(layout.pos.row = matchidx$row,
                           layout.pos.col = matchidx$col))
     }
@@ -524,7 +505,7 @@ ggtsdisplay <- function(x, plot.type=c("partial","scatter","spectrum"),
     
     #Add ts plot with points
     matchidx <- as.data.frame(which(gridlayout == 1, arr.ind = TRUE))
-    tsplot <- ggplot2::autoplot(x) + ggplot2::ggtitle(substitute(x))
+    tsplot <- ggplot2::autoplot(x, ylab=NULL) + ggplot2::ggtitle(substitute(x))
     if(points){
       tsplot <- tsplot + ggplot2::geom_point()
     }
@@ -532,16 +513,18 @@ ggtsdisplay <- function(x, plot.type=c("partial","scatter","spectrum"),
           vp = grid::viewport(layout.pos.row = matchidx$row,
                               layout.pos.col = matchidx$col))
     
-    #Add Acf plot
-    matchidx <- as.data.frame(which(gridlayout == 2, arr.ind = TRUE))
-    print(ggAcf(x, lag.max=lag.max, na.action=na.action, ...) + ggplot2::ggtitle(NULL),
-          vp = grid::viewport(layout.pos.row = matchidx$row,
-                              layout.pos.col = matchidx$col))
+    #Prepare Acf plot
+    acfplot <- ggAcf(x, lag.max=lag.max, na.action=na.action, ...) + ggplot2::ggtitle(NULL)
     
-    #Add last plot (variable)
-    matchidx <- as.data.frame(which(gridlayout == 3, arr.ind = TRUE))
+    #Prepare last plot (variable)
     if(plot.type == "partial"){
       lastplot <- ggPacf(x, lag.max=lag.max, na.action=na.action) + ggplot2::ggtitle(NULL)
+      #Match y-axis
+      acfplotrange <- ggplot2::ggplot_build(acfplot)$panel$ranges[[1]]$y.range
+      pacfplotrange <- ggplot2::ggplot_build(lastplot)$panel$ranges[[1]]$y.range
+      yrange <- range(c(acfplotrange, pacfplotrange))
+      acfplot <- acfplot + ggplot2::ylim(yrange)
+      lastplot <- lastplot + ggplot2::ylim(yrange)
     }
     else if(plot.type == "scatter"){
       scatterData <- data.frame(y = x[2:NROW(x)], x = x[1:NROW(x)-1])
@@ -554,13 +537,22 @@ ggtsdisplay <- function(x, plot.type=c("partial","scatter","spectrum"),
       lastplot <- ggplot2::ggplot(ggplot2::aes_(y = ~spectrum, x = ~frequency), data=specData)+
         ggplot2::geom_line() + ggplot2::scale_y_log10()
     }
+    
+    #Add ACF plot
+    matchidx <- as.data.frame(which(gridlayout == 2, arr.ind = TRUE))
+    print(acfplot,
+          vp = grid::viewport(layout.pos.row = matchidx$row,
+                              layout.pos.col = matchidx$col))
+    
+    #Add last plot
+    matchidx <- as.data.frame(which(gridlayout == 3, arr.ind = TRUE))
     print(lastplot,
           vp = grid::viewport(layout.pos.row = matchidx$row,
                               layout.pos.col = matchidx$col))
   }
 }
 
-ggmonthplot <- function (x, labels = NULL, times = time(x), phase = cycle(x), ylab = deparse(substitute(x)), ...){
+ggmonthplot <- function (x, labels = NULL, times = time(x), phase = cycle(x), ...){
   if (requireNamespace("ggplot2")){
     if (!inherits(x, "ts")){
       stop("ggmonthplot requires a ts object, use x=object")
@@ -581,8 +573,7 @@ ggmonthplot <- function (x, labels = NULL, times = time(x), phase = cycle(x), yl
     p <- p + ggplot2::geom_line()
     
     #Add average lines
-    p <- p + ggplot2::geom_line(ggplot2::aes_(y=~avg), col="red")
-    
+    p <- p + ggplot2::geom_line(ggplot2::aes_(y=~avg), col="#0000AA")
     
     #Create x-axis labels
     xfreq <- frequency(x)
@@ -604,22 +595,18 @@ ggmonthplot <- function (x, labels = NULL, times = time(x), phase = cycle(x), yl
     p <- p + ggplot2::scale_x_discrete(breaks=paste(midYear,".",1:xfreq,sep=""), labels=xbreaks)
     
     #Graph labels
-    p <- p + ggplot2::ylab(ylab)
-    p <- p + ggplot2::xlab(NULL)
+    p <- p + ggAddExtras(ylab = deparse(substitute(x)), xlab = NULL)
     return(p)
   }
 }
 
-ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NULL, main=NULL, xlab="Season", ylab="", col=NULL, labelgap=0.04, ...){
+ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NULL, col=NULL, labelgap=0.04, ...){
   if (requireNamespace("ggplot2")){
     if (!inherits(x, "ts")){
       stop("autoplot.seasonplot requires a ts object, use x=object")
     }
     if(!is.null(type)){
       message("Plot types are not yet supported for seasonplot()")
-    }
-    if (missing(main)){
-      main <- paste("Seasonal plot:", deparse(substitute(x)))
     }
 
     data <- data.frame(y=as.numeric(x),year=factor(trunc(time(x))),time=as.numeric(round(time(x)%%1,digits = 6)))
@@ -641,7 +628,6 @@ ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NUL
       }
     }
 
-
     if(year.labels){        
       yrlab <- aggregate(time ~ year, data=data, FUN = max)
       yrlab <- cbind(yrlab, offset=labelgap)
@@ -660,27 +646,21 @@ ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NUL
       p <- p + ggplot2::geom_text(ggplot2::aes_(x=~time, y=~y, label=~year), data=yrlab)
     }
 
-    #Graph title
-    p <- p + ggplot2::ggtitle(main)
-
     #Graph labels
-    p <- p + ggplot2::xlab(xlab)
-    p <- p + ggplot2::ylab(ylab)
+    p <- p + ggAddExtras(main=paste("Seasonal plot:", deparse(substitute(x))), xlab="Season", ylab=NULL)
     return(p)
   }
 }
 
-autoplot.splineforecast <- function (object, plot.conf=TRUE, main=NULL, xlab=NULL, ylab=NULL, ...){
-  if (is.null(ylab)){
-    ylab <- deparse(object$model$call$x)
-  }
-  p <- autoplot.forecast(object, plot.conf=plot.conf, main=main, xlab=xlab, ylab=ylab, ...)
+autoplot.splineforecast <- function (object, plot.conf=TRUE, ...){
+  p <- autoplot.forecast(object, plot.conf=plot.conf, ...)
   fit <- data.frame(datetime=as.numeric(time(object$fitted)),y=as.numeric(object$fitted))
   p <- p + ggplot2::geom_point(ggplot2::aes_(x=~datetime,y=~y),data=fit,size=2)
+  p <- p + ggAddExtras(ylab=deparse(object$model$call$x))
   return(p)
 }
 
-autoplot.stl <- function (object, labels = NULL, main=NULL, xlab="Time", ylab="", ...){
+autoplot.stl <- function (object, labels = NULL, ...){
   if (requireNamespace("ggplot2")){
     if (!inherits(object, "stl")){
       stop("autoplot.stl requires a stl object, use x=object")
@@ -704,17 +684,12 @@ autoplot.stl <- function (object, labels = NULL, main=NULL, xlab="Time", ylab=""
     p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
     p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = 0, parts = "remainder"))
 
-    #Graph title
-    p <- p + ggplot2::ggtitle(main)
-
-    #Graph labels
-    p <- p + ggplot2::xlab(xlab)
-    p <- p + ggplot2::ylab(ylab)
+    p <- p + ggAddExtras(xlab="Time", ylab="")
     return(p)
   }
 }
 
-autoplot.ts <- function(object, main=NULL, xlab="Time", ylab=substitute(object), ...){
+autoplot.ts <- function(object, ...){
   if(requireNamespace("ggplot2")){
     if(!is.ts(object)){
       stop("autoplot.ts requires a ts object, use object=object")
@@ -730,17 +705,12 @@ autoplot.ts <- function(object, main=NULL, xlab="Time", ylab=substitute(object),
     #Add data
     p <- p + ggplot2::geom_line()
 
-    #Graph title
-    p <- p + ggplot2::ggtitle(main)
-
-    #Graph labels
-    p <- p + ggplot2::xlab(xlab)
-    p <- p + ggplot2::ylab(ylab)
+    p <- p + ggAddExtras(xlab="Time", ylab=deparse(substitute(object)))
     return(p)
   }
 }
 
-autoplot.mts <- function(object, main=NULL, xlab="Time", ylab=substitute(object), ...){
+autoplot.mts <- function(object, ...){
   if(requireNamespace("ggplot2")){
     if(!is.mts(object)){
       stop("autoplot.mts requires a mts object, use x=object")
@@ -753,12 +723,7 @@ autoplot.mts <- function(object, main=NULL, xlab="Time", ylab=substitute(object)
     #Add data
     p <- p + ggplot2::geom_line()
 
-    #Graph title
-    p <- p + ggplot2::ggtitle(main)
-
-    #Graph labels
-    p <- p + ggplot2::xlab(xlab)
-    p <- p + ggplot2::ylab(ylab)
+    p <- p + ggAddExtras(xlab="Time", ylab=deparse(substitute(object)))
     return(p)
   }
 }
