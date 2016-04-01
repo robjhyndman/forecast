@@ -171,7 +171,7 @@ ggtaperedpacf <- function(x, ...){
   ggtaperedacf(x, type="partial", ...)
 }
 
-autoplot.Arima <- function (object, type = c("both", "ar", "ma"), ...){
+autoplot.ARIMA <- function (object, type = c("both", "ar", "ma"), ...){
   if (requireNamespace("ggplot2")){
     if (is.Arima(object)){
       #Detect type
@@ -266,7 +266,7 @@ autoplot.Arima <- function (object, type = c("both", "ar", "ma"), ...){
 }
 
 autoplot.ar <- function(object, ...){
-  autoplot.Arima(object, ...)
+  autoplot.ARIMA(object, ...)
 }
 
 autoplot.decomposed.ts <- function (object, ...){
