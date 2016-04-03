@@ -5,7 +5,7 @@
 \usage{taylor}
 \format{Time series data}
 \source{James W Taylor}
-\references{Taylor, J.W. (2003) Short-term electricity demand forecasting using double seasonal exponential smoothing. \emph{Journal of the Operational Reseach Society}, \bold{54}, 799-805.
+\references{Taylor, J.W. (2003) Short-term electricity demand forecasting using double seasonal exponential smoothing. \emph{Journal of the Operational Research Society}, \bold{54}, 799-805.
 }
 
 
