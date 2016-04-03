@@ -134,22 +134,22 @@ autoplot.mpacf <- function(object, ...){
     if(!is.null(object$lower)){
       data <- data.frame(Lag=1:object$lag, z=object$z, sig=(object$lower<0 & object$upper>0))
       cidata <- data.frame(Lag=rep(1:object$lag,each=2) + c(-0.5,0.5), z=rep(object$z, each=2), upper=rep(object$upper, each=2), lower=rep(object$lower, each=2))
-      plotci <- TRUE
+      plotpi <- TRUE
     }
     else{
       data <- data.frame(Lag=1:object$lag, z=object$z)
-      plotci <- FALSE
+      plotpi <- FALSE
     }
     #Initialise ggplot object
     p <- ggplot2::ggplot()
     p <- p + ggplot2::geom_hline(ggplot2::aes(yintercept=0), size=0.2)
 
     #Add data
-    if(plotci){
+    if(plotpi){
       p <- p + ggplot2::geom_ribbon(ggplot2::aes_(x = ~Lag, ymin = ~lower, ymax = ~upper), data=cidata, fill="grey50")
     }
     p <- p + ggplot2::geom_line(ggplot2::aes_(x = ~Lag, y = ~z), data=data)
-    if(plotci){
+    if(plotpi){
       p <- p + ggplot2::geom_point(ggplot2::aes_(x = ~Lag, y = ~z, colour = ~sig), data=data)
     }
     #Change ticks to be seasonal
@@ -586,7 +586,7 @@ ggmonthplot <- function (x, labels = NULL, times = time(x), phase = cycle(x), ..
     }
 
     data <- data.frame(y=as.numeric(x),year=factor(trunc(time(x))),season=as.numeric(phase))
-    avgLines <- aggregate(data$y, by=list(data$season), FUN=mean)
+    avgLines <- stats::aggregate(data$y, by=list(data$season), FUN=mean)
     colnames(avgLines) <- c("season", "avg")
     data <- merge(data, avgLines, by="season")
 
@@ -656,11 +656,11 @@ ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NUL
     }
 
     if(year.labels){
-      yrlab <- aggregate(time ~ year, data=data, FUN = max)
+      yrlab <- stats::aggregate(time ~ year, data=data, FUN = max)
       yrlab <- cbind(yrlab, offset=labelgap)
     }
     if(year.labels.left){
-      yrlabL <- aggregate(time ~ year, data=data, FUN = min)
+      yrlabL <- stats::aggregate(time ~ year, data=data, FUN = min)
       yrlabL <- cbind(yrlabL, offset=-labelgap)
       if(year.labels){
         yrlab <- rbind(yrlab, yrlabL)
@@ -739,7 +739,7 @@ autoplot.ts <- function(object, ...){
 
 autoplot.mts <- function(object, ...){
   if(requireNamespace("ggplot2")){
-    if(!is.mts(object)){
+    if(!stats::is.mts(object)){
       stop("autoplot.mts requires a mts object, use x=object")
     }
     data <- data.frame(y=as.numeric(c(object)), x=rep(as.numeric(time(object)),NCOL(object)),
@@ -755,15 +755,50 @@ autoplot.mts <- function(object, ...){
   }
 }
 
-fortify.ts <- function(model, data){
-  model <- cbind(x = as.numeric(time(model)), y = as.numeric(model))
-  as.data.frame(model)
+fortify.ts <- function(model, data, ...)
+{
+  # Use ggfortify version if it is loaded
+  # to prevent cran errors
+  if(exists("ggfreqplot"))
+  {
+    tsp <- attr(model, which = "tsp")
+    dtindex <- time(model)
+    if (any(tsp[3] == c(4, 12)))
+      dtindex <- zoo::as.Date.yearmon(dtindex)
+    model <- data.frame(Index = dtindex, Data = as.numeric(model))
+    return(ggplot2::fortify(model))
+  }
+  else
+  {
+    model <- cbind(x = as.numeric(time(model)), y = as.numeric(model))
+    as.data.frame(model)
+  }
 }
 
-fortify.forecast <- function(model, data=as.data.frame(model), CI=TRUE){
+fortify.forecast <- function(model, data=as.data.frame(model), PI=TRUE, ...){
+  # Use ggfortify version if it is loaded
+  # to prevent cran errors
+  if(exists("ggfreqplot"))
+  {
+    n <- length(model$x)
+    h <- length(model$mean)
+    out <- matrix(NA, nrow=n+h, ncol=4+2*length(model$level))
+    out[1:n,2] <- model$x
+    out[1:n,3] <- model$fitted
+    forecasted <- as.data.frame(model)
+    out[n+(1:h),4:NCOL(out)] <- as.matrix(forecasted)
+    colnames(out) <- c("Index","Data","Fitted",colnames(forecasted))
+    out <- as.data.frame(out)
+    tsp <- attr(model$x, which = "tsp")
+    dtindex <- seq(from = tsp[1], length = n+h, by = 1/tsp[3])
+    if (any(tsp[3] == c(4, 12)))
+      dtindex <- zoo::as.Date.yearmon(dtindex)
+    out[,1] <- dtindex
+    return(ggplot2::fortify(out))
+  }
   Hiloc <- grep("Hi ", names(data))
   Loloc <- grep("Lo ", names(data))
-  if(CI){
+  if(PI){
     if(length(Hiloc)==length(Loloc)){
       if(length(Hiloc)>0){
         return(data.frame(x=rep(as.numeric(time(model$mean)), length(Hiloc)+1),
@@ -792,7 +827,7 @@ StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
     fcast <- forecast(tsdat, h=h, level=level, fan=fan, robust=robust,
                       lambda=lambda, find.frequency=find.frequency,
                       allow.multiplicative.trend=allow.multiplicative.trend)
-    fcast <- fortify(fcast, CI=plot.conf)
+    fcast <- fortify(fcast, PI=plot.conf)
     suppressWarnings(fcast <- cbind(fcast,data[1,!colnames(data)%in%colnames(fcast)]))
     fcast
   }
@@ -870,7 +905,7 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
     if(stat=="forecast"){
       stat <- "identity"
     }
-    data <- fortify(mapping, CI=plot.conf)
+    data <- fortify(mapping, PI=plot.conf)
     mapping <- ggplot2::aes_(x = ~x, y = ~y, level = ~level, group = ~-level)
     if(plot.conf){
       mapping$ymin <- quote(ymin)

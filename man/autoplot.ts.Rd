@@ -5,7 +5,7 @@
 \title{Automatically create a ggplot for time series objects}
 \usage{\method{autoplot}{ts}(object, ...)
 \method{autoplot}{mts}(object, ...)
-\method{fortify}{ts}(model,data)
+\method{fortify}{ts}(model,data, ...)
 }
 
 \arguments{

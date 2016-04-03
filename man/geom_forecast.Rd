@@ -77,13 +77,13 @@ The aesthetics required for the forecasting to work includes forecast observatio
 
 \author{Mitchell O'Hara-Wild}
 \examples{
+\dontrun{
 library(ggplot2)
 autoplot(USAccDeaths) + geom_forecast()
 
 lungDeaths <- cbind(mdeaths, fdeaths)
 autoplot(lungDeaths) + geom_forecast()
 
-\dontrun{
 # Using fortify.ts
 p <- ggplot(aes(x=x, y=y), data=USAccDeaths)
 p <- p + geom_line()
@@ -91,16 +91,16 @@ p + geom_forecast()
 
 # Without fortify.ts
 data <- data.frame(USAccDeaths=as.numeric(USAccDeaths), time=as.numeric(time(USAccDeaths)))
-p <- ggplot(aes(x=time, y=USAccDeaths), data=data)
 p <- p + geom_line()
 p + geom_forecast()
 
 p + geom_forecast(h=60)
+p <- ggplot(aes(x=time, y=USAccDeaths), data=data)
 p + geom_forecast(level=c(70,98))
 p + geom_forecast(level=c(70,98),colour="lightblue")
-}
 
 #Add forecasts to multivariate series with colour groups
 lungDeaths <- cbind(mdeaths, fdeaths)
 autoplot(lungDeaths) + geom_forecast(forecast(mdeaths), series="mdeaths")
+}
 }

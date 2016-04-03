@@ -1,7 +1,7 @@
 tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
   cl <- match.call()
   if(!("formula" %in% class(formula))){
-    formula <- as.formula(formula)
+    formula <- stats::as.formula(formula)
   }
   mt <- terms(formula)
 
@@ -25,7 +25,7 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
       }
     }
   }
-  formula <- reformulate(attr(mt,"term.labels"), response = vars[[attr(mt,"response")+1]],
+  formula <- stats::reformulate(attr(mt,"term.labels"), response = vars[[attr(mt,"response")+1]],
                          intercept = attr(mt,"intercept"))
   if(sum(c(tsvar, fnvar))>0){
     #Remove variables not needed in data (trend+season+functions)

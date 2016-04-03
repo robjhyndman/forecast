@@ -1,8 +1,8 @@
 \name{dshw}
 \alias{dshw}
 \title{Double-Seasonal Holt-Winters Forecasting}
-\usage{dshw(y, period1, period2, h=2*max(period1,period2), 
-    alpha=NULL, beta=NULL, gamma=NULL, omega=NULL, phi=NULL, 
+\usage{dshw(y, period1, period2, h=2*max(period1,period2),
+    alpha=NULL, beta=NULL, gamma=NULL, omega=NULL, phi=NULL,
     lambda=NULL, biasadj=FALSE, armethod=TRUE, model = NULL)}
 
 \arguments{
@@ -57,12 +57,12 @@ Springer-Verlag. \url{http://www.exponentialsmoothing.net}.
 \dontrun{
 fcast <- dshw(taylor)
 plot(fcast)
-}
 
 t <- seq(0,5,by=1/20)
 x <- exp(sin(2*pi*t) + cos(2*pi*t*4) + rnorm(length(t),0,.1))
 fit <- dshw(x,20,5)
 plot(fit)
+}
 }
 
 \keyword{ts}

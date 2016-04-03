@@ -49,7 +49,7 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL, ...
     if(min(season) < 1L | max(season) > frequency(x))
       stop(paste("Seasons must be between 1 and", frequency(x)))
   
-  start <- head(time(x)[is.element(cycle(x), season)],1)
+  start <- utils::head(time(x)[is.element(cycle(x), season)],1)
   if("mts" %in% class(x)){
     x <- subset.matrix(x, is.element(cycle(x), season))
   }
