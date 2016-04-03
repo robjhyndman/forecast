@@ -50,10 +50,10 @@ If \code{autoplot} is given an \code{acf} or \code{mpacf} function, then an appr
 \author{Mitchell O'Hara-Wild}
 \examples{
 library(ggplot2)
-autoplot(Acf(wineind, plot=FALSE))
-autoplot(taperedacf(wineind, plot=FALSE, calc.ci=FALSE))
 ggAcf(wineind)
-ggtaperedacf(wineind, calc.ci=FALSE)
+autoplot(Acf(wineind, plot=FALSE))
+\dontrun{autoplot(taperedacf(wineind, plot=FALSE))
+ggtaperedacf(wineind)
+ggtaperedpacf(wineind)}
 ggCcf(mdeaths, fdeaths)
-\dontrun{ggtaperedacf(wineind, calc.ci=FALSE)}
 }

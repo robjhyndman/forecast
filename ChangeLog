@@ -1,4 +1,4 @@
-Version 7.0 (1 April 2016)
+Version 7.0 (3 April 2016)
   * Added ggplot2 graphics
   * Bias adjustment option added for all functions that allow Box-Cox transformations
   * Added Ccf function, and rewrote Acf to handle multivariate series.
