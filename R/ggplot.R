@@ -77,7 +77,7 @@ autoplot.acf <- function(object, ci=0.95, ...){
       if(object$series == "X"){
         seriesname <- strsplit(object$snames, " ")[[1]][1]
       }
-      freq <- frequency(eval.parent(call(seriesname)[[1]]))
+      freq <- frequency(eval.parent(parse(text=seriesname)))
     } else{
       freq <- 1
     }
