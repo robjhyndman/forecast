@@ -58,6 +58,8 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
 	max.Q<-ifelse(max.Q <= floor((serieslength/3)/m), max.Q, floor((serieslength/3)/m))
 
   orig.x <- x
+  origxreg <- xreg
+
   if(!is.null(lambda))
     x <- BoxCox(x,lambda)
 
@@ -413,11 +415,11 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     {
       # Final model is lousy. Better try again without approximation
       #warning("Unable to fit final model using maximum likelihood. AIC value approximated")
-      bestfit <- auto.arima(x, d=d, D=D, max.p=max.p, max.q=max.q,
+      bestfit <- auto.arima(orig.x, d=d, D=D, max.p=max.p, max.q=max.q,
           max.P=max.P, max.Q=max.Q, max.order=max.order, max.d=max.d, max.D=max.D,
           start.p=start.p, start.q=start.q, start.P=1, start.Q=1,
           stationary=stationary, seasonal=seasonal, ic=ic,
-          stepwise=TRUE, trace=trace, approximation=FALSE, xreg=xreg,
+          stepwise=TRUE, trace=trace, approximation=FALSE, xreg=origxreg,
           allowdrift=allowdrift,allowmean=allowmean,lambda=lambda, biasadj=biasadj,
           parallel=FALSE)
       bestfit$ic <- switch(ic,bic=bestfit$bic,aic=bestfit$aic,aicc=bestfit$aicc)

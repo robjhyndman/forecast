@@ -1,3 +1,6 @@
+Version 7.1 (7 April 2016)
+  * Fixed bug in auto.arima where the Box-Cox transformation was sometimes applied twice
+
 Version 7.0 (3 April 2016)
   * Added ggplot2 graphics
   * Bias adjustment option added for all functions that allow Box-Cox transformations
