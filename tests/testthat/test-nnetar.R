@@ -64,6 +64,32 @@ if(require(testthat) & require(fpp))
                                      xreg=credit[, c("savings", "income")], decay=0.1)
                 expect_output(print(creditnnet), regexp = "decay=0.1",
                               fixed=TRUE)
+                ## Test output format correct
+                oilnnet <- nnetar(oil, p=1, size=0, skip=TRUE, Wts=c(0, 1), maxit=0)
+                expect_true(all.equal(oilnnet$fitted[-1], oil[-length(oil)]))
+                ## Test output format correct when NAs present
+                oilna <- oil
+                oilna[12] <- NA
+                suppressWarnings(oilnnet <- nnetar(oilna, p=1, size=0, skip=TRUE, Wts=c(0, 1), maxit=0))
+                expect_true(all.equal(oilnnet$fitted[-c(1, 12, 13)], oilna[-c(11, 12, length(oilna))]))
+                ## Test model argument
+                fit1 <- nnetar(credit[, "score"],
+                               xreg=credit[, c("savings", "income")],
+                               lambda=2, decay=0.5, maxit=25, repeats=7)
+                fit2 <- nnetar(credit[, "score"], xreg=credit[, c("savings", "income")], model=fit1)
+                # Check some model parameters
+                expect_true(identical(fit1$p, fit2$p))
+                expect_true(identical(fit1$lambda, fit2$lambda))
+                expect_true(identical(fit1$nnetargs, fit2$nnetargs))
+                # Check fitted values are all the same
+                expect_true(identical(fitted(fit1), fitted(fit2)))
+                # Check residuals all the same
+                expect_true(identical(residuals(fit1), residuals(fit2)))
+                # Check number of neural nets
+                expect_true(identical(length(fit1$model), length(fit2$model)))
+                # Check neural network weights all the same
+                expect_true(identical(fit1$model[[1]]$wts, fit2$model[[1]]$wts))
+                expect_true(identical(fit1$model[[7]]$wts, fit2$model[[7]]$wts))
 
 	})
 }
