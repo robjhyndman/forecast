@@ -51,8 +51,8 @@ if(require(testthat) & require(fpp))
                 expect_true(length(forecast(
                   creditnnet, h=10, xreg=credit[1:7, c("savings", "income")])$mean) == 7)
                 # Test that P is ignored if m=1
-                creditnnet <- nnetar(credit[, "score"], p=2, P=4,
-                                     xreg=credit[, c("savings", "income")])
+                creditnnet <- suppressWarnings(nnetar(credit[, "score"], p=2, P=4,
+                                     xreg=credit[, c("savings", "income")]))
                 expect_output(print(creditnnet), regexp = "NNAR(2,2)",
                               fixed=TRUE)
                 # Test fixed size
@@ -60,8 +60,8 @@ if(require(testthat) & require(fpp))
                 expect_true(uscnnet$size == 3)
                 expect_output(print(creditnnet), regexp = "NNAR(1,12)", fixed=TRUE)
                 # Test passing arguments to nnet
-                creditnnet <- nnetar(credit[, "score"], p=2, P=4,
-                                     xreg=credit[, c("savings", "income")], decay=0.1)
+                creditnnet <- suppressWarnings(nnetar(credit[, "score"], p=2, P=4,
+                                     xreg=credit[, c("savings", "income")], decay=0.1))
                 expect_output(print(creditnnet), regexp = "decay=0.1",
                               fixed=TRUE)
                 ## Test output format correct
