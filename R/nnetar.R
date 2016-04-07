@@ -5,7 +5,7 @@
 #size set to average of number of inputs and number of outputs: (p+P+1)/2
 #if xreg is included then size = (p+P+ncol(xreg)+1)/2
 
-nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NULL, scale.inputs=TRUE, ...)
+nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NULL, subset=NULL, scale.inputs=TRUE, ...)
 {
   useoldmodel <- FALSE
   if (!is.null(model))
@@ -56,15 +56,15 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   {
     if (useoldmodel)
     {
-      xx <- scale(xx, center = model$scalex$mean, scale = model$scalex$sd)
-      scalex <- list(mean = attr(xx,"scaled:center"),
-                     sd = attr(xx,"scaled:scale"))
+      xx <- scale(xx, center = model$scalex$center, scale = model$scalex$scale)
+      scalex <- list(center = attr(xx,"scaled:center"),
+                     scale = attr(xx,"scaled:scale"))
     }
     else
     {
       xx <- scale(xx, center = TRUE, scale = TRUE)
-      scalex <- list(mean = attr(xx,"scaled:center"),
-                     sd = attr(xx,"scaled:scale"))
+      scalex <- list(center = attr(xx,"scaled:center"),
+                     scale = attr(xx,"scaled:scale"))
     }
     xx <- xx[,1]
   }
@@ -84,15 +84,15 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     {
       if (useoldmodel)
       {
-        xxreg <- scale(xreg, center = model$scalexreg$mean, scale = model$scalexreg$sd)
-        scalexreg <- list(mean = attr(xxreg,"scaled:center"),
-                          sd = attr(xxreg,"scaled:scale"))
+        xxreg <- scale(xreg, center = model$scalexreg$center, scale = model$scalexreg$scale)
+        scalexreg <- list(center = attr(xxreg,"scaled:center"),
+                          scale = attr(xxreg,"scaled:scale"))
       }
       else
       {
         xxreg <- scale(xreg, center = TRUE, scale = TRUE)
-        scalexreg <- list(mean = attr(xxreg,"scaled:center"),
-                          sd = attr(xxreg,"scaled:scale"))
+        scalexreg <- list(center = attr(xxreg,"scaled:center"),
+                          scale = attr(xxreg,"scaled:scale"))
       }
     }
     else
@@ -159,7 +159,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     out$nnetargs <- model$nnetargs
   fits <- c(rep(NA_real_,maxlag), rowMeans(sapply(fit, predict)))
   if(scale.inputs)
-    fits <- fits * scalex$sd + scalex$mean
+    fits <- fits * scalex$scale + scalex$center
   fits <- ts(fits)
   if(!is.null(lambda))
     fits <- InvBoxCox(fits,lambda)
@@ -242,9 +242,9 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), xr
   # Check and apply scaling of fitted model
   if(!is.null(object$scalex))
   {
-    xx <- scale(xx, center = object$scalex$mean, scale = object$scalex$sd)
+    xx <- scale(xx, center = object$scalex$center, scale = object$scalex$scale)
     if(!is.null(xreg))
-      xreg <- scale(xreg, center = object$scalexreg$mean, scale = object$scalexreg$sd)
+      xreg <- scale(xreg, center = object$scalexreg$center, scale = object$scalexreg$scale)
   }
   # Get lags used in fitted model
   lags <- object$lags
@@ -257,7 +257,7 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), xr
     flag <- c(fcast[i],flag[-maxlag])
   }
   if(!is.null(object$scalex))
-    fcast <- fcast * object$scalex$sd + object$scalex$mean
+    fcast <- fcast * object$scalex$scale + object$scalex$center
   out$mean <- ts(fcast,start=tspx[2]+1/tspx[3],frequency=tspx[3])
   if(!is.null(lambda))
     out$mean <- InvBoxCox(out$mean,lambda)
