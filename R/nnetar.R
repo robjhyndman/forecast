@@ -21,8 +21,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     minlength <- max(c(model$p, model$P*m))
     if (length(x) < minlength)
       stop(paste("Series must be at least of length", minlength, "to use fitted model"))
-    x <- as.ts(x)
-    if (tsp(x)[3] != m)
+    if (tsp(as.ts(x))[3] != m)
     {
       warning(paste("Data frequency doesn't match fitted model, coercing to frequency =", m))
       x <- ts(x, frequency=m)
