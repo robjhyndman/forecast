@@ -50,22 +50,24 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     xx <- BoxCox(x,lambda)
   else
     xx <- x
+  ## Check whether to only use a subset of the data
+  if (is.null(subset))
+    subset <- TRUE
   # Scale series
   scalex <- NULL
   if(scale.inputs)
   {
     if (useoldmodel)
     {
-      xx <- scale(xx, center = model$scalex$center, scale = model$scalex$scale)
-      scalex <- list(center = attr(xx,"scaled:center"),
-                     scale = attr(xx,"scaled:scale"))
+      scalex <- model$scalex
     }
     else
     {
-      xx <- scale(xx, center = TRUE, scale = TRUE)
-      scalex <- list(center = attr(xx,"scaled:center"),
-                     scale = attr(xx,"scaled:scale"))
+      tmpx <- scale(xx[subset], center = TRUE, scale = TRUE)
+      scalex <- list(center = attr(tmpx,"scaled:center"),
+                     scale = attr(tmpx,"scaled:scale"))
     }
+    xx <- scale(xx, center = scalex$center, scale = scalex$scale)
     xx <- xx[,1]
   }
   # Check xreg class & dim
@@ -73,7 +75,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   scalexreg <- NULL
   if(!is.null(xreg))
   {
-    xreg <- as.matrix(xreg)
+    xxreg <- xreg <- as.matrix(xreg)
     if(length(x) != NROW(xreg))
       stop("Number of rows in xreg does not match series length")
     # Check for NAs in xreg
@@ -84,20 +86,15 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     {
       if (useoldmodel)
       {
-        xxreg <- scale(xreg, center = model$scalexreg$center, scale = model$scalexreg$scale)
-        scalexreg <- list(center = attr(xxreg,"scaled:center"),
-                          scale = attr(xxreg,"scaled:scale"))
+      scalexreg <- model$scalexreg
       }
       else
       {
-        xxreg <- scale(xreg, center = TRUE, scale = TRUE)
-        scalexreg <- list(center = attr(xxreg,"scaled:center"),
-                          scale = attr(xxreg,"scaled:scale"))
+        tmpx <- scale(xxreg[subset, ], center = TRUE, scale = TRUE)
+        scalexreg <- list(center = attr(tmpx,"scaled:center"),
+                          scale = attr(tmpx,"scaled:scale"))
       }
-    }
-    else
-    {
-      xxreg <- xreg
+      xxreg <- scale(xxreg, center = scalexreg$center, scale = scalexreg$scale)
     }
   }
   # Set up lagged matrix
