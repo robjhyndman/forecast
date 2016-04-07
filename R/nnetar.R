@@ -236,17 +236,22 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), xr
   xx <- object$x
   if(!is.null(lambda))
     xx <- BoxCox(xx,lambda)
+  # Check and apply scaling of fitted model
   if(!is.null(object$scalex))
   {
     xx <- scale(xx, center = object$scalex$mean, scale = object$scalex$sd)
     if(!is.null(xreg))
       xreg <- scale(xreg, center = object$scalexreg$mean, scale = object$scalexreg$sd)
   }
-  flag <- rev(tail(xx, n=max(object$lags)))
+  # Get lags used in fitted model
+  lags <- object$lags
+  maxlag <- max(lags)
+  flag <- rev(tail(xx, n=maxlag))
+  # Iterative 1-step forecast
   for(i in 1:h)
   {
-    fcast[i] <- mean(sapply(object$model, predict, newdata=c(flag[object$lags], xreg[i, ])))
-    flag <- c(fcast[i],flag[-length(flag)])
+    fcast[i] <- mean(sapply(object$model, predict, newdata=c(flag[lags], xreg[i, ])))
+    flag <- c(fcast[i],flag[-maxlag])
   }
   if(!is.null(object$scalex))
     fcast <- fcast * object$scalex$sd + object$scalex$mean
