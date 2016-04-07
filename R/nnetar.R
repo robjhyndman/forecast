@@ -50,9 +50,12 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     xx <- BoxCox(x,lambda)
   else
     xx <- x
-  ## Check whether to only use a subset of the data
-  if (is.null(subset))
-    subset <- TRUE
+  ## Check whether to use a subset of the data
+  xsub <- rep(TRUE, length(x))
+  if (is.numeric(subset))
+    xsub[-subset] <- FALSE
+  if (is.logical(subset))
+    xsub <- subset
   # Scale series
   scalex <- NULL
   if(scale.inputs)
@@ -63,7 +66,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     }
     else
     {
-      tmpx <- scale(xx[subset], center = TRUE, scale = TRUE)
+      tmpx <- scale(xx[xsub], center = TRUE, scale = TRUE)
       scalex <- list(center = attr(tmpx,"scaled:center"),
                      scale = attr(tmpx,"scaled:scale"))
     }
@@ -90,7 +93,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
       }
       else
       {
-        tmpx <- scale(xxreg[subset, ], center = TRUE, scale = TRUE)
+        tmpx <- scale(xxreg[xsub, ], center = TRUE, scale = TRUE)
         scalexreg <- list(center = attr(tmpx,"scaled:center"),
                           scale = attr(tmpx,"scaled:scale"))
       }
@@ -134,6 +137,8 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     size <- round((NCOL(lags.X)+1)/2)
   # Remove missing values if present
   j <- complete.cases(lags.X,y)
+  ## Remove values not in subset
+  j <- j & xsub[-(1:maxlag)]
   ## Fit average ANN.
   if(useoldmodel)
     fit <- oldmodel_avnnet(lags.X[j,],y[j],size=size, model)
@@ -150,6 +155,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   out$size <- size
   out$xreg <- xreg
   out$lambda <- lambda
+  out$subset <- (1:length(x))[xsub]
   out$model <- fit
   out$nnetargs <- list(...)
   if (useoldmodel)
