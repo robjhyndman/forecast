@@ -141,7 +141,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   if(useoldmodel)
     fit <- oldmodel_avnnet(lags.X[j,],y[j],size=size, model)
   else
-    fit <- avnnet(lags.X[j,],y[j],size=size,linout=1,trace=FALSE,repeats=repeats, ...)
+    fit <- avnnet(lags.X[j,],y[j],size=size,repeats=repeats, ...)
   # Return results
   out <- list()
   out$x <- as.ts(x)
@@ -178,11 +178,11 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
 }
 
 # Aggregate several neural network models
-avnnet <- function(x,y,repeats, ...)
+avnnet <- function(x,y,repeats, linout=TRUE, trace=FALSE, ...)
 {
   mods <- list()
   for(i in 1:repeats)
-    mods[[i]] <- nnet::nnet(x, y, ...)
+    mods[[i]] <- nnet::nnet(x, y, linout=linout, trace=trace, ...)
   return(structure(mods,class="nnetarmodels"))
 }
 
