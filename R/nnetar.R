@@ -109,6 +109,8 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     if(missing(p))
       p <- max(length(ar(na.interp(xx))$ar),1)
     lags <- 1:p
+    if(P>1)
+      warning("Non-seasonal data, ignoring seasonal lags")
     P <- 0
   }
   else
