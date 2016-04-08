@@ -173,6 +173,8 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   if(P>0)
     out$method <- paste(out$method,",",P,sep="")
   out$method <- paste(out$method,",",size,")",sep="")
+  if(P>0)
+    out$method <- paste(out$method,"[",m,"]",sep="")
   out$call <- match.call()
   return(structure(out,class=c("nnetar")))
 }
