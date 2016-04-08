@@ -21,8 +21,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     minlength <- max(c(model$p, model$P*m))
     if (length(x) < minlength)
       stop(paste("Series must be at least of length", minlength, "to use fitted model"))
-    x <- as.ts(x)
-    if (tsp(x)[3] != m)
+    if (tsp(as.ts(x))[3] != m)
     {
       warning(paste("Data frequency doesn't match fitted model, coercing to frequency =", m))
       x <- ts(x, frequency=m)
@@ -110,6 +109,8 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     if(missing(p))
       p <- max(length(ar(na.interp(xx))$ar),1)
     lags <- 1:p
+    if(P>1)
+      warning("Non-seasonal data, ignoring seasonal lags")
     P <- 0
   }
   else
@@ -140,7 +141,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   if(useoldmodel)
     fit <- oldmodel_avnnet(lags.X[j,],y[j],size=size, model)
   else
-    fit <- avnnet(lags.X[j,],y[j],size=size,linout=1,trace=FALSE,repeats=repeats, ...)
+    fit <- avnnet(lags.X[j,],y[j],size=size,repeats=repeats, ...)
   # Return results
   out <- list()
   out$x <- as.ts(x)
@@ -177,11 +178,11 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
 }
 
 # Aggregate several neural network models
-avnnet <- function(x,y,repeats, ...)
+avnnet <- function(x,y,repeats, linout=TRUE, trace=FALSE, ...)
 {
   mods <- list()
   for(i in 1:repeats)
-    mods[[i]] <- nnet::nnet(x, y, ...)
+    mods[[i]] <- nnet::nnet(x, y, linout=linout, trace=trace, ...)
   return(structure(mods,class="nnetarmodels"))
 }
 
@@ -236,17 +237,22 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), xr
   xx <- object$x
   if(!is.null(lambda))
     xx <- BoxCox(xx,lambda)
+  # Check and apply scaling of fitted model
   if(!is.null(object$scalex))
   {
     xx <- scale(xx, center = object$scalex$mean, scale = object$scalex$sd)
     if(!is.null(xreg))
       xreg <- scale(xreg, center = object$scalexreg$mean, scale = object$scalexreg$sd)
   }
-  flag <- rev(tail(xx, n=max(object$lags)))
+  # Get lags used in fitted model
+  lags <- object$lags
+  maxlag <- max(lags)
+  flag <- rev(tail(xx, n=maxlag))
+  # Iterative 1-step forecast
   for(i in 1:h)
   {
-    fcast[i] <- mean(sapply(object$model, predict, newdata=c(flag[object$lags], xreg[i, ])))
-    flag <- c(fcast[i],flag[-length(flag)])
+    fcast[i] <- mean(sapply(object$model, predict, newdata=c(flag[lags], xreg[i, ])))
+    flag <- c(fcast[i],flag[-maxlag])
   }
   if(!is.null(object$scalex))
     fcast <- fcast * object$scalex$sd + object$scalex$mean
