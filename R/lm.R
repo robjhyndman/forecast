@@ -38,17 +38,13 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
     dataname <- substitute(data)
   }
 
-  if(length(vars)>1){
-    # Grab variables missing from data
-    vars[[1]] <- quote(forecast:::datamat)
-    if(!missing(data)){
-      vars[[length(vars)+1]] <- dataname
-    }
-    data <- eval.parent(vars)
+  # Grab any variables missing from data
+  vars[[1]] <- quote(datamat)
+  
+  if(!missing(data)){
+    vars[[length(vars)+1]] <- quote(data)
   }
-  else{
-    data <- datamat(data)
-  }
+  data <- eval(vars)
 
   # Check to see if data is univariate time series
   if(is.null(dim(data)) & length(data)!=0){
@@ -217,7 +213,8 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
     if (any(misvar == 0)){
       reqvars <- reqvars[misvar == 0]
       for (i in reqvars){
-        subvars <- grep(i, names(object$coefficients), value=TRUE)
+        subvars <- pmatch(names(object$coefficients), i, nomatch=FALSE)==1
+        subvars <- names(object$coefficients)[subvars]
         subvars <- substr(subvars, nchar(i)+1, 999L)
         fsub <- match(make.names(subvars), newvars, 0L)
         if (any(fsub == 0)){
