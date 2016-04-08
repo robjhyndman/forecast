@@ -90,6 +90,12 @@ if(require(testthat) & require(fpp))
                 # Check neural network weights all the same
                 expect_true(identical(fit1$model[[1]]$wts, fit2$model[[1]]$wts))
                 expect_true(identical(fit1$model[[7]]$wts, fit2$model[[7]]$wts))
+                # Check subset argument
+                oilnnet <- nnetar(oil, subset=11:20)
+                expect_true(identical(which(!is.na(fitted(oilnnet))), 11:20))
+                oilnnet <- nnetar(oil, subset=c(rep(F, 10), rep(T, 10), rep(F, length(oil)-20)))
+                expect_true(identical(which(!is.na(fitted(oilnnet))), 11:20))
+
 
 	})
 }
