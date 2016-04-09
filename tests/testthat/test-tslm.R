@@ -38,9 +38,11 @@ if(require(fpp) & require(testthat))
     expect_true("trend:season"%in%attr(fit$terms,"term.labels"))
   })
   
-  test_that("function renaming for forecast.lm()", {
-    fit1 <- tslm(v_y ~ v_x + trend + fourier(v_y, 3), data=data.frame(v_y=v_y))
-    expect_equal(grep("FN.fourier_", names(fit1$coefficients)), 4:9)
+  test_that("tslm parity with lm", {
+    fit1 <- tslm(v_y ~ v_x + fourier(v_y, 3), data=data.frame(v_y=v_y))
+    fit2 <- lm(v_y ~ v_x + fourier(v_y, 3), data=data.frame(v_y=v_y))
+    expect_equal(fit1$coefficients, fit1$coefficients)
+    expect_equal(fit1$model, fit2$model)
   })
   
   test_that("tests on subsetting data", {
