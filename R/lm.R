@@ -285,6 +285,9 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
     }
   }
   newdata <- as.data.frame(newdata)
+  if(!exists("oldnewdata")){
+    oldnewdata <- newdata
+  }
   # If only one column, assume its name.
   if(ncol(newdata)==1 & colnames(newdata)[1]=="newdata")
     colnames(newdata) <- as.character(formula(object$model))[3]
