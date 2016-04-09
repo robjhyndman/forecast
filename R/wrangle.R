@@ -27,7 +27,7 @@ datamat <- function(..., flatten=TRUE, functions=TRUE){
       else if (is.matrix(vars[[i]])){
         for (j in 1:NCOL(vars[[i]])){
           vars[[length(vars)+1]] <- vars[[i]][,j]
-          names(vars)[length(vars)] <- colnames(usconsumption)[j]
+          names(vars)[length(vars)] <- make.names(colnames(vars[[i]])[j])
         }
         i <- i + 1
       }
@@ -36,28 +36,18 @@ datamat <- function(..., flatten=TRUE, functions=TRUE){
       }
     }
   }
-  if(functions){
-    for(i in 1:length(names(vars))){
-      term <- parse(text=names(vars)[i])[[1]]
-      if(!is.symbol(term)){
-        if(typeof(eval(term[[1]]))=="closure"){#If this term is a function (alike fourier)
-          names(vars)[i] <- paste("FN.",term[[1]],"_",sep="")
-        }
-      }
-    }
-  }
   class(vars) <- "data.frame"
   row.names(vars) <- 1:max(sapply(vars, NROW))
-#   if(is.ts(vars[,1])){
-#     if(NCOL(vars)>1){
-#       class(vars) <- c(class(vars),"mts")
-#     }
-#     class(vars) <- c(class(vars),"ts")
-#     tspx <- unique(sapply(vars,tsp), MARGIN = 2)
-#     if(length(tspx)==3){
-#       attr(vars, "tsp") <- tspx
-#     }
-#   }
+  #   if(is.ts(vars[,1])){
+  #     if(NCOL(vars)>1){
+  #       class(vars) <- c(class(vars),"mts")
+  #     }
+  #     class(vars) <- c(class(vars),"ts")
+  #     tspx <- unique(sapply(vars,tsp), MARGIN = 2)
+  #     if(length(tspx)==3){
+  #       attr(vars, "tsp") <- tspx
+  #     }
+  #   }
   return(vars)
 }
 
