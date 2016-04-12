@@ -71,10 +71,12 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL, ...
   else
   {
     consec <- all(diff(i)==1)
-    if (isTRUE(consec) && !is.logical(i))
+    l <- length(i)
+    numseq <- !is.logical(i) && isTRUE(l>1)
+    if (isTRUE(consec) && isTRUE(numseq))
     {
-      xtime <- as.vector(time(x))
-      ts(y, start=xtime[min(i)], end=xtime[max(i)], frequency = frequency(x))
+      xtime <- time(x)
+      ts(y, start=xtime[i[1]], end=xtime[i[l]], frequency = frequency(x))
     }
     else
       y
