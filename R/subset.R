@@ -48,7 +48,7 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL, ...
   else
     if(min(season) < 1L | max(season) > frequency(x))
       stop(paste("Seasons must be between 1 and", frequency(x)))
-  
+
   start <- utils::head(time(x)[is.element(cycle(x), season)],1)
   if("mts" %in% class(x)){
     x <- subset.matrix(x, is.element(cycle(x), season))
@@ -57,4 +57,28 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL, ...
     x <- subset.default(x, is.element(cycle(x), season))
   }
     return(ts(x, frequency=length(season), start=start))
+}
+
+
+## Keep tsp properties when extracting with consecutive indices
+"[.ts" <- function (x, i, j, drop = TRUE)
+{
+  y <- NextMethod("[")
+  if (missing(i))
+  {
+    ts(y, start = start(x), frequency = frequency(x))
+  }
+  else
+  {
+    consec <- all(diff(i)==1)
+    l <- length(i)
+    numseq <- !is.logical(i) && isTRUE(l>1)
+    if (isTRUE(consec) && isTRUE(numseq))
+    {
+      xtime <- time(x)
+      ts(y, start=xtime[i[1]], end=xtime[i[l]], frequency = frequency(x))
+    }
+    else
+      y
+  }
 }
