@@ -184,12 +184,12 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
   {
     reqvars <- as.character(attr(object$terms,"variables")[-1])[-attr(object$terms,"response")]
     #Search for time series variables
-    tsvar <- match(c("trend", "season"), reqvars, 0L)!=0
+    tsvar <- match(c("trend", "season"), reqvars, 0L)
     #Check if required variables are functions
     fnvar <- sapply(reqvars, function(x) !(is.symbol(parse(text=x)[[1]]) || typeof(eval(parse(text=x)[[1]][[1]]))!="closure"))
     if(!is.data.frame(newdata)){
       newdata <- datamat(newdata)
-      colnames(newdata)[1] <- reqvars[!tsvar][1]
+      colnames(newdata)[1] <- ifelse(sum(tsvar>0),reqvars[-tsvar][1],reqvars[1])
       warning("newdata column names not specified, defaulting to first variable required.")
     }
     oldnewdata <- newdata
@@ -236,10 +236,11 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
             tmpdata[[length(tmpdata)+1]] <- imat
           }
           else{
-            stop(paste("Could not find \"", i, "\" in newdata", sep=""))
+            #Attempt to evaluate it as a function
+            subvars <- i
           }
         }
-        else{ #Check if it is a function
+        if(length(subvars)==1){ #Check if it is a function
           if(fnvar[match(i, reqvars)]){#Pre-evaluate function from data
             tmpdata[[length(tmpdata)+1]] <- eval(parse(text=subvars)[[1]], newdata)
           }
