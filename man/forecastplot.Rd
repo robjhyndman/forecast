@@ -41,7 +41,7 @@
 
 \description{Plots historical data with forecasts and prediction intervals.
 
-\code{autoplot} will produce an equivelant plot as a ggplot object.}
+\code{autoplot} will produce an equivalent plot as a ggplot object.}
 
 \value{None.}
 
@@ -50,18 +50,16 @@
 \author{Rob J Hyndman & Mitchell O'Hara-Wild}
 \seealso{\code{\link[stats]{plot.ts}}}
 \examples{library(ggplot2)
-library(fpp)
 
-deaths.fit <- hw(USAccDeaths,h=48)
-plot(deaths.fit)
-autoplot(deaths.fit)
+wine.fit <- hw(wineind,h=48)
+plot(wine.fit)
+autoplot(wine.fit)
 
-fit <- lm(Carbon ~ City, data=fuel)
-fcast <- forecast(fit, newdata=data.frame(City=30))
-plot(fcast, xlab="City (mpg)", ylab="Carbon footprint (tons per year)")
-autoplot(fcast, xlab="City (mpg)", ylab="Carbon footprint (tons per year)")
+fit <- tslm(wineind ~ fourier(wineind,4))
+fcast <- forecast(fit, newdata=data.frame(fourier(wineind,4,20)))
+autoplot(fcast)
 
-fcast <- splinef(uspop,h=5)
+fcast <- splinef(airmiles,h=5)
 plot(fcast)
 autoplot(fcast)
 }
