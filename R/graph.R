@@ -56,12 +56,12 @@ seasonplot <- function(x, s, season.labels=NULL, year.labels=FALSE, year.labels.
 {
   if(missing(main))
     main = paste("Seasonal plot:", deparse(substitute(x)))
-  
+
   if(missing(s))
     s = frequency(x)
   if(s<=1)
-    stop("Frequency must be > 1")
-  
+    stop("Data are not seasonal")
+
   # Pad series
   tsx <- x
   if(start(x)[2]>1)
@@ -78,7 +78,7 @@ seasonplot <- function(x, s, season.labels=NULL, year.labels=FALSE, year.labels.
   }
   else if(s == 4)
   {
-    labs <- month.name[c(1, 4, 7, 10)]
+    labs <- paste("Q",1:4,sep="")
     xLab <- "Quarter"
   }
   else if(s == 7)
