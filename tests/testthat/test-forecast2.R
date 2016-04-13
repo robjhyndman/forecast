@@ -29,13 +29,13 @@ if(require(testthat))
   })
 
   test_that("test forecast.HoltWinters()", {
-    hwmod <- stats::HoltWinters(woolyrnq)
+    hwmod <- stats::HoltWinters(UKgas)
     expect_true(all(forecast(hwmod, fan = TRUE)$mean == forecast(hwmod)$mean))
     expect_error(forecast(hwmod, level = -10))
     expect_error(forecast(hwmod, level = 110))
     # Forecasts transformed manually with Box-Cox should match
     # forecasts when lambda is passed as an argument
-    hwmodbc <- stats::HoltWinters(BoxCox(woolyrnq, lambda = 0.25))
+    hwmodbc <- stats::HoltWinters(BoxCox(UKgas, lambda = 0.25))
     hwfc <- forecast(hwmodbc, lambda = 0.25, biasadj=FALSE)$mean
     hwfc2 <- forecast(hwmodbc, lambda = 0.25, biasadj=TRUE)$mean
     hwbcfc <- InvBoxCox(forecast(hwmodbc)$mean, lambda = 0.25)
