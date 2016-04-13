@@ -602,14 +602,14 @@ Version 0.999 (27 July 2006)
   * The package has been turned into three packages forming a bundle. The functions and a few datasets are still in the forecast package. The data from Makridakis, Wheelwright and Hyndman (1998) is now in the fma package. The M-competition data is now in the Mcomp package. Both fma and Mcomp automatically load forecast.
   * This is the first version available on all operating systems (not just Windows).
   * pegels has been replaced by ets. ets only fits the model; it doesn't produce forecasts. To get forecasts, apply the forecast function to the ets object.
-  * ets has been completely rewritten which makes it slower, but much easier to maintain. Different boundary conditions are used and a different optimizer is used, so don?t expect the results to be identical to what was done by the old pegels function. To get something like the results from the old pegels function, use forecast(ets(?)).
+  * ets has been completely rewritten which makes it slower, but much easier to maintain. Different boundary conditions are used and a different optimizer is used, so don't expect the results to be identical to what was done by the old pegels function. To get something like the results from the old pegels function, use forecast(ets()).
   * simulate.ets() added to simulate from an ets model.
   * Changed name of cars to auto to avoid clash with the cars data in the datasets package.
   * arima2 functionality is now handled by arima() and pegels2 functionality is now handled by ets.
   * best.arima now allows the option of BIC to be used for model selection.
   * Croston's method added in function croston().
   * ts.display renamed as tsdisplay
-  * mean.f changed to meanf, theta.f changed to thetaf, rw.f changed to rwf, seasonaldummy.f to seasonaldummyf, sindex.f to sindexf, and spline.f to splinef. These changes are to avoid potential problems if anyone introduces an ?f? class.
+  * mean.f changed to meanf, theta.f changed to thetaf, rw.f changed to rwf, seasonaldummy.f to seasonaldummyf, sindex.f to sindexf, and spline.f to splinef. These changes are to avoid potential problems if anyone introduces an 'f' class.
 
 Version 0.994 (4 October 2004)
   * Fixed bug in arima which caused predict() to sometimes fail when there was no xreg term.
@@ -626,7 +626,7 @@ Version 0.993 (20 July 2004)
 Version 0.99 (21 May 2004)
   * Added automatic selection of order of differencing for best.arima.
   * Added possibility of linear trend in arima models.
-  * In pegels(), option added to allow parameters of an exponential smoothing model to be in the ?admissible? (or invertible) region rather than within the usual (0,1) region.
+  * In pegels(), option added to allow parameters of an exponential smoothing model to be in the 'admissible' (or invertible) region rather than within the usual (0,1) region.
   * Fixed some bugs in pegels.
   * Included all M1 and M3 data and some functions to subset and plot them.
   * Note: This package will only work in R1.9 or later.
@@ -636,7 +636,7 @@ Version 0.98 (23 August 2003)
       o It is now possible to specify particular values of the smoothing parameters rather than always use the optimized values. If none are specified, the optimal values are still estimated as before.
       o It is also possible to specify upper and lower bounds for each parameter separately.
   * New function: theta.f. This implements the Theta method which did very well in the M3 competition.
-  * A few minor problems with pegels fixed and a bug in forecast.plot that meant it didn?t work when the series contained missing values.
+  * A few minor problems with pegels fixed and a bug in forecast.plot that meant it didn't work when the series contained missing values.
 
 Version 0.972 (11 July 2003)
   * Small bug fix: pegels did not return correct model when model was partially specified.
