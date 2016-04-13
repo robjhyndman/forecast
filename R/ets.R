@@ -306,27 +306,6 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
   else
     m <- 1
 
-  # Adjust bounds if any parameters are specified.
-  if(is.null(alpha))
-  {
-    # Ensure alpha > beta
-    if(!is.null(beta))
-      lower[1] <- max(lower[1], beta)
-    # Ensure alpha < 1-gamma
-    if(!is.null(gamma))
-      upper[1] <- min(upper[1], 1-gamma)
-  }
-  if(is.null(beta) & !is.null(alpha) & trendtype != "N")
-  {
-    # Ensure beta < alpha
-    upper[2] <- min(upper[2], alpha)
-  }
-  if(is.null(gamma) & !is.null(alpha) & seasontype != "N")
-  {
-    # Ensure gamma < 1-alpha
-    upper[3] <- min(upper[3], 1-alpha)
-  }
-
   # Initialize smoothing parameters
   par <- initparam(alpha,beta,gamma,phi,trendtype,seasontype,damped,lower,upper,m)
   names(alpha) <- names(beta) <- names(gamma) <- names(phi) <- NULL
@@ -612,48 +591,40 @@ initparam <- function(alpha,beta,gamma,phi,trendtype,seasontype,damped,lower,upp
 
   # Select alpha
   if(is.null(alpha))
+  {
     alpha <- lower[1] + 0.5*(upper[1]-lower[1])/m
-  par <- alpha
-  names(par) <- "alpha"
+    par <- c(alpha=alpha)
+  }
+  else
+    par <- numeric(0)
 
   # Select beta
-  if(trendtype !="N")
+  if(trendtype !="N" & is.null(beta))
   {
-    if(is.null(beta))
-    {
-      # Ensure beta < alpha
-      upper[2] <- min(upper[2], alpha)
-      beta <- lower[2] + 0.1*(upper[2]-lower[2])
-    }
-    par <- c(par,beta)
-    names(par)[length(par)] <- "beta"
+    # Ensure beta < alpha
+    upper[2] <- min(upper[2], alpha)
+    beta <- lower[2] + 0.1*(upper[2]-lower[2])
+    par <- c(par,beta=beta)
   }
 
   # Select gamma
-  if(seasontype != "N")
+  if(seasontype != "N" & is.null(gamma))
   {
-    if(is.null(gamma))
-    {
-      # Ensure gamma < 1-alpha
-      upper[3] <- min(upper[3], 1-alpha)
-      gamma <- lower[3] + 0.05*(upper[3]-lower[3])
-    }
-    par <- c(par,gamma)
-    names(par)[length(par)] <- "gamma"
+    # Ensure gamma < 1-alpha
+    upper[3] <- min(upper[3], 1-alpha)
+    gamma <- lower[3] + 0.05*(upper[3]-lower[3])
+    par <- c(par,gamma=gamma)
   }
 
   # Select phi
-  if(damped)
+  if(damped & is.null(phi))
   {
-    if(is.null(phi))
-      phi <- lower[4] + .99*(upper[4]-lower[4])
-    par <- c(par,phi)
-    names(par)[length(par)] <- "phi"
+    phi <- lower[4] + .99*(upper[4]-lower[4])
+    par <- c(par,phi=phi)
   }
 
   return(par)
 }
-
 
 check.param <- function(alpha,beta,gamma,phi,lower,upper,bounds,m)
 {
