@@ -40,7 +40,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
     stop("nmse out of range")
   m <- frequency(y)
 
-  if(sum((upper-lower)>0)<4)
+  if(any(upper < lower))
     stop("Lower limits must be less than upper limits")
 
   # If model is an ets object, re-fit model to new data
@@ -256,41 +256,41 @@ ets <- function(y, model="ZZZ", damped=NULL,
 }
 
 
-myRequire <- function(libName) {
+# myRequire <- function(libName) {
 
-  req.suc <- require(libName, quietly=TRUE, character.only=TRUE)
-  if(!req.suc) stop("The ",libName," package is not available.")
+#   req.suc <- require(libName, quietly=TRUE, character.only=TRUE)
+#   if(!req.suc) stop("The ",libName," package is not available.")
 
-  req.suc
-}
+#   req.suc
+# }
 
-getNewBounds <- function(par, lower, upper, nstate) {
+# getNewBounds <- function(par, lower, upper, nstate) {
 
-  myLower <- NULL
-  myUpper <- NULL
+#   myLower <- NULL
+#   myUpper <- NULL
 
-  if("alpha" %in% names(par)) {
-    myLower <- c(myLower, lower[1])
-    myUpper <- c(myUpper, upper[1])
-  }
-  if("beta" %in% names(par)) {
-    myLower <- c(myLower, lower[2])
-    myUpper <- c(myUpper, upper[2])
-  }
-  if("gamma" %in% names(par)) {
-    myLower <- c(myLower, lower[3])
-    myUpper <- c(myUpper, upper[3])
-  }
-  if("phi" %in% names(par)) {
-    myLower <- c(myLower, lower[4])
-    myUpper <- c(myUpper, upper[4])
-  }
+#   if("alpha" %in% names(par)) {
+#     myLower <- c(myLower, lower[1])
+#     myUpper <- c(myUpper, upper[1])
+#   }
+#   if("beta" %in% names(par)) {
+#     myLower <- c(myLower, lower[2])
+#     myUpper <- c(myUpper, upper[2])
+#   }
+#   if("gamma" %in% names(par)) {
+#     myLower <- c(myLower, lower[3])
+#     myUpper <- c(myUpper, upper[3])
+#   }
+#   if("phi" %in% names(par)) {
+#     myLower <- c(myLower, lower[4])
+#     myUpper <- c(myUpper, upper[4])
+#   }
 
-  myLower <- c(myLower,rep(-1e8,nstate))
-  myUpper <- c(myUpper,rep(1e8,nstate))
+#   myLower <- c(myLower,rep(-1e8,nstate))
+#   myUpper <- c(myUpper,rep(1e8,nstate))
 
-  list(lower=myLower, upper=myUpper)
-}
+#   list(lower=myLower, upper=myUpper)
+# }
 
 
 etsmodel <- function(y, errortype, trendtype, seasontype, damped,
@@ -305,6 +305,27 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
     m <- tsp.y[3]
   else
     m <- 1
+
+  # Adjust bounds if any parameters are specified.
+  if(is.null(alpha))
+  {
+    # Ensure alpha > beta
+    if(!is.null(beta))
+      lower[1] <- max(lower[1], beta)
+    # Ensure alpha < 1-gamma
+    if(!is.null(gamma))
+      upper[1] <- min(upper[1], 1-gamma)
+  }
+  if(is.null(beta) & !is.null(alpha) & trendtype != "N")
+  {
+    # Ensure beta < alpha
+    upper[2] <- min(upper[2], alpha)
+  }
+  if(is.null(gamma) & !is.null(alpha) & seasontype != "N")
+  {
+    # Ensure gamma < 1-alpha
+    upper[3] <- min(upper[3], 1-alpha)
+  }
 
   # Initialize smoothing parameters
   par <- initparam(alpha,beta,gamma,phi,trendtype,seasontype,damped,lower,upper,m)
@@ -586,65 +607,48 @@ etsTargetFunctionInit <- function(par,y,nstate,errortype,trendtype,seasontype,da
 
 initparam <- function(alpha,beta,gamma,phi,trendtype,seasontype,damped,lower,upper,m)
 {
-  # Set up initial parameters
-  par <- numeric(0)
+  if(any(lower > upper))
+    stop("Inconsistent parameter boundaries")
+
+  # Select alpha
   if(is.null(alpha))
+    alpha <- lower[1] + 0.5*(upper[1]-lower[1])/m
+  par <- alpha
+  names(par) <- "alpha"
+
+  # Select beta
+  if(trendtype !="N")
   {
-    if(m > 12)
-      alpha <- 0.0002
-    if(is.null(beta) & is.null(gamma))
-      alpha <- lower[1] + .1*(upper[1]-lower[1])
-    else if(is.null(gamma))
-      alpha <- beta+0.001
-    else if(is.null(beta))
-      alpha <- 0.999-gamma
-    else
-      alpha <- 0.5*(beta - gamma + 1)
-    if(alpha < lower[1] | alpha > upper[1])
-      stop("Inconsistent parameter limits")
-    par <- alpha
-    names(par) <- "alpha"
-  }
-  if(is.null(beta))
-  {
-    if(trendtype !="N")
+    if(is.null(beta))
     {
-      if(m > 12)
-        beta <- 0.00015
-      else
-        beta <- lower[2] + .1*(upper[2]-lower[2])
-      if(beta > alpha)
-        beta <- min(alpha - 0.0001,0.0001)
-      if(beta < lower[2] | beta > upper[2])
-        stop("Can't find consistent starting parameters")
-      par <- c(par,beta)
-      names(par)[length(par)] <- "beta"
+      # Ensure beta < alpha
+      upper[2] <- min(upper[2], alpha)
+      beta <- lower[2] + 0.1*(upper[2]-lower[2])
     }
+    par <- c(par,beta)
+    names(par)[length(par)] <- "beta"
   }
-  if(is.null(gamma))
+
+  # Select gamma
+  if(seasontype != "N")
   {
-    if(seasontype !="N")
+    if(is.null(gamma))
     {
-      if(m > 12)
-        gamma <- 0.0002
-      else
-        gamma <- lower[3] + .01*(upper[3]-lower[3])
-      if(gamma > 1-alpha)
-        gamma <- min(0.999-alpha,0.001)
-      if(gamma < lower[3] | gamma > upper[3])
-        stop("Can't find consistent starting parameters")
-      par <- c(par,gamma)
-      names(par)[length(par)] <- "gamma"
+      # Ensure gamma < 1-alpha
+      upper[3] <- min(upper[3], 1-alpha)
+      gamma <- lower[3] + 0.05*(upper[3]-lower[3])
     }
+    par <- c(par,gamma)
+    names(par)[length(par)] <- "gamma"
   }
-  if(is.null(phi))
+
+  # Select phi
+  if(damped)
   {
-    if(damped)
-    {
+    if(is.null(phi))
       phi <- lower[4] + .99*(upper[4]-lower[4])
-      par <- c(par,phi)
-      names(par)[length(par)] <- "phi"
-    }
+    par <- c(par,phi)
+    names(par)[length(par)] <- "phi"
   }
 
   return(par)
