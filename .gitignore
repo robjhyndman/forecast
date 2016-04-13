@@ -7,3 +7,4 @@ forecast.Rproj
 .Rbuildignore
 .travis.yml
 revdep
+tests/testthat/Rplots.pdf

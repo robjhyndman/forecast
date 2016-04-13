@@ -1,5 +1,11 @@
-Version 7.1 (7 April 2016)
+Version 7.1 (13 April 2016)
   * Fixed bug in auto.arima where the Box-Cox transformation was sometimes applied twice
+  * Improved axes for ggseasonalplot()
+  * Improved tslm() to avoid some problems finding data
+  * nnetar() updated to allow subsets()
+  * Modified initial values for ets()
+  * Improved unit tests to avoid deprecated functions and to avoid data from fpp
+  * Removed fpp from Suggests list
 
 Version 7.0 (3 April 2016)
   * Added ggplot2 graphics
@@ -502,7 +508,7 @@ Version 1.16 (29 September 2008)
   * Another bug fix in auto.arima(). Occasionally the root checking would cause an error. The condition is now trapped.
 
 Version 1.15 (16 September 2008)
-  * Bug fix in auto.arima(). The series wasn’t always being stored as part of the return object when stepwise=FALSE.
+  * Bug fix in auto.arima(). The series wasn't always being stored as part of the return object when stepwise=FALSE.
 
 Version 1.14 (1 August 2008)
   * The time series stored in M3 in the Mcomp package did not contain all the components listed in the help file. This problem has now been fixed.
@@ -528,7 +534,7 @@ Version 1.10 (21 January 2008)
   * Bug fixes in auto.arima(). It was sometimes returning a non-optimal model, and occasionally no model at all. Also, additional stationarity and invertibility testing is now done.
 
 Version 1.09 (11 December 2007)
-  * A new argument “restrict” has been added to ets() with default TRUE. If set to FALSE, then the unstable ETS models are also allowed.
+  * A new argument 'restrict' has been added to ets() with default TRUE. If set to FALSE, then the unstable ETS models are also allowed.
   * A bug in the print.Arima() function was fixed.
 
 Version 1.08 (21 November 2007)
@@ -588,22 +594,22 @@ Version 0.99991 (2 August 2006)
 Version 0.9999 (1 August 2006)
   * Mostly bug fixes.
   * A few data sets have been moved from fma to forecast as they are not used in my book.
-  * ets is now considerably slower but gives better results. Full optimization is now the only option (which is what slows it down). I had too many problems with poor models when partial optimization was used. I’ll work on speeding it up sometime, but this is not a high priority. It is fast enough for most use. If you really need to forecast 1000 series, run it overnight.
-  * In ets, I’ve experimented with new starting conditions for optimization and it seems to be fairly robust now.
+  * ets is now considerably slower but gives better results. Full optimization is now the only option (which is what slows it down). I had too many problems with poor models when partial optimization was used. I'll work on speeding it up sometime, but this is not a high priority. It is fast enough for most use. If you really need to forecast 1000 series, run it overnight.
+  * In ets, I've experimented with new starting conditions for optimization and it seems to be fairly robust now.
   * Multiplicative error models can no longer be applied to series containing zeros or negative values. However, the forecasts from these models are not constrained to be positive.
 
 Version 0.999 (27 July 2006)
   * The package has been turned into three packages forming a bundle. The functions and a few datasets are still in the forecast package. The data from Makridakis, Wheelwright and Hyndman (1998) is now in the fma package. The M-competition data is now in the Mcomp package. Both fma and Mcomp automatically load forecast.
   * This is the first version available on all operating systems (not just Windows).
-  * pegels has been replaced by ets. ets only fits the model; it doesn’t produce forecasts. To get forecasts, apply the forecast function to the ets object.
-  * ets has been completely rewritten which makes it slower, but much easier to maintain. Different boundary conditions are used and a different optimizer is used, so don’t expect the results to be identical to what was done by the old pegels function. To get something like the results from the old pegels function, use forecast(ets(…)).
+  * pegels has been replaced by ets. ets only fits the model; it doesn't produce forecasts. To get forecasts, apply the forecast function to the ets object.
+  * ets has been completely rewritten which makes it slower, but much easier to maintain. Different boundary conditions are used and a different optimizer is used, so don?t expect the results to be identical to what was done by the old pegels function. To get something like the results from the old pegels function, use forecast(ets(?)).
   * simulate.ets() added to simulate from an ets model.
   * Changed name of cars to auto to avoid clash with the cars data in the datasets package.
   * arima2 functionality is now handled by arima() and pegels2 functionality is now handled by ets.
   * best.arima now allows the option of BIC to be used for model selection.
-  * Croston’s method added in function croston().
+  * Croston's method added in function croston().
   * ts.display renamed as tsdisplay
-  * mean.f changed to meanf, theta.f changed to thetaf, rw.f changed to rwf, seasonaldummy.f to seasonaldummyf, sindex.f to sindexf, and spline.f to splinef. These changes are to avoid potential problems if anyone introduces an “f” class.
+  * mean.f changed to meanf, theta.f changed to thetaf, rw.f changed to rwf, seasonaldummy.f to seasonaldummyf, sindex.f to sindexf, and spline.f to splinef. These changes are to avoid potential problems if anyone introduces an ?f? class.
 
 Version 0.994 (4 October 2004)
   * Fixed bug in arima which caused predict() to sometimes fail when there was no xreg term.
@@ -620,7 +626,7 @@ Version 0.993 (20 July 2004)
 Version 0.99 (21 May 2004)
   * Added automatic selection of order of differencing for best.arima.
   * Added possibility of linear trend in arima models.
-  * In pegels(), option added to allow parameters of an exponential smoothing model to be in the “admissible” (or invertible) region rather than within the usual (0,1) region.
+  * In pegels(), option added to allow parameters of an exponential smoothing model to be in the ?admissible? (or invertible) region rather than within the usual (0,1) region.
   * Fixed some bugs in pegels.
   * Included all M1 and M3 data and some functions to subset and plot them.
   * Note: This package will only work in R1.9 or later.
@@ -630,7 +636,7 @@ Version 0.98 (23 August 2003)
       o It is now possible to specify particular values of the smoothing parameters rather than always use the optimized values. If none are specified, the optimal values are still estimated as before.
       o It is also possible to specify upper and lower bounds for each parameter separately.
   * New function: theta.f. This implements the Theta method which did very well in the M3 competition.
-  * A few minor problems with pegels fixed and a bug in forecast.plot that meant it didn’t work when the series contained missing values.
+  * A few minor problems with pegels fixed and a bug in forecast.plot that meant it didn?t work when the series contained missing values.
 
 Version 0.972 (11 July 2003)
   * Small bug fix: pegels did not return correct model when model was partially specified.
