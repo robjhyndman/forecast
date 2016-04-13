@@ -525,7 +525,7 @@ print.tbats <- function(x, ...) {
 plot.tbats <- function (x, main="Decomposition by TBATS model", ...)
 {
 	out <- tbats.components(x)
-	plot(out, main=main, nc=1, ...)
+	plot.ts(out, main=main, nc=1, ...)
 }
 
 
