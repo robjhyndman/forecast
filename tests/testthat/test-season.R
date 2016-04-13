@@ -1,5 +1,5 @@
 # A unit test for na.interp() and tsclean()
-if(require(fpp) & require(testthat))
+if(require(testthat))
 {
   test_that("tests for monthdays", {
   expect_error(monthdays(rnorm(10)))
@@ -21,7 +21,7 @@ if(require(fpp) & require(testthat))
   })
 
   test_that("tests for seasonaldummyf", {
-  expect_error(seasonaldummyf(1))
+  expect_error(seasonaldummy(1))
   expect_warning(dummymat <- seasonaldummyf(wineind, 4), "deprecated")
   expect_true(nrow(dummymat) == 4)
   expect_true(ncol(dummymat) == 11)
@@ -37,7 +37,6 @@ if(require(fpp) & require(testthat))
   })
 
   test_that("tests for fourierf", {
-    expect_error(fourierf(1))
     expect_warning(fouriermat <- fourierf(wineind, 4, 10), "deprecated")
     expect_true(nrow(fouriermat) == 10)
     expect_true(ncol(fouriermat) == 8)
@@ -48,9 +47,9 @@ if(require(fpp) & require(testthat))
   })
 
   test_that("tests for forecast.stlm",{
-  expect_error(forecast.stlm(stlm(a10), newxreg = matrix(rep(1, 24), ncol = 2)))
-  stlmfit1 <- stlm(cafe, method = "ets")
-  stlmfit2 <- stlm(cafe, method = "arima", approximation = FALSE)
+  expect_error(forecast.stlm(stlm(wineind), newxreg = matrix(rep(1, 24), ncol = 2)))
+  stlmfit1 <- stlm(woolyrnq, method = "ets")
+  stlmfit2 <- stlm(woolyrnq, method = "arima", approximation = FALSE)
   fcfit1 <- forecast(stlmfit1)
   fcfit2 <- forecast(stlmfit1, fan = TRUE)
   expect_true(all(fcfit2$level == seq(from = 51, to = 99, by=3)))

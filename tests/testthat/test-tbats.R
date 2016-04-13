@@ -1,5 +1,5 @@
 # A unit test for tbats function
-if(require(testthat) & require(fpp))
+if(require(testthat))
 {
   context("Tests on tbats() functions")
   test_that("Test simple cases for tbats", {
@@ -11,14 +11,14 @@ if(require(testthat) & require(fpp))
   test_that("Test tbats() and forecasts", {
     # Fit tbats models
     tbatsfit1 <- tbats(wineind, use.parallel = FALSE)
-    tbatsfit2 <- tbats(austa, use.parallel = FALSE)
+    tbatsfit2 <- tbats(WWWusage, use.parallel = FALSE)
     tbatsfit3 <- tbats(as.numeric(woolyrnq), seasonal.periods = frequency(woolyrnq), use.parallel = FALSE)
-    tbatsfit4 <- tbats(oil, use.box.cox = FALSE, use.parallel = FALSE)
+    tbatsfit4 <- tbats(airmiles, use.box.cox = FALSE, use.parallel = FALSE)
     # Test tbats.components
-    expect_that(tbats.components(tbatsfit1), not(throws_error()))
-    expect_that(tbats.components(tbatsfit2), not(throws_error()))
-    expect_that(tbats.components(tbatsfit3), not(throws_error()))
-    expect_that(tbats.components(tbatsfit4), not(throws_error()))
+    tbats.components(tbatsfit1)
+    tbats.components(tbatsfit2)
+    tbats.components(tbatsfit3)
+    tbats.components(tbatsfit4)
     # Test accuracy.tbats() function
     expect_output(print(accuracy(tbatsfit1)), regexp = "ME")
     expect_output(print(accuracy(tbatsfit2)), regexp = "ME")
@@ -31,9 +31,9 @@ if(require(testthat) & require(fpp))
     expect_output(print(summary(tbatsfit4)), regexp = "Length")
     #Test fitted length
     expect_true(length(fitted(tbatsfit1)) == length(wineind))
-    expect_true(length(fitted(tbatsfit2)) == length(austa))
+    expect_true(length(fitted(tbatsfit2)) == length(WWWusage))
     expect_true(length(fitted(tbatsfit3)) == length(woolyrnq))
-    expect_true(length(fitted(tbatsfit4)) == length(oil))
+    expect_true(length(fitted(tbatsfit4)) == length(airmiles))
     # Test length of forecast
     expect_true(length(forecast(tbatsfit1)$mean) == 2 * frequency(wineind))
     expect_true(length(forecast(tbatsfit2)$mean) == 10)
@@ -48,7 +48,7 @@ if(require(testthat) & require(fpp))
 
   test_that("Test tbats() with parallel", {
     # Tests will not run on Travis in parallel
-    #expect_output(print(tbats(cafe, num.cores = 1)), regexp = "TBATS")
+    #expect_output(print(tbats(woolyrnq, num.cores = 1)), regexp = "TBATS")
     #expect_output(print(tbats(elecsales, num.cores = 1, use.trend = FALSE)), regexp = "BATS")
   })
 }

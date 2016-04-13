@@ -1,5 +1,5 @@
 # A unit test functions in newarima2.R
-if(require(fpp) & require(testthat))
+if(require(testthat))
 {
   test_that("test auto.arima() and associated methods", {
     expect_warning(auto.arima(rep(1, 100), stepwise = TRUE, parallel = TRUE))
@@ -24,14 +24,13 @@ if(require(fpp) & require(testthat))
 
   test_that("test parallel = TRUE and stepwise = FALSE for auto.arima()", {
     skip_on_travis()
-    expect_output(print(auto.arima(austa, parallel = TRUE, stepwise = FALSE)),
-      regexp = "with drift")
+    expect_equal(auto.arima(WWWusage, parallel = TRUE, stepwise = FALSE)$arma,  c(3L,0L,0L,0L,1L,1L,0L))
   })
 
   test_that("tests for nsdiffs()", {
     expect_true(nsdiffs(wineind) == 1)
-    expect_true(nsdiffs(cafe) == 1)
-    expect_error(nsdiffs(oil))
+    expect_true(nsdiffs(woolyrnq) == 1)
+    expect_error(nsdiffs(airmiles))
     expect_true(nsdiffs(rep(1, 100)) == 0)
     expect_warning(nsdiffs(ts(rnorm(10), f = 0.1)))
   })
