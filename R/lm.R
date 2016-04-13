@@ -4,7 +4,7 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
     formula <- stats::as.formula(formula)
   }
   mt <- terms(formula)
-  
+
   vars <- attr(mt,"variables")
   #Check for time series variables
   tsvar <- match(c("trend", "season"), as.character(vars), 0L)
@@ -24,13 +24,13 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
     #Remove variables not needed in data (trend+season+functions)
     vars <- vars[-c(tsvar, fnvar)]
   }
-  
+
   if(!missing(data)){
     #Check for any missing variables in data
     vars <- vars[c(TRUE, !as.character(vars[-1])%in%colnames(data))]
     dataname <- substitute(data)
   }
-  
+
   # Grab any variables missing from data
   vars[[1]] <- quote(forecast:::datamat)
   if(!missing(data)){
@@ -39,7 +39,7 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
   else{
     data <- eval.parent(vars)
   }
-  
+
   # Check to see if data is univariate time series
   if(is.null(dim(data)) & length(data)!=0){
     #cn <- as.character(vars)[2:length(vars)]
@@ -80,30 +80,19 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
   }
   colnames(data) <- cn
   if(!missing(subset)){
-    if(is.logical(subset)){
-      subsetTF <- subset
-    }
-    else{
-      subsetTF <- eval.parent(substitute(subset)[[2]])%in%subset
-    }
-    if(NCOL(subset)!=1){
-      subsetTF <- rowSums(matrix(data=subsetTF, ncol=2))==NCOL(subset) #TODO
-    }
-    if(NROW(subsetTF)!=NROW(data)){
-      stop("Subset must specify the rows to keep in the dataset")
-    }
-    if(!is.null(tsp(subset)) & NROW(subset)!=NROW(data)){
-      tspx <- tsp(subset)
-    }
-    else{
-      warning("Subset has been assumed contiguous")
-      timesx <- time(data[,1])[subsetTF]
-      tspx <- recoverTSP(timesx)
-    }
+    if(!is.logical(subset))
+      stop("subset must be logical")
+    else if(NCOL(subset) > 1)
+      stop("subset must be a logical vector")
+    else if(NROW(subset) != NROW(data))
+      stop("Subset must be the same length as the number of rows in the dataset")
+    warning("Subset has been assumed contiguous")
+    timesx <- time(data[,1])[subset]
+    tspx <- recoverTSP(timesx)
     if(tspx[3]==1 & tsdat[2]==0 & tsvar[2]!=0){
       stop("Non-seasonal data cannot be modelled using a seasonal factor")
     }
-    data <- data[subsetTF,]#model.frame(formula,as.data.frame(data[subsetTF,]))
+    data <- data[subset,]#model.frame(formula,as.data.frame(data[subsetTF,]))
   }
   if(!is.null(lambda)){
     data[,1] <- BoxCox(data[,1],lambda)
@@ -145,7 +134,7 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
     else if (min(level) < 0 | max(level) > 99.99)
       stop("Confidence limit out of range")
   }
-  
+
   if(!is.null(object$data))
     origdata <- object$data
   else if(!is.null(object$call$data)){
@@ -161,7 +150,7 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
     if(!is.element("data.frame", class(origdata)))
       stop("Could not find data.  Try training your model using tslm() or attach data directly to the object via object$data<-modeldata for some object<-lm(formula,modeldata).")
   }
-  
+
   # Check if the forecasts will be time series
   if(ts & is.element("ts",class(origdata))){
     tspx <- tsp(origdata)
@@ -171,19 +160,23 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
     tspx <- tsp(origdata[,1])
     timesx <- time(origdata[,1])
   }
+  else if(ts & is.element("ts",class(fitted(object)))){
+    tspx <- tsp(fitted(object))
+    timesx <- time(fitted(object))
+  }
   else
     tspx <- NULL
-  if(!is.null(object$call$subset))
-  {
-    j <- eval(object$call$subset)
-    origdata <- origdata[j,]
-    if(!is.null(tspx))
-    {
-      # Try to figure out times for subset. Assume they are contiguous.
-      timesx <- timesx[j]
-      tspx <- tsp(origdata) <- c(min(timesx),max(timesx),tspx[3])
-    }
-  }
+  # if(!is.null(object$call$subset))
+  # {
+  #   j <- eval(object$call$subset)
+  #   origdata <- origdata[j,]
+  #   if(!is.null(tspx))
+  #   {
+  #     # Try to figure out times for subset. Assume they are contiguous.
+  #     timesx <- timesx[j]
+  #     tspx <- tsp(origdata) <- c(min(timesx),max(timesx),tspx[3])
+  #   }
+  # }
   # Add trend and seasonal to data frame
   oldterms <- terms(object)
   #Adjust terms for function variables and rename datamat colnames to match.
@@ -291,26 +284,26 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
   # If only one column, assume its name.
   if(ncol(newdata)==1 & colnames(newdata)[1]=="newdata")
     colnames(newdata) <- as.character(formula(object$model))[3]
-  
+
   # Check regressors included in newdata.
   # Not working so removed for now.
   #xreg <- attributes(terms(object$model))$term.labels
   #if(any(!is.element(xreg,colnames(newdata))))
   #  stop("Predictor variables not included")
-  
+
   object$x <- getResponse(object)
   #responsevar <- as.character(formula(object$model))[2]
   #responsevar <- gsub("`","",responsevar)
   #object$x <- model.frame(object$model)[,responsevar]
-  
+
   out <- list()
   nl <- length(level)
   for(i in 1:nl)
     out[[i]] <- predict(object, newdata=newdata, se.fit=TRUE, interval="prediction", level=level[i]/100, ...)
-  
+
   if(nrow(newdata) != length(out[[1]]$fit[,1]))
     stop("Variables not found in newdata")
-  
+
   object$terms <- oldterms
   fcast <- list(model=object,mean=out[[1]]$fit[,1],lower=out[[1]]$fit[,2],upper=out[[1]]$fit[,3],
                 level=level,x=object$x)
@@ -343,7 +336,7 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
     fcast$upper <- ts(fcast$upper, start=tspx[2]+1/tspx[3],frequency=tspx[3])
     fcast$lower <- ts(fcast$lower, start=tspx[2]+1/tspx[3],frequency=tspx[3])
   }
-  
+
   if(!is.null(lambda))
   {
     fcast$x <- InvBoxCox(fcast$x,lambda)
@@ -354,7 +347,7 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
     fcast$lower <- InvBoxCox(fcast$lower,lambda)
     fcast$upper <- InvBoxCox(fcast$upper,lambda)
   }
-  
+
   return(structure(fcast,class="forecast"))
 }
 
