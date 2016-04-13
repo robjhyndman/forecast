@@ -23,7 +23,7 @@ if(require(testthat))
   	for(ar in 1:5){
   		for(i in 0:1){
     			for(ma in 1:5){
-			      fitarima <- Arima(airmiles, order = c(ar, i, ma), method = "ML", include.constant = TRUE, lambda = 0.5)
+			      fitarima <- Arima(lynx, order = c(ar, i, ma), method = "ML", include.constant = TRUE, lambda = 0.5)
 			      arextracted <- fitarima$arma[1]
 			      iextracted <- fitarima$arma[6]
 			      maextracted <- fitarima$arma[2]

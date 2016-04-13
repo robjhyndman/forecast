@@ -30,7 +30,7 @@ if(require(testthat))
 
   test_that("test forecast.HoltWinters()", {
     hwmod <- stats::HoltWinters(woolyrnq)
-    forecast(hwmod, fan = TRUE)$mean == forecast(hwmod)$mean
+    expect_true(all(forecast(hwmod, fan = TRUE)$mean == forecast(hwmod)$mean))
     expect_error(forecast(hwmod, level = -10))
     expect_error(forecast(hwmod, level = 110))
     # Forecasts transformed manually with Box-Cox should match
