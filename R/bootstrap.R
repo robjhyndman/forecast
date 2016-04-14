@@ -53,18 +53,21 @@ MBB <- function(x, window_size) {
 }
 
 
-bootstrap_series <- function(x, frequency, num) {
-  xs = array(0, c(num, length(x)))
-  xs[1,] = x # the first series is the original one
+bld.mbb.bootstrap <- function(x, num) {
+
+  freq <- frequency(x)
+  
+  xs <- list()
+  xs[[1]] <- x # the first series is the original one
   
   if (num>1){
     # Box-Cox transformation
     lambda = BoxCox.lambda(x, lower=0, upper=1)
     x.bc = BoxCox(x, lambda)
     
-    if (frequency>1){
+    if (freq>1){
       # STL decomposition
-      x.stl = stl(ts(x.bc, freq=frequency), "per")$time.series
+      x.stl = stl(ts(x.bc, freq=freq), "per")$time.series
       seasonal = x.stl[,1]
       trend = x.stl[,2]
       remainder = x.stl[,3]
@@ -79,8 +82,8 @@ bootstrap_series <- function(x, frequency, num) {
     
     # Bootstrap some series, using MBB
     for (i in 2:num){      
-      window_size <- if(frequency>1) 2*frequency else 8 
-      xs[i,] = InvBoxCox(trend + seasonal + MBB(remainder, window_size), lambda)
+      window_size <- if(freq>1) 2*freq else 8 
+      xs[[i]] = InvBoxCox(trend + seasonal + MBB(remainder, window_size), lambda)
     }
   }
   
