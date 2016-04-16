@@ -359,7 +359,7 @@ plot.bats <- function (x, main="Decomposition by BATS model", ...)
   tsp(out) <- tsp(y)
 
   # Do the plot
-  plot(out, main=main, nc=1, ...)
+  plot.ts(out, main=main, nc=1, ...)
 }
 
 is.bats <- function(x){

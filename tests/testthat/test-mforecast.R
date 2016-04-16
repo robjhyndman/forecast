@@ -1,13 +1,13 @@
 # A unit test for forecast.R
-if(require(fpp) & require(testthat))
+if(require(testthat))
 {
   context("Test mforecast.R")
-  
+
   mv_y <- ts(cbind(rnorm(120,0,3) + 1:120 + 20*sin(2*pi*(1:120)/12), rnorm(120,3,7) + 1:120 + 16*sin(2*pi*(1:120 + 6)/12)), frequency=12)
   mv_x <- ts(cbind(rnorm(120,0,8) + (1:120)/2 + 42*sin(2*pi*(1:120)/12), rnorm(120,3,7) + (1:120)*-1 + 20*sin(2*pi*(1:120 + 6)/12)), frequency=12)
   v_y <- ts(rnorm(120,0,8) + (1:120)/2 + 12*sin(2*pi*(1:120)/12), frequency = 12)
   v_x <- ts(rnorm(120,0,1) + (1:120)*(-1) + 28*sin(2*pi*(1:120)/12), frequency = 12)
-  
+
   test_that("tests for is.mforecast()", {
     fit <- lm(mv_y ~ v_x)
     fcast <- forecast(fit, newdata=data.frame(v_x=30))
@@ -34,15 +34,15 @@ if(require(fpp) & require(testthat))
     fit1_1 <- mlmsplit(fit, index = 1)
     expect_true(!is.null(tsp((fit1_1$data[,1]))))
   })
-  
+
   test_that("tests for forecast.mlm()", {
     fit <- lm(mv_y ~ v_x)
     fcast <- forecast(fit, newdata=data.frame(v_x=30))
     fit2 <- lm(mv_y[,1] ~ v_x)
     fcast2 <- forecast(fit2, newdata=data.frame(v_x=30))
     expect_equal(fcast$res[,1], fcast2$residuals)
-  })  
-  
+  })
+
   test_that("tests for forecast.mts()", {
     lungDeaths <- cbind(mdeaths, fdeaths)
     fcast_b <- forecast(lungDeaths)
@@ -50,18 +50,18 @@ if(require(fpp) & require(testthat))
     fcast_f <- forecast(fdeaths)
     expect_true(all.equal(fcast_b$mean[[1]], fcast_m$mean))
     expect_true(all.equal(fcast_b$mean[[2]], fcast_f$mean))
-  })  
-  
+  })
+
   test_that("tests for print.mforecast()", {
     fit <- lm(mv_y ~ v_x)
     fcast <- forecast(fit, newdata=data.frame(v_x=30))
     expect_output(print(fcast),"Series 1")
     expect_output(print(fcast),"Series 2")
   })
-  
+
   test_that("tests for plot.mforecast()", {
     fit <- lm(mv_y ~ v_x)
     fcast <- forecast(fit, newdata=data.frame(v_x=30))
-    expect_that(plot(fcast), not(throws_error()))
+    plot(fcast)
   })
 }

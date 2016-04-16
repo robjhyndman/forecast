@@ -1,51 +1,56 @@
 # A unit test for ets function
-if(require(fpp) & require(testthat))
+if(require(testthat))
 {
 	context("Tests on input")
 	test_that("tests for some arguments in ets", {
-	  fit <- ets(a10, model = "ZZM")
+	  fit <- ets(wineind, model = "ZZM")
 	  comp <- paste0(fit$components[1:3], collapse = "")
 	  expect_that(comp, equals("MAM"))
 	})
 
 	test_that("tests for some arguments in ets", {
-	  fit <- ets(a10, model = "MAM", alpha = 0.1611)
+	  fit <- ets(wineind, model = "MAM", alpha = 0.1611)
 	  expect_that(as.numeric(fit$par["alpha"]), equals(0.1611))
 	})
-	
+
 	test_that("refit ets model to new data", {
-	  fit <- ets(a10, model = "MAM", alpha = 0.1611)
-	  expect_that(ets(a10, model=fit, alpha=0.1611), not(throws_error()))
-	  expect_that(ets(a10, model=fit, alpha=0.1611, beta=NA), not(throws_error()))
-	  expect_that(ets(a10, model=fit, alpha=0.1611, gamma=NA), not(throws_error()))
-	  expect_that(ets(a10, model=fit, alpha=0.1611, phi=NA), not(throws_error()))
-	  expect_that(ets(a10, model=fit, alpha=0.1611, use.initial.values=TRUE), not(throws_error()))
+	  fit <- ets(wineind, model = "MAM", alpha = 0.1611)
+	  parnames <- c("alpha","beta","gamma")
+	  par <- fit$par[parnames]
+	  expect_identical(ets(wineind, model=fit, alpha=0.1611)$par[parnames], par)
+	  expect_identical(ets(wineind, model=fit, alpha=0.1611, beta=NA)$par[parnames],par)
+	  expect_identical(ets(wineind, model=fit, alpha=0.1611, gamma=NA)$par[parnames],par)
+	  expect_identical(ets(wineind, model=fit, alpha=0.1611, phi=NA)$par[parnames],par)
+	  expect_identical(ets(wineind, model=fit, alpha=0.1611, use.initial.values=TRUE)$par,fit$par)
 	})
-	
+
 	test_that("class methods for ets work", {
-	  fit <- ets(a10, model = "MAM", alpha = 0.1611)
-	  expect_that(summary(fit), not(throws_error()))
-	  expect_that(coef(fit), not(throws_error()))
-	  expect_that(logLik(fit), not(throws_error()))
-	  expect_that(plot(fit), not(throws_error()))
+	  fit <- ets(wineind, model = "MAM", alpha = 0.1611)
+	  expect_output(summary(fit),"Smoothing parameters")
+	  expect_equal(length(coef(fit)), 16L)
+	  expect_lt(abs(logLik(fit) + 1802.9586023), 1e-5)
+	  plot(fit)
 	})
-	
+
 	test_that("test ets() for errors", {
 	  expect_warning(ets(taylor))
-	  expect_that(fit1<-ets(oil, lambda = 0.15, biasadj=FALSE), not(throws_error()))
-	  expect_that(fit2<-ets(oil, lambda = 0.15, biasadj = TRUE), not(throws_error()))
+	  fit1<-ets(airmiles, lambda = 0.15, biasadj=FALSE)
+	  expect_gt(fit1$par["alpha"], 0.96)
+	  fit2<-ets(airmiles, lambda = 0.15, biasadj = TRUE)
+	  expect_gt(fit2$par["alpha"], 0.96)
 	  expect_false(identical(fit1$fitted, fit2$fitted))
 	  expect_error(ets(taylor, model = "ZZA"))
 	})
-	
+
 	test_that("forecast.ets()", {
-	  expect_that(fit<-ets(oil, lambda = 0.15, biasadj = TRUE), not(throws_error()))
-	  expect_that(fcast1 <- forecast(fit, PI=FALSE), not(throws_error()))
+	  fit<-ets(airmiles, lambda = 0.15, biasadj = TRUE)
+	  fcast1 <- forecast(fit, PI=FALSE)
 	  expect_true(is.null(fcast1$upper) & is.null(fcast1$lower))
-	  expect_that(fcast1 <- forecast(fit, biasadj=FALSE), not(throws_error()))
-	  expect_that(fcast2 <- forecast(fit, biasadj=TRUE), not(throws_error()))
+	  fcast1 <- forecast(fit, biasadj=FALSE)
+	  fcast2 <- forecast(fit, biasadj=TRUE)
 	  expect_false(identical(fcast1$mean, fcast2$mean))
-	  expect_that(fcast <- forecast(fit, simulate=TRUE), not(throws_error()))
+	  fcast <- forecast(fit, simulate=TRUE)
 	  expect_true(!is.null(fcast$upper) & !is.null(fcast$lower))
+	  expect_true(all(fcast$upper > fcast$lower))
 	})
 }

@@ -1,5 +1,5 @@
 # A unit test for Arima() function
-if(require(fpp) & require(testthat))
+if(require(testthat))
 {
 	context("Tests on input")
 	test_that("tests for a non-ts object", {
@@ -10,20 +10,20 @@ if(require(fpp) & require(testthat))
 	})
 
 	test_that("tests for a ts with the seasonal component", {
-  	fit <- Arima(a10, order = c(1, 1, 1), seasonal = c(0, 1, 1))
+  	fit <- Arima(wineind, order = c(1, 1, 1), seasonal = c(0, 1, 1))
   	expect_that(fit$arma, equals(c(1, 1, 0, 1, 12, 1, 1)))
 	})
 
 	test_that("tests for ARIMA errors", {
-  	fit <- Arima(a10, order = c(1, 1, 1), seasonal = c(0, 1, 1))
-  	expect_that(arima.errors(fit), equals(a10))
+  	fit <- Arima(wineind, order = c(1, 1, 1), seasonal = c(0, 1, 1))
+  	expect_that(arima.errors(fit), equals(wineind))
 	})
 
 	test_that("tests for arimaorder", {
   	for(ar in 1:5){
   		for(i in 0:1){
     			for(ma in 1:5){
-			      fitarima <- Arima(austa, order = c(ar, i, ma), method = "ML", include.constant = TRUE, lambda = 0.5)
+			      fitarima <- Arima(lynx, order = c(ar, i, ma), method = "ML", include.constant = TRUE, lambda = 0.5)
 			      arextracted <- fitarima$arma[1]
 			      iextracted <- fitarima$arma[6]
 			      maextracted <- fitarima$arma[2]
@@ -85,14 +85,14 @@ if(require(fpp) & require(testthat))
 
 	test_that("tests for refitting Arima", {
 	# Refit Arima with drift
-	fitarima <- auto.arima(austa, test = "pp")
-	newdata <- forecast(austa)$mean
-	refitarima <- Arima(c(austa, newdata), model = fitarima)
+	fitarima <- auto.arima(WWWusage, test = "pp")
+	newdata <- forecast(WWWusage)$mean
+	refitarima <- Arima(c(WWWusage, newdata), model = fitarima)
 	expect_true(all(arimaorder(fitarima) == arimaorder(refitarima)))
 	# Refit seasonal Arima
-	fitarima <- auto.arima(cafe)
-	newdata <- forecast(cafe)$mean
-	refitarima <- Arima(c(cafe, newdata), model = fitarima)
+	fitarima <- auto.arima(woolyrnq)
+	newdata <- forecast(woolyrnq)$mean
+	refitarima <- Arima(c(woolyrnq, newdata), model = fitarima)
 	expect_true(all(arimaorder(fitarima) == arimaorder(refitarima)))
 	})
 }

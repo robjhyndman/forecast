@@ -77,12 +77,25 @@ autoplot.acf <- function(object, ci=0.95, ...){
       if(object$series == "X"){
         seriesname <- strsplit(object$snames, " ")[[1]][1]
       }
-      freq <- frequency(eval.parent(parse(text=seriesname)))
+      x <- eval.parent(parse(text=seriesname))
+      freq <- frequency(x)
+      msts <- is.element("msts",class(x))
     } else{
       freq <- 1
+      msts <- FALSE
     }
+
+    # Add seasonal x-axis
+    if(msts)
+    {
+      periods <- attributes(x)$msts
+      periods <- periods[periods != freq]
+      minorbreaks <- periods * seq(-20:20)
+    }
+    else
+      minorbreaks <- NULL
     p <- p + ggplot2::scale_x_continuous(breaks = seasonalaxis(freq,
-      length(data$Lag), type=ticktype, plot=FALSE))
+      length(data$Lag), type=ticktype, plot=FALSE), minor_breaks=minorbreaks)
     p <- p + ggAddExtras(ylab=ylab, xlab="Lag", main=main)
     return(p)
   }
@@ -152,8 +165,23 @@ autoplot.mpacf <- function(object, ...){
     if(plotpi){
       p <- p + ggplot2::geom_point(ggplot2::aes_(x = ~Lag, y = ~z, colour = ~sig), data=data)
     }
+
     #Change ticks to be seasonal
-    p <- p + ggplot2::scale_x_continuous(breaks = seasonalaxis(frequency(object$x), length(data$Lag), type="acf", plot=FALSE))
+    freq <- frequency(object$x)
+    msts <- is.element("msts",class(object$x))
+
+    # Add seasonal x-axis
+    if(msts)
+    {
+      periods <- attributes(object$x)$msts
+      periods <- periods[periods != freq]
+      minorbreaks <- periods * seq(-20:20)
+    }
+    else
+      minorbreaks <- NULL
+
+    p <- p + ggplot2::scale_x_continuous(breaks = seasonalaxis(frequency(object$x), length(data$Lag), type="acf", plot=FALSE),
+                              minor_breaks=minorbreaks)
 
     if(object$type=="partial"){
       ylab <- "PACF"
@@ -636,11 +664,16 @@ ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NUL
       message("Plot types are not yet supported for seasonplot()")
     }
 
+    # Check data are seasonal
+    s <- frequency(x)
+    if(s <= 1)
+      stop("Data are not seasonal")
+
     data <- data.frame(y=as.numeric(x),year=factor(trunc(time(x))),time=as.numeric(round(time(x)%%1,digits = 6)))
 
     #Initialise ggplot object
     p <- ggplot2::ggplot(ggplot2::aes_(x=~time, y=~y, group=~year, colour=~year), data=data, na.rm=TRUE)
-    p <- p + ggplot2::scale_x_continuous()
+    #p <- p + ggplot2::scale_x_continuous()
 
     #Add data
     p <- p + ggplot2::geom_line()
@@ -673,8 +706,31 @@ ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NUL
       p <- p + ggplot2::geom_text(ggplot2::aes_(x=~time, y=~y, label=~year), data=yrlab)
     }
 
-    #Graph labels
-    p <- p + ggAddExtras(main=paste("Seasonal plot:", deparse(substitute(x))), xlab="Season", ylab=NULL)
+    # Add seasonal labels
+    if(s == 12)
+    {
+      labs <- month.abb
+      xLab <- "Month"
+    }
+    else if(s == 4)
+    {
+      labs <- paste("Q",1:4,sep="")
+      xLab <- "Quarter"
+    }
+    else if(s == 7)
+    {
+      labs <- c("Sun","Mon","Tue","Wed","Thu","Fri","Sat")
+      xLab <- "Day"
+    }
+    else
+    {
+      labs <- NULL
+      xLab <- "Season"
+    }
+    p <-  p + ggplot2::scale_x_continuous(breaks=sort(unique(data$time)), minor_breaks=NULL, labels=labs)
+
+    #Graph title and axes
+    p <- p + ggAddExtras(main=paste("Seasonal plot:", deparse(substitute(x))), xlab=xLab, ylab=NULL)
     return(p)
   }
 }
