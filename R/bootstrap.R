@@ -53,7 +53,7 @@ MBB <- function(x, window_size) {
 }
 
 
-bld.mbb.bootstrap <- function(x, num) {
+bld.mbb.bootstrap <- function(x, num, block_size = if(frequency(x)>1) 2*frequency(x) else 8 ) {
 
   freq <- frequency(x)
   
@@ -82,8 +82,7 @@ bld.mbb.bootstrap <- function(x, num) {
     
     # Bootstrap some series, using MBB
     for (i in 2:num){      
-      window_size <- if(freq>1) 2*freq else 8 
-      xs[[i]] = InvBoxCox(trend + seasonal + MBB(remainder, window_size), lambda)
+      xs[[i]] = InvBoxCox(trend + seasonal + MBB(remainder, block_size), lambda)
     }
   }
   

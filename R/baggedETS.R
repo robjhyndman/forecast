@@ -1,7 +1,8 @@
 ##
 
 forecast.baggedETS <- function(x, h=ifelse(frequency(x)>1, 2*frequency(x), 10), 
-    bootstrapped_series=bld.mbb.bootstrap(x, 100), ...) {
+    block_size = if(frequency(x)>1) 2*frequency(x) else 8,
+    bootstrapped_series=bld.mbb.bootstrap(x, 100, block_size), ...) {
   
   forecasts_boot <- lapply(bootstrapped_series, function(x) { 
         mod <- ets(x, ...) 
@@ -33,63 +34,3 @@ forecast.baggedETS <- function(x, h=ifelse(frequency(x)>1, 2*frequency(x), 10),
   
 }
 
-
-#library(forecast)
-#library(fpp)
-#
-#res <- forecast:::forecast.baggedETS(ausbeer)
-#res
-#
-#plot(res)
-#
-#print.default(res)
-
-#
-###ausbeer
-##bootstrapped_series <-  forecast:::bld.mbb.bootstrap(ausbeer, 100)
-##
-###frequency(ausbeer)
-###bootstrapped_series <-  bld.mbb.bootstrap(ausbeer, 4, 100)
-###bootstrapped_series[[100]]
-##
-##res <- forecast:::baggedETS(ausbeer, bootstrapped_series, 12)
-##res
-#
-#
-#
-#
-#
-#
-#plot(res$mean_forecast, type="l")
-#
-#plot(bootstrapped_series[1,], type="l")
-#apply(bootstrapped_series, 1, lines)
-#
-#forc <- forecast(ets(ausbeer))
-#
-#print.default(forc)
-#
-#plot()
-#
-#horizon = 12
-#forecasts_boot <- lapply(bootstrapped_series, function(x) { 
-#      mod <- ets(x) 
-#      forecast(mod, PI=FALSE, h=horizon)$mean
-#    })
-#
-#print.default(forecasts_boot[[100]])
-#
-#forecasts_boot <- as.matrix(as.data.frame(forecasts_boot))
-#colnames(forecasts_boot) <- NULL
-#
-#x <- bootstrapped_series[2,]
-#
-#plot(x, type="l")
-#
-#plot(forc)
-#
-#plot(forecast(ets(x)))
-#
-#apply(bootstrapped_series, 1, ts, frequency=12)
-#
-#?apply
