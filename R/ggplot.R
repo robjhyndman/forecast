@@ -634,23 +634,27 @@ ggmonthplot <- function (x, labels = NULL, times = time(x), phase = cycle(x), ..
     xfreq <- frequency(x)
     if(xfreq==4){
       xbreaks <- c("Q1","Q2","Q3","Q4")
+      xlab <- "Quarter"
     }
     else if (xfreq==7){
       xbreaks <- c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
                    "Friday", "Saturday")
+      xlab <- "Day"
     }
     else if(xfreq==12){
       xbreaks <- month.abb
+      xlab <- "Month"
     }
     else{
       xbreaks <- 1:frequency(x)
+      xlab <- "Season"
     }
 
     midYear <- sort(levels(data$year))[length(levels(data$year))%/%2]
     p <- p + ggplot2::scale_x_discrete(breaks=paste(midYear,".",1:xfreq,sep=""), labels=xbreaks)
 
     #Graph labels
-    p <- p + ggAddExtras(ylab = deparse(substitute(x)), xlab = NULL)
+    p <- p + ggAddExtras(ylab = deparse(substitute(x)), xlab = xlab)
     return(p)
   }
 }
