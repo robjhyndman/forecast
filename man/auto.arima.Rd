@@ -51,7 +51,7 @@ possible model within the order constraints provided.}
 
 \details{Non-stepwise selection can be slow, especially for seasonal data. Stepwise algorithm outlined in Hyndman and Khandakar (2008) except that the default method for selecting seasonal differences is now the OCSB test rather than the Canova-Hansen test.
 }
-\value{Same as for \code{\link{arima}}}
+\value{Same as for \code{\link{Arima}}}
 
 \references{
 Hyndman, R.J. and Khandakar, Y. (2008) "Automatic time series forecasting: The forecast package for R", \emph{Journal of Statistical Software}, \bold{26}(3).
