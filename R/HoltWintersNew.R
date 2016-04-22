@@ -216,9 +216,6 @@ HoltWintersZZ  <- function (x,
   	sigma2 <- mean(final.fit$residuals^2)
   else
   	sigma2 <- mean((final.fit$residuals/fitted)^2)
-  
-  
-  
 	structure(list(fitted    = fitted,
 			residuals=final.fit$residuals,
 			components=components,
