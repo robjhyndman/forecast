@@ -797,7 +797,7 @@ autoplot.ts <- function(object, ...){
   }
 }
 
-autoplot.mts <- function(object, ...){
+autoplot.mts <- function(object, facets=FALSE, ...){
   if(requireNamespace("ggplot2")){
     if(!stats::is.mts(object)){
       stop("autoplot.mts requires a mts object, use x=object")
@@ -805,10 +805,15 @@ autoplot.mts <- function(object, ...){
     data <- data.frame(y=as.numeric(c(object)), x=rep(as.numeric(time(object)),NCOL(object)),
                        series=rep(colnames(object), each=NROW(object)))
     #Initialise ggplot object
-    p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x, group=~series, colour=~series), data=data)
+    p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x), data=data)
 
     #Add data
-    p <- p + ggplot2::geom_line()
+    if(facets){
+      p <- p + ggplot2::geom_line() + ggplot2::facet_grid(series~., scales = "free_y")
+    }
+    else{
+      p <- p + ggplot2::geom_line(ggplot2::aes_(group=~series, colour=~series))
+    }
 
     p <- p + ggAddExtras(xlab="Time", ylab=deparse(substitute(object)))
     return(p)
