@@ -552,6 +552,9 @@ ggtsdisplay <- function(x, plot.type=c("partial","scatter","spectrum"),
     if(missing(lag.max)){
       lag.max <- round(min(max(10*log10(length(x)), 3*frequency(x)), length(x)/3))
     }
+    
+    dots <- list(...)
+    labs <- match(c("xlab", "ylab", "main"), names(dots), nomatch=0)
 
     #Set up grid for plots
     gridlayout <- matrix(c(1,2,1,3), nrow=2)
@@ -560,16 +563,19 @@ ggtsdisplay <- function(x, plot.type=c("partial","scatter","spectrum"),
 
     #Add ts plot with points
     matchidx <- as.data.frame(which(gridlayout == 1, arr.ind = TRUE))
-    tsplot <- ggplot2::autoplot(x, ylab=NULL) + ggplot2::ggtitle(substitute(x))
+    tsplot <- do.call(ggplot2::autoplot, c(object=quote(x), dots[labs]))
     if(points){
       tsplot <- tsplot + ggplot2::geom_point()
+    }
+    if(is.null(tsplot$labels$title)){ #Add title if missing
+      tsplot <- tsplot + ggplot2::ggtitle(substitute(x))
     }
     print(tsplot,
           vp = grid::viewport(layout.pos.row = matchidx$row,
                               layout.pos.col = matchidx$col))
 
     #Prepare Acf plot
-    acfplot <- ggAcf(x, lag.max=lag.max, na.action=na.action, ...) + ggplot2::ggtitle(NULL)
+    acfplot <- do.call(ggAcf, c(x=quote(x), lag.max=lag.max, na.action=na.action, dots[-labs])) + ggplot2::ggtitle(NULL)
 
     #Prepare last plot (variable)
     if(plot.type == "partial"){
