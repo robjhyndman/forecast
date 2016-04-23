@@ -8,7 +8,7 @@
     main=NULL, xlab="", ylab="", pch=1, cex=0.5, ...)
     
 ggtsdisplay(x, plot.type=c("partial","scatter","spectrum"),
-    points=TRUE, lag.max, na.action=na.contiguous, ...)
+    points=TRUE, lag.max, na.action=na.contiguous, theme=NULL, ...)
 }
 
 \arguments{  \item{x}{a numeric vector or time series.}
@@ -18,6 +18,7 @@ ggtsdisplay(x, plot.type=c("partial","scatter","spectrum"),
                  input or for lag \eqn{k} an MA(\eqn{k-1}) input?}
 \item{lag.max}{the maximum lag to plot for the acf and pacf. A suitable value is selected by default if the argument is missing.}
 \item{na.action}{function to handle missing values in acf, pacf and spectrum calculations. The default is \code{\link[stats]{na.contiguous}}. Useful alternatives are \code{\link[stats]{na.pass}} and \code{\link{na.interp}}.}
+\item{theme}{Adds a ggplot element to each plot, typically a theme.}
 \item{main}{Main title.}
 \item{xlab}{X-axis label.}
 \item{ylab}{Y-axis label.}
@@ -38,5 +39,8 @@ ggtsdisplay(x, plot.type=c("partial","scatter","spectrum"),
 \seealso{\code{\link[stats]{plot.ts}}, \code{\link{Acf}}, \code{\link[stats]{spec.ar}}}
 \examples{tsdisplay(diff(WWWusage))
 ggtsdisplay(USAccDeaths, plot.type="scatter")
+
+library(ggplot2)
+ggtsdisplay(USAccDeaths, plot.type="scatter", theme=theme_bw())
 }
 \keyword{ts}
