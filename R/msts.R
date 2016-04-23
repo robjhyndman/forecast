@@ -1,8 +1,5 @@
 msts <- function(data, seasonal.periods, ts.frequency=floor(max(seasonal.periods)), ...)
 {
-  if(ts.frequency <= 1L)
-    stop("frequency must be greater than 1 for an msts object")
-
 	if(is.element("ts",class(data)) & frequency(data) == ts.frequency)
 		object <- data
   else
