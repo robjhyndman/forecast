@@ -542,7 +542,7 @@ autoplot.mforecast <- function (object, plot.conf=TRUE, gridlayout=NULL, ...){
 }
 
 ggtsdisplay <- function(x, plot.type=c("partial","scatter","spectrum"),
-                        points=TRUE, lag.max, na.action=na.contiguous, ...){
+                        points=TRUE, lag.max, na.action=na.contiguous, theme=NULL, ...){
   if (requireNamespace("ggplot2") & requireNamespace("grid")){
     plot.type <- match.arg(plot.type)
 
@@ -570,13 +570,19 @@ ggtsdisplay <- function(x, plot.type=c("partial","scatter","spectrum"),
     if(is.null(tsplot$labels$title)){ #Add title if missing
       tsplot <- tsplot + ggplot2::ggtitle(substitute(x))
     }
+    if(!is.null(theme)){
+      tsplot <- tsplot + theme
+    }
     print(tsplot,
           vp = grid::viewport(layout.pos.row = matchidx$row,
                               layout.pos.col = matchidx$col))
 
     #Prepare Acf plot
     acfplot <- do.call(ggAcf, c(x=quote(x), lag.max=lag.max, na.action=na.action, dots[-labs])) + ggplot2::ggtitle(NULL)
-
+    if(!is.null(theme)){
+      acfplot <- acfplot + theme
+    }
+    
     #Prepare last plot (variable)
     if(plot.type == "partial"){
       lastplot <- ggPacf(x, lag.max=lag.max, na.action=na.action) + ggplot2::ggtitle(NULL)
@@ -597,6 +603,9 @@ ggtsdisplay <- function(x, plot.type=c("partial","scatter","spectrum"),
       specData <- data.frame(spectrum = specData$spec, frequency = specData$freq)
       lastplot <- ggplot2::ggplot(ggplot2::aes_(y = ~spectrum, x = ~frequency), data=specData)+
         ggplot2::geom_line() + ggplot2::scale_y_log10()
+    }
+    if(!is.null(theme)){
+      lastplot <- lastplot + theme
     }
 
     #Add ACF plot
