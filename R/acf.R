@@ -18,8 +18,11 @@ Acf <- function(x, lag.max = NULL,
     acf.out$series <- vname
   }
   # Make lags in integer units
-  nlags <- dim(acf.out$lag)[1] - 1L
-  acf.out$lag[,,] <- 0:nlags
+  nlags <- dim(acf.out$lag)[1]
+  if(type=="partial")
+    acf.out$lag[,,] <- 1:(nlags)
+  else
+    acf.out$lag[,,] <- 0:(nlags-1)
 
   # Plot if required
   if(plot)
@@ -54,6 +57,8 @@ Acf <- function(x, lag.max = NULL,
         seasonalaxis(attributes(x)$msts, nlags, type="acf")
       else
         seasonalaxis(frequency(x), nlags, type="acf")
+      if(type=="covariance")
+        axis(at=0, side=1)
     }
     return(invisible(acf.out))
   }
