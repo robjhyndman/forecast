@@ -14,7 +14,8 @@ findfrequency <- function(x)
   # Remove trend from data
   x <- residuals(tslm(x ~ trend))
   # Compute spectrum by fitting ar model to largest section of x
-  spec <- spec.ar(c(na.contiguous(x)),plot=FALSE)
+  n.freq <- 500
+  spec <- spec.ar(c(na.contiguous(x)), plot=FALSE, n.freq=n.freq)
   if(max(spec$spec)>10) # Arbitrary threshold chosen by trial and error.
   {
     period <- floor(1/spec$freq[which.max(spec$spec)] + 0.5)
@@ -23,7 +24,7 @@ findfrequency <- function(x)
       j <- which(diff(spec$spec)>0)
       if(length(j)>0)
       {
-        nextmax <- j[1] + which.max(spec$spec[(j[1]+1):500])
+        nextmax <- j[1] + which.max(spec$spec[(j[1]+1):n.freq])
         if(nextmax < length(spec$freq))
           period <- floor(1/spec$freq[nextmax] + 0.5)
         else
