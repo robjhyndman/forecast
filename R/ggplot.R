@@ -25,6 +25,12 @@ ggAddExtras <- function(xlab=NA, ylab=NA, main=NA){
       extras[[length(extras)+1]] <- ggplot2::ggtitle(main)
     }
   }
+  if("xlim"%in%names(dots)){
+    extras[[length(extras)+1]] <- ggplot2::xlim(dots$xlim)
+  }
+  if("ylim"%in%names(dots)){
+    extras[[length(extras)+1]] <- ggplot2::ylim(dots$ylim)
+  }
   return(extras)
 }
 
