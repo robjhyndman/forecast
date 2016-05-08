@@ -503,15 +503,18 @@ fitted.Arima <- function(object, biasadj = FALSE, ...)
 Arima <- function(x, order=c(0, 0, 0),
       seasonal=c(0, 0, 0),
       xreg=NULL, include.mean=TRUE, include.drift=FALSE, include.constant, lambda=model$lambda,
-    transform.pars=TRUE,
-      fixed=NULL, init=NULL, method=c("CSS-ML", "ML", "CSS"),
-      n.cond, optim.control=list(), kappa=1e6, model=NULL)
+      transform.pars=TRUE,
+      fixed=NULL, init=NULL, method=c("CSS-ML", "ML", "CSS"), n.cond,
+      optim.method=c("BFGS", "Nelder-Mead", "CG", "L-BFGS-B", "SANN", "Brent"),
+      optim.control=list(), kappa=1e6, model=NULL)
 {
     # Remove outliers near ends
     #j <- time(x)
     #x <- na.contiguous(x)
     #if(length(j) != length(x))
     #    warning("Missing values encountered. Using longest contiguous portion of time series")
+  
+  optim.method <- match.arg(optim.method)
 
   series <- deparse(substitute(x))
 
@@ -558,7 +561,7 @@ Arima <- function(x, order=c(0, 0, 0),
 
   if(!is.null(model))
   {
-    tmp <- arima2(x,model,xreg=xreg,method=method)
+    tmp <- arima2(x,model,xreg=xreg,method=method,optim.method=optim.method)
     xreg <- tmp$xreg
   }
   else
@@ -570,10 +573,12 @@ Arima <- function(x, order=c(0, 0, 0),
     }
     if(is.null(xreg))
       suppressWarnings(tmp <- stats::arima(x=x,order=order,seasonal=seasonal,include.mean=include.mean,
-          transform.pars=transform.pars,fixed=fixed,init=init,method=method,n.cond=n.cond,optim.control=optim.control,kappa=kappa))
+          transform.pars=transform.pars,fixed=fixed,init=init,method=method,n.cond=n.cond,
+          optim.method=optim.method,optim.control=optim.control,kappa=kappa))
     else
       suppressWarnings(tmp <- stats::arima(x=x,order=order,seasonal=seasonal,xreg=xreg,include.mean=include.mean,
-             transform.pars=transform.pars,fixed=fixed,init=init,method=method,n.cond=n.cond,optim.control=optim.control,kappa=kappa))
+             transform.pars=transform.pars,fixed=fixed,init=init,method=method,n.cond=n.cond,
+             optim.method=optim.method,optim.control=optim.control,kappa=kappa))
   }
 
   # Calculate aicc & bic based on tmp$aic
@@ -593,8 +598,10 @@ Arima <- function(x, order=c(0, 0, 0),
 }
 
 # Refits the model to new data x
-arima2 <- function (x, model, xreg, method)
+arima2 <- function (x, model, xreg, method,
+      optim.method=c("BFGS", "Nelder-Mead", "CG", "L-BFGS-B", "SANN", "Brent"))
 {
+    optim.method <- match.arg(optim.method)
     use.drift <- is.element("drift",names(model$coef))
     use.intercept <- is.element("intercept",names(model$coef))
     use.xreg <- is.element("xreg",names(model$call))
@@ -624,20 +631,23 @@ arima2 <- function (x, model, xreg, method)
     {
         if(use.xreg)
             refit <- Arima(x,order=model$arma[c(1,6,2)],seasonal=list(order=model$arma[c(3,7,4)],period=model$arma[5]),
-                fixed=model$coef,include.mean=use.intercept,xreg=xreg,method=method)
+                fixed=model$coef,include.mean=use.intercept,xreg=xreg,method=method,optim.method=optim.method)
         else
             refit <- Arima(x,order=model$arma[c(1,6,2)],seasonal=list(order=model$arma[c(3,7,4)],period=model$arma[5]),
-                fixed=model$coef,include.mean=use.intercept,method=method)
+                fixed=model$coef,include.mean=use.intercept,method=method,optim.method=optim.method)
     }
     else if(length(model$coef)>0) # Nonseasonal model with some parameters
     {
         if(use.xreg)
-           refit <- Arima(x,order=model$arma[c(1,6,2)],fixed=model$coef,xreg=xreg,include.mean=use.intercept,method=method)
+           refit <- Arima(x,order=model$arma[c(1,6,2)],fixed=model$coef,xreg=xreg,
+                include.mean=use.intercept,method=method,optim.method=optim.method)
         else
-            refit <- Arima(x,order=model$arma[c(1,6,2)],fixed=model$coef,include.mean=use.intercept,method=method)
+            refit <- Arima(x,order=model$arma[c(1,6,2)],fixed=model$coef,include.mean=use.intercept,
+                method=method,optim.method=optim.method)
     }
     else # No parameters
-            refit <- Arima(x,order=model$arma[c(1,6,2)],include.mean=FALSE,method=method)
+            refit <- Arima(x,order=model$arma[c(1,6,2)],include.mean=FALSE,
+                method=method,optim.method=optim.method)
 
     refit$var.coef <- matrix(0,length(refit$coef),length(refit$coef))
     if(use.xreg) # Why is this needed?

@@ -5,7 +5,8 @@
 Arima(x, order=c(0,0,0), seasonal=c(0,0,0),
     xreg=NULL, include.mean=TRUE, include.drift=FALSE, 
     include.constant, lambda=model$lambda, transform.pars=TRUE, 
-    fixed=NULL, init=NULL, method=c("CSS-ML","ML","CSS"), n.cond, 
+    fixed=NULL, init=NULL, method=c("CSS-ML","ML","CSS"), n.cond,
+    optim.method=("BFGS", "Nelder-Mead", "CG", "L-BFGS-B", "SANN", "Brend"), 
     optim.control=list(), kappa=1e6, model=NULL)
 }
 
@@ -24,6 +25,8 @@ Arima(x, order=c(0,0,0), seasonal=c(0,0,0),
 \item{init}{optional numeric vector of initial parameter values. Missing values will be filled in, by zeroes except for regression coefficients. Values already specified in fixed will be ignored.}
 \item{method}{Fitting method: maximum likelihood or minimize conditional sum-of-squares. The default (unless there are missing values) is to use conditional-sum-of-squares to find starting values, then maximum likelihood.}
 \item{n.cond}{Only used if fitting by conditional-sum-of-squares: the number of initial observations to ignore. It will be ignored if less than the maximum lag of an AR term.}
+\item{optim.method}{The value passed as the \code{method} argument to 
+\link[stats]{optim}}
 \item{optim.control}{List of control parameters for optim.}
 \item{kappa}{the prior variance (as a multiple of the innovations variance) for the past observations in a differenced model. Do not reduce this.}
 \item{model}{Output from a previous call to \code{Arima}. If model is passed, this same model is fitted to
