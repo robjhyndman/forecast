@@ -6,7 +6,7 @@ Arima(x, order=c(0,0,0), seasonal=c(0,0,0),
     xreg=NULL, include.mean=TRUE, include.drift=FALSE, 
     include.constant, lambda=model$lambda, transform.pars=TRUE, 
     fixed=NULL, init=NULL, method=c("CSS-ML","ML","CSS"), n.cond,
-    optim.method=("BFGS", "Nelder-Mead", "CG", "L-BFGS-B", "SANN", "Brend"), 
+    optim.method=("BFGS", "Nelder-Mead", "CG", "L-BFGS-B", "SANN", "Brent"), 
     optim.control=list(), kappa=1e6, model=NULL)
 }
 
