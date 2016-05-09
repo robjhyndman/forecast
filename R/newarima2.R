@@ -8,8 +8,6 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     allowdrift=TRUE,allowmean=TRUE,lambda=NULL, biasadj=FALSE,
     parallel=FALSE, num.cores=2, ...)
 {
-  optim.method <- match.arg(optim.method)
-
   # Only non-stepwise parallel implemented so far.
   if (stepwise==TRUE & parallel==TRUE)
   {
@@ -459,7 +457,6 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
 # and drift terms to be included.
 myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE, ic="aic", trace=FALSE,approximation=FALSE,offset=0,xreg=NULL,...)
 {
-    optim.method <- match.arg(optim.method)
     n <- length(x)
     m <- frequency(x)
     use.season <- (sum(seasonal)>0) & m>0
@@ -474,7 +471,7 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
         if(use.season)
             suppressWarnings(fit <- try(stats::arima(x=x,order=order,seasonal=list(order=seasonal,period=m),xreg=xreg,method=method,...),silent=TRUE))
         else
-            suppressWarnings(fit <- try(stats::arima(x=x,order=order,xreg=xreg,method=method,optim.method=optim.method),silent=TRUE))
+            suppressWarnings(fit <- try(stats::arima(x=x,order=order,xreg=xreg,method=method,...),silent=TRUE))
     }
     else
     {
