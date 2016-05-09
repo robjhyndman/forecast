@@ -4,10 +4,8 @@
 \usage{
 Arima(x, order=c(0,0,0), seasonal=c(0,0,0),
     xreg=NULL, include.mean=TRUE, include.drift=FALSE, 
-    include.constant, lambda=model$lambda, transform.pars=TRUE, 
-    fixed=NULL, init=NULL, method=c("CSS-ML","ML","CSS"), n.cond,
-    optim.method=c("BFGS", "Nelder-Mead", "CG", "L-BFGS-B", "SANN", "Brent"), 
-    optim.control=list(), kappa=1e6, model=NULL)
+    include.constant, lambda=model$lambda, method=c("CSS-ML","ML","CSS"), 
+    model=NULL, ...)
 }
 
 \arguments{
@@ -20,17 +18,10 @@ Arima(x, order=c(0,0,0), seasonal=c(0,0,0),
     The default is FALSE.}
 \item{include.constant}{If TRUE, then \code{include.mean} is set to be TRUE for undifferenced series and \code{include.drift} is set to be TRUE for differenced series. Note that if there is more than one difference taken, no constant is included regardless of the value of this argument. This is deliberate as otherwise quadratic and higher order polynomial trends would be induced.}
 \item{lambda}{Box-Cox transformation parameter. Ignored if NULL. Otherwise, data transformed before model is estimated.}
-\item{transform.pars}{Logical. If true, the AR parameters are transformed to ensure that they remain in the region of stationarity. Not used for method="CSS".}
-\item{fixed}{optional numeric vector of the same length as the total number of parameters. If supplied, only NA entries in fixed will be varied. transform.pars=TRUE will be overridden (with a warning) if any AR parameters are fixed. It may be wise to set transform.pars=FALSE when fixing MA parameters, especially near non-invertibility.}
-\item{init}{optional numeric vector of initial parameter values. Missing values will be filled in, by zeroes except for regression coefficients. Values already specified in fixed will be ignored.}
 \item{method}{Fitting method: maximum likelihood or minimize conditional sum-of-squares. The default (unless there are missing values) is to use conditional-sum-of-squares to find starting values, then maximum likelihood.}
-\item{n.cond}{Only used if fitting by conditional-sum-of-squares: the number of initial observations to ignore. It will be ignored if less than the maximum lag of an AR term.}
-\item{optim.method}{The value passed as the \code{method} argument to 
-\link[stats]{optim}}
-\item{optim.control}{List of control parameters for optim.}
-\item{kappa}{the prior variance (as a multiple of the innovations variance) for the past observations in a differenced model. Do not reduce this.}
 \item{model}{Output from a previous call to \code{Arima}. If model is passed, this same model is fitted to
 \code{x} without re-estimating any parameters.}
+\item{...}{Additional arguments to be passed to \code{\link[stats]{arima}}.}
 }
 
 \description{Largely a wrapper for the \code{\link[stats]{arima}} function in the stats package. The main difference is that this function
