@@ -1,7 +1,7 @@
 search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     max.P=2, max.Q=2, max.order=5, stationary=FALSE, ic=c("aic","aicc","bic"),
     trace=FALSE,approximation=FALSE,xreg=NULL,offset=offset,allowdrift=TRUE,
-    allowmean=TRUE, parallel=FALSE, num.cores=2)
+    allowmean=TRUE, parallel=FALSE, num.cores=2, ...)
 {
   #dataname <- substitute(x)
   ic <- match.arg(ic)
@@ -31,7 +31,7 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
               {
                 fit <- myarima(x,order=c(i,d,j),seasonal=c(I,D,J),
                   constant=(K==1),trace=trace,ic=ic, approximation=approximation,
-                  offset=offset,xreg=xreg)
+                  offset=offset,xreg=xreg,...)
                 if(fit$ic < best.ic)
                 {
                   best.ic <- fit$ic
@@ -58,7 +58,8 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
       if (i+j+I+J <= max.order)
       {
         fit <- myarima(x,order=c(i,d,j),seasonal=c(I,D,J),constant=(K==1),
-        trace=trace,ic=ic,approximation=approximation,offset=offset,xreg=xreg)
+        trace=trace,ic=ic,approximation=approximation,offset=offset,xreg=xreg,
+        ...)
       }
       if (exists("fit"))
         return(cbind(fit, K))
@@ -97,7 +98,7 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
       #constant <- length(bestfit$coef) - ncol(xreg) > sum(bestfit$arma[1:4])
       newbestfit <- myarima(x,order=bestfit$arma[c(1,6,2)],
         seasonal=bestfit$arma[c(3,7,4)], constant=constant, ic,
-        trace=FALSE, approximation=FALSE, xreg=xreg)
+        trace=FALSE, approximation=FALSE, xreg=xreg, ...)
       if(newbestfit$ic == Inf)
       {
         # Final model is lousy. Better try again without approximation
@@ -106,7 +107,7 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
             max.P=max.P, max.Q=max.Q, max.order=max.order, stationary=stationary,
             ic=ic, trace=trace, approximation=FALSE, xreg=xreg, offset=offset,
             allowdrift=allowdrift, allowmean=allowmean,
-            parallel=parallel, num.cores=num.cores)
+            parallel=parallel, num.cores=num.cores, ...)
         bestfit$ic <- switch(ic,bic=bestfit$bic,aic=bestfit$aic,aicc=bestfit$aicc)
       }
       else
@@ -503,16 +504,14 @@ fitted.Arima <- function(object, biasadj = FALSE, ...)
 Arima <- function(x, order=c(0, 0, 0),
       seasonal=c(0, 0, 0),
       xreg=NULL, include.mean=TRUE, include.drift=FALSE, include.constant, lambda=model$lambda,
-    transform.pars=TRUE,
-      fixed=NULL, init=NULL, method=c("CSS-ML", "ML", "CSS"),
-      n.cond, optim.control=list(), kappa=1e6, model=NULL)
+      method=c("CSS-ML", "ML", "CSS"), model=NULL, ...)
 {
     # Remove outliers near ends
     #j <- time(x)
     #x <- na.contiguous(x)
     #if(length(j) != length(x))
     #    warning("Missing values encountered. Using longest contiguous portion of time series")
-
+  
   series <- deparse(substitute(x))
 
   origx <- x
@@ -569,11 +568,9 @@ Arima <- function(x, order=c(0, 0, 0),
       xreg <- cbind(drift=drift,xreg)
     }
     if(is.null(xreg))
-      suppressWarnings(tmp <- stats::arima(x=x,order=order,seasonal=seasonal,include.mean=include.mean,
-          transform.pars=transform.pars,fixed=fixed,init=init,method=method,n.cond=n.cond,optim.control=optim.control,kappa=kappa))
+      suppressWarnings(tmp <- stats::arima(x=x,order=order,seasonal=seasonal,include.mean=include.mean,method=method,...))
     else
-      suppressWarnings(tmp <- stats::arima(x=x,order=order,seasonal=seasonal,xreg=xreg,include.mean=include.mean,
-             transform.pars=transform.pars,fixed=fixed,init=init,method=method,n.cond=n.cond,optim.control=optim.control,kappa=kappa))
+      suppressWarnings(tmp <- stats::arima(x=x,order=order,seasonal=seasonal,xreg=xreg,include.mean=include.mean,...))
   }
 
   # Calculate aicc & bic based on tmp$aic
@@ -624,17 +621,17 @@ arima2 <- function (x, model, xreg, method)
     {
         if(use.xreg)
             refit <- Arima(x,order=model$arma[c(1,6,2)],seasonal=list(order=model$arma[c(3,7,4)],period=model$arma[5]),
-                fixed=model$coef,include.mean=use.intercept,xreg=xreg,method=method)
+                include.mean=use.intercept,xreg=xreg,method=method,fixed=model$coef)
         else
             refit <- Arima(x,order=model$arma[c(1,6,2)],seasonal=list(order=model$arma[c(3,7,4)],period=model$arma[5]),
-                fixed=model$coef,include.mean=use.intercept,method=method)
+                include.mean=use.intercept,method=method,fixed=model$coef)
     }
     else if(length(model$coef)>0) # Nonseasonal model with some parameters
     {
         if(use.xreg)
-           refit <- Arima(x,order=model$arma[c(1,6,2)],fixed=model$coef,xreg=xreg,include.mean=use.intercept,method=method)
+           refit <- Arima(x,order=model$arma[c(1,6,2)],xreg=xreg,include.mean=use.intercept,method=method,fixed=model$coef)
         else
-            refit <- Arima(x,order=model$arma[c(1,6,2)],fixed=model$coef,include.mean=use.intercept,method=method)
+            refit <- Arima(x,order=model$arma[c(1,6,2)],include.mean=use.intercept,method=method,fixed=model$coef)
     }
     else # No parameters
             refit <- Arima(x,order=model$arma[c(1,6,2)],include.mean=FALSE,method=method)
