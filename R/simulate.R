@@ -277,8 +277,8 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
 
     if(future)
     {
-      model <- list(order=order, ar=ar, ma=ma,sd=sqrt(object$sigma2),residuals=residuals(object), 
-        seasonal.difference=object$arma[7], seasonal.period=object$arma[5], flag.seasonal.arma=flag.s.arma, 
+      model <- list(order=order, ar=ar, ma=ma,sd=sqrt(object$sigma2),residuals=residuals(object),
+        seasonal.difference=object$arma[7], seasonal.period=object$arma[5], flag.seasonal.arma=flag.s.arma,
         seasonal.order=object$arma[c(3,7,4)])
     }
     else
@@ -306,7 +306,7 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
 
     if(future)
     {
-      model <- list(order=object$arma[c(1, 6, 2)],ar=ar,ma=ma,sd=sqrt(object$sigma2),residuals=residuals(object), 
+      model <- list(order=object$arma[c(1, 6, 2)],ar=ar,ma=ma,sd=sqrt(object$sigma2),residuals=residuals(object),
         seasonal.difference=0, flag.seasonal.arma=flag.s.arma, seasonal.order=c(0,0,0), seasonal.period=1)
     }
     else
@@ -437,7 +437,7 @@ simulate.ar <- function(object, nsim=object$n.used, seed=NULL, future=TRUE, boot
   else if(length(innov)==nsim)
     e <- innov
   else
-    stop("Length of innov must be equal to nsim")  
+    stop("Length of innov must be equal to nsim")
   if(future)
     return(myarima.sim(model,nsim,x=object$x,e=e) + x.mean)
   else
@@ -471,5 +471,57 @@ simulate.fracdiff <- function(object, nsim=object$n, seed=NULL, future=TRUE, boo
 }
 
 
-
-
+simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, future=TRUE, bootstrap=FALSE, innov=NULL, ...)
+{
+  if(is.null(innov))
+  {
+    if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE))
+      runif(1)
+    if (is.null(seed))
+      RNGstate <- get(".Random.seed", envir = .GlobalEnv)
+    else
+    {
+      R.seed <- get(".Random.seed", envir = .GlobalEnv)
+      set.seed(seed)
+      RNGstate <- structure(seed, kind = as.list(RNGkind()))
+      on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
+    }
+  }
+  ## only future currently implemented
+  if(!future)
+    warning("simulate.nnetar() currently only supports future=TRUE")
+  ## set simulation innovations
+  if(bootstrap)
+  {
+    res <- na.omit(object$residuals)
+    res <- res - mean(res)          #center residuals
+    e <- sample(res,nsim,replace=TRUE)
+  }
+  else if(is.null(innov))
+    e <- rnorm(nsim, 0, sd(object$residuals, na.rm=TRUE))
+  else if(length(innov)==nsim)
+    e <- innov
+  else
+    stop("Length of innov must be equal to nsim")
+  ##
+  ## Simulate by iteratively forecasting and adding innovation
+  x <- object$x
+  oldxreg <- object$xreg
+  if (!is.null(xreg))
+    xreg <- as.matrix(xreg)
+  startx <- tsp(x)[1]
+  endx <- tsp(x)[2]
+  freqx <- tsp(x)[3]
+  path <- rep(NA_real_, length=n)
+  path <- ts(path, start=endx+1/freqx, end=endx+n/freqx, frequency=freqx)
+  for (i in 1:n){
+    newmodel <- nnetar(x, model=object, xreg=oldxreg)
+    fcast <- forecast(newmodel, h=1, xreg=xreg[i, ])
+    newpt <- fcast$mean + e[i]
+    path[i] <- newpt
+    newx <- c(x, newpt)
+    x <- ts(newx, start=startx, end=endx+i/freqx, frequency=freqx)
+    oldxreg <- rbind(oldxreg, xreg[i, ])
+  }
+  return(path)
+}
