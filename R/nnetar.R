@@ -295,6 +295,7 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI
   }
   else
   {
+    level <- NULL
     lower <- NULL
     upper <- NULL
   }
