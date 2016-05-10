@@ -512,11 +512,11 @@ simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL,
   startx <- tsp(x)[1]
   endx <- tsp(x)[2]
   freqx <- tsp(x)[3]
-  path <- rep(NA_real_, length=n)
-  path <- ts(path, start=endx+1/freqx, end=endx+n/freqx, frequency=freqx)
-  for (i in 1:n){
+  path <- rep(NA_real_, length=nsim)
+  path <- ts(path, start=endx+1/freqx, end=endx+nsim/freqx, frequency=freqx)
+  for (i in 1:nsim){
     newmodel <- nnetar(x, model=object, xreg=oldxreg)
-    fcast <- forecast(newmodel, h=1, xreg=xreg[i, ])
+    fcast <- forecast(newmodel, h=1, xreg=xreg[i, ], PI=FALSE)
     newpt <- fcast$mean + e[i]
     path[i] <- newpt
     newx <- c(x, newpt)
