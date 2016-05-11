@@ -1,9 +1,12 @@
 \name{gglagplot}
 \alias{gglagplot}
+\alias{gglagchull}
 \title{Time series lag ggplots}
 \usage{gglagplot(x, lags = 1, set.lags = 1:lags, diag=TRUE,
-  diag.col="gray", do.lines = TRUE, colourlines = TRUE, labels = !do.lines,
-  seasonal = TRUE, ...)
+  diag.col="gray", do.lines = TRUE, colourlines = TRUE,
+  labels = !do.lines, seasonal = TRUE, ...)
+gglagchull(x, lags = 1, set.lags = 1:lags, diag=TRUE, 
+  diag.col="gray", ...)
 }
 \arguments{
 \item{x}{a time series object (type \code{ts}).}
@@ -17,7 +20,12 @@
 \item{seasonal}{Should the line colour be based on seasonal characteristics (TRUE), or sequential (FALSE).}
 \item{\dots}{Not used (for consistency with lag.plot)}
 }
-\description{Plots a lag plot using ggplot.}
+\description{Plots a lag plot using ggplot.
+
+\dQuote{gglagplot} will plot time series against lagged versions of themselves. Helps visualising 'auto-dependence' even when auto-correlations vanish.
+
+\dQuote{gglagchull} will layer convex hulls of the lags, layered on a single plot. This helps visualise the change in 'auto-dependence' as lags increase.
+}
 
 \value{None.
 }
@@ -26,8 +34,10 @@
 \seealso{\code{\link[stats]{lag.plot}}}
 \examples{
 gglagplot(AirPassengers)
+gglagchull(AirPassengers)
 gglagplot(AirPassengers,seasonal=FALSE)
 
 lungDeaths <- cbind(mdeaths, fdeaths)
 gglagplot(lungDeaths, lags=2)
+gglagchull(lungDeaths, lags=6)
 }

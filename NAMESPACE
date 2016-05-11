@@ -32,11 +32,12 @@ is.acf, is.Arima, is.bats, is.constant, is.ets, is.forecast, is.mforecast, is.nn
 nnetar, forecast.nnetar, plot.Arima, plot.ar, taperedacf, taperedpacf,
 meanf, logLik.ets, monthdays, na.interp, ets, plot.bats, plot.tbats, plot.ets, plot.forecast,
 plot.splineforecast, rwf, seasadj, seasonaldummy,naive,snaive,stlf,subset.ts,
-seasonaldummyf, ggAcf, ggPacf, ggCcf, ggtaperedacf, ggtaperedpacf, gglagplot, ggtsdisplay, ggmonthplot,
-ggseasonplot, seasonplot, ses, sindexf, splinef, tslm, fourier, fourierf,forecast.lm,
-thetaf, tsdisplay, simulate.ets, simulate.ar, simulate.Arima, simulate.fracdiff, ndiffs, nsdiffs, dm.test,tbats.components,
-Acf,Pacf,Ccf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts, getResponse, tsoutliers,
-tsclean, bizdays, easter,stlm, forecast.stlm, StatForecast, GeomForecast, geom_forecast)
+seasonaldummyf, ggAcf, ggPacf, ggCcf, ggtaperedacf, ggtaperedpacf, gglagplot, gglagchull,
+ggtsdisplay, ggmonthplot, ggseasonplot, seasonplot, ses, sindexf, splinef, tslm, fourier,
+fourierf,forecast.lm,thetaf, tsdisplay, simulate.ets, simulate.ar, simulate.Arima, simulate.fracdiff,
+ndiffs, nsdiffs, dm.test,tbats.components, Acf,Pacf,Ccf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts,
+getResponse, tsoutliers, tsclean, bizdays, easter,stlm, forecast.stlm,
+StatForecast, GeomForecast, geom_forecast)
 
 S3method(autoplot, acf)
 S3method(autoplot, ar)
