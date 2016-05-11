@@ -628,6 +628,82 @@ ggtsdisplay <- function(x, plot.type=c("partial","scatter","spectrum"),
   }
 }
 
+gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray", do.lines = TRUE, colourlines = TRUE, labels = !do.lines, seasonal = TRUE, ...){
+  if (requireNamespace("ggplot2")){
+    if(is.ts(x)){
+      linecol = cycle(x)
+    }
+    else{
+      seasonal=FALSE
+    }
+    x <- as.matrix(x)
+    
+    #Prepare data for plotting
+    n <- NROW(x)
+    data <- data.frame()
+    for(i in 1:NCOL(x)){
+      for(lag in set.lags){
+        sname <- colnames(x)[i]
+        if(is.null(sname)){
+          sname <- substitute(x)
+        }
+        data <- rbind(data, data.frame(lagnum = 1:(n-lag), freqcur = ifelse(rep(seasonal,n-lag),linecol[(lag+1):n],(lag+1):n), orig = x[(lag+1):n,i], lagged = x[1:(n-lag),i], lag = rep(lag, n-lag), series = rep(sname, n-lag)))
+      }
+    }
+    
+    #Initialise ggplot object
+    p <- ggplot2::ggplot(ggplot2::aes_(x=~orig, y=~lagged), data=data)
+    
+    if(diag){
+      p <- p + ggplot2::geom_abline(colour=diag.col, linetype="dashed")
+    }
+    
+    if(do.lines){
+      if(labels){
+        linesize = 0.25
+      }
+      else{
+        linesize = 0.5
+      }
+      if(colourlines){
+        p <- p + ggplot2::geom_path(ggplot2::aes_(colour=~freqcur), size=linesize)
+      }
+      else{
+        p <- p + ggplot2::geom_path(size=linesize)
+      }
+    }
+    else{
+      colourlines <- FALSE
+    }
+    if(labels){
+      p <- p + ggplot2::geom_text(ggplot2::aes_(label=~lagnum))
+    }
+    p <- p + ggplot2::guides(colour = ggplot2::guide_colourbar(title=ifelse(seasonal, "season", "time")))
+    
+    #Ensure all facets are of size size (if extreme values are excluded in lag specification)
+    if(max(set.lags)>NROW(x)/2){
+      axissize <- rbind(aggregate(orig ~ series, data=data, min),aggregate(orig~ series, data=data, max))
+      axissize <- data.frame(series = rep(axissize$series, length(set.lags)), orig = rep(axissize$orig, length(set.lags)), lag = rep(set.lags, each=NCOL(x)))
+      p <- p + ggplot2::geom_blank(ggplot2::aes_(x=~orig, y=~orig), data=axissize)
+    }
+    #Facet
+    if(NCOL(x)>1){
+      p <- p + ggplot2::facet_wrap(series~lag, scales = "free", labeller = function(labels) list(unname(unlist(do.call("Map", c(list(paste, sep=", lag "), lapply(labels, as.character)))))))
+    }
+    else{
+      p <- p + ggplot2::facet_wrap(~lag, labeller = function(labels) lapply(labels, function(x) paste0("lag ",as.character(x))))
+    }
+    p <- p + ggplot2::theme(aspect.ratio=1)
+    if(colourlines){
+      p <- p + ggplot2::guides(colour = ggplot2::guide_colourbar(title=ifelse(seasonal, "season", "time")))
+    }
+    
+    p <- p + ggAddExtras(ylab = NULL, xlab = NULL)
+    
+    return(p)
+  }
+}
+
 ggmonthplot <- function (x, labels = NULL, times = time(x), phase = cycle(x), ...){
   if (requireNamespace("ggplot2")){
     if (!inherits(x, "ts")){
