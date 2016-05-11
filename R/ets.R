@@ -68,11 +68,11 @@ ets <- function(y, model="ZZZ", damped=NULL,
       e <- pegelsresid.C(y, m, model$initstate, errortype, trendtype, seasontype, damped, alpha, beta, gamma, phi, nmse)
 
       # Compute error measures
-      np <- length(model$par)
+      np <- length(model$par) + 1
       model$loglik <- -0.5*e$lik
       model$aic <- e$lik + 2*np
       model$bic <- e$lik + log(ny)*np
-      model$aicc <- e$lik + 2*ny*np/(ny-np-1)
+      model$aicc <- model$aic +  2*np*(np+1)/(ny-np-1)
       model$mse <- e$amse[1]
       model$amse <- mean(e$amse)
 
@@ -459,10 +459,11 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
     phi <- fit.par["phi"]
   e <- pegelsresid.C(y,m,init.state,errortype,trendtype,seasontype,damped,alpha,beta,gamma,phi,nmse)
 
-  n <- length(y)
+  np <- length(model$par) + 1
+  ny <- length(y)
   aic <- e$lik + 2*np
-  bic <- e$lik + log(n)*np
-  aicc <- e$lik + 2*n*np/(n-np-1)
+  bic <- e$lik + log(ny)*np
+  aicc <- model$aic +  2*np*(np+1)/(ny-np-1)
 
   mse <- e$amse[1]
   amse <- mean(e$amse)
