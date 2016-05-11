@@ -791,7 +791,7 @@ ggmonthplot <- function (x, labels = NULL, times = time(x), phase = cycle(x), ..
   }
 }
 
-ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NULL, col=NULL, labelgap=0.04, ...){
+ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NULL, labelgap=0.04, ...){
   if (requireNamespace("ggplot2")){
     if (!inherits(x, "ts")){
       stop("autoplot.seasonplot requires a ts object, use x=object")
@@ -805,7 +805,7 @@ ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NUL
     if(s <= 1)
       stop("Data are not seasonal")
 
-    data <- data.frame(y=as.numeric(x),year=factor(trunc(time(x))),time=as.numeric(round(time(x)%%1,digits = 6)))
+    data <- data.frame(y=as.numeric(x),year=as.numeric(trunc(time(x))),time=as.numeric(round(time(x)%%1,digits = 6)))
 
     #Initialise ggplot object
     p <- ggplot2::ggplot(ggplot2::aes_(x=~time, y=~y, group=~year, colour=~year), data=data, na.rm=TRUE)
@@ -813,16 +813,6 @@ ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NUL
 
     #Add data
     p <- p + ggplot2::geom_line()
-
-    if(!is.null(col)){
-      ncol <- length(unique(data$year))
-      if(length(col)==1){
-        p <- p + ggplot2::scale_color_manual(guide="none", values=rep(col, ncol))
-      }
-      else{
-        p <- p + ggplot2::scale_color_manual(values=rep(col, ceiling(ncol/length(col)))[1:ncol])
-      }
-    }
 
     if(year.labels){
       yrlab <- stats::aggregate(time ~ year, data=data, FUN = max)

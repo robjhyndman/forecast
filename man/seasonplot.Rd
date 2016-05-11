@@ -7,7 +7,7 @@
     col=1, labelgap=0.1, ...)
 
 ggseasonplot(x, year.labels=FALSE, year.labels.left=FALSE, 
-    type=NULL, col=NULL, labelgap=0.04,
+    type=NULL, labelgap=0.04,
     ...)
 }
 \arguments{
@@ -34,6 +34,6 @@ ggseasonplot(x, year.labels=FALSE, year.labels.left=FALSE,
 \author{Rob J Hyndman & Mitchell O'Hara-Wild}
 \seealso{\code{\link[stats]{monthplot}}}
 \examples{seasonplot(AirPassengers,col=rainbow(12),year.labels=TRUE)
-ggseasonplot(AirPassengers,col=rainbow(12),year.labels=TRUE)
+ggseasonplot(AirPassengers,year.labels=TRUE)
 }
 \keyword{ts}
