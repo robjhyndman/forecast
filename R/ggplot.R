@@ -678,8 +678,6 @@ gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray"
     if(labels){
       p <- p + ggplot2::geom_text(ggplot2::aes_(label=~lagnum))
     }
-    p <- p + ggplot2::guides(colour = ggplot2::guide_colourbar(title=ifelse(seasonal, "season", "time")))
-    
     #Ensure all facets are of size size (if extreme values are excluded in lag specification)
     if(max(set.lags)>NROW(x)/2){
       axissize <- rbind(aggregate(orig ~ series, data=data, min),aggregate(orig~ series, data=data, max))
@@ -697,6 +695,49 @@ gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray"
     if(colourlines){
       p <- p + ggplot2::guides(colour = ggplot2::guide_colourbar(title=ifelse(seasonal, "season", "time")))
     }
+    
+    p <- p + ggAddExtras(ylab = NULL, xlab = NULL)
+    
+    return(p)
+  }
+}
+
+gglagchull <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray", ...){
+  if (requireNamespace("ggplot2")){
+    x <- as.matrix(x)
+    
+    #Prepare data for plotting
+    n <- NROW(x)
+    data <- data.frame()
+    for(i in 1:NCOL(x)){
+      for(lag in set.lags){
+        sname <- colnames(x)[i]
+        if(is.null(sname)){
+          sname <- substitute(x)
+        }
+        data <- rbind(data, data.frame(orig = x[(lag+1):n,i], lagged = x[1:(n-lag),i], lag = rep(lag, n-lag), series = rep(sname, n-lag))[chull(x[(lag+1):n,i], x[1:(n-lag),i]),])
+      }
+    }
+    
+    #Initialise ggplot object
+    p <- ggplot2::ggplot(ggplot2::aes_(x=~orig, y=~lagged), data=data)
+    
+    if(diag){
+      p <- p + ggplot2::geom_abline(colour=diag.col, linetype="dashed")
+    }
+    
+    p <- p + ggplot2::geom_path(ggplot2::aes_(colour=~lag))
+
+    p <- p + ggplot2::guides(colour = ggplot2::guide_colourbar(title="lag"))
+    
+    #Ensure all facets are of size size (if extreme values are excluded in lag specification)
+    if(max(set.lags)>NROW(x)/2){
+      axissize <- rbind(aggregate(orig ~ series, data=data, min),aggregate(orig~ series, data=data, max))
+      axissize <- data.frame(series = rep(axissize$series, length(set.lags)), orig = rep(axissize$orig, length(set.lags)), lag = rep(set.lags, each=NCOL(x)))
+      p <- p + ggplot2::geom_blank(ggplot2::aes_(x=~orig, y=~orig), data=axissize)
+    }
+
+    p <- p + ggplot2::theme(aspect.ratio=1)
     
     p <- p + ggAddExtras(ylab = NULL, xlab = NULL)
     
