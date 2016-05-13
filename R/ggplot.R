@@ -628,13 +628,14 @@ ggtsdisplay <- function(x, plot.type=c("partial","scatter","spectrum"),
   }
 }
 
-gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray", do.lines = TRUE, colour = TRUE, labels = FALSE, seasonal = TRUE, ...){
+gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray", do.lines = TRUE, colour = TRUE, continuous = TRUE, labels = FALSE, seasonal = TRUE, ...){
   if (requireNamespace("ggplot2")){
     if(frequency(x)>1){
       linecol = cycle(x)
     }
     else{
       seasonal=FALSE
+      continuous=TRUE
     }
     x <- as.matrix(x)
     
@@ -649,6 +650,9 @@ gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray"
         }
         data <- rbind(data, data.frame(lagnum = 1:(n-lag), freqcur = ifelse(rep(seasonal,n-lag),linecol[(lag+1):n],(lag+1):n), orig = x[(lag+1):n,i], lagged = x[1:(n-lag),i], lag = rep(lag, n-lag), series = rep(sname, n-lag)))
       }
+    }
+    if(!continuous){
+      data$freqcur <- factor(data$freqcur)
     }
     
     #Initialise ggplot object
@@ -695,7 +699,12 @@ gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray"
     }
     p <- p + ggplot2::theme(aspect.ratio=1)
     if(colour){
-      p <- p + ggplot2::guides(colour = ggplot2::guide_colourbar(title=ifelse(seasonal, "season", "time")))
+      if(continuous){
+        p <- p + ggplot2::guides(colour = ggplot2::guide_colourbar(title=ifelse(seasonal, "season", "time")))
+      }
+      else{
+        p <- p + ggplot2::guides(colour = ggplot2::guide_legend(title=ifelse(seasonal, "season", "time")))
+      }
     }
     
     p <- p + ggAddExtras(ylab = NULL, xlab = NULL)
