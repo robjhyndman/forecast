@@ -473,28 +473,33 @@ arima.errors <- function(z)
 }
 
 # Return one-step fits
-fitted.Arima <- function(object, biasadj = FALSE, ...)
+fitted.Arima <- function(object, biasadj = FALSE, h = 1, ...)
 {
-  x <- getResponse(object)
-  if(!is.null(object$fitted)){
-    return(object$fitted)
-  }
-  if(is.null(x))
-  {
-    #warning("Fitted values are unavailable due to missing historical data")
-    return(NULL)
-  }
-  if(is.null(object$lambda)){
-    return(x - object$residuals)
-  }
-  else{
-    fits <- InvBoxCox(BoxCox(x,object$lambda) - object$residuals, object$lambda)
-    if(biasadj){
-      return(InvBoxCoxf(x = fits, fvar = var(object$residuals), lambda = object$lambda))
+  if(h==1){
+    x <- getResponse(object)
+    if(!is.null(object$fitted)){
+      return(object$fitted)
+    }
+    if(is.null(x))
+    {
+      #warning("Fitted values are unavailable due to missing historical data")
+      return(NULL)
+    }
+    if(is.null(object$lambda)){
+      return(x - object$residuals)
     }
     else{
-      return(fits)
+      fits <- InvBoxCox(BoxCox(x,object$lambda) - object$residuals, object$lambda)
+      if(biasadj){
+        return(InvBoxCoxf(x = fits, fvar = var(object$residuals), lambda = object$lambda))
+      }
+      else{
+        return(fits)
+      }
     }
+  }
+  else{
+    return(hfitted(object=object, h=h, FUN=Arima, biasadj=biasadj,  ...))
   }
 }
 
