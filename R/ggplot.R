@@ -628,7 +628,7 @@ ggtsdisplay <- function(x, plot.type=c("partial","scatter","spectrum"),
   }
 }
 
-gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray", do.lines = TRUE, colourlines = TRUE, labels = !do.lines, seasonal = TRUE, ...){
+gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray", do.lines = TRUE, colour = TRUE, labels = FALSE, seasonal = TRUE, ...){
   if (requireNamespace("ggplot2")){
     if(frequency(x)>1){
       linecol = cycle(x)
@@ -658,23 +658,25 @@ gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray"
       p <- p + ggplot2::geom_abline(colour=diag.col, linetype="dashed")
     }
     
-    if(do.lines){
-      if(labels){
-        linesize = 0.25
-      }
-      else{
-        linesize = 0.5
-      }
-      if(colourlines){
-        p <- p + ggplot2::geom_path(ggplot2::aes_(colour=~freqcur), size=linesize)
-      }
-      else{
-        p <- p + ggplot2::geom_path(size=linesize)
-      }
+    if(labels){
+      linesize = 0.25
     }
     else{
-      colourlines <- FALSE
+      linesize = 0.5
     }
+    plottype <- if(do.lines){
+      ggplot2::geom_path
+    }
+    else{
+      ggplot2::geom_point
+    }
+    if(colour){
+      p <- p + plottype(ggplot2::aes_(colour=~freqcur), size=linesize)
+    }
+    else{
+      p <- p + plottype(size=linesize)
+    }
+  
     if(labels){
       p <- p + ggplot2::geom_text(ggplot2::aes_(label=~lagnum))
     }
@@ -692,7 +694,7 @@ gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray"
       p <- p + ggplot2::facet_wrap(~lag, labeller = function(labels) lapply(labels, function(x) paste0("lag ",as.character(x))))
     }
     p <- p + ggplot2::theme(aspect.ratio=1)
-    if(colourlines){
+    if(colour){
       p <- p + ggplot2::guides(colour = ggplot2::guide_colourbar(title=ifelse(seasonal, "season", "time")))
     }
     
