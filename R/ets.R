@@ -10,9 +10,6 @@ ets <- function(y, model="ZZZ", damped=NULL,
   bounds <- match.arg(bounds)
   ic <- match.arg(ic)
 
-  #if(max(y,na.rm=TRUE) > 1e6)
-  #    warning("Very large numbers which may cause numerical problems. Try scaling the data first")
-
   if(any(class(y) %in% c("data.frame","list","matrix","mts")))
     stop("y should be a univariate time series")
   y <- as.ts(y)
@@ -173,7 +170,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
     npars <- npars + m # gamma + s
   if(!is.null(damped))
     npars <- npars + as.numeric(damped)
-  if(n <= npars + 1)
+  if(n <= max(4,npars + 1))
     stop("You've got to be joking. I need more data!")
 
   # Fit model (assuming only one nonseasonal model)
