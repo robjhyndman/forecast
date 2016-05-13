@@ -15,7 +15,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
   y <- as.ts(y)
 
   # Check if data is constant
-  if (is.constant(y))
+  if (missing(model) & is.constant(y))
     return(ses(y, alpha=0.99999, initial='simple')$model)
 
   # Remove missing values near ends
