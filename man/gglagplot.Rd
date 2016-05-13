@@ -3,7 +3,7 @@
 \alias{gglagchull}
 \title{Time series lag ggplots}
 \usage{gglagplot(x, lags = 1, set.lags = 1:lags, diag=TRUE,
-  diag.col="gray", do.lines = TRUE, colour = TRUE,
+  diag.col="gray", do.lines = TRUE, colour = TRUE, continuous = FALSE,
   labels = FALSE, seasonal = TRUE, ...)
 gglagchull(x, lags = 1, set.lags = 1:lags, diag=TRUE, 
   diag.col="gray", ...)
@@ -16,6 +16,7 @@ gglagchull(x, lags = 1, set.lags = 1:lags, diag=TRUE,
 \item{diag.col}{color to be used for the diagonal if(diag).}
 \item{do.lines}{if TRUE, lines will be drawn, otherwise points will be drawn.}
 \item{colour}{logical indicating if lines should be coloured.}
+\item{continuous}{Should the colour scheme for years be continuous or discrete?}
 \item{labels}{logical indicating if labels should be used.}
 \item{seasonal}{Should the line colour be based on seasonal characteristics (TRUE), or sequential (FALSE).}
 \item{\dots}{Not used (for consistency with lag.plot)}
