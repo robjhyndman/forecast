@@ -32,12 +32,11 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
   }
 
   # Grab any variables missing from data
-  vars[[1]] <- quote(forecast:::datamat)
   if(!missing(data)){
-    data <- datamat(eval.parent(vars), data)
+    data <- datamat(do.call(datamat, as.list(vars[-1]), envir = parent.frame()),data)
   }
   else{
-    data <- eval.parent(vars)
+    data <- do.call(datamat, as.list(vars[-1]), envir = parent.frame())
   }
 
   # Check to see if data is univariate time series
