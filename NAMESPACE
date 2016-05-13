@@ -27,7 +27,7 @@ importFrom("utils", "head")
 
 export(arfima, Arima, arima.errors, arimaorder, auto.arima, BoxCox, croston,
 fitted.Arima, forecast, forecast.ar, forecast.Arima, forecast.ets, forecast.fracdiff,findfrequency,
-forecast.HoltWinters, forecast.lm, forecast.stl, forecast.StructTS, forecast.bats, forecast.tbats, accuracy, hfitted, holt, hw, InvBoxCox,
+forecast.HoltWinters, forecast.lm, forecast.stl, forecast.StructTS, forecast.bats, forecast.tbats, accuracy, holt, hw, InvBoxCox,
 is.acf, is.Arima, is.bats, is.constant, is.ets, is.forecast, is.mforecast, is.nnetar, is.nnetarmodels, is.splineforecast, is.stlm,
 nnetar, forecast.nnetar, plot.Arima, plot.ar, taperedacf, taperedpacf,
 meanf, logLik.ets, monthdays, na.interp, ets, plot.bats, plot.tbats, plot.ets, plot.forecast,
