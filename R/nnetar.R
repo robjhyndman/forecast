@@ -267,6 +267,15 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), xr
   return(structure(out,class="forecast"))
 }
 
+fitted.nnetar <- function(object, h=1, ...){
+  if(h==1){
+    return(stats:::fitted.default(object))
+  }
+  else{
+    return(hfitted(object=object, h=h, FUN=nnetar, ...))
+  }
+}
+
 print.nnetar <- function(x, digits = max(3, getOption("digits") - 3), ...)
 {
   cat("Series:", x$series, "\n")

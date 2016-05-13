@@ -1017,6 +1017,15 @@ coef.ets <- function(object,...)
   object$par
 }
 
+fitted.ets <- function(object, h=1, ...){
+  if(h==1){
+    return(stats:::fitted.default(object))
+  }
+  else{
+    return(hfitted(object=object, h=h, FUN=ets, ...))
+  }
+}
+
 logLik.ets <- function(object,...)
 {
   structure(object$loglik,df=length(object$par),class="logLik")

@@ -321,7 +321,12 @@ plot.forecast <- function(x, include, plot.conf=TRUE, shaded=TRUE, shadebars=(le
     xlab=xlab,ylim=ylim,ylab=ylab,main=main,col=col,type=type, ...)
   if(plot.conf)
   {
-    xxx <- tsp(pred.mean)[1] - 1/freq + (1:npred)/freq
+    if(is.ts(x$upper)){
+      xxx <- time(x$upper)
+    }
+    else{
+      xxx <- tsp(pred.mean)[1] - 1/freq + (1:npred)/freq
+    }
     idx <- rev(order(x$level))
     nint <- length(x$level)
     if(is.null(shadecols))
@@ -379,6 +384,40 @@ predict.default <- function(object, ...)
     forecast(object, ...)
 }
 
+hfitted <- function(object, h=1, FUN=class(object), ...)
+{
+  if(h==1){
+    return(fitted(object))
+  }
+  #Attempt to get model function
+  if(missing(FUN)){
+    for(i in FUN){
+      if(exists(i)){
+        if(typeof(eval(parse(text = i)[[1]]))=="closure"){
+          FUN <- i
+          i <- "Y"
+          break
+        }
+      }
+    }
+    if(i!="Y"){
+      stop("Could not find appropriate function to refit, specify FUN=function")
+    }
+  }
+  x <- getResponse(object)
+  tspx <- tsp(x)
+  fits <- fitted(object)*NA
+  n <- length(fits)
+  for(i in 1:(n-h))
+  {
+    newx <- ts(x[1:i], start=tspx[1], frequency=tspx[3])
+    refit <- try(eval(call(name=FUN, newx, model=object)), silent=TRUE)
+    if(!is.element("try-error", class(refit)))
+      fits[i+h] <- suppressWarnings(forecast(refit, h=h, ...)$mean[h])
+  }
+  return(fits)
+}
+
 # The following function is for when users don't realise they already have the forecasts.
 # e.g., with the dshw(), meanf() or rwf() functions.
 
@@ -404,6 +443,14 @@ forecast.forecast <- function(object, ...)
     object$lower <- ts(object$lower[1:h,], start=tspf[1], frequency=tspf[3])
   }
   return(object)
+}
+
+subset.forecast <- function(x, ...){
+  tspx <- tsp(x$mean)
+  x$mean <- subset(x$mean, ...)
+  x$lower <- subset(ts(x$lower, start=tspx[1], frequency=tspx[3]), ...)
+  x$upper <- subset(ts(x$upper, start=tspx[1], frequency=tspx[3]), ...)
+  return(x)
 }
 
 is.forecast <- function(x){
