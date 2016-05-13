@@ -471,7 +471,7 @@ calcFTest <- function(r.sse, ur.sse, num.restrictions, num.u.params, num.observa
 
 fitted.tbats <- function(object, h=1, ...){
   if(h==1){
-    return(stats:::fitted.default(object))
+    return(object$fitted.values)
   }
   else{
     return(hfitted(object=object, h=h, FUN=tbats, ...))

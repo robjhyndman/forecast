@@ -269,7 +269,7 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), xr
 
 fitted.nnetar <- function(object, h=1, ...){
   if(h==1){
-    return(stats:::fitted.default(object))
+    return(object$fitted)
   }
   else{
     return(hfitted(object=object, h=h, FUN=nnetar, ...))
