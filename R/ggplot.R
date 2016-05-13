@@ -630,7 +630,7 @@ ggtsdisplay <- function(x, plot.type=c("partial","scatter","spectrum"),
 
 gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray", do.lines = TRUE, colourlines = TRUE, labels = !do.lines, seasonal = TRUE, ...){
   if (requireNamespace("ggplot2")){
-    if(is.ts(x)){
+    if(frequency(x)>1){
       linecol = cycle(x)
     }
     else{
