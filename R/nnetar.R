@@ -272,7 +272,7 @@ fitted.nnetar <- function(object, h=1, ...){
     return(object$fitted)
   }
   else{
-    return(hfitted(object=object, h=h, FUN=nnetar, ...))
+    return(hfitted(object=object, h=h, FUN="nnetar", ...))
   }
 }
 

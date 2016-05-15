@@ -284,7 +284,7 @@ fitted.bats <- function(object, h=1, ...){
     return(object$fitted.values)
   }
   else{
-    return(hfitted(object=object, h=h, FUN=bats, ...))
+    return(hfitted(object=object, h=h, FUN="bats", ...))
   }
 }
 

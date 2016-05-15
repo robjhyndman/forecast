@@ -474,7 +474,7 @@ fitted.tbats <- function(object, h=1, ...){
     return(object$fitted.values)
   }
   else{
-    return(hfitted(object=object, h=h, FUN=tbats, ...))
+    return(hfitted(object=object, h=h, FUN="tbats", ...))
   }
 }
 

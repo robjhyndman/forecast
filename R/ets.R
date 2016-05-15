@@ -1019,7 +1019,7 @@ fitted.ets <- function(object, h=1, ...){
     return(object$fitted)
   }
   else{
-    return(hfitted(object=object, h=h, FUN=ets, ...))
+    return(hfitted(object=object, h=h, FUN="ets", ...))
   }
 }
 
