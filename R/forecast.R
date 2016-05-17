@@ -408,12 +408,18 @@ hfitted <- function(object, h=1, FUN=class(object), ...)
   tspx <- tsp(x)
   fits <- fitted(object)*NA
   n <- length(fits)
+  refitarg <- list(model = object)
+  fcarg <- list(h=h)
   for(i in 1:(n-h))
   {
-    newx <- ts(x[1:i], start=tspx[1], frequency=tspx[3])
-    refit <- try(eval(call(name=FUN, newx, model=object)), silent=TRUE)
-    if(!is.element("try-error", class(refit)))
-      fits[i+h] <- suppressWarnings(forecast(refit, h=h, ...)$mean[h])
+    refitarg$x <- ts(x[1:i], start=tspx[1], frequency=tspx[3])
+    if(!is.null(object$xreg)){
+      refitarg$xreg <- ts(object$xreg[1:i,], start=tspx[1], frequency=tspx[3])
+      fcarg$xreg <- ts(object$xreg[(i+1):(i+h),], start=tspx[1]+i/tspx[3], frequency=tspx[3])
+    }
+    fcarg$object <- try(do.call(FUN, refitarg), silent=TRUE)
+    if(!is.element("try-error", class(fcarg$object)))
+      fits[i+h] <- suppressWarnings(do.call("forecast", fcarg)$mean[h])
   }
   return(fits)
 }
