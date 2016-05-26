@@ -152,25 +152,20 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
       max.q <- min(max.q, m-1)
   }
 
-  # Find constant offset for AIC calculation using simple AR(1) model
+  # Find constant offset for AIC calculation using white noise model
   if(approximation)
   {
     if(D==0)
-      fit <- try(stats::arima(x,order=c(1,d,0),xreg=xreg,...), silent=TRUE)
+      fit <- try(stats::arima(x,order=c(0,d,0),xreg=xreg,...), silent=TRUE)
     else
-      fit <- try(stats::arima(x,order=c(1,d,0),seasonal=list(order=c(0,D,0),period=m,xreg=xreg,...)), silent=TRUE)
+      fit <- try(stats::arima(x,order=c(0,d,0), seasonal=list(order=c(0,D,0),period=m),
+        xreg=xreg,...), silent=TRUE)
     if(!is.element("try-error",class(fit)))
       offset <- -2*fit$loglik - serieslength*log(fit$sigma2)
-    else # Use a white noise model
+    else # Not sure this should ever happen
     {
-      fit <- try(stats::arima(x,order=c(0,d,0),seasonal=list(order=c(0,D,0),period=m,xreg=xreg,...)), silent=TRUE)
-      if(!is.element("try-error",class(fit)))
-        offset <- -2*fit$loglik - serieslength*log(fit$sigma2)
-      else # Give up
-      {
-        #warning("Unable to calculate AIC offset")
-        offset <- 0
-      }
+      #warning("Unable to calculate AIC offset")
+      offset <- 0
     }
   }
   else
@@ -417,10 +412,9 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     #constant <- length(bestfit$coef) > sum(bestfit$arma[1:4])
     newbestfit <- myarima(x,order=bestfit$arma[c(1,6,2)],
       seasonal=bestfit$arma[c(3,7,4)],constant=constant,ic,trace=FALSE,approximation=FALSE,xreg=xreg,...)
-    if(newbestfit$ic == Inf)
+    if(newbestfit$ic == Inf | newbestfit$code > 0)
     {
       # Final model is lousy. Better try again without approximation
-      #warning("Unable to fit final model using maximum likelihood. AIC value approximated")
       bestfit <- auto.arima(orig.x, d=d, D=D, max.p=max.p, max.q=max.q,
           max.P=max.P, max.Q=max.Q, max.order=max.order, max.d=max.d, max.D=max.D,
           start.p=start.p, start.q=start.q, start.P=1, start.Q=1,
