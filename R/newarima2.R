@@ -161,10 +161,16 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
       fit <- try(stats::arima(x,order=c(1,d,0),seasonal=list(order=c(0,D,0),period=m,xreg=xreg,...)), silent=TRUE)
     if(!is.element("try-error",class(fit)))
       offset <- -2*fit$loglik - serieslength*log(fit$sigma2)
-    else
+    else # Use a white noise model
     {
-      warning("Unable to calculate AIC offset")
-      offset <- 0
+      fit <- try(stats::arima(x,order=c(0,d,0),seasonal=list(order=c(0,D,0),period=m,xreg=xreg,...)), silent=TRUE)
+      if(!is.element("try-error",class(fit)))
+        offset <- -2*fit$loglik - serieslength*log(fit$sigma2)
+      else # Give up
+      {
+        #warning("Unable to calculate AIC offset")
+        offset <- 0
+      }
     }
   }
   else
