@@ -1,14 +1,18 @@
 forecast.ets <- function(object, h=ifelse(object$m>1, 2*object$m, 10),
-  level=c(80,95), fan=FALSE, simulate=FALSE, bootstrap=FALSE, npaths=5000, PI=TRUE, lambda=object$lambda, biasadj=FALSE, ...)
+  level=c(80,95), fan=FALSE, simulate=FALSE, bootstrap=FALSE, npaths=5000, PI=TRUE, 
+  lambda=object$lambda, biasadj=FALSE, ...)
 {
   # Check inputs
   #if(h>2000 | h<=0)
   if(h <= 0)
     stop("Forecast horizon out of bounds")
-  if(!PI)
+  if(is.null(lambda))
+    biasadj <- FALSE
+  if(!PI & !biasadj)
   {
     simulate <- bootstrap <- fan <- FALSE
-    npaths <- 2 # Just to avoid errors
+    if(!biasadj)
+      npaths <- 2 # Just to avoid errors
     level <- 90
   }
   if(fan)
@@ -34,8 +38,6 @@ forecast.ets <- function(object, h=ifelse(object$m>1, 2*object$m, 10),
     f <- class3(h,object$states[n+1,],object$components[2],object$components[3],damped,object$m,object$sigma2,object$par)
   else
     f <- pegelsfcast.C(h,object,level=level,bootstrap=bootstrap,npaths=npaths)
-  if(!PI)
-    f$var <- f$lower <- f$upper <- NULL
 
   tsp.x <- tsp(object$x)
   if(!is.null(tsp.x))
@@ -43,26 +45,31 @@ forecast.ets <- function(object, h=ifelse(object$m>1, 2*object$m, 10),
   else
     start.f <- length(object$x)+1
   out <- list(model=object,mean=ts(f$mu,frequency=object$m,start=start.f),level=level,x=object$x)
-  if(!is.null(f$var))
+  if(PI | biasadj)
   {
-    out$lower <- out$upper <- ts(matrix(NA,ncol=length(level),nrow=h))
-    for(i in 1:length(level))
+    if(!is.null(f$var))
     {
-      marg.error <- sqrt(f$var) * abs(qnorm((100-level[i])/200))
-      out$lower[,i] <- out$mean - marg.error
-      out$upper[,i] <- out$mean + marg.error
+      out$lower <- out$upper <- ts(matrix(NA,ncol=length(level),nrow=h))
+      for(i in 1:length(level))
+      {
+        marg.error <- sqrt(f$var) * abs(qnorm((100-level[i])/200))
+        out$lower[,i] <- out$mean - marg.error
+        out$upper[,i] <- out$mean + marg.error
+      }
+      tsp(out$lower) <- tsp(out$upper) <- tsp(out$mean)
     }
-    tsp(out$lower) <- tsp(out$upper) <- tsp(out$mean)
+    else if(!is.null(f$lower))
+    {
+      out$lower <- ts(f$lower)
+      out$upper <- ts(f$upper)
+      tsp(out$lower) <- tsp(out$upper) <- tsp(out$mean)
+    }
+    else if(PI)
+      warning("No prediction intervals for this model")
+    else if(biasadj)
+      warning("No bias adjustment possible")
   }
-  else if(!is.null(f$lower))
-  {
-    out$lower <- ts(f$lower)
-    out$upper <- ts(f$upper)
-    tsp(out$lower) <- tsp(out$upper) <- tsp(out$mean)
-  }
-  else if(PI)
-    warning("No prediction intervals for this model")
-		
+	
   out$fitted <- fitted(object)
   out$method <- object$method
   out$residuals <- residuals(object)
@@ -73,14 +80,17 @@ forecast.ets <- function(object, h=ifelse(object$m>1, 2*object$m, 10),
 	  #out$fitted <- InvBoxCox(out$fitted,lambda)
     out$mean <- InvBoxCox(out$mean,lambda)
     if(biasadj){
+
       out$mean <- InvBoxCoxf(x = out, lambda = lambda)
     }
 	  if(PI)  # PI = TRUE
 	  {
-		out$lower <- InvBoxCox(out$lower,lambda)
-		out$upper <- InvBoxCox(out$upper,lambda)
+ 		  out$lower <- InvBoxCox(out$lower,lambda)
+		  out$upper <- InvBoxCox(out$upper,lambda)
 	  }
   }
+  if(!PI)
+    out$lower <- out$upper <- out$level <- NULL
 	
   return(structure(out,class="forecast"))
 }
