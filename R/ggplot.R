@@ -391,6 +391,9 @@ autoplot.forecast <- function (object, include, plot.conf=TRUE, shadecols=c("#59
       vars <- c(yvar=yvar, xvar=xvar)
       data <- object$model$model
       colnames(data) <- names(vars)[match(colnames(data), vars)]
+      if(!is.null(object$model$lambda)){
+        data$yvar <- InvBoxCox(data$yvar, object$model$lambda)
+      }
     }
     else if (!is.null(object$x)){
       data <- data.frame(yvar=object$x)
