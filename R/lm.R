@@ -106,9 +106,9 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
   #fit$data <- data # This unfortunately needs to be a mf, to be able to separate multivariate response
   #fit$x <- data[,1] ## Do we want to include subsetting here?
   fit$call <- cl
-  if(NCOL(data[,1])>1){ #Univariate response
-    fit$data <- data[,1]
-  }
+  # if(NCOL(data[,1])>1){ #Univariate response
+  #   fit$data <- data[,1]
+  # }
   if(exists("dataname")){
     fit$call$data <- dataname
   }

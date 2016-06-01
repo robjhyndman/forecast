@@ -30,9 +30,6 @@ if(require(testthat))
     expect_equal(fit1$fitted.values, fit3$fitted.values)
     expect_equal(fit2$fitted.values, fit4$fitted.values)
     expect_error(mlmsplit(fit), "Must select lm")
-    fit <- tslm(mv_y ~ v_x)
-    fit1_1 <- mlmsplit(fit, index = 1)
-    expect_true(!is.null(tsp((fit1_1$data[,1]))))
   })
 
   test_that("tests for forecast.mlm()", {
