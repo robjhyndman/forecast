@@ -408,11 +408,12 @@ hfitted <- function(object, h=1, FUN=class(object), ...)
   tspx <- tsp(x)
   fits <- fitted(object)*NA
   n <- length(fits)
-  refitarg <- list(model = object)
+  refitarg <- list(x=NULL, model = object)
+  names(refitarg)[1] <- names(formals(FUN))[1]
   fcarg <- list(h=h)
   for(i in 1:(n-h))
   {
-    refitarg$x <- ts(x[1:i], start=tspx[1], frequency=tspx[3])
+    refitarg[[1]] <- ts(x[1:i], start=tspx[1], frequency=tspx[3])
     if(!is.null(object$xreg)){
       refitarg$xreg <- ts(object$xreg[1:i,], start=tspx[1], frequency=tspx[3])
       fcarg$xreg <- ts(object$xreg[(i+1):(i+h),], start=tspx[1]+i/tspx[3], frequency=tspx[3])
