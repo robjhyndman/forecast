@@ -931,7 +931,7 @@ autoplot.stl <- function (object, labels = NULL, ...){
     p <- p + ggAddExtras(xlab="Time", ylab="")
 
     # Make x axis contain only whole numbers (e.g., years)
-    p <- p + scale_x_continuous(breaks=unique(round(pretty(data$datetime))))
+    p <- p + ggplot2::scale_x_continuous(breaks=unique(round(pretty(data$datetime))))
 
     return(p)
   }
@@ -957,7 +957,7 @@ autoplot.ts <- function(object, ...){
     p <- p + ggAddExtras(xlab="Time", ylab=deparse(substitute(object)))
 
     # Make x axis contain only whole numbers (e.g., years)
-    p <- p + scale_x_continuous(breaks=unique(round(pretty(data$x))))
+    p <- p + ggplot2::scale_x_continuous(breaks=unique(round(pretty(data$x))))
     return(p)
   }
 }
