@@ -971,13 +971,13 @@ autoplot.mts <- function(object, facets=FALSE, ...){
                        series=rep(colnames(object), each=NROW(object)))
     #Initialise ggplot object
     p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x), data=data)
-
-    #Add data
     if(facets){
+      p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x, group=~series), data=data)
       p <- p + ggplot2::geom_line() + ggplot2::facet_grid(series~., scales = "free_y")
     }
     else{
-      p <- p + ggplot2::geom_line(ggplot2::aes_(group=~series, colour=~series))
+      p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x, group=~series, colour=~series), data=data)
+      p <- p + ggplot2::geom_line()
     }
 
     p <- p + ggAddExtras(xlab="Time", ylab=deparse(substitute(object)))
@@ -1028,7 +1028,7 @@ fortify.forecast <- function(model, data=as.data.frame(model), PI=TRUE, ...){
   }
   Hiloc <- grep("Hi ", names(data))
   Loloc <- grep("Lo ", names(data))
-  if(PI){
+  if(PI & !is.null(model$level)){
     if(length(Hiloc)==length(Loloc)){
       if(length(Hiloc)>0){
         return(data.frame(x=rep(as.numeric(time(model$mean)), length(Hiloc)+1),
@@ -1041,7 +1041,7 @@ fortify.forecast <- function(model, data=as.data.frame(model), PI=TRUE, ...){
       warning("missing intervals detected, plotting point predictions only")
     }
   }
-  return(data.frame(x=as.numeric(time(model$mean)), y=data[,1], level=rep(-Inf,NROW(data))))
+  return(data.frame(x=as.numeric(time(model$mean)), y=as.numeric(model$mean), level=rep(-Inf,NROW(model$mean))))
 }
 
 StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
@@ -1085,8 +1085,8 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom,
     data
   },
   setup_data = function(data, params){
-    data$group <- -as.numeric(factor(interaction(data$group, data$level)))
-    if(any(is.finite(data$level))){
+    if(any(is.finite(data$level))){ # if there are finite confidence levels (point forecasts are non-finite)
+      data$group <- -as.numeric(factor(interaction(data$group, data$level))) # multiple group levels
       levels <- suppressWarnings(as.numeric(data$level))
       if(min(levels[is.finite(levels)])<50){
         data$scalefill <- scales::rescale(levels, from = c(1,99))
@@ -1103,7 +1103,7 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom,
     altcol <- col2rgb(col)
     altcol <- rgb2hsv(altcol[[1]],altcol[[2]],altcol[[3]])
 
-    if(all(is.finite(data$level))){
+    if(any(is.finite(data$level))){
       plot.ci <- TRUE
       altcol1 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 7/12, 5/6))
       altcol2 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1/6, 1))
@@ -1135,25 +1135,27 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
     if(stat=="forecast"){
       stat <- "identity"
     }
+    plot.conf <- plot.conf & !is.null(mapping$level)
     data <- fortify(mapping, PI=plot.conf)
-    mapping <- ggplot2::aes_(x = ~x, y = ~y, level = ~level, group = ~-level)
+    mapping <- ggplot2::aes_(x = ~x, y = ~y)
     if(plot.conf){
+      mapping$level <- quote(level)
+      mapping$group <- quote(-level)
       mapping$ymin <- quote(ymin)
       mapping$ymax <- quote(ymax)
     }
-    if(!missing(series)){
-      data <- transform(data, series=series)
-      mapping$colour <- quote(series)
-    }
   }
-  if(is.mforecast(mapping)){
+  else if(is.mforecast(mapping)){
     #Convert mforecast to list of forecast
     #return lapply of geom_forecast with params on list
     stop("mforecast objects not yet supported. Try calling geom_forecast() for several forecast objects")
   }
-  if(is.ts(mapping)){
+  else if(is.ts(mapping)){
     data <- data.frame(y = as.numeric(mapping), x = as.numeric(time(mapping)))
     mapping <- ggplot2::aes_(y=~y, x=~x)
+  }
+  if(!missing(series)){
+    data <- transform(data, series=series)
   }
   if(stat=="forecast"){
     ggplot2::layer(
