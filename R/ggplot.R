@@ -561,7 +561,7 @@ ggtsdisplay <- function(x, plot.type=c("partial","scatter","spectrum"),
     if(missing(lag.max)){
       lag.max <- round(min(max(10*log10(length(x)), 3*frequency(x)), length(x)/3))
     }
-    
+
     dots <- list(...)
     labs <- match(c("xlab", "ylab", "main"), names(dots), nomatch=0)
 
@@ -591,7 +591,7 @@ ggtsdisplay <- function(x, plot.type=c("partial","scatter","spectrum"),
     if(!is.null(theme)){
       acfplot <- acfplot + theme
     }
-    
+
     #Prepare last plot (variable)
     if(plot.type == "partial"){
       lastplot <- ggPacf(x, lag.max=lag.max, na.action=na.action) + ggplot2::ggtitle(NULL)
@@ -641,7 +641,7 @@ gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray"
       continuous=TRUE
     }
     x <- as.matrix(x)
-    
+
     #Prepare data for plotting
     n <- NROW(x)
     data <- data.frame()
@@ -657,14 +657,14 @@ gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray"
     if(!continuous){
       data$freqcur <- factor(data$freqcur)
     }
-    
+
     #Initialise ggplot object
     p <- ggplot2::ggplot(ggplot2::aes_(x=~orig, y=~lagged), data=data)
-    
+
     if(diag){
       p <- p + ggplot2::geom_abline(colour=diag.col, linetype="dashed")
     }
-    
+
     if(labels){
       linesize = 0.25
     }
@@ -683,7 +683,7 @@ gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray"
     else{
       p <- p + plottype(size=linesize)
     }
-  
+
     if(labels){
       p <- p + ggplot2::geom_text(ggplot2::aes_(label=~lagnum))
     }
@@ -709,9 +709,9 @@ gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray"
         p <- p + ggplot2::guides(colour = ggplot2::guide_legend(title=ifelse(seasonal, "season", "time")))
       }
     }
-    
+
     p <- p + ggAddExtras(ylab = NULL, xlab = NULL)
-    
+
     return(p)
   }
 }
@@ -719,7 +719,7 @@ gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray"
 gglagchull <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray", ...){
   if (requireNamespace("ggplot2")){
     x <- as.matrix(x)
-    
+
     #Prepare data for plotting
     n <- NROW(x)
     data <- data.frame()
@@ -732,7 +732,7 @@ gglagchull <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray
         data <- rbind(data, data.frame(orig = x[(lag+1):n,i], lagged = x[1:(n-lag),i], lag = rep(lag, n-lag), series = rep(sname, n-lag))[grDevices::chull(x[(lag+1):n,i], x[1:(n-lag),i]),])
       }
     }
-    
+
     #Initialise ggplot object
     p <- ggplot2::ggplot(ggplot2::aes_(x=~orig, y=~lagged), data=data)
     if(diag){
@@ -741,14 +741,14 @@ gglagchull <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray
     p <- p + ggplot2::geom_polygon(ggplot2::aes_(group=~lag,colour=~lag,fill=~lag), alpha=1/length(set.lags))
     p <- p + ggplot2::guides(colour = ggplot2::guide_colourbar(title="lag"))
     p <- p + ggplot2::theme(aspect.ratio=1)
-    
+
     #Facet
     if(NCOL(x)>1){
       p <- p + ggplot2::facet_wrap(~series, scales = "free")
     }
-    
+
     p <- p + ggAddExtras(ylab = "lagged", xlab = "original")
-    
+
     return(p)
   }
 }
@@ -837,7 +837,7 @@ ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NUL
       if(continuous){
         p <- p + ggplot2::scale_color_gradientn(colours=col)
       }
-      else{      
+      else{
         ncol <- length(unique(data$year))
         if(length(col)==1){
           p <- p + ggplot2::scale_color_manual(guide="none", values=rep(col, ncol))
@@ -927,7 +927,12 @@ autoplot.stl <- function (object, labels = NULL, ...){
     p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
     p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = 0, parts = "remainder"))
 
+    # Add axis labels
     p <- p + ggAddExtras(xlab="Time", ylab="")
+
+    # Make x axis contain only whole numbers (e.g., years)
+    p <- p + scale_x_continuous(breaks=unique(round(pretty(data$datetime))))
+
     return(p)
   }
 }
@@ -948,7 +953,11 @@ autoplot.ts <- function(object, ...){
     #Add data
     p <- p + ggplot2::geom_line()
 
+    # Add labels
     p <- p + ggAddExtras(xlab="Time", ylab=deparse(substitute(object)))
+
+    # Make x axis contain only whole numbers (e.g., years)
+    p <- p + scale_x_continuous(breaks=unique(round(pretty(data$x))))
     return(p)
   }
 }
