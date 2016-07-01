@@ -597,54 +597,57 @@ Arima <- function(x, order=c(0, 0, 0),
 # Refits the model to new data x
 arima2 <- function (x, model, xreg, method)
 {
-    use.drift <- is.element("drift",names(model$coef))
-    use.intercept <- is.element("intercept",names(model$coef))
-    use.xreg <- is.element("xreg",names(model$call))
-    if(use.drift)
-    {
-      driftmod <- lm(model$xreg[,"drift"] ~ I(time(model$x)))
-      newxreg <- driftmod$coeff[1] + driftmod$coeff[2]*time(x)
-      if(!is.null(xreg)) {
-        origColNames <- colnames(xreg)
-        xreg <- cbind(xreg, newxreg)
-        colnames(xreg) <- c(origColNames, "drift")
-      } else {
-        xreg <- as.matrix(data.frame(drift=newxreg))
-      }
-      use.xreg <- TRUE
+  use.drift <- is.element("drift",names(model$coef))
+  use.intercept <- is.element("intercept",names(model$coef))
+  use.xreg <- is.element("xreg",names(model$call))
+  if(use.drift)
+  {
+    driftmod <- lm(model$xreg[,"drift"] ~ I(time(model$x)))
+    newxreg <- driftmod$coeff[1] + driftmod$coeff[2]*time(x)
+    if(!is.null(xreg)) {
+      origColNames <- colnames(xreg)
+      xreg <- cbind(xreg, newxreg)
+      colnames(xreg) <- c(origColNames, "drift")
+    } else {
+      xreg <- as.matrix(data.frame(drift=newxreg))
     }
+    use.xreg <- TRUE
+  }
 
-    if(!is.null(model$xreg))
-    {
-      if(is.null(xreg))
-        stop("No regressors provided")
-      if(ncol(xreg) != ncol(model$xreg))
-        stop("Number of regressors does not match fitted model")
-    }
+  if(!is.null(model$xreg))
+  {
+    if(is.null(xreg))
+      stop("No regressors provided")
+    if(ncol(xreg) != ncol(model$xreg))
+      stop("Number of regressors does not match fitted model")
+  }
 
-    if(model$arma[5]>1 & sum(abs(model$arma[c(3,4,7)]))>0) # Seasonal model
-    {
-        if(use.xreg)
-            refit <- Arima(x,order=model$arma[c(1,6,2)],seasonal=list(order=model$arma[c(3,7,4)],period=model$arma[5]),
-                include.mean=use.intercept,xreg=xreg,method=method,fixed=model$coef)
-        else
-            refit <- Arima(x,order=model$arma[c(1,6,2)],seasonal=list(order=model$arma[c(3,7,4)],period=model$arma[5]),
-                include.mean=use.intercept,method=method,fixed=model$coef)
-    }
-    else if(length(model$coef)>0) # Nonseasonal model with some parameters
-    {
-        if(use.xreg)
-           refit <- Arima(x,order=model$arma[c(1,6,2)],xreg=xreg,include.mean=use.intercept,method=method,fixed=model$coef)
-        else
-            refit <- Arima(x,order=model$arma[c(1,6,2)],include.mean=use.intercept,method=method,fixed=model$coef)
-    }
-    else # No parameters
-            refit <- Arima(x,order=model$arma[c(1,6,2)],include.mean=FALSE,method=method)
+  if(model$arma[5]>1 & sum(abs(model$arma[c(3,4,7)]))>0) # Seasonal model
+  {
+    if(use.xreg)
+      refit <- Arima(x,order=model$arma[c(1,6,2)],seasonal=list(order=model$arma[c(3,7,4)],period=model$arma[5]),
+            include.mean=use.intercept,xreg=xreg,method=method,fixed=model$coef)
+    else
+      refit <- Arima(x,order=model$arma[c(1,6,2)],seasonal=list(order=model$arma[c(3,7,4)],period=model$arma[5]),
+            include.mean=use.intercept,method=method,fixed=model$coef)
+  }
+  else if(length(model$coef)>0) # Nonseasonal model with some parameters
+  {
+    if(use.xreg)
+       refit <- Arima(x,order=model$arma[c(1,6,2)],xreg=xreg,include.mean=use.intercept,method=method,fixed=model$coef)
+    else
+      refit <- Arima(x,order=model$arma[c(1,6,2)],include.mean=use.intercept,method=method,fixed=model$coef)
+  }
+  else # No parameters
+    refit <- Arima(x,order=model$arma[c(1,6,2)],include.mean=FALSE,method=method)
 
-    refit$var.coef <- matrix(0,length(refit$coef),length(refit$coef))
-    if(use.xreg) # Why is this needed?
-      refit$xreg <- xreg
-    return(refit)
+  refit$var.coef <- matrix(0,length(refit$coef),length(refit$coef))
+  if(use.xreg) # Why is this needed?
+    refit$xreg <- xreg
+  # Adjust residual variance to be unbiased
+  fit$sigma2 <- sum(fit$residuals^2, na.rm=TRUE) / (nstar - npar + 1)
+  
+  return(refit)
 }
 
 # Modified version of function print.Arima from stats package
