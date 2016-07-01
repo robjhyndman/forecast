@@ -600,6 +600,7 @@ arima2 <- function (x, model, xreg, method)
   use.drift <- is.element("drift",names(model$coef))
   use.intercept <- is.element("intercept",names(model$coef))
   use.xreg <- is.element("xreg",names(model$call))
+  sigma2 <- model$sigma2
   if(use.drift)
   {
     driftmod <- lm(model$xreg[,"drift"] ~ I(time(model$x)))
@@ -634,7 +635,7 @@ arima2 <- function (x, model, xreg, method)
   else if(length(model$coef)>0) # Nonseasonal model with some parameters
   {
     if(use.xreg)
-       refit <- Arima(x,order=model$arma[c(1,6,2)],xreg=xreg,include.mean=use.intercept,method=method,fixed=model$coef)
+      refit <- Arima(x,order=model$arma[c(1,6,2)],xreg=xreg,include.mean=use.intercept,method=method,fixed=model$coef)
     else
       refit <- Arima(x,order=model$arma[c(1,6,2)],include.mean=use.intercept,method=method,fixed=model$coef)
   }
@@ -644,8 +645,7 @@ arima2 <- function (x, model, xreg, method)
   refit$var.coef <- matrix(0,length(refit$coef),length(refit$coef))
   if(use.xreg) # Why is this needed?
     refit$xreg <- xreg
-  # Adjust residual variance to be unbiased
-  fit$sigma2 <- sum(fit$residuals^2, na.rm=TRUE) / (nstar - npar + 1)
+  refit$sigma2 <- sigma2
   
   return(refit)
 }
