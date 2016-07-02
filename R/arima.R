@@ -589,8 +589,11 @@ Arima <- function(x, order=c(0, 0, 0),
   tmp$lambda <- lambda
   tmp$x <- origx
   # Adjust residual variance to be unbiased
-  tmp$sigma2 <- sum(tmp$residuals^2, na.rm=TRUE) / (nstar - npar + 1)
-
+  if(is.null(model))
+  {
+    tmp$sigma2 <- sum(tmp$residuals^2, na.rm=TRUE) / (nstar - npar + 1)
+  }
+  
   return(structure(tmp, class=c("ARIMA","Arima")))
 }
 
