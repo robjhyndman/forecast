@@ -64,13 +64,13 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
   }
   tsdat <- match(c("trend", "season"), cn, 0L)
   #Create trend and season if missing
-  if(tsdat[1]==0&tsvar[1]!=0){#If "trend" is not in data, but is in formula
+  if(tsdat[1]==0){#&tsvar[1]!=0){#If "trend" is not in data, but is in formula
     trend <- 1:NROW(data)
     cn <- c(cn,"trend")
     data <- cbind(data,trend)
   }
-  if(tsdat[2]==0&tsvar[2]!=0){#If "season" is not in data, but is in formula
-    if(tspx[3]==1){ # Nonseasonal data
+  if(tsdat[2]==0){#&tsvar[2]!=0){#If "season" is not in data, but is in formula
+    if(tsvar[2]!=0 & tspx[3]==1){ # Nonseasonal data, and season requested
       stop("Non-seasonal data cannot be modelled using a seasonal factor")
     }
     season <- as.factor(cycle(data[,1]))
