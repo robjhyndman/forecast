@@ -20,16 +20,16 @@
 \item{object}{Forecast object produced by \code{\link{forecast}}. Used for ggplot graphics (S3 method consistency).}
 \item{include}{number of values from time series to include in plot. Default is all values.}
 \item{plot.conf}{Logical flag indicating whether to plot prediction intervals.}
-\item{shaded}{Logical flag indicating whether prediction intervals should be shaded (TRUE) or lines (FALSE)}
-\item{shadebars}{Logical flag indicating if prediction intervals should be plotted as shaded bars (if TRUE) or a shaded polygon (if FALSE).
+\item{shaded}{Logical flag indicating whether prediction intervals should be shaded (\code{TRUE}) or lines (\code{FALSE})}
+\item{shadebars}{Logical flag indicating if prediction intervals should be plotted as shaded bars (if \code{TRUE}) or a shaded polygon (if \code{FALSE}).
     Ignored if \code{shaded=FALSE}. Bars are plotted by default if there are fewer than five forecast horizons.}
 \item{shadecols}{Colors for shaded prediction intervals. To get default colors used prior to v3.26, set \code{shadecols="oldstyle"}.}
 \item{col}{Colour for the data line.}
 \item{fcol}{Colour for the forecast line.}
 \item{flty}{Line type for the forecast line.}
 \item{flwd}{Line width for the forecast line.}
-\item{pi.col}{If \code{shade=FALSE} and \code{plot.conf=TRUE}, the prediction intervals are plotted in this colour.}
-\item{pi.lty}{If \code{shade=FALSE} and \code{plot.conf=TRUE}, the prediction intervals are plotted using this line type.}
+\item{pi.col}{If \code{shaded=FALSE} and \code{plot.conf=TRUE}, the prediction intervals are plotted in this colour.}
+\item{pi.lty}{If \code{shaded=FALSE} and \code{plot.conf=TRUE}, the prediction intervals are plotted using this line type.}
 \item{ylim}{Limits on y-axis.}
 \item{main}{Main title.}
 \item{xlab}{X-axis label.}

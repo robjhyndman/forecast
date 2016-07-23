@@ -359,13 +359,13 @@ plot.forecast <- function(x, include, plot.conf=TRUE, shaded=TRUE, shadebars=(le
       }
       else if(npred == 1)
       {
-        lines(xxx+c(-0.5,0.5)/freq,rep(x$lower[,idx[i]],2),col=pi.col,lty=pi.lty)
-        lines(xxx+c(-0.5,0.5)/freq,rep(x$upper[,idx[i]],2),col=pi.col,lty=pi.lty)
+        lines(c(xxx)+c(-0.5,0.5)/freq, rep(x$lower[,idx[i]],2),col=pi.col,lty=pi.lty)
+        lines(c(xxx)+c(-0.5,0.5)/freq, rep(x$upper[,idx[i]],2),col=pi.col,lty=pi.lty)
       }
       else
       {
-        lines(xxx,x$lower[,idx[i]],col=pi.col,lty=pi.lty)
-        lines(xxx,x$upper[,idx[i]],col=pi.col,lty=pi.lty)
+        lines(x$lower[,idx[i]],col=pi.col,lty=pi.lty)
+        lines(x$upper[,idx[i]],col=pi.col,lty=pi.lty)
       }
     }
   }
