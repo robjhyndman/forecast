@@ -610,8 +610,8 @@ arima2 <- function (x, model, xreg, method)
     newxreg <- driftmod$coeff[1] + driftmod$coeff[2]*time(x)
     if(!is.null(xreg)) {
       origColNames <- colnames(xreg)
-      xreg <- cbind(xreg, newxreg)
-      colnames(xreg) <- c(origColNames, "drift")
+      xreg <- cbind(newxreg,xreg)
+      colnames(xreg) <- c("drift",origColNames)
     } else {
       xreg <- as.matrix(data.frame(drift=newxreg))
     }

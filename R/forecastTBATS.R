@@ -1,5 +1,10 @@
 forecast.tbats <- function(object, h, level=c(80,95), fan=FALSE, biasadj=FALSE, ...) 
 {
+
+	# Check if forecast.tbats called incorrectly
+	if(identical(class(object),"bats"))
+		return(forecast.bats(object, h, level, fan, biasadj, ...))
+
 	#Set up variables
   if(missing(h))
   {
