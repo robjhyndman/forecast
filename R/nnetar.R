@@ -5,7 +5,7 @@
 #size set to average of number of inputs and number of outputs: (p+P+1)/2
 #if xreg is included then size = (p+P+ncol(xreg)+1)/2
 
-nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NULL, subset=NULL, scale.inputs=TRUE, parallel=TRUE, num.cores=2, ...)
+nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NULL, subset=NULL, scale.inputs=TRUE, parallel=FALSE, num.cores=2, ...)
 {
   useoldmodel <- FALSE
   if (!is.null(model))
