@@ -968,7 +968,7 @@ autoplot.mts <- function(object, facets=FALSE, ...){
       stop("autoplot.mts requires a mts object, use x=object")
     }
     data <- data.frame(y=as.numeric(c(object)), x=rep(as.numeric(time(object)),NCOL(object)),
-                       series=rep(colnames(object), each=NROW(object)))
+                       series=factor(rep(colnames(object), each=NROW(object)), levels=colnames(object)))
     #Initialise ggplot object
     p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x), data=data)
     if(facets){
