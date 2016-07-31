@@ -190,28 +190,31 @@ accuracy <- function(f,x,test=NULL,d=NULL,D=NULL)
     stop("Unable to compute forecast accuracy measures")
 
   # Find d and D
-  if(testset)
+  if(is.null(D) & is.null(d))
   {
-    d <- as.numeric(frequency(x) == 1)
-    D <- as.numeric(frequency(x) > 1)
-  }
-  else if(trainset)
-  {
-    if(!is.null(f$mean))
+    if(testset)
     {
-      d <- as.numeric(frequency(f$mean) == 1)
-      D <- as.numeric(frequency(f$mean) > 1)
+      d <- as.numeric(frequency(x) == 1)
+      D <- as.numeric(frequency(x) > 1)
+    }
+    else if(trainset)
+    {
+      if(!is.null(f$mean))
+      {
+        d <- as.numeric(frequency(f$mean) == 1)
+        D <- as.numeric(frequency(f$mean) > 1)
+      }
+      else
+      {
+        d <- as.numeric(frequency(f$x) == 1)
+        D <- as.numeric(frequency(f$x) > 1)
+      }
     }
     else
     {
-      d <- as.numeric(frequency(f$x) == 1)
-      D <- as.numeric(frequency(f$x) > 1)
+      d <- as.numeric(frequency(f)==1)
+      D <- as.numeric(frequency(f) > 1)
     }
-  }
-  else
-  {
-    d <- as.numeric(frequency(f)==1)
-    D <- as.numeric(frequency(f) > 1)
   }
 
 
