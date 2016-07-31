@@ -4,7 +4,7 @@
 
 \title{Neural Network Time Series Forecasts}
 \usage{nnetar(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NULL,
-    subset=NULL, scale.inputs=TRUE, parallel = TRUE, num.cores = 2,  ...)
+    subset=NULL, scale.inputs=TRUE, parallel = FALSE, num.cores = 2,  ...)
 \method{forecast}{nnetar}(object, h=ifelse(object$m > 1, 2 * object$m, 10),
     xreg=NULL, lambda=object$lambda, ...)
 }
