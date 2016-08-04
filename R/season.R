@@ -372,13 +372,15 @@ fourierf <- function(x, K, h)
   labels <- character(length = len) # column names
   cs.K <- cumsum(2*c(0, K))
   for (j in 1:len.p) {
-    for(i in 1L:K[j]) {
-      if(2*i < period[j])
-        X[,cs.K[j] + 2*i-1] <- sinpi(2*i*times/period[j])
-      X[,cs.K[j] + 2*i] <- cospi(2*i*times/period[j])
+    if(K[j] > 0L) {
+      for(i in 1L:K[j]) {
+        if(2*i < period[j])
+          X[,cs.K[j] + 2*i-1] <- sinpi(2*i*times/period[j])
+        X[,cs.K[j] + 2*i] <- cospi(2*i*times/period[j])
+      }
+      labels[(cs.K[j] + 1):cs.K[j + 1]] <- paste(paste0(c("S","C"),rep(1:K[j],rep(2,K[j]))),
+                                               round(period[j]), sep = "-")
     }
-    labels[(cs.K[j] + 1):cs.K[j + 1]] <- paste(paste0(c("S","C"),rep(1:K[j],rep(2,K[j]))),
-                                                  round(period[j]), sep = "-")
   }
   colnames(X) <- labels
   # Remove missing columns

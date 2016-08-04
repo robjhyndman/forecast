@@ -11,7 +11,7 @@
 \arguments{
 \item{data}{A numeric vector, ts object, matrix or data frame. It is intended that the time series data is univariate, otherwise treated the same as ts().}
 \item{seasonal.periods}{A vector of the seasonal periods of the msts.}
-\item{ts.frequency}{The seasonal periods that should be used as frequency of the underlying ts object. The default value is \code{max(seasonal.periods)}.}
+\item{ts.frequency}{The seasonal period that should be used as frequency of the underlying ts object. The default value is \code{max(seasonal.periods)}.}
 \item{...}{Arguments to be passed to the underlying call to \code{ts()}. For example \code{start=c(1987,5)}.}
 }
 
