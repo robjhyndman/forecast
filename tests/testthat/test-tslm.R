@@ -74,6 +74,9 @@ if(require(testthat))
     fcast1 <- forecast(fit1, h=60, biasadj=FALSE)
     fcast2 <- forecast(fit2, h=60, biasadj=TRUE)
     expect_false(identical(fcast1$mean, fcast2$mean))
+    
+    fred <- tslm(ldeaths ~ trend + season, lambda=0)
+    fc <- forecast(fred)
   })
 
   test_that("Unusual usage", {
