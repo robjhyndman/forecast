@@ -66,11 +66,11 @@ meanf <- function(x,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE)
 		upper <- InvBoxCox(upper,lambda)
 	}	
 
-  junk <- list(method="Mean",level=level,x=x,xname=xname,mean=f,lower=lower,upper=upper,
+  out <- list(method="Mean",level=level,x=x,xname=xname,mean=f,lower=lower,upper=upper,
         model=list(mu=f[1],mu.se=s/sqrt(length(x)),sd=s), lambda=lambda, fitted=fits, residuals=res)
-  junk$model$call <- match.call()
+  out$model$call <- match.call()
 
-  return(structure(junk,class="forecast"))
+  return(structure(out,class="forecast"))
 }
 
 thetaf <- function(x,h=10,level=c(80,95),fan=FALSE)
@@ -177,11 +177,11 @@ rwf <- function(x,h=10,drift=FALSE,level=c(80,95),fan=FALSE,lambda=NULL,biasadj=
     lower <- InvBoxCox(lower,lambda)
   }
 
-  junk <- list(method=method,level=level,x=x,xname=xname,mean=fcast,lower=lower,upper=upper,
+  out <- list(method=method,level=level,x=x,xname=xname,mean=fcast,lower=lower,upper=upper,
       model=list(drift=b,drift.se=b.se,sd=s), fitted = fits, residuals = res, lambda=lambda)
-  junk$model$call <- match.call()
+  out$model$call <- match.call()
 
-  return(structure(junk,class="forecast"))
+  return(structure(out,class="forecast"))
 }
 
 BoxCox <- function(x,lambda)
@@ -391,15 +391,15 @@ croston2 <- function(x,h=10,alpha=0.1,nofits=FALSE)
     else
     {
         n <- length(x)
-        junk <- x*NA
+        fits <- x*NA
         if(n > 1)
         {
           for(i in 1:(n-1))
-              junk[i+1] <- croston2(x[1:i],h=1,alpha=alpha,nofits=TRUE)
+              fits[i+1] <- croston2(x[1:i],h=1,alpha=alpha,nofits=TRUE)
         }
-        junk <- ts(junk)
-        tsp(junk) <- tsp.x
-        return(list(mean = ratio, fitted = junk, model=list(demand=y.f,period=p.f)))
+        fits <- ts(fits)
+        tsp(fits) <- tsp.x
+        return(list(mean = ratio, fitted = fits, model=list(demand=y.f,period=p.f)))
     }
 }
 
