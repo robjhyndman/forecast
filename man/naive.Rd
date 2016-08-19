@@ -6,7 +6,7 @@
 \usage{naive(x, h=10, level=c(80,95), fan=FALSE, lambda=NULL, biasadj=FALSE)
 rwf(x, h=10, drift=FALSE, level=c(80,95), fan=FALSE, lambda=NULL, biasadj=FALSE)
 snaive(x, h=2*frequency(x), level=c(80,95), fan=FALSE, lambda=NULL, biasadj=FALSE)
-
+}
 \arguments{
 \item{x}{a numeric vector or time series}
 \item{h}{Number of periods for forecasting}
