@@ -415,12 +415,20 @@ snaive <- function(x,h=2*frequency(x),level=c(80,95),fan=FALSE, lambda=NULL)
     return(fc)
 }
 
-naive <- function(x,h=10,level=c(80,95),fan=FALSE, lambda=NULL)
+# naive <- function(x,h=10,level=c(80,95),fan=FALSE, lambda=NULL)
+# {
+#     fc <- forecast(Arima(x,order=c(0,1,0),lambda=lambda),h,level=level,fan=fan)
+#     # Remove initial fitted values and error
+#     fc$fitted[1] <- NA
+#     fc$residuals[1] <- NA
+#     fc$method <- "Naive method"
+#     return(fc)
+# }
+
+naive <- function(x,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biadadj=FALSE)
 {
-    fc <- forecast(Arima(x,order=c(0,1,0),lambda=lambda),h,level=level,fan=fan)
-    # Remove initial fitted values and error
-    fc$fitted[1] <- NA
-    fc$residuals[1] <- NA
-    fc$method <- "Naive method"
-    return(fc)
+  fc <- rwf(x, h=h, level=level, fan=fan, lambda=lambda, drift=FALSE, biasadj=biasadj)
+  fc$method <- "Naive method"
+  return(fc)
 }
+
