@@ -105,84 +105,6 @@ thetaf <- function(x,h=10,level=c(80,95),fan=FALSE)
     return(fcast)
 }
 
-# Random walk
-rwf <- function(x,h=10,drift=FALSE,level=c(80,95),fan=FALSE,lambda=NULL,biasadj=FALSE)
-{
-  xname <- deparse(substitute(x))
-  n <- length(x)
-  freq <- frequency(x)
-  nn <- 1:h
-  if(!is.ts(x))
-    x <- ts(x)
-  if(!is.null(lambda))
-  {
-    origx <- x
-    x <- BoxCox(x,lambda)
-  }
-  if(drift)
-  {
-    fit <- summary(lm(diff(x) ~ 1,na.action=na.exclude))
-    b <- fit$coefficients[1,1]
-    b.se <- fit$coefficients[1,2]
-    s <- fit$sigma
-#    res <- ts(c(NA,residuals(fit)))
-    method <- "Random walk with drift"
-  }
-  else
-  {
-    b <- b.se <- 0
-    s <- sd(diff(x),na.rm=TRUE)
-#    fits <- ts(x[-n],start=tsp(x)[1]+1/freq,frequency=freq)
-#    res <- ts(c(NA,diff(x)))
-    method <- "Random walk"
-  }
-  fits <- ts(c(NA,x[-n]) + b, start=tsp(x)[1], frequency=freq)
-  res <- x - fits
-  #tsp(res) <- tsp(fits) <- tsp(x)
-  f <- x[n] + nn*b
-  se <- sqrt((nn*s^2) + (nn*b.se)^2)
-
-  if(fan)
-    level <- seq(51,99,by=3)
-  else
-  {
-    if(min(level) > 0 & max(level) < 1)
-      level <- 100*level
-    else if(min(level) < 0 | max(level) > 99.99)
-      stop("Confidence limit out of range")
-  }
-  nconf <- length(level)
-  z <- qnorm(.5 + level/200)
-  lower <- upper <- matrix(NA,nrow=h,ncol=nconf)
-  for(i in 1:nconf)
-  {
-    lower[,i] <- f - z[i]*se
-    upper[,i] <- f + z[i]*se
-  }
-  lower <- ts(lower,start=tsp(x)[2]+1/freq,frequency=freq)
-  upper <- ts(upper,start=tsp(x)[2]+1/freq,frequency=freq)
-  colnames(lower) <- colnames(upper) <- paste(level,"%",sep="")
-  fcast <- ts(f,start=tsp(x)[2]+1/freq,frequency=freq)
-  #fits <- x - res
-  if(!is.null(lambda))
-  {
-    x <- origx
-    fcast <- InvBoxCox(fcast,lambda)
-    if(biasadj){
-      fcast <- InvBoxCoxf(x = list(level = level, mean = fcast, upper = upper, lower = lower), lambda = lambda)
-    }
-    fcast <- InvBoxCox(fcast,lambda)
-    fits <- InvBoxCox(fits,lambda)
-    upper <- InvBoxCox(upper,lambda)
-    lower <- InvBoxCox(lower,lambda)
-  }
-
-  out <- list(method=method,level=level,x=x,xname=xname,mean=fcast,lower=lower,upper=upper,
-      model=list(drift=b,drift.se=b.se,sd=s), fitted = fits, residuals = res, lambda=lambda)
-  out$model$call <- match.call()
-
-  return(structure(out,class="forecast"))
-}
 
 BoxCox <- function(x,lambda)
 {
@@ -401,34 +323,5 @@ croston2 <- function(x,h=10,alpha=0.1,nofits=FALSE)
         tsp(fits) <- tsp.x
         return(list(mean = ratio, fitted = fits, model=list(demand=y.f,period=p.f)))
     }
-}
-
-
-snaive <- function(x,h=2*frequency(x),level=c(80,95),fan=FALSE, lambda=NULL)
-{
-    fc <- forecast(Arima(x,seasonal=list(order=c(0,1,0),period=frequency(x)), lambda=lambda),h=h,level=level,fan=fan)
-    # Remove initial fitted values and error
-    m <- frequency(x)
-    fc$fitted[1:m] <- NA
-    fc$residuals[1:m] <- NA
-    fc$method <- "Seasonal naive method"
-    return(fc)
-}
-
-# naive <- function(x,h=10,level=c(80,95),fan=FALSE, lambda=NULL)
-# {
-#     fc <- forecast(Arima(x,order=c(0,1,0),lambda=lambda),h,level=level,fan=fan)
-#     # Remove initial fitted values and error
-#     fc$fitted[1] <- NA
-#     fc$residuals[1] <- NA
-#     fc$method <- "Naive method"
-#     return(fc)
-# }
-
-naive <- function(x,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biadadj=FALSE)
-{
-  fc <- rwf(x, h=h, level=level, fan=fan, lambda=lambda, drift=FALSE, biasadj=biasadj)
-  fc$method <- "Naive method"
-  return(fc)
 }
 
