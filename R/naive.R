@@ -105,7 +105,7 @@ rwf <- function(x,h=10,drift=FALSE,level=c(80,95),fan=FALSE,lambda=NULL,biasadj=
 #     return(fc)
 # }
 
-naive <- function(x,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biadadj=FALSE)
+naive <- function(x,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE)
 {
   fc <- rwf(x, h=h, level=level, fan=fan, lambda=lambda, drift=FALSE, biasadj=biasadj)
   fc$method <- "Naive method"
