@@ -20,7 +20,7 @@ dm.test <- function (e1, e2, alternative = c("two.sided", "less", "greater"), h 
   
   n <- length(d)
   k <- ((n + 1 - 2 * h + (h/n) * (h-1))/n)^(1/2)
-  STATISTIC <- STATISTIC * k
+  STATISTIC <- STATISTIC / k
   names(STATISTIC) <- "DM"
   if (alternative == "two.sided")
     PVAL <- 2 * pt(-abs(STATISTIC), df = n-1)
