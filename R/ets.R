@@ -161,8 +161,15 @@ ets <- function(y, model="ZZZ", damped=NULL,
       stop("Forbidden model combination")
   }
 
-  # Check we have enough data to fit a model
   n <- length(y)
+  # Return non-optimized SES if 4 or  fewer observations
+  if(n <= 4) 
+  {
+    fit <- HoltWintersZZ(orig.y, beta=FALSE, gamma=FALSE, lambda=lambda, biasadj=biasadj)
+    fit$call <- match.call()
+    return(fit)
+  }
+  # Otherwise proceed to check we have enough data to fit a model
   npars <- 2L # alpha + l0
   if(trendtype=="A" | trendtype=="M")
     npars <- npars + 2L # beta + b0
@@ -170,8 +177,8 @@ ets <- function(y, model="ZZZ", damped=NULL,
     npars <- npars + m # gamma + s
   if(!is.null(damped))
     npars <- npars + as.numeric(damped)
-  if(n <= max(4,npars + 1))
-    stop("You've got to be joking. I need more data!")
+  if(n <= npars+1)
+    stop("Sorry, but I need more data!")
 
   # Fit model (assuming only one nonseasonal model)
   if(errortype=="Z")
