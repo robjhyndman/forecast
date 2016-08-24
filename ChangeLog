@@ -1,11 +1,11 @@
 Version 7.2 (?? 2016)
   * Faceting for autoplot.mts
   * Box-Cox support for ses, holt, hw
+  * ets() now works for tiny time series
   * Added h-step fitted values in fitted() function.
   * ggplot2 theme support
   * Added gglagplot, gglagchull
   * Arima() and auto.arima() now allow any argument to be passed to stats::arima().
-  * Fixed bug in DM test
   * Bug fixes and speed improvements
 
 Version 7.1 (14 April 2016)
