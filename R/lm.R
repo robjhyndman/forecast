@@ -3,7 +3,15 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
   if(!("formula" %in% class(formula))){
     formula <- stats::as.formula(formula)
   }
-  mt <- terms(formula)
+  if(missing(data)){
+    mt <- try(terms(formula))
+    if(class(mt) == "try-error"){
+      stop("Cannot extract terms from formula, please provide data argument.")
+    }
+  }
+  else{
+    mt <- terms(formula, data=data)
+  }
 
   vars <- attr(mt,"variables")
   #Check for time series variables
