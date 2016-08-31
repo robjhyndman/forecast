@@ -5,7 +5,7 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
   }
   if(missing(data)){
     mt <- try(terms(formula))
-    if(class(mt) == "try-error"){
+    if(is.element("try-error", class(mt))){
       stop("Cannot extract terms from formula, please provide data argument.")
     }
   }
