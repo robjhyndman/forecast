@@ -416,10 +416,12 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   # Refit using ML if approximation used for IC
   if(approximation & !is.null(bestfit$arma))
   {
-    #constant <- length(bestfit$coef) > sum(bestfit$arma[1:4])
     newbestfit <- myarima(x,order=bestfit$arma[c(1,6,2)],
       seasonal=bestfit$arma[c(3,7,4)],constant=constant,ic,trace=FALSE,approximation=FALSE,xreg=xreg,...)
-    if(newbestfit$ic == Inf | newbestfit$code > 0)
+    tryagain <- (newbestfit$ic == Inf | newbestfit$code > 0)
+    if(length(tryagain)==0L)
+      tryagain <- TRUE
+    if(tryagain)
     {
       # Final model is lousy. Better try again without approximation
       bestfit <- auto.arima(orig.x, d=d, D=D, max.p=max.p, max.q=max.q,
