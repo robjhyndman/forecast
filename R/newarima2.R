@@ -3,7 +3,8 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     start.p=2, start.q=2, start.P=1, start.Q=1,
     stationary=FALSE, seasonal=TRUE, ic=c("aicc","aic","bic"),
     stepwise=TRUE, trace=FALSE,
-    approximation=(length(x)>100 | frequency(x)>12), xreg=NULL,
+    approximation=(length(x)>100 | frequency(x)>12), 
+    truncate=FALSE, xreg=NULL,
     test=c("kpss","adf","pp"), seasonal.test=c("ocsb","ch"),
     allowdrift=TRUE,allowmean=TRUE,lambda=NULL, biasadj=FALSE,
     parallel=FALSE, num.cores=2, ...)
@@ -155,6 +156,12 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   # Find constant offset for AIC calculation using white noise model
   if(approximation)
   {
+    if(truncate)
+    {
+      tspx <- tsp(x)
+      if(length(x) > 6*tspx[3])
+        x <- ts(tail(x, 6*tspx[3]), end=tspx[2], freq=tspx[3])
+    }
     if(D==0)
       fit <- try(stats::arima(x,order=c(0,d,0),xreg=xreg,...), silent=TRUE)
     else
