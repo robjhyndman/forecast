@@ -53,10 +53,10 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   else
     m <- round(m) # Avoid non-integer seasonal periods
 
-	max.p<-ifelse(max.p <= floor(serieslength/3), max.p, floor(serieslength/3))
-	max.q<-ifelse(max.q <= floor(serieslength/3), max.q, floor(serieslength/3))
-	max.P<-ifelse(max.P <= floor((serieslength/3)/m), max.P, floor((serieslength/3)/m))
-	max.Q<-ifelse(max.Q <= floor((serieslength/3)/m), max.Q, floor((serieslength/3)/m))
+  max.p <- min(max.p, floor(serieslength/3))
+  max.q <- min(max.q, floor(serieslength/3))
+  max.P <- min(max.P, floor(serieslength/3/m))
+  max.Q <- min(max.Q, floor(serieslength/3/m))
 
   orig.x <- x
   origxreg <- xreg
