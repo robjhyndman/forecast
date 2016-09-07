@@ -1,7 +1,8 @@
 \name{thetaf}
 \alias{thetaf}
 \title{Theta method forecast}
-\usage{thetaf(y, h=10, level=c(80,95), fan=FALSE, x=y)}
+\usage{thetaf(y, h=ifelse(frequency(y)>1, 2*frequency(y), 10), 
+  level=c(80,95), fan=FALSE, x=y)}
 
 \arguments{
 \item{y}{a numeric vector or time series}
@@ -13,7 +14,10 @@
 \description{Returns forecasts and prediction intervals for a theta method forecast.
 }
 \details{The theta method of Assimakopoulos and Nikolopoulos (2000) is
-equivalent to simple exponential smoothing with drift. This is demonstrated in Hyndman and Billah (2003).
+equivalent to simple exponential smoothing with drift. This is demonstrated in Hyndman and Billah (2003). 
+
+The series is tested for seasonality using the test outlined in A&N. If deemed seasonal, the series is seasonally adjusted using a classical multiplicative decomposition before applying the theta method. The resulting forecasts are then reseasonalized. 
+
 Prediction intervals are computed using the underlying state space model.
 }
 
