@@ -5,7 +5,7 @@
 #size set to average of number of inputs and number of outputs: (p+P+1)/2
 #if xreg is included then size = (p+P+ncol(xreg)+1)/2
 
-nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NULL, subset=NULL, scale.inputs=TRUE, ...)
+nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NULL, subset=NULL, scale.inputs=TRUE, parallel=FALSE, num.cores=2, ...)
 {
   useoldmodel <- FALSE
   if (!is.null(model))
@@ -141,9 +141,9 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   j <- j & xsub[-(1:maxlag)]
   ## Fit average ANN.
   if(useoldmodel)
-    fit <- oldmodel_avnnet(lags.X[j,],y[j],size=size, model)
+    fit <- oldmodel_avnnet(lags.X[j,],y[j],size=size, model, parallel=parallel, num.cores=num.cores)
   else
-    fit <- avnnet(lags.X[j,],y[j],size=size,repeats=repeats, ...)
+    fit <- avnnet(lags.X[j,],y[j],size=size,repeats=repeats, parallel=parallel, num.cores=num.cores, ...)
   # Return results
   out <- list()
   out$x <- as.ts(x)
@@ -183,8 +183,20 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
 }
 
 # Aggregate several neural network models
-avnnet <- function(x,y,repeats, linout=TRUE, trace=FALSE, ...)
-{
+avnnet <- function(x,y,repeats, linout=TRUE, trace=FALSE, parallel = TRUE, num.cores = NULL, ...){
+  if(parallel){
+    if(is.null(num.cores)){
+      num.cores <- detectCores(all.tests = FALSE, logical = TRUE)
+    }
+    cl <- makeCluster(num.cores)
+    registerDoParallel(cl)
+    on.exit(stopCluster(cl))
+    mods <- foreach(i=1:repeats, .packages="nnet") %dopar%{
+      nnet::nnet(x=x, y=y, linout=linout, trace=trace, ...)
+    }
+    return(structure(mods,class="nnetarmodels"))
+  }
+  # nonparallel case
   mods <- list()
   for(i in 1:repeats)
     mods[[i]] <- nnet::nnet(x, y, linout=linout, trace=trace, ...)
@@ -192,7 +204,7 @@ avnnet <- function(x,y,repeats, linout=TRUE, trace=FALSE, ...)
 }
 
 # Fit old model to new data
-oldmodel_avnnet <- function(x, y, size, model)
+oldmodel_avnnet <- function(x, y, size, model, parallel = TRUE, num.cores = 2)
 {
   repeats <- length(model$model)
   args <- list(x=x, y=y, size=size, linout=1, trace=FALSE)
@@ -200,6 +212,21 @@ oldmodel_avnnet <- function(x, y, size, model)
   args <- c(args, model$nnetargs)
   # set iterations to zero (i.e. weights stay fixed)
   args$maxit <- 0
+  if(parallel){
+    if(is.null(num.cores)){
+      num.cores <- detectCores(all.tests = FALSE, logical = TRUE)
+      
+      }
+    cl <- makeCluster(num.cores)
+    registerDoParallel(cl)
+    on.exit(stopCluster(cl))
+    mods <- foreach(i=1:repeats, .packages="nnet") %dopar%{
+      args$Wts <- model$model[[i]]$wts
+      do.call(nnet::nnet, args)
+      }
+    return(structure(mods,class="nnetarmodels"))
+  }
+  # nonparallel case
   mods <- list()
   for(i in 1:repeats)
   {
