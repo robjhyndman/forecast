@@ -9,7 +9,7 @@ auto.arima(x, d=NA, D=NA, max.p=5, max.q=5,
      stationary=FALSE, seasonal=TRUE,
      ic=c("aicc", "aic", "bic"), stepwise=TRUE, trace=FALSE,
      approximation=(length(x)>100 | frequency(x)>12), 
-     truncate=FALSE, xreg=NULL,
+     truncate=NULL, xreg=NULL,
      test=c("kpss","adf","pp"), seasonal.test=c("ocsb","ch"),
      allowdrift=TRUE, allowmean=TRUE, lambda=NULL, biasadj=FALSE,
      parallel=FALSE, num.cores=2, ...)
@@ -36,7 +36,7 @@ auto.arima(x, d=NA, D=NA, max.p=5, max.q=5,
 \item{stepwise}{If \code{TRUE}, will do stepwise selection (faster). Otherwise, it searches over all models. Non-stepwise selection can be very slow, especially for seasonal models.}
 \item{trace}{If \code{TRUE}, the list of ARIMA models considered will be reported.}
 \item{approximation}{If \code{TRUE}, estimation is via conditional sums of squares andthe information criteria used for model selection are approximated. The final model is still computed using maximum likelihood estimation. Approximation should be used for long time series or a high seasonal period to avoid excessive computation times.}
-\item{truncate}{If \code{TRUE}, model selection is based on a truncated version of the time series to speed up computation. This argument is ignored when \code{approximation=FALSE}.}
+\item{truncate}{An integer value indicating how many observations to use in model selection. The last \code{truncate} values of the series are used to select a model when \code{truncate} is not \code{NULL} and \code{approximation=TRUE}. All observations are used if either \code{truncate=NULL} or \code{approximation=FALSE}.}
 \item{xreg}{Optionally, a vector or matrix of external regressors, which must have the same number of rows as x.}
 \item{test}{Type of unit root test to use. See \code{\link{ndiffs}} for details.}
 \item{seasonal.test}{This determines which seasonal unit root test is used. See \code{\link{nsdiffs}} for details.}
