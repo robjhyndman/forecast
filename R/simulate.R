@@ -134,7 +134,7 @@ myarima.sim <- function (model, n, x, e, ...)
     {
       lagged.x.values <- x.with.data[(i-len.ar):(i-1)]
       ar.coefficients <- model$ar[length(model$ar):1]
-      sum.mutliplied.x <- sum(lagged.x.values * (ar.coefficients))
+      sum.mutliplied.x <- sum((lagged.x.values * ar.coefficients)[ar.coefficients != 0])
       x.with.data[i] <- x.with.data[i]+sum.mutliplied.x
     }
 
