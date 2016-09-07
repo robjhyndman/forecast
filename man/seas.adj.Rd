@@ -1,11 +1,12 @@
 \name{seasadj}
 \alias{seasadj}
 \title{Seasonal adjustment}
-\usage{seasadj(object)
+\usage{seasadj(object, ...)
 }
 
 \arguments{
 \item{object}{Object created by \code{\link[stats]{decompose}}, \code{\link[stats]{stl}} or \code{\link{tbats}}.}
+\item{...}{Other arguments not currently used.}
 }
 \description{Returns seasonally adjusted data constructed by removing the seasonal component.}
 

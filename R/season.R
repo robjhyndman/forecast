@@ -48,37 +48,6 @@ sindexf <- function(object,h)
     return(out)
 }
 
-seasadj <- function(object)
-{
-    if(is.element("stl",class(object)))
-        return(object$time.series[,2]+object$time.series[,3])
-    else if(is.element("decomposed.ts",class(object)))
-    {
-        if(object$type=="additive")
-            return(object$x-object$seasonal)
-        else
-            return(object$x/object$seasonal)
-    }
-    else if(is.element("tbats",class(object)))
-    {
-      comp <- tbats.components(object)
-      scols <- grep("season",colnames(comp))
-      sa <- comp[,"observed"]-rowSums(comp[,scols,drop=FALSE])
-      # Back transform if necessary
-      if (!is.null(object$lambda))
-        sa <- InvBoxCox(sa, object$lambda)
-      return(sa)
-    }
-    else if(is.element("bats",class(object)))
-    {
-      if(is.null(object$gamma.values))
-        stop("There are no seasonal components in the series.")
-      else
-        stop("No seasonal adjustment available for BATS models")
-    }
-    else
-      stop("I don't know how to seasonally adjust objects of this type")
-}
 
 seasonaldummy <- function(x, h=NULL)
 {
