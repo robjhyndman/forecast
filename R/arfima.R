@@ -120,7 +120,7 @@ arfima <- function(y, drange = c(0, 0.5), estim = c("mle","ls"), lambda = NULL, 
 	    fit$fitted <- InvBoxCoxf(fit$fitted, fvar = var(fit$residuals), lambda=lambda)
 	  }
 	fit$lambda <- lambda
-	fit$call$data <- data.frame(x=x)
+	fit$call <- match.call()
 	return(fit)
 }
 
