@@ -17,7 +17,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     if (!is.nnetar(model))
       stop("Model must be a nnetar object")
     # Check new data
-    m <- round(frequency(model$x))
+    m <- max(round(frequency(model$x)),1L)
     minlength <- max(c(model$p, model$P*m))
     if (length(x) < minlength)
       stop(paste("Series must be at least of length", minlength, "to use fitted model"))
@@ -103,7 +103,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   # Set up lagged matrix
   n <- length(xx)
   xx <- as.ts(xx)
-  m <- round(frequency(xx))
+  m <- max(round(frequency(xx)), 1L)
   if(m==1)
   {
     if(missing(p))
