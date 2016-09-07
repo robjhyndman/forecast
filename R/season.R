@@ -176,8 +176,8 @@ forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsm
 
 # Function takes time series, does STL decomposition, and fits a model to seasonally adjusted series
 # But it does not forecast. Instead, the result can be passed to forecast().
-stlm <- function(x ,s.window=7, robust=FALSE, method=c("ets","arima"),
-     modelfunction=NULL, etsmodel="ZZN", lambda=NULL, xreg=NULL, allow.multiplicative.trend=FALSE, ...)
+stlm <- function(y ,s.window=7, robust=FALSE, method=c("ets","arima"),
+     modelfunction=NULL, etsmodel="ZZN", lambda=NULL, xreg=NULL, allow.multiplicative.trend=FALSE, x=y, ...)
 {
   method <- match.arg(method)
 
@@ -273,7 +273,7 @@ forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE
   return(fcast)
 }
 
-stlf <- function(x, h=frequency(x)*2, s.window=7, t.window=NULL, robust=FALSE, lambda=NULL, biasadj=FALSE, ...)
+stlf <- function(y, h=frequency(x)*2, s.window=7, t.window=NULL, robust=FALSE, lambda=NULL, biasadj=FALSE, x=y, ...)
 {
 	if (!is.null(lambda))
 	{

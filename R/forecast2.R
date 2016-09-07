@@ -1,7 +1,7 @@
 # Mean forecast
-meanf <- function(x,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE)
+meanf <- function(y,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE, x=y)
 {
-  xname <- deparse(substitute(x))
+  xname <- deparse(substitute(y))
   n <- length(x)
   if(!is.null(lambda))
   {
@@ -67,7 +67,7 @@ meanf <- function(x,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE)
   return(structure(out,class="forecast"))
 }
 
-thetaf <- function(x,h=10,level=c(80,95),fan=FALSE)
+thetaf <- function(y,h=10,level=c(80,95),fan=FALSE, x=y)
 {
   if(fan)
     level <- seq(51,99,by=3)
@@ -271,13 +271,13 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x)>1,2*freque
 
 ## CROSTON
 
-croston <- function(x,h=10,alpha=0.1)
+croston <- function(y,h=10,alpha=0.1,x=y)
 {
   if(sum(x<0) > 0)
     stop("Series should not contain negative values")
   out <- croston2(x,h,alpha)
   out$x <- x
-  out$xname <- deparse(substitute(x))
+  out$xname <- deparse(substitute(y))
   if(!is.null(out$fitted))
     out$residuals <- x-out$fitted
   out$method <- "Croston's method"

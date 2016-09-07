@@ -1,4 +1,4 @@
-auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
+auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     max.P=2, max.Q=2, max.order=5, max.d=2, max.D=1,
     start.p=2, start.q=2, start.P=1, start.Q=1,
     stationary=FALSE, seasonal=TRUE, ic=c("aicc","aic","bic"),
@@ -7,7 +7,7 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     truncate=NULL, xreg=NULL,
     test=c("kpss","adf","pp"), seasonal.test=c("ocsb","ch"),
     allowdrift=TRUE,allowmean=TRUE,lambda=NULL, biasadj=FALSE,
-    parallel=FALSE, num.cores=2, ...)
+    parallel=FALSE, num.cores=2, x=y, ...)
 {
   # Only non-stepwise parallel implemented so far.
   if (stepwise==TRUE & parallel==TRUE)
@@ -16,7 +16,7 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     parallel <- FALSE
   }
 
-  series <- deparse(substitute(x))
+  series <- deparse(substitute(y))
   x <- as.ts(x)
 
   # Check for constant data

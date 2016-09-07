@@ -1,13 +1,14 @@
 \name{thetaf}
 \alias{thetaf}
 \title{Theta method forecast}
-\usage{thetaf(x, h=10, level=c(80,95), fan=FALSE)}
+\usage{thetaf(y, h=10, level=c(80,95), fan=FALSE, x=y)}
 
 \arguments{
-\item{x}{a numeric vector or time series}
+\item{y}{a numeric vector or time series}
 \item{h}{Number of periods for forecasting}
 \item{level}{Confidence levels for prediction intervals.}
 \item{fan}{If TRUE, level is set to seq(51,99,by=3). This is suitable for fan plots.}
+\item{x}{Deprecated. Included for backwards compatibility.}
 }
 \description{Returns forecasts and prediction intervals for a theta method forecast.
 }

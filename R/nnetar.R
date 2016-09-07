@@ -5,9 +5,10 @@
 #size set to average of number of inputs and number of outputs: (p+P+1)/2
 #if xreg is included then size = (p+P+ncol(xreg)+1)/2
 
-nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NULL, subset=NULL, scale.inputs=TRUE, ...)
+nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NULL, subset=NULL, scale.inputs=TRUE, x=y, ...)
 {
   useoldmodel <- FALSE
+  yname <- deparse(substitute(y))
   if (!is.null(model))
   {
     # Use previously fitted model
@@ -171,7 +172,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   tsp(out$fitted) <- tsp(out$x)
   out$residuals <- out$x - out$fitted
   out$lags <- lags
-  out$series <- deparse(substitute(x))
+  out$series <- yname
   out$method <- paste("NNAR(",p,sep="")
   if(P>0)
     out$method <- paste(out$method,",",P,sep="")

@@ -340,8 +340,8 @@ zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, seasonal="additive"
 			)
 }
 
-ses <- function (x, h = 10, level = c(80, 95), fan = FALSE, initial=c("optimal","simple"),
-  alpha=NULL, lambda=NULL, biasadj=FALSE, ...)
+ses <- function (y, h = 10, level = c(80, 95), fan = FALSE, initial=c("optimal","simple"),
+  alpha=NULL, lambda=NULL, biasadj=FALSE, x=y, ...)
 {
   initial <- match.arg(initial)
 
@@ -355,9 +355,9 @@ ses <- function (x, h = 10, level = c(80, 95), fan = FALSE, initial=c("optimal",
   return(fcast)
 }
 
-holt <- function (x, h = 10, damped = FALSE, level = c(80, 95), fan = FALSE,
+holt <- function (y, h = 10, damped = FALSE, level = c(80, 95), fan = FALSE,
           initial=c("optimal","simple"), exponential=FALSE, alpha=NULL, beta=NULL,
-          lambda=NULL, biasadj=FALSE, ...)
+          lambda=NULL, biasadj=FALSE, x=y, ...)
 {
   initial <- match.arg(initial)
   if(initial=="optimal" | damped)
@@ -385,9 +385,9 @@ holt <- function (x, h = 10, damped = FALSE, level = c(80, 95), fan = FALSE,
   return(fcast)
 }
 
-hw <- function(x, h = 2 * frequency(x), seasonal = c("additive","multiplicative"), damped = FALSE,
+hw <- function(y, h = 2 * frequency(x), seasonal = c("additive","multiplicative"), damped = FALSE,
     level = c(80, 95), fan = FALSE, initial=c("optimal","simple"), exponential=FALSE,
-    alpha=NULL, beta=NULL,gamma=NULL, lambda=NULL, biasadj=FALSE, ...)
+    alpha=NULL, beta=NULL,gamma=NULL, lambda=NULL, biasadj=FALSE, x=y, ...)
 {
   initial <- match.arg(initial)
   seasonal <- match.arg(seasonal)

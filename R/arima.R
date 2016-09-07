@@ -506,20 +506,20 @@ fitted.Arima <- function(object, biasadj = FALSE, h = 1, ...)
 # Calls arima from stats package and adds data to the returned object
 # Also allows refitting to new data
 # and drift terms to be included.
-Arima <- function(x, order=c(0, 0, 0),
+Arima <- function(y, order=c(0, 0, 0),
       seasonal=c(0, 0, 0),
       xreg=NULL, include.mean=TRUE, include.drift=FALSE, include.constant, lambda=model$lambda,
-      method=c("CSS-ML", "ML", "CSS"), model=NULL, ...)
+      method=c("CSS-ML", "ML", "CSS"), model=NULL, x=y, ...)
 {
     # Remove outliers near ends
     #j <- time(x)
     #x <- na.contiguous(x)
     #if(length(j) != length(x))
     #    warning("Missing values encountered. Using longest contiguous portion of time series")
-  
-  series <- deparse(substitute(x))
 
-  origx <- x
+  series <- deparse(substitute(y))
+
+  origx <- y
   if(!is.null(lambda))
     x <- BoxCox(x,lambda)
 
@@ -593,7 +593,7 @@ Arima <- function(x, order=c(0, 0, 0),
   {
     tmp$sigma2 <- sum(tmp$residuals^2, na.rm=TRUE) / (nstar - npar + 1)
   }
-  
+
   return(structure(tmp, class=c("ARIMA","Arima")))
 }
 
@@ -649,7 +649,7 @@ arima2 <- function (x, model, xreg, method)
   if(use.xreg) # Why is this needed?
     refit$xreg <- xreg
   refit$sigma2 <- sigma2
-  
+
   return(refit)
 }
 
