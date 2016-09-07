@@ -51,6 +51,8 @@ forecast.mlm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambd
   else {
     stop("Response not found")
   }
+  if(!is.null(tspx))
+    out$x <- ts(out$x, start=tspx[1], frequency=tspx[3])
   out$residuals <- residuals(object)
   out$fitted <- fitted(object)
   out$mean <- out$lower <- out$upper <- vector("list",K)
