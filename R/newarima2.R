@@ -198,10 +198,17 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   }
 
   # Starting model
-  p <- start.p <- min(start.p,max.p)
-  q <- start.q <- min(start.q,max.q)
-  P <- start.P <- min(start.P,max.P)
-  Q <- start.Q <- min(start.Q,max.Q)
+  if(length(x) < 10L)
+  {
+    start.p <- min(start.p, 1L)
+    start.q <- min(start.q, 1L)
+    start.P <- 0L
+    start.Q <- 0L
+  }
+  p <- start.p <- min(start.p, max.p)
+  q <- start.q <- min(start.q, max.q)
+  P <- start.P <- min(start.P, max.P)
+  Q <- start.Q <- min(start.Q, max.Q)
 
   results <- matrix(NA,nrow=100,ncol=8)
 
