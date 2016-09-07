@@ -3,7 +3,7 @@
 
 #Author: RJH
 
-thetaf <- function(y, h = ifelse(frequency(y)>1, 2*frequency(y), 10), 
+thetaf <- function(y, h=ifelse(frequency(y)>1, 2*frequency(y), 10), 
   level=c(80,95), fan=FALSE, x=y)
 {
   # Check inputs
@@ -22,7 +22,7 @@ thetaf <- function(y, h = ifelse(frequency(y)>1, 2*frequency(y), 10),
   m <- frequency(x)
   if(m > 1)
   {
-    r <- as.numeric(acf(x, lag=m, plot=FALSE)$acf)[-1]
+    r <- as.numeric(acf(x, lag.max=m, plot=FALSE)$acf)[-1]
     stat <- sqrt((1 + 2*sum(r[-m]^2)) / n)
     seasonal <- (abs(r[m]) / stat > qnorm(0.95))
   }
