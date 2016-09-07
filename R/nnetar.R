@@ -257,7 +257,10 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), xr
   # Iterative 1-step forecast
   for(i in 1:h)
   {
-    fcast[i] <- mean(sapply(object$model, predict, newdata=c(flag[lags], xreg[i, ])))
+    newdata <- c(flag[lags], xreg[i, ])
+    if(any(is.na(newdata)))
+      stop("I can't forecast when there are missing values near the end of the series.")
+    fcast[i] <- mean(sapply(object$model, predict, newdata=newdata))
     flag <- c(fcast[i],flag[-maxlag])
   }
   if(!is.null(object$scalex))
