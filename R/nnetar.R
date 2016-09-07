@@ -5,9 +5,10 @@
 #size set to average of number of inputs and number of outputs: (p+P+1)/2
 #if xreg is included then size = (p+P+ncol(xreg)+1)/2
 
-nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NULL, subset=NULL, scale.inputs=TRUE, ...)
+nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NULL, subset=NULL, scale.inputs=TRUE, x=y, ...)
 {
   useoldmodel <- FALSE
+  yname <- deparse(substitute(y))
   if (!is.null(model))
   {
     # Use previously fitted model
@@ -17,7 +18,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     if (!is.nnetar(model))
       stop("Model must be a nnetar object")
     # Check new data
-    m <- frequency(model$x)
+    m <- max(round(frequency(model$x)),1L)
     minlength <- max(c(model$p, model$P*m))
     if (length(x) < minlength)
       stop(paste("Series must be at least of length", minlength, "to use fitted model"))
@@ -103,7 +104,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   # Set up lagged matrix
   n <- length(xx)
   xx <- as.ts(xx)
-  m <- frequency(xx)
+  m <- max(round(frequency(xx)), 1L)
   if(m==1)
   {
     if(missing(p))
@@ -171,7 +172,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   tsp(out$fitted) <- tsp(out$x)
   out$residuals <- out$x - out$fitted
   out$lags <- lags
-  out$series <- deparse(substitute(x))
+  out$series <- yname
   out$method <- paste("NNAR(",p,sep="")
   if(P>0)
     out$method <- paste(out$method,",",P,sep="")
@@ -256,7 +257,10 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), xr
   # Iterative 1-step forecast
   for(i in 1:h)
   {
-    fcast[i] <- mean(sapply(object$model, predict, newdata=c(flag[lags], xreg[i, ])))
+    newdata <- c(flag[lags], xreg[i, ])
+    if(any(is.na(newdata)))
+      stop("I can't forecast when there are missing values near the end of the series.")
+    fcast[i] <- mean(sapply(object$model, predict, newdata=newdata))
     flag <- c(fcast[i],flag[-maxlag])
   }
   if(!is.null(object$scalex))

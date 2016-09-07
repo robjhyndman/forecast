@@ -61,7 +61,7 @@ unfracdiff <- function(x,y,n,h,d)
 
 ## Automatic ARFIMA modelling
 ## Will return Arima object if d < 0.01 to prevent estimation problems
-arfima <- function(x, drange = c(0, 0.5), estim = c("mle","ls"), lambda = NULL, biasadj = FALSE, ...)
+arfima <- function(y, drange = c(0, 0.5), estim = c("mle","ls"), lambda = NULL, biasadj = FALSE, x=y, ...)
 {
 	estim <- match.arg(estim)
 #	require(fracdiff)
@@ -120,7 +120,7 @@ arfima <- function(x, drange = c(0, 0.5), estim = c("mle","ls"), lambda = NULL, 
 	    fit$fitted <- InvBoxCoxf(fit$fitted, fvar = var(fit$residuals), lambda=lambda)
 	  }
 	fit$lambda <- lambda
-	fit$call$data <- data.frame(x=x)
+	fit$call <- match.call()
 	return(fit)
 }
 

@@ -1,7 +1,7 @@
 # Mean forecast
-meanf <- function(x,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE)
+meanf <- function(y,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE, x=y)
 {
-  xname <- deparse(substitute(x))
+  xname <- deparse(substitute(y))
   n <- length(x)
   if(!is.null(lambda))
   {
@@ -65,38 +65,6 @@ meanf <- function(x,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE)
   out$model$call <- match.call()
 
   return(structure(out,class="forecast"))
-}
-
-thetaf <- function(x,h=10,level=c(80,95),fan=FALSE)
-{
-  if(fan)
-    level <- seq(51,99,by=3)
-  else
-  {
-    if(min(level) > 0 & max(level) < 1)
-      level <- 100*level
-    else if(min(level) < 0 | max(level) > 99.99)
-      stop("Confidence limit out of range")
-  }
-  fcast <- ses(x,h=h)
-  tmp2 <- lsfit(0:(length(x)-1),x)$coef[2]/2
-  alpha <- fcast$model$par["alpha"]
-  n <- length(x)
-  fcast$mean <- fcast$mean + tmp2*(0:(h-1) + (1-(1-alpha)^n)/alpha)
-  fcast.se <- sqrt(fcast$model$sigma) * sqrt((0:(h-1))*alpha^2+1)
-  nconf <- length(level)
-  fcast$lower <- fcast$upper <- matrix(NA,nrow=h,ncol=nconf)
-  for(i in 1:nconf)
-  {
-    zt <- -qnorm( 0.5 - level[i]/200)
-    fcast$lower[,i] <- fcast$mean - zt*fcast.se
-    fcast$upper[,i] <- fcast$mean + zt*fcast.se
-  }
-  fcast$level <- level
-  fcast$method <- "Theta"
-  fcast$model <- list(alpha=alpha,drift=tmp2,sigma=fcast$model$sigma)
-  fcast$model$call <- match.call()
-  return(fcast)
 }
 
 
@@ -271,13 +239,13 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x)>1,2*freque
 
 ## CROSTON
 
-croston <- function(x,h=10,alpha=0.1)
+croston <- function(y,h=10,alpha=0.1,x=y)
 {
   if(sum(x<0) > 0)
     stop("Series should not contain negative values")
   out <- croston2(x,h,alpha)
   out$x <- x
-  out$xname <- deparse(substitute(x))
+  out$xname <- deparse(substitute(y))
   if(!is.null(out$fitted))
     out$residuals <- x-out$fitted
   out$method <- "Croston's method"

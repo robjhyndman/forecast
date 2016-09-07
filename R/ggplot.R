@@ -396,11 +396,11 @@ autoplot.forecast <- function (object, include, plot.conf=TRUE, shadecols=c("#59
       }
     }
     else if (!is.null(object$x)){
-      data <- data.frame(yvar=object$x)
+      data <- data.frame(yvar=c(object$x))
       vars <- c(yvar="y")
     }
     else if (!is.null(object$residuals) && !is.null(object$fitted)){
-      data <- data.frame(yvar=object$residuals+object$fitted)
+      data <- data.frame(yvar=c(object$residuals+object$fitted))
       vars <- c(yvar="y")
     }
     else{

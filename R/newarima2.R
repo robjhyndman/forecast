@@ -1,12 +1,13 @@
-auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
+auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     max.P=2, max.Q=2, max.order=5, max.d=2, max.D=1,
     start.p=2, start.q=2, start.P=1, start.Q=1,
     stationary=FALSE, seasonal=TRUE, ic=c("aicc","aic","bic"),
     stepwise=TRUE, trace=FALSE,
-    approximation=(length(x)>100 | frequency(x)>12), xreg=NULL,
+    approximation=(length(x)>100 | frequency(x)>12), 
+    truncate=NULL, xreg=NULL,
     test=c("kpss","adf","pp"), seasonal.test=c("ocsb","ch"),
     allowdrift=TRUE,allowmean=TRUE,lambda=NULL, biasadj=FALSE,
-    parallel=FALSE, num.cores=2, ...)
+    parallel=FALSE, num.cores=2, x=y, ...)
 {
   # Only non-stepwise parallel implemented so far.
   if (stepwise==TRUE & parallel==TRUE)
@@ -15,7 +16,7 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     parallel <- FALSE
   }
 
-  series <- deparse(substitute(x))
+  series <- deparse(substitute(y))
   x <- as.ts(x)
 
   # Check for constant data
@@ -52,10 +53,10 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   else
     m <- round(m) # Avoid non-integer seasonal periods
 
-	max.p<-ifelse(max.p <= floor(serieslength/3), max.p, floor(serieslength/3))
-	max.q<-ifelse(max.q <= floor(serieslength/3), max.q, floor(serieslength/3))
-	max.P<-ifelse(max.P <= floor((serieslength/3)/m), max.P, floor((serieslength/3)/m))
-	max.Q<-ifelse(max.Q <= floor((serieslength/3)/m), max.Q, floor((serieslength/3)/m))
+  max.p <- min(max.p, floor(serieslength/3))
+  max.q <- min(max.q, floor(serieslength/3))
+  max.P <- min(max.P, floor(serieslength/3/m))
+  max.Q <- min(max.Q, floor(serieslength/3/m))
 
   orig.x <- x
   origxreg <- xreg
@@ -155,6 +156,12 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   # Find constant offset for AIC calculation using white noise model
   if(approximation)
   {
+    if(!is.null(truncate))
+    {
+      tspx <- tsp(x)
+      if(length(x) > truncate)
+        x <- ts(tail(x, truncate), end=tspx[2], frequency=tspx[3])
+    }
     if(D==0)
       fit <- try(stats::arima(x,order=c(0,d,0),xreg=xreg,...), silent=TRUE)
     else
@@ -191,10 +198,17 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   }
 
   # Starting model
-  p <- start.p <- min(start.p,max.p)
-  q <- start.q <- min(start.q,max.q)
-  P <- start.P <- min(start.P,max.P)
-  Q <- start.Q <- min(start.Q,max.Q)
+  if(length(x) < 10L)
+  {
+    start.p <- min(start.p, 1L)
+    start.q <- min(start.q, 1L)
+    start.P <- 0L
+    start.Q <- 0L
+  }
+  p <- start.p <- min(start.p, max.p)
+  q <- start.q <- min(start.q, max.q)
+  P <- start.P <- min(start.P, max.P)
+  Q <- start.Q <- min(start.Q, max.Q)
 
   results <- matrix(NA,nrow=100,ncol=8)
 
@@ -409,10 +423,12 @@ auto.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   # Refit using ML if approximation used for IC
   if(approximation & !is.null(bestfit$arma))
   {
-    #constant <- length(bestfit$coef) > sum(bestfit$arma[1:4])
     newbestfit <- myarima(x,order=bestfit$arma[c(1,6,2)],
       seasonal=bestfit$arma[c(3,7,4)],constant=constant,ic,trace=FALSE,approximation=FALSE,xreg=xreg,...)
-    if(newbestfit$ic == Inf | newbestfit$code > 0)
+    tryagain <- (newbestfit$ic == Inf | newbestfit$code > 0)
+    if(length(tryagain)==0L)
+      tryagain <- TRUE
+    if(tryagain)
     {
       # Final model is lousy. Better try again without approximation
       bestfit <- auto.arima(orig.x, d=d, D=D, max.p=max.p, max.q=max.q,

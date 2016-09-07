@@ -134,8 +134,8 @@ myarima.sim <- function (model, n, x, e, ...)
     {
       lagged.x.values <- x.with.data[(i-len.ar):(i-1)]
       ar.coefficients <- model$ar[length(model$ar):1]
-      sum.mutliplied.x <- sum(lagged.x.values * (ar.coefficients))
-      x.with.data[i] <- x.with.data[i]+sum.mutliplied.x
+      sum.multiplied.x <- sum((lagged.x.values * ar.coefficients)[abs(ar.coefficients) < 1e-13])
+      x.with.data[i] <- x.with.data[i]+sum.multiplied.x
     }
 
     x.end <- x.with.data[(length(diff.data)+1):length(x.with.data)]
@@ -446,39 +446,28 @@ simulate.ar <- function(object, nsim=object$n.used, seed=NULL, future=TRUE, boot
 
 simulate.fracdiff <- function(object, nsim=object$n, seed=NULL, future=TRUE, bootstrap=FALSE, innov=NULL, ...)
 {
-  x <- object$x <- getResponse(object)
+  x <- getResponse(object)
 
-  # Strip initial and final missing values
-  xx <- na.ends(x)
+  # Strip initial and final missing values 
+  xx <- na.ends(x) 
   n <- length(xx)
 
   # Remove mean
   meanx <- mean(xx)
-  xx <- xx - meanx
+  xx <- xx - meanx 
 
-  y <- undo.na.ends(x,diffseries(xx, d = object$d))
-  fit <- Arima(y, order = c(length(object$ar), 0, length(object$ma)),
+  # Difference series (removes mean as well)
+  y <- undo.na.ends(x, diffseries(xx, d = object$d)) 
+
+  # Create ARMA model for differenced series
+  arma <- Arima(y, order = c(length(object$ar), 0, length(object$ma)),
     include.mean = FALSE, fixed = c(object$ar, -object$ma))
-  # Simulate ARMA
-  ysim <- simulate(fit,nsim,seed,future=future,bootstrap=bootstrap,innov=innov)
-  # Undo differencing
-  return(unfracdiff(xx,ysim,n,nsim,object$d))
-  # bin.c <- (-1)^(0:(n + nsim)) * choose(object$d, (0:(n + nsim)))
-  # b <- numeric(n)
-  # xsim <- LHS <- numeric(nsim)
-  # RHS <- cumsum(ysim)
-  # bs <- cumsum(bin.c[1:nsim])
-  # b <- bin.c[(1:n) + 1]
-  # xsim[1] <- RHS[1] <- ysim[1] - sum(b * rev(xx))
-  # for (k in 2:nsim)
-  # {
-    # b <- b + bin.c[(1:n) + k]
-    # RHS[k] <- RHS[k] - sum(b * rev(xx))
-    # LHS[k] <- sum(rev(xsim[1:(k - 1)]) * bs[2:k])
-    # xsim[k] <- RHS[k] - LHS[k]
-  # }
-  # tspx <- tsp(x)
-  # return(ts(xsim,frequency=tspx[3],start=tspx[2]+1/tspx[3]))
+
+  # Simulate from ARMA model
+  ysim <- simulate(arma, nsim, seed, future=future, bootstrap=bootstrap, innov=innov)
+
+  # Undo differencing and add back mean
+  return(unfracdiff(xx,ysim,n,nsim,object$d) + meanx)
 }
 
 

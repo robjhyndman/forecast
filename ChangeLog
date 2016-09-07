@@ -1,8 +1,13 @@
-Version 7.2 (?? 2016)
+Version 7.2 (8 September 2016)
   * Faceting for autoplot.mts
   * Box-Cox support for ses, holt, hw
   * ets() now works for tiny time series
   * Added h-step fitted values in fitted() function.
+  * seasonal adjustment added to thetaf()
+  * y now the standard first argument in all modelling functions
+  * Added truncate argument to auto.arima()
+  * seasadj() now an S3 method
+  * series with frequency < 1 and non-integer seasonality now handled better
   * ggplot2 theme support
   * Added gglagplot, gglagchull
   * Arima() and auto.arima() now allow any argument to be passed to stats::arima().

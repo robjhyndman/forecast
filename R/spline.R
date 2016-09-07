@@ -42,14 +42,14 @@ spline.loglik <- function(beta,y,cc=1e2)
 }
 
 # Spline forecasts
-splinef <- function(x, h=10, level=c(80,95), fan=FALSE, lambda=NULL, biasadj=FALSE, method=c("gcv","mle"))
+splinef <- function(y, h=10, level=c(80,95), fan=FALSE, lambda=NULL, biasadj=FALSE, method=c("gcv","mle"),x=y)
 {
     method <- match.arg(method)
     if(!is.ts(x))
         x <- ts(x)
     n <- length(x)
     freq <- frequency(x)
-    xname <- deparse(substitute(x))
+    xname <- deparse(substitute(y))
 
 	if(!is.null(lambda))
 	{
