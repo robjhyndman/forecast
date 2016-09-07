@@ -29,6 +29,7 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
     if(!any(class(y) == "ts"))
       y <- msts(y, seasonal.periods)
   }
+  seasonal.periods <- unique(pmax(seasonal.periods,1))
   if(all(seasonal.periods == 1))
     seasonal.periods <- NULL
 
