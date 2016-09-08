@@ -266,27 +266,20 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
     newdata <- tmpdata
     h <- nrow(newdata)
   }
-  if(!is.null(tspx) & any(is.element(c("trend","season"),colnames(origdata))))
+  if(!is.null(tspx))
   {
-    if(is.element("trend",colnames(origdata))){
-      trend <- max(origdata[,"trend"]) + (1:h)
-      if(!missing(newdata)){
-        newdata <- cbind(newdata, trend)
-      }
-      else{
-        newdata <- datamat(trend)
-      }
+    # Always generate trend series
+    trend <- ifelse(is.null(origdata$trend), NCOL(origdata), max(origdata$trend)) + (1:h)
+    if(!missing(newdata)){
+      newdata <- cbind(newdata, trend)
     }
-    if(is.element("season",colnames(origdata))){
-      x <- ts(1:h, start=tspx[2]+1/tspx[3], frequency=tspx[3])
-      season <- as.factor(cycle(x))
-      if(!missing(newdata)){
-        newdata <- cbind(newdata, season)
-      }
-      else{
-        newdata <- datamat(season)
-      }
+    else{
+      newdata <- datamat(trend)
     }
+    # Always generate season series
+    x <- ts(1:h, start=tspx[2]+1/tspx[3], frequency=tspx[3])
+    season <- as.factor(cycle(x))
+    newdata <- cbind(newdata, season)
   }
   newdata <- as.data.frame(newdata)
   if(!exists("oldnewdata")){
