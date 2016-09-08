@@ -19,6 +19,8 @@ equivalent to simple exponential smoothing with drift. This is demonstrated in H
 The series is tested for seasonality using the test outlined in A&N. If deemed seasonal, the series is seasonally adjusted using a classical multiplicative decomposition before applying the theta method. The resulting forecasts are then reseasonalized. 
 
 Prediction intervals are computed using the underlying state space model.
+
+More general theta methods are available in the \code{\link[forecTheta]{forecTheta}} package.
 }
 
 \value{An object of class "\code{forecast}".
