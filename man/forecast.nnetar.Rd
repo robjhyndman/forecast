@@ -2,12 +2,14 @@
 \alias{forecast.nnetar}
 \title{Forecasting using neural network models}
 \usage{\method{forecast}{nnetar}(object, h=ifelse(object$m > 1, 2 * object$m, 10),
-    PI=FALSE, level=c(80, 95), fan=FALSE, xreg=NULL, lambda=object$lambda, bootstrap=FALSE, npaths=1000, innov=NULL, ...)
+    PI=FALSE, level=c(80, 95), fan=FALSE, xreg=NULL,
+lambda=object$lambda, bootstrap=FALSE, npaths=1000, innov=NULL, ...)
 }
 
 \arguments{
 \item{object}{An object of class "\code{nnetar}" resulting from a call to \code{\link{arima}}.
-\item{h}{Number of periods for forecasting. If \code{xreg} is used, \code{h} is ignored and the number of forecast periods is 
+\item{h}{Number of periods for forecasting. If \code{xreg} is used,
+  \code{h} is ignored and the number of forecast periods is 
 set to the number of rows of \code{xreg}.}
 \item{PI}{If TRUE, prediction intervals are produced, otherwise 
 only point forecasts are calculated. If \code{PI} is FALSE, then
@@ -16,10 +18,14 @@ only point forecasts are calculated. If \code{PI} is FALSE, then
 \item{level}{Confidence level for prediction intervals.}
 \item{fan}{If \code{TRUE}, level is set to \code{seq(51,99,by=3)}. This is suitable for fan plots.}
 \item{xreg}{Future values of external regressor variables.}
-\item{lambda}{Box-Cox transformation parameter. Ignored if NULL. Otherwise, forecasts back-transformed via an inverse Box-Cox transformation.}
+\item{lambda}{Box-Cox transformation parameter. Ignored if
+  NULL. Otherwise, forecasts back-transformed via an inverse Box-Cox
+  transformation.}
 \item{bootstrap}{If \code{TRUE}, then prediction intervals computed
-  using simulations with resampled residuals rather than normally distributed errors.}
-\item{npaths}{Number of sample paths used in computing simulated prediction intervals.}
+  using simulations with resampled residuals rather than normally
+  distributed errors.}
+\item{npaths}{Number of sample paths used in computing simulated
+  prediction intervals.}
 \item{innov}{A vector of values to use as innovations in the interval
   calculation. Bootstrap samples of length \code{h} from \code{innov}
   are used for each
