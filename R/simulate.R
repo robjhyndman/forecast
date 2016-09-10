@@ -448,16 +448,16 @@ simulate.fracdiff <- function(object, nsim=object$n, seed=NULL, future=TRUE, boo
 {
   x <- getResponse(object)
 
-  # Strip initial and final missing values 
-  xx <- na.ends(x) 
+  # Strip initial and final missing values
+  xx <- na.ends(x)
   n <- length(xx)
 
   # Remove mean
   meanx <- mean(xx)
-  xx <- xx - meanx 
+  xx <- xx - meanx
 
   # Difference series (removes mean as well)
-  y <- undo.na.ends(x, diffseries(xx, d = object$d)) 
+  y <- undo.na.ends(x, diffseries(xx, d = object$d))
 
   # Create ARMA model for differenced series
   arma <- Arima(y, order = c(length(object$ar), 0, length(object$ma)),
@@ -471,7 +471,7 @@ simulate.fracdiff <- function(object, nsim=object$n, seed=NULL, future=TRUE, boo
 }
 
 
-simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, future=TRUE, bootstrap=FALSE, innov=NULL, ...)
+simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, lambda=object$lambda, future=TRUE, bootstrap=FALSE, innov=NULL, ...)
 {
   if(is.null(innov))
   {
@@ -501,27 +501,63 @@ simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL,
     e <- rnorm(nsim, 0, sd(object$residuals, na.rm=TRUE))
   else if(length(innov)==nsim)
     e <- innov
+  else if(length(innov)==1)
+    e <- rep(innov, nsim)
   else
     stop("Length of innov must be equal to nsim")
   ##
-  ## Simulate by iteratively forecasting and adding innovation
-  x <- object$x
-  oldxreg <- object$xreg
-  if (!is.null(xreg))
-    xreg <- as.matrix(xreg)
-  startx <- tsp(x)[1]
-  endx <- tsp(x)[2]
-  freqx <- tsp(x)[3]
-  path <- rep(NA_real_, length=nsim)
-  path <- ts(path, start=endx+1/freqx, end=endx+nsim/freqx, frequency=freqx)
-  for (i in 1:nsim){
-    newmodel <- nnetar(x, model=object, xreg=oldxreg)
-    fcast <- forecast(newmodel, h=1, xreg=xreg[i, ], PI=FALSE)
-    newpt <- fcast$mean + e[i]
-    path[i] <- newpt
-    newx <- c(x, newpt)
-    x <- ts(newx, start=startx, end=endx+i/freqx, frequency=freqx)
-    oldxreg <- rbind(oldxreg, xreg[i, ])
+  tspx <- tsp(object$x)
+  # Check if xreg was used in fitted model
+  if(is.null(object$xreg))
+  {
+    if(!is.null(xreg))
+      warning("External regressors were not used in fitted model, xreg will be ignored")
+    xreg <- NULL
   }
+  else
+  {
+    if(is.null(xreg))
+      stop("No external regressors provided")
+    xreg <- as.matrix(xreg)
+    if(NCOL(xreg) != NCOL(object$xreg))
+      stop("Number of external regressors does not match fitted model")
+    if(NROW(xreg) != nsim)
+      stop("Number of rows in xreg does not match nsim")
+  }
+  xx <- object$x
+  if(!is.null(lambda))
+  {
+    xx <- BoxCox(xx,lambda)
+    e <- BoxCox(e, lambda)
+  }
+  # Check and apply scaling of fitted model
+  if(!is.null(object$scalex))
+  {
+    xx <- scale(xx, center = object$scalex$center, scale = object$scalex$scale)
+    e <- scale(e, center = 0, scale = object$scalex$scale)
+    if(!is.null(xreg))
+      xreg <- scale(xreg, center = object$scalexreg$center, scale = object$scalexreg$scale)
+  }
+  ## Get lags used in fitted model
+  lags <- object$lags
+  maxlag <- max(lags)
+  flag <- rev(tail(xx, n=maxlag))
+  ## Simulate by iteratively forecasting and adding innovation
+  path <- numeric(nsim)
+  for (i in 1:nsim){
+    newdata <- c(flag[lags], xreg[i, ])
+    if(any(is.na(newdata)))
+      stop("I can't simulate when there are missing values near the end of the series.")
+    path[i] <- mean(sapply(object$model, predict, newdata=newdata)) + e[i]
+    flag <- c(path[i],flag[-maxlag])
+  }
+  ## Re-scale simulated points
+  if(!is.null(object$scalex))
+    path <- path * object$scalex$scale + object$scalex$center
+  ## Add ts properties
+  path <- ts(path,start=tspx[2]+1/tspx[3],frequency=tspx[3])
+  ## Back-transform simulated points
+  if(!is.null(lambda))
+    path <- InvBoxCox(path,lambda)
   return(path)
 }
