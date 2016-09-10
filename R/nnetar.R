@@ -217,7 +217,7 @@ print.nnetarmodels <- function(x, ...)
 }
 
 
-forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI=FALSE, level=c(80, 95), fan=FALSE, xreg=NULL, lambda=object$lambda, bootstrap=FALSE, npaths=5000, ...)
+forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI=FALSE, level=c(80, 95), fan=FALSE, xreg=NULL, lambda=object$lambda, bootstrap=FALSE, npaths=1000, innov=NULL, ...)
 {
 #  require(nnet)
   out <- object
@@ -275,6 +275,7 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI
   # Re-scale point forecasts
   if(!is.null(object$scalex))
     fcast <- fcast * object$scalex$scale + object$scalex$center
+  # Add ts properties
   fcast <- ts(fcast,start=tspx[2]+1/tspx[3],frequency=tspx[3])
   # Back-transform point forecasts
   if(!is.null(lambda))
@@ -285,7 +286,7 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI
     nint <- length(level)
     sim <- matrix(NA,nrow=npaths,ncol=h)
     for(i in 1:npaths)
-      sim[i,] <- simulate(object, nsim=h, bootstrap=bootstrap, xreg=xreg, lambda=lambda)
+      sim[i,] <- simulate(object, nsim=h, bootstrap=bootstrap, xreg=xreg, lambda=lambda, innov=innov)
     lower <- apply(sim, 2, quantile, 0.5 - level/200, type = 8)
     upper <- apply(sim, 2, quantile, 0.5 + level/200, type = 8)
     if (nint > 1L) {
