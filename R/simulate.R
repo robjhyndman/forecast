@@ -471,7 +471,7 @@ simulate.fracdiff <- function(object, nsim=object$n, seed=NULL, future=TRUE, boo
 }
 
 
-simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, lambda=object$lambda, future=TRUE, bootstrap=FALSE, innov=NULL, ...)
+simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, future=TRUE, bootstrap=FALSE, innov=NULL, lambda=object$lambda, ...)
 {
   if(is.null(innov))
   {
