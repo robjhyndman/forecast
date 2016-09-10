@@ -34,7 +34,7 @@ meanf, logLik.ets, monthdays, na.interp, ets, plot.bats, plot.tbats, plot.ets, p
 plot.splineforecast, rwf, seasadj, seasonaldummy,naive,snaive,stlf,subset.ts,
 seasonaldummyf, ggAcf, ggPacf, ggCcf, ggtaperedacf, ggtaperedpacf, gglagplot, gglagchull,
 ggtsdisplay, ggmonthplot, ggseasonplot, seasonplot, ses, sindexf, splinef, tslm, fourier,
-fourierf,forecast.lm,thetaf, tsdisplay, simulate.ets, simulate.ar, simulate.Arima, simulate.fracdiff,
+fourierf,forecast.lm,thetaf, tsdisplay, simulate.ets, simulate.ar, simulate.Arima, simulate.fracdiff, simulate.nnetar,
 ndiffs, nsdiffs, dm.test,tbats.components, Acf,Pacf,Ccf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts,
 getResponse, tsoutliers, tsclean, bizdays, easter,stlm, forecast.stlm,
 StatForecast, GeomForecast, geom_forecast)
@@ -115,6 +115,7 @@ S3method(simulate,ar)
 S3method(simulate,Arima)
 S3method(simulate,ets)
 S3method(simulate,fracdiff)
+S3method(simulate,nnetar)
 S3method(subset,ts)
 S3method(summary,Arima)
 S3method(summary,ets)
