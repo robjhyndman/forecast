@@ -21,8 +21,8 @@
 \item{seed}{Either NULL or an integer that will be used in a call to \code{\link[base]{set.seed}} 
 before simulating the time series. The default, NULL will not change the random generator state.}
 \item{future}{Produce sample paths that are future to and conditional on the data in \code{object}.}
-\item{bootstrap}{If TRUE, simulation uses resampled errors rather than normally distributed errors.}
-\item{innov}{A vector of innovations to use as the error series. If present, \code{bootstrap} and \code{seed} are ignored.}
+\item{bootstrap}{If TRUE, simulation uses resampled errors rather than normally distributed errors or errors provided as \code{innov}.}
+\item{innov}{A vector of innovations to use as the error series. Ignored if \code{bootstrap==TRUE}.}
 \item{xreg}{New values of xreg to be used for forecasting. Must have nsim rows.}
 \item{lambda}{Box-Cox parameter. If not \code{NULL}, the simulated series is transformed using an inverse Box-Cox transformation with parameter \code{lamda}.}
 \item{...}{Other arguments.}

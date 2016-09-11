@@ -1,3 +1,6 @@
+Version 7.3 (?? 2016)
+  * Documentation improvement
+
 Version 7.2 (8 September 2016)
   * Faceting for autoplot.mts
   * Box-Cox support for ses, holt, hw
