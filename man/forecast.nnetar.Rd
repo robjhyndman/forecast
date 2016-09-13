@@ -26,11 +26,7 @@ set to the number of rows of \code{xreg}.}
   distributed errors.}
 \item{npaths}{Number of sample paths used in computing simulated
   prediction intervals.}
-\item{innov}{A vector of values to use as innovations in the interval
-  calculation. Bootstrap samples of length \code{h} from \code{innov}
-  are used for each
-  simulated path}
-\item{...}{Other arguments.}
+\item{...}{Additional arguments passed to \code{\link{simulate.nnetar}}}
 }
 
 \description{Returns forecasts and other information for univariate neural network models.}
