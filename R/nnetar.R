@@ -217,7 +217,7 @@ print.nnetarmodels <- function(x, ...)
 }
 
 
-forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI=FALSE, level=c(80, 95), fan=FALSE, xreg=NULL, lambda=object$lambda, bootstrap=FALSE, npaths=1000, innov=NULL, ...)
+forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI=FALSE, level=c(80, 95), fan=FALSE, xreg=NULL, lambda=object$lambda, bootstrap=FALSE, npaths=1000, ...)
 {
 #  require(nnet)
   out <- object
@@ -286,8 +286,7 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI
     nint <- length(level)
     sim <- matrix(NA,nrow=npaths,ncol=h)
     for(i in 1:npaths)
-      bootinnov <- sample(innov, h, replace=TRUE)
-      sim[i,] <- simulate(object, nsim=h, bootstrap=bootstrap, xreg=xreg, lambda=lambda, innov=bootinnov)
+      sim[i,] <- simulate(object, nsim=h, bootstrap=bootstrap, xreg=xreg, lambda=lambda, ...)
     lower <- apply(sim, 2, quantile, 0.5 - level/200, type = 8)
     upper <- apply(sim, 2, quantile, 0.5 + level/200, type = 8)
     if (nint > 1L) {
