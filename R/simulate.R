@@ -499,8 +499,10 @@ simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL,
     e <- sample(res,nsim,replace=TRUE)
   }
   else if(is.null(innov))
+  {
     res <- rowMeans(sapply(object$model, residuals))
     e <- rnorm(nsim, 0, sd(res, na.rm=TRUE))
+  }
   else if(length(innov)==nsim)
     e <- innov
   else if(length(innov)==1)
