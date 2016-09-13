@@ -493,12 +493,14 @@ simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL,
   ## set simulation innovations
   if(bootstrap)
   {
-    res <- na.omit(object$residuals)
+    res <- rowMeans(sapply(object$model, residuals))
+    res <- na.omit(res)
     res <- res - mean(res)          #center residuals
     e <- sample(res,nsim,replace=TRUE)
   }
   else if(is.null(innov))
-    e <- rnorm(nsim, 0, sd(object$residuals, na.rm=TRUE))
+    res <- rowMeans(sapply(object$model, residuals))
+    e <- rnorm(nsim, 0, sd(res, na.rm=TRUE))
   else if(length(innov)==nsim)
     e <- innov
   else if(length(innov)==1)
@@ -528,13 +530,11 @@ simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL,
   if(!is.null(lambda))
   {
     xx <- BoxCox(xx,lambda)
-    e <- BoxCox(e, lambda)
   }
   # Check and apply scaling of fitted model
   if(!is.null(object$scalex))
   {
     xx <- scale(xx, center = object$scalex$center, scale = object$scalex$scale)
-    e <- scale(e, center = 0, scale = object$scalex$scale)
     if(!is.null(xreg))
       xreg <- scale(xreg, center = object$scalexreg$center, scale = object$scalexreg$scale)
   }
