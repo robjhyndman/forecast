@@ -3,7 +3,7 @@
 \title{Forecasting using neural network models}
 \usage{\method{forecast}{nnetar}(object, h=ifelse(object$m > 1, 2 * object$m, 10),
     PI=FALSE, level=c(80, 95), fan=FALSE, xreg=NULL,
-lambda=object$lambda, bootstrap=FALSE, npaths=1000, innov=NULL, ...)
+lambda=object$lambda, bootstrap=FALSE, npaths=1000, ...)
 }
 
 \arguments{
