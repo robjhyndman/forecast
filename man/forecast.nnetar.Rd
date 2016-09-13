@@ -7,7 +7,7 @@ lambda=object$lambda, bootstrap=FALSE, npaths=1000, innov=NULL, ...)
 }
 
 \arguments{
-\item{object}{An object of class "\code{nnetar}" resulting from a call to \code{\link{arima}}.
+\item{object}{An object of class "\code{nnetar}" resulting from a call to \code{\link{arima}}.}
 \item{h}{Number of periods for forecasting. If \code{xreg} is used,
   \code{h} is ignored and the number of forecast periods is 
 set to the number of rows of \code{xreg}.}
