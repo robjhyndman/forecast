@@ -1,4 +1,4 @@
-forecast.tbats <- function(object, h, level=c(80,95), fan=FALSE, biasadj=FALSE, ...) 
+forecast.tbats <- function(object, h, level=c(80,95), fan=FALSE, biasadj=FALSE, ...)
 {
 
 	# Check if forecast.tbats called incorrectly
@@ -24,8 +24,8 @@ forecast.tbats <- function(object, h, level=c(80,95), fan=FALSE, biasadj=FALSE, 
 		else if(min(level) < 0 | max(level) > 99.99)
 			stop("Confidence limit out of range")
 	}
-	
-	
+
+
 	if(any(class(object$y) == "ts")) {
 		ts.frequency <- frequency(object$y)
 	} else {
@@ -43,15 +43,15 @@ forecast.tbats <- function(object, h, level=c(80,95), fan=FALSE, biasadj=FALSE, 
 	} else {
 		adj.beta <- 0
 	}
-	
+
 	#Set up the matrices
 	w <- .Call("makeTBATSWMatrix", smallPhi_s = object$damping.parameter, kVector_s=as.integer(object$k.vector), arCoefs_s = object$ar.coefficients, maCoefs_s = object$ma.coefficients, tau_s=as.integer(tau), PACKAGE = "forecast")
-	
+
 	if(!is.null(object$seasonal.periods)) {
 		gamma.bold <- matrix(0,nrow=1,ncol=tau)
 		.Call("updateTBATSGammaBold", gammaBold_s=gamma.bold, kVector_s=as.integer(object$k.vector), gammaOne_s=object$gamma.one.v, gammaTwo_s=object$gamma.two.v, PACKAGE = "forecast")
 	} else {
-		gamma.bold <- NULL	
+		gamma.bold <- NULL
 	}
 	g <- matrix(0, nrow=(tau+1+adj.beta+object$p+object$q), ncol=1)
 	if(object$p != 0) {
@@ -61,15 +61,15 @@ forecast.tbats <- function(object, h, level=c(80,95), fan=FALSE, biasadj=FALSE, 
 		g[(1+adj.beta+tau+object$p+1),1] <- 1
 	}
 	.Call("updateTBATSGMatrix", g_s=g, gammaBold_s=gamma.bold, alpha_s=object$alpha, beta_s=object$beta.v, PACKAGE = "forecast")
-	
+
 	#print(g)
-	
+
 	F <- makeTBATSFMatrix(alpha=object$alpha, beta=object$beta, small.phi=object$damping.parameter, seasonal.periods=object$seasonal.periods, k.vector=as.integer(object$k.vector), gamma.bold.matrix=gamma.bold, ar.coefs=object$ar.coefficients, ma.coefs=object$ma.coefficients)
-	
+
 	#Do the forecast
 	y.forecast[1] <- w$w.transpose %*% object$x[,ncol(object$x)]
-	x[,1] <-  F %*% object$x[,ncol(object$x)] + g %*% object$errors[length(object$errors)]
-	
+	x[,1] <-  F %*% object$x[,ncol(object$x)] #+ g %*% object$errors[length(object$errors)]
+
 	if(h > 1) {
 		for(t in 2:h) {
 			x[,t] <- F %*% x[,(t-1)]
@@ -86,12 +86,12 @@ forecast.tbats <- function(object, h, level=c(80,95), fan=FALSE, biasadj=FALSE, 
 				f.running <- diag(ncol(F))
 			} else {
 				f.running <- f.running %*% F
-			}				
-			c.j <- w$w.transpose %*% f.running %*% g 
+			}
+			c.j <- w$w.transpose %*% f.running %*% g
 			variance.multiplier[(j+1)] <- variance.multiplier[j]+ c.j^2
 		}
 	}
-	
+
 	variance <- object$variance * variance.multiplier
 	#print(variance)
 	st.dev <- sqrt(variance)
@@ -99,7 +99,7 @@ forecast.tbats <- function(object, h, level=c(80,95), fan=FALSE, biasadj=FALSE, 
 		marg.error  <-  st.dev * abs(qnorm((100-level[i])/200))
 		lower.bounds[,i]  <-  y.forecast - marg.error
 		upper.bounds[,i]  <-  y.forecast + marg.error
-		
+
 	}
 	#Inv Box Cox transform if required
 	if(!is.null(object$lambda))
@@ -125,7 +125,7 @@ forecast.tbats <- function(object, h, level=c(80,95), fan=FALSE, biasadj=FALSE, 
 	x <- msts(object$y, seasonal.periods=(if(!is.null(object$seasonal.periods)) { object$seasonal.periods} else { ts.frequency}), ts.frequency=ts.frequency, start=start.time)
 	fitted.values <- msts(object$fitted.values, seasonal.periods=(if(!is.null(object$seasonal.periods)) { object$seasonal.periods} else { ts.frequency}), ts.frequency=ts.frequency, start=start.time)
 	y.forecast <- msts(y.forecast, seasonal.periods=(if(!is.null(object$seasonal.periods)) { object$seasonal.periods} else { ts.frequency}), ts.frequency=ts.frequency, start=fcast.start.time)
-		
+
 	forecast.object <- list(model=object, mean=y.forecast, level=level, x=x, upper=upper.bounds, lower=lower.bounds, fitted=fitted.values, method=makeTextTBATS(object), residuals=object$errors)
 	class(forecast.object) <- "forecast"
 	return(forecast.object)
@@ -157,7 +157,7 @@ makeTextTBATS <- function(object) {
 	} else {
 		name <- paste(name, "-,", sep="")
 	}
-  	
+
 	if(!is.null(object$seasonal.periods)) {
 		name <- paste(name, " {", sep="")
     M <- length(object$seasonal.periods)
@@ -170,7 +170,7 @@ makeTextTBATS <- function(object) {
 			}
 		}
 	} else {
-		name <- paste(name, "{-})", sep="")	
+		name <- paste(name, "{-})", sep="")
 	}
 	return(name)
 }
