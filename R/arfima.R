@@ -45,7 +45,7 @@ unfracdiff <- function(x,y,n,h,d)
 	xnew[1] <- RHS[1] <- y[1] - sum(b * rev(x))
 	if(h>1)
 	{
-		for (k in 2:h) 
+		for (k in 2:h)
 		{
 			b <- b + bin.c[(1:n) + k]
 			RHS[k] <- RHS[k] - sum(b * rev(x))
@@ -56,7 +56,7 @@ unfracdiff <- function(x,y,n,h,d)
 	tspx <- tsp(x)
 	if(is.null(tspx))
 		tspx <- c(1,length(x),1)
-	return(ts(xnew,frequency=tspx[3],start=tspx[2]+1/tspx[3]))    
+	return(ts(xnew,frequency=tspx[3],start=tspx[2]+1/tspx[3]))
 }
 
 ## Automatic ARFIMA modelling
@@ -65,30 +65,30 @@ arfima <- function(y, drange = c(0, 0.5), estim = c("mle","ls"), lambda = NULL, 
 {
 	estim <- match.arg(estim)
 #	require(fracdiff)
-    
+
 	orig.x <- x
 	if (!is.null(lambda)){
 		x <- BoxCox(x, lambda)
 	}
-	
+
 	# Strip initial and final missing values
 	xx <- na.ends(x)
-	
+
 	# Remove mean
 	meanx <- mean(xx)
 	xx <- xx - meanx
-	
+
 	# Choose differencing parameter with AR(2) proxy to handle correlations
 	suppressWarnings(fit <- fracdiff::fracdiff(xx,nar=2,drange=drange))
- 
+
 	# Choose p and q
 	d <- fit$d
 	y <- fracdiff::diffseries(xx, d=d)
 	fit <- auto.arima(y, max.P=0, max.Q=0, stationary=TRUE, ...)
-	
+
 	# Refit model using fracdiff
 	suppressWarnings(fit <- fracdiff::fracdiff(xx, nar=fit$arma[1], nma=fit$arma[2],drange=drange))
-	
+
 	# Refine parameters with MLE
 	if(estim=="mle")
 	{
@@ -109,7 +109,7 @@ arfima <- function(y, drange = c(0, 0.5), estim = c("mle","ls"), lambda = NULL, 
 		else
 			warning("MLE estimation failed. Returning LS estimates")
 	}
-	
+
 	# Add things to model that will be needed by forecast.fracdiff
 	fit$x <- orig.x
 	fit$residuals <- undo.na.ends(x,residuals(fit))
@@ -126,21 +126,23 @@ arfima <- function(y, drange = c(0, 0.5), estim = c("mle","ls"), lambda = NULL, 
 
 # Forecast the output of fracdiff() or arfima()
 
-forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, biasadj=FALSE, ...) 
+forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, biasadj=FALSE, ...)
 {
 	# Extract data
 	x <- object$x <- getResponse(object)
-	
+	if(is.null(x))
+	  stop("Unable to find original time series")
+
 	if(!is.null(lambda)){
 		x <- BoxCox(x,lambda)
 	}
-	
+
 	xx <- na.ends(x)
 	n <- length(xx)
-	
+
 	meanx <- mean(xx)
 	xx <- xx - meanx
-	
+
 	# Construct ARMA part of model and forecast with it
 	y <- fracdiff::diffseries(xx, d=object$d)
 	fit <- Arima(y, order=c(length(object$ar),0,length(object$ma)), include.mean=FALSE, fixed=c(object$ar,-object$ma))
@@ -148,7 +150,7 @@ forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=ob
 
 	# Undifference
 	fcast.x <- unfracdiff(xx,fcast.y$mean,n,h,object$d)
-	
+
 	# Binomial coefficient for expansion of d
 	bin.c <- (-1)^(0:(n+h)) * choose(object$d,(0:(n+h)))
 
@@ -169,7 +171,7 @@ forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=ob
 					# fcast.x[k] <- RHS[k] - LHS[k]
 			# }
 	# }
-	
+
 	# Extract stuff from ARMA model
 	p <- fit$arma[1]
 	q <- fit$arma[2]
@@ -185,30 +187,30 @@ forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=ob
 	if(h>1)
 	{
 		new.phi[2:h] <- -bin.c[2:h]
-		for (i in 2:h) 
+		for (i in 2:h)
 		{
 			if(p>0)
 				new.phi[i] <- sum(phi[1:(i-1)] * bin.c[(i-1):1]) - bin.c[i]
 			psi[i] <- sum(new.phi[2:i] * rev(psi[1:(i-1)])) + theta[i-1]
 		}
 	}
-	
+
 	# Compute forecast variances
 	fse <- sqrt(cumsum(psi^2) * fit$sigma2)
-	
+
 	# Compute prediction intervals
-	if (fan) 
+	if (fan)
 			level <- seq(51, 99, by = 3)
-	else 
+	else
 	{
-		if (min(level) > 0 & max(level) < 1) 
+		if (min(level) > 0 & max(level) < 1)
 			level <- 100 * level
-		else if (min(level) < 0 | max(level) > 99.99) 
+		else if (min(level) < 0 | max(level) > 99.99)
 			stop("Confidence limit out of range")
 	}
 	nint <- length(level)
 	upper <- lower <- matrix(NA, ncol = nint, nrow=h)
-	for (i in 1:nint) 
+	for (i in 1:nint)
 	{
 		qq <- qnorm(0.5 * (1 + level[i]/100))
 		lower[, i] <- fcast.x - qq * fse
@@ -225,7 +227,7 @@ forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=ob
 	lower <- ts(lower+meanx, frequency=data.tsp[3], start=data.tsp[2] + 1/data.tsp[3])
 	upper <- ts(upper+meanx, frequency=data.tsp[3], start=data.tsp[2] + 1/data.tsp[3])
 	method <- paste("ARFIMA(",p,",",round(object$d,2),",",q,")",sep="")
-	
+
 	if(!is.null(lambda))
 	{
 		x <- InvBoxCox(x,lambda)
@@ -238,8 +240,8 @@ forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=ob
 		upper <- InvBoxCox(upper,lambda)
 	}
 
-    return(structure(list(x=x, mean=mean.fcast, upper=upper, lower=lower, 
-        level=level, method=method, xname=deparse(substitute(x)), model=object, 
+    return(structure(list(x=x, mean=mean.fcast, upper=upper, lower=lower,
+        level=level, method=method, xname=deparse(substitute(x)), model=object,
         residuals=res, fitted=fits), class="forecast"))
 }
 
@@ -253,9 +255,9 @@ residuals.fracdiff <- function(object, ...)
 		return(object$residuals)
 	else                             # Object produced by fracdiff()
 	{
-		if (is.element("x", names(object))) 
+		if (is.element("x", names(object)))
 			x <- object$x
-		else 
+		else
 			x <- eval.parent(parse(text=as.character(object$call)[2]))
 		if(!is.null(object$lambda))
 			x <- BoxCox(x,object$lambda)
