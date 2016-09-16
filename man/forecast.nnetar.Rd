@@ -3,7 +3,7 @@
 \title{Forecasting using neural network models}
 \usage{\method{forecast}{nnetar}(object, h=ifelse(object$m > 1, 2 * object$m, 10),
     PI=FALSE, level=c(80, 95), fan=FALSE, xreg=NULL,
-lambda=object$lambda, bootstrap=FALSE, npaths=1000, ...)
+lambda=object$lambda, bootstrap=FALSE, npaths=1000, innov=NULL, ...)
 }
 
 \arguments{
@@ -23,9 +23,12 @@ set to the number of rows of \code{xreg}.}
   transformation.}
 \item{bootstrap}{If \code{TRUE}, then prediction intervals computed
   using simulations with resampled residuals rather than normally
-  distributed errors.}
+  distributed errors. Ignored if \code{innov} is not \code{NULL}.}
 \item{npaths}{Number of sample paths used in computing simulated
   prediction intervals.}
+\item{innov}{Values to use as innovations for prediction intervals. Must
+  be a matrix with \code{h} rows and \code{npaths} columns (vectors are
+  coerced into a matrix). If present, \code{bootstrap} is ignored.}
 \item{...}{Additional arguments passed to \code{\link{simulate.nnetar}}}
 }
 
