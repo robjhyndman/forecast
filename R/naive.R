@@ -66,9 +66,8 @@ lagwalk <- function(y, lag=1, h=10, drift=FALSE,
     y <- origy
     fcast <- InvBoxCox(fcast,lambda)
     if(biasadj){
-      fcast <- InvBoxCoxf(x = list(level = level, mean = fcast, upper = upper, lower = lower), lambda = lambda)
+      fcast$mean <- InvBoxCoxf(x = list(level = level, mean = fcast, upper = upper, lower = lower), lambda = lambda) 
     }
-    fcast <- InvBoxCox(fcast,lambda)
     fits <- InvBoxCox(fits,lambda)
     upper <- InvBoxCox(upper,lambda)
     lower <- InvBoxCox(lower,lambda)
