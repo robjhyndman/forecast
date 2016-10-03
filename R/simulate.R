@@ -81,13 +81,9 @@ myarima.sim <- function (model, n, x, e, ...)
     data <- ts(data,frequency=1,start=1)
   if (!is.list(model))
     stop("'model' must be list")
+  if(n <= 0L)
+    stop("'n' must be strictly positive")
   p <- length(model$ar)
-  if (p)
-  {
-    minroots <- min(Mod(polyroot(c(1, -model$ar))))
-    if (minroots <= 1)
-      stop("'ar' part of model is not stationary")
-  }
   q <- length(model$ma)
   d <- 0
   if (!is.null(ord <- model$order))
@@ -101,6 +97,12 @@ myarima.sim <- function (model, n, x, e, ...)
     d <- ord[2L]
     if (d != round(d) || d < 0)
       stop("number of differences must be a positive integer")
+  }
+  if (p)
+  {
+    minroots <- min(Mod(polyroot(c(1, -model$ar))))
+    if (minroots <= 1)
+      stop("'ar' part of model is not stationary")
   }
   if (length(model$ma))
   {
@@ -185,22 +187,19 @@ myarima.sim <- function (model, n, x, e, ...)
   ##Regular undifferencing, if there is no seasonal differencing
   if (d > 0 && (model$seasonal.difference == 0))
   {
-  x <- diffinv(x, differences = d,xi=data.new[length(data.new)-(d:1)+1])[-(1:d)]
+    x <- diffinv(x, differences = d,xi=data.new[length(data.new)-(d:1)+1])[-(1:d)]
   }
 
   ########
   #Code for Undifferencing for where the differencing is both Seasonal and Non-Seasonal (Non-Seasonal First)
-  #Regular first
   if((d > 0) && (model$seasonal.difference > 0))
   {
+    #Regular first
     delta.four <- diff(data, lag=model$seasonal.period, differences = model$seasonal.difference)
     regular.xi <- delta.four[(length(delta.four)-model$seasonal.difference):length(delta.four)]
     x <- diffinv(x, differences = d, xi=regular.xi[length(regular.xi)-(d:1)+1])[-(1:d)]
-  }
-
-  #Then seasonal
-  if((model$seasonal.difference > 0) && (d > 0))
-  {
+ 
+    #Then seasonal
     i <- length(data)-model$seasonal.difference*model$seasonal.period+1
     seasonal.xi <- data[i:length(data)]
     length.s.xi <- length(seasonal.xi)
