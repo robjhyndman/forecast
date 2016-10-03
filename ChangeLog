@@ -1,5 +1,7 @@
 Version 7.3 (?? 2016)
+  * Added prediction intervals and simulation for nnetar().
   * Documentation improvement
+  * Bug fixes
 
 Version 7.2 (8 September 2016)
   * Faceting for autoplot.mts
