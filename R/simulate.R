@@ -86,6 +86,8 @@ myarima.sim <- function (model, n, x, e, ...)
   p <- length(model$ar)
   q <- length(model$ma)
   d <- 0
+  D <- model$seasonal.difference
+  m <- model$seasonal.period
   if (!is.null(ord <- model$order))
   {
     if (length(ord) != 3L)
@@ -115,16 +117,16 @@ myarima.sim <- function (model, n, x, e, ...)
 
   if(length(model$ar) & (len.ar <= length(data)))
   {
-    if((model$seasonal.difference != 0) && (d != 0))
+    if((D != 0) && (d != 0))
     {
       diff.data <- diff(data, lag=1, differences = d)
-      diff.data <- diff(diff.data, lag=model$seasonal.period, differences = model$seasonal.difference)
+      diff.data <- diff(diff.data, lag=m, differences = D)
     }
-    else if((model$seasonal.difference != 0) && (d == 0))
+    else if((D != 0) && (d == 0))
     {
-      diff.data <- diff(data, lag=model$seasonal.period, differences = model$seasonal.difference)
+      diff.data <- diff(data, lag=model$seasonal.period, differences = D)
     }
-    else if((model$seasonal.difference == 0) && (d != 0))
+    else if((D == 0) && (d != 0))
       diff.data <- diff(data, lag=1, differences = d)
     else
       diff.data <- data
@@ -149,7 +151,7 @@ myarima.sim <- function (model, n, x, e, ...)
     #AR filtering for all other cases where AR is used.
     x <- stats::filter(x, model$ar, method = "recursive")
   }
-  if((d == 0) && (model$seasonal.difference == 0) && (flag.noadjust==FALSE)) # Adjust to ensure end matches approximately
+  if((d == 0) && (D == 0) && (flag.noadjust==FALSE)) # Adjust to ensure end matches approximately
   {
     # Last 20 diffs
     if(n.start >= 20)
@@ -167,48 +169,38 @@ myarima.sim <- function (model, n, x, e, ...)
   {
     x <- x[-(1:n.start)]
   }
-  ##
-  #####
-  #Seasonal undifferencing, if there is no regular differencing
-  if((model$seasonal.difference > 0) && (d == 0))
+
+
+  ########Undo all differences
+
+  if((D > 0) && (d == 0))
   {
-    i <- length(data)-model$seasonal.difference*model$seasonal.period+1
+    #Seasonal undifferencing, if there is no regular differencing
+    i <- length(data) - D*m + 1
     seasonal.xi <- data[i:length(data)]
     length.s.xi <- length(seasonal.xi)
-    x <- diffinv(x, lag=model$seasonal.period, differences=model$seasonal.difference, xi=seasonal.xi)[-(1:length.s.xi)]
-    data.new <- data
+    x <- diffinv(x, lag=m, differences=D, xi=seasonal.xi)[-(1:length.s.xi)]
   }
-  else
+  else if((d > 0) && (D == 0))
   {
-    data.new <- data
+    #Regular undifferencing, if there is no seasonal differencing
+    x <- diffinv(x, differences=d, xi=data[length(data)-(d:1)+1])[-(1:d)]
   }
-  ###End seasonal undifferencing
-
-  ##Regular undifferencing, if there is no seasonal differencing
-  if (d > 0 && (model$seasonal.difference == 0))
+  else if((d > 0) && (D > 0))
   {
-    x <- diffinv(x, differences = d,xi=data.new[length(data.new)-(d:1)+1])[-(1:d)]
-  }
-
-  ########
-  #Code for Undifferencing for where the differencing is both Seasonal and Non-Seasonal (Non-Seasonal First)
-  if((d > 0) && (model$seasonal.difference > 0))
-  {
+    #Undifferencing for where the differencing is both Seasonal and Non-Seasonal
     #Regular first
-    delta.four <- diff(data, lag=model$seasonal.period, differences = model$seasonal.difference)
-    regular.xi <- delta.four[(length(delta.four)-model$seasonal.difference):length(delta.four)]
+    delta.four <- diff(data, lag=m, differences=D)
+    regular.xi <- delta.four[(length(delta.four)-D):length(delta.four)]
     x <- diffinv(x, differences = d, xi=regular.xi[length(regular.xi)-(d:1)+1])[-(1:d)]
  
     #Then seasonal
-    i <- length(data)-model$seasonal.difference*model$seasonal.period+1
+    i <- length(data) - D*m + 1
     seasonal.xi <- data[i:length(data)]
     length.s.xi <- length(seasonal.xi)
-    x <- diffinv(x, lag=model$seasonal.period, differences=model$seasonal.difference, xi=seasonal.xi)
+    x <- diffinv(x, lag=m, differences=D, xi=seasonal.xi)
     x <- x[-(1:length.s.xi)]
-    data.new <- data
   }
-
-  ########
 
   x <- ts(x[1:n],frequency=frequency(data),start=tsp(data)[2]+1/tsp(data)[3])
   return(x)
