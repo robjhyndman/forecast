@@ -646,12 +646,12 @@ gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray"
     n <- NROW(x)
     data <- data.frame()
     for(i in 1:NCOL(x)){
-      for(lag in set.lags){
+      for(lagi in set.lags){
         sname <- colnames(x)[i]
         if(is.null(sname)){
           sname <- deparse(match.call()$x)
         }
-        data <- rbind(data, data.frame(lagnum = 1:(n-lag), freqcur = ifelse(rep(seasonal,n-lag),linecol[(lag+1):n],(lag+1):n), orig = x[(lag+1):n,i], lagged = x[1:(n-lag),i], lag = rep(lag, n-lag), series = rep(sname, n-lag)))
+        data <- rbind(data, data.frame(lagnum = 1:(n-lagi), freqcur = ifelse(rep(seasonal,n-lagi),linecol[(lagi+1):n],(lagi+1):n), orig = x[(lagi+1):n,i], lagged = x[1:(n-lagi),i], lagVal = factor(rep(lagi, n-lagi)), series = factor(rep(sname, n-lagi))))
       }
     }
     if(!continuous){
@@ -690,15 +690,15 @@ gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray"
     #Ensure all facets are of size size (if extreme values are excluded in lag specification)
     if(max(set.lags)>NROW(x)/2){
       axissize <- rbind(aggregate(orig ~ series, data=data, min),aggregate(orig~ series, data=data, max))
-      axissize <- data.frame(series = rep(axissize$series, length(set.lags)), orig = rep(axissize$orig, length(set.lags)), lag = rep(set.lags, each=NCOL(x)))
+      axissize <- data.frame(series = rep(axissize$series, length(set.lags)), orig = rep(axissize$orig, length(set.lags)), lagVal = rep(set.lags, each=NCOL(x)))
       p <- p + ggplot2::geom_blank(ggplot2::aes_(x=~orig, y=~orig), data=axissize)
     }
     #Facet
     if(NCOL(x)>1){
-      p <- p + ggplot2::facet_wrap(series~lag, scales = "free", labeller = function(labels) list(unname(unlist(do.call("Map", c(list(paste, sep=", lag "), lapply(labels, as.character)))))))
+      p <- p + ggplot2::facet_wrap(~lagVal + series, scales = "free", labeller = function(labels) list(unname(unlist(do.call("Map", c(list(paste, sep=", lag "), lapply(rev(labels), as.character)))))))
     }
     else{
-      p <- p + ggplot2::facet_wrap(~lag, labeller = function(labels) lapply(labels, function(x) paste0("lag ",as.character(x))))
+      p <- p + ggplot2::facet_wrap(~lagVal, labeller = function(labels) lapply(labels, function(x) paste0("lag ",as.character(x))))
     }
     p <- p + ggplot2::theme(aspect.ratio=1)
     if(colour){
