@@ -20,7 +20,7 @@ if(require(testthat))
 	  expect_equal(bats(-1, use.box.cox = TRUE, use.parallel = FALSE)$AIC, -Inf )
 	  skip_on_cran()
 	  skip_on_travis()
-	  expect_gt(bats(abc, use.box.cox = TRUE, use.parallel = TRUE)$lambda, 0.9999)
+	  expect_gt(bats(abc, use.box.cox = TRUE, use.parallel = TRUE)$lambda, 0.999)
 	})
 
 }
