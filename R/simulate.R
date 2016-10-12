@@ -484,20 +484,18 @@ simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL,
   ## set simulation innovations
   if(bootstrap)
   {
-    res <- rowMeans(sapply(object$model, residuals))
-    res <- na.omit(res)
-    res <- res - mean(res)          #center residuals
+    res <- na.omit(residuals(object))/object$scalex$scale
     e <- sample(res,nsim,replace=TRUE)
   }
   else if(is.null(innov))
   {
-    res <- rowMeans(sapply(object$model, residuals))
+    res <- na.omit(residuals(object))/object$scalex$scale
     e <- rnorm(nsim, 0, sd(res, na.rm=TRUE))
   }
   else if(length(innov)==nsim)
-    e <- innov
+    e <- innov/object$scalex$scale
   else if(length(innov)==1)
-    e <- rep(innov, nsim)
+    e <- rep(innov, nsim)/object$scalex$scale
   else
     stop("Length of innov must be equal to nsim")
   ##
