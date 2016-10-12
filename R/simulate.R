@@ -193,7 +193,7 @@ myarima.sim <- function (model, n, x, e, ...)
     delta.four <- diff(data, lag=m, differences=D)
     regular.xi <- delta.four[(length(delta.four)-D):length(delta.four)]
     x <- diffinv(x, differences = d, xi=regular.xi[length(regular.xi)-(d:1)+1])[-(1:d)]
- 
+
     #Then seasonal
     i <- length(data) - D*m + 1
     seasonal.xi <- data[i:length(data)]
@@ -484,17 +484,20 @@ simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL,
   ## set simulation innovations
   if(bootstrap)
   {
-    res <- na.omit(residuals(object))/object$scalex$scale
+    res <- na.omit(rowMeans(sapply(object$model, residuals)))
+    ## res <- na.omit(residuals(object, type=innovation))/object$scalex$scale
     e <- sample(res,nsim,replace=TRUE)
   }
   else if(is.null(innov))
   {
-    res <- na.omit(residuals(object))/object$scalex$scale
+    res <- na.omit(rowMeans(sapply(object$model, residuals)))
+    ## res <- na.omit(residuals(object, type=innovation))/object$scalex$scale
     e <- rnorm(nsim, 0, sd(res, na.rm=TRUE))
   }
   else if(length(innov)==nsim)
     e <- innov/object$scalex$scale
   else if(length(innov)==1)
+    ## to pass innov=0 so simulation equals mean forecast
     e <- rep(innov, nsim)/object$scalex$scale
   else
     stop("Length of innov must be equal to nsim")
