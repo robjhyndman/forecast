@@ -14,6 +14,8 @@ simulate.ets <- function(object, nsim=length(object$x), seed=NULL, future=TRUE, 
       on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
     }
   }
+  else
+    nsim <- length(innov)
   if(is.null(tsp(object$x)))
     object$x <- ts(object$x,frequency=1,start=1)
 
@@ -239,6 +241,9 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
       on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
     }
   }
+  else
+    nsim <- length(innov)
+
   #############End Random seed code
 
 
@@ -410,6 +415,9 @@ simulate.ar <- function(object, nsim=object$n.used, seed=NULL, future=TRUE, boot
       on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
     }
   }
+  else
+    nsim <- length(innov)
+ 
   if(future)
   {
       model <- list(ar=object$ar,sd=sqrt(object$var.pred),residuals=object$resid, seasonal.difference=0, seasonal.period=1, flag.seasonal.arma=FALSE)
