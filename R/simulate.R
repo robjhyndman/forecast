@@ -478,23 +478,28 @@ simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL,
       on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
     }
   }
+  else
+    nsim <- length(innov)
   ## only future currently implemented
   if(!future)
     warning("simulate.nnetar() currently only supports future=TRUE")
   ## set simulation innovations
   if(bootstrap)
   {
-    res <- na.omit(residuals(object))/object$scalex$scale
+#    res <- na.omit(residuals(object, type="innovation"))/object$scalex$scale
+    res <- na.omit(rowMeans(sapply(object$model, residuals)))
     e <- sample(res,nsim,replace=TRUE)
   }
   else if(is.null(innov))
   {
-    res <- na.omit(residuals(object))/object$scalex$scale
+#    res <- na.omit(residuals(object, type="innovation"))/object$scalex$scale
+    res <- na.omit(rowMeans(sapply(object$model, residuals)))
     e <- rnorm(nsim, 0, sd(res, na.rm=TRUE))
   }
   else if(length(innov)==nsim)
     e <- innov/object$scalex$scale
   else if(length(innov)==1)
+    ## to pass innov=0 so simulation equals mean forecast
     e <- rep(innov, nsim)/object$scalex$scale
   else
     stop("Length of innov must be equal to nsim")
