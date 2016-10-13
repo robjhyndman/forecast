@@ -25,7 +25,10 @@ simulate.ets <- function(object, nsim=length(object$x), seed=NULL, future=TRUE, 
     initstate <- object$state[sample(1:length(object$x),1),]
 
   if(bootstrap)
-    e <- sample(object$residuals,nsim,replace=TRUE)
+  {
+    res <- na.omit(object$residuals - mean(object$residuals, na.rm=TRUE))
+    e <- sample(res,nsim,replace=TRUE)
+  }
   else if(is.null(innov))
     e <- rnorm(nsim,0,sqrt(object$sigma))
   else if(length(innov)==nsim)
@@ -324,7 +327,10 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
 
   n <- length(x)
   if(bootstrap)
-    e <- sample(model$residuals,nsim,replace=TRUE)
+  {
+    res <- na.omit(model$residuals - mean(model$residuals, na.rm=TRUE))
+    e <- sample(res,nsim,replace=TRUE)
+  }
   else if(is.null(innov))
     e <- rnorm(nsim, 0, model$sd)
   else if(length(innov)==nsim)
@@ -430,7 +436,10 @@ simulate.ar <- function(object, nsim=object$n.used, seed=NULL, future=TRUE, boot
   object$x <- getResponse(object)
   object$x <- object$x - x.mean
   if(bootstrap)
-    e <- sample(na.omit(model$residuals),nsim,replace=TRUE)
+  {
+    res <- na.omit(model$residuals - mean(model$residuals, na.rm=TRUE))
+    e <- sample(res,nsim,replace=TRUE)
+  }
   else if(is.null(innov))
     e <- rnorm(nsim, 0, model$sd)
   else if(length(innov)==nsim)
@@ -496,6 +505,7 @@ simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL,
   {
 #    res <- na.omit(residuals(object, type="innovation"))/object$scalex$scale
     res <- na.omit(rowMeans(sapply(object$model, residuals)))
+    res <- res - mean(res)
     e <- sample(res,nsim,replace=TRUE)
   }
   else if(is.null(innov))
