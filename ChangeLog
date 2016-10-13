@@ -1,3 +1,6 @@
+Version 7.4 (?? 2016)
+  * Bug fixes
+
 Version 7.3 (12 October 2016)
   * Added prediction intervals and simulation for nnetar().
   * Documentation improvement
