@@ -632,8 +632,9 @@ ggtsdisplay <- function(x, plot.type=c("partial","scatter","spectrum"),
 }
 
 gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray", do.lines = TRUE, colour = TRUE, continuous = TRUE, labels = FALSE, seasonal = TRUE, ...){
+  freq <- frequency(x)
   if (requireNamespace("ggplot2")){
-    if(frequency(x)>1){
+    if(freq > 1){
       linecol = cycle(x)
     }
     else{
@@ -666,10 +667,10 @@ gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray"
     }
 
     if(labels){
-      linesize = 0.25
+      linesize = 0.25 * (2 - do.lines)
     }
     else{
-      linesize = 0.5
+      linesize = 0.5 * (2 - do.lines)
     }
     plottype <- if(do.lines){
       ggplot2::geom_path
@@ -702,11 +703,26 @@ gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray"
     }
     p <- p + ggplot2::theme(aspect.ratio=1)
     if(colour){
+      if(seasonal)
+      {
+        if(freq==4L)
+          title <- "Quarter"
+        else if(freq==12L)
+          title <- "Month"
+        else if(freq==7L)
+          title <- "Day"
+        else if(freq==24L)
+          title <- "Hour"
+        else
+          title <- "Season"
+      }      
+      else
+        title <- "Time"
       if(continuous){
-        p <- p + ggplot2::guides(colour = ggplot2::guide_colourbar(title=ifelse(seasonal, "season", "time")))
+        p <- p + ggplot2::guides(colour = ggplot2::guide_colourbar(title=title))
       }
       else{
-        p <- p + ggplot2::guides(colour = ggplot2::guide_legend(title=ifelse(seasonal, "season", "time")))
+        p <- p + ggplot2::guides(colour = ggplot2::guide_legend(title=title))
       }
     }
 
