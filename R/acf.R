@@ -144,9 +144,16 @@ seasonalaxis <- function(frequency, nlags, type, plot=TRUE)
 }
 
 
-Pacf <- function (x, lag.max=NULL, plot=TRUE, na.action=na.contiguous, ...)
+Pacf <- function (x, lag.max=NULL, 
+                plot = TRUE, na.action = na.contiguous, demean=TRUE, ...)
 {
-  Acf(x, type="partial", lag.max=lag.max, plot=plot, na.action=na.action, ...)
+  object <- Acf(x, lag.max=lag.max, type="partial", na.action=na.action, demean=demean, plot=FALSE)
+  object$series <- deparse(substitute(x))
+  if(plot)
+    return(plot(object, ...))
+  else
+    return(object)
+
 }
 
 Ccf <- function (x, y, lag.max=NULL, type=c("correlation","covariance"),

@@ -116,7 +116,7 @@ ggAcf <- function(x, lag.max = NULL,
   }
   cl[[1]] <- quote(Acf)
   object <- eval.parent(cl)
-  if(plot==TRUE){
+  if(plot){
     return(autoplot(object,  ...))
   }
   else{
@@ -124,8 +124,15 @@ ggAcf <- function(x, lag.max = NULL,
   }
 }
 
-ggPacf <- function(x, ...){
-  ggAcf(x, type="partial", ...)
+ggPacf <- function(x, lag.max = NULL,
+                  plot = TRUE, na.action = na.contiguous, demean=TRUE, ...)
+{
+  object <- Acf(x, lag.max=lag.max, type="partial", na.action=na.action, demean=demean, plot=FALSE)
+  object$series <- deparse(substitute(x))
+  if(plot)
+    return(autoplot(object, ...))
+  else
+    return(object)
 }
 
 ggCcf <- function(x, y, lag.max=NULL, type=c("correlation","covariance"),

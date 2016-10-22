@@ -7,13 +7,14 @@
 \title{(Partial) Autocorrelation and Cross-Correlation Function Estimation}
 \usage{
 Acf(x, lag.max = NULL,
-    type = c("correlation", "covariance", "partial"),
-    plot = TRUE, na.action = na.contiguous, demean=TRUE, ...)
-Pacf(x, lag.max=NULL, plot=TRUE, na.action=na.contiguous, ...)
+  type = c("correlation", "covariance", "partial"),
+  plot = TRUE, na.action = na.contiguous, demean=TRUE, ...)
+Pacf(x, lag.max=NULL, 
+  plot = TRUE, na.action = na.contiguous, demean=TRUE, ...)
 Ccf(x, y, lag.max=NULL, type=c("correlation","covariance"),
-    plot=TRUE, na.action=na.contiguous, ...)
+  plot=TRUE, na.action=na.contiguous, ...)
 taperedacf(x, lag.max=NULL, type=c("correlation", "partial"),
-   plot=TRUE, calc.ci=TRUE, level=95, nsim=100, ...)
+  plot=TRUE, calc.ci=TRUE, level=95, nsim=100, ...)
 taperedpacf(x, ...) }
 
 \arguments{
