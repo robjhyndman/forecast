@@ -77,24 +77,15 @@ autoplot.acf <- function(object, ci=0.95, ...){
       ylab <- NULL
     }
 
-    #Change ticks to be seasonal and prepare default title
-    if(!is.null(object$series)){
-      seriesname <- object$series
-      if(object$series == "X"){
-        seriesname <- strsplit(object$snames, " ")[[1]][1]
-      }
-      x <- eval.parent(parse(text=seriesname))
-      freq <- frequency(x)
-      msts <- is.element("msts",class(x))
-    } else{
-      freq <- 1
-      msts <- FALSE
-    }
-
     # Add seasonal x-axis
-    if(msts)
+    #Change ticks to be seasonal and prepare default title
+    if(!is.null(object$tsp))
+      freq <- object$tsp[3]
+    else
+      freq <- 1
+    if(!is.null(object$periods))
     {
-      periods <- attributes(x)$msts
+      periods <- object$periods
       periods <- periods[periods != freq]
       minorbreaks <- periods * seq(-20:20)
     }
@@ -116,6 +107,8 @@ ggAcf <- function(x, lag.max = NULL,
   }
   cl[[1]] <- quote(Acf)
   object <- eval.parent(cl)
+  object$tsp <- tsp(x)
+  object$periods <- attributes(x)$msts
   if(plot){
     return(autoplot(object,  ...))
   }

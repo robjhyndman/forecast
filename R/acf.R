@@ -12,6 +12,9 @@ Acf <- function(x, lag.max = NULL,
 
   acf.out <- stats::acf(x, plot=FALSE, lag.max=lag.max, type=type, na.action=na.action, demean=demean)
 
+  acf.out$tsp <- tsp(x)
+  acf.out$periods <- attributes(x)$msts
+
   if(nseries==1)
   {
     vname <- deparse(substitute(x))
@@ -149,8 +152,29 @@ Pacf <- function (x, lag.max=NULL,
 {
   object <- Acf(x, lag.max=lag.max, type="partial", na.action=na.action, demean=demean, plot=FALSE)
   object$series <- deparse(substitute(x))
+
+  # Plot if required
   if(plot)
-    return(plot(object, ...))
+  {
+    nlags <- dim(object$lag)[1]
+    plot.out <- object
+    # Check if there is a ylim input
+    input_list <- as.list(substitute(list(...)))
+    ylimarg <- is.element("ylim",names(input_list))
+    if(ylimarg)
+      plot(plot.out, xaxt="n", ...)
+    else
+    {
+      ylim <- c(-1, 1) * 3/sqrt(length(x))
+      ylim <- range(ylim, plot.out$acf)
+      plot(plot.out, ylim=ylim, xaxt="n", ...)
+    }
+    # Make nice horizontal axis
+    if(is.element("msts", class(x)))
+      seasonalaxis(attributes(x)$msts, nlags, type="acf")
+    else
+      seasonalaxis(frequency(x), nlags, type="acf")
+  }
   else
     return(object)
 
