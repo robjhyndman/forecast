@@ -174,6 +174,7 @@ Pacf <- function (x, lag.max=NULL,
       seasonalaxis(attributes(x)$msts, nlags, type="acf")
     else
       seasonalaxis(frequency(x), nlags, type="acf")
+    return(invisible(object))
   }
   else
     return(object)
