@@ -6,10 +6,10 @@ importFrom(timeDate, as.timeDate, isBizday, difftimeDate, Easter)
 importFrom(nnet,nnet)
 import(parallel,Rcpp)
 
-importFrom("grDevices", "gray", "heat.colors")
+importFrom("grDevices", "gray", "heat.colors", "nclass.FD")
 importFrom("graphics", "abline", "axis", "grid", "layout", "lines",
              "mtext", "par", "plot", "points", "polygon", "text",
-             "title")
+             "title", "hist")
 importFrom("stats", "Box.test", "acf", "approx", "ar", "arima",
              "arima.sim", "as.ts", "complete.cases", "cycle",
              "decompose", "diffinv", "end", "extractAIC", "fitted", "formula",
@@ -37,7 +37,7 @@ ggtsdisplay, ggmonthplot, ggseasonplot, seasonplot, ses, sindexf, splinef, tslm,
 fourierf,forecast.lm,thetaf, tsdisplay, simulate.ets, simulate.ar, simulate.Arima, simulate.fracdiff, simulate.nnetar,
 ndiffs, nsdiffs, dm.test,tbats.components, Acf,Pacf,Ccf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts,
 getResponse, tsoutliers, tsclean, bizdays, easter,stlm, forecast.stlm,
-StatForecast, GeomForecast, geom_forecast)
+StatForecast, GeomForecast, geom_forecast, gghistogram)
 
 S3method(autoplot, acf)
 S3method(autoplot, ar)

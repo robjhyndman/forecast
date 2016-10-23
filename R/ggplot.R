@@ -550,10 +550,11 @@ autoplot.mforecast <- function (object, plot.conf=TRUE, gridlayout=NULL, ...){
   }
 }
 
-ggtsdisplay <- function(x, plot.type=c("partial","scatter","spectrum"),
+ggtsdisplay <- function(x, plot.type=c("partial","histogram","scatter","spectrum"),
                         points=TRUE, lag.max, na.action=na.contiguous, theme=NULL, ...){
   if (requireNamespace("ggplot2") & requireNamespace("grid")){
     plot.type <- match.arg(plot.type)
+    main <- deparse(substitute(x))
 
     if(!is.ts(x)){
       x <- ts(x)
@@ -563,6 +564,10 @@ ggtsdisplay <- function(x, plot.type=c("partial","scatter","spectrum"),
     }
 
     dots <- list(...)
+    if(is.null(dots$xlab))
+      dots$xlab <- ""
+    if(is.null(dots$ylab))
+      dots$ylab <- ""
     labs <- match(c("xlab", "ylab", "main"), names(dots), nomatch=0)
 
     #Set up grid for plots
@@ -574,10 +579,10 @@ ggtsdisplay <- function(x, plot.type=c("partial","scatter","spectrum"),
     matchidx <- as.data.frame(which(gridlayout == 1, arr.ind = TRUE))
     tsplot <- do.call(ggplot2::autoplot, c(object=quote(x), dots[labs]))
     if(points){
-      tsplot <- tsplot + ggplot2::geom_point()
+      tsplot <- tsplot + ggplot2::geom_point(size=0.5)
     }
     if(is.null(tsplot$labels$title)){ #Add title if missing
-      tsplot <- tsplot + ggplot2::ggtitle(substitute(x))
+      tsplot <- tsplot + ggplot2::ggtitle(main)
     }
     if(!is.null(theme)){
       tsplot <- tsplot + theme
@@ -601,6 +606,10 @@ ggtsdisplay <- function(x, plot.type=c("partial","scatter","spectrum"),
       yrange <- range(c(acfplotrange, pacfplotrange))
       acfplot <- acfplot + ggplot2::ylim(yrange)
       lastplot <- lastplot + ggplot2::ylim(yrange)
+    }
+    else if(plot.type == "histogram")
+    {
+      lastplot <- gghistogram(x, add.normal=TRUE, add.rug=TRUE) + ggplot2::xlab(main)
     }
     else if(plot.type == "scatter"){
       scatterData <- data.frame(y = x[2:NROW(x)], x = x[1:NROW(x)-1])
@@ -715,7 +724,7 @@ gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray"
           title <- "Hour"
         else
           title <- "Season"
-      }      
+      }
       else
         title <- "Time"
       if(continuous){
@@ -1190,4 +1199,56 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
       params = list(na.rm = na.rm, ...)
     )
   }
+}
+
+
+# Produce nice histogram with appropriately chosen bin widths
+# Designed to work with time series data without issuing warnings.
+
+gghistogram <- function(x, add.normal=FALSE, add.kde=FALSE, add.rug=TRUE, bins)
+{
+  xname <- deparse(substitute(x))
+  if(missing(bins))
+    bins <- grDevices::nclass.FD(na.omit(x))
+  data <- data.frame(x=as.numeric(c(x)))
+  #Initialise ggplot object and plot histogram
+  binwidth <- (max(x,na.rm=TRUE) - min(x,na.rm=TRUE))/bins
+  p <- ggplot2::ggplot() +
+    ggplot2::geom_histogram(ggplot2::aes(x), data=data, binwidth=binwidth, boundary=0) +
+    ggplot2::xlab(xname)
+  # Add normal density estimate
+  if(add.normal | add.kde)
+  {
+    xmin <- min(x, na.rm=TRUE)
+    xmax <- max(x, na.rm=TRUE)
+    if(add.kde)
+    {
+      h <- stats::bw.SJ(x)
+      xmin <- xmin - 3*h
+      xmax <- xmax + 3*h
+    }
+    if(add.normal)
+    {
+      xmean <- mean(x, na.rm=TRUE)
+      xsd <- sd(x, na.rm=TRUE)
+      xmin <- min(xmin, xmean-3*xsd)
+      xmax <- max(xmax, xmean+3*xsd)
+    }
+    xgrid <- seq(xmin, xmax, l=512)
+    if(add.normal)
+    {
+      df <- data.frame(x=xgrid, y=length(x) * binwidth * stats::dnorm(xgrid, xmean, xsd))
+      p <- p + ggplot2::geom_line(ggplot2::aes(df$x,df$y), col="#ff8a62")
+    }
+    if(add.kde)
+    {
+      kde <- stats::density(x, bw=h, from=xgrid[1], to=xgrid[512], n=512)
+      p <- p + ggplot2::geom_line(ggplot2::aes(x=kde$x,y=length(x) * binwidth * kde$y), col='#67a9ff')
+    }
+  }
+  if(add.rug)
+  {
+    p <- p + ggplot2::geom_rug(ggplot2::aes(x))
+  }
+  return(p)
 }
