@@ -117,6 +117,13 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
         d <- d-1
     }
   }
+
+  # Check number of differences selected
+  if(D >= 2)
+    warning("Having more than one seasonal differences is not recommended. Please consider using only one seasonal difference.")  
+  else if(D+d > 2)
+    warning("Having 3 or more differencing operations is not recommended. Please consider reducing the total number of differences.")
+
   if(d>0)
     dx <- diff(dx,differences=d,lag=1)
 
