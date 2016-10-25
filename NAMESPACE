@@ -20,10 +20,9 @@ importFrom("stats", "Box.test", "acf", "approx", "ar", "arima",
              "qnorm", "qt", "quantile", "residuals", "rnorm", "runif",
              "sd", "simulate", "smooth.spline", "start", "stl", "supsmu",
              "terms", "time", "ts", "tsp", "tsp<-", "tsdiag", "var")
-importFrom("utils", "packageVersion", "tail")
+importFrom("utils", "packageVersion", "tail", "head")
 importFrom("ggplot2","autoplot","fortify")
 importFrom("stats", "aggregate", "as.formula", "is.mts", "reformulate")
-importFrom("utils", "head")
 
 export(arfima, Arima, arima.errors, arimaorder, auto.arima, BoxCox, croston,
 fitted.Arima, forecast, forecast.ar, forecast.Arima, forecast.ets, forecast.fracdiff,findfrequency,
@@ -87,6 +86,8 @@ S3method(getResponse,Arima)
 S3method(getResponse,default)
 S3method(getResponse,fracdiff)
 S3method(getResponse,lm)
+S3method(head,ts)
+S3method(tail,ts)
 S3method(logLik,ets)
 S3method(plot,ar)
 S3method(plot,Arima)

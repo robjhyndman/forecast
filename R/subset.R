@@ -48,7 +48,7 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL, ...
   else
     if(min(season) < 1L | max(season) > frequency(x))
       stop(paste("Seasons must be between 1 and", frequency(x)))
-  
+
   start <- utils::head(time(x)[is.element(cycle(x), season)],1)
   if("mts" %in% class(x)){
     x <- subset.matrix(x, is.element(cycle(x), season))
@@ -57,4 +57,29 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL, ...
     x <- subset.default(x, is.element(cycle(x), season))
   }
     return(ts(x, frequency=length(season), start=start))
+}
+
+head.ts <- function(x, n=6L, ...)
+{
+  tspx <- tsp(x)
+  if(NCOL(x) > 1)
+    hx <- ts(utils::head.matrix(as.matrix(x), n=n, ...),
+      start=tspx[1], frequency=tspx[3])
+  else
+    hx <- ts(head(c(x), n=n, ...),
+             start=tspx[1], frequency=tspx[3])
+  return(hx)
+}
+
+
+tail.ts <- function(x, n=6L, ...)
+{
+  tspx <- tsp(x)
+  if(NCOL(x) > 1)
+    hx <- ts(utils::tail.matrix(as.matrix(x), n=n, ...),
+             end=tspx[2], frequency=tspx[3])
+  else
+    hx <- ts(tail(c(x), n=n, ...),
+             end=tspx[2], frequency=tspx[3])
+  return(hx)
 }
