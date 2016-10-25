@@ -276,6 +276,7 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
     else if(min(level) < 0 | max(level) > 99.99)
       stop("Confidence limit out of range")
   }
+  level <- sort(level)
   if(use.drift)
   {
     n <- length(x)
