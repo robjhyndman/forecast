@@ -375,7 +375,7 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
   #         seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
   #         opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt))
 
-  #     func <- .Call("etsGetTargetFunctionRmalschainsPtr", package="forecast")
+  #     func <- .Call("etsGetTargetFunctionRmalschainsPtr", PACKAGE="forecast")
 
   #   }
 
@@ -406,7 +406,7 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
 #        seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
 #        opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt))
 #
-#    func <- .Call("etsGetTargetFunctionRdonlp2Ptr", package="forecast")
+#    func <- .Call("etsGetTargetFunctionRdonlp2Ptr", PACKAGE="forecast")
 #
 #    myBounds <- getNewBounds(par, lower, upper, nstate)
 #
@@ -423,7 +423,7 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
         opt.crit=opt.crit, nmse=as.integer(nmse), bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt))
 
     fred <- .Call("etsNelderMead", par, env, -Inf,
-        sqrt(.Machine$double.eps), 1.0, 0.5, 2.0, trace, maxit, package="forecast")
+        sqrt(.Machine$double.eps), 1.0, 0.5, 2.0, trace, maxit, PACKAGE="forecast")
 
     fit.par <- fred$par
 
@@ -583,7 +583,7 @@ etsTargetFunctionInit <- function(par,y,nstate,errortype,trendtype,seasontype,da
       opt.crit=opt.crit, nmse=as.integer(nmse), bounds=bounds, m=m,
       optAlpha, optBeta, optGamma, optPhi,
       givenAlpha, givenBeta, givenGamma, givenPhi,
-      alpha, beta, gamma, phi, env, package="forecast")
+      alpha, beta, gamma, phi, env, PACKAGE="forecast")
   res
 }
 
