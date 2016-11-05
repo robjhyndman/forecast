@@ -3,19 +3,20 @@
 \alias{auto.arima}
 \title{Fit best ARIMA model to univariate time series}
 \usage{
-auto.arima(x, d=NA, D=NA, max.p=5, max.q=5,
+auto.arima(y, d=NA, D=NA, max.p=5, max.q=5,
      max.P=2, max.Q=2, max.order=5, max.d=2, max.D=1, 
      start.p=2, start.q=2, start.P=1, start.Q=1, 
      stationary=FALSE, seasonal=TRUE,
      ic=c("aicc", "aic", "bic"), stepwise=TRUE, trace=FALSE,
-     approximation=(length(x)>100 | frequency(x)>12), xreg=NULL,
+     approximation=(length(x)>100 | frequency(x)>12), 
+     truncate=NULL, xreg=NULL,
      test=c("kpss","adf","pp"), seasonal.test=c("ocsb","ch"),
      allowdrift=TRUE, allowmean=TRUE, lambda=NULL, biasadj=FALSE,
-     parallel=FALSE, num.cores=2)
+     parallel=FALSE, num.cores=2, x=y, ...)
 }
 
 \arguments{
-\item{x}{a univariate time series}
+\item{y}{a univariate time series}
 \item{d}{Order of first-differencing. If missing, will choose a value based on KPSS test.}
 \item{D}{Order of seasonal-differencing. If missing, will choose a value based on OCSB test.}
 \item{max.p}{Maximum value of p}
@@ -35,7 +36,8 @@ auto.arima(x, d=NA, D=NA, max.p=5, max.q=5,
 \item{stepwise}{If \code{TRUE}, will do stepwise selection (faster). Otherwise, it searches over all models. Non-stepwise selection can be very slow, especially for seasonal models.}
 \item{trace}{If \code{TRUE}, the list of ARIMA models considered will be reported.}
 \item{approximation}{If \code{TRUE}, estimation is via conditional sums of squares andthe information criteria used for model selection are approximated. The final model is still computed using maximum likelihood estimation. Approximation should be used for long time series or a high seasonal period to avoid excessive computation times.}
-\item{xreg}{Optionally, a vector or matrix of external regressors, which must have the same number of rows as x.}
+\item{truncate}{An integer value indicating how many observations to use in model selection. The last \code{truncate} values of the series are used to select a model when \code{truncate} is not \code{NULL} and \code{approximation=TRUE}. All observations are used if either \code{truncate=NULL} or \code{approximation=FALSE}.}
+\item{xreg}{Optionally, a vector or matrix of external regressors, which must have the same number of rows as \code{y}.}
 \item{test}{Type of unit root test to use. See \code{\link{ndiffs}} for details.}
 \item{seasonal.test}{This determines which seasonal unit root test is used. See \code{\link{nsdiffs}} for details.}
 \item{allowdrift}{If \code{TRUE}, models with drift terms are considered.}
@@ -44,6 +46,8 @@ auto.arima(x, d=NA, D=NA, max.p=5, max.q=5,
 \item{biasadj}{Use adjusted back-transformed mean for Box-Cox transformations. If TRUE, point forecasts and fitted values are mean forecast. Otherwise, these points can be considered the median of the forecast densities.}
 \item{parallel}{If \code{TRUE} and \code{stepwise = FALSE}, then the specification search is done in parallel. This can give a significant speedup on mutlicore machines.}
 \item{num.cores}{Allows the user to specify the amount of parallel processes to be used if \code{parallel = TRUE} and \code{stepwise = FALSE}. If \code{NULL}, then the number of logical cores is automatically detected and all available cores are used.}
+\item{x}{Deprecated. Included for backwards compatibility.}
+\item{...}{Additional arguments to be passed to \code{\link[stats]{arima}}.}
 }
 \description{Returns best ARIMA model according to either AIC, AICc or BIC value.
 The function conducts a search over
@@ -51,7 +55,7 @@ possible model within the order constraints provided.}
 
 \details{Non-stepwise selection can be slow, especially for seasonal data. Stepwise algorithm outlined in Hyndman and Khandakar (2008) except that the default method for selecting seasonal differences is now the OCSB test rather than the Canova-Hansen test.
 }
-\value{Same as for \code{\link{arima}}}
+\value{Same as for \code{\link{Arima}}}
 
 \references{
 Hyndman, R.J. and Khandakar, Y. (2008) "Automatic time series forecasting: The forecast package for R", \emph{Journal of Statistical Software}, \bold{26}(3).

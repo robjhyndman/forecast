@@ -29,6 +29,7 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
     if(!any(class(y) == "ts"))
       y <- msts(y, seasonal.periods)
   }
+  seasonal.periods <- unique(pmax(seasonal.periods,1))
   if(all(seasonal.periods == 1))
     seasonal.periods <- NULL
 
@@ -279,6 +280,14 @@ parFilterSpecifics<-function(control.number, control.array, y, seasonal.periods,
 	}
 }
 
+fitted.bats <- function(object, h=1, ...){
+  if(h==1){
+    return(object$fitted.values)
+  }
+  else{
+    return(hfitted(object=object, h=h, FUN="bats", ...))
+  }
+}
 
 print.bats <- function(x,...) {
 	cat(makeText(x))
@@ -359,7 +368,7 @@ plot.bats <- function (x, main="Decomposition by BATS model", ...)
   tsp(out) <- tsp(y)
 
   # Do the plot
-  plot(out, main=main, nc=1, ...)
+  plot.ts(out, main=main, nc=1, ...)
 }
 
 is.bats <- function(x){

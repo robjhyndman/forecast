@@ -30,7 +30,7 @@ It is also possible for the model to be of class \code{"ets"}, and equal to the 
 \item{gamma}{Value of gamma. If NULL, it is estimated.}
 \item{phi}{Value of phi. If NULL, it is estimated.}
 \item{additive.only}{If TRUE, will only consider additive models. Default is FALSE.}
-\item{lambda}{Box-Cox transformation parameter. Ignored if NULL. Otherwise, data transformed before model is estimated. When \code{lambda=TRUE}, \code{additive.only} is set to FALSE.}
+\item{lambda}{Box-Cox transformation parameter. Ignored if NULL. Otherwise, data transformed before model is estimated. When \code{lambda} is specified, \code{additive.only} is set to \code{TRUE}.}
 \item{biasadj}{Use adjusted back-transformed mean for Box-Cox transformations. If TRUE, point forecasts and fitted values are mean forecast. Otherwise, these points can be considered the median of the forecast densities.}
 \item{lower}{Lower bounds for the parameters (alpha, beta, gamma, phi)}
 \item{upper}{Upper bounds for the parameters (alpha, beta, gamma, phi)}

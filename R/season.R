@@ -48,37 +48,6 @@ sindexf <- function(object,h)
     return(out)
 }
 
-seasadj <- function(object)
-{
-    if(is.element("stl",class(object)))
-        return(object$time.series[,2]+object$time.series[,3])
-    else if(is.element("decomposed.ts",class(object)))
-    {
-        if(object$type=="additive")
-            return(object$x-object$seasonal)
-        else
-            return(object$x/object$seasonal)
-    }
-    else if(is.element("tbats",class(object)))
-    {
-      comp <- tbats.components(object)
-      scols <- grep("season",colnames(comp))
-      sa <- comp[,"observed"]-rowSums(comp[,scols,drop=FALSE])
-      # Back transform if necessary
-      if (!is.null(object$lambda))
-        sa <- InvBoxCox(sa, object$lambda)
-      return(sa)
-    }
-    else if(is.element("bats",class(object)))
-    {
-      if(is.null(object$gamma.values))
-        stop("There are no seasonal components in the series.")
-      else
-        stop("No seasonal adjustment available for BATS models")
-    }
-    else
-      stop("I don't know how to seasonally adjust objects of this type")
-}
 
 seasonaldummy <- function(x, h=NULL)
 {
@@ -207,8 +176,8 @@ forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsm
 
 # Function takes time series, does STL decomposition, and fits a model to seasonally adjusted series
 # But it does not forecast. Instead, the result can be passed to forecast().
-stlm <- function(x ,s.window=7, robust=FALSE, method=c("ets","arima"),
-     modelfunction=NULL, etsmodel="ZZN", lambda=NULL, xreg=NULL, allow.multiplicative.trend=FALSE, ...)
+stlm <- function(y ,s.window=7, robust=FALSE, method=c("ets","arima"),
+     modelfunction=NULL, etsmodel="ZZN", lambda=NULL, xreg=NULL, allow.multiplicative.trend=FALSE, x=y, ...)
 {
   method <- match.arg(method)
 
@@ -304,7 +273,7 @@ forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE
   return(fcast)
 }
 
-stlf <- function(x, h=frequency(x)*2, s.window=7, t.window=NULL, robust=FALSE, lambda=NULL, biasadj=FALSE, ...)
+stlf <- function(y, h=frequency(x)*2, s.window=7, t.window=NULL, robust=FALSE, lambda=NULL, biasadj=FALSE, x=y, ...)
 {
 	if (!is.null(lambda))
 	{
@@ -372,13 +341,15 @@ fourierf <- function(x, K, h)
   labels <- character(length = len) # column names
   cs.K <- cumsum(2*c(0, K))
   for (j in 1:len.p) {
-    for(i in 1L:K[j]) {
-      if(2*i < period[j])
-        X[,cs.K[j] + 2*i-1] <- sinpi(2*i*times/period[j])
-      X[,cs.K[j] + 2*i] <- cospi(2*i*times/period[j])
+    if(K[j] > 0L) {
+      for(i in 1L:K[j]) {
+        if(2*i < period[j])
+          X[,cs.K[j] + 2*i-1] <- sinpi(2*i*times/period[j])
+        X[,cs.K[j] + 2*i] <- cospi(2*i*times/period[j])
+      }
+      labels[(cs.K[j] + 1):cs.K[j + 1]] <- paste(paste0(c("S","C"),rep(1:K[j],rep(2,K[j]))),
+                                               round(period[j]), sep = "-")
     }
-    labels[(cs.K[j] + 1):cs.K[j + 1]] <- paste(paste0(c("S","C"),rep(1:K[j],rep(2,K[j]))),
-                                                  round(period[j]), sep = "-")
   }
   colnames(X) <- labels
   # Remove missing columns

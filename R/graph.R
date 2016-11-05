@@ -1,6 +1,6 @@
 ### Time series graphics and transformations
 
-tsdisplay <- function(x,plot.type=c("partial", "scatter", "spectrum"),points=TRUE,ci.type=c("white", "ma"),
+tsdisplay <- function(x,plot.type=c("partial", "histogram","scatter", "spectrum"),points=TRUE,ci.type=c("white", "ma"),
                 lag.max, na.action=na.contiguous, main=NULL,xlab="",ylab="",
                 pch=1,cex=0.5, ...)
 
@@ -43,6 +43,10 @@ tsdisplay <- function(x,plot.type=c("partial", "scatter", "spectrum"),points=TRU
   }
   else if(plot.type == "spectrum")
     spec.ar(x,main="",na.action=na.action)
+  else if(plot.type=="histogram")
+  {
+    graphics::hist(x, breaks="FD", main="", xlab=main)
+  }
   else
     plot(junk2,ylim=ylim,xlim=c(1,lag.max),ylab="PACF",main="",...)
   par(def.par)
@@ -56,12 +60,12 @@ seasonplot <- function(x, s, season.labels=NULL, year.labels=FALSE, year.labels.
 {
   if(missing(main))
     main = paste("Seasonal plot:", deparse(substitute(x)))
-  
+
   if(missing(s))
     s = frequency(x)
   if(s<=1)
-    stop("Frequency must be > 1")
-  
+    stop("Data are not seasonal")
+
   # Pad series
   tsx <- x
   if(start(x)[2]>1)
@@ -78,7 +82,7 @@ seasonplot <- function(x, s, season.labels=NULL, year.labels=FALSE, year.labels.
   }
   else if(s == 4)
   {
-    labs <- month.name[c(1, 4, 7, 10)]
+    labs <- paste("Q",1:4,sep="")
     xLab <- "Quarter"
   }
   else if(s == 7)

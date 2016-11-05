@@ -34,16 +34,16 @@ forecast.mlm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambd
   y<-attr(object$terms,"response")
   
   # Check if the forecasts will be time series
-  if(ts & is.element("ts",class(object$x))){
-    tspx <- tsp(object$x)
-    timesx <- time(object$x)
+  if(ts & is.element("ts",class(fitted(object)))){
+    tspx <- tsp(fitted(object))
+    timesx <- time(fitted(object))
   }
   else{
     tspx <- NULL
   }
   out <- list(model=object,level=level)
   if(!is.null(object$x) & !is.list(object$x)){
-    out$x <- object$x
+    out$x <- object$x #no longer exists, consider removing
   }
   else if(!is.null(object$model)){
     out$x <- object$model[,y]
@@ -51,6 +51,8 @@ forecast.mlm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambd
   else {
     stop("Response not found")
   }
+  if(!is.null(tspx))
+    out$x <- ts(out$x, start=tspx[1], frequency=tspx[3])
   out$residuals <- residuals(object)
   out$fitted <- fitted(object)
   out$mean <- out$lower <- out$upper <- vector("list",K)

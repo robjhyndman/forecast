@@ -18,7 +18,6 @@
 \author{Mitchell O'Hara-Wild}
 \seealso{\code{\link[stats]{monthplot}}}
 \examples{
-library(fpp)
 ggmonthplot(AirPassengers)
-ggmonthplot(bricksq)
+ggmonthplot(woolyrnq)
 }

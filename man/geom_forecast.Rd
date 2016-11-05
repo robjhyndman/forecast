@@ -91,6 +91,7 @@ p + geom_forecast()
 
 # Without fortify.ts
 data <- data.frame(USAccDeaths=as.numeric(USAccDeaths), time=as.numeric(time(USAccDeaths)))
+p <- ggplot(aes(x=time, y=USAccDeaths), data=data)
 p <- p + geom_line()
 p + geom_forecast()
 

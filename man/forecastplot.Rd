@@ -20,16 +20,16 @@
 \item{object}{Forecast object produced by \code{\link{forecast}}. Used for ggplot graphics (S3 method consistency).}
 \item{include}{number of values from time series to include in plot. Default is all values.}
 \item{plot.conf}{Logical flag indicating whether to plot prediction intervals.}
-\item{shaded}{Logical flag indicating whether prediction intervals should be shaded (TRUE) or lines (FALSE)}
-\item{shadebars}{Logical flag indicating if prediction intervals should be plotted as shaded bars (if TRUE) or a shaded polygon (if FALSE).
+\item{shaded}{Logical flag indicating whether prediction intervals should be shaded (\code{TRUE}) or lines (\code{FALSE})}
+\item{shadebars}{Logical flag indicating if prediction intervals should be plotted as shaded bars (if \code{TRUE}) or a shaded polygon (if \code{FALSE}).
     Ignored if \code{shaded=FALSE}. Bars are plotted by default if there are fewer than five forecast horizons.}
 \item{shadecols}{Colors for shaded prediction intervals. To get default colors used prior to v3.26, set \code{shadecols="oldstyle"}.}
 \item{col}{Colour for the data line.}
 \item{fcol}{Colour for the forecast line.}
 \item{flty}{Line type for the forecast line.}
 \item{flwd}{Line width for the forecast line.}
-\item{pi.col}{If \code{shade=FALSE} and \code{plot.conf=TRUE}, the prediction intervals are plotted in this colour.}
-\item{pi.lty}{If \code{shade=FALSE} and \code{plot.conf=TRUE}, the prediction intervals are plotted using this line type.}
+\item{pi.col}{If \code{shaded=FALSE} and \code{plot.conf=TRUE}, the prediction intervals are plotted in this colour.}
+\item{pi.lty}{If \code{shaded=FALSE} and \code{plot.conf=TRUE}, the prediction intervals are plotted using this line type.}
 \item{ylim}{Limits on y-axis.}
 \item{main}{Main title.}
 \item{xlab}{X-axis label.}
@@ -41,7 +41,7 @@
 
 \description{Plots historical data with forecasts and prediction intervals.
 
-\code{autoplot} will produce an equivelant plot as a ggplot object.}
+\code{autoplot} will produce an equivalent plot as a ggplot object.}
 
 \value{None.}
 
@@ -50,18 +50,16 @@
 \author{Rob J Hyndman & Mitchell O'Hara-Wild}
 \seealso{\code{\link[stats]{plot.ts}}}
 \examples{library(ggplot2)
-library(fpp)
 
-deaths.fit <- hw(USAccDeaths,h=48)
-plot(deaths.fit)
-autoplot(deaths.fit)
+wine.fit <- hw(wineind,h=48)
+plot(wine.fit)
+autoplot(wine.fit)
 
-fit <- lm(Carbon ~ City, data=fuel)
-fcast <- forecast(fit, newdata=data.frame(City=30))
-plot(fcast, xlab="City (mpg)", ylab="Carbon footprint (tons per year)")
-autoplot(fcast, xlab="City (mpg)", ylab="Carbon footprint (tons per year)")
+fit <- tslm(wineind ~ fourier(wineind,4))
+fcast <- forecast(fit, newdata=data.frame(fourier(wineind,4,20)))
+autoplot(fcast)
 
-fcast <- splinef(uspop,h=5)
+fcast <- splinef(airmiles,h=5)
 plot(fcast)
 autoplot(fcast)
 }

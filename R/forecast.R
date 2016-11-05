@@ -14,7 +14,8 @@ findfrequency <- function(x)
   # Remove trend from data
   x <- residuals(tslm(x ~ trend))
   # Compute spectrum by fitting ar model to largest section of x
-  spec <- spec.ar(c(na.contiguous(x)),plot=FALSE)
+  n.freq <- 500
+  spec <- spec.ar(c(na.contiguous(x)), plot=FALSE, n.freq=n.freq)
   if(max(spec$spec)>10) # Arbitrary threshold chosen by trial and error.
   {
     period <- floor(1/spec$freq[which.max(spec$spec)] + 0.5)
@@ -23,7 +24,7 @@ findfrequency <- function(x)
       j <- which(diff(spec$spec)>0)
       if(length(j)>0)
       {
-        nextmax <- j[1] + which.max(spec$spec[(j[1]+1):500])
+        nextmax <- j[1] + which.max(spec$spec[(j[1]+1):n.freq])
         if(nextmax < length(spec$freq))
           period <- floor(1/spec$freq[nextmax] + 0.5)
         else
@@ -320,7 +321,12 @@ plot.forecast <- function(x, include, plot.conf=TRUE, shaded=TRUE, shadebars=(le
     xlab=xlab,ylim=ylim,ylab=ylab,main=main,col=col,type=type, ...)
   if(plot.conf)
   {
-    xxx <- tsp(pred.mean)[1] - 1/freq + (1:npred)/freq
+    if(is.ts(x$upper)){
+      xxx <- time(x$upper)
+    }
+    else{
+      xxx <- tsp(pred.mean)[1] - 1/freq + (1:npred)/freq
+    }
     idx <- rev(order(x$level))
     nint <- length(x$level)
     if(is.null(shadecols))
@@ -353,13 +359,13 @@ plot.forecast <- function(x, include, plot.conf=TRUE, shaded=TRUE, shadebars=(le
       }
       else if(npred == 1)
       {
-        lines(xxx+c(-0.5,0.5)/freq,rep(x$lower[,idx[i]],2),col=pi.col,lty=pi.lty)
-        lines(xxx+c(-0.5,0.5)/freq,rep(x$upper[,idx[i]],2),col=pi.col,lty=pi.lty)
+        lines(c(xxx)+c(-0.5,0.5)/freq, rep(x$lower[,idx[i]],2),col=pi.col,lty=pi.lty)
+        lines(c(xxx)+c(-0.5,0.5)/freq, rep(x$upper[,idx[i]],2),col=pi.col,lty=pi.lty)
       }
       else
       {
-        lines(xxx,x$lower[,idx[i]],col=pi.col,lty=pi.lty)
-        lines(xxx,x$upper[,idx[i]],col=pi.col,lty=pi.lty)
+        lines(x$lower[,idx[i]],col=pi.col,lty=pi.lty)
+        lines(x$upper[,idx[i]],col=pi.col,lty=pi.lty)
       }
     }
   }
@@ -376,6 +382,47 @@ plot.forecast <- function(x, include, plot.conf=TRUE, shaded=TRUE, shadebars=(le
 predict.default <- function(object, ...)
 {
     forecast(object, ...)
+}
+
+hfitted <- function(object, h=1, FUN=class(object), ...)
+{
+  if(h==1){
+    return(fitted(object))
+  }
+  #Attempt to get model function
+  if(missing(FUN)){
+    for(i in FUN){
+      if(exists(i)){
+        if(typeof(eval(parse(text = i)[[1]]))=="closure"){
+          FUN <- i
+          i <- "Y"
+          break
+        }
+      }
+    }
+    if(i!="Y"){
+      stop("Could not find appropriate function to refit, specify FUN=function")
+    }
+  }
+  x <- getResponse(object)
+  tspx <- tsp(x)
+  fits <- fitted(object)*NA
+  n <- length(fits)
+  refitarg <- list(x=NULL, model = object)
+  names(refitarg)[1] <- names(formals(FUN))[1]
+  fcarg <- list(h=h)
+  for(i in 1:(n-h))
+  {
+    refitarg[[1]] <- ts(x[1:i], start=tspx[1], frequency=tspx[3])
+    if(!is.null(object$xreg)){
+      refitarg$xreg <- ts(object$xreg[1:i,], start=tspx[1], frequency=tspx[3])
+      fcarg$xreg <- ts(object$xreg[(i+1):(i+h),], start=tspx[1]+i/tspx[3], frequency=tspx[3])
+    }
+    fcarg$object <- try(do.call(FUN, refitarg), silent=TRUE)
+    if(!is.element("try-error", class(fcarg$object)))
+      fits[i+h] <- suppressWarnings(do.call("forecast", fcarg)$mean[h])
+  }
+  return(fits)
 }
 
 # The following function is for when users don't realise they already have the forecasts.
@@ -399,10 +446,21 @@ forecast.forecast <- function(object, ...)
       stop("Please select a longer horizon when the forecasts are first computed")
     tspf <- tsp(object$mean)
     object$mean <- ts(object$mean[1:h], start=tspf[1], frequency=tspf[3])
-    object$upper <- ts(object$upper[1:h,], start=tspf[1], frequency=tspf[3])
-    object$lower <- ts(object$lower[1:h,], start=tspf[1], frequency=tspf[3])
+    if(!is.null(object$upper))
+    {
+      object$upper <- ts(object$upper[1:h,], start=tspf[1], frequency=tspf[3])
+      object$lower <- ts(object$lower[1:h,], start=tspf[1], frequency=tspf[3])
+    }
   }
   return(object)
+}
+
+subset.forecast <- function(x, ...){
+  tspx <- tsp(x$mean)
+  x$mean <- subset(x$mean, ...)
+  x$lower <- subset(ts(x$lower, start=tspx[1], frequency=tspx[3]), ...)
+  x$upper <- subset(ts(x$upper, start=tspx[1], frequency=tspx[3]), ...)
+  return(x)
 }
 
 is.forecast <- function(x){

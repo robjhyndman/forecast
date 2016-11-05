@@ -38,7 +38,7 @@ month <- seasonaldummy(ldeaths)
 deaths.lm  <- tslm(ldeaths ~ month)
 tsdisplay(residuals(deaths.lm))
 ldeaths.fcast <- forecast(deaths.lm,
-  data.frame(month=I(seasonaldummy(ldeaths,36))))
+    data.frame(month=I(seasonaldummy(ldeaths,36))))
 plot(ldeaths.fcast)
 
 # A simpler approach to seasonal dummy variables
@@ -48,13 +48,14 @@ plot(ldeaths.fcast)
 
 # Using Fourier series
 deaths.lm  <- tslm(ldeaths ~ fourier(ldeaths,3))
-ldeaths.fcast <- forecast(deaths.lm, fourier(ldeaths,3,36))
+ldeaths.fcast <- forecast(deaths.lm,
+    data.frame(fourier(ldeaths,3,36)))
 plot(ldeaths.fcast)
 
 # Using Fourier series for a "msts" object
 taylor.lm <- tslm(taylor ~ fourier(taylor, K = c(3, 3)))
 taylor.fcast <- forecast(taylor.lm,
-                  data.frame(fourier(taylor, K = c(3, 3), h = 270)))
+    data.frame(fourier(taylor, K = c(3, 3), h = 270)))
 plot(taylor.fcast)
 }
 \keyword{ts}

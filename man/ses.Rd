@@ -3,18 +3,21 @@
 \alias{holt}
 \alias{hw}
 \title{Exponential smoothing forecasts}
-\usage{ses(x, h=10, level=c(80,95), fan=FALSE, 
-    initial=c("optimal","simple"), alpha=NULL, ...)
-holt(x, h=10, damped=FALSE, level=c(80,95), fan=FALSE, 
+\usage{ses(y, h=10, level=c(80,95), fan=FALSE, 
+    initial=c("optimal","simple"), alpha=NULL, 
+    lambda=NULL, biasadj=FALSE, x=y, ...)
+holt(y, h=10, damped=FALSE, level=c(80,95), fan=FALSE, 
     initial=c("optimal","simple"), exponential=FALSE,
-    alpha=NULL, beta=NULL, ...)
-hw(x, h=2*frequency(x), seasonal=c("additive","multiplicative"), damped=FALSE, 
-    level=c(80,95), fan=FALSE, initial=c("optimal","simple"), 
-    exponential=FALSE, alpha=NULL, beta=NULL, gamma=NULL, ...)
+    alpha=NULL, beta=NULL, lambda=NULL, biasadj=FALSE, x=y, ...)
+hw(y, h=2*frequency(x), seasonal=c("additive","multiplicative"), 
+    damped=FALSE, level=c(80,95), fan=FALSE, 
+    initial=c("optimal","simple"), exponential=FALSE,
+    alpha=NULL, beta=NULL, gamma=NULL, 
+    lambda=NULL, biasadj=FALSE, x=y, ...)
 }
 
 \arguments{
-\item{x}{a numeric vector or time series}
+\item{y}{a numeric vector or time series}
 \item{h}{Number of periods for forecasting.}
 \item{damped}{If TRUE, use a damped trend.}
 \item{seasonal}{Type of seasonality in \code{hw} model. "additive" or "multiplicative"}
@@ -25,10 +28,13 @@ hw(x, h=2*frequency(x), seasonal=c("additive","multiplicative"), damped=FALSE,
 \item{alpha}{Value of smoothing parameter for the level. If \code{NULL}, it will be estimated.}
 \item{beta}{Value of smoothing parameter for the trend. If \code{NULL}, it will be estimated.}
 \item{gamma}{Value of smoothing parameter for the seasonal component. If \code{NULL}, it will be estimated.}
+\item{lambda}{Box-Cox transformation parameter. Ignored if NULL. Otherwise, data transformed before model is estimated. When \code{lambda=TRUE}, \code{additive.only} is set to FALSE.}
+\item{biasadj}{Use adjusted back-transformed mean for Box-Cox transformations. If TRUE, point forecasts and fitted values are mean forecast. Otherwise, these points can be considered the median of the forecast densities.}
+\item{x}{Deprecated. Included for backwards compatibility.}
 \item{...}{Other arguments passed to \code{forecast.ets}.}
 }
 
-\description{Returns forecasts and other information for exponential smoothing forecasts applied to x.
+\description{Returns forecasts and other information for exponential smoothing forecasts applied to \code{y}.
 }
 \details{ses, holt and hw are simply convenient wrapper functions for \code{forecast(ets(...))}.
 }

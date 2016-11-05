@@ -1,5 +1,5 @@
 # A unit test for msts.R
-if(require(testthat) & require(fpp))
+if(require(testthat))
 {
   context("Test msts.R")
 	test_that("tests for msts() and print.msts()", {

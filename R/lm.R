@@ -3,8 +3,17 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
   if(!("formula" %in% class(formula))){
     formula <- stats::as.formula(formula)
   }
-  mt <- terms(formula)
-  
+  if(missing(data)){
+    mt <- try(terms(formula))
+    if(is.element("try-error", class(mt))){
+      stop("Cannot extract terms from formula, please provide data argument.")
+    }
+  }
+  else{
+    mt <- terms(formula, data=data)
+  }
+
+  ## Categorise formula variables into time-series, functions, and data.
   vars <- attr(mt,"variables")
   #Check for time series variables
   tsvar <- match(c("trend", "season"), as.character(vars), 0L)
@@ -18,35 +27,33 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
       }
     }
   }
-  formula <- stats::reformulate(attr(mt,"term.labels"), response = vars[[attr(mt,"response")+1]],
-                                intercept = attr(mt,"intercept"))
+  
   if(sum(c(tsvar, fnvar))>0){
     #Remove variables not needed in data (trend+season+functions)
     vars <- vars[-c(tsvar, fnvar)]
   }
   
+  ## Grab any variables missing from data
   if(!missing(data)){
     #Check for any missing variables in data
     vars <- vars[c(TRUE, !as.character(vars[-1])%in%colnames(data))]
     dataname <- substitute(data)
   }
-  
-  # Grab any variables missing from data
-  vars[[1]] <- quote(forecast:::datamat)
   if(!missing(data)){
-    data <- datamat(eval.parent(vars), data)
+    data <- datamat(do.call(datamat, as.list(vars[-1]), envir = parent.frame()),data)
   }
   else{
-    data <- eval.parent(vars)
+    data <- do.call(datamat, as.list(vars[-1]), envir = parent.frame())
   }
-  
-  # Check to see if data is univariate time series
+
+  ## Set column name of univariate dataset
   if(is.null(dim(data)) & length(data)!=0){
-    #cn <- as.character(vars)[2:length(vars)]
     cn <- as.character(vars)[2]
   } else{
     cn <- colnames(data)
   }
+  
+  ## Get time series attributes from the data
   if(is.null(tsp(data))){
     if(is.null(tsp(data[,1]))){#Check for complex ts data.frame
       if((attr(mt,"intercept")+1)%in%fnvar){#Check unevaluated response variable
@@ -64,14 +71,15 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
     stop("Not time series data, use lm()")
   }
   tsdat <- match(c("trend", "season"), cn, 0L)
-  #Create trend and season if missing
-  if(tsdat[1]==0&tsvar[1]!=0){#If "trend" is not in data, but is in formula
+  
+  ## Create trend and season if missing from the data
+  if(tsdat[1]==0){#&tsvar[1]!=0){#If "trend" is not in data, but is in formula
     trend <- 1:NROW(data)
     cn <- c(cn,"trend")
     data <- cbind(data,trend)
   }
-  if(tsdat[2]==0&tsvar[2]!=0){#If "season" is not in data, but is in formula
-    if(tspx[3]==1){ # Nonseasonal data
+  if(tsdat[2]==0){#&tsvar[2]!=0){#If "season" is not in data, but is in formula
+    if(tsvar[2]!=0 & tspx[3]==1){ # Nonseasonal data, and season requested
       stop("Non-seasonal data cannot be modelled using a seasonal factor")
     }
     season <- as.factor(cycle(data[,1]))
@@ -79,31 +87,22 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
     data <- cbind(data,season)
   }
   colnames(data) <- cn
+  
+  ## Subset the data according to subset argument
   if(!missing(subset)){
-    if(is.logical(subset)){
-      subsetTF <- subset
-    }
-    else{
-      subsetTF <- eval.parent(substitute(subset)[[2]])%in%subset
-    }
-    if(NCOL(subset)!=1){
-      subsetTF <- rowSums(matrix(data=subsetTF, ncol=2))==NCOL(subset) #TODO
-    }
-    if(NROW(subsetTF)!=NROW(data)){
-      stop("Subset must specify the rows to keep in the dataset")
-    }
-    if(!is.null(tsp(subset)) & NROW(subset)!=NROW(data)){
-      tspx <- tsp(subset)
-    }
-    else{
-      warning("Subset has been assumed contiguous")
-      timesx <- time(data[,1])[subsetTF]
-      tspx <- recoverTSP(timesx)
-    }
+    if(!is.logical(subset))
+      stop("subset must be logical")
+    else if(NCOL(subset) > 1)
+      stop("subset must be a logical vector")
+    else if(NROW(subset) != NROW(data))
+      stop("Subset must be the same length as the number of rows in the dataset")
+    warning("Subset has been assumed contiguous")
+    timesx <- time(data[,1])[subset]
+    tspx <- recoverTSP(timesx)
     if(tspx[3]==1 & tsdat[2]==0 & tsvar[2]!=0){
       stop("Non-seasonal data cannot be modelled using a seasonal factor")
     }
-    data <- data[subsetTF,]#model.frame(formula,as.data.frame(data[subsetTF,]))
+    data <- data[subset,]#model.frame(formula,as.data.frame(data[subsetTF,]))
   }
   if(!is.null(lambda)){
     data[,1] <- BoxCox(data[,1],lambda)
@@ -111,16 +110,13 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
   if(tsdat[2]==0&tsvar[2]!=0){
     data$season <- factor(data$season) #fix for lost factor information, may not be needed?
   }
+  
+  ## Fit the model and prepare model structure
   fit <- lm(formula,data=data,na.action=na.exclude,...)
   fit$residuals <- ts(residuals(fit))
   fit$fitted.values <- ts(fitted(fit))
   tsp(fit$residuals) <- tsp(fit$fitted.values) <- tsp(data[,1]) <- tspx
-  fit$data <- data # This unfortunately needs to be a mf, to be able to separate multivariate response
-  fit$x <- data[,1] ## Do we want to include subsetting here?
   fit$call <- cl
-  if(NCOL(data[,1])>1){ #Univariate response
-    fit$data <- data[,1]
-  }
   if(exists("dataname")){
     fit$call$data <- dataname
   }
@@ -145,9 +141,12 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
     else if (min(level) < 0 | max(level) > 99.99)
       stop("Confidence limit out of range")
   }
-  
+
   if(!is.null(object$data))
-    origdata <- object$data
+    origdata <- object$data #no longer exists
+  else if(!is.null(object$model)){
+    origdata <- object$model
+  }
   else if(!is.null(object$call$data)){
     origdata <- try(object$data <- eval(object$call$data), silent = TRUE)
     if (is.element("try-error", class(origdata)))
@@ -161,7 +160,7 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
     if(!is.element("data.frame", class(origdata)))
       stop("Could not find data.  Try training your model using tslm() or attach data directly to the object via object$data<-modeldata for some object<-lm(formula,modeldata).")
   }
-  
+
   # Check if the forecasts will be time series
   if(ts & is.element("ts",class(origdata))){
     tspx <- tsp(origdata)
@@ -171,19 +170,23 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
     tspx <- tsp(origdata[,1])
     timesx <- time(origdata[,1])
   }
+  else if(ts & is.element("ts",class(fitted(object)))){
+    tspx <- tsp(fitted(object))
+    timesx <- time(fitted(object))
+  }
   else
     tspx <- NULL
-  if(!is.null(object$call$subset))
-  {
-    j <- eval(object$call$subset)
-    origdata <- origdata[j,]
-    if(!is.null(tspx))
-    {
-      # Try to figure out times for subset. Assume they are contiguous.
-      timesx <- timesx[j]
-      tspx <- tsp(origdata) <- c(min(timesx),max(timesx),tspx[3])
-    }
-  }
+  # if(!is.null(object$call$subset))
+  # {
+  #   j <- eval(object$call$subset)
+  #   origdata <- origdata[j,]
+  #   if(!is.null(tspx))
+  #   {
+  #     # Try to figure out times for subset. Assume they are contiguous.
+  #     timesx <- timesx[j]
+  #     tspx <- tsp(origdata) <- c(min(timesx),max(timesx),tspx[3])
+  #   }
+  # }
   # Add trend and seasonal to data frame
   oldterms <- terms(object)
   #Adjust terms for function variables and rename datamat colnames to match.
@@ -191,12 +194,12 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
   {
     reqvars <- as.character(attr(object$terms,"variables")[-1])[-attr(object$terms,"response")]
     #Search for time series variables
-    tsvar <- match(c("trend", "season"), reqvars, 0L)!=0
+    tsvar <- match(c("trend", "season"), reqvars, 0L)
     #Check if required variables are functions
     fnvar <- sapply(reqvars, function(x) !(is.symbol(parse(text=x)[[1]]) || typeof(eval(parse(text=x)[[1]][[1]]))!="closure"))
     if(!is.data.frame(newdata)){
       newdata <- datamat(newdata)
-      colnames(newdata)[1] <- reqvars[!tsvar][1]
+      colnames(newdata)[1] <- ifelse(sum(tsvar>0),reqvars[-tsvar][1],reqvars[1])
       warning("newdata column names not specified, defaulting to first variable required.")
     }
     oldnewdata <- newdata
@@ -243,10 +246,11 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
             tmpdata[[length(tmpdata)+1]] <- imat
           }
           else{
-            stop(paste("Could not find \"", i, "\" in newdata", sep=""))
+            #Attempt to evaluate it as a function
+            subvars <- i
           }
         }
-        else{ #Check if it is a function
+        if(length(subvars)==1){ #Check if it is a function
           if(fnvar[match(i, reqvars)]){#Pre-evaluate function from data
             tmpdata[[length(tmpdata)+1]] <- eval(parse(text=subvars)[[1]], newdata)
           }
@@ -262,27 +266,20 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
     newdata <- tmpdata
     h <- nrow(newdata)
   }
-  if(!is.null(tspx) & any(is.element(c("trend","season"),colnames(origdata))))
+  if(!is.null(tspx))
   {
-    if(is.element("trend",colnames(origdata))){
-      trend <- max(origdata[,"trend"]) + (1:h)
-      if(!missing(newdata)){
-        newdata <- cbind(newdata, trend)
-      }
-      else{
-        newdata <- datamat(trend)
-      }
+    # Always generate trend series
+    trend <- ifelse(is.null(origdata$trend), NCOL(origdata), max(origdata$trend)) + (1:h)
+    if(!missing(newdata)){
+      newdata <- cbind(newdata, trend)
     }
-    if(is.element("season",colnames(origdata))){
-      x <- ts(1:h, start=tspx[2]+1/tspx[3], frequency=tspx[3])
-      season <- as.factor(cycle(x))
-      if(!missing(newdata)){
-        newdata <- cbind(newdata, season)
-      }
-      else{
-        newdata <- datamat(season)
-      }
+    else{
+      newdata <- datamat(trend)
     }
+    # Always generate season series
+    x <- ts(1:h, start=tspx[2]+1/tspx[3], frequency=tspx[3])
+    season <- as.factor(cycle(x))
+    newdata <- cbind(newdata, season)
   }
   newdata <- as.data.frame(newdata)
   if(!exists("oldnewdata")){
@@ -291,26 +288,26 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
   # If only one column, assume its name.
   if(ncol(newdata)==1 & colnames(newdata)[1]=="newdata")
     colnames(newdata) <- as.character(formula(object$model))[3]
-  
+
   # Check regressors included in newdata.
   # Not working so removed for now.
   #xreg <- attributes(terms(object$model))$term.labels
   #if(any(!is.element(xreg,colnames(newdata))))
   #  stop("Predictor variables not included")
-  
+
   object$x <- getResponse(object)
   #responsevar <- as.character(formula(object$model))[2]
   #responsevar <- gsub("`","",responsevar)
   #object$x <- model.frame(object$model)[,responsevar]
-  
+
   out <- list()
   nl <- length(level)
   for(i in 1:nl)
     out[[i]] <- predict(object, newdata=newdata, se.fit=TRUE, interval="prediction", level=level[i]/100, ...)
-  
+
   if(nrow(newdata) != length(out[[1]]$fit[,1]))
     stop("Variables not found in newdata")
-  
+
   object$terms <- oldterms
   fcast <- list(model=object,mean=out[[1]]$fit[,1],lower=out[[1]]$fit[,2],upper=out[[1]]$fit[,3],
                 level=level,x=object$x)
@@ -343,7 +340,7 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
     fcast$upper <- ts(fcast$upper, start=tspx[2]+1/tspx[3],frequency=tspx[3])
     fcast$lower <- ts(fcast$lower, start=tspx[2]+1/tspx[3],frequency=tspx[3])
   }
-  
+
   if(!is.null(lambda))
   {
     fcast$x <- InvBoxCox(fcast$x,lambda)
@@ -354,7 +351,7 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
     fcast$lower <- InvBoxCox(fcast$lower,lambda)
     fcast$upper <- InvBoxCox(fcast$upper,lambda)
   }
-  
+
   return(structure(fcast,class="forecast"))
 }
 

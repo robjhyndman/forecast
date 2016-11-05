@@ -5,9 +5,10 @@
 #size set to average of number of inputs and number of outputs: (p+P+1)/2
 #if xreg is included then size = (p+P+ncol(xreg)+1)/2
 
-nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NULL, subset=NULL, scale.inputs=TRUE, ...)
+nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NULL, subset=NULL, scale.inputs=TRUE, x=y, ...)
 {
   useoldmodel <- FALSE
+  yname <- deparse(substitute(y))
   if (!is.null(model))
   {
     # Use previously fitted model
@@ -17,7 +18,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     if (!is.nnetar(model))
       stop("Model must be a nnetar object")
     # Check new data
-    m <- frequency(model$x)
+    m <- max(round(frequency(model$x)),1L)
     minlength <- max(c(model$p, model$P*m))
     if (length(x) < minlength)
       stop(paste("Series must be at least of length", minlength, "to use fitted model"))
@@ -103,7 +104,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   # Set up lagged matrix
   n <- length(xx)
   xx <- as.ts(xx)
-  m <- frequency(xx)
+  m <- max(round(frequency(xx)), 1L)
   if(m==1)
   {
     if(missing(p))
@@ -171,7 +172,7 @@ nnetar <- function(x, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   tsp(out$fitted) <- tsp(out$x)
   out$residuals <- out$x - out$fitted
   out$lags <- lags
-  out$series <- deparse(substitute(x))
+  out$series <- yname
   out$method <- paste("NNAR(",p,sep="")
   if(P>0)
     out$method <- paste(out$method,",",P,sep="")
@@ -216,12 +217,21 @@ print.nnetarmodels <- function(x, ...)
 }
 
 
-forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), xreg=NULL, lambda=object$lambda, ...)
+forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI=FALSE, level=c(80, 95), fan=FALSE, xreg=NULL, lambda=object$lambda, bootstrap=FALSE, npaths=1000, innov=NULL, ...)
 {
 #  require(nnet)
   out <- object
   tspx <- tsp(out$x)
-
+  #
+  if(fan)
+    level <- seq(51,99,by=3)
+  else
+  {
+    if(min(level) > 0 & max(level) < 1)
+      level <- 100*level
+    else if(min(level) < 0 | max(level) > 99.99)
+      stop("Confidence limit out of range")
+  }
   # Check if xreg was used in fitted model
   if(is.null(object$xreg))
   {
@@ -256,15 +266,61 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), xr
   # Iterative 1-step forecast
   for(i in 1:h)
   {
-    fcast[i] <- mean(sapply(object$model, predict, newdata=c(flag[lags], xreg[i, ])))
+    newdata <- c(flag[lags], xreg[i, ])
+    if(any(is.na(newdata)))
+      stop("I can't forecast when there are missing values near the end of the series.")
+    fcast[i] <- mean(sapply(object$model, predict, newdata=newdata))
     flag <- c(fcast[i],flag[-maxlag])
   }
+  # Re-scale point forecasts
   if(!is.null(object$scalex))
     fcast <- fcast * object$scalex$scale + object$scalex$center
-  out$mean <- ts(fcast,start=tspx[2]+1/tspx[3],frequency=tspx[3])
+  # Add ts properties
+  fcast <- ts(fcast,start=tspx[2]+1/tspx[3],frequency=tspx[3])
+  # Back-transform point forecasts
   if(!is.null(lambda))
-    out$mean <- InvBoxCox(out$mean,lambda)
+    fcast <- InvBoxCox(fcast,lambda)
+  # Compute prediction intervals using simulations
+  if(isTRUE(PI))
+  {
+    nint <- length(level)
+    sim <- matrix(NA,nrow=npaths,ncol=h)
+    if(!is.null(innov))
+    {
+      if(length(innov) != h*npaths)
+        stop("Incorrect number of innovations, need h*npaths values")
+      innov <- matrix(innov, nrow=h, ncol=npaths)
+      bootstrap <- FALSE
+    }
+    for(i in 1:npaths)
+      sim[i,] <- simulate(object, nsim=h, bootstrap=bootstrap, xreg=xreg, lambda=lambda, innov=innov[, i], ...)
+    lower <- apply(sim, 2, quantile, 0.5 - level/200, type = 8)
+    upper <- apply(sim, 2, quantile, 0.5 + level/200, type = 8)
+    if (nint > 1L) {
+      lower <- t(lower)
+      upper <- t(upper)
+    }
+  }
+  else
+  {
+    level <- NULL
+    lower <- NULL
+    upper <- NULL
+  }
+  out$mean <- fcast
+  out$level <- level
+  out$lower <- lower
+  out$upper <- upper
   return(structure(out,class="forecast"))
+}
+
+fitted.nnetar <- function(object, h=1, ...){
+  if(h==1){
+    return(object$fitted)
+  }
+  else{
+    return(hfitted(object=object, h=h, FUN="nnetar", ...))
+  }
 }
 
 print.nnetar <- function(x, digits = max(3, getOption("digits") - 3), ...)

@@ -1,5 +1,5 @@
 # A unit test for dshw function
-if(require(testthat) & require(fpp))
+if(require(testthat))
 {
   context("Tests on dshw()")
   test_that("Test dshw()", {
@@ -20,10 +20,10 @@ if(require(testthat) & require(fpp))
     expect_true(all(fit1 == fit2))
     # Test fits with lambda specified and armethod = FALSE
     y <- x + 1
-    expect_that(fit3 <- dshw(y, period1 = 5, period2 = 20, lambda = 2, biasadj = FALSE), not(throws_error()))
-    expect_that(fit4 <- dshw(y, period1 = 5, period2 = 20, lambda = 2, biasadj = TRUE), not(throws_error()))
+    fit3 <- dshw(y, period1 = 5, period2 = 20, lambda = 2, biasadj = FALSE)
+    fit4 <- dshw(y, period1 = 5, period2 = 20, lambda = 2, biasadj = TRUE)
     expect_false(identical(fit3$mean, fit4$mean))
-    expect_that(dshw(x, period1 = 5, period2 = 20, armethod = FALSE), not(throws_error()))
+    fit5 <- dshw(x, period1 = 5, period2 = 20, armethod = FALSE)
     # Test fits with inappropriate periods specified
     expect_error(dshw(x, period1 = 5, period2 = 5))
     expect_error(dshw(x, period1 = 5, period2 = 20.1))

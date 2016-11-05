@@ -1,17 +1,18 @@
 \name{croston}
 \alias{croston}
 \title{Forecasts for intermittent demand using Croston's method}
-\usage{croston(x, h=10, alpha=0.1)
+\usage{croston(y, h=10, alpha=0.1, x=y)
 }
 
 \arguments{
-\item{x}{a numeric vector or time series}
+\item{y}{a numeric vector or time series}
 \item{h}{Number of periods for forecasting.}
 \item{alpha}{Value of alpha. Default value is 0.1.}
+\item{x}{Deprecated. Included for backwards compatibility.}
 }
 
 \description{Returns forecasts and other information for Croston's
-forecasts applied to x. }
+forecasts applied to y. }
 
 \details{Based on Croston's (1972) method for intermittent demand
 forecasting, also described in Shenstone and Hyndman (2005).
@@ -31,7 +32,7 @@ An object of class \code{"forecast"} is a list containing at least the following
 \item{method}{The name of the forecasting method as a character string}
 \item{mean}{Point forecasts as a time series}
 \item{x}{The original time series (either \code{object} itself or the time series used to create the model stored as \code{object}).}
-\item{residuals}{Residuals from the fitted model. That is x minus fitted values.}
+\item{residuals}{Residuals from the fitted model. That is y minus fitted values.}
 \item{fitted}{Fitted values (one-step forecasts)}
 
 The function \code{summary} is used to obtain and print a summary of
@@ -55,8 +56,8 @@ demand forecasting". \emph{Journal of Forecasting}, \bold{24}, 389-402.
 \seealso{\code{\link{ses}}.}
 
 \author{Rob J Hyndman}
-\examples{x <- rpois(20,lambda=.3)
-fcast <- croston(x)
+\examples{y <- rpois(20,lambda=.3)
+fcast <- croston(y)
 plot(fcast)
 }
 \keyword{ts}
