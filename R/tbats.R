@@ -29,6 +29,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
     if(!any(class(y) == "ts"))
       y <- msts(y, seasonal.periods)
   }
+  seasonal.periods <- unique(pmax(seasonal.periods,1))
   if(all(seasonal.periods == 1))
     seasonal.periods <- NULL
 
@@ -469,6 +470,14 @@ calcFTest <- function(r.sse, ur.sse, num.restrictions, num.u.params, num.observa
 	return(p.value)
 }
 
+fitted.tbats <- function(object, h=1, ...){
+  if(h==1){
+    return(object$fitted.values)
+  }
+  else{
+    return(hfitted(object=object, h=h, FUN="tbats", ...))
+  }
+}
 
 print.tbats <- function(x, ...) {
 	cat(makeTextTBATS(x))

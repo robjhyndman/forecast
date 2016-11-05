@@ -4,12 +4,13 @@
 \alias{autoplot.mts}
 \title{Automatically create a ggplot for time series objects}
 \usage{\method{autoplot}{ts}(object, ...)
-\method{autoplot}{mts}(object, ...)
+\method{autoplot}{mts}(object, facets=FALSE, ...)
 \method{fortify}{ts}(model,data, ...)
 }
 
 \arguments{
 \item{object}{Object of class \dQuote{ts} or \dQuote{mts}.}
+\item{facets}{If TRUE, multiple time series will be faceted. If FALSE, each series will be assigned a colour.}
 \item{model}{Object of class \dQuote{ts} to be converted to \dQuote{data.frame}.}
 \item{data}{Not used (required for \link{fortify} method)}
 \item{...}{Other plotting parameters to affect the plot.}
@@ -30,4 +31,5 @@ autoplot(USAccDeaths)
 
 lungDeaths <- cbind(mdeaths, fdeaths)
 autoplot(lungDeaths)
+autoplot(lungDeaths, facets=TRUE)
 }

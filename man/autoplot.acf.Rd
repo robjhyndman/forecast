@@ -13,7 +13,8 @@
 ggAcf(x, lag.max = NULL,
     type = c("correlation", "covariance", "partial"),
     plot = TRUE, na.action = na.contiguous, demean=TRUE, ...)
-ggPacf(x, ...)
+ggPacf(x, lag.max = NULL,
+    plot = TRUE, na.action = na.contiguous, demean=TRUE, ...)
 ggCcf(x, y, lag.max=NULL, type=c("correlation","covariance"),
     plot=TRUE, na.action=na.contiguous, ...)
 ggtaperedacf(x, lag.max=NULL, type=c("correlation", "partial"),

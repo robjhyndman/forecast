@@ -5,27 +5,30 @@
 
 getResponse <- function(object,...) UseMethod("getResponse")
 
-getResponse.default <- function(object,...){
+getResponse.default <- function(object,...)
+{
 	if(is.list(object))
 		return(object$x)
 	else
 		return(NULL)
 }
 
-getResponse.lm <- function(object,...) {
+getResponse.lm <- function(object,...) 
+{
 	responsevar <- as.character(formula(object))[2]
 	ans <- model.frame(object$model)[,responsevar]
 	return(ans)
 }
 
-getResponse.Arima <- function(object,...) {
+getResponse.Arima <- function(object,...) 
+{
 	if (is.element("x", names(object))) 
     x <- object$x
   else
   {
   	series.name <- object$series
   	if(is.null(series.name))
-  		stop("missing component series in Arima model")
+  		stop("missing original time series")
   	else
   	{
     	x <- try(eval.parent(parse(text = series.name)),silent=TRUE)
@@ -38,29 +41,42 @@ getResponse.Arima <- function(object,...) {
   return(as.ts(x))
 }
 
-getResponse.fracdiff <- function(object, ...) {
-	if (is.element("x", names(object))) 
-        x <- object$x
+getResponse.fracdiff <- function(object, ...) 
+{
+  if (is.element("x", names(object))) 
+    x <- object$x
+  else
+  {
+    series.name <- as.character(object$call)[2]
+    if(is.null(series.name))
+      stop("missing original time series")
     else
- 		x <- eval.parent(parse(text=as.character(object$call)[2]))
-	if(is.null(tsp(x)))
-		x <- ts(x,frequency=1,start=1)
-	return(x)
+    {
+      x <- try(eval.parent(parse(text = series.name)),silent=TRUE)
+      if(is.element("try-error",class(x))) # Try one level further up the chain
+        x <- try(eval.parent(parse(text = series.name),2),silent=TRUE)
+      if(is.element("try-error",class(x))) # Give up
+        return(NULL)
+    }
+  }
+  return(as.ts(x))
 }
 
-getResponse.ar <- function(object, ...) {
+getResponse.ar <- function(object, ...) 
+{
   getResponse.Arima(object)
 }
 
-getResponse.tbats <- function(object,..){
-  if(is.element("y", names(object))){
+getResponse.tbats <- function(object,..)
+{
+  if(is.element("y", names(object)))
     y <- object$y
-  } else {
+  else
     return(NULL)
-  }
   return(as.ts(y))
 }
 
-getResponse.bats <- function(object,...){
+getResponse.bats <- function(object,...)
+{
   return(getResponse.tbats(object,...))
 }

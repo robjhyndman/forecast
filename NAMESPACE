@@ -6,10 +6,10 @@ importFrom(timeDate, as.timeDate, isBizday, difftimeDate, Easter)
 importFrom(nnet,nnet)
 import(parallel,Rcpp)
 
-importFrom("grDevices", "gray", "heat.colors")
+importFrom("grDevices", "gray", "heat.colors", "nclass.FD")
 importFrom("graphics", "abline", "axis", "grid", "layout", "lines",
              "mtext", "par", "plot", "points", "polygon", "text",
-             "title")
+             "title", "hist")
 importFrom("stats", "Box.test", "acf", "approx", "ar", "arima",
              "arima.sim", "as.ts", "complete.cases", "cycle",
              "decompose", "diffinv", "end", "extractAIC", "fitted", "formula",
@@ -20,10 +20,9 @@ importFrom("stats", "Box.test", "acf", "approx", "ar", "arima",
              "qnorm", "qt", "quantile", "residuals", "rnorm", "runif",
              "sd", "simulate", "smooth.spline", "start", "stl", "supsmu",
              "terms", "time", "ts", "tsp", "tsp<-", "tsdiag", "var")
-importFrom("utils", "packageVersion", "tail")
+importFrom("utils", "packageVersion", "tail", "head")
 importFrom("ggplot2","autoplot","fortify")
 importFrom("stats", "aggregate", "as.formula", "is.mts", "reformulate")
-importFrom("utils", "head")
 
 export(arfima, Arima, arima.errors, arimaorder, auto.arima, BoxCox, croston,
 fitted.Arima, forecast, forecast.ar, forecast.Arima, forecast.ets, forecast.fracdiff,findfrequency,
@@ -32,11 +31,13 @@ is.acf, is.Arima, is.bats, is.constant, is.ets, is.forecast, is.mforecast, is.nn
 nnetar, forecast.nnetar, plot.Arima, plot.ar, taperedacf, taperedpacf,
 meanf, logLik.ets, monthdays, na.interp, ets, plot.bats, plot.tbats, plot.ets, plot.forecast,
 plot.splineforecast, rwf, seasadj, seasonaldummy,naive,snaive,stlf,subset.ts,
-seasonaldummyf, ggAcf, ggPacf, ggCcf, ggtaperedacf, ggtaperedpacf, ggtsdisplay, ggmonthplot,
-ggseasonplot, seasonplot, ses, sindexf, splinef, tslm, fourier, fourierf,forecast.lm,
-thetaf, tsdisplay, simulate.ets, simulate.ar, simulate.Arima, simulate.fracdiff, ndiffs, nsdiffs, dm.test,tbats.components,
-Acf,Pacf,Ccf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts, getResponse, tsoutliers,
-tsclean, bizdays, easter,stlm, forecast.stlm, StatForecast, GeomForecast, geom_forecast)
+seasonaldummyf, ggAcf, ggPacf, ggCcf, ggtaperedacf, ggtaperedpacf, gglagplot, gglagchull,
+ggtsdisplay, ggmonthplot, ggseasonplot, seasonplot, ses, sindexf, splinef, tslm, fourier,
+fourierf,forecast.lm,thetaf, tsdisplay, simulate.ets, simulate.ar, simulate.Arima, simulate.fracdiff, simulate.nnetar,
+ndiffs, nsdiffs, dm.test,tbats.components, Acf,Pacf,Ccf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts,
+getResponse, tsoutliers, tsclean, bizdays, easter,stlm, forecast.stlm,
+StatForecast, GeomForecast, geom_forecast, gghistogram,
+checkresiduals)
 
 S3method(autoplot, acf)
 S3method(autoplot, ar)
@@ -56,6 +57,10 @@ S3method(as.character, Arima)
 S3method(as.data.frame,forecast)
 S3method(coef,ets)
 S3method(fitted,Arima)
+S3method(fitted,ets)
+S3method(fitted,tbats)
+S3method(fitted,bats)
+S3method(fitted,nnetar)
 S3method(fitted,fracdiff)
 S3method(fitted,ar)
 S3method(forecast,ar)
@@ -81,6 +86,8 @@ S3method(getResponse,Arima)
 S3method(getResponse,default)
 S3method(getResponse,fracdiff)
 S3method(getResponse,lm)
+S3method(head,ts)
+S3method(tail,ts)
 S3method(logLik,ets)
 S3method(plot,ar)
 S3method(plot,Arima)
@@ -103,10 +110,14 @@ S3method(print,tbats)
 S3method(residuals,bats)
 S3method(residuals,fracdiff)
 S3method(residuals, ar)
+S3method(seasadj,decomposed.ts)
+S3method(seasadj,tbats)
+S3method(seasadj,stl)
 S3method(simulate,ar)
 S3method(simulate,Arima)
 S3method(simulate,ets)
 S3method(simulate,fracdiff)
+S3method(simulate,nnetar)
 S3method(subset,ts)
 S3method(summary,Arima)
 S3method(summary,ets)

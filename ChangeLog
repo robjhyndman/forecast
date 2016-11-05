@@ -1,3 +1,28 @@
+Version 7.4 (?? 2016)
+  * Added gghistogram() and checkresiduals()
+  * Added head.ts() and tail.ts(), so head and tail now work properly on ts objects.
+  * Bug fixes
+
+Version 7.3 (12 October 2016)
+  * Added prediction intervals and simulation for nnetar().
+  * Documentation improvement
+  * Bug fixes
+
+Version 7.2 (8 September 2016)
+  * Faceting for autoplot.mts
+  * Box-Cox support for ses, holt, hw
+  * ets() now works for tiny time series
+  * Added h-step fitted values in fitted() function.
+  * seasonal adjustment added to thetaf()
+  * y now the standard first argument in all modelling functions
+  * Added truncate argument to auto.arima()
+  * seasadj() now an S3 method
+  * series with frequency < 1 and non-integer seasonality now handled better
+  * ggplot2 theme support
+  * Added gglagplot, gglagchull
+  * Arima() and auto.arima() now allow any argument to be passed to stats::arima().
+  * Bug fixes and speed improvements
+
 Version 7.1 (14 April 2016)
   * Fixed bug in auto.arima where the Box-Cox transformation was sometimes applied twice
   * Improved axes for ggseasonalplot()

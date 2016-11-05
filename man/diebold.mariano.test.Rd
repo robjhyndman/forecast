@@ -26,11 +26,13 @@ A list with class \code{"htest"} containing the following components:
 \item{data.name}{a character vector giving the names of the two error series.}
 }
 
-\details{The null hypothesis is that the two methods have the same forecast accuracy. For \code{alternative="less"}, the alternative hypothesis is that method 2 is less accurate than method 1. For \code{alternative="greater"}, the alternative hypothesis is that method 2 is more accurate than method 1. For \code{alternative="two.sided"}, the alternative hypothesis is that method 1 and method 2 have different levels of accuracy.
+\details{This function implements the modified test proposed by Harvey, Leybourne and Newbold (1997). The null hypothesis is that the two methods have the same forecast accuracy. For \code{alternative="less"}, the alternative hypothesis is that method 2 is less accurate than method 1. For \code{alternative="greater"}, the alternative hypothesis is that method 2 is more accurate than method 1. For \code{alternative="two.sided"}, the alternative hypothesis is that method 1 and method 2 have different levels of accuracy.
 }
 \references{
-Diebold, F.X. and Mariano, R.S. (1995) Comparing predictive accuracy. \emph{Journal of Business
-and Economic Statistics}, \bold{13}, 253-263.}
+Diebold, F.X. and Mariano, R.S. (1995) Comparing predictive accuracy. \emph{Journal of Business and Economic Statistics}, \bold{13}, 253-263.
+
+Harvey, D., Leybourne, S., & Newbold, P. (1997). Testing the equality of prediction mean squared errors. \emph{International Journal of forecasting}, \bold{13}(2), 281-291.
+}
 
 \author{George Athanasopoulos}
 

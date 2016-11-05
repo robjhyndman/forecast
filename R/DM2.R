@@ -10,11 +10,16 @@ dm.test <- function (e1, e2, alternative = c("two.sided", "less", "greater"), h 
   dv <- d.var#max(1e-8,d.var)
   if(dv > 0)
     STATISTIC <- mean(d, na.rm = TRUE) / sqrt(dv)
-  else 
+  else if(h==1)
     stop("Variance of DM statistic is zero")
+  else
+  {
+    warning("Variance is negative, using horizon h=1")
+    return(dm.test(e1,e2,alternative,h=1,power))
+  }
   
   n <- length(d)
-  k <- ((n + 1 - 2 * h + (h/n) * (h-1))/n)^(1/2)
+  k <- ((n + 1 - 2*h + (h/n) * (h-1))/n)^(1/2)
   STATISTIC <- STATISTIC * k
   names(STATISTIC) <- "DM"
   if (alternative == "two.sided")
