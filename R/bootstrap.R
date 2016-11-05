@@ -67,7 +67,7 @@ bld.mbb.bootstrap <- function(x, num, block_size = if(frequency(x)>1) 2*frequenc
     
     if (freq>1){
       # STL decomposition
-      x.stl = stl(ts(x.bc, freq=freq), "per")$time.series
+      x.stl = stl(ts(x.bc, frequency=freq), "per")$time.series
       seasonal = x.stl[,1]
       trend = x.stl[,2]
       remainder = x.stl[,3]

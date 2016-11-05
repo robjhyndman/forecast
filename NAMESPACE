@@ -28,7 +28,8 @@ export(arfima, Arima, arima.errors, arimaorder, auto.arima, BoxCox, croston,
 fitted.Arima, forecast, forecast.ar, forecast.Arima, forecast.ets, forecast.fracdiff,findfrequency,
 forecast.HoltWinters, forecast.lm, forecast.stl, forecast.StructTS, forecast.bats, forecast.tbats, accuracy, holt, hw, InvBoxCox,
 is.acf, is.Arima, is.bats, is.constant, is.ets, is.forecast, is.mforecast, is.nnetar, is.nnetarmodels, is.splineforecast, is.stlm,
-nnetar, forecast.nnetar, plot.Arima, plot.ar, taperedacf, taperedpacf,
+nnetar, forecast.nnetar, baggedETS,forecast.baggedETS,is.baggedETS,bld.mbb.bootstrap,
+plot.Arima, plot.ar, taperedacf, taperedpacf,
 meanf, logLik.ets, monthdays, na.interp, ets, plot.bats, plot.tbats, plot.ets, plot.forecast,
 plot.splineforecast, rwf, seasadj, seasonaldummy,naive,snaive,stlf,subset.ts,
 seasonaldummyf, ggAcf, ggPacf, ggCcf, ggtaperedacf, ggtaperedpacf, gglagplot, gglagchull,
@@ -74,6 +75,7 @@ S3method(forecast,HoltWinters)
 S3method(forecast,lm)
 S3method(forecast,mlm)
 S3method(forecast,nnetar)
+S3method(forecast,baggedETS)
 S3method(forecast,stl)
 S3method(forecast,stlm)
 S3method(forecast,StructTS)
@@ -105,6 +107,7 @@ S3method(print,forecast)
 S3method(print,mforecast)
 S3method(print,msts)
 S3method(print,nnetar)
+S3method(print,baggedETS)
 S3method(print,nnetarmodels)
 S3method(print,tbats)
 S3method(residuals,bats)
