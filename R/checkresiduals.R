@@ -1,4 +1,4 @@
-checkresiduals <- function(object, lag)
+checkresiduals <- function(object, lag, df=NULL)
 {
   # Extract residuals
   if(is.element("ts",class(object)) | is.element("numeric",class(object)) )
@@ -6,12 +6,21 @@ checkresiduals <- function(object, lag)
   else
     residuals <- residuals(object)
 
+  # Find method
+  if(!is.null(object$method))
+    method <- object$method
+
   # Produce plots
-  ggtsdisplay(residuals, plot.type="histogram")
+  if(!is.null(method))
+    main <- paste("Residuals from", method)
+  else
+    main <- "Residuals"
+  ggtsdisplay(residuals, plot.type="histogram", main=main)
 
   # Check if we have the model
   if(is.element("forecast",class(object)))
     object <- object$model
+
   if(is.null(object))
     return()
 
@@ -22,8 +31,17 @@ checkresiduals <- function(object, lag)
     df <- length(object$coef)
   else if(is.element("bats",class(object)))
     df <- length(object$parameters$vect) + NROW(object$seed.states)
+  else if(method=="Mean")
+    df <- 1
+  else if(grepl("Naive",method, ignore.case=TRUE))
+    df <- 0
+  else if(method=="Random walk")
+    df <- 0
+  else if(method=="Random walk with drift")
+    df <- 1
   else
     df <- NULL
+
 
   # Do Ljung-Box test
   if(!is.null(df))
