@@ -11,13 +11,9 @@
 \item{\dots}{Other arguments passed to \code{\link{ets}}.}
 }
 
-\description{Feed-forward neural networks with a single hidden layer and lagged inputs for forecasting univariate time series.}
+\description{The bagged ETS forecasting method.}
 
-\details{A feed-forward neural network is fitted with lagged values of \code{y} as inputs and a single hidden layer with \code{size} nodes. The inputs are for lags 1 to \code{p}, and lags \code{m} to \code{mP} where \code{m=frequency(y)}. If there are missing values in \code{y} or \code{xreg}), the corresponding rows (and any others which depend on them as lags) are omitted from the fit. A total of \code{repeats} networks are fitted, each with random starting weights. These are then averaged when computing forecasts. The network is trained for one-step forecasting. Multi-step forecasts are computed recursively. 
-
-For non-seasonal data, the fitted model is denoted as an NNAR(p,k) model, where k is the number of hidden nodes. This is analogous to an AR(p) model but with nonlinear functions. For seasonal data, the fitted model is called an NNAR(p,P,k)[m] model, which is analogous to an ARIMA(p,0,0)(P,0,0)[m] model but with nonlinear functions.
-}
-
+\details{This function implements the bagged ETS forecasting method described in Bergmeir et al. The \code{\link{ets}} function is applied to all bootstrapped series. Using the default parameters, the function \code{\link{bld.mbb.bootstrap}} is used to calculate the bootstrapped series with the Box-Cox and Loess-based decomposition (BLD) bootstrap. The function \code{\link{forecast.baggedETS}} can then be used to calculate forecasts.}
 
 \value{Returns an object of class "\code{baggedETS}".
 
