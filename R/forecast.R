@@ -59,9 +59,13 @@ forecast.ts <- function(object, h=ifelse(frequency(object)>1, 2*frequency(object
     if(obj.freq < 13)
       forecast(ets(object,lambda = lambda, allow.multiplicative.trend=allow.multiplicative.trend, ...),
         h=h,level=level,fan=fan)
-    else
+    else if(n > 2*obj.freq)
       stlf(object,h=h,level=level,fan=fan,lambda = lambda,
         allow.multiplicative.trend=allow.multiplicative.trend,...)
+    else 
+      forecast(ets(object, model="ZZN", lambda = lambda, allow.multiplicative.trend=allow.multiplicative.trend, ...),
+        h=h,level=level,fan=fan)
+
   }
   else
     meanf(object,h=h,level=level,fan=fan,lambda = lambda, ...)
@@ -72,6 +76,7 @@ as.data.frame.forecast <- function(x,...)
     nconf <- length(x$level)
     out <- matrix(x$mean, ncol=1)
     ists <- is.ts(x$mean)
+    fr.x <- frequency(x$mean)
     if(ists)
     {
         out <- ts(out)
@@ -89,13 +94,17 @@ as.data.frame.forecast <- function(x,...)
         }
     }
     colnames(out) <- names
-    rownames(out) <- time(x$mean)
+    tx <- time(x$mean)
+    if(max(abs(tx-round(tx))) < 1e-11)
+      nd <- 0
+    else
+      nd <- max(round(log10(fr.x)+1),2)
+    rownames(out) <- format(tx, nsmall=nd, digits=nd)
     # Rest of function borrowed from print.ts(), but with header() omitted
     if(!ists)
         return(as.data.frame(out))
 
     x <- as.ts(out)
-    fr.x <- frequency(x)
     calendar <- any(fr.x == c(4, 12)) && length(start(x)) ==  2L
     Tsp <- tsp(x)
     if (is.null(Tsp))
@@ -139,7 +148,6 @@ as.data.frame.forecast <- function(x,...)
             }
             else
             {
-                tx <- time(x)
                 attributes(x) <- NULL
                 names(x) <- tx
             }
@@ -161,7 +169,7 @@ as.data.frame.forecast <- function(x,...)
             else format(t2), sep=" ")
         }
         else
-            rownames(x) <- format(time(x))
+            rownames(x) <- format(time(x), nsmall=nd, digits=nd)
         attr(x, "class") <- attr(x, "tsp") <- attr(x, "na.action") <- NULL
     }
     return(as.data.frame(x))
