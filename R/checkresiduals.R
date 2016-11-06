@@ -1,4 +1,4 @@
-checkresiduals <- function(object, lag)
+checkresiduals <- function(object, lag, df=NULL)
 {
   # Extract residuals
   if(is.element("ts",class(object)) | is.element("numeric",class(object)) )
@@ -22,8 +22,16 @@ checkresiduals <- function(object, lag)
     df <- length(object$coef)
   else if(is.element("bats",class(object)))
     df <- length(object$parameters$vect) + NROW(object$seed.states)
-  else
-    df <- NULL
+  else if(object$method=="Mean")
+    df <- 1
+  else if(grepl("Naive",object$method, ignore.case=TRUE))
+    df <- 0
+  else if(object$method=="Random walk")
+    df <- 0
+  else if(object$method=="Random walk with drift")
+    df <- 1
+
+
 
   # Do Ljung-Box test
   if(!is.null(df))
