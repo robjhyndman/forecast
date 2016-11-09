@@ -5,6 +5,7 @@
 \alias{is.bats}
 \alias{is.nnetar}
 \alias{is.nnetarmodels}
+\alias{is.baggedETS}
 \alias{is.stlm}
 \title{Is an object a particular model type?}
 \usage{is.ets(x)
@@ -16,6 +17,7 @@ is.bats(x)
 is.ets(x)
 is.nnetar(x)
 is.nnetarmodels(x)
+is.baggedETS(x)
 is.stlm(x)
 }
 
