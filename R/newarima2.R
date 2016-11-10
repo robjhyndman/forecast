@@ -18,6 +18,8 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
 
   series <- deparse(substitute(y))
   x <- as.ts(x)
+  if(NCOL(x) > 1)
+    stop("auto.arima can only handle univariate time series")
 
   # Check for constant data
   if(is.constant(x))
