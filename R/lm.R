@@ -28,6 +28,9 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
     }
   }
   
+  ## Quick fix for `...` scoping issue, consider re-doing.
+  formula <- stats::reformulate(attr(mt, "term.labels"), response = vars[[attr(mt, "response") + 1]], intercept = attr(mt, "intercept"))
+  
   if(sum(c(tsvar, fnvar))>0){
     #Remove variables not needed in data (trend+season+functions)
     vars <- vars[-c(tsvar, fnvar)]
