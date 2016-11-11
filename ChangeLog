@@ -1,4 +1,9 @@
-Version 7.3 (?? 2016)
+Version 7.4 (?? 2016)
+  * Added gghistogram() and checkresiduals()
+  * Added head.ts() and tail.ts(), so head and tail now work properly on ts objects.
+  * Bug fixes
+
+Version 7.3 (12 October 2016)
   * Added prediction intervals and simulation for nnetar().
   * Documentation improvement
   * Bug fixes

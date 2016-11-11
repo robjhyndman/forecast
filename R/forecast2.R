@@ -277,8 +277,8 @@ croston2 <- function(x,h=10,alpha=0.1,nofits=FALSE)
     return(list(mean=ts(rep(NA,h), start=start.f, frequency=freq.x)))
   else
   {
-    y.f <- ses(y,alpha=alpha,initial="simple",h=h)
-    p.f <- ses(tt,alpha=alpha,initial="simple",h=h)
+    y.f <- ses(y,alpha=alpha,initial="simple",h=h, PI=FALSE)
+    p.f <- ses(tt,alpha=alpha,initial="simple",h=h, PI=FALSE)
   }
   ratio <- ts(y.f$mean/p.f$mean,start=start.f, frequency = freq.x)
   if(nofits)

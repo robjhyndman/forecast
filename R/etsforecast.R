@@ -24,6 +24,8 @@ forecast.ets <- function(object, h=ifelse(object$m>1, 2*object$m, 10),
     else if(min(level) < 0 | max(level) > 99.99)
       stop("Confidence limit out of range")
   }
+  # Order levels
+  level <- sort(level)
 
   n <- length(object$x)
   damped <- as.logical(object$components[4])

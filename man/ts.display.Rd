@@ -2,12 +2,12 @@
 \alias{tsdisplay}
 \alias{ggtsdisplay}
 \title{Time series display}
-\usage{tsdisplay(x, plot.type=c("partial","scatter","spectrum"),
-    points=TRUE, ci.type=c("white", "ma"), 
-    lag.max, na.action=na.contiguous, 
+\usage{tsdisplay(x, plot.type=c("partial","histogram","scatter","spectrum"),
+    points=TRUE, ci.type=c("white", "ma"),
+    lag.max, na.action=na.contiguous,
     main=NULL, xlab="", ylab="", pch=1, cex=0.5, ...)
-    
-ggtsdisplay(x, plot.type=c("partial","scatter","spectrum"),
+
+ggtsdisplay(x, plot.type=c("partial","histogram","scatter","spectrum"),
     points=TRUE, lag.max, na.action=na.contiguous, theme=NULL, ...)
 }
 
