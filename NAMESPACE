@@ -14,15 +14,15 @@ importFrom("stats", "Box.test", "acf", "approx", "ar", "arima",
              "arima.sim", "as.ts", "complete.cases", "cycle",
              "decompose", "diffinv", "end", "extractAIC", "fitted", "formula",
              "frequency","window","filter","na.contiguous","spec.ar",
-             "hatvalues", "is.ts", "ksmooth", "lm", "lsfit",
+             "hatvalues", "is.ts", "ksmooth", "lm", "lsfit","loess", "median",
              "model.frame", "na.exclude", "na.omit", "na.pass", "optim",
              "optimize", "pf", "plot.ts", "poly", "predict", "pt",
              "qnorm", "qt", "quantile", "residuals", "rnorm", "runif",
              "sd", "simulate", "smooth.spline", "start", "stl", "supsmu",
              "terms", "time", "ts", "tsp", "tsp<-", "tsdiag", "var")
+importFrom("stats", "aggregate", "as.formula", "is.mts", "reformulate")
 importFrom("utils", "packageVersion", "tail", "head")
 importFrom("ggplot2","autoplot","fortify")
-importFrom("stats", "aggregate", "as.formula", "is.mts", "reformulate")
 
 export(arfima, Arima, arima.errors, arimaorder, auto.arima, BoxCox, croston,
 fitted.Arima, forecast, forecast.ar, forecast.Arima, forecast.ets, forecast.fracdiff,findfrequency,
