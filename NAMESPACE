@@ -20,9 +20,12 @@ importFrom("stats", "Box.test", "acf", "approx", "ar", "arima",
              "qnorm", "qt", "quantile", "residuals", "rnorm", "runif",
              "sd", "simulate", "smooth.spline", "start", "stl", "supsmu",
              "terms", "time", "ts", "tsp", "tsp<-", "tsdiag", "var")
+importFrom("stats", "aggregate", "as.formula", "is.mts", "reformulate")
 importFrom("utils", "packageVersion", "tail", "head")
 importFrom("ggplot2","autoplot","fortify")
-importFrom("stats", "aggregate", "as.formula", "is.mts", "reformulate")
+
+importFrom(magrittr,"%>%")
+export("%>%")
 
 export(arfima, Arima, arima.errors, arimaorder, auto.arima, BoxCox, croston,
 fitted.Arima, forecast, forecast.ar, forecast.Arima, forecast.ets, forecast.fracdiff,findfrequency,
