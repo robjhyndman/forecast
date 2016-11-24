@@ -8,12 +8,13 @@
     main=NULL, xlab="", ylab="", pch=1, cex=0.5, ...)
 
 ggtsdisplay(x, plot.type=c("partial","histogram","scatter","spectrum"),
-    points=TRUE, lag.max, na.action=na.contiguous, theme=NULL, ...)
+    points=TRUE, smooth=FALSE, lag.max, na.action=na.contiguous, theme=NULL, ...)
 }
 
 \arguments{  \item{x}{a numeric vector or time series.}
 \item{plot.type}{type of plot to include in lower right corner.}
 \item{points}{logical flag indicating whether to show the individual points or not in the time plot.}
+\item{smooth}{logical flag indicating whether to show a smooth loess curve superimposed on the time plot.}
 \item{ci.type}{type of confidence limits for ACF that is passed to \code{\link[stats]{acf}}. Should the confidence limits assume a white noise
                  input or for lag \eqn{k} an MA(\eqn{k-1}) input?}
 \item{lag.max}{the maximum lag to plot for the acf and pacf. A suitable value is selected by default if the argument is missing.}
