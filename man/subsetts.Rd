@@ -29,5 +29,6 @@
 \author{Rob J Hyndman}
 \examples{plot(subset(gas,month="November"))
 subset(woolyrnq,quarter=3)
+subset(USAccDeaths, start=49)
 }
 \keyword{ts}
