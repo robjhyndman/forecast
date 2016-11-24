@@ -1,4 +1,5 @@
-subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL, ...)
+subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL, 
+  start=NULL, end=NULL, ...)
 {
   if(!is.null(subset))
   {
@@ -12,6 +13,19 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL, ...
     else{
       return(subset.default(x,subset))
     }
+  }
+  else if(!is.null(start) | !is.null(end))
+  {
+    if(is.null(start))
+      start <- 1
+    if(is.null(end))
+      end <- NROW(x)
+    if("mts" %in% class(x))
+      xsub <- x[start:end,]
+    else
+      xsub <- x[start:end]
+    tspx <- tsp(x)
+    return(ts(xsub, frequency=tspx[3], start=tspx[1L] + (start-1)/tspx[3L]))
   }
   else if(frequency(x) <= 1)
     stop("Data must be seasonal")
