@@ -79,9 +79,11 @@ head.ts <- function(x, n=6L, ...)
   if(NCOL(x) > 1)
     hx <- ts(utils::head.matrix(as.matrix(x), n=n, ...),
       start=tspx[1], frequency=tspx[3])
-  else
+  else if((length(x) + n) > 0)
     hx <- ts(head(c(x), n=n, ...),
              start=tspx[1], frequency=tspx[3])
+  else
+    hx <- numeric(0)
   return(hx)
 }
 
@@ -92,8 +94,10 @@ tail.ts <- function(x, n=6L, ...)
   if(NCOL(x) > 1)
     hx <- ts(utils::tail.matrix(as.matrix(x), n=n, ...),
              end=tspx[2], frequency=tspx[3])
-  else
+  else if((length(x) + n) > 0)
     hx <- ts(tail(c(x), n=n, ...),
              end=tspx[2], frequency=tspx[3])
+  else
+    hx <- numeric(0)
   return(hx)
 }
