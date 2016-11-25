@@ -13,13 +13,16 @@ The function invokes particular \emph{methods} which depend on the class of the 
 
 For example, the function \code{\link{forecast.Arima}} makes forecasts based on the results produced by \code{\link[stats]{arima}}.
 
-The function \code{\link{forecast.ts}} makes forecasts using \code{\link{ets}} models (if the data are non-seasonal or the seasonal period is 12 or less) or \code{\link{stlf}} (if the seasonal period is 13 or more).
+If \code{model=NULL},the function \code{\link{forecast.ts}} makes forecasts using \code{\link{ets}} models (if the data are non-seasonal or the seasonal period is 12 or less) or \code{\link{stlf}} (if the seasonal period is 13 or more).
+
+If \code{model} is not \code{NULL}, \code{forecast.ts} will apply the \code{model} to the \code{object} time series, and then generate forecasts accordingly.
+
 }
 
 \usage{forecast(object,...)
 \method{forecast}{ts}(object, h = ifelse(frequency(object) > 1, 2 * frequency(object), 10) , 
          level=c(80,95), fan=FALSE, robust=FALSE, lambda=NULL, find.frequency=FALSE, 
-         allow.multiplicative.trend=FALSE, ...)}
+         allow.multiplicative.trend=FALSE, model=NULL,...)}
 
 \arguments{
 \item{object}{a time series or time series model for which forecasts are required}
@@ -30,16 +33,14 @@ The function \code{\link{forecast.ts}} makes forecasts using \code{\link{ets}} m
 \item{lambda}{Box-Cox transformation parameter.}
 \item{find.frequency}{If TRUE, the function determines the appropriate period, if the data is of unknown period.}
 \item{allow.multiplicative.trend}{If TRUE, then ETS models with multiplicative trends are allowed. Otherwise, only additive or no trend ETS models are permitted.}
-\item{...}{Additional arguments affecting the forecasts produced. \code{forecast.ts} passes these to \code{\link{forecast.ets}} or \code{\link{stlf}} depending on the frequency of the time series.}
+\item{model}{An object describing a time series model; e.g., one of of class \code{ets}, \code{Arima}, \code{bats}, \code{tbats}, or \code{nnetar}.}
+\item{...}{Additional arguments affecting the forecasts produced. If \code{model=NULL}, \code{forecast.ts} passes these to \code{\link{ets}} or \code{\link{stlf}} depending on the frequency of the time series. If \code{model} is not \code{NULL}, the arguments are passed to the relevant modelling function.}
 }
 \value{An object of class "\code{forecast}".
 
-The function \code{summary} is used to obtain
-and print a summary of the
-results, while the function \code{plot} produces a plot of the forecasts and prediction intervals.
+The function \code{summary} is used to obtain and print a summary of the results, while the function \code{plot} produces a plot of the forecasts and prediction intervals.
 
-The generic accessors functions \code{fitted.values} and \code{residuals} extract various useful features of
-the value returned by \code{forecast$model}.
+The generic accessors functions \code{fitted.values} and \code{residuals} extract various useful features of the value returned by \code{forecast$model}.
 
 An object of class \code{"forecast"} is a list usually containing at least the following elements:
 \item{model}{A list containing information about the fitted model}
@@ -59,5 +60,10 @@ An object of class \code{"forecast"} is a list usually containing at least the f
 \code{\link{hw}}.
 }
 
+\examples{
+WWWusage %>% forecast %>% plot
+fit <- ets(window(WWWusage, end=60))
+fc <- forecast(WWWusage, model=fit)
+}
 \author{Rob J Hyndman}
 \keyword{ts}

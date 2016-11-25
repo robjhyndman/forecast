@@ -42,7 +42,7 @@ findfrequency <- function(x)
 
 forecast.ts <- function(object, h=ifelse(frequency(object)>1, 2*frequency(object), 10),
   level=c(80,95), fan=FALSE, robust=FALSE, lambda = NULL, find.frequency = FALSE,
-  allow.multiplicative.trend=FALSE, ...)
+  allow.multiplicative.trend=FALSE, model=NULL, ...)
 {
   n <- length(object)
   if (find.frequency) {
@@ -54,6 +54,23 @@ forecast.ts <- function(object, h=ifelse(frequency(object)>1, 2*frequency(object
   if(robust)
     object <- tsclean(object, replace.missing=TRUE, lambda = lambda)
 
+  if(!is.null(model))
+  {
+    if("ets" %in% class(model))
+      fit <- ets(object, model=model, ...)
+    else if("Arima" %in% class(model))
+      fit <- Arima(object, model=model, ...)
+    else if("bats" %in% class(model))
+      fit <- bats(object, model=model, ...)
+    else if("tbats" %in% class(model))
+      fit <- tbats(object, model=model, ...)
+    else if("nnetar" %in% class(model))
+      fit <- nnetar(object, model=model, ...)
+    else 
+      stop("Unknown model class")
+    return(forecast(fit,h=h,level=level,fan=fan))
+  }
+  
   if(n > 3)
   {
     if(obj.freq < 13)
