@@ -1,34 +1,30 @@
-# TODO: Add comment
-#
-# Author: srazbash
-###############################################################################
-
-
 forecast.bats <- function(object, h, level=c(80,95), fan=FALSE, biasadj=FALSE, ...)
 {
-	#Set up the variables
+  #Set up the variables
+  if(any(class(object$y) == "ts"))
+		ts.frequency <- frequency(object$y)
+	else
+		ts.frequency <- ifelse(!is.null(object$seasonal.periods), max(object$seasonal.periods), 1)
+
   if(missing(h))
   {
-    if(is.null(object$seasonal.periods))
-      h <- 10
+  	if(is.null(object$seasonal.periods))
+      h <- ifelse(ts.frequency == 1, 10, 2*ts.frequency)
     else
       h <- 2 * max(object$seasonal.periods)
   }
-	else if(h<=0) {
+	else if(h <= 0)
 		stop("Forecast horizon out of bounds")
-	}
-	if(fan) {
-		level <- seq(51,99,by=3)
-	}
-  	if(any(class(object$y) == "ts")) {
-		ts.frequency <- frequency(object$y)
-	} else {
-		ts.frequency <- ifelse(!is.null(object$seasonal.periods), max(object$seasonal.periods), 1)
-	}
 
-	#if(!is.null(object$lambda)) {
-	#	y <- BoxCox(y, lambda=object$lambda)
-	#}
+	if(fan)
+		level <- seq(51,99,by=3)
+	else
+	{
+		if(min(level) > 0 & max(level) < 1)
+			level <- 100*level
+		else if(min(level) < 0 | max(level) > 99.99)
+			stop("Confidence limit out of range")
+	}
 
 	#Set up the matrices
 	x <- matrix(0,nrow=nrow(object$x), ncol=h)

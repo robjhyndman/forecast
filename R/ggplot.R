@@ -551,7 +551,8 @@ autoplot.mforecast <- function (object, plot.conf=TRUE, gridlayout=NULL, ...){
 }
 
 ggtsdisplay <- function(x, plot.type=c("partial","histogram","scatter","spectrum"),
-                        points=TRUE, lag.max, na.action=na.contiguous, theme=NULL, ...){
+                        points=TRUE, smooth=FALSE, 
+                        lag.max, na.action=na.contiguous, theme=NULL, ...){
   if (requireNamespace("ggplot2") & requireNamespace("grid")){
     plot.type <- match.arg(plot.type)
     main <- deparse(substitute(x))
@@ -581,6 +582,9 @@ ggtsdisplay <- function(x, plot.type=c("partial","histogram","scatter","spectrum
     if(points){
       tsplot <- tsplot + ggplot2::geom_point(size=0.5)
     }
+    if(smooth){
+      tsplot <- tsplot + ggplot2::geom_smooth(method="loess", se=FALSE)
+    }
     if(is.null(tsplot$labels$title)){ #Add title if missing
       tsplot <- tsplot + ggplot2::ggtitle(main)
     }
@@ -596,13 +600,13 @@ ggtsdisplay <- function(x, plot.type=c("partial","histogram","scatter","spectrum
     if(!is.null(theme)){
       acfplot <- acfplot + theme
     }
-
+    
     #Prepare last plot (variable)
     if(plot.type == "partial"){
       lastplot <- ggPacf(x, lag.max=lag.max, na.action=na.action) + ggplot2::ggtitle(NULL)
       #Match y-axis
-      acfplotrange <- ggplot2::ggplot_build(acfplot)$panel$ranges[[1]]$y.range
-      pacfplotrange <- ggplot2::ggplot_build(lastplot)$panel$ranges[[1]]$y.range
+      acfplotrange <- ggplot2::layer_scales(acfplot)$y$range$range
+      pacfplotrange <- ggplot2::layer_scales(lastplot)$y$range$range
       yrange <- range(c(acfplotrange, pacfplotrange))
       acfplot <- acfplot + ggplot2::ylim(yrange)
       lastplot <- lastplot + ggplot2::ylim(yrange)
