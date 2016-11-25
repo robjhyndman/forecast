@@ -41,7 +41,9 @@ fourierf,forecast.lm,thetaf, tsdisplay, simulate.ets, simulate.ar, simulate.Arim
 ndiffs, nsdiffs, dm.test,tbats.components, Acf,Pacf,Ccf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts,
 getResponse, tsoutliers, tsclean, bizdays, easter,stlm, forecast.stlm,
 StatForecast, GeomForecast, geom_forecast, gghistogram,
-checkresiduals,tscv)
+checkresiduals,tscv, autoplot.acf, autoplot.ar, autoplot.Arima,
+autoplot.decomposed.ts, autoplot.ets, autoplot.forecast, autoplot.mforecast,
+autoplot.splineforecast, autoplot.stl, autoplot.ts, autoplot.mpacf, autoplot.mts)
 
 S3method(autoplot, acf)
 S3method(autoplot, ar)
