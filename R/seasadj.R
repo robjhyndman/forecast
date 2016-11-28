@@ -4,7 +4,7 @@ seasadj <- function(object,...) UseMethod("seasadj")
 
 seasadj.stl <- function(object, ...)
 {
-   return(object$time.series[,2] + object$time.series[,3])
+   return(seasonal(object) + irregular(object))
 }
 
 seasadj.decomposed.ts <- function(object, ...)
@@ -17,11 +17,12 @@ seasadj.decomposed.ts <- function(object, ...)
 
 seasadj.tbats <- function(object, ...)
 {
-  comp <- tbats.components(object)
-  scols <- grep("season",colnames(comp))
-  sa <- comp[,"observed"] - rowSums(comp[,scols,drop=FALSE])
-  # Back transform if necessary
-  if (!is.null(object$lambda))
-    sa <- InvBoxCox(sa, object$lambda)
-  return(sa)
+  return(object$y - seasonal(object))
+  # comp <- tbats.components(object)
+  # scols <- grep("season",colnames(comp))
+  # sa <- comp[,"observed"] - rowSums(comp[,scols,drop=FALSE])
+  # # Back transform if necessary
+  # if (!is.null(object$lambda))
+  #   sa <- InvBoxCox(sa, object$lambda)
+  # return(sa)
 }
