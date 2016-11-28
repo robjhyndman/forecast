@@ -4,14 +4,14 @@
 \alias{irregular}
 \title{Extract components from a time series decomposition}
 \usage{seasonal(object)
-trend(object)
-irregular(object)
+trendcycle(object)
+remainder(object)
 }
 
 \arguments{
 \item{object}{Object created by \code{\link[stats]{decompose}}, \code{\link[stats]{stl}} or \code{\link{tbats}}.}
 }
-\description{Returns a univariate time series equal to either a seasonal component, trend component or irregular component from a time series decomposition.}
+\description{Returns a univariate time series equal to either a seasonal component, trend-cycle component or remainder component from a time series decomposition.}
 
 \value{Univariate time series.}
 
@@ -19,15 +19,15 @@ irregular(object)
 \author{Rob J Hyndman}
 \examples{plot(USAccDeaths)
 fit <- stl(USAccDeaths, s.window="periodic")
-lines(trend(fit),col="red")
+lines(trendcycle(fit),col="red")
 
 library(ggplot2)
 autoplot(cbind(
 	    Data=USAccDeaths,
 	    Seasonal=seasonal(fit),
-  	  Trend=trend(fit),
-	    Irregular=irregular(fit)),
-    facets=TRUE) + 
+  	  Trend=trendcycle(fit),
+	    Remainder=remainder(fit)),
+    facets=TRUE) +
   ylab("") + xlab("Year")
 }
 \keyword{ts}

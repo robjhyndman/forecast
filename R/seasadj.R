@@ -4,7 +4,7 @@ seasadj <- function(object,...) UseMethod("seasadj")
 
 seasadj.stl <- function(object, ...)
 {
-   return(trend(object) + irregular(object))
+   return(trendcycle(object) + remainder(object))
 }
 
 seasadj.decomposed.ts <- function(object, ...)
