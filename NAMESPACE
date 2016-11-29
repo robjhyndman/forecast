@@ -44,7 +44,7 @@ StatForecast, GeomForecast, geom_forecast, gghistogram,
 checkresiduals,tscv, autoplot.acf, autoplot.ar, autoplot.Arima,
 autoplot.decomposed.ts, autoplot.ets, autoplot.forecast, autoplot.mforecast,
 autoplot.splineforecast, autoplot.stl, autoplot.ts, autoplot.mpacf, autoplot.mts,
-seasonal, trend,irregular)
+seasonal, trendcycle,remainder)
 
 S3method(autoplot, acf)
 S3method(autoplot, ar)
