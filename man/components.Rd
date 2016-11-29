@@ -1,7 +1,7 @@
 \name{seasonal}
 \alias{seasonal}
-\alias{trend}
-\alias{irregular}
+\alias{trendcycle}
+\alias{remainder}
 \title{Extract components from a time series decomposition}
 \usage{seasonal(object)
 trendcycle(object)
