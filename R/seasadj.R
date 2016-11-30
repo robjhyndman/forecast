@@ -26,3 +26,8 @@ seasadj.tbats <- function(object, ...)
   #   sa <- InvBoxCox(sa, object$lambda)
   # return(sa)
 }
+
+seasadj.seas <- function(object, ...)
+{
+  return(seasonal::final(object))
+}
