@@ -348,7 +348,7 @@ autoplot.decomposed.ts <- function (object, labels=NULL, ...){
     p <- p + ggplot2::geom_segment(ggplot2::aes_(x = ~datetime, xend = ~datetime, y = 0, yend = ~y),
                                    data=subset(data,data$parts==cn[4]), lineend = "butt", na.rm = TRUE)
     p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
-    p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = 1, parts = cn[4]))
+    p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = 0, parts = cn[4]))
     
     # Add axis labels
     p <- p + ggAddExtras(main = paste("Decomposition of",object$type,"time series"), xlab="Time",
@@ -973,7 +973,7 @@ autoplot.stl <- function (object, labels = NULL, ...){
     p <- p + ggplot2::geom_segment(ggplot2::aes_(x = ~datetime, xend = ~datetime, y = 0, yend = ~y),
                                    data=subset(data,data$parts==cn[4]), lineend = "butt")
     p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
-    p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = 1, parts = cn[4]))
+    p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = 0, parts = cn[4]))
 
     # Add axis labels
     p <- p + ggAddExtras(xlab="Time", ylab="")
