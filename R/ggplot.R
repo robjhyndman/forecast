@@ -1031,10 +1031,10 @@ ggts <- function(object, colour=TRUE){
                        series = deparse(substitute(object)),
                        seriesVal = as.numeric(object))
   if(colour){
-    geom_line(aes_(x=~timeVal, y=~seriesVal, group=~series, colour=~series), data=tsdata)
+    ggplot2::geom_line(ggplot2::aes_(x=~timeVal, y=~seriesVal, group=~series, colour=~series), data=tsdata)
   }
   else{
-    geom_line(aes_(x=~timeVal, y=~seriesVal, group=~series), data=tsdata)
+    ggplot2::geom_line(ggplot2::aes_(x=~timeVal, y=~seriesVal, group=~series), data=tsdata)
   }
 }
 
