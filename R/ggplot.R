@@ -806,9 +806,13 @@ gglagchull <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray
 }
 
 ggmonthplot <- function (x, labels = NULL, times = time(x), phase = cycle(x), ...){
+  ggsubseriesplot(x, labels, times, phase, ...)
+}
+
+ggsubseriesplot <- function (x, labels = NULL, times = time(x), phase = cycle(x), ...){
   if (requireNamespace("ggplot2")){
     if (!inherits(x, "ts")){
-      stop("ggmonthplot requires a ts object, use x=object")
+      stop("ggsubseriesplot requires a ts object, use x=object")
     }
 
     data <- data.frame(y=as.numeric(x),year=factor(trunc(time(x))),season=as.numeric(phase))
