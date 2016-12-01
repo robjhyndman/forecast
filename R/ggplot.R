@@ -684,7 +684,7 @@ gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray"
         }
         data <- rbind(data,
                       data.frame(lagnum = 1:(n-lagi),
-                                 freqcur = ifelse(rep(seasonal,n-lagi), linecol[1:(n-lagi-1)], 1:(n-lagi-1)),
+                                 freqcur = ifelse(rep(seasonal,n-lagi), linecol[1:(n-lagi)], 1:(n-lagi)),
                                  orig = x[1:(n-lagi),i],
                                  lagged = x[(lagi+1):n,i],
                                  lagVal = factor(rep(lagi, n-lagi)),
