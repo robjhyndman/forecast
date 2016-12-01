@@ -1035,6 +1035,11 @@ logLik.ets <- function(object,...)
   structure(object$loglik,df=length(object$par)+1,class="logLik")
 }
 
+nobs.ets <- function(object, ...)
+{
+  length(object$x)
+}
+
 is.ets <- function(x){
   inherits(x, "ets")
 }
