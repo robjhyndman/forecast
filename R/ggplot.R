@@ -952,11 +952,11 @@ autoplot.stl <- function (object, labels = NULL, ...){
     p <- ggplot2::ggplot(ggplot2::aes_(x=~datetime, y=~y), data=data)
 
     #Add data
-    p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~y), data=subset(data,data$parts!="remainder"), na.rm=TRUE)
+    p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~y), data=subset(data,data$parts!=cn[4]), na.rm=TRUE)
     p <- p + ggplot2::geom_segment(ggplot2::aes_(x = ~datetime, xend = ~datetime, y = 0, yend = ~y),
-                                   data=subset(data,data$parts=="remainder"), lineend = "butt")
+                                   data=subset(data,data$parts==cn[4]), lineend = "butt")
     p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
-    p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = 0, parts = "remainder"))
+    p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = 1, parts = cn[4]))
 
     # Add axis labels
     p <- p + ggAddExtras(xlab="Time", ylab="")
@@ -965,6 +965,53 @@ autoplot.stl <- function (object, labels = NULL, ...){
     p <- p + ggplot2::scale_x_continuous(breaks=unique(round(pretty(data$datetime))))
 
     return(p)
+  }
+}
+
+
+autoplot.seas <- function (object, labels = NULL, ...){
+  if (requireNamespace("ggplot2")){
+    if (!inherits(object, "seas")){
+      stop("autoplot.seas requires a seas object")
+    }
+    if(is.null(labels)){
+      labels <- c("seasonal", "trend", "remainder")
+    }
+    
+    data <- object$data[,c("final", "seasonal", "trend", "irregular")]
+    cn <- c("data",labels)
+    data <- data.frame(datetime=rep(time(data),NCOL(data)), y=c(data),
+                       parts=factor(rep(cn, each=NROW(data)), levels=cn))
+    
+    #Initialise ggplot object
+    p <- ggplot2::ggplot(ggplot2::aes_(x=~datetime, y=~y), data=data)
+    
+    #Add data
+    p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~y), data=subset(data,data$parts!=cn[4]), na.rm=TRUE)
+    p <- p + ggplot2::geom_segment(ggplot2::aes_(x = ~datetime, xend = ~datetime, y = 1, yend = ~y),
+                                   data=subset(data,data$parts==cn[4]), lineend = "butt")
+    p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
+    p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = 1, parts = cn[4]))
+    
+    # Add axis labels
+    p <- p + ggAddExtras(xlab="Time", ylab="")
+    
+    # Make x axis contain only whole numbers (e.g., years)
+    p <- p + ggplot2::scale_x_continuous(breaks=unique(round(pretty(data$datetime))))
+    
+    return(p)
+  }
+}
+
+ggts <- function(object, colour=TRUE){
+  tsdata <- data.frame(timeVal = as.numeric(time(object)), 
+                       series = deparse(substitute(object)),
+                       seriesVal = as.numeric(object))
+  if(colour){
+    geom_line(aes_(x=~timeVal, y=~seriesVal, group=~series, colour=~series), data=tsdata)
+  }
+  else{
+    geom_line(aes_(x=~timeVal, y=~seriesVal, group=~series), data=tsdata)
   }
 }
 
