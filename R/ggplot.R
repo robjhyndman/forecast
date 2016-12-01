@@ -1046,7 +1046,7 @@ autoplot.ts <- function(object, ...){
     p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x), data=data)
 
     #Add data
-    p <- p + ggplot2::geom_line()
+    p <- p + ggplot2::geom_line(na.rm = TRUE)
 
     # Add labels
     p <- p + ggAddExtras(xlab="Time", ylab=deparse(substitute(object)))
@@ -1068,11 +1068,11 @@ autoplot.mts <- function(object, facets=FALSE, ...){
     p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x), data=data)
     if(facets){
       p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x, group=~series), data=data)
-      p <- p + ggplot2::geom_line() + ggplot2::facet_grid(series~., scales = "free_y")
+      p <- p + ggplot2::geom_line(na.rm = TRUE) + ggplot2::facet_grid(series~., scales = "free_y")
     }
     else{
       p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x, group=~series, colour=~series), data=data)
-      p <- p + ggplot2::geom_line()
+      p <- p + ggplot2::geom_line(na.rm = TRUE)
     }
 
     p <- p + ggAddExtras(xlab="Time", ylab=deparse(substitute(object)))
