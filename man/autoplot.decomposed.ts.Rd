@@ -1,11 +1,12 @@
 \name{autoplot.decomposed.ts}
 \alias{autoplot.decomposed.ts}
 \title{ggplot of a decomposed time series object}
-\usage{\method{autoplot}{decomposed.ts}(object, ...)
+\usage{\method{autoplot}{decomposed.ts}(object, labels = NULL, ...)
 }
 
 \arguments{
 \item{object}{Object of class \dQuote{decomposed.ts} to be plotted.}
+\item{labels}{Labels to replace "seasonal", "trend", and "remainder".}
 \item{...}{Other plotting parameters to affect the plot.}
 }
 
