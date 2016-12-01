@@ -327,8 +327,8 @@ autoplot.ar <- function(object, ...){
 autoplot.decomposed.ts <- function (object, ...){
   if (requireNamespace("ggplot2")){
     data <- data.frame(datetime=rep(time(object$x),4), y=c(object$x, object$trend, object$seasonal, object$random),
-                       decomposed=factor(rep(c("observed","trend","seasonal","random"),each=NROW(object$x)),
-                                         levels=c("observed","trend","seasonal","random")))
+                       decomposed=factor(rep(c("data","trend","seasonal","remainder"),each=NROW(object$x)),
+                                         levels=c("data","trend","seasonal","remainder")))
 
     #Initialise ggplot object
     p <- ggplot2::ggplot(ggplot2::aes_(x=~datetime, y=~y), data=data)
@@ -937,6 +937,8 @@ autoplot.stl <- function (object, labels = NULL, ...){
     if (!inherits(object, "stl")){
       stop("autoplot.stl requires a stl object, use x=object")
     }
+    # Re-order series as trend, seasonal, remainder
+    object$time.series <- object$time.series[,c("trend","seasonal","remainder")]
     if(is.null(labels)){
       labels <- colnames(object$time.series)
     }

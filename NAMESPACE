@@ -23,6 +23,7 @@ importFrom("stats", "Box.test", "acf", "approx", "ar", "arima",
 importFrom("stats", "aggregate", "as.formula", "is.mts", "reformulate")
 importFrom("utils", "packageVersion", "tail", "head")
 importFrom("ggplot2","autoplot","fortify")
+importFrom("seasonal","final","irregular","trend")
 
 importFrom(magrittr,"%>%")
 export("%>%")
@@ -43,7 +44,8 @@ getResponse, tsoutliers, tsclean, bizdays, easter,stlm, forecast.stlm,
 StatForecast, GeomForecast, geom_forecast, gghistogram,
 checkresiduals,tscv, autoplot.acf, autoplot.ar, autoplot.Arima,
 autoplot.decomposed.ts, autoplot.ets, autoplot.forecast, autoplot.mforecast,
-autoplot.splineforecast, autoplot.stl, autoplot.ts, autoplot.mpacf, autoplot.mts)
+autoplot.splineforecast, autoplot.stl, autoplot.ts, autoplot.mpacf, autoplot.mts,
+seasonal, trendcycle,remainder)
 
 S3method(autoplot, acf)
 S3method(autoplot, ar)
@@ -121,6 +123,7 @@ S3method(residuals, ar)
 S3method(seasadj,decomposed.ts)
 S3method(seasadj,tbats)
 S3method(seasadj,stl)
+S3method(seasadj,seas)
 S3method(simulate,ar)
 S3method(simulate,Arima)
 S3method(simulate,ets)
