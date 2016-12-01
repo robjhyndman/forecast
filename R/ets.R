@@ -1032,7 +1032,7 @@ fitted.ets <- function(object, h=1, ...){
 
 logLik.ets <- function(object,...)
 {
-  structure(object$loglik,df=length(object$par),class="logLik")
+  structure(object$loglik,df=length(object$par)+1,class="logLik")
 }
 
 is.ets <- function(x){
