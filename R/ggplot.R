@@ -682,7 +682,13 @@ gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray"
         if(is.null(sname)){
           sname <- deparse(match.call()$x)
         }
-        data <- rbind(data, data.frame(lagnum = 1:(n-lagi), freqcur = ifelse(rep(seasonal,n-lagi),linecol[(lagi+1):n],(lagi+1):n), orig = x[(lagi+1):n,i], lagged = x[1:(n-lagi),i], lagVal = factor(rep(lagi, n-lagi)), series = factor(rep(sname, n-lagi))))
+        data <- rbind(data,
+                      data.frame(lagnum = 1:(n-lagi),
+                                 freqcur = ifelse(rep(seasonal,n-lagi), linecol[1:(n-lagi-1)], 1:(n-lagi-1)),
+                                 orig = x[1:(n-lagi),i],
+                                 lagged = x[(lagi+1):n,i],
+                                 lagVal = factor(rep(lagi, n-lagi)),
+                                 series = factor(rep(sname, n-lagi))))
       }
     }
     if(!continuous){
@@ -690,7 +696,7 @@ gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray"
     }
 
     #Initialise ggplot object
-    p <- ggplot2::ggplot(ggplot2::aes_(x=~orig, y=~lagged), data=data)
+    p <- ggplot2::ggplot(ggplot2::aes_(x=~lagged, y=~orig), data=data)
 
     if(diag){
       p <- p + ggplot2::geom_abline(colour=diag.col, linetype="dashed")
