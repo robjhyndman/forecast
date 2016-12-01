@@ -344,11 +344,12 @@ autoplot.decomposed.ts <- function (object, labels=NULL, ...){
     p <- ggplot2::ggplot(ggplot2::aes_(x=~datetime, y=~y), data=data)
     
     # Add data
+    int <- as.numeric(object$type=="multiplicative")
     p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~y), data=subset(data,data$parts!=cn[4]), na.rm=TRUE)
-    p <- p + ggplot2::geom_segment(ggplot2::aes_(x = ~datetime, xend = ~datetime, y = 0, yend = ~y),
+    p <- p + ggplot2::geom_segment(ggplot2::aes_(x = ~datetime, xend = ~datetime, y = int, yend = ~y),
                                    data=subset(data,data$parts==cn[4]), lineend = "butt", na.rm = TRUE)
     p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
-    p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = 0, parts = cn[4]))
+    p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = int, parts = cn[4]))
     
     # Add axis labels
     p <- p + ggAddExtras(main = paste("Decomposition of",object$type,"time series"), xlab="Time",
