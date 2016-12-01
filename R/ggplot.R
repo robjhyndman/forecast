@@ -324,22 +324,39 @@ autoplot.ar <- function(object, ...){
   autoplot.Arima(object, ...)
 }
 
-autoplot.decomposed.ts <- function (object, ...){
+autoplot.decomposed.ts <- function (object, labels=NULL, ...){
   if (requireNamespace("ggplot2")){
-    data <- data.frame(datetime=rep(time(object$x),4), y=c(object$x, object$trend, object$seasonal, object$random),
-                       decomposed=factor(rep(c("data","trend","seasonal","remainder"),each=NROW(object$x)),
-                                         levels=c("data","trend","seasonal","remainder")))
+    if (!inherits(object, "decomposed.ts")){
+      stop("autoplot.decomposed.ts requires a decomposed.ts object")
+    }
+    
+    if(is.null(labels)){
+      labels <- c("seasonal","trend","remainder")
+    }
+    
+    cn <- c("data", labels)
+    
+    data <- data.frame(datetime = rep(time(object$x), 4), 
+                       y = c(object$x, object$seasonal, object$trend, object$random),
+                       parts = factor(rep(cn, each=NROW(object$x)), levels=cn))
 
-    #Initialise ggplot object
+    # Initialise ggplot object
     p <- ggplot2::ggplot(ggplot2::aes_(x=~datetime, y=~y), data=data)
-
-    #Add data
-    p <- p + ggplot2::geom_line(na.rm=TRUE)
-    p <- p + ggplot2::facet_grid(decomposed ~ ., scales="free_y", switch="y")
-
-    p <- p + ggAddExtras(main = paste("Decomposition of",object$type,"time series"), xlab=NULL,
+    
+    # Add data
+    p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~y), data=subset(data,data$parts!=cn[4]), na.rm=TRUE)
+    p <- p + ggplot2::geom_segment(ggplot2::aes_(x = ~datetime, xend = ~datetime, y = 0, yend = ~y),
+                                   data=subset(data,data$parts==cn[4]), lineend = "butt", na.rm = TRUE)
+    p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
+    p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = 0, parts = cn[4]))
+    
+    # Add axis labels
+    p <- p + ggAddExtras(main = paste("Decomposition of",object$type,"time series"), xlab="Time",
                          ylab="")
-
+    
+    # Make x axis contain only whole numbers (e.g., years)
+    p <- p + ggplot2::scale_x_continuous(breaks=unique(round(pretty(data$datetime))))
+    
     return(p)
   }
 }
@@ -956,7 +973,7 @@ autoplot.stl <- function (object, labels = NULL, ...){
     p <- p + ggplot2::geom_segment(ggplot2::aes_(x = ~datetime, xend = ~datetime, y = 0, yend = ~y),
                                    data=subset(data,data$parts==cn[4]), lineend = "butt")
     p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
-    p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = 1, parts = cn[4]))
+    p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = 0, parts = cn[4]))
 
     # Add axis labels
     p <- p + ggAddExtras(xlab="Time", ylab="")
