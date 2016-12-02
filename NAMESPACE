@@ -19,7 +19,8 @@ importFrom("stats", "Box.test", "acf", "approx", "ar", "arima",
              "optimize", "pf", "plot.ts", "poly", "predict", "pt",
              "qnorm", "qt", "quantile", "residuals", "rnorm", "runif",
              "sd", "simulate", "smooth.spline", "start", "stl", "supsmu",
-             "terms", "time", "ts", "tsp", "tsp<-", "tsdiag", "var")
+             "terms", "time", "ts", "tsp", "tsp<-", "tsdiag", "var",
+             "logLik","nobs")
 importFrom("stats", "aggregate", "as.formula", "is.mts", "reformulate")
 importFrom("utils", "packageVersion", "tail", "head")
 importFrom("ggplot2","autoplot","fortify")
@@ -34,7 +35,7 @@ forecast.HoltWinters, forecast.lm, forecast.stl, forecast.StructTS, forecast.bat
 is.acf, is.Arima, is.bats, is.constant, is.ets, is.forecast, is.mforecast, is.nnetar, is.nnetarmodels, is.splineforecast, is.stlm,
 nnetar, forecast.nnetar, baggedETS,forecast.baggedETS,is.baggedETS,bld.mbb.bootstrap,
 plot.Arima, plot.ar, taperedacf, taperedpacf,
-meanf, logLik.ets, monthdays, na.interp, ets, plot.bats, plot.tbats, plot.ets, plot.forecast,
+meanf, logLik.ets, nobs.ets, monthdays, na.interp, ets, plot.bats, plot.tbats, plot.ets, plot.forecast,
 plot.splineforecast, rwf, seasadj, seasonaldummy,naive,snaive,stlf,subset.ts,
 seasonaldummyf, ggAcf, ggPacf, ggCcf, ggtaperedacf, ggtaperedpacf, gglagplot, gglagchull,
 ggtsdisplay, ggmonthplot, ggsubseriesplot, ggseasonplot, seasonplot, ses, sindexf, splinef, tslm, fourier,
