@@ -35,7 +35,10 @@ lagwalk <- function(y, lag=1, h=10, drift=FALSE,
   fits <- ts(c(rep(NA,lag),head(y,-lag)) + b, start=tsp(y)[1], frequency=m)
   res <- y - fits
   fullperiods <- (h-1)/lag+1
-  steps <- rep(1:fullperiods, rep(m,fullperiods))[1:h]
+  if(lag==1)
+    steps <- 1:h
+  else
+    steps <- rep(1:fullperiods, rep(m,fullperiods))[1:h]
   f <- rep(tail(y,lag), fullperiods)[1:h] + steps*b
   mse <- mean(res^2, na.rm=TRUE)
   se  <- sqrt(mse*steps  + (steps*b.se)^2)
