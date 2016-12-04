@@ -36,7 +36,7 @@ using STL Decomposition and Box-Cox Transformation. International Journal of For
 
 \author{Christoph Bergmeir, Fotios Petropoulos}
 
-\examples{fit <- baggedETS(lynx)
+\examples{fit <- baggedETS(WWWusage)
 fcast <- forecast(fit)
 plot(fcast)
 }
