@@ -1,9 +1,11 @@
 \name{logLik.ets}
 \alias{logLik.ets}
+\alias{nobs.ets}
 
 \title{Log-Likelihood of an ets object}
 \usage{
 \method{logLik}{ets}(object, ...)
+\method{nobs}{ets}(object, ...)
 }
 
 \arguments{
@@ -11,10 +13,10 @@
 \item{...}{some methods for this generic require additional arguments. None are used in this method.}
 }
 
-\description{Returns the log-likelihood of the ets model represented by \code{object} evaluated at the estimated parameters.}
+\description{\code{logLik.ets} returns the log-likelihood of the ets model represented by \code{object} evaluated at the estimated parameters. \code{nobs.ets} returns the number of observations used to fit the ets model \code{object}.}
 
 
-\value{the log-likelihood of the model represented by \code{object} evaluated at the estimated parameters.}
+\value{A numerical value.}
 
 
 \references{Hyndman, R.J., Koehler, A.B., Ord, J.K., and Snyder, R.D. (2008)

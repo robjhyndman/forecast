@@ -1,7 +1,9 @@
 \name{ggmonthplot}
 \alias{ggmonthplot}
+\alias{ggsubseriesplot}
 \title{Create a seasonal subseries ggplot}
-\usage{ggmonthplot(x, labels = NULL, times = time(x), phase = cycle(x), ...)
+\usage{ggsubseriesplot(x, labels = NULL, times = time(x), phase = cycle(x), ...)
+	ggmonthplot(x, labels = NULL, times = time(x), phase = cycle(x), ...)
 }
 \arguments{
 \item{x}{a time series object (type \code{ts}).}
@@ -10,14 +12,15 @@
 \item{phase}{A vector of seasonal components}
 \item{\dots}{Not used (for consistency with monthplot)}
 }
-\description{Plots a month plot using ggplot.}
+\description{Plots a subseries plot using ggplot. The \code{ggmonthplot} function is simply a wrapper for \code{ggsubseriesplot} as a convenience for users familiar with \code{\link[stats]{monthplot}}.
+}
 
-\value{None.
+\value{Returns an object of class \code{ggplot}.
 }
 
 \author{Mitchell O'Hara-Wild}
 \seealso{\code{\link[stats]{monthplot}}}
 \examples{
-ggmonthplot(AirPassengers)
-ggmonthplot(woolyrnq)
+ggsubseriesplot(AirPassengers)
+ggsubseriesplot(woolyrnq)
 }

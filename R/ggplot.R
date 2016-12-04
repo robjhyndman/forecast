@@ -344,11 +344,12 @@ autoplot.decomposed.ts <- function (object, labels=NULL, ...){
     p <- ggplot2::ggplot(ggplot2::aes_(x=~datetime, y=~y), data=data)
     
     # Add data
+    int <- as.numeric(object$type=="multiplicative")
     p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~y), data=subset(data,data$parts!=cn[4]), na.rm=TRUE)
-    p <- p + ggplot2::geom_segment(ggplot2::aes_(x = ~datetime, xend = ~datetime, y = 0, yend = ~y),
+    p <- p + ggplot2::geom_segment(ggplot2::aes_(x = ~datetime, xend = ~datetime, y = int, yend = ~y),
                                    data=subset(data,data$parts==cn[4]), lineend = "butt", na.rm = TRUE)
     p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
-    p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = 0, parts = cn[4]))
+    p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = int, parts = cn[4]))
     
     # Add axis labels
     p <- p + ggAddExtras(main = paste("Decomposition of",object$type,"time series"), xlab="Time",
@@ -806,9 +807,13 @@ gglagchull <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray
 }
 
 ggmonthplot <- function (x, labels = NULL, times = time(x), phase = cycle(x), ...){
+  ggsubseriesplot(x, labels, times, phase, ...)
+}
+
+ggsubseriesplot <- function (x, labels = NULL, times = time(x), phase = cycle(x), ...){
   if (requireNamespace("ggplot2")){
     if (!inherits(x, "ts")){
-      stop("ggmonthplot requires a ts object, use x=object")
+      stop("ggsubseriesplot requires a ts object, use x=object")
     }
 
     data <- data.frame(y=as.numeric(x),year=factor(trunc(time(x))),season=as.numeric(phase))
@@ -1031,10 +1036,10 @@ ggts <- function(object, colour=TRUE){
                        series = deparse(substitute(object)),
                        seriesVal = as.numeric(object))
   if(colour){
-    geom_line(aes_(x=~timeVal, y=~seriesVal, group=~series, colour=~series), data=tsdata)
+    ggplot2::geom_line(ggplot2::aes_(x=~timeVal, y=~seriesVal, group=~series, colour=~series), data=tsdata)
   }
   else{
-    geom_line(aes_(x=~timeVal, y=~seriesVal, group=~series), data=tsdata)
+    ggplot2::geom_line(ggplot2::aes_(x=~timeVal, y=~seriesVal, group=~series), data=tsdata)
   }
 }
 

@@ -1,7 +1,6 @@
 \name{forecast.stl}
 \alias{forecast.stl}
 \alias{stlf}
-\alias{stl}
 \alias{stlm}
 \alias{forecast.stlm}
 \title{Forecasting using stl objects}

@@ -19,7 +19,7 @@ seasonal <- function(object)
     return(season)
 	}
   else if("seas" %in% class(object))
-    stop("No idea")
+    return(object$data[,"seasonal"])
   else
     stop("Unknown object type")
 }

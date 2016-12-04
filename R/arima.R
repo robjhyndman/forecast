@@ -739,11 +739,6 @@ is.Arima <- function(x){
   inherits(x, "Arima")
 }
 
-residuals.ar <- function(object, ...)
-{
-  object$resid
-}
-
 fitted.ar <- function(object, ...)
 {
   getResponse(object)-residuals(object)

@@ -43,11 +43,21 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     if (is.null(model$scalex))
       scale.inputs <- FALSE
   }
+  else
+  {
+    if(length(y) < 3)
+      stop("Not enough data to fit a model")
+  }
   # Check for NAs in x
   if (any(is.na(x)))
     warning("Missing values in x, omitting rows")
+  # Check for constant data
+  constant_data <- is.constant(na.interp(x))
+  if(constant_data)
+    scale.inputs <- FALSE
+
   # Transform data
-  if(!is.null(lambda))
+  if(!is.null(lambda) & !constant_data)
     xx <- BoxCox(x,lambda)
   else
     xx <- x
@@ -59,7 +69,7 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     xsub <- subset
   # Scale series
   scalex <- NULL
-  if(scale.inputs)
+  if(scale.inputs & !constant_data)
   {
     if (useoldmodel)
     {
@@ -105,6 +115,8 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   n <- length(xx)
   xx <- as.ts(xx)
   m <- max(round(frequency(xx)), 1L)
+  if(constant_data)
+    p <- 1
   if(m==1)
   {
     if(missing(p))

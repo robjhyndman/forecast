@@ -28,6 +28,6 @@ using STL Decomposition and Box-Cox Transformation. International Journal of For
 
 \author{Christoph Bergmeir, Fotios Petropoulos}
 
-\examples{bootstrapped_series <- bld.mbb.bootstrap(lynx, 100)
+\examples{bootstrapped_series <- bld.mbb.bootstrap(WWWusage, 100)
 }
 \keyword{ts}
