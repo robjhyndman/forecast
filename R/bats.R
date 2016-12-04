@@ -335,9 +335,6 @@ print.bats <- function(x,...) {
 	cat(x$AIC)
 	cat("\n")
 }
-residuals.bats <- function(object, ...) {
-	object$errors
-}
 
 plot.bats <- function (x, main="Decomposition by BATS model", ...)
 {

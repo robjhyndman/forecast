@@ -245,28 +245,6 @@ forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=ob
         residuals=res, fitted=fits), class="forecast"))
 }
 
-# Residuals from arfima() or fracdiff()
-
-residuals.fracdiff <- function(object, ...)
-{
-	#require(fracdiff)
-
-	if(!is.null(object$residuals))   # Object produced by arfima()
-		return(object$residuals)
-	else                             # Object produced by fracdiff()
-	{
-		if (is.element("x", names(object)))
-			x <- object$x
-		else
-			x <- eval.parent(parse(text=as.character(object$call)[2]))
-		if(!is.null(object$lambda))
-			x <- BoxCox(x,object$lambda)
-		y <- fracdiff::diffseries(x - mean(x), d=object$d)
-		fit <- arima(y, order=c(length(object$ar),0,length(object$ma)), include.mean=FALSE, fixed=c(object$ar,object$ma))
-		return(residuals(fit))
-	}
-}
-
 # Fitted values from arfima() or fracdiff()
 
 fitted.fracdiff <- function(object, ...)
