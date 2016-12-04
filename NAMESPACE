@@ -19,10 +19,12 @@ importFrom("stats", "Box.test", "acf", "approx", "ar", "arima",
              "optimize", "pf", "plot.ts", "poly", "predict", "pt",
              "qnorm", "qt", "quantile", "residuals", "rnorm", "runif",
              "sd", "simulate", "smooth.spline", "start", "stl", "supsmu",
-             "terms", "time", "ts", "tsp", "tsp<-", "tsdiag", "var")
+             "terms", "time", "ts", "tsp", "tsp<-", "tsdiag", "var",
+             "logLik","nobs")
 importFrom("stats", "aggregate", "as.formula", "is.mts", "reformulate")
 importFrom("utils", "packageVersion", "tail", "head")
 importFrom("ggplot2","autoplot","fortify")
+importFrom("seasonal","final","irregular","trend")
 
 importFrom(magrittr,"%>%")
 export("%>%")
@@ -33,10 +35,10 @@ forecast.HoltWinters, forecast.lm, forecast.stl, forecast.StructTS, forecast.bat
 is.acf, is.Arima, is.bats, is.constant, is.ets, is.forecast, is.mforecast, is.nnetar, is.nnetarmodels, is.splineforecast, is.stlm,
 nnetar, forecast.nnetar, baggedETS,forecast.baggedETS,is.baggedETS,bld.mbb.bootstrap,
 plot.Arima, plot.ar, taperedacf, taperedpacf,
-meanf, logLik.ets, monthdays, na.interp, ets, plot.bats, plot.tbats, plot.ets, plot.forecast,
+meanf, logLik.ets, nobs.ets, monthdays, na.interp, ets, plot.bats, plot.tbats, plot.ets, plot.forecast,
 plot.splineforecast, rwf, seasadj, seasonaldummy,naive,snaive,stlf,subset.ts,
 seasonaldummyf, ggAcf, ggPacf, ggCcf, ggtaperedacf, ggtaperedpacf, gglagplot, gglagchull,
-ggtsdisplay, ggmonthplot, ggseasonplot, seasonplot, ses, sindexf, splinef, tslm, fourier,
+ggtsdisplay, ggmonthplot, ggsubseriesplot, ggseasonplot, seasonplot, ses, sindexf, splinef, tslm, fourier,
 fourierf,forecast.lm,thetaf, tsdisplay, simulate.ets, simulate.ar, simulate.Arima, simulate.fracdiff, simulate.nnetar,
 ndiffs, nsdiffs, dm.test,tbats.components, Acf,Pacf,Ccf,ma,CV,BoxCox.lambda,dshw, bats, tbats, msts,
 getResponse, tsoutliers, tsclean, bizdays, easter,stlm, forecast.stlm,
@@ -44,6 +46,7 @@ StatForecast, GeomForecast, geom_forecast, gghistogram,
 checkresiduals,tscv, autoplot.acf, autoplot.ar, autoplot.Arima,
 autoplot.decomposed.ts, autoplot.ets, autoplot.forecast, autoplot.mforecast,
 autoplot.splineforecast, autoplot.stl, autoplot.ts, autoplot.mpacf, autoplot.mts,
+autoplot.seas,
 seasonal, trendcycle,remainder)
 
 S3method(autoplot, acf)
@@ -56,6 +59,7 @@ S3method(autoplot, mforecast)
 S3method(autoplot, splineforecast)
 S3method(autoplot, stl)
 S3method(autoplot, ts)
+S3method(autoplot, seas)
 S3method(autoplot, mpacf)
 S3method(autoplot, mts)
 S3method(fortify, ts)
@@ -97,6 +101,7 @@ S3method(getResponse,lm)
 S3method(head,ts)
 S3method(tail,ts)
 S3method(logLik,ets)
+S3method(nobs,ets)
 S3method(plot,ar)
 S3method(plot,Arima)
 S3method(plot,bats)
@@ -122,6 +127,7 @@ S3method(residuals, ar)
 S3method(seasadj,decomposed.ts)
 S3method(seasadj,tbats)
 S3method(seasadj,stl)
+S3method(seasadj,seas)
 S3method(simulate,ar)
 S3method(simulate,Arima)
 S3method(simulate,ets)

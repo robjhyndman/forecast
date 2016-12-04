@@ -324,22 +324,40 @@ autoplot.ar <- function(object, ...){
   autoplot.Arima(object, ...)
 }
 
-autoplot.decomposed.ts <- function (object, ...){
+autoplot.decomposed.ts <- function (object, labels=NULL, ...){
   if (requireNamespace("ggplot2")){
-    data <- data.frame(datetime=rep(time(object$x),4), y=c(object$x, object$trend, object$seasonal, object$random),
-                       decomposed=factor(rep(c("observed","trend","seasonal","random"),each=NROW(object$x)),
-                                         levels=c("observed","trend","seasonal","random")))
+    if (!inherits(object, "decomposed.ts")){
+      stop("autoplot.decomposed.ts requires a decomposed.ts object")
+    }
+    
+    if(is.null(labels)){
+      labels <- c("seasonal","trend","remainder")
+    }
+    
+    cn <- c("data", labels)
+    
+    data <- data.frame(datetime = rep(time(object$x), 4), 
+                       y = c(object$x, object$seasonal, object$trend, object$random),
+                       parts = factor(rep(cn, each=NROW(object$x)), levels=cn))
 
-    #Initialise ggplot object
+    # Initialise ggplot object
     p <- ggplot2::ggplot(ggplot2::aes_(x=~datetime, y=~y), data=data)
-
-    #Add data
-    p <- p + ggplot2::geom_line(na.rm=TRUE)
-    p <- p + ggplot2::facet_grid(decomposed ~ ., scales="free_y", switch="y")
-
-    p <- p + ggAddExtras(main = paste("Decomposition of",object$type,"time series"), xlab=NULL,
+    
+    # Add data
+    int <- as.numeric(object$type=="multiplicative")
+    p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~y), data=subset(data,data$parts!=cn[4]), na.rm=TRUE)
+    p <- p + ggplot2::geom_segment(ggplot2::aes_(x = ~datetime, xend = ~datetime, y = int, yend = ~y),
+                                   data=subset(data,data$parts==cn[4]), lineend = "butt", na.rm = TRUE)
+    p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
+    p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = int, parts = cn[4]))
+    
+    # Add axis labels
+    p <- p + ggAddExtras(main = paste("Decomposition of",object$type,"time series"), xlab="Time",
                          ylab="")
-
+    
+    # Make x axis contain only whole numbers (e.g., years)
+    p <- p + ggplot2::scale_x_continuous(breaks=unique(round(pretty(data$datetime))))
+    
     return(p)
   }
 }
@@ -665,7 +683,13 @@ gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray"
         if(is.null(sname)){
           sname <- deparse(match.call()$x)
         }
-        data <- rbind(data, data.frame(lagnum = 1:(n-lagi), freqcur = ifelse(rep(seasonal,n-lagi),linecol[(lagi+1):n],(lagi+1):n), orig = x[(lagi+1):n,i], lagged = x[1:(n-lagi),i], lagVal = factor(rep(lagi, n-lagi)), series = factor(rep(sname, n-lagi))))
+        data <- rbind(data,
+                      data.frame(lagnum = 1:(n-lagi),
+                                 freqcur = ifelse(rep(seasonal,n-lagi), linecol[1:(n-lagi)], 1:(n-lagi)),
+                                 orig = x[1:(n-lagi),i],
+                                 lagged = x[(lagi+1):n,i],
+                                 lagVal = factor(rep(lagi, n-lagi)),
+                                 series = factor(rep(sname, n-lagi))))
       }
     }
     if(!continuous){
@@ -673,7 +697,7 @@ gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray"
     }
 
     #Initialise ggplot object
-    p <- ggplot2::ggplot(ggplot2::aes_(x=~orig, y=~lagged), data=data)
+    p <- ggplot2::ggplot(ggplot2::aes_(x=~lagged, y=~orig), data=data)
 
     if(diag){
       p <- p + ggplot2::geom_abline(colour=diag.col, linetype="dashed")
@@ -783,9 +807,13 @@ gglagchull <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray
 }
 
 ggmonthplot <- function (x, labels = NULL, times = time(x), phase = cycle(x), ...){
+  ggsubseriesplot(x, labels, times, phase, ...)
+}
+
+ggsubseriesplot <- function (x, labels = NULL, times = time(x), phase = cycle(x), ...){
   if (requireNamespace("ggplot2")){
     if (!inherits(x, "ts")){
-      stop("ggmonthplot requires a ts object, use x=object")
+      stop("ggsubseriesplot requires a ts object, use x=object")
     }
 
     data <- data.frame(y=as.numeric(x),year=factor(trunc(time(x))),season=as.numeric(phase))
@@ -937,6 +965,8 @@ autoplot.stl <- function (object, labels = NULL, ...){
     if (!inherits(object, "stl")){
       stop("autoplot.stl requires a stl object, use x=object")
     }
+    # Re-order series as trend, seasonal, remainder
+    object$time.series <- object$time.series[,c("trend","seasonal","remainder")]
     if(is.null(labels)){
       labels <- colnames(object$time.series)
     }
@@ -950,11 +980,11 @@ autoplot.stl <- function (object, labels = NULL, ...){
     p <- ggplot2::ggplot(ggplot2::aes_(x=~datetime, y=~y), data=data)
 
     #Add data
-    p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~y), data=subset(data,data$parts!="remainder"), na.rm=TRUE)
+    p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~y), data=subset(data,data$parts!=cn[4]), na.rm=TRUE)
     p <- p + ggplot2::geom_segment(ggplot2::aes_(x = ~datetime, xend = ~datetime, y = 0, yend = ~y),
-                                   data=subset(data,data$parts=="remainder"), lineend = "butt")
+                                   data=subset(data,data$parts==cn[4]), lineend = "butt")
     p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
-    p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = 0, parts = "remainder"))
+    p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = 0, parts = cn[4]))
 
     # Add axis labels
     p <- p + ggAddExtras(xlab="Time", ylab="")
@@ -963,6 +993,53 @@ autoplot.stl <- function (object, labels = NULL, ...){
     p <- p + ggplot2::scale_x_continuous(breaks=unique(round(pretty(data$datetime))))
 
     return(p)
+  }
+}
+
+
+autoplot.seas <- function (object, labels = NULL, ...){
+  if (requireNamespace("ggplot2")){
+    if (!inherits(object, "seas")){
+      stop("autoplot.seas requires a seas object")
+    }
+    if(is.null(labels)){
+      labels <- c("seasonal", "trend", "remainder")
+    }
+    
+    data <- object$data[,c("final", "seasonal", "trend", "irregular")]
+    cn <- c("data",labels)
+    data <- data.frame(datetime=rep(time(data),NCOL(data)), y=c(data),
+                       parts=factor(rep(cn, each=NROW(data)), levels=cn))
+    
+    #Initialise ggplot object
+    p <- ggplot2::ggplot(ggplot2::aes_(x=~datetime, y=~y), data=data)
+    
+    #Add data
+    p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~y), data=subset(data,data$parts!=cn[4]), na.rm=TRUE)
+    p <- p + ggplot2::geom_segment(ggplot2::aes_(x = ~datetime, xend = ~datetime, y = 1, yend = ~y),
+                                   data=subset(data,data$parts==cn[4]), lineend = "butt")
+    p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
+    p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = 1, parts = cn[4]))
+    
+    # Add axis labels
+    p <- p + ggAddExtras(xlab="Time", ylab="")
+    
+    # Make x axis contain only whole numbers (e.g., years)
+    p <- p + ggplot2::scale_x_continuous(breaks=unique(round(pretty(data$datetime))))
+    
+    return(p)
+  }
+}
+
+ggts <- function(object, colour=TRUE){
+  tsdata <- data.frame(timeVal = as.numeric(time(object)), 
+                       series = deparse(substitute(object)),
+                       seriesVal = as.numeric(object))
+  if(colour){
+    ggplot2::geom_line(ggplot2::aes_(x=~timeVal, y=~seriesVal, group=~series, colour=~series), data=tsdata)
+  }
+  else{
+    ggplot2::geom_line(ggplot2::aes_(x=~timeVal, y=~seriesVal, group=~series), data=tsdata)
   }
 }
 
@@ -980,7 +1057,7 @@ autoplot.ts <- function(object, ...){
     p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x), data=data)
 
     #Add data
-    p <- p + ggplot2::geom_line()
+    p <- p + ggplot2::geom_line(na.rm = TRUE)
 
     # Add labels
     p <- p + ggAddExtras(xlab="Time", ylab=deparse(substitute(object)))
@@ -1002,11 +1079,11 @@ autoplot.mts <- function(object, facets=FALSE, ...){
     p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x), data=data)
     if(facets){
       p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x, group=~series), data=data)
-      p <- p + ggplot2::geom_line() + ggplot2::facet_grid(series~., scales = "free_y")
+      p <- p + ggplot2::geom_line(na.rm = TRUE) + ggplot2::facet_grid(series~., scales = "free_y")
     }
     else{
       p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x, group=~series, colour=~series), data=data)
-      p <- p + ggplot2::geom_line()
+      p <- p + ggplot2::geom_line(na.rm = TRUE)
     }
 
     p <- p + ggAddExtras(xlab="Time", ylab=deparse(substitute(object)))

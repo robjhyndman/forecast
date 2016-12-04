@@ -17,7 +17,9 @@ seasonal <- function(object)
       season <- InvBoxCox(season, object$lambda)
     tsp(season) <- tsp(comp)
     return(season)
-  }
+	}
+  else if("seas" %in% class(object))
+    return(object$data[,"seasonal"])
   else
     stop("Unknown object type")
 }
@@ -35,6 +37,8 @@ trendcycle <- function(object)
 #       trnd <- InvBoxCox(trnd, object$lambda)
 #     return(trnd)
 #   }
+  else if("seas" %in% class(object))
+    return(seasonal::trend(object))
 	else
 	  stop("Unknown object type")
 }
@@ -55,6 +59,8 @@ remainder <- function(object)
 #     tsp(irreg) <- tsp(comp)
 #     return(irreg)
 #   }
+  else if("seas" %in% class(object))
+    return(seasonal::irregular(object))
 	else
 	  stop("Unknown object type")
 }
