@@ -204,7 +204,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     bestfit$lambda <- lambda
     bestfit$x <- orig.x
     bestfit$series <- series
-    bestfit$fitted <- fitted(bestfit, biasadj)
+    bestfit$fitted <- fitted(bestfit)
     return(bestfit)
   }
 
@@ -470,7 +470,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   bestfit$call <- match.call()
   bestfit$call$x <- data.frame(x=x)
   bestfit$lambda <- lambda
-  bestfit$fitted <- fitted(bestfit, biasadj)
+  bestfit$fitted <- fitted(bestfit)
 
   if(trace)
     cat("\n\n Best model:",arima.string(bestfit, padding=TRUE),"\n\n")

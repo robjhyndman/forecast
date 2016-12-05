@@ -349,7 +349,7 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
   }
   colnames(lower)=colnames(upper)=paste(level, "%", sep="")
   method <- arima.string(object, padding=FALSE)
-  fits <- fitted(object, biasadj)
+  fits <- fitted(object)
   if(!is.null(lambda) & is.null(object$constant))  { # Back-transform point forecasts and prediction intervals
     pred$pred <- InvBoxCox(pred$pred, lambda, biasadj, var(residuals(object), na.rm=TRUE))
     if(!bootstrap) { # Bootstrapped intervals already back-transformed
@@ -451,23 +451,22 @@ arima.errors <- function(object)
 }
 
 # Return one-step fits
-fitted.Arima <- function(object, biasadj = NULL, h = 1, ...)
+fitted.Arima <- function(object, h = 1, ...)
 {
   if(h==1){
     x <- getResponse(object)
     if(!is.null(object$fitted)){
       return(object$fitted)
     }
-    if(is.null(x))
-    {
+    else if(is.null(x)){
       #warning("Fitted values are unavailable due to missing historical data")
       return(NULL)
     }
-    if(is.null(object$lambda)){
+    else if(is.null(object$lambda)){
       return(x - object$residuals)
     }
     else{
-      fits <- InvBoxCox(BoxCox(x,object$lambda) - object$residuals, object$lambda, biasadj, var(object$residuals))
+      fits <- InvBoxCox(BoxCox(x,object$lambda) - object$residuals, object$lambda, NULL, var(object$residuals))
       return(fits)
     }
   }
@@ -569,7 +568,7 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
     tmp$sigma2 <- sum(tmp$residuals^2, na.rm=TRUE) / (nstar - npar + 1)
   }
   out <- structure(tmp, class=c("ARIMA","Arima"))
-  out$fitted <- fitted(out, biasadj)
+  out$fitted <- fitted(out)
   return(out)
 }
 
