@@ -1,8 +1,8 @@
-\name{tscv}
-\alias{tscv}
+\name{tsCV}
+\alias{tsCV}
 \title{Time series cross-validation}
 \usage{
-tscv(y, forecastfunction, h, ...)
+tsCV(y, forecastfunction, h, ...)
 }
 
 \arguments{
@@ -18,11 +18,12 @@ tscv(y, forecastfunction, h, ...)
 
 \details{Let \code{y} contain the time series \eqn{y_1,\dots,y_T}{y[1:T]}. Then \code{forecastfunction} is applied successively to the time series \eqn{y_1,\dots,y_t}{y[1:t]}, for \eqn{t=1,\dots,T-h}, making predictions \eqn{\hat{y}_{t+h|t}}{f[t+h]}. The errors are given by \eqn{e_{t+h} = y_{t+h}-\hat{y}_{t+h|t}}{e[t+h] = y[t+h]-f[t+h]}. These are returned as a vector, \eqn{e_1,\dots,e_T}{e[1:T]}. The first few errors may be missing as it may not be possible to apply \code{forecastfunction} to very short time series.}
 
+\seealso{\link{CV}, \link{CVar}, \link{residuals.Arima}.}
 
 \author{Rob J Hyndman}
 \examples{
 #Fit an AR(2) model to each subset
 far2 <- function(x, h){forecast(Arima(x, order=c(2,0,0)), h=h)}
-e <- tscv(lynx, far2, h=1)
+e <- tsCV(lynx, far2, h=1)
 }
 \keyword{ts}
