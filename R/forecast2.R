@@ -81,7 +81,7 @@ BoxCox <- function(x,lambda)
   return(out)  
 }
 
-InvBoxCox <- function(x,lambda)
+InvBoxCox <- function(x, lambda, biasadj=FALSE, fvar=NULL)
 {
   if(lambda < 0)
     x[x > -1/lambda] <- NA
@@ -94,10 +94,42 @@ InvBoxCox <- function(x,lambda)
   }
   if(!is.null(colnames(x)))
     colnames(out) <- colnames(x)
-  return(out)  
+  
+  if(is.null(biasadj)){
+    biasadj <- attr(lambda, "biasadj")  
+  }   
+  if(!is.logical(biasadj)){
+    warning("biasadj information not found, defaulting to FALSE.")
+    biasadj <- FALSE  
+  }  
+  if(biasadj){
+    if(is.null(fvar)){
+      stop("fvar must be provided when biasadj=TRUE")
+    }
+    if(is.list(fvar)){ #Create fvar from forecast interval
+      level <- max(fvar$level)
+    if(NCOL(fvar$upper)>1 & NCOL(fvar$lower)){
+        i <- match(level,fvar$level)
+        fvar$upper <- fvar$upper[,i]
+        fvar$lower <- fvar$lower[,i]
+      }
+      if(level>1)
+        level <- level/100    
+      level <- mean(c(level,1))
+      #Note: Use BoxCox transformed upper and lower values
+      fvar <- ((fvar$upper-fvar$lower)/stats::qnorm(level)/2)^2
+    }
+    if(is.matrix(fvar)){
+      fvar <- diag(fvar)
+    }
+    out <- out * (1 + 0.5*fvar*(1-lambda)/(out)^(2*lambda))
+  }
+  return(out)
 }
 
+#Deprecated
 InvBoxCoxf <- function(x=NULL, fvar=NULL, lambda=NULL){
+  message("Deprecated, use InvBoxCox instead")
   if(is.null(lambda))
     stop("Must specify lambda using lambda=numeric(1)")
   if(is.null(fvar))
