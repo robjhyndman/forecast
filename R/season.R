@@ -194,7 +194,12 @@ stlm <- function(y ,s.window=7, robust=FALSE, method=c("ets","arima"), modelfunc
     else if(inherits(model$model, "Arima")){
       modelfunction <- function(x,...){return(Arima(x,model=model$model, ...))}
     }
-    else{
+    else if(!is.null(model$modelfunction)){
+      if("method"%in%names(formals(model$modelfunction))){
+        modelfunction <- function(x,...){return(model$modelfunction(x,model=model$model, ...))}
+      }
+    }
+    if(is.null(modelfunction){
       stop("Unknown model type")
     }
   }
@@ -233,8 +238,8 @@ stlm <- function(y ,s.window=7, robust=FALSE, method=c("ets","arima"), modelfunc
     attr(lambda, "biasadj") <- biasadj
   }
 
-  return(structure(list(stl=stld,model=fit, lambda=lambda, x=origx, m=frequency(origx),
-     fitted=fits, residuals=res),class="stlm"))
+  return(structure(list(stl=stld, model=fit, modelfunction=modelfunction, lambda=lambda,
+                        x=origx, m=frequency(origx), fitted=fits, residuals=res),class="stlm"))
 }
 
 forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE,
