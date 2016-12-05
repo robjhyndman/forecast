@@ -305,6 +305,7 @@ fitSpecificTBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.per
     e <- fitted.values.and.errors$e
     variance <- sum((e*e))/length(y)
     fitted.values <- InvBoxCox(fitted.values.and.errors$y.hat, lambda=lambda, biasadj, variance)
+    attr(lambda, "biasadj") <- biasadj
     #e <- InvBoxCox(e, lambda=lambda)
     ee <- y-fitted.values
 
