@@ -60,9 +60,10 @@ CVar <- function(y, k=10, FUN=nnetar, cvtrace=FALSE, ...){
   }
   out$k <- k
   ## calculate mean acuracy accross all folds
-  out$CVmean <- matrix(apply(cvacc, 2, FUN=mean, na.rm=TRUE), dimnames=list(colnames(acc), "Mean"))
+  CVmean <- matrix(apply(cvacc, 2, FUN=mean, na.rm=TRUE), dimnames=list(colnames(acc), "Mean"))
   ## calculate accuracy sd accross all folds --- include?
-  out$CVsd <- matrix(apply(cvacc, 2, FUN=sd, na.rm=TRUE), dimnames=list(colnames(acc), "SD"))
+  CVsd <- matrix(apply(cvacc, 2, FUN=sd, na.rm=TRUE), dimnames=list(colnames(acc), "SD"))
+  out$CVsummary <- cbind(CVmean,CVsd)
   ## what class to set? e.g.
   return(structure(out, class=c("CVar", class(trainmodel))))
 }
@@ -74,7 +75,6 @@ print.CVar <- function(x, ...){
   ## Print number of folds
   cat(x$k, "-fold cross-validation\n", sep="")
   ## Print mean & sd accuracy() results
-  print(x$CVmean)
-  print(x$CVsd)
+  print(x$CVsummary)
   invisible(x)
 }
