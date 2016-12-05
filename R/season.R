@@ -199,7 +199,7 @@ stlm <- function(y ,s.window=7, robust=FALSE, method=c("ets","arima"), modelfunc
         modelfunction <- function(x,...){return(model$modelfunction(x,model=model$model, ...))}
       }
     }
-    if(is.null(modelfunction){
+    if(is.null(modelfunction)){
       stop("Unknown model type")
     }
   }
