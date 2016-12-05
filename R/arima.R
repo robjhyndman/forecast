@@ -349,7 +349,7 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
   }
   colnames(lower)=colnames(upper)=paste(level, "%", sep="")
   method <- arima.string(object, padding=FALSE)
-  fits <- fitted(object, biasadj)
+  fits <- fitted(object)
   if(!is.null(lambda) & is.null(object$constant))  { # Back-transform point forecasts and prediction intervals
     pred$pred <- InvBoxCox(pred$pred, lambda, biasadj, var(residuals(object), na.rm=TRUE))
     if(!bootstrap) { # Bootstrapped intervals already back-transformed
@@ -568,7 +568,7 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
     tmp$sigma2 <- sum(tmp$residuals^2, na.rm=TRUE) / (nstar - npar + 1)
   }
   out <- structure(tmp, class=c("ARIMA","Arima"))
-  out$fitted <- fitted(out, biasadj)
+  out$fitted <- fitted(out)
   return(out)
 }
 
