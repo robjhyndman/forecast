@@ -28,5 +28,12 @@ if(require(testthat))
     fit <- ets(USAccDeaths, lambda = 0.5, biasadj = TRUE)
     expect_true(all.equal(forecast(fit), forecast(fit, biasadj=TRUE)))
     
+    #bats
+    fit <- bats(USAccDeaths, use.box.cox = TRUE, biasadj = TRUE)
+    expect_true(all.equal(forecast(fit), forecast(fit, biasadj=TRUE)))
+    
+    #tbats
+    fit <- tbats(USAccDeaths, use.box.cox = TRUE, biasadj = TRUE)
+    expect_true(all.equal(forecast(fit), forecast(fit, biasadj=TRUE)))
   })
 }

@@ -27,16 +27,16 @@ fitPreviousBATSModel <- function (y, model, biasadj=FALSE) {
   F <- makeFMatrix(alpha=alpha, beta=beta.v, small.phi <- small.phi, seasonal.periods=seasonal.periods, gamma.bold.matrix=g$gamma.bold.matrix, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
   #2. Calculate!
   y.touse <- y
-  if (is.null(lambda) == FALSE) {
+  if (!is.null(lambda)) {
     y.touse <- BoxCox(y, lambda=lambda)
   }
   fitted.values.and.errors <- calcModel(y.touse, model$seed.states, F, g$g, w)
   e <- fitted.values.and.errors$e
   fitted.values <- fitted.values.and.errors$y.hat
-  if (is.null(lambda) == FALSE) {
-    fitted.values <- InvBoxCox(fitted.values, lambda=lambda, biasadj, var(e))
-  }
   variance <- sum((e*e))/length(y)
+  if (!is.null(lambda)) {
+    fitted.values <- InvBoxCox(fitted.values, lambda=lambda, biasadj, variance)
+  }
 
   model.for.output <- model
   model.for.output$variance = variance
@@ -47,7 +47,7 @@ fitPreviousBATSModel <- function (y, model, biasadj=FALSE) {
   return(model.for.output)
 }
 
-fitSpecificBATS <- function(y, use.box.cox, biasadj=FALSE, use.beta, use.damping, seasonal.periods=NULL, starting.params=NULL, x.nought=NULL, ar.coefs=NULL, ma.coefs=NULL, init.box.cox=NULL, bc.lower=0, bc.upper=1) {
+fitSpecificBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.periods=NULL, starting.params=NULL, x.nought=NULL, ar.coefs=NULL, ma.coefs=NULL, init.box.cox=NULL, bc.lower=0, bc.upper=1, biasadj=FALSE) {
   if(!is.null(seasonal.periods)) {
     seasonal.periods <- as.integer(sort(seasonal.periods))
   }
@@ -251,8 +251,9 @@ fitSpecificBATS <- function(y, use.box.cox, biasadj=FALSE, use.beta, use.damping
     y.transformed <- BoxCox(y, lambda=lambda)
     fitted.values.and.errors <- calcModel(y.transformed, x.nought, F, g$g, w)
     e <- fitted.values.and.errors$e
-    fitted.values <- InvBoxCox(fitted.values.and.errors$y.hat, lambda=lambda, biasadj, var(e))
     variance <- sum((e*e))/length(y)
+    fitted.values <- InvBoxCox(fitted.values.and.errors$y.hat, lambda=lambda, biasadj, variance)
+    attr(lambda, "biasadj") <- biasadj
     #e <- InvBoxCox(e, lambda=lambda)
     #ee <- y-fitted.values
 
