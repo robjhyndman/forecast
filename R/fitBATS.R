@@ -34,7 +34,7 @@ fitPreviousBATSModel <- function (y, model, biasadj=FALSE) {
   e <- fitted.values.and.errors$e
   fitted.values <- fitted.values.and.errors$y.hat
   if (!is.null(lambda)) {
-    fitted.values <- InvBoxCox(fitted.values, lambda=lambda, biasadj, var(e))
+    fitted.values <- InvBoxCox(fitted.values, lambda=lambda, biasadj, var(c(e)))
   }
   variance <- sum((e*e))/length(y)
 
