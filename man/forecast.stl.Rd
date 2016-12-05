@@ -6,7 +6,7 @@
 \title{Forecasting using stl objects}
 \usage{
 stlm(y, s.window=7, robust=FALSE, method=c("ets","arima"), 
-     modelfunction=NULL, etsmodel="ZZN", lambda=NULL, xreg=NULL, 
+     modelfunction=NULL, etsmodel="ZZN", lambda=NULL, biasadj=FALSE, xreg=NULL, 
      allow.multiplicative.trend=FALSE, x=y, ...)
 stlf(y, h=frequency(x)*2, s.window=7, t.window=NULL, robust=FALSE,
     lambda=NULL, biasadj=FALSE, x=y, ...)

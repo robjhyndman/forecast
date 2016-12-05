@@ -219,6 +219,10 @@ stlm <- function(y ,s.window=7, robust=FALSE, method=c("ets","arima"),
   # Fitted values and residuals
   fits <- fitted(fit) + stld$time.series[,"seasonal"]
   res <- residuals(fit)
+  if(!is.null(lambda)){
+    fits <- InvBoxCox(fits, lambda, biasadj, var(res))
+    attr(lambda, "biasadj") <- biasadj
+  }
 
   return(structure(list(stl=stld,model=fit, lambda=lambda, x=origx, m=frequency(origx),
      fitted=fits, residuals=res),class="stlm"))
