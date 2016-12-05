@@ -28,13 +28,10 @@ CVar <- function(y, k=10, FUN=nnetar, cvtrace=FALSE, ...){
   k <- min(as.integer(k), nx)
   if(k <= 1L)
     stop("k must be at least 2")
-  ## capture arguments to pass to FUN
-  funargs <- list(...)
-  funargs$x <- y
+  # Set up folds
   ind <- seq_len(nx)
   fold <- sample(rep(1:k, length.out=nx))
 
-  ## xfit <- x  # out-of-sample for full series?
   cvacc <- matrix(NA_real_, nrow=k, ncol=7)
   out <- list()
   for (i in 1:k)
