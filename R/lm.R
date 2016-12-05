@@ -28,12 +28,16 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
     }
   }
   
-  ## Quick fix for `...` scoping issue, consider re-doing.
-  formula <- stats::reformulate(attr(mt, "term.labels"), response = vars[[attr(mt, "response") + 1]], intercept = attr(mt, "intercept"))
+  ## Fix formula's environment for correct `...` scoping.
+  attr(formula, ".Environment") <- environment()
   
   if(sum(c(tsvar, fnvar))>0){
     #Remove variables not needed in data (trend+season+functions)
-    vars <- vars[-c(tsvar, fnvar)]
+    rmvar <- c(tsvar, fnvar)
+    rmvar <- rmvar[rmvar!=attr(mt,"response")+1] #Never remove the reponse variable
+    if(any(rmvar!=0)){
+      vars <- vars[-rmvar]
+    }
   }
   
   ## Grab any variables missing from data
@@ -58,19 +62,15 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
   
   ## Get time series attributes from the data
   if(is.null(tsp(data))){
-    if(is.null(tsp(data[,1]))){#Check for complex ts data.frame
-      if((attr(mt,"intercept")+1)%in%fnvar){#Check unevaluated response variable
-        tspx <- tsp(eval(attr(mt,"variables")[[attr(mt,"intercept")+1]]))
-      }
+    if((attr(mt,"response")+1)%in%fnvar){#Check unevaluated response variable
+      tspx <- tsp(eval(attr(mt,"variables")[[attr(mt,"response")+1]]))
     }
-    else{
-      tspx <- tsp(data[,1])
-    }
+    tspx <- tsp(data[,1])#Check for complex ts data.frame
   }
   else{
     tspx <- tsp(data)
   }
-  if(!exists("tspx")){
+  if(is.null(tspx)){
     stop("Not time series data, use lm()")
   }
   tsdat <- match(c("trend", "season"), cn, 0L)
