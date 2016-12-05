@@ -491,10 +491,9 @@ fitted.Arima <- function(object, biasadj = FALSE, h = 1, ...)
 # Calls arima from stats package and adds data to the returned object
 # Also allows refitting to new data
 # and drift terms to be included.
-Arima <- function(y, order=c(0, 0, 0),
-      seasonal=c(0, 0, 0),
-      xreg=NULL, include.mean=TRUE, include.drift=FALSE, include.constant, lambda=model$lambda,
-      method=c("CSS-ML", "ML", "CSS"), model=NULL, x=y, ...)
+Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.mean=TRUE,
+                  include.drift=FALSE, include.constant, lambda=model$lambda, biasadj=NULL,
+                  method=c("CSS-ML", "ML", "CSS"), model=NULL, x=y, ...)
 {
     # Remove outliers near ends
     #j <- time(x)
@@ -573,13 +572,15 @@ Arima <- function(y, order=c(0, 0, 0),
   tmp$call <- match.call()
   tmp$lambda <- lambda
   tmp$x <- origx
+  
   # Adjust residual variance to be unbiased
   if(is.null(model))
   {
     tmp$sigma2 <- sum(tmp$residuals^2, na.rm=TRUE) / (nstar - npar + 1)
   }
-
-  return(structure(tmp, class=c("ARIMA","Arima")))
+  out <- structure(tmp, class=c("ARIMA","Arima"))
+  out$fitted <- fitted(out, biasadj)
+  return(out)
 }
 
 # Refits the model to new data x
