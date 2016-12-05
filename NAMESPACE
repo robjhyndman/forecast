@@ -48,7 +48,7 @@ autoplot.decomposed.ts, autoplot.ets, autoplot.forecast, autoplot.mforecast,
 autoplot.splineforecast, autoplot.stl, autoplot.ts, autoplot.mpacf, autoplot.mts,
 autoplot.seas,
 seasonal, trendcycle,remainder,
-fitted.Arima, 
+fitted.Arima,  fitted.bats, fitted.tbats, fitted.ets, fitted.nnetar,
 residuals.ar, residuals.Arima, residuals.bats, residuals.ets, residuals.fracdiff, 
 residuals.forecast, residuals.nnetar, residuals.stlm)
 
