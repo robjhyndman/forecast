@@ -65,10 +65,10 @@ fitPreviousTBATSModel <- function (y, model, biasadj=FALSE) {
   fitted.values.and.errors <- calcModel(y.touse, model$seed.states, F, g, w)
   e <- fitted.values.and.errors$e
   fitted.values <- fitted.values.and.errors$y.hat
-  if (is.null(lambda) == FALSE) {
-    fitted.values <- InvBoxCox(fitted.values, lambda=lambda, biasadj, var(e))
-  }
   variance <- sum((e*e))/length(y)
+  if (!is.null(lambda)) {
+    fitted.values <- InvBoxCox(fitted.values, lambda=lambda, biasadj, variance)
+  }
 
   model.for.output <- model
   model.for.output$variance = variance
@@ -303,8 +303,8 @@ fitSpecificTBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.per
     y.transformed <- BoxCox(y, lambda=lambda)
     fitted.values.and.errors <- calcModel(y.transformed, x.nought, F, g, w)
     e <- fitted.values.and.errors$e
-    fitted.values <- InvBoxCox(fitted.values.and.errors$y.hat, lambda=lambda, biasadj, var(e))
     variance <- sum((e*e))/length(y)
+    fitted.values <- InvBoxCox(fitted.values.and.errors$y.hat, lambda=lambda, biasadj, variance)
     #e <- InvBoxCox(e, lambda=lambda)
     ee <- y-fitted.values
 
