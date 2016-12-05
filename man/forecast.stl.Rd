@@ -5,8 +5,8 @@
 \alias{forecast.stlm}
 \title{Forecasting using stl objects}
 \usage{
-stlm(y, s.window=7, robust=FALSE, method=c("ets","arima"), 
-     modelfunction=NULL, etsmodel="ZZN", lambda=NULL, biasadj=FALSE, xreg=NULL, 
+stlm(y, s.window=7, robust=FALSE, method=c("ets","arima"), modelfunction=NULL,
+     model=NULL, etsmodel="ZZN", lambda=NULL, biasadj=FALSE, xreg=NULL, 
      allow.multiplicative.trend=FALSE, x=y, ...)
 stlf(y, h=frequency(x)*2, s.window=7, t.window=NULL, robust=FALSE,
     lambda=NULL, biasadj=FALSE, x=y, ...)
@@ -26,6 +26,7 @@ stlf(y, h=frequency(x)*2, s.window=7, t.window=NULL, robust=FALSE,
 \item{method}{Method to use for forecasting the seasonally adjusted series.}
 \item{modelfunction}{An alternative way of specifying the function for modelling the seasonally adjusted series. If \code{modelfunction} is not \code{NULL}, then \code{method} is
 ignored. Otherwise \code{method} is used to specify the time series model to be used.}
+\item{model}{Output from a previous call to \code{stlm}. If a \code{stlm} model is passed, this same model is fitted to y without re-estimating any parameters.}
 \item{forecastfunction}{An alternative way of specifying the function for forecasting the seasonally adjusted series. If \code{forecastfunction} is not \code{NULL}, then \code{method} is
 ignored. Otherwise \code{method} is used to specify the forecasting method to be used.}
 \item{etsmodel}{The ets model specification passed to \code{\link[forecast]{ets}}. By default it allows any non-seasonal model. If \code{method!="ets"}, this argument is ignored.}
