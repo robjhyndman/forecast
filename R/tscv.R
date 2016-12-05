@@ -44,11 +44,8 @@ CVar <- function(y, k=10, FUN=nnetar, cvtrace=FALSE, ...){
     testfit <- fitted(testmodel)
     acc <- accuracy(y, testfit, test=testset)
     cvacc[i, ] <- acc
-    ##
     out[[paste0("fold", i)]]$model <- trainmodel
     out[[paste0("fold", i)]]$accuracy <- acc
-    ## include full series?
-    ## xfit[testset] <- testfit[testset]
     if (isTRUE(cvtrace)){
       cat("Fold", i, "\n")
       print(acc)
@@ -61,16 +58,21 @@ CVar <- function(y, k=10, FUN=nnetar, cvtrace=FALSE, ...){
   ## calculate accuracy sd accross all folds --- include?
   CVsd <- matrix(apply(cvacc, 2, FUN=sd, na.rm=TRUE), dimnames=list(colnames(acc), "SD"))
   out$CVsummary <- cbind(CVmean,CVsd)
-  ## what class to set? e.g.
+  out$series <- deparse(substitute(y))
+  out$call <- match.call()
   return(structure(out, class=c("CVar", class(trainmodel))))
 }
 
-print.CVar <- function(x, ...){
+print.CVar <- function(x, ...)
+{
+  cat("Series:", x$series, "\n")
+  cat("Call:   ")
+  print(x$call)
   ## Add info about series, function, and parameters
   ## Add note about any NA/NaN in folds?
   ##
   ## Print number of folds
-  cat(x$k, "-fold cross-validation\n", sep="")
+  cat("\n",x$k, "-fold cross-validation\n", sep="")
   ## Print mean & sd accuracy() results
   print(x$CVsummary)
   invisible(x)
