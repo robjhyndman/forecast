@@ -195,7 +195,7 @@ stlm <- function(y ,s.window=7, robust=FALSE, method=c("ets","arima"), modelfunc
       modelfunction <- function(x,...){return(Arima(x,model=model$model, ...))}
     }
     else if(!is.null(model$modelfunction)){
-      if("method"%in%names(formals(model$modelfunction))){
+      if("model"%in%names(formals(model$modelfunction))){
         modelfunction <- function(x,...){return(model$modelfunction(x,model=model$model, ...))}
       }
     }
