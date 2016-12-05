@@ -451,26 +451,10 @@ getxreg <- function(z)
 }
 
 # Extract errors from ARIMA model (as distinct from residuals)
-arima.errors <- function(z)
+arima.errors <- function(object)
 {
-  if(!is.list(z))
-    stop("z must be a list")
-    x <- getResponse(z)
-  if(!is.null(z$lambda))
-    x <- BoxCox(x,z$lambda)
-  xreg <- getxreg(z)
-  # Remove intercept
-  if(is.element("intercept",names(z$coef)))
-    xreg <- cbind(rep(1,length(x)),xreg)
-  # Return errors
-  if(is.null(xreg))
-    return(x)
-  else
-  {
-    norder <- sum(z$arma[1:4])
-    return(ts(c(x - xreg %*% as.matrix(z$coef[(norder+1):length(z$coef)])),
-      frequency=frequency(x),start=start(x)))
-  }
+  message("Deprecated, use residuals.Arima(object, type='regression') instead")
+  residuals(object, type='regression')
 }
 
 # Return one-step fits
