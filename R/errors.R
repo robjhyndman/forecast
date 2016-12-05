@@ -87,7 +87,7 @@ testaccuracy <- function(f,x,test,d,D)
   {
     fpe <- (c(ff[2:n])/c(xx[1:(n-1)]) - 1)[test-1]
     ape <- (c(xx[2:n])/c(xx[1:(n-1)]) - 1)[test-1]
-    theil <- sqrt(sum((fpe - ape)^2)/sum(ape^2))
+    theil <- sqrt(sum((fpe - ape)^2, na.rm=TRUE)/sum(ape^2, na.rm=TRUE))
     if(length(error) > 1)
       r1 <- acf(error,plot=FALSE,lag.max=2,na.action=na.pass)$acf[2,1,1]
     else
