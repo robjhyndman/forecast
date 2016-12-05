@@ -1,4 +1,4 @@
-forecast.bats <- function(object, h, level=c(80,95), fan=FALSE, biasadj=FALSE, ...)
+forecast.bats <- function(object, h, level=c(80,95), fan=FALSE, biasadj=NULL, ...)
 {
   #Set up the variables
   if(any(class(object$y) == "ts"))
@@ -74,10 +74,7 @@ forecast.bats <- function(object, h, level=c(80,95), fan=FALSE, biasadj=FALSE, .
 	#Inv Box Cox transform if required
 	if(!is.null(object$lambda))
 	{
-	  y.forecast <- InvBoxCox(y.forecast,object$lambda)
-	  if(biasadj){
-	    y.forecast <- InvBoxCoxf(x = list(level = level, mean = y.forecast, upper = upper.bounds, lower = lower.bounds), lambda = object$lambda)
-	  }
+	  y.forecast <- InvBoxCox(y.forecast, object$lambda, biasadj, list(level = level, upper = upper.bounds, lower = lower.bounds))
 		lower.bounds <- InvBoxCox(lower.bounds,object$lambda)
 		if(object$lambda < 1) {
 			lower.bounds<-pmax(lower.bounds, 0)

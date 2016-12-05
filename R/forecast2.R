@@ -50,12 +50,7 @@ meanf <- function(y,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE, x
   {
     fits <- InvBoxCox(fits,lambda)
     x <- origx
-    f <- InvBoxCox(f,lambda)
-    if(biasadj)
-    {
-      f <- InvBoxCoxf(x = list(level = level, mean = f, upper = upper, lower = lower), 
-            lambda = lambda)
-    }
+    f <- InvBoxCox(f, lambda, biasadj, list(level = level, upper = upper, lower = lower))
     lower <- InvBoxCox(lower,lambda)
     upper <- InvBoxCox(upper,lambda)
   }  
@@ -155,7 +150,7 @@ InvBoxCoxf <- function(x=NULL, fvar=NULL, lambda=NULL){
   return(x$mean * (1 + 0.5*fvar*(1-lambda)/(x$mean)^(2*lambda)))
 }
 
-forecast.StructTS <- function(object,h=ifelse(object$coef["epsilon"]>1e-10, 2*object$xtsp[3], 10),level=c(80,95),fan=FALSE,lambda=NULL,biasadj=FALSE,...)
+forecast.StructTS <- function(object,h=ifelse(object$coef["epsilon"]>1e-10, 2*object$xtsp[3], 10),level=c(80,95),fan=FALSE,lambda=NULL,biasadj=NULL,...)
 {
   xname <- deparse(substitute(x))
   x <- object$data
@@ -191,12 +186,7 @@ forecast.StructTS <- function(object,h=ifelse(object$coef["epsilon"]>1e-10, 2*ob
   {
     fits <- InvBoxCox(fits,lambda)
     x <- InvBoxCox(x,lambda)
-    pred$pred <- InvBoxCox(pred$pred,lambda)
-    if(biasadj)
-    {
-      pred$pred <- InvBoxCoxf(x = list(level=level, mean=pred$pred, upper=upper, lower=lower), 
-        lambda = lambda)
-    }
+    pred$pred <- InvBoxCox(pred$pred, lambda, biasadj, list(level=level, upper=upper, lower=lower))
     lower <- InvBoxCox(lower,lambda)
     upper <- InvBoxCox(upper,lambda)
   }
@@ -208,7 +198,7 @@ forecast.StructTS <- function(object,h=ifelse(object$coef["epsilon"]>1e-10, 2*ob
 }
 
 forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x)>1,2*frequency(object$x),10),
-  level=c(80,95), fan=FALSE, lambda=NULL, biasadj=FALSE,...)
+  level=c(80,95), fan=FALSE, lambda=NULL, biasadj=NULL,...)
 {
   xname <- deparse(substitute(x))
   x <- object$x
@@ -244,12 +234,7 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x)>1,2*freque
   {
     fitted <- InvBoxCox(object$fitted[,1],lambda)
     x <- InvBoxCox(x,lambda)
-    pmean <- InvBoxCox(pmean,lambda)
-    if(biasadj)
-    {
-      pmean <- InvBoxCoxf(x = list(level = level, mean = pmean, upper = upper, lower = lower), 
-        lambda = lambda)
-    }
+    pmean <- InvBoxCox(pmean, lambda, biasadj, list(level = level, upper = upper, lower = lower))
     lower <- InvBoxCox(lower,lambda)
     upper <- InvBoxCox(upper,lambda)
   }  

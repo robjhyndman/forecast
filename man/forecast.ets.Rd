@@ -3,7 +3,7 @@
 \title{Forecasting using ETS models}
 \usage{\method{forecast}{ets}(object, h=ifelse(object$m>1, 2*object$m, 10), 
     level=c(80,95), fan=FALSE, simulate=FALSE, bootstrap=FALSE, 
-    npaths=5000, PI=TRUE, lambda=object$lambda, biasadj=FALSE, ...)
+    npaths=5000, PI=TRUE, lambda=object$lambda, biasadj=NULL, ...)
 }
 
 \arguments{
@@ -17,7 +17,7 @@ errors.}
 \item{npaths}{Number of sample paths used in computing simulated prediction intervals.}
 \item{PI}{If TRUE, prediction intervals are produced, otherwise only point forecasts are calculated. If \code{PI} is FALSE, then \code{level}, \code{fan}, \code{simulate}, \code{bootstrap} and \code{npaths} are all ignored.}
 \item{lambda}{Box-Cox transformation parameter. Ignored if NULL. Otherwise, forecasts back-transformed via an inverse Box-Cox transformation.}
-\item{biasadj}{Use adjusted back-transformed mean for Box-Cox transformations. If TRUE, point forecasts and fitted values are mean forecast. Otherwise, these points can be considered the median of the forecast densities.}
+\item{biasadj}{Use adjusted back-transformed mean for Box-Cox transformations. If TRUE, point forecasts and fitted values are mean forecast. Otherwise, these points can be considered the median of the forecast densities. By default, the value is taken from what was used when fitting the model.}
 \item{...}{Other arguments.}
 }
 

@@ -28,7 +28,7 @@ mlmsplit <- function(x, index=NULL){
   return(x)
 }
 
-forecast.mlm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, biasadj=FALSE, ts=TRUE, ...)
+forecast.mlm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, biasadj=NULL, ts=TRUE, ...)
 {
   K <- NCOL(object$coefficients)
   y<-attr(object$terms,"response")

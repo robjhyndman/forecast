@@ -88,7 +88,7 @@ seasonaldummyf <- function(x, h)
 forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsmodel="ZZN",
      forecastfunction=NULL,
      h = frequency(object$time.series)*2, level = c(80, 95), fan = FALSE,
-     lambda=NULL, biasadj=FALSE, xreg=NULL, newxreg=NULL, allow.multiplicative.trend=FALSE, ...)
+     lambda=NULL, biasadj=NULL, xreg=NULL, newxreg=NULL, allow.multiplicative.trend=FALSE, ...)
 {
   method <- match.arg(method)
   if(is.null(forecastfunction))
@@ -161,12 +161,10 @@ forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsm
 	{
 		fcast$x <- InvBoxCox(fcast$x,lambda)
 		fcast$fitted <- InvBoxCox(fcast$fitted, lambda)
-		fcast$mean <- InvBoxCox(fcast$mean, lambda)
-		if(biasadj){
-		  fcast$mean <- InvBoxCoxf(fcast, lambda = lambda)
-		}
+		fcast$mean <- InvBoxCox(fcast$mean, lambda, biasadj, fcast)
 		fcast$lower <- InvBoxCox(fcast$lower, lambda)
 		fcast$upper <- InvBoxCox(fcast$upper, lambda)
+		attr(lambda, "biasadj") <- biasadj
 		fcast$lambda <- lambda
 	}
 
@@ -176,8 +174,8 @@ forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsm
 
 # Function takes time series, does STL decomposition, and fits a model to seasonally adjusted series
 # But it does not forecast. Instead, the result can be passed to forecast().
-stlm <- function(y ,s.window=7, robust=FALSE, method=c("ets","arima"),
-     modelfunction=NULL, etsmodel="ZZN", lambda=NULL, xreg=NULL, allow.multiplicative.trend=FALSE, x=y, ...)
+stlm <- function(y ,s.window=7, robust=FALSE, method=c("ets","arima"), modelfunction=NULL, 
+                 etsmodel="ZZN", lambda=NULL, biasadj=FALSE, xreg=NULL, allow.multiplicative.trend=FALSE, x=y, ...)
 {
   method <- match.arg(method)
 
@@ -229,7 +227,7 @@ stlm <- function(y ,s.window=7, robust=FALSE, method=c("ets","arima"),
 }
 
 forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE,
-     lambda=object$lambda, biasadj=FALSE, newxreg=NULL, allow.multiplicative.trend=FALSE, ...)
+     lambda=object$lambda, biasadj=NULL, newxreg=NULL, allow.multiplicative.trend=FALSE, ...)
 {
   if(!is.null(newxreg))
   {
@@ -264,12 +262,10 @@ forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE
   if (!is.null(lambda))
   {
     fcast$fitted <- InvBoxCox(fcast$fitted, lambda)
-    fcast$mean <- InvBoxCox(fcast$mean, lambda)
-    if(biasadj){
-      fcast$mean <- InvBoxCoxf(fcast, lambda = lambda)
-    }
+    fcast$mean <- InvBoxCox(fcast$mean, lambda, biasadj, fcast)
     fcast$lower <- InvBoxCox(fcast$lower, lambda)
     fcast$upper <- InvBoxCox(fcast$upper, lambda)
+    attr(lambda, "biasadj") <- biasadj
     fcast$lambda <- lambda
   }
   fcast$x <- object$x

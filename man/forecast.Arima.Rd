@@ -5,11 +5,11 @@
 \title{Forecasting using ARIMA or ARFIMA models}
 \usage{\method{forecast}{Arima}(object, h=ifelse(object$arma[5]>1,2*object$arma[5],10),
     level=c(80,95), fan=FALSE, xreg=NULL, lambda=object$lambda, 
-    bootstrap=FALSE, npaths=5000, biasadj=FALSE, ...)
+    bootstrap=FALSE, npaths=5000, biasadj=NULL, ...)
 \method{forecast}{ar}(object, h=10, level=c(80,95), fan=FALSE, lambda=NULL, 
-    bootstrap=FALSE, npaths=5000, biasadj=FALSE, ...)
+    bootstrap=FALSE, npaths=5000, biasadj=NULL, ...)
 \method{forecast}{fracdiff}(object, h=10, level=c(80,95), fan=FALSE,
-    lambda=object$lambda, biasadj=FALSE, ...)
+    lambda=object$lambda, biasadj=NULL, ...)
 }
 
 \arguments{
@@ -21,7 +21,7 @@ set to the number of rows of \code{xreg}.}
 \item{fan}{If \code{TRUE}, level is set to \code{seq(51,99,by=3)}. This is suitable for fan plots.}
 \item{xreg}{Future values of an regression variables (for class \code{Arima} objects only).}
 \item{lambda}{Box-Cox transformation parameter. Ignored if NULL. Otherwise, forecasts back-transformed via an inverse Box-Cox transformation.}
-\item{biasadj}{Use adjusted back-transformed mean for Box-Cox transformations. If TRUE, point forecasts and fitted values are mean forecast. Otherwise, these points can be considered the median of the forecast densities.}
+\item{biasadj}{Use adjusted back-transformed mean for Box-Cox transformations. If TRUE, point forecasts and fitted values are mean forecast. Otherwise, these points can be considered the median of the forecast densities. By default, the value is taken from what was used when fitting the model.}
 \item{bootstrap}{If \code{TRUE}, then prediction intervals computed using simulation with resampled errors.}
 \item{npaths}{Number of sample paths used in computing simulated prediction intervals when \code{bootstrap=TRUE}.}
 \item{...}{Other arguments.}
