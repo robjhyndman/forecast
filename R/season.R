@@ -174,7 +174,7 @@ forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsm
 
 # Function takes time series, does STL decomposition, and fits a model to seasonally adjusted series
 # But it does not forecast. Instead, the result can be passed to forecast().
-stlm <- function(y ,s.window=7, robust=FALSE, method=c("ets","arima"), modelfunction=NULL, 
+stlm <- function(y ,s.window=7, robust=FALSE, method=c("ets","arima"), modelfunction=NULL, model=NULL,
                  etsmodel="ZZN", lambda=NULL, biasadj=FALSE, xreg=NULL, allow.multiplicative.trend=FALSE, x=y, ...)
 {
   method <- match.arg(method)
@@ -186,9 +186,20 @@ stlm <- function(y ,s.window=7, robust=FALSE, method=c("ets","arima"), modelfunc
 
   # Do STL decomposition
   stld <- stl(x,s.window=s.window,robust=robust)
-
+  
+  if(!is.null(model)){
+    if(inherits(model$model, "ets")){
+      modelfunction <- function(x,...){return(ets(x,model=model$model, use.initial.values = TRUE, ...))}
+    }
+    else if(inherits(model$model, "Arima")){
+      modelfunction <- function(x,...){return(Arima(x,model=model$model, ...))}
+    }
+    else{
+      stop("Unknown model type")
+    }
+  }
   # Construct modelfunction if not passed as an argument
-  if(is.null(modelfunction))
+  else if(is.null(modelfunction))
   {
     if(method!="arima" & !is.null(xreg))
       stop("xreg arguments can only be used with ARIMA models")
