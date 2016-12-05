@@ -90,10 +90,8 @@ ets <- function(y, model="ZZZ", damped=NULL,
       model$x <- orig.y
       if(!is.null(lambda))
       {
-        model$fitted <- InvBoxCox(model$fitted,lambda)
-        if(biasadj){
-          model$fitted <- InvBoxCoxf(x = model$fitted, fvar = var(model$residuals), lambda = lambda)
-        }
+        model$fitted <- InvBoxCox(model$fitted, lambda, biasadj, var(model$residuals))
+        attr(lambda, "biasadj") <- biasadj
       }
       model$lambda <- lambda
 
@@ -245,15 +243,13 @@ ets <- function(y, model="ZZZ", damped=NULL,
   model$initstate <- model$states[1,]
   model$sigma2 <- mean(model$residuals^2,na.rm=TRUE)
   model$x <- orig.y
-  model$lambda <- lambda
   if(!is.null(lambda))
   {
-    model$fitted <- InvBoxCox(model$fitted,lambda)
-    if(biasadj){
-      model$fitted <- InvBoxCoxf(x = model$fitted, fvar = var(model$residuals), lambda = lambda)
-    }
+    model$fitted <- InvBoxCox(model$fitted,lambda, biasadj, var(model$residuals))
+    attr(lambda, "biasadj") <- biasadj
   }
-
+  
+  model$lambda <- lambda
   #model$call$data <- dataname
 
   return(structure(model,class="ets"))

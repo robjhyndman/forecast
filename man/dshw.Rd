@@ -1,7 +1,7 @@
 \name{dshw}
 \alias{dshw}
 \title{Double-Seasonal Holt-Winters Forecasting}
-\usage{dshw(y, period1, period2, h=2*max(period1,period2),
+\usage{dshw(y, period1=NULL, period2=NULL, h=2*max(period1,period2),
     alpha=NULL, beta=NULL, gamma=NULL, omega=NULL, phi=NULL,
     lambda=NULL, biasadj=FALSE, armethod=TRUE, model = NULL)}
 
@@ -16,7 +16,7 @@
 \item{omega}{Smoothing parameter for the second seasonal period. If \code{NULL}, the parameter is estimated using least squares.}
 \item{phi}{Autoregressive parameter. If \code{NULL}, the parameter is estimated using least squares.}
 \item{lambda}{Box-Cox transformation parameter. Ignored if \code{NULL}. Otherwise, data transformed before model is estimated.}
-\item{biasadj}{Use adjusted back-transformed mean for Box-Cox transformations. If TRUE, point forecasts and fitted values are mean forecast. Otherwise, these points can be considered the median of the forecast densities.}
+\item{biasadj}{Use adjusted back-transformed mean for Box-Cox transformations. If TRUE, point forecasts and fitted values are mean forecast. Otherwise, these points can be considered the median of the forecast densities. By default, the value is taken from what was used when fitting the model.}
 \item{armethod}{If TRUE, the forecasts are adjusted using an AR(1) model for the errors.}
 \item{model}{If it's specified, an existing model is applied to a new data set.}
 }

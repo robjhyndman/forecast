@@ -2,7 +2,7 @@
 \alias{forecast.lm}
 \title{Forecast a linear model with possible time series components}
 \usage{\method{forecast}{lm}(object, newdata, h=10, level=c(80,95), fan=FALSE, 
-    lambda=object$lambda, biasadj=FALSE, ts=TRUE, ...)
+    lambda=object$lambda, biasadj=NULL, ts=TRUE, ...)
 }
 
 \arguments{

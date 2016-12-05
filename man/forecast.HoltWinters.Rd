@@ -2,7 +2,7 @@
 \alias{forecast.HoltWinters}
 \title{Forecasting using Holt-Winters objects}
 \usage{\method{forecast}{HoltWinters}(object, h=ifelse(frequency(object$x)>1,2*frequency(object$x),10),
-    level=c(80,95),fan=FALSE,lambda=NULL, biasadj=FALSE,...)
+    level=c(80,95),fan=FALSE,lambda=NULL, biasadj=NULL,...)
 }
 
 \arguments{

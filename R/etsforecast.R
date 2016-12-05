@@ -1,13 +1,23 @@
 forecast.ets <- function(object, h=ifelse(object$m>1, 2*object$m, 10),
   level=c(80,95), fan=FALSE, simulate=FALSE, bootstrap=FALSE, npaths=5000, PI=TRUE, 
-  lambda=object$lambda, biasadj=FALSE, ...)
+  lambda=object$lambda, biasadj=NULL, ...)
 {
   # Check inputs
   #if(h>2000 | h<=0)
   if(h <= 0)
     stop("Forecast horizon out of bounds")
-  if(is.null(lambda))
+  if(is.null(lambda)){
     biasadj <- FALSE
+  }
+  else{
+    if(is.null(biasadj)){  
+      biasadj <- attr(lambda, "biasadj") 
+    }  
+    if(!is.logical(biasadj)){ 
+      warning("biasadj information not found, defaulting to FALSE.") 
+      biasadj <- FALSE 
+    } 
+  }
   if(!PI & !biasadj)
   {
     simulate <- bootstrap <- fan <- FALSE
@@ -68,7 +78,7 @@ forecast.ets <- function(object, h=ifelse(object$m>1, 2*object$m, 10),
     }
     else if(PI)
       warning("No prediction intervals for this model")
-    else if(biasadj)
+    else if(any(biasadj))
       warning("No bias adjustment possible")
   }
 	
@@ -80,10 +90,7 @@ forecast.ets <- function(object, h=ifelse(object$m>1, 2*object$m, 10),
   {
 	  #out$x <- InvBoxCox(object$x,lambda)
 	  #out$fitted <- InvBoxCox(out$fitted,lambda)
-    out$mean <- InvBoxCox(out$mean,lambda)
-    if(biasadj){
-      out$mean <- InvBoxCoxf(x = out, lambda = lambda)
-    }
+    out$mean <- InvBoxCox(out$mean,lambda, biasadj, out)
 	  if(PI)  # PI = TRUE
 	  {
  		  out$lower <- InvBoxCox(out$lower,lambda)

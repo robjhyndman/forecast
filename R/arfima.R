@@ -114,11 +114,10 @@ arfima <- function(y, drange = c(0, 0.5), estim = c("mle","ls"), lambda = NULL, 
 	fit$x <- orig.x
 	fit$residuals <- undo.na.ends(x,residuals(fit))
 	fit$fitted <- x - fit$residuals
-	if(!is.null(lambda))
-	  fit$fitted <- InvBoxCox(fit$fitted,lambda)
-	  if(biasadj){
-	    fit$fitted <- InvBoxCoxf(fit$fitted, fvar = var(fit$residuals), lambda=lambda)
-	  }
+	if(!is.null(lambda)){
+	  fit$fitted <- InvBoxCox(fit$fitted, lambda, biasadj, var(fit$residuals))
+	  attr(lambda, "biasadj") <- biasadj
+	}
 	fit$lambda <- lambda
 	fit$call <- match.call()
 	return(fit)
@@ -126,7 +125,7 @@ arfima <- function(y, drange = c(0, 0.5), estim = c("mle","ls"), lambda = NULL, 
 
 # Forecast the output of fracdiff() or arfima()
 
-forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, biasadj=FALSE, ...)
+forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, biasadj=NULL, ...) 
 {
 	# Extract data
 	x <- object$x <- getResponse(object)
@@ -232,10 +231,7 @@ forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=ob
 	{
 		x <- InvBoxCox(x,lambda)
 		fits <- InvBoxCox(fits,lambda)
-		mean.fcast <- InvBoxCox(mean.fcast,lambda)
-		if(biasadj){
-		  mean.fcast <- InvBoxCoxf(list(level = level, mean = mean.fcast, upper=upper, lower=lower),lambda=lambda)
-		}
+		mean.fcast <- InvBoxCox(mean.fcast, lambda, biasadj, list(level = level, upper=upper, lower=lower))
 		lower <- InvBoxCox(lower,lambda)
 		upper <- InvBoxCox(upper,lambda)
 	}

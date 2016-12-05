@@ -133,10 +133,7 @@ splinef <- function(y, h=10, level=c(80,95), fan=FALSE, lambda=NULL, biasadj=FAL
 
 	if(!is.null(lambda))
 	{
-	  Yhat <- InvBoxCox(Yhat,lambda)
-	  if(biasadj){
-	    Yhat <- InvBoxCoxf(x = list(level = level, mean = Yhat, upper = upper, lower = lower), lambda = lambda)
-	  }
+	  Yhat <- InvBoxCox(Yhat, lambda, biasadj, list(level = level, upper = upper, lower = lower))
 		upper <- InvBoxCox(upper,lambda)
 		lower <- InvBoxCox(lower,lambda)
 		yfit <- InvBoxCox(yfit,lambda)

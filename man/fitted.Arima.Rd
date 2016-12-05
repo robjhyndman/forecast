@@ -5,7 +5,7 @@
 \alias{fitted.ets}
 \alias{fitted.nnetar}
 \title{h-step in-sample forecasts for time series models.}
-\usage{\method{fitted}{Arima}(object, biasadj=FALSE, h=1, ...)
+\usage{\method{fitted}{Arima}(object, biasadj=NULL, h=1, ...)
 \method{fitted}{bats}(object, h=1, ...)
 \method{fitted}{tbats}(object, h=1, ...)
 \method{fitted}{ets}(object, h=1, ...)
@@ -14,7 +14,7 @@
 
 \arguments{
 \item{object}{An object of class "\code{Arima}", "\code{bats}", "\code{tbats}", "\code{ets}" or "\code{nnetar}".}
-\item{biasadj}{Use adjusted back-transformed mean for Box-Cox transformations. If TRUE, point forecasts and fitted values are mean forecast. Otherwise, these points can be considered the median of the forecast densities.}
+\item{biasadj}{Use adjusted back-transformed mean for Box-Cox transformations. If TRUE, point forecasts and fitted values are mean forecast. Otherwise, these points can be considered the median of the forecast densities. By default, the value is taken from what was used when fitting the model.}
 \item{h}{The number of steps to forecast ahead.}
 \item{...}{Other arguments.}
 }

@@ -138,10 +138,8 @@ dshw <- function(y, period1=NULL, period2=NULL, h=2*max(period1,period2),
   if(!is.null(lambda))
   {
     y <- origy
-    fcast <- InvBoxCox(fcast,lambda)
-    if(biasadj){
-      fcast <- InvBoxCoxf(x = fcast, fvar = var(e), lambda = lambda)
-    }
+    fcast <- InvBoxCox(fcast, lambda, biasadj, var(e))
+    attr(lambda, "biasadj") <- biasadj
     #Does this also need a biasadj backtransform?
     yhat <- InvBoxCox(yhat,lambda)
   }

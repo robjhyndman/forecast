@@ -4,8 +4,8 @@
 \usage{
 Arima(y, order=c(0,0,0), seasonal=c(0,0,0),
     xreg=NULL, include.mean=TRUE, include.drift=FALSE, 
-    include.constant, lambda=model$lambda, method=c("CSS-ML","ML","CSS"), 
-    model=NULL, x=y,...)
+    include.constant, lambda=model$lambda, biasadj=FALSE,
+    method=c("CSS-ML","ML","CSS"), model=NULL, x=y,...)
 }
 
 \arguments{
@@ -18,6 +18,7 @@ Arima(y, order=c(0,0,0), seasonal=c(0,0,0),
     The default is FALSE.}
 \item{include.constant}{If TRUE, then \code{include.mean} is set to be TRUE for undifferenced series and \code{include.drift} is set to be TRUE for differenced series. Note that if there is more than one difference taken, no constant is included regardless of the value of this argument. This is deliberate as otherwise quadratic and higher order polynomial trends would be induced.}
 \item{lambda}{Box-Cox transformation parameter. Ignored if NULL. Otherwise, data transformed before model is estimated.}
+\item{biasadj}{Use adjusted back-transformed mean for Box-Cox transformations. If TRUE, point forecasts and fitted values are mean forecast. Otherwise, these points can be considered the median of the forecast densities.}
 \item{method}{Fitting method: maximum likelihood or minimize conditional sum-of-squares. The default (unless there are missing values) is to use conditional-sum-of-squares to find starting values, then maximum likelihood.}
 \item{model}{Output from a previous call to \code{Arima}. If model is passed, this same model is fitted to \code{y} without re-estimating any parameters.}
 \item{x}{Deprecated. Included for backwards compatibility.}
