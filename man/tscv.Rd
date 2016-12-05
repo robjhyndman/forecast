@@ -12,7 +12,7 @@ tsCV(y, forecastfunction, h, ...)
 \item{...}{Other arguments are passed to \code{forecastfunction}.}
 }
 
-\description{\code{tscv} computes the forecast errors obtained by applying \code{forecastfunction} to subsets of the time series \code{y} using a rolling forecast origin.}
+\description{\code{tsCV} computes the forecast errors obtained by applying \code{forecastfunction} to subsets of the time series \code{y} using a rolling forecast origin.}
 
 \value{Numerical time series object containing the forecast errors.}
 
