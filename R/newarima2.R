@@ -63,9 +63,11 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   orig.x <- x
   origxreg <- xreg
 
-  if(!is.null(lambda))
+  if(!is.null(lambda)){
     x <- BoxCox(x,lambda)
-
+    attr(lambda, "biasadj") <- biasadj
+  }
+  
   # Choose order of differencing
   if(!is.null(xreg))
   {
@@ -468,7 +470,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   bestfit$call <- match.call()
   bestfit$call$x <- data.frame(x=x)
   bestfit$lambda <- lambda
-  #bestfit$fitted <- fitted(bestfit)
+  bestfit$fitted <- fitted(bestfit, biasadj)
 
   if(trace)
     cat("\n\n Best model:",arima.string(bestfit, padding=TRUE),"\n\n")
