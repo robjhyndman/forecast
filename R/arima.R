@@ -504,8 +504,10 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
   series <- deparse(substitute(y))
 
   origx <- y
-  if(!is.null(lambda))
+  if(!is.null(lambda)){
     x <- BoxCox(x,lambda)
+    attr(lambda, "biasadj") <- biasadj 
+  }
 
   if (!is.null(xreg))
   {
