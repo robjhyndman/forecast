@@ -1256,14 +1256,11 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
     data <- fortify(mapping, PI=plot.conf)
     mapping <- ggplot2::aes_(x = ~x, y = ~y)
     if(plot.conf){
-      mapping$level <- quote(level)
       mapping$group <- quote(-level)
-      mapping$ymin <- quote(ymin)
-      mapping$ymax <- quote(ymax)
     }
     if(!missing(series)){
-      mapping$colour <- quote(series)
       data <- transform(data, series=series)
+      mapping$colour <- quote(series)
     }
   }
   else if(is.mforecast(mapping)){
