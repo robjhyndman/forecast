@@ -56,15 +56,18 @@ forecast.ts <- function(object, h=ifelse(frequency(object)>1, 2*frequency(object
 
   if(!is.null(model))
   {
-    if("ets" %in% class(model))
+    if(inherits(model, "forecast")){
+      model <- model$model
+    }
+    if(inherits(model, "ets"))
       fit <- ets(object, model=model, ...)
-    else if("Arima" %in% class(model))
+    else if(inherits(model, "Arima"))
       fit <- Arima(object, model=model, ...)
-    else if("bats" %in% class(model))
+    else if(inherits(model, "bats"))
       fit <- bats(object, model=model, ...)
-    else if("tbats" %in% class(model))
+    else if(inherits(model, "tbats"))
       fit <- tbats(object, model=model, ...)
-    else if("nnetar" %in% class(model))
+    else if(inherits(model, "nnetar"))
       fit <- nnetar(object, model=model, ...)
     else 
       stop("Unknown model class")
