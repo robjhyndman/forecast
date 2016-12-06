@@ -365,7 +365,7 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
 
 
 forecast.ar <- function(object,h=10,level=c(80,95),fan=FALSE, lambda=NULL,
-  bootstrap=FALSE, npaths=5000, biasadj=NULL, ...)
+  bootstrap=FALSE, npaths=5000, biasadj=FALSE, ...)
 {
     x <- getResponse(object)
     pred <- predict(object,newdata=x,n.ahead=h)
