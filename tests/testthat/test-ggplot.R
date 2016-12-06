@@ -39,19 +39,28 @@ if(require(testthat))
     autoplot(etsfcast)
     autoplot(etsfcast, plot.conf = FALSE)
     
+    lmfit <- lm(mpg ~ disp, data=mtcars)
+    lmfcast <- forecast(lmfit, newdata=data.frame(disp=214))
+    autoplot(lmfcast)
+    
     mfcast <- forecast(ldeaths)
     autoplot(mfcast)
     
     ggtsdisplay(USAccDeaths, plot.type = "spectrum")
+    ggtsdisplay(USAccDeaths, plot.type = "partial")
+    ggtsdisplay(USAccDeaths, plot.type = "histogram")
+    ggtsdisplay(USAccDeaths, plot.type = "scatter", theme=theme_bw())
     
     gglagplot(woolyrnq, lags=2)
     gglagplot(ldeaths, lags=2)
+    gglagplot(WWWusage, do.lines = FALSE, colour = FALSE, labels = TRUE)
     
     gglagchull(woolyrnq, lags=4)
     
     ggmonthplot(woolyrnq)
     
-    ggseasonplot(USAccDeaths)
+    ggseasonplot(woolyrnq, year.labels = TRUE, year.labels.left = TRUE)
+    ggseasonplot(USAccDeaths, polar=TRUE, col=1:5, continuous = TRUE)
     
     splinefit <- splinef(airmiles, h=5)
     autoplot(splinefit)
@@ -65,6 +74,6 @@ if(require(testthat))
     autoplot(ldeaths) + geom_forecast()
     autoplot(ldeaths, facet=TRUE) + geom_forecast()
     
-    gghistogram(USAccDeaths, add.kde = TRUE, add.normal = TRUE)
+    gghistogram(USAccDeaths, add.kde = TRUE)
   })
 }
