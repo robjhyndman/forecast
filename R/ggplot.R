@@ -1088,7 +1088,6 @@ autoplot.mts <- function(object, facets=FALSE, ...){
     data <- data.frame(y=as.numeric(c(object)), x=rep(as.numeric(time(object)),NCOL(object)),
                        series=factor(rep(colnames(object), each=NROW(object)), levels=colnames(object)))
     #Initialise ggplot object
-    p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x), data=data)
     if(facets){
       p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x, group=~series), data=data)
       p <- p + ggplot2::geom_line(na.rm = TRUE) + ggplot2::facet_grid(series~., scales = "free_y")
@@ -1262,6 +1261,10 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
       mapping$ymin <- quote(ymin)
       mapping$ymax <- quote(ymax)
     }
+    if(!missing(series)){
+      mapping$colour <- quote(series)
+      data <- transform(data, series=series)
+    }
   }
   else if(is.mforecast(mapping)){
     #Convert mforecast to list of forecast
@@ -1272,10 +1275,8 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
     data <- data.frame(y = as.numeric(mapping), x = as.numeric(time(mapping)))
     mapping <- ggplot2::aes_(y=~y, x=~x)
   }
-  if(!missing(series)){
-    data <- transform(data, series=series)
-  }
   if(stat=="forecast"){
+    ## TODO: Add/pass through series information to be added to dataset
     ggplot2::layer(
       geom = GeomForecast, mapping = mapping, data = data, stat = stat,
       position = position, show.legend = show.legend, inherit.aes = inherit.aes,
