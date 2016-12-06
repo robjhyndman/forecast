@@ -61,7 +61,7 @@ unfracdiff <- function(x,y,n,h,d)
 
 ## Automatic ARFIMA modelling
 ## Will return Arima object if d < 0.01 to prevent estimation problems
-arfima <- function(y, drange = c(0, 0.5), estim = c("mle","ls"), lambda = NULL, biasadj = FALSE, x=y, ...)
+arfima <- function(y, drange = c(0, 0.5), estim = c("mle","ls"), model = NULL, lambda = NULL, biasadj = FALSE, x=y, ...)
 {
 	estim <- match.arg(estim)
 #	require(fracdiff)
@@ -70,44 +70,53 @@ arfima <- function(y, drange = c(0, 0.5), estim = c("mle","ls"), lambda = NULL, 
 	if (!is.null(lambda)){
 		x <- BoxCox(x, lambda)
 	}
-
-	# Strip initial and final missing values
-	xx <- na.ends(x)
-
-	# Remove mean
-	meanx <- mean(xx)
-	xx <- xx - meanx
-
-	# Choose differencing parameter with AR(2) proxy to handle correlations
-	suppressWarnings(fit <- fracdiff::fracdiff(xx,nar=2,drange=drange))
-
-	# Choose p and q
-	d <- fit$d
-	y <- fracdiff::diffseries(xx, d=d)
-	fit <- auto.arima(y, max.P=0, max.Q=0, stationary=TRUE, ...)
-
-	# Refit model using fracdiff
-	suppressWarnings(fit <- fracdiff::fracdiff(xx, nar=fit$arma[1], nma=fit$arma[2],drange=drange))
-
-	# Refine parameters with MLE
-	if(estim=="mle")
-	{
-		y <- fracdiff::diffseries(xx, d=fit$d)
-		p <- length(fit$ar)
-		q <- length(fit$ma)
-		fit2 <- try(Arima(y,order=c(p,0,q),include.mean=FALSE))
-		if(is.element("try-error",class(fit2)))
-      fit2 <- try(Arima(y,order=c(p,0,q),include.mean=FALSE,method="ML"))
-		if(!is.element("try-error",class(fit2)))
-		{
-			if(p>0)
-				fit$ar <- fit2$coef[1:p]
-			if(q>0)
-				fit$ma <- -fit2$coef[p+(1:q)]
-			fit$residuals <- fit2$residuals
-		}
-		else
-			warning("MLE estimation failed. Returning LS estimates")
+	
+	# Re-fit arfima model
+	if(!is.null(model)){
+	  fit <- model
+	  fit$x <- x
+	  fit$residuals <- NULL
+	}
+	# Estimate model
+	else{
+  	# Strip initial and final missing values
+  	xx <- na.ends(x)
+  
+  	# Remove mean
+  	meanx <- mean(xx)
+  	xx <- xx - meanx
+  	
+	  # Choose differencing parameter with AR(2) proxy to handle correlations
+	  suppressWarnings(fit <- fracdiff::fracdiff(xx,nar=2,drange=drange))
+	  
+	  # Choose p and q
+	  d <- fit$d
+	  y <- fracdiff::diffseries(xx, d=d)
+	  fit <- auto.arima(y, max.P=0, max.Q=0, stationary=TRUE, ...)
+	  
+	  # Refit model using fracdiff
+	  suppressWarnings(fit <- fracdiff::fracdiff(xx, nar=fit$arma[1], nma=fit$arma[2],drange=drange))
+	  
+	  # Refine parameters with MLE
+	  if(estim=="mle")
+	  {
+	    y <- fracdiff::diffseries(xx, d=fit$d)
+	    p <- length(fit$ar)
+	    q <- length(fit$ma)
+	    fit2 <- try(Arima(y,order=c(p,0,q),include.mean=FALSE))
+	    if(is.element("try-error",class(fit2)))
+	      fit2 <- try(Arima(y,order=c(p,0,q),include.mean=FALSE,method="ML"))
+	    if(!is.element("try-error",class(fit2)))
+	    {
+	      if(p>0)
+	        fit$ar <- fit2$coef[1:p]
+	      if(q>0)
+	        fit$ma <- -fit2$coef[p+(1:q)]
+	      fit$residuals <- fit2$residuals
+	    }
+	    else
+	      warning("MLE estimation failed. Returning LS estimates")
+	  }
 	}
 
 	# Add things to model that will be needed by forecast.fracdiff
@@ -120,6 +129,7 @@ arfima <- function(y, drange = c(0, 0.5), estim = c("mle","ls"), lambda = NULL, 
 	}
 	fit$lambda <- lambda
 	fit$call <- match.call()
+	#fit$call$data <- data.frame(x=x) #Consider replacing fit$call with match.call for consistency and tidyness
 	return(fit)
 }
 
