@@ -76,7 +76,7 @@ residuals.fracdiff <- function(object, type=c("innovation","response"), ...)
       if(!is.null(object$lambda))
         x <- BoxCox(x,object$lambda)
       y <- fracdiff::diffseries(x - mean(x), d=object$d)
-      fit <- arima(y, order=c(length(object$ar),0,length(object$ma)), include.mean=FALSE, fixed=c(object$ar,object$ma))
+      fit <- arima(y, order=c(length(object$ar),0,length(object$ma)), include.mean=FALSE, fixed=c(object$ar,-object$ma))
       return(residuals(fit, type="innovation"))
     }
   }
