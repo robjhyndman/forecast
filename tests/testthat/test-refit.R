@@ -5,7 +5,7 @@ if(require(testthat))
 
   test_that("tests for re-fitting models", {
     #arima
-    fit <- Arima(mdeaths, c(1,0,0), c(2,0,0), include.mean = FALSE)
+    fit <- Arima(mdeaths, c(1,0,0), c(2,0,0), include.mean = FALSE, include.drift = TRUE)
     
     refit <- Arima(fdeaths, model=fit)
     expect_true(identical(fit$coef, refit$coef))
@@ -16,8 +16,8 @@ if(require(testthat))
     refit_same <- Arima(mdeaths, model=fit)
     expect_true(identical(fit$coef, refit_same$coef))
     expect_true(identical(fit$x, refit_same$x))
-    expect_true(identical(fit$fitted, refit_same$fitted))
-    expect_true(identical(fit$residuals, refit_same$residuals))
+    expect_true(all.equal(fit$fitted, refit_same$fitted))
+    expect_true(all.equal(fit$residuals, refit_same$residuals))
     
     #arfima
     fit <- arfima(mdeaths)
