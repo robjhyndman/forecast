@@ -862,7 +862,7 @@ ggsubseriesplot <- function (x, labels = NULL, times = time(x), phase = cycle(x)
   }
 }
 
-ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NULL, col=NULL, continuous=FALSE, labelgap=0.04, ...){
+ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NULL, col=NULL, continuous=FALSE, polar=FALSE, labelgap=0.04, ...){
   if (requireNamespace("ggplot2")){
     if (!inherits(x, "ts")){
       stop("autoplot.seasonplot requires a ts object, use x=object")
@@ -882,6 +882,14 @@ ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NUL
     }
     else{
       as.factor(data$year)
+    }
+    if(polar){
+      startValues <- data[data$time==0,]
+      startValues$time <- 1-.Machine$double.eps
+      if(round((data$time[NROW(data)] + 1/s)%%1, 6) != 0){
+        startValues <- startValues[-NROW(startValues),]
+      }
+      data <- rbind(data, startValues)
     }
     #Initialise ggplot object
     p <- ggplot2::ggplot(ggplot2::aes_(x=~time, y=~y, group=~year, colour=~year), data=data, na.rm=TRUE)
@@ -944,7 +952,11 @@ ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NUL
       labs <- NULL
       xLab <- "Season"
     }
-    p <-  p + ggplot2::scale_x_continuous(breaks=sort(unique(data$time)), minor_breaks=NULL, labels=labs)
+    if(polar){
+      labs <- c(labs, '')
+      p <- p + ggplot2::coord_polar()
+    }
+    p <- p + ggplot2::scale_x_continuous(breaks=sort(unique(data$time)), minor_breaks=NULL, labels=labs)
 
     #Graph title and axes
     p <- p + ggAddExtras(main=paste("Seasonal plot:", deparse(substitute(x))), xlab=xLab, ylab=NULL)
