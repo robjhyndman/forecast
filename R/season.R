@@ -186,7 +186,7 @@ stlm <- function(y ,s.window=7, robust=FALSE, method=c("ets","arima"), modelfunc
 
   # Do STL decomposition
   stld <- stl(x,s.window=s.window,robust=robust)
-  
+
   if(!is.null(model)){
     if(inherits(model$model, "ets")){
       modelfunction <- function(x,...){return(ets(x,model=model$model, use.initial.values = TRUE, ...))}
@@ -346,32 +346,43 @@ fourierf <- function(x, K, h)
     cospi <- function(x){cos(pi*x)}
   }
 
-  len.p <- length(period)
-  if(len.p != length(K))
+  if(length(period) != length(K))
     stop("Number of periods does not match number of orders")
   if(any(2*K > period))
     stop("K must be not be greater than period/2")
 
-  len <- 2*sum(K)
-  X <- matrix(0,nrow=length(times),ncol=len)*NA
-  labels <- character(length = len) # column names
-  cs.K <- cumsum(2*c(0, K))
-  for (j in 1:len.p) {
-    if(K[j] > 0L) {
-      for(i in 1L:K[j]) {
-        if(2*i < period[j])
-          X[,cs.K[j] + 2*i-1] <- sinpi(2*i*times/period[j])
-        X[,cs.K[j] + 2*i] <- cospi(2*i*times/period[j])
-      }
-      labels[(cs.K[j] + 1):cs.K[j + 1]] <- paste(paste0(c("S","C"),rep(1:K[j],rep(2,K[j]))),
-                                               round(period[j]), sep = "-")
+  # Compute periods of all Fourier terms
+  p <- numeric(0)
+  labels <- character(0)
+  for(j in seq_along(period))
+  {
+    if(K[j]>0)
+    {
+      p <- c(p, (1:K[j])/period[j])
+      labels <- c(labels, paste(paste0(c("S","C"),rep(1:K[j],rep(2,K[j]))),
+                      round(period[j]), sep="-"))
     }
   }
+  # Remove equivalent seasonal periods due to multiple seasonality
+  k <- duplicated(p)
+  p <- p[!k]
+  labels <- labels[!rep(k,rep(2,length(k)))]
+
+  # Remove columns where sinpi=0
+  k <- abs(2*p - round(2*p)) > .Machine$double.eps
+
+  # Compute matrix of Fourier terms
+  X <- matrix(NA_real_,nrow=length(times),ncol=2L*length(p))
+  for(j in seq_along(p))
+  {
+    if(k[j])
+      X[,2L*j-1L] <- sinpi(2*p[j]*times)
+    X[,2L*j] <- cospi(2*p[j]*times)
+  }
   colnames(X) <- labels
+
   # Remove missing columns
-  X <- X[,!is.na(colSums(X))]
-  # Remove equal columns
-  X <- unique(X, MARGIN=2)
+  X <- X[,!is.na(colSums(X)),drop=FALSE]
 
   return(X)
 }
