@@ -1018,7 +1018,7 @@ autoplot.seas <- function (object, labels = NULL, ...){
       labels <- c("seasonal", "trend", "remainder")
     }
     
-    data <- object$data[,c("final", "seasonal", "trend", "irregular")]
+    data <- cbind(object$x, object$data[,c("seasonal", "trend", "irregular")])
     cn <- c("data",labels)
     data <- data.frame(datetime=rep(time(data),NCOL(data)), y=c(data),
                        parts=factor(rep(cn, each=NROW(data)), levels=cn))
