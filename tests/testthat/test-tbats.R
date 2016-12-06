@@ -10,7 +10,7 @@ if(require(testthat))
 
   test_that("Test tbats() and forecasts", {
     # Fit tbats models
-    tbatsfit1 <- tbats(wineind, use.parallel = FALSE)
+    tbatsfit1 <- tbats(subset(wineind, end = 50), use.parallel = FALSE)
     tbatsfit2 <- tbats(WWWusage, use.parallel = FALSE)
     tbatsfit3 <- tbats(as.numeric(woolyrnq), seasonal.periods = frequency(woolyrnq), use.parallel = FALSE)
     tbatsfit4 <- tbats(airmiles, use.box.cox = FALSE, use.parallel = FALSE)
@@ -30,7 +30,7 @@ if(require(testthat))
     expect_output(print(summary(tbatsfit3)), regexp = "Length")
     expect_output(print(summary(tbatsfit4)), regexp = "Length")
     #Test fitted length
-    expect_true(length(fitted(tbatsfit1)) == length(wineind))
+    expect_true(length(fitted(tbatsfit1)) == 50)
     expect_true(length(fitted(tbatsfit2)) == length(WWWusage))
     expect_true(length(fitted(tbatsfit3)) == length(woolyrnq))
     expect_true(length(fitted(tbatsfit4)) == length(airmiles))

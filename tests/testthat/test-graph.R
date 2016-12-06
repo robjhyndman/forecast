@@ -9,7 +9,7 @@ if(require(testthat))
 		seasonplot(wineind)
 		seasonplot(wineind, year.labels = TRUE)
 		seasonplot(wineind, year.labels.left = TRUE)
-		seasonplot(taylor)
+		#seasonplot(taylor)
 	})
 
 	test_that("Tests for tsdisplay()", {

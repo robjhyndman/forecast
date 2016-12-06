@@ -4,14 +4,13 @@ if(require(testthat))
 	context("Testing nnetar")
 	test_that("Tests for nnetar", {
     oilnnet <- nnetar(airmiles, lambda = 0.15)
-		woolyrnqnnet <- nnetar(woolyrnq)
+		woolyrnqnnet <- nnetar(woolyrnq, repeats=10)
 		expect_output(print(woolyrnqnnet), regexp = "Series: woolyrnq")
 		expect_true(length(forecast(oilnnet)$mean) == 10)
 		expect_true(length(forecast(woolyrnqnnet)$mean) == 2 * frequency(woolyrnq))
     #
     # Test with single-column xreg (which might be a vector)
-    uscnnet <- nnetar(woolyrnq,
-                      xreg=1:length(woolyrnq))
+    uscnnet <- nnetar(woolyrnq, xreg=1:length(woolyrnq))
     expect_true(all(dim(uscnnet$xreg) == c(119, 1)))
     expect_true(length(forecast(uscnnet, xreg=120:130)$mean) == 11)
     # Test default size with and without xreg
@@ -21,7 +20,7 @@ if(require(testthat))
     expect_output(print(uscnnet), regexp = "4-2-1 network",
                   fixed=TRUE)
     expect_true(uscnnet$size == 2)
-    uscnnet <- nnetar(woolyrnq, p=2, P=2, xreg=1:119)
+    uscnnet <- nnetar(woolyrnq, p=2, P=2, xreg=1:119, repeats=10)
     expect_output(print(uscnnet), regexp = "NNAR(2,2,3)",
                   fixed=TRUE)
     expect_output(print(uscnnet), regexp = "5-3-1 network",
@@ -58,7 +57,7 @@ if(require(testthat))
     expect_output(print(creditnnet), regexp = "decay=0.1",
                   fixed=TRUE)
     ## Test output format correct
-    oilnnet <- nnetar(airmiles, p=1, size=0, skip=TRUE, Wts=c(0, 1), maxit=0)
+    oilnnet <- nnetar(airmiles, p=1, size=0, skip=TRUE, Wts=c(0, 1), maxit=0, repeats=10)
     expect_true(all.equal(oilnnet$fitted[-1], airmiles[-length(airmiles)]))
     ## Test output format correct when NAs present
     oilna <- airmiles
@@ -88,7 +87,5 @@ if(require(testthat))
     expect_true(identical(which(!is.na(fitted(oilnnet))), 11:20))
     oilnnet <- nnetar(airmiles, subset=c(rep(F, 10), rep(T, 10), rep(F, length(airmiles)-20)))
     expect_true(identical(which(!is.na(fitted(oilnnet))), 11:20))
-
-
 	})
 }

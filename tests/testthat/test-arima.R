@@ -82,17 +82,4 @@ if(require(testthat))
 	test_that("tests for as.character.Arima()", {
 	expect_match(as.character(auto.arima(woolyrnq)), regexp = "ARIMA")
 	})
-
-	test_that("tests for refitting Arima", {
-	# Refit Arima with drift
-	fitarima <- auto.arima(WWWusage, test = "pp")
-	newdata <- forecast(WWWusage)$mean
-	refitarima <- Arima(c(WWWusage, newdata), model = fitarima)
-	expect_true(all(arimaorder(fitarima) == arimaorder(refitarima)))
-	# Refit seasonal Arima
-	fitarima <- auto.arima(woolyrnq)
-	newdata <- forecast(woolyrnq)$mean
-	refitarima <- Arima(c(woolyrnq, newdata), model = fitarima)
-	expect_true(all(arimaorder(fitarima) == arimaorder(refitarima)))
-	})
 }
