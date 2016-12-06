@@ -74,8 +74,7 @@ arfima <- function(y, drange = c(0, 0.5), estim = c("mle","ls"), model = NULL, l
 	# Re-fit arfima model
 	if(!is.null(model)){
 	  fit <- model
-	  fit$x <- x
-	  fit$residuals <- NULL
+	  fit$residuals <- fit$fitted <- fit$lambda <- NULL
 	}
 	# Estimate model
 	else{
