@@ -34,6 +34,11 @@ ggAddExtras <- function(xlab=NA, ylab=NA, main=NA){
   return(extras)
 }
 
+ggtsbreaks <- function(x){
+  # Make x axis contain only whole numbers (e.g., years)
+  return(floor(x[1]):ceiling(x[2]))
+}
+
 autoplot.acf <- function(object, ci=0.95, ...){
   if (requireNamespace("ggplot2")){
     if (!inherits(object, "acf")){
@@ -1075,7 +1080,7 @@ autoplot.ts <- function(object, ...){
     p <- p + ggAddExtras(xlab="Time", ylab=deparse(substitute(object)))
 
     # Make x axis contain only whole numbers (e.g., years)
-    p <- p + ggplot2::scale_x_continuous(breaks=unique(round(pretty(data$x))))
+    p <- p + ggplot2::scale_x_continuous(breaks=ggtsbreaks)
     return(p)
   }
 }
