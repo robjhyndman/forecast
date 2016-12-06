@@ -471,7 +471,7 @@ fitted.Arima <- function(object, h = 1, ...)
     }
   }
   else{
-    return(hfitted(object=object, h=h, FUN="Arima", biasadj=biasadj,  ...))
+    return(hfitted(object=object, h=h, FUN="Arima", ...))
   }
 }
 
