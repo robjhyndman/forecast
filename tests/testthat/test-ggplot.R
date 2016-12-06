@@ -49,7 +49,7 @@ if(require(testthat))
     ggtsdisplay(USAccDeaths, plot.type = "spectrum")
     ggtsdisplay(USAccDeaths, plot.type = "partial")
     ggtsdisplay(USAccDeaths, plot.type = "histogram")
-    ggtsdisplay(USAccDeaths, plot.type = "scatter", theme=theme_bw())
+    ggtsdisplay(USAccDeaths, plot.type = "scatter", theme=ggplot2::theme_bw())
     
     gglagplot(woolyrnq, lags=2)
     gglagplot(ldeaths, lags=2)
