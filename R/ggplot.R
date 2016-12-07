@@ -1355,8 +1355,6 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
     }
   }
   else if(is.mforecast(mapping)){
-    #Convert mforecast to list of forecast
-    #return lapply of geom_forecast with params on list
     cl <- match.call()
     #cl[[1]] <- quote(list)
     cl$mapping <- quote(fclist[[i]])

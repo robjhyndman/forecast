@@ -44,7 +44,6 @@ rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link{borders}}.}
 \item{plot.conf}{If \code{FALSE}, confidence intervals will not be plotted, giving only the forecast line.}
-\item{h}{Number of periods for forecasting}
 \item{series}{Matches an unidentified forecast layer with a coloured object on the plot.}
 \item{...}{Additional arguments for \code{\link{forecast.ts}}, other arguments are passed on to \code{\link{layer}}. These are
 often aesthetics, used to set an aesthetic to a fixed value, like
