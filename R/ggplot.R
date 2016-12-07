@@ -1186,7 +1186,8 @@ StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
 )
 
 GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom, ## Produces both point forecasts and intervals on graph
-  required_aes = c("x", "y", "ymin", "ymax", "level"),
+  required_aes = c("x", "y"),
+  optional_aes = c("ymin", "ymax", "level"),
   default_aes = ggplot2::aes(colour = "#868FBD", fill = "grey60", size = .5,
     linetype = 1, weight = 1, alpha = 1),
   draw_key = function(data, params, size){
@@ -1233,19 +1234,24 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom, ## Produces both
       )
     )
   },
+  
   handle_na = function(self, data, params){ #Consider removing/changing
     data
   },
 
   draw_group = function(data, panel_scales, coord){
-
     data <- split(data, is.na(data$y))
     
     #Draw forecasted points and intervals
+    if(length(data) == 1){ #plot.conf=FALSE
+      ggplot2:::ggname("geom_forecast", 
+        GeomForecastPoint$draw_panel(data[[1]], panel_scales, coord))
+    }
+    else{ #plot.conf=TRUE
     ggplot2:::ggname("geom_forecast",
       grid::addGrob(GeomForecastInterval$draw_group(data[[2]], panel_scales, coord),
-                        GeomForecastPoint$draw_panel(data[[1]], panel_scales, coord))
-    )
+                   GeomForecastPoint$draw_panel(data[[1]], panel_scales, coord)))
+    }
   }
 )
 
