@@ -36,7 +36,7 @@ ggAddExtras <- function(xlab=NA, ylab=NA, main=NA){
 
 ggtsbreaks <- function(x){
   # Make x axis contain only whole numbers (e.g., years)
-  return(floor(x[1]):ceiling(x[2]))
+  return(unique(round(pretty(floor(x[1]):ceiling(x[2])))))
 }
 
 autoplot.acf <- function(object, ci=0.95, ...){
