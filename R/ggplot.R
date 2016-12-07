@@ -1357,7 +1357,23 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
   else if(is.mforecast(mapping)){
     #Convert mforecast to list of forecast
     #return lapply of geom_forecast with params on list
-    stop("mforecast objects not yet supported. Try calling geom_forecast() for several forecast objects")
+    cl <- match.call()
+    #cl[[1]] <- quote(list)
+    cl$mapping <- quote(fclist[[i]])
+    if(!is.null(series)){
+      #cl$series <- quote(series)
+      if(length(series)!=length(mapping$mean)){
+        series <- names(mapping$mean)
+      }
+    }
+    #return(lapply(mforecastsplit(mapping), function(x)do.call(geom_forecast, eval(cl))))
+    fclist <- mforecastsplit(mapping)
+    out <- list()
+    for(i in 1:length(fclist)){
+      cl$series <- series[i]
+      out[[i]] <- eval(cl)
+    }
+    return(out)
   }
   else if(is.ts(mapping)){
     data <- data.frame(y = as.numeric(mapping), x = as.numeric(time(mapping)))
