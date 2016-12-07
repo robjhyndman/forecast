@@ -1191,17 +1191,48 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom, ## Produces both
     linetype = 1, weight = 1, alpha = 1),
   draw_key = function(data, params, size){
     lwd <- min(data$size, min(size) / 4)
-
-    grid::rectGrob(
-      width = unit(1, "npc") - unit(lwd, "mm"),
-      height = unit(1, "npc") - unit(lwd, "mm"),
-      gp = grid::gpar(
-        col = data$colour,
-        fill = alpha(data$colour, data$alpha),
-        lty = data$linetype,
-        lwd = lwd * .pt,
-        linejoin = "mitre"
-      ))
+    
+    col <- data$colour
+    altcol <- col2rgb(col)
+    altcol <- rgb2hsv(altcol[[1]],altcol[[2]],altcol[[3]])
+    
+    # Calculate and set colour
+    linecol <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1, 2/3))
+    altcol1 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 7/12, 5/6))
+    altcol2 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1/6, 1))
+    print(data)
+    grid::grobTree(
+      grid::rectGrob(
+        width = unit(1, "npc") - unit(lwd, "mm"),
+        height = unit(1, "npc") - unit(lwd, "mm"),
+        gp = grid::gpar(
+          col = altcol2,
+          fill = alpha(altcol2, data$alpha),
+          lty = data$linetype,
+          lwd = lwd * .pt,
+          linejoin = "mitre")
+      ),
+      grid::polygonGrob(
+        x=c(0,  0.4,0.6,0.8,1,1,  0.6,0.4,0.1,0),
+        y=c(0.5,0.9,0.7,1,  1,0.6,0.1,0.3,0  ,0),
+        gp = grid::gpar(
+          col = altcol1,
+          fill = alpha(altcol1, data$alpha),
+          lty = data$linetype,
+          lwd = lwd * .pt,
+          linejoin = "mitre")
+      ),
+      grid::linesGrob(
+        x=c(0, 0.4, 0.6, 1),
+        y=c(0.2, 0.6, 0.4, 0.9),
+        gp = grid::gpar(
+          col = linecol,
+          fill = alpha(linecol, data$alpha),
+          lty = data$linetype,
+          lwd = lwd * .pt,
+          linejoin = "mitre")
+      )
+    )
   },
   handle_na = function(self, data, params){ #Consider removing/changing
     data
