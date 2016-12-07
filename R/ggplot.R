@@ -1185,74 +1185,158 @@ StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
   }
 )
 
-GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom,
-  required_aes = c("x","y"),
+GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom, ## Produces both point forecasts and intervals on graph
+  required_aes = c("x", "y", "ymin", "ymax", "level"),
   default_aes = ggplot2::aes(colour = "#868FBD", fill = "grey60", size = .5,
     linetype = 1, weight = 1, alpha = 1),
   draw_key = function(data, params, size){
     lwd <- min(data$size, min(size) / 4)
-
-    grid::rectGrob(
-      width = unit(1, "npc") - unit(lwd, "mm"),
-      height = unit(1, "npc") - unit(lwd, "mm"),
-      gp = grid::gpar(
-        col = data$colour,
-        fill = alpha(data$colour, data$alpha),
-        lty = data$linetype,
-        lwd = lwd * .pt,
-        linejoin = "mitre"
-      ))
+    
+    col <- data$colour
+    altcol <- col2rgb(col)
+    altcol <- rgb2hsv(altcol[[1]],altcol[[2]],altcol[[3]])
+    
+    # Calculate and set colour
+    linecol <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1, 2/3))
+    altcol1 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 7/12, 5/6))
+    altcol2 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1/6, 1))
+    grid::grobTree(
+      grid::rectGrob(
+        width = unit(1, "npc") - unit(lwd, "mm"),
+        height = unit(1, "npc") - unit(lwd, "mm"),
+        gp = grid::gpar(
+          col = altcol2,
+          fill = alpha(altcol2, data$alpha),
+          lty = data$linetype,
+          lwd = lwd * .pt,
+          linejoin = "mitre")
+      ),
+      # grid::polygonGrob(
+      #   x=c(0,  0.4,0.6,0.8,1,1,  0.6,0.4,0.1,0),
+      #   y=c(0.5,0.9,0.7,1,  1,0.6,0.1,0.3,0  ,0),
+      #   gp = grid::gpar(
+      #     col = altcol1,
+      #     fill = alpha(altcol1, data$alpha),
+      #     lty = data$linetype,
+      #     lwd = lwd * .pt,
+      #     linejoin = "mitre")
+      # ),
+      grid::linesGrob(
+        x=c(0, 0.4, 0.6, 1),
+        y=c(0.2, 0.6, 0.4, 0.9),
+        gp = grid::gpar(
+          col = linecol,
+          fill = alpha(linecol, data$alpha),
+          lty = data$linetype,
+          lwd = lwd * .pt,
+          linejoin = "mitre")
+      )
+    )
   },
-  handle_na = function(self, data, params){
-    data
-  },
-  setup_data = function(data, params){
-    if(any(is.finite(data$level))){ # if there are finite confidence levels (point forecasts are non-finite)
-      data$group <- -as.numeric(factor(interaction(data$group, data$level))) # multiple group levels
-      levels <- suppressWarnings(as.numeric(data$level))
-      if(min(levels[is.finite(levels)])<50){
-        data$scalefill <- scales::rescale(levels, from = c(1,99))
-      }
-      else{
-        data$scalefill <- scales::rescale(levels, from = c(50,99))
-      }
-    }
+  handle_na = function(self, data, params){ #Consider removing/changing
     data
   },
 
   draw_group = function(data, panel_scales, coord){
-    col <- data$colour[1]
-    altcol <- col2rgb(col)
-    altcol <- rgb2hsv(altcol[[1]],altcol[[2]],altcol[[3]])
 
-    if(any(is.finite(data$level))){
-      plot.ci <- TRUE
-      altcol1 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 7/12, 5/6))
-      altcol2 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1/6, 1))
-      intervalpred <- transform(data[,-match("y", colnames(data))], colour = NA,
-                                fill = scales::gradient_n_pal(c(altcol1,altcol2))(data$scalefill[1]))
-    }
-    else{
-      plot.ci <- FALSE
-      if(any(c("ymax","ymin")%in%colnames(data))){
-        data <- data[,-match(c("level","ymax","ymin"), colnames(data))]
-      }
-      linecol <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1, 2/3))
-      pointpred <- transform(data, group = -1, fill = NA, colour = linecol)
-    }
+    data <- split(data, is.na(data$y))
+    
     #Draw forecasted points and intervals
     ggplot2:::ggname("geom_forecast",
-      grid::grobTree(if(plot.ci)GeomRibbon$draw_group(intervalpred, panel_scales, coord),
-               if(!plot.ci)GeomLine$draw_panel(pointpred, panel_scales, coord)
-    ))
+      grid::addGrob(GeomForecastInterval$draw_group(data[[2]], panel_scales, coord),
+                        GeomForecastPoint$draw_panel(data[[1]], panel_scales, coord))
+    )
   }
 )
 
+GeomForecastPoint <- ggplot2::ggproto("GeomForecastPoint", GeomForecast, ## Produces only point forecasts
+  required_aes = c("x","y"),
+  
+  setup_data = function(data, params){
+    data[!is.na(data$y),] # Extract only forecast points
+  },
+  
+  draw_group = function(data, panel_scales, coord){
+    col <- data$colour[1]
+    altcol <- col2rgb(col)
+    altcol <- rgb2hsv(altcol[[1]],altcol[[2]],altcol[[3]])
+    
+    # Calculate and set colour
+    linecol <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1, 2/3))
+    
+    # Select appropriate Geom and set defaults
+    if(NROW(data)==0){ #Blank
+      GeomBlank$draw_panel
+    }
+    else if(NROW(data)==1){ #Point
+      GeomForecastPointGeom <- GeomPoint$draw_panel
+      pointpred <- transform(data, fill = NA, colour = linecol, size=1, shape=19, stroke=0.5)
+    }
+    else{ #Line
+      GeomForecastPointGeom <- GeomLine$draw_panel
+      pointpred <- transform(data, fill = NA, colour = linecol)
+    }
+    
+    #Draw forecast points
+    ggplot2:::ggname("geom_forecast_point",
+                     grid::grobTree(GeomForecastPointGeom(pointpred, panel_scales, coord)))
+  }
+)
+
+
+GeomForecastInterval <- ggplot2::ggproto("GeomForecastInterval", GeomForecast, ## Produces only forecasts intervals on graph
+   required_aes = c("x","ymin","ymax","level"),
+   
+   setup_data = function(data, params){
+     data[is.na(data$y),] # Extract only forecast intervals
+   },
+   
+   draw_group = function(data, panel_scales, coord){
+     if(min(data$level)<50){
+       data$scalefill <- scales::rescale(data$level, from = c(1,99))
+     }
+     else{
+       data$scalefill <- scales::rescale(data$level, from = c(50,99))
+     }
+     
+     col <- data$colour[1]
+     altcol <- col2rgb(col)
+     altcol <- rgb2hsv(altcol[[1]],altcol[[2]],altcol[[3]])
+     
+     altcol1 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 7/12, 5/6))
+     altcol2 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1/6, 1))
+     colscale <- scales::gradient_n_pal(c(altcol1,altcol2))
+     
+     intervalGrobList <- lapply(split(data, -data$level), 
+            FUN = function(x){
+              # Calculate colour
+              fillcol <- colscale(x$scalefill[1])
+              # Select appropriate Geom and set defaults
+              if(NROW(x)==0){ #Blank
+                GeomBlank$draw_panel
+              }
+              else if(NROW(x)==1){ #Linerange
+                GeomForecastIntervalGeom <- GeomLinerange$draw_panel
+                x <- transform(x, colour=fillcol, fill = NA, size=1)
+              }
+              else{ #Ribbon
+                GeomForecastIntervalGeom <- GeomRibbon$draw_group
+                x <- transform(x, colour=NA, fill = fillcol)
+              }
+              #Create grob
+              return(GeomForecastIntervalGeom(x, panel_scales, coord))
+            }
+     )
+     
+     #Draw forecast intervals
+     ggplot2:::ggname("geom_forecast_interval", do.call(grid::grobTree, intervalGrobList))
+   }
+)
+
+
 geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
                           position = "identity", na.rm = FALSE, show.legend = NA,
-                          inherit.aes = TRUE, plot.conf=TRUE, h=NULL, level=c(80,95), fan=FALSE,
-                          robust=FALSE, lambda=NULL, find.frequency=FALSE,
-                          allow.multiplicative.trend=FALSE, series, ...) {
+                          inherit.aes = TRUE, plot.conf=TRUE, series=NULL, ...) {
   if(is.forecast(mapping)){
     if(stat=="forecast"){
       stat <- "identity"
@@ -1260,44 +1344,52 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
     plot.conf <- plot.conf & !is.null(mapping$level)
     data <- fortify(mapping, PI=plot.conf)
     mapping <- ggplot2::aes_(x = ~x, y = ~y)
-    if(plot.conf){
-      mapping$level <- quote(level) 
-      mapping$group <- quote(-level) 
-      mapping$ymin <- quote(ymin) 
-      mapping$ymax <- quote(ymax) 
-    }
-    if(!missing(series)){
+    if(!is.null(series)){
       data <- transform(data, series=series)
       mapping$colour <- quote(series)
     }
+    if(plot.conf){
+      mapping$level <- quote(level)
+      mapping$ymin <- quote(ymin)
+      mapping$ymax <- quote(ymax)
+    }
   }
   else if(is.mforecast(mapping)){
-    #Convert mforecast to list of forecast
-    #return lapply of geom_forecast with params on list
-    stop("mforecast objects not yet supported. Try calling geom_forecast() for several forecast objects")
+    cl <- match.call()
+    #cl[[1]] <- quote(list)
+    cl$mapping <- quote(fclist[[i]])
+    if(!is.null(series)){
+      #cl$series <- quote(series)
+      if(length(series)!=length(mapping$mean)){
+        series <- names(mapping$mean)
+      }
+    }
+    #return(lapply(mforecastsplit(mapping), function(x)do.call(geom_forecast, eval(cl))))
+    fclist <- mforecastsplit(mapping)
+    out <- list()
+    for(i in 1:length(fclist)){
+      cl$series <- series[i]
+      out[[i]] <- eval(cl)
+    }
+    return(out)
   }
   else if(is.ts(mapping)){
     data <- data.frame(y = as.numeric(mapping), x = as.numeric(time(mapping)))
     mapping <- ggplot2::aes_(y=~y, x=~x)
   }
   if(stat=="forecast"){
-    ## TODO: Add/pass through series information to be added to dataset
-    ggplot2::layer(
-      geom = GeomForecast, mapping = mapping, data = data, stat = stat,
-      position = position, show.legend = show.legend, inherit.aes = inherit.aes,
-      params = list(plot.conf=plot.conf, h=h, level=level, fan=fan, robust=robust,
-                    lambda=lambda, find.frequency=find.frequency,
-                    allow.multiplicative.trend=allow.multiplicative.trend,
-                    na.rm = na.rm, ...)
-    )
+    if(!is.null(series)){
+      warning("To use the series argument, provide geom_forecast() with a forecast object.")
+    }
+    paramlist <- list(na.rm = na.rm, plot.conf=plot.conf, ...)
   }
   else{
-    ggplot2::layer(
-      geom = GeomForecast, mapping = mapping, data = data, stat = stat,
-      position = position, show.legend = show.legend, inherit.aes = inherit.aes,
-      params = list(na.rm = na.rm, ...)
-    )
+    paramlist <- list(na.rm = na.rm, ...)
   }
+  ggplot2::layer(
+    geom = GeomForecast, mapping = mapping, data = data, stat = stat,
+    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+    params = paramlist)
 }
 
 

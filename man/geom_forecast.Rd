@@ -5,9 +5,7 @@
 \title{Forecast plot}
 \usage{geom_forecast(mapping = NULL, data = NULL, stat = "forecast",
     position = "identity", na.rm = FALSE, show.legend = NA,
-    inherit.aes = TRUE, plot.conf=TRUE, h=NULL, level=c(80,95), fan=FALSE,
-    robust=FALSE, lambda=NULL, find.frequency=FALSE,
-    allow.multiplicative.trend=FALSE, series, ...)
+    inherit.aes = TRUE, plot.conf=TRUE, series=NULL, ...)
 }
 
 \arguments{
@@ -45,19 +43,9 @@ a warning.  If \code{TRUE} silently removes missing values.}
 rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link{borders}}.}
-
 \item{plot.conf}{If \code{FALSE}, confidence intervals will not be plotted, giving only the forecast line.}
-\item{h}{Number of periods for forecasting}
-\item{level}{Confidence level for prediction intervals.}
-\item{fan}{If TRUE, \code{level} is set to \code{seq(51,99,by=3)}. This is suitable for fan plots.}
-\item{robust}{If TRUE, the function is robust to missing values and outliers in \code{object}. This argument is only valid when \code{object} is of class \code{ts}.}
-\item{lambda}{Box-Cox transformation parameter.}
-\item{find.frequency}{If TRUE, the function determines the appropriate period, if the data is of unknown period.}
-\item{allow.multiplicative.trend}{If TRUE, then ETS models with multiplicative trends are allowed. Otherwise, only additive or no trend ETS models are permitted.}
-
 \item{series}{Matches an unidentified forecast layer with a coloured object on the plot.}
-
-\item{...}{other arguments passed on to \code{\link{layer}}. These are
+\item{...}{Additional arguments for \code{\link{forecast.ts}}, other arguments are passed on to \code{\link{layer}}. These are
 often aesthetics, used to set an aesthetic to a fixed value, like
 \code{color = "red"} or \code{alpha = .5}. They may also be parameters
 to the paired geom/stat.}
