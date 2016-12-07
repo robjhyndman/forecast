@@ -1269,16 +1269,17 @@ GeomForecastPoint <- ggplot2::ggproto("GeomForecastPoint", GeomForecast, ## Prod
       GeomBlank$draw_panel
     }
     else if(NROW(data)==1){ #Point
-      GeomForecastIntervalGeom <- GeomLinerange$draw_panel
+      GeomForecastPointGeom <- GeomPoint$draw_panel
       pointpred <- transform(data, fill = NA, colour = linecol, size=1, shape=19, stroke=0.5)
     }
     else{ #Line
-      GeomForecastIntervalGeom <- GeomRibbon$draw_group
+      GeomForecastPointGeom <- GeomLine$draw_panel
       pointpred <- transform(data, fill = NA, colour = linecol)
     }
+    
     #Draw forecast points
     ggplot2:::ggname("geom_forecast_point",
-                     grid::grobTree(GeomPoint$draw_panel(pointpred, panel_scales, coord)))
+                     grid::grobTree(GeomForecastPointGeom(pointpred, panel_scales, coord)))
   }
 )
 
