@@ -1200,7 +1200,6 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom, ## Produces both
     linecol <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1, 2/3))
     altcol1 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 7/12, 5/6))
     altcol2 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1/6, 1))
-    print(data)
     grid::grobTree(
       grid::rectGrob(
         width = unit(1, "npc") - unit(lwd, "mm"),
@@ -1212,16 +1211,16 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom, ## Produces both
           lwd = lwd * .pt,
           linejoin = "mitre")
       ),
-      grid::polygonGrob(
-        x=c(0,  0.4,0.6,0.8,1,1,  0.6,0.4,0.1,0),
-        y=c(0.5,0.9,0.7,1,  1,0.6,0.1,0.3,0  ,0),
-        gp = grid::gpar(
-          col = altcol1,
-          fill = alpha(altcol1, data$alpha),
-          lty = data$linetype,
-          lwd = lwd * .pt,
-          linejoin = "mitre")
-      ),
+      # grid::polygonGrob(
+      #   x=c(0,  0.4,0.6,0.8,1,1,  0.6,0.4,0.1,0),
+      #   y=c(0.5,0.9,0.7,1,  1,0.6,0.1,0.3,0  ,0),
+      #   gp = grid::gpar(
+      #     col = altcol1,
+      #     fill = alpha(altcol1, data$alpha),
+      #     lty = data$linetype,
+      #     lwd = lwd * .pt,
+      #     linejoin = "mitre")
+      # ),
       grid::linesGrob(
         x=c(0, 0.4, 0.6, 1),
         y=c(0.2, 0.6, 0.4, 0.9),
