@@ -1304,17 +1304,16 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
 # Produce nice histogram with appropriately chosen bin widths
 # Designed to work with time series data without issuing warnings.
 
-gghistogram <- function(x, add.normal=FALSE, add.kde=FALSE, add.rug=TRUE, bins)
+gghistogram <- function(x, add.normal=FALSE, add.kde=FALSE, add.rug=TRUE, bins, boundary=0)
 {
-  xname <- deparse(substitute(x))
   if(missing(bins))
     bins <- grDevices::nclass.FD(na.omit(x))
   data <- data.frame(x=as.numeric(c(x)))
   #Initialise ggplot object and plot histogram
   binwidth <- (max(x,na.rm=TRUE) - min(x,na.rm=TRUE))/bins
   p <- ggplot2::ggplot() +
-    ggplot2::geom_histogram(ggplot2::aes(x), data=data, binwidth=binwidth, boundary=0) +
-    ggplot2::xlab(xname)
+    ggplot2::geom_histogram(ggplot2::aes(x), data=data, binwidth=binwidth, boundary=boundary) +
+    ggplot2::xlab(deparse(substitute(x)))
   # Add normal density estimate
   if(add.normal | add.kde)
   {
