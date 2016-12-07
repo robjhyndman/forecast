@@ -412,13 +412,14 @@ predict.default <- function(object, ...)
     forecast(object, ...)
 }
 
-hfitted <- function(object, h=1, FUN=class(object), ...)
+hfitted <- function(object, h=1, FUN=NULL, ...)
 {
   if(h==1){
     return(fitted(object))
   }
   #Attempt to get model function
-  if(missing(FUN)){
+  if(is.null(FUN)){
+    FUN <- class(object)
     for(i in FUN){
       if(exists(i)){
         if(typeof(eval(parse(text = i)[[1]]))=="closure"){
