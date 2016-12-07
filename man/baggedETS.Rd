@@ -2,12 +2,12 @@
 \alias{baggedETS}
 
 \title{Forecasting using the bagged ETS method}
-\usage{baggedETS(x, bootstrapped_series=bld.mbb.bootstrap(x, 100), ...)
+\usage{baggedETS(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), ...)
 }
 
 \arguments{
-\item{x}{A numeric vector or time series.}
-\item{bootstrapped_series}{bootstrapped versions of x.}
+\item{y}{A numeric vector or time series.}
+\item{bootstrapped_series}{bootstrapped versions of y.}
 \item{\dots}{Other arguments passed to \code{\link{ets}}.}
 }
 
@@ -22,7 +22,7 @@ results.
 
 \item{models}{A list containing the fitted ETS ensemble models.}
 \item{method}{The name of the forecasting method as a character string}
-\item{x}{The original time series.}
+\item{y}{The original time series.}
 \item{bootstrapped_series}{The bootstrapped series.}
 \item{etsargs}{The arguments passed through to \code{\link{ets}}.}
 \item{fitted}{Fitted values (one-step forecasts). The mean is of the fitted values is calculated over the ensemble.}
