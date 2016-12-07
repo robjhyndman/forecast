@@ -65,7 +65,7 @@ arfima <- function(y, drange = c(0, 0.5), estim = c("mle","ls"), model = NULL, l
 {
 	estim <- match.arg(estim)
 #	require(fracdiff)
-
+	
 	orig.x <- x
 	if (!is.null(lambda)){
 		x <- BoxCox(x, lambda)
@@ -75,6 +75,9 @@ arfima <- function(y, drange = c(0, 0.5), estim = c("mle","ls"), model = NULL, l
 	if(!is.null(model)){
 	  fit <- model
 	  fit$residuals <- fit$fitted <- fit$lambda <- NULL
+	  if(!is.null(lambda)){
+	    fit$lambda <- lambda # Required for residuals.fracdiff()
+	  }
 	}
 	# Estimate model
 	else{
