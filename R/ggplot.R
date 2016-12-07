@@ -1186,7 +1186,7 @@ StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
 )
 
 GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom, ## Produces both point forecasts and intervals on graph
-  required_aes = c("x","y"),
+  required_aes = c("x", "y", "ymin", "ymax", "level"),
   default_aes = ggplot2::aes(colour = "#868FBD", fill = "grey60", size = .5,
     linetype = 1, weight = 1, alpha = 1),
   draw_key = function(data, params, size){
@@ -1284,9 +1284,7 @@ GeomForecastInterval <- ggplot2::ggproto("GeomForecastInterval", GeomForecast, #
 
 geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
                           position = "identity", na.rm = FALSE, show.legend = NA,
-                          inherit.aes = TRUE, plot.conf=TRUE, h=NULL, level=c(80,95), fan=FALSE,
-                          robust=FALSE, lambda=NULL, find.frequency=FALSE,
-                          allow.multiplicative.trend=FALSE, series, ...) {
+                          inherit.aes = TRUE, plot.conf=TRUE, series=NULL, ...) {
   if(is.forecast(mapping)){
     if(stat=="forecast"){
       stat <- "identity"
@@ -1294,17 +1292,14 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
     plot.conf <- plot.conf & !is.null(mapping$level)
     data <- fortify(mapping, PI=plot.conf)
     mapping <- ggplot2::aes_(x = ~x, y = ~y)
-    if(!missing(series)){
+    if(!is.null(series)){
       data <- transform(data, series=series)
       mapping$colour <- quote(series)
     }
     if(plot.conf){
-      confmapping <- mapping
-      confmapping$y <- NULL
-      confmapping$level <- quote(level)
-      #confmapping$group <- quote(-level)
-      confmapping$ymin <- quote(ymin)
-      confmapping$ymax <- quote(ymax)
+      mapping$level <- quote(level)
+      mapping$ymin <- quote(ymin)
+      mapping$ymax <- quote(ymax)
     }
   }
   else if(is.mforecast(mapping)){
@@ -1317,28 +1312,15 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
     mapping <- ggplot2::aes_(y=~y, x=~x)
   }
   if(stat=="forecast"){
-    ## TODO: Add/pass through series information to be added to dataset
-    ggplot2::layer(
-      geom = GeomForecast, mapping = mapping, data = data, stat = stat,
-      position = position, show.legend = show.legend, inherit.aes = inherit.aes,
-      params = list(plot.conf=plot.conf, h=h, level=level, fan=fan, robust=robust,
-                    lambda=lambda, find.frequency=find.frequency,
-                    allow.multiplicative.trend=allow.multiplicative.trend,
-                    na.rm = na.rm, ...)
-    )
+    paramlist <- list(na.rm = na.rm, plot.conf=plot.conf, series=series, ...)
   }
   else{
-    list(
-      ggplot2::layer(
-        geom = GeomForecastInterval, mapping = confmapping, data = data, stat = stat,
-        position = position, show.legend = show.legend, inherit.aes = inherit.aes,
-        params = list(na.rm = na.rm, ...)),
-      ggplot2::layer(
-        geom = GeomForecastPoint, mapping = mapping, data = data, stat = stat,
-        position = position, show.legend = show.legend, inherit.aes = inherit.aes,
-        params = list(na.rm = na.rm, ...))
-    )
+    paramlist <- list(na.rm = na.rm, ...)
   }
+  ggplot2::layer(
+    geom = GeomForecast, mapping = mapping, data = data, stat = stat,
+    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+    params = paramlist)
 }
 
 
