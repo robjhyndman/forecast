@@ -1231,12 +1231,24 @@ GeomForecastPoint <- ggplot2::ggproto("GeomForecastPoint", GeomForecast, ## Prod
     altcol <- col2rgb(col)
     altcol <- rgb2hsv(altcol[[1]],altcol[[2]],altcol[[3]])
     
+    # Calculate and set colour
     linecol <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1, 2/3))
-    pointpred <- transform(data, fill = NA, colour = linecol)
     
+    # Select appropriate Geom and set defaults
+    if(NROW(data)==0){ #Blank
+      GeomBlank$draw_panel
+    }
+    else if(NROW(data)==1){ #Point
+      GeomForecastIntervalGeom <- GeomLinerange$draw_panel
+      pointpred <- transform(data, fill = NA, colour = linecol, size=1, shape=19, stroke=0.5)
+    }
+    else{ #Line
+      GeomForecastIntervalGeom <- GeomRibbon$draw_group
+      pointpred <- transform(data, fill = NA, colour = linecol)
+    }
     #Draw forecast points
     ggplot2:::ggname("geom_forecast_point",
-                     grid::grobTree(GeomLine$draw_panel(pointpred, panel_scales, coord)))
+                     grid::grobTree(GeomPoint$draw_panel(pointpred, panel_scales, coord)))
   }
 )
 
@@ -1249,10 +1261,6 @@ GeomForecastInterval <- ggplot2::ggproto("GeomForecastInterval", GeomForecast, #
    },
    
    draw_group = function(data, panel_scales, coord){
-     if(NROW(data)==0){ # Return geom_blank
-       stop("There are no forecast intervals to plot")
-     }
-     
      if(min(data$level)<50){
        data$scalefill <- scales::rescale(data$level, from = c(1,99))
      }
@@ -1270,9 +1278,22 @@ GeomForecastInterval <- ggplot2::ggproto("GeomForecastInterval", GeomForecast, #
      
      intervalGrobList <- lapply(split(data, -data$level), 
             FUN = function(x){
+              # Calculate colour
               fillcol <- colscale(x$scalefill[1])
-              x <- transform(x, colour=NA, fill = fillcol)
-              return(GeomRibbon$draw_group(x, panel_scales, coord))
+              # Select appropriate Geom and set defaults
+              if(NROW(x)==0){ #Blank
+                GeomBlank$draw_panel
+              }
+              else if(NROW(x)==1){ #Linerange
+                GeomForecastIntervalGeom <- GeomLinerange$draw_panel
+                x <- transform(x, colour=fillcol, fill = NA, size=1)
+              }
+              else{ #Ribbon
+                GeomForecastIntervalGeom <- GeomRibbon$draw_group
+                x <- transform(x, colour=NA, fill = fillcol)
+              }
+              #Create grob
+              return(GeomForecastIntervalGeom(x, panel_scales, coord))
             }
      )
      
