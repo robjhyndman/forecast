@@ -1203,108 +1203,47 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom, ## Produces both
         linejoin = "mitre"
       ))
   },
-  handle_na = function(self, data, params){
-    data
-  },
-  setup_data = function(data, params){
-    if(any(is.finite(data$level))){ # if there are finite confidence levels (point forecasts are non-finite)
-      data$group <- -as.numeric(factor(interaction(data$group, data$level))) # multiple group levels
-      levels <- suppressWarnings(as.numeric(data$level))
-      if(min(levels[is.finite(levels)])<50){
-        data$scalefill <- scales::rescale(levels, from = c(1,99))
-      }
-      else{
-        data$scalefill <- scales::rescale(levels, from = c(50,99))
-      }
-    }
+  handle_na = function(self, data, params){ #Consider removing/changing
     data
   },
 
   draw_group = function(data, panel_scales, coord){
-    col <- data$colour[1]
-    altcol <- col2rgb(col)
-    altcol <- rgb2hsv(altcol[[1]],altcol[[2]],altcol[[3]])
 
-    if(any(is.finite(data$level))){
-      plot.ci <- TRUE
-      altcol1 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 7/12, 5/6))
-      altcol2 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1/6, 1))
-      intervalpred <- transform(data[,-match("y", colnames(data))], colour = NA,
-                                fill = scales::gradient_n_pal(c(altcol1,altcol2))(data$scalefill[1]))
-    }
-    else{
-      plot.ci <- FALSE
-      if(any(c("ymax","ymin")%in%colnames(data))){
-        data <- data[,-match(c("level","ymax","ymin"), colnames(data))]
-      }
-      linecol <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1, 2/3))
-      pointpred <- transform(data, group = -1, fill = NA, colour = linecol)
-    }
+    data <- split(data, is.na(data$y))
+    
     #Draw forecasted points and intervals
     ggplot2:::ggname("geom_forecast",
-      grid::grobTree(if(plot.ci)GeomRibbon$draw_group(intervalpred, panel_scales, coord),
-               if(!plot.ci)GeomLine$draw_panel(pointpred, panel_scales, coord)
-    ))
+      grid::addGrob(GeomForecastInterval$draw_group(data[[2]], panel_scales, coord),
+                        GeomForecastPoint$draw_panel(data[[1]], panel_scales, coord))
+    )
   }
 )
 
-GeomForecastPoint <- ggplot2::ggproto("GeomForecastPoint", ggplot2::Geom, ## Produces only point forecasts
+GeomForecastPoint <- ggplot2::ggproto("GeomForecastPoint", GeomForecast, ## Produces only point forecasts
   required_aes = c("x","y"),
-  default_aes = ggplot2::aes(colour = "#868FBD", fill = "grey60", size = .5,
-                             linetype = 1, weight = 1, alpha = 1),
-  draw_key = function(data, params, size){
-    lwd <- min(data$size, min(size) / 4)
-    
-    grid::rectGrob(
-      width = unit(1, "npc") - unit(lwd, "mm"),
-      height = unit(1, "npc") - unit(lwd, "mm"),
-      gp = grid::gpar(
-        col = data$colour,
-        fill = alpha(data$colour, data$alpha),
-        lty = data$linetype,
-        lwd = lwd * .pt,
-        linejoin = "mitre"
-      ))
+  
+  setup_data = function(data, params){
+    data[!is.na(data$y),] # Extract only forecast points
   },
-  handle_na = function(self, data, params){
-    data
-  },
+  
   draw_group = function(data, panel_scales, coord){
     col <- data$colour[1]
     altcol <- col2rgb(col)
     altcol <- rgb2hsv(altcol[[1]],altcol[[2]],altcol[[3]])
     
     linecol <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1, 2/3))
-    pointpred <- transform(data, group = -1, fill = NA, colour = linecol)
+    pointpred <- transform(data, fill = NA, colour = linecol)
     
-    #Draw forecasted points
+    #Draw forecast points
     ggplot2:::ggname("geom_forecast_point",
                      grid::grobTree(GeomLine$draw_panel(pointpred, panel_scales, coord)))
   }
 )
 
 
-GeomForecastInterval <- ggplot2::ggproto("GeomForecastInterval", ggplot2::Geom, ## Produces only forecasts intervals on graph
+GeomForecastInterval <- ggplot2::ggproto("GeomForecastInterval", GeomForecast, ## Produces only forecasts intervals on graph
    required_aes = c("x","ymin","ymax","level"),
-   default_aes = ggplot2::aes(colour = "#868FBD", fill = "grey60", size = .5,
-                              linetype = 1, weight = 1, alpha = 1),
-   draw_key = function(data, params, size){
-     lwd <- min(data$size, min(size) / 4)
-     
-     grid::rectGrob(
-       width = unit(1, "npc") - unit(lwd, "mm"),
-       height = unit(1, "npc") - unit(lwd, "mm"),
-       gp = grid::gpar(
-         col = data$colour,
-         fill = alpha(data$colour, data$alpha),
-         lty = data$linetype,
-         lwd = lwd * .pt,
-         linejoin = "mitre"
-       ))
-   },
-   handle_na = function(self, data, params){
-     data
-   },
+   
    setup_data = function(data, params){
      data[is.na(data$y),] # Extract only forecast intervals
    },
@@ -1337,8 +1276,8 @@ GeomForecastInterval <- ggplot2::ggproto("GeomForecastInterval", ggplot2::Geom, 
             }
      )
      
-     #Draw forecasted points and intervals
-     ggplot2:::ggname("geom_forecast", do.call(grid::grobTree, intervalGrobList))
+     #Draw forecast intervals
+     ggplot2:::ggname("geom_forecast_interval", do.call(grid::grobTree, intervalGrobList))
    }
 )
 
