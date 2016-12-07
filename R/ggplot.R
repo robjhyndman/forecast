@@ -1312,7 +1312,10 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
     mapping <- ggplot2::aes_(y=~y, x=~x)
   }
   if(stat=="forecast"){
-    paramlist <- list(na.rm = na.rm, plot.conf=plot.conf, series=series, ...)
+    if(!is.null(series)){
+      warning("To use the series argument, provide geom_forecast() with a forecast object.")
+    }
+    paramlist <- list(na.rm = na.rm, plot.conf=plot.conf, ...)
   }
   else{
     paramlist <- list(na.rm = na.rm, ...)
