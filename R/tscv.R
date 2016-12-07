@@ -72,7 +72,7 @@ print.CVar <- function(x, ...)
   ## Add note about any NA/NaN in folds?
   ##
   ## Print number of folds
-  cat("\n",x$k, "-fold cross-validation\n", sep="")
+  cat("\n", x$k, "-fold cross-validation\n", sep="")
   ## Print mean & sd accuracy() results
   print(x$CVsummary)
   invisible(x)

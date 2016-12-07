@@ -359,7 +359,7 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
   }
   return(structure(list(method=method, model=object, level=level,
       mean=pred$pred, lower=lower, upper=upper, x=x,
-      xname=deparse(substitute(x)), fitted=fits, residuals=residuals(object)),
+      fitted=fits, residuals=residuals(object)),
       class="forecast"))
 }
 
@@ -411,8 +411,7 @@ forecast.ar <- function(object,h=10,level=c(80,95),fan=FALSE, lambda=NULL,
     }
 
     return(structure(list(method=method,model=object,level=level,mean=pred$pred,
-        lower=lower,upper=upper, x=x, xname=deparse(substitute(x)),
-        fitted=fits,residuals=res)
+        lower=lower,upper=upper, x=x, fitted=fits,residuals=res)
         ,class="forecast"))
 }
 

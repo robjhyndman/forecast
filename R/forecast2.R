@@ -1,7 +1,6 @@
 # Mean forecast
 meanf <- function(y,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE, x=y)
 {
-  xname <- deparse(substitute(y))
   n <- length(x)
   if(!is.null(lambda))
   {
@@ -55,7 +54,7 @@ meanf <- function(y,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE, x
     upper <- InvBoxCox(upper,lambda)
   }  
 
-  out <- list(method="Mean",level=level,x=x,xname=xname,mean=f,lower=lower,upper=upper,
+  out <- list(method="Mean",level=level,x=x,mean=f,lower=lower,upper=upper,
     model=list(mu=f[1],mu.se=s/sqrt(length(x)),sd=s), lambda=lambda, fitted=fits, residuals=res)
   out$model$call <- match.call()
 
@@ -152,7 +151,6 @@ InvBoxCoxf <- function(x=NULL, fvar=NULL, lambda=NULL){
 
 forecast.StructTS <- function(object,h=ifelse(object$coef["epsilon"]>1e-10, 2*object$xtsp[3], 10),level=c(80,95),fan=FALSE,lambda=NULL,biasadj=NULL,...)
 {
-  xname <- deparse(substitute(x))
   x <- object$data
   pred <- predict(object,n.ahead=h)
   if(fan)
@@ -193,14 +191,13 @@ forecast.StructTS <- function(object,h=ifelse(object$coef["epsilon"]>1e-10, 2*ob
     
   
   return(structure(list(method=method, model=object, level=level, mean=pred$pred,
-    lower=lower, upper=upper, x=x, xname=xname, fitted=fits, residuals=residuals(object)),
+    lower=lower, upper=upper, x=x, fitted=fits, residuals=residuals(object)),
     class="forecast"))
 }
 
 forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x)>1,2*frequency(object$x),10),
   level=c(80,95), fan=FALSE, lambda=NULL, biasadj=NULL,...)
 {
-  xname <- deparse(substitute(x))
   x <- object$x
   if(!is.null(object$exponential))
     if(object$exponential)
@@ -248,7 +245,7 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x)>1,2*freque
   tsp(fitted) <- tsp(object$x)
 
   return(structure(list(method="HoltWinters", model=object, level=level,
-    mean=pmean, lower=lower, upper=upper, x=x, xname=xname, 
+    mean=pmean, lower=lower, upper=upper, x=x, 
     fitted=fitted, residuals=x-fitted),
     class="forecast"))
 }
@@ -262,7 +259,6 @@ croston <- function(y,h=10,alpha=0.1,x=y)
     stop("Series should not contain negative values")
   out <- croston2(x,h,alpha)
   out$x <- x
-  out$xname <- deparse(substitute(y))
   if(!is.null(out$fitted))
     out$residuals <- x-out$fitted
   out$method <- "Croston's method"

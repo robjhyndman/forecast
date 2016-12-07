@@ -6,7 +6,6 @@
 lagwalk <- function(y, lag=1, h=10, drift=FALSE, 
   level=c(80,95), fan=FALSE, lambda=NULL, biasadj=FALSE)
 {
-  xname <- deparse(substitute(y))
   n <- length(y)
   m <- frequency(y)
   nn <- 1:h
@@ -73,7 +72,7 @@ lagwalk <- function(y, lag=1, h=10, drift=FALSE,
     lower <- InvBoxCox(lower,lambda)
   }
 
-  out <- list(method=method,level=level,x=y,xname=xname,mean=fcast,lower=lower,upper=upper,
+  out <- list(method=method,level=level,x=y,mean=fcast,lower=lower,upper=upper,
       model=list(drift=b,drift.se=b.se,sd=s), fitted = fits, residuals = res, lambda=lambda)
   out$model$call <- match.call()
 
@@ -86,7 +85,6 @@ rwf <- function(y,h=10,drift=FALSE,level=c(80,95),fan=FALSE,lambda=NULL,biasadj=
 {
   fc <- lagwalk(x, lag=1, h=h, drift=drift, level=level, fan=fan, 
     lambda=lambda, biasadj=biasadj)
-  fc$xname <- deparse(substitute(y))
   fc$model$call <- match.call()
 
   if(drift)
@@ -109,7 +107,6 @@ rwf <- function(y,h=10,drift=FALSE,level=c(80,95),fan=FALSE,lambda=NULL,biasadj=
 naive <- function(y,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE,x=y)
 {
   fc <- rwf(x, h=h, level=level, fan=fan, lambda=lambda, drift=FALSE, biasadj=biasadj)
-  fc$xname <- deparse(substitute(y))
   fc$model$call <- match.call()
   fc$method <- "Naive method"
   return(fc)
@@ -131,7 +128,6 @@ snaive <- function(y, h=2*frequency(x), level=c(80,95), fan=FALSE, lambda=NULL, 
 {
   fc <- lagwalk(x, lag=frequency(x), h=h, drift=FALSE, level=level, fan=fan, 
     lambda=lambda, biasadj=biasadj)
-  fc$xname <- deparse(substitute(y))
   fc$model$call <- match.call()
   fc$method <- "Seasonal naive method"
   return(fc)

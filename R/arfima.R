@@ -246,7 +246,7 @@ forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=ob
 	}
 
     return(structure(list(x=x, mean=mean.fcast, upper=upper, lower=lower,
-        level=level, method=method, xname=deparse(substitute(x)), model=object,
+        level=level, method=method, model=object,
         residuals=res, fitted=fits), class="forecast"))
 }
 

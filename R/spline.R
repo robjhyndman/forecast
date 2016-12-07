@@ -49,7 +49,6 @@ splinef <- function(y, h=10, level=c(80,95), fan=FALSE, lambda=NULL, biasadj=FAL
         x <- ts(x)
     n <- length(x)
     freq <- frequency(x)
-    xname <- deparse(substitute(y))
 
 	if(!is.null(lambda))
 	{
