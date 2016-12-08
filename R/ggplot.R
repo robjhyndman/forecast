@@ -1054,7 +1054,7 @@ ggts <- function(object, colour=TRUE, series=NULL){
                        series = deparse(substitute(object)),
                        seriesVal = as.numeric(object))
   if(!is.null(series)){
-    tsdata <- transform(series = series)
+    tsdata <- transform(tsdata, series = series)
   }
   if(colour){
     ggplot2::geom_line(ggplot2::aes_(x=~timeVal, y=~seriesVal, group=~series, colour=~series), data=tsdata)
