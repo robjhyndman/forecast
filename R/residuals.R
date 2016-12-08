@@ -97,7 +97,7 @@ residuals.nnetar <- function(object, type=c("innovation","response"), h=1, ...)
   type <- match.arg(type)
   if(type=="innovation" & !is.null(object$lambda))
     if(!is.null(object$scalex$scale))
-      na.omit(rowMeans(sapply(object$model, residuals)))/object$scalex$scale
+      na.omit(rowMeans(sapply(object$model, residuals)))*object$scalex$scale
     else
       na.omit(rowMeans(sapply(object$model, residuals)))
   else
