@@ -1214,18 +1214,18 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom, ## Produces both
   required_aes = c("x", "y"),
   optional_aes = c("ymin", "ymax", "level"),
   default_aes = ggplot2::aes(colour = "#868FBD", fill = "grey60", size = .5,
-    linetype = 1, weight = 1, alpha = 1),
+    linetype = 1, weight = 1, alpha = 1, level=NA), #Having level as a default_aes allows the level legend pass tests
   draw_key = function(data, params, size){
     lwd <- min(data$size, min(size) / 4)
-    
     col <- data$colour
     altcol <- col2rgb(col)
     altcol <- rgb2hsv(altcol[[1]],altcol[[2]],altcol[[3]])
     
     # Calculate and set colour
     linecol <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1, 2/3))
-    altcol1 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 7/12, 5/6))
+    #altcol1 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 7/12, 5/6))
     altcol2 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1/6, 1))
+    
     grid::grobTree(
       grid::rectGrob(
         width = unit(1, "npc") - unit(lwd, "mm"),
@@ -1315,6 +1315,13 @@ GeomForecastPoint <- ggplot2::ggproto("GeomForecastPoint", GeomForecast, ## Prod
 )
 
 
+blendHex <- function(alpha, col1, col2){
+  col1 <- c(col2rgb(col1))
+  col2 <- c(col2rgb(col2))
+  blendcol <- alpha*col1 + (1-alpha)*col2
+  return(do.call(paste0, as.list(c("#", as.character(as.hexmode(round(blendcol)))))))
+}
+
 GeomForecastInterval <- ggplot2::ggproto("GeomForecastInterval", GeomForecast, ## Produces only forecasts intervals on graph
    required_aes = c("x","ymin","ymax","level"),
    
@@ -1323,25 +1330,24 @@ GeomForecastInterval <- ggplot2::ggproto("GeomForecastInterval", GeomForecast, #
    },
    
    draw_group = function(data, panel_scales, coord){
-     if(min(data$level)<50){
-       data$scalefill <- scales::rescale(data$level, from = c(1,99))
-     }
-     else{
-       data$scalefill <- scales::rescale(data$level, from = c(50,99))
-     }
-     
-     col <- data$colour[1]
-     altcol <- col2rgb(col)
-     altcol <- rgb2hsv(altcol[[1]],altcol[[2]],altcol[[3]])
-     
-     altcol1 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 7/12, 5/6))
-     altcol2 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1/6, 1))
-     colscale <- scales::gradient_n_pal(c(altcol1,altcol2))
-     
-     intervalGrobList <- lapply(split(data, -data$level), 
+     # if(min(data$level)<50){
+     #   data$scalefill <- scales::rescale(data$level, from = c(1,99))
+     # }
+     # else{
+     #   data$scalefill <- scales::rescale(data$level, from = c(50,99))
+     # }
+     # 
+     # col <- data$colour[1]
+     # altcol <- col2rgb(col)
+     # altcol <- rgb2hsv(altcol[[1]],altcol[[2]],altcol[[3]])
+     # 
+     # altcol1 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 7/12, 5/6))
+     # altcol2 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1/6, 1))
+     # colscale <- scales::gradient_n_pal(c(altcol1,altcol2))
+     intervalGrobList <- lapply(split(data, data$level), 
             FUN = function(x){
               # Calculate colour
-              fillcol <- colscale(x$scalefill[1])
+              fillcol <- blendHex(0.5, x$colour[1], x$level[1])#colscale(x$scalefill[1])
               # Select appropriate Geom and set defaults
               if(NROW(x)==0){ #Blank
                 GeomBlank$draw_panel
@@ -1355,12 +1361,12 @@ GeomForecastInterval <- ggplot2::ggproto("GeomForecastInterval", GeomForecast, #
                 x <- transform(x, colour=NA, fill = fillcol)
               }
               #Create grob
-              return(GeomForecastIntervalGeom(x, panel_scales, coord))
+              return(GeomForecastIntervalGeom(x, panel_scales, coord)) ## Create list pair with average ymin/ymax to order layers
             }
      )
      
      #Draw forecast intervals
-     ggplot2:::ggname("geom_forecast_interval", do.call(grid::grobTree, intervalGrobList))
+     ggplot2:::ggname("geom_forecast_interval", do.call(grid::grobTree, rev(intervalGrobList))) #TODO: Find reliable method to stacking them correctly
    }
 )
 
@@ -1423,6 +1429,24 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
     params = paramlist)
 }
 
+scale_level_continuous <- function(..., low = "#666666", high = "#AAAAAA", space = "Lab", na.value = "grey50", guide = "level_colourbar") 
+{
+  continuous_scale("level", "gradient", scales::seq_gradient_pal(low, high, space), na.value = na.value, guide = guide, ...)
+}
+
+guide_level_colourbar <- function(...){
+  out <- ggplot2:::guide_colourbar(...)
+  out$available_aes = c("level") #Add our new aesthetic option to be accepted by ggplot
+  class(out) <- c("level_colourbar", class(out))
+  return(out)
+}
+
+guide_train.level_colourbar <- function(guide, scale){
+  scale$aesthetics <- "colour"
+  trained_guide <- ggplot2:::guide_train.colorbar(guide, scale)
+  trained_guide$key <- transform(trained_guide$key, level=NA) # Add name to pass later test
+  return(trained_guide)
+}
 
 # Produce nice histogram with appropriately chosen bin widths
 # Designed to work with time series data without issuing warnings.
