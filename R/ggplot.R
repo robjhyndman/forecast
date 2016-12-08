@@ -890,10 +890,11 @@ ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NUL
     }
     if(polar){
       startValues <- data[data$time==0,]
-      startValues$time <- 1-.Machine$double.eps
-      if(round((data$time[NROW(data)] + 1/s)%%1, 6) != 0){
-        startValues <- startValues[-NROW(startValues),]
+      if(round(data$time[1], 6) == 0){
+        startValues <- startValues[-1,]
       }
+      startValues$time <- 1-.Machine$double.eps
+      levels(startValues$year) <- as.numeric(levels(startValues$year)) - 1
       data <- rbind(data, startValues)
     }
     #Initialise ggplot object
