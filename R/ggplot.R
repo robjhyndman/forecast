@@ -1050,6 +1050,22 @@ autoplot.seas <- function (object, labels = NULL, ...){
 }
 
 ggts <- function(object, colour=TRUE, series=NULL){
+  if(inherits(object, "mts")){
+    cl <- match.call()
+    cl$object <- quote(object[,i])
+    if(length(series)!=NCOL(object)){
+      if(colour){
+        warning("For a multivariate timeseries, specify a seriesname for each timeseries. Defaulting to column names.")
+      }
+      series <- colnames(ldeaths)
+    }
+    out <- list()
+    for(i in 1:NCOL(object)){
+      cl$series <- series[i]
+      out[[i]] <- eval(cl)
+    }
+    return(out)
+  }
   tsdata <- data.frame(timeVal = as.numeric(time(object)), 
                        series = ifelse(is.null(series), deparse(substitute(object)), series),
                        seriesVal = as.numeric(object))
