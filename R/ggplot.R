@@ -971,9 +971,10 @@ ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NUL
 }
 
 autoplot.splineforecast <- function (object, PI=TRUE, ...){
-  p <- autoplot.forecast(object, PI=PI, ...)
+  p <- autoplot(object$x) + geom_forecast(object)
+  p <- p + ggplot2::geom_point(size=2)
   fit <- data.frame(datetime=as.numeric(time(object$fitted)),y=as.numeric(object$fitted))
-  p <- p + ggplot2::geom_point(ggplot2::aes_(x=~datetime,y=~y),data=fit,size=2)
+  p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime,y=~y), colour="red", data=fit)
   p <- p + ggAddExtras(ylab=deparse(object$model$call$x))
   return(p)
 }
