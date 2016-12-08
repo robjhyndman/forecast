@@ -1049,9 +1049,13 @@ autoplot.seas <- function (object, labels = NULL, ...){
 }
 
 ggts <- function(object, colour=TRUE){
+ggts <- function(object, colour=TRUE, series=NULL){
   tsdata <- data.frame(timeVal = as.numeric(time(object)), 
                        series = deparse(substitute(object)),
                        seriesVal = as.numeric(object))
+  if(!is.null(series)){
+    tsdata <- transform(series = series)
+  }
   if(colour){
     ggplot2::geom_line(ggplot2::aes_(x=~timeVal, y=~seriesVal, group=~series, colour=~series), data=tsdata)
   }
@@ -1060,7 +1064,7 @@ ggts <- function(object, colour=TRUE){
   }
 }
 
-autoplot.ts <- function(object, ...){
+autoplot.ts <- function(object, series=NULL, ...){
   if(requireNamespace("ggplot2")){
     if(!is.ts(object)){
       stop("autoplot.ts requires a ts object, use object=object")
@@ -1069,13 +1073,20 @@ autoplot.ts <- function(object, ...){
     # Create data frame with time as a column labelled x
     # and time series as a column labelled y.
     data <- data.frame(y = as.numeric(object), x = as.numeric(time(object)))
-
+    
     #Initialise ggplot object
-    p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x), data=data)
+    if(!is.null(series)){
+      data <- transform(data, series=series)
+      p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x, group=~series, colour=~series), data=data)
+    }
+    else{
+      p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x), data=data)
+    }
+
 
     #Add data
     p <- p + ggplot2::geom_line(na.rm = TRUE)
-
+    
     # Add labels
     p <- p + ggAddExtras(xlab="Time", ylab=deparse(substitute(object)))
 

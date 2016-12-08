@@ -3,13 +3,14 @@
 \alias{fortify.ts}
 \alias{autoplot.mts}
 \title{Automatically create a ggplot for time series objects}
-\usage{\method{autoplot}{ts}(object, ...)
+\usage{\method{autoplot}{ts}(object, series = NULL, ...)
 \method{autoplot}{mts}(object, facets=FALSE, ...)
 \method{fortify}{ts}(model,data, ...)
 }
 
 \arguments{
 \item{object}{Object of class \dQuote{ts} or \dQuote{mts}.}
+\item{series}{Identifies the timeseries with a colour, which integrates well with the functionality of \link{geom_forecast}.}
 \item{facets}{If TRUE, multiple time series will be faceted. If FALSE, each series will be assigned a colour.}
 \item{model}{Object of class \dQuote{ts} to be converted to \dQuote{data.frame}.}
 \item{data}{Not used (required for \link{fortify} method)}
