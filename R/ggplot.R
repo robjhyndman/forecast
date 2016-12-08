@@ -1048,14 +1048,10 @@ autoplot.seas <- function (object, labels = NULL, ...){
   }
 }
 
-ggts <- function(object, colour=TRUE){
 ggts <- function(object, colour=TRUE, series=NULL){
   tsdata <- data.frame(timeVal = as.numeric(time(object)), 
-                       series = deparse(substitute(object)),
+                       series = ifelse(is.null(series), deparse(substitute(object)), series),
                        seriesVal = as.numeric(object))
-  if(!is.null(series)){
-    tsdata <- transform(tsdata, series = series)
-  }
   if(colour){
     ggplot2::geom_line(ggplot2::aes_(x=~timeVal, y=~seriesVal, group=~series, colour=~series), data=tsdata)
   }
