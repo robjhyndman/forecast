@@ -198,7 +198,7 @@ myarima.sim <- function (model, n, x, e, ...)
     delta.four <- diff(data, lag=m, differences=D)
     regular.xi <- delta.four[(length(delta.four)-D):length(delta.four)]
     x <- diffinv(x, differences = d, xi=regular.xi[length(regular.xi)-(d:1)+1])[-(1:d)]
- 
+
     #Then seasonal
     i <- length(data) - D*m + 1
     seasonal.xi <- data[i:length(data)]
@@ -423,7 +423,7 @@ simulate.ar <- function(object, nsim=object$n.used, seed=NULL, future=TRUE, boot
   }
   else
     nsim <- length(innov)
- 
+
   if(future)
   {
       model <- list(ar=object$ar,sd=sqrt(object$var.pred),residuals=object$resid, seasonal.difference=0, seasonal.period=1, flag.seasonal.arma=FALSE)
@@ -503,15 +503,19 @@ simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL,
   ## set simulation innovations
   if(bootstrap)
   {
-#    res <- na.omit(residuals(object, type="innovation"))/object$scalex$scale
-    res <- na.omit(rowMeans(sapply(object$model, residuals)))
+    res <- na.omit(residuals(object, type="innovation"))
     res <- res - mean(res)
+    ## scale if appropriate
+    if(!is.null(object$scalex$scale))
+      res <- res/object$scalex$scale
     e <- sample(res,nsim,replace=TRUE)
   }
   else if(is.null(innov))
   {
-#    res <- na.omit(residuals(object, type="innovation"))/object$scalex$scale
-    res <- na.omit(rowMeans(sapply(object$model, residuals)))
+    res <- na.omit(residuals(object, type="innovation"))
+    ## scale if appropriate
+    if(!is.null(object$scalex$scale))
+      res <- res/object$scalex$scale
     e <- rnorm(nsim, 0, sd(res, na.rm=TRUE))
   }
   else if(length(innov)==nsim)
