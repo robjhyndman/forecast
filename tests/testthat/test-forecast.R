@@ -34,7 +34,7 @@ if(require(testthat))
 #   expect_that(plot(nnetfc), not(throws_error()))
 #   expect_that(plot(batsfc), not(throws_error()))
 #   expect_that(plot(batsfc, shaded = FALSE), not(throws_error()))
-#   expect_that(plot(tslmfc, plot.conf = FALSE), not(throws_error()))
+#   expect_that(plot(tslmfc, PI = FALSE), not(throws_error()))
 #   expect_that(plot(forecast(tslmmod, h = 0)), not(throws_error()))
 # })
 }

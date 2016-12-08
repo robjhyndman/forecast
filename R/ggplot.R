@@ -394,16 +394,16 @@ autoplot.ets <- function (object, ...){
   }
 }
 
-autoplot.forecast <- function (object, include, plot.conf=TRUE, shadecols=c("#596DD5","#D5DBFF"), fcol="#0000AA", flwd=0.5, ...){
+autoplot.forecast <- function (object, include, PI=TRUE, shadecols=c("#596DD5","#D5DBFF"), fcol="#0000AA", flwd=0.5, ...){
   if (requireNamespace("ggplot2")){
     if (!is.forecast(object)){
       stop("autoplot.forecast requires a forecast object, use object=object")
     }
     if(is.null(object$lower) | is.null(object$upper) | is.null(object$level)) {
-      plot.conf <- FALSE
+      PI <- FALSE
     }
     else if(!is.finite(max(object$upper))) {
-      plot.conf <- FALSE
+      PI <- FALSE
     }
 
     if (!is.null(object$model$terms) && !is.null(object$model$model)){
@@ -448,7 +448,7 @@ autoplot.forecast <- function (object, include, plot.conf=TRUE, shadecols=c("#59
       p <- p + ggplot2::labs(y=vars["yvar"], x=vars["xvar"])
 
       #Forecasted intervals
-      if (plot.conf){
+      if (PI){
         levels <- NROW(object$level)
         interval <- data.frame(xpred=rep(object$newdata[[1]],levels),lower=c(object$lower),upper=c(object$upper),level=object$level)
         interval<-interval[order(interval$level,decreasing = TRUE),] #Must be ordered for gg z-index
@@ -502,7 +502,7 @@ autoplot.forecast <- function (object, include, plot.conf=TRUE, shadecols=c("#59
       #Forecasted intervals
       predicted <- data.frame(xvar = time(object$mean), yvar = object$mean)
       colnames(predicted) <- c("datetime","ypred")
-      if (plot.conf){
+      if (PI){
         levels <- NROW(object$level)
         interval <- data.frame(datetime=rep(predicted$datetime,levels),lower=c(object$lower),upper=c(object$upper),level=rep(object$level,each=NROW(object$mean)))
         interval <- interval[order(interval$level,decreasing = TRUE),] #Must be ordered for gg z-index
@@ -531,7 +531,7 @@ autoplot.forecast <- function (object, include, plot.conf=TRUE, shadecols=c("#59
   }
 }
 
-autoplot.mforecast <- function (object, plot.conf=TRUE, gridlayout=NULL, ...){
+autoplot.mforecast <- function (object, PI=TRUE, gridlayout=NULL, ...){
   if (requireNamespace("ggplot2") & requireNamespace("grid")){
     if (!is.mforecast(object)){
       stop("autoplot.mforecast requires a mforecast object, use object=object")
@@ -543,8 +543,8 @@ autoplot.mforecast <- function (object, plot.conf=TRUE, gridlayout=NULL, ...){
     }
 
     #Set up vector arguments
-    if (missing(plot.conf)){
-      plot.conf <- rep(TRUE, K)
+    if (missing(PI)){
+      PI <- rep(TRUE, K)
     }
 
     #Set up grid
@@ -566,7 +566,7 @@ autoplot.mforecast <- function (object, plot.conf=TRUE, gridlayout=NULL, ...){
       }
       matchidx <- as.data.frame(which(gridlayout == i, arr.ind = TRUE))
       print(autoplot(structure(partialfcast,class="forecast"),
-                     plot.conf=plot.conf[i], ...) + ggAddExtras(ylab=colnames(object$x)[i]),
+                     PI=PI[i], ...) + ggAddExtras(ylab=colnames(object$x)[i]),
             vp = grid::viewport(layout.pos.row = matchidx$row,
                           layout.pos.col = matchidx$col))
     }
@@ -970,8 +970,8 @@ ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NUL
   }
 }
 
-autoplot.splineforecast <- function (object, plot.conf=TRUE, ...){
-  p <- autoplot.forecast(object, plot.conf=plot.conf, ...)
+autoplot.splineforecast <- function (object, PI=TRUE, ...){
+  p <- autoplot.forecast(object, PI=PI, ...)
   fit <- data.frame(datetime=as.numeric(time(object$fitted)),y=as.numeric(object$fitted))
   p <- p + ggplot2::geom_point(ggplot2::aes_(x=~datetime,y=~y),data=fit,size=2)
   p <- p + ggAddExtras(ylab=deparse(object$model$call$x))
@@ -1192,7 +1192,7 @@ fortify.forecast <- function(model, data=as.data.frame(model), PI=TRUE, ...){
 
 StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
   required_aes = c("x","y"),
-  compute_group = function(data, scales, params, plot.conf=TRUE, h=NULL,
+  compute_group = function(data, scales, params, PI=TRUE, h=NULL,
                            level=c(80,95), fan=FALSE, robust=FALSE, lambda=NULL,
                            find.frequency=FALSE, allow.multiplicative.trend=FALSE, ...) {
     tspx <- recoverTSP(data$x)
@@ -1203,7 +1203,7 @@ StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
     fcast <- forecast(tsdat, h=h, level=level, fan=fan, robust=robust,
                       lambda=lambda, find.frequency=find.frequency,
                       allow.multiplicative.trend=allow.multiplicative.trend)
-    fcast <- fortify(fcast, PI=plot.conf)
+    fcast <- fortify(fcast, PI=PI)
     suppressWarnings(fcast <- cbind(fcast,data[1,!colnames(data)%in%colnames(fcast)]))
     fcast
   }
@@ -1267,11 +1267,11 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom, ## Produces both
     data <- split(data, is.na(data$y))
     
     #Draw forecasted points and intervals
-    if(length(data) == 1){ #plot.conf=FALSE
+    if(length(data) == 1){ #PI=FALSE
       ggplot2:::ggname("geom_forecast", 
         GeomForecastPoint$draw_panel(data[[1]], panel_scales, coord))
     }
-    else{ #plot.conf=TRUE
+    else{ #PI=TRUE
     ggplot2:::ggname("geom_forecast",
       grid::addGrob(GeomForecastInterval$draw_group(data[[2]], panel_scales, coord),
                    GeomForecastPoint$draw_panel(data[[1]], panel_scales, coord)))
@@ -1366,19 +1366,19 @@ GeomForecastInterval <- ggplot2::ggproto("GeomForecastInterval", GeomForecast, #
 
 geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
                           position = "identity", na.rm = FALSE, show.legend = NA,
-                          inherit.aes = TRUE, plot.conf=TRUE, series=NULL, ...) {
+                          inherit.aes = TRUE, PI=TRUE, series=NULL, ...) {
   if(is.forecast(mapping)){
     if(stat=="forecast"){
       stat <- "identity"
     }
-    plot.conf <- plot.conf & !is.null(mapping$level)
-    data <- fortify(mapping, PI=plot.conf)
+    PI <- PI & !is.null(mapping$level)
+    data <- fortify(mapping, PI=PI)
     mapping <- ggplot2::aes_(x = ~x, y = ~y)
     if(!is.null(series)){
       data <- transform(data, series=series)
       mapping$colour <- quote(series)
     }
-    if(plot.conf){
+    if(PI){
       mapping$level <- quote(level)
       mapping$ymin <- quote(ymin)
       mapping$ymax <- quote(ymax)
@@ -1411,7 +1411,7 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
     if(!is.null(series)){
       warning("To use the series argument, provide geom_forecast() with a forecast object.")
     }
-    paramlist <- list(na.rm = na.rm, plot.conf=plot.conf, ...)
+    paramlist <- list(na.rm = na.rm, PI=PI, ...)
   }
   else{
     paramlist <- list(na.rm = na.rm, ...)

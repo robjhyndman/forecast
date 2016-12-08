@@ -37,7 +37,7 @@ if(require(testthat))
     
     etsfcast <- forecast(etsfit)
     autoplot(etsfcast)
-    autoplot(etsfcast, plot.conf = FALSE)
+    autoplot(etsfcast, PI = FALSE)
     
     lmfit <- lm(mpg ~ disp, data=mtcars)
     lmfcast <- forecast(lmfit, newdata=data.frame(disp=214))

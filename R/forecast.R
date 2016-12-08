@@ -218,7 +218,7 @@ summary.forecast <- function(object,...)
     }
 }
 
-plotlmforecast <- function(object, plot.conf, shaded, shadecols, col, fcol, pi.col, pi.lty,
+plotlmforecast <- function(object, PI, shaded, shadecols, col, fcol, pi.col, pi.lty,
   xlim=NULL, ylim, main, ylab, xlab, ...)
 {
   xvar <- attributes(terms(object$model))$term.labels
@@ -234,7 +234,7 @@ plotlmforecast <- function(object, plot.conf, shaded, shadecols, col, fcol, pi.c
     xlim=xlim,ylim=ylim,xlab=xlab,ylab=ylab,main=main,col=col,...)
   abline(object$model)
   nf <- length(object$mean)
-  if(plot.conf)
+  if(PI)
   {
     nint <- length(object$level)
     idx <- rev(order(object$level))
@@ -266,7 +266,7 @@ plotlmforecast <- function(object, plot.conf, shaded, shadecols, col, fcol, pi.c
   points(object$newdata[,xvar],object$mean,pch=19,col=fcol)
 }
 
-plot.forecast <- function(x, include, plot.conf=TRUE, shaded=TRUE, shadebars=(length(x$mean)<5),
+plot.forecast <- function(x, include, PI=TRUE, shaded=TRUE, shadebars=(length(x$mean)<5),
         shadecols=NULL, col=1, fcol=4, pi.col=1, pi.lty=2, ylim=NULL, main=NULL, xlab="",
         ylab="", type="l",  flty = 1, flwd = 2, ...)
 {
@@ -275,17 +275,17 @@ plot.forecast <- function(x, include, plot.conf=TRUE, shaded=TRUE, shadebars=(le
   else
     xx=NULL
   if(is.null(x$lower) | is.null(x$upper) | is.null(x$level)){
-    plot.conf <- FALSE
+    PI <- FALSE
   }
   else if(!is.finite(max(x$upper))){
-    plot.conf <- FALSE
+    PI <- FALSE
   }
 
   if(!shaded)
     shadebars <- FALSE
   if(is.null(main))
     main <- paste("Forecasts from ",x$method,sep="")
-  if(plot.conf)
+  if(PI)
   {
     x$upper <- as.matrix(x$upper)
     x$lower <- as.matrix(x$lower)
@@ -293,9 +293,9 @@ plot.forecast <- function(x, include, plot.conf=TRUE, shaded=TRUE, shadebars=(le
 
   if(is.element("lm",class(x$model)) & !is.element("ts",class(x$mean))) # Non time series linear model
   {
-    plotlmforecast(x, plot.conf=plot.conf, shaded=shaded, shadecols=shadecols, col=col, fcol=fcol, pi.col=pi.col, pi.lty=pi.lty,
+    plotlmforecast(x, PI=PI, shaded=shaded, shadecols=shadecols, col=col, fcol=fcol, pi.col=pi.col, pi.lty=pi.lty,
       ylim=ylim, main=main, xlab=xlab, ylab=ylab, ...)
-    if(plot.conf)
+    if(PI)
       return(invisible(list(mean=x$mean,lower=as.matrix(x$lower),upper=as.matrix(x$upper))))
     else
       return(invisible(list(mean=x$mean)))
@@ -335,7 +335,7 @@ plot.forecast <- function(x, include, plot.conf=TRUE, shaded=TRUE, shadebars=(le
   if(is.null(ylim))
   {
     ylim <- range(c(xx[(n-include+1):n],pred.mean),na.rm=TRUE)
-    if(plot.conf)
+    if(PI)
       ylim <- range(ylim,x$lower,x$upper,na.rm=TRUE)
   }
   npred <- length(pred.mean)
@@ -347,7 +347,7 @@ plot.forecast <- function(x, include, plot.conf=TRUE, shaded=TRUE, shadebars=(le
   }
   plot(ts(c(xxx[(nx-include+1):nx], rep(NA, npred)), end=tsp(xx)[2] + (nx-n)/freq + npred/freq, frequency=freq),
     xlab=xlab,ylim=ylim,ylab=ylab,main=main,col=col,type=type, ...)
-  if(plot.conf)
+  if(PI)
   {
     if(is.ts(x$upper)){
       xxx <- time(x$upper)
@@ -401,7 +401,7 @@ plot.forecast <- function(x, include, plot.conf=TRUE, shaded=TRUE, shadebars=(le
     lines(pred.mean, lty = flty, lwd=flwd, col = fcol)
   else
     points(pred.mean, col=fcol, pch=19)
-  if(plot.conf)
+  if(PI)
     invisible(list(mean=pred.mean,lower=x$lower,upper=x$upper))
   else
     invisible(list(mean=pred.mean))
