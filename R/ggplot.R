@@ -1058,7 +1058,7 @@ ggts <- function(object, colour=TRUE, series=NULL){
       if(colour){
         warning("For a multivariate timeseries, specify a seriesname for each timeseries. Defaulting to column names.")
       }
-      series <- colnames(ldeaths)
+      series <- colnames(object)
     }
     out <- list()
     for(i in 1:NCOL(object)){
