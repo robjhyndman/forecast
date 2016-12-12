@@ -1288,12 +1288,15 @@ GeomForecastPoint <- ggplot2::ggproto("GeomForecastPoint", GeomForecast, ## Prod
   },
   
   draw_group = function(data, panel_scales, coord){
-    col <- data$colour[1]
-    altcol <- col2rgb(col)
-    altcol <- rgb2hsv(altcol[[1]],altcol[[2]],altcol[[3]])
-    
+    # col <- data$colour[1]
+    # altcol <- col2rgb(col)
+    # altcol <- rgb2hsv(altcol[[1]],altcol[[2]],altcol[[3]])
+    # 
+    # # Calculate and set colour
+    # linecol <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1, 2/3))
+    browser()
     # Calculate and set colour
-    linecol <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1, 2/3))
+    linecol <- blendHex(data$colour[1], data$level[1], 1)
     
     # Select appropriate Geom and set defaults
     if(NROW(data)==0){ #Blank
@@ -1315,12 +1318,37 @@ GeomForecastPoint <- ggplot2::ggproto("GeomForecastPoint", GeomForecast, ## Prod
 )
 
 
-blendHex <- function(alpha, col1, col2){
-  col1 <- c(col2rgb(col1))
-  col2 <- c(col2rgb(col2))
-  blendcol <- alpha*col1 + (1-alpha)*col2
-  return(do.call(paste0, as.list(c("#", as.character(as.hexmode(round(blendcol)))))))
+blendHex <- function(mixcol, seqcol, alpha=1){
+  requireNamespace("colorspace")
+  
+  if(is.na(seqcol)){
+    return(mixcol)
+  }
+  
+  seqcol <- col2rgb(seqcol, alpha = TRUE)
+  mixcol <- col2rgb(mixcol, alpha = TRUE)
+  seqcolHex <- as(colorspace::RGB(R = seqcol[1,]/255, G = seqcol[2,]/255, B = seqcol[3,]/255), Class = "RGB")
+  mixcolHex <- as(colorspace::RGB(R = mixcol[1,]/255, G = mixcol[2,]/255, B = mixcol[3,]/255), Class = "RGB")
+  
+  #transform to hue/lightness/saturation colorspace
+  seqcolHLS <- as(seqcolHex, "HLS")
+  mixcolHLS <- as(mixcolHex, "HLS")
+  
+  #copy luminence
+  mixcolHLS@coords[, "L"] <- seqcolHLS@coords[, "L"]
+  mixcolHex <- as(mixcolHLS, "RGB")
+  mixcolHex <- colorspace::hex(mixcolHex)
+  
+  return(mixcolHex)
 }
+
+# GenerateSequentialGradient <- function(cols, lmin=0.3, lmax=0.7){
+#   #Convert named colours to RGB (TODO: find a simpler/faster method)
+#   cols <- do.call(paste0, data.frame(t(rbind("#", as.character(as.hexmode(col2rgb(cols)))))))
+#   cols1 <- colorspace::readhex(file = textConnection(paste(cols, collapse = "\n")))
+#   #transform to hue/lightness/saturation colorspace
+#   cols1 <- as(cols1, "HLS")
+# }
 
 GeomForecastInterval <- ggplot2::ggproto("GeomForecastInterval", GeomForecast, ## Produces only forecasts intervals on graph
    required_aes = c("x","ymin","ymax","level"),
@@ -1347,7 +1375,7 @@ GeomForecastInterval <- ggplot2::ggproto("GeomForecastInterval", GeomForecast, #
      intervalGrobList <- lapply(split(data, data$level), 
             FUN = function(x){
               # Calculate colour
-              fillcol <- blendHex(0.5, x$colour[1], x$level[1])#colscale(x$scalefill[1])
+              fillcol <- blendHex(x$colour[1], x$level[1], 0.6)#colscale(x$scalefill[1]) # Consider blending different amounts of white?
               # Select appropriate Geom and set defaults
               if(NROW(x)==0){ #Blank
                 GeomBlank$draw_panel
@@ -1429,9 +1457,9 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
     params = paramlist)
 }
 
-scale_level_continuous <- function(..., low = "#666666", high = "#AAAAAA", space = "Lab", na.value = "grey50", guide = "level_colourbar") 
+scale_level_continuous <- function(..., low = "#888888", high = "#BBBBBB", space = "Lab", na.value = "gray50", guide = "level_colourbar", point = na.value) 
 {
-  continuous_scale("level", "gradient", scales::seq_gradient_pal(low, high, space), na.value = na.value, guide = guide, ...)
+  continuous_scale("level", "gradient", scales::seq_gradient_pal(low, high, space), na.value = point, guide = guide, ...)
 }
 
 guide_level_colourbar <- function(...){
