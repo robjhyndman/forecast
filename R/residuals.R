@@ -96,12 +96,18 @@ residuals.nnetar <- function(object, type=c("innovation","response"), h=1, ...)
 {
   type <- match.arg(type)
   if(type=="innovation" & !is.null(object$lambda))
+  {
+    res <- matrix(unlist(lapply(object$model, residuals)), ncol=length(object$model))
     if(!is.null(object$scalex$scale))
-      na.omit(rowMeans(sapply(object$model, residuals)))*object$scalex$scale
-    else
-      na.omit(rowMeans(sapply(object$model, residuals)))
+      res <- res * object$scalex$scale
+  }
   else
-    getResponse(object) - fitted(object, h=h)
+    res <- getResponse(object) - fitted(object, h=h)
+
+  tspx <- tsp(getResponse(object))
+  res <- ts(res, frequency=tspx[3L], end=tspx[2L])
+
+  return(res)
 }
 
 residuals.stlm <- function(object, type=c("innovation","response"), ...)
