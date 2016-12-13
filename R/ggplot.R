@@ -1408,6 +1408,7 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
     if(stat=="forecast"){
       stat <- "identity"
     }
+    inherit.aes <- FALSE
     PI <- PI & !is.null(mapping$level)
     data <- fortify(mapping, PI=PI)
     mapping <- ggplot2::aes_(x = ~x, y = ~y)
