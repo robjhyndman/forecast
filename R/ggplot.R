@@ -1214,7 +1214,7 @@ StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
 GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom, ## Produces both point forecasts and intervals on graph
   required_aes = c("x", "y"),
   optional_aes = c("ymin", "ymax", "level"),
-  default_aes = ggplot2::aes(colour = "#868FBD", fill = "grey60", size = .5,
+  default_aes = ggplot2::aes(colour = "blue", fill = "grey60", size = .5,
     linetype = 1, weight = 1, alpha = 1, level=NA), #Having level as a default_aes allows the level legend pass tests
   draw_key = function(data, params, size){
     lwd <- min(data$size, min(size) / 4)
@@ -1337,6 +1337,7 @@ blendHex <- function(mixcol, seqcol, alpha=1){
   
   #copy luminence
   mixcolHLS@coords[, "L"] <- seqcolHLS@coords[, "L"]
+  mixcolHLS@coords[, "S"] <- alpha*mixcolHLS@coords[, "S"] + (1-alpha)*seqcolHLS@coords[, "S"]
   mixcolHex <- as(mixcolHLS, "RGB")
   mixcolHex <- colorspace::hex(mixcolHex)
   
@@ -1458,8 +1459,14 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
     params = paramlist)
 }
 
-scale_level_continuous <- function(..., low = "#888888", high = "#BBBBBB", space = "Lab", na.value = "gray50", guide = "level_colourbar", point = na.value) 
+scale_level_continuous <- function(..., low = "#888888", high = "#BBBBBB", space = "Lab", na.value = "gray30", guide = "level_colourbar", point = na.value) 
 {
+  if(guide=="colourbar" || guide=="colorbar"){
+    guide <- "level_colourbar"
+  }
+  else if(guide=="legend"){
+    guide <- "level_legend"
+  }
   continuous_scale("level", "gradient", scales::seq_gradient_pal(low, high, space), na.value = point, guide = guide, ...)
 }
 
@@ -1470,9 +1477,23 @@ guide_level_colourbar <- function(...){
   return(out)
 }
 
+guide_level_legend <- function(...){
+  out <- ggplot2:::guide_legend(...)
+  out$available_aes = c("level") #Add our new aesthetic option to be accepted by ggplot
+  class(out) <- c("level_legend", class(out))
+  return(out)
+}
+
 guide_train.level_colourbar <- function(guide, scale){
   scale$aesthetics <- "colour"
   trained_guide <- ggplot2:::guide_train.colorbar(guide, scale)
+  trained_guide$key <- transform(trained_guide$key, level=NA) # Add name to pass later test
+  return(trained_guide)
+}
+
+guide_train.level_legend <- function(guide, scale){
+  scale$aesthetics <- "colour"
+  trained_guide <- ggplot2:::guide_train.legend(guide, scale)
   trained_guide$key <- transform(trained_guide$key, level=NA) # Add name to pass later test
   return(trained_guide)
 }
