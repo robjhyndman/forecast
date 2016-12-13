@@ -1087,20 +1087,21 @@ autoplot.ts <- function(object, series=NULL, ...){
     # Create data frame with time as a column labelled x
     # and time series as a column labelled y.
     data <- data.frame(y = as.numeric(object), x = as.numeric(time(object)))
-    
-    #Initialise ggplot object
     if(!is.null(series)){
       data <- transform(data, series=series)
-      p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x, group=~series, colour=~series), data=data)
+    }
+    
+    #Initialise ggplot object
+    p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x), data=data)
+    
+    #Add data
+    if(!is.null(series)){
+      p <- p + ggplot2::geom_line(ggplot2::aes_(group=~series, colour=~series), na.rm = TRUE)
     }
     else{
-      p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x), data=data)
+      p <- p + ggplot2::geom_line(na.rm = TRUE)
     }
 
-
-    #Add data
-    p <- p + ggplot2::geom_line(na.rm = TRUE)
-    
     # Add labels
     p <- p + ggAddExtras(xlab="Time", ylab=deparse(substitute(object)))
 
@@ -1118,13 +1119,12 @@ autoplot.mts <- function(object, facets=FALSE, ...){
     data <- data.frame(y=as.numeric(c(object)), x=rep(as.numeric(time(object)),NCOL(object)),
                        series=factor(rep(colnames(object), each=NROW(object)), levels=colnames(object)))
     #Initialise ggplot object
+    p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x, group=~series), data=data)
     if(facets){
-      p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x, group=~series), data=data)
       p <- p + ggplot2::geom_line(na.rm = TRUE) + ggplot2::facet_grid(series~., scales = "free_y")
     }
     else{
-      p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x, group=~series, colour=~series), data=data)
-      p <- p + ggplot2::geom_line(na.rm = TRUE)
+      p <- p + ggplot2::geom_line(ggplot2::aes_(colour=~series), na.rm = TRUE)
     }
 
     p <- p + ggAddExtras(xlab="Time", ylab=deparse(substitute(object)))
