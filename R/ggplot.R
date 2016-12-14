@@ -1193,10 +1193,10 @@ fortify.forecast <- function(model, data=as.data.frame(model), PI=TRUE, ...){
 
 StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
   required_aes = c("x","y"),
-  optional_aes = c("colour"),
-  default_aes = ggplot2::aes(level = ..level.., colour = ..series..),## TODO: Work out how I mistakenly made it work
-  compute_group = function(data, scales, params, PI=TRUE, series=NULL, h=NULL,
-                           level=c(80,95), fan=FALSE, robust=FALSE, lambda=NULL,
+  default_aes = ggplot2::aes(level = ..level..),
+  
+  compute_group = function(data, scales, params, PI=TRUE, series=NULL, 
+                           h=NULL, level=c(80,95), fan=FALSE, robust=FALSE, lambda=NULL,
                            find.frequency=FALSE, allow.multiplicative.trend=FALSE, ...) {
     ## TODO: Rewrite
     tspx <- recoverTSP(data$x)
@@ -1208,17 +1208,17 @@ StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
                       lambda=lambda, find.frequency=find.frequency,
                       allow.multiplicative.trend=allow.multiplicative.trend)
     fcast <- fortify(fcast, PI=PI)
-    suppressWarnings(fcast <- cbind(fcast,data[1,!colnames(data)%in%colnames(fcast)], series=series))
     
-    # Add series information
+    # Add ggplot & series information
+    extraInfo <- as.list(data[1,!colnames(data)%in%colnames(fcast)])
+    extraInfo$`_data` <- quote(fcast)
     if(!is.null(series)){
       if(data$group[1] > length(series)){
-        message("Recycling series, please provide a series name for each time series")
+        message("Recycling series argument, please provide a series name for each time series")
       }
-      fcast <- transform(fcast, series=series[(abs(data$group[1])-1)%%length(series)+1])
+      extraInfo[["series"]] <- series[(abs(data$group[1])-1)%%length(series)+1]
     }
-    
-    fcast
+    do.call("transform", extraInfo)
   }
 )
 
@@ -1411,6 +1411,9 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
   }
   if(stat=="forecast"){
     paramlist <- list(na.rm = na.rm, PI=PI, series=series, ...)
+    if(!is.null(series)){
+      mapping <- aes(colour = ..series..)
+    }
   }
   else{
     paramlist <- list(na.rm = na.rm, ...)
