@@ -1286,14 +1286,6 @@ GeomForecastPoint <- ggplot2::ggproto("GeomForecastPoint", GeomForecast, ## Prod
   },
   
   draw_group = function(data, panel_scales, coord){
-    # col <- data$colour[1]
-    # altcol <- col2rgb(col)
-    # altcol <- rgb2hsv(altcol[[1]],altcol[[2]],altcol[[3]])
-    # 
-    # # Calculate and set colour
-    # linecol <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1, 2/3))
-    browser()
-    # Calculate and set colour
     linecol <- blendHex(data$colour[1], data$level[1], 1)
     
     # Select appropriate Geom and set defaults
@@ -1341,14 +1333,6 @@ blendHex <- function(mixcol, seqcol, alpha=1){
   return(mixcolHex)
 }
 
-# GenerateSequentialGradient <- function(cols, lmin=0.3, lmax=0.7){
-#   #Convert named colours to RGB (TODO: find a simpler/faster method)
-#   cols <- do.call(paste0, data.frame(t(rbind("#", as.character(as.hexmode(col2rgb(cols)))))))
-#   cols1 <- colorspace::readhex(file = textConnection(paste(cols, collapse = "\n")))
-#   #transform to hue/lightness/saturation colorspace
-#   cols1 <- as(cols1, "HLS")
-# }
-
 GeomForecastInterval <- ggplot2::ggproto("GeomForecastInterval", GeomForecast, ## Produces only forecasts intervals on graph
    required_aes = c("x","ymin","ymax","level"),
    
@@ -1357,20 +1341,6 @@ GeomForecastInterval <- ggplot2::ggproto("GeomForecastInterval", GeomForecast, #
    },
    
    draw_group = function(data, panel_scales, coord){
-     # if(min(data$level)<50){
-     #   data$scalefill <- scales::rescale(data$level, from = c(1,99))
-     # }
-     # else{
-     #   data$scalefill <- scales::rescale(data$level, from = c(50,99))
-     # }
-     # 
-     # col <- data$colour[1]
-     # altcol <- col2rgb(col)
-     # altcol <- rgb2hsv(altcol[[1]],altcol[[2]],altcol[[3]])
-     # 
-     # altcol1 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 7/12, 5/6))
-     # altcol2 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1/6, 1))
-     # colscale <- scales::gradient_n_pal(c(altcol1,altcol2))
      intervalGrobList <- lapply(split(data, data$level), 
             FUN = function(x){
               # Calculate colour
@@ -1401,6 +1371,7 @@ GeomForecastInterval <- ggplot2::ggproto("GeomForecastInterval", GeomForecast, #
 geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
                           position = "identity", na.rm = FALSE, show.legend = NA,
                           inherit.aes = TRUE, PI=TRUE, series=NULL, ...) {
+  ## TODO: Tidy initialisation
   if(is.forecast(mapping)){
     if(stat=="forecast"){
       stat <- "identity"
@@ -1429,7 +1400,6 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
         series <- names(mapping$mean)
       }
     }
-    #return(lapply(mforecastsplit(mapping), function(x)do.call(geom_forecast, eval(cl))))
     fclist <- mforecastsplit(mapping)
     out <- list()
     for(i in 1:length(fclist)){
@@ -1465,6 +1435,7 @@ scale_level_continuous <- function(..., low = "#888888", high = "#BBBBBB", space
   continuous_scale("level", "gradient", scales::seq_gradient_pal(low, high, space), na.value = point, guide = guide, ...)
 }
 
+## TODO: Write own guide
 guide_level_colourbar <- function(...){
   out <- ggplot2:::guide_colourbar(...)
   out$available_aes = c("level") #Add our new aesthetic option to be accepted by ggplot
