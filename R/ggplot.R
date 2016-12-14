@@ -1315,14 +1315,11 @@ blendHex <- function(mixcol, seqcol, alpha=1){
     return(mixcol)
   }
   
+  #transform to hue/lightness/saturation colorspace
   seqcol <- col2rgb(seqcol, alpha = TRUE)
   mixcol <- col2rgb(mixcol, alpha = TRUE)
-  seqcolHex <- as(colorspace::RGB(R = seqcol[1,]/255, G = seqcol[2,]/255, B = seqcol[3,]/255), Class = "RGB")
-  mixcolHex <- as(colorspace::RGB(R = mixcol[1,]/255, G = mixcol[2,]/255, B = mixcol[3,]/255), Class = "RGB")
-  
-  #transform to hue/lightness/saturation colorspace
-  seqcolHLS <- as(seqcolHex, "HLS")
-  mixcolHLS <- as(mixcolHex, "HLS")
+  seqcolHLS <- as(colorspace::RGB(R = seqcol[1,]/255, G = seqcol[2,]/255, B = seqcol[3,]/255), Class = "HLS")
+  mixcolHLS <- as(colorspace::RGB(R = mixcol[1,]/255, G = mixcol[2,]/255, B = mixcol[3,]/255), Class = "HLS")
   
   #copy luminence
   mixcolHLS@coords[, "L"] <- seqcolHLS@coords[, "L"]
