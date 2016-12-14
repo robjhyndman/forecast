@@ -1193,10 +1193,12 @@ fortify.forecast <- function(model, data=as.data.frame(model), PI=TRUE, ...){
 
 StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
   required_aes = c("x","y"),
-  default_aes = ggplot2::aes(level = ..level..),
-  compute_group = function(data, scales, params, PI=TRUE, h=NULL,
+  optional_aes = c("colour"),
+  default_aes = ggplot2::aes(level = ..level.., colour = ..series..),## TODO: Work out how I mistakenly made it work
+  compute_group = function(data, scales, params, PI=TRUE, series=NULL, h=NULL,
                            level=c(80,95), fan=FALSE, robust=FALSE, lambda=NULL,
                            find.frequency=FALSE, allow.multiplicative.trend=FALSE, ...) {
+    ## TODO: Rewrite
     tspx <- recoverTSP(data$x)
     if(is.null(h)){
       h <- ifelse(tspx[3] > 1, 2 * tspx[3], 10)
@@ -1206,48 +1208,43 @@ StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
                       lambda=lambda, find.frequency=find.frequency,
                       allow.multiplicative.trend=allow.multiplicative.trend)
     fcast <- fortify(fcast, PI=PI)
-    suppressWarnings(fcast <- cbind(fcast,data[1,!colnames(data)%in%colnames(fcast)]))
+    suppressWarnings(fcast <- cbind(fcast,data[1,!colnames(data)%in%colnames(fcast)], series=series))
+    
+    # Add series information
+    if(!is.null(series)){
+      if(data$group[1] > length(series)){
+        message("Recycling series, please provide a series name for each time series")
+      }
+      fcast <- transform(fcast, series=series[(abs(data$group[1])-1)%%length(series)+1])
+    }
+    
     fcast
   }
 )
 
-GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom, ## Produces both point forecasts and intervals on graph
+GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom, # Produces both point forecasts and intervals on graph
   required_aes = c("x", "y"),
   optional_aes = c("ymin", "ymax", "level"),
   default_aes = ggplot2::aes(colour = "blue", fill = "grey60", size = .5,
-    linetype = 1, weight = 1, alpha = 1, level=NA), #Having level as a default_aes allows the level legend pass tests
-  draw_key = function(data, params, size){
+    linetype = 1, weight = 1, alpha = 1, level="gray30"),
+  draw_key = function(data, params, size){ ## TODO: Somehow extract level information
     lwd <- min(data$size, min(size) / 4)
-    col <- data$colour
-    altcol <- col2rgb(col)
-    altcol <- rgb2hsv(altcol[[1]],altcol[[2]],altcol[[3]])
     
     # Calculate and set colour
-    linecol <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1, 2/3))
-    #altcol1 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 7/12, 5/6))
-    altcol2 <- colorspace::hex(colorspace::HSV(altcol[1]*360, 1/6, 1))
+    linecol <- blendHex(data$col, data$level, 1)
+    fillcol <- blendHex(data$col, "#CCCCCC", 0.8)
     
     grid::grobTree(
       grid::rectGrob(
         width = unit(1, "npc") - unit(lwd, "mm"),
         height = unit(1, "npc") - unit(lwd, "mm"),
         gp = grid::gpar(
-          col = altcol2,
-          fill = alpha(altcol2, data$alpha),
+          col = fillcol,
+          fill = alpha(fillcol, data$alpha),
           lty = data$linetype,
           lwd = lwd * .pt,
           linejoin = "mitre")
       ),
-      # grid::polygonGrob(
-      #   x=c(0,  0.4,0.6,0.8,1,1,  0.6,0.4,0.1,0),
-      #   y=c(0.5,0.9,0.7,1,  1,0.6,0.1,0.3,0  ,0),
-      #   gp = grid::gpar(
-      #     col = altcol1,
-      #     fill = alpha(altcol1, data$alpha),
-      #     lty = data$linetype,
-      #     lwd = lwd * .pt,
-      #     linejoin = "mitre")
-      # ),
       grid::linesGrob(
         x=c(0, 0.4, 0.6, 1),
         y=c(0.2, 0.6, 0.4, 0.9),
@@ -1261,7 +1258,7 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom, ## Produces both
     )
   },
   
-  handle_na = function(self, data, params){ #Consider removing/changing
+  handle_na = function(self, data, params){ ## TODO: Consider removing/changing
     data
   },
 
@@ -1446,10 +1443,7 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
     mapping <- ggplot2::aes_(y=~y, x=~x)
   }
   if(stat=="forecast"){
-    if(!is.null(series)){
-      warning("To use the series argument, provide geom_forecast() with a forecast object.")
-    }
-    paramlist <- list(na.rm = na.rm, PI=PI, ...)
+    paramlist <- list(na.rm = na.rm, PI=PI, series=series, ...)
   }
   else{
     paramlist <- list(na.rm = na.rm, ...)
