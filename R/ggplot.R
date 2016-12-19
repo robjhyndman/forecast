@@ -1054,7 +1054,7 @@ autoplot.seas <- function (object, labels = NULL, ...){
   }
 }
 
-autolayer.mts <- function(object, colour=TRUE, series=NULL){
+autolayer.mts <- function(object, colour=TRUE, series=NULL, ...){
   cl <- match.call()
   cl[[1]] <- quote(autolayer)
   cl$object <- quote(object[,i])

@@ -7,8 +7,8 @@
 \title{Automatically create a ggplot for time series objects}
 \usage{\method{autoplot}{ts}(object, series = NULL, ...)
 \method{autoplot}{mts}(object, facets=FALSE, ...)
-\method{autolayer}{ts}(object, colour=TRUE, series=NULL)
-\method{autolayer}{mts}(object, colour=TRUE, series=NULL)
+\method{autolayer}{ts}(object, colour=TRUE, series=NULL, ...)
+\method{autolayer}{mts}(object, colour=TRUE, series=NULL, ...)
 \method{fortify}{ts}(model,data, ...)
 }
 
