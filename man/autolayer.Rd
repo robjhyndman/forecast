@@ -1,6 +1,6 @@
 \name{autolayer}
 \alias{autolayer}
-\title{Create a ggpot layer appropriate to a particular data type}
+\title{Create a ggplot layer appropriate to a particular data type}
 \usage{autolayer(object, ...)
 }
 
