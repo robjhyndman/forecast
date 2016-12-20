@@ -1199,7 +1199,7 @@ fortify.forecast <- function(model, data=as.data.frame(model), PI=TRUE, ...){
 
 StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
   required_aes = c("x","y"),
-  default_aes = ggplot2::aes(level = ..level..),
+  default_aes = ggplot2::aes_(level = ~..level..),
   
   compute_group = function(data, scales, params, PI=TRUE, series=NULL, 
                            h=NULL, level=c(80,95), fan=FALSE, robust=FALSE, lambda=NULL,
@@ -1307,14 +1307,14 @@ GeomForecastPoint <- ggplot2::ggproto("GeomForecastPoint", GeomForecast, ## Prod
     
     # Select appropriate Geom and set defaults
     if(NROW(data)==0){ #Blank
-      GeomBlank$draw_panel
+      ggplot2::GeomBlank$draw_panel
     }
     else if(NROW(data)==1){ #Point
-      GeomForecastPointGeom <- GeomPoint$draw_panel
+      GeomForecastPointGeom <- ggplot2::GeomPoint$draw_panel
       pointpred <- transform(data, fill = NA, colour = linecol, size=1, shape=19, stroke=0.5)
     }
     else{ #Line
-      GeomForecastPointGeom <- GeomLine$draw_panel
+      GeomForecastPointGeom <- ggplot2::GeomLine$draw_panel
       pointpred <- transform(data, fill = NA, colour = linecol)
     }
     
@@ -1333,8 +1333,8 @@ blendHex <- function(mixcol, seqcol, alpha=1){
   }
   
   #transform to hue/lightness/saturation colorspace
-  seqcol <- col2rgb(seqcol, alpha = TRUE)
-  mixcol <- col2rgb(mixcol, alpha = TRUE)
+  seqcol <- grDevices::col2rgb(seqcol, alpha = TRUE)
+  mixcol <- grDevices::col2rgb(mixcol, alpha = TRUE)
   seqcolHLS <- as(colorspace::RGB(R = seqcol[1,]/255, G = seqcol[2,]/255, B = seqcol[3,]/255), Class = "HLS")
   mixcolHLS <- as(colorspace::RGB(R = mixcol[1,]/255, G = mixcol[2,]/255, B = mixcol[3,]/255), Class = "HLS")
   
@@ -1361,14 +1361,14 @@ GeomForecastInterval <- ggplot2::ggproto("GeomForecastInterval", GeomForecast, #
               fillcol <- blendHex(x$colour[1], x$level[1], 0.6)#colscale(x$scalefill[1]) # Consider blending different amounts of white?
               # Select appropriate Geom and set defaults
               if(NROW(x)==0){ #Blank
-                GeomBlank$draw_panel
+                ggplot2::GeomBlank$draw_panel
               }
               else if(NROW(x)==1){ #Linerange
-                GeomForecastIntervalGeom <- GeomLinerange$draw_panel
+                GeomForecastIntervalGeom <- ggplot2::GeomLinerange$draw_panel
                 x <- transform(x, colour=fillcol, fill = NA, size=1)
               }
               else{ #Ribbon
-                GeomForecastIntervalGeom <- GeomRibbon$draw_group
+                GeomForecastIntervalGeom <- ggplot2::GeomRibbon$draw_group
                 x <- transform(x, colour=NA, fill = fillcol)
               }
               #Create grob
@@ -1429,7 +1429,7 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
   if(stat=="forecast"){
     paramlist <- list(na.rm = na.rm, PI=PI, series=series, ...)
     if(!is.null(series)){
-      mapping <- aes(colour = ..series..)
+      mapping <- ggplot2::aes_(colour = ~..series..)
     }
   }
   else{
@@ -1449,11 +1449,10 @@ scale_level_continuous <- function(..., low = "#888888", high = "#BBBBBB", space
   else if(guide=="legend"){
     guide <- "level_legend"
   }
-  #return(continuous_scale("level", "gradient", scales::seq_gradient_pal(low, high, space), na.value = point, guide = guide, ...))
   out <- ggproto(NULL, continuous_scale("level", "gradient", scales::seq_gradient_pal(low, high, space), na.value = point, guide = guide, ...),
     leveltrain = function(self, x){
       uniqueX <- unique(x[!is.na(x)])
-      if(length(uniqueX) <= 5 && ggplot2:::is.waive(self$breaks)){
+      if(length(uniqueX) <= 5 && inherits(self$breaks, "waiver")){
         self$super$guide <- "level_legend"
         self$breaks <- uniqueX
       }
@@ -1463,16 +1462,17 @@ scale_level_continuous <- function(..., low = "#888888", high = "#BBBBBB", space
   return(out)
 }
 
-## TODO: Write own guide
 guide_level_colourbar <- function(...){
-  out <- ggplot2:::guide_colourbar(...)
+  out <- ggplot2::guide_colourbar(...)
   out$available_aes = c("level") #Add our new aesthetic option to be accepted by ggplot
   class(out) <- c("level_colourbar", class(out))
   return(out)
 }
 
+guide_level_colorbar <- guide_level_colourbar
+
 guide_level_legend <- function(...){
-  out <- ggplot2:::guide_legend(...)
+  out <- ggplot2::guide_legend(...)
   out$available_aes = c("level") #Add our new aesthetic option to be accepted by ggplot
   class(out) <- c("level_legend", class(out))
   return(out)
@@ -1480,7 +1480,7 @@ guide_level_legend <- function(...){
 
 guide_train.level_colourbar <- function(guide, scale){
   scale$aesthetics <- "colour"
-  trained_guide <- ggplot2:::guide_train.colorbar(guide, scale)
+  trained_guide <- get("guide_train.colorbar", envir = asNamespace("ggplot2"), inherits = FALSE)(guide, scale)
   trained_guide$override.aes$colour <- trained_guide$key$colour # Override allows colour to work when colour aesthetic is missing
   trained_guide$key <- transform(trained_guide$key, level=TRUE) # Add name to pass later test
   return(trained_guide)
@@ -1488,7 +1488,7 @@ guide_train.level_colourbar <- function(guide, scale){
 
 guide_train.level_legend <- function(guide, scale){
   scale$aesthetics <- "colour"
-  trained_guide <- ggplot2:::guide_train.legend(guide, scale)
+  trained_guide <- get("guide_train.colorbar", envir = asNamespace("ggplot2"), inherits = FALSE)(guide, scale)
   trained_guide$override.aes$colour <- trained_guide$key$colour # Override allows colour to work when colour aesthetic is missing
   trained_guide$key <- transform(trained_guide$key, level=TRUE) # Add name to pass later test
   return(trained_guide)
