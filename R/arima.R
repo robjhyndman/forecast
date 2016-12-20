@@ -403,7 +403,7 @@ forecast.ar <- function(object,h=10,level=c(80,95),fan=FALSE, lambda=NULL,
     if(!is.null(lambda))
     {
       pred$pred <- InvBoxCox(pred$pred, lambda, biasadj, list(level = level, upper = upper, lower = lower))
-      
+
       lower <- InvBoxCox(lower,lambda)
       upper <- InvBoxCox(upper,lambda)
       fits <- InvBoxCox(fits,lambda)
@@ -492,7 +492,7 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
   origx <- y
   if(!is.null(lambda)){
     x <- BoxCox(x,lambda)
-    attr(lambda, "biasadj") <- biasadj 
+    attr(lambda, "biasadj") <- biasadj
   }
 
   if (!is.null(xreg))
@@ -547,7 +547,7 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
     if(is.null(xreg))
       suppressWarnings(tmp <- stats::arima(x=x,order=order,seasonal=seasonal,include.mean=include.mean,method=method,...))
     else
-      suppressWarnings(tmp <- stats::arima(x=x,order=order,seasonal=seasonal,xreg=xreg,include.mean=include.mean,...))
+      suppressWarnings(tmp <- stats::arima(x=x,order=order,seasonal=seasonal,xreg=xreg,include.mean=include.mean,method=method,...))
   }
 
   # Calculate aicc & bic based on tmp$aic
@@ -560,7 +560,7 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
   tmp$call <- match.call()
   tmp$lambda <- lambda
   tmp$x <- origx
-  
+
   # Adjust residual variance to be unbiased
   if(is.null(model))
   {

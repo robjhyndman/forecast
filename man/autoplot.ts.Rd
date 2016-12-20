@@ -1,10 +1,14 @@
 \name{autoplot.ts}
 \alias{autoplot.ts}
-\alias{fortify.ts}
 \alias{autoplot.mts}
+\alias{autolayer.ts}
+\alias{autolayer.mts}
+\alias{fortify.ts}
 \title{Automatically create a ggplot for time series objects}
 \usage{\method{autoplot}{ts}(object, series = NULL, ...)
 \method{autoplot}{mts}(object, facets=FALSE, ...)
+\method{autolayer}{ts}(object, colour=TRUE, series=NULL, ...)
+\method{autolayer}{mts}(object, colour=TRUE, series=NULL, ...)
 \method{fortify}{ts}(model,data, ...)
 }
 
@@ -12,6 +16,7 @@
 \item{object}{Object of class \dQuote{ts} or \dQuote{mts}.}
 \item{series}{Identifies the timeseries with a colour, which integrates well with the functionality of \link{geom_forecast}.}
 \item{facets}{If TRUE, multiple time series will be faceted. If FALSE, each series will be assigned a colour.}
+\item{colour}{If TRUE, the time series will be assigned a colour aesthetic}
 \item{model}{Object of class \dQuote{ts} to be converted to \dQuote{data.frame}.}
 \item{data}{Not used (required for \link{fortify} method)}
 \item{...}{Other plotting parameters to affect the plot.}

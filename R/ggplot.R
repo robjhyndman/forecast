@@ -1,3 +1,7 @@
+autolayer <- function(object, ...){
+  UseMethod("autolayer")
+}
+
 ggAddExtras <- function(xlab=NA, ylab=NA, main=NA){
   dots <- eval.parent(quote(list(...)))
   extras <- list()
@@ -1050,31 +1054,33 @@ autoplot.seas <- function (object, labels = NULL, ...){
   }
 }
 
-ggts <- function(object, colour=TRUE, series=NULL){
-  if(inherits(object, "mts")){
-    cl <- match.call()
-    cl$object <- quote(object[,i])
-    if(length(series)!=NCOL(object)){
-      if(colour){
-        warning("For a multivariate timeseries, specify a seriesname for each timeseries. Defaulting to column names.")
-      }
-      series <- colnames(ldeaths)
+autolayer.mts <- function(object, colour=TRUE, series=NULL, ...){
+  cl <- match.call()
+  cl[[1]] <- quote(autolayer)
+  cl$object <- quote(object[,i])
+  if(length(series)!=NCOL(object)){
+    if(colour){
+      message("For a multivariate timeseries, specify a seriesname for each timeseries. Defaulting to column names.")
     }
-    out <- list()
-    for(i in 1:NCOL(object)){
-      cl$series <- series[i]
-      out[[i]] <- eval(cl)
-    }
-    return(out)
+    series <- colnames(object)
   }
+  out <- list()
+  for(i in 1:NCOL(object)){
+    cl$series <- series[i]
+    out[[i]] <- eval(cl)
+  }
+  return(out)
+}
+
+autolayer.ts <- function(object, colour=TRUE, series=NULL, ...){
   tsdata <- data.frame(timeVal = as.numeric(time(object)), 
                        series = ifelse(is.null(series), deparse(substitute(object)), series),
                        seriesVal = as.numeric(object))
   if(colour){
-    ggplot2::geom_line(ggplot2::aes_(x=~timeVal, y=~seriesVal, group=~series, colour=~series), data=tsdata)
+    ggplot2::geom_line(ggplot2::aes_(x=~timeVal, y=~seriesVal, group=~series, colour=~series), data=tsdata, ...)
   }
   else{
-    ggplot2::geom_line(ggplot2::aes_(x=~timeVal, y=~seriesVal, group=~series), data=tsdata)
+    ggplot2::geom_line(ggplot2::aes_(x=~timeVal, y=~seriesVal, group=~series), data=tsdata, ...)
   }
 }
 

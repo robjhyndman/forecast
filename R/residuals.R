@@ -1,11 +1,11 @@
-residuals.ar <- function(object, type=c("innovation","response"),...) 
+residuals.ar <- function(object, type=c("innovation","response"),...)
 {
   type <- match.arg(type)
   # innovation and response residuals are the same for AR models
   object$resid
 }
 
-residuals.Arima <- function(object, type=c("innovation","response","regression"), h=1, ...) 
+residuals.Arima <- function(object, type=c("innovation","response","regression"), h=1, ...)
 {
   type <- match.arg(type)
   if(type=="innovation")
@@ -33,7 +33,7 @@ residuals.Arima <- function(object, type=c("innovation","response","regression")
   }
 }
 
-residuals.bats <- function(object, type=c("innovation","response"), h=1, ...) 
+residuals.bats <- function(object, type=c("innovation","response"), h=1, ...)
 {
   type <- match.arg(type)
   if(type=="innovation")
@@ -42,7 +42,7 @@ residuals.bats <- function(object, type=c("innovation","response"), h=1, ...)
     getResponse(object) - fitted(object, h=h)
 }
 
-residuals.ets <- function(object, type=c("innovation","response"), h=1, ...) 
+residuals.ets <- function(object, type=c("innovation","response"), h=1, ...)
 {
   type <- match.arg(type)
   if(type=="innovation")
@@ -51,7 +51,7 @@ residuals.ets <- function(object, type=c("innovation","response"), h=1, ...)
     getResponse(object) - fitted(object, h=h)
 }
 
-residuals.forecast <- function(object, type=c("innovation","response"), ...) 
+residuals.forecast <- function(object, type=c("innovation","response"), ...)
 {
   type <- match.arg(type)
   if(type=="innovation")
@@ -60,7 +60,7 @@ residuals.forecast <- function(object, type=c("innovation","response"), ...)
     getResponse(object) - fitted(object)
 }
 
-residuals.fracdiff <- function(object, type=c("innovation","response"), ...) 
+residuals.fracdiff <- function(object, type=c("innovation","response"), ...)
 {
   type <- match.arg(type)
   if(type=="innovation")
@@ -92,16 +92,25 @@ residuals.geom_forecast <- function(object, type=c("innovation","response"), ...
     getResponse(object) - fitted(object)
 }
 
-residuals.nnetar <- function(object, type=c("innovation","response"), h=1, ...) 
+residuals.nnetar <- function(object, type=c("innovation","response"), h=1, ...)
 {
   type <- match.arg(type)
-  if(type=="innovation")
-    object$residuals
+  if(type=="innovation" & !is.null(object$lambda))
+  {
+    res <- matrix(unlist(lapply(object$model, residuals)), ncol=length(object$model))
+    if(!is.null(object$scalex$scale))
+      res <- res * object$scalex$scale
+  }
   else
-    getResponse(object) - fitted(object, h=h)
+    res <- getResponse(object) - fitted(object, h=h)
+
+  tspx <- tsp(getResponse(object))
+  res <- ts(res, frequency=tspx[3L], end=tspx[2L])
+
+  return(res)
 }
 
-residuals.stlm <- function(object, type=c("innovation","response"), ...) 
+residuals.stlm <- function(object, type=c("innovation","response"), ...)
 {
   type <- match.arg(type)
   if(type=="innovation")
@@ -109,4 +118,3 @@ residuals.stlm <- function(object, type=c("innovation","response"), ...)
   else
     getResponse(object) - fitted(object)
 }
-
