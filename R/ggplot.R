@@ -1226,12 +1226,17 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom, # Produces both 
   required_aes = c("x", "y"),
   optional_aes = c("ymin", "ymax", "level"),
   default_aes = ggplot2::aes(colour = "blue", fill = "grey60", size = .5,
-    linetype = 1, weight = 1, alpha = 1, level="gray30"),
+    linetype = 1, weight = 1, alpha = 1, level=FALSE),
   draw_key = function(data, params, size){ ## TODO: Somehow extract level information
+    if(data[["level"]]){
+      data$fill <- data$colour
+      return(GeomRibbon$draw_key(data, params, size))
+    }
     lwd <- min(data$size, min(size) / 4)
     
+    
     # Calculate and set colour
-    linecol <- blendHex(data$col, data$level, 1)
+    linecol <- blendHex(data$col, "gray30", 1)
     fillcol <- blendHex(data$col, "#CCCCCC", 0.8)
     
     grid::grobTree(
@@ -1424,7 +1429,7 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
     params = paramlist)
 }
 
-scale_level_continuous <- function(..., low = "#888888", high = "#BBBBBB", space = "Lab", na.value = "gray30", guide = "level_colourbar", point = na.value) 
+scale_level_continuous <- function(..., low = "#888888", high = "#BBBBBB", space = "Lab", na.value = "gray30", guide = "colourbar", point = na.value) 
 {
   if(guide=="colourbar" || guide=="colorbar"){
     guide <- "level_colourbar"
@@ -1432,7 +1437,18 @@ scale_level_continuous <- function(..., low = "#888888", high = "#BBBBBB", space
   else if(guide=="legend"){
     guide <- "level_legend"
   }
-  continuous_scale("level", "gradient", scales::seq_gradient_pal(low, high, space), na.value = point, guide = guide, ...)
+  #return(continuous_scale("level", "gradient", scales::seq_gradient_pal(low, high, space), na.value = point, guide = guide, ...))
+  out <- ggproto(NULL, continuous_scale("level", "gradient", scales::seq_gradient_pal(low, high, space), na.value = point, guide = guide, ...),
+    leveltrain = function(self, x){
+      uniqueX <- unique(x[!is.na(x)])
+      if(length(uniqueX) <= 5 && ggplot2:::is.waive(self$breaks)){
+        self$super$guide <- "level_legend"
+        self$breaks <- uniqueX
+      }
+      self$range$range <- scales::train_continuous(x, self$range$range)
+    })
+  out$range$train <- out$leveltrain
+  return(out)
 }
 
 ## TODO: Write own guide
@@ -1453,14 +1469,14 @@ guide_level_legend <- function(...){
 guide_train.level_colourbar <- function(guide, scale){
   scale$aesthetics <- "colour"
   trained_guide <- ggplot2:::guide_train.colorbar(guide, scale)
-  trained_guide$key <- transform(trained_guide$key, level=NA) # Add name to pass later test
+  trained_guide$key <- transform(trained_guide$key, level=TRUE) # Add name to pass later test
   return(trained_guide)
 }
 
 guide_train.level_legend <- function(guide, scale){
   scale$aesthetics <- "colour"
   trained_guide <- ggplot2:::guide_train.legend(guide, scale)
-  trained_guide$key <- transform(trained_guide$key, level=NA) # Add name to pass later test
+  trained_guide$key <- transform(trained_guide$key, level=TRUE) # Add name to pass later test
   return(trained_guide)
 }
 
