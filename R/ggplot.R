@@ -1469,6 +1469,7 @@ guide_level_legend <- function(...){
 guide_train.level_colourbar <- function(guide, scale){
   scale$aesthetics <- "colour"
   trained_guide <- ggplot2:::guide_train.colorbar(guide, scale)
+  trained_guide$override.aes$colour <- trained_guide$key$colour # Override allows colour to work when colour aesthetic is missing
   trained_guide$key <- transform(trained_guide$key, level=TRUE) # Add name to pass later test
   return(trained_guide)
 }
@@ -1476,6 +1477,7 @@ guide_train.level_colourbar <- function(guide, scale){
 guide_train.level_legend <- function(guide, scale){
   scale$aesthetics <- "colour"
   trained_guide <- ggplot2:::guide_train.legend(guide, scale)
+  trained_guide$override.aes$colour <- trained_guide$key$colour # Override allows colour to work when colour aesthetic is missing
   trained_guide$key <- transform(trained_guide$key, level=TRUE) # Add name to pass later test
   return(trained_guide)
 }
