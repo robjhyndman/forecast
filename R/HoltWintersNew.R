@@ -355,18 +355,18 @@ ses <- function (y, h = 10, level = c(80, 95), fan = FALSE, initial=c("optimal",
 
 holt <- function (y, h = 10, damped = FALSE, level = c(80, 95), fan = FALSE,
           initial=c("optimal","simple"), exponential=FALSE, alpha=NULL, beta=NULL,
-          lambda=NULL, biasadj=FALSE, x=y, ...)
+          phi=NULL, lambda=NULL, biasadj=FALSE, x=y, ...)
 {
   initial <- match.arg(initial)
   if(initial=="optimal" | damped)
   {
   	if(exponential)
-	    fcast <- forecast(ets(x, "MMN", alpha=alpha, beta=beta, damped = damped, opt.crit="mse", lambda=lambda, biasadj=biasadj), h, level = level, fan = fan, ...)
+	    fcast <- forecast(ets(x, "MMN", alpha=alpha, beta=beta, phi=phi, damped = damped, opt.crit="mse", lambda=lambda, biasadj=biasadj), h, level = level, fan = fan, ...)
 	  else
-	    fcast <- forecast(ets(x, "AAN", alpha=alpha, beta=beta, damped = damped, opt.crit="mse", lambda=lambda, biasadj=biasadj), h, level = level, fan = fan, ...)
+	    fcast <- forecast(ets(x, "AAN", alpha=alpha, beta=beta, phi=phi, damped = damped, opt.crit="mse", lambda=lambda, biasadj=biasadj), h, level = level, fan = fan, ...)
 	}	  
   else
-    fcast <- forecast(HoltWintersZZ(x, alpha=alpha, beta=beta, gamma=FALSE, exponential=exponential, lambda=lambda, biasadj=biasadj),
+    fcast <- forecast(HoltWintersZZ(x, alpha=alpha, beta=beta, gamma=FALSE, phi=phi, exponential=exponential, lambda=lambda, biasadj=biasadj),
     	h, level = level, fan = fan, ...)
   if (damped)
   {
@@ -385,7 +385,7 @@ holt <- function (y, h = 10, damped = FALSE, level = c(80, 95), fan = FALSE,
 
 hw <- function(y, h = 2 * frequency(x), seasonal = c("additive","multiplicative"), damped = FALSE,
     level = c(80, 95), fan = FALSE, initial=c("optimal","simple"), exponential=FALSE,
-    alpha=NULL, beta=NULL,gamma=NULL, lambda=NULL, biasadj=FALSE, x=y, ...)
+    alpha=NULL, beta=NULL, gamma=NULL, phi=NULL, lambda=NULL, biasadj=FALSE, x=y, ...)
 {
   initial <- match.arg(initial)
   seasonal <- match.arg(seasonal)
@@ -394,14 +394,14 @@ hw <- function(y, h = 2 * frequency(x), seasonal = c("additive","multiplicative"
     if (seasonal == "additive" & exponential)
     	stop("Forbidden model combination")
     else if(seasonal=="additive" & !exponential)
-      fcast <- forecast(ets(x, "AAA", alpha=alpha, beta=beta, gamma=gamma, damped = damped, opt.crit="mse", lambda=lambda, biasadj=biasadj), h, level = level,  fan = fan, ...)
+      fcast <- forecast(ets(x, "AAA", alpha=alpha, beta=beta, gamma=gamma, phi=phi, damped = damped, opt.crit="mse", lambda=lambda, biasadj=biasadj), h, level = level,  fan = fan, ...)
     else if(seasonal!="additive" & exponential)
-      fcast <- forecast(ets(x, "MMM", alpha=alpha, beta=beta, gamma=gamma, damped = damped, opt.crit="mse", lambda=lambda, biasadj=biasadj), h, level = level,  fan = fan, ...)
+      fcast <- forecast(ets(x, "MMM", alpha=alpha, beta=beta, gamma=gamma, phi=phi, damped = damped, opt.crit="mse", lambda=lambda, biasadj=biasadj), h, level = level,  fan = fan, ...)
     else #if(seasonal!="additive" & !exponential)
-      fcast <- forecast(ets(x, "MAM", alpha=alpha, beta=beta, gamma=gamma, damped = damped, opt.crit="mse", lambda=lambda, biasadj=biasadj), h, level = level, fan = fan, ...)
+      fcast <- forecast(ets(x, "MAM", alpha=alpha, beta=beta, gamma=gamma, phi=phi, damped = damped, opt.crit="mse", lambda=lambda, biasadj=biasadj), h, level = level, fan = fan, ...)
   }
   else
-    fcast <- forecast(HoltWintersZZ(x, alpha=alpha, beta=beta, gamma=gamma, seasonal=seasonal,exponential=exponential, lambda=lambda, biasadj=biasadj),
+    fcast <- forecast(HoltWintersZZ(x, alpha=alpha, beta=beta, gamma=gamma, phi=phi, seasonal=seasonal,exponential=exponential, lambda=lambda, biasadj=biasadj),
     	h, level = level, fan = fan, ...)
   if (seasonal == "additive")
     fcast$method <- "Holt-Winters' additive method"
