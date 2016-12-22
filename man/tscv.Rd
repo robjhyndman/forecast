@@ -2,7 +2,7 @@
 \alias{tsCV}
 \title{Time series cross-validation}
 \usage{
-tsCV(y, forecastfunction, h, ...)
+tsCV(y, forecastfunction, h=1, ...)
 }
 
 \arguments{

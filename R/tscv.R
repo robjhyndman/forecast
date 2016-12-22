@@ -5,7 +5,7 @@
 # ... are passed to forecastfunction
 
 
-tsCV <- function(y, forecastfunction, h, ...)
+tsCV <- function(y, forecastfunction, h=1, ...)
 {
   y <- as.ts(y)
   n <- length(y)
