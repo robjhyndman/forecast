@@ -657,6 +657,10 @@ print.ARIMA <- function (x, digits=max(3, getOption("digits") - 3), se=TRUE,
             coef <- matrix(coef, 1L, dimnames=list(NULL, names(coef)))
             coef <- rbind(coef, s.e.=ses)
         }
+        # Change intercept to mean
+        j <- match("intercept", colnames(coef))
+        if(!is.na(j))
+          colnames(coef)[j] <- "mean"
         print.default(coef, print.gap=2)
     }
     cm <- x$call$method
