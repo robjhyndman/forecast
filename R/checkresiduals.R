@@ -6,13 +6,12 @@ checkresiduals <- function(object, lag, df=NULL)
   else
     residuals <- residuals(object)
 
-  # Find method
-  if(!is.null(object$method))
-    method <- object$method
+  if(length(residuals) == 0L)
+    stop("No residuals found")
 
   # Produce plots
-  if(!is.null(method))
-    main <- paste("Residuals from", method)
+  if(!is.null(object$method))
+    main <- paste("Residuals from", object$method)
   else
     main <- "Residuals"
   ggtsdisplay(residuals, plot.type="histogram", main=main)
@@ -31,13 +30,15 @@ checkresiduals <- function(object, lag, df=NULL)
     df <- length(object$coef)
   else if(is.element("bats",class(object)))
     df <- length(object$parameters$vect) + NROW(object$seed.states)
-  else if(method=="Mean")
+  else if(is.element('lm', class(object)))
+    df <- length(object$coefficients)
+  else if(object$method=="Mean")
     df <- 1
-  else if(grepl("Naive",method, ignore.case=TRUE))
+  else if(grepl("Naive",object$method, ignore.case=TRUE))
     df <- 0
-  else if(method=="Random walk")
+  else if(object$method=="Random walk")
     df <- 0
-  else if(method=="Random walk with drift")
+  else if(object$method=="Random walk with drift")
     df <- 1
   else
     df <- NULL

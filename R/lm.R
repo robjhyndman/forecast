@@ -27,10 +27,10 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
       }
     }
   }
-  
+
   ## Fix formula's environment for correct `...` scoping.
   attr(formula, ".Environment") <- environment()
-  
+
   if(sum(c(tsvar, fnvar))>0){
     #Remove variables not needed in data (trend+season+functions)
     rmvar <- c(tsvar, fnvar)
@@ -39,7 +39,7 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
       vars <- vars[-rmvar]
     }
   }
-  
+
   ## Grab any variables missing from data
   if(!missing(data)){
     #Check for any missing variables in data
@@ -59,7 +59,7 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
   } else{
     cn <- colnames(data)
   }
-  
+
   ## Get time series attributes from the data
   if(is.null(tsp(data))){
     if((attr(mt,"response")+1)%in%fnvar){#Check unevaluated response variable
@@ -74,7 +74,7 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
     stop("Not time series data, use lm()")
   }
   tsdat <- match(c("trend", "season"), cn, 0L)
-  
+
   ## Create trend and season if missing from the data
   if(tsdat[1]==0){#&tsvar[1]!=0){#If "trend" is not in data, but is in formula
     trend <- 1:NROW(data)
@@ -90,7 +90,7 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
     data <- cbind(data,season)
   }
   colnames(data) <- cn
-  
+
   ## Subset the data according to subset argument
   if(!missing(subset)){
     if(!is.logical(subset))
@@ -113,13 +113,14 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
   if(tsdat[2]==0&tsvar[2]!=0){
     data$season <- factor(data$season) #fix for lost factor information, may not be needed?
   }
-  
+
   ## Fit the model and prepare model structure
   fit <- lm(formula,data=data,na.action=na.exclude,...)
   fit$residuals <- ts(residuals(fit))
   fit$fitted.values <- ts(fitted(fit))
   tsp(fit$residuals) <- tsp(fit$fitted.values) <- tsp(data[,1]) <- tspx
   fit$call <- cl
+  fit$method <- "Linear regression model"
   if(exists("dataname")){
     fit$call$data <- dataname
   }
