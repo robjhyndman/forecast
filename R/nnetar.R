@@ -309,9 +309,15 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI
     lower <- apply(sim, 2, quantile, 0.5 - level/200, type = 8)
     upper <- apply(sim, 2, quantile, 0.5 + level/200, type = 8)
     if (nint > 1L) {
-      lower <- t(lower)
-      upper <- t(upper)
+      lower <- ts(t(lower))
+      upper <- ts(t(upper))
     }
+    else
+    {
+      lower <- ts(matrix(lower, ncol=1L))
+      upper <- ts(matrix(upper, ncol=1L))
+    }
+    tsp(lower) <- tsp(upper) <- tsp(fcast)
   }
   else
   {

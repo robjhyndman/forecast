@@ -348,6 +348,9 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
     }
   }
   colnames(lower)=colnames(upper)=paste(level, "%", sep="")
+  lower <- ts(lower)
+  upper <- ts(upper)
+  tsp(lower) <- tsp(upper) <- tsp(pred$pred)
   method <- arima.string(object, padding=FALSE)
   fits <- fitted(object)
   if(!is.null(lambda) & is.null(object$constant))  { # Back-transform point forecasts and prediction intervals
@@ -394,7 +397,7 @@ forecast.ar <- function(object,h=10,level=c(80,95),fan=FALSE, lambda=NULL,
         lower[,i] <- pred$pred - qq*pred$se
         upper[,i] <- pred$pred + qq*pred$se
     }
-    colnames(lower)=colnames(upper)=paste(level,"%",sep="")
+    colnames(lower) <- colnames(upper) <- paste(level,"%",sep="")
     method <- paste("AR(",object$order,")",sep="")
     f <- frequency(x)
     res <- residuals(object)

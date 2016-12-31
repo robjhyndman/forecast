@@ -1,5 +1,5 @@
 forecast.ets <- function(object, h=ifelse(object$m>1, 2*object$m, 10),
-  level=c(80,95), fan=FALSE, simulate=FALSE, bootstrap=FALSE, npaths=5000, PI=TRUE, 
+  level=c(80,95), fan=FALSE, simulate=FALSE, bootstrap=FALSE, npaths=5000, PI=TRUE,
   lambda=object$lambda, biasadj=NULL, ...)
 {
   # Check inputs
@@ -10,13 +10,13 @@ forecast.ets <- function(object, h=ifelse(object$m>1, 2*object$m, 10),
     biasadj <- FALSE
   }
   else{
-    if(is.null(biasadj)){  
-      biasadj <- attr(lambda, "biasadj") 
-    }  
-    if(!is.logical(biasadj)){ 
-      warning("biasadj information not found, defaulting to FALSE.") 
-      biasadj <- FALSE 
-    } 
+    if(is.null(biasadj)){
+      biasadj <- attr(lambda, "biasadj")
+    }
+    if(!is.logical(biasadj)){
+      warning("biasadj information not found, defaulting to FALSE.")
+      biasadj <- FALSE
+    }
   }
   if(!PI & !biasadj)
   {
@@ -62,6 +62,7 @@ forecast.ets <- function(object, h=ifelse(object$m>1, 2*object$m, 10),
     if(!is.null(f$var))
     {
       out$lower <- out$upper <- ts(matrix(NA,ncol=length(level),nrow=h))
+      colnames(out$lower) <- colnames(out$upper) <- paste(level,"%",sep="")
       for(i in 1:length(level))
       {
         marg.error <- sqrt(f$var) * abs(qnorm((100-level[i])/200))
@@ -81,7 +82,7 @@ forecast.ets <- function(object, h=ifelse(object$m>1, 2*object$m, 10),
     else if(any(biasadj))
       warning("No bias adjustment possible")
   }
-	
+
   out$fitted <- fitted(object)
   out$method <- object$method
   out$residuals <- residuals(object)
@@ -99,7 +100,7 @@ forecast.ets <- function(object, h=ifelse(object$m>1, 2*object$m, 10),
   }
   if(!PI)
     out$lower <- out$upper <- out$level <- NULL
-	
+
   return(structure(out,class="forecast"))
 }
 

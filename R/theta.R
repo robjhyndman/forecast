@@ -3,7 +3,7 @@
 
 #Author: RJH
 
-thetaf <- function(y, h=ifelse(frequency(y)>1, 2*frequency(y), 10), 
+thetaf <- function(y, h=ifelse(frequency(y)>1, 2*frequency(y), 10),
   level=c(80,95), fan=FALSE, x=y)
 {
   # Check inputs
@@ -50,7 +50,8 @@ thetaf <- function(y, h=ifelse(frequency(y)>1, 2*frequency(y), 10),
   # Find prediction intervals
   fcast.se <- sqrt(fcast$model$sigma) * sqrt((0:(h-1))*alpha^2+1)
   nconf <- length(level)
-  fcast$lower <- fcast$upper <- matrix(NA,nrow=h,ncol=nconf)
+  fcast$lower <- fcast$upper <- ts(matrix(NA,nrow=h,ncol=nconf))
+  tsp(fcast$lower) <- tsp(fcast$upper) <- tsp(fcast$mean)
   for(i in 1:nconf)
   {
     zt <- -qnorm( 0.5 - level[i]/200)

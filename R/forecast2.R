@@ -44,7 +44,7 @@ meanf <- function(y,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE, x
     lower <- ts(lower,start=tsp(x)[2]+1/freq,frequency=freq)
     upper <- ts(upper,start=tsp(x)[2]+1/freq,frequency=freq)
   }
-  
+
   if(!is.null(lambda))
   {
     fits <- InvBoxCox(fits,lambda)
@@ -52,7 +52,7 @@ meanf <- function(y,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE, x
     f <- InvBoxCox(f, lambda, biasadj, list(level = level, upper = upper, lower = lower))
     lower <- InvBoxCox(lower,lambda)
     upper <- InvBoxCox(upper,lambda)
-  }  
+  }
 
   out <- list(method="Mean",level=level,x=x,mean=f,lower=lower,upper=upper,
     model=list(mu=f[1],mu.se=s/sqrt(length(x)),sd=s), lambda=lambda, fitted=fits, residuals=res)
@@ -72,7 +72,7 @@ BoxCox <- function(x,lambda)
     out <- (sign(x)*abs(x)^lambda - 1)/lambda
   if(!is.null(colnames(x)))
     colnames(out) <- colnames(x)
-  return(out)  
+  return(out)
 }
 
 InvBoxCox <- function(x, lambda, biasadj=FALSE, fvar=NULL)
@@ -88,14 +88,14 @@ InvBoxCox <- function(x, lambda, biasadj=FALSE, fvar=NULL)
   }
   if(!is.null(colnames(x)))
     colnames(out) <- colnames(x)
-  
+
   if(is.null(biasadj)){
-    biasadj <- attr(lambda, "biasadj")  
-  }   
+    biasadj <- attr(lambda, "biasadj")
+  }
   if(!is.logical(biasadj)){
     warning("biasadj information not found, defaulting to FALSE.")
-    biasadj <- FALSE  
-  }  
+    biasadj <- FALSE
+  }
   if(biasadj){
     if(is.null(fvar)){
       stop("fvar must be provided when biasadj=TRUE")
@@ -108,7 +108,7 @@ InvBoxCox <- function(x, lambda, biasadj=FALSE, fvar=NULL)
         fvar$lower <- fvar$lower[,i]
       }
       if(level>1)
-        level <- level/100    
+        level <- level/100
       level <- mean(c(level,1))
       #Note: Use BoxCox transformed upper and lower values
       fvar <- ((fvar$upper-fvar$lower)/stats::qnorm(level)/2)^2
@@ -136,7 +136,7 @@ InvBoxCoxf <- function(x=NULL, fvar=NULL, lambda=NULL){
       x$lower <- x$lower[,i]
     }
     if(level>1)
-      level <- level/100    
+      level <- level/100
     level <- mean(c(level,1))
     #Note: Use BoxCox transformed upper and lower values
     fvar <- ((x$upper-x$lower)/stats::qnorm(level)/2)^2
@@ -163,8 +163,7 @@ forecast.StructTS <- function(object,h=ifelse(object$coef["epsilon"]>1e-10, 2*ob
       stop("Confidence limit out of range")
   }
   nint <- length(level)
-  lower <- matrix(NA,ncol=nint,nrow=length(pred$pred))
-  upper <- lower
+  upper <- lower <- matrix(NA,ncol=nint,nrow=length(pred$pred))
   for(i in 1:nint)
   {
     qq <- qnorm(0.5*(1+level[i]/100))
@@ -176,9 +175,9 @@ forecast.StructTS <- function(object,h=ifelse(object$coef["epsilon"]>1e-10, 2*ob
     method <- "Basic structural model"
   else if(is.element("slope",names(object$coef)))
     method <- "Local linear structural model"
-  else 
+  else
     method <- "Local level structural model"
-  
+
   fits <- x - residuals(object)
   if(!is.null(lambda))
   {
@@ -188,8 +187,8 @@ forecast.StructTS <- function(object,h=ifelse(object$coef["epsilon"]>1e-10, 2*ob
     lower <- InvBoxCox(lower,lambda)
     upper <- InvBoxCox(upper,lambda)
   }
-    
-  
+
+
   return(structure(list(method=method, model=object, level=level, mean=pred$pred,
     lower=lower, upper=upper, x=x, fitted=fits, residuals=residuals(object)),
     class="forecast"))
@@ -225,8 +224,8 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x)>1,2*freque
     upper[,i] <- pmean + qq*se
   }
   colnames(lower) = colnames(upper) = paste(level,"%",sep="")
-  
-  
+
+
   if(!is.null(lambda))
   {
     fitted <- InvBoxCox(object$fitted[,1],lambda)
@@ -234,7 +233,7 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x)>1,2*freque
     pmean <- InvBoxCox(pmean, lambda, biasadj, list(level = level, upper = upper, lower = lower))
     lower <- InvBoxCox(lower,lambda)
     upper <- InvBoxCox(upper,lambda)
-  }  
+  }
   else
     fitted <- object$fitted[,1]
 
@@ -245,7 +244,7 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x)>1,2*freque
   tsp(fitted) <- tsp(object$x)
 
   return(structure(list(method="HoltWinters", model=object, level=level,
-    mean=pmean, lower=lower, upper=upper, x=x, 
+    mean=pmean, lower=lower, upper=upper, x=x,
     fitted=fitted, residuals=x-fitted),
     class="forecast"))
 }
