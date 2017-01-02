@@ -1,4 +1,4 @@
-checkresiduals <- function(object, lag, df=NULL)
+checkresiduals <- function(object, lag, df=NULL, ...)
 {
   # Extract residuals
   if(is.element("ts",class(object)) | is.element("numeric",class(object)) )
@@ -11,10 +11,16 @@ checkresiduals <- function(object, lag, df=NULL)
 
   # Produce plots
   if(!is.null(object$method))
+  {
     main <- paste("Residuals from", object$method)
+    method <- object$method
+  }
   else
+  {
     main <- "Residuals"
-  ggtsdisplay(residuals, plot.type="histogram", main=main)
+    method <- "Missing"
+  }
+  suppressWarnings(ggtsdisplay(residuals, plot.type="histogram", main=main, ...))
 
   # Check if we have the model
   if(is.element("forecast",class(object)))
@@ -32,13 +38,13 @@ checkresiduals <- function(object, lag, df=NULL)
     df <- length(object$parameters$vect) + NROW(object$seed.states)
   else if(is.element('lm', class(object)))
     df <- length(object$coefficients)
-  else if(object$method=="Mean")
+  else if(method=="Mean")
     df <- 1
-  else if(grepl("Naive",object$method, ignore.case=TRUE))
+  else if(grepl("Naive",method, ignore.case=TRUE))
     df <- 0
-  else if(object$method=="Random walk")
+  else if(method=="Random walk")
     df <- 0
-  else if(object$method=="Random walk with drift")
+  else if(method=="Random walk with drift")
     df <- 1
   else
     df <- NULL
@@ -50,7 +56,11 @@ checkresiduals <- function(object, lag, df=NULL)
     freq <- frequency(residuals)
     if(missing(lag))
       lag <- max(df+3, ifelse(freq>1, 2*freq, 10))
-    print(Box.test(residuals, fitdf=df, lag=lag, type="Ljung"))
+
+    LBtest <- Box.test(residuals, fitdf=df, lag=lag, type="Ljung")
+    LBtest$method <- "Ljung-Box test"
+    names(LBtest$statistic) <- "Q*"
+    print(LBtest)
     cat(paste("Model df: ",df,".   Total lags used: ",lag,"\n\n",sep=""))
   }
 }
