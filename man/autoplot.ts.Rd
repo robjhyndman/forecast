@@ -18,7 +18,7 @@
 \item{facets}{If TRUE, multiple time series will be faceted. If FALSE, each series will be assigned a colour.}
 \item{colour}{If TRUE, the time series will be assigned a colour aesthetic}
 \item{model}{Object of class \dQuote{ts} to be converted to \dQuote{data.frame}.}
-\item{data}{Not used (required for \link{fortify} method)}
+\item{data}{Not used (required for \code{fortify} method)}
 \item{...}{Other plotting parameters to affect the plot.}
 }
 
@@ -28,7 +28,7 @@
 
 \value{None. Function produces a ggplot graph.}
 
-\seealso{\code{\link[stats]{plot.ts}}, \code{\link[ggplot2]{fortify}}}
+\seealso{\code{\link[stats]{plot.ts}}, \code{fortify}}
 
 \author{Mitchell O'Hara-Wild}
 \examples{
