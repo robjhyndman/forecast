@@ -6,7 +6,7 @@
 
 \arguments{
 \item{model}{Object of class \dQuote{ts} to be converted to \dQuote{data.frame}.}
-\item{data}{Not used (required for \code{fortify} method)}
+\item{data}{Not used (required for \link{fortify} method)}
 \item{PI}{If TRUE, confidence intervals are included.}
 \item{...}{Other arguments, currently ignored.}
 }
@@ -15,6 +15,6 @@
 
 \value{A \code{data.frame} containing elements from a \code{forecast} object necessary for plotting in ggplot.}
 
-\seealso{\code{\link{forecast}}, \code{fortify}}
+\seealso{\code{\link{forecast}}, \code{\link[ggplot2]{fortify}}}
 
 \author{Mitchell O'Hara-Wild}
