@@ -1441,63 +1441,6 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
     params = paramlist)
 }
 
-scale_level_continuous <- function(..., low = "#888888", high = "#BBBBBB", space = "Lab", na.value = "gray30", guide = "colourbar", point = na.value) 
-{
-  if(guide=="colourbar" || guide=="colorbar"){
-    guide <- "level_colourbar"
-  }
-  else if(guide=="legend"){
-    guide <- "level_legend"
-  }
-  out <- ggplot2::ggproto(NULL, ggplot2::scale_colour_continuous(..., low=low, high=high, space=space, na.value = point, guide=guide),
-    leveltrain = function(self, x){
-      uniqueX <- unique(x[!is.na(x)])
-      if(length(uniqueX) <= 5 && inherits(self$breaks, "waiver")){
-        self$super$guide <- "level_legend"
-        self$breaks <- uniqueX
-      }
-      self$range$range <- suppressWarnings(range(x, self$range$range, na.rm = TRUE, finite = TRUE))
-    })
-  out$aesthetics <- "level"
-  out$range$train <- out$leveltrain
-  return(out)
-}
-
-guide_level_colourbar <- function(...){
-  out <- ggplot2::guide_colourbar(...)
-  out$available_aes = c("level") #Add our new aesthetic option to be accepted by ggplot
-  class(out) <- c("level_colourbar", class(out))
-  return(out)
-}
-
-guide_level_colorbar <- guide_level_colourbar
-
-guide_level_legend <- function(...){
-  out <- ggplot2::guide_legend(...)
-  out$available_aes = c("level") #Add our new aesthetic option to be accepted by ggplot
-  class(out) <- c("level_legend", class(out))
-  return(out)
-}
-
-guide_train.level_colourbar <- function(guide, scale){
-  #mainFn <- ggplot2:::guide_train.colorbar
-  scale$aesthetics <- "colour"
-  trained_guide <- get("guide_train.colorbar", envir = asNamespace("ggplot2"), inherits = FALSE)(guide, scale)
-  trained_guide$override.aes$colour <- trained_guide$key$colour # Override allows colour to work when colour aesthetic is missing
-  trained_guide$key <- transform(trained_guide$key, level=TRUE) # Add name to pass later test
-  return(trained_guide)
-}
-
-guide_train.level_legend <- function(guide, scale){
-  #mainFn <- ggplot2:::guide_train.legend
-  scale$aesthetics <- "colour"
-  guide$nbin = max(length(scale$breaks), 1)
-  trained_guide <- get("guide_train.colorbar", envir = asNamespace("ggplot2"), inherits = FALSE)(guide, scale)
-  trained_guide$override.aes$colour <- trained_guide$key$colour # Override allows colour to work when colour aesthetic is missing
-  trained_guide$key <- transform(trained_guide$key, level=TRUE) # Add name to pass later test
-  return(trained_guide)
-}
-
 # Produce nice histogram with appropriately chosen bin widths
 # Designed to work with time series data without issuing warnings.
 
