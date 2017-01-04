@@ -43,6 +43,7 @@ fourierf,forecast.lm,thetaf, tsdisplay, simulate.ets, simulate.ar, simulate.Arim
 ndiffs, nsdiffs, dm.test,tbats.components, Acf,Pacf,Ccf,ma,BoxCox.lambda,dshw, bats, tbats, msts,
 getResponse, tsoutliers, tsclean, bizdays, easter,stlm, forecast.stlm,
 StatForecast, GeomForecast, geom_forecast, gghistogram,
+scale_level_continuous, guide_level_colourbar, guide_level_legend, guide_train.level_colourbar, guide_train.level_legend,
 checkresiduals,
 CV, tsCV, CVar, 
 autolayer, autolayer.ts, autolayer.mts,

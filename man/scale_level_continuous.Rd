@@ -1,7 +1,8 @@
 \name{scale_level_continuous}
 \alias{scale_level_continuous}
 \title{Gradient for prediction interval levels}
-\usage{scale_level_continuous(..., low = "#888888", high = "#BBBBBB", space = "Lab", na.value = "gray30", guide = "colourbar", point = na.value) 
+\usage{scale_level_continuous(..., low = "#888888", high = "#BBBBBB", space = "Lab",
+  na.value = "gray30", guide = "colourbar", point = na.value) 
 }
 
 \arguments{

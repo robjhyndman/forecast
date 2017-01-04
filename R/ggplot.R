@@ -1449,15 +1449,16 @@ scale_level_continuous <- function(..., low = "#888888", high = "#BBBBBB", space
   else if(guide=="legend"){
     guide <- "level_legend"
   }
-  out <- ggproto(NULL, continuous_scale("level", "gradient", scales::seq_gradient_pal(low, high, space), na.value = point, guide = guide, ...),
+  out <- ggplot2::ggproto(NULL, ggplot2::scale_colour_continuous(..., low=low, high=high, space=space, na.value = point, guide=guide),
     leveltrain = function(self, x){
       uniqueX <- unique(x[!is.na(x)])
       if(length(uniqueX) <= 5 && inherits(self$breaks, "waiver")){
         self$super$guide <- "level_legend"
         self$breaks <- uniqueX
       }
-      self$range$range <- scales::train_continuous(x, self$range$range)
+      self$range$range <- suppressWarnings(range(x, self$range$range, na.rm = TRUE, finite = TRUE))
     })
+  out$aesthetics <- "level"
   out$range$train <- out$leveltrain
   return(out)
 }
@@ -1479,6 +1480,7 @@ guide_level_legend <- function(...){
 }
 
 guide_train.level_colourbar <- function(guide, scale){
+  #mainFn <- ggplot2:::guide_train.colorbar
   scale$aesthetics <- "colour"
   trained_guide <- get("guide_train.colorbar", envir = asNamespace("ggplot2"), inherits = FALSE)(guide, scale)
   trained_guide$override.aes$colour <- trained_guide$key$colour # Override allows colour to work when colour aesthetic is missing
@@ -1487,7 +1489,9 @@ guide_train.level_colourbar <- function(guide, scale){
 }
 
 guide_train.level_legend <- function(guide, scale){
+  #mainFn <- ggplot2:::guide_train.legend
   scale$aesthetics <- "colour"
+  guide$nbin = max(length(scale$breaks), 1)
   trained_guide <- get("guide_train.colorbar", envir = asNamespace("ggplot2"), inherits = FALSE)(guide, scale)
   trained_guide$override.aes$colour <- trained_guide$key$colour # Override allows colour to work when colour aesthetic is missing
   trained_guide$key <- transform(trained_guide$key, level=TRUE) # Add name to pass later test
