@@ -6,8 +6,8 @@ Description: Methods and tools for displaying and analysing
              via state space models and automatic ARIMA modelling.
 Depends: R (>= 3.0.2), stats, graphics, zoo, timeDate
 Imports: tseries, fracdiff, Rcpp (>= 0.11.0), nnet, colorspace,
-  parallel, ggplot2 (>= 2.0.0), magrittr, seasonal
-Suggests: testthat
+  parallel, magrittr, seasonal
+Suggests: testthat, ggplot2 (>= 2.0.0)
 LinkingTo: Rcpp (>= 0.11.0), RcppArmadillo (>= 0.2.35)
 LazyData: yes
 ByteCompile: TRUE
