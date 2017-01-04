@@ -1230,22 +1230,11 @@ StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
 
 GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom, # Produces both point forecasts and intervals on graph
   required_aes = c("x", "y"),
-  optional_aes = c("ymin", "ymax", "level"),
+  optional_aes = c("ymin", "ymax"),
   default_aes = ggplot2::aes(colour = "blue", fill = "grey60", size = .5,
     linetype = 1, weight = 1, alpha = 1, level=NULL),
   draw_key = function(data, params, size){
-    if(!is.null(data[["level"]])){
-      if(is.character(data[["level"]])){
-        data$fill <- data[["level"]]
-      }
-      else{
-        data$fill <- data$colour
-      }
-      data$colour <- NA
-      return(GeomRibbon$draw_key(data, params, size))
-    }
     lwd <- min(data$size, min(size) / 4)
-    
     
     # Calculate and set colour
     linecol <- blendHex(data$col, "gray30", 1)
