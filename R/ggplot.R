@@ -1292,7 +1292,7 @@ GeomForecastPoint <- ggplot2::ggproto("GeomForecastPoint", GeomForecast, ## Prod
   },
   
   draw_group = function(data, panel_scales, coord){
-    linecol <- blendHex(data$colour[1], data$level[1], 1)
+    linecol <- blendHex(data$colour[1], "gray30", 1)
     
     # Select appropriate Geom and set defaults
     if(NROW(data)==0){ #Blank
@@ -1344,10 +1344,12 @@ GeomForecastInterval <- ggplot2::ggproto("GeomForecastInterval", GeomForecast, #
    },
    
    draw_group = function(data, panel_scales, coord){
+     shadeVal <- (data$level - min(data$level))/diff(range(data$level)) * 0.2 + 8/15
+     data$shadeCol <- rgb(shadeVal, shadeVal, shadeVal)
      intervalGrobList <- lapply(split(data, data$level), 
             FUN = function(x){
               # Calculate colour
-              fillcol <- blendHex(x$colour[1], x$level[1], 0.6)#colscale(x$scalefill[1]) # Consider blending different amounts of white?
+              fillcol <- blendHex(x$colour[1], x$shadeCol[1], 0.7)
               # Select appropriate Geom and set defaults
               if(NROW(x)==0){ #Blank
                 ggplot2::GeomBlank$draw_panel
