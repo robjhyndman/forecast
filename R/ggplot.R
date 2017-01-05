@@ -432,9 +432,12 @@ autoplot.forecast <- function (object, include, PI=TRUE, shadecols=c("#596DD5","
       else {
         stop("Could not find data")
       }
-      if(!is.null(object$model$call)) {
-        vars <- c(yvar=as.character(object$model$call$y))
-        if(vars=="object")
+      if (!is.null(object$series)) {
+        vars <- c(yvar=object$series)
+      }
+      else if (!is.null(object$model$call)) {
+        vars <- c(yvar=deparse(object$model$call$y))
+        if (vars=="object")
           vars <- c(yvar="y")
       }
       else {
