@@ -338,20 +338,20 @@ autoplot.decomposed.ts <- function (object, labels=NULL, ...){
     if (!inherits(object, "decomposed.ts")){
       stop("autoplot.decomposed.ts requires a decomposed.ts object")
     }
-    
+
     if(is.null(labels)){
       labels <- c("seasonal","trend","remainder")
     }
-    
+
     cn <- c("data", labels)
-    
-    data <- data.frame(datetime = rep(time(object$x), 4), 
+
+    data <- data.frame(datetime = rep(time(object$x), 4),
                        y = c(object$x, object$seasonal, object$trend, object$random),
                        parts = factor(rep(cn, each=NROW(object$x)), levels=cn))
 
     # Initialise ggplot object
     p <- ggplot2::ggplot(ggplot2::aes_(x=~datetime, y=~y), data=data)
-    
+
     # Add data
     int <- as.numeric(object$type=="multiplicative")
     p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~y), data=subset(data,data$parts!=cn[4]), na.rm=TRUE)
@@ -359,14 +359,14 @@ autoplot.decomposed.ts <- function (object, labels=NULL, ...){
                                    data=subset(data,data$parts==cn[4]), lineend = "butt", na.rm = TRUE)
     p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
     p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = int, parts = cn[4]))
-    
+
     # Add axis labels
     p <- p + ggAddExtras(main = paste("Decomposition of",object$type,"time series"), xlab="Time",
                          ylab="")
-    
+
     # Make x axis contain only whole numbers (e.g., years)
     p <- p + ggplot2::scale_x_continuous(breaks=unique(round(pretty(data$datetime))))
-    
+
     return(p)
   }
 }
@@ -422,16 +422,24 @@ autoplot.forecast <- function (object, include, PI=TRUE, shadecols=c("#596DD5","
         data$yvar <- InvBoxCox(data$yvar, object$model$lambda)
       }
     }
-    else if (!is.null(object$x)){
-      data <- data.frame(yvar=c(object$x))
-      vars <- c(yvar="y")
-    }
-    else if (!is.null(object$residuals) && !is.null(object$fitted)){
-      data <- data.frame(yvar=c(object$residuals+object$fitted))
-      vars <- c(yvar="y")
-    }
-    else{
-      stop("Could not find data")
+    else {
+      if (!is.null(object$x)) {
+        data <- data.frame(yvar=c(object$x))
+      }
+      else if (!is.null(object$residuals) && !is.null(object$fitted)) {
+        data <- data.frame(yvar=c(object$residuals+object$fitted))
+      }
+      else {
+        stop("Could not find data")
+      }
+      if(!is.null(object$model$call)) {
+        vars <- c(yvar=as.character(object$model$call$y))
+        if(vars=="object")
+          vars <- c(yvar="y")
+      }
+      else {
+        vars <- c(yvar="y")
+      }
     }
 
     #Initialise ggplot object
@@ -578,7 +586,7 @@ autoplot.mforecast <- function (object, PI=TRUE, gridlayout=NULL, ...){
 }
 
 ggtsdisplay <- function(x, plot.type=c("partial","histogram","scatter","spectrum"),
-                        points=TRUE, smooth=FALSE, 
+                        points=TRUE, smooth=FALSE,
                         lag.max, na.action=na.contiguous, theme=NULL, ...){
   if (requireNamespace("ggplot2") & requireNamespace("grid")){
     plot.type <- match.arg(plot.type)
@@ -627,7 +635,7 @@ ggtsdisplay <- function(x, plot.type=c("partial","histogram","scatter","spectrum
     if(!is.null(theme)){
       acfplot <- acfplot + theme
     }
-    
+
     #Prepare last plot (variable)
     if(plot.type == "partial"){
       lastplot <- ggPacf(x, lag.max=lag.max, na.action=na.action) + ggplot2::ggtitle(NULL)
@@ -1028,28 +1036,28 @@ autoplot.seas <- function (object, labels = NULL, ...){
     if(is.null(labels)){
       labels <- c("seasonal", "trend", "remainder")
     }
-    
+
     data <- cbind(object$x, object$data[,c("seasonal", "trend", "irregular")])
     cn <- c("data",labels)
     data <- data.frame(datetime=rep(time(data),NCOL(data)), y=c(data),
                        parts=factor(rep(cn, each=NROW(data)), levels=cn))
-    
+
     #Initialise ggplot object
     p <- ggplot2::ggplot(ggplot2::aes_(x=~datetime, y=~y), data=data)
-    
+
     #Add data
     p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~y), data=subset(data,data$parts!=cn[4]), na.rm=TRUE)
     p <- p + ggplot2::geom_segment(ggplot2::aes_(x = ~datetime, xend = ~datetime, y = 1, yend = ~y),
                                    data=subset(data,data$parts==cn[4]), lineend = "butt")
     p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
     p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = 1, parts = cn[4]))
-    
+
     # Add axis labels
     p <- p + ggAddExtras(xlab="Time", ylab="")
-    
+
     # Make x axis contain only whole numbers (e.g., years)
     p <- p + ggplot2::scale_x_continuous(breaks=unique(round(pretty(data$datetime))))
-    
+
     return(p)
   }
 }
@@ -1073,7 +1081,7 @@ autolayer.mts <- function(object, colour=TRUE, series=NULL, ...){
 }
 
 autolayer.ts <- function(object, colour=TRUE, series=NULL, ...){
-  tsdata <- data.frame(timeVal = as.numeric(time(object)), 
+  tsdata <- data.frame(timeVal = as.numeric(time(object)),
                        series = ifelse(is.null(series), deparse(substitute(object)), series),
                        seriesVal = as.numeric(object))
   if(colour){
@@ -1096,10 +1104,10 @@ autoplot.ts <- function(object, series=NULL, ...){
     if(!is.null(series)){
       data <- transform(data, series=series)
     }
-    
+
     #Initialise ggplot object
     p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x), data=data)
-    
+
     #Add data
     if(!is.null(series)){
       p <- p + ggplot2::geom_line(ggplot2::aes_(group=~series, colour=~series), na.rm = TRUE)
@@ -1200,8 +1208,8 @@ fortify.forecast <- function(model, data=as.data.frame(model), PI=TRUE, ...){
 StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
   required_aes = c("x","y"),
   default_aes = ggplot2::aes_(level = ~..level..),
-  
-  compute_group = function(data, scales, params, PI=TRUE, series=NULL, 
+
+  compute_group = function(data, scales, params, PI=TRUE, series=NULL,
                            h=NULL, level=c(80,95), fan=FALSE, robust=FALSE, lambda=NULL,
                            find.frequency=FALSE, allow.multiplicative.trend=FALSE, ...) {
     ## TODO: Rewrite
@@ -1214,7 +1222,7 @@ StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
                       lambda=lambda, find.frequency=find.frequency,
                       allow.multiplicative.trend=allow.multiplicative.trend)
     fcast <- fortify(fcast, PI=PI)
-    
+
     # Add ggplot & series information
     extraInfo <- as.list(data[1,!colnames(data)%in%colnames(fcast)])
     extraInfo$`_data` <- quote(fcast)
@@ -1235,11 +1243,11 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom, # Produces both 
     linetype = 1, weight = 1, alpha = 1, level=NULL),
   draw_key = function(data, params, size){
     lwd <- min(data$size, min(size) / 4)
-    
+
     # Calculate and set colour
     linecol <- blendHex(data$col, "gray30", 1)
     fillcol <- blendHex(data$col, "#CCCCCC", 0.8)
-    
+
     grid::grobTree(
       grid::rectGrob(
         width = unit(1, "npc") - unit(lwd, "mm"),
@@ -1263,17 +1271,17 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom, # Produces both 
       )
     )
   },
-  
+
   handle_na = function(self, data, params){ ## TODO: Consider removing/changing
     data
   },
 
   draw_group = function(data, panel_scales, coord){
     data <- split(data, is.na(data$y))
-    
+
     #Draw forecasted points and intervals
     if(length(data) == 1){ #PI=FALSE
-      ggplot2:::ggname("geom_forecast", 
+      ggplot2:::ggname("geom_forecast",
         GeomForecastPoint$draw_panel(data[[1]], panel_scales, coord))
     }
     else{ #PI=TRUE
@@ -1286,14 +1294,14 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom, # Produces both 
 
 GeomForecastPoint <- ggplot2::ggproto("GeomForecastPoint", GeomForecast, ## Produces only point forecasts
   required_aes = c("x","y"),
-  
+
   setup_data = function(data, params){
     data[!is.na(data$y),] # Extract only forecast points
   },
-  
+
   draw_group = function(data, panel_scales, coord){
     linecol <- blendHex(data$colour[1], "gray30", 1)
-    
+
     # Select appropriate Geom and set defaults
     if(NROW(data)==0){ #Blank
       ggplot2::GeomBlank$draw_panel
@@ -1306,7 +1314,7 @@ GeomForecastPoint <- ggplot2::ggproto("GeomForecastPoint", GeomForecast, ## Prod
       GeomForecastPointGeom <- ggplot2::GeomLine$draw_panel
       pointpred <- transform(data, fill = NA, colour = linecol)
     }
-    
+
     #Draw forecast points
     ggplot2:::ggname("geom_forecast_point",
                      grid::grobTree(GeomForecastPointGeom(pointpred, panel_scales, coord)))
@@ -1316,37 +1324,37 @@ GeomForecastPoint <- ggplot2::ggproto("GeomForecastPoint", GeomForecast, ## Prod
 
 blendHex <- function(mixcol, seqcol, alpha=1){
   requireNamespace("colorspace")
-  
+
   if(is.na(seqcol)){
     return(mixcol)
   }
-  
+
   #transform to hue/lightness/saturation colorspace
   seqcol <- grDevices::col2rgb(seqcol, alpha = TRUE)
   mixcol <- grDevices::col2rgb(mixcol, alpha = TRUE)
   seqcolHLS <- suppressWarnings(colorspace::coerce(colorspace::RGB(R = seqcol[1,]/255, G = seqcol[2,]/255, B = seqcol[3,]/255), structure(NULL, class="HLS")))
   mixcolHLS <- suppressWarnings(colorspace::coerce(colorspace::RGB(R = mixcol[1,]/255, G = mixcol[2,]/255, B = mixcol[3,]/255), structure(NULL, class="HLS")))
-  
+
   #copy luminence
   mixcolHLS@coords[, "L"] <- seqcolHLS@coords[, "L"]
   mixcolHLS@coords[, "S"] <- alpha*mixcolHLS@coords[, "S"] + (1-alpha)*seqcolHLS@coords[, "S"]
   mixcolHex <- suppressWarnings(colorspace::coerce(mixcolHLS, structure(NULL, class="RGB")))
   mixcolHex <- colorspace::hex(mixcolHex)
-  
+
   return(mixcolHex)
 }
 
 GeomForecastInterval <- ggplot2::ggproto("GeomForecastInterval", GeomForecast, ## Produces only forecasts intervals on graph
    required_aes = c("x","ymin","ymax","level"),
-   
+
    setup_data = function(data, params){
      data[is.na(data$y),] # Extract only forecast intervals
    },
-   
+
    draw_group = function(data, panel_scales, coord){
      shadeVal <- (data$level - min(data$level))/diff(range(data$level)) * 0.2 + 8/15
      data$shadeCol <- rgb(shadeVal, shadeVal, shadeVal)
-     intervalGrobList <- lapply(split(data, data$level), 
+     intervalGrobList <- lapply(split(data, data$level),
             FUN = function(x){
               # Calculate colour
               fillcol <- blendHex(x$colour[1], x$shadeCol[1], 0.7)
@@ -1366,7 +1374,7 @@ GeomForecastInterval <- ggplot2::ggproto("GeomForecastInterval", GeomForecast, #
               return(GeomForecastIntervalGeom(x, panel_scales, coord)) ## Create list pair with average ymin/ymax to order layers
             }
      )
-     
+
      #Draw forecast intervals
      ggplot2:::ggname("geom_forecast_interval", do.call(grid::grobTree, rev(intervalGrobList))) #TODO: Find reliable method to stacking them correctly
    }
