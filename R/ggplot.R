@@ -1269,14 +1269,11 @@ fortify.forecast <- function(model, data=as.data.frame(model), PI=TRUE, ...){
   return(data.frame(x=as.numeric(time(model$mean)), y=as.numeric(model$mean), level=rep(NA,NROW(model$mean))))
 }
 
-StatForecast <- if (!requireNamespace("ggplot2", quietly = TRUE)){
-  return(NULL)
-} else{
-  ggplot2::ggproto("StatForecast", ggplot2::Stat,
+StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
   required_aes = c("x","y"),
   default_aes = ggplot2::aes_(level = ~..level..),
-
-  compute_group = function(data, scales, params, PI=TRUE, series=NULL,
+  
+  compute_group = function(data, scales, params, PI=TRUE, series=NULL, 
                            h=NULL, level=c(80,95), fan=FALSE, robust=FALSE, lambda=NULL,
                            find.frequency=FALSE, allow.multiplicative.trend=FALSE, ...) {
     ## TODO: Rewrite
@@ -1289,7 +1286,7 @@ StatForecast <- if (!requireNamespace("ggplot2", quietly = TRUE)){
                       lambda=lambda, find.frequency=find.frequency,
                       allow.multiplicative.trend=allow.multiplicative.trend)
     fcast <- ggplot2::fortify(fcast, PI=PI)
-
+    
     # Add ggplot & series information
     extraInfo <- as.list(data[1,!colnames(data)%in%colnames(fcast)])
     extraInfo$`_data` <- quote(fcast)
@@ -1300,23 +1297,21 @@ StatForecast <- if (!requireNamespace("ggplot2", quietly = TRUE)){
       extraInfo[["series"]] <- series[(abs(data$group[1])-1)%%length(series)+1]
     }
     do.call("transform", extraInfo)
-  })
-}
-GeomForecast <- if (!requireNamespace("ggplot2", quietly = TRUE)){
-  return(NULL)
-} else{
-  ggplot2::ggproto("GeomForecast", ggplot2::Geom, # Produces both point forecasts and intervals on graph
+  }
+)
+
+GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom, # Produces both point forecasts and intervals on graph
   required_aes = c("x", "y"),
   optional_aes = c("ymin", "ymax"),
   default_aes = ggplot2::aes(colour = "blue", fill = "grey60", size = .5,
     linetype = 1, weight = 1, alpha = 1, level=NULL),
   draw_key = function(data, params, size){
     lwd <- min(data$size, min(size) / 4)
-
+    
     # Calculate and set colour
     linecol <- blendHex(data$col, "gray30", 1)
     fillcol <- blendHex(data$col, "#CCCCCC", 0.8)
-
+    
     grid::grobTree(
       grid::rectGrob(
         width = grid::unit(1, "npc") - grid::unit(lwd, "mm"),
@@ -1340,17 +1335,17 @@ GeomForecast <- if (!requireNamespace("ggplot2", quietly = TRUE)){
       )
     )
   },
-
+  
   handle_na = function(self, data, params){ ## TODO: Consider removing/changing
     data
   },
 
   draw_group = function(data, panel_scales, coord){
     data <- split(data, is.na(data$y))
-
+    
     #Draw forecasted points and intervals
     if(length(data) == 1){ #PI=FALSE
-      ggplot2:::ggname("geom_forecast",
+      ggplot2:::ggname("geom_forecast", 
         GeomForecastPoint$draw_panel(data[[1]], panel_scales, coord))
     }
     else{ #PI=TRUE
@@ -1358,22 +1353,19 @@ GeomForecast <- if (!requireNamespace("ggplot2", quietly = TRUE)){
       grid::addGrob(GeomForecastInterval$draw_group(data[[2]], panel_scales, coord),
                    GeomForecastPoint$draw_panel(data[[1]], panel_scales, coord)))
     }
-  })
-}
+  }
+)
 
-GeomForecastPoint <- if (!requireNamespace("ggplot2", quietly = TRUE)){
-  return(NULL)
-} else{
-  ggplot2::ggproto("GeomForecastPoint", GeomForecast, ## Produces only point forecasts
+GeomForecastPoint <- ggplot2::ggproto("GeomForecastPoint", GeomForecast, ## Produces only point forecasts
   required_aes = c("x","y"),
-
+  
   setup_data = function(data, params){
     data[!is.na(data$y),] # Extract only forecast points
   },
-
+  
   draw_group = function(data, panel_scales, coord){
     linecol <- blendHex(data$colour[1], "gray30", 1)
-
+    
     # Select appropriate Geom and set defaults
     if(NROW(data)==0){ #Blank
       ggplot2::GeomBlank$draw_panel
@@ -1386,12 +1378,12 @@ GeomForecastPoint <- if (!requireNamespace("ggplot2", quietly = TRUE)){
       GeomForecastPointGeom <- ggplot2::GeomLine$draw_panel
       pointpred <- transform(data, fill = NA, colour = linecol)
     }
-
+    
     #Draw forecast points
     ggplot2:::ggname("geom_forecast_point",
                      grid::grobTree(GeomForecastPointGeom(pointpred, panel_scales, coord)))
-  })
-}
+  }
+)
 
 
 blendHex <- function(mixcol, seqcol, alpha=1){
@@ -1416,44 +1408,41 @@ blendHex <- function(mixcol, seqcol, alpha=1){
   return(mixcolHex)
 }
 
-GeomForecastInterval <- if (!requireNamespace("ggplot2", quietly = TRUE)){
-  return(NULL)
-} else{
-  ggplot2::ggproto("GeomForecastInterval", GeomForecast, ## Produces only forecasts intervals on graph
-  required_aes = c("x","ymin","ymax","level"),
-  
-  setup_data = function(data, params){
-   data[is.na(data$y),] # Extract only forecast intervals
-  },
-  
-  draw_group = function(data, panel_scales, coord){
-   shadeVal <- (data$level - min(data$level))/diff(range(data$level)) * 0.2 + 8/15
-   data$shadeCol <- rgb(shadeVal, shadeVal, shadeVal)
-   intervalGrobList <- lapply(split(data, data$level),
-          FUN = function(x){
-            # Calculate colour
-            fillcol <- blendHex(x$colour[1], x$shadeCol[1], 0.7)
-            # Select appropriate Geom and set defaults
-            if(NROW(x)==0){ #Blank
-              ggplot2::GeomBlank$draw_panel
+GeomForecastInterval <- ggplot2::ggproto("GeomForecastInterval", GeomForecast, ## Produces only forecasts intervals on graph
+   required_aes = c("x","ymin","ymax","level"),
+   
+   setup_data = function(data, params){
+     data[is.na(data$y),] # Extract only forecast intervals
+   },
+   
+   draw_group = function(data, panel_scales, coord){
+     shadeVal <- (data$level - min(data$level))/diff(range(data$level)) * 0.2 + 8/15
+     data$shadeCol <- rgb(shadeVal, shadeVal, shadeVal)
+     intervalGrobList <- lapply(split(data, data$level), 
+            FUN = function(x){
+              # Calculate colour
+              fillcol <- blendHex(x$colour[1], x$shadeCol[1], 0.7)
+              # Select appropriate Geom and set defaults
+              if(NROW(x)==0){ #Blank
+                ggplot2::GeomBlank$draw_panel
+              }
+              else if(NROW(x)==1){ #Linerange
+                GeomForecastIntervalGeom <- ggplot2::GeomLinerange$draw_panel
+                x <- transform(x, colour=fillcol, fill = NA, size=1)
+              }
+              else{ #Ribbon
+                GeomForecastIntervalGeom <- ggplot2::GeomRibbon$draw_group
+                x <- transform(x, colour=NA, fill = fillcol)
+              }
+              #Create grob
+              return(GeomForecastIntervalGeom(x, panel_scales, coord)) ## Create list pair with average ymin/ymax to order layers
             }
-            else if(NROW(x)==1){ #Linerange
-              GeomForecastIntervalGeom <- ggplot2::GeomLinerange$draw_panel
-              x <- transform(x, colour=fillcol, fill = NA, size=1)
-            }
-            else{ #Ribbon
-              GeomForecastIntervalGeom <- ggplot2::GeomRibbon$draw_group
-              x <- transform(x, colour=NA, fill = fillcol)
-            }
-            #Create grob
-            return(GeomForecastIntervalGeom(x, panel_scales, coord)) ## Create list pair with average ymin/ymax to order layers
-          }
-   )
-  
-   #Draw forecast intervals
-   ggplot2:::ggname("geom_forecast_interval", do.call(grid::grobTree, rev(intervalGrobList))) #TODO: Find reliable method to stacking them correctly
-  })
-}
+     )
+     
+     #Draw forecast intervals
+     ggplot2:::ggname("geom_forecast_interval", do.call(grid::grobTree, rev(intervalGrobList))) #TODO: Find reliable method to stacking them correctly
+   }
+)
 
 
 geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
@@ -1461,7 +1450,7 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
                           inherit.aes = TRUE, PI=TRUE, series=NULL, ...) {
   ## TODO: Tidy initialisation
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\"), and then re-load the forecast package.", call. = FALSE)
+    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
   else{
     if(is.forecast(mapping)){
@@ -1574,6 +1563,3 @@ gghistogram <- function(x, add.normal=FALSE, add.kde=FALSE, add.rug=TRUE, bins, 
     return(p)
   }
 }
-# 
-# scale_x_ts <- ggplot2::scale_x_continuous
-# scale_y_ts <- ggplot2::scale_y_continuous
