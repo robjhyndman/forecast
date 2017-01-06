@@ -1390,6 +1390,8 @@ GeomForecastPoint <- ggplot2::ggproto("GeomForecastPoint", GeomForecast, ## Prod
 
   draw_group = function(data, panel_scales, coord){
     linecol <- blendHex(data$colour[1], "gray30", 1)
+    # Compute alpha transparency
+    data$alpha <- grDevices::col2rgb(linecol, alpha = TRUE)[4,]/255 * data$alpha
 
     # Select appropriate Geom and set defaults
     if(NROW(data)==0){ #Blank
@@ -1413,7 +1415,6 @@ GeomForecastPoint <- ggplot2::ggproto("GeomForecastPoint", GeomForecast, ## Prod
 
 blendHex <- function(mixcol, seqcol, alpha=1){
   requireNamespace("colorspace")
-
   if(is.na(seqcol)){
     return(mixcol)
   }
@@ -1429,7 +1430,7 @@ blendHex <- function(mixcol, seqcol, alpha=1){
   mixcolHLS@coords[, "S"] <- alpha*mixcolHLS@coords[, "S"] + (1-alpha)*seqcolHLS@coords[, "S"]
   mixcolHex <- suppressWarnings(colorspace::coerce(mixcolHLS, structure(NULL, class="RGB")))
   mixcolHex <- colorspace::hex(mixcolHex)
-
+  mixcolHex <- ggplot2::alpha(mixcolHex, mixcol[4,]/255)
   return(mixcolHex)
 }
 
@@ -1447,6 +1448,9 @@ GeomForecastInterval <- ggplot2::ggproto("GeomForecastInterval", GeomForecast, #
             FUN = function(x){
               # Calculate colour
               fillcol <- blendHex(x$colour[1], x$shadeCol[1], 0.7)
+              # Compute alpha transparency
+              x$alpha <- grDevices::col2rgb(fillcol, alpha = TRUE)[4,]/255 * x$alpha
+              
               # Select appropriate Geom and set defaults
               if(NROW(x)==0){ #Blank
                 ggplot2::GeomBlank$draw_panel
