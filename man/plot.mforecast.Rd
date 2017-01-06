@@ -5,7 +5,7 @@
 
 \usage{
 \method{plot}{mforecast}(x, main=paste("Forecasts from",x$method),xlab="time",...)
-\method{autoplot}{mforecast}(object, PI=TRUE, gridlayout=NULL, ...)
+\method{autoplot}{mforecast}(object, PI = TRUE, facets = TRUE, colour = FALSE, ...)
 }
 \arguments{
 \item{x}{Multivariate forecast object of class \code{mforecast}.}
@@ -13,7 +13,8 @@
 \item{main}{Main title. Default is the forecast method. For autoplot, specify a vector of titles for each plot.}
 \item{xlab}{X-axis label. For autoplot, specify a vector of labels for each plot.}
 \item{PI}{If \code{FALSE}, confidence intervals will not be plotted, giving only the forecast line.}
-\item{gridlayout}{A matrix of positions for the each forecast plot to be positioned.}
+\item{facets}{If TRUE, multiple time series will be faceted. If FALSE, each series will be assigned a colour.}
+\item{colour}{If TRUE, the time series will be assigned a colour aesthetic}
 \item{\dots}{additional arguments to each individual \code{plot}.} }
 
 \description{Plots historical data with multivariate forecasts and prediction intervals.

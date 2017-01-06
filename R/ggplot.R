@@ -526,44 +526,67 @@ autoplot.forecast <- function (object, include, PI=TRUE, shadecols=c("#596DD5","
   }
 }
 
-autoplot.mforecast <- function (object, PI=TRUE, gridlayout=NULL, ...){
-  if (requireNamespace("ggplot2") & requireNamespace("grid")){
+autoplot.mforecast <- function (object, PI = TRUE, facets = TRUE, colour = FALSE, ...){
+  if (requireNamespace("ggplot2")){
     if (!is.mforecast(object)){
       stop("autoplot.mforecast requires a mforecast object, use object=object")
     }
-
-    K <- NCOL(object$x)
-    if (K<2){
-      warning("Expected at least two plots but forecast required less.")
+    if (is.null(object[["newdata"]])){
+      # ts forecasts
+      p <- autoplot(object$x, facets = facets, colour = colour) + geom_forecast(object, ...)
+      if (facets){
+        p <- p + ggplot2::facet_wrap(~ series, 
+          labeller = function(labels){
+            if(!is.null(object$method)){
+              lapply(labels, function(x) paste0(as.character(x), "\n", object$method[as.character(x)]))
+            }
+            else{
+              lapply(labels, function(x) paste0(as.character(x)))
+            }
+          },
+          ncol = 1,
+          scales = "free_y"
+        )
+      }
+      p <- p + ggAddExtras(ylab = NULL)
+      return(p)
     }
-
-    #Set up vector arguments
-    if (missing(PI)){
-      PI <- rep(TRUE, K)
-    }
-
-    #Set up grid
-    if (is.null(gridlayout)) {
-      # Make the panel
+    else{
+      # lm forecasts
+      if (!requireNamespace("grid")){
+        stop("grid is needed for this function to work. Install it via install.packages(\"grid\")", call. = FALSE) 
+      }
+      
+      K <- NCOL(object$x)
+      if (K<2){
+        warning("Expected at least two plots but forecast required less.")
+      }
+      
+      #Set up vector arguments
+      if (missing(PI)){
+        PI <- rep(TRUE, K)
+      }
+      
+      #Set up grid
       # ncol: Number of columns of plots
       # nrow: Number of rows needed, calculated from # of cols
       gridlayout <- matrix(seq(1, K), ncol = 1, nrow = K)
-    }
-
-    grid::grid.newpage()
-    grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow(gridlayout), ncol(gridlayout))))
-
-    for (i in 1:K){
-      partialfcast <- list(x=object$x[,i],mean=object$mean[[i]],method=object$method,
-                           upper=object$upper[[i]], lower=object$lower[[i]], level=object$level, newdata=object$newdata)
-      if (!is.null(object$model) &   inherits(object$model, "mlm")){
-        partialfcast$model <- mlmsplit(object$model,index=i)
+      
+      grid::grid.newpage()
+      grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow(gridlayout), ncol(gridlayout))))
+      
+      for (i in 1:K){
+        partialfcast <- list(x=object$x[,i],mean=object$mean[[i]],method=object$method,
+                             upper=object$upper[[i]], lower=object$lower[[i]], level=object$level, newdata=object$newdata)
+        if (!is.null(object$model) &   inherits(object$model, "mlm")){
+          partialfcast$model <- mlmsplit(object$model,index=i)
+        }
+        matchidx <- as.data.frame(which(gridlayout == i, arr.ind = TRUE))
+        print(autoplot(structure(partialfcast,class="forecast"),
+                       PI=PI[i], ...) + ggAddExtras(ylab=colnames(object$x)[i]),
+              vp = grid::viewport(layout.pos.row = matchidx$row,
+                                  layout.pos.col = matchidx$col))
       }
-      matchidx <- as.data.frame(which(gridlayout == i, arr.ind = TRUE))
-      print(autoplot(structure(partialfcast,class="forecast"),
-                     PI=PI[i], ...) + ggAddExtras(ylab=colnames(object$x)[i]),
-            vp = grid::viewport(layout.pos.row = matchidx$row,
-                          layout.pos.col = matchidx$col))
     }
   }
 }
