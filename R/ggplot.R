@@ -275,67 +275,47 @@ autoplot.Arima <- function (object, type = c("both", "ar", "ma"), ...){
       stop("autoplot.Arima requires an Arima object, use object=object")
     }
 
-    #Check if no roots
-    emptyplot <- ((p == 0 & q == 0) | (type == "ar" & (p == 0)) | (type == "ma" & (q == 0)))
-
     if (type == "both") {
-      if (requireNamespace("grid")){
-        type <- c("ar", "ma")
-      }
-      else{
-        warning("Cannot do plots side by side, install grid package")
-      }
+      type <- c("ar", "ma")
     }
 
+    #Prepare data
+    arData <- maData <- NULL
+    if("ar" %in% type){
+      arData <- arroots(object)
+      arData <- data.frame(roots = arData$roots, type = arData$type)
+    }
+    if("ma" %in% type){
+      maData <- maroots(object)
+      maData <- data.frame(roots = maData$roots, type = maData$type)
+    }
+    allRoots <- rbind(arData, maData)
+    allRoots$Real <- Re(1/allRoots$roots)
+    allRoots$Imaginary <- Im(1/allRoots$roots)
+    allRoots$UnitCircle <- factor(ifelse((abs(allRoots$roots) > 1), "Within", "Outside"))
+
     #Initialise general ggplot object
-    p <- ggplot2::ggplot()
+    p <- ggplot2::ggplot(ggplot2::aes_(x=~Real, y=~Imaginary, colour=~UnitCircle), data=allRoots)
     p <- p + ggplot2::coord_fixed(ratio = 1)
     p <- p + ggplot2::annotate("path", x=cos(seq(0,2*pi,length.out=100)),
                                y=sin(seq(0,2*pi,length.out=100)))
     p <- p + ggplot2::geom_vline(xintercept = 0)
     p <- p + ggplot2::geom_hline(yintercept = 0)
     p <- p + ggAddExtras(xlab = "Real", ylab="Imaginary")
-
-    if(emptyplot)
+    
+    if(NROW(allRoots) == 0)
       return(p + ggAddExtras(main = "No AR or MA roots"))
-
-    allroots <- vector("list", length(type))
-
-    for (i in 1:length(type)){
-      if (type[i] == "ma"){
-        allroots[[i]] <- data.frame(roots = 1/maroots(object)$roots)
-      }
-      else if (type[i] == "ar"){
-        allroots[[i]] <- data.frame(roots = 1/arroots(object)$roots)
-      }
-      else{
-        stop(paste("Unknown type:", type[i]))
-      }
-      allroots[[i]]$UnitCircle <- factor(ifelse((abs(1/allroots[[i]]$roots) > 1), "Within", "Outside"))
-    }
-
-    #Add data
-    if (length(type)==1){
-      p <- p + ggplot2::geom_point(ggplot2::aes_(x=~Re(roots), y=~Im(roots), colour=~UnitCircle), data=allroots[[1]], size=3)
-      p <- p + ggAddExtras(main = paste("Inverse",toupper(type[1]),"roots"))
-      return(p)
+    
+    p <- p + ggplot2::geom_point(size=3)
+    
+    if(length(type)==1){
+      p <- p + ggAddExtras(main = paste("Inverse",toupper(type),"roots"))
     }
     else{
-      gridlayout <- matrix(seq(1, length(type)), ncol = length(type), nrow = 1)
-      grid::grid.newpage()
-      grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow(gridlayout), ncol(gridlayout))))
-
-      for (i in 1:length(type)){
-        m <- p + ggplot2::geom_point(ggplot2::aes_(x=~Re(roots), y=~Im(roots), colour=~UnitCircle), data=allroots[[i]], size=3)
-        m <- m + ggAddExtras(main = paste("Inverse",toupper(type[i]),"roots"))
-
-        matchidx <- as.data.frame(which(gridlayout == i, arr.ind = TRUE))
-
-        print(m, vp = grid::viewport(layout.pos.row = matchidx$row,
-                               layout.pos.col = matchidx$col))
-      }
+      p <- p + ggplot2::facet_wrap(~ type, labeller = function(labels) lapply(labels, function(x) paste(as.character(x), "roots")))
     }
   }
+  return(p)
 }
 
 autoplot.ar <- function(object, ...){
@@ -564,7 +544,7 @@ autoplot.forecast <- function (object, include, PI=TRUE, shadecols=c("#596DD5","
   }
 }
 
-autoplot.mforecast <- function (object, PI=TRUE, gridlayout=NULL, ...){
+autoplot.mforecast <- function (object, PI = TRUE, facets = TRUE, colour = FALSE, ...){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
@@ -575,39 +555,62 @@ autoplot.mforecast <- function (object, PI=TRUE, gridlayout=NULL, ...){
     if (!is.mforecast(object)){
       stop("autoplot.mforecast requires a mforecast object, use object=object")
     }
-
-    K <- NCOL(object$x)
-    if (K<2){
-      warning("Expected at least two plots but forecast required less.")
+    if (is.null(object[["newdata"]])){
+      # ts forecasts
+      p <- autoplot(object$x, facets = facets, colour = colour) + geom_forecast(object, ...)
+      if (facets){
+        p <- p + ggplot2::facet_wrap(~ series, 
+          labeller = function(labels){
+            if(!is.null(object$method)){
+              lapply(labels, function(x) paste0(as.character(x), "\n", object$method[as.character(x)]))
+            }
+            else{
+              lapply(labels, function(x) paste0(as.character(x)))
+            }
+          },
+          ncol = 1,
+          scales = "free_y"
+        )
+      }
+      p <- p + ggAddExtras(ylab = NULL)
+      return(p)
     }
-
-    #Set up vector arguments
-    if (missing(PI)){
-      PI <- rep(TRUE, K)
-    }
-
-    #Set up grid
-    if (is.null(gridlayout)) {
-      # Make the panel
+    else{
+      # lm forecasts
+      if (!requireNamespace("grid")){
+        stop("grid is needed for this function to work. Install it via install.packages(\"grid\")", call. = FALSE) 
+      }
+      
+      K <- NCOL(object$x)
+      if (K<2){
+        warning("Expected at least two plots but forecast required less.")
+      }
+      
+      #Set up vector arguments
+      if (missing(PI)){
+        PI <- rep(TRUE, K)
+      }
+      
+      #Set up grid
       # ncol: Number of columns of plots
       # nrow: Number of rows needed, calculated from # of cols
       gridlayout <- matrix(seq(1, K), ncol = 1, nrow = K)
-    }
-
-    grid::grid.newpage()
-    grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow(gridlayout), ncol(gridlayout))))
-
-    for (i in 1:K){
-      partialfcast <- list(x=object$x[,i],mean=object$mean[[i]],method=object$method,
-                           upper=object$upper[[i]], lower=object$lower[[i]], level=object$level, newdata=object$newdata)
-      if (!is.null(object$model) &   inherits(object$model, "mlm")){
-        partialfcast$model <- mlmsplit(object$model,index=i)
+      
+      grid::grid.newpage()
+      grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow(gridlayout), ncol(gridlayout))))
+      
+      for (i in 1:K){
+        partialfcast <- list(x=object$x[,i],mean=object$mean[[i]],method=object$method,
+                             upper=object$upper[[i]], lower=object$lower[[i]], level=object$level, newdata=object$newdata)
+        if (!is.null(object$model) &   inherits(object$model, "mlm")){
+          partialfcast$model <- mlmsplit(object$model,index=i)
+        }
+        matchidx <- as.data.frame(which(gridlayout == i, arr.ind = TRUE))
+        print(autoplot(structure(partialfcast,class="forecast"),
+                       PI=PI[i], ...) + ggAddExtras(ylab=colnames(object$x)[i]),
+              vp = grid::viewport(layout.pos.row = matchidx$row,
+                                  layout.pos.col = matchidx$col))
       }
-      matchidx <- as.data.frame(which(gridlayout == i, arr.ind = TRUE))
-      print(autoplot(structure(partialfcast,class="forecast"),
-                     PI=PI[i], ...) + ggAddExtras(ylab=colnames(object$x)[i]),
-            vp = grid::viewport(layout.pos.row = matchidx$row,
-                          layout.pos.col = matchidx$col))
     }
   }
 }
@@ -1194,7 +1197,7 @@ autoplot.ts <- function(object, series=NULL, ...){
   }
 }
 
-autoplot.mts <- function(object, facets=FALSE, ...){
+autoplot.mts <- function(object, colour=TRUE, facets=FALSE, ...){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
@@ -1204,13 +1207,17 @@ autoplot.mts <- function(object, facets=FALSE, ...){
     }
     data <- data.frame(y=as.numeric(c(object)), x=rep(as.numeric(time(object)),NCOL(object)),
                        series=factor(rep(colnames(object), each=NROW(object)), levels=colnames(object)))
+    
     #Initialise ggplot object
     p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x, group=~series), data=data)
-    if(facets){
-      p <- p + ggplot2::geom_line(na.rm = TRUE) + ggplot2::facet_grid(series~., scales = "free_y")
+    if(colour){
+      p <- p + ggplot2::geom_line(ggplot2::aes_(colour=~series), na.rm = TRUE)
     }
     else{
-      p <- p + ggplot2::geom_line(ggplot2::aes_(colour=~series), na.rm = TRUE)
+      p <- p + ggplot2::geom_line(na.rm = TRUE)
+    }
+    if(facets){
+      p <- p + ggplot2::facet_grid(series~., scales = "free_y")
     }
 
     p <- p + ggAddExtras(xlab="Time", ylab=deparse(substitute(object)))
@@ -1259,12 +1266,21 @@ fortify.forecast <- function(model, data=as.data.frame(model), PI=TRUE, ...){
     out[,1] <- dtindex
     return(ggplot2::fortify(out))
   }
+  if(is.null(model[["newdata"]])){
+    xVals <- as.numeric(time(model$mean)) # x axis is time
+  }
+  else{
+    xVals <- as.numeric(model[["newdata"]][,1]) # Only display the first column of newdata, should be generalised.
+    if(NCOL(model[["newdata"]]) > 1){
+      message("Note: only extracting first column of data")
+    }
+  }
   Hiloc <- grep("Hi ", names(data))
   Loloc <- grep("Lo ", names(data))
   if(PI & !is.null(model$level)){
     if(length(Hiloc)==length(Loloc)){
       if(length(Hiloc)>0){
-        return(data.frame(x=rep(as.numeric(time(model$mean)), length(Hiloc)+1),
+        return(data.frame(x=rep(xVals, length(Hiloc)+1),
                           y=c(rep(NA,NROW(data)*(length(Hiloc))),data[,1]),
                           level=c(as.numeric(rep(gsub("Hi ","",names(data)[Hiloc]), each=NROW(data))), rep(NA,NROW(data))),
                           ymax=c(unlist(data[,Hiloc]),rep(NA,NROW(data))), ymin=c(unlist(data[,Loloc]),rep(NA,NROW(data)))))
@@ -1274,7 +1290,7 @@ fortify.forecast <- function(model, data=as.data.frame(model), PI=TRUE, ...){
       warning("missing intervals detected, plotting point predictions only")
     }
   }
-  return(data.frame(x=as.numeric(time(model$mean)), y=as.numeric(model$mean), level=rep(NA,NROW(model$mean))))
+  return(data.frame(x=xVals, y=as.numeric(model$mean), level=rep(NA,NROW(model$mean))))
 }
 
 StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
