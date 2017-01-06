@@ -1301,14 +1301,20 @@ fortify.forecast <- function(model, data=as.data.frame(model), PI=TRUE, ...){
     out[,1] <- dtindex
     return(ggplot2::fortify(out))
   }
-  if(is.null(model[["newdata"]])){
+  
+  # Time series forecasts
+  if (is.element("ts",class(model$mean))){
     xVals <- as.numeric(time(model$mean)) # x axis is time
   }
-  else{
+  # Cross-sectional forecasts
+  else if (!is.null(model[["newdata"]])){
     xVals <- as.numeric(model[["newdata"]][,1]) # Only display the first column of newdata, should be generalised.
     if(NCOL(model[["newdata"]]) > 1){
       message("Note: only extracting first column of data")
     }
+  }
+  else {
+    stop("Could not find forecast x axis")
   }
   Hiloc <- grep("Hi ", names(data))
   Loloc <- grep("Lo ", names(data))
