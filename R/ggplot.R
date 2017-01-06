@@ -1246,17 +1246,15 @@ autoplot.mts <- function(object, colour=TRUE, facets=FALSE, ...){
                        series=factor(rep(colnames(object), each=NROW(object)), levels=colnames(object)))
     
     #Initialise ggplot object
-    p <- ggplot2::ggplot(ggplot2::aes_(y=~y, x=~x, group=~series), data=data)
+    mapping <- ggplot2::aes_(y=~y, x=~x, group=~series)
     if(colour){
-      p <- p + ggplot2::geom_line(ggplot2::aes_(colour=~series), na.rm = TRUE)
+      mapping$colour <- quote(series)
     }
-    else{
-      p <- p + ggplot2::geom_line(na.rm = TRUE)
-    }
+    p <- ggplot2::ggplot(mapping, data=data)
+    p <- p + ggplot2::geom_line(na.rm = TRUE)
     if(facets){
       p <- p + ggplot2::facet_grid(series~., scales = "free_y")
     }
-
     p <- p + ggAddExtras(xlab="Time", ylab=deparse(substitute(object)))
     return(p)
   }
