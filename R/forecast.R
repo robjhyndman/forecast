@@ -77,18 +77,20 @@ forecast.ts <- function(object, h=ifelse(frequency(object)>1, 2*frequency(object
   if(n > 3)
   {
     if(obj.freq < 13)
-      forecast(ets(object,lambda = lambda, allow.multiplicative.trend=allow.multiplicative.trend, ...),
+      out <- forecast(ets(object,lambda = lambda, allow.multiplicative.trend=allow.multiplicative.trend, ...),
         h=h,level=level,fan=fan)
     else if(n > 2*obj.freq)
-      stlf(object,h=h,level=level,fan=fan,lambda = lambda,
+      out <- stlf(object,h=h,level=level,fan=fan,lambda = lambda,
         allow.multiplicative.trend=allow.multiplicative.trend,...)
     else 
-      forecast(ets(object, model="ZZN", lambda = lambda, allow.multiplicative.trend=allow.multiplicative.trend, ...),
+      out <- forecast(ets(object, model="ZZN", lambda = lambda, allow.multiplicative.trend=allow.multiplicative.trend, ...),
         h=h,level=level,fan=fan)
 
   }
   else
-    meanf(object,h=h,level=level,fan=fan,lambda = lambda, ...)
+    out <- meanf(object,h=h,level=level,fan=fan,lambda = lambda, ...)
+  out$series <- deparse(substitute(object))
+  return(out)
 }
 
 as.data.frame.forecast <- function(x,...)
