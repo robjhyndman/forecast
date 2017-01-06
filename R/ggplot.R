@@ -557,7 +557,7 @@ autoplot.mforecast <- function (object, PI = TRUE, facets = TRUE, colour = FALSE
     }
     if (is.null(object[["newdata"]])){
       # ts forecasts
-      p <- autoplot(object$x, facets = facets, colour = colour) + geom_forecast(object, ...)
+      p <- autoplot(object$x, facets = facets, colour = colour) + autolayer(object, ...)
       if (facets){
         p <- p + ggplot2::facet_wrap(~ series, 
           labeller = function(labels){
@@ -1035,7 +1035,7 @@ autoplot.splineforecast <- function (object, PI=TRUE, ...){
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
   else{
-    p <- autoplot(object$x) + geom_forecast(object)
+    p <- autoplot(object$x) + autolayer(object)
     p <- p + ggplot2::geom_point(size=2)
     fit <- data.frame(datetime=as.numeric(time(object$fitted)),y=as.numeric(object$fitted))
     p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime,y=~y), colour="red", data=fit)
@@ -1159,6 +1159,43 @@ autolayer.ts <- function(object, colour=TRUE, series=NULL, ...){
       ggplot2::geom_line(ggplot2::aes_(x=~timeVal, y=~seriesVal, group=~series), data=tsdata, ...)
     }
   }
+}
+
+autolayer.forecast <- function(object, series = NULL, PI = TRUE, ...){
+  PI <- PI & !is.null(object$level)
+  data <- fortify(object, PI=PI)
+  mapping <- ggplot2::aes_(x = ~x, y = ~y)
+  if(!is.null(object$series)){
+    data <- transform(data, series=object$series)
+  }
+  if(!is.null(series)){
+    data <- transform(data, series=series)
+    mapping$colour <- quote(series)
+  }
+  if(PI){
+    mapping$level <- quote(level)
+    mapping$ymin <- quote(ymin)
+    mapping$ymax <- quote(ymax)
+  }
+  geom_forecast(mapping=mapping, data=data, stat="identity", ...)
+}
+
+autolayer.mforecast <- function(object, series = NULL, PI = TRUE, ...){
+  cl <- match.call()
+  cl[[1]] <- quote(autolayer)
+  cl$object <- quote(fclist[[i]])
+  if(!is.null(series)){
+    if(length(series)!=length(object$mean)){
+      series <- names(object$mean)
+    }
+  }
+  fclist <- mforecastsplit(object)
+  out <- list()
+  for(i in 1:length(fclist)){
+    cl$series <- series[i]
+    out[[i]] <- eval(cl)
+  }
+  return(out)
 }
 
 autoplot.ts <- function(object, series=NULL, ...){
@@ -1473,65 +1510,30 @@ GeomForecastInterval <- ggplot2::ggproto("GeomForecastInterval", GeomForecast, #
 geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
                           position = "identity", na.rm = FALSE, show.legend = NA,
                           inherit.aes = TRUE, PI=TRUE, series=NULL, ...) {
-  ## TODO: Tidy initialisation
-  if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+  if(is.forecast(mapping) || is.mforecast(mapping)){
+    warning("Use autolayer instead of geom_forecast to add a forecast layer to your ggplot object.")
+    cl <- match.call()
+    cl[[1]] <- quote(autolayer)
+    names(cl)[names(cl)=="mapping"] <- "object"
+    return(eval.parent(cl))
+  }
+  if(is.ts(mapping)){
+    data <- data.frame(y = as.numeric(mapping), x = as.numeric(time(mapping)))
+    mapping <- ggplot2::aes_(y=~y, x=~x)
+  }
+  if(stat=="forecast"){
+    paramlist <- list(na.rm = na.rm, PI=PI, series=series, ...)
+    if(!is.null(series)){
+      mapping <- ggplot2::aes_(colour = ~..series..)
+    }
   }
   else{
-    if(is.forecast(mapping)){
-      if(stat=="forecast"){
-        stat <- "identity"
-      }
-      inherit.aes <- FALSE
-      PI <- PI & !is.null(mapping$level)
-      data <- ggplot2::fortify(mapping, PI=PI)
-      mapping <- ggplot2::aes_(x = ~x, y = ~y)
-      if(!is.null(series)){
-        data <- transform(data, series=series)
-        mapping$colour <- quote(series)
-      }
-      if(PI){
-        mapping$level <- quote(level)
-        mapping$ymin <- quote(ymin)
-        mapping$ymax <- quote(ymax)
-      }
-    }
-    else if(is.mforecast(mapping)){
-      cl <- match.call()
-      #cl[[1]] <- quote(list)
-      cl$mapping <- quote(fclist[[i]])
-      if(!is.null(series)){
-        #cl$series <- quote(series)
-        if(length(series)!=length(mapping$mean)){
-          series <- names(mapping$mean)
-        }
-      }
-      fclist <- mforecastsplit(mapping)
-      out <- list()
-      for(i in 1:length(fclist)){
-        cl$series <- series[i]
-        out[[i]] <- eval(cl)
-      }
-      return(out)
-    }
-    else if(is.ts(mapping)){
-      data <- data.frame(y = as.numeric(mapping), x = as.numeric(time(mapping)))
-      mapping <- ggplot2::aes_(y=~y, x=~x)
-    }
-    if(stat=="forecast"){
-      paramlist <- list(na.rm = na.rm, PI=PI, series=series, ...)
-      if(!is.null(series)){
-        mapping <- ggplot2::aes_(colour = ~..series..)
-      }
-    }
-    else{
-      paramlist <- list(na.rm = na.rm, ...)
-    }
-    ggplot2::layer(
-      geom = GeomForecast, mapping = mapping, data = data, stat = stat,
-      position = position, show.legend = show.legend, inherit.aes = inherit.aes,
-      params = paramlist)
+    paramlist <- list(na.rm = na.rm, ...)
   }
+  ggplot2::layer(
+    geom = GeomForecast, mapping = mapping, data = data, stat = stat,
+    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+    params = paramlist)
 }
 
 # Produce nice histogram with appropriately chosen bin widths
