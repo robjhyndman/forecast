@@ -266,67 +266,47 @@ autoplot.Arima <- function (object, type = c("both", "ar", "ma"), ...){
       stop("autoplot.Arima requires an Arima object, use object=object")
     }
 
-    #Check if no roots
-    emptyplot <- ((p == 0 & q == 0) | (type == "ar" & (p == 0)) | (type == "ma" & (q == 0)))
-
     if (type == "both") {
-      if (requireNamespace("grid")){
-        type <- c("ar", "ma")
-      }
-      else{
-        warning("Cannot do plots side by side, install grid package")
-      }
+      type <- c("ar", "ma")
     }
 
+    #Prepare data
+    arData <- maData <- NULL
+    if("ar" %in% type){
+      arData <- arroots(object)
+      arData <- data.frame(roots = arData$roots, type = arData$type)
+    }
+    if("ma" %in% type){
+      maData <- maroots(object)
+      maData <- data.frame(roots = maData$roots, type = maData$type)
+    }
+    allRoots <- rbind(arData, maData)
+    allRoots$Real <- Re(1/allRoots$roots)
+    allRoots$Imaginary <- Im(1/allRoots$roots)
+    allRoots$UnitCircle <- factor(ifelse((abs(allRoots$roots) > 1), "Within", "Outside"))
+
     #Initialise general ggplot object
-    p <- ggplot2::ggplot()
+    p <- ggplot2::ggplot(ggplot2::aes_(x=~Real, y=~Imaginary, colour=~UnitCircle), data=allRoots)
     p <- p + ggplot2::coord_fixed(ratio = 1)
     p <- p + ggplot2::annotate("path", x=cos(seq(0,2*pi,length.out=100)),
                                y=sin(seq(0,2*pi,length.out=100)))
     p <- p + ggplot2::geom_vline(xintercept = 0)
     p <- p + ggplot2::geom_hline(yintercept = 0)
     p <- p + ggAddExtras(xlab = "Real", ylab="Imaginary")
-
-    if(emptyplot)
+    
+    if(NROW(allRoots) == 0)
       return(p + ggAddExtras(main = "No AR or MA roots"))
-
-    allroots <- vector("list", length(type))
-
-    for (i in 1:length(type)){
-      if (type[i] == "ma"){
-        allroots[[i]] <- data.frame(roots = 1/maroots(object)$roots)
-      }
-      else if (type[i] == "ar"){
-        allroots[[i]] <- data.frame(roots = 1/arroots(object)$roots)
-      }
-      else{
-        stop(paste("Unknown type:", type[i]))
-      }
-      allroots[[i]]$UnitCircle <- factor(ifelse((abs(1/allroots[[i]]$roots) > 1), "Within", "Outside"))
-    }
-
-    #Add data
-    if (length(type)==1){
-      p <- p + ggplot2::geom_point(ggplot2::aes_(x=~Re(roots), y=~Im(roots), colour=~UnitCircle), data=allroots[[1]], size=3)
-      p <- p + ggAddExtras(main = paste("Inverse",toupper(type[1]),"roots"))
-      return(p)
+    
+    p <- p + ggplot2::geom_point(size=3)
+    
+    if(length(type)==1){
+      p <- p + ggAddExtras(main = paste("Inverse",toupper(type),"roots"))
     }
     else{
-      gridlayout <- matrix(seq(1, length(type)), ncol = length(type), nrow = 1)
-      grid::grid.newpage()
-      grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow(gridlayout), ncol(gridlayout))))
-
-      for (i in 1:length(type)){
-        m <- p + ggplot2::geom_point(ggplot2::aes_(x=~Re(roots), y=~Im(roots), colour=~UnitCircle), data=allroots[[i]], size=3)
-        m <- m + ggAddExtras(main = paste("Inverse",toupper(type[i]),"roots"))
-
-        matchidx <- as.data.frame(which(gridlayout == i, arr.ind = TRUE))
-
-        print(m, vp = grid::viewport(layout.pos.row = matchidx$row,
-                               layout.pos.col = matchidx$col))
-      }
+      p <- p + ggplot2::facet_wrap(~ type, labeller = function(labels) lapply(labels, function(x) paste(as.character(x), "roots")))
     }
   }
+  return(p)
 }
 
 autoplot.ar <- function(object, ...){
