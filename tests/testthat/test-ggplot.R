@@ -4,7 +4,8 @@ if(require(testthat))
   context("forecast ggplot tests")
 
   test_that("tests for autoplot/gg functions", {
-    ldeaths <- cbind(mdeaths, fdeaths)
+    library(ggplot2)
+    lungDeaths <- cbind(mdeaths, fdeaths)
     
     ggAcf(wineind)
     autoplot(Acf(wineind))
@@ -43,7 +44,7 @@ if(require(testthat))
     lmfcast <- forecast(lmfit, newdata=data.frame(disp=214))
     autoplot(lmfcast)
     
-    mfcast <- forecast(ldeaths)
+    mfcast <- forecast(lungDeaths)
     autoplot(mfcast)
     
     ggtsdisplay(USAccDeaths, plot.type = "spectrum")
@@ -52,7 +53,7 @@ if(require(testthat))
     ggtsdisplay(USAccDeaths, plot.type = "scatter", theme=ggplot2::theme_bw())
     
     gglagplot(woolyrnq, lags=2)
-    gglagplot(ldeaths, lags=2)
+    gglagplot(lungDeaths, lags=2)
     gglagplot(WWWusage, do.lines = FALSE, colour = FALSE, labels = TRUE)
     
     gglagchull(woolyrnq, lags=4)
@@ -66,13 +67,16 @@ if(require(testthat))
     autoplot(splinefit)
     
     autoplot(USAccDeaths)
-    autoplot(ldeaths)
-    autoplot(ldeaths, facet=TRUE)
+    autoplot(lungDeaths)
+    autoplot(lungDeaths, facet=TRUE)
     
     autoplot(USAccDeaths) + geom_forecast()
     autoplot(USAccDeaths) + geom_forecast(etsfcast, series="ETS")
-    autoplot(ldeaths) + geom_forecast()
-    autoplot(ldeaths, facet=TRUE) + geom_forecast()
+    autoplot(lungDeaths) + geom_forecast()
+    autoplot(lungDeaths) + geom_forecast(mfcast, series = c("mdeaths", "fdeaths"))
+    autoplot(lungDeaths) + geom_forecast(mfcast)
+    autoplot(lungDeaths) + geom_forecast(mfcast, series = TRUE)
+    autoplot(lungDeaths, facet=TRUE) + geom_forecast()
     
     gghistogram(USAccDeaths, add.kde = TRUE)
   })
