@@ -1174,12 +1174,21 @@ fortify.forecast <- function(model, data=as.data.frame(model), PI=TRUE, ...){
     out[,1] <- dtindex
     return(ggplot2::fortify(out))
   }
+  if(is.null(model[["newdata"]])){
+    xVals <- as.numeric(time(model$mean)) # x axis is time
+  }
+  else{
+    xVals <- as.numeric(model[["newdata"]][,1]) # Only display the first column of newdata, should be generalised.
+    if(NCOL(model[["newdata"]]) > 1){
+      message("Note: only extracting first column of data")
+    }
+  }
   Hiloc <- grep("Hi ", names(data))
   Loloc <- grep("Lo ", names(data))
   if(PI & !is.null(model$level)){
     if(length(Hiloc)==length(Loloc)){
       if(length(Hiloc)>0){
-        return(data.frame(x=rep(as.numeric(time(model$mean)), length(Hiloc)+1),
+        return(data.frame(x=rep(xVals, length(Hiloc)+1),
                           y=c(rep(NA,NROW(data)*(length(Hiloc))),data[,1]),
                           level=c(as.numeric(rep(gsub("Hi ","",names(data)[Hiloc]), each=NROW(data))), rep(NA,NROW(data))),
                           ymax=c(unlist(data[,Hiloc]),rep(NA,NROW(data))), ymin=c(unlist(data[,Loloc]),rep(NA,NROW(data)))))
@@ -1189,7 +1198,7 @@ fortify.forecast <- function(model, data=as.data.frame(model), PI=TRUE, ...){
       warning("missing intervals detected, plotting point predictions only")
     }
   }
-  return(data.frame(x=as.numeric(time(model$mean)), y=as.numeric(model$mean), level=rep(NA,NROW(model$mean))))
+  return(data.frame(x=xVals, y=as.numeric(model$mean), level=rep(NA,NROW(model$mean))))
 }
 
 StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
