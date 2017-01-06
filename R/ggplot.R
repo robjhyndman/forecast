@@ -2,9 +2,6 @@ autolayer <- function(object, ...){
   UseMethod("autolayer")
 }
 
-autoplot <- if (requireNamespace("ggplot2", quietly = TRUE))
-    ggplot2::autoplot else function(object, ...) UseMethod("autoplot")
-
 ggAddExtras <- function(xlab=NA, ylab=NA, main=NA){
   dots <- eval.parent(quote(list(...)))
   extras <- list()
