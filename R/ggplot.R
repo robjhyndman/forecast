@@ -44,7 +44,10 @@ ggtsbreaks <- function(x){
 }
 
 autoplot.acf <- function(object, ci=0.95, ...){
-  if (requireNamespace("ggplot2")){
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+  }
+  else{
     if (!inherits(object, "acf")){
       stop("autoplot.acf requires a acf object, use object=object")
     }
@@ -155,7 +158,10 @@ ggCcf <- function(x, y, lag.max=NULL, type=c("correlation","covariance"),
 }
 
 autoplot.mpacf <- function(object, ...){
-  if (requireNamespace("ggplot2")){
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+  }
+  else{
     if (!inherits(object, "mpacf")){
       stop("autoplot.mpacf requires a mpacf object, use object=object")
     }
@@ -232,7 +238,10 @@ ggtaperedpacf <- function(x, ...){
 }
 
 autoplot.Arima <- function (object, type = c("both", "ar", "ma"), ...){
-  if (requireNamespace("ggplot2")){
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+  }
+  else{
     if (is.Arima(object)){
       #Detect type
       type <- match.arg(type)
@@ -334,7 +343,10 @@ autoplot.ar <- function(object, ...){
 }
 
 autoplot.decomposed.ts <- function (object, labels=NULL, ...){
-  if (requireNamespace("ggplot2")){
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+  }
+  else{
     if (!inherits(object, "decomposed.ts")){
       stop("autoplot.decomposed.ts requires a decomposed.ts object")
     }
@@ -372,7 +384,10 @@ autoplot.decomposed.ts <- function (object, labels=NULL, ...){
 }
 
 autoplot.ets <- function (object, ...){
-  if (requireNamespace("ggplot2")){
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+  }
+  else{
     if (!is.ets(object)){
       stop("autoplot.ets requires an ets object, use object=object")
     }
@@ -399,7 +414,10 @@ autoplot.ets <- function (object, ...){
 }
 
 autoplot.forecast <- function (object, include, PI=TRUE, shadecols=c("#596DD5","#D5DBFF"), fcol="#0000AA", flwd=0.5, ...){
-  if (requireNamespace("ggplot2")){
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+  }
+  else{
     if (!is.forecast(object)){
       stop("autoplot.forecast requires a forecast object, use object=object")
     }
@@ -547,7 +565,13 @@ autoplot.forecast <- function (object, include, PI=TRUE, shadecols=c("#596DD5","
 }
 
 autoplot.mforecast <- function (object, PI=TRUE, gridlayout=NULL, ...){
-  if (requireNamespace("ggplot2") & requireNamespace("grid")){
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+  }
+  else if (!requireNamespace("grid", quietly = TRUE)) {
+    stop("grid is needed for this function to work. Install it via install.packages(\"grid\")", call. = FALSE)
+  }
+  else{
     if (!is.mforecast(object)){
       stop("autoplot.mforecast requires a mforecast object, use object=object")
     }
@@ -591,7 +615,13 @@ autoplot.mforecast <- function (object, PI=TRUE, gridlayout=NULL, ...){
 ggtsdisplay <- function(x, plot.type=c("partial","histogram","scatter","spectrum"),
                         points=TRUE, smooth=FALSE,
                         lag.max, na.action=na.contiguous, theme=NULL, ...){
-  if (requireNamespace("ggplot2") & requireNamespace("grid")){
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+  }
+  else if (!requireNamespace("grid", quietly = TRUE)) {
+    stop("grid is needed for this function to work. Install it via install.packages(\"grid\")", call. = FALSE)
+  }
+  else{
     plot.type <- match.arg(plot.type)
     main <- deparse(substitute(x))
 
@@ -683,8 +713,11 @@ ggtsdisplay <- function(x, plot.type=c("partial","histogram","scatter","spectrum
 }
 
 gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray", do.lines = TRUE, colour = TRUE, continuous = TRUE, labels = FALSE, seasonal = TRUE, ...){
-  freq <- frequency(x)
-  if (requireNamespace("ggplot2")){
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+  }
+  else{
+    freq <- frequency(x)
     if(freq > 1){
       linecol = cycle(x)
     }
@@ -790,7 +823,10 @@ gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray"
 }
 
 gglagchull <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray", ...){
-  if (requireNamespace("ggplot2")){
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+  }
+  else{
     x <- as.matrix(x)
 
     #Prepare data for plotting
@@ -831,7 +867,10 @@ ggmonthplot <- function (x, labels = NULL, times = time(x), phase = cycle(x), ..
 }
 
 ggsubseriesplot <- function (x, labels = NULL, times = time(x), phase = cycle(x), ...){
-  if (requireNamespace("ggplot2")){
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+  }
+  else{
     if (!inherits(x, "ts")){
       stop("ggsubseriesplot requires a ts object, use x=object")
     }
@@ -883,7 +922,10 @@ ggsubseriesplot <- function (x, labels = NULL, times = time(x), phase = cycle(x)
 }
 
 ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NULL, col=NULL, continuous=FALSE, polar=FALSE, labelgap=0.04, ...){
-  if (requireNamespace("ggplot2")){
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+  }
+  else{
     if (!inherits(x, "ts")){
       stop("autoplot.seasonplot requires a ts object, use x=object")
     }
@@ -986,16 +1028,24 @@ ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NUL
 }
 
 autoplot.splineforecast <- function (object, PI=TRUE, ...){
-  p <- autoplot(object$x) + geom_forecast(object)
-  p <- p + ggplot2::geom_point(size=2)
-  fit <- data.frame(datetime=as.numeric(time(object$fitted)),y=as.numeric(object$fitted))
-  p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime,y=~y), colour="red", data=fit)
-  p <- p + ggAddExtras(ylab=deparse(object$model$call$x))
-  return(p)
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+  }
+  else{
+    p <- autoplot(object$x) + geom_forecast(object)
+    p <- p + ggplot2::geom_point(size=2)
+    fit <- data.frame(datetime=as.numeric(time(object$fitted)),y=as.numeric(object$fitted))
+    p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime,y=~y), colour="red", data=fit)
+    p <- p + ggAddExtras(ylab=deparse(object$model$call$x))
+    return(p)
+  }
 }
 
 autoplot.stl <- function (object, labels = NULL, ...){
-  if (requireNamespace("ggplot2")){
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+  }
+  else{
     if (!inherits(object, "stl")){
       stop("autoplot.stl requires a stl object, use x=object")
     }
@@ -1032,7 +1082,10 @@ autoplot.stl <- function (object, labels = NULL, ...){
 
 
 autoplot.seas <- function (object, labels = NULL, ...){
-  if (requireNamespace("ggplot2")){
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+  }
+  else{
     if (!inherits(object, "seas")){
       stop("autoplot.seas requires a seas object")
     }
@@ -1066,37 +1119,50 @@ autoplot.seas <- function (object, labels = NULL, ...){
 }
 
 autolayer.mts <- function(object, colour=TRUE, series=NULL, ...){
-  cl <- match.call()
-  cl[[1]] <- quote(autolayer)
-  cl$object <- quote(object[,i])
-  if(length(series)!=NCOL(object)){
-    if(colour){
-      message("For a multivariate timeseries, specify a seriesname for each timeseries. Defaulting to column names.")
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+  }
+  else{
+    cl <- match.call()
+    cl[[1]] <- quote(autolayer)
+    cl$object <- quote(object[,i])
+    if(length(series)!=NCOL(object)){
+      if(colour){
+        message("For a multivariate timeseries, specify a seriesname for each timeseries. Defaulting to column names.")
+      }
+      series <- colnames(object)
     }
-    series <- colnames(object)
+    out <- list()
+    for(i in 1:NCOL(object)){
+      cl$series <- series[i]
+      out[[i]] <- eval(cl)
+    }
+    return(out)
   }
-  out <- list()
-  for(i in 1:NCOL(object)){
-    cl$series <- series[i]
-    out[[i]] <- eval(cl)
-  }
-  return(out)
 }
 
 autolayer.ts <- function(object, colour=TRUE, series=NULL, ...){
-  tsdata <- data.frame(timeVal = as.numeric(time(object)),
-                       series = ifelse(is.null(series), deparse(substitute(object)), series),
-                       seriesVal = as.numeric(object))
-  if(colour){
-    ggplot2::geom_line(ggplot2::aes_(x=~timeVal, y=~seriesVal, group=~series, colour=~series), data=tsdata, ...)
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
   else{
-    ggplot2::geom_line(ggplot2::aes_(x=~timeVal, y=~seriesVal, group=~series), data=tsdata, ...)
+    tsdata <- data.frame(timeVal = as.numeric(time(object)),
+                         series = ifelse(is.null(series), deparse(substitute(object)), series),
+                         seriesVal = as.numeric(object))
+    if(colour){
+      ggplot2::geom_line(ggplot2::aes_(x=~timeVal, y=~seriesVal, group=~series, colour=~series), data=tsdata, ...)
+    }
+    else{
+      ggplot2::geom_line(ggplot2::aes_(x=~timeVal, y=~seriesVal, group=~series), data=tsdata, ...)
+    }
   }
 }
 
 autoplot.ts <- function(object, series=NULL, ...){
-  if(requireNamespace("ggplot2")){
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+  }
+  else{
     if(!is.ts(object)){
       stop("autoplot.ts requires a ts object, use object=object")
     }
@@ -1129,7 +1195,10 @@ autoplot.ts <- function(object, series=NULL, ...){
 }
 
 autoplot.mts <- function(object, facets=FALSE, ...){
-  if(requireNamespace("ggplot2")){
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+  }
+  else{
     if(!stats::is.mts(object)){
       stop("autoplot.mts requires a mts object, use x=object")
     }
@@ -1224,8 +1293,9 @@ StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
     fcast <- forecast(tsdat, h=h, level=level, fan=fan, robust=robust,
                       lambda=lambda, find.frequency=find.frequency,
                       allow.multiplicative.trend=allow.multiplicative.trend)
-    fcast <- fortify(fcast, PI=PI)
-
+    
+    fcast <- ggplot2::fortify(fcast, PI=PI)
+    
     # Add ggplot & series information
     extraInfo <- as.list(data[1,!colnames(data)%in%colnames(fcast)])
     extraInfo$`_data` <- quote(fcast)
@@ -1253,13 +1323,13 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom, # Produces both 
 
     grid::grobTree(
       grid::rectGrob(
-        width = unit(1, "npc") - unit(lwd, "mm"),
-        height = unit(1, "npc") - unit(lwd, "mm"),
+        width = grid::unit(1, "npc") - grid::unit(lwd, "mm"),
+        height = grid::unit(1, "npc") - grid::unit(lwd, "mm"),
         gp = grid::gpar(
           col = fillcol,
-          fill = alpha(fillcol, data$alpha),
+          fill = scales::alpha(fillcol, data$alpha),
           lty = data$linetype,
-          lwd = lwd * .pt,
+          lwd = lwd * ggplot2::.pt,
           linejoin = "mitre")
       ),
       grid::linesGrob(
@@ -1267,9 +1337,9 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom, # Produces both 
         y=c(0.2, 0.6, 0.4, 0.9),
         gp = grid::gpar(
           col = linecol,
-          fill = alpha(linecol, data$alpha),
+          fill = scales::alpha(linecol, data$alpha),
           lty = data$linetype,
-          lwd = lwd * .pt,
+          lwd = lwd * ggplot2::.pt,
           linejoin = "mitre")
       )
     )
@@ -1388,59 +1458,64 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
                           position = "identity", na.rm = FALSE, show.legend = NA,
                           inherit.aes = TRUE, PI=TRUE, series=NULL, ...) {
   ## TODO: Tidy initialisation
-  if(is.forecast(mapping)){
-    if(stat=="forecast"){
-      stat <- "identity"
-    }
-    inherit.aes <- FALSE
-    PI <- PI & !is.null(mapping$level)
-    data <- fortify(mapping, PI=PI)
-    mapping <- ggplot2::aes_(x = ~x, y = ~y)
-    if(!is.null(series)){
-      data <- transform(data, series=series)
-      mapping$colour <- quote(series)
-    }
-    if(PI){
-      mapping$level <- quote(level)
-      mapping$ymin <- quote(ymin)
-      mapping$ymax <- quote(ymax)
-    }
-  }
-  else if(is.mforecast(mapping)){
-    cl <- match.call()
-    #cl[[1]] <- quote(list)
-    cl$mapping <- quote(fclist[[i]])
-    if(!is.null(series)){
-      #cl$series <- quote(series)
-      if(length(series)!=length(mapping$mean)){
-        series <- names(mapping$mean)
-      }
-    }
-    fclist <- mforecastsplit(mapping)
-    out <- list()
-    for(i in 1:length(fclist)){
-      cl$series <- series[i]
-      out[[i]] <- eval(cl)
-    }
-    return(out)
-  }
-  else if(is.ts(mapping)){
-    data <- data.frame(y = as.numeric(mapping), x = as.numeric(time(mapping)))
-    mapping <- ggplot2::aes_(y=~y, x=~x)
-  }
-  if(stat=="forecast"){
-    paramlist <- list(na.rm = na.rm, PI=PI, series=series, ...)
-    if(!is.null(series)){
-      mapping <- ggplot2::aes_(colour = ~..series..)
-    }
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
   else{
-    paramlist <- list(na.rm = na.rm, ...)
+    if(is.forecast(mapping)){
+      if(stat=="forecast"){
+        stat <- "identity"
+      }
+      inherit.aes <- FALSE
+      PI <- PI & !is.null(mapping$level)
+      data <- ggplot2::fortify(mapping, PI=PI)
+      mapping <- ggplot2::aes_(x = ~x, y = ~y)
+      if(!is.null(series)){
+        data <- transform(data, series=series)
+        mapping$colour <- quote(series)
+      }
+      if(PI){
+        mapping$level <- quote(level)
+        mapping$ymin <- quote(ymin)
+        mapping$ymax <- quote(ymax)
+      }
+    }
+    else if(is.mforecast(mapping)){
+      cl <- match.call()
+      #cl[[1]] <- quote(list)
+      cl$mapping <- quote(fclist[[i]])
+      if(!is.null(series)){
+        #cl$series <- quote(series)
+        if(length(series)!=length(mapping$mean)){
+          series <- names(mapping$mean)
+        }
+      }
+      fclist <- mforecastsplit(mapping)
+      out <- list()
+      for(i in 1:length(fclist)){
+        cl$series <- series[i]
+        out[[i]] <- eval(cl)
+      }
+      return(out)
+    }
+    else if(is.ts(mapping)){
+      data <- data.frame(y = as.numeric(mapping), x = as.numeric(time(mapping)))
+      mapping <- ggplot2::aes_(y=~y, x=~x)
+    }
+    if(stat=="forecast"){
+      paramlist <- list(na.rm = na.rm, PI=PI, series=series, ...)
+      if(!is.null(series)){
+        mapping <- ggplot2::aes_(colour = ~..series..)
+      }
+    }
+    else{
+      paramlist <- list(na.rm = na.rm, ...)
+    }
+    ggplot2::layer(
+      geom = GeomForecast, mapping = mapping, data = data, stat = stat,
+      position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+      params = paramlist)
   }
-  ggplot2::layer(
-    geom = GeomForecast, mapping = mapping, data = data, stat = stat,
-    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
-    params = paramlist)
 }
 
 # Produce nice histogram with appropriately chosen bin widths
@@ -1448,47 +1523,52 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
 
 gghistogram <- function(x, add.normal=FALSE, add.kde=FALSE, add.rug=TRUE, bins, boundary=0)
 {
-  if(missing(bins))
-    bins <- grDevices::nclass.FD(na.omit(x))
-  data <- data.frame(x=as.numeric(c(x)))
-  #Initialise ggplot object and plot histogram
-  binwidth <- (max(x,na.rm=TRUE) - min(x,na.rm=TRUE))/bins
-  p <- ggplot2::ggplot() +
-    ggplot2::geom_histogram(ggplot2::aes(x), data=data, binwidth=binwidth, boundary=boundary) +
-    ggplot2::xlab(deparse(substitute(x)))
-  # Add normal density estimate
-  if(add.normal | add.kde)
-  {
-    xmin <- min(x, na.rm=TRUE)
-    xmax <- max(x, na.rm=TRUE)
-    if(add.kde)
-    {
-      h <- stats::bw.SJ(x)
-      xmin <- xmin - 3*h
-      xmax <- xmax + 3*h
-    }
-    if(add.normal)
-    {
-      xmean <- mean(x, na.rm=TRUE)
-      xsd <- sd(x, na.rm=TRUE)
-      xmin <- min(xmin, xmean-3*xsd)
-      xmax <- max(xmax, xmean+3*xsd)
-    }
-    xgrid <- seq(xmin, xmax, l=512)
-    if(add.normal)
-    {
-      df <- data.frame(x=xgrid, y=length(x) * binwidth * stats::dnorm(xgrid, xmean, xsd))
-      p <- p + ggplot2::geom_line(ggplot2::aes(df$x,df$y), col="#ff8a62")
-    }
-    if(add.kde)
-    {
-      kde <- stats::density(x, bw=h, from=xgrid[1], to=xgrid[512], n=512)
-      p <- p + ggplot2::geom_line(ggplot2::aes(x=kde$x,y=length(x) * binwidth * kde$y), col='#67a9ff')
-    }
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
-  if(add.rug)
-  {
-    p <- p + ggplot2::geom_rug(ggplot2::aes(x))
+  else{
+    if(missing(bins))
+      bins <- grDevices::nclass.FD(na.omit(x))
+    data <- data.frame(x=as.numeric(c(x)))
+    #Initialise ggplot object and plot histogram
+    binwidth <- (max(x,na.rm=TRUE) - min(x,na.rm=TRUE))/bins
+    p <- ggplot2::ggplot() +
+      ggplot2::geom_histogram(ggplot2::aes(x), data=data, binwidth=binwidth, boundary=boundary) +
+      ggplot2::xlab(deparse(substitute(x)))
+    # Add normal density estimate
+    if(add.normal | add.kde)
+    {
+      xmin <- min(x, na.rm=TRUE)
+      xmax <- max(x, na.rm=TRUE)
+      if(add.kde)
+      {
+        h <- stats::bw.SJ(x)
+        xmin <- xmin - 3*h
+        xmax <- xmax + 3*h
+      }
+      if(add.normal)
+      {
+        xmean <- mean(x, na.rm=TRUE)
+        xsd <- sd(x, na.rm=TRUE)
+        xmin <- min(xmin, xmean-3*xsd)
+        xmax <- max(xmax, xmean+3*xsd)
+      }
+      xgrid <- seq(xmin, xmax, l=512)
+      if(add.normal)
+      {
+        df <- data.frame(x=xgrid, y=length(x) * binwidth * stats::dnorm(xgrid, xmean, xsd))
+        p <- p + ggplot2::geom_line(ggplot2::aes(df$x,df$y), col="#ff8a62")
+      }
+      if(add.kde)
+      {
+        kde <- stats::density(x, bw=h, from=xgrid[1], to=xgrid[512], n=512)
+        p <- p + ggplot2::geom_line(ggplot2::aes(x=kde$x,y=length(x) * binwidth * kde$y), col='#67a9ff')
+      }
+    }
+    if(add.rug)
+    {
+      p <- p + ggplot2::geom_rug(ggplot2::aes(x))
+    }
+    return(p)
   }
-  return(p)
 }
