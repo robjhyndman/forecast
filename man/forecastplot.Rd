@@ -1,6 +1,7 @@
 \name{plot.forecast}
 \alias{plot.forecast}
 \alias{autoplot.forecast}
+\alias{autolayer.forecast}
 \alias{plot.splineforecast}
 \alias{autoplot.splineforecast}
 \title{Forecast plot}
@@ -12,6 +13,7 @@
     flty=1, flwd=2, ...)
 \method{autoplot}{forecast}(object, include, PI=TRUE,
     shadecols=c("#596DD5","#D5DBFF"), fcol="#0000AA", flwd=0.5, ...)
+\method{autolayer}{forecast}(object, series = NULL, PI = TRUE, ...)
 \method{plot}{splineforecast}(x, fitcol=2, type="o", pch=19, ...)
 \method{autoplot}{splineforecast}(object, PI=TRUE, ...)
 }
@@ -34,6 +36,7 @@
 \item{main}{Main title.}
 \item{xlab}{X-axis label.}
 \item{ylab}{Y-axis label.}
+\item{series}{Matches an unidentified forecast layer with a coloured object on the plot.}
 \item{fitcol}{Line colour for fitted values.}
 \item{type}{1-character string giving the type of plot desired. As for \code{\link[graphics]{plot.default}}.}
 \item{pch}{Plotting character (if \code{type=="p"} or \code{type=="o"}).}

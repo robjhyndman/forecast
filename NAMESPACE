@@ -45,7 +45,7 @@ getResponse, tsoutliers, tsclean, bizdays, easter,stlm, forecast.stlm,
 StatForecast, GeomForecast, geom_forecast, gghistogram,
 checkresiduals,
 CV, tsCV, CVar, 
-autolayer, autolayer.ts, autolayer.mts,
+autolayer, autolayer.ts, autolayer.mts, autolayer.forecast, autolayer.mforecast,
 autoplot.acf, autoplot.ar, autoplot.Arima,
 autoplot.decomposed.ts, autoplot.ets, autoplot.forecast, autoplot.mforecast,
 autoplot.splineforecast, autoplot.stl, autoplot.ts, autoplot.mpacf, autoplot.mts,
@@ -58,6 +58,8 @@ residuals.forecast, residuals.nnetar, residuals.stlm)
 
 S3method(autolayer, ts)
 S3method(autolayer, mts)
+S3method(autolayer, forecast)
+S3method(autolayer, mforecast)
 S3method(autoplot, acf)
 S3method(autoplot, ar)
 S3method(autoplot, Arima)
