@@ -255,12 +255,20 @@ forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=ob
 
 # Fitted values from arfima() or fracdiff()
 
-fitted.fracdiff <- function(object, ...)
+fitted.fracdiff <- function(object, h = 1, ...)
 {
-	if(!is.null(object$fitted))      # Object produced by arfima()
-		return(object$fitted)
-	else
-	{
+	if(!is.null(object$fitted)){      # Object produced by arfima()
+	  if(h==1){
+	    return(object$fitted)
+	  }
+    else{
+      return(hfitted(object=object, h=h, FUN="arfima", ...))
+    }
+	}
+	else {
+	  if(h!=1){
+	    warning("h-step fits are not supported for models produced by fracdiff(), returning one-step fits (h=1)")
+	  }
 		x <- getResponse(object)
 		return(x-residuals(object))
 	}

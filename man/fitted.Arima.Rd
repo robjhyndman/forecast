@@ -1,11 +1,13 @@
 \name{fitted.Arima}
 \alias{fitted.Arima}
+\alias{fitted.fracdiff}
 \alias{fitted.bats}
 \alias{fitted.tbats}
 \alias{fitted.ets}
 \alias{fitted.nnetar}
 \title{h-step in-sample forecasts for time series models.}
 \usage{\method{fitted}{Arima}(object, h=1, ...)
+\method{fitted}{fracdiff}(object, h=1, ...)
 \method{fitted}{bats}(object, h=1, ...)
 \method{fitted}{tbats}(object, h=1, ...)
 \method{fitted}{ets}(object, h=1, ...)
