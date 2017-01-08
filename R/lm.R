@@ -311,8 +311,11 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
     stop("Variables not found in newdata")
 
   object$terms <- oldterms
+  if(is.null(object$series)){ # Model produced via lm(), add series attribute
+    object$series <- deparse(attr(oldterms, "variables")[[1 + attr(oldterms, "response")]])
+  }
   fcast <- list(model=object,mean=out[[1]]$fit[,1],lower=out[[1]]$fit[,2],upper=out[[1]]$fit[,3],
-                level=level,x=object$x)
+                level=level,x=object$x,series=object$series)
   fcast$method <- "Linear regression model"
   fcast$newdata <- oldnewdata
   fcast$residuals <- residuals(object)
