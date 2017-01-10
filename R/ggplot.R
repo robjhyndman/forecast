@@ -1336,7 +1336,6 @@ fortify.forecast <- function(model, data=as.data.frame(model), PI=TRUE, ...){
 
 StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
   required_aes = c("x","y"),
-  default_aes = ggplot2::aes_(level = ~..level..),
 
   compute_group = function(data, scales, params, PI=TRUE, series=NULL,
                            h=NULL, level=c(80,95), fan=FALSE, robust=FALSE, lambda=NULL,
@@ -1370,7 +1369,7 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom, # Produces both 
   required_aes = c("x", "y"),
   optional_aes = c("ymin", "ymax"),
   default_aes = ggplot2::aes(colour = "blue", fill = "grey60", size = .5,
-    linetype = 1, weight = 1, alpha = 1, level=NULL),
+    linetype = 1, weight = 1, alpha = 1),
   draw_key = function(data, params, size){
     lwd <- min(data$size, min(size) / 4)
 
@@ -1476,14 +1475,18 @@ blendHex <- function(mixcol, seqcol, alpha=1){
 }
 
 GeomForecastInterval <- ggplot2::ggproto("GeomForecastInterval", GeomForecast, ## Produces only forecasts intervals on graph
-   required_aes = c("x","ymin","ymax","level"),
+   required_aes = c("x","ymin","ymax"),
 
    setup_data = function(data, params){
      data[is.na(data$y),] # Extract only forecast intervals
    },
 
    draw_group = function(data, panel_scales, coord){
-     shadeVal <- (data$level - min(data$level))/diff(range(data$level)) * 0.2 + 8/15
+     leveldiff <- diff(range(data$level))
+     if(leveldiff == 0){
+       leveldiff <- 1
+     }
+     shadeVal <- (data$level - min(data$level))/leveldiff * 0.2 + 8/15
      data$shadeCol <- rgb(shadeVal, shadeVal, shadeVal)
      intervalGrobList <- lapply(split(data, data$level),
             FUN = function(x){
