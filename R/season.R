@@ -153,6 +153,7 @@ forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsm
   fcast$x <- ts(rowSums(object$time.series))
   tsp(fcast$x) <- tsp(object$time.series)
   fcast$method <- paste("STL + ",fcast$method)
+  fcast$series <- deparse(object$call$x)
   fcast$seasonal <- ts(lastseas[1:m],frequency=m,start=tsp(object$time.series)[2]-1+1/m)
   fcast$fitted <- fitted(fcast)+object$time.series[,1]
   fcast$residuals <- fcast$x - fcast$fitted
@@ -239,7 +240,7 @@ stlm <- function(y ,s.window=7, robust=FALSE, method=c("ets","arima"), modelfunc
   }
 
   return(structure(list(stl=stld, model=fit, modelfunction=modelfunction, lambda=lambda,
-                        x=origx, m=frequency(origx), fitted=fits, residuals=res),class="stlm"))
+                        x=origx, series=deparse(substitute(y)), m=frequency(origx), fitted=fits, residuals=res),class="stlm"))
 }
 
 forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE,
@@ -271,6 +272,7 @@ forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE
   fcast$upper <- fcast$upper + lastseas
   fcast$lower <- fcast$lower + lastseas
   fcast$method <- paste("STL + ",fcast$method)
+  fcast$series <- object$series
   fcast$seasonal <- ts(lastseas[1:m],frequency=m,start=tsp(object$stl$time.series)[2]-1+1/m)
   #fcast$residuals <- residuals()
   fcast$fitted <- fitted(fcast)+object$stl$time.series[,1]

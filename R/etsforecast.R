@@ -85,6 +85,12 @@ forecast.ets <- function(object, h=ifelse(object$m>1, 2*object$m, 10),
 
   out$fitted <- fitted(object)
   out$method <- object$method
+  if(!is.null(object$series)){
+    out$series <- object$series
+  }
+  else{
+    out$series <- object$call$y
+  }
   out$residuals <- residuals(object)
 
   if(!is.null(lambda))

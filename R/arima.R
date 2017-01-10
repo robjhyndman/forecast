@@ -352,6 +352,15 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
   upper <- ts(upper)
   tsp(lower) <- tsp(upper) <- tsp(pred$pred)
   method <- arima.string(object, padding=FALSE)
+  seriesname <- if(!is.null(object$series)){
+    object$series
+  }
+  else if(!is.null(object$call$x)){
+    object$call$x
+  }
+  else{
+    object$call$y
+  }
   fits <- fitted(object)
   if(!is.null(lambda) & is.null(object$constant))  { # Back-transform point forecasts and prediction intervals
     pred$pred <- InvBoxCox(pred$pred, lambda, biasadj, var(residuals(object), na.rm=TRUE))
@@ -361,7 +370,7 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
     }
   }
   return(structure(list(method=method, model=object, level=level,
-      mean=pred$pred, lower=lower, upper=upper, x=x,
+      mean=pred$pred, lower=lower, upper=upper, x=x, series=seriesname,
       fitted=fits, residuals=residuals(object)),
       class="forecast"))
 }
@@ -414,7 +423,7 @@ forecast.ar <- function(object,h=10,level=c(80,95),fan=FALSE, lambda=NULL,
     }
 
     return(structure(list(method=method,model=object,level=level,mean=pred$pred,
-        lower=lower,upper=upper, x=x, fitted=fits,residuals=res)
+        lower=lower,upper=upper, x=x, series=deparse(object$call$x), fitted=fits,residuals=res)
         ,class="forecast"))
 }
 
@@ -571,6 +580,7 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
   }
   out <- structure(tmp, class=c("ARIMA","Arima"))
   out$fitted <- fitted(out)
+  out$series <- series
   return(out)
 }
 

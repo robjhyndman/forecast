@@ -65,6 +65,7 @@ arfima <- function(y, drange = c(0, 0.5), estim = c("mle","ls"), model = NULL, l
 {
 	estim <- match.arg(estim)
 #	require(fracdiff)
+	seriesname <- deparse(substitute(y))
 	
 	orig.x <- x
 	if (!is.null(lambda)){
@@ -131,6 +132,7 @@ arfima <- function(y, drange = c(0, 0.5), estim = c("mle","ls"), model = NULL, l
 	}
 	fit$lambda <- lambda
 	fit$call <- match.call()
+	fit$series <- seriesname
 	#fit$call$data <- data.frame(x=x) #Consider replacing fit$call with match.call for consistency and tidyness
 	return(fit)
 }
@@ -247,10 +249,17 @@ forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=ob
 		lower <- InvBoxCox(lower,lambda)
 		upper <- InvBoxCox(upper,lambda)
 	}
+	
+	seriesname <- if(!is.null(object$series)){
+	  object$series
+	}
+	else {
+	  deparse(object$call$x)
+	}
 
-    return(structure(list(x=x, mean=mean.fcast, upper=upper, lower=lower,
-        level=level, method=method, model=object,
-        residuals=res, fitted=fits), class="forecast"))
+  return(structure(list(x=x, mean=mean.fcast, upper=upper, lower=lower,
+      level=level, method=method, model=object, series=seriesname,
+      residuals=res, fitted=fits), class="forecast"))
 }
 
 # Fitted values from arfima() or fracdiff()

@@ -10,6 +10,7 @@ dshw <- function(y, period1=NULL, period2=NULL, h=2*max(period1,period2),
 {
   if(min(y,na.rm=TRUE) <= 0)
     stop("dshw not suitable when data contain zeros or negative numbers")
+  seriesname <- deparse(substitute(y))
   if (!is.null(model) && model$method == "DSHW") {
     period1 <- model$period1
     period2 <- model$period2
@@ -144,7 +145,7 @@ dshw <- function(y, period1=NULL, period2=NULL, h=2*max(period1,period2),
     yhat <- InvBoxCox(yhat,lambda)
   }
 
-  return(structure(list(mean=fcast,method="DSHW",x=y,residuals=e,fitted=yhat,
+  return(structure(list(mean=fcast,method="DSHW",x=y,residuals=e,fitted=yhat,series=seriesname,
               model=list(mape=mape,mse=mse,alpha=alpha,beta=beta, gamma=gamma,omega=omega,phi=phi,
                          lambda = lambda, l0=s.start,b0=t.start,s10=wstart,s20=I), period1 = period1,
                          period2 = period2),class="forecast"))
