@@ -1532,7 +1532,12 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
   if(stat=="forecast"){
     paramlist <- list(na.rm = na.rm, PI=PI, series=series, ...)
     if(!is.null(series)){
-      mapping <- ggplot2::aes_(colour = ~..series..)
+      if(inherits(mapping, "uneval")){
+        mapping$colour = quote(..series..)
+      }
+      else{
+        mapping <- ggplot2::aes_(colour = ~..series..)
+      }
     }
   }
   else{
