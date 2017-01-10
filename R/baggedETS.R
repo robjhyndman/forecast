@@ -30,7 +30,7 @@ baggedETS <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), ...)
 
 forecast.baggedETS <- function(object, h=ifelse(frequency(object$x)>1, 2*frequency(object$x), 10), ...) {
 
-  out <- list(model=object, series=object$series, x=object$y)
+  out <- list(model=object, series=object$series, x=object$y, method=object$method)
   #out <- object
   tspx <- tsp(out$x)
 
