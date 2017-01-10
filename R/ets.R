@@ -9,6 +9,8 @@ ets <- function(y, model="ZZZ", damped=NULL,
   opt.crit <- match.arg(opt.crit)
   bounds <- match.arg(bounds)
   ic <- match.arg(ic)
+  
+  seriesname <- deparse(substitute(y))
 
   if(any(class(y) %in% c("data.frame","list","matrix","mts")))
     stop("y should be a univariate time series")
@@ -88,6 +90,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
       model$residuals <- ts(e$e,frequency=tsp.y[3],start=tsp.y[1])
       model$sigma2 <- mean(model$residuals^2,na.rm=TRUE)
       model$x <- orig.y
+      model$series <- seriesname
       if(!is.null(lambda))
       {
         model$fitted <- InvBoxCox(model$fitted, lambda, biasadj, var(model$residuals))
@@ -238,6 +241,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
 
   model$m <- m
   model$method <- paste("ETS(",best.e,",",best.t,ifelse(best.d,"d",""),",",best.s,")",sep="")
+  model$series <- seriesname
   model$components <- c(best.e,best.t,best.s,best.d)
   model$call <- match.call()
   model$initstate <- model$states[1,]

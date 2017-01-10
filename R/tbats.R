@@ -8,6 +8,8 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
   if (any(class(y) %in% c("data.frame", "list", "matrix", "mts")))
     stop("y should be a univariate time series")
 
+  seriesname <- deparse(substitute(y))
+  
   origy <- y
 
   # Get seasonal periods
@@ -337,6 +339,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
 	best.model$call <- match.call()
 	attributes(best.model$fitted.values) <- attributes(best.model$errors) <- attributes(origy)
 	best.model$y <- origy
+	best.model$series <- seriesname
 
 	return(best.model)
 }

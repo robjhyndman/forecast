@@ -54,7 +54,7 @@ meanf <- function(y,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE, x
     upper <- InvBoxCox(upper,lambda)
   }
 
-  out <- list(method="Mean",level=level,x=x,mean=f,lower=lower,upper=upper,
+  out <- list(method="Mean",level=level,x=x,series=deparse(substitute(y)),mean=f,lower=lower,upper=upper,
     model=list(mu=f[1],mu.se=s/sqrt(length(x)),sd=s), lambda=lambda, fitted=fits, residuals=res)
   out$model$call <- match.call()
 
@@ -190,7 +190,7 @@ forecast.StructTS <- function(object,h=ifelse(object$coef["epsilon"]>1e-10, 2*ob
 
 
   return(structure(list(method=method, model=object, level=level, mean=pred$pred,
-    lower=lower, upper=upper, x=x, fitted=fits, residuals=residuals(object)),
+    lower=lower, upper=upper, x=x, series=object$series, fitted=fits, residuals=residuals(object)),
     class="forecast"))
 }
 
@@ -244,7 +244,7 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x)>1,2*freque
   tsp(fitted) <- tsp(object$x)
 
   return(structure(list(method="HoltWinters", model=object, level=level,
-    mean=pmean, lower=lower, upper=upper, x=x,
+    mean=pmean, lower=lower, upper=upper, x=x, series=deparse(object$call$x),
     fitted=fitted, residuals=x-fitted),
     class="forecast"))
 }
@@ -261,6 +261,7 @@ croston <- function(y,h=10,alpha=0.1,x=y)
   if(!is.null(out$fitted))
     out$residuals <- x-out$fitted
   out$method <- "Croston's method"
+  out$series <- deparse(substitute(y))
   return(structure(out,class="forecast"))
 }
 
