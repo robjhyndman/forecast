@@ -1367,7 +1367,7 @@ StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
 
 GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom, # Produces both point forecasts and intervals on graph
   required_aes = c("x", "y"),
-  optional_aes = c("ymin", "ymax"),
+  optional_aes = c("ymin", "ymax", "level"),
   default_aes = ggplot2::aes(colour = "blue", fill = "grey60", size = .5,
     linetype = 1, weight = 1, alpha = 1),
   draw_key = function(data, params, size){
