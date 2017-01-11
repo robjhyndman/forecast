@@ -268,7 +268,7 @@ plotlmforecast <- function(object, PI, shaded, shadecols, col, fcol, pi.col, pi.
   points(object$newdata[,xvar],object$mean,pch=19,col=fcol)
 }
 
-plot.forecast <- function(x, include, PI=TRUE, shaded=TRUE, shadebars=(length(x$mean)<5),
+plot.forecast <- function(x, include, PI=TRUE, showgap = TRUE, shaded=TRUE, shadebars=(length(x$mean)<5),
         shadecols=NULL, col=1, fcol=4, pi.col=1, pi.lty=2, ylim=NULL, main=NULL, xlab="",
         ylab="", type="l",  flty = 1, flwd = 2, ...)
 {
@@ -324,6 +324,14 @@ plot.forecast <- function(x, include, PI=TRUE, shaded=TRUE, shadebars=(length(x$
     nx <- max(which(!is.na(xx)))
     xxx <- xx[1:nx]
     include <- min(include,nx)
+    
+    if(!showgap){
+      lastObs <- x$x[length(x$x)]
+      lastTime <- time(x$x)[length(x$x)]
+      x$mean <- ts(c(lastObs, x$mean), start = lastTime, frequency = freq)
+      x$upper <- ts(rbind(lastObs, x$upper), start = lastTime, frequency = freq)
+      x$lower <- ts(rbind(lastObs, x$lower), start = lastTime, frequency = freq)
+    }
   }
   else
   {
@@ -331,7 +339,12 @@ plot.forecast <- function(x, include, PI=TRUE, shaded=TRUE, shadebars=(length(x$
     strt <- start(x$mean)
     nx <- include <- 1
     xx <- xxx <- ts(NA,frequency=freq,end=tsp(x$mean)[1]-1/freq)
+    
+    if(!showgap){
+      warning("Removing the gap requires historical data, provide this via model$x. Defaulting showgap to TRUE.")
+    }
   }
+  
   pred.mean <- x$mean
 
   if(is.null(ylim))

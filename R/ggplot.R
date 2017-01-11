@@ -1161,9 +1161,9 @@ autolayer.ts <- function(object, colour=TRUE, series=NULL, ...){
   }
 }
 
-autolayer.forecast <- function(object, series = NULL, PI = TRUE, ...){
+autolayer.forecast <- function(object, series = NULL, PI = TRUE, showgap = TRUE, ...){
   PI <- PI & !is.null(object$level)
-  data <- fortify(object, PI=PI)
+  data <- fortify(object, PI=PI, showgap=showgap)
   mapping <- ggplot2::aes_(x = ~x, y = ~y)
   if(!is.null(object$series)){
     data <- transform(data, series=object$series)
@@ -1280,7 +1280,7 @@ fortify.ts <- function(model, data, ...)
   }
 }
 
-fortify.forecast <- function(model, data=as.data.frame(model), PI=TRUE, ...){
+fortify.forecast <- function(model, data=as.data.frame(model), PI=TRUE, showgap=TRUE, ...){
   # Use ggfortify version if it is loaded
   # to prevent cran errors
   if(exists("ggfreqplot"))
@@ -1318,26 +1318,45 @@ fortify.forecast <- function(model, data=as.data.frame(model), PI=TRUE, ...){
   }
   Hiloc <- grep("Hi ", names(data))
   Loloc <- grep("Lo ", names(data))
-  if(PI & !is.null(model$level)){
+  if(PI & !is.null(model$level)){ # PI
     if(length(Hiloc)==length(Loloc)){
       if(length(Hiloc)>0){
-        return(data.frame(x=rep(xVals, length(Hiloc)+1),
+        out <- data.frame(x=rep(xVals, length(Hiloc)+1),
                           y=c(rep(NA,NROW(data)*(length(Hiloc))),data[,1]),
                           level=c(as.numeric(rep(gsub("Hi ","",names(data)[Hiloc]), each=NROW(data))), rep(NA,NROW(data))),
-                          ymax=c(unlist(data[,Hiloc]),rep(NA,NROW(data))), ymin=c(unlist(data[,Loloc]),rep(NA,NROW(data)))))
+                          ymax=c(unlist(data[,Hiloc]),rep(NA,NROW(data))), ymin=c(unlist(data[,Loloc]),rep(NA,NROW(data))))
+        numInterval <- length(model$level)
       }
     }
     else{
       warning("missing intervals detected, plotting point predictions only")
+      PI <- FALSE
     }
   }
-  return(data.frame(x=xVals, y=as.numeric(model$mean), level=rep(NA,NROW(model$mean))))
+  if(!PI){ # No PI
+    out <- data.frame(x=xVals, y=as.numeric(model$mean), level=rep(NA,NROW(model$mean)), ymax=rep(NA,NROW(model$mean)), ymin=rep(NA,NROW(model$mean)))
+    numInterval <- 0
+  }
+  if(!showgap){
+    if(is.null(model$x)){
+      warning("Removing the gap requires historical data, provide this via model$x. Defaulting showgap to TRUE.")
+    }
+    else{
+      intervalGap <- data.frame(x=rep(time(model$x)[length(model$x)], numInterval +1),
+                                y=c(model$x[length(model$x)], rep(NA, numInterval)),
+                                level=c(NA, model$level)[seq_along(1:(numInterval+1))],
+                                ymax=c(NA, rep(model$x[length(model$x)], numInterval)),
+                                ymin=c(NA, rep(model$x[length(model$x)], numInterval)))
+    out <- rbind(intervalGap, out)
+    }
+  }
+  return(out)
 }
 
 StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
   required_aes = c("x","y"),
 
-  compute_group = function(data, scales, params, PI=TRUE, series=NULL,
+  compute_group = function(data, scales, params, PI=TRUE, showgap=TRUE, series=NULL,
                            h=NULL, level=c(80,95), fan=FALSE, robust=FALSE, lambda=NULL,
                            find.frequency=FALSE, allow.multiplicative.trend=FALSE, ...) {
     ## TODO: Rewrite
@@ -1350,7 +1369,7 @@ StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
                       lambda=lambda, find.frequency=find.frequency,
                       allow.multiplicative.trend=allow.multiplicative.trend)
     
-    fcast <- ggplot2::fortify(fcast, PI=PI)
+    fcast <- ggplot2::fortify(fcast, PI=PI, showgap=showgap)
     
     # Add ggplot & series information
     extraInfo <- as.list(data[1,!colnames(data)%in%colnames(fcast)])
@@ -1520,7 +1539,7 @@ GeomForecastInterval <- ggplot2::ggproto("GeomForecastInterval", GeomForecast, #
 
 geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
                           position = "identity", na.rm = FALSE, show.legend = NA,
-                          inherit.aes = TRUE, PI=TRUE, series=NULL, ...) {
+                          inherit.aes = TRUE, PI=TRUE, showgap=TRUE, series=NULL, ...) {
   if(is.forecast(mapping) || is.mforecast(mapping)){
     warning("Use autolayer instead of geom_forecast to add a forecast layer to your ggplot object.")
     cl <- match.call()
@@ -1533,7 +1552,7 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
     mapping <- ggplot2::aes_(y=~y, x=~x)
   }
   if(stat=="forecast"){
-    paramlist <- list(na.rm = na.rm, PI=PI, series=series, ...)
+    paramlist <- list(na.rm = na.rm, PI=PI, showgap=showgap, series=series, ...)
     if(!is.null(series)){
       if(inherits(mapping, "uneval")){
         mapping$colour = quote(..series..)

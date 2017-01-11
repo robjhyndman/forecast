@@ -5,7 +5,7 @@
 \title{Forecast plot}
 \usage{geom_forecast(mapping = NULL, data = NULL, stat = "forecast",
     position = "identity", na.rm = FALSE, show.legend = NA,
-    inherit.aes = TRUE, PI=TRUE, series=NULL, ...)
+    inherit.aes = TRUE, PI=TRUE, showgap=TRUE, series=NULL, ...)
 }
 
 \arguments{
@@ -44,6 +44,7 @@ rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link{borders}}.}
 \item{PI}{If \code{FALSE}, confidence intervals will not be plotted, giving only the forecast line.}
+\item{showgap}{If \code{showgap=FALSE}, the gap between the historical observations and the forecasts is removed.}
 \item{series}{Matches an unidentified forecast layer with a coloured object on the plot.}
 \item{...}{Additional arguments for \code{\link{forecast.ts}}, other arguments are passed on to \code{\link{layer}}. These are
 often aesthetics, used to set an aesthetic to a fixed value, like
