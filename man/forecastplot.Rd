@@ -7,13 +7,13 @@
 \title{Forecast plot}
 
 \usage{
-\method{plot}{forecast}(x, include, PI=TRUE, shaded=TRUE,
+\method{plot}{forecast}(x, include, PI=TRUE, showgap=TRUE, shaded=TRUE,
     shadebars=(length(x$mean)<5), shadecols=NULL, col=1, fcol=4,
     pi.col=1, pi.lty=2, ylim=NULL, main=NULL, xlab="", ylab="", type="l",
     flty=1, flwd=2, ...)
 \method{autoplot}{forecast}(object, include, PI=TRUE,
     shadecols=c("#596DD5","#D5DBFF"), fcol="#0000AA", flwd=0.5, ...)
-\method{autolayer}{forecast}(object, series = NULL, PI = TRUE, ...)
+\method{autolayer}{forecast}(object, series = NULL, PI = TRUE, showgap = TRUE, ...)
 \method{plot}{splineforecast}(x, fitcol=2, type="o", pch=19, ...)
 \method{autoplot}{splineforecast}(object, PI=TRUE, ...)
 }
@@ -22,6 +22,7 @@
 \item{object}{Forecast object produced by \code{\link{forecast}}. Used for ggplot graphics (S3 method consistency).}
 \item{include}{number of values from time series to include in plot. Default is all values.}
 \item{PI}{Logical flag indicating whether to plot prediction intervals.}
+\item{showgap}{If \code{showgap=FALSE}, the gap between the historical observations and the forecasts is removed.}
 \item{shaded}{Logical flag indicating whether prediction intervals should be shaded (\code{TRUE}) or lines (\code{FALSE})}
 \item{shadebars}{Logical flag indicating if prediction intervals should be plotted as shaded bars (if \code{TRUE}) or a shaded polygon (if \code{FALSE}).
     Ignored if \code{shaded=FALSE}. Bars are plotted by default if there are fewer than five forecast horizons.}

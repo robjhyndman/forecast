@@ -1,13 +1,14 @@
 \name{fortify.forecast}
 \alias{fortify.forecast}
 \title{Fortify a forecast object to data.frame for ggplot}
-\usage{\method{fortify}{forecast}(model, data=as.data.frame(model), PI=TRUE, ...)
+\usage{\method{fortify}{forecast}(model, data=as.data.frame(model), PI=TRUE, showgap=TRUE, ...)
 }
 
 \arguments{
 \item{model}{Object of class \dQuote{ts} to be converted to \dQuote{data.frame}.}
 \item{data}{Not used (required for \link{fortify} method)}
 \item{PI}{If TRUE, confidence intervals are included.}
+\item{showgap}{If \code{showgap=FALSE}, the gap between the historical observations and the forecasts is removed.}
 \item{...}{Other arguments, currently ignored.}
 }
 
