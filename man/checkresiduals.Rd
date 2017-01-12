@@ -1,7 +1,7 @@
 \name{checkresiduals}
 \alias{checkresiduals}
 \title{Check that residuals from a time series model look like white noise}
-\usage{checkresiduals(object, lag, df=NULL, test=c("LB","BG"), ...)
+\usage{checkresiduals(object, lag, df=NULL, test, ...)
 }
 \arguments{
 \item{object}{Either a time series model, a forecast object, or a time series (assumed to be residuals).}
