@@ -5,7 +5,7 @@
 \alias{autoplot.StructTS}
 \title{Plot time series decomposition components using ggplot}
 \usage{\method{autoplot}{seas}(object, labels = NULL, ...)
-\method{autoplot}{stl}(object, labels = NULL, ...)
+\method{autoplot}{stl}(object, labels = NULL, range.bars = TRUE, ...)
 \method{autoplot}{decomposed.ts}(object, labels = NULL, ...)
 \method{autoplot}{StructTS}(object, labels = NULL, ...)
 }
@@ -13,6 +13,7 @@
 \arguments{
 \item{object}{Object of class \dQuote{seas}, \dQuote{stl}, or \dQuote{decomposed.ts}.}
 \item{labels}{Labels to replace "seasonal", "trend", and "remainder".}
+\item{range.bars}{Logical indicating if each plot should have a bar at its right side representing relative size}
 \item{...}{Other plotting parameters to affect the plot.}
 }
 

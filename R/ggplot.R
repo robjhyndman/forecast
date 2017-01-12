@@ -1044,7 +1044,7 @@ autoplot.splineforecast <- function (object, PI=TRUE, ...){
   }
 }
 
-autoplot.stl <- function (object, labels = NULL, ...){
+autoplot.stl <- function (object, labels = NULL, range.bars = TRUE, ...){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
@@ -1067,17 +1067,35 @@ autoplot.stl <- function (object, labels = NULL, ...){
     p <- ggplot2::ggplot(ggplot2::aes_(x=~datetime, y=~y), data=data)
 
     #Add data
+    # Timeseries lines
     p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~y), data=subset(data,data$parts!=cn[4]), na.rm=TRUE)
     p <- p + ggplot2::geom_segment(ggplot2::aes_(x = ~datetime, xend = ~datetime, y = 0, yend = ~y),
                                    data=subset(data,data$parts==cn[4]), lineend = "butt")
+
+    # Rangebars
+    if(range.bars){
+      yranges <- vapply(split(data$y, data$parts), function(x) range(x), numeric(2))
+      xranges <- range(data$datetime)
+      barmid <- apply(yranges, 2, mean)
+      barlength <- min(apply(yranges, 2, diff))
+      barwidth <- (1/64)*diff(xranges)
+      barpos <- data.frame(left = xranges[2]+barwidth, right = xranges[2]+barwidth*2,
+                           top = barmid+barlength/2, bottom = barmid-barlength/2,
+                           parts = colnames(yranges), datetime = xranges[2], y = barmid)
+      p <- p + ggplot2::geom_rect(ggplot2::aes_(xmin = ~left, xmax = ~right, ymax = ~top, ymin = ~bottom), data=barpos, fill="gray75", colour="black", size=1/3)
+    }
+    
+    # Remainder
     p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
     p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = 0, parts = cn[4]))
-
+    
     # Add axis labels
     p <- p + ggAddExtras(xlab="Time", ylab="")
 
     # Make x axis contain only whole numbers (e.g., years)
-    p <- p + ggplot2::scale_x_continuous(breaks=unique(round(pretty(data$datetime))))
+    p <- p + ggplot2::scale_x_continuous(breaks=unique(round(pretty(data$datetime)))) 
+    # ^^ Remove rightmost x axis gap with `expand=c(0.05, 0, 0, 0)` argument when assymetric `expand` feature is supported
+    # issue: tidyverse/ggplot2#1669
 
     return(p)
   }
