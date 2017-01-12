@@ -1083,6 +1083,40 @@ autoplot.stl <- function (object, labels = NULL, ...){
   }
 }
 
+autoplot.StructTS <- function (object, labels = NULL, ...){
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+  }
+  else{
+    if (!inherits(object, "StructTS")){
+      stop("autoplot.StructTS requires a StructTS object.")
+    }
+    
+    if(is.null(labels)){
+      labels <- colnames(object$fitted)
+    }
+    
+    data <- object$fitted
+    cn <- c("data",labels)
+    data <- data.frame(datetime=rep(time(data),NCOL(data)+1), y=c(object$data,data),
+                       parts=factor(rep(cn, each=NROW(data)), levels=cn))
+    
+    #Initialise ggplot object
+    p <- ggplot2::ggplot(ggplot2::aes_(x=~datetime, y=~y), data=data)
+    
+    #Add data
+    p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~y), na.rm=TRUE)
+    p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
+    
+    # Add axis labels
+    p <- p + ggAddExtras(xlab="Time", ylab="")
+    
+    # Make x axis contain only whole numbers (e.g., years)
+    p <- p + ggplot2::scale_x_continuous(breaks=unique(round(pretty(data$datetime))))
+    
+    return(p)
+  }
+}
 
 autoplot.seas <- function (object, labels = NULL, ...){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {

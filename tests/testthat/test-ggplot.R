@@ -29,7 +29,8 @@ if(require(testthat))
     autoplot(decomposefit)
     etsfit <- ets(USAccDeaths, model="ANA")
     autoplot(etsfit)
-    
+    structfit <- StructTS(USAccDeaths)
+    autoplot(structfit)
     stlfit <- stl(USAccDeaths, s.window = "periodic")
     autoplot(stlfit)
     
