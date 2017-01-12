@@ -25,6 +25,7 @@ importFrom("stats", "aggregate", "as.formula", "is.mts", "reformulate")
 importFrom("utils", "packageVersion", "tail", "head")
 importFrom("ggplot2", "autoplot", "fortify")
 importFrom("seasonal", "final", "irregular", "trend")
+importFrom("lmtest","bgtest")
 
 importFrom(magrittr,"%>%")
 export("%>%")

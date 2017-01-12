@@ -1,5 +1,15 @@
-checkresiduals <- function(object, lag, df=NULL, ...)
-{
+checkresiduals <- function(object, lag, df=NULL, test, ...)
+{  
+  if(missing(test))
+  {
+    if(is.element("lm", class(object)))
+      test <- "BG"
+    else
+      test <- "LB"
+  }
+  else 
+    test <- match.arg(test, c("LB","BG"))
+
   # Extract residuals
   if(is.element("ts",class(object)) | is.element("numeric",class(object)) )
     residuals <- object
@@ -28,6 +38,9 @@ checkresiduals <- function(object, lag, df=NULL, ...)
 
   if(is.null(object))
     return()
+  
+  # Seasonality of data
+  freq <- frequency(residuals)
 
   # Find model df
   if(is.element("ets",class(object)))
@@ -49,19 +62,26 @@ checkresiduals <- function(object, lag, df=NULL, ...)
   else
     df <- NULL
 
+  if(missing(lag))
+    lag <- max(df+3, ifelse(freq>1, 2*freq, 10))
+  
 
-  # Do Ljung-Box test
   if(!is.null(df))
   {
-    freq <- frequency(residuals)
-    if(missing(lag))
-      lag <- max(df+3, ifelse(freq>1, 2*freq, 10))
-
-    LBtest <- Box.test(residuals, fitdf=df, lag=lag, type="Ljung")
-    LBtest$method <- "Ljung-Box test"
-    names(LBtest$statistic) <- "Q*"
-    print(LBtest)
-    cat(paste("Model df: ",df,".   Total lags used: ",lag,"\n\n",sep=""))
+    if(test=="BG")
+    {
+      # Do Breusch-Godfrey test
+      print(lmtest::bgtest(object, order=lag))
+    }
+    else
+    {
+      # Do Ljung-Box test
+      LBtest <- Box.test(residuals, fitdf=df, lag=lag, type="Ljung")
+      LBtest$method <- "Ljung-Box test"
+      names(LBtest$statistic) <- "Q*"
+      print(LBtest)
+      cat(paste("Model df: ",df,".   Total lags used: ",lag,"\n\n",sep=""))
+    }
   }
 }
 
