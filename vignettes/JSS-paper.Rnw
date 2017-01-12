@@ -51,9 +51,15 @@ in the \pkg{forecast} package.}
 }
 
 \begin{document}
-\SweaveOpts{concordance=TRUE}
 
-\SweaveOpts{engine=R,eps=FALSE}
+<<include=FALSE, echo=FALSE>>=
+library(knitr)
+opts_chunk$set(
+concordance=TRUE, 
+engine='R'
+)
+@
+
 %\VignetteIndexEntry{Automatic Time Series Forecasting: The forecast Package for R}
 %\VignetteDepends{forecast,expsmooth}
 %\VignetteEngine{knitr::knitr}
@@ -61,10 +67,10 @@ in the \pkg{forecast} package.}
 %\VignettePackage{forecast}
 
 
-<<preliminaries,echo=FALSE,results=hide>>=
+<<preliminaries, echo=FALSE>>=
 library("forecast")
 library("expsmooth")
-options(prompt = "R> ", continue = "+   ")
+oldopts <- options(prompt = "R> ", continue = "+   ")
 @
 
 \section{Introduction}
@@ -891,7 +897,7 @@ the number of short term overseas visitors to Australia from May
 \begin{figure}[!htb]
 \centering
 
-<<ets-forecast ,fig=TRUE,height=7,width=9,echo=FALSE>>=
+<<ets-forecast ,fig.height=7,fig.width=9,echo=FALSE>>=
 par(mfrow = c(2,2))
 plot(forecast(ets(bonds)), main="(a) US 10-year bonds yield", xlab="Year", ylab="Percentage per annum")
 plot(forecast(ets(usnetelec)), main="(b) US net electricity generation", xlab="Year", ylab="Billion kwh")
@@ -974,7 +980,7 @@ along with the extracted components (level, growth and seasonal).
 The \code{forecast()} function computes the required forecasts which
 are then plotted as in Figure~\ref{fexamples}(b).
 
-<<ets-usnetelec-fcast,eval=TRUE,echo=TRUE>>=
+<<ets-usnetelec-fcast,eval=TRUE,echo=TRUE, fig.show="hide">>=
 fcast <- forecast(etsfit)
 plot(fcast)
 @
@@ -1039,7 +1045,7 @@ not possible using the \code{HoltWinters()} function.
 \begin{figure}[!b]
 \centering
 
-<<arima-forecast-plots ,fig=TRUE,height=7,width=9,echo=FALSE>>=
+<<arima-forecast-plots ,fig.height=7,fig.width=9,echo=FALSE>>=
 par(mfrow = c(2,2))
 plot(forecast(auto.arima(bonds)), main="(a) US 10-year bonds yield", xlab="Year", ylab="Percentage per annum")
 plot(forecast(auto.arima(usnetelec)), main="(b) US net electricity generation", xlab="Year", ylab="Billion kwh")
@@ -1064,7 +1070,7 @@ the probability coverage.
 
 To apply this algorithm to the US net electricity generation time
 series \code{usnetelec}, we use the following commands.
-<<arima-auto-fcast,eval=TRUE,echo=TRUE>>=
+<<arima-auto-fcast,eval=TRUE,echo=TRUE,fig.show="hide">>=
 arimafit <- auto.arima(usnetelec)
 fcast <- forecast(arimafit)
 plot(fcast)
@@ -1220,6 +1226,10 @@ intervals, are discussed in \citet{HKPB05}.
 \item \code{rwf()} gives ``na\"{\i}ve'' forecasts equal to the most
 recent observation assuming a random walk model. This function
 also allows forecasting using a random walk with drift.
+
+<<reset, echo=FALSE>>=
+options(oldopts)
+@
 
 \end{description}
 
