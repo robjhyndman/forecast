@@ -1276,10 +1276,10 @@ autolayer.forecast <- function(object, series = NULL, PI = TRUE, showgap = TRUE,
   data <- fortify(object, PI=PI, showgap=showgap)
   mapping <- ggplot2::aes_(x = ~x, y = ~y)
   if(!is.null(object$series)){
-    data <- transform(data, series=object$series)
+    data[["series"]] <- object$series
   }
   if(!is.null(series)){
-    data <- transform(data, series=series)
+    data[["series"]] <- series
     mapping$colour <- quote(series)
   }
   if(PI){
