@@ -2,10 +2,12 @@
 \alias{autoplot.seas}
 \alias{autoplot.stl}
 \alias{autoplot.decomposed.ts}
+\alias{autoplot.StructTS}
 \title{Plot time series decomposition components using ggplot}
 \usage{\method{autoplot}{seas}(object, labels = NULL, ...)
 \method{autoplot}{stl}(object, labels = NULL, ...)
 \method{autoplot}{decomposed.ts}(object, labels = NULL, ...)
+\method{autoplot}{StructTS}(object, labels = NULL, ...)
 }
 
 \arguments{
@@ -20,7 +22,7 @@
 \value{Returns an object of class \code{ggplot}.
 }
 
-\seealso{\code{\link[seasonal]{seas}}, \code{\link[stats]{stl}}, \code{\link[stats]{decompose}}, \code{\link[stats]{plot.stl}}. 
+\seealso{\code{\link[seasonal]{seas}}, \code{\link[stats]{stl}}, \code{\link[stats]{decompose}}, \code{\link[stats]{StructTS}}, \code{\link[stats]{plot.stl}}. 
 }
 
 \author{Mitchell O'Hara-Wild}
