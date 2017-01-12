@@ -3,12 +3,13 @@
 \alias{autoplot.ets}
 \title{Plot components from ETS model}
 \usage{\method{plot}{ets}(x, ...)
-\method{autoplot}{ets}(object, ...)
+\method{autoplot}{ets}(object, range.bars = NULL, ...)
 }
 
 \arguments{
 \item{x}{Object of class \dQuote{ets}.}
 \item{object}{Object of class \dQuote{ets}. Used for ggplot graphics (S3 method consistency).}
+\item{range.bars}{Logical indicating if each plot should have a bar at its right side representing relative size. If NULL, automatic selection takes place.}
 \item{...}{Other plotting parameters to affect the plot.}
 }
 
