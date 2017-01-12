@@ -1247,7 +1247,7 @@ autoplot.mts <- function(object, colour=TRUE, facets=FALSE, ...){
     
     #Initialise ggplot object
     mapping <- ggplot2::aes_(y=~y, x=~x, group=~series)
-    if(colour){
+    if (colour & (!facets | !missing(colour))){
       mapping$colour <- quote(series)
     }
     p <- ggplot2::ggplot(mapping, data=data)
