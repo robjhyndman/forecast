@@ -322,7 +322,7 @@ autoplot.ar <- function(object, ...){
   autoplot.Arima(object, ...)
 }
 
-autoplot.decomposed.ts <- function (object, labels=NULL, ...){
+autoplot.decomposed.ts <- function (object, labels=NULL, range.bars = NULL, ...){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
@@ -352,6 +352,21 @@ autoplot.decomposed.ts <- function (object, labels=NULL, ...){
     p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
     p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = int, parts = cn[4]))
 
+    if(is.null(range.bars)){
+      range.bars <- object$type == "additive"
+    }
+    if(range.bars){
+      yranges <- vapply(split(data$y, data$parts), function(x) range(x, na.rm = TRUE), numeric(2))
+      xranges <- range(data$datetime)
+      barmid <- apply(yranges, 2, mean)
+      barlength <- min(apply(yranges, 2, diff))
+      barwidth <- (1/64)*diff(xranges)
+      barpos <- data.frame(left = xranges[2]+barwidth, right = xranges[2]+barwidth*2,
+                           top = barmid+barlength/2, bottom = barmid-barlength/2,
+                           parts = colnames(yranges), datetime = xranges[2], y = barmid)
+      p <- p + ggplot2::geom_rect(ggplot2::aes_(xmin = ~left, xmax = ~right, ymax = ~top, ymin = ~bottom), data=barpos, fill="gray75", colour="black", size=1/3)
+    }
+    
     # Add axis labels
     p <- p + ggAddExtras(main = paste("Decomposition of",object$type,"time series"), xlab="Time",
                          ylab="")
@@ -363,7 +378,7 @@ autoplot.decomposed.ts <- function (object, labels=NULL, ...){
   }
 }
 
-autoplot.ets <- function (object, ...){
+autoplot.ets <- function (object, range.bars = NULL, ...){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
@@ -387,6 +402,21 @@ autoplot.ets <- function (object, ...){
     #Add data
     p <- p + ggplot2::geom_line(na.rm=TRUE)
     p <- p + ggplot2::facet_grid(parts ~ ., scales="free_y", switch="y")
+    browser()
+    if(is.null(range.bars)){
+      range.bars <- is.null(object$lambda)
+    }
+    if(range.bars){
+      yranges <- vapply(split(data$y, data$parts), function(x) range(x, na.rm = TRUE), numeric(2))
+      xranges <- range(data$datetime)
+      barmid <- apply(yranges, 2, mean)
+      barlength <- min(apply(yranges, 2, diff))
+      barwidth <- (1/64)*diff(xranges)
+      barpos <- data.frame(left = xranges[2]+barwidth, right = xranges[2]+barwidth*2,
+                           top = barmid+barlength/2, bottom = barmid-barlength/2,
+                           parts = colnames(yranges), datetime = xranges[2], y = barmid)
+      p <- p + ggplot2::geom_rect(ggplot2::aes_(xmin = ~left, xmax = ~right, ymax = ~top, ymin = ~bottom), data=barpos, fill="gray75", colour="black", size=1/3)
+    }
 
     p <- p + ggAddExtras(xlab = NULL, ylab = "", main = paste("Decomposition by",object$method,"method"))
     return(p)
@@ -1074,7 +1104,7 @@ autoplot.stl <- function (object, labels = NULL, range.bars = TRUE, ...){
 
     # Rangebars
     if(range.bars){
-      yranges <- vapply(split(data$y, data$parts), function(x) range(x), numeric(2))
+      yranges <- vapply(split(data$y, data$parts), function(x) range(x, na.rm = TRUE), numeric(2))
       xranges <- range(data$datetime)
       barmid <- apply(yranges, 2, mean)
       barlength <- min(apply(yranges, 2, diff))
@@ -1101,7 +1131,7 @@ autoplot.stl <- function (object, labels = NULL, range.bars = TRUE, ...){
   }
 }
 
-autoplot.StructTS <- function (object, labels = NULL, ...){
+autoplot.StructTS <- function (object, labels = NULL, range.bars = TRUE, ...){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
@@ -1126,6 +1156,18 @@ autoplot.StructTS <- function (object, labels = NULL, ...){
     p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~y), na.rm=TRUE)
     p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
     
+    if(range.bars){
+      yranges <- vapply(split(data$y, data$parts), function(x) range(x, na.rm = TRUE), numeric(2))
+      xranges <- range(data$datetime)
+      barmid <- apply(yranges, 2, mean)
+      barlength <- min(apply(yranges, 2, diff))
+      barwidth <- (1/64)*diff(xranges)
+      barpos <- data.frame(left = xranges[2]+barwidth, right = xranges[2]+barwidth*2,
+                           top = barmid+barlength/2, bottom = barmid-barlength/2,
+                           parts = colnames(yranges), datetime = xranges[2], y = barmid)
+      p <- p + ggplot2::geom_rect(ggplot2::aes_(xmin = ~left, xmax = ~right, ymax = ~top, ymin = ~bottom), data=barpos, fill="gray75", colour="black", size=1/3)
+    }
+    
     # Add axis labels
     p <- p + ggAddExtras(xlab="Time", ylab="")
     
@@ -1136,7 +1178,7 @@ autoplot.StructTS <- function (object, labels = NULL, ...){
   }
 }
 
-autoplot.seas <- function (object, labels = NULL, ...){
+autoplot.seas <- function (object, labels = NULL, range.bars = NULL, ...){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
@@ -1163,6 +1205,22 @@ autoplot.seas <- function (object, labels = NULL, ...){
     p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
     p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = 1, parts = cn[4]))
 
+    # Rangebars
+    if(is.null(range.bars)){
+      range.bars <- object$spc$transform$`function`=="none"
+    }
+    if(range.bars){
+      yranges <- vapply(split(data$y, data$parts), function(x) range(x, na.rm = TRUE), numeric(2))
+      xranges <- range(data$datetime)
+      barmid <- apply(yranges, 2, mean)
+      barlength <- min(apply(yranges, 2, diff))
+      barwidth <- (1/64)*diff(xranges)
+      barpos <- data.frame(left = xranges[2]+barwidth, right = xranges[2]+barwidth*2,
+                           top = barmid+barlength/2, bottom = barmid-barlength/2,
+                           parts = colnames(yranges), datetime = xranges[2], y = barmid)
+      p <- p + ggplot2::geom_rect(ggplot2::aes_(xmin = ~left, xmax = ~right, ymax = ~top, ymin = ~bottom), data=barpos, fill="gray75", colour="black", size=1/3)
+    }
+    
     # Add axis labels
     p <- p + ggAddExtras(xlab="Time", ylab="")
 
