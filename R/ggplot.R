@@ -302,12 +302,12 @@ autoplot.Arima <- function (object, type = c("both", "ar", "ma"), ...){
     p <- p + ggplot2::geom_vline(xintercept = 0)
     p <- p + ggplot2::geom_hline(yintercept = 0)
     p <- p + ggAddExtras(xlab = "Real", ylab="Imaginary")
-    
+
     if(NROW(allRoots) == 0)
       return(p + ggAddExtras(main = "No AR or MA roots"))
-    
+
     p <- p + ggplot2::geom_point(size=3)
-    
+
     if(length(type)==1){
       p <- p + ggAddExtras(main = paste("Inverse",toupper(type),"roots"))
     }
@@ -366,7 +366,7 @@ autoplot.decomposed.ts <- function (object, labels=NULL, range.bars = NULL, ...)
                            parts = colnames(yranges), datetime = xranges[2], y = barmid)
       p <- p + ggplot2::geom_rect(ggplot2::aes_(xmin = ~left, xmax = ~right, ymax = ~top, ymin = ~bottom), data=barpos, fill="gray75", colour="black", size=1/3)
     }
-    
+
     # Add axis labels
     p <- p + ggAddExtras(main = paste("Decomposition of",object$type,"time series"), xlab="Time",
                          ylab="")
@@ -586,7 +586,7 @@ autoplot.mforecast <- function (object, PI = TRUE, facets = TRUE, colour = FALSE
       # ts forecasts
       p <- autoplot(getResponse(object), facets = facets, colour = colour) + autolayer(object, ...)
       if (facets){
-        p <- p + ggplot2::facet_wrap(~ series, 
+        p <- p + ggplot2::facet_wrap(~ series,
           labeller = function(labels){
             if(!is.null(object$method)){
               lapply(labels, function(x) paste0(as.character(x), "\n", object$method[as.character(x)]))
@@ -605,27 +605,27 @@ autoplot.mforecast <- function (object, PI = TRUE, facets = TRUE, colour = FALSE
     else{
       # lm forecasts
       if (!requireNamespace("grid")){
-        stop("grid is needed for this function to work. Install it via install.packages(\"grid\")", call. = FALSE) 
+        stop("grid is needed for this function to work. Install it via install.packages(\"grid\")", call. = FALSE)
       }
-      
+
       K <- length(object$forecast)
       if (K<2){
         warning("Expected at least two plots but forecast required less.")
       }
-      
+
       #Set up vector arguments
       if (missing(PI)){
         PI <- rep(TRUE, K)
       }
-      
+
       #Set up grid
       # ncol: Number of columns of plots
       # nrow: Number of rows needed, calculated from # of cols
       gridlayout <- matrix(seq(1, K), ncol = 1, nrow = K)
-      
+
       grid::grid.newpage()
       grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow(gridlayout), ncol(gridlayout))))
-      
+
       for (i in 1:K){
         partialfcast <- object$forecast[[i]]
         partialfcast$model <- mlmsplit(object$model,index=i)
@@ -1108,16 +1108,16 @@ autoplot.stl <- function (object, labels = NULL, range.bars = TRUE, ...){
                            parts = colnames(yranges), datetime = xranges[2], y = barmid)
       p <- p + ggplot2::geom_rect(ggplot2::aes_(xmin = ~left, xmax = ~right, ymax = ~top, ymin = ~bottom), data=barpos, fill="gray75", colour="black", size=1/3)
     }
-    
+
     # Remainder
     p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
     p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = 0, parts = cn[4]))
-    
+
     # Add axis labels
     p <- p + ggAddExtras(xlab="Time", ylab="")
 
     # Make x axis contain only whole numbers (e.g., years)
-    p <- p + ggplot2::scale_x_continuous(breaks=unique(round(pretty(data$datetime)))) 
+    p <- p + ggplot2::scale_x_continuous(breaks=unique(round(pretty(data$datetime))))
     # ^^ Remove rightmost x axis gap with `expand=c(0.05, 0, 0, 0)` argument when assymetric `expand` feature is supported
     # issue: tidyverse/ggplot2#1669
 
@@ -1133,23 +1133,23 @@ autoplot.StructTS <- function (object, labels = NULL, range.bars = TRUE, ...){
     if (!inherits(object, "StructTS")){
       stop("autoplot.StructTS requires a StructTS object.")
     }
-    
+
     if(is.null(labels)){
       labels <- colnames(object$fitted)
     }
-    
+
     data <- object$fitted
     cn <- c("data",labels)
     data <- data.frame(datetime=rep(time(data),NCOL(data)+1), y=c(object$data,data),
                        parts=factor(rep(cn, each=NROW(data)), levels=cn))
-    
+
     #Initialise ggplot object
     p <- ggplot2::ggplot(ggplot2::aes_(x=~datetime, y=~y), data=data)
-    
+
     #Add data
     p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~y), na.rm=TRUE)
     p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
-    
+
     if(range.bars){
       yranges <- vapply(split(data$y, data$parts), function(x) range(x, na.rm = TRUE), numeric(2))
       xranges <- range(data$datetime)
@@ -1161,13 +1161,13 @@ autoplot.StructTS <- function (object, labels = NULL, range.bars = TRUE, ...){
                            parts = colnames(yranges), datetime = xranges[2], y = barmid)
       p <- p + ggplot2::geom_rect(ggplot2::aes_(xmin = ~left, xmax = ~right, ymax = ~top, ymin = ~bottom), data=barpos, fill="gray75", colour="black", size=1/3)
     }
-    
+
     # Add axis labels
     p <- p + ggAddExtras(xlab="Time", ylab="")
-    
+
     # Make x axis contain only whole numbers (e.g., years)
     p <- p + ggplot2::scale_x_continuous(breaks=unique(round(pretty(data$datetime))))
-    
+
     return(p)
   }
 }
@@ -1214,7 +1214,7 @@ autoplot.seas <- function (object, labels = NULL, range.bars = NULL, ...){
                            parts = colnames(yranges), datetime = xranges[2], y = barmid)
       p <- p + ggplot2::geom_rect(ggplot2::aes_(xmin = ~left, xmax = ~right, ymax = ~top, ymin = ~bottom), data=barpos, fill="gray75", colour="black", size=1/3)
     }
-    
+
     # Add axis labels
     p <- p + ggAddExtras(xlab="Time", ylab="")
 
@@ -1347,7 +1347,7 @@ autoplot.mts <- function(object, colour=TRUE, facets=FALSE, ...){
     }
     data <- data.frame(y=as.numeric(c(object)), x=rep(as.numeric(time(object)),NCOL(object)),
                        series=factor(rep(colnames(object), each=NROW(object)), levels=colnames(object)))
-    
+
     #Initialise ggplot object
     mapping <- ggplot2::aes_(y=~y, x=~x, group=~series)
     if (colour & (!facets | !missing(colour))){
@@ -1384,27 +1384,6 @@ fortify.ts <- function(model, data, ...)
 }
 
 fortify.forecast <- function(model, data=as.data.frame(model), PI=TRUE, showgap=TRUE, ...){
-  # Use ggfortify version if it is loaded
-  # to prevent cran errors
-  if(exists("ggfreqplot"))
-  {
-    n <- length(model$x)
-    h <- length(model$mean)
-    out <- matrix(NA, nrow=n+h, ncol=4+2*length(model$level))
-    out[1:n,2] <- model$x
-    out[1:n,3] <- model$fitted
-    forecasted <- as.data.frame(model)
-    out[n+(1:h),4:NCOL(out)] <- as.matrix(forecasted)
-    colnames(out) <- c("Index","Data","Fitted",colnames(forecasted))
-    out <- as.data.frame(out)
-    tsp <- attr(model$x, which = "tsp")
-    dtindex <- seq(from = tsp[1], length = n+h, by = 1/tsp[3])
-    if (any(tsp[3] == c(4, 12)))
-      dtindex <- zoo::as.Date.yearmon(dtindex)
-    out[,1] <- dtindex
-    return(ggplot2::fortify(out))
-  }
-  
   # Time series forecasts
   if (is.element("ts",class(model$mean))){
     xVals <- as.numeric(time(model$mean)) # x axis is time
@@ -1471,9 +1450,9 @@ StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
     fcast <- forecast(tsdat, h=h, level=level, fan=fan, robust=robust,
                       lambda=lambda, find.frequency=find.frequency,
                       allow.multiplicative.trend=allow.multiplicative.trend)
-    
+
     fcast <- ggplot2::fortify(fcast, PI=PI, showgap=showgap)
-    
+
     # Add ggplot & series information
     extraInfo <- as.list(data[1,!colnames(data)%in%colnames(fcast)])
     extraInfo$`_data` <- quote(fcast)
@@ -1616,7 +1595,7 @@ GeomForecastInterval <- ggplot2::ggproto("GeomForecastInterval", GeomForecast, #
               fillcol <- blendHex(x$colour[1], x$shadeCol[1], 0.7)
               # Compute alpha transparency
               x$alpha <- grDevices::col2rgb(fillcol, alpha = TRUE)[4,]/255 * x$alpha
-              
+
               # Select appropriate Geom and set defaults
               if(NROW(x)==0){ #Blank
                 ggplot2::GeomBlank$draw_panel
