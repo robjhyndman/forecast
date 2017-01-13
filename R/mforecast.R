@@ -28,27 +28,6 @@ mlmsplit <- function(x, index=NULL){
   return(x)
 }
 
-mforecastsplit <- function(x, index=1:length(x$mean)){
-  out <- list()
-  for(i in index){
-    out[[i]] <- structure(list(level = x$level,
-                     x = x$x[,i], 
-                     model = x$model[[i]],
-                     mean = x$mean[[i]],
-                     lower = x$lower[[i]],
-                     upper = x$upper[[i]],
-                     method = x$method[i],
-                     residuals = x$residuals[,i],
-                     fitted = x$fitted[,i],
-                     series = names(x$mean)[i]),
-                     class = "forecast")
-  }
-  if(length(index)==1){
-    out <- out[[1]]
-  }
-  return(out)
-}
-
 forecast.mlm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, biasadj=NULL, ts=TRUE, ...)
 {
   out <- list(model=object,forecast=vector("list", NCOL(object$coefficients)))
