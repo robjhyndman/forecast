@@ -149,12 +149,12 @@ plot.mforecast <- function(x, main=paste("Forecasts from",x$method),xlab="time",
 }
 
 summary.mforecast <- function(object, ...){
-  cat(paste("\nForecast method:",object$method))
+  cat(paste("\nForecast method:",unique(object$method)))
   cat(paste("\n\nModel Information:\n"))
   print(object$model)
   cat("\nError measures:\n")
   print(accuracy(object))
-  if(is.null(object$mean))
+  if(is.null(object$forecast))
     cat("\n No forecasts\n")
   else
   {
