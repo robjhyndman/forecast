@@ -578,9 +578,6 @@ autoplot.mforecast <- function (object, PI = TRUE, facets = TRUE, colour = FALSE
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
-  else if (!requireNamespace("grid", quietly = TRUE)) {
-    stop("grid is needed for this function to work. Install it via install.packages(\"grid\")", call. = FALSE)
-  }
   else{
     if (!is.mforecast(object)){
       stop("autoplot.mforecast requires a mforecast object, use object=object")
