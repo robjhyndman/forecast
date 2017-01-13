@@ -585,9 +585,9 @@ autoplot.mforecast <- function (object, PI = TRUE, facets = TRUE, colour = FALSE
     if (!is.mforecast(object)){
       stop("autoplot.mforecast requires a mforecast object, use object=object")
     }
-    if (is.null(object[["newdata"]])){
+    if (is.ts(object$forecast[[1]]$mean)){
       # ts forecasts
-      p <- autoplot(object$x, facets = facets, colour = colour) + autolayer(object, ...)
+      p <- autoplot(getResponse(object), facets = facets, colour = colour) + autolayer(object, ...)
       if (facets){
         p <- p + ggplot2::facet_wrap(~ series, 
           labeller = function(labels){
@@ -611,7 +611,7 @@ autoplot.mforecast <- function (object, PI = TRUE, facets = TRUE, colour = FALSE
         stop("grid is needed for this function to work. Install it via install.packages(\"grid\")", call. = FALSE) 
       }
       
-      K <- NCOL(object$x)
+      K <- length(object$forecast)
       if (K<2){
         warning("Expected at least two plots but forecast required less.")
       }
@@ -630,11 +630,8 @@ autoplot.mforecast <- function (object, PI = TRUE, facets = TRUE, colour = FALSE
       grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow(gridlayout), ncol(gridlayout))))
       
       for (i in 1:K){
-        partialfcast <- list(x=object$x[,i],mean=object$mean[[i]],method=object$method,
-                             upper=object$upper[[i]], lower=object$lower[[i]], level=object$level, newdata=object$newdata)
-        if (!is.null(object$model) &   inherits(object$model, "mlm")){
-          partialfcast$model <- mlmsplit(object$model,index=i)
-        }
+        partialfcast <- object$forecast[[i]]
+        partialfcast$model <- mlmsplit(object$model,index=i)
         matchidx <- as.data.frame(which(gridlayout == i, arr.ind = TRUE))
         print(autoplot(structure(partialfcast,class="forecast"),
                        PI=PI[i], ...) + ggAddExtras(ylab=colnames(object$x)[i]),
