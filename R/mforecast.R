@@ -47,26 +47,17 @@ forecast.mlm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambd
 forecast.mts <- function(object, h=ifelse(frequency(object)>1, 2*frequency(object), 10), 
                          level=c(80,95), fan=FALSE, robust=FALSE, lambda = NULL, find.frequency = FALSE, 
                          allow.multiplicative.trend=FALSE, ...){
-  out <- list(level=level, x=object)
-  for(i in 1:NCOL(object)){
-    fcast <- forecast.ts(object[,i], h=h, level=level, fan=fan, robust=robust, lambda=lambda, find.frequency=find.frequency,
-                allow.multiplicative.trend = allow.multiplicative.trend, ...)
-    out$model[[i]] <- fcast$model
-    out$mean[[i]] <- fcast$mean
-    out$lower[[i]] <- fcast$lower
-    out$upper[[i]] <- fcast$upper
-    out$method[[i]] <- fcast$method
-    if(i==1){
-      out$residuals <- residuals(fcast)
-      out$fitted <- fitted(fcast)
-    }
-    else{
-      out$residuals <- cbind(out$residuals, residuals(fcast))
-      out$fitted <- cbind(out$fitted, fitted(fcast))
-    }
-  }
   
-  names(out$model) <- names(out$mean) <- names(out$lower) <- names(out$upper) <- names(out$method) <- colnames(out$fitted) <- colnames(out$residuals) <- colnames(object)
+  out <- list(forecast = vector("list", NCOL(object)))
+  cl <- match.call()
+  cl[[1]] <- quote(forecast.ts)
+  cl$object <- quote(object[,i])
+  for(i in 1:NCOL(object)){
+    out$forecast[[i]] <- eval(cl)
+    out$forecast[[i]]$series <- colnames(object)[i]
+  }
+  out$method <- vapply(out$forecast, function(x) x$method, character(1))
+  names(out$forecast) <- names(out$method) <- colnames(object)
   return(structure(out,class="mforecast"))
 }
 
