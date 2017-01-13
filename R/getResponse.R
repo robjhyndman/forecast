@@ -80,3 +80,8 @@ getResponse.bats <- function(object,...)
 {
   return(getResponse.tbats(object,...))
 }
+
+getResponse.mforecast <- function(object,...)
+{
+  return(do.call(cbind, lapply(object$forecast, function(x) x$x)))
+}
