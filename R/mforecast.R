@@ -51,51 +51,17 @@ mforecastsplit <- function(x, index=1:length(x$mean)){
 
 forecast.mlm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, biasadj=NULL, ts=TRUE, ...)
 {
-  K <- NCOL(object$coefficients)
-  y<-attr(object$terms,"response")
+  out <- list(model=object,forecast=vector("list", NCOL(object$coefficients)))
   
-  # Check if the forecasts will be time series
-  if(ts & is.element("ts",class(fitted(object)))){
-    tspx <- tsp(fitted(object))
-    timesx <- time(fitted(object))
+  cl <- match.call()
+  cl[[1]] <- quote(forecast.lm)
+  cl$object <- quote(mlmsplit(object,index=i))
+  for(i in seq_along(out$forecast)){
+    out$forecast[[i]] <- eval(cl)
+    out$forecast[[i]]$series <- colnames(object$coefficients)[i]
   }
-  else{
-    tspx <- NULL
-  }
-  out <- list(model=object,level=level)
-  if(!is.null(object$x) & !is.list(object$x)){
-    out$x <- object$x #no longer exists, consider removing
-  }
-  else if(!is.null(object$model)){
-    out$x <- object$model[,y]
-  }
-  else {
-    stop("Response not found")
-  }
-  if(!is.null(tspx))
-    out$x <- ts(out$x, start=tspx[1], frequency=tspx[3])
-  out$residuals <- residuals(object)
-  out$fitted <- fitted(object)
-  out$mean <- out$lower <- out$upper <- vector("list",K)
-  names(out$mean) <- names(out$lower) <- names(out$upper) <- colnames(object$coefficients)
-  out$method <- "Multiple linear regression model"
-  for (i in 1:K){
-    if(missing(newdata)){
-      fcst <- forecast(object = mlmsplit(object,index=i),
-                       h=h, level = level, fan = fan, lambda=lambda,
-                       biasadj=biasadj, ts = !is.null(tspx), ...)
-      newdata <- fcst$newdata
-    }
-    else{
-      fcst <- forecast(object = mlmsplit(object,index=i), newdata=newdata,
-                       h=h, level = level, fan = fan, lambda=lambda,
-                       biasadj=biasadj, ts = !is.null(tspx), ...)
-    }
-    out$mean[[i]] <- fcst$mean
-    out$lower[[i]] <- fcst$lower
-    out$upper[[i]] <- fcst$upper
-  }
-  out$newdata <- newdata
+  out$method <- rep("Multiple linear regression model", length(out$forecast))
+  names(out$forecast) <- names(out$method) <- colnames(object$coefficients)
   return(structure(out,class="mforecast"))
 }
 
