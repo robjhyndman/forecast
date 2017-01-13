@@ -322,7 +322,7 @@ autoplot.ar <- function(object, ...){
   autoplot.Arima(object, ...)
 }
 
-autoplot.decomposed.ts <- function (object, labels=NULL, ...){
+autoplot.decomposed.ts <- function (object, labels=NULL, range.bars = NULL, ...){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
@@ -352,6 +352,21 @@ autoplot.decomposed.ts <- function (object, labels=NULL, ...){
     p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
     p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = int, parts = cn[4]))
 
+    if(is.null(range.bars)){
+      range.bars <- object$type == "additive"
+    }
+    if(range.bars){
+      yranges <- vapply(split(data$y, data$parts), function(x) range(x, na.rm = TRUE), numeric(2))
+      xranges <- range(data$datetime)
+      barmid <- apply(yranges, 2, mean)
+      barlength <- min(apply(yranges, 2, diff))
+      barwidth <- (1/64)*diff(xranges)
+      barpos <- data.frame(left = xranges[2]+barwidth, right = xranges[2]+barwidth*2,
+                           top = barmid+barlength/2, bottom = barmid-barlength/2,
+                           parts = colnames(yranges), datetime = xranges[2], y = barmid)
+      p <- p + ggplot2::geom_rect(ggplot2::aes_(xmin = ~left, xmax = ~right, ymax = ~top, ymin = ~bottom), data=barpos, fill="gray75", colour="black", size=1/3)
+    }
+    
     # Add axis labels
     p <- p + ggAddExtras(main = paste("Decomposition of",object$type,"time series"), xlab="Time",
                          ylab="")
@@ -363,7 +378,7 @@ autoplot.decomposed.ts <- function (object, labels=NULL, ...){
   }
 }
 
-autoplot.ets <- function (object, ...){
+autoplot.ets <- function (object, range.bars = NULL, ...){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
@@ -387,6 +402,21 @@ autoplot.ets <- function (object, ...){
     #Add data
     p <- p + ggplot2::geom_line(na.rm=TRUE)
     p <- p + ggplot2::facet_grid(parts ~ ., scales="free_y", switch="y")
+    browser()
+    if(is.null(range.bars)){
+      range.bars <- is.null(object$lambda)
+    }
+    if(range.bars){
+      yranges <- vapply(split(data$y, data$parts), function(x) range(x, na.rm = TRUE), numeric(2))
+      xranges <- range(data$datetime)
+      barmid <- apply(yranges, 2, mean)
+      barlength <- min(apply(yranges, 2, diff))
+      barwidth <- (1/64)*diff(xranges)
+      barpos <- data.frame(left = xranges[2]+barwidth, right = xranges[2]+barwidth*2,
+                           top = barmid+barlength/2, bottom = barmid-barlength/2,
+                           parts = colnames(yranges), datetime = xranges[2], y = barmid)
+      p <- p + ggplot2::geom_rect(ggplot2::aes_(xmin = ~left, xmax = ~right, ymax = ~top, ymin = ~bottom), data=barpos, fill="gray75", colour="black", size=1/3)
+    }
 
     p <- p + ggAddExtras(xlab = NULL, ylab = "", main = paste("Decomposition by",object$method,"method"))
     return(p)
@@ -548,16 +578,13 @@ autoplot.mforecast <- function (object, PI = TRUE, facets = TRUE, colour = FALSE
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
-  else if (!requireNamespace("grid", quietly = TRUE)) {
-    stop("grid is needed for this function to work. Install it via install.packages(\"grid\")", call. = FALSE)
-  }
   else{
     if (!is.mforecast(object)){
       stop("autoplot.mforecast requires a mforecast object, use object=object")
     }
-    if (is.null(object[["newdata"]])){
+    if (is.ts(object$forecast[[1]]$mean)){
       # ts forecasts
-      p <- autoplot(object$x, facets = facets, colour = colour) + autolayer(object, ...)
+      p <- autoplot(getResponse(object), facets = facets, colour = colour) + autolayer(object, ...)
       if (facets){
         p <- p + ggplot2::facet_wrap(~ series, 
           labeller = function(labels){
@@ -581,7 +608,7 @@ autoplot.mforecast <- function (object, PI = TRUE, facets = TRUE, colour = FALSE
         stop("grid is needed for this function to work. Install it via install.packages(\"grid\")", call. = FALSE) 
       }
       
-      K <- NCOL(object$x)
+      K <- length(object$forecast)
       if (K<2){
         warning("Expected at least two plots but forecast required less.")
       }
@@ -600,11 +627,8 @@ autoplot.mforecast <- function (object, PI = TRUE, facets = TRUE, colour = FALSE
       grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow(gridlayout), ncol(gridlayout))))
       
       for (i in 1:K){
-        partialfcast <- list(x=object$x[,i],mean=object$mean[[i]],method=object$method,
-                             upper=object$upper[[i]], lower=object$lower[[i]], level=object$level, newdata=object$newdata)
-        if (!is.null(object$model) &   inherits(object$model, "mlm")){
-          partialfcast$model <- mlmsplit(object$model,index=i)
-        }
+        partialfcast <- object$forecast[[i]]
+        partialfcast$model <- mlmsplit(object$model,index=i)
         matchidx <- as.data.frame(which(gridlayout == i, arr.ind = TRUE))
         print(autoplot(structure(partialfcast,class="forecast"),
                        PI=PI[i], ...) + ggAddExtras(ylab=colnames(object$x)[i]),
@@ -1074,7 +1098,7 @@ autoplot.stl <- function (object, labels = NULL, range.bars = TRUE, ...){
 
     # Rangebars
     if(range.bars){
-      yranges <- vapply(split(data$y, data$parts), function(x) range(x), numeric(2))
+      yranges <- vapply(split(data$y, data$parts), function(x) range(x, na.rm = TRUE), numeric(2))
       xranges <- range(data$datetime)
       barmid <- apply(yranges, 2, mean)
       barlength <- min(apply(yranges, 2, diff))
@@ -1101,7 +1125,7 @@ autoplot.stl <- function (object, labels = NULL, range.bars = TRUE, ...){
   }
 }
 
-autoplot.StructTS <- function (object, labels = NULL, ...){
+autoplot.StructTS <- function (object, labels = NULL, range.bars = TRUE, ...){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
@@ -1126,6 +1150,18 @@ autoplot.StructTS <- function (object, labels = NULL, ...){
     p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime, y=~y), na.rm=TRUE)
     p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
     
+    if(range.bars){
+      yranges <- vapply(split(data$y, data$parts), function(x) range(x, na.rm = TRUE), numeric(2))
+      xranges <- range(data$datetime)
+      barmid <- apply(yranges, 2, mean)
+      barlength <- min(apply(yranges, 2, diff))
+      barwidth <- (1/64)*diff(xranges)
+      barpos <- data.frame(left = xranges[2]+barwidth, right = xranges[2]+barwidth*2,
+                           top = barmid+barlength/2, bottom = barmid-barlength/2,
+                           parts = colnames(yranges), datetime = xranges[2], y = barmid)
+      p <- p + ggplot2::geom_rect(ggplot2::aes_(xmin = ~left, xmax = ~right, ymax = ~top, ymin = ~bottom), data=barpos, fill="gray75", colour="black", size=1/3)
+    }
+    
     # Add axis labels
     p <- p + ggAddExtras(xlab="Time", ylab="")
     
@@ -1136,7 +1172,7 @@ autoplot.StructTS <- function (object, labels = NULL, ...){
   }
 }
 
-autoplot.seas <- function (object, labels = NULL, ...){
+autoplot.seas <- function (object, labels = NULL, range.bars = NULL, ...){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
@@ -1163,6 +1199,22 @@ autoplot.seas <- function (object, labels = NULL, ...){
     p <- p + ggplot2::facet_grid("parts ~ .", scales="free_y", switch="y")
     p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data=data.frame(y = 1, parts = cn[4]))
 
+    # Rangebars
+    if(is.null(range.bars)){
+      range.bars <- object$spc$transform$`function`=="none"
+    }
+    if(range.bars){
+      yranges <- vapply(split(data$y, data$parts), function(x) range(x, na.rm = TRUE), numeric(2))
+      xranges <- range(data$datetime)
+      barmid <- apply(yranges, 2, mean)
+      barlength <- min(apply(yranges, 2, diff))
+      barwidth <- (1/64)*diff(xranges)
+      barpos <- data.frame(left = xranges[2]+barwidth, right = xranges[2]+barwidth*2,
+                           top = barmid+barlength/2, bottom = barmid-barlength/2,
+                           parts = colnames(yranges), datetime = xranges[2], y = barmid)
+      p <- p + ggplot2::geom_rect(ggplot2::aes_(xmin = ~left, xmax = ~right, ymax = ~top, ymin = ~bottom), data=barpos, fill="gray75", colour="black", size=1/3)
+    }
+    
     # Add axis labels
     p <- p + ggAddExtras(xlab="Time", ylab="")
 
@@ -1218,10 +1270,10 @@ autolayer.forecast <- function(object, series = NULL, PI = TRUE, showgap = TRUE,
   data <- fortify(object, PI=PI, showgap=showgap)
   mapping <- ggplot2::aes_(x = ~x, y = ~y)
   if(!is.null(object$series)){
-    data <- transform(data, series=object$series)
+    data[["series"]] <- object$series
   }
   if(!is.null(series)){
-    data <- transform(data, series=series)
+    data[["series"]] <- series
     mapping$colour <- quote(series)
   }
   if(PI){
@@ -1235,15 +1287,14 @@ autolayer.forecast <- function(object, series = NULL, PI = TRUE, showgap = TRUE,
 autolayer.mforecast <- function(object, series = NULL, PI = TRUE, ...){
   cl <- match.call()
   cl[[1]] <- quote(autolayer)
-  cl$object <- quote(fclist[[i]])
+  cl$object <- quote(object$forecast[[i]])
   if(!is.null(series)){
-    if(length(series)!=length(object$mean)){
-      series <- names(object$mean)
+    if(length(series)!=length(object$forecast)){
+      series <- names(object$forecast)
     }
   }
-  fclist <- mforecastsplit(object)
   out <- list()
-  for(i in 1:length(fclist)){
+  for(i in 1:length(object$forecast)){
     cl$series <- series[i]
     out[[i]] <- eval(cl)
   }
@@ -1299,7 +1350,7 @@ autoplot.mts <- function(object, colour=TRUE, facets=FALSE, ...){
     
     #Initialise ggplot object
     mapping <- ggplot2::aes_(y=~y, x=~x, group=~series)
-    if(colour){
+    if (colour & (!facets | !missing(colour))){
       mapping$colour <- quote(series)
     }
     p <- ggplot2::ggplot(mapping, data=data)

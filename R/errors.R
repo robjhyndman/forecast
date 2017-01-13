@@ -249,27 +249,21 @@ accuracy <- function(f,x,test=NULL,d=NULL,D=NULL)
   return(out)
 }
 
-# Compute accuracy for a VAR model (from the vars package)
+# Compute accuracy for an mforecast object 
 accuracy.mforecast <- function(object, x, test=NULL, d, D)
 {
-  fc <- object
-  class(fc) <- "forecast"
-  vnames <- names(object$mean)
+  out <- NULL
   nox <- missing(x)
-  for(i in 1:length(object$mean))
+  i <- 1
+  for(fcast in object$forecast)
   {
-    fc$mean <- object$mean[[i]]
-    fc$x <- object$x[,i]
-    fc$fitted <- object$fitted[,i]
     if(nox)
-      out1 <- accuracy(fc, test=test, d=d, D=D)
+      out1 <- accuracy(fcast, test=test, d=d, D=D)
     else
-      out1 <- accuracy(fc, x[,i], test, d, D)
-    rownames(out1) <- paste(vnames[i],rownames(out1))
-    if(i==1)
-      out <- out1
-    else
-      out <- rbind(out, out1)
+      out1 <- accuracy(fcast, x[,i], test, d, D)
+    rownames(out1) <- paste(fcast$series,rownames(out1))
+    out <- rbind(out, out1)
+    i <- i + 1
   }
   return(out)
 }

@@ -1,32 +1,45 @@
 # forecast function for varest, just a wrapper for predict.varest
 forecast.varest <- function(object, h=10, level=c(80,95), fan=FALSE, ...)
 {
-	out <- list(model=object,level=level,x=object$y)
+	out <- list(model=object,forecast=vector("list", object$K))
 	# Get residuals and fitted values and fix the times
-	out$residuals <- out$fitted <- ts(matrix(NA,nrow=nrow(out$x),ncol=ncol(out$x)))
-	tsp(out$residuals) <- tsp(out$fitted) <- tsp(out$x)
+	
+	tspx <- tsp(object$y)
 	vres <- residuals(object)
 	vfits <- fitted(object)
-	out$residuals[ (nrow(out$residuals)-nrow(vres)+1):nrow(out$residuals), ] <- vres
-	out$fitted[ (nrow(out$fitted)-nrow(vfits)+1):nrow(out$fitted), ] <- vfits
+	method <- paste0("VAR(",object$p,")")
 	# Add forecasts with prediction intervals
-	out$mean <- out$lower <- out$upper <- vector("list",object$K)
-	for(i in 1:(length(level)))
+	#out$mean <- out$lower <- out$upper <- vector("list",object$K)
+	for(i in seq_along(level))
 	{
 		pr <- predict(object, n.ahead=h, ci=level[i]/100, ...)
 		for(j in 1:object$K)
 		{
-			if(i==1)
-				out$mean[[j]] <- pr$fcst[[j]][,"fcst"]
-			out$lower[[j]] <- cbind(out$lower[[j]],pr$fcst[[j]][,"lower"])
-			out$upper[[j]] <- cbind(out$upper[[j]],pr$fcst[[j]][,"upper"])
+			out$forecast[[j]]$lower <- cbind(out$forecast[[j]]$lower, pr$fcst[[j]][,"lower"])
+			out$forecast[[j]]$upper <- cbind(out$forecast[[j]]$upper, pr$fcst[[j]][,"upper"])
 		}
 	}
-	names(out$mean) <- names(out$lower) <- names(out$upper) <- names(pr$fcst)
-	tspx <- tsp(object$y)
-	for(j in 1:object$K)
-		out$mean[[j]] <- ts(out$mean[[j]], frequency=tspx[3], start=tspx[2]+1/tspx[3])
-	out$method <- paste("VAR(",object$p,")",sep="")
+	j <- 1
+	for(fcast in out$forecast){
+	  fcast$mean <- ts(pr$fcst[[j]][,"fcst"], frequency=tspx[3], start=tspx[2]+1/tspx[3])
+	  fcast$lower <- ts(fcast$lower, frequency=tspx[3], start=tspx[2]+1/tspx[3])
+	  fcast$upper <- ts(fcast$upper, frequency=tspx[3], start=tspx[2]+1/tspx[3])
+	  colnames(fcast$lower) <- colnames(fcast$upper) <- paste0(level, "%")
+	  fcast$residuals <- fcast$fitted <- ts(rep(NA, nrow(object$y)))
+	  fcast$residuals[((1-nrow(vres)):0) + length(fcast$residuals)] <- vres[,j]
+	  fcast$fitted[((1-nrow(vfits)):0) + length(fcast$fitted)] <- vfits[,j]
+	  fcast$method <- method
+	  fcast$level <- level
+	  fcast$x <- object$y[,j]
+	  fcast$series <- colnames(object$y)[j]
+	  tsp(fcast$residuals) <- tsp(fcast$fitted) <- tspx
+	  fcast <- structure(fcast, class="forecast")
+	  out$forecast[[j]] <- fcast
+	  j <- j + 1
+	}
+	names(out$forecast) <- names(pr$fcst)
+	out$method <- rep(method, object$K)
+	names(out$forecast) <- names(out$method) <- names(pr$fcst)
 	return(structure(out,class="mforecast"))
 }
 

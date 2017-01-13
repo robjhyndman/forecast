@@ -28,136 +28,56 @@ mlmsplit <- function(x, index=NULL){
   return(x)
 }
 
-mforecastsplit <- function(x, index=1:length(x$mean)){
-  out <- list()
-  for(i in index){
-    out[[i]] <- structure(list(level = x$level,
-                     x = x$x[,i], 
-                     model = x$model[[i]],
-                     mean = x$mean[[i]],
-                     lower = x$lower[[i]],
-                     upper = x$upper[[i]],
-                     method = x$method[i],
-                     residuals = x$residuals[,i],
-                     fitted = x$fitted[,i],
-                     series = names(x$mean)[i]),
-                     class = "forecast")
-  }
-  if(length(index)==1){
-    out <- out[[1]]
-  }
-  return(out)
-}
-
 forecast.mlm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, biasadj=NULL, ts=TRUE, ...)
 {
-  K <- NCOL(object$coefficients)
-  y<-attr(object$terms,"response")
+  out <- list(model=object,forecast=vector("list", NCOL(object$coefficients)))
   
-  # Check if the forecasts will be time series
-  if(ts & is.element("ts",class(fitted(object)))){
-    tspx <- tsp(fitted(object))
-    timesx <- time(fitted(object))
+  cl <- match.call()
+  cl[[1]] <- quote(forecast.lm)
+  cl$object <- quote(mlmsplit(object,index=i))
+  for(i in seq_along(out$forecast)){
+    out$forecast[[i]] <- eval(cl)
+    out$forecast[[i]]$series <- colnames(object$coefficients)[i]
   }
-  else{
-    tspx <- NULL
-  }
-  out <- list(model=object,level=level)
-  if(!is.null(object$x) & !is.list(object$x)){
-    out$x <- object$x #no longer exists, consider removing
-  }
-  else if(!is.null(object$model)){
-    out$x <- object$model[,y]
-  }
-  else {
-    stop("Response not found")
-  }
-  if(!is.null(tspx))
-    out$x <- ts(out$x, start=tspx[1], frequency=tspx[3])
-  out$residuals <- residuals(object)
-  out$fitted <- fitted(object)
-  out$mean <- out$lower <- out$upper <- vector("list",K)
-  names(out$mean) <- names(out$lower) <- names(out$upper) <- colnames(object$coefficients)
-  out$method <- "Multiple linear regression model"
-  for (i in 1:K){
-    if(missing(newdata)){
-      fcst <- forecast(object = mlmsplit(object,index=i),
-                       h=h, level = level, fan = fan, lambda=lambda,
-                       biasadj=biasadj, ts = !is.null(tspx), ...)
-      newdata <- fcst$newdata
-    }
-    else{
-      fcst <- forecast(object = mlmsplit(object,index=i), newdata=newdata,
-                       h=h, level = level, fan = fan, lambda=lambda,
-                       biasadj=biasadj, ts = !is.null(tspx), ...)
-    }
-    out$mean[[i]] <- fcst$mean
-    out$lower[[i]] <- fcst$lower
-    out$upper[[i]] <- fcst$upper
-  }
-  out$newdata <- newdata
+  out$method <- rep("Multiple linear regression model", length(out$forecast))
+  names(out$forecast) <- names(out$method) <- colnames(object$coefficients)
   return(structure(out,class="mforecast"))
 }
 
 forecast.mts <- function(object, h=ifelse(frequency(object)>1, 2*frequency(object), 10), 
                          level=c(80,95), fan=FALSE, robust=FALSE, lambda = NULL, find.frequency = FALSE, 
                          allow.multiplicative.trend=FALSE, ...){
-  out <- list(level=level, x=object)
-  for(i in 1:NCOL(object)){
-    fcast <- forecast.ts(object[,i], h=h, level=level, fan=fan, robust=robust, lambda=lambda, find.frequency=find.frequency,
-                allow.multiplicative.trend = allow.multiplicative.trend, ...)
-    out$model[[i]] <- fcast$model
-    out$mean[[i]] <- fcast$mean
-    out$lower[[i]] <- fcast$lower
-    out$upper[[i]] <- fcast$upper
-    out$method[[i]] <- fcast$method
-    if(i==1){
-      out$residuals <- residuals(fcast)
-      out$fitted <- fitted(fcast)
-    }
-    else{
-      out$residuals <- cbind(out$residuals, residuals(fcast))
-      out$fitted <- cbind(out$fitted, fitted(fcast))
-    }
-  }
   
-  names(out$model) <- names(out$mean) <- names(out$lower) <- names(out$upper) <- names(out$method) <- colnames(out$fitted) <- colnames(out$residuals) <- colnames(object)
+  out <- list(forecast = vector("list", NCOL(object)))
+  cl <- match.call()
+  cl[[1]] <- quote(forecast.ts)
+  cl$object <- quote(object[,i])
+  for(i in 1:NCOL(object)){
+    out$forecast[[i]] <- eval(cl)
+    out$forecast[[i]]$series <- colnames(object)[i]
+  }
+  out$method <- vapply(out$forecast, function(x) x$method, character(1))
+  names(out$forecast) <- names(out$method) <- colnames(object)
   return(structure(out,class="mforecast"))
 }
 
 print.mforecast <- function(x, ...)
 {
-  for(i in 1:length(x$mean))
-  {
-    cat(names(x$mean)[i],"\n")
-    fcst <- x
-    fcst$mean <- x$mean[[i]]
-    fcst$lower <- x$lower[[i]]
-    fcst$upper <- x$upper[[i]]
-    class(fcst) <- "forecast"
-    print(fcst)
-    if(i < length(x$mean))
-      cat("\n")
-  }
+  lapply(x$forecast, function(x){
+    cat(paste0(x$series, "\n"))
+    print(x)
+    cat("\n")
+  })
+  return(invisible())
 }
 
-plot.mforecast <- function(x, main=paste("Forecasts from",x$method),xlab="time",...)
+plot.mforecast <- function(x, main=paste("Forecasts from",unique(x$method)),xlab="time",...)
 {
-  K <- length(x$mean)
-  oldpar <- par(mfrow=c(K,1),mar=c(0,5.1,0,2.1),oma=c(6,0,5,0))
+  oldpar <- par(mfrow=c(length(x$forecast),1),mar=c(0,5.1,0,2.1),oma=c(6,0,5,0))
   on.exit(par(oldpar))
-  for(i in 1:K)
+  for(fcast in x$forecast)
   {
-    fcst <- x
-    fcst$mean <- x$mean[[i]]
-    fcst$lower <- x$lower[[i]]
-    fcst$upper <- x$upper[[i]]
-    fcst$x <- x$x[,i]
-    if("mlm" %in% class(fcst$model)){
-      fcst$model <- mlmsplit(fcst$model, index=i)
-    }
-    class(fcst) <- "forecast"
-    plot(fcst,main="",xaxt="n",ylab=names(x$mean)[i],...)
+    plot(fcast,main="",xaxt="n",ylab=fcast$series,...)
   }
   axis(1)
   mtext(xlab,outer=TRUE,side=1,line=3)
@@ -165,12 +85,12 @@ plot.mforecast <- function(x, main=paste("Forecasts from",x$method),xlab="time",
 }
 
 summary.mforecast <- function(object, ...){
-  cat(paste("\nForecast method:",object$method))
+  cat(paste("\nForecast method:",unique(object$method)))
   cat(paste("\n\nModel Information:\n"))
   print(object$model)
   cat("\nError measures:\n")
   print(accuracy(object))
-  if(is.null(object$mean))
+  if(is.null(object$forecast))
     cat("\n No forecasts\n")
   else
   {
