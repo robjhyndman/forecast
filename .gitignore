@@ -8,3 +8,4 @@ forecast.Rproj
 .travis.yml
 revdep
 tests/testthat/Rplots.pdf
+inst/doc

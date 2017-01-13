@@ -1,0 +1,1248 @@
+\documentclass[nojss]{jss}
+\usepackage{amsmath,rotating,bm,fancyvrb,paralist,thumbpdf}
+
+\def\damped{$_{\mbox{\footnotesize d}}$}
+\let\var=\VAR
+\def\R{\proglang{R}}
+
+\author{Rob J. Hyndman\\Monash University
+   \And Yeasmin Khandakar\\Monash University}
+\Plainauthor{Rob J. Hyndman, Yeasmin Khandakar}
+\title{Automatic Time Series Forecasting: The \pkg{forecast} Package for \proglang{R}}
+\Plaintitle{Automatic Time Series Forecasting: The forecast Package for R}
+
+\Abstract{
+This vignette to the \proglang{R} package \pkg{forecast} is an extended version of \cite{HK2008}, published in the \emph{Journal of Statistical Software}.
+
+Automatic forecasts of large numbers of univariate time
+series are often needed in business and other contexts. We describe
+two automatic forecasting algorithms that have been implemented in
+the \pkg{forecast} package for \R. The first is based on innovations
+state space models that underly exponential smoothing methods. The
+second is a step-wise algorithm for forecasting with ARIMA models.
+The algorithms are applicable to both seasonal and non-seasonal
+data, and are compared and illustrated using four real time series.
+We also briefly describe some of the other functionality available
+in the \pkg{forecast} package.}
+
+\Keywords{ARIMA models, automatic forecasting, exponential smoothing, prediction intervals, state space models, time series, \R}
+\Plainkeywords{ARIMA models, automatic forecasting, exponential smoothing, prediction intervals, state space models, time series, R}
+
+\Volume{26}
+\Issue{3}
+\Month{July}
+\Year{2008}
+\Submitdate{2007-05-29}
+\Acceptdate{2008-03-22}
+
+\Address{
+  Rob J. Hyndman\\
+  Department of Econometrics \& Business Statistics\\
+  Monash University\\
+  Clayton VIC 3800, Australia\\
+  E-mail: \email{Rob.Hyndman@buseco.monash.edu.au}\\
+  URL: \url{http://www.robhyndman.info}\\
+
+  Yeasmin Khandakar\\
+  Department of Econometrics \& Business Statistics\\
+  Monash University\\
+  Clayton VIC 3800, Australia\\
+  E-mail: \email{Yeasmin.Khandakar@buseco.monash.edu.au}
+}
+
+\begin{document}
+
+<<include=FALSE, echo=FALSE>>=
+library(knitr)
+opts_chunk$set(
+concordance=TRUE, 
+engine='R'
+)
+@
+
+%\VignetteIndexEntry{Automatic Time Series Forecasting: The forecast Package for R}
+%\VignetteDepends{forecast,expsmooth}
+%\VignetteEngine{knitr::knitr}
+%\VignetteKeywords{ARIMA models, automatic forecasting, exponential smoothing, prediction intervals, state space models, time series, R}
+%\VignettePackage{forecast}
+
+
+<<preliminaries, echo=FALSE>>=
+library("forecast")
+library("expsmooth")
+oldopts <- options(prompt = "R> ", continue = "+   ")
+@
+
+\section{Introduction}
+
+Automatic forecasts of large numbers of univariate time series are
+often needed in business. It is common to have over one thousand
+product lines that need forecasting at least monthly. Even when a
+smaller number of forecasts are required, there may be nobody
+suitably trained in the use of time series models to produce them.
+In these circumstances, an automatic forecasting algorithm is an
+essential tool. Automatic forecasting algorithms must determine an
+appropriate time series model, estimate the parameters and compute
+the forecasts. They must be robust to unusual time series patterns,
+and applicable to large numbers of series without user intervention.
+The most popular automatic forecasting algorithms are based on
+either exponential smoothing or ARIMA models.
+
+In this article, we discuss the implementation of two automatic
+univariate forecasting methods in the \pkg{forecast} package for \R.
+We also briefly describe some univariate forecasting
+methods that are part of the \pkg{forecast} package.
+
+The \pkg{forecast} package for the \proglang{R} system for
+statistical computing \citep{R} is part of the \pkg{forecasting}
+bundle \citep{expsmooth,fma,forecast,Mcomp} which also contains the packages \pkg{fma}, \pkg{expsmooth}
+and \pkg{Mcomp}, and is available from the Comprehensive \proglang{R}
+Archive Network at \url{http://CRAN.R-project.org/package=forecasting}. Version~1.11 of the
+package was used for this paper. The \pkg{forecast} package contains
+functions for univariate forecasting, while the other three packages
+contain large collections of real time series data that are suitable
+for testing forecasting methods. The \pkg{fma} package contains the
+90~data sets from \citet{MWH3}, the \pkg{expsmooth} package contains
+24~data sets from \citet{expsmooth08}, and the \pkg{Mcomp} package
+contains the 1001~time series from the M-competition \citep{Mcomp82}
+and the 3003~time series from the M3-competition \citep{M3comp00}.
+
+The \pkg{forecast} package implements automatic forecasting using
+exponential smoothing, ARIMA models, the Theta method \citep{AN00},
+cubic splines \citep{HKPB05}, as well as other common forecasting
+methods. In this article, we primarily discuss the exponential
+smoothing approach (in Section~\ref{sec:expsmooth}) and the ARIMA
+modelling approach (in Section~\ref{sec:arima}) to automatic
+forecasting. In Section~\ref{sec:package}, we describe the implementation of these
+methods in the \pkg{forecast} package, along with other features of the package.
+
+\section{Exponential smoothing}\label{sec:expsmooth}
+
+Although exponential smoothing methods have been around since the
+1950s, a modelling framework incorporating procedures for model
+selection was not developed until relatively recently.
+\citet{OKS97}, \citet{HKSG02} and \citet{HKOS05} have shown that all
+exponential smoothing methods (including non-linear methods) are
+optimal forecasts from innovations state space models.
+
+Exponential smoothing methods were originally classified by Pegels'
+(1969)\nocite{Pegels69} taxonomy. This was later extended by
+\citet{Gardner85}, modified by \citet{HKSG02}, and extended again by
+\citet{Taylor03a}, giving a total of fifteen methods seen in the
+following table.
+
+\begin{table}[!hbt]
+\begin{center}\vspace{0.2cm}
+\begin{tabular}{|ll|ccc|} \hline
+& &\multicolumn{3}{c|}{Seasonal Component} \\
+\multicolumn{2}{|c|}{Trend}& N & A & M\\
+\multicolumn{2}{|c|}{Component}  & (None)    & (Additive)  & (Multiplicative)\\
+\cline{3-5} &&&\\[-0.3cm]
+N & (None) & N,N & N,A & N,M\\
+&&&&\\[-0.3cm]
+A & (Additive) & A,N & A,A & A,M\\
+&&&&\\[-0.3cm]
+A\damped & (Additive damped) & A\damped,N & A\damped,A & A\damped,M\\
+&&&&\\[-0.3cm]
+M & (Multiplicative) & M,N & M,A & M,M\\
+&&&&\\[-0.3cm]
+M\damped  & (Multiplicative damped) & M\damped,N & M\damped,A & M\damped,M\\
+\hline
+\end{tabular}\vspace{0.2cm}
+\end{center}
+\caption{The fifteen exponential smoothing methods.}
+\end{table}
+
+Some of these methods are better known under other names. For
+example, cell (N,N) describes the simple exponential smoothing (or
+SES) method, cell (A,N) describes Holt's linear method, and cell
+(A\damped,N) describes the damped trend method. The additive
+Holt-Winters' method is given by cell (A,A) and the multiplicative
+Holt-Winters' method is given by cell (A,M). The other cells
+correspond to less commonly used but analogous methods.
+
+
+\subsection{Point forecasts for all methods}
+
+
+We denote the observed time series by $y_1,y_2,\dots,y_n$. A
+forecast of $y_{t+h}$ based on all of the data up to time $t$ is
+denoted by $\hat{y}_{t+h|t}$.
+To illustrate the method, we give the point forecasts and updating
+equations for method (A,A), the Holt-Winters' additive method:
+\begin{subequations}\label{AMmethod}
+\begin{eqnarray}
+\mbox{Level:}\quad &&\ell_t ~=~ \alpha (y_t - s_{t-m}) + (1-\alpha)(\ell_{t-1} + b_{t-1})\hspace*{1cm} \label{eq:3-44a}\\
+\mbox{Growth:}\quad &&b_t ~=~ \beta^*(\ell_t - \ell_{t-1}) + (1-\beta^*)b_{t-1} \label{eq:3-45a}\\
+\mbox{Seasonal:}\quad &&s_t ~=~ \gamma(y_t - \ell_{t-1} -b_{t-1}) + (1-\gamma)s_{t-m}\label{eq:3-46a}\\
+\mbox{Forecast:}\quad &&\hat{y}_{t+h|t} ~=~ \ell_t + b_th
++s_{t-m+h_m^+}. \label{eq:3-47a}
+\end{eqnarray}
+\end{subequations}
+where $m$ is the length of seasonality (e.g., the number of months
+or quarters in a year), $\ell_t$ represents the level of the series,
+$b_t$ denotes the growth, $s_t$ is the seasonal component,
+$\hat{y}_{t+h|t}$ is the forecast for $h$ periods ahead, and $h_m^+
+= \big[(h-1) \mbox{~mod~} m\big] + 1$. To use method
+\eqref{AMmethod}, we need values for the initial states $\ell_0$,
+$b_0$ and $s_{1-m},\dots,s_0$, and for the smoothing parameters
+$\alpha$, $\beta^*$ and $\gamma$. All of these will be estimated
+from the observed data.
+
+Equation~\eqref{eq:3-46a} is slightly different from the usual
+Holt-Winters equations such as those in \citet{MWH3} or
+\citet{BOK05}. These authors replace \eqref{eq:3-46a} with
+$$
+s_t = \gamma^*(y_t - \ell_{t}) + (1-\gamma^*)s_{t-m}.
+$$
+If $\ell_t$ is substituted using \eqref{eq:3-44a}, we obtain
+$$s_t = \gamma^*(1-\alpha)(y_t - \ell_{t-1}-b_{t-1}) +
+\{1-\gamma^*(1-\alpha)\}s_{t-m}.
+$$
+Thus, we obtain identical forecasts using this approach by replacing
+$\gamma$ in \eqref{eq:3-46a} with $\gamma^*(1-\alpha)$. The
+modification given in \eqref{eq:3-46a} was proposed by \citet{OKS97}
+to make the state space formulation simpler. It is equivalent to
+Archibald's (1990)\nocite{Archibald90} variation of the
+Holt-Winters' method.
+
+
+\begin{sidewaystable}
+\def\dampfactor{\phi_h}
+\begin{small}
+\begin{center}
+\begin{tabular}{|c|lll|} \hline
+  & \multicolumn{3}{c|}{Seasonal} \\
+{Trend} & \multicolumn{1}{c}{N} & \multicolumn{1}{c}{A}
+& \multicolumn{1}{c|}{M}\\
+\cline{2-4}
+    & $\ell_t = \alpha y_t + (1-\alpha) \ell_{t-1}$
+    & $\ell_t = \alpha (y_t - s_{t-m}) + (1-\alpha) \ell_{t-1}$
+    & $\ell_t = \alpha (y_t / s_{t-m}) + (1-\alpha) \ell_{t-1}$\\
+{N}
+    &
+    & $s_t = \gamma (y_t - \ell_{t-1}) + (1-\gamma) s_{t-m}$
+    & $s_t = \gamma (y_t / \ell_{t-1}) + (1-\gamma) s_{t-m}$ \\
+    & $\hat{y}_{t+h|t} = \ell_t$
+    & $\hat{y}_{t+h|t} = \ell_t + s_{t-m+h_m^+}$
+    & $\hat{y}_{t+h|t}= \ell_ts_{t-m+h_m^+}$ \\
+\hline
+    & $\ell_t = \alpha y_t + (1-\alpha) (\ell_{t-1}+b_{t-1})$
+    & $\ell_t = \alpha (y_t - s_{t-m}) + (1-\alpha)    (\ell_{t-1}+b_{t-1})$
+    & $\ell_t = \alpha (y_t / s_{t-m}) + (1-\alpha)    (\ell_{t-1}+b_{t-1})$\\
+{A}
+    & $b_t = \beta^* (\ell_t-\ell_{t-1}) + (1-\beta^*) b_{t-1}$
+    & $b_t = \beta^* (\ell_t-\ell_{t-1}) + (1-\beta^*) b_{t-1}$
+    & $b_t = \beta^* (\ell_t-\ell_{t-1}) + (1-\beta^*) b_{t-1}$\\
+    &
+    & $s_t = \gamma (y_t - \ell_{t-1}-b_{t-1}) + (1-\gamma)    s_{t-m}$
+    & $s_t = \gamma (y_t / (\ell_{t-1}-b_{t-1})) + (1-\gamma)    s_{t-m}$\\
+    & $\hat{y}_{t+h|t} = \ell_t+hb_t$
+    & $\hat{y}_{t+h|t} = \ell_t +hb_t +s_{t-m+h_m^+}$
+    & $\hat{y}_{t+h|t}= (\ell_t+hb_t)s_{t-m+h_m^+}$ \\
+\hline
+    & $\ell_t = \alpha y_t + (1-\alpha) (\ell_{t-1}+\phi b_{t-1})$
+    & $\ell_t = \alpha (y_t - s_{t-m}) + (1-\alpha) (\ell_{t-1}+\phi    b_{t-1})$
+    & $\ell_t = \alpha (y_t / s_{t-m}) + (1-\alpha) (\ell_{t-1}+\phi    b_{t-1})$\\
+{A\damped }
+    & $b_t = \beta^* (\ell_t-\ell_{t-1}) + (1-\beta^*) \phi    b_{t-1}$
+    & $b_t = \beta^* (\ell_t-\ell_{t-1}) + (1-\beta^*) \phi    b_{t-1}$
+    & $b_t = \beta^* (\ell_t-\ell_{t-1}) + (1-\beta^*) \phi    b_{t-1}$\\
+    &
+    & $s_t = \gamma (y_t - \ell_{t-1}-\phi b_{t-1}) + (1-\gamma)    s_{t-m}$
+    & $s_t = \gamma (y_t / (\ell_{t-1}-\phi b_{t-1})) + (1-\gamma)    s_{t-m}$\\
+    & $\hat{y}_{t+h|t} = \ell_t+\dampfactor b_t$
+    & $\hat{y}_{t+h|t} = \ell_t+\dampfactor b_t+s_{t-m+h_m^+}$
+    & $\hat{y}_{t+h|t}= (\ell_t+\dampfactor b_t)s_{t-m+h_m^+}$
+\\
+\hline
+    & $\ell_t = \alpha y_t + (1-\alpha) \ell_{t-1}b_{t-1}$
+    & $\ell_t = \alpha (y_t - s_{t-m}) + (1-\alpha)    \ell_{t-1}b_{t-1}$
+    & $\ell_t = \alpha (y_t / s_{t-m}) + (1-\alpha)    \ell_{t-1}b_{t-1}$\\
+{M}
+    & $b_t = \beta^* (\ell_t/\ell_{t-1}) + (1-\beta^*) b_{t-1}$
+    & $b_t = \beta^* (\ell_t/\ell_{t-1}) + (1-\beta^*) b_{t-1}$
+    & $b_t = \beta^* (\ell_t/\ell_{t-1}) + (1-\beta^*) b_{t-1}$\\
+    &
+    & $s_t = \gamma (y_t - \ell_{t-1}b_{t-1}) + (1-\gamma) s_{t-m}$
+    & $s_t = \gamma (y_t / (\ell_{t-1}b_{t-1})) + (1-\gamma) s_{t-m}$\\
+    & $\hat{y}_{t+h|t} = \ell_tb_t^h$
+    & $\hat{y}_{t+h|t} = \ell_tb_t^h + s_{t-m+h_m^+}$
+    & $\hat{y}_{t+h|t}= \ell_tb_t^hs_{t-m+h_m^+}$ \\
+\hline
+    & $\ell_t = \alpha y_t + (1-\alpha) \ell_{t-1}b^\phi_{t-1}$
+    & $\ell_t = \alpha (y_t - s_{t-m}) + (1-\alpha)\ell_{t-1}b^\phi_{t-1}$
+    & $\ell_t = \alpha (y_t / s_{t-m}) + (1-\alpha)\ell_{t-1}b^\phi_{t-1}$\\
+{M\damped }
+    & $b_t = \beta^* (\ell_t/\ell_{t-1}) + (1-\beta^*)    b^\phi_{t-1}$
+    & $b_t = \beta^* (\ell_t/\ell_{t-1}) + (1-\beta^*)    b^\phi_{t-1}$
+    & $b_t = \beta^* (\ell_t/\ell_{t-1}) + (1-\beta^*)    b^\phi_{t-1}$\\
+    &
+    & $s_t = \gamma (y_t - \ell_{t-1}b^\phi_{t-1}) + (1-\gamma) s_{t-m}$
+    & $s_t = \gamma (y_t / (\ell_{t-1}b^\phi_{t-1})) + (1-\gamma) s_{t-m}$\\
+    & $\hat{y}_{t+h|t} = \ell_tb_t^{\phi_h}$
+    & $\hat{y}_{t+h|t} = \ell_tb_t^{\phi_h} + s_{t-m+h_m^+}$
+    & $\hat{y}_{t+h|t}= \ell_tb_t^{\phi_h}s_{t-m+h_m^+}$ \\
+\hline
+\end{tabular}
+\end{center}
+\end{small}
+
+\caption{Formulae for recursive calculations and point forecasts. In
+each case,  $\ell_t$ denotes the series level at time $t$, $b_t$
+denotes the slope at time $t$, $s_t$ denotes the seasonal component
+of the series at time $t$, and $m$ denotes the number of seasons in
+a year; $\alpha$, $\beta^*$, $\gamma$ and $\phi$ are constants,
+$\phi_h = \phi+\phi^2+\dots+\phi^{h}$ and $h_m^+ = \big[(h-1)
+\mbox{~mod~} m\big] + 1$.}\label{table:pegels}
+\end{sidewaystable}
+
+Table~\ref{table:pegels} gives recursive formulae for computing
+point forecasts  $h$ periods ahead for all of the exponential
+smoothing methods. Some interesting special cases can be obtained by
+setting the smoothing parameters to extreme values. For example, if
+$\alpha=0$, the level is constant over time; if $\beta^*=0$, the
+slope is constant over time; and if $\gamma=0$, the seasonal pattern
+is constant over time.  At the other extreme, na\"{\i}ve forecasts (i.e.,
+$\hat{y}_{t+h|t}=y_t$ for all $h$) are obtained using the (N,N)
+method with $\alpha=1$.  Finally, the additive and multiplicative
+trend methods are special cases of their damped counterparts
+obtained by letting $\phi=1$.
+
+\subsection{Innovations state space models} \label{sec:statespace}
+
+
+For each exponential smoothing method in Table~\ref{table:pegels},
+\citet{expsmooth08} describe two possible innovations state space
+models, one corresponding to a model with additive errors and the
+other to a model with multiplicative errors. If the same parameter
+values are used, these two models give equivalent point forecasts,
+although different prediction intervals. Thus there are 30 potential
+models described in this classification.
+
+Historically, the nature of the error component has often been
+ignored, because the distinction between additive and multiplicative
+errors makes no difference to point forecasts.
+
+We are careful to distinguish exponential smoothing \emph{methods}
+from the underlying state space \emph{models}. An exponential
+smoothing method is an algorithm for producing point forecasts only.
+The underlying stochastic state space model gives the same point
+forecasts, but also provides a framework for computing prediction
+intervals and other properties.
+
+To distinguish the models with additive and multiplicative errors,
+we add an extra letter to the front of the method notation. The
+triplet (E,T,S) refers to the three components: error, trend and
+seasonality. So the model ETS(A,A,N) has additive errors, additive
+trend and no seasonality---in other words, this is Holt's linear
+method with additive errors. Similarly, ETS(M,M\damped,M) refers to
+a model with multiplicative errors, a damped multiplicative trend
+and multiplicative seasonality. The notation
+ETS($\cdot$,$\cdot$,$\cdot$) helps in remembering the order in which
+the components are specified.
+
+Once a model is specified, we can study the probability distribution
+of future values of the series and find, for example, the
+conditional mean of a future observation given knowledge of the
+past. We denote this as $\mu_{t+h|t} = \E(y_{t+h} \mid \bm{x}_t)$,
+where $\bm{x}_t$ contains the unobserved components such as
+$\ell_t$, $b_t$ and $s_t$. For $h=1$ we use $\mu_t\equiv\mu_{t+1|t}$
+as a shorthand notation. For many models, these conditional means
+will be identical to the point forecasts given in
+Table~\ref{table:pegels}, so that $\mu_{t+h|t}=\hat{y}_{t+h|t}$.
+However, for other models (those with multiplicative trend or
+multiplicative seasonality), the conditional mean and the point
+forecast will differ slightly for $h\ge 2$.
+
+We illustrate these ideas using the damped trend method of
+\citet{GM85}.
+
+\subsubsection{Additive error model:  ETS(A,A$_d$,N)}
+
+Let $\mu_t = \hat{y}_t = \ell_{t-1}+b_{t-1}$ denote the one-step
+forecast of $y_{t}$ assuming that we know the values of all
+parameters. Also, let $\varepsilon_t = y_t - \mu_t$ denote the
+one-step forecast error at time $t$. From the equations in
+Table~\ref{table:pegels}, we find that
+\begin{eqnarray}
+\label{ss1}
+y_t &=& \ell_{t-1} + \phi b_{t-1} + \varepsilon_t\\
+\ell_t &=& \ell_{t-1} + \phi b_{t-1} + \alpha \varepsilon_t
+\label{ss2}\\
+b_t &=& \phi b_{t-1} + \beta^*(\ell_t - \ell_{t-1}- \phi b_{t-1})
+    = \phi b_{t-1} + \alpha\beta^*\varepsilon_t. \label{ss3}
+\end{eqnarray}
+We simplify the last expression by setting $\beta=\alpha\beta^*$.
+The three equations above constitute a state space model underlying
+the damped Holt's method. Note that it is an \emph{innovations}
+state space model \citep{AM79,Aoki87} because the same error term
+appears in each equation. We can write it in standard state space
+notation by defining the state vector as $\bm{x}_t = (\ell_t,b_t)'$
+and expressing \eqref{ss1}--\eqref{ss3} as
+\begin{subequations}
+\begin{eqnarray}
+y_t &=& \left[ 1 ~~ \phi \right] \bm{x}_{t-1} +
+\varepsilon_t\label{obseq}\\
+\bm{x}_t &=& \left[\begin{array}{ll}
+                        1 & \phi\\
+                        0 & \phi
+                   \end{array}\right]\bm{x}_{t-1}
+            + \left[\begin{array}{l}
+                          \alpha\\
+                          \beta
+                    \end{array}\right]\varepsilon_t.\label{stateeq}
+\end{eqnarray}
+\end{subequations}
+The model is fully specified once we state the distribution of the
+error term $\varepsilon_t$. Usually we assume that these are
+independent and identically distributed, following a normal
+distribution with mean 0 and variance $\sigma^2$, which we write as
+$\varepsilon_t \sim\mbox{NID}(0, \sigma^2)$.
+
+
+\subsubsection{Multiplicative error model: ETS(M,A$_d$,N)}
+
+A model with multiplicative error can be derived similarly, by first
+setting $\varepsilon_t = (y_t-\mu_t)/\mu_t$, so that $\varepsilon_t$
+is the relative error. Then, following a similar approach to that
+for additive errors, we find
+\begin{eqnarray*}
+y_t &=& (\ell_{t-1} + \phi b_{t-1})(1 + \varepsilon_t)\\
+\ell_t &=& (\ell_{t-1} + \phi b_{t-1})(1 + \alpha \varepsilon_t)\\
+b_t &=& \phi b_{t-1} + \beta(\ell_{t-1}+\phi b_{t-1})\varepsilon_t,
+\end{eqnarray*}
+or
+\begin{eqnarray*}
+y_t &=& \left[ 1 ~~ \phi \right] \bm{x}_{t-1}(1 + \varepsilon_t)\\
+\bm{x}_t &=& \left[\begin{array}{ll}
+                        1 & \phi \\
+                        0 & \phi
+                   \end{array}\right]\bm{x}_{t-1} + \left[ 1 ~~
+                   \phi
+                   \right] \bm{x}_{t-1}
+             \left[\begin{array}{l}
+                          \alpha\\
+                          \beta
+                    \end{array}\right]\varepsilon_t.
+\end{eqnarray*}
+Again we assume that $\varepsilon_t \sim \mbox{NID}(0,\sigma^2)$.
+
+Of course, this is a nonlinear state space model, which is usually
+considered difficult to handle in estimating and forecasting.
+However, that is one of the many advantages of the innovations form
+of state space models --- we can still compute forecasts, the
+likelihood and prediction intervals for this nonlinear model with no
+more effort than is required for the additive error model.
+
+
+
+
+
+\subsection{State space models for all exponential smoothing methods}\label{sec:ssmodels}
+
+There are similar state space models for all 30 exponential
+smoothing variations. The general model involves a state vector
+$\bm{x}_t = (\ell_t, b_t$, $s_t, s_{t-1}, \dots, s_{t-m+1})'$ and
+state space equations of the form
+\begin{subequations}\label{eq:ss}
+\begin{eqnarray}
+y_t &=& w(\bm{x}_{t-1}) + r(\bm{x}_{t-1})\varepsilon_t
+\label{eq:ss1}\\
+\bm{x}_t &=& f(\bm{x}_{t-1}) + g(\bm{x}_{t-1})\varepsilon_t
+\label{eq:ss2}
+\end{eqnarray}
+\end{subequations}
+where $\{\varepsilon_t\}$ is a Gaussian white noise process with
+mean zero and variance $\sigma^2$, and $\mu_t = w(\bm{x}_{t-1})$.
+The model with additive errors has $r(\bm{x}_{t-1})=1$, so that $y_t
+= \mu_{t} + \varepsilon_t$. The model with multiplicative errors has
+$r(\bm{x}_{t-1})=\mu_t$, so that $y_t = \mu_{t}(1 + \varepsilon_t)$.
+Thus,  $\varepsilon_t = (y_t - \mu_t)/\mu_t$ is the relative error
+for the multiplicative model. The models are not unique. Clearly,
+any value of $r(\bm{x}_{t-1})$ will lead to identical point
+forecasts for $y_t$.
+
+
+All of the methods in Table~\ref{table:pegels} can be written in the
+form \eqref{eq:ss1} and \eqref{eq:ss2}. The specific form for each
+model is given in \citet{expsmooth08}.
+
+Some of the combinations of trend, seasonality and error can
+occasionally lead to numerical difficulties; specifically, any model
+equation that requires division by a state component could involve
+division by zero. This is a problem for models with additive errors
+and either multiplicative trend or multiplicative seasonality, as
+well as for the model with multiplicative errors, multiplicative
+trend and additive seasonality. These models should therefore be
+used with caution.
+
+The multiplicative error models are useful when the data are
+strictly positive, but are not numerically stable when the data
+contain zeros or negative values. So when the time series is not
+strictly positive, only the six fully additive models may be
+applied.
+
+The point forecasts given in Table~\ref{table:pegels} are easily
+obtained from these models by iterating equations~\eqref{eq:ss1}
+and~\eqref{eq:ss2} for $t=n+1, n+2,\dots,n+h$, setting
+$\varepsilon_{n+j}=0$ for $j=1,\dots,h$. In most cases (notable
+exceptions being models with multiplicative seasonality or
+multiplicative trend for $h\ge2$), the point forecasts can be shown
+to be equal to $\mu_{t+h|t} = \E(y_{t+h} \mid \bm{x}_t)$, the
+conditional expectation of the corresponding state space model.
+
+The models also provide a means of obtaining prediction intervals.
+In the case of the linear models, where the forecast distributions
+are normal, we can derive the conditional variance $v_{t+h|t} =
+\var(y_{t+h} \mid \bm{x}_t)$ and obtain prediction intervals
+accordingly. This approach also works for many of the nonlinear
+models. Detailed derivations of the results for many models are
+given in \citet{HKOS05}.
+
+A more direct approach that works for all of the models is to simply
+simulate many future sample paths conditional on the last estimate
+of the state vector, $\bm{x}_t$. Then prediction intervals can be
+obtained from the percentiles of the simulated sample paths. Point
+forecasts can also be obtained in this way by taking the average of
+the simulated values at each future time period. An advantage of
+this approach is that we generate an estimate of the complete
+predictive distribution, which is especially useful in applications
+such as inventory planning, where expected costs depend on the whole
+distribution.
+
+
+\subsection{Estimation}\label{sec:estimation}
+
+In order to use these models for forecasting, we need to know the
+values of $\bm{x}_0$ and the parameters $\alpha$, $\beta$, $\gamma$
+and $\phi$. It is easy to compute the likelihood of the innovations
+state space model \eqref{eq:ss}, and so obtain maximum likelihood
+estimates. \citet{OKS97} show that
+\begin{equation}\label{likelihood}
+L^*(\bm\theta,\bm{x}_0) = n\log\Big(\sum_{t=1}^n
+\varepsilon^2_t\Big) + 2\sum_{t=1}^n \log|r(\bm{x}_{t-1})|
+\end{equation}
+is equal to twice the negative logarithm of the likelihood function
+(with constant terms eliminated), conditional on the parameters
+$\bm\theta = (\alpha,\beta,\gamma,\phi)'$ and the initial states
+$\bm{x}_0 = (\ell_0,b_0,s_0,s_{-1},\dots,s_{-m+1})'$, where $n$ is
+the number of observations. This is easily computed by simply using
+the recursive equations in Table~\ref{table:pegels}. Unlike state
+space models with multiple sources of error, we do not need to use
+the Kalman filter to compute the likelihood.
+
+The parameters $\bm\theta$ and the initial states $\bm{x}_0$ can be
+estimated by minimizing $L^*$. Most implementations of exponential
+smoothing use an ad~hoc heuristic scheme to estimate $\bm{x}_0$.
+However, with modern computers, there is no reason why we cannot
+estimate $\bm{x}_0$ along with $\bm\theta$, and the resulting
+forecasts are often substantially better when we do.
+
+We constrain the initial states $\bm{x}_0$ so that the seasonal
+indices add to zero for additive seasonality, and add to $m$ for
+multiplicative seasonality. There have been several suggestions for
+restricting the parameter space for  $\alpha$, $\beta$ and $\gamma$.
+The traditional approach is to ensure that the various equations can
+be interpreted as weighted averages, thus requiring $\alpha$,
+$\beta^*=\beta/\alpha$, $\gamma^*=\gamma/(1-\alpha)$ and $\phi$ to
+all lie within $(0,1)$. This suggests
+$$0<\alpha<1,\qquad 0<\beta<\alpha,\qquad 0<\gamma <
+1-\alpha,\qquad\mbox{and}\qquad 0<\phi<1.
+$$
+However, \citet{HAA08} show that these restrictions are usually
+stricter than necessary (although in a few cases they are not
+restrictive enough).
+
+
+
+\subsection{Model selection}
+
+Forecast accuracy measures such as mean squared error (MSE) can
+be used for selecting a model for a given set of data, provided the
+errors are computed from data in a hold-out set and not from the
+same data as were used for model estimation. However, there are
+often too few out-of-sample errors to draw reliable conclusions.
+Consequently, a penalized method based on the in-sample fit is
+usually better.
+
+One such approach uses a penalized likelihood such as Akaike's
+Information Criterion:
+$$\mbox{AIC} = L^*(\hat{\bm\theta},\hat{\bm{x}}_0) + 2q,
+$$
+where $q$ is the number of parameters in $\bm\theta$ plus the number
+of free states in $\bm{x}_0$, and $\hat{\bm\theta}$ and
+$\hat{\bm{x}}_0$ denote the estimates of $\bm\theta$ and $\bm{x}_0$.
+We select the model that minimizes the AIC amongst all of the models
+that are appropriate for the data.
+
+The AIC also provides a method for selecting between the additive
+and multiplicative error models. The point forecasts from the two
+models are identical so that standard forecast accuracy measures
+such as the MSE or mean absolute percentage
+error (MAPE) are unable to select between the error types. The AIC
+is able to select between the error types because it is based on
+likelihood rather than one-step forecasts.
+
+Obviously, other model selection criteria (such as the BIC) could
+also be used in a similar manner.
+
+
+\subsection{Automatic forecasting}
+\label{sec:algorithm}
+
+We combine the preceding ideas to obtain a robust and widely
+applicable automatic forecasting algorithm.  The steps involved are
+summarized below.
+\begin{compactenum}
+\item For each series, apply all models that are appropriate,
+optimizing the parameters (both smoothing parameters and the initial
+state variable) of the model in each case.
+
+\item Select the best of the models according to the AIC.
+
+\item Produce point forecasts using the best model (with optimized
+parameters) for as many steps ahead as required.
+
+\item Obtain prediction intervals for the best model either using
+the analytical results of \citet{HKOS05}, or by simulating future
+sample paths for $\{y_{n+1},\dots,y_{n+h}\}$ and finding the
+$\alpha/2$ and $1-\alpha/2$ percentiles of the simulated data at
+each forecasting horizon.  If simulation is used, the sample paths
+may be generated using the normal distribution for errors
+(parametric bootstrap) or using the resampled errors (ordinary
+bootstrap).
+\end{compactenum}
+
+\citet{HKSG02} applied this automatic forecasting strategy to the
+M-competition data \citep{Mcomp82} and the IJF-M3 competition data
+\citep{M3comp00} using a restricted set of exponential smoothing
+models, and demonstrated that the methodology is particularly good
+at short term forecasts (up to about 6 periods ahead), and
+especially for seasonal short-term series (beating all other methods
+in the competitions for these series).
+
+
+
+\section{ARIMA models}\label{sec:arima}
+
+A common obstacle for many people in using Autoregressive Integrated
+Moving Average (ARIMA) models for forecasting is that the order
+selection process is usually considered subjective and difficult to
+apply. But it does not have to be. There have been several attempts
+to automate ARIMA modelling in the last 25 years.
+
+\citet{HR82} proposed a method to identify the order of an ARMA
+model for a stationary series. In their method the innovations can
+be obtained by fitting a long autoregressive model to the data, and
+then the likelihood of potential models is computed via a series of
+standard regressions. They established the asymptotic properties of
+the procedure under very general conditions.
+
+\citet{Gomez98} extended the Hannan-Rissanen identification method
+to include multiplicative seasonal ARIMA model identification.
+\citet{TRAMOSEATS98} implemented this automatic identification
+procedure in the software \pkg{TRAMO} and \pkg{SEATS}. For a
+given series, the algorithm attempts to find the model with the
+minimum BIC.
+
+\citet{Liu89} proposed a method for identification of seasonal ARIMA
+models using a filtering method and certain heuristic rules; this
+algorithm is used in the \pkg{SCA-Expert} software. Another
+approach is described by \citet{MP00a} whose algorithm for
+univariate ARIMA models also allows intervention analysis. It is
+implemented in the software package ``Time Series Expert''
+(\pkg{TSE-AX}).
+
+Other algorithms are in use in commercial software, although they
+are not documented in the public domain literature. In particular,
+\pkg{Forecast Pro} \citep{ForecastPro00} is well-known for its excellent
+automatic ARIMA algorithm which was used in the M3-forecasting
+competition \citep{M3comp00}. Another proprietary algorithm is
+implemented in \pkg{Autobox} \citep{Reilly00}. \citet{OL96} provide an
+early review of some of the commercial software that implement
+automatic ARIMA forecasting.
+
+\subsection{Choosing the model order using unit root tests and the AIC}
+
+A non-seasonal ARIMA($p,d,q$) process is given by
+\begin{eqnarray*}
+\phi(B)(1-B^d)y_{t} &=& c + \theta(B)\varepsilon_t%\label{eq:arima1}
+\end{eqnarray*}
+where $\{\varepsilon_t\}$ is a white noise process with mean zero
+and variance $\sigma^2$, $B$ is the backshift operator, and
+$\phi(z)$ and $\theta(z)$ are polynomials of order $p$ and $q$
+respectively. To ensure causality and invertibility, it is assumed
+that $\phi(z)$ and $\theta(z)$ have no roots for $|z|<1$
+\citep{BDbook91}. If $c\ne0$, there is an implied polynomial of
+order $d$ in the forecast function.
+
+The seasonal ARIMA$(p,d,q)(P,D,Q)_m$ process is given by
+\begin{eqnarray*}
+\Phi(B^m)\phi(B)(1-B^{m})^D(1-B)^dy_{t} &=& c + \Theta(B^m)\theta(B)\varepsilon_t%\label{eq:arima1}
+\end{eqnarray*}
+where $\Phi(z)$ and $\Theta(z)$ are polynomials of orders $P$ and
+$Q$ respectively, each containing no roots inside the unit circle.
+If $c\ne0$, there is an implied polynomial of order $d+D$ in the
+forecast function.
+
+The main task in automatic ARIMA forecasting is selecting an
+appropriate model order, that is the values $p$, $q$, $P$, $Q$, $D$,
+$d$. If $d$ and $D$ are known, we can select the orders $p$, $q$,
+$P$ and $Q$ via an information criterion such as the AIC:
+$$\mbox{AIC} = -2\log(L) + 2(p+q+P+Q+k)$$
+where $k=1$ if $c\ne0$ and 0 otherwise, and $L$ is the maximized
+likelihood of the model fitted to the \emph{differenced} data
+$(1-B^m)^D(1-B)^dy_t$.  The likelihood of the full model for $y_t$
+is not actually defined and so the value of the AIC for different
+levels of differencing are not comparable.
+
+One solution to this difficulty is the ``diffuse prior'' approach
+which is outlined in \citet{DKbook01} and implemented in the
+\code{arima()} function \citep{Ripley:2002} in \R. In this approach, the initial values
+of the time series (before the observed values) are assumed to have
+mean zero and a large variance. However, choosing $d$ and $D$ by
+minimizing the AIC using this approach tends to lead to
+over-differencing. For forecasting purposes, we believe it is better
+to make as few differences as possible because over-differencing
+harms forecasts \citep{SY94} and widens prediction intervals.
+\citep[Although, see][for a contrary view.]{Hendry97}
+
+Consequently, we need some other approach to choose $d$ and $D$. We
+prefer unit-root tests. However, most unit-root tests are based on a
+null hypothesis that a unit root exists which biases results towards
+more differences rather than fewer differences. For example,
+variations on the Dickey-Fuller test \citep{DF81} all assume there
+is a unit root at lag 1, and the HEGY test of \citet{HEGY90} is
+based on a null hypothesis that there is a seasonal unit root.
+Instead, we prefer unit-root tests based on a null hypothesis of no
+unit-root.
+
+For non-seasonal data, we consider ARIMA($p,d,q$) models where $d$
+is selected based on successive KPSS unit-root tests \citep{KPSS92}.
+That is, we test the data for a unit root; if the test result is
+significant, we test the differenced data for a unit root; and so
+on. We stop this procedure when we obtain our first insignificant
+result.
+
+For seasonal data, we consider ARIMA$(p,d,q)(P,D,Q)_m$ models where
+$m$ is the seasonal frequency and $D=0$ or $D=1$ depending on an
+extended Canova-Hansen test \citep{CH95}. Canova and Hansen only
+provide critical values for $2<m<13$. In our implementation of their
+test, we allow any value of $m>1$. Let $C_m$ be the critical value
+for seasonal period $m$. We plotted $C_m$ against $m$ for values of
+$m$ up to 365 and noted that they fit the line $C_m = 0.269
+m^{0.928}$ almost exactly. So for $m>12$, we use this simple
+expression to obtain the critical value.
+
+We note in passing that the null hypothesis for the Canova-Hansen
+test is not an ARIMA model as it includes seasonal dummy terms. It
+is a test for whether the seasonal pattern changes sufficiently over
+time to warrant a seasonal unit root, or whether a stable seasonal
+pattern modelled using fixed dummy variables is more appropriate.
+Nevertheless, we have found that the test is still useful for
+choosing $D$ in a strictly ARIMA framework (i.e., without seasonal
+dummy variables). If a stable seasonal pattern is selected (i.e.,
+the null hypothesis is not rejected), the seasonality is effectively
+handled by stationary seasonal AR and MA terms.
+
+After $D$ is selected, we choose $d$ by applying successive KPSS
+unit-root tests to the seasonally differenced data (if $D=1$) or the
+original data (if $D=0$). Once $d$ (and possibly $D$) are selected,
+we proceed to select the values of $p$, $q$, $P$ and $Q$ by
+minimizing the AIC\@. We allow $c\ne0$ for models where $d+D < 2$.
+
+
+\subsection{A step-wise procedure for traversing the model
+space}
+
+Suppose we have seasonal data and we consider
+ARIMA$(p,d,q)(P,D,Q)_m$ models where $p$ and $q$ can take values
+from 0 to 3, and $P$ and $Q$ can take values from 0 to 1. When $c=0$
+there is a total of 288 possible models, and when $c\ne 0$ there is
+a total of 192 possible models, giving 480 models altogether. If the
+values of $p$, $d$, $q$, $P$, $D$ and $Q$ are allowed to range more
+widely, the number of possible models increases rapidly.
+Consequently, it is often not feasible to simply fit every potential
+model and choose the one with the lowest AIC\@. Instead, we need a
+way of traversing the space of models efficiently in order to arrive
+at the model with the lowest AIC value.
+
+We propose a step-wise algorithm as follows.
+\begin{description}
+\item[Step 1:]  We try four possible models to start with.
+\begin{itemize}
+\item ARIMA($2,d,2$) if $m=1$ and ARIMA($2,d,2)(1,D,1)$ if $m>1$.
+
+\item ARIMA($0,d,0$) if $m=1$ and ARIMA($0,d,0)(0,D,0)$ if $m>1$.
+
+\item ARIMA($1,d,0$) if $m=1$ and ARIMA($1,d,0)(1,D,0)$ if $m>1$.
+
+\item ARIMA($0,d,1$) if $m=1$ and ARIMA($0,d,1)(0,D,1)$ if $m>1$.
+\end{itemize}
+If $d+D \le 1$, these models are fitted with $c\ne0$. Otherwise, we
+set $c=0$. Of these four models, we select the one with the smallest
+AIC value. This is called the ``current'' model and is denoted by
+ARIMA($p,d,q$) if $m=1$ or ARIMA($p,d,q)(P,D,Q)_m$ if $m>1$.
+
+\item[Step 2:] We consider up to thirteen variations on the current
+model:
+\begin{itemize}
+\item where one of $p$, $q$, $P$ and $Q$ is allowed to vary by
+$\pm1$ from the current model;
+
+\item where $p$ and $q$ both vary by $\pm1$ from the current model;
+
+\item where $P$ and $Q$ both vary by $\pm1$ from the current model;
+
+\item where the constant $c$ is included if the current model
+      has $c=0$ or excluded if the current model has $c\ne0$.
+\end{itemize}
+Whenever a model with lower AIC is found, it becomes the new
+``current'' model and the procedure is repeated. This process
+finishes when we cannot find a model close to the current model with
+lower AIC.
+\end{description}
+
+There are several constraints on the fitted models to avoid problems
+with convergence or near unit-roots. The constraints are outlined
+below.
+\begin{itemize}
+\item The values of $p$ and $q$ are not allowed to exceed specified
+upper bounds (with default values of 5 in each case).
+
+\item The values of $P$ and $Q$ are not allowed to exceed specified
+upper bounds (with default values of 2 in each case).
+
+\item We reject any model which is ``close'' to non-invertible or
+non-causal. Specifically, we compute the roots of $\phi(B)\Phi(B)$
+and $\theta(B)\Theta(B)$. If either have a root that is smaller than
+1.001 in absolute value, the model is rejected.
+
+\item If there are any errors arising in the non-linear optimization
+routine used for estimation, the model is rejected. The rationale
+here is that any model that is difficult to fit is probably not a
+good model for the data.
+\end{itemize}
+
+The algorithm is guaranteed to return a valid model because the
+model space is finite and at least one of the starting models will
+be accepted (the model with no AR or MA parameters). The selected
+model is used to produce forecasts.
+
+\subsection{Comparisons with exponential smoothing}
+
+There is a widespread myth that ARIMA models are more general than
+exponential smoothing. This is not true. The two classes of models
+overlap. The linear exponential smoothing models are all special
+cases of ARIMA models---the equivalences are discussed in
+\citet{HAA08}. However, the non-linear exponential smoothing models
+have no equivalent ARIMA counterpart. On the other hand, there are
+many ARIMA models which have no exponential smoothing counterpart.
+Thus, the two model classes overlap and are complimentary; each has
+its strengths and weaknesses.
+
+The exponential smoothing state space models are all non-stationary.
+Models with seasonality or non-damped trend (or both) have two unit
+roots; all other models---that is, non-seasonal models with either
+no trend or damped trend---have one unit root. It is possible to
+define a stationary model with similar characteristics to
+exponential smoothing, but this is not normally done. The philosophy
+of exponential smoothing is that the world is non-stationary. So if
+a stationary model is required, ARIMA models are better.
+
+One advantage of the exponential smoothing models is that they can
+be non-linear. So time series that exhibit non-linear
+characteristics including heteroscedasticity  may be better modelled
+using exponential smoothing state space models.
+
+For seasonal data, there are many more ARIMA models than the 30
+possible models in the exponential smoothing class of
+Section~\ref{sec:expsmooth}. It may be thought that the larger model
+class is advantageous. However, the results in \citet{HKSG02} show
+that the exponential smoothing models performed better than the
+ARIMA models for the seasonal M3 competition data. (For the annual
+M3 data, the ARIMA models performed better.) In a discussion of
+these results, \citet{Hyndman01} speculates that the larger model
+space of ARIMA models actually harms forecasting performance because
+it introduces additional uncertainty. The smaller exponential
+smoothing class is sufficiently rich to capture the dynamics of
+almost all real business and economic time series.
+
+
+\section[The forecast package]{The \pkg{forecast} package}\label{sec:package}
+
+The algorithms and modelling frameworks for automatic univariate
+time series forecasting are implemented in the \pkg{forecast}
+package in \R. We illustrate the methods using the following four
+real time series shown in Figure~\ref{fexamples}.
+\begin{compactitem}
+\item Figure~\ref{fexamples}(a) shows 125 monthly US government
+bond yields (percent per annum) from January 1994 to May 2004.
+
+\item Figure~\ref{fexamples}(b) displays 55 observations of annual
+US net electricity generation (billion kwh) for 1949 through 2003.
+
+\item Figure~\ref{fexamples}(c) presents 113 quarterly observations
+of passenger motor vehicle production in the U.K. (thousands of
+cars) for the first quarter of 1977 through the first quarter of
+2005.
+
+\item Figure~\ref{fexamples}(d) shows 240 monthly observations of
+the number of short term overseas visitors to Australia from May
+1985 to April 2005.
+\end{compactitem}
+
+
+\begin{figure}[!htb]
+\centering
+
+<<ets-forecast ,fig.height=7,fig.width=9,echo=FALSE>>=
+par(mfrow = c(2,2))
+plot(forecast(ets(bonds)), main="(a) US 10-year bonds yield", xlab="Year", ylab="Percentage per annum")
+plot(forecast(ets(usnetelec)), main="(b) US net electricity generation", xlab="Year", ylab="Billion kwh")
+plot(forecast(ets(ukcars)), main="(c) UK passenger motor vehicle production", xlab="Year", ylab="Thousands of cars")
+plot(forecast(ets(visitors)), main="(d) Overseas visitors to Australia", xlab="Year", ylab="Thousands of people")
+@
+
+
+\caption{Four time series showing point forecasts and 80\% \& 95\%
+prediction intervals obtained using exponential smoothing state
+space models.\label{fexamples}}
+\end{figure}
+
+
+\subsection{Implementation of the automatic exponential smoothing
+algorithm}
+
+The innovations state space modelling framework described in
+Section~\ref{sec:expsmooth} is implemented via the \code{ets()}
+function in the \pkg{forecast} package. The models chosen via the
+algorithm for the four data sets were:
+\begin{compactitem}
+\item ETS(A,A\damped,N) for monthly US 10-year bonds yield\\
+($\alpha=0.9999$, $\beta=0.1113$, $\phi=0.8106$, $\ell_0 =  5.3338$,
+$b_0=0.6097$);
+
+\item ETS(M,A,N) for annual US net electricity generation\\
+($\alpha=0.9999$, $\beta=0.1992$, $\ell_0 =  250.4317$,
+$b_0=42.0242$);
+
+\item ETS(A,N,A) for quarterly UK motor vehicle production\\
+($\alpha = 0.6267$, $\gamma=0.0001$, $\ell_0 = 313.0916$, $s_{-3}=24.1778$,
+$s_{-2}=21.5553$, $s_{-1}=-44.606$, $s_0=-1.1271$);
+
+\item ETS(M,A,M) for monthly Australian overseas visitors\\
+($\alpha=0.6567$, $\beta=0.0012$, $\gamma=0.1712$, $\ell_0 = 87.2703$,
+$b_0=2.6226$, $s_{-11} = 0.8595$, $s_{-10} = 0.8619$, $s_{-9}= 0.9993$,
+$s_{-8}= 0.9317$, $s_{-7}= 0.8324$, $s_{-6}= 1.003$, $s_{-5}= 1.107$,
+$s_{-4}= 1.366$, $s_{-3}= 0.9699$, $s_{-2}= 1.0656$, $s_{-1}=1.063$,
+$s_0= 0.9407$).
+\end{compactitem}
+Although there is a lot of computation involved, it can be handled
+remarkably quickly on modern computers. Each of the forecasts shown
+in Figure~\ref{fexamples} took no more than a few seconds on a
+standard PC\@. The US electricity generation series took the longest
+as there are no analytical prediction intervals available for the
+ETS(M,M\damped,N) model. Consequently, the prediction intervals for
+this series were computed using simulation of 5000 future sample
+paths.
+
+To apply the algorithm to the US net electricity generation time
+series \code{usnetelec}, we use the following command.
+
+<<ets-usnetelec,eval=TRUE,echo=TRUE>>=
+etsfit <- ets(usnetelec)
+@
+
+The object \code{etsfit} is of class ``\code{ets}'' and contains all
+of the necessary information about the fitted model including model
+parameters, the value of the state vector $\bm{x}_t$ for all $t$,
+residuals and so on. Printing the \code{etsfit} object shows the
+main items of interest.
+
+<<ets-usnetelec-print,eval=TRUE,echo=TRUE>>=
+etsfit
+@
+
+Some goodness-of-fit measures \citep[defined in][]{HK06} are
+obtained using \code{accuracy()}.
+
+<<ets-usnetelec-accuracy,eval=TRUE,echo=TRUE>>=
+accuracy(etsfit)
+@
+
+There are also \code{coef()}, \code{plot()}, \code{summary()}, \code{residuals()}, \code{fitted()} and
+\code{simulate()} methods for objects of class ``\code{ets}''. The
+\code{plot()} function shows time plots of the original time series
+along with the extracted components (level, growth and seasonal).
+
+The \code{forecast()} function computes the required forecasts which
+are then plotted as in Figure~\ref{fexamples}(b).
+
+<<ets-usnetelec-fcast,eval=TRUE,echo=TRUE, fig.show="hide">>=
+fcast <- forecast(etsfit)
+plot(fcast)
+@
+
+Printing the \code{fcast} object gives a table showing the
+prediction intervals.
+
+<<ets-usnetelec-fcast-print,eval=TRUE,echo=TRUE>>=
+fcast
+@
+
+The \code{ets()} function also provides the useful feature of
+applying a fitted model to a new data set. For example, we could
+withhold 10 observations from the \code{usnetelec} data set when
+fitting, then compute the one-step forecast errors for the
+out-of-sample data.
+
+<<ets-usnetelec-newdata,eval=FALSE,echo=TRUE>>=
+fit <- ets(usnetelec[1:45])
+test <- ets(usnetelec[46:55], model = fit)
+accuracy(test)
+@
+
+We can also look at the measures of forecast accuracy where the
+forecasts are based on only the fitting data.
+
+<<ets-usnetelec-fcast-accuracy,eval=FALSE,echo=TRUE>>=
+accuracy(forecast(fit,10), usnetelec[46:55])
+@
+
+\subsection[The HoltWinters() function]{The \code{HoltWinters()} function}
+
+There is another implementation of exponential smoothing in \R\ via
+the \code{HoltWinters()} function \citep{Meyer:2002} in the \pkg{stats} package. It
+implements only the (N,N), (A,N), (A,A) and (A,M) methods. The
+initial states $\bm{x}_0$ are fixed using a heuristic algorithm.
+Because of the way the initial states are estimated, a full three
+years of seasonal data are required to implement the seasonal
+forecasts using \code{HoltWinters()}. (See \citet{shortseasonal} for
+the minimal sample size required.) The smoothing parameters are
+optimized by minimizing the average squared prediction errors, which
+is equivalent to minimizing \eqref{likelihood} in the case of
+additive errors.
+
+There is a \code{predict()} method for the resulting object which
+can produce point forecasts and prediction intervals. Although it is
+nowhere documented, it appears that the prediction intervals
+produced by \code{predict()} for an object of class
+\code{HoltWinters} are based on an equivalent ARIMA model in the
+case of the (N,N), (A,N) and (A,A) methods, assuming additive
+errors. These prediction intervals are equivalent to the prediction
+intervals that arise from the (A,N,N), (A,A,N) and (A,A,A) state
+space models. For the (A,M) method, the prediction interval provided
+by \code{predict()} appears to be based on \citet{CY91} which is an
+approximation to the true prediction interval arising from the
+(A,A,M) model. Prediction intervals with multiplicative errors are
+not possible using the \code{HoltWinters()} function.
+
+\subsection{Implementation of the automatic ARIMA algorithm}
+
+
+\begin{figure}[!b]
+\centering
+
+<<arima-forecast-plots ,fig.height=7,fig.width=9,echo=FALSE>>=
+par(mfrow = c(2,2))
+plot(forecast(auto.arima(bonds)), main="(a) US 10-year bonds yield", xlab="Year", ylab="Percentage per annum")
+plot(forecast(auto.arima(usnetelec)), main="(b) US net electricity generation", xlab="Year", ylab="Billion kwh")
+plot(forecast(auto.arima(ukcars)), main="(c) UK passenger motor vehicle production", xlab="Year", ylab="Thousands of cars")
+plot(forecast(auto.arima(visitors)), main="(d) Overseas visitors to Australia", xlab="Year", ylab="Thousands of people")
+@
+
+\caption{Four time series showing point forecasts and 80\% \& 95\%
+prediction intervals obtained using ARIMA
+models.\label{arimaexamples}}
+\end{figure}
+
+
+The algorithm of Section~\ref{sec:arima} is applied to the same four
+time series. Unlike the exponential smoothing algorithm, the ARIMA
+class of models assumes homoscedasticity, which is not always
+appropriate. Consequently, transformations are sometimes necessary.
+For these four time series, we model the raw data for series
+(a)--(c), but the logged data for series (d). The prediction
+intervals are back-transformed with the point forecasts to preserve
+the probability coverage.
+
+To apply this algorithm to the US net electricity generation time
+series \code{usnetelec}, we use the following commands.
+<<arima-auto-fcast,eval=TRUE,echo=TRUE,fig.show="hide">>=
+arimafit <- auto.arima(usnetelec)
+fcast <- forecast(arimafit)
+plot(fcast)
+@
+The function \code{auto.arima()} implements the algorithm of
+Section~\ref{sec:arima} and returns an object of class \code{Arima}.
+The resulting forecasts are shown in Figure~\ref{arimaexamples}. The
+fitted models are as follows:
+\begin{compactitem}
+\item ARIMA(2,1,2)(1,0,1)$_{12}$ with drift for monthly US 10-year bonds yield\\
+($\theta_1=-1.3090$, $\theta_2=-0.701$, $\phi_1=1.5853$, $\phi_2=0.9476$, $\Theta_1=-0.2690$, $\Phi_1=0.1206$, $c=-0.0130$);
+
+\item ARIMA(2,1,2) with drift for annual US net electricity generation\\
+($\phi_1=-1.3032$, $\phi_2=-0.4332$, $\theta_1=1.5284$,
+$\theta_2=0.8340$, $c=66.1585$);
+
+\item ARIMA(2,1,0)(2,0,0)$_4$ model for quarterly UK motor vehicle production\\
+($\phi_1=-0.3475$, $\phi_2 = -0.2100$, $\Phi_1=0.2559$, $\Phi_2=0.5913$);
+
+\item ARIMA(1,0,1)(0,1,2)$_{12}$ model with drift
+for monthly Australian overseas visitors\\
+($\phi_1=0.8968$, $\theta_1=-0.3187$, $\Theta_1=-0.7110$,
+$\Theta_2=0.1461$, $c=1.4820$).
+\end{compactitem}
+Note that the \R\ parameterization has $\theta(B) = (1 + \theta_1B +
+\dots + \theta_qB)$ and $\phi(B) = (1 - \phi_1B + \dots - \phi_qB)$,
+and similarly for the seasonal terms.
+
+A summary of the forecasts is available, part of which is shown
+below.
+<<arima-fcast-summary,eval=TRUE,echo=TRUE>>=
+summary(fcast)
+@
+The in-sample error measures for the two models are very similar.
+Note that the information criteria are not comparable.
+
+The \pkg{forecast} package also contains the function \code{Arima()}
+which is largely a wrapper to the \code{arima()} function in the
+\pkg{stats} package. The \code{Arima()} function in the
+\pkg{forecast} package makes it easier to include a drift term when
+$d+D=1$. (Setting \code{include.mean=TRUE} in the \code{arima()}
+function from the \pkg{stats} package will only work when $d+D=0$.)
+It also provides the facility for fitting an existing ARIMA model to
+a new data set (as was demonstrated for the \code{ets()} function
+earlier).
+
+One-step forecasts for ARIMA models are now available via a
+\code{fitted()} function. We also provide a new function
+\code{arima.errors()} which returns the original time series after
+adjusting for regression variables. If there are no regression
+variables in the ARIMA model, then the errors will be identical to
+the original series. If there are regression variables in the ARIMA
+model, then the errors will be equal to the original series minus
+the effect of the regression variables, but leaving in the serial
+correlation that is modelled with the AR and MA terms. In contrast,
+\code{residuals()} provides true residuals, removing the AR and MA
+terms as well.
+
+The generic functions \code{summary()}, \code{print()}, \code{fitted()}  and
+\code{forecast()} apply to models obtained from either the
+\code{Arima()} or \code{arima()} functions.
+
+
+\subsection[The forecast() function]{The \code{forecast()} function}
+
+The \code{forecast()} function is generic and has S3 methods for a
+wide range of time series models. It computes point forecasts and
+prediction intervals from the time series model. Methods exist for
+models fitted using \code{ets()}, \code{auto.arima()},
+\code{Arima()}, \code{arima()}, \code{ar()}, \code{HoltWinters()}
+and \texttt{StructTS()}.
+
+There is also a method for a \code{ts} object. If a time series
+object is passed as the first argument to \code{forecast()}, the
+function will produce forecasts based on the exponential smoothing
+algorithm of Section~\ref{sec:expsmooth}.
+
+In most cases, there is an existing \code{predict()} function which
+is intended to do much the same thing. Unfortunately, the resulting
+objects from the \code{predict()} function contain different
+information in each case and so it is not possible to build generic
+functions (such as \code{plot()} and \code{summary()}) for the
+results. So, instead, \code{forecast()} acts as a wrapper to
+\code{predict()}, and packages the information obtained in a common
+format (the \code{forecast} class). We also define
+a default \code{predict()} method which is used when no existing
+\code{predict()} function exists, and calls the relevant
+\code{forecast()} function. Thus, \code{predict()} methods parallel
+\code{forecast()} methods, but the latter provide consistent output
+that is more useable.
+
+
+
+\subsection[The forecast class]{The \code{forecast} class}
+
+The output from the \code{forecast()} function is an object of class
+``\code{forecast}'' and includes at least the following information:
+\begin{compactitem}
+\item the original series;
+
+\item point forecasts;
+
+\item prediction intervals of specified coverage;
+
+\item the forecasting method used and information about the fitted
+model;
+
+\item residuals from the fitted model;
+
+\item one-step forecasts from the fitted model for the period of the
+observed data.
+\end{compactitem}
+
+There are \code{print()}, \code{plot()} and \code{summary()} methods
+for the ``\code{forecast}'' class. Figures~\ref{fexamples}
+and~\ref{arimaexamples} were produced using the \code{plot()} method.
+
+The prediction intervals are, by default, computed
+for 80\% and 95\% coverage, although other values are possible if
+requested. Fan charts \citep{Wallis99} are possible using the
+combination \verb|plot(forecast(model.object, fan = TRUE))|.
+
+
+\subsection{Other functions}\label{sec:other}
+
+We now briefly describe some of the other features of the
+\pkg{forecast} package. Each of the following functions produces an
+object of class ``\code{forecast}''.
+\begin{description}
+\item \code{croston()} implements \citeauthor{Croston72}'s
+    \citeyearpar{Croston72} method for intermittent demand
+    forecasting. In this method, the time series is decomposed
+    into two separate sequences: the non-zero values and the
+    time intervals between non-zero values. These are then
+    independently forecast using simple exponential smoothing
+    and the forecasts of the original series are obtained as
+    ratios of the two sets of forecasts. No prediction intervals
+    are provided because there is no underlying stochastic model
+    \citep{SH05}.
+
+\item \code{theta()} provides forecasts from the Theta method
+\citep{AN00}. \citet{HB03} showed that these were equivalent to a
+special case of simple exponential smoothing with drift.
+
+\item \code{splinef()} gives cubic-spline forecasts, based on
+fitting a cubic spline to the historical data and extrapolating it
+linearly. The details of this method, and the associated prediction
+intervals, are discussed in \citet{HKPB05}.
+
+
+\item \code{meanf()} returns forecasts based on the historical mean.
+
+\item \code{rwf()} gives ``na\"{\i}ve'' forecasts equal to the most
+recent observation assuming a random walk model. This function
+also allows forecasting using a random walk with drift.
+
+<<reset, echo=FALSE>>=
+options(oldopts)
+@
+
+\end{description}
+
+In addition, there are some new plotting functions for time series.
+\begin{description}
+\item \code{tsdisplay()} provides a time plot along with an ACF and
+PACF.
+
+\item \code{seasonplot()} produces a seasonal plot as described in
+\citet{MWH3}.
+
+\end{description}
+
+\bibliography{JSS-paper}
+
+\end{document}

@@ -7,7 +7,9 @@ Description: Methods and tools for displaying and analysing
 Depends: R (>= 3.0.2), stats, graphics, zoo, timeDate
 Imports: tseries, fracdiff, Rcpp (>= 0.11.0), nnet, colorspace,
   parallel, ggplot2 (>= 2.0.0), magrittr, seasonal, lmtest
-Suggests: testthat
+Suggests: testthat,
+    knitr,
+    rmarkdown
 LinkingTo: Rcpp (>= 0.11.0), RcppArmadillo (>= 0.2.35)
 LazyData: yes
 ByteCompile: TRUE
@@ -16,3 +18,4 @@ Authors@R: c(person(given="Rob", family="Hyndman", role=c("aut", "cre", "cph"),
 BugReports: https://github.com/robjhyndman/forecast/issues
 License: GPL (>= 2)
 URL: http://github.com/robjhyndman/forecast
+VignetteBuilder: knitr
