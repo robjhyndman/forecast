@@ -34,6 +34,7 @@ forecast.varest <- function(object, h=10, level=c(80,95), fan=FALSE, ...)
 	  fcast$series <- colnames(object$y)[j]
 	  tsp(fcast$residuals) <- tsp(fcast$fitted) <- tspx
 	  fcast <- structure(fcast, class="forecast")
+	  out$forecast[[j]] <- fcast
 	  j <- j + 1
 	}
 	names(out$forecast) <- names(pr$fcst)
