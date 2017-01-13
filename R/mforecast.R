@@ -127,18 +127,11 @@ forecast.mts <- function(object, h=ifelse(frequency(object)>1, 2*frequency(objec
 
 print.mforecast <- function(x, ...)
 {
-  for(i in 1:length(x$mean))
-  {
-    cat(names(x$mean)[i],"\n")
-    fcst <- x
-    fcst$mean <- x$mean[[i]]
-    fcst$lower <- x$lower[[i]]
-    fcst$upper <- x$upper[[i]]
-    class(fcst) <- "forecast"
-    print(fcst)
-    if(i < length(x$mean))
-      cat("\n")
-  }
+  lapply(x$forecast, function(x){
+    cat(paste0(x$series, "\n"))
+    print(x)
+    cat("\n")
+  })
 }
 
 plot.mforecast <- function(x, main=paste("Forecasts from",x$method),xlab="time",...)
