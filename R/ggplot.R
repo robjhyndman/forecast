@@ -1293,15 +1293,14 @@ autolayer.forecast <- function(object, series = NULL, PI = TRUE, showgap = TRUE,
 autolayer.mforecast <- function(object, series = NULL, PI = TRUE, ...){
   cl <- match.call()
   cl[[1]] <- quote(autolayer)
-  cl$object <- quote(fclist[[i]])
+  cl$object <- quote(object$forecast[[i]])
   if(!is.null(series)){
-    if(length(series)!=length(object$mean)){
-      series <- names(object$mean)
+    if(length(series)!=length(object$forecast)){
+      series <- names(object$forecast)
     }
   }
-  fclist <- mforecastsplit(object)
   out <- list()
-  for(i in 1:length(fclist)){
+  for(i in 1:length(object$forecast)){
     cl$series <- series[i]
     out[[i]] <- eval(cl)
   }
