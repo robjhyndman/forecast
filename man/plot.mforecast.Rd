@@ -5,7 +5,7 @@
 \title{Multivariate forecast plot}
 
 \usage{
-\method{plot}{mforecast}(x, main=paste("Forecasts from",x$method),xlab="time",...)
+\method{plot}{mforecast}(x, main=paste("Forecasts from",unique(x$method)),xlab="time",...)
 \method{autoplot}{mforecast}(object, PI = TRUE, facets = TRUE, colour = FALSE, ...)
 \method{autolayer}{mforecast}(object, series = NULL, PI = TRUE, ...)
 }

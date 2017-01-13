@@ -101,7 +101,7 @@ print.mforecast <- function(x, ...)
   return(invisible())
 }
 
-plot.mforecast <- function(x, main=paste("Forecasts from",x$method),xlab="time",...)
+plot.mforecast <- function(x, main=paste("Forecasts from",unique(x$method)),xlab="time",...)
 {
   oldpar <- par(mfrow=c(length(x$forecast),1),mar=c(0,5.1,0,2.1),oma=c(6,0,5,0))
   on.exit(par(oldpar))
