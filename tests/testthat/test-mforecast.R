@@ -37,7 +37,7 @@ if(require(testthat))
     fcast <- forecast(fit, newdata=data.frame(v_x=30))
     fit2 <- lm(mv_y[,1] ~ v_x)
     fcast2 <- forecast(fit2, newdata=data.frame(v_x=30))
-    expect_equal(fcast$res[,1], fcast2$residuals)
+    expect_equal(fcast$forecast[[1]]$residuals, fcast2$residuals)
   })
 
   test_that("tests for forecast.mts()", {
@@ -45,8 +45,8 @@ if(require(testthat))
     fcast_b <- forecast(lungDeaths)
     fcast_m <- forecast(mdeaths)
     fcast_f <- forecast(fdeaths)
-    expect_true(all.equal(fcast_b$mean[[1]], fcast_m$mean))
-    expect_true(all.equal(fcast_b$mean[[2]], fcast_f$mean))
+    expect_true(all.equal(fcast_b$forecast[[1]]$mean, fcast_m$mean))
+    expect_true(all.equal(fcast_b$forecast[[2]]$mean, fcast_f$mean))
   })
 
   test_that("tests for print.mforecast()", {
