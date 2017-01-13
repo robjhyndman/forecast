@@ -132,6 +132,7 @@ print.mforecast <- function(x, ...)
     print(x)
     cat("\n")
   })
+  return(invisible())
 }
 
 plot.mforecast <- function(x, main=paste("Forecasts from",x$method),xlab="time",...)
