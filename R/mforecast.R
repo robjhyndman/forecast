@@ -136,21 +136,11 @@ print.mforecast <- function(x, ...)
 
 plot.mforecast <- function(x, main=paste("Forecasts from",x$method),xlab="time",...)
 {
-  K <- length(x$mean)
-  oldpar <- par(mfrow=c(K,1),mar=c(0,5.1,0,2.1),oma=c(6,0,5,0))
+  oldpar <- par(mfrow=c(length(x$forecast),1),mar=c(0,5.1,0,2.1),oma=c(6,0,5,0))
   on.exit(par(oldpar))
-  for(i in 1:K)
+  for(fcast in x$forecast)
   {
-    fcst <- x
-    fcst$mean <- x$mean[[i]]
-    fcst$lower <- x$lower[[i]]
-    fcst$upper <- x$upper[[i]]
-    fcst$x <- x$x[,i]
-    if("mlm" %in% class(fcst$model)){
-      fcst$model <- mlmsplit(fcst$model, index=i)
-    }
-    class(fcst) <- "forecast"
-    plot(fcst,main="",xaxt="n",ylab=names(x$mean)[i],...)
+    plot(fcast,main="",xaxt="n",ylab=fcast$series,...)
   }
   axis(1)
   mtext(xlab,outer=TRUE,side=1,line=3)
