@@ -9,7 +9,8 @@ Imports: tseries, fracdiff, Rcpp (>= 0.11.0), nnet, colorspace,
   parallel, ggplot2 (>= 2.0.0), magrittr, lmtest
 Suggests: testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    expsmooth
 LinkingTo: Rcpp (>= 0.11.0), RcppArmadillo (>= 0.2.35)
 LazyData: yes
 ByteCompile: TRUE
