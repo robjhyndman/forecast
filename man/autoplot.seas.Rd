@@ -23,7 +23,7 @@
 \value{Returns an object of class \code{ggplot}.
 }
 
-\seealso{\code{\link[seasonal]{seas}}, \code{\link[stats]{stl}}, \code{\link[stats]{decompose}}, \code{\link[stats]{StructTS}}, \code{\link[stats]{plot.stl}}. 
+\seealso{\code{\link[seasonal]{seas}}, \code{\link[stats]{stl}}, \code{\link[stats]{decompose}}, \code{\link[stats]{StructTS}}, \code{\link[stats]{plot.stl}}.
 }
 
 \author{Mitchell O'Hara-Wild}
@@ -32,7 +32,9 @@ library(ggplot2)
 co2 %>% decompose %>% autoplot
 nottem %>% stl(s.window='periodic') %>% autoplot
 
+\dontrun{
 library(seasonal)
 m <- seas(USAccDeaths)
 autoplot(m)
+}
 }

@@ -38,7 +38,7 @@ trendcycle <- function(object)
 #     return(trnd)
 #   }
   else if("seas" %in% class(object))
-    return(seasonal::trend(object))
+    return(seasextract_w_na_action(object, "trend"))
 	else
 	  stop("Unknown object type")
 }
@@ -60,8 +60,24 @@ remainder <- function(object)
 #     return(irreg)
 #   }
   else if("seas" %in% class(object))
-    return(seasonal::irregular(object))
+    return(seasextract_w_na_action(object, "irregular"))
 	else
 	  stop("Unknown object type")
 }
 
+## Copied from seasonal:::extract_w_na_action
+## Importing is problematic due to issues with ARM processors
+
+seasextract_w_na_action <- function (x, name)
+{
+    if (is.null(x$data))
+        return(NULL)
+    z <- na.omit(x$data[, name])
+    if (!is.null(x$na.action)) {
+        if (attr(x$na.action, "class") == "exclude") {
+            z <- ts(stats::napredict(x$na.action, z))
+            tsp(z) <- tsp(x$x)
+        }
+    }
+    z
+}

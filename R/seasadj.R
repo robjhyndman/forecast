@@ -29,5 +29,5 @@ seasadj.tbats <- function(object, ...)
 
 seasadj.seas <- function(object, ...)
 {
-  return(seasonal::final(object))
+  return(seasextract_w_na_action(object, "final"))
 }
