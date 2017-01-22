@@ -69,11 +69,11 @@ forecast.ts <- function(object, h=ifelse(frequency(object)>1, 2*frequency(object
       fit <- tbats(object, model=model, ...)
     else if(inherits(model, "nnetar"))
       fit <- nnetar(object, model=model, ...)
-    else 
+    else
       stop("Unknown model class")
     return(forecast(fit,h=h,level=level,fan=fan))
   }
-  
+
   if(n > 3)
   {
     if(obj.freq < 13)
@@ -82,7 +82,7 @@ forecast.ts <- function(object, h=ifelse(frequency(object)>1, 2*frequency(object
     else if(n > 2*obj.freq)
       out <- stlf(object,h=h,level=level,fan=fan,lambda = lambda,
         allow.multiplicative.trend=allow.multiplicative.trend,...)
-    else 
+    else
       out <- forecast(ets(object, model="ZZN", lambda = lambda, allow.multiplicative.trend=allow.multiplicative.trend, ...),
         h=h,level=level,fan=fan)
 
@@ -111,7 +111,7 @@ as.data.frame.forecast <- function(x,...)
         x$lower <- as.matrix(x$lower)
         for (i in 1:nconf)
         {
-            out <- cbind(out, x$lower[, i], x$upper[, i])
+            out <- cbind(out, x$lower[, i,drop=FALSE], x$upper[, i,drop=FALSE])
             names <- c(names, paste("Lo", x$level[i]), paste("Hi", x$level[i]))
         }
     }
@@ -324,7 +324,7 @@ plot.forecast <- function(x, include, PI=TRUE, showgap = TRUE, shaded=TRUE, shad
     nx <- max(which(!is.na(xx)))
     xxx <- xx[1:nx]
     include <- min(include,nx)
-    
+
     if(!showgap){
       lastObs <- x$x[length(x$x)]
       lastTime <- time(x$x)[length(x$x)]
@@ -339,12 +339,12 @@ plot.forecast <- function(x, include, PI=TRUE, showgap = TRUE, shaded=TRUE, shad
     strt <- start(x$mean)
     nx <- include <- 1
     xx <- xxx <- ts(NA,frequency=freq,end=tsp(x$mean)[1]-1/freq)
-    
+
     if(!showgap){
       warning("Removing the gap requires historical data, provide this via model$x. Defaulting showgap to TRUE.")
     }
   }
-  
+
   pred.mean <- x$mean
 
   if(is.null(ylim))
@@ -492,8 +492,8 @@ forecast.forecast <- function(object, ...)
     object$mean <- ts(object$mean[1:h], start=tspf[1], frequency=tspf[3])
     if(!is.null(object$upper))
     {
-      object$upper <- ts(object$upper[1:h,], start=tspf[1], frequency=tspf[3])
-      object$lower <- ts(object$lower[1:h,], start=tspf[1], frequency=tspf[3])
+      object$upper <- ts(object$upper[1:h,,drop=FALSE], start=tspf[1], frequency=tspf[3])
+      object$lower <- ts(object$lower[1:h,,drop=FALSE], start=tspf[1], frequency=tspf[3])
     }
   }
   return(object)
