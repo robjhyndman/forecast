@@ -1,6 +1,23 @@
-Version 7.4 (?? 2016)
-  * Added gghistogram() and checkresiduals()
+Version 8.0 (?? January 2017)
+  * Added pipe operator
+  * Added tsCV() and CVar() functions
+  * Added baggedETS()
   * Added head.ts() and tail.ts(), so head and tail now work properly on ts objects.
+  * Added gghistogram() and checkresiduals()
+  * Added ggseasonplot with polar coordinates
+  * Added autolayer.ts
+  * Added type argument to residuals() for different types of residuals
+  * Added support for seas objects from the seasonal package
+  * Component extraction for seasonal decomposition methods
+  * Range bars for decomposition autoplots
+  * Added autoplot.StructTS()
+  * Added vignette based on JSS article
+  * Improved ggplot functions
+  * mforecast objects re-structured
+  * autoplot functions now exported
+  * Refit support for arfima() and stlm()
+  * Better bias adjustment support after Box-Cox transformation
+  * print.ARIMA has better labelling of constants
   * Bug fixes
 
 Version 7.3 (12 October 2016)
