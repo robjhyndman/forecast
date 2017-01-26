@@ -19,6 +19,7 @@ thetaf <- function(y, h=ifelse(frequency(y)>1, 2*frequency(y), 10),
 
   # Check seasonality
   n <- length(x)
+  x <- as.ts(x)
   m <- frequency(x)
   if(m > 1)
   {
