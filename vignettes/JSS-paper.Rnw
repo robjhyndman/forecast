@@ -12,18 +12,9 @@
 \Plaintitle{Automatic Time Series Forecasting: The forecast Package for R}
 
 \Abstract{
-This vignette to the \proglang{R} package \pkg{forecast} is an extended version of \cite{HK2008}, published in the \emph{Journal of Statistical Software}.
+This vignette to the \proglang{R} package \pkg{forecast} is an updated version of \cite{HK2008}, published in the \emph{Journal of Statistical Software}.
 
-Automatic forecasts of large numbers of univariate time
-series are often needed in business and other contexts. We describe
-two automatic forecasting algorithms that have been implemented in
-the \pkg{forecast} package for \R. The first is based on innovations
-state space models that underly exponential smoothing methods. The
-second is a step-wise algorithm for forecasting with ARIMA models.
-The algorithms are applicable to both seasonal and non-seasonal
-data, and are compared and illustrated using four real time series.
-We also briefly describe some of the other functionality available
-in the \pkg{forecast} package.}
+Automatic forecasts of large numbers of univariate time series are often needed in business and other contexts. We describe two automatic forecasting algorithms that have been implemented in the \pkg{forecast} package for \R. The first is based on innovations state space models that underly exponential smoothing methods. The second is a step-wise algorithm for forecasting with ARIMA models. The algorithms are applicable to both seasonal and non-seasonal data, and are compared and illustrated using four real time series. We also briefly describe some of the other functionality available in the \pkg{forecast} package.}
 
 \Keywords{ARIMA models, automatic forecasting, exponential smoothing, prediction intervals, state space models, time series, \R}
 \Plainkeywords{ARIMA models, automatic forecasting, exponential smoothing, prediction intervals, state space models, time series, R}
@@ -40,14 +31,13 @@ in the \pkg{forecast} package.}
   Department of Econometrics \& Business Statistics\\
   Monash University\\
   Clayton VIC 3800, Australia\\
-  E-mail: \email{Rob.Hyndman@buseco.monash.edu.au}\\
+  E-mail: \email{Rob.Hyndman@monash.edu}\\
   URL: \url{http://www.robhyndman.info}\\
 
   Yeasmin Khandakar\\
   Department of Econometrics \& Business Statistics\\
   Monash University\\
-  Clayton VIC 3800, Australia\\
-  E-mail: \email{Yeasmin.Khandakar@buseco.monash.edu.au}
+  Clayton VIC 3800, Australia
 }
 
 \begin{document}
@@ -55,7 +45,7 @@ in the \pkg{forecast} package.}
 <<include=FALSE, echo=FALSE>>=
 library(knitr)
 opts_chunk$set(
-concordance=TRUE, 
+concordance=TRUE,
 engine='R'
 )
 @
@@ -75,46 +65,13 @@ oldopts <- options(prompt = "R> ", continue = "+   ")
 
 \section{Introduction}
 
-Automatic forecasts of large numbers of univariate time series are
-often needed in business. It is common to have over one thousand
-product lines that need forecasting at least monthly. Even when a
-smaller number of forecasts are required, there may be nobody
-suitably trained in the use of time series models to produce them.
-In these circumstances, an automatic forecasting algorithm is an
-essential tool. Automatic forecasting algorithms must determine an
-appropriate time series model, estimate the parameters and compute
-the forecasts. They must be robust to unusual time series patterns,
-and applicable to large numbers of series without user intervention.
-The most popular automatic forecasting algorithms are based on
-either exponential smoothing or ARIMA models.
+Automatic forecasts of large numbers of univariate time series are often needed in business. It is common to have over one thousand product lines that need forecasting at least monthly. Even when a smaller number of forecasts are required, there may be nobody suitably trained in the use of time series models to produce them. In these circumstances, an automatic forecasting algorithm is an essential tool. Automatic forecasting algorithms must determine an appropriate time series model, estimate the parameters and compute the forecasts. They must be robust to unusual time series patterns, and applicable to large numbers of series without user intervention. The most popular automatic forecasting algorithms are based on either exponential smoothing or ARIMA models.
 
-In this article, we discuss the implementation of two automatic
-univariate forecasting methods in the \pkg{forecast} package for \R.
-We also briefly describe some univariate forecasting
-methods that are part of the \pkg{forecast} package.
+In this article, we discuss the implementation of two automatic univariate forecasting methods in the \pkg{forecast} package for \R. We also briefly describe some univariate forecasting methods that are part of the \pkg{forecast} package.
 
-The \pkg{forecast} package for the \proglang{R} system for
-statistical computing \citep{R} is part of the \pkg{forecasting}
-bundle \citep{expsmooth,fma,forecast,Mcomp} which also contains the packages \pkg{fma}, \pkg{expsmooth}
-and \pkg{Mcomp}, and is available from the Comprehensive \proglang{R}
-Archive Network at \url{http://CRAN.R-project.org/package=forecasting}. Version~1.11 of the
-package was used for this paper. The \pkg{forecast} package contains
-functions for univariate forecasting, while the other three packages
-contain large collections of real time series data that are suitable
-for testing forecasting methods. The \pkg{fma} package contains the
-90~data sets from \citet{MWH3}, the \pkg{expsmooth} package contains
-24~data sets from \citet{expsmooth08}, and the \pkg{Mcomp} package
-contains the 1001~time series from the M-competition \citep{Mcomp82}
-and the 3003~time series from the M3-competition \citep{M3comp00}.
+The \pkg{forecast} package for the \proglang{R} system for statistical computing \citep{R} is part of the \pkg{forecasting} bundle \citep{expsmooth,fma,forecast,Mcomp} which also contains the packages \pkg{fma}, \pkg{expsmooth} and \pkg{Mcomp}, and is available from the Comprehensive \proglang{R} Archive Network at \url{http://CRAN.R-project.org/package=forecasting}. Version~\Sexpr{packageVersion('forecast')} of the package was used for this paper. The \pkg{forecast} package contains functions for univariate forecasting, while the other three packages contain large collections of real time series data that are suitable for testing forecasting methods. The \pkg{fma} package contains the 90~data sets from \citet{MWH3}, the \pkg{expsmooth} package contains 24~data sets from \citet{expsmooth08}, and the \pkg{Mcomp} package contains the 1001~time series from the M-competition \citep{Mcomp82} and the 3003~time series from the M3-competition \citep{M3comp00}.
 
-The \pkg{forecast} package implements automatic forecasting using
-exponential smoothing, ARIMA models, the Theta method \citep{AN00},
-cubic splines \citep{HKPB05}, as well as other common forecasting
-methods. In this article, we primarily discuss the exponential
-smoothing approach (in Section~\ref{sec:expsmooth}) and the ARIMA
-modelling approach (in Section~\ref{sec:arima}) to automatic
-forecasting. In Section~\ref{sec:package}, we describe the implementation of these
-methods in the \pkg{forecast} package, along with other features of the package.
+The \pkg{forecast} package implements automatic forecasting using exponential smoothing, ARIMA models, the Theta method \citep{AN00}, cubic splines \citep{HKPB05}, as well as other common forecasting methods. In this article, we primarily discuss the exponential smoothing approach (in Section~\ref{sec:expsmooth}) and the ARIMA modelling approach (in Section~\ref{sec:arima}) to automatic forecasting. In Section~\ref{sec:package}, we describe the implementation of these methods in the \pkg{forecast} package, along with other features of the package.
 
 \section{Exponential smoothing}\label{sec:expsmooth}
 
