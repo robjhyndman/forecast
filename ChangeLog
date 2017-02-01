@@ -1,4 +1,4 @@
-Version 8.0 (?? January 2017)
+Version 8.0 (?? February 2017)
   * Added pipe operator
   * Added tsCV() and CVar() functions
   * Added baggedETS()
@@ -14,6 +14,7 @@ Version 8.0 (?? January 2017)
   * Added vignette based on JSS article
   * Improved ggplot functions
   * mforecast objects re-structured
+  * Added as.data.frame.mforecast()
   * autoplot functions now exported
   * Refit support for arfima() and stlm()
   * Better bias adjustment support after Box-Cox transformation
