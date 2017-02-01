@@ -402,7 +402,6 @@ autoplot.ets <- function (object, range.bars = NULL, ...){
     #Add data
     p <- p + ggplot2::geom_line(na.rm=TRUE)
     p <- p + ggplot2::facet_grid(parts ~ ., scales="free_y", switch="y")
-    browser()
     if(is.null(range.bars)){
       range.bars <- is.null(object$lambda)
     }
