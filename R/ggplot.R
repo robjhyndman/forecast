@@ -272,7 +272,7 @@ autoplot.Arima <- function (object, type = c("both", "ar", "ma"), ...){
       q <- 0
     }
     else{
-      stop("autoplot.Arima requires an Arima object, use object=object")
+      stop("autoplot.Arima requires an Arima object")
     }
 
     if (type == "both") {
@@ -281,21 +281,26 @@ autoplot.Arima <- function (object, type = c("both", "ar", "ma"), ...){
 
     #Prepare data
     arData <- maData <- NULL
-    if("ar" %in% type){
+    if("ar" %in% type & p > 0){
       arData <- arroots(object)
       arData <- data.frame(roots = arData$roots, type = arData$type)
     }
-    if("ma" %in% type){
+    if("ma" %in% type & q > 0){
       maData <- maroots(object)
       maData <- data.frame(roots = maData$roots, type = maData$type)
     }
     allRoots <- rbind(arData, maData)
-    allRoots$Real <- Re(1/allRoots$roots)
-    allRoots$Imaginary <- Im(1/allRoots$roots)
-    allRoots$UnitCircle <- factor(ifelse((abs(allRoots$roots) > 1), "Within", "Outside"))
-
+    if(p + q > 0)
+    {
+      allRoots$Real <- Re(1/allRoots$roots)
+      allRoots$Imaginary <- Im(1/allRoots$roots)
+      allRoots$UnitCircle <- factor(ifelse((abs(allRoots$roots) > 1), "Within", "Outside"))
+    }
     #Initialise general ggplot object
-    p <- ggplot2::ggplot(ggplot2::aes_(x=~Real, y=~Imaginary, colour=~UnitCircle), data=allRoots)
+    if(p+q > 0)
+      p <- ggplot2::ggplot(ggplot2::aes_(x=~Real, y=~Imaginary, colour=~UnitCircle), data=allRoots)
+    else
+      p <- ggplot2::ggplot()
     p <- p + ggplot2::coord_fixed(ratio = 1)
     p <- p + ggplot2::annotate("path", x=cos(seq(0,2*pi,length.out=100)),
                                y=sin(seq(0,2*pi,length.out=100)))
