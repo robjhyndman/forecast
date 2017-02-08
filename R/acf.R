@@ -100,7 +100,8 @@ seasonalaxis <- function(frequency, nlags, type, plot=TRUE)
           out2 <- 1:nlags
         else if(nlags <= 15 & type=="ccf")
           out2 <- (-nlags:nlags)
-        out <- pretty(out2)
+        if(!is.null(out2))
+          out <- pretty(out2)
       }
     }
     else if(frequency > 1 & ((type=="acf" & np >= 2L) | (type=="ccf" & np >= 1L)))
