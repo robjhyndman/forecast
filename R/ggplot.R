@@ -114,7 +114,7 @@ ggAcf <- function(x, lag.max = NULL,
                   type = c("correlation", "covariance", "partial"),
                   plot = TRUE, na.action = na.contiguous, demean=TRUE, ...){
   cl <- match.call()
-  if(plot==TRUE){
+  if(plot){
     cl$plot=FALSE
   }
   cl[[1]] <- quote(Acf)
@@ -143,13 +143,13 @@ ggPacf <- function(x, lag.max = NULL,
 ggCcf <- function(x, y, lag.max=NULL, type=c("correlation","covariance"),
                   plot=TRUE, na.action=na.contiguous, ...){
   cl <- match.call()
-  if(plot==TRUE){
+  if(plot){
     cl$plot <- FALSE
   }
   cl[[1]] <- quote(Ccf)
   object <- eval.parent(cl)
   object$snames <- paste(substitute(x), "&", substitute(y))
-  if(plot==TRUE){
+  if(plot){
     return(autoplot(object, ...))
   }
   else{
@@ -220,12 +220,12 @@ autoplot.mpacf <- function(object, ...){
 ggtaperedacf <- function(x, lag.max=NULL, type=c("correlation", "partial"),
                          plot=TRUE, calc.ci=TRUE, level=95, nsim=100, ...){
   cl <- match.call()
-  if(plot==TRUE){
+  if(plot){
     cl$plot=FALSE
   }
   cl[[1]] <- quote(taperedacf)
   object <- eval.parent(cl)
-  if(plot==TRUE){
+  if(plot){
     return(autoplot(object, ...))
   }
   else{
