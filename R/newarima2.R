@@ -460,7 +460,8 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   # Nothing fitted
   if(bestfit$ic == Inf)
   {
-    cat("\n")
+    if(trace)
+      cat("\n")
     stop("No suitable ARIMA model found")
   }
 
