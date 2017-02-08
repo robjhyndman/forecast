@@ -70,20 +70,23 @@ autoplot.acf <- function(object, ci=0.95, ...){
     p <- p + ggplot2::geom_hline(yintercept=c(-ci, ci), colour="blue", linetype="dashed")
 
     #Prepare graph labels
-    if(object$series == "X"){
+    if(!is.null(object$ccf)){
       ylab <- "CCF"
       ticktype <- "ccf"
       main <- paste("Series:",object$snames)
+      nlags <- round(length(data$Lag)/2)
     }
     else if(object$type == "partial"){
       ylab <- "PACF"
       ticktype <- "acf"
       main <- paste("Series:",object$series)
+      nlags <- length(data$Lag)
     }
     else if(object$type == "correlation"){
       ylab <- "ACF"
       ticktype <- "acf"
       main <- paste("Series:",object$series)
+      nlags <- length(data$Lag)
     }
     else{
       ylab <- NULL
@@ -104,7 +107,7 @@ autoplot.acf <- function(object, ci=0.95, ...){
     else
       minorbreaks <- NULL
     p <- p + ggplot2::scale_x_continuous(breaks = seasonalaxis(freq,
-      length(data$Lag), type=ticktype, plot=FALSE), minor_breaks=minorbreaks)
+      nlags, type=ticktype, plot=FALSE), minor_breaks=minorbreaks)
     p <- p + ggAddExtras(ylab=ylab, xlab="Lag", main=main)
     return(p)
   }
@@ -149,6 +152,7 @@ ggCcf <- function(x, y, lag.max=NULL, type=c("correlation","covariance"),
   cl[[1]] <- quote(Ccf)
   object <- eval.parent(cl)
   object$snames <- paste(substitute(x), "&", substitute(y))
+  object$ccf <- TRUE
   if(plot){
     return(autoplot(object, ...))
   }
