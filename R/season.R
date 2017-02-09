@@ -318,10 +318,10 @@ stlf <- function(y, h=frequency(x)*2, s.window=7, t.window=NULL, robust=FALSE, l
 fourier <- function(x, K, h=NULL)
 {
   if(is.null(h)){
-    return(...fourier(x, K, 1:length(x)))
+    return(...fourier(x, K, 1:NROW(x)))
   }
   else{
-    return(...fourier(x, K, length(x)+(1:h)))
+    return(...fourier(x, K, NROW(x)+(1:h)))
   }
 }
 

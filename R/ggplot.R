@@ -70,20 +70,23 @@ autoplot.acf <- function(object, ci=0.95, ...){
     p <- p + ggplot2::geom_hline(yintercept=c(-ci, ci), colour="blue", linetype="dashed")
 
     #Prepare graph labels
-    if(object$series == "X"){
+    if(!is.null(object$ccf)){
       ylab <- "CCF"
       ticktype <- "ccf"
       main <- paste("Series:",object$snames)
+      nlags <- round(length(data$Lag)/2)
     }
     else if(object$type == "partial"){
       ylab <- "PACF"
       ticktype <- "acf"
       main <- paste("Series:",object$series)
+      nlags <- length(data$Lag)
     }
     else if(object$type == "correlation"){
       ylab <- "ACF"
       ticktype <- "acf"
       main <- paste("Series:",object$series)
+      nlags <- length(data$Lag)
     }
     else{
       ylab <- NULL
@@ -104,7 +107,7 @@ autoplot.acf <- function(object, ci=0.95, ...){
     else
       minorbreaks <- NULL
     p <- p + ggplot2::scale_x_continuous(breaks = seasonalaxis(freq,
-      length(data$Lag), type=ticktype, plot=FALSE), minor_breaks=minorbreaks)
+      nlags, type=ticktype, plot=FALSE), minor_breaks=minorbreaks)
     p <- p + ggAddExtras(ylab=ylab, xlab="Lag", main=main)
     return(p)
   }
@@ -114,7 +117,7 @@ ggAcf <- function(x, lag.max = NULL,
                   type = c("correlation", "covariance", "partial"),
                   plot = TRUE, na.action = na.contiguous, demean=TRUE, ...){
   cl <- match.call()
-  if(plot==TRUE){
+  if(plot){
     cl$plot=FALSE
   }
   cl[[1]] <- quote(Acf)
@@ -143,13 +146,14 @@ ggPacf <- function(x, lag.max = NULL,
 ggCcf <- function(x, y, lag.max=NULL, type=c("correlation","covariance"),
                   plot=TRUE, na.action=na.contiguous, ...){
   cl <- match.call()
-  if(plot==TRUE){
+  if(plot){
     cl$plot <- FALSE
   }
   cl[[1]] <- quote(Ccf)
   object <- eval.parent(cl)
   object$snames <- paste(substitute(x), "&", substitute(y))
-  if(plot==TRUE){
+  object$ccf <- TRUE
+  if(plot){
     return(autoplot(object, ...))
   }
   else{
@@ -220,12 +224,12 @@ autoplot.mpacf <- function(object, ...){
 ggtaperedacf <- function(x, lag.max=NULL, type=c("correlation", "partial"),
                          plot=TRUE, calc.ci=TRUE, level=95, nsim=100, ...){
   cl <- match.call()
-  if(plot==TRUE){
+  if(plot){
     cl$plot=FALSE
   }
   cl[[1]] <- quote(taperedacf)
   object <- eval.parent(cl)
-  if(plot==TRUE){
+  if(plot){
     return(autoplot(object, ...))
   }
   else{
@@ -272,7 +276,7 @@ autoplot.Arima <- function (object, type = c("both", "ar", "ma"), ...){
       q <- 0
     }
     else{
-      stop("autoplot.Arima requires an Arima object, use object=object")
+      stop("autoplot.Arima requires an Arima object")
     }
 
     if (type == "both") {
@@ -281,21 +285,26 @@ autoplot.Arima <- function (object, type = c("both", "ar", "ma"), ...){
 
     #Prepare data
     arData <- maData <- NULL
-    if("ar" %in% type){
+    if("ar" %in% type & p > 0){
       arData <- arroots(object)
       arData <- data.frame(roots = arData$roots, type = arData$type)
     }
-    if("ma" %in% type){
+    if("ma" %in% type & q > 0){
       maData <- maroots(object)
       maData <- data.frame(roots = maData$roots, type = maData$type)
     }
     allRoots <- rbind(arData, maData)
-    allRoots$Real <- Re(1/allRoots$roots)
-    allRoots$Imaginary <- Im(1/allRoots$roots)
-    allRoots$UnitCircle <- factor(ifelse((abs(allRoots$roots) > 1), "Within", "Outside"))
-
+    if(p + q > 0)
+    {
+      allRoots$Real <- Re(1/allRoots$roots)
+      allRoots$Imaginary <- Im(1/allRoots$roots)
+      allRoots$UnitCircle <- factor(ifelse((abs(allRoots$roots) > 1), "Within", "Outside"))
+    }
     #Initialise general ggplot object
-    p <- ggplot2::ggplot(ggplot2::aes_(x=~Real, y=~Imaginary, colour=~UnitCircle), data=allRoots)
+    if(p+q > 0)
+      p <- ggplot2::ggplot(ggplot2::aes_(x=~Real, y=~Imaginary, colour=~UnitCircle), data=allRoots)
+    else
+      p <- ggplot2::ggplot()
     p <- p + ggplot2::coord_fixed(ratio = 1)
     p <- p + ggplot2::annotate("path", x=cos(seq(0,2*pi,length.out=100)),
                                y=sin(seq(0,2*pi,length.out=100)))
