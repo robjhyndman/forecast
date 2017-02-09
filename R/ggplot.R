@@ -1275,7 +1275,7 @@ autolayer.ts <- function(object, colour=TRUE, series=NULL, ...){
 
 autolayer.forecast <- function(object, series = NULL, PI = TRUE, showgap = TRUE, ...){
   PI <- PI & !is.null(object$level)
-  data <- fortify(object, PI=PI, showgap=showgap)
+  data <- forecast2plotdf(object, PI=PI, showgap=showgap)
   mapping <- ggplot2::aes_(x = ~x, y = ~y)
   if(!is.null(object$series)){
     data[["series"]] <- object$series
@@ -1391,7 +1391,7 @@ fortify.ts <- function(model, data, ...)
   }
 }
 
-fortify.forecast <- function(model, data=as.data.frame(model), PI=TRUE, showgap=TRUE, ...){
+forecast2plotdf <- function(model, data=as.data.frame(model), PI=TRUE, showgap=TRUE, ...){
   # Time series forecasts
   if (is.element("ts",class(model$mean))){
     xVals <- as.numeric(time(model$mean)) # x axis is time
@@ -1459,7 +1459,7 @@ StatForecast <- ggplot2::ggproto("StatForecast", ggplot2::Stat,
                       lambda=lambda, find.frequency=find.frequency,
                       allow.multiplicative.trend=allow.multiplicative.trend)
 
-    fcast <- ggplot2::fortify(fcast, PI=PI, showgap=showgap)
+    fcast <- forecast2plotdf(fcast, PI=PI, showgap=showgap)
 
     # Add ggplot & series information
     extraInfo <- as.list(data[1,!colnames(data)%in%colnames(fcast)])
