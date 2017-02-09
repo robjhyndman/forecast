@@ -264,10 +264,7 @@ autoplot.Arima <- function (object, type = c("both", "ar", "ma"), ...){
       }
 
       if (type == "both") {
-        if (p == 0)
-          type <- "ma"
-        else if (q == 0)
-          type <- "ar"
+        type <- c("ar", "ma")
       }
     }
     else if (inherits(object, "ar")){
@@ -278,33 +275,27 @@ autoplot.Arima <- function (object, type = c("both", "ar", "ma"), ...){
     else{
       stop("autoplot.Arima requires an Arima object")
     }
-
-    if (type == "both") {
-      type <- c("ar", "ma")
-    }
-
+    
+    #Remove NULL type
+    type <- intersect(type, c("ar", "ma")[c(p>0, q>0)])
+    
     #Prepare data
     arData <- maData <- NULL
+    allRoots <- data.frame(roots = numeric(0), type = character(0))
     if("ar" %in% type & p > 0){
       arData <- arroots(object)
-      arData <- data.frame(roots = arData$roots, type = arData$type)
+      allRoots <- rbind(allRoots, data.frame(roots = arData$roots, type = arData$type))
     }
     if("ma" %in% type & q > 0){
       maData <- maroots(object)
-      maData <- data.frame(roots = maData$roots, type = maData$type)
+      allRoots <- rbind(allRoots, data.frame(roots = maData$roots, type = maData$type))
     }
-    allRoots <- rbind(arData, maData)
-    if(p + q > 0)
-    {
-      allRoots$Real <- Re(1/allRoots$roots)
-      allRoots$Imaginary <- Im(1/allRoots$roots)
-      allRoots$UnitCircle <- factor(ifelse((abs(allRoots$roots) > 1), "Within", "Outside"))
-    }
+    allRoots$Real <- Re(1/allRoots$roots)
+    allRoots$Imaginary <- Im(1/allRoots$roots)
+    allRoots$UnitCircle <- factor(ifelse((abs(allRoots$roots) > 1), "Within", "Outside"))
+
     #Initialise general ggplot object
-    if(p+q > 0)
-      p <- ggplot2::ggplot(ggplot2::aes_(x=~Real, y=~Imaginary, colour=~UnitCircle), data=allRoots)
-    else
-      p <- ggplot2::ggplot()
+    p <- ggplot2::ggplot(ggplot2::aes_(x=~Real, y=~Imaginary, colour=~UnitCircle), data=allRoots)
     p <- p + ggplot2::coord_fixed(ratio = 1)
     p <- p + ggplot2::annotate("path", x=cos(seq(0,2*pi,length.out=100)),
                                y=sin(seq(0,2*pi,length.out=100)))
