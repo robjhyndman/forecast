@@ -28,37 +28,61 @@ devtools::install_github("robjhyndman/forecast")
 
 ```s
 library(forecast)
+library(ggplot2)
 
 # ETS forecasts
-fit <- ets(USAccDeaths)
-plot(forecast(fit))
+USAccDeaths %>%
+  ets %>%
+  forecast %>%
+  autoplot
 
 # Automatic ARIMA forecasts
-fit <- auto.arima(WWWusage)
-plot(forecast(fit, h=20))
+WWWusage %>%
+  auto.arima %>%
+  forecast(h=20) %>%
+  autoplot
 
 # ARFIMA forecasts
 library(fracdiff)
 x <- fracdiff.sim( 100, ma=-.4, d=.3)$series
-fit <- arfima(x)
-plot(forecast(fit, h=30))
+arfima(x) %>%
+  forecast(h=30) %>%
+  autoplot
 
 # Forecasting with STL
-tsmod <- stlm(USAccDeaths, modelfunction=ar)
-plot(forecast(tsmod, h=36))
+USAccDeaths %>%
+  stlm(modelfunction=ar) %>%
+  forecast(h=36) %>%
+  autoplot
 
-plot(stlf(AirPassengers, lambda=0))
+AirPassengers %>%
+  stlf(lambda=0) %>%
+  autoplot
 
-decomp <- stl(USAccDeaths,s.window="periodic")
-plot(forecast(decomp))
+USAccDeaths %>%
+  stl(s.window='periodic') %>%
+  forecast %>%
+  autoplot
 
 # TBATS forecasts
-fit <- tbats(USAccDeaths)
-plot(forecast(fit))
+USAccDeaths %>%
+  tbats %>%
+  forecast %>%
+  autoplot
 
-taylor.fit <- tbats(taylor)
-plot(forecast(taylor.fit))
+taylor %>%
+  tbats %>%
+  forecast %>%
+  autoplot
 ```
+
+## For more information
+
+  * Get started in forecasting with the online textbook at http://OTexts.org/fpp/
+  * Read the Hyndsight blog at http://robjhyndman.com/hyndsight/
+  * Ask forecasting questions on http://stats.stackexchange.com/tags/forecasting
+  * Ask R questions on http://stackoverflow.com/tags/forecasting+r
+  * Join the International Institute of Forecasters: http://forecasters.org/
 
 ## License
 
