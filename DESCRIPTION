@@ -4,18 +4,39 @@ Title: Forecasting Functions for Time Series and Linear Models
 Description: Methods and tools for displaying and analysing
              univariate time series forecasts including exponential smoothing
              via state space models and automatic ARIMA modelling.
-Depends: R (>= 3.0.2), stats, graphics, zoo, timeDate
-Imports: tseries, fracdiff, Rcpp (>= 0.11.0), nnet, colorspace,
-  parallel, ggplot2 (>= 2.0.0), magrittr, lmtest
-Suggests: testthat,
-    knitr,
-    rmarkdown,
-    expsmooth
-LinkingTo: Rcpp (>= 0.11.0), RcppArmadillo (>= 0.2.35)
+Depends: 
+  R (>= 3.0.2), 
+Imports: 
+  stats, 
+  graphics, 
+  tseries, 
+  fracdiff, 
+  Rcpp (>= 0.11.0), 
+  nnet,
+  colorspace, 
+  parallel, 
+  ggplot2 (>= 2.0.0), 
+  magrittr, 
+  lmtest, 
+  zoo,
+  timeDate
+Suggests: 
+  testthat,
+  knitr,
+  rmarkdown,
+  expsmooth
+LinkingTo: 
+  Rcpp (>= 0.11.0), 
+  RcppArmadillo (>= 0.2.35)
 LazyData: yes
 ByteCompile: TRUE
-Authors@R: c(person(given="Rob", family="Hyndman", role=c("aut", "cre", "cph"),
-  email="Rob.Hyndman@monash.edu"))
+Authors@R: c(
+  person("Rob", "Hyndman", email="Rob.Hyndman@monash.edu", role=c("aut", "cre", "cph")),
+  person("Mitchell", "O'Hara-Wild", role="aut"),
+  person("Christoph", "Bergmeir", role="aut"),
+  person("Slava", "Razbash", role="aut"),
+  person("Earo", "Wang", role="aut")
+  )
 BugReports: https://github.com/robjhyndman/forecast/issues
 License: GPL (>= 2)
 URL: http://github.com/robjhyndman/forecast
