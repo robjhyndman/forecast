@@ -42,7 +42,7 @@ bizdays <- function(x, FinCenter = c("New York", "London", "NERC", "Tokyo",
     days.len <- timeDate::timeSequence(from = start, to = end)
     # Grab business days
     biz <- days.len[timeDate::isBizday(days.len, holidays = holidays)]
-    bizdays <- format(as.yearqtr(biz), format = "%Y Qtr%q")
+    bizdays <- format(zoo::as.yearqtr(biz), format = "%Y Qtr%q")
     
   } # else if (freq == 52L) {  # Weekly data
   #   start <- paste0(start(x)[1L], "-01-01")
@@ -85,9 +85,9 @@ easter <- function(x, easter.mon = FALSE) {
     easter <- format(easter0, format = fmat) # easter mon
   } else if (freq == 4L) {
     fmat <- "%Y-%q"
-    yr.mon <- format(as.yearqtr(date), format = fmat) # yr.qtr
-    gd.fri <- format(as.yearqtr(gd.fri0), format = fmat)
-    easter <- format(as.yearqtr(easter0), format = fmat)
+    yr.mon <- format(zoo::as.yearqtr(date), format = fmat) # yr.qtr
+    gd.fri <- format(zoo::as.yearqtr(gd.fri0), format = fmat)
+    easter <- format(zoo::as.yearqtr(easter0), format = fmat)
   }
   span <- cbind(gd.fri, easter)  # the span of easter holidays
   hdays <- unlist(apply(span, 1, unique))
