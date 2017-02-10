@@ -1,3 +1,6 @@
+## Add as.Date.timeDate to S3 method table
+as.Date.timeDate <- timeDate::as.Date.timeDate
+
 bizdays <- function(x, FinCenter = c("New York", "London", "NERC", "Tokyo",
                                      "Zurich")) {
   # Return the number of trading days corresponding to the input ts
