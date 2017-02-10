@@ -1,4 +1,5 @@
 Version 8.0 (?? February 2017)
+  * Added tips to start up message
   * Added pipe operator
   * Added tsCV() and CVar() functions
   * Added baggedETS()
@@ -11,7 +12,7 @@ Version 8.0 (?? February 2017)
   * Component extraction for seasonal decomposition methods
   * Range bars for decomposition autoplots
   * Added autoplot.StructTS()
-  * Added vignette based on JSS article
+  * Added vignette based on 2008 JSS article by Hyndman and Khandakar
   * Improved ggplot functions
   * mforecast objects re-structured
   * Added as.data.frame.mforecast()
