@@ -24,7 +24,8 @@ Suggests:
   testthat,
   knitr,
   rmarkdown,
-  expsmooth
+  expsmooth,
+  rticles
 LinkingTo: 
   Rcpp (>= 0.11.0), 
   RcppArmadillo (>= 0.2.35)

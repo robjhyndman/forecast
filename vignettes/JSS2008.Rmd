@@ -42,7 +42,7 @@ preamble: >
   \def\R{\proglang{R}}
 bibliography: JSS-paper.bib
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Automatic Time Series Forecasting: The forecast Package for R}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 output: rticles::jss_article
@@ -54,7 +54,6 @@ fig_caption: true
 ```{r load packages, echo=FALSE, message=FALSE}
 library('forecast')
 library('expsmooth')
-options(prompt = "R> ", continue = "+   ", digits=5)
 ```
 
 # Introduction
