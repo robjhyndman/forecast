@@ -15,9 +15,9 @@ author:
       Monash University
       Clayton VIC 3800, Australia
 title:
-  formatted: "Automatic Time Series Forecasting:\\newline The \\pkg{forecast} Package for \\proglang{R}"
+  formatted: "Automatic Time Series Forecasting:\\newline the \\pkg{forecast} Package for \\proglang{R}"
   # If you use tex in the formatted title, also supply version without
-  plain:     "Automatic Time Series Forecasting: The forecast Package for R"
+  plain:     "Automatic Time Series Forecasting: the forecast Package for R"
   # For running headers, if needed
   short:     "\\pkg{forecast}: Automatic Time Series Forecasting"
 abstract: >
@@ -42,7 +42,7 @@ preamble: >
   \def\R{\proglang{R}}
 bibliography: JSS-paper.bib
 vignette: >
-  %\VignetteIndexEntry{Automatic Time Series Forecasting: The forecast Package for R}
+  %\VignetteIndexEntry{Automatic Time Series Forecasting: the forecast Package for R (Hyndman & Khandakar, JSS 2008)}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 output: rticles::jss_article
