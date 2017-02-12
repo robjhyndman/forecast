@@ -633,7 +633,7 @@ autoplot.mforecast <- function (object, PI = TRUE, facets = TRUE, colour = FALSE
         partialfcast$model <- mlmsplit(object$model,index=i)
         matchidx <- as.data.frame(which(gridlayout == i, arr.ind = TRUE))
         print(autoplot(structure(partialfcast,class="forecast"),
-                       PI=PI[i], ...) + ggAddExtras(ylab=colnames(object$x)[i]),
+                       PI=PI[i], ...) + ggAddExtras(ylab=names(object$forecast)[i]),
               vp = grid::viewport(layout.pos.row = matchidx$row,
                                   layout.pos.col = matchidx$col))
       }
