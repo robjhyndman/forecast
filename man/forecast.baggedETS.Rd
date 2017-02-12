@@ -1,7 +1,7 @@
 \name{forecast.baggedETS}
 \alias{forecast.baggedETS}
 \title{Forecasting using the bagged ETS method}
-\usage{\method{forecast}{baggedETS}(object, 
+\usage{\method{forecast}{baggedETS}(object,
     h=ifelse(frequency(object$x)>1, 2*frequency(object$x), 10), ...)
 }
 
@@ -44,7 +44,7 @@ using STL Decomposition and Box-Cox Transformation. International Journal of For
 
 \author{Christoph Bergmeir, Fotios Petropoulos}
 
-\examples{fit <- baggedETS(lynx)
+\examples{fit <- baggedETS(WWWusage)
 fcast <- forecast(fit)
 plot(fcast)
 }
