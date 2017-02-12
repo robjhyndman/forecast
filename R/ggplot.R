@@ -1067,7 +1067,7 @@ autoplot.splineforecast <- function (object, PI=TRUE, ...){
     p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime,y=~y), colour="red", data=fit)
     p <- p + ggAddExtras(ylab=deparse(object$model$call$x))
     if(!is.null(object$series))
-      p <- p + ylab(object$series)
+      p <- p + ggplot2::ylab(object$series)
     return(p)
   }
 }
