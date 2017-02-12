@@ -904,13 +904,17 @@ ggsubseriesplot <- function (x, labels = NULL, times = time(x), phase = cycle(x)
       stop("ggsubseriesplot requires a ts object, use x=object")
     }
 
-    data <- data.frame(y=as.numeric(x),year=factor(trunc(time(x))),season=as.numeric(phase))
+    data <- data.frame(y=as.numeric(x),year=trunc(time(x)),season=as.numeric(phase))
+    seasonwidth <- (max(data$year)-min(data$year))*1.05
+    data$time <- data$season + 0.025 + (data$year-min(data$year))/seasonwidth
     avgLines <- stats::aggregate(data$y, by=list(data$season), FUN=mean)
     colnames(avgLines) <- c("season", "avg")
     data <- merge(data, avgLines, by="season")
 
     #Initialise ggplot object
-    p <- ggplot2::ggplot(ggplot2::aes_(x=~interaction(year, season), y=~y, group=~season), data=data, na.rm=TRUE)
+    #p <- ggplot2::ggplot(ggplot2::aes_(x=~interaction(year, season), y=~y, group=~season), data=data, na.rm=TRUE)
+    p <- ggplot2::ggplot(ggplot2::aes_(x=~time, y=~y, group=~season),
+      data=data, na.rm=TRUE)
 
     #Remove vertical break lines
     p <- p + ggplot2::theme(panel.grid.major.x = ggplot2::element_blank())
@@ -941,8 +945,8 @@ ggsubseriesplot <- function (x, labels = NULL, times = time(x), phase = cycle(x)
       xlab <- "Season"
     }
 
-    midYear <- sort(levels(data$year))[length(levels(data$year))%/%2]
-    p <- p + ggplot2::scale_x_discrete(breaks=paste(midYear,".",1:xfreq,sep=""), labels=xbreaks)
+    #X-axis
+    p <- p + ggplot2::scale_x_continuous(breaks=0.5+(1:xfreq), labels=xbreaks)
 
     #Graph labels
     p <- p + ggAddExtras(ylab = deparse(substitute(x)), xlab = xlab)
