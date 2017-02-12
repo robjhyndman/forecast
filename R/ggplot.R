@@ -967,7 +967,10 @@ ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NUL
     if(s <= 1)
       stop("Data are not seasonal")
 
-    data <- data.frame(y=as.numeric(x),year=trunc(time(x)),time=as.numeric(round(time(x)%%1,digits = 6)))
+    data <- data.frame(y=as.numeric(x),
+      year=trunc(time(x)),
+      cycle=as.numeric(cycle(x)),
+      time=as.numeric((cycle(x)-1)/frequency(x)))
     data$year <- if(continuous){
       as.numeric(data$year)
     }
@@ -975,8 +978,8 @@ ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NUL
       as.factor(data$year)
     }
     if(polar){
-      startValues <- data[data$time==0,]
-      if(round(data$time[1], 6) == 0){
+      startValues <- data[data$cycle==1,]
+      if(data$cycle[1] == 1){
         startValues <- startValues[-1,]
       }
       startValues$time <- 1-.Machine$double.eps
