@@ -6,7 +6,7 @@
     year.labels.left=FALSE, type="o", main, xlab=NULL, ylab="",
     col=1, labelgap=0.1, ...)
 
-ggseasonplot(x, year.labels=FALSE, year.labels.left=FALSE, 
+ggseasonplot(x, year.labels=FALSE, year.labels.left=FALSE,
     type=NULL, col=NULL, continuous=FALSE, polar=FALSE,
     labelgap=0.04, ...)
 }
@@ -25,7 +25,7 @@ ggseasonplot(x, year.labels=FALSE, year.labels.left=FALSE,
 \item{polar}{Plot the graph on seasonal coordinates}
 \item{labelgap}{Distance between year labels and plotted lines}
 \item{\dots}{additional arguments to \code{\link[graphics]{plot}}.} }
-\description{Plots a seasonal plot as described in Hyndman and Athanasopoulos (2014, chapter 2).
+\description{Plots a seasonal plot as described in Hyndman and Athanasopoulos (2014, chapter 2). This is like a time plot except that the data are plotted against the seasons in separate years.
 }
 
 \value{None.
