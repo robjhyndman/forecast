@@ -275,10 +275,10 @@ autoplot.Arima <- function (object, type = c("both", "ar", "ma"), ...){
     else{
       stop("autoplot.Arima requires an Arima object")
     }
-    
+
     #Remove NULL type
     type <- intersect(type, c("ar", "ma")[c(p>0, q>0)])
-    
+
     #Prepare data
     arData <- maData <- NULL
     allRoots <- data.frame(roots = numeric(0), type = character(0))
@@ -440,7 +440,10 @@ autoplot.forecast <- function (object, include, PI=TRUE, shadecols=c("#596DD5","
     if (!is.null(object$model$terms) && !is.null(object$model$model)){
       #Initialise original dataset
       mt <- object$model$terms
-      yvar <- deparse(mt[[2]]) # Perhaps a better way to do this
+      if(!is.null(object$series))
+        yvar <- object$series
+      else
+        yvar <- deparse(mt[[2]]) # Perhaps a better way to do this
       xvar <- attr(mt,"term.labels")
       vars <- c(yvar=yvar, xvar=xvar)
       data <- object$model$model
@@ -1063,6 +1066,8 @@ autoplot.splineforecast <- function (object, PI=TRUE, ...){
     fit <- data.frame(datetime=as.numeric(time(object$fitted)),y=as.numeric(object$fitted))
     p <- p + ggplot2::geom_line(ggplot2::aes_(x=~datetime,y=~y), colour="red", data=fit)
     p <- p + ggAddExtras(ylab=deparse(object$model$call$x))
+    if(!is.null(object$series))
+      p <- p + ylab(object$series)
     return(p)
   }
 }
