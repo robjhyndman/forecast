@@ -52,9 +52,9 @@ If \code{autoplot} is given an \code{acf} or \code{mpacf} function, then an appr
 \examples{
 library(ggplot2)
 ggAcf(wineind)
-autoplot(Acf(wineind, plot=FALSE))
+wineind %>% Acf(plot=FALSE) %>% autoplot
 \dontrun{
-autoplot(taperedacf(wineind, plot=FALSE))
+wineind %>% taperedacf(plot=FALSE) %>% autoplot
 ggtaperedacf(wineind)
 ggtaperedpacf(wineind)}
 ggCcf(mdeaths, fdeaths)
