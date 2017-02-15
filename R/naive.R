@@ -3,7 +3,7 @@
 # lag=1 corresponds to standard random walk (i.e., naive forecast)
 # lag=m corresponds to seasonal naive method
 
-lagwalk <- function(y, lag=1, h=10, drift=FALSE, 
+lagwalk <- function(y, lag=1, h=10, drift=FALSE,
   level=c(80,95), fan=FALSE, lambda=NULL, biasadj=FALSE)
 {
   n <- length(y)
@@ -73,7 +73,8 @@ lagwalk <- function(y, lag=1, h=10, drift=FALSE,
   }
 
   out <- list(method=method,level=level,x=y,mean=fcast,lower=lower,upper=upper,
-      model=list(drift=b,drift.se=b.se,sd=s), fitted = fits, residuals = res, lambda=lambda)
+      model=structure(list(includedrift=drift,drift=b,drift.se=b.se,sd=s),class='naive'),
+      fitted = fits, residuals = res, lambda=lambda)
   out$model$call <- match.call()
 
   return(structure(out,class="forecast"))
@@ -83,7 +84,7 @@ lagwalk <- function(y, lag=1, h=10, drift=FALSE,
 # Random walk
 rwf <- function(y,h=10,drift=FALSE,level=c(80,95),fan=FALSE,lambda=NULL,biasadj=FALSE,x=y)
 {
-  fc <- lagwalk(x, lag=1, h=h, drift=drift, level=level, fan=fan, 
+  fc <- lagwalk(x, lag=1, h=h, drift=drift, level=level, fan=fan,
     lambda=lambda, biasadj=biasadj)
   fc$model$call <- match.call()
   fc$series <- deparse(substitute(y))
@@ -94,7 +95,7 @@ rwf <- function(y,h=10,drift=FALSE,level=c(80,95),fan=FALSE,lambda=NULL,biasadj=
     fc$method <- "Random walk"
   return(fc)
 }
-  
+
 # naive <- function(x,h=10,level=c(80,95),fan=FALSE, lambda=NULL)
 # {
 #     fc <- forecast(Arima(x,order=c(0,1,0),lambda=lambda),h,level=level,fan=fan)
@@ -128,10 +129,18 @@ naive <- function(y,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE,x=
 
 snaive <- function(y, h=2*frequency(x), level=c(80,95), fan=FALSE, lambda=NULL, biasadj=FALSE,x=y)
 {
-  fc <- lagwalk(x, lag=frequency(x), h=h, drift=FALSE, level=level, fan=fan, 
+  fc <- lagwalk(x, lag=frequency(x), h=h, drift=FALSE, level=level, fan=fan,
     lambda=lambda, biasadj=biasadj)
   fc$model$call <- match.call()
   fc$series <- deparse(substitute(y))
   fc$method <- "Seasonal naive method"
   return(fc)
+}
+
+print.naive <- function(x, ...)
+{
+  cat(paste("Call:", deparse(x$call), "\n\n"))
+  if(x$includedrift)
+    cat(paste("Drift: ",round(x$drift,4),"  (se ",round(x$drift.se,4), ")\n", sep=""))
+  cat(paste("Residual sd:", round(x$sd,4), "\n"))
 }
