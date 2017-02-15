@@ -3,7 +3,7 @@
 \alias{gglagchull}
 \title{Time series lag ggplots}
 \usage{gglagplot(x, lags = 1, set.lags = 1:lags, diag=TRUE,
-  diag.col="gray", do.lines = TRUE, colour = TRUE, continuous = TRUE,
+  diag.col="gray", do.lines = TRUE, colour = TRUE, continuous = FALSE,
   labels = FALSE, seasonal = TRUE, ...)
 gglagchull(x, lags = 1, set.lags = 1:lags, diag=TRUE,
   diag.col="gray", ...)

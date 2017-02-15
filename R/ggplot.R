@@ -741,7 +741,7 @@ ggtsdisplay <- function(x, plot.type=c("partial","histogram","scatter","spectrum
   }
 }
 
-gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray", do.lines = TRUE, colour = TRUE, continuous = TRUE, labels = FALSE, seasonal = TRUE, ...){
+gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray", do.lines = TRUE, colour = TRUE, continuous = FALSE, labels = FALSE, seasonal = TRUE, ...){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
