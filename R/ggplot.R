@@ -741,19 +741,25 @@ ggtsdisplay <- function(x, plot.type=c("partial","histogram","scatter","spectrum
   }
 }
 
-gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray", do.lines = TRUE, colour = TRUE, continuous = FALSE, labels = FALSE, seasonal = TRUE, ...){
+gglagplot <- function(x, lags=ifelse(frequency(x)>1, min(25,2*frequency(x)), 9),
+  set.lags = 1:lags, diag=TRUE, diag.col="gray", do.lines = TRUE, colour = TRUE,
+  continuous = frequency(x)>13, labels = FALSE, seasonal = TRUE, ...){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
   else{
     freq <- frequency(x)
     if(freq > 1){
-      linecol = cycle(x)
+      linecol <- cycle(x)
+      if(freq > 24)
+        continuous <- TRUE
     }
     else{
       seasonal=FALSE
       continuous=TRUE
     }
+    # Make sure lags is evaluated
+    tmp <- lags
     x <- as.matrix(x)
 
     #Prepare data for plotting
@@ -851,11 +857,15 @@ gglagplot <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray"
   }
 }
 
-gglagchull <- function(x, lags = 1, set.lags = 1:lags, diag=TRUE, diag.col="gray", ...){
+gglagchull <- function(x,
+  lags=ifelse(frequency(x)>1, min(12,frequency(x)), 4),
+  set.lags = 1:lags, diag=TRUE, diag.col="gray", ...){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
   else{
+    # Make sure lags is evaluated
+    tmp <- lags
     x <- as.matrix(x)
 
     #Prepare data for plotting
