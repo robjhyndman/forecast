@@ -651,6 +651,8 @@ ggtsdisplay <- function(x, plot.type=c("partial","histogram","scatter","spectrum
     stop("grid is needed for this function to work. Install it via install.packages(\"grid\")", call. = FALSE)
   }
   else{
+    if(NCOL(x)>1)
+      stop("ggtsdisplay is only for univariate time series")
     plot.type <- match.arg(plot.type)
     main <- deparse(substitute(x))
 
