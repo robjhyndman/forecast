@@ -745,7 +745,7 @@ ggtsdisplay <- function(x, plot.type=c("partial","histogram","scatter","spectrum
 
 gglagplot <- function(x, lags=ifelse(frequency(x)>1, min(25,2*frequency(x)), 9),
   set.lags = 1:lags, diag=TRUE, diag.col="gray", do.lines = TRUE, colour = TRUE,
-  continuous = frequency(x)>13, labels = FALSE, seasonal = TRUE, ...){
+  continuous = frequency(x)>12, labels = FALSE, seasonal = TRUE, ...){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
