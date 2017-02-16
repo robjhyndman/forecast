@@ -24,7 +24,10 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   # Check for constant data
   if(is.constant(x))
   {
-    fit <- Arima(x,order=c(0,0,0),fixed=mean(x,na.rm=TRUE),...)
+    if(allowmean)
+      fit <- Arima(x,order=c(0,0,0),fixed=mean(x,na.rm=TRUE),...)
+    else
+      fit <- Arima(x,order=c(0,0,0),include.mean=FALSE,...)
     fit$x <- x
     fit$series <- series
     fit$call <- match.call()
