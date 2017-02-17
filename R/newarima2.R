@@ -776,25 +776,25 @@ OCSBtest <- function(time.series, period)
           # Proceed to do OCSB test.
           reg.summary <- summary(regression)
           reg.coefs <- reg.summary$coefficients
-          t.two.pos <- grep("t.two", rownames(reg.coefs), fixed = TRUE)
-          if(length(t.two.pos) != 0)
-            t.two <- reg.coefs[t.two.pos,3]
+          y.two.pos <- grep("y.two", rownames(reg.coefs), fixed = TRUE)
+          if(length(y.two.pos) != 0)
+            y.two <- reg.coefs[y.two.pos,3]
           else
-            t.two <- NA
+            y.two <- NA
 
-          if((is.nan(t.two)) | (is.infinite(t.two)) | (is.na(t.two)) | (is.element("try-error",class(regression))))
+          if((is.nan(y.two)) | (is.infinite(y.two)) | (is.na(y.two)) | (is.element("try-error",class(regression))))
             return(1)
           else
-            return(as.numeric(t.two >= calcOCSBCritVal(period)))
+            return(as.numeric(y.two >= calcOCSBCritVal(period)))
         }
       }
     }
   }
 
   suppressWarnings(se <- sqrt(diag(regression$var.coef)))
-  t.two <- regression$coef[names(regression$coef)=="y.two"]/se[names(se)=="y.two"]
+  y.two <- regression$coef[names(regression$coef)=="y.two"]/se[names(se)=="y.two"]
 
-  return(as.numeric(t.two >= calcOCSBCritVal(period)))
+  return(as.numeric(y.two >= calcOCSBCritVal(period)))
 }
 
 # Check that Arima object has positive coefficient variances without returning warnings
