@@ -757,9 +757,12 @@ gglagplot <- function(x, lags=ifelse(frequency(x)>1, min(25,2*frequency(x)), 9),
         continuous <- TRUE
     }
     else{
-      seasonal=FALSE
-      continuous=TRUE
+      seasonal <- FALSE
+      continuous <- TRUE
     }
+    if(!seasonal)
+      continuous <- TRUE
+
     # Make sure lags is evaluated
     tmp <- lags
     x <- as.matrix(x)
