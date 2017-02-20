@@ -227,6 +227,7 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
       reqvars <- reqvars[misvar | fnvar] #They are required
       fnvar <- fnvar[misvar | fnvar] #Update required function variables
       for (i in reqvars){
+        found <- FALSE
         subvars <- NULL
         for(j in 1:length(object$coefficients)){
           subvars[j] <- pmatch(i,names(object$coefficients)[j])
@@ -246,6 +247,7 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
             imat <- as.matrix(newdata[,fsub], ncol = length(fsub))
             colnames(imat) <- subvars
             tmpdata[[length(tmpdata)+1]] <- imat
+            found <- TRUE
           }
           else{
             #Attempt to evaluate it as a function
@@ -255,11 +257,17 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
         if(length(subvars)==1){ #Check if it is a function
           if(fnvar[match(i, reqvars)]){#Pre-evaluate function from data
             tmpdata[[length(tmpdata)+1]] <- eval(parse(text=subvars)[[1]], newdata)
+            
+            names(tmpdata)[length(tmpdata)] <- paste0("solvedFN___",match(i, reqvars))
+            subvarloc <- match(i,lapply(attr(object$terms,"predvars"),deparse))
+            attr(object$terms,"predvars")[[subvarloc]] <- attr(object$terms,"variables")[[subvarloc]] <- parse(text=paste0("solvedFN___",match(i, reqvars)))[[1]]
+            found <- TRUE
           }
         }
-        names(tmpdata)[length(tmpdata)] <- paste0("solvedFN___",match(i, reqvars))
-        subvarloc <- match(i,lapply(attr(object$terms,"predvars"),deparse))
-        attr(object$terms,"predvars")[[subvarloc]] <- attr(object$terms,"variables")[[subvarloc]] <- parse(text=paste0("solvedFN___",match(i, reqvars)))[[1]]
+        
+        if(!found){
+          warning(paste0("Could not find required variable ", i, " in newdata. Specify newdata as a named data.frame"))
+        }
       }
     }
     if(rm1){
