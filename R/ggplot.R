@@ -781,7 +781,7 @@ gglagplot <- function(x, lags=ifelse(frequency(x)>1, min(25,2*frequency(x)), 9),
                                  freqcur = ifelse(rep(seasonal,n-lagi), linecol[1:(n-lagi)], 1:(n-lagi)),
                                  orig = x[1:(n-lagi),i],
                                  lagged = x[(lagi+1):n,i],
-                                 lagVal = factor(rep(lagi, n-lagi)),
+                                 lagVal = rep(lagi, n-lagi),
                                  series = factor(rep(sname, n-lagi))))
       }
     }
@@ -795,7 +795,6 @@ gglagplot <- function(x, lags=ifelse(frequency(x)>1, min(25,2*frequency(x)), 9),
     if(diag){
       p <- p + ggplot2::geom_abline(colour=diag.col, linetype="dashed")
     }
-
     if(labels){
       linesize = 0.25 * (2 - do.lines)
     }
@@ -824,12 +823,21 @@ gglagplot <- function(x, lags=ifelse(frequency(x)>1, min(25,2*frequency(x)), 9),
       axissize <- data.frame(series = rep(axissize$series, length(set.lags)), orig = rep(axissize$orig, length(set.lags)), lagVal = rep(set.lags, each=NCOL(x)))
       p <- p + ggplot2::geom_blank(ggplot2::aes_(x=~orig, y=~orig), data=axissize)
     }
+
     #Facet
+    labellerFn <- function(labels){
+      if(!is.null(labels$series)){
+        # Multivariate labels
+        labels$series <- as.character(labels$series)
+      }
+      labels$lagVal <- paste("lag", labels$lagVal)
+      return(labels)
+    }
     if(NCOL(x)>1){
-      p <- p + ggplot2::facet_wrap(~lagVal + series, scales = "free", labeller = function(labels) list(unname(unlist(do.call("Map", c(list(paste, sep=", lag "), lapply(rev(labels), as.character)))))))
+      p <- p + ggplot2::facet_wrap(~series + lagVal, scales = "free", labeller = labellerFn)
     }
     else{
-      p <- p + ggplot2::facet_wrap(~lagVal, labeller = function(labels) lapply(labels, function(x) paste0("lag ",as.character(x))))
+      p <- p + ggplot2::facet_wrap(~lagVal, labeller = labellerFn)
     }
     p <- p + ggplot2::theme(aspect.ratio=1)
     if(colour){
