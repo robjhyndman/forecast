@@ -13,10 +13,11 @@ mlmsplit <- function(x, index=NULL){
   class(x) <- "lm"
   y<-attr(x$terms,"response")
   
-  cn <- colnames(x$model)
-  cn[y] <- colnames(x$model[[y]])[index]
+  yName <- colnames(x$model[[y]])[index]
   x$model[[y]] <- x$model[[y]][,index]
-  colnames(x$model) <- cn
+  colnames(x$model)[y] <- yName
+  attr(x$model, "terms") <- terms(reformulate(attr(x$terms, "term.labels"), response=yName), data=x$model)
+  
   if(!is.null(tsp(x$data[,1]))){
     tspx <- tsp(x$data[,1]) #Consolidate ts attributes for forecast.lm
     x$data <- lapply(x$model, function(x) ts(x, start = tspx[1], end = tspx[2], frequency = tspx[3]))
@@ -24,7 +25,6 @@ mlmsplit <- function(x, index=NULL){
     row.names(x$data) <- 1:max(sapply(x$data, NROW))
   }
   
-  attr(x$terms,"dataClasses")[y] <- class(x$model[[y]])
   x$terms <- terms(x$model)
   return(x)
 }
