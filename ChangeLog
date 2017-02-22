@@ -1,4 +1,4 @@
-Version 8.0 (?? February 2017)
+Version 8.0 (22 February 2017)
   * Added tips to start up message
   * Added pipe operator
   * Added tsCV() and CVar() functions
@@ -6,6 +6,7 @@ Version 8.0 (?? February 2017)
   * Added head.ts() and tail.ts(), so head and tail now work properly on ts objects.
   * Added gghistogram() and checkresiduals()
   * Added ggseasonplot with polar coordinates
+  * Modified defaults for gglagplot
   * Added autolayer.ts
   * Added type argument to residuals() for different types of residuals
   * Added support for seas objects from the seasonal package

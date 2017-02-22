@@ -743,7 +743,7 @@ ggtsdisplay <- function(x, plot.type=c("partial","histogram","scatter","spectrum
   }
 }
 
-gglagplot <- function(x, lags=ifelse(frequency(x)>1, min(25,2*frequency(x)), 9),
+gglagplot <- function(x, lags=ifelse(frequency(x)>9, 16, 9),
   set.lags = 1:lags, diag=TRUE, diag.col="gray", do.lines = TRUE, colour = TRUE,
   continuous = frequency(x)>12, labels = FALSE, seasonal = TRUE, ...){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {

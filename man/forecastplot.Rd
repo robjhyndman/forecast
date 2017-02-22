@@ -45,7 +45,7 @@
 
 \description{Plots historical data with forecasts and prediction intervals.
 
-\code{autoplot} will produce an equivalent plot as a ggplot object.}
+\code{autoplot} will produce a ggplot object.}
 
 \value{None.}
 

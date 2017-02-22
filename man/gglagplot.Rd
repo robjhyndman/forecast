@@ -2,7 +2,7 @@
 \alias{gglagplot}
 \alias{gglagchull}
 \title{Time series lag ggplots}
-\usage{gglagplot(x, lags=ifelse(frequency(x)>1, min(25,2*frequency(x)), 9),
+\usage{gglagplot(x, lags=ifelse(frequency(x)>9, 16, 9),
 	set.lags=1:lags, diag=TRUE, diag.col="gray", do.lines=TRUE, colour=TRUE,
 	continuous=frequency(x)>12, labels=FALSE, seasonal=TRUE, ...)
 gglagchull(x, lags=ifelse(frequency(x)>1, min(12,frequency(x)), 4),
@@ -34,9 +34,10 @@ gglagchull(x, lags=ifelse(frequency(x)>1, min(12,frequency(x)), 4),
 \author{Mitchell O'Hara-Wild}
 \seealso{\code{\link[stats]{lag.plot}}}
 \examples{
-gglagplot(AirPassengers)
-gglagchull(AirPassengers)
-gglagplot(AirPassengers,seasonal=FALSE)
+gglagplot(woolyrnq)
+gglagplot(woolyrnq,seasonal=FALSE)
+
+gglagchull(woolyrnq)
 
 lungDeaths <- cbind(mdeaths, fdeaths)
 gglagplot(lungDeaths, lags=2)
