@@ -18,7 +18,7 @@ HoltWintersZZ  <- function (x,
 	seasonal <- match.arg(seasonal)
 	m <- frequency(x)
 	lenx <- length(x)
-	
+
 	if(!is.null(lambda)){
 	  x <- BoxCox(x,lambda)
 	}
@@ -350,6 +350,8 @@ ses <- function (y, h = 10, level = c(80, 95), fan = FALSE, initial=c("optimal",
 
   fcast$method <- fcast$model$method <- "Simple exponential smoothing"
   fcast$model$call <- match.call()
+  fcast$series <- deparse(substitute(y))
+
   return(fcast)
 }
 
@@ -364,7 +366,7 @@ holt <- function (y, h = 10, damped = FALSE, level = c(80, 95), fan = FALSE,
 	    fcast <- forecast(ets(x, "MMN", alpha=alpha, beta=beta, phi=phi, damped = damped, opt.crit="mse", lambda=lambda, biasadj=biasadj), h, level = level, fan = fan, ...)
 	  else
 	    fcast <- forecast(ets(x, "AAN", alpha=alpha, beta=beta, phi=phi, damped = damped, opt.crit="mse", lambda=lambda, biasadj=biasadj), h, level = level, fan = fan, ...)
-	}	  
+	}
   else
     fcast <- forecast(HoltWintersZZ(x, alpha=alpha, beta=beta, gamma=FALSE, phi=phi, exponential=exponential, lambda=lambda, biasadj=biasadj),
     	h, level = level, fan = fan, ...)
@@ -380,6 +382,8 @@ holt <- function (y, h = 10, damped = FALSE, level = c(80, 95), fan = FALSE,
 	  fcast$method <- paste(fcast$method,"with exponential trend")
   fcast$model$method <- fcast$method
   fcast$model$call <- match.call()
+  fcast$series <- deparse(substitute(y))
+
   return(fcast)
 }
 
@@ -417,5 +421,7 @@ hw <- function(y, h = 2 * frequency(x), seasonal = c("additive","multiplicative"
   }
   fcast$model$method <- fcast$method
   fcast$model$call <- match.call()
+  fcast$series <- deparse(substitute(y))
+
   return(fcast)
 }
