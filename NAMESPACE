@@ -162,4 +162,4 @@ S3method(summary,mforecast)
 S3method(tsdiag,ets)
 S3method(window,msts)
 
-useDynLib(forecast)
+useDynLib(forecast, .registration = TRUE)
