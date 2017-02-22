@@ -14,8 +14,9 @@ mlmsplit <- function(x, index=NULL){
   y<-attr(x$terms,"response")
   
   cn <- colnames(x$model)
+  cn[y] <- colnames(x$model[[y]])[index]
   x$model[[y]] <- x$model[[y]][,index]
-  
+  colnames(x$model) <- cn
   if(!is.null(tsp(x$data[,1]))){
     tspx <- tsp(x$data[,1]) #Consolidate ts attributes for forecast.lm
     x$data <- lapply(x$model, function(x) ts(x, start = tspx[1], end = tspx[2], frequency = tspx[3]))
