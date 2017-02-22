@@ -20,7 +20,6 @@
 }
 
 \examples{
-data(gold)
-tsclean(gold)
+cleangold <- tsclean(gold)
 }
 \keyword{ts}

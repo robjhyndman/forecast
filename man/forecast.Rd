@@ -20,8 +20,8 @@ If \code{model} is not \code{NULL}, \code{forecast.ts} will apply the \code{mode
 }
 
 \usage{forecast(object,...)
-\method{forecast}{ts}(object, h = ifelse(frequency(object) > 1, 2 * frequency(object), 10) , 
-         level=c(80,95), fan=FALSE, robust=FALSE, lambda=NULL, find.frequency=FALSE, 
+\method{forecast}{ts}(object, h = ifelse(frequency(object) > 1, 2 * frequency(object), 10) ,
+         level=c(80,95), fan=FALSE, robust=FALSE, lambda=NULL, find.frequency=FALSE,
          allow.multiplicative.trend=FALSE, model=NULL,...)}
 
 \arguments{
@@ -61,7 +61,7 @@ An object of class \code{"forecast"} is a list usually containing at least the f
 }
 
 \examples{
-WWWusage %>% forecast %>% plot
+WWWusage \%>\% forecast \%>\% plot
 fit <- ets(window(WWWusage, end=60))
 fc <- forecast(WWWusage, model=fit)
 }

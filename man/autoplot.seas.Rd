@@ -29,8 +29,8 @@
 \author{Mitchell O'Hara-Wild}
 \examples{
 library(ggplot2)
-co2 %>% decompose %>% autoplot
-nottem %>% stl(s.window='periodic') %>% autoplot
+co2 \%>\% decompose \%>\% autoplot
+nottem \%>\% stl(s.window='periodic') \%>\% autoplot
 
 \dontrun{
 library(seasonal)
