@@ -1697,7 +1697,7 @@ gghistogram <- function(x, add.normal=FALSE, add.kde=FALSE, add.rug=TRUE, bins, 
   }
   else{
     if(missing(bins))
-      bins <- grDevices::nclass.FD(na.omit(x))
+      bins <- grDevices::nclass.FD(na.exclude(x))
     data <- data.frame(x=as.numeric(c(x)))
     #Initialise ggplot object and plot histogram
     binwidth <- (max(x,na.rm=TRUE) - min(x,na.rm=TRUE))/bins
