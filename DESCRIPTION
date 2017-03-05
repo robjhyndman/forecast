@@ -1,33 +1,33 @@
 Package: forecast
-Version: 8.0
+Version: 8.1
 Title: Forecasting Functions for Time Series and Linear Models
 Description: Methods and tools for displaying and analysing
              univariate time series forecasts including exponential smoothing
              via state space models and automatic ARIMA modelling.
-Depends: 
-  R (>= 3.0.2), 
-Imports: 
-  stats, 
-  graphics, 
-  tseries, 
-  fracdiff, 
-  Rcpp (>= 0.11.0), 
+Depends:
+  R (>= 3.0.2),
+Imports:
+  stats,
+  graphics,
+  tseries,
+  fracdiff,
+  Rcpp (>= 0.11.0),
   nnet,
-  colorspace, 
-  parallel, 
-  ggplot2 (>= 2.0.0), 
-  magrittr, 
-  lmtest, 
+  colorspace,
+  parallel,
+  ggplot2 (>= 2.0.0),
+  magrittr,
+  lmtest,
   zoo,
   timeDate
-Suggests: 
+Suggests:
   testthat,
   knitr,
   rmarkdown,
   expsmooth,
   rticles
-LinkingTo: 
-  Rcpp (>= 0.11.0), 
+LinkingTo:
+  Rcpp (>= 0.11.0),
   RcppArmadillo (>= 0.2.35)
 LazyData: yes
 ByteCompile: TRUE

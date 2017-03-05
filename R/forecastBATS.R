@@ -93,10 +93,10 @@ forecast.bats <- function(object, h, level=c(80,95), fan=FALSE, biasadj=NULL, ..
   upper.bounds <- msts(upper.bounds, seasonal.periods=(if(!is.null(object$seasonal.periods)) { object$seasonal.periods} else { ts.frequency}), ts.frequency=ts.frequency, start=fcast.start.time)
   lower.bounds <- msts(lower.bounds, seasonal.periods=(if(!is.null(object$seasonal.periods)) { object$seasonal.periods} else { ts.frequency}), ts.frequency=ts.frequency, start=fcast.start.time)
   colnames(upper.bounds) <- colnames(lower.bounds) <- paste0(level, "%")
-  
+
   forecast.object <- list(model=object, mean=y.forecast, level=level, x=x, series=object$series,
 	                        upper=upper.bounds, lower=lower.bounds, fitted=fitted.values,
-	                        method=makeText(object), residuals=object$errors)
+	                        method=as.character(object), residuals=object$errors)
 	if(is.null(object$series)){
 	  forecast.object$series <- deparse(object$call$y)
 	}
@@ -105,7 +105,7 @@ forecast.bats <- function(object, h, level=c(80,95), fan=FALSE, biasadj=NULL, ..
 }
 
 
-makeText <- function(object) {
+as.character.bats <- function(object) {
 	name <- "BATS("
 	if(!is.null(object$lambda)) {
 		name <- paste(name, round(object$lambda, digits=3), sep="")

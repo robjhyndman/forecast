@@ -124,20 +124,20 @@ forecast.tbats <- function(object, h, level=c(80,95), fan=FALSE, biasadj=NULL, .
   upper.bounds <- msts(upper.bounds, seasonal.periods=(if(!is.null(object$seasonal.periods)) { object$seasonal.periods} else { ts.frequency}), ts.frequency=ts.frequency, start=fcast.start.time)
   lower.bounds <- msts(lower.bounds, seasonal.periods=(if(!is.null(object$seasonal.periods)) { object$seasonal.periods} else { ts.frequency}), ts.frequency=ts.frequency, start=fcast.start.time)
   colnames(upper.bounds) <- colnames(lower.bounds) <- paste0(level, "%")
-  
+
   forecast.object <- list(model=object, mean=y.forecast, level=level, x=x, series=object$series,
 	                        upper=upper.bounds, lower=lower.bounds, fitted=fitted.values,
-	                        method=makeTextTBATS(object), residuals=object$errors)
+	                        method=as.character(object), residuals=object$errors)
 	if(is.null(object$series)){
 	  forecast.object$series <- deparse(object$call$y)
 	}
-	
+
 	class(forecast.object) <- "forecast"
 	return(forecast.object)
 }
 
 
-makeTextTBATS <- function(object) {
+as.character.tbats <- function(object) {
 	name <- "TBATS("
 	if(!is.null(object$lambda)) {
 		name <- paste(name, round(object$lambda, digits=3), sep="")

@@ -9,7 +9,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
     stop("y should be a univariate time series")
 
   seriesname <- deparse(substitute(y))
-  
+
   origy <- y
 
   # Get seasonal periods
@@ -483,7 +483,7 @@ fitted.tbats <- function(object, h=1, ...){
 }
 
 print.tbats <- function(x, ...) {
-	cat(makeTextTBATS(x))
+	cat(as.character(x))
 	cat("\n")
 	cat("\nCall: ")
 	print(x$call)

@@ -9,7 +9,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
   opt.crit <- match.arg(opt.crit)
   bounds <- match.arg(bounds)
   ic <- match.arg(ic)
-  
+
   seriesname <- deparse(substitute(y))
 
   if(any(class(y) %in% c("data.frame","list","matrix","mts")))
@@ -164,7 +164,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
 
   n <- length(y)
   # Return non-optimized SES if 4 or  fewer observations
-  if(n <= 4) 
+  if(n <= 4)
   {
     fit <- HoltWintersZZ(orig.y, beta=FALSE, gamma=FALSE, lambda=lambda, biasadj=biasadj)
     fit$call <- match.call()
@@ -252,13 +252,22 @@ ets <- function(y, model="ZZZ", damped=NULL,
     model$fitted <- InvBoxCox(model$fitted,lambda, biasadj, var(model$residuals))
     attr(lambda, "biasadj") <- biasadj
   }
-  
+
   model$lambda <- lambda
   #model$call$data <- dataname
 
   return(structure(model,class="ets"))
 }
 
+as.character.ets <- function(x, ...)
+{
+  paste("ETS(",
+        x$components[1],",",
+        x$components[2],
+        ifelse(x$components[4],"d",""),",",
+        x$components[3],")",
+    sep="")
+}
 
 # myRequire <- function(libName) {
 

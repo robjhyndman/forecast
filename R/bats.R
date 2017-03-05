@@ -9,7 +9,7 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
     stop("y should be a univariate time series")
 
   seriesname <- deparse(substitute(y))
-  
+
   origy <- y
 
   # Get seasonal periods
@@ -293,7 +293,7 @@ fitted.bats <- function(object, h=1, ...){
 }
 
 print.bats <- function(x,...) {
-	cat(makeText(x))
+	cat(as.character(x))
 	cat("\n")
 	cat("\nCall: ")
 	print(x$call)
