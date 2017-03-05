@@ -1,6 +1,7 @@
 Version 8.1 (?? 2017)
   * Added as.character.ets, as.character.bats, as.character.tbats
   * Made gghistogram() and checkresiduals() robust to missing values
+  * Bug fixes
 
 Version 8.0 (22 February 2017)
   * Added tips to start up message
