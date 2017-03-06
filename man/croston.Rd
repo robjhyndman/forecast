@@ -5,7 +5,7 @@
 }
 
 \arguments{
-\item{y}{a numeric vector or time series}
+\item{y}{a numeric vector or time series of class \code{ts}}
 \item{h}{Number of periods for forecasting.}
 \item{alpha}{Value of alpha. Default value is 0.1.}
 \item{x}{Deprecated. Included for backwards compatibility.}

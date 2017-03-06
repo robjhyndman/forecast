@@ -5,7 +5,7 @@
     method=c("gcv","mle"), x=y)}
 
 \arguments{
-\item{y}{a numeric vector or time series}
+\item{y}{a numeric vector or time series of class \code{ts}}
 \item{h}{Number of periods for forecasting}
 \item{level}{Confidence level for prediction intervals.}
 \item{fan}{If TRUE, level is set to seq(51,99,by=3). This is suitable for fan plots.}

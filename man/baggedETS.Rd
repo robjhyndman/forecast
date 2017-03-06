@@ -6,7 +6,7 @@
 }
 
 \arguments{
-\item{y}{A numeric vector or time series.}
+\item{y}{A numeric vector or time series of class \code{ts}.}
 \item{bootstrapped_series}{bootstrapped versions of y.}
 \item{\dots}{Other arguments passed to \code{\link{ets}}.}
 }

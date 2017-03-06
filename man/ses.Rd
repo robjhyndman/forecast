@@ -17,7 +17,7 @@ hw(y, h=2*frequency(x), seasonal=c("additive","multiplicative"),
 }
 
 \arguments{
-\item{y}{a numeric vector or time series}
+\item{y}{a numeric vector or time series of class \code{ts}}
 \item{h}{Number of periods for forecasting.}
 \item{damped}{If TRUE, use a damped trend.}
 \item{seasonal}{Type of seasonality in \code{hw} model. "additive" or "multiplicative"}

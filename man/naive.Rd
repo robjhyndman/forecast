@@ -8,7 +8,7 @@ rwf(y, h=10, drift=FALSE, level=c(80,95), fan=FALSE, lambda=NULL, biasadj=FALSE,
 snaive(y, h=2*frequency(x), level=c(80,95), fan=FALSE, lambda=NULL, biasadj=FALSE,x=y)
 }
 \arguments{
-\item{y}{a numeric vector or time series}
+\item{y}{a numeric vector or time series of class \code{ts}}
 \item{h}{Number of periods for forecasting}
 \item{drift}{Logical flag. If TRUE, fits a random walk with drift model.}
 \item{level}{Confidence levels for prediction intervals.}

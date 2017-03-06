@@ -4,7 +4,7 @@
 \usage{BoxCox.lambda(x, method=c("guerrero","loglik"), lower=-1, upper=2)
 }
 \arguments{
-\item{x}{a numeric vector or time series}
+\item{x}{a numeric vector or time series of class \code{ts}}
 \item{method}{Choose method to be used in calculating lambda.}
 \item{lower}{Lower limit for possible lambda values.}
 \item{upper}{Upper limit for possible lambda values.}

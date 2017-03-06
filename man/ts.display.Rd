@@ -11,7 +11,7 @@ ggtsdisplay(x, plot.type=c("partial","histogram","scatter","spectrum"),
     points=TRUE, smooth=FALSE, lag.max, na.action=na.contiguous, theme=NULL, ...)
 }
 
-\arguments{  \item{x}{a numeric vector or time series.}
+\arguments{  \item{x}{a numeric vector or time series of class \code{ts}.}
 \item{plot.type}{type of plot to include in lower right corner.}
 \item{points}{logical flag indicating whether to show the individual points or not in the time plot.}
 \item{smooth}{logical flag indicating whether to show a smooth loess curve superimposed on the time plot.}

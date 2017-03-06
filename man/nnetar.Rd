@@ -7,7 +7,7 @@
 }
 
 \arguments{
-\item{y}{A numeric vector or time series.}
+\item{y}{A numeric vector or time series of class \code{ts}.}
 \item{p}{Embedding dimension for non-seasonal time series. Number of non-seasonal lags used as inputs. For non-seasonal time series, the default is the optimal number of lags (according to the AIC) for a linear AR(p) model. For seasonal time series, the same method is used but applied to seasonally adjusted data (from an stl decomposition).}
 \item{P}{Number of seasonal lags used as inputs.}
 \item{size}{Number of nodes in the hidden layer. Default is half of the number of input nodes (including external regressors, if given) plus 1.}

@@ -12,7 +12,7 @@ ets(y, model="ZZZ", damped=NULL, alpha=NULL, beta=NULL, gamma=NULL,
 }
 
 \arguments{
-\item{y}{a numeric vector or time series}
+\item{y}{a numeric vector or time series of class \code{ts}}
 \item{model}{Usually a three-character string identifying method using the framework terminology of Hyndman et al. (2002) and
 Hyndman et al. (2008).
 The first letter denotes the error type ("A", "M" or "Z"); the second letter denotes the trend

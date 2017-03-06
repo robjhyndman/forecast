@@ -4,7 +4,7 @@
 \usage{findfrequency(x)
 }
 \arguments{
-\item{x}{a numeric vector or time series}
+\item{x}{a numeric vector or time series of class \code{ts}}
 }
 \description{\code{findfrequency} returns the period of the dominant frequency of a time series. For seasonal data, it will return the seasonal period. For cyclic data, it will return the average cycle length.
 }

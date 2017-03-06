@@ -11,7 +11,7 @@ ggseasonplot(x, year.labels=FALSE, year.labels.left=FALSE,
     labelgap=0.04, ...)
 }
 \arguments{
-\item{x}{a numeric vector or time series.}
+\item{x}{a numeric vector or time series of class \code{ts}.}
 \item{s}{seasonal frequency of x}
 \item{season.labels}{Labels for each season in the "year"}
 \item{year.labels}{Logical flag indicating whether labels for each year of data should be plotted on the right.}

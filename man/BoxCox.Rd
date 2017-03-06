@@ -6,8 +6,8 @@
 InvBoxCox(x, lambda, biasadj=FALSE, fvar=NULL)
 }
 \arguments{
-\item{x}{a numeric vector or time series}
-\item{lambda}{transformation parameter}
+\item{x}{a numeric vector or time series of class \code{ts}.}
+\item{lambda}{transformation parameter.}
 \item{biasadj}{Use adjusted back-transformed mean for Box-Cox transformations. If TRUE, point forecasts and fitted values are mean forecast. Otherwise, these points can be considered the median of the forecast densities.}
 \item{fvar}{Optional parameter required if biasadj=TRUE. Can either be the forecast variance, or a list containing the interval \code{level}, and the corresponding \code{upper} and \code{lower} intervals.}
 }
