@@ -1,14 +1,18 @@
 \name{autoplot.ts}
 \alias{autoplot.ts}
 \alias{autoplot.mts}
+\alias{autoplot.msts}
 \alias{autolayer.ts}
 \alias{autolayer.mts}
+\alias{autolayer.msts}
 \alias{fortify.ts}
 \title{Automatically create a ggplot for time series objects}
 \usage{\method{autoplot}{ts}(object, series = NULL, ...)
 \method{autoplot}{mts}(object, colour=TRUE, facets=FALSE, ...)
+\method{autoplot}{msts}(object, ...)
 \method{autolayer}{ts}(object, colour=TRUE, series=NULL, ...)
 \method{autolayer}{mts}(object, colour=TRUE, series=NULL, ...)
+\method{autolayer}{msts}(object, ...)
 \method{fortify}{ts}(model,data, ...)
 }
 

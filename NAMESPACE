@@ -45,10 +45,10 @@ getResponse, tsoutliers, tsclean, bizdays, easter,stlm, forecast.stlm,
 StatForecast, GeomForecast, geom_forecast, gghistogram,
 checkresiduals,
 CV, tsCV, CVar,
-autolayer, autolayer.ts, autolayer.mts, autolayer.forecast, autolayer.mforecast,
+autolayer, autolayer.ts, autolayer.mts, autolayer.msts, autolayer.forecast, autolayer.mforecast,
 autoplot.acf, autoplot.ar, autoplot.Arima,
 autoplot.decomposed.ts, autoplot.ets, autoplot.StructTS, autoplot.forecast, autoplot.mforecast,
-autoplot.splineforecast, autoplot.stl, autoplot.ts, autoplot.mpacf, autoplot.mts,
+autoplot.splineforecast, autoplot.stl, autoplot.ts, autoplot.mpacf, autoplot.mts, autoplot.msts,
 autoplot.seas,
 fortify.ts,
 seasonal, trendcycle,remainder,
@@ -58,6 +58,7 @@ residuals.forecast, residuals.nnetar, residuals.stlm)
 
 S3method(autolayer, ts)
 S3method(autolayer, mts)
+S3method(autolayer, msts)
 S3method(autolayer, forecast)
 S3method(autolayer, mforecast)
 S3method(autoplot, acf)
@@ -74,6 +75,7 @@ S3method(autoplot, ts)
 S3method(autoplot, seas)
 S3method(autoplot, mpacf)
 S3method(autoplot, mts)
+S3method(autoplot, msts)
 S3method(fortify, ts)
 S3method(as.character, Arima)
 S3method(as.character, ets)

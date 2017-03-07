@@ -1282,6 +1282,12 @@ autolayer.mts <- function(object, colour=TRUE, series=NULL, ...){
   }
 }
 
+autolayer.msts <- function(object, ...){
+  class(object) <- c("mts", "ts", "matrix")
+  attr(object, "msts") <- NULL
+  autolayer(object, ...)
+}
+
 autolayer.ts <- function(object, colour=TRUE, series=NULL, ...){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
@@ -1395,6 +1401,12 @@ autoplot.mts <- function(object, colour=TRUE, facets=FALSE, ...){
     p <- p + ggAddExtras(xlab="Time", ylab=deparse(substitute(object)))
     return(p)
   }
+}
+
+autoplot.msts <- function(object, ...){
+  class(object) <- c("mts", "ts", "matrix")
+  attr(object, "msts") <- NULL
+  autoplot(object, ...)
 }
 
 fortify.ts <- function(model, data, ...)
