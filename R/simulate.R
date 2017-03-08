@@ -353,8 +353,18 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
   }
   if (use.drift)
   {
-    dft <- as.matrix(1:nsim) + n
-    xreg <- cbind(dft,xreg)
+    # Remove existing drift column
+    if(NCOL(xreg)==1)
+      xreg <- NULL
+    else
+      xreg <- xreg[,!is.element(colnames(xreg),"drift"), drop=FALSE]
+    # Create new drift column for historical simulation
+      dft <- as.matrix(1:nsim)
+    # Adapt if future simulation
+    if(future)
+      dft <- dft + n
+    # Add to xreg
+    xreg <- cbind(drift=dft,xreg)
   }
   narma <- sum(object$arma[1L:4L])
   if(length(object$coef) > narma)
