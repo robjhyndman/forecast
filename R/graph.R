@@ -61,17 +61,22 @@ seasonplot <- function(x, s, season.labels=NULL, year.labels=FALSE, year.labels.
   if(missing(main))
     main = paste("Seasonal plot:", deparse(substitute(x)))
 
+  # Check data are seasonal and convert to integer seasonality
   if(missing(s))
-    s = frequency(x)
-  if(s<=1)
+    s <- round(frequency(x))
+  if(s <= 1)
     stop("Data are not seasonal")
+
+  tspx <- tsp(x)
+  x <- ts(x, start=tspx[1], frequency=s)
 
   # Pad series
   tsx <- x
-  if(start(x)[2]>1)
-    x <- c(rep(NA,start(x)[2]-1),x)
-  x <- c(x,rep(NA,s-length(x)%%s))
-  Season <- rep(c(1:s,NA),length(x)/s)
+  startperiod <- round(cycle(x)[1])
+  if(startperiod > 1)
+    x <- c(rep(NA, startperiod-1), x)
+  x <- c(x, rep(NA, s - length(x)%%s))
+  Season <- rep(c(1:s,NA), length(x)/s)
   xnew <- rep(NA,length(x))
   xnew[!is.na(Season)] <- x
 
@@ -90,11 +95,30 @@ seasonplot <- function(x, s, season.labels=NULL, year.labels=FALSE, year.labels.
     labs <- c("Sun","Mon","Tue","Wed","Thu","Fri","Sat")
     xLab <- "Day"
   }
+  else if(s == 52)
+  {
+    labs <- 1:s
+    xLab <- "Week"
+  }
+  else if(s == 24)
+  {
+    labs <- 0:(s-1)
+    xLab <- "Hour"
+  }
+  else if(s == 48)
+  {
+    labs <- seq(0, 23.5, by=0.5)
+    xLab <- "Half-hour"
+  }
   else
   {
-    labs <- NULL
+    if(s < 20)
+      labs <- 1:s
+    else
+      labs <- NULL
     xLab <- "Season"
   }
+
   if(is.null(xlab))
     xlab <- xLab
   if(is.null(season.labels))

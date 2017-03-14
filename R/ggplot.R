@@ -989,15 +989,21 @@ ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NUL
       message("Plot types are not yet supported for seasonplot()")
     }
 
-    # Check data are seasonal
-    s <- frequency(x)
+    # Check data are seasonal and convert to integer seasonality
+    s <- round(frequency(x))
     if(s <= 1)
       stop("Data are not seasonal")
-
+    
+    # Grab name for plot title
+    xname <- deparse(substitute(x))
+    
+    tspx <- tsp(x)
+    x <- ts(x, start=tspx[1], frequency=s)
+    
     data <- data.frame(y=as.numeric(x),
       year=trunc(time(x)),
       cycle=as.numeric(cycle(x)),
-      time=as.numeric((cycle(x)-1)/frequency(x)))
+      time=as.numeric((cycle(x)-1)/s))
     data$year <- if(continuous){
       as.numeric(data$year)
     }
@@ -1069,11 +1075,27 @@ ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NUL
       labs <- c("Sun","Mon","Tue","Wed","Thu","Fri","Sat")
       xLab <- "Day"
     }
+    else if(s == 52)
+    {
+      labs <- 1:s
+      xLab <- "Week"
+    }
+    else if(s == 24)
+    {
+      labs <- 0:(s-1)
+      xLab <- "Hour"
+    }
+    else if(s == 48)
+    {
+      labs <- seq(0, 23.5, by=0.5)
+      xLab <- "Half-hour"
+    }
     else
     {
-      labs <- NULL
+      labs <- 1:s
       xLab <- "Season"
     }
+    
     if(polar){
       labs <- c(labs, '')
       p <- p + ggplot2::coord_polar()
@@ -1081,7 +1103,7 @@ ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NUL
     p <- p + ggplot2::scale_x_continuous(breaks=sort(unique(data$time)), minor_breaks=NULL, labels=labs)
 
     #Graph title and axes
-    p <- p + ggAddExtras(main=paste("Seasonal plot:", deparse(substitute(x))), xlab=xLab, ylab=NULL)
+    p <- p + ggAddExtras(main=paste("Seasonal plot:", xname), xlab=xLab, ylab=NULL)
     return(p)
   }
 }
