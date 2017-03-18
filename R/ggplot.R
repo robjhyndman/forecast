@@ -1385,6 +1385,9 @@ autoplot.mts <- function(object, colour=TRUE, facets=FALSE, ...){
     if(!stats::is.mts(object)){
       stop("autoplot.mts requires a mts object, use x=object")
     }
+    if(NCOL(object) <= 1){
+      return(autoplot.ts(object))
+    }
     data <- data.frame(y=as.numeric(c(object)), x=rep(as.numeric(time(object)),NCOL(object)),
                        series=factor(rep(colnames(object), each=NROW(object)), levels=colnames(object)))
 
