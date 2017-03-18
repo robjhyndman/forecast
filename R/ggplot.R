@@ -1283,9 +1283,21 @@ autolayer.mts <- function(object, colour=TRUE, series=NULL, ...){
 }
 
 autolayer.msts <- function(object, ...){
-  class(object) <- c("mts", "ts", "matrix")
+  if(NCOL(object) > 1){
+    sname <- NULL
+    class(object) <- c("mts", "ts", "matrix")
+  }
+  else{
+    sname <- deparse(substitute(object))
+    class(object) <- c("ts")
+  }
   attr(object, "msts") <- NULL
-  autolayer(object, ...)
+  if(!is.null(match.call()[["series"]])){
+    autolayer(object, ...)
+  }
+  else{
+    autolayer(object, series=sname, ...)
+  }
 }
 
 autolayer.ts <- function(object, colour=TRUE, series=NULL, ...){
@@ -1407,9 +1419,21 @@ autoplot.mts <- function(object, colour=TRUE, facets=FALSE, ...){
 }
 
 autoplot.msts <- function(object, ...){
-  class(object) <- c("mts", "ts", "matrix")
+  if(NCOL(object) > 1){
+    sname <- NULL
+    class(object) <- c("mts", "ts", "matrix")
+  }
+  else{
+    sname <- deparse(substitute(object))
+    class(object) <- c("ts")
+  }
   attr(object, "msts") <- NULL
-  autoplot(object, ...)
+  if(!is.null(match.call()[["series"]])){
+    autoplot(object, ...)
+  }
+  else{
+    autoplot(object, series=sname, ...)
+  }
 }
 
 fortify.ts <- function(model, data, ...)
