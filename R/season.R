@@ -180,6 +180,24 @@ stlm <- function(y ,s.window=7, robust=FALSE, method=c("ets","arima"), modelfunc
 {
   method <- match.arg(method)
 
+  # Check univariate
+  if(NCOL(x)>1L)
+    stop("y must be a univariate time series")
+  else
+  {
+    if(!is.null(ncol(x)))
+    {
+      if(ncol(x)==1L) # Probably redundant check
+        x <- x[,1L]
+    }
+  }
+  # Check x is a seasonal time series
+  tspx <- tsp(x)
+  if(is.null(tspx))
+    stop("y is not a seasonal ts object")
+  else if(tspx[3] <= 1L)
+    stop("y is not a seasonal ts object")
+
   # Transform data if necessary
   origx <- x
   if (!is.null(lambda))
@@ -293,11 +311,28 @@ forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE
 
 stlf <- function(y, h=frequency(x)*2, s.window=7, t.window=NULL, robust=FALSE, lambda=NULL, biasadj=FALSE, x=y, ...)
 {
+  seriesname <- deparse(substitute(y))
+
+  # Check univariate
+  if(NCOL(x)>1L)
+    stop("y must be a univariate time series")
+  else
+  {
+    if(!is.null(ncol(x)))
+    {
+      if(ncol(x)==1L) # Probably redundant check
+        x <- x[,1L]
+    }
+  }
+  # Check x is a seasonal time series
+  tspx <- tsp(x)
+  if(is.null(tspx))
+    stop("y is not a seasonal ts object")
+  else if(tspx[3] <= 1L)
+    stop("y is not a seasonal ts object")
+
 	if (!is.null(lambda))
-	{
-		origx <- x
 		x <- BoxCox(x, lambda)
-	}
 
 	fit <- stl(x,s.window=s.window,t.window=t.window,robust=robust)
 	fcast <- forecast(fit,h=h,lambda=lambda,biasadj=biasadj, ...)
@@ -311,6 +346,8 @@ stlf <- function(y, h=frequency(x)*2, s.window=7, t.window=NULL, robust=FALSE, l
 	# 	fcast$upper <- InvBoxCox(fcast$upper, lambda)
 	# 	fcast$lambda <- lambda
 	# }
+
+  fcast$series <- seriesname
 
 	return(fcast)
 }
