@@ -64,7 +64,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   max.Q <- min(max.Q, floor(serieslength/3/m))
 
   orig.x <- x
-  origxreg <- xreg
+  xregg <- xreg
 
   if(!is.null(lambda))
   {
@@ -73,18 +73,18 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   }
 
   # Choose order of differencing
-  if(!is.null(xreg))
+  if(!is.null(xregg))
   {
-    nmxreg <- deparse(substitute(xreg))
-    xreg <- as.matrix(xreg)
-    if(ncol(xreg)==1 & length(nmxreg) > 1)
+    nmxreg <- deparse(substitute(xregg))
+    xregg <- as.matrix(xregg)
+    if(ncol(xregg)==1 & length(nmxreg) > 1)
       nmxreg <- "xreg"
-    if (is.null(colnames(xreg)))
-      colnames(xreg) <- if (ncol(xreg) == 1) nmxreg
-    else paste(nmxreg, 1:ncol(xreg), sep = "")
-    j <- !is.na(x) & !is.na(rowSums(xreg))
+    if (is.null(colnames(xregg)))
+      colnames(xregg) <- if (ncol(xregg) == 1) nmxreg
+    else paste(nmxreg, 1:ncol(xregg), sep = "")
+    j <- !is.na(x) & !is.na(rowSums(xregg))
     xx <- x
-    xx[j] <- residuals(lm(x ~ xreg))
+    xx[j] <- residuals(lm(x ~ xregg))
   }
   else
     xx <- x
@@ -96,9 +96,9 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   {
     D <- nsdiffs(xx, m=m, test=seasonal.test, max.D=max.D)
     # Make sure xreg is not null after differencing
-    if(D > 0 & !is.null(xreg))
+    if(D > 0 & !is.null(xregg))
     {
-      diffxreg <- diff(xreg, differences=D, lag=m)
+      diffxreg <- diff(xregg, differences=D, lag=m)
       if(any(apply(diffxreg, 2, is.constant)))
         D <- D-1
     }
@@ -107,18 +107,18 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     dx <- diff(xx,differences=D,lag=m)
   else
     dx <- xx
-  if(!is.null(xreg))
+  if(!is.null(xregg))
   {
     if(D > 0)
-      diffxreg <- diff(xreg, differences=D, lag=m)
+      diffxreg <- diff(xregg, differences=D, lag=m)
     else
-      diffxreg <- xreg
+      diffxreg <- xregg
   }
   if(is.na(d))
   {
     d <- ndiffs(dx,test=test, max.d=max.d)
     # Make sure xreg is not null after differencing
-    if(d > 0 & !is.null(xreg))
+    if(d > 0 & !is.null(xregg))
     {
       diffxreg <- diff(diffxreg, differences=d, lag=1)
       if(any(apply(diffxreg, 2, is.constant)))
@@ -451,7 +451,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
                     max.P=max.P, max.Q=max.Q, max.order=max.order, max.d=max.d, max.D=max.D,
                     start.p=start.p, start.q=start.q, start.P=1, start.Q=1,
                     stationary=stationary, seasonal=seasonal, ic=ic,
-                    stepwise=TRUE, trace=trace, approximation=FALSE, xreg=origxreg,
+                    stepwise=TRUE, trace=trace, approximation=FALSE, xreg=xreg,
                     allowdrift=allowdrift,allowmean=allowmean,lambda=lambda, biasadj=biasadj,
                     parallel=FALSE,...)
       bestfit$ic <- switch(ic,bic=bestfit$bic,aic=bestfit$aic,aicc=bestfit$aicc)
