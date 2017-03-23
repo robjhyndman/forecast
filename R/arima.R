@@ -299,7 +299,7 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
     if(is.null(xreg))
       stop("No regressors provided")
     object$call$xreg <- getxreg(object)
-    if(ncol(xreg) != ncol(object$call$xreg))
+    if(NCOL(xreg) != NCOL(object$call$xreg))
       stop("Number of regressors does not match fitted model")
     pred <- predict(object, n.ahead=h, newxreg=xreg)
   }
