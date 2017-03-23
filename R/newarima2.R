@@ -64,7 +64,6 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   max.Q <- min(max.Q, floor(serieslength/3/m))
 
   orig.x <- x
-  xregg <- xreg
 
   if(!is.null(lambda))
   {
@@ -73,10 +72,10 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   }
 
   # Choose order of differencing
-  if(!is.null(xregg))
+  if(!is.null(xreg))
   {
-    nmxreg <- deparse(substitute(xregg))
-    xregg <- as.matrix(xregg)
+    nmxreg <- deparse(substitute(xreg))
+    xregg <- as.matrix(xreg)
     if(ncol(xregg)==1 & length(nmxreg) > 1)
       nmxreg <- "xreg"
     if (is.null(colnames(xregg)))
@@ -87,7 +86,10 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     xx[j] <- residuals(lm(x ~ xregg))
   }
   else
+  {
     xx <- x
+    xregg <- NULL
+  }
   if(stationary)
     d <- D <- 0
   if(m == 1)
