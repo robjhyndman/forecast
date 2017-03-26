@@ -360,6 +360,8 @@ holt <- function (y, h = 10, damped = FALSE, level = c(80, 95), fan = FALSE,
           phi=NULL, lambda=NULL, biasadj=FALSE, x=y, ...)
 {
   initial <- match.arg(initial)
+  if(length(y) <= 1L)
+    stop("I need at least two observations to estimate trend.")
   if(initial=="optimal" | damped)
   {
   	if(exponential)
@@ -393,6 +395,11 @@ hw <- function(y, h = 2 * frequency(x), seasonal = c("additive","multiplicative"
 {
   initial <- match.arg(initial)
   seasonal <- match.arg(seasonal)
+  m <- frequency(x)
+  if(m <= 1L)
+    stop("The time series should have frequency greater than 1.")
+  if(length(y) < m+3)
+    stop(paste("I need at least",m+3,"observations to estimate seasonality."))
   if(initial=="optimal" | damped)
   {
     if (seasonal == "additive" & exponential)
