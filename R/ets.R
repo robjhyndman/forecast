@@ -178,7 +178,6 @@ ets <- function(y, model="ZZZ", damped=NULL,
     if(!is.null(damped))
         if(damped)
           warning("Not enough data to use damping")
-    fit <- 0
     if(seasontype=="A" | seasontype=="M")
     {
       fit <- try(HoltWintersZZ(orig.y,
