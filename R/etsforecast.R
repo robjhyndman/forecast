@@ -179,8 +179,8 @@ class1 <- function(h,last.state,trendtype,seasontype,damped,m,sigma2,par)
     for(i in 1:(h-1))
     {
       mu[i] <- H %*% Fj %*% last.state
-      Fj <- Fj %*% F
       cj[i] <- H %*% Fj %*% G
+      Fj <- Fj %*% F
     }
     cj2 <- cumsum(cj^2)
     var <- sigma2 * c(1,1+cj2)
