@@ -16,7 +16,7 @@ if(require(testthat))
 
 	test_that("tests for ARIMA errors", {
   	fit <- Arima(wineind, order = c(1, 1, 1), seasonal = c(0, 1, 1))
-  	expect_that(arima.errors(fit), equals(wineind))
+  	expect_that(residuals(fit, type='regression'), equals(wineind))
 	})
 
 	test_that("tests for arimaorder", {

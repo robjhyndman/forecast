@@ -163,14 +163,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
   }
 
   n <- length(y)
-  # Return non-optimized SES if 4 or  fewer observations
-  if(n <= 4)
-  {
-    fit <- HoltWintersZZ(orig.y, beta=FALSE, gamma=FALSE, lambda=lambda, biasadj=biasadj)
-    fit$call <- match.call()
-    return(fit)
-  }
-  # Otherwise proceed to check we have enough data to fit a model
+  # Check we have enough data to fit a model
   npars <- 2L # alpha + l0
   if(trendtype=="A" | trendtype=="M")
     npars <- npars + 2L # beta + b0
@@ -178,8 +171,79 @@ ets <- function(y, model="ZZZ", damped=NULL,
     npars <- npars + m # gamma + s
   if(!is.null(damped))
     npars <- npars + as.numeric(damped)
-  if(n <= npars+1)
-    stop("Sorry, but I need more data!")
+
+  # Produce something non-optimized for tiny data sets
+  if(n <= npars+4L)
+  {
+    if(!is.null(damped))
+        if(damped)
+          warning("Not enough data to use damping")
+    if(seasontype=="A" | seasontype=="M")
+    {
+      fit <- try(HoltWintersZZ(orig.y,
+        alpha=alpha, beta=beta, gamma=gamma, phi=phi,
+        exponential=(trendtype=="M"),
+        seasonal=ifelse(seasontype!="A","multiplicative","additive"),
+        lambda=lambda, biasadj=biasadj), silent=TRUE)
+      if(!("try-error" %in% class(fit)))
+      {
+        fit$call <- match.call()
+        fit$method <- as.character(fit)
+        fit$series <- deparse(substitute(y))
+        return(fit)
+      }
+      else
+        warning("Seasonal component could not be estimated")
+    }
+    if(trendtype=="A" | trendtype=="M")
+    {
+      fit <- try(HoltWintersZZ(orig.y,
+        alpha=alpha, beta=beta, gamma=FALSE, phi=phi,
+        exponential=(trendtype=="M"),
+        lambda=lambda, biasadj=biasadj), silent=TRUE)
+      if(!("try-error" %in% class(fit)))
+      {
+        fit$call <- match.call()
+        fit$method <- as.character(fit)
+        fit$series <- deparse(substitute(y))
+        return(fit)
+      }
+      else
+        warning("Trend component could not be estimated")
+    }
+    if(trendtype=="N" & seasontype=="N")
+    {
+      fit <- try(HoltWintersZZ(orig.y,
+        alpha=alpha, beta=FALSE, gamma=FALSE,
+        lambda=lambda, biasadj=biasadj), silent=TRUE)
+      if(!("try-error" %in% class(fit)))
+      {
+        fit$call <- match.call()
+        fit$method <- as.character(fit)
+        fit$series <- deparse(substitute(y))
+        return(fit)
+      }
+    }
+    # Try holt and ses and return best
+    fit1 <- try(HoltWintersZZ(orig.y,
+        alpha=alpha, beta=beta, gamma=FALSE, phi=phi,
+        exponential=(trendtype=="M"),
+        lambda=lambda, biasadj=biasadj), silent=TRUE)
+    fit2 <- try(HoltWintersZZ(orig.y,
+        alpha=alpha, beta=FALSE, gamma=FALSE, phi=phi,
+        exponential=(trendtype=="M"),
+        lambda=lambda, biasadj=biasadj), silent=TRUE)
+    if("try-error" %in% class(fit1))
+      fit <- fit2
+    else if(fit1$sigma2 < fit2$sigma2)
+      fit <- fit1
+    else
+      fit <- fit2
+    fit$call <- match.call()
+    fit$method <- as.character(fit)
+    fit$series <- deparse(substitute(y))
+    return(fit)
+  }
 
   # Fit model (assuming only one nonseasonal model)
   if(errortype=="Z")
