@@ -167,7 +167,7 @@ as.character.tbats <- function(x, ...) {
 		name <- paste(name, " {", sep="")
     M <- length(x$seasonal.periods)
 		for(i in 1:M) {
-			name <- paste(name, "<", x$seasonal.periods[i], ",", x$k.vector[i], ">", sep="")
+			name <- paste(name, "<", round(x$seasonal.periods[i],2), ",", x$k.vector[i], ">", sep="")
 			if(i < M) {
 				name <- paste(name, ", ", sep="")
 			} else {
