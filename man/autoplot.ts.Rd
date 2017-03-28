@@ -8,12 +8,12 @@
 \alias{fortify.ts}
 \title{Automatically create a ggplot for time series objects}
 \usage{\method{autoplot}{ts}(object, series = NULL, ...)
-\method{autoplot}{mts}(object, colour=TRUE, facets=FALSE, ...)
-\method{autoplot}{msts}(object, ...)
-\method{autolayer}{ts}(object, colour=TRUE, series=NULL, ...)
-\method{autolayer}{mts}(object, colour=TRUE, series=NULL, ...)
-\method{autolayer}{msts}(object, ...)
-\method{fortify}{ts}(model,data, ...)
+\method{autoplot}{mts}(object, colour = TRUE, facets = FALSE, ...)
+\method{autoplot}{msts}(object, series = NULL,...)
+\method{autolayer}{ts}(object, colour = TRUE, series = NULL, ...)
+\method{autolayer}{mts}(object, colour = TRUE, series = NULL, ...)
+\method{autolayer}{msts}(object, series = NULL, ...)
+\method{fortify}{ts}(model, data, ...)
 }
 
 \arguments{
