@@ -39,6 +39,6 @@ Authors@R: c(
   person("Earo", "Wang", role="aut")
   )
 BugReports: https://github.com/robjhyndman/forecast/issues
-License: GPL (>= 2)
+License: GPL (>= 3)
 URL: http://github.com/robjhyndman/forecast
 VignetteBuilder: knitr

@@ -11,13 +11,13 @@
 }
 
 \arguments{
-\item{object}{Object of class \dQuote{seas}, \dQuote{stl}, or \dQuote{decomposed.ts}.}
-\item{labels}{Labels to replace "seasonal", "trend", and "remainder".}
-\item{range.bars}{Logical indicating if each plot should have a bar at its right side representing relative size. If NULL, automatic selection takes place.}
+\item{object}{Object of class \dQuote{\code{seas}}, \dQuote{\code{stl}}, or \dQuote{\code{decomposed.ts}}.}
+\item{labels}{Labels to replace \dquote{seasonal}, \dQuote{trend}, and \dQuote{remainder}.}
+\item{range.bars}{Logical indicating if each plot should have a bar at its right side representing relative size. If \code{NULL}, automatic selection takes place.}
 \item{...}{Other plotting parameters to affect the plot.}
 }
 
-\description{Produces a ggplot object of seasonally decomposed time series for objects of class "stl" (created with \code{\link[stats]{stl}}), class "seas" (created with \code{\link[seasonal]{seas}}), or  class "decomposed.ts" (created with \code{\link[stats]{decompose}}).
+\description{Produces a ggplot object of seasonally decomposed time series for objects of class \dQuote{\code{stl}} (created with \code{\link[stats]{stl}}), class \dQuote{\code{seas}} (created with \code{\link[seasonal]{seas}}), or  class \dQuote{\code{decomposed.ts}} (created with \code{\link[stats]{decompose}}).
 }
 
 \value{Returns an object of class \code{ggplot}.
@@ -34,7 +34,6 @@ nottem \%>\% stl(s.window='periodic') \%>\% autoplot
 
 \dontrun{
 library(seasonal)
-m <- seas(USAccDeaths)
-autoplot(m)
+seas(USAccDeaths) \%>\% autoplot
 }
 }

@@ -1,5 +1,4 @@
 \name{auto.arima}
-\alias{best.arima}
 \alias{auto.arima}
 \title{Fit best ARIMA model to univariate time series}
 \usage{
@@ -49,11 +48,9 @@ auto.arima(y, d=NA, D=NA, max.p=5, max.q=5,
 \item{x}{Deprecated. Included for backwards compatibility.}
 \item{...}{Additional arguments to be passed to \code{\link[stats]{arima}}.}
 }
-\description{Returns best ARIMA model according to either AIC, AICc or BIC value.
-The function conducts a search over
-possible model within the order constraints provided.}
+\description{Returns best ARIMA model according to either AIC, AICc or BIC value. The function conducts a search over possible model within the order constraints provided.}
 
-\details{Non-stepwise selection can be slow, especially for seasonal data. Stepwise algorithm outlined in Hyndman and Khandakar (2008) except that the default method for selecting seasonal differences is now the OCSB test rather than the Canova-Hansen test.
+\details{Non-stepwise selection can be slow, especially for seasonal data. Stepwise algorithm outlined in Hyndman and Khandakar (2008) except that the default method for selecting seasonal differences is now the OCSB test rather than the Canova-Hansen test. There are also some other minor variations to the algorithm described in Hyndman and Khandakar (2008).
 }
 \value{Same as for \code{\link{Arima}}}
 

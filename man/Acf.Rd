@@ -22,7 +22,7 @@ taperedpacf(x, ...) }
 \item{y}{a univariate numeric time series object or a numeric vector.}
 \item{lag.max}{maximum lag at which to calculate the acf. Default is $10*log10(N/m)$ where $N$ is the number of observations and $m$ the number of series. Will be automatically limited to one less than the number of observations in the series.}
 \item{type}{character string giving the type of acf to be computed. Allowed values are
-"\code{correlation}" (the default), "\code{covariance}"  or "\code{partial}".}
+\dQuote{\code{correlation}} (the default), \dQuote{\code{covariance}}  or \dQuote{\code{partial}}.}
 \item{plot}{logical. If \code{TRUE} (the default) the resulting acf, pacf or ccf is plotted.}
 \item{na.action}{function to handle missing values. Default is \code{\link[stats]{na.contiguous}}.  Useful alternatives are \code{\link[stats]{na.pass}} and \code{\link{na.interp}}.}
 \item{demean}{Should covariances be about the sample means?}

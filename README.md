@@ -78,7 +78,7 @@ taylor %>%
 
 ## For more information
 
-  * Get started in forecasting with the online textbook at http://OTexts.org/fpp/
+  * Get started in forecasting with the online textbook at http://OTexts.org/fpp2/
   * Read the Hyndsight blog at http://robjhyndman.com/hyndsight/
   * Ask forecasting questions on http://stats.stackexchange.com/tags/forecasting
   * Ask R questions on http://stackoverflow.com/tags/forecasting+r
@@ -86,4 +86,4 @@ taylor %>%
 
 ## License
 
-This package is free and open source software, licensed under GPL (>= 2).
+This package is free and open source software, licensed under GPL (>= 3).

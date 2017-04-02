@@ -17,11 +17,11 @@
 }
 
 \arguments{
-\item{object}{Object of class \dQuote{ts} or \dQuote{mts}.}
+\item{object}{Object of class \dQuote{\code{ts}} or \dQuote{\code{mts}}.}
 \item{series}{Identifies the timeseries with a colour, which integrates well with the functionality of \link{geom_forecast}.}
 \item{facets}{If TRUE, multiple time series will be faceted (and unless specified, colour is set to FALSE). If FALSE, each series will be assigned a colour.}
 \item{colour}{If TRUE, the time series will be assigned a colour aesthetic}
-\item{model}{Object of class \dQuote{ts} to be converted to \dQuote{data.frame}.}
+\item{model}{Object of class \dQuote{\code{ts}} to be converted to \dQuote{\code{data.frame}}.}
 \item{data}{Not used (required for \link{fortify} method)}
 \item{...}{Other plotting parameters to affect the plot.}
 }

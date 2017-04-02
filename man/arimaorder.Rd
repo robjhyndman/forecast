@@ -5,7 +5,7 @@
 }
 
 \arguments{
-\item{object}{An object of class "\code{Arima}", "\code{ar}" or "\code{fracdiff}". Usually the result of a call to 
+\item{object}{An object of class \dQuote{\code{Arima}}, dQuote{\code{ar}} or \dQuote{\code{fracdiff}}. Usually the result of a call to 
 \code{\link[stats]{arima}}, \code{\link{Arima}}, \code{\link{auto.arima}}, \code{\link[stats]{ar}}, \code{\link{arfima}} or \code{\link[fracdiff]{fracdiff}}.}
 }
 
@@ -18,6 +18,6 @@
 
 \author{Rob J Hyndman}
 
-\examples{arimaorder(auto.arima(WWWusage))
+\examples{WWWusage \%>\% auto.arima \%>\% arimaorder
 }
 \keyword{ts}
