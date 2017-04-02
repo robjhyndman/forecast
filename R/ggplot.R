@@ -495,7 +495,7 @@ autoplot.forecast <- function (object, include, PI=TRUE, shadecols=c("#596DD5","
       #Forecasted intervals
       if (PI){
         levels <- NROW(object$level)
-        interval <- data.frame(xpred=rep(object$newdata[[1]],levels),lower=c(object$lower),upper=c(object$upper),level=object$level)
+        interval <- data.frame(xpred=rep(object$newdata[[1]],levels),lower=c(object$lower),upper=c(object$upper),level=rep(object$level, each=NROW(object$newdata[[1]])))
         interval<-interval[order(interval$level,decreasing = TRUE),] #Must be ordered for gg z-index
         p <- p + ggplot2::geom_linerange(ggplot2::aes_(x=~xpred, ymin=~lower, ymax=~upper, colour=~level), data=interval, size=flwd)
         if(length(object$level)<=5){
