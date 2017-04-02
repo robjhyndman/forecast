@@ -12,7 +12,7 @@
 
 \arguments{
 \item{object}{Object of class \dQuote{\code{seas}}, \dQuote{\code{stl}}, or \dQuote{\code{decomposed.ts}}.}
-\item{labels}{Labels to replace \dquote{seasonal}, \dQuote{trend}, and \dQuote{remainder}.}
+\item{labels}{Labels to replace \dQuote{seasonal}, \dQuote{trend}, and \dQuote{remainder}.}
 \item{range.bars}{Logical indicating if each plot should have a bar at its right side representing relative size. If \code{NULL}, automatic selection takes place.}
 \item{...}{Other plotting parameters to affect the plot.}
 }
