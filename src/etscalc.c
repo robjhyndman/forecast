@@ -26,7 +26,7 @@ void etscalc(double *y, int *n, double *x, int *m, int *error, int *trend, int *
     double *alpha, double *beta, double *gamma, double *phi, double *e, double *lik, double *amse, int *nmse)
 {
     int i, j, nstates;
-    double oldl, l, oldb, b, olds[24], s[24], f[30], lik2, tmp;
+    double oldl, l, oldb, b, olds[24], s[24], f[30], lik2, tmp, denom[30];
 
     if((*m > 24) & (*season > NONE))
         return;
@@ -51,7 +51,10 @@ void etscalc(double *y, int *n, double *x, int *m, int *error, int *trend, int *
     *lik = 0.0;
     lik2 = 0.0;
     for(j=0; j<(*nmse); j++)
+    {
         amse[j] = 0.0;
+        denom[j] = 0.0;
+    }
 
     for (i=0; i<(*n); i++)
     {
@@ -81,8 +84,9 @@ void etscalc(double *y, int *n, double *x, int *m, int *error, int *trend, int *
         {
             if(i+j<(*n))
             {
+                denom[j] += 1.0;
                 tmp = y[i+j]-f[j];
-                amse[j] += (tmp*tmp)/(*n);
+                amse[j] = (amse[j] * (denom[j]-1.0) + (tmp*tmp)) / denom[j];
             }
         }
 
