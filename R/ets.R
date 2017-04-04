@@ -104,6 +104,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
     else
     {
       model <- modelcomponents
+      message("Model is being refit with current smoothing parameters but initial states are being re-estimated.\nSet 'use.initial.values=TRUE' if you want to re-use existing initial values.")
     }
   }
 
