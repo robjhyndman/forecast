@@ -472,6 +472,9 @@ hfitted <- function(object, h=1, FUN=NULL, ...)
   refitarg <- list(x=NULL, model = object)
   names(refitarg)[1] <- names(formals(FUN))[1]
   fcarg <- list(h=h)
+  if(FUN=="ets"){
+    refitarg$use.initial.values <- TRUE
+  }
   for(i in 1:(n-h))
   {
     refitarg[[1]] <- ts(x[1:i], start=tspx[1], frequency=tspx[3])
