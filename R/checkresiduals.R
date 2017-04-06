@@ -1,4 +1,4 @@
-checkresiduals <- function(object, lag, df=NULL, test, ...)
+checkresiduals <- function(object, lag, df=NULL, test, plot=TRUE, ...)
 {
   if(missing(test))
   {
@@ -6,9 +6,15 @@ checkresiduals <- function(object, lag, df=NULL, test, ...)
       test <- "BG"
     else
       test <- "LB"
+    showtest <- TRUE
+  }
+  else if(test != FALSE)
+  {
+    test <- match.arg(test, c("LB","BG"))
+    showtest <- TRUE
   }
   else
-    test <- match.arg(test, c("LB","BG"))
+    showtest <- FALSE
 
   # Extract residuals
   if(is.element("ts",class(object)) | is.element("numeric",class(object)) )
@@ -32,18 +38,20 @@ checkresiduals <- function(object, lag, df=NULL, test, ...)
   else
     main <- paste("Residuals from", method)
 
-  suppressWarnings(ggtsdisplay(residuals, plot.type="histogram", main=main, ...))
+  if(plot)
+  {
+    suppressWarnings(ggtsdisplay(residuals, plot.type="histogram", main=main, ...))
+  }
 
   # Check if we have the model
   if(is.element("forecast",class(object)))
     object <- object$model
 
-  if(is.null(object))
-    return()
+  if(is.null(object) | !showtest)
+    return(invisible())
 
   # Seasonality of data
   freq <- frequency(residuals)
-
 
   # Find model df
   if(is.element("ets",class(object)))
