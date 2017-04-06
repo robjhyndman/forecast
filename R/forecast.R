@@ -463,7 +463,6 @@ as.data.frame.forecast <- function(x,...)
     else
       nd <- max(round(log10(fr.x)+1),2)
     rownames(out) <- format(tx, nsmall=nd, digits=nd)
-    browser()
     # Rest of function borrowed from print.ts(), but with header() omitted
     if(!ists)
         return(as.data.frame(out))
@@ -533,7 +532,7 @@ as.data.frame.forecast <- function(x,...)
             else format(t2), sep=" ")
         }
         else
-            rownames(x) <- format(time(x), nsmall=nd, digits=nd)
+            rownames(x) <- format(time(x), nsmall=nd)
         attr(x, "class") <- attr(x, "tsp") <- attr(x, "na.action") <- NULL
     }
     return(as.data.frame(x))
