@@ -530,3 +530,10 @@ subset.forecast <- function(x, ...){
 is.forecast <- function(x){
   inherits(x, "forecast")
 }
+
+as.ts.forecast <- function(x, ...){
+  df <- ts(as.matrix(as.data.frame.forecast(x)))
+  tsp(df) <- tsp(x$mean)
+  return(df)
+}
+
