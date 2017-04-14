@@ -54,7 +54,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
   if(is.constant(y))
   {
     fit <- list(y=y,x=matrix(y,nrow=1,ncol=ny),errors=y*0,fitted.values=y,seed.states=matrix(y[1]),
-      AIC=-Inf,likelihood=-Inf,variance=0,alpha=0.9999, call=match.call())
+      AIC=-Inf,likelihood=-Inf,variance=0,alpha=0.9999, method="TBATS", call=match.call())
     return(structure(fit,class='bats'))
   }
 
@@ -340,7 +340,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
 	attributes(best.model$fitted.values) <- attributes(best.model$errors) <- attributes(origy)
 	best.model$y <- origy
 	best.model$series <- seriesname
-
+	best.model$method <- "TBATS"
 	return(best.model)
 }
 
