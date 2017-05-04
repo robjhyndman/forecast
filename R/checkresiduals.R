@@ -1,5 +1,6 @@
 checkresiduals <- function(object, lag, df=NULL, test, plot=TRUE, ...)
 {
+  showtest <- TRUE
   if(missing(test))
   {
     if(is.element("lm", class(object)))

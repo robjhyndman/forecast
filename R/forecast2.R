@@ -113,7 +113,7 @@ InvBoxCox <- function(x, lambda, biasadj=FALSE, fvar=NULL)
       #Note: Use BoxCox transformed upper and lower values
       fvar <- ((fvar$upper-fvar$lower)/stats::qnorm(level)/2)^2
     }
-    if(is.matrix(fvar)){
+    if(NCOL(fvar) > 1){
       fvar <- diag(fvar)
     }
     out <- out * (1 + 0.5*fvar*(1-lambda)/(out)^(2*lambda))

@@ -422,6 +422,43 @@ autoplot.ets <- function (object, range.bars = NULL, ...){
   }
 }
 
+autoplot.tbats <- function(object, range.bars = FALSE, ...){
+  cl <- match.call()
+  cl[[1]] <- quote(autoplot.bats)
+  eval.parent(cl)
+}
+
+autoplot.bats <- function(object, range.bars = FALSE, ...){
+  data <- tbats.components(object)
+  
+  cn <- colnames(data)
+  #Convert to longform
+  data <- data.frame(datetime=rep(time(data),NCOL(data)), y=c(data),
+                     parts=factor(rep(cn, each=NROW(data)), levels=cn))
+  
+  #Initialise ggplot object
+  p <- ggplot2::ggplot(ggplot2::aes_(x=~datetime, y=~y), data=data, ylab="")
+  
+  #Add data
+  p <- p + ggplot2::geom_line(na.rm=TRUE)
+  p <- p + ggplot2::facet_grid(parts ~ ., scales="free_y", switch="y")
+  
+  if(range.bars){
+    yranges <- vapply(split(data$y, data$parts), function(x) range(x, na.rm = TRUE), numeric(2))
+    xranges <- range(data$datetime)
+    barmid <- apply(yranges, 2, mean)
+    barlength <- min(apply(yranges, 2, diff))
+    barwidth <- (1/64)*diff(xranges)
+    barpos <- data.frame(left = xranges[2]+barwidth, right = xranges[2]+barwidth*2,
+                         top = barmid+barlength/2, bottom = barmid-barlength/2,
+                         parts = colnames(yranges), datetime = xranges[2], y = barmid)
+    p <- p + ggplot2::geom_rect(ggplot2::aes_(xmin = ~left, xmax = ~right, ymax = ~top, ymin = ~bottom), data=barpos, fill="gray75", colour="black", size=1/3)
+  }
+  
+  p <- p + ggAddExtras(xlab = NULL, ylab = "", main = paste("Decomposition by",object$method,"method"))
+  return(p)
+}
+
 autoplot.forecast <- function (object, include, PI=TRUE, shadecols=c("#596DD5","#D5DBFF"), fcol="#0000AA", flwd=0.5, ...){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
