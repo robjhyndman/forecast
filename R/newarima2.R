@@ -599,8 +599,8 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
       else if(!constant & (order[2]+seasonal[2] == 0))
         cat(" with zero mean    ")
       else
-        cat("         ")
-      cat(" :",Inf,"*")
+        cat("                   ")
+      cat(" :",Inf)
     }
     return(list(ic=Inf))
   }
