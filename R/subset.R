@@ -101,3 +101,9 @@ tail.ts <- function(x, n=6L, ...)
     hx <- numeric(0)
   return(hx)
 }
+
+subset.msts <- function(x, subset=NULL, start=NULL, end=NULL, ...){
+  out <- subset.ts(x, start = start, end = end, ...)
+  tspx <- tsp(x)
+  msts(out, seasonal.periods = attr(x, "msts"), start = tspx[1], frequency = tspx[3])
+}

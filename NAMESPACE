@@ -36,7 +36,7 @@ is.acf, is.Arima, is.bats, is.constant, is.ets, is.forecast, is.mforecast, is.nn
 nnetar, forecast.nnetar, baggedETS,forecast.baggedETS,is.baggedETS,bld.mbb.bootstrap,
 plot.Arima, plot.ar, taperedacf, taperedpacf,
 meanf, monthdays, na.interp, ets, plot.bats, plot.tbats, plot.ets, plot.forecast,
-plot.splineforecast, rwf, seasadj, seasonaldummy,naive,snaive,stlf,subset.ts,
+plot.splineforecast, rwf, seasadj, seasonaldummy,naive,snaive,stlf,subset.ts,subset.msts,
 seasonaldummyf, ggAcf, ggPacf, ggCcf, ggtaperedacf, ggtaperedpacf, gglagplot, gglagchull,
 ggtsdisplay, ggmonthplot, ggsubseriesplot, ggseasonplot, seasonplot, ses, sindexf, splinef, tslm, fourier,
 fourierf,forecast.lm,thetaf, tsdisplay, simulate.ets, simulate.ar, simulate.Arima, simulate.fracdiff, simulate.nnetar,
@@ -112,6 +112,7 @@ S3method(forecast,tbats)
 S3method(forecast,ts)
 S3method(forecast,mts)
 S3method(forecast,varest)
+#S3method(frequency,msts)
 S3method(getResponse,ar)
 S3method(getResponse,Arima)
 S3method(getResponse,default)
@@ -161,6 +162,7 @@ S3method(simulate,ets)
 S3method(simulate,fracdiff)
 S3method(simulate,nnetar)
 S3method(subset,ts)
+S3method(subset,msts)
 S3method(summary,Arima)
 S3method(summary,ets)
 S3method(summary,forecast)
