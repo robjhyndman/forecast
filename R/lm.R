@@ -273,7 +273,7 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
     if(rm1){
       tmpdata[[1]] <- NULL
     }
-    newdata <- tmpdata
+    newdata <- cbind(newdata, tmpdata)
     h <- nrow(newdata)
   }
   if(!is.null(tspx))
