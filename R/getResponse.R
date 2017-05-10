@@ -67,7 +67,7 @@ getResponse.ar <- function(object, ...)
   getResponse.Arima(object)
 }
 
-getResponse.tbats <- function(object,..)
+getResponse.tbats <- function(object,...)
 {
   if(is.element("y", names(object)))
     y <- object$y
