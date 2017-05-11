@@ -1,7 +1,7 @@
 #' Residuals for various time series models
-#' 
+#'
 #' Returns time series of residuals from a fitted model.
-#' 
+#'
 #' Innovation residuals correspond to the white noise process that drives the
 #' evolution of the time series model. Response residuals are the difference
 #' between the observations and the fitted values (equivalent to \code{h}-step
@@ -13,10 +13,13 @@
 #' variables, the errors will be identical to the original series (possibly
 #' adjusted to have zero mean).  \code{arima.errors} is a deprecated function
 #' which is identical to \code{residuals.Arima(object, type="regression")}.
-#' 
+#'
 #' @param object An object containing a time series model of class \code{ar},
 #' \code{Arima}, \code{bats}, \code{ets}, \code{fracdiff}, \code{nnetar} or
-#' \code{stlm}. If object is of class \code{forecast},
+#' \code{stlm}.
+#' If \code{object} is of class \code{forecast}, then the function will return
+#' \code{object$residuals} if it exists, otherwise it returns the differences between
+#' the observations and their fitted values.
 #' @param type Type of residual.
 #' @param h If \code{type='response'}, then the fitted values are computed for
 #' \code{h}-step forecasts.
@@ -25,7 +28,7 @@
 #' @author Rob J Hyndman
 #' @seealso \code{\link{fitted.Arima}}, \code{\link{checkresiduals}}.
 #' @keywords ts
-#' 
+#'
 #' @export
 residuals.forecast <- function(object, type=c("innovation","response"), ...)
 {
@@ -37,7 +40,7 @@ residuals.forecast <- function(object, type=c("innovation","response"), ...)
 }
 
 #' @rdname residuals.forecast
-#' @export 
+#' @export
 residuals.ar <- function(object, type=c("innovation","response"),...)
 {
   type <- match.arg(type)
@@ -46,10 +49,10 @@ residuals.ar <- function(object, type=c("innovation","response"),...)
 }
 
 #' @rdname residuals.forecast
-#' 
+#'
 #' @examples
 #' fit <- Arima(lynx,order=c(4,0,0), lambda=0.5)
-#' 
+#'
 #' plot(residuals(fit))
 #' plot(residuals(fit, type='response'))
 #' @export
@@ -82,7 +85,7 @@ residuals.Arima <- function(object, type=c("innovation","response","regression")
 }
 
 #' @rdname residuals.forecast
-#' @export 
+#' @export
 residuals.bats <- function(object, type=c("innovation","response"), h=1, ...)
 {
   type <- match.arg(type)
@@ -93,7 +96,7 @@ residuals.bats <- function(object, type=c("innovation","response"), h=1, ...)
 }
 
 #' @rdname residuals.forecast
-#' @export 
+#' @export
 residuals.tbats <- function(object, type=c("innovation","response"), h=1, ...)
 {
   type <- match.arg(type)
@@ -104,7 +107,7 @@ residuals.tbats <- function(object, type=c("innovation","response"), h=1, ...)
 }
 
 #' @rdname residuals.forecast
-#' @export 
+#' @export
 residuals.ets <- function(object, type=c("innovation","response"), h=1, ...)
 {
   type <- match.arg(type)
@@ -115,7 +118,7 @@ residuals.ets <- function(object, type=c("innovation","response"), h=1, ...)
 }
 
 #' @rdname residuals.forecast
-#' @export 
+#' @export
 residuals.fracdiff <- function(object, type=c("innovation","response"), ...)
 {
   type <- match.arg(type)
@@ -141,7 +144,7 @@ residuals.fracdiff <- function(object, type=c("innovation","response"), ...)
 }
 
 #' @rdname residuals.forecast
-#' @export 
+#' @export
 residuals.nnetar <- function(object, type=c("innovation","response"), h=1, ...)
 {
   type <- match.arg(type)
@@ -161,7 +164,7 @@ residuals.nnetar <- function(object, type=c("innovation","response"), h=1, ...)
 }
 
 #' @rdname residuals.forecast
-#' @export 
+#' @export
 residuals.stlm <- function(object, type=c("innovation","response"), ...)
 {
   type <- match.arg(type)
@@ -170,3 +173,4 @@ residuals.stlm <- function(object, type=c("innovation","response"), ...)
   else
     getResponse(object) - fitted(object)
 }
+

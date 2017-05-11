@@ -132,11 +132,11 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
 
 
 #' Number of differences required for a stationary series
-#' 
+#'
 #' Functions to estimate the number of differences required to make a given
 #' time series stationary. \code{ndiffs} estimates the number of first
 #' differences and \code{nsdiffs} estimates the number of seasonal differences.
-#' 
+#'
 #' \code{ndiffs} uses a unit root test to determine the number of differences
 #' required for time series \code{x} to be made stationary. If
 #' \code{test="kpss"}, the KPSS test is used with the null hypothesis that
@@ -147,14 +147,14 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
 #' both of these cases, the null hypothesis is that \code{x} has a unit root
 #' against a stationary root alternative. Then the test returns the least
 #' number of differences required to fail the test at the level \code{alpha}.
-#' 
+#'
 #' \code{nsdiffs} uses seasonal unit root tests to determine the number of
 #' seasonal differences required for time series \code{x} to be made stationary
 #' (possibly with some lag-one differencing as well). If \code{test="ch"}, the
 #' Canova-Hansen (1995) test is used (with null hypothesis of deterministic
 #' seasonality) and if \code{test="ocsb"}, the Osborn-Chui-Smith-Birchenhall
 #' (1988) test is used (with null hypothesis that a seasonal unit root exists).
-#' 
+#'
 #' @param x A univariate time series
 #' @param alpha Level of the test
 #' @param m Length of seasonal period
@@ -167,22 +167,22 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
 #' @references Canova F and Hansen BE (1995) "Are Seasonal Patterns Constant
 #' over Time? A Test for Seasonal Stability", \emph{Journal of Business and
 #' Economic Statistics} \bold{13}(3):237-252.
-#' 
+#'
 #' Dickey DA and Fuller WA (1979), "Distribution of the Estimators for
 #' Autoregressive Time Series with a Unit Root", \emph{Journal of the American
 #' Statistical Association} \bold{74}:427-431.
-#' 
+#'
 #' Kwiatkowski D, Phillips PCB, Schmidt P and Shin Y (1992) "Testing the Null
 #' Hypothesis of Stationarity against the Alternative of a Unit Root",
 #' \emph{Journal of Econometrics} \bold{54}:159-178.
-#' 
+#'
 #' Osborn DR, Chui APL, Smith J, and Birchenhall CR (1988) "Seasonality and the
 #' order of integration for consumption", \emph{Oxford Bulletin of Economics
 #' and Statistics} \bold{50}(4):361-377.
-#' 
+#'
 #' Osborn, D.R. (1990) "A survey of seasonality in UK macroeconomic variables",
 #' \emph{International Journal of Forecasting}, \bold{6}:327-336.
-#' 
+#'
 #' Said E and Dickey DA (1984), "Testing for Unit Roots in Autoregressive
 #' Moving Average Models of Unknown Order", \emph{Biometrika}
 #' \bold{71}:599-607.
@@ -190,7 +190,7 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
 #' @examples
 #' ndiffs(WWWusage)
 #' ndiffs(diff(log(AirPassengers),12))
-#' 
+#'
 #' @export
 ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), max.d=2)
 {
@@ -309,16 +309,16 @@ SD.test <- function (wts, s=frequency(wts))
 
 
 #' Forecasting using ARIMA or ARFIMA models
-#' 
+#'
 #' Returns forecasts and other information for univariate ARIMA models.
-#' 
+#'
 #' For \code{Arima} or \code{ar} objects, the function calls
 #' \code{\link[stats]{predict.Arima}} or \code{\link[stats]{predict.ar}} and
 #' constructs an object of class "\code{forecast}" from the results. For
 #' \code{fracdiff} objects, the calculations are all done within
 #' \code{\link{forecast.fracdiff}} using the equations given by Peiris and
 #' Perera (1988).
-#' 
+#'
 #' @param object An object of class "\code{Arima}", "\code{ar}" or
 #' "\code{fracdiff}". Usually the result of a call to
 #' \code{\link[stats]{arima}}, \code{\link{auto.arima}},
@@ -345,14 +345,14 @@ SD.test <- function (wts, s=frequency(wts))
 #' intervals when \code{bootstrap=TRUE}.
 #' @param ... Other arguments.
 #' @return An object of class "\code{forecast}".
-#' 
+#'
 #' The function \code{summary} is used to obtain and print a summary of the
 #' results, while the function \code{plot} produces a plot of the forecasts and
 #' prediction intervals.
-#' 
+#'
 #' The generic accessor functions \code{fitted.values} and \code{residuals}
 #' extract useful features of the value returned by \code{forecast.Arima}.
-#' 
+#'
 #' An object of class "\code{forecast}" is a list containing at least the
 #' following elements: \item{model}{A list containing information about the
 #' fitted model} \item{method}{The name of the forecasting method as a
@@ -376,12 +376,12 @@ SD.test <- function (wts, s=frequency(wts))
 #' @examples
 #' fit <- Arima(WWWusage,c(3,1,0))
 #' plot(forecast(fit))
-#' 
+#'
 #' library(fracdiff)
 #' x <- fracdiff.sim( 100, ma=-.4, d=.3)$series
 #' fit <- arfima(x)
 #' plot(forecast(fit,h=30))
-#' 
+#'
 #' @export
 forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma[5], 10),
     level=c(80, 95), fan=FALSE, xreg=NULL, lambda=object$lambda,  bootstrap=FALSE, npaths=5000, biasadj=NULL, ...)
@@ -595,9 +595,23 @@ getxreg <- function(z)
   }
 }
 
-# Extract errors from ARIMA model (as distinct from residuals)
-
-#' @inherit residuals.forecast
+#' Errors from a regression model with ARIMA errors
+#'
+#' Returns time series of the regression residuals from a fitted ARIMA model.
+#'
+#' This is a deprecated function
+#' which is identical to \code{\link{residuals.Arima}(object, type="regression")}
+#' Regression residuals are equal to the original data
+#' minus the effect of any regression variables. If there are no regression
+#' variables, the errors will be identical to the original series (possibly
+#' adjusted to have zero mean).
+#'
+#' @param object An object containing a time series model of class \code{Arima}.
+#' @return A \code{ts} object
+#' @author Rob J Hyndman
+#' @seealso \code{\link{residuals.Arima}}.
+#' @keywords ts
+#'
 #' @export
 arima.errors <- function(object)
 {
@@ -609,9 +623,9 @@ arima.errors <- function(object)
 
 
 #' h-step in-sample forecasts for time series models.
-#' 
+#'
 #' Returns h-step forecasts for the data used in fitting the model.
-#' 
+#'
 #' @param object An object of class "\code{Arima}", "\code{bats}",
 #' "\code{tbats}", "\code{ets}" or "\code{nnetar}".
 #' @param h The number of steps to forecast ahead.
@@ -631,7 +645,7 @@ arima.errors <- function(object)
 #' lines(fitted(fit, h=2), col='green')
 #' lines(fitted(fit, h=3), col='blue')
 #' legend("topleft", legend=paste("h =",1:3), col=2:4, lty=1)
-#' 
+#'
 #' @export
 fitted.Arima <- function(object, h = 1, ...)
 {
@@ -663,16 +677,16 @@ fitted.Arima <- function(object, h = 1, ...)
 
 
 #' Fit ARIMA model to univariate time series
-#' 
+#'
 #' Largely a wrapper for the \code{\link[stats]{arima}} function in the stats
 #' package. The main difference is that this function allows a drift term. It
 #' is also possible to take an ARIMA model from a previous call to \code{Arima}
 #' and re-apply it to the data \code{y}.
-#' 
+#'
 #' See the \code{\link[stats]{arima}} function in the stats package.
-#' 
+#'
 #' @aliases print.ARIMA summary.Arima as.character.Arima
-#' 
+#'
 #' @param y a univariate time series of class \code{ts}.
 #' @param order A specification of the non-seasonal part of the ARIMA model:
 #' the three components (p, d, q) are the AR order, the degree of differencing,
@@ -713,9 +727,9 @@ fitted.Arima <- function(object, h = 1, ...)
 #' @return See the \code{\link[stats]{arima}} function in the stats package.
 #' The additional objects returned are \item{x}{The time series data}
 #' \item{xreg}{The regressors used in fitting (when relevant).}
-#' 
+#'
 #' @export
-#' 
+#'
 #' @author Rob J Hyndman
 #' @seealso \code{\link{auto.arima}}, \code{\link{forecast.Arima}}.
 #' @keywords ts
@@ -725,25 +739,25 @@ fitted.Arima <- function(object, h = 1, ...)
 #'   Arima(order=c(3,1,0)) %>%
 #'   forecast(h=20) %>%
 #'   autoplot
-#' 
+#'
 #' # Fit model to first few years of AirPassengers data
 #' air.model <- Arima(window(AirPassengers,end=1956+11/12),order=c(0,1,1),
 #'                    seasonal=list(order=c(0,1,1),period=12),lambda=0)
 #' plot(forecast(air.model,h=48))
 #' lines(AirPassengers)
-#' 
+#'
 #' # Apply fitted model to later data
 #' air.model2 <- Arima(window(AirPassengers,start=1957),model=air.model)
-#' 
+#'
 #' # Forecast accuracy measures on the log scale.
 #' # in-sample one-step forecasts.
 #' accuracy(air.model)
 #' # out-of-sample one-step forecasts.
 #' accuracy(air.model2)
 #' # out-of-sample multi-step forecasts
-#' accuracy(forecast(air.model,h=48,lambda=NULL), 
+#' accuracy(forecast(air.model,h=48,lambda=NULL),
 #'          log(window(AirPassengers,start=1957)))
-#' 
+#'
 Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.mean=TRUE,
                   include.drift=FALSE, include.constant, lambda=model$lambda, biasadj=FALSE,
                   method=c("CSS-ML", "ML", "CSS"), model=NULL, x=y, ...)
@@ -953,10 +967,10 @@ print.ARIMA <- function (x, digits=max(3, getOption("digits") - 3), se=TRUE, ...
 
 
 #' Return the order of an ARIMA or ARFIMA model
-#' 
+#'
 #' Returns the order of a univariate ARIMA or ARFIMA model.
-#' 
-#' 
+#'
+#'
 #' @param object An object of class \dQuote{\code{Arima}}, dQuote\code{ar} or
 #' \dQuote{\code{fracdiff}}. Usually the result of a call to
 #' \code{\link[stats]{arima}}, \code{\link{Arima}}, \code{\link{auto.arima}},
@@ -972,7 +986,7 @@ print.ARIMA <- function (x, digits=max(3, getOption("digits") - 3), se=TRUE, ...
 #' @keywords ts
 #' @examples
 #' WWWusage %>% auto.arima %>% arimaorder
-#' 
+#'
 #' @export
 arimaorder <- function (object)
 {

@@ -38,7 +38,10 @@
 \arguments{
 \item{object}{An object containing a time series model of class \code{ar},
 \code{Arima}, \code{bats}, \code{ets}, \code{fracdiff}, \code{nnetar} or
-\code{stlm}. If object is of class \code{forecast},}
+\code{stlm}.
+If \code{object} is of class \code{forecast}, then the function will return
+\code{object$residuals} if it exists, otherwise it returns the differences between
+the observations and their fitted values.}
 
 \item{type}{Type of residual.}
 
