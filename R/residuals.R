@@ -140,15 +140,6 @@ residuals.fracdiff <- function(object, type=c("innovation","response"), ...)
     getResponse(object) - fitted(object)
 }
 
-#' @export
-residuals.geom_forecast <- function(object, type=c("innovation","response"), ...) {
-  type <- match.arg(type)
-  if(type=="innovation")
-    object$residuals
-  else
-    getResponse(object) - fitted(object)
-}
-
 #' @rdname residuals.forecast
 #' @export 
 residuals.nnetar <- function(object, type=c("innovation","response"), h=1, ...)
