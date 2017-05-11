@@ -3,7 +3,6 @@
 symbols.rds
 .Rhistory
 .Rproj.user
-forecast.Rproj
 .Rbuildignore
 .travis.yml
 revdep
