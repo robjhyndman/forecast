@@ -62,6 +62,40 @@ bcloglik <- function(x, lower=-1, upper=2)
   return(xl[which.max(loglik)])
 }
 
+
+
+#' Automatic selection of Box Cox transformation parameter
+#' 
+#' If \code{method=="guerrero"}, Guerrero's (1993) method is used, where lambda
+#' minimizes the coefficient of variation for subseries of \code{x}.
+#' 
+#' If \code{method=="loglik"}, the value of lambda is chosen to maximize the
+#' profile log likelihood of a linear model fitted to \code{x}. For
+#' non-seasonal data, a linear time trend is fitted while for seasonal data, a
+#' linear time trend with seasonal dummy variables is used.
+#' 
+#' 
+#' @param x a numeric vector or time series of class \code{ts}
+#' @param method Choose method to be used in calculating lambda.
+#' @param lower Lower limit for possible lambda values.
+#' @param upper Upper limit for possible lambda values.
+#' @return a number indicating the Box-Cox transformation parameter.
+#' @author Leanne Chhay and Rob J Hyndman
+#' @seealso \code{\link{BoxCox}}
+#' @references Box, G. E. P. and Cox, D. R. (1964) An analysis of
+#' transformations. \emph{JRSS B} \bold{26} 211--246.
+#' 
+#' Guerrero, V.M. (1993) Time-series analysis supported by power
+#' transformations. \emph{Journal of Forecasting}, \bold{12}, 37--48.
+#' @keywords ts
+#' @examples
+#' 
+#' lambda <- BoxCox.lambda(AirPassengers,lower=0)
+#' air.fit <- Arima(AirPassengers, order=c(0,1,1),
+#'                  seasonal=list(order=c(0,1,1),period=12), lambda=lambda)
+#' plot(forecast(air.fit))
+#' 
+#' @export
 BoxCox.lambda <- function(x, method=c("guerrero","loglik"), lower=-1, upper=2)
 {
   if(any(x <= 0, na.rm=TRUE))

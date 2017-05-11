@@ -2,6 +2,34 @@
 # These should match corresponding functions in the seasonal package
 # providing similar functional for stl, decomposed.ts and tbats objects
 
+#' Extract components from a time series decomposition
+#' 
+#' Returns a univariate time series equal to either a seasonal component,
+#' trend-cycle component or remainder component from a time series
+#' decomposition.
+#' 
+#' @param object Object created by \code{\link[stats]{decompose}},
+#' \code{\link[stats]{stl}} or \code{\link{tbats}}.
+#' @return Univariate time series.
+#' @author Rob J Hyndman
+#' @seealso \code{\link[stats]{stl}}, \code{\link[stats]{decompose}},
+#' \code{\link{tbats}}, \code{\link{seasadj}}.
+#' @keywords ts
+#' @examples
+#' plot(USAccDeaths)
+#' fit <- stl(USAccDeaths, s.window="periodic")
+#' lines(trendcycle(fit),col="red")
+#' 
+#' library(ggplot2)
+#' autoplot(cbind(
+#' 	    Data=USAccDeaths,
+#' 	    Seasonal=seasonal(fit),
+#'   	  Trend=trendcycle(fit),
+#' 	    Remainder=remainder(fit)),
+#'     facets=TRUE) +
+#'   ylab("") + xlab("Year")
+#' 
+#' @export
 seasonal <- function(object)
 {
 	if("stl" %in% class(object))
@@ -24,6 +52,8 @@ seasonal <- function(object)
     stop("Unknown object type")
 }
 
+#' @rdname seasonal
+#' @export
 trendcycle <- function(object)
 {
 	if("stl" %in% class(object))
@@ -43,6 +73,8 @@ trendcycle <- function(object)
 	  stop("Unknown object type")
 }
 
+#' @rdname seasonal
+#' @export
 remainder <- function(object)
 {
 	if("stl" %in% class(object))

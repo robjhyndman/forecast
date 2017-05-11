@@ -1,3 +1,4 @@
+#' @export
 tsdiag.ets <- function (object, gof.lag = 10, ...) 
 {
     oldpar <- par(mfrow = c(3, 1))

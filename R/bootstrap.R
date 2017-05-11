@@ -53,6 +53,32 @@ MBB <- function(x, window_size) {
 }
 
 
+
+
+#' Box-Cox and Loess-based decomposition bootstrap.
+#' 
+#' Generates bootstrapped versions of a time series using the Box-Cox and
+#' Loess-based decomposition bootstrap.
+#' 
+#' The procedure is described in Bergmeir et al. Box-Cox decomposition is
+#' applied, together with STL or Loess (for non-seasonal time series), and the
+#' remainder is bootstrapped using a moving block bootstrap.
+#' 
+#' @param x Original time series.
+#' @param num Number of bootstrapped versions to generate.
+#' @param block_size Block size for the moving block bootstrap.
+#' @return A list with bootstrapped versions of the series. The first series in
+#' the list is the original series.
+#' @author Christoph Bergmeir, Fotios Petropoulos
+#' @seealso \code{\link{baggedETS}}.
+#' @references Bergmeir, C., R. J. Hyndman, and J. M. Benitez (2016). Bagging
+#' Exponential Smoothing Methods using STL Decomposition and Box-Cox
+#' Transformation. International Journal of Forecasting 32, 303-312.
+#' @keywords ts
+#' @examples
+#' bootstrapped_series <- bld.mbb.bootstrap(WWWusage, 100)
+#' 
+#' @export
 bld.mbb.bootstrap <- function(x, num, block_size = if(frequency(x)>1) 2*frequency(x) else 8 ) {
 
   freq <- frequency(x)

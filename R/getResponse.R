@@ -3,8 +3,28 @@
 # be on the original scale, not the Box-Cox transformed scale.
 
 
+
+
+#' Get response variable from time series model.
+#' 
+#' \code{getResponse} is a generic function for extracting the historical data
+#' from a time series model (including \code{Arima}, \code{ets}, \code{ar},
+#' \code{fracdiff}), a linear model of class \code{lm}, or a forecast object.
+#' The function invokes particular \emph{methods} which depend on the class of
+#' the first argument.
+#' 
+#' 
+#' @param object a time series model or forecast object.
+#' @param ... Additional arguments that are ignored.
+#' @return A numerical vector or a time series object of class \code{ts}.
+#' @author Rob J Hyndman
+#' @keywords ts
+#' 
+#' @export
 getResponse <- function(object,...) UseMethod("getResponse")
 
+#' @rdname getResponse
+#' @export
 getResponse.default <- function(object,...)
 {
 	if(is.list(object))
@@ -13,6 +33,8 @@ getResponse.default <- function(object,...)
 		return(NULL)
 }
 
+#' @rdname getResponse
+#' @export
 getResponse.lm <- function(object,...) 
 {
 	responsevar <- deparse(formula(object)[[2]])
@@ -20,6 +42,8 @@ getResponse.lm <- function(object,...)
 	return(ans)
 }
 
+#' @rdname getResponse
+#' @export
 getResponse.Arima <- function(object,...) 
 {
 	if (is.element("x", names(object))) 
@@ -41,6 +65,8 @@ getResponse.Arima <- function(object,...)
   return(as.ts(x))
 }
 
+#' @rdname getResponse
+#' @export
 getResponse.fracdiff <- function(object, ...) 
 {
   if (is.element("x", names(object))) 
@@ -62,11 +88,15 @@ getResponse.fracdiff <- function(object, ...)
   return(as.ts(x))
 }
 
+#' @rdname getResponse
+#' @export
 getResponse.ar <- function(object, ...) 
 {
   getResponse.Arima(object)
 }
 
+#' @rdname getResponse
+#' @export
 getResponse.tbats <- function(object,...)
 {
   if(is.element("y", names(object)))
@@ -76,11 +106,15 @@ getResponse.tbats <- function(object,...)
   return(as.ts(y))
 }
 
+#' @rdname getResponse
+#' @export
 getResponse.bats <- function(object,...)
 {
   return(getResponse.tbats(object,...))
 }
 
+#' @rdname getResponse
+#' @export
 getResponse.mforecast <- function(object,...)
 {
   return(do.call(cbind, lapply(object$forecast, function(x) x$x)))

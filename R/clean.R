@@ -6,6 +6,29 @@
 # Adds seasonality based on a periodic stl decomposition with seasonal series
 # Argument lambda allows for Box-cox transformation
 
+
+
+#' Interpolate missing values in a time series
+#' 
+#' Uses linear interpolation for non-seasonal series and a periodic stl
+#' decomposition with seasonal series to replace missing values.
+#' 
+#' A more general and flexible approach is available using \code{na.approx} in
+#' the \code{zoo} package.
+#' 
+#' @param x time series
+#' @param lambda a numeric value suggesting Box-cox transformation
+#' @return Time series
+#' @author Rob J Hyndman
+#' @seealso \code{\link[forecast]{na.interp}},
+#' \code{\link[forecast]{tsoutliers}}
+#' @keywords ts
+#' @examples
+#' 
+#' data(gold)
+#' plot(na.interp(gold))
+#' 
+#' @export
 na.interp <- function(x, lambda=NULL)
 {
   missng <- is.na(x)
@@ -66,6 +89,30 @@ na.interp <- function(x, lambda=NULL)
 # Function to identify outliers and replace them with better values
 # Missing values replaced as well if replace.missing=TRUE
 
+
+
+#' Identify and replace outliers and missing values in a time series
+#' 
+#' Uses supsmu for non-seasonal series and a periodic stl decompostion with
+#' seasonal series to identify outliers. To estimate missing values and outlier
+#' replacements, linear interpolation is used on the (possibly seasonally
+#' adjusted) series
+#' 
+#' 
+#' @param x time series
+#' @param replace.missing If TRUE, it not only replaces outliers, but also
+#' interpolates missing values
+#' @param lambda a numeric value giving the Box-Cox transformation parameter
+#' @return Time series
+#' @author Rob J Hyndman
+#' @seealso \code{\link[forecast]{na.interp}},
+#' \code{\link[forecast]{tsoutliers}}, \code{\link[stats]{supsmu}}
+#' @keywords ts
+#' @examples
+#' 
+#' cleangold <- tsclean(gold)
+#' 
+#' @export
 tsclean <- function(x, replace.missing=TRUE, lambda = NULL)
 {
   outliers <- tsoutliers(x, lambda = lambda)
@@ -76,6 +123,28 @@ tsclean <- function(x, replace.missing=TRUE, lambda = NULL)
 }
 
 # Function to identify time series outlieres
+
+
+#' Identify and replace outliers in a time series
+#' 
+#' Uses supsmu for non-seasonal series and a periodic stl decompostion with
+#' seasonal series to identify outliers and estimate their replacements.
+#' 
+#' 
+#' @param x time series
+#' @param iterate the number of iteration only for non-seasonal series
+#' @param lambda Allowing Box-cox transformation
+#' @return \item{index}{Indicating the index of outlier(s)}
+#' \item{replacement}{Suggested numeric values to replace identified outliers}
+#' @author Rob J Hyndman
+#' @seealso \code{\link[forecast]{na.interp}}, \code{\link[forecast]{tsclean}}
+#' @keywords ts
+#' @examples
+#' 
+#' data(gold)
+#' tsoutliers(gold)
+#' 
+#' @export
 tsoutliers <- function(x, iterate=2, lambda=NULL)
 {
   n <- length(x)

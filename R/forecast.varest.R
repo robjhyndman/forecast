@@ -1,4 +1,5 @@
 # forecast function for varest, just a wrapper for predict.varest
+#' @export
 forecast.varest <- function(object, h=10, level=c(80,95), fan=FALSE, ...)
 {
 	out <- list(model=object,forecast=vector("list", object$K))
