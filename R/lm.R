@@ -1,3 +1,41 @@
+#' Fit a linear model with time series components
+#' 
+#' \code{tslm} is used to fit linear models to time series including trend and
+#' seasonality components.
+#' 
+#' \code{tslm} is largely a wrapper for \code{\link[stats]{lm}()} except that
+#' it allows variables "trend" and "season" which are created on the fly from
+#' the time series characteristics of the data. The variable "trend" is a
+#' simple time trend and "season" is a factor indicating the season (e.g., the
+#' month or the quarter depending on the frequency of the data).
+#' 
+#' @param formula an object of class "formula" (or one that can be coerced to
+#' that class): a symbolic description of the model to be fitted.
+#' @param data an optional data frame, list or environment (or object coercible
+#' by as.data.frame to a data frame) containing the variables in the model. If
+#' not found in data, the variables are taken from environment(formula),
+#' typically the environment from which lm is called.
+#' @param subset an optional subset containing rows of data to keep. For best
+#' results, pass a logical vector of rows to keep. Also supports
+#' \code{\link[base]{subset}()} functions.
+#' @param lambda Box-Cox transformation parameter. Ignored if NULL. Otherwise,
+#' data are transformed via a Box-Cox transformation.
+#' @param biasadj Use adjusted back-transformed mean for Box-Cox
+#' transformations. If TRUE, point forecasts and fitted values are mean
+#' forecast. Otherwise, these points can be considered the median of the
+#' forecast densities.
+#' @param ... Other arguments passed to \code{\link[stats]{lm}()}
+#' @return Returns an object of class "lm".
+#' @author Mitchell O'Hara-Wild and Rob J Hyndman
+#' @seealso \code{\link{forecast.lm}}, \code{\link[stats]{lm}}.
+#' @keywords stats
+#' @examples
+#' 
+#' y <- ts(rnorm(120,0,3) + 1:120 + 20*sin(2*pi*(1:120)/12), frequency=12)
+#' fit <- tslm(y ~ trend + season)
+#' plot(forecast(fit, h=20))
+#' 
+#' @export
 tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
   cl <- match.call()
   if(!("formula" %in% class(formula))){
@@ -132,6 +170,68 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
   return(fit)
 }
 
+
+
+#' Forecast a linear model with possible time series components
+#' 
+#' \code{forecast.lm} is used to predict linear models, especially those
+#' involving trend and seasonality components.
+#' 
+#' \code{forecast.lm} is largely a wrapper for
+#' \code{\link[stats]{predict.lm}()} except that it allows variables "trend"
+#' and "season" which are created on the fly from the time series
+#' characteristics of the data. Also, the output is reformatted into a
+#' \code{forecast} object.
+#' 
+#' @param object Object of class "lm", usually the result of a call to
+#' \code{\link[stats]{lm}} or \code{\link{tslm}}.
+#' @param newdata An optional data frame in which to look for variables with
+#' which to predict. If omitted, it is assumed that the only variables are
+#' trend and season, and \code{h} forecasts are produced.
+#' @param level Confidence level for prediction intervals.
+#' @param fan If \code{TRUE}, level is set to seq(51,99,by=3). This is suitable
+#' for fan plots.
+#' @param h Number of periods for forecasting. Ignored if \code{newdata}
+#' present.
+#' @param lambda Box-Cox transformation parameter. Ignored if \code{NULL}.
+#' Otherwise, forecasts back-transformed via an inverse Box-Cox transformation.
+#' @param biasadj Use adjusted back-transformed mean for Box-Cox
+#' transformations. If TRUE, point forecasts and fitted values are mean
+#' forecast. Otherwise, these points can be considered the median of the
+#' forecast densities.
+#' @param ts If \code{TRUE}, the forecasts will be treated as time series
+#' provided the original data is a time series; the \code{newdata} will be
+#' interpreted as related to the subsequent time periods. If \code{FALSE}, any
+#' time series attributes of the original data will be ignored.
+#' @param ... Other arguments passed to \code{\link[stats]{predict.lm}()}.
+#' @return An object of class "\code{forecast}".
+#' 
+#' The function \code{summary} is used to obtain and print a summary of the
+#' results, while the function \code{plot} produces a plot of the forecasts and
+#' prediction intervals.
+#' 
+#' The generic accessor functions \code{fitted.values} and \code{residuals}
+#' extract useful features of the value returned by \code{forecast.lm}.
+#' 
+#' An object of class \code{"forecast"} is a list containing at least the
+#' following elements: \item{model}{A list containing information about the
+#' fitted model} \item{method}{The name of the forecasting method as a
+#' character string} \item{mean}{Point forecasts as a time series}
+#' \item{lower}{Lower limits for prediction intervals} \item{upper}{Upper
+#' limits for prediction intervals} \item{level}{The confidence values
+#' associated with the prediction intervals} \item{x}{The historical data for
+#' the response variable.} \item{residuals}{Residuals from the fitted model.
+#' That is x minus fitted values.} \item{fitted}{Fitted values}
+#' @author Rob J Hyndman
+#' @seealso \code{\link{tslm}}, \code{\link[stats]{lm}}.
+#' @keywords stats
+#' @examples
+#' 
+#' y <- ts(rnorm(120,0,3) + 1:120 + 20*sin(2*pi*(1:120)/12), frequency=12)
+#' fit <- tslm(y ~ trend + season)
+#' plot(forecast(fit, h=20))
+#' 
+#' @export
 forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, biasadj=NULL, ts=TRUE, ...)
 {
   if (fan)
@@ -366,6 +466,29 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
 }
 
 # Compute cross-validation and information criteria from a linear model
+
+
+#' Cross-validation statistic
+#' 
+#' Computes the leave-one-out cross-validation statistic (also known as PRESS
+#' -- prediction residual sum of squares), AIC, corrected AIC, BIC and adjusted
+#' R^2 values for a linear model.
+#' 
+#' 
+#' @param obj output from \code{\link[stats]{lm}} or \code{\link{tslm}}
+#' @return Numerical vector containing CV, AIC, AICc, BIC and AdjR2 values.
+#' @author Rob J Hyndman
+#' @seealso \code{\link[stats]{AIC}}
+#' @keywords models
+#' @examples
+#' 
+#' y <- ts(rnorm(120,0,3) + 20*sin(2*pi*(1:120)/12), frequency=12)
+#' fit1 <- tslm(y ~ trend + season)
+#' fit2 <- tslm(y ~ season)
+#' CV(fit1)
+#' CV(fit2)
+#' 
+#' @export
 CV <- function(obj)
 {
   if(!is.element("lm", class(obj)))

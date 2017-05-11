@@ -174,6 +174,63 @@ trainingaccuracy <- function(f,test,d, D)
   return(out)
 }
 
+
+
+#' Accuracy measures for a forecast model
+#' 
+#' Returns range of summary measures of the forecast accuracy. If \code{x} is
+#' provided, the function measures out-of-sample (test set) forecast accuracy
+#' based on \code{x-f}. If \code{x} is not provided, the function only produces
+#' in-sample (training set) accuracy measures of the forecasts based on
+#' \code{f["x"]-fitted(f)}. All measures are defined and discussed in Hyndman
+#' and Koehler (2006).
+#' 
+#' The measures calculated are: \itemize{ \item ME: Mean Error \item RMSE: Root
+#' Mean Squared Error \item MAE: Mean Absolute Error \item MPE: Mean Percentage
+#' Error \item MAPE: Mean Absolute Percentage Error \item MASE: Mean Absolute
+#' Scaled Error \item ACF1: Autocorrelation of errors at lag 1. } By default,
+#' the MASE calculation is scaled using MAE of in-sample naive forecasts for
+#' non-seasonal time series, in-sample seasonal naive forecasts for seasonal
+#' time series and in-sample mean forecasts for non-time series data.
+#' 
+#' See Hyndman and Koehler (2006) and Hyndman and Athanasopoulos (2014, Section
+#' 2.5) for further details.
+#' 
+#' @param f An object of class \dQuote{\code{forecast}}, or a numerical vector
+#' containing forecasts. It will also work with \code{Arima}, \code{ets} and
+#' \code{lm} objects if \code{x} is omitted -- in which case in-sample accuracy
+#' measures are returned.
+#' @param x An optional numerical vector containing actual values of the same
+#' length as object, or a time series overlapping with the times of \code{f}.
+#' @param test Indicator of which elements of \code{x} and \code{f} to test. If
+#' \code{test} is \code{NULL}, all elements are used. Otherwise test is a
+#' numeric vector containing the indices of the elements to use in the test.
+#' @param d An integer indicating the number of lag-1 differences to be used
+#' for the denominator in MASE calculation. Default value is 1 for non-seasonal
+#' series and 0 for seasonal series.
+#' @param D An integer indicating the number of seasonal differences to be used
+#' for the denominator in MASE calculation. Default value is 0 for non-seasonal
+#' series and 1 for seasonal series.
+#' @return Matrix giving forecast accuracy measures.
+#' @author Rob J Hyndman
+#' @references Hyndman, R.J. and Koehler, A.B. (2006) "Another look at measures
+#' of forecast accuracy". \emph{International Journal of Forecasting},
+#' \bold{22}(4), 679-688. Hyndman, R.J. and Athanasopoulos, G. (2014)
+#' "Forecasting: principles and practice", OTexts. Section 2.5 "Evaluating
+#' forecast accuracy". \url{http://www.otexts.org/fpp/2/5}.
+#' @keywords ts
+#' @examples
+#' 
+#' fit1 <- rwf(EuStockMarkets[1:200,1],h=100)
+#' fit2 <- meanf(EuStockMarkets[1:200,1],h=100)
+#' accuracy(fit1)
+#' accuracy(fit2)
+#' accuracy(fit1,EuStockMarkets[201:300,1])
+#' accuracy(fit2,EuStockMarkets[201:300,1])
+#' plot(fit1)
+#' lines(EuStockMarkets[1:300,1])
+#' 
+#' @export
 accuracy <- function(f,x,test=NULL,d=NULL,D=NULL)
 {
   if(!any(is.element(class(f), c("mforecast","forecast","ts","integer","numeric",

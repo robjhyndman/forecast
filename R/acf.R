@@ -1,4 +1,72 @@
 # Replacement for the acf() function.
+
+
+#' (Partial) Autocorrelation and Cross-Correlation Function Estimation
+#' 
+#' The function \code{Acf} computes (and by default plots) an estimate of the
+#' autocorrelation function of a (possibly multivariate) time series. Function
+#' \code{Pacf} computes (and by default plots) an estimate of the partial
+#' autocorrelation function of a (possibly multivariate) time series. Function
+#' \code{Ccf} computes the cross-correlation or cross-covariance of two
+#' univariate series.
+#' 
+#' The functions improve the \code{\link[stats]{acf}},
+#' \code{\link[stats]{pacf}} and \code{\link[stats]{ccf}} functions. The main
+#' differences are that \code{Acf} does not plot a spike at lag 0 when
+#' \code{type=="correlation"} (which is redundant) and the horizontal axes show
+#' lags in time units rather than seasonal units.
+#' 
+#' The tapered versions implement the ACF and PACF estimates and plots
+#' described in Hyndman (2015), based on the banded and tapered estimates of
+#' autocovariance proposed by McMurry and Politis (2010).
+#' 
+#' @param x a univariate or multivariate (not Ccf) numeric time series object
+#' or a numeric vector or matrix.
+#' @param y a univariate numeric time series object or a numeric vector.
+#' @param lag.max maximum lag at which to calculate the acf. Default is
+#' $10*log10(N/m)$ where $N$ is the number of observations and $m$ the number
+#' of series. Will be automatically limited to one less than the number of
+#' observations in the series.
+#' @param type character string giving the type of acf to be computed. Allowed
+#' values are \dQuote{\code{correlation}} (the default),
+#' \dQuote{\code{covariance}} or \dQuote{\code{partial}}.
+#' @param plot logical. If \code{TRUE} (the default) the resulting acf, pacf or
+#' ccf is plotted.
+#' @param na.action function to handle missing values. Default is
+#' \code{\link[stats]{na.contiguous}}.  Useful alternatives are
+#' \code{\link[stats]{na.pass}} and \code{\link{na.interp}}.
+#' @param demean Should covariances be about the sample means?
+#' @param calc.ci If \code{TRUE}, confidence intervals for the ACF/PACF
+#' estimates are calculated.
+#' @param level Percentage level used for the confidence intervals.
+#' @param nsim The number of bootstrap samples used in estimating the
+#' confidence intervals.
+#' @param ... Additional arguments passed to the plotting function.
+#' @return The \code{Acf}, \code{Pacf} and \code{Ccf} functions return objects
+#' of class "acf" as described in \code{\link[stats]{acf}} from the stats
+#' package. The \code{taperedacf} and \code{taperedpacf} functions return
+#' objects of class "mpacf".
+#' @author Rob J Hyndman
+#' @seealso \code{\link[stats]{acf}}, \code{\link[stats]{pacf}},
+#' \code{\link[stats]{ccf}}, \code{\link{tsdisplay}}
+#' @references Hyndman, R.J. (2015). Discussion of ``High-dimensional
+#' autocovariance matrices and optimal linear prediction''. \emph{Electronic
+#' Journal of Statistics}, 9, 792-796.
+#' 
+#' McMurry, T. L., & Politis, D. N. (2010). Banded and tapered estimates for
+#' autocovariance matrices and the linear process bootstrap. \emph{Journal of
+#' Time Series Analysis}, 31(6), 471-482.
+#' @keywords ts
+#' @examples
+#' 
+#' Acf(wineind)
+#' Pacf(wineind)
+#' \dontrun{
+#' taperedacf(wineind, nsim=50)
+#' taperedpacf(wineind, nsim=50)
+#' }
+#' 
+#' @export
 Acf <- function(x, lag.max = NULL,
                 type = c("correlation", "covariance", "partial"),
                 plot = TRUE, na.action = na.contiguous, demean=TRUE, ...)
@@ -147,7 +215,8 @@ seasonalaxis <- function(frequency, nlags, type, plot=TRUE)
     return(out)
 }
 
-
+#' @rdname Acf
+#' @export
 Pacf <- function (x, lag.max=NULL, 
                 plot = TRUE, na.action = na.contiguous, demean=TRUE, ...)
 {
@@ -182,6 +251,8 @@ Pacf <- function (x, lag.max=NULL,
 
 }
 
+#' @rdname Acf
+#' @export
 Ccf <- function (x, y, lag.max=NULL, type=c("correlation","covariance"),
                  plot=TRUE, na.action=na.contiguous, ...)
 {
@@ -313,6 +384,9 @@ wpacf  <- function(x, lag.max=length(x)-1)
 
 # Function to produce new style plot of ACF or PACF with CI
 # x = time series
+
+#' @rdname Acf
+#' @export
 taperedacf <- function(x, lag.max=NULL, type=c("correlation","partial"),
                        plot=TRUE, calc.ci=TRUE, level=95, nsim=100, ...)
 {
@@ -359,7 +433,8 @@ taperedacf <- function(x, lag.max=NULL, type=c("correlation","partial"),
   return(out)
 }
 
-
+#' @rdname Acf
+#' @export
 taperedpacf <- function (x, ...)
 {
   taperedacf(x, type="partial", ...)
@@ -407,6 +482,8 @@ plot.mpacf <- function(object, xlim=NULL, ylim=NULL, xlab="Lag", ylab="", ...)
   points(lagx[!j], object$z[!j], pch=19)
 }
 
+#' @rdname is.ets
+#' @export
 is.acf <- function(x){
   inherits(x, "acf")
 }

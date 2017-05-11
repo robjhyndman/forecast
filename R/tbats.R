@@ -1,6 +1,75 @@
 # Author: srazbash
 ###############################################################################
 
+
+
+#' TBATS model (Exponential smoothing state space model with Box-Cox
+#' transformation, ARMA errors, Trend and Seasonal components)
+#' 
+#' Fits a TBATS model applied to \code{y}, as described in De Livera, Hyndman &
+#' Snyder (2011). Parallel processing is used by default to speed up the
+#' computations.
+#' 
+#' @aliases as.character.tbats print.tbats
+#' 
+#' @param y The time series to be forecast. Can be \code{numeric}, \code{msts}
+#' or \code{ts}. Only univariate time series are supported.
+#' @param use.box.cox \code{TRUE/FALSE} indicates whether to use the Box-Cox
+#' transformation or not. If \code{NULL} then both are tried and the best fit
+#' is selected by AIC.
+#' @param use.trend \code{TRUE/FALSE} indicates whether to include a trend or
+#' not. If \code{NULL} then both are tried and the best fit is selected by AIC.
+#' @param use.damped.trend \code{TRUE/FALSE} indicates whether to include a
+#' damping parameter in the trend or not. If \code{NULL} then both are tried
+#' and the best fit is selected by AIC.
+#' @param seasonal.periods If \code{y} is \code{numeric} then seasonal periods
+#' can be specified with this parameter.
+#' @param use.arma.errors \code{TRUE/FALSE} indicates whether to include ARMA
+#' errors or not. If \code{TRUE} the best fit is selected by AIC. If
+#' \code{FALSE} then the selection algorithm does not consider ARMA errors.
+#' @param use.parallel \code{TRUE/FALSE} indicates whether or not to use
+#' parallel processing.
+#' @param num.cores The number of parallel processes to be used if using
+#' parallel processing. If \code{NULL} then the number of logical cores is
+#' detected and all available cores are used.
+#' @param bc.lower The lower limit (inclusive) for the Box-Cox transformation.
+#' @param bc.upper The upper limit (inclusive) for the Box-Cox transformation.
+#' @param biasadj Use adjusted back-transformed mean for Box-Cox
+#' transformations. If TRUE, point forecasts and fitted values are mean
+#' forecast. Otherwise, these points can be considered the median of the
+#' forecast densities.
+#' @param model Output from a previous call to \code{tbats}. If model is
+#' passed, this same model is fitted to \code{y} without re-estimating any
+#' parameters.
+#' @param ... Additional arguments to be passed to \code{auto.arima} when
+#' choose an ARMA(p, q) model for the errors. (Note that xreg will be ignored,
+#' as will any arguments concerning seasonality and differencing, but arguments
+#' controlling the values of p and q will be used.)
+#' @return An object with class \code{c("tbats", "bats")}. The generic accessor
+#' functions \code{fitted.values} and \code{residuals} extract useful features
+#' of the value returned by \code{bats} and associated functions. The fitted
+#' model is designated TBATS(omega, p,q, phi, <m1,k1>,...,<mJ,kJ>) where omega
+#' is the Box-Cox parameter and phi is the damping parameter; the error is
+#' modelled as an ARMA(p,q) process and m1,...,mJ list the seasonal periods
+#' used in the model and k1,...,kJ are the corresponding number of Fourier
+#' terms used for each seasonality.
+#' @author Slava Razbash and Rob J Hyndman
+#' @seealso \code{\link{tbats.components}}.
+#' @references De Livera, A.M., Hyndman, R.J., & Snyder, R. D. (2011),
+#' Forecasting time series with complex seasonal patterns using exponential
+#' smoothing, \emph{Journal of the American Statistical Association},
+#' \bold{106}(496), 1513-1527.
+#' @keywords ts
+#' @examples
+#' 
+#' \dontrun{
+#' fit <- tbats(USAccDeaths)
+#' plot(forecast(fit))
+#' 
+#' taylor.fit <- tbats(taylor)
+#' plot(forecast(taylor.fit))}
+#' 
+#' @export
 tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
 	seasonal.periods=NULL, use.arma.errors=TRUE, use.parallel=length(y)>1000, num.cores=2,
 	bc.lower=0, bc.upper=1, biasadj=FALSE, model=NULL, ...)
@@ -473,6 +542,8 @@ calcFTest <- function(r.sse, ur.sse, num.restrictions, num.u.params, num.observa
 	return(p.value)
 }
 
+#' @rdname fitted.Arima
+#' @export
 fitted.tbats <- function(object, h=1, ...){
   if(h==1){
     return(object$fitted.values)
@@ -482,6 +553,7 @@ fitted.tbats <- function(object, h=1, ...){
   }
 }
 
+#' @export
 print.tbats <- function(x, ...) {
 	cat(as.character(x))
 	cat("\n")
@@ -532,8 +604,16 @@ print.tbats <- function(x, ...) {
 	cat("\n")
 }
 
-
-
+#' @rdname plot.bats
+#' 
+#' @examples
+#' 
+#' \dontrun{
+#' fit <- tbats(USAccDeaths)
+#' plot(fit)
+#' autoplot(fit, range.bars = TRUE)}
+#' 
+#' @export
 plot.tbats <- function (x, main="Decomposition by TBATS model", ...)
 {
 	out <- tbats.components(x)
@@ -541,6 +621,30 @@ plot.tbats <- function (x, main="Decomposition by TBATS model", ...)
 }
 
 
+
+
+#' Extract components of a TBATS model
+#' 
+#' Extract the level, slope and seasonal components of a TBATS model.
+#' 
+#' 
+#' @param x A tbats object created by \code{\link{tbats}}.
+#' @return A multiple time series (\code{mts}) object.
+#' @author Slava Razbash and Rob J Hyndman
+#' @seealso \code{\link{tbats}}.
+#' @references De Livera, A.M., Hyndman, R.J., & Snyder, R. D. (2011),
+#' Forecasting time series with complex seasonal patterns using exponential
+#' smoothing, \emph{Journal of the American Statistical Association},
+#' \bold{106}(496), 1513-1527.
+#' @keywords ts
+#' @examples
+#' 
+#' \dontrun{
+#' fit <- tbats(USAccDeaths, use.parallel=FALSE)
+#' components <- tbats.components(fit)
+#' plot(components)}
+#' 
+#' @export
 tbats.components <- function(x)
 {
   # Get original data, transform if necessary

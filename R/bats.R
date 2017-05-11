@@ -1,6 +1,71 @@
 # Author: srazbash
 ###############################################################################
 
+
+
+#' BATS model (Exponential smoothing state space model with Box-Cox
+#' transformation, ARMA errors, Trend and Seasonal components)
+#' 
+#' Fits a BATS model applied to \code{y}, as described in De Livera, Hyndman &
+#' Snyder (2011). Parallel processing is used by default to speed up the
+#' computations.
+#' 
+#' @aliases as.character.bats print.bats
+#' 
+#' @param y The time series to be forecast. Can be \code{numeric}, \code{msts}
+#' or \code{ts}. Only univariate time series are supported.
+#' @param use.box.cox \code{TRUE/FALSE} indicates whether to use the Box-Cox
+#' transformation or not. If \code{NULL} then both are tried and the best fit
+#' is selected by AIC.
+#' @param use.trend \code{TRUE/FALSE} indicates whether to include a trend or
+#' not. If \code{NULL} then both are tried and the best fit is selected by AIC.
+#' @param use.damped.trend \code{TRUE/FALSE} indicates whether to include a
+#' damping parameter in the trend or not. If \code{NULL} then both are tried
+#' and the best fit is selected by AIC.
+#' @param seasonal.periods If \code{y} is a numeric then seasonal periods can
+#' be specified with this parameter.
+#' @param use.arma.errors \code{TRUE/FALSE} indicates whether to include ARMA
+#' errors or not. If \code{TRUE} the best fit is selected by AIC. If
+#' \code{FALSE} then the selection algorithm does not consider ARMA errors.
+#' @param use.parallel \code{TRUE/FALSE} indicates whether or not to use
+#' parallel processing.
+#' @param num.cores The number of parallel processes to be used if using
+#' parallel processing. If \code{NULL} then the number of logical cores is
+#' detected and all available cores are used.
+#' @param bc.lower The lower limit (inclusive) for the Box-Cox transformation.
+#' @param bc.upper The upper limit (inclusive) for the Box-Cox transformation.
+#' @param biasadj Use adjusted back-transformed mean for Box-Cox
+#' transformations. If TRUE, point forecasts and fitted values are mean
+#' forecast. Otherwise, these points can be considered the median of the
+#' forecast densities.
+#' @param model Output from a previous call to \code{bats}. If model is passed,
+#' this same model is fitted to \code{y} without re-estimating any parameters.
+#' @param ... Additional arguments to be passed to \code{auto.arima} when
+#' choose an ARMA(p, q) model for the errors. (Note that xreg will be ignored,
+#' as will any arguments concerning seasonality and differencing, but arguments
+#' controlling the values of p and q will be used.)
+#' @return An object of class "\code{bats}". The generic accessor functions
+#' \code{fitted.values} and \code{residuals} extract useful features of the
+#' value returned by \code{bats} and associated functions. The fitted model is
+#' designated BATS(omega, p,q, phi, m1,...mJ) where omega is the Box-Cox
+#' parameter and phi is the damping parameter; the error is modelled as an
+#' ARMA(p,q) process and m1,...,mJ list the seasonal periods used in the model.
+#' @author Slava Razbash and Rob J Hyndman
+#' @references De Livera, A.M., Hyndman, R.J., & Snyder, R. D. (2011),
+#' Forecasting time series with complex seasonal patterns using exponential
+#' smoothing, \emph{Journal of the American Statistical Association},
+#' \bold{106}(496), 1513-1527.
+#' @keywords ts
+#' @examples
+#' 
+#' \dontrun{
+#' fit <- bats(USAccDeaths)
+#' plot(forecast(fit))
+#' 
+#' taylor.fit <- bats(taylor)
+#' plot(forecast(taylor.fit))}
+#' 
+#' @export
 bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
   seasonal.periods=NULL, use.arma.errors=TRUE, use.parallel=length(y)>1000, num.cores=2,
   bc.lower=0, bc.upper=1, biasadj = FALSE, model=NULL, ...)
@@ -283,6 +348,8 @@ parFilterSpecifics<-function(control.number, control.array, y, seasonal.periods,
 	}
 }
 
+#' @rdname fitted.Arima
+#' @export
 fitted.bats <- function(object, h=1, ...){
   if(h==1){
     return(object$fitted.values)
@@ -292,6 +359,7 @@ fitted.bats <- function(object, h=1, ...){
   }
 }
 
+#' @export
 print.bats <- function(x,...) {
 	cat(as.character(x))
 	cat("\n")
@@ -339,6 +407,26 @@ print.bats <- function(x,...) {
 	cat("\n")
 }
 
+
+
+#' Plot components from BATS model
+#' 
+#' Produces a plot of the level, slope and seasonal components from a BATS or
+#' TBATS model.
+#' 
+#' @param x Object of class \dQuote{bats/tbats}.
+#' @param object Object of class \dQuote{bats/tbats}.
+#' @param main Main title for plot.
+#' @param range.bars Logical indicating if each plot should have a bar at its
+#' right side representing relative size. If NULL, automatic selection takes
+#' place.
+#' @param ... Other plotting parameters passed to \code{\link[graphics]{par}}.
+#' @return None. Function produces a plot
+#' @author Rob J Hyndman
+#' @seealso \code{\link{bats}},\code{\link{tbats}}
+#' @keywords hplot
+#' 
+#' @export
 plot.bats <- function (x, main="Decomposition by BATS model", ...)
 {
   # Get original data, transform if necessary
@@ -371,6 +459,8 @@ plot.bats <- function (x, main="Decomposition by BATS model", ...)
   plot.ts(out, main=main, nc=1, ...)
 }
 
+#' @rdname is.ets
+#' @export
 is.bats <- function(x){
   inherits(x, "bats")
 }

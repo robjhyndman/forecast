@@ -1,3 +1,5 @@
+#' @rdname forecast.bats
+#' @export
 forecast.tbats <- function(object, h, level=c(80,95), fan=FALSE, biasadj=NULL, ...)
 {
   # Check if forecast.tbats called incorrectly
@@ -137,6 +139,7 @@ forecast.tbats <- function(object, h, level=c(80,95), fan=FALSE, biasadj=NULL, .
 }
 
 
+#' @export
 as.character.tbats <- function(x, ...) {
 	name <- "TBATS("
 	if(!is.null(x$lambda)) {

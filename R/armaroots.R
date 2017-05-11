@@ -58,6 +58,44 @@ plot.armaroots <- function(x, xlab, ylab, main, ...)
   }
 }
 
+
+
+#' Plot characteristic roots from ARIMA model
+#' 
+#' Produces a plot of the inverse AR and MA roots of an ARIMA model. Inverse
+#' roots outside the unit circle are shown in red.
+#' 
+#' \code{autoplot} will produce an equivelant plot as a ggplot object.
+#' 
+#' @param x Object of class \dQuote{Arima} or \dQuote{ar}.
+#' @param object Object of class \dQuote{Arima} or \dQuote{ar}. Used for ggplot
+#' graphics (S3 method consistency).
+#' @param type Determines if both AR and MA roots are plotted, of if just one
+#' set is plotted.
+#' @param main Main title. Default is "Inverse AR roots" or "Inverse MA roots".
+#' @param xlab X-axis label.
+#' @param ylab Y-axis label.
+#' @param ... Other plotting parameters passed to \code{\link[graphics]{par}}.
+#' @return None. Function produces a plot
+#' @author Rob J Hyndman & Mitchell O'Hara-Wild
+#' @seealso \code{\link{Arima}}, \code{\link[stats]{ar}}
+#' @keywords hplot
+#' @examples
+#' 
+#' library(ggplot2)
+#' 
+#' fit <- Arima(WWWusage, order=c(3,1,0))
+#' plot(fit)
+#' autoplot(fit)
+#' 
+#' fit <- Arima(woolyrnq,order=c(2,0,0),seasonal=c(2,1,1))
+#' plot(fit)
+#' autoplot(fit)
+#' 
+#' plot(ar.ols(gold[1:61]))
+#' autoplot(ar.ols(gold[1:61]))
+#' 
+#' @export
 plot.Arima <- function(x, type=c("both","ar","ma"), main, 
   xlab="Real", ylab="Imaginary", ...)
 {
@@ -106,6 +144,8 @@ plot.Arima <- function(x, type=c("both","ar","ma"), main,
     plot(maroots(x), main=main, xlab=xlab, ylab=ylab, ...)
 }
 
+#' @rdname plot.Arima
+#' @export
 plot.ar <- function(x, main, xlab="Real", ylab="Imaginary", ...)
 {
   if(!is.element("ar",class(x)))
