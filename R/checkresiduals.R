@@ -49,9 +49,13 @@ checkresiduals <- function(object, lag, df=NULL, test, plot=TRUE, ...)
   else
     showtest <- FALSE
 
+
   # Extract residuals
   if(is.element("ts",class(object)) | is.element("numeric",class(object)) )
+  {
     residuals <- object
+    object <- list(method="Missing")
+  }
   else
     residuals <- residuals(object)
 
