@@ -46,7 +46,14 @@
 #' the errors.
 #' @param model If it's specified, an existing model is applied to a new data
 #' set.
-#' @return An object of class "\code{forecast}".
+#' @return An object of class "\code{forecast}" which is a list that includes the
+#' following elements: 
+#'   \item{model}{A list containing information about the fitted model} 
+#'   \item{method}{The name of the forecasting method as a character string} 
+#'   \item{mean}{Point forecasts as a time series}
+#'   \item{x}{The original time series.} 
+#'   \item{residuals}{Residuals from the fitted model. That is x minus fitted values.} 
+#'   \item{fitted}{Fitted values (one-step forecasts)}
 #' 
 #' The function \code{summary} is used to obtain and print a summary of the
 #' results, while the function \code{plot} produces a plot of the forecasts.
@@ -54,14 +61,6 @@
 #' The generic accessor functions \code{fitted.values} and \code{residuals}
 #' extract useful features of the value returned by \code{dshw}.
 #' 
-#' An object of class \code{"forecast"} is a list containing at least the
-#' following elements: \item{model}{A list containing information about the
-#' fitted model} \item{method}{The name of the forecasting method as a
-#' character string} \item{mean}{Point forecasts as a time series} \item{x}{The
-#' original time series (either \code{object} itself or the time series used to
-#' create the model stored as \code{object}).} \item{residuals}{Residuals from
-#' the fitted model. That is x minus fitted values.} \item{fitted}{Fitted
-#' values (one-step forecasts)}
 #' @author Rob J Hyndman
 #' @seealso \code{\link[stats]{HoltWinters}}, \code{\link{ets}}.
 #' @references Taylor, J.W. (2003) Short-term electricity demand forecasting
