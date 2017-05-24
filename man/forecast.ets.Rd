@@ -19,11 +19,11 @@ to \code{\link{ets}}.}
 \item{fan}{If TRUE, level is set to seq(51,99,by=3). This is suitable for
 fan plots.}
 
-\item{simulate}{If TRUE, prediction intervals produced by simulation rather
-than using analytic formulae.}
+\item{simulate}{If TRUE, prediction intervals are produced by simulation rather
+than using analytic formulae. Errors are assumed to be normally distributed.}
 
-\item{bootstrap}{If TRUE, and if \code{simulate=TRUE}, then simulation uses
-resampled errors rather than normally distributed errors.}
+\item{bootstrap}{If TRUE, then prediction intervals are produced by simulation using
+resampled errors (rather than normally distributed errors).}
 
 \item{npaths}{Number of sample paths used in computing simulated prediction
 intervals.}

@@ -1,18 +1,18 @@
 #' Forecasting using ETS models
-#' 
+#'
 #' Returns forecasts and other information for univariate ETS models.
-#' 
-#' 
+#'
+#'
 #' @param object An object of class "\code{ets}". Usually the result of a call
 #' to \code{\link{ets}}.
 #' @param h Number of periods for forecasting
 #' @param level Confidence level for prediction intervals.
 #' @param fan If TRUE, level is set to seq(51,99,by=3). This is suitable for
 #' fan plots.
-#' @param simulate If TRUE, prediction intervals produced by simulation rather
-#' than using analytic formulae.
-#' @param bootstrap If TRUE, and if \code{simulate=TRUE}, then simulation uses
-#' resampled errors rather than normally distributed errors.
+#' @param simulate If TRUE, prediction intervals are produced by simulation rather
+#' than using analytic formulae. Errors are assumed to be normally distributed.
+#' @param bootstrap If TRUE, then prediction intervals are produced by simulation using
+#' resampled errors (rather than normally distributed errors).
 #' @param npaths Number of sample paths used in computing simulated prediction
 #' intervals.
 #' @param PI If TRUE, prediction intervals are produced, otherwise only point
@@ -28,14 +28,14 @@
 #' fitting the model.
 #' @param ... Other arguments.
 #' @return An object of class "\code{forecast}".
-#' 
+#'
 #' The function \code{summary} is used to obtain and print a summary of the
 #' results, while the function \code{plot} produces a plot of the forecasts and
 #' prediction intervals.
-#' 
+#'
 #' The generic accessor functions \code{fitted.values} and \code{residuals}
 #' extract useful features of the value returned by \code{forecast.ets}.
-#' 
+#'
 #' An object of class \code{"forecast"} is a list containing at least the
 #' following elements: \item{model}{A list containing information about the
 #' fitted model} \item{method}{The name of the forecasting method as a
@@ -55,7 +55,7 @@
 #' @examples
 #' fit <- ets(USAccDeaths)
 #' plot(forecast(fit,h=48))
-#' 
+#'
 #' @export
 forecast.ets <- function(object, h=ifelse(object$m>1, 2*object$m, 10),
   level=c(80,95), fan=FALSE, simulate=FALSE, bootstrap=FALSE, npaths=5000, PI=TRUE,
@@ -98,6 +98,8 @@ forecast.ets <- function(object, h=ifelse(object$m>1, 2*object$m, 10),
 
   n <- length(object$x)
   damped <- as.logical(object$components[4])
+  if(bootstrap)
+    simulate <- TRUE
 
   if(simulate)
     f <- pegelsfcast.C(h,object,level=level,bootstrap=bootstrap,npaths=npaths)
