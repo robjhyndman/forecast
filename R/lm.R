@@ -120,7 +120,7 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
     data <- cbind(data,trend)
   }
   if(tsdat[2]==0){#&tsvar[2]!=0){#If "season" is not in data, but is in formula
-    if(tsvar[2]!=0 & tspx[3]==1){ # Nonseasonal data, and season requested
+    if(tsvar[2]!=0 & tspx[3]<=1){ # Nonseasonal data, and season requested
       stop("Non-seasonal data cannot be modelled using a seasonal factor")
     }
     season <- as.factor(cycle(data[,1]))
@@ -167,6 +167,7 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
     fit$lambda <- lambda
     fit$fitted.values <- InvBoxCox(fit$fitted.values, lambda, biasadj, var(fit$residuals))
   }
+  class(fit) <- c("tslm","lm")
   return(fit)
 }
 
@@ -504,3 +505,9 @@ CV <- function(obj)
   names(out) <- c("CV","AIC","AICc","BIC","AdjR2")
   return(out)
 }
+
+residuals.tslm <- function(object, ...)
+{
+  object$residuals
+}
+
