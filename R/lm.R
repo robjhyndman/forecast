@@ -167,7 +167,7 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...){
     fit$lambda <- lambda
     fit$fitted.values <- InvBoxCox(fit$fitted.values, lambda, biasadj, var(fit$residuals))
   }
-  class(fit) <- c("tslm","lm")
+  class(fit) <- c("tslm",class(fit))
   return(fit)
 }
 
@@ -429,9 +429,9 @@ forecast.lm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda
   fcast$newdata <- oldnewdata
   fcast$residuals <- residuals(object)
   fcast$fitted <- fitted(object)
-  if(nrow(origdata) != length(fcast$x)) # Give up on ts attributes as some data are missing
+  if(NROW(origdata) != NROW(fcast$x)) # Give up on ts attributes as some data are missing
     tspx <- NULL
-  if(length(fcast$x) != length(fcast$residuals))
+  if(NROW(fcast$x) != NROW(fcast$residuals))
     tspx <- NULL
   if(!is.null(tspx))
   {
