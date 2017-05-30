@@ -1,4 +1,6 @@
-#forecast
+forecast
+======================
+
 [![Travis-CI Build Status](https://travis-ci.org/robjhyndman/forecast.svg?branch=master)](https://travis-ci.org/robjhyndman/forecast)
 [![Coverage Status](https://coveralls.io/repos/robjhyndman/forecast/badge.svg?branch=master&service=github)](https://coveralls.io/r/robjhyndman/forecast?branch=master)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/forecast)](https://cran.r-project.org/package=forecast)
