@@ -144,6 +144,7 @@ tail.ts <- function(x, n=6L, ...)
 #' @export
 subset.msts <- function(x, subset=NULL, start=NULL, end=NULL, ...){
   out <- subset.ts(x, start = start, end = end, ...)
-  tspx <- tsp(x)
-  msts(out, seasonal.periods = attr(x, "msts"), start = tspx[1], frequency = tspx[3])
+  tspx <- tsp(out)
+  msts(out, seasonal.periods = attr(x, "msts"), 
+    start = tspx[1], ts.frequency = tspx[3])
 }
