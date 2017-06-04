@@ -1,4 +1,4 @@
-forecast
+forecast <img src="logo.png" align="right" />
 ======================
 
 [![Travis-CI Build Status](https://travis-ci.org/robjhyndman/forecast.svg?branch=master)](https://travis-ci.org/robjhyndman/forecast)
