@@ -6,7 +6,6 @@ forecast <img src="logo.png" align="right" />
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/forecast)](https://cran.r-project.org/package=forecast)
 [![Downloads](http://cranlogs.r-pkg.org/badges/forecast)](https://cran.r-project.org/package=forecast)
 [![Rdoc](http://www.rdocumentation.org/badges/version/forecast)](http://www.rdocumentation.org/packages/forecast)
-[![Pending Pull-Requests](http://githubbadges.herokuapp.com/robjhyndman/forecast/pulls.svg?style=flat)](https://github.com/robjhyndman/forecast/pulls)
 
 The R package *forecast* provides methods and tools for displaying and analysing univariate time series forecasts including exponential smoothing via state space models and automatic ARIMA modelling.
 
