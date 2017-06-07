@@ -99,7 +99,7 @@ accuracy(air.model)
 # out-of-sample one-step forecasts.
 accuracy(air.model2)
 # out-of-sample multi-step forecasts
-accuracy(forecast(air.model,h=48,lambda=NULL), 
+accuracy(forecast(air.model,h=48,lambda=NULL),
          log(window(AirPassengers,start=1957)))
 
 }
