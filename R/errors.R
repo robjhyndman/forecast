@@ -211,6 +211,7 @@ trainingaccuracy <- function(f,test,d, D)
 #' @param D An integer indicating the number of seasonal differences to be used
 #' for the denominator in MASE calculation. Default value is 0 for non-seasonal
 #' series and 1 for seasonal series.
+#' @param ... Additional arguments depending on the specific method.
 #' @return Matrix giving forecast accuracy measures.
 #' @author Rob J Hyndman
 #' @references Hyndman, R.J. and Koehler, A.B. (2006) "Another look at measures
@@ -229,9 +230,16 @@ trainingaccuracy <- function(f,test,d, D)
 #' accuracy(fit2,EuStockMarkets[201:300,1])
 #' plot(fit1)
 #' lines(EuStockMarkets[1:300,1])
-#' 
 #' @export
-accuracy <- function(f,x,test=NULL,d=NULL,D=NULL)
+accuracy <- function(f, ...)
+{
+  UseMethod("accuracy")
+}
+
+#' @rdname accuracy
+#' @method accuracy default
+#' @export
+accuracy.default <- function(f, x, test=NULL, d=NULL, D=NULL, ...)
 {
   if(!any(is.element(class(f), c("mforecast","forecast","ts","integer","numeric",
       "Arima","ets","lm","bats","tbats","nnetar","stlm"))))
@@ -307,7 +315,7 @@ accuracy <- function(f,x,test=NULL,d=NULL,D=NULL)
 }
 
 # Compute accuracy for an mforecast object 
-accuracy.mforecast <- function(object, x, test=NULL, d, D)
+accuracy.mforecast <- function(object, x, test=NULL, d, D, ...)
 {
   out <- NULL
   nox <- missing(x)

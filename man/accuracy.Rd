@@ -2,15 +2,20 @@
 % Please edit documentation in R/errors.R
 \name{accuracy}
 \alias{accuracy}
+\alias{accuracy.default}
 \title{Accuracy measures for a forecast model}
 \usage{
-accuracy(f, x, test = NULL, d = NULL, D = NULL)
+accuracy(f, ...)
+
+\method{accuracy}{default}(f, x, test = NULL, d = NULL, D = NULL, ...)
 }
 \arguments{
 \item{f}{An object of class \dQuote{\code{forecast}}, or a numerical vector
 containing forecasts. It will also work with \code{Arima}, \code{ets} and
 \code{lm} objects if \code{x} is omitted -- in which case in-sample accuracy
 measures are returned.}
+
+\item{...}{Additional arguments depending on the specific method.}
 
 \item{x}{An optional numerical vector containing actual values of the same
 length as object, or a time series overlapping with the times of \code{f}.}
@@ -60,7 +65,6 @@ accuracy(fit1,EuStockMarkets[201:300,1])
 accuracy(fit2,EuStockMarkets[201:300,1])
 plot(fit1)
 lines(EuStockMarkets[1:300,1])
-
 }
 \references{
 Hyndman, R.J. and Koehler, A.B. (2006) "Another look at measures
