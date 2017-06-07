@@ -391,7 +391,7 @@ autoplot.Arima <- function (object, type = c("both", "ar", "ma"), ...){
       p <- p + ggAddExtras(main = paste("Inverse",toupper(type),"roots"))
     }
     else{
-      p <- p + ggplot2::facet_wrap(~ type, labeller = function(labels) lapply(labels, function(x) paste(as.character(x), "roots")))
+      p <- p + ggplot2::facet_wrap(~ type, labeller = function(labels) lapply(labels, function(x) paste("Inverse",as.character(x), "roots")))
     }
   }
   return(p)
