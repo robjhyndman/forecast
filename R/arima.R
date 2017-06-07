@@ -473,6 +473,11 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
       lower <- t(lower)
       upper <- t(upper)
     }
+    else
+    {
+      lower <- matrix(lower, ncol=1)
+      upper <- matrix(upper, ncol=1)
+    }
   }
   else { # Compute prediction intervals via the normal distribution
     lower <- matrix(NA, ncol=nint, nrow=length(pred$pred))
