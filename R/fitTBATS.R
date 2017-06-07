@@ -99,7 +99,7 @@ fitSpecificTBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.per
       q <- 0
     }
     #Calculate starting values:
-    alpha <- .1
+    alpha <- 0.09
     if(use.beta) {
       adj.beta <- 1
       beta.v <- 0.05
