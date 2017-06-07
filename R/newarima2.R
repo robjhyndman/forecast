@@ -1,15 +1,15 @@
 #' Fit best ARIMA model to univariate time series
-#' 
+#'
 #' Returns best ARIMA model according to either AIC, AICc or BIC value. The
 #' function conducts a search over possible model within the order constraints
 #' provided.
-#' 
+#'
 #' Non-stepwise selection can be slow, especially for seasonal data. Stepwise
 #' algorithm outlined in Hyndman and Khandakar (2008) except that the default
 #' method for selecting seasonal differences is now the OCSB test rather than
 #' the Canova-Hansen test. There are also some other minor variations to the
 #' algorithm described in Hyndman and Khandakar (2008).
-#' 
+#'
 #' @param y a univariate time series
 #' @param d Order of first-differencing. If missing, will choose a value based
 #' on KPSS test.
@@ -78,7 +78,7 @@
 #' @examples
 #' fit <- auto.arima(WWWusage)
 #' plot(forecast(fit,h=20))
-#' 
+#'
 #' @export
 auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
    max.P=2, max.Q=2, max.order=5, max.d=2, max.D=1,
@@ -530,14 +530,24 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
       tryagain <- TRUE
     if(tryagain)
     {
-      # Final model is lousy. Better try again without approximation
-      bestfit <- auto.arima(orig.x, d=d, D=D, max.p=max.p, max.q=max.q,
-                    max.P=max.P, max.Q=max.Q, max.order=max.order, max.d=max.d, max.D=max.D,
-                    start.p=start.p, start.q=start.q, start.P=1, start.Q=1,
-                    stationary=stationary, seasonal=seasonal, ic=ic,
-                    stepwise=TRUE, trace=trace, approximation=FALSE, xreg=xreg,
-                    allowdrift=allowdrift,allowmean=allowmean,lambda=lambda, biasadj=biasadj,
-                    parallel=FALSE,...)
+      # Final model is lousy. Try refitting the best models without approximation
+      # until we find one that works
+      icorder <- order(results[,8])
+      nmodels <- sum(!is.na(results[,8]))
+      for(i in 2:nmodels)
+      {
+        k <- icorder[i]
+        fit <- myarima(x, order=c(results[k,1],d,results[k,3]),
+                       seasonal=c(results[k,4],D,results[k,6]),
+                       constant=results[k,7]==1,
+                       ic,trace,approximation=FALSE,offset=offset,
+                       xreg=xreg,...)
+        if(fit$ic < Inf)
+        {
+          bestfit <- fit
+          break;
+        }
+      }
       bestfit$ic <- switch(ic,bic=bestfit$bic,aic=bestfit$aic,aicc=bestfit$aicc)
     }
     else
@@ -739,10 +749,10 @@ summary.Arima <- function(object,...)
 
 # Number of seasonal differences
 #' @rdname ndiffs
-#' 
-#' @examples 
+#'
+#' @examples
 #' nsdiffs(log(AirPassengers))
-#' 
+#'
 #' @export
 nsdiffs <- function(x, m=frequency(x), test=c("ocsb", "ch"), max.D=1)
 {
@@ -898,10 +908,10 @@ checkarima <- function(object)
 
 
 #' Is an object constant?
-#' 
+#'
 #' Returns true if the object's numerical values do not vary.
-#' 
-#' 
+#'
+#'
 #' @param x object to be tested
 is.constant <- function(x)
 {
