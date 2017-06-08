@@ -702,9 +702,20 @@ newmodel <- function(p,d,q,P,D,Q,constant,results)
 arima.string <- function(object, padding=FALSE)
 {
   order <- object$arma[c(1,6,2,3,7,4,5)]
+  m <- order[7]
   result <- paste("ARIMA(",order[1],",",order[2],",",order[3],")",sep="")
-  if(order[7]>1 & sum(order[4:6]) > 0)
-    result <- paste(result,"(",order[4],",",order[5],",",order[6],")[",order[7],"]",sep="")
+  if(m > 1 & sum(order[4:6]) > 0)
+    result <- paste(result,"(",order[4],",",order[5],",",order[6],")[",m,"]",sep="")
+  if(padding & m > 1 & sum(order[4:6]) == 0)
+  {
+    result <- paste(result, "         ", sep='')
+    if(m <= 9)
+      result <- paste(result, " ", sep='')
+    else if(m <= 99)
+      result <- paste(result, "  ", sep='')
+    else
+      result <- paste(result, "   ", sep='')
+  }
   if(!is.null(object$xreg))
   {
     if(NCOL(object$xreg)==1 & is.element("drift",names(object$coef)))
