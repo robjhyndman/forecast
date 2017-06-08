@@ -312,6 +312,9 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
 
   results <- matrix(NA,nrow=100,ncol=8)
 
+  if(approximation & trace)
+    cat("\n Fitting models using approximations to speed things up...\n")
+
   bestfit <- myarima(x,order=c(p,d,q),seasonal=c(P,D,Q),constant=constant,ic,trace,approximation,offset=offset,xreg=xreg,...)
   results[1,] <- c(p,d,q,P,D,Q,constant,bestfit$ic)
   # Null model with possible constant
@@ -522,36 +525,23 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   # Refit using ML if approximation used for IC
   if(approximation & !is.null(bestfit$arma))
   {
-    newbestfit <- myarima(x,order=bestfit$arma[c(1,6,2)],
-              seasonal=bestfit$arma[c(3,7,4)],constant=constant,ic,trace=FALSE,
-              approximation=FALSE,xreg=xreg,...)
-    tryagain <- (newbestfit$ic == Inf | newbestfit$code > 0)
-    if(length(tryagain)==0L)
-      tryagain <- TRUE
-    if(tryagain)
+    if(trace)
+      cat("\n\n Now re-fitting the best model(s) without approximations...\n")
+    icorder <- order(results[,8])
+    nmodels <- sum(!is.na(results[,8]))
+    for(i in 1:nmodels)
     {
-      # Final model is lousy. Try refitting the best models without approximation
-      # until we find one that works
-      icorder <- order(results[,8])
-      nmodels <- sum(!is.na(results[,8]))
-      for(i in 2:nmodels)
+      k <- icorder[i]
+      fit <- myarima(x, order=c(results[k,1],d,results[k,3]),
+                     seasonal=c(results[k,4],D,results[k,6]),
+                     constant=results[k,7]==1,
+                     ic, trace, approximation=FALSE, xreg=xreg, ...)
+      if(fit$ic < Inf)
       {
-        k <- icorder[i]
-        fit <- myarima(x, order=c(results[k,1],d,results[k,3]),
-                       seasonal=c(results[k,4],D,results[k,6]),
-                       constant=results[k,7]==1,
-                       ic,trace,approximation=FALSE,offset=offset,
-                       xreg=xreg,...)
-        if(fit$ic < Inf)
-        {
-          bestfit <- fit
-          break;
-        }
+        bestfit <- fit
+        break;
       }
-      bestfit$ic <- switch(ic,bic=bestfit$bic,aic=bestfit$aic,aicc=bestfit$aicc)
     }
-    else
-      bestfit <- newbestfit
   }
 
   # Nothing fitted
