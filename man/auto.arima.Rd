@@ -122,7 +122,7 @@ The number of seasonal differences is sometimes poorly chosen. If your data show
 seasonality, try setting \code{D=1} rather than relying on the automatic selection of \code{D}.
 
 Non-stepwise selection can be slow, especially for seasonal data. The stepwise
-algorithm outlined in Hyndman and Khandakar (2008) except that the default
+algorithm outlined in Hyndman and Khandakar (2008) is used except that the default
 method for selecting seasonal differences is now the OCSB test rather than
 the Canova-Hansen test. There are also some other minor variations to the
 algorithm described in Hyndman and Khandakar (2008).
