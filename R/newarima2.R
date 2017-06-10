@@ -914,6 +914,7 @@ checkarima <- function(object)
 #'
 #'
 #' @param x object to be tested
+#' @export
 is.constant <- function(x)
 {
   x <- as.numeric(x)
