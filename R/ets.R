@@ -1,16 +1,16 @@
 #' Exponential smoothing state space model
-#' 
+#'
 #' Returns ets model applied to \code{y}.
-#' 
+#'
 #' Based on the classification of methods as described in Hyndman et al (2008).
-#' 
+#'
 #' The methodology is fully automatic. The only required argument for ets is
 #' the time series. The model is chosen automatically if not specified. This
 #' methodology performed extremely well on the M3-competition data. (See
 #' Hyndman, et al, 2002, below.)
-#' 
+#'
 #' @aliases print.ets summary.ets as.character.ets coef.ets tsdiag.ets
-#' 
+#'
 #' @param y a numeric vector or time series of class \code{ts}
 #' @param model Usually a three-character string identifying method using the
 #' framework terminology of Hyndman et al. (2002) and Hyndman et al. (2008).
@@ -20,7 +20,7 @@
 #' "M"=multiplicative and "Z"=automatically selected. So, for example, "ANN" is
 #' simple exponential smoothing with additive errors, "MAM" is multiplicative
 #' Holt-Winters' method with multiplicative errors, and so on.
-#' 
+#'
 #' It is also possible for the model to be of class \code{"ets"}, and equal to
 #' the output from a previous call to \code{ets}. In this case, the same model
 #' is fitted to \code{y} without re-estimating any smoothing parameters. See
@@ -65,7 +65,7 @@
 #' re-estimated.
 #' @param ... Other undocumented arguments.
 #' @return An object of class "\code{ets}".
-#' 
+#'
 #' The generic accessor functions \code{fitted.values} and \code{residuals}
 #' extract useful features of the value returned by \code{ets} and associated
 #' functions.
@@ -76,11 +76,11 @@
 #' "A state space framework for automatic forecasting using exponential
 #' smoothing methods", \emph{International J. Forecasting}, \bold{18}(3),
 #' 439--454.
-#' 
+#'
 #' Hyndman, R.J., Akram, Md., and Archibald, B. (2008) "The admissible
 #' parameter space for exponential smoothing models". \emph{Annals of
 #' Statistical Mathematics}, \bold{60}(2), 407--426.
-#' 
+#'
 #' Hyndman, R.J., Koehler, A.B., Ord, J.K., and Snyder, R.D. (2008)
 #' \emph{Forecasting with exponential smoothing: the state space approach},
 #' Springer-Verlag. \url{http://www.exponentialsmoothing.net}.
@@ -88,7 +88,7 @@
 #' @examples
 #' fit <- ets(USAccDeaths)
 #' plot(forecast(fit))
-#' 
+#'
 #' @export
 ets <- function(y, model="ZZZ", damped=NULL,
     alpha=NULL, beta=NULL, gamma=NULL, phi=NULL, additive.only=FALSE, lambda=NULL, biasadj=FALSE,
@@ -137,7 +137,8 @@ ets <- function(y, model="ZZZ", damped=NULL,
   # If model is an ets object, re-fit model to new data
   if(class(model)=="ets")
   {
-    alpha <- model$par["alpha"]
+    # Prevent alpha being zero (to avoid divide by zero in the C code)
+    alpha <- max(model$par["alpha"], 1e-10)
     beta <- model$par["beta"]
     if(is.na(beta))
       beta <- NULL
@@ -630,6 +631,7 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
     gamma <- fit.par["gamma"]
   if(!is.na(fit.par["phi"]))
     phi <- fit.par["phi"]
+
   e <- pegelsresid.C(y,m,init.state,errortype,trendtype,seasontype,damped,alpha,beta,gamma,phi,nmse)
 
   np <- np + 1
@@ -1149,12 +1151,12 @@ admissible <- function(alpha,beta,gamma,phi,m)
 
 
 #' Plot components from ETS model
-#' 
+#'
 #' Produces a plot of the level, slope and seasonal components from an ETS
 #' model.
-#' 
+#'
 #' \code{autoplot} will produce an equivelant plot as a ggplot object.
-#' 
+#'
 #' @param x Object of class \dQuote{ets}.
 #' @param object Object of class \dQuote{ets}. Used for ggplot graphics (S3
 #' method consistency).
@@ -1167,14 +1169,14 @@ admissible <- function(alpha,beta,gamma,phi,m)
 #' @seealso \code{\link{ets}}
 #' @keywords hplot
 #' @examples
-#' 
+#'
 #' fit <- ets(USAccDeaths)
 #' plot(fit)
 #' plot(fit,plot.type="single",ylab="",col=1:3)
-#' 
+#'
 #' library(ggplot2)
 #' autoplot(fit)
-#' 
+#'
 #' @export
 plot.ets <- function(x,...)
 {
@@ -1245,9 +1247,9 @@ nobs.ets <- function(object, ...)
 
 
 #' Is an object a particular model type?
-#' 
+#'
 #' Returns true if the model object is of a particular type
-#' 
+#'
 #' @param x object to be tested
 #' @export
 is.ets <- function(x){
