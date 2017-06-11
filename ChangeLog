@@ -1,6 +1,14 @@
-Version 8.1 (?? 2017)
+Version 8.1 (11 June 2017)
   * Added as.character.ets, as.character.bats, as.character.tbats
   * Made gghistogram() and checkresiduals() robust to missing values
+  * All documentation now generated using roxygen
+  * Improved documentation for many functions
+  * Added autoplot.msts() and autolayer.msts()
+  * Added as.character methods for many models to generate model names
+  * Added as.ts.forecast()
+  * autoplot method for bats/tbats models
+  * Better ARIMA trace output
+  * Made accuracy an S3 method
   * Bug fixes
 
 Version 8.0 (22 February 2017)
