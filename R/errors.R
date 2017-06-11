@@ -177,14 +177,14 @@ trainingaccuracy <- function(f,test,d, D)
 
 
 #' Accuracy measures for a forecast model
-#' 
+#'
 #' Returns range of summary measures of the forecast accuracy. If \code{x} is
 #' provided, the function measures out-of-sample (test set) forecast accuracy
 #' based on \code{x-f}. If \code{x} is not provided, the function only produces
 #' in-sample (training set) accuracy measures of the forecasts based on
 #' \code{f["x"]-fitted(f)}. All measures are defined and discussed in Hyndman
 #' and Koehler (2006).
-#' 
+#'
 #' The measures calculated are: \itemize{ \item ME: Mean Error \item RMSE: Root
 #' Mean Squared Error \item MAE: Mean Absolute Error \item MPE: Mean Percentage
 #' Error \item MAPE: Mean Absolute Percentage Error \item MASE: Mean Absolute
@@ -192,10 +192,10 @@ trainingaccuracy <- function(f,test,d, D)
 #' the MASE calculation is scaled using MAE of in-sample naive forecasts for
 #' non-seasonal time series, in-sample seasonal naive forecasts for seasonal
 #' time series and in-sample mean forecasts for non-time series data.
-#' 
+#'
 #' See Hyndman and Koehler (2006) and Hyndman and Athanasopoulos (2014, Section
 #' 2.5) for further details.
-#' 
+#'
 #' @param f An object of class \dQuote{\code{forecast}}, or a numerical vector
 #' containing forecasts. It will also work with \code{Arima}, \code{ets} and
 #' \code{lm} objects if \code{x} is omitted -- in which case in-sample accuracy
@@ -221,7 +221,7 @@ trainingaccuracy <- function(f,test,d, D)
 #' forecast accuracy". \url{http://www.otexts.org/fpp/2/5}.
 #' @keywords ts
 #' @examples
-#' 
+#'
 #' fit1 <- rwf(EuStockMarkets[1:200,1],h=100)
 #' fit2 <- meanf(EuStockMarkets[1:200,1],h=100)
 #' accuracy(fit1)
@@ -314,9 +314,11 @@ accuracy.default <- function(f, x, test=NULL, d=NULL, D=NULL, ...)
   return(out)
 }
 
-# Compute accuracy for an mforecast object 
-accuracy.mforecast <- function(object, x, test=NULL, d, D, ...)
+# Compute accuracy for an mforecast object
+#' @export
+accuracy.mforecast <- function(f, x, test=NULL, d, D, ...)
 {
+  object <- f
   out <- NULL
   nox <- missing(x)
   i <- 1
