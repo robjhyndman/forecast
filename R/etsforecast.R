@@ -57,6 +57,7 @@
 #' plot(forecast(fit,h=48))
 #'
 #' @export
+#' @export forecast.ets
 forecast.ets <- function(object, h=ifelse(object$m>1, 2*object$m, 10),
   level=c(80,95), fan=FALSE, simulate=FALSE, bootstrap=FALSE, npaths=5000, PI=TRUE,
   lambda=object$lambda, biasadj=NULL, ...)
