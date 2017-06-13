@@ -47,7 +47,7 @@ testaccuracy <- function(f,x,test,d,D)
   ff <- f
   xx <- x
 
-  error <- (xx-ff[1:n])[test]
+  error <- (xx-rep(ff, length.out = n))[test]
   pe <- error/xx[test] * 100
 
   me <- mean(error, na.rm=TRUE)
