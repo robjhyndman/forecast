@@ -1195,135 +1195,143 @@ ggsubseriesplot <- function (x, labels = NULL, times = time(x), phase = cycle(x)
 #' ggseasonplot(AirPassengers, year.labels=TRUE, continuous=TRUE)
 #' 
 #' @export
-ggseasonplot <- function (x, year.labels=FALSE, year.labels.left=FALSE, type=NULL, col=NULL, continuous=FALSE, polar=FALSE, labelgap=0.04, ...){
+ggseasonplot <- function (x, season.labels=NULL, year.labels=FALSE, year.labels.left=FALSE, type=NULL, col=NULL, continuous=FALSE, polar=FALSE, labelgap=0.04, ...){
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
-  else{
-    if (!inherits(x, "ts")){
-      stop("autoplot.seasonplot requires a ts object, use x=object")
-    }
-    if(!is.null(type)){
-      message("Plot types are not yet supported for seasonplot()")
-    }
+  if (!inherits(x, "ts")){
+    stop("autoplot.seasonplot requires a ts object, use x=object")
+  }
+  if(!is.null(type)){
+    message("Plot types are not yet supported for seasonplot()")
+  }
 
-    # Check data are seasonal and convert to integer seasonality
-    s <- round(frequency(x))
-    if(s <= 1)
-      stop("Data are not seasonal")
-    
-    # Grab name for plot title
-    xname <- deparse(substitute(x))
-    
-    tspx <- tsp(x)
-    x <- ts(x, start=tspx[1], frequency=s)
-    
-    data <- data.frame(y=as.numeric(x),
-      year=trunc(time(x)),
-      cycle=as.numeric(cycle(x)),
-      time=as.numeric((cycle(x)-1)/s))
-    data$year <- if(continuous){
-      as.numeric(data$year)
+  # Check data are seasonal and convert to integer seasonality
+  s <- round(frequency(x))
+  if(s <= 1)
+    stop("Data are not seasonal")
+  
+  # Grab name for plot title
+  xname <- deparse(substitute(x))
+  
+  tspx <- tsp(x)
+  x <- ts(x, start=tspx[1], frequency=s)
+  
+  data <- data.frame(y=as.numeric(x),
+    year=trunc(time(x)),
+    cycle=as.numeric(cycle(x)),
+    time=as.numeric((cycle(x)-1)/s))
+  data$year <- if(continuous){
+    as.numeric(data$year)
+  }
+  else{
+    as.factor(data$year)
+  }
+  if(polar){
+    startValues <- data[data$cycle==1,]
+    if(data$cycle[1] == 1){
+      startValues <- startValues[-1,]
+    }
+    startValues$time <- 1-.Machine$double.eps
+    levels(startValues$year) <- as.numeric(levels(startValues$year)) - 1
+    data <- rbind(data, startValues)
+  }
+  #Initialise ggplot object
+  p <- ggplot2::ggplot(ggplot2::aes_(x=~time, y=~y, group=~year, colour=~year), data=data, na.rm=TRUE)
+  #p <- p + ggplot2::scale_x_continuous()
+
+  #Add data
+  p <- p + ggplot2::geom_line()
+
+  if(!is.null(col)){
+    if(continuous){
+      p <- p + ggplot2::scale_color_gradientn(colours=col)
     }
     else{
-      as.factor(data$year)
-    }
-    if(polar){
-      startValues <- data[data$cycle==1,]
-      if(data$cycle[1] == 1){
-        startValues <- startValues[-1,]
-      }
-      startValues$time <- 1-.Machine$double.eps
-      levels(startValues$year) <- as.numeric(levels(startValues$year)) - 1
-      data <- rbind(data, startValues)
-    }
-    #Initialise ggplot object
-    p <- ggplot2::ggplot(ggplot2::aes_(x=~time, y=~y, group=~year, colour=~year), data=data, na.rm=TRUE)
-    #p <- p + ggplot2::scale_x_continuous()
-
-    #Add data
-    p <- p + ggplot2::geom_line()
-
-    if(!is.null(col)){
-      if(continuous){
-        p <- p + ggplot2::scale_color_gradientn(colours=col)
+      ncol <- length(unique(data$year))
+      if(length(col)==1){
+        p <- p + ggplot2::scale_color_manual(guide="none", values=rep(col, ncol))
       }
       else{
-        ncol <- length(unique(data$year))
-        if(length(col)==1){
-          p <- p + ggplot2::scale_color_manual(guide="none", values=rep(col, ncol))
-        }
-        else{
-          p <- p + ggplot2::scale_color_manual(values=rep(col, ceiling(ncol/length(col)))[1:ncol])
-        }
+        p <- p + ggplot2::scale_color_manual(values=rep(col, ceiling(ncol/length(col)))[1:ncol])
       }
     }
-
-    if(year.labels){
-      yrlab <- stats::aggregate(time ~ year, data=data, FUN = max)
-      yrlab <- cbind(yrlab, offset=labelgap)
-    }
-    if(year.labels.left){
-      yrlabL <- stats::aggregate(time ~ year, data=data, FUN = min)
-      yrlabL <- cbind(yrlabL, offset=-labelgap)
-      if(year.labels){
-        yrlab <- rbind(yrlab, yrlabL)
-      }
-    }
-    if(year.labels | year.labels.left){
-      yrlab <- merge(yrlab, data)
-      yrlab$time <- yrlab$time+yrlab$offset
-      p <- p + ggplot2::guides(colour=FALSE)
-      p <- p + ggplot2::geom_text(ggplot2::aes_(x=~time, y=~y, label=~year), data=yrlab)
-    }
-
-    # Add seasonal labels
-    if(s == 12)
-    {
-      labs <- month.abb
-      xLab <- "Month"
-    }
-    else if(s == 4)
-    {
-      labs <- paste("Q",1:4,sep="")
-      xLab <- "Quarter"
-    }
-    else if(s == 7)
-    {
-      labs <- c("Sun","Mon","Tue","Wed","Thu","Fri","Sat")
-      xLab <- "Day"
-    }
-    else if(s == 52)
-    {
-      labs <- 1:s
-      xLab <- "Week"
-    }
-    else if(s == 24)
-    {
-      labs <- 0:(s-1)
-      xLab <- "Hour"
-    }
-    else if(s == 48)
-    {
-      labs <- seq(0, 23.5, by=0.5)
-      xLab <- "Half-hour"
-    }
-    else
-    {
-      labs <- 1:s
-      xLab <- "Season"
-    }
-    
-    if(polar){
-      labs <- c(labs, '')
-      p <- p + ggplot2::coord_polar()
-    }
-    p <- p + ggplot2::scale_x_continuous(breaks=sort(unique(data$time)), minor_breaks=NULL, labels=labs)
-
-    #Graph title and axes
-    p <- p + ggAddExtras(main=paste("Seasonal plot:", xname), xlab=xLab, ylab=NULL)
-    return(p)
   }
+
+  if(year.labels){
+    yrlab <- stats::aggregate(time ~ year, data=data, FUN = max)
+    yrlab <- cbind(yrlab, offset=labelgap)
+  }
+  if(year.labels.left){
+    yrlabL <- stats::aggregate(time ~ year, data=data, FUN = min)
+    yrlabL <- cbind(yrlabL, offset=-labelgap)
+    if(year.labels){
+      yrlab <- rbind(yrlab, yrlabL)
+    }
+  }
+  if(year.labels | year.labels.left){
+    yrlab <- merge(yrlab, data)
+    yrlab$time <- yrlab$time+yrlab$offset
+    p <- p + ggplot2::guides(colour=FALSE)
+    p <- p + ggplot2::geom_text(ggplot2::aes_(x=~time, y=~y, label=~year), data=yrlab)
+  }
+
+  # Add seasonal labels
+  if(s == 12)
+  {
+    labs <- month.abb
+    xLab <- "Month"
+  }
+  else if(s == 4)
+  {
+    labs <- paste("Q",1:4,sep="")
+    xLab <- "Quarter"
+  }
+  else if(s == 7)
+  {
+    labs <- c("Sun","Mon","Tue","Wed","Thu","Fri","Sat")
+    xLab <- "Day"
+  }
+  else if(s == 52)
+  {
+    labs <- 1:s
+    xLab <- "Week"
+  }
+  else if(s == 24)
+  {
+    labs <- 0:(s-1)
+    xLab <- "Hour"
+  }
+  else if(s == 48)
+  {
+    labs <- seq(0, 23.5, by=0.5)
+    xLab <- "Half-hour"
+  }
+  else
+  {
+    labs <- 1:s
+    xLab <- "Season"
+  }
+  
+  if(polar){
+    labs <- c(labs, '')
+    p <- p + ggplot2::coord_polar()
+  }
+  
+  if(!is.null(season.labels)){
+    if(length(season.labels) != length(labs)){
+      warning(paste0("Provided season.labels have length ", length(season.labels), ", but ", length(labs), " are required. Ignoring season.labels."))
+    }
+    else{
+      labs <- season.labels
+    }
+  }
+  
+  p <- p + ggplot2::scale_x_continuous(breaks=sort(unique(data$time)), minor_breaks=NULL, labels=labs)
+
+  #Graph title and axes
+  p <- p + ggAddExtras(main=paste("Seasonal plot:", xname), xlab=xLab, ylab=NULL)
+  return(p)
 }
 
 #' @rdname plot.forecast

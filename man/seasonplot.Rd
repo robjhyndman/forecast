@@ -5,9 +5,9 @@
 \alias{seasonplot}
 \title{Seasonal plot}
 \usage{
-ggseasonplot(x, year.labels = FALSE, year.labels.left = FALSE,
-  type = NULL, col = NULL, continuous = FALSE, polar = FALSE,
-  labelgap = 0.04, ...)
+ggseasonplot(x, season.labels = NULL, year.labels = FALSE,
+  year.labels.left = FALSE, type = NULL, col = NULL, continuous = FALSE,
+  polar = FALSE, labelgap = 0.04, ...)
 
 seasonplot(x, s, season.labels = NULL, year.labels = FALSE,
   year.labels.left = FALSE, type = "o", main, xlab = NULL, ylab = "",
@@ -15,6 +15,8 @@ seasonplot(x, s, season.labels = NULL, year.labels = FALSE,
 }
 \arguments{
 \item{x}{a numeric vector or time series of class \code{ts}.}
+
+\item{season.labels}{Labels for each season in the "year"}
 
 \item{year.labels}{Logical flag indicating whether labels for each year of
 data should be plotted on the right.}
@@ -37,8 +39,6 @@ discrete?}
 \item{\dots}{additional arguments to \code{\link[graphics]{plot}}.}
 
 \item{s}{seasonal frequency of x}
-
-\item{season.labels}{Labels for each season in the "year"}
 
 \item{main}{Main title.}
 
