@@ -47,6 +47,10 @@ testaccuracy <- function(f,x,test,d,D)
   ff <- f
   xx <- x
 
+  # Check length of f
+  if(length(f) < n)
+    stop("Not enough forecasts. Check that forecasts and test data match.")
+
   error <- (xx-ff[1:n])[test]
   pe <- error/xx[test] * 100
 
