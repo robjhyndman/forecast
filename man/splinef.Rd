@@ -77,7 +77,7 @@ summary(fcast)
 Hyndman, King, Pitrun and Billah (2005) Local linear forecasts
 using cubic smoothing splines. \emph{Australian and New Zealand Journal of
 Statistics}, \bold{47}(1), 87-99.
-\url{http://robjhyndman.com/papers/splinefcast/}.
+\url{https://robjhyndman.com/publications/splinefcast/}.
 }
 \seealso{
 \code{\link[stats]{smooth.spline}}, \code{\link[stats]{arima}},

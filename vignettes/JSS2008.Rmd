@@ -7,7 +7,7 @@ author:
       Monash University
       Clayton VIC 3800, Australia
     email: Rob.Hyndman@monash.edu
-    url: http://robjhyndman.com
+    url: https://robjhyndman.com
   - name: Yeasmin Khandakar
     affiliation: Monash University
     address: >
@@ -362,7 +362,7 @@ y_t &= \left[ 1    \phi \right] \bm{x}_{t-1}(1 + \varepsilon_t)\\
 \bm{x}_t &= \left[\begin{array}{ll}
                         1 & \phi \\
                         0 & \phi
-                   \end{array}\right]\bm{x}_{t-1} + \left[ 1   
+                   \end{array}\right]\bm{x}_{t-1} + \left[ 1
                    \phi
                    \right] \bm{x}_{t-1}
              \left[\begin{array}{l}
@@ -854,21 +854,21 @@ function in the \pkg{forecast} package. (The default settings of \code{ets()} do
 algorithm for the four data sets were:
 \begin{compactitem}
 \item `r etsnames[1]` for monthly US 10-year bonds yield\\
-($\alpha=`r format(coef(mod1)['alpha'], digits=4, nsmall=4)`$, 
- $\beta=`r format(coef(mod1)['beta'], digits=4, nsmall=4)`$, 
- $\phi=`r format(coef(mod1)['phi'], digits=4, nsmall=4)`$, 
+($\alpha=`r format(coef(mod1)['alpha'], digits=4, nsmall=4)`$,
+ $\beta=`r format(coef(mod1)['beta'], digits=4, nsmall=4)`$,
+ $\phi=`r format(coef(mod1)['phi'], digits=4, nsmall=4)`$,
  $\ell_0 = `r format(coef(mod1)['l'], digits=4, nsmall=4)`$,
  $b_0=`r format(coef(mod1)['b'], digits=4, nsmall=4)`$);
 
 \item `r etsnames[2]` for annual US net electricity generation\\
-($\alpha=`r format(coef(mod2)['alpha'], digits=4, nsmall=4)`$, 
- $\beta=`r format(coef(mod2)['beta'], digits=4, nsmall=4)`$, 
+($\alpha=`r format(coef(mod2)['alpha'], digits=4, nsmall=4)`$,
+ $\beta=`r format(coef(mod2)['beta'], digits=4, nsmall=4)`$,
  $\ell_0 = `r format(coef(mod2)['l'], digits=4, nsmall=4)`$,
  $b_0=`r format(coef(mod2)['b'], digits=4, nsmall=4)`$);
 
 \item `r etsnames[3]` for quarterly UK motor vehicle production\\
-($\alpha=`r format(coef(mod3)['alpha'], digits=4, nsmall=4)`$, 
- $\gamma=`r format(coef(mod3)['gamma'], digits=4, nsmall=4)`$, 
+($\alpha=`r format(coef(mod3)['alpha'], digits=4, nsmall=4)`$,
+ $\gamma=`r format(coef(mod3)['gamma'], digits=4, nsmall=4)`$,
  $\ell_0 = `r format(coef(mod3)['l'], digits=4, nsmall=4)`$,
  $s_{-3}=`r format(-sum(coef(mod3)[c('s0','s1','s2')]), digits=4, nsmall=4)`$,
  $s_{-2}=`r format(coef(mod3)['s2'], digits=4, nsmall=4)`$,
@@ -876,9 +876,9 @@ algorithm for the four data sets were:
  $s_0=`r format(coef(mod3)['s0'], digits=4, nsmall=4)`$);
 
 \item `r etsnames[4]` for monthly Australian overseas visitors\\
-($\alpha=`r format(coef(mod4)['alpha'], digits=4, nsmall=4)`$, 
- $\beta=`r format(coef(mod4)['beta'], digits=2, nsmall=4)`$, 
- $\gamma=`r format(coef(mod4)['gamma'], digits=4, nsmall=4)`$, 
+($\alpha=`r format(coef(mod4)['alpha'], digits=4, nsmall=4)`$,
+ $\beta=`r format(coef(mod4)['beta'], digits=2, nsmall=4)`$,
+ $\gamma=`r format(coef(mod4)['gamma'], digits=4, nsmall=4)`$,
  $\ell_0 = `r format(coef(mod4)['l'], digits=4, nsmall=4)`$,
  $b_0 = `r format(coef(mod4)['b'], digits=4, nsmall=4)`$,
  $s_{-11}=`r format(12-sum(tail(coef(mod4),11)), digits=4, nsmall=4)`$,
@@ -1041,7 +1041,7 @@ arimanames <- c(as.character(mod1),
   as.character(mod2),
   as.character(mod3),
   as.character(mod4))
-arimanames <- 
+arimanames <-
     gsub("\\[([0-9]*)\\]", "$_{\\1}$", arimanames)
 ```
 
@@ -1081,7 +1081,7 @@ and similarly for the seasonal terms.
 A summary of the forecasts is available, part of which is shown
 below.
 
-<!-- 
+<!--
 For some reason, this doesn't work.
 ```{r arimafcastsummary, echo=TRUE, message=FALSE, warning=FALSE, as.is=TRUE}
 summary(fcast)
@@ -1090,7 +1090,7 @@ summary(fcast)
 
 ```
 Forecast method: ARIMA(2,1,2) with drift
-Series: usnetelec 
+Series: usnetelec
 
 Coefficients:
           ar1      ar2     ma1     ma2    drift
@@ -1214,28 +1214,28 @@ We now briefly describe some of the other features of the
 \pkg{forecast} package. Each of the following functions produces an
 object of class ``\code{forecast}''.
 
-\code{croston()} 
+\code{croston()}
 :  implements the method of @Croston72 for intermittent demand forecasting. In this method, the time series is decomposed into two separate sequences: the non-zero values and the time intervals between non-zero values. These are then independently forecast using simple exponential smoothing and the forecasts of the original series are obtained as ratios of the two sets of forecasts. No prediction intervals are provided because there is no underlying stochastic model [@SH05].
 
-\code{theta()} 
+\code{theta()}
 : provides forecasts from the Theta method [@AN00]. @HB03 showed that these were equivalent to a special case of simple exponential smoothing with drift.
 
 \code{splinef()}
 : gives cubic-spline forecasts, based on fitting a cubic spline to the historical data and extrapolating it linearly. The details of this method, and the associated prediction intervals, are discussed in @HKPB05.
 
-\code{meanf()} 
+\code{meanf()}
 : returns forecasts based on the historical mean.
 
-\code{rwf()} 
+\code{rwf()}
 : gives ``naïve'' forecasts equal to the most recent observation assuming a random walk model. This function also allows forecasting using a random walk with drift.
 
 
 In addition, there are some new plotting functions for time series.
 
-\code{tsdisplay()} 
+\code{tsdisplay()}
 : provides a time plot along with an ACF and PACF.
 
-\code{seasonplot()} 
+\code{seasonplot()}
 : produces a seasonal plot as described in @MWH3.
 
 \newpage

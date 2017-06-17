@@ -39,7 +39,7 @@ print(modelcv$fold1)
 Bergmeir, C., Hyndman, R.J., Koo, B. (2015) A note on the
 validity of cross-validation for evaluating time series prediction. Monash
 working paper 10/15.
-\url{http://robjhyndman.com/working-papers/cv-time-series/}.
+\url{https://robjhyndman.com/publications/cv-time-series/}.
 }
 \seealso{
 \link{CV}, \link{tsCV}.

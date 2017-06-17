@@ -80,7 +80,7 @@ taylor %>%
 ## For more information
 
   * Get started in forecasting with the online textbook at http://OTexts.org/fpp2/
-  * Read the Hyndsight blog at http://robjhyndman.com/hyndsight/
+  * Read the Hyndsight blog at https://robjhyndman.com/hyndsight/
   * Ask forecasting questions on http://stats.stackexchange.com/tags/forecasting
   * Ask R questions on http://stackoverflow.com/tags/forecasting+r
   * Join the International Institute of Forecasters: http://forecasters.org/

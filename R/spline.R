@@ -45,17 +45,17 @@ spline.loglik <- function(beta,y,cc=1e2)
 
 
 #' Cubic Spline Forecast
-#' 
+#'
 #' Returns local linear forecasts and prediction intervals using cubic
 #' smoothing splines.
-#' 
+#'
 #' The cubic smoothing spline model is equivalent to an ARIMA(0,2,2) model but
 #' with a restricted parameter space. The advantage of the spline model over
 #' the full ARIMA model is that it provides a smooth historical trend as well
 #' as a linear forecast function. Hyndman, King, Pitrun, and Billah (2002) show
 #' that the forecast performance of the method is hardly affected by the
 #' restricted parameter space.
-#' 
+#'
 #' @param y a numeric vector or time series of class \code{ts}
 #' @param h Number of periods for forecasting
 #' @param level Confidence level for prediction intervals.
@@ -73,14 +73,14 @@ spline.loglik <- function(beta,y,cc=1e2)
 #' maximum likelihood method from Hyndman et al (2002) is used.
 #' @param x Deprecated. Included for backwards compatibility.
 #' @return An object of class "\code{forecast}".
-#' 
+#'
 #' The function \code{summary} is used to obtain and print a summary of the
 #' results, while the function \code{plot} produces a plot of the forecasts and
 #' prediction intervals.
-#' 
+#'
 #' The generic accessor functions \code{fitted.values} and \code{residuals}
 #' extract useful features of the value returned by \code{splinef}.
-#' 
+#'
 #' An object of class \code{"forecast"} containing the following elements:
 #' \item{model}{A list containing information about the fitted model}
 #' \item{method}{The name of the forecasting method as a character string}
@@ -99,13 +99,13 @@ spline.loglik <- function(beta,y,cc=1e2)
 #' @references Hyndman, King, Pitrun and Billah (2005) Local linear forecasts
 #' using cubic smoothing splines. \emph{Australian and New Zealand Journal of
 #' Statistics}, \bold{47}(1), 87-99.
-#' \url{http://robjhyndman.com/papers/splinefcast/}.
+#' \url{https://robjhyndman.com/publications/splinefcast/}.
 #' @keywords ts
 #' @examples
 #' fcast <- splinef(uspop,h=5)
 #' plot(fcast)
 #' summary(fcast)
-#' 
+#'
 #' @export
 splinef <- function(y, h=10, level=c(80,95), fan=FALSE, lambda=NULL, biasadj=FALSE, method=c("gcv","mle"),x=y)
 {
@@ -219,12 +219,12 @@ splinef <- function(y, h=10, level=c(80,95), fan=FALSE, lambda=NULL, biasadj=FAL
 }
 
 #' @rdname plot.forecast
-#' 
+#'
 #' @examples
 #' fcast <- splinef(airmiles,h=5)
 #' plot(fcast)
 #' autoplot(fcast)
-#' 
+#'
 #' @export
 plot.splineforecast <- function(x,fitcol=2,type="o",pch=19,...)
 {
