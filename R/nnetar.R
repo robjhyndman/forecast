@@ -8,10 +8,10 @@
 
 
 #' Neural Network Time Series Forecasts
-#' 
+#'
 #' Feed-forward neural networks with a single hidden layer and lagged inputs
 #' for forecasting univariate time series.
-#' 
+#'
 #' A feed-forward neural network is fitted with lagged values of \code{y} as
 #' inputs and a single hidden layer with \code{size} nodes. The inputs are for
 #' lags 1 to \code{p}, and lags \code{m} to \code{mP} where
@@ -21,15 +21,15 @@
 #' fitted, each with random starting weights. These are then averaged when
 #' computing forecasts. The network is trained for one-step forecasting.
 #' Multi-step forecasts are computed recursively.
-#' 
+#'
 #' For non-seasonal data, the fitted model is denoted as an NNAR(p,k) model,
 #' where k is the number of hidden nodes. This is analogous to an AR(p) model
 #' but with nonlinear functions. For seasonal data, the fitted model is called
 #' an NNAR(p,P,k)[m] model, which is analogous to an ARIMA(p,0,0)(P,0,0)[m]
 #' model but with nonlinear functions.
-#' 
+#'
 #' @aliases print.nnetar print.nnetarmodels
-#' 
+#'
 #' @param y A numeric vector or time series of class \code{ts}.
 #' @param p Embedding dimension for non-seasonal time series. Number of
 #' non-seasonal lags used as inputs. For non-seasonal time series, the default
@@ -57,13 +57,13 @@
 #' @param \dots Other arguments passed to \code{\link[nnet]{nnet}} for
 #' \code{nnetar}.
 #' @return Returns an object of class "\code{nnetar}".
-#' 
+#'
 #' The function \code{summary} is used to obtain and print a summary of the
 #' results.
-#' 
+#'
 #' The generic accessor functions \code{fitted.values} and \code{residuals}
 #' extract useful features of the value returned by \code{nnetar}.
-#' 
+#'
 #' \item{model}{A list containing information about the fitted model}
 #' \item{method}{The name of the forecasting method as a character string}
 #' \item{x}{The original time series.} \item{xreg}{The external regressors used
@@ -76,20 +76,20 @@
 #' fit <- nnetar(lynx)
 #' fcast <- forecast(fit)
 #' plot(fcast)
-#' 
+#'
 #' ## Arguments can be passed to nnet()
 #' fit <- nnetar(lynx, decay=0.5, maxit=150)
 #' plot(forecast(fit))
 #' lines(lynx)
-#' 
+#'
 #' ## Fit model to first 100 years of lynx data
 #' fit <- nnetar(window(lynx,end=1920), decay=0.5, maxit=150)
 #' plot(forecast(fit,h=14))
 #' lines(lynx)
-#' 
+#'
 #' ## Apply fitted model to later data, including all optional arguments
 #' fit2 <- nnetar(window(lynx,start=1921), model=fit)
-#' 
+#'
 #' @export
 nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NULL, subset=NULL, scale.inputs=TRUE, x=y, ...)
 {
@@ -207,6 +207,11 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   {
     if(missing(p))
       p <- max(length(ar(na.interp(xx))$ar),1)
+    if(p >= n-1)
+    {
+      warning("Reducing number of lagged inputs due to short series")
+      p <- n-2
+    }
     lags <- 1:p
     if(P>1)
       warning("Non-seasonal data, ignoring seasonal lags")
@@ -216,13 +221,28 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   {
     if(missing(p))
     {
-      x.sa <- seasadj(stl(na.interp(xx),s.window=7))
+      if(n >= 2*m)
+        x.sa <- seasadj(stl(na.interp(xx),s.window=7))
+      else
+        x.sa <- na.interp(xx)
       p <- max(length(ar(x.sa)$ar),1)
     }
-    if(P > 0)
+    if(p >= n-1)
+    {
+      warning("Reducing number of lagged inputs due to short series")
+      p <- n-2
+    }
+    if(P > 0 & n >= m*P+2)
       lags <- sort(unique(c(1:p,m*(1:P))))
     else
+    {
       lags <- 1:p
+      if(P>0)
+      {
+        warning("Series too short for seasonal lags")
+        P <- 0
+      }
+    }
   }
   maxlag <- max(lags)
   nlag <- length(lags)
@@ -319,15 +339,15 @@ print.nnetarmodels <- function(x, ...)
 
 
 #' Forecasting using neural network models
-#' 
+#'
 #' Returns forecasts and other information for univariate neural network
 #' models.
-#' 
+#'
 #' Prediction intervals are calculated through simulations and can be slow.
 #' Note that if the network is too complex and overfits the data, the residuals
 #' can be arbitrarily small; if used for prediction interval calculations, they
 #' could lead to misleadingly small values.
-#' 
+#'
 #' @param object An object of class "\code{nnetar}" resulting from a call to
 #' \code{\link{arima}}.
 #' @param h Number of periods for forecasting. If \code{xreg} is used, \code{h}
@@ -352,14 +372,14 @@ print.nnetarmodels <- function(x, ...)
 #' into a matrix). If present, \code{bootstrap} is ignored.
 #' @param ... Additional arguments passed to \code{\link{simulate.nnetar}}
 #' @return An object of class "\code{forecast}".
-#' 
+#'
 #' The function \code{summary} is used to obtain and print a summary of the
 #' results, while the function \code{plot} produces a plot of the forecasts and
 #' prediction intervals.
-#' 
+#'
 #' The generic accessor functions \code{fitted.values} and \code{residuals}
 #' extract useful features of the value returned by \code{forecast.nnetar}.
-#' 
+#'
 #' An object of class "\code{forecast}" is a list containing at least the
 #' following elements: \item{model}{A list containing information about the
 #' fitted model} \item{method}{The name of the forecasting method as a
@@ -379,7 +399,7 @@ print.nnetarmodels <- function(x, ...)
 #' fit <- nnetar(lynx)
 #' fcast <- forecast(fit)
 #' plot(fcast)
-#' 
+#'
 #' @export
 forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI=FALSE, level=c(80, 95), fan=FALSE, xreg=NULL, lambda=object$lambda, bootstrap=FALSE, npaths=1000, innov=NULL, ...)
 {
