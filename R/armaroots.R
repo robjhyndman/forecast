@@ -18,7 +18,7 @@ arroots <- function(object)
   }
   return(structure(list(roots=numeric(0),type="AR"),class='armaroots'))
 }
- 
+
 # Compute MA roots
 maroots <- function(object)
 {
@@ -34,7 +34,7 @@ maroots <- function(object)
   }
   return(structure(list(roots=numeric(0),type="MA"),class='armaroots'))
 }
- 
+
 plot.armaroots <- function(x, xlab, ylab, main, ...)
 {
   if(missing(main))
@@ -48,7 +48,7 @@ plot.armaroots <- function(x, xlab, ylab, main, ...)
   circx <- seq(-1,1,l=501)
   circy <- sqrt(1-circx^2)
   lines(c(circx,circx),c(circy,-circy),col='gray')
-  lines(c(-2,2),c(0,0),col='gray') 
+  lines(c(-2,2),c(0,0),col='gray')
   lines(c(0,0),c(-2,2),col='gray')
   if(length(x$roots) > 0) {
     inside <- abs(x$roots) > 1
@@ -61,12 +61,12 @@ plot.armaroots <- function(x, xlab, ylab, main, ...)
 
 
 #' Plot characteristic roots from ARIMA model
-#' 
+#'
 #' Produces a plot of the inverse AR and MA roots of an ARIMA model. Inverse
 #' roots outside the unit circle are shown in red.
-#' 
-#' \code{autoplot} will produce an equivelant plot as a ggplot object.
-#' 
+#'
+#' \code{autoplot} will produce an equivalent plot as a ggplot object.
+#'
 #' @param x Object of class \dQuote{Arima} or \dQuote{ar}.
 #' @param object Object of class \dQuote{Arima} or \dQuote{ar}. Used for ggplot
 #' graphics (S3 method consistency).
@@ -81,22 +81,22 @@ plot.armaroots <- function(x, xlab, ylab, main, ...)
 #' @seealso \code{\link{Arima}}, \code{\link[stats]{ar}}
 #' @keywords hplot
 #' @examples
-#' 
+#'
 #' library(ggplot2)
-#' 
+#'
 #' fit <- Arima(WWWusage, order=c(3,1,0))
 #' plot(fit)
 #' autoplot(fit)
-#' 
+#'
 #' fit <- Arima(woolyrnq,order=c(2,0,0),seasonal=c(2,1,1))
 #' plot(fit)
 #' autoplot(fit)
-#' 
+#'
 #' plot(ar.ols(gold[1:61]))
 #' autoplot(ar.ols(gold[1:61]))
-#' 
+#'
 #' @export
-plot.Arima <- function(x, type=c("both","ar","ma"), main, 
+plot.Arima <- function(x, type=c("both","ar","ma"), main,
   xlab="Real", ylab="Imaginary", ...)
 {
   type <- match.arg(type)

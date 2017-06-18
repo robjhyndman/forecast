@@ -93,7 +93,7 @@ na.interp <- function(x, lambda=NULL)
 
 #' Identify and replace outliers and missing values in a time series
 #' 
-#' Uses supsmu for non-seasonal series and a periodic stl decompostion with
+#' Uses supsmu for non-seasonal series and a periodic stl decomposition with
 #' seasonal series to identify outliers. To estimate missing values and outlier
 #' replacements, linear interpolation is used on the (possibly seasonally
 #' adjusted) series
@@ -127,7 +127,7 @@ tsclean <- function(x, replace.missing=TRUE, lambda = NULL)
 
 #' Identify and replace outliers in a time series
 #' 
-#' Uses supsmu for non-seasonal series and a periodic stl decompostion with
+#' Uses supsmu for non-seasonal series and a periodic stl decomposition with
 #' seasonal series to identify outliers and estimate their replacements.
 #' 
 #' 

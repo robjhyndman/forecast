@@ -44,7 +44,7 @@
 #' @param trace If \code{TRUE}, the list of ARIMA models considered will be
 #' reported.
 #' @param approximation If \code{TRUE}, estimation is via conditional sums of
-#' squares andthe information criteria used for model selection are
+#' squares and the information criteria used for model selection are
 #' approximated. The final model is still computed using maximum likelihood
 #' estimation. Approximation should be used for long time series or a high
 #' seasonal period to avoid excessive computation times.

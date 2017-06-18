@@ -29,7 +29,7 @@ Produces a plot of the level, slope and seasonal components from an ETS
 model.
 }
 \details{
-\code{autoplot} will produce an equivelant plot as a ggplot object.
+\code{autoplot} will produce an equivalent plot as a ggplot object.
 }
 \examples{
 

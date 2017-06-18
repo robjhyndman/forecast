@@ -43,7 +43,7 @@ plot.}
 Plots historical data with multivariate forecasts and prediction intervals.
 }
 \details{
-\code{autoplot} will produce an equivelant plot as a ggplot object.
+\code{autoplot} will produce an equivalent plot as a ggplot object.
 }
 \examples{
 library(ggplot2)

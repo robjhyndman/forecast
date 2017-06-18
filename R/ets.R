@@ -1155,7 +1155,7 @@ admissible <- function(alpha,beta,gamma,phi,m)
 #' Produces a plot of the level, slope and seasonal components from an ETS
 #' model.
 #'
-#' \code{autoplot} will produce an equivelant plot as a ggplot object.
+#' \code{autoplot} will produce an equivalent plot as a ggplot object.
 #'
 #' @param x Object of class \dQuote{ets}.
 #' @param object Object of class \dQuote{ets}. Used for ggplot graphics (S3

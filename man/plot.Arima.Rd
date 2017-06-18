@@ -41,7 +41,7 @@ Produces a plot of the inverse AR and MA roots of an ARIMA model. Inverse
 roots outside the unit circle are shown in red.
 }
 \details{
-\code{autoplot} will produce an equivelant plot as a ggplot object.
+\code{autoplot} will produce an equivalent plot as a ggplot object.
 }
 \examples{
 

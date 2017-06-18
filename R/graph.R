@@ -3,12 +3,12 @@
 
 
 #' Time series display
-#' 
+#'
 #' Plots a time series along with its acf and either its pacf, lagged
 #' scatterplot or spectrum.
-#' 
-#' \code{ggtsdisplay} will produce the equivelant plot using ggplot graphics.
-#' 
+#'
+#' \code{ggtsdisplay} will produce the equivalent plot using ggplot graphics.
+#'
 #' @param x a numeric vector or time series of class \code{ts}.
 #' @param plot.type type of plot to include in lower right corner.
 #' @param points logical flag indicating whether to show the individual points
@@ -41,7 +41,7 @@
 #' @examples
 #' tsdisplay(diff(WWWusage))
 #' ggtsdisplay(USAccDeaths, plot.type="scatter")
-#' 
+#'
 #' @export
 tsdisplay <- function(x,plot.type=c("partial", "histogram","scatter", "spectrum"),points=TRUE,ci.type=c("white", "ma"),
                 lag.max, na.action=na.contiguous, main=NULL,xlab="",ylab="",
@@ -101,11 +101,11 @@ tsdisplay <- function(x,plot.type=c("partial", "histogram","scatter", "spectrum"
 
 
 #' Seasonal plot
-#' 
+#'
 #' Plots a seasonal plot as described in Hyndman and Athanasopoulos (2014,
 #' chapter 2). This is like a time plot except that the data are plotted
 #' against the seasons in separate years.
-#' 
+#'
 #' @param x a numeric vector or time series of class \code{ts}.
 #' @param s seasonal frequency of x
 #' @param season.labels Labels for each season in the "year"
@@ -133,7 +133,7 @@ tsdisplay <- function(x,plot.type=c("partial", "histogram","scatter", "spectrum"
 #' @keywords ts
 #' @examples
 #' seasonplot(AirPassengers, col=rainbow(12), year.labels=TRUE)
-#' 
+#'
 #' @export
 seasonplot <- function(x, s, season.labels=NULL, year.labels=FALSE, year.labels.left=FALSE,
     type="o", main, xlab=NULL, ylab="", col=1, labelgap=0.1, ...)

@@ -58,7 +58,7 @@ Plots a time series along with its acf and either its pacf, lagged
 scatterplot or spectrum.
 }
 \details{
-\code{ggtsdisplay} will produce the equivelant plot using ggplot graphics.
+\code{ggtsdisplay} will produce the equivalent plot using ggplot graphics.
 }
 \examples{
 library(ggplot2)

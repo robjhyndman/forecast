@@ -14,19 +14,19 @@ mlmsplit <- function(x, index=NULL){
   }
   class(x) <- "lm"
   y<-attr(x$terms,"response")
-  
+
   yName <- colnames(x$model[[y]])[index]
   x$model[[y]] <- x$model[[y]][,index]
   colnames(x$model)[y] <- yName
   attr(x$model, "terms") <- terms(reformulate(attr(x$terms, "term.labels"), response=yName), data=x$model)
-  
+
   if(!is.null(tsp(x$data[,1]))){
     tspx <- tsp(x$data[,1]) #Consolidate ts attributes for forecast.lm
     x$data <- lapply(x$model, function(x) ts(x, start = tspx[1], end = tspx[2], frequency = tspx[3]))
     class(x$data) <- "data.frame"
     row.names(x$data) <- 1:max(sapply(x$data, NROW))
   }
-  
+
   x$terms <- terms(x$model)
   return(x)
 }
@@ -34,15 +34,15 @@ mlmsplit <- function(x, index=NULL){
 
 
 #' Forecast a multiple linear model with possible time series components
-#' 
+#'
 #' \code{forecast.mlm} is used to predict multiple linear models, especially
 #' those involving trend and seasonality components.
-#' 
+#'
 #' \code{forecast.mlm} is largely a wrapper for
 #' \code{\link[forecast]{forecast.lm}()} except that it allows forecasts to be
 #' generated on multiple series. Also, the output is reformatted into a
 #' \code{mforecast} object.
-#' 
+#'
 #' @param object Object of class "mlm", usually the result of a call to
 #' \code{\link[stats]{lm}} or \code{\link{tslm}}.
 #' @param newdata An optional data frame in which to look for variables with
@@ -65,14 +65,14 @@ mlmsplit <- function(x, index=NULL){
 #' time series attributes of the original data will be ignored.
 #' @param ... Other arguments passed to \code{\link[forecast]{forecast.lm}()}.
 #' @return An object of class "\code{mforecast}".
-#' 
+#'
 #' The function \code{summary} is used to obtain and print a summary of the
 #' results, while the function \code{plot} produces a plot of the forecasts and
 #' prediction intervals.
-#' 
+#'
 #' The generic accessor functions \code{fitted.values} and \code{residuals}
 #' extract useful features of the value returned by \code{forecast.lm}.
-#' 
+#'
 #' An object of class \code{"mforecast"} is a list containing at least the
 #' following elements: \item{model}{A list containing information about the
 #' fitted model} \item{method}{The name of the forecasting method as a
@@ -87,21 +87,21 @@ mlmsplit <- function(x, index=NULL){
 #' @seealso \code{\link{tslm}}, \code{\link{forecast.lm}},
 #' \code{\link[stats]{lm}}.
 #' @examples
-#' 
+#'
 #' lungDeaths <- cbind(mdeaths, fdeaths)
 #' fit <- tslm(lungDeaths ~ trend + season)
 #' fcast <- forecast(fit, h=10)
-#' 
+#'
 #' carPower <- as.matrix(mtcars[,c("qsec","hp")])
 #' carmpg <- mtcars[,"mpg"]
 #' fit <- lm(carPower ~ carmpg)
 #' fcast <- forecast(fit, newdata=data.frame(carmpg=30))
-#' 
+#'
 #' @export
 forecast.mlm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, biasadj=NULL, ts=TRUE, ...)
 {
   out <- list(model=object,forecast=vector("list", NCOL(object$coefficients)))
-  
+
   cl <- match.call()
   cl[[1]] <- quote(forecast.lm)
   cl$object <- quote(mlmsplit(object,index=i))
@@ -115,16 +115,16 @@ forecast.mlm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambd
 }
 
 #' Forecasting time series
-#' 
+#'
 #' \code{mforecast} is a class of objects for forecasting from multivariate
 #' time series or multivariate time series models. The function invokes
 #' particular \emph{methods} which depend on the class of the first argument.
-#' 
+#'
 #' For example, the function \code{\link{forecast.mlm}} makes multivariate
 #' forecasts based on the results produced by \code{\link{tslm}}.
-#' 
+#'
 #' @aliases mforecast print.mforecast summary.mforecast as.data.frame.mforecast
-#' 
+#'
 #' @param object a multivariate time series or multivariate time series model
 #' for which forecasts are required
 #' @param h Number of periods for forecasting
@@ -142,15 +142,15 @@ forecast.mlm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambd
 #' models are permitted.
 #' @param ... Additional arguments affecting the forecasts produced.
 #' @return An object of class "\code{mforecast}".
-#' 
+#'
 #' The function \code{summary} is used to obtain and print a summary of the
 #' results, while the function \code{plot} produces a plot of the multivariate
 #' forecasts and prediction intervals.
-#' 
+#'
 #' The generic accessors functions \code{fitted.values} and \code{residuals}
 #' extract various useful features of the value returned by
 #' \code{forecast$model}.
-#' 
+#'
 #' An object of class \code{"mforecast"} is a list usually containing at least
 #' the following elements: \item{model}{A list containing information about the
 #' fitted model} \item{method}{The name of the forecasting method as a
@@ -165,12 +165,12 @@ forecast.mlm <- function(object, newdata, h=10, level=c(80,95), fan=FALSE, lambd
 #' @author Rob J Hyndman & Mitchell O'Hara-Wild
 #' @seealso Other functions which return objects of class \code{"mforecast"}
 #' are \code{\link{forecast.mlm}}, \code{forecast.varest}.
-#' 
+#'
 #' @export
-forecast.mts <- function(object, h=ifelse(frequency(object)>1, 2*frequency(object), 10), 
-                         level=c(80,95), fan=FALSE, robust=FALSE, lambda = NULL, find.frequency = FALSE, 
+forecast.mts <- function(object, h=ifelse(frequency(object)>1, 2*frequency(object), 10),
+                         level=c(80,95), fan=FALSE, robust=FALSE, lambda = NULL, find.frequency = FALSE,
                          allow.multiplicative.trend=FALSE, ...){
-  
+
   out <- list(forecast = vector("list", NCOL(object)))
   cl <- match.call()
   cl[[1]] <- quote(forecast.ts)
@@ -198,11 +198,11 @@ print.mforecast <- function(x, ...)
 
 
 #' Multivariate forecast plot
-#' 
+#'
 #' Plots historical data with multivariate forecasts and prediction intervals.
-#' 
-#' \code{autoplot} will produce an equivelant plot as a ggplot object.
-#' 
+#'
+#' \code{autoplot} will produce an equivalent plot as a ggplot object.
+#'
 #' @param x Multivariate forecast object of class \code{mforecast}.
 #' @param object Multivariate forecast object of class \code{mforecast}. Used
 #' for ggplot graphics (S3 method consistency).
@@ -226,20 +226,20 @@ print.mforecast <- function(x, ...)
 #' @keywords ts
 #' @examples
 #' library(ggplot2)
-#' 
+#'
 #' lungDeaths <- cbind(mdeaths, fdeaths)
 #' fit <- tslm(lungDeaths ~ trend + season)
 #' fcast <- forecast(fit, h=10)
 #' plot(fcast)
 #' autoplot(fcast)
-#' 
+#'
 #' carPower <- as.matrix(mtcars[,c("qsec","hp")])
 #' carmpg <- mtcars[,"mpg"]
 #' fit <- lm(carPower ~ carmpg)
 #' fcast <- forecast(fit, newdata=data.frame(carmpg=30))
 #' plot(fcast, xlab="Year")
 #' autoplot(fcast, xlab=rep("Year",2))
-#' 
+#'
 #' @export
 plot.mforecast <- function(x, main=paste("Forecasts from",unique(x$method)),xlab="time",...)
 {
