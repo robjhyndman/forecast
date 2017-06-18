@@ -86,7 +86,7 @@ fitSpecificBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.peri
       beta.v <- NULL
       b <- NULL
       small.phi <- NULL
-      use.damping=FALSE
+      use.damping <- FALSE
     }
     if(!is.null(seasonal.periods)) {
       gamma.v <- rep(.001, length(seasonal.periods))
@@ -176,7 +176,8 @@ fitSpecificBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.peri
   #for(i in 2:length(y)) {
   #  w.tilda.transpose[i,] <- w.tilda.transpose[(i-1),] %*% D
   #}
-  w.tilda.transpose=.Call("calcWTilda", wTildaTransposes=w.tilda.transpose, Ds=D, PACKAGE = "forecast")
+  w.tilda.transpose <- .Call("calcWTilda", wTildaTransposes=w.tilda.transpose, Ds=D,
+    PACKAGE = "forecast")
   ##If there is a seasonal component in the model, then the follow adjustment need to be made so that the seed states can be found
   if(!is.null(seasonal.periods)) {
     #drop the lines from w.tilda.transpose that correspond to the last seasonal value of each seasonal period
@@ -339,7 +340,7 @@ calcLikelihood <- function(param.vector, opt.env, use.beta, use.small.phi, seaso
     gamma.vector <- param.vector[gamma.start:(gamma.start+length(seasonal.periods)-1)]
     final.gamma.pos <- gamma.start+length(gamma.vector)-1
   } else {
-    gamma.vector=NULL
+    gamma.vector <- NULL
     final.gamma.pos <- gamma.start-1
   }
   if(p != 0) {
@@ -405,7 +406,7 @@ calcLikelihoodNOTransformed <- function(param.vector, opt.env, x.nought, use.bet
     gamma.vector <- param.vector[gamma.start:(gamma.start+length(seasonal.periods)-1)]
     final.gamma.pos <- gamma.start+length(gamma.vector)-1
   } else {
-    gamma.vector=NULL
+    gamma.vector <- NULL
     final.gamma.pos <- gamma.start-1
   }
   if(p != 0) {

@@ -2,13 +2,13 @@
 
 
 #' Mean Forecast
-#' 
+#'
 #' Returns forecasts and prediction intervals for an iid model applied to y.
-#' 
+#'
 #' The iid model is \deqn{Y_t=\mu + Z_t}{Y[t]=mu + Z[t]} where \eqn{Z_t}{Z[t]}
 #' is a normal iid error. Forecasts are given by \deqn{Y_n(h)=\mu}{Y[n+h]=mu}
 #' where \eqn{\mu}{mu} is estimated by the sample mean.
-#' 
+#'
 #' @param y a numeric vector or time series of class \code{ts}
 #' @param h Number of periods for forecasting
 #' @param level Confidence levels for prediction intervals.
@@ -22,14 +22,14 @@
 #' forecast densities.
 #' @param x Deprecated. Included for backwards compatibility.
 #' @return An object of class "\code{forecast}".
-#' 
+#'
 #' The function \code{summary} is used to obtain and print a summary of the
 #' results, while the function \code{plot} produces a plot of the forecasts and
 #' prediction intervals.
-#' 
+#'
 #' The generic accessor functions \code{fitted.values} and \code{residuals}
 #' extract useful features of the value returned by \code{meanf}.
-#' 
+#'
 #' An object of class \code{"forecast"} is a list containing at least the
 #' following elements: \item{model}{A list containing information about the
 #' fitted model} \item{method}{The name of the forecasting method as a
@@ -47,7 +47,7 @@
 #' @examples
 #' nile.fcast <- meanf(Nile, h=10)
 #' plot(nile.fcast)
-#' 
+#'
 #' @export
 meanf <- function(y,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE, x=y)
 {
@@ -115,15 +115,15 @@ meanf <- function(y,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE, x
 
 
 #' Box Cox Transformation
-#' 
+#'
 #' BoxCox() returns a transformation of the input variable using a Box-Cox
 #' transformation. InvBoxCox() reverses the transformation.
-#' 
+#'
 #' The Box-Cox transformation is given by \deqn{f_\lambda(x) =\frac{x^\lambda -
 #' 1}{\lambda}}{f(x;lambda)=(x^lambda - 1)/lambda} if \eqn{\lambda\ne0}{lambda
 #' is not equal to 0}. For \eqn{\lambda=0}{lambda=0},
 #' \deqn{f_0(x)=\log(x)}{f(x;0)=log(x)}.
-#' 
+#'
 #' @param x a numeric vector or time series of class \code{ts}.
 #' @param lambda transformation parameter.
 #' @param biasadj Use adjusted back-transformed mean for Box-Cox
@@ -140,11 +140,11 @@ meanf <- function(y,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE, x
 #' transformations. \emph{JRSS B} \bold{26} 211--246.
 #' @keywords ts
 #' @examples
-#' 
+#'
 #' lambda <- BoxCox.lambda(lynx)
 #' lynx.fit <- ar(BoxCox(lynx,lambda))
 #' plot(forecast(lynx.fit,h=20,lambda=lambda))
-#' 
+#'
 #' @export
 BoxCox <- function(x,lambda)
 {
@@ -238,13 +238,13 @@ InvBoxCoxf <- function(x=NULL, fvar=NULL, lambda=NULL){
 
 
 #' Forecasting using Structural Time Series models
-#' 
+#'
 #' Returns forecasts and other information for univariate structural time
 #' series models.
-#' 
+#'
 #' This function calls \code{predict.StructTS} and constructs an object of
 #' class "\code{forecast}" from the results.
-#' 
+#'
 #' @param object An object of class "\code{StructTS}". Usually the result of a
 #' call to \code{\link[stats]{StructTS}}.
 #' @param h Number of periods for forecasting
@@ -259,14 +259,14 @@ InvBoxCoxf <- function(x=NULL, fvar=NULL, lambda=NULL){
 #' forecast densities.
 #' @param ... Other arguments.
 #' @return An object of class "\code{forecast}".
-#' 
+#'
 #' The function \code{summary} is used to obtain and print a summary of the
 #' results, while the function \code{plot} produces a plot of the forecasts and
 #' prediction intervals.
-#' 
+#'
 #' The generic accessor functions \code{fitted.values} and \code{residuals}
 #' extract useful features of the value returned by \code{forecast.StructTS}.
-#' 
+#'
 #' An object of class \code{"forecast"} is a list containing at least the
 #' following elements: \item{model}{A list containing information about the
 #' fitted model} \item{method}{The name of the forecasting method as a
@@ -284,7 +284,7 @@ InvBoxCoxf <- function(x=NULL, fvar=NULL, lambda=NULL){
 #' @examples
 #' fit <- StructTS(WWWusage,"level")
 #' plot(forecast(fit))
-#' 
+#'
 #' @export
 forecast.StructTS <- function(object,h=ifelse(object$coef["epsilon"]>1e-10, 2*object$xtsp[3], 10),level=c(80,95),fan=FALSE,lambda=NULL,biasadj=NULL,...)
 {
@@ -307,7 +307,7 @@ forecast.StructTS <- function(object,h=ifelse(object$coef["epsilon"]>1e-10, 2*ob
     lower[,i] <- pred$pred - qq*pred$se
     upper[,i] <- pred$pred + qq*pred$se
   }
-  colnames(lower) = colnames(upper) = paste(level,"%",sep="")
+  colnames(lower) <- colnames(upper) <- paste(level,"%",sep="")
   if(is.element("seas",names(object$coef)))
     method <- "Basic structural model"
   else if(is.element("slope",names(object$coef)))
@@ -334,16 +334,16 @@ forecast.StructTS <- function(object,h=ifelse(object$coef["epsilon"]>1e-10, 2*ob
 
 
 #' Forecasting using Holt-Winters objects
-#' 
+#'
 #' Returns forecasts and other information for univariate Holt-Winters time
 #' series models.
-#' 
+#'
 #' This function calls \code{\link[stats]{predict.HoltWinters}} and constructs
 #' an object of class "\code{forecast}" from the results.
-#' 
+#'
 #' It is included for completeness, but the \code{\link{ets}} is recommended
 #' for use instead of \code{\link[stats]{HoltWinters}}.
-#' 
+#'
 #' @param object An object of class "\code{HoltWinters}". Usually the result of
 #' a call to \code{\link[stats]{HoltWinters}}.
 #' @param h Number of periods for forecasting
@@ -358,15 +358,15 @@ forecast.StructTS <- function(object,h=ifelse(object$coef["epsilon"]>1e-10, 2*ob
 #' forecast densities.
 #' @param ... Other arguments.
 #' @return An object of class "\code{forecast}".
-#' 
+#'
 #' The function \code{summary} is used to obtain and print a summary of the
 #' results, while the function \code{plot} produces a plot of the forecasts and
 #' prediction intervals.
-#' 
+#'
 #' The generic accessor functions \code{fitted.values} and \code{residuals}
 #' extract useful features of the value returned by
 #' \code{forecast.HoltWinters}.
-#' 
+#'
 #' An object of class \code{"forecast"} is a list containing at least the
 #' following elements: \item{model}{A list containing information about the
 #' fitted model} \item{method}{The name of the forecasting method as a
@@ -384,7 +384,7 @@ forecast.StructTS <- function(object,h=ifelse(object$coef["epsilon"]>1e-10, 2*ob
 #' @examples
 #' fit <- HoltWinters(WWWusage,gamma=FALSE)
 #' plot(forecast(fit))
-#' 
+#'
 #' @export
 forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x)>1,2*frequency(object$x),10),
   level=c(80,95), fan=FALSE, lambda=NULL, biasadj=NULL,...)
@@ -415,7 +415,7 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x)>1,2*freque
     lower[,i] <- pmean - qq*se
     upper[,i] <- pmean + qq*se
   }
-  colnames(lower) = colnames(upper) = paste(level,"%",sep="")
+  colnames(lower) <- colnames(upper) <- paste(level,"%",sep="")
 
 
   if(!is.null(lambda))
@@ -447,22 +447,22 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x)>1,2*freque
 
 
 #' Forecasts for intermittent demand using Croston's method
-#' 
+#'
 #' Returns forecasts and other information for Croston's forecasts applied to
 #' y.
-#' 
+#'
 #' Based on Croston's (1972) method for intermittent demand forecasting, also
 #' described in Shenstone and Hyndman (2005). Croston's method involves using
 #' simple exponential smoothing (SES) on the non-zero elements of the time
 #' series and a separate application of SES to the times between non-zero
 #' elements of the time series. The smoothing parameters of the two
 #' applications of SES are assumed to be equal and are denoted by \code{alpha}.
-#' 
+#'
 #' Note that prediction intervals are not computed as Croston's method has no
 #' underlying stochastic model. The separate forecasts for the non-zero
 #' demands, and for the times between non-zero demands do have prediction
 #' intervals based on ETS(A,N,N) models.
-#' 
+#'
 #' @param y a numeric vector or time series of class \code{ts}
 #' @param h Number of periods for forecasting.
 #' @param alpha Value of alpha. Default value is 0.1.
@@ -477,10 +477,10 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x)>1,2*freque
 #' or the time series used to create the model stored as \code{object}).}
 #' \item{residuals}{Residuals from the fitted model. That is y minus fitted
 #' values.} \item{fitted}{Fitted values (one-step forecasts)}
-#' 
+#'
 #' The function \code{summary} is used to obtain and print a summary of the
 #' results, while the function \code{plot} produces a plot of the forecasts.
-#' 
+#'
 #' The generic accessor functions \code{fitted.values} and \code{residuals}
 #' extract useful features of the value returned by \code{croston} and
 #' associated functions.
@@ -489,7 +489,7 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x)>1,2*freque
 #' @references Croston, J. (1972) "Forecasting and stock control for
 #' intermittent demands", \emph{Operational Research Quarterly}, \bold{23}(3),
 #' 289-303.
-#' 
+#'
 #' Shenstone, L., and Hyndman, R.J. (2005) "Stochastic models underlying
 #' Croston's method for intermittent demand forecasting". \emph{Journal of
 #' Forecasting}, \bold{24}, 389-402.
@@ -498,7 +498,7 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x)>1,2*freque
 #' y <- rpois(20,lambda=.3)
 #' fcast <- croston(y)
 #' plot(fcast)
-#' 
+#'
 #' @export
 croston <- function(y,h=10,alpha=0.1,x=y)
 {
