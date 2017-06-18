@@ -39,11 +39,11 @@ fitPreviousBATSModel <- function (y, model, biasadj=FALSE) {
   }
 
   model.for.output <- model
-  model.for.output$variance = variance
-  model.for.output$fitted.values = c(fitted.values)
-  model.for.output$errors=c(e)
-  model.for.output$x=fitted.values.and.errors$x
-  model.for.output$y=y
+  model.for.output$variance <- variance
+  model.for.output$fitted.values <- c(fitted.values)
+  model.for.output$errors <- c(e)
+  model.for.output$x <- fitted.values.and.errors$x
+  model.for.output$y <- y
   return(model.for.output)
 }
 

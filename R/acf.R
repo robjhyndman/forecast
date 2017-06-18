@@ -2,24 +2,24 @@
 
 
 #' (Partial) Autocorrelation and Cross-Correlation Function Estimation
-#' 
+#'
 #' The function \code{Acf} computes (and by default plots) an estimate of the
 #' autocorrelation function of a (possibly multivariate) time series. Function
 #' \code{Pacf} computes (and by default plots) an estimate of the partial
 #' autocorrelation function of a (possibly multivariate) time series. Function
 #' \code{Ccf} computes the cross-correlation or cross-covariance of two
 #' univariate series.
-#' 
+#'
 #' The functions improve the \code{\link[stats]{acf}},
 #' \code{\link[stats]{pacf}} and \code{\link[stats]{ccf}} functions. The main
 #' differences are that \code{Acf} does not plot a spike at lag 0 when
 #' \code{type=="correlation"} (which is redundant) and the horizontal axes show
 #' lags in time units rather than seasonal units.
-#' 
+#'
 #' The tapered versions implement the ACF and PACF estimates and plots
 #' described in Hyndman (2015), based on the banded and tapered estimates of
 #' autocovariance proposed by McMurry and Politis (2010).
-#' 
+#'
 #' @param x a univariate or multivariate (not Ccf) numeric time series object
 #' or a numeric vector or matrix.
 #' @param y a univariate numeric time series object or a numeric vector.
@@ -52,20 +52,20 @@
 #' @references Hyndman, R.J. (2015). Discussion of ``High-dimensional
 #' autocovariance matrices and optimal linear prediction''. \emph{Electronic
 #' Journal of Statistics}, 9, 792-796.
-#' 
+#'
 #' McMurry, T. L., & Politis, D. N. (2010). Banded and tapered estimates for
 #' autocovariance matrices and the linear process bootstrap. \emph{Journal of
 #' Time Series Analysis}, 31(6), 471-482.
 #' @keywords ts
 #' @examples
-#' 
+#'
 #' Acf(wineind)
 #' Pacf(wineind)
 #' \dontrun{
 #' taperedacf(wineind, nsim=50)
 #' taperedpacf(wineind, nsim=50)
 #' }
-#' 
+#'
 #' @export
 Acf <- function(x, lag.max = NULL,
                 type = c("correlation", "covariance", "partial"),
@@ -76,9 +76,11 @@ Acf <- function(x, lag.max = NULL,
   # Set maximum lag
   nseries <- NCOL(x)
   if (is.null(lag.max))
-    lag.max <- as.integer(max(floor(10 * (log10(NROW(x)) - log10(nseries))), 2*frequency(x)))
+    lag.max <- as.integer(max(floor(10 * (log10(NROW(x)) - log10(nseries))),
+      2*frequency(x)))
 
-  acf.out <- stats::acf(x, plot=FALSE, lag.max=lag.max, type=type, na.action=na.action, demean=demean)
+  acf.out <- stats::acf(x, plot=FALSE, lag.max=lag.max,
+    type=type, na.action=na.action, demean=demean)
 
   acf.out$tsp <- tsp(x)
   acf.out$periods <- attributes(x)$msts
@@ -172,7 +174,8 @@ seasonalaxis <- function(frequency, nlags, type, plot=TRUE)
           out <- pretty(out2)
       }
     }
-    else if(frequency > 1 & ((type=="acf" & np >= 2L) | (type=="ccf" & np >= 1L)))
+    else if(frequency > 1 &
+      ((type=="acf" & np >= 2L) | (type=="ccf" & np >= 1L)))
     {
       if(type=="acf" & nlags <= 40)
       {
@@ -217,10 +220,11 @@ seasonalaxis <- function(frequency, nlags, type, plot=TRUE)
 
 #' @rdname Acf
 #' @export
-Pacf <- function (x, lag.max=NULL, 
+Pacf <- function (x, lag.max=NULL,
                 plot = TRUE, na.action = na.contiguous, demean=TRUE, ...)
 {
-  object <- Acf(x, lag.max=lag.max, type="partial", na.action=na.action, demean=demean, plot=FALSE)
+  object <- Acf(x, lag.max=lag.max, type="partial",
+    na.action=na.action, demean=demean, plot=FALSE)
   object$series <- deparse(substitute(x))
 
   # Plot if required
@@ -261,7 +265,8 @@ Ccf <- function (x, y, lag.max=NULL, type=c("correlation","covariance"),
   if (is.null(lag.max))
     lag.max <- as.integer(max(floor(10 * log10(NROW(x))), 2*frequency(x)))
 
-  ccf.out <- stats::ccf(x, y, plot=FALSE, type=type, lag.max=lag.max, na.action=na.action)
+  ccf.out <- stats::ccf(x, y, plot=FALSE, type=type,
+    lag.max=lag.max, na.action=na.action)
 
   # Make lags in integer units
   nlags <- (dim(ccf.out$lag)[1]-1)/2
@@ -298,7 +303,8 @@ wacf <- function (x, lag.max = length(x)-1)
     stop("'lag.max' must be at least 0")
 
   # Standard estimator
-  acfest <- stats::acf(c(x), lag.max = lag.max, plot = FALSE, na.action = na.contiguous)
+  acfest <- stats::acf(c(x), lag.max = lag.max,
+    plot = FALSE, na.action = na.contiguous)
   acfest$series <- deparse(substitute(x))
 
   # Taper estimates
@@ -441,7 +447,8 @@ taperedpacf <- function (x, ...)
 }
 
 
-plot.mpacf <- function(object, xlim=NULL, ylim=NULL, xlab="Lag", ylab="", ...)
+plot.mpacf <- function(object, xlim=NULL, ylim=NULL,
+  xlab="Lag", ylab="", ...)
 {
   lagx <- 1:object$lag
 
@@ -452,7 +459,8 @@ plot.mpacf <- function(object, xlim=NULL, ylim=NULL, xlab="Lag", ylab="", ...)
   if(ylab=="")
     ylab <- ifelse(object$type=="partial","PACF","ACF")
 
-  plot(lagx, object$z, type="n", xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, xaxt="n", ...)
+  plot(lagx, object$z, type="n", xlim=xlim, ylim=ylim,
+    xlab=xlab, ylab=ylab, xaxt="n", ...)
 
   grid(col=gray(.80), nx=NA, ny=NULL, lty=1)
   abline(h=0, col=gray(.4))
@@ -471,8 +479,9 @@ plot.mpacf <- function(object, xlim=NULL, ylim=NULL, xlab="Lag", ylab="", ...)
   {
     for(j in 1:object$lag)
     {
-      polygon(lagx[j] + c(-0.55,0.55,0.55,-0.55), c(rep(object$lower[j],2),rep(object$upper[j],2)),
-              col=gray(0.60), border=FALSE)
+      polygon(lagx[j] + c(-0.55,0.55,0.55,-0.55),
+        c(rep(object$lower[j],2),rep(object$upper[j],2)),
+        col=gray(0.60), border=FALSE)
     }
     #    polygon(c(lagx,rev(lagx)),c(object$lower,rev(object$upper)),col=gray(.60),border=FALSE)
   }

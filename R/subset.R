@@ -1,15 +1,15 @@
 #' Subsetting a time series
-#' 
+#'
 #' Various types of subsetting of a time series. Allows subsetting by index
 #' values (unlike \code{\link[stats]{window}}). Also allows extraction of the
 #' values of a specific season or subset of seasons in each year. For example,
 #' to extract all values for the month of May from a time series.
-#' 
+#'
 #' If character values for months are used, either upper or lower case may be
 #' used, and partial unambiguous names are acceptable. Possible character
 #' values for quarters are \code{"Q1"}, \code{"Q2"}, \code{"Q3"}, and
 #' \code{"Q4"}.
-#' 
+#'
 #' @param x a univariate time series to be subsetted
 #' @param subset optional logical expression indicating elements to keep;
 #' missing values are taken as false. \code{subset} must be the same length as
@@ -33,9 +33,9 @@
 #' plot(subset(gas,month="November"))
 #' subset(woolyrnq,quarter=3)
 #' subset(USAccDeaths, start=49)
-#' 
+#'
 #' @export
-subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL, 
+subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL,
   start=NULL, end=NULL, ...)
 {
   if(!is.null(subset))
@@ -145,6 +145,6 @@ tail.ts <- function(x, n=6L, ...)
 subset.msts <- function(x, subset=NULL, start=NULL, end=NULL, ...){
   out <- subset.ts(x, start = start, end = end, ...)
   tspx <- tsp(out)
-  msts(out, seasonal.periods = attr(x, "msts"), 
+  msts(out, seasonal.periods = attr(x, "msts"),
     start = tspx[1], ts.frequency = tspx[3])
 }

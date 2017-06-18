@@ -492,7 +492,7 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
     	warning("Upper prediction intervals are not finite.")
     }
   }
-  colnames(lower)=colnames(upper)=paste(level, "%", sep="")
+  colnames(lower) <- colnames(upper) <- paste(level, "%", sep="")
   lower <- ts(lower)
   upper <- ts(upper)
   tsp(lower) <- tsp(upper) <- tsp(pred$pred)

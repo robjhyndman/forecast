@@ -64,11 +64,11 @@ unfracdiff <- function(x,y,n,h,d)
 
 
 #' Fit a fractionally differenced ARFIMA model
-#' 
+#'
 #' An ARFIMA(p,d,q) model is selected and estimated automatically using the
 #' Hyndman-Khandakar (2008) algorithm to select p and q and the Haslett and
 #' Raftery (1989) algorithm to estimate the parameters including d.
-#' 
+#'
 #' This function combines \code{\link[fracdiff]{fracdiff}} and
 #' \code{\link{auto.arima}} to automatically select and estimate an ARFIMA
 #' model.  The fractional differencing parameter is chosen first assuming an
@@ -77,7 +77,7 @@ unfracdiff <- function(x,y,n,h,d)
 #' using \code{\link{auto.arima}}. Finally, the full ARFIMA(p,d,q) model is
 #' re-estimated using \code{\link[fracdiff]{fracdiff}}. If \code{estim=="mle"},
 #' the ARMA coefficients are refined using \code{\link[stats]{arima}}.
-#' 
+#'
 #' @param y a univariate time series (numeric vector).
 #' @param drange Allowable values of d to be considered. Default of
 #' \code{c(0,0.5)} ensures a stationary model is returned.
@@ -100,38 +100,38 @@ unfracdiff <- function(x,y,n,h,d)
 #' the \code{\link[fracdiff]{fracdiff}} documentation. A few additional objects
 #' are added to the list including \code{x} (the original time series), and the
 #' \code{residuals} and \code{fitted} values.
-#' 
+#'
 #' @export
-#' 
+#'
 #' @author Rob J Hyndman and Farah Yasmeen
 #' @seealso \code{\link[fracdiff]{fracdiff}}, \code{\link{auto.arima}},
 #' \code{\link{forecast.fracdiff}}.
 #' @references J. Haslett and A. E. Raftery (1989) Space-time Modelling with
 #' Long-memory Dependence: Assessing Ireland's Wind Power Resource (with
 #' discussion); \emph{Applied Statistics} \bold{38}, 1-50.
-#' 
+#'
 #' Hyndman, R.J. and Khandakar, Y. (2008) "Automatic time series forecasting:
 #' The forecast package for R", \emph{Journal of Statistical Software},
 #' \bold{26}(3).
 #' @keywords ts
 #' @examples
-#' 
+#'
 #' library(fracdiff)
 #' x <- fracdiff.sim( 100, ma=-.4, d=.3)$series
 #' fit <- arfima(x)
 #' tsdisplay(residuals(fit))
-#' 
+#'
 arfima <- function(y, drange = c(0, 0.5), estim = c("mle","ls"), model = NULL, lambda = NULL, biasadj = FALSE, x=y, ...)
 {
 	estim <- match.arg(estim)
 #	require(fracdiff)
 	seriesname <- deparse(substitute(y))
-	
+
 	orig.x <- x
 	if (!is.null(lambda)){
 		x <- BoxCox(x, lambda)
 	}
-	
+
 	# Re-fit arfima model
 	if(!is.null(model)){
 	  fit <- model
@@ -144,22 +144,22 @@ arfima <- function(y, drange = c(0, 0.5), estim = c("mle","ls"), model = NULL, l
 	else{
   	# Strip initial and final missing values
   	xx <- na.ends(x)
-  
+
   	# Remove mean
   	meanx <- mean(xx)
   	xx <- xx - meanx
-  	
+
 	  # Choose differencing parameter with AR(2) proxy to handle correlations
 	  suppressWarnings(fit <- fracdiff::fracdiff(xx,nar=2,drange=drange))
-	  
+
 	  # Choose p and q
 	  d <- fit$d
 	  y <- fracdiff::diffseries(xx, d=d)
 	  fit <- auto.arima(y, max.P=0, max.Q=0, stationary=TRUE, ...)
-	  
+
 	  # Refit model using fracdiff
 	  suppressWarnings(fit <- fracdiff::fracdiff(xx, nar=fit$arma[1], nma=fit$arma[2],drange=drange))
-	  
+
 	  # Refine parameters with MLE
 	  if(estim=="mle")
 	  {
@@ -201,7 +201,7 @@ arfima <- function(y, drange = c(0, 0.5), estim = c("mle","ls"), model = NULL, l
 
 #' @rdname forecast.Arima
 #' @export
-forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, biasadj=NULL, ...) 
+forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=object$lambda, biasadj=NULL, ...)
 {
 	# Extract data
 	x <- object$x <- getResponse(object)
@@ -291,7 +291,7 @@ forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=ob
 		lower[, i] <- fcast.x - qq * fse
 		upper[, i] <- fcast.x + qq * fse
 	}
-	colnames(lower) = colnames(upper) = paste(level, "%", sep = "")
+	colnames(lower) <- colnames(upper) <- paste(level, "%", sep = "")
 
 	res <- undo.na.ends(x,residuals(fit))
 	fits <- x-res
@@ -311,7 +311,7 @@ forecast.fracdiff <- function(object, h=10, level=c(80,95), fan=FALSE, lambda=ob
 		lower <- InvBoxCox(lower,lambda)
 		upper <- InvBoxCox(upper,lambda)
 	}
-	
+
 	seriesname <- if(!is.null(object$series)){
 	  object$series
 	}

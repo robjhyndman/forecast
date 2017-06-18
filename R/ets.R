@@ -124,7 +124,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
   if(!is.null(lambda))
   {
     y <- BoxCox(y,lambda)
-    additive.only=TRUE
+    additive.only <- TRUE
   }
 
   if(nmse < 1 | nmse > 30)
@@ -170,7 +170,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
 
       # Compute states, fitted values and residuals
       tsp.y <- tsp(y)
-      model$states=ts(e$states,frequency=tsp.y[3],start=tsp.y[1]-1/tsp.y[3])
+      model$states <- ts(e$states,frequency=tsp.y[3],start=tsp.y[1]-1/tsp.y[3])
       colnames(model$states)[1] <- "l"
       if(trendtype!="N")
         colnames(model$states)[2] <- "b"
@@ -643,7 +643,7 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
   mse <- e$amse[1]
   amse <- mean(e$amse)
 
-  states=ts(e$states,frequency=tsp.y[3],start=tsp.y[1]-1/tsp.y[3])
+  states <- ts(e$states,frequency=tsp.y[3],start=tsp.y[1]-1/tsp.y[3])
   colnames(states)[1] <- "l"
   if(trendtype!="N")
     colnames(states)[2] <- "b"
@@ -730,11 +730,11 @@ etsTargetFunctionInit <- function(par,y,nstate,errortype,trendtype,seasontype,da
 
 
   if(!damped)
-    phi <- 1;
+    phi <- 1
   if(trendtype == "N")
-    beta <- 0;
+    beta <- 0
   if(seasontype == "N")
-    gamma <- 0;
+    gamma <- 0
 
 #  cat("alpha: ", alpha)
 #  cat(" beta: ", beta)
@@ -1068,13 +1068,13 @@ pegelsresid.C <- function(y,m,init.state,errortype,trendtype,seasontype,damped,a
   x <- numeric(p*(n+1))
   x[1:p] <- init.state
   e <- numeric(n)
-  lik <- 0;
+  lik <- 0
   if(!damped)
-    phi <- 1;
+    phi <- 1
   if(trendtype == "N")
-    beta <- 0;
+    beta <- 0
   if(seasontype == "N")
-    gamma <- 0;
+    gamma <- 0
 
   amse <- numeric(nmse)
 
