@@ -1,0 +1,23 @@
+template:
+  params:
+    bootswatch: flatly
+
+authors:
+  Rob Hyndman:
+    href: http://robjhyndman.com
+  Mitchell O'Hara-Wild:
+    href: https://github.com/mitchelloharawild
+  Christoph Bergmeir:
+  Slava Razbash:
+  Earo Wang:
+    href: http://earo.me
+
+navbar:
+  type: default
+  left:
+    - text: "Reference"
+      href: reference/index.html
+    - text: "Vignettes"
+      href: https://cran.r-project.org/web/packages/forecast/vignettes/JSS2008.pdf
+    - text: "Change Log"
+      href: news/index.html

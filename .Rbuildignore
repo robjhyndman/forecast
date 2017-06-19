@@ -2,3 +2,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^logo\.png$
+^docs$
+^_pkgdown\.yml$
+Makefile
