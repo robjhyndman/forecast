@@ -1,3 +1,6 @@
+install:
+	Rscript -e "rt::rmake()"
+
 build:
 	Rscript -e "rt::rbuild()"
 
@@ -8,4 +11,9 @@ docs:
 	Rscript -e "rt::rdoc()"
 
 pkgdown:
-	mv vignettes /tmp/; Rscript -e "rt::rpkgdown()"; mv tmp/vignettes .
+	mv vignettes /tmp/; Rscript -e "rt::rpkgdown()"; mv /tmp/vignettes .
+
+winbuild:
+	Rscript -e "rt::rwinbuild(devel=TRUE)"
+
+all: install
