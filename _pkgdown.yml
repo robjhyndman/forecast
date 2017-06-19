@@ -17,7 +17,7 @@ navbar:
   left:
     - text: "Reference"
       href: reference/index.html
-    - text: "Vignettes"
+    - text: "JSS paper (2008)"
       href: https://cran.r-project.org/web/packages/forecast/vignettes/JSS2008.pdf
     - text: "Change Log"
       href: news/index.html
