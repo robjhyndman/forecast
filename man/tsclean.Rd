@@ -18,7 +18,7 @@ interpolates missing values}
 Time series
 }
 \description{
-Uses supsmu for non-seasonal series and a periodic stl decompostion with
+Uses supsmu for non-seasonal series and a periodic stl decomposition with
 seasonal series to identify outliers. To estimate missing values and outlier
 replacements, linear interpolation is used on the (possibly seasonally
 adjusted) series

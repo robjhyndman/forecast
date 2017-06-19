@@ -52,12 +52,12 @@ set.}
 }
 \value{
 An object of class "\code{forecast}" which is a list that includes the
-following elements: 
-  \item{model}{A list containing information about the fitted model} 
-  \item{method}{The name of the forecasting method as a character string} 
+following elements:
+  \item{model}{A list containing information about the fitted model}
+  \item{method}{The name of the forecasting method as a character string}
   \item{mean}{Point forecasts as a time series}
-  \item{x}{The original time series.} 
-  \item{residuals}{Residuals from the fitted model. That is x minus fitted values.} 
+  \item{x}{The original time series.}
+  \item{residuals}{Residuals from the fitted model. That is x minus fitted values.}
   \item{fitted}{Fitted values (one-step forecasts)}
 
 The function \code{summary} is used to obtain and print a summary of the
@@ -94,7 +94,7 @@ plot(fit)
 \references{
 Taylor, J.W. (2003) Short-term electricity demand forecasting
 using double seasonal exponential smoothing. \emph{Journal of the
-Operational Reseach Society}, \bold{54}, 799-805.
+Operational Research Society}, \bold{54}, 799-805.
 
 Hyndman, R.J., Koehler, A.B., Ord, J.K., and Snyder, R.D. (2008)
 \emph{Forecasting with exponential smoothing: the state space approach},

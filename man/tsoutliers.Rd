@@ -18,7 +18,7 @@ tsoutliers(x, iterate = 2, lambda = NULL)
 \item{replacement}{Suggested numeric values to replace identified outliers}
 }
 \description{
-Uses supsmu for non-seasonal series and a periodic stl decompostion with
+Uses supsmu for non-seasonal series and a periodic stl decomposition with
 seasonal series to identify outliers and estimate their replacements.
 }
 \examples{
