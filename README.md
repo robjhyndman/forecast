@@ -10,8 +10,8 @@ forecast <img src="man/figures/logo.png" align="right" />
 The R package *forecast* provides methods and tools for displaying and analysing univariate time series forecasts including exponential smoothing via state space models and automatic ARIMA modelling.
 
 ## Installation
-You can install the **stable** version on
-[R CRAN](https://cran.r-project.org/package=forecast).
+You can install the **stable** version from
+[CRAN](https://cran.r-project.org/package=forecast).
 
 ```s
 install.packages('forecast', dependencies = TRUE)
