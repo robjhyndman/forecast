@@ -8,7 +8,9 @@ authors:
   Mitchell O'Hara-Wild:
     href: https://github.com/mitchelloharawild
   Christoph Bergmeir:
+    href: https://github.com/cbergmeir
   Slava Razbash:
+    href: https://github.com/slavarazbash
   Earo Wang:
     href: http://earo.me
 
@@ -17,7 +19,7 @@ navbar:
   left:
     - text: "Reference"
       href: reference/index.html
-    - text: "JSS paper (2008)"
+    - text: "JSS paper"
       href: https://cran.r-project.org/web/packages/forecast/vignettes/JSS2008.pdf
     - text: "Change Log"
       href: news/index.html
