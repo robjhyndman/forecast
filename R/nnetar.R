@@ -66,10 +66,12 @@
 #'
 #' \item{model}{A list containing information about the fitted model}
 #' \item{method}{The name of the forecasting method as a character string}
-#' \item{x}{The original time series.} \item{xreg}{The external regressors used
-#' in fitting (if given).} \item{residuals}{Residuals from the fitted model.
-#' That is x minus fitted values.} \item{fitted}{Fitted values (one-step
-#' forecasts)} \item{...}{Other arguments}
+#' \item{x}{The original time series.} 
+#' \item{xreg}{The external regressors used in fitting (if given).} 
+#' \item{residuals}{Residuals from the fitted model. That is x minus fitted values.} 
+#' \item{fitted}{Fitted values (one-step forecasts)} 
+#' \item{...}{Other arguments}
+#' 
 #' @author Rob J Hyndman
 #' @keywords ts
 #' @examples
@@ -381,17 +383,20 @@ print.nnetarmodels <- function(x, ...)
 #' extract useful features of the value returned by \code{forecast.nnetar}.
 #'
 #' An object of class "\code{forecast}" is a list containing at least the
-#' following elements: \item{model}{A list containing information about the
-#' fitted model} \item{method}{The name of the forecasting method as a
-#' character string} \item{mean}{Point forecasts as a time series}
-#' \item{lower}{Lower limits for prediction intervals} \item{upper}{Upper
-#' limits for prediction intervals} \item{level}{The confidence values
-#' associated with the prediction intervals} \item{x}{The original time series
-#' (either \code{object} itself or the time series used to create the model
-#' stored as \code{object}).} \item{xreg}{The external regressors used in
-#' fitting (if given).} \item{residuals}{Residuals from the fitted model. That
-#' is x minus fitted values.} \item{fitted}{Fitted values (one-step forecasts)}
-#' \item{...}{Other arguments}
+#' following elements: 
+#'   \item{model}{A list containing information about the fitted model} 
+#'   \item{method}{The name of the forecasting method as a character string} 
+#'   \item{mean}{Point forecasts as a time series}
+#'   \item{lower}{Lower limits for prediction intervals} 
+#'   \item{upper}{Upper limits for prediction intervals} 
+#'   \item{level}{The confidence values associated with the prediction intervals} 
+#'   \item{x}{The original time series (either \code{object} itself or the time series 
+#'            used to create the model stored as \code{object}).} 
+#'   \item{xreg}{The external regressors used in fitting (if given).} 
+#'   \item{residuals}{Residuals from the fitted model. That is x minus fitted values.} 
+#'   \item{fitted}{Fitted values (one-step forecasts)}
+#'   \item{...}{Other arguments}
+#' 
 #' @author Rob J Hyndman
 #' @seealso \code{\link{nnetar}}.
 #' @keywords ts
@@ -434,6 +439,7 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI
   }
   fcast <- numeric(h)
   xx <- object$x
+  xxreg <- xreg
   if(!is.null(lambda))
     xx <- BoxCox(xx,lambda)
   # Check and apply scaling of fitted model
@@ -441,8 +447,9 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI
   {
     xx <- scale(xx, center = object$scalex$center, scale = object$scalex$scale)
     if(!is.null(xreg))
-      xreg <- scale(xreg, center = object$scalexreg$center, scale = object$scalexreg$scale)
+      xxreg <- scale(xreg, center = object$scalexreg$center, scale = object$scalexreg$scale)
   }
+
   # Get lags used in fitted model
   lags <- object$lags
   maxlag <- max(lags)
@@ -450,7 +457,7 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI
   # Iterative 1-step forecast
   for(i in 1:h)
   {
-    newdata <- c(flag[lags], xreg[i, ])
+    newdata <- c(flag[lags], xxreg[i, ])
     if(any(is.na(newdata)))
       stop("I can't forecast when there are missing values near the end of the series.")
     fcast[i] <- mean(sapply(object$model, predict, newdata=newdata))
