@@ -728,13 +728,17 @@ as.data.frame.forecast <- function(x,...)
         if (calendar && fr.x > 1)
         {
             tm <- time(x)
-            t2 <- 1 + round(fr.x * ((tm + 0.001)%%1))
-            p1 <- format(floor(zapsmall(tm)))
-            rownames(x) <- if (fr.x == 12)
+            t2 <- cycle(x)
+            p1 <- format(floor(tm + 1e-8))
+            rownames(x) <- 
+              if (fr.x == 12)
                 paste(month.abb[t2], p1, sep=" ")
-            else paste(p1, if (fr.x == 4)
-                c("Q1", "Q2", "Q3", "Q4")[t2]
-            else format(t2), sep=" ")
+              else paste(p1, 
+                    if (fr.x == 4)
+                      c("Q1", "Q2", "Q3", "Q4")[t2]
+                    else 
+                      format(t2), 
+                    sep=" ")
         }
         else
             rownames(x) <- format(time(x), nsmall=nd)
