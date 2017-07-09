@@ -143,7 +143,7 @@ reference:
       - tsCV
       - dm.test
   - title: "Data"
-    desc: "Data sets included in the packages"
+    desc: "Data sets included in the package"
     contents:
       - gas
       - gold
