@@ -194,17 +194,15 @@ The additional objects returned are</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘ggplot2’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:forecast’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    autolayer</span></div><div class='input'><span class='no'>WWWusage</span> <span class='kw'>%&gt;%</span>
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>)
+<span class='no'>WWWusage</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>Arima</span>(<span class='kw'>order</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>3</span>,<span class='fl'>1</span>,<span class='fl'>0</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>20</span>) <span class='kw'>%&gt;%</span>
-  <span class='no'>autoplot</span></div><img src='Arima-5.png' alt='' width='540' height='400' /><div class='input'>
+  <span class='no'>autoplot</span></div><img src='Arima-2.png' alt='' width='540' height='400' /><div class='input'>
 <span class='co'># Fit model to first few years of AirPassengers data</span>
 <span class='no'>air.model</span> <span class='kw'>&lt;-</span> <span class='fu'>Arima</span>(<span class='fu'>window</span>(<span class='no'>AirPassengers</span>,<span class='kw'>end</span><span class='kw'>=</span><span class='fl'>1956</span>+<span class='fl'>11</span>/<span class='fl'>12</span>),<span class='kw'>order</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>),
                    <span class='kw'>seasonal</span><span class='kw'>=</span><span class='fu'>list</span>(<span class='kw'>order</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>),<span class='kw'>period</span><span class='kw'>=</span><span class='fl'>12</span>),<span class='kw'>lambda</span><span class='kw'>=</span><span class='fl'>0</span>)
-<span class='fu'>plot</span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>air.model</span>,<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>48</span>))</div><div class='input'><span class='fu'>lines</span>(<span class='no'>AirPassengers</span>)</div><img src='Arima-8.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>plot</span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>air.model</span>,<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>48</span>))</div><div class='input'><span class='fu'>lines</span>(<span class='no'>AirPassengers</span>)</div><img src='Arima-5.png' alt='' width='540' height='400' /><div class='input'>
 <span class='co'># Apply fitted model to later data</span>
 <span class='no'>air.model2</span> <span class='kw'>&lt;-</span> <span class='fu'>Arima</span>(<span class='fu'>window</span>(<span class='no'>AirPassengers</span>,<span class='kw'>start</span><span class='kw'>=</span><span class='fl'>1957</span>),<span class='kw'>model</span><span class='kw'>=</span><span class='no'>air.model</span>)
 
