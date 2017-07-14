@@ -446,12 +446,12 @@ forecast.Arima <- function (object, h=ifelse(object$arma[5] > 1, 2 * object$arma
   else
       pred <- predict(object, n.ahead=h)
 
-  # Fix time series characteristics if there are missing values at end of series.
+  # Fix time series characteristics if there are missing values at end of series, or if tsp is missing from pred
   if(!is.null(x))
   {
     tspx <- tsp(x)
     nx <- max(which(!is.na(x)))
-    if(nx != length(x))
+    if(nx != length(x) | is.null(tsp(pred$pred)) | is.null(tsp(pred$se)))
     {
       tspx[2] <- time(x)[nx]
       start.f <- tspx[2]+1/tspx[3]
