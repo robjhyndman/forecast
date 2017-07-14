@@ -11,7 +11,7 @@ bibentry(bibtype = "Manual",
   author = as.person("Rob J Hyndman"),
   year = year,
   note = vers,
-  url = "http://github.com/robjhyndman/forecast")
+  url = "http://pkg.robjhyndman.com/forecast")
 
 bibentry(bibtype = "Article",
   title     = "Automatic time series forecasting: the forecast package for {R}",
