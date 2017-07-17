@@ -211,15 +211,15 @@ model.</p></dd> <dt>fitted</dt><dd><p>Fitted values (one-step forecasts)</p></dd
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>ses, holt and hw are simply convenient wrapper functions for
-<code>forecast(ets(...))</code>.</p>
+<code><a href='forecast.html'>forecast(ets(...))</a></code>.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Hyndman, R.J., Koehler, A.B., Ord, J.K., Snyder, R.D. (2008)
 <em>Forecasting with exponential smoothing: the state space approach</em>,
-Springer-Verlag: New York. <a href = 'http://www.exponentialsmoothing.net'>http://www.exponentialsmoothing.net</a>.</p>
+Springer-Verlag: New York. <a href='http://www.exponentialsmoothing.net'>http://www.exponentialsmoothing.net</a>.</p>
 <p>Hyndman, R.J., Athanasopoulos (2014) <em>Forecasting: principles and
-practice</em>, OTexts: Melbourne, Australia. <a href = 'http://www.otexts.org/fpp'>http://www.otexts.org/fpp</a>.</p>
+practice</em>, OTexts: Melbourne, Australia. <a href='http://www.otexts.org/fpp'>http://www.otexts.org/fpp</a>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -230,8 +230,8 @@ practice</em>, OTexts: Melbourne, Australia. <a href = 'http://www.otexts.org/fp
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='no'>fcast</span> <span class='kw'>&lt;-</span> <span class='fu'>holt</span>(<span class='no'>airmiles</span>)
-<span class='fu'>plot</span>(<span class='no'>fcast</span>)</div><img src='ses-2.png' alt='' width='540' height='400' /><div class='input'><span class='no'>deaths.fcast</span> <span class='kw'>&lt;-</span> <span class='fu'>hw</span>(<span class='no'>USAccDeaths</span>,<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>48</span>)
-<span class='fu'>plot</span>(<span class='no'>deaths.fcast</span>)</div><img src='ses-4.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>fcast</span>)</div><div class='img'><img src='ses-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='no'>deaths.fcast</span> <span class='kw'>&lt;-</span> <span class='fu'>hw</span>(<span class='no'>USAccDeaths</span>,<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>48</span>)
+<span class='fu'>plot</span>(<span class='no'>deaths.fcast</span>)</div><div class='img'><img src='ses-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -115,7 +115,7 @@ results.</p>
 <dt>method</dt><dd><p>The name of the forecasting method as a character string</p></dd>
 <dt>y</dt><dd><p>The original time series.</p></dd> <dt>bootstrapped_series</dt><dd><p>The
 bootstrapped series.</p></dd> <dt>etsargs</dt><dd><p>The arguments passed through to
-<code>ets</code>.</p></dd> <dt>fitted</dt><dd><p>Fitted values (one-step forecasts). The
+<code><a href='ets.html'>ets</a></code>.</p></dd> <dt>fitted</dt><dd><p>Fitted values (one-step forecasts). The
 mean is of the fitted values is calculated over the ensemble.</p></dd>
 <dt>residuals</dt><dd><p>Original values minus fitted values.</p></dd>
 
@@ -139,7 +139,7 @@ Transformation. International Journal of Forecasting 32, 303-312.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>baggedETS</span>(<span class='no'>WWWusage</span>)
 <span class='no'>fcast</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>)
-<span class='fu'>plot</span>(<span class='no'>fcast</span>)</div><img src='baggedETS-2.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>fcast</span>)</div><div class='img'><img src='baggedETS-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -195,33 +195,34 @@ axis. Refer to the examples below. To automatically set up aesthetics, use
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'>not_run</span>({
-  <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
-  <span class='fu'>autoplot</span>(<span class='no'>USAccDeaths</span>) + <span class='fu'>geom_forecast</span>()
+</div><span class='co'># NOT RUN {</span>
+<span class='fu'>library</span>(<span class='no'>ggplot2</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>USAccDeaths</span>) + <span class='fu'>geom_forecast</span>()
 
-  <span class='no'>lungDeaths</span> <span class='kw'>&lt;-</span> <span class='fu'>cbind</span>(<span class='no'>mdeaths</span>, <span class='no'>fdeaths</span>)
-  <span class='fu'>autoplot</span>(<span class='no'>lungDeaths</span>) + <span class='fu'>geom_forecast</span>()
+<span class='no'>lungDeaths</span> <span class='kw'>&lt;-</span> <span class='fu'>cbind</span>(<span class='no'>mdeaths</span>, <span class='no'>fdeaths</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>lungDeaths</span>) + <span class='fu'>geom_forecast</span>()
 
-  <span class='co'># Using fortify.ts</span>
-  <span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='fu'>aes</span>(<span class='kw'>x</span><span class='kw'>=</span><span class='no'>x</span>, <span class='kw'>y</span><span class='kw'>=</span><span class='no'>y</span>), <span class='kw'>data</span><span class='kw'>=</span><span class='no'>USAccDeaths</span>)
-  <span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='no'>p</span> + <span class='fu'>geom_line</span>()
-  <span class='no'>p</span> + <span class='fu'>geom_forecast</span>()
+<span class='co'># Using fortify.ts</span>
+<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>x</span><span class='kw'>=</span><span class='no'>x</span>, <span class='kw'>y</span><span class='kw'>=</span><span class='no'>y</span>), <span class='kw'>data</span><span class='kw'>=</span><span class='no'>USAccDeaths</span>)
+<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='no'>p</span> + <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_path'>geom_line</a></span>()
+<span class='no'>p</span> + <span class='fu'>geom_forecast</span>()
 
-  <span class='co'># Without fortify.ts</span>
-  <span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>USAccDeaths</span><span class='kw'>=</span><span class='fu'>as.numeric</span>(<span class='no'>USAccDeaths</span>), <span class='kw'>time</span><span class='kw'>=</span><span class='fu'>as.numeric</span>(<span class='fu'>time</span>(<span class='no'>USAccDeaths</span>)))
-  <span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='fu'>aes</span>(<span class='kw'>x</span><span class='kw'>=</span><span class='no'>time</span>, <span class='kw'>y</span><span class='kw'>=</span><span class='no'>USAccDeaths</span>), <span class='kw'>data</span><span class='kw'>=</span><span class='no'>data</span>)
-  <span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='no'>p</span> + <span class='fu'>geom_line</span>()
-  <span class='no'>p</span> + <span class='fu'>geom_forecast</span>()
+<span class='co'># Without fortify.ts</span>
+<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>USAccDeaths</span><span class='kw'>=</span><span class='fu'>as.numeric</span>(<span class='no'>USAccDeaths</span>), <span class='kw'>time</span><span class='kw'>=</span><span class='fu'>as.numeric</span>(<span class='fu'>time</span>(<span class='no'>USAccDeaths</span>)))
+<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>x</span><span class='kw'>=</span><span class='no'>time</span>, <span class='kw'>y</span><span class='kw'>=</span><span class='no'>USAccDeaths</span>), <span class='kw'>data</span><span class='kw'>=</span><span class='no'>data</span>)
+<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='no'>p</span> + <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/geom_path'>geom_line</a></span>()
+<span class='no'>p</span> + <span class='fu'>geom_forecast</span>()
 
-  <span class='no'>p</span> + <span class='fu'>geom_forecast</span>(<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>60</span>)
-  <span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='fu'>aes</span>(<span class='kw'>x</span><span class='kw'>=</span><span class='no'>time</span>, <span class='kw'>y</span><span class='kw'>=</span><span class='no'>USAccDeaths</span>), <span class='kw'>data</span><span class='kw'>=</span><span class='no'>data</span>)
-  <span class='no'>p</span> + <span class='fu'>geom_forecast</span>(<span class='kw'>level</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>70</span>,<span class='fl'>98</span>))
-  <span class='no'>p</span> + <span class='fu'>geom_forecast</span>(<span class='kw'>level</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>70</span>,<span class='fl'>98</span>),<span class='kw'>colour</span><span class='kw'>=</span><span class='st'>"lightblue"</span>)
+<span class='no'>p</span> + <span class='fu'>geom_forecast</span>(<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>60</span>)
+<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/aes'>aes</a></span>(<span class='kw'>x</span><span class='kw'>=</span><span class='no'>time</span>, <span class='kw'>y</span><span class='kw'>=</span><span class='no'>USAccDeaths</span>), <span class='kw'>data</span><span class='kw'>=</span><span class='no'>data</span>)
+<span class='no'>p</span> + <span class='fu'>geom_forecast</span>(<span class='kw'>level</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>70</span>,<span class='fl'>98</span>))
+<span class='no'>p</span> + <span class='fu'>geom_forecast</span>(<span class='kw'>level</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>70</span>,<span class='fl'>98</span>),<span class='kw'>colour</span><span class='kw'>=</span><span class='st'>"lightblue"</span>)
 
-  <span class='co'>#Add forecasts to multivariate series with colour groups</span>
-  <span class='no'>lungDeaths</span> <span class='kw'>&lt;-</span> <span class='fu'>cbind</span>(<span class='no'>mdeaths</span>, <span class='no'>fdeaths</span>)
-  <span class='fu'>autoplot</span>(<span class='no'>lungDeaths</span>) + <span class='fu'>geom_forecast</span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>mdeaths</span>), <span class='kw'>series</span><span class='kw'>=</span><span class='st'>"mdeaths"</span>)
-})</div></pre>
+<span class='co'>#Add forecasts to multivariate series with colour groups</span>
+<span class='no'>lungDeaths</span> <span class='kw'>&lt;-</span> <span class='fu'>cbind</span>(<span class='no'>mdeaths</span>, <span class='no'>fdeaths</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>lungDeaths</span>) + <span class='fu'>geom_forecast</span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>mdeaths</span>), <span class='kw'>series</span><span class='kw'>=</span><span class='st'>"mdeaths"</span>)
+<span class='co'># }</span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

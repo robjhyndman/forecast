@@ -208,11 +208,11 @@ differenced ARIMA models, <em>Journal of Time Series Analysis</em>,
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Arima.html'>Arima</a></span>(<span class='no'>WWWusage</span>,<span class='fu'>c</span>(<span class='fl'>3</span>,<span class='fl'>1</span>,<span class='fl'>0</span>))
-<span class='fu'>plot</span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>))</div><img src='forecast.Arima-2.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>plot</span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>))</div><div class='img'><img src='forecast.Arima-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='fu'>library</span>(<span class='no'>fracdiff</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>fracdiff.sim</span>( <span class='fl'>100</span>, <span class='kw'>ma</span><span class='kw'>=</span>-<span class='fl'>.4</span>, <span class='kw'>d</span><span class='kw'>=</span><span class='fl'>.3</span>)$<span class='no'>series</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/fracdiff/topics/fracdiff.sim'>fracdiff.sim</a></span>( <span class='fl'>100</span>, <span class='kw'>ma</span><span class='kw'>=</span>-<span class='fl'>.4</span>, <span class='kw'>d</span><span class='kw'>=</span><span class='fl'>.3</span>)$<span class='no'>series</span>
 <span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='arfima.html'>arfima</a></span>(<span class='no'>x</span>)
-<span class='fu'>plot</span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>,<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>30</span>))</div><img src='forecast.Arima-4.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>plot</span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>,<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>30</span>))</div><div class='img'><img src='forecast.Arima-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

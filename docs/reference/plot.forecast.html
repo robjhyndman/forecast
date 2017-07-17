@@ -230,7 +230,7 @@ on the plot.</p></td>
 
     <p>Hyndman and Athanasopoulos (2014) <em>Forecasting: principles
 and practice</em>, OTexts: Melbourne, Australia.
-<a href = 'http://www.otexts.org/fpp/'>http://www.otexts.org/fpp/</a></p>
+<a href='http://www.otexts.org/fpp/'>http://www.otexts.org/fpp/</a></p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -241,12 +241,12 @@ and practice</em>, OTexts: Melbourne, Australia.
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>)
 
 <span class='no'>wine.fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ses.html'>hw</a></span>(<span class='no'>wineind</span>,<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>48</span>)
-<span class='fu'>plot</span>(<span class='no'>wine.fit</span>)</div><img src='plot.forecast-2.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>autoplot</span>(<span class='no'>wine.fit</span>)</div><img src='plot.forecast-4.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>wine.fit</span>)</div><div class='img'><img src='plot.forecast-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>wine.fit</span>)</div><div class='img'><img src='plot.forecast-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='tslm.html'>tslm</a></span>(<span class='no'>wineind</span> ~ <span class='fu'><a href='fourier.html'>fourier</a></span>(<span class='no'>wineind</span>,<span class='fl'>4</span>))
 <span class='no'>fcast</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='fu'>data.frame</span>(<span class='fu'><a href='fourier.html'>fourier</a></span>(<span class='no'>wineind</span>,<span class='fl'>4</span>,<span class='fl'>20</span>)))
-<span class='fu'>autoplot</span>(<span class='no'>fcast</span>)</div><img src='plot.forecast-6.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>fcast</span>)</div><div class='img'><img src='plot.forecast-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='no'>fcast</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='splinef.html'>splinef</a></span>(<span class='no'>airmiles</span>,<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>5</span>)
-<span class='fu'>plot</span>(<span class='no'>fcast</span>)</div><img src='plot.forecast-8.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>autoplot</span>(<span class='no'>fcast</span>)</div><img src='plot.forecast-10.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>fcast</span>)</div><div class='img'><img src='plot.forecast-4.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>fcast</span>)</div><div class='img'><img src='plot.forecast-5.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

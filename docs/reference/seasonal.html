@@ -117,15 +117,15 @@ decomposition.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>plot</span>(<span class='no'>USAccDeaths</span>)</div><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>stl</span>(<span class='no'>USAccDeaths</span>, <span class='kw'>s.window</span><span class='kw'>=</span><span class='st'>"periodic"</span>)
-<span class='fu'>lines</span>(<span class='fu'>trendcycle</span>(<span class='no'>fit</span>),<span class='kw'>col</span><span class='kw'>=</span><span class='st'>"red"</span>)</div><img src='seasonal-3.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>lines</span>(<span class='fu'>trendcycle</span>(<span class='no'>fit</span>),<span class='kw'>col</span><span class='kw'>=</span><span class='st'>"red"</span>)</div><div class='img'><img src='seasonal-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
-<span class='fu'>autoplot</span>(<span class='fu'>cbind</span>(
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='fu'>cbind</span>(
             <span class='kw'>Data</span><span class='kw'>=</span><span class='no'>USAccDeaths</span>,
             <span class='kw'>Seasonal</span><span class='kw'>=</span><span class='fu'>seasonal</span>(<span class='no'>fit</span>),
           <span class='kw'>Trend</span><span class='kw'>=</span><span class='fu'>trendcycle</span>(<span class='no'>fit</span>),
             <span class='kw'>Remainder</span><span class='kw'>=</span><span class='fu'>remainder</span>(<span class='no'>fit</span>)),
     <span class='kw'>facets</span><span class='kw'>=</span><span class='fl'>TRUE</span>) +
-  <span class='fu'>ylab</span>(<span class='st'>""</span>) + <span class='fu'>xlab</span>(<span class='st'>"Year"</span>)</div><img src='seasonal-5.png' alt='' width='540' height='400' /><div class='input'>
+  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/labs'>ylab</a></span>(<span class='st'>""</span>) + <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/labs'>xlab</a></span>(<span class='st'>"Year"</span>)</div><div class='img'><img src='seasonal-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
