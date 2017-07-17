@@ -63,7 +63,7 @@ checkresiduals <- function(object, lag, df=NULL, test, plot=TRUE, ...)
     stop("No residuals found")
 
   if("ar" %in% class(object))
-    method <- paste("AR(",fit$order,")",sep="")
+    method <- paste("AR(",object$order,")",sep="")
   else if(!is.null(object$method))
     method <- object$method
   else if("HoltWinters" %in% class(object))
@@ -75,7 +75,7 @@ checkresiduals <- function(object, lag, df=NULL, test, plot=TRUE, ...)
     method <- try(as.character(object), silent=TRUE)
     if("try-error" %in% class(method))
       method <- "Missing"
-    else if(length(method) > 1 | strlen(method[1]) > 50)
+    else if(length(method) > 1 | base::nchar(method[1]) > 50)
       method <- "Missing"
   }
   if(method=="Missing")
