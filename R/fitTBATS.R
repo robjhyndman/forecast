@@ -72,8 +72,9 @@ fitPreviousTBATSModel <- function (y, model, biasadj=FALSE) {
 
   model.for.output <- model
   model.for.output$variance <- variance
-  model.for.output$fitted.values <- c(fitted.values)
-  model.for.output$errors <- c(e)
+  model.for.output$fitted.values <- ts(c(fitted.values))
+  model.for.output$errors <- ts(c(e))
+  tsp(model.for.output$fitted.values) <- tsp(model.for.output$errors) <- tsp(y)
   model.for.output$x <- fitted.values.and.errors$x
   model.for.output$y <- y
   return(model.for.output)
@@ -361,7 +362,11 @@ fitSpecificTBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.per
 
 
   #Make a list object
-  model.for.output <- list(lambda=lambda, alpha=alpha, beta=beta.v, damping.parameter=small.phi, gamma.one.values=gamma.one.v, gamma.two.values=gamma.two.v, ar.coefficients=ar.coefs, ma.coefficients=ma.coefs, likelihood=likelihood, optim.return.code=optim.like$convergence, variance=variance, AIC=aic, parameters=list(vect=optim.like$par, control=param.vector$control), seed.states=x.nought, fitted.values=c(fitted.values), errors=c(e), x=fitted.values.and.errors$x, seasonal.periods=seasonal.periods, k.vector=k.vector, y=y, p=p, q=q)
+  fits <- ts(c(fitted.values))
+  e <- ts(c(e))
+  tsp(fits) <- tsp(e) <- tsp(y)
+  model.for.output <- list(lambda=lambda, alpha=alpha, beta=beta.v, damping.parameter=small.phi, gamma.one.values=gamma.one.v, gamma.two.values=gamma.two.v, ar.coefficients=ar.coefs, ma.coefficients=ma.coefs, likelihood=likelihood, optim.return.code=optim.like$convergence, variance=variance, AIC=aic, parameters=list(vect=optim.like$par, control=param.vector$control), seed.states=x.nought, 
+    fitted.values=fits, errors=e, x=fitted.values.and.errors$x, seasonal.periods=seasonal.periods, k.vector=k.vector, y=y, p=p, q=q)
   class(model.for.output) <- c("tbats","bats")
   return(model.for.output)
 }

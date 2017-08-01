@@ -44,6 +44,7 @@ fitPreviousBATSModel <- function (y, model, biasadj=FALSE) {
   model.for.output$errors <- c(e)
   model.for.output$x <- fitted.values.and.errors$x
   model.for.output$y <- y
+  attributes(model.for.output$fitted.values) <- attributes(model.for.output$errors) <- attributes(y)
   return(model.for.output)
 }
 
