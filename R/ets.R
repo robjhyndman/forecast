@@ -768,7 +768,9 @@ initparam <- function(alpha,beta,gamma,phi,trendtype,seasontype,damped,lower,upp
   # Select alpha
   if(is.null(alpha))
   {
-    alpha <- lower[1] + 0.5*(upper[1]-lower[1])/m
+    alpha <- max(lower[1] + 0.5*(upper[1]-lower[1])/m, lower[2]+2e-3)
+    if(alpha > 1 | alpha < 0)
+      alpha <- lower[1] + 2e-3
     par <- c(alpha=alpha)
   }
   else
@@ -780,6 +782,8 @@ initparam <- function(alpha,beta,gamma,phi,trendtype,seasontype,damped,lower,upp
     # Ensure beta < alpha
     upper[2] <- min(upper[2], alpha)
     beta <- lower[2] + 0.1*(upper[2]-lower[2])
+    if(beta < 0 | beta > alpha)
+      beta <- alpha - 1e-3
     par <- c(par,beta=beta)
   }
 
@@ -789,6 +793,8 @@ initparam <- function(alpha,beta,gamma,phi,trendtype,seasontype,damped,lower,upp
     # Ensure gamma < 1-alpha
     upper[3] <- min(upper[3], 1-alpha)
     gamma <- lower[3] + 0.05*(upper[3]-lower[3])
+    if(gamma < 0 | gamma > 1-alpha)
+      gamma <- 1-alpha-1e-3
     par <- c(par,gamma=gamma)
   }
 
@@ -796,6 +802,8 @@ initparam <- function(alpha,beta,gamma,phi,trendtype,seasontype,damped,lower,upp
   if(damped & is.null(phi))
   {
     phi <- lower[4] + .99*(upper[4]-lower[4])
+    if(phi < 0 | phi > 1)
+      phi <- upper[4] - 1e-3
     par <- c(par,phi=phi)
   }
 
