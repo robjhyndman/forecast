@@ -5,16 +5,16 @@
 
 PKG_NAME=$(shell grep -i ^package DESCRIPTION | cut -d : -d \  -f 2)
 
-all: build pkgdown install
+all: install
 
-check: 
+check:
 	rcheck
 
 build:
 	R CMD build .
 	mv -f *.tar.gz ..
 
-install: 
+install:
 	rmake
 
 winbuild:
@@ -30,6 +30,3 @@ docs:
 
 pkgdown:
 	mv vignettes /tmp/; Rscript -e "rt::rpkgdown()"; mv /tmp/vignettes .
-
-winbuild:
-	Rscript -e "rt::rwinbuild(devel=TRUE)"
