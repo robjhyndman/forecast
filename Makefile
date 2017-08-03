@@ -1,11 +1,29 @@
-install:
-	Rscript -e "rt::rmake()"
+# Makefile for generating R packages.
+# 2017 Rob J Hyndman
+#
+# Assumes Makefile is in top folder of package
+
+PKG_NAME=$(shell grep -i ^package DESCRIPTION | cut -d : -d \  -f 2)
+
+all: build pkgdown install
+
+check: 
+	rcheck
 
 build:
-	Rscript -e "rt::rbuild()"
+	R CMD build .
+	mv -f *.tar.gz ..
 
-check:
-	Rscript -e "rt::rcheck()"
+install: 
+	rmake
+
+winbuild:
+	Rscript -e "rt::rwinbuild(devel=TRUE)"
+
+clean:
+	-rm -f ../$(PKG_NAME)_*.tar.gz
+	-rm -r -f man/*.Rd
+	-rm -r -f NAMESPACE
 
 docs:
 	Rscript -e "rt::rdoc()"
@@ -15,5 +33,3 @@ pkgdown:
 
 winbuild:
 	Rscript -e "rt::rwinbuild(devel=TRUE)"
-
-all: install
