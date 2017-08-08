@@ -89,7 +89,7 @@
 rolling forecast origin.</p>
     
 
-    <pre class="usage"><span class='fu'>tsCV</span>(<span class='no'>y</span>, <span class='no'>forecastfunction</span>, <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>tsCV</span>(<span class='no'>y</span>, <span class='no'>forecastfunction</span>, <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>window</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -107,6 +107,10 @@ must have an argument <code>h</code> for the forecast horizon.</p></td>
     <tr>
       <th>h</th>
       <td><p>Forecast horizon</p></td>
+    </tr>
+    <tr>
+      <th>window</th>
+      <td><p>Length of the rolling window, if NULL, a rolling window will not be used.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -131,14 +135,17 @@ series.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><a href='CV.html'>CV</a>, <a href='CVar.html'>CVar</a>, <a href='residuals.forecast.html'>residuals.Arima</a>.</p>
+    <p><a href='CV.html'>CV</a>, <a href='CVar.html'>CVar</a>, <a href='residuals.forecast.html'>residuals.Arima</a>, <a href='https://robjhyndman.com/hyndsight/tscv/'>https://robjhyndman.com/hyndsight/tscv/</a>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='co'>#Fit an AR(2) model to each subset</span>
+<span class='co'>#Fit an AR(2) model to each rolling origin subset</span>
 <span class='no'>far2</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>h</span>){<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='fu'><a href='Arima.html'>Arima</a></span>(<span class='no'>x</span>, <span class='kw'>order</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>2</span>,<span class='fl'>0</span>,<span class='fl'>0</span>)), <span class='kw'>h</span><span class='kw'>=</span><span class='no'>h</span>)}
-<span class='no'>e</span> <span class='kw'>&lt;-</span> <span class='fu'>tsCV</span>(<span class='no'>lynx</span>, <span class='no'>far2</span>, <span class='kw'>h</span><span class='kw'>=</span><span class='fl'>1</span>)</div></pre>
+<span class='no'>e</span> <span class='kw'>&lt;-</span> <span class='fu'>tsCV</span>(<span class='no'>lynx</span>, <span class='no'>far2</span>, <span class='kw'>h</span><span class='kw'>=</span><span class='fl'>1</span>)
+
+<span class='co'>#Fit the same model with a rolling window of length 30</span>
+<span class='no'>e</span> <span class='kw'>&lt;-</span> <span class='fu'>tsCV</span>(<span class='no'>lynx</span>, <span class='no'>far2</span>, <span class='kw'>h</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>window</span><span class='kw'>=</span><span class='fl'>30</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
