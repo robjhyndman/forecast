@@ -4,7 +4,7 @@
 \alias{tsCV}
 \title{Time series cross-validation}
 \usage{
-tsCV(y, forecastfunction, h = 1, ...)
+tsCV(y, forecastfunction, h = 1, window = NULL, ...)
 }
 \arguments{
 \item{y}{Univariate time series}
@@ -14,6 +14,8 @@ tsCV(y, forecastfunction, h = 1, ...)
 must have an argument \code{h} for the forecast horizon.}
 
 \item{h}{Forecast horizon}
+
+\item{window}{Length of the rolling window, if NULL, a rolling window will not be used.}
 
 \item{...}{Other arguments are passed to \code{forecastfunction}.}
 }
@@ -37,13 +39,16 @@ series.
 }
 \examples{
 
-#Fit an AR(2) model to each subset
+#Fit an AR(2) model to each rolling origin subset
 far2 <- function(x, h){forecast(Arima(x, order=c(2,0,0)), h=h)}
 e <- tsCV(lynx, far2, h=1)
 
+#Fit the same model with a rolling window of length 30
+e <- tsCV(lynx, far2, h=1, window=30)
+
 }
 \seealso{
-\link{CV}, \link{CVar}, \link{residuals.Arima}.
+\link{CV}, \link{CVar}, \link{residuals.Arima}, \url{https://robjhyndman.com/hyndsight/tscv/}.
 }
 \author{
 Rob J Hyndman

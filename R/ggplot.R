@@ -1730,8 +1730,14 @@ autoplot.mts <- function(object, colour=TRUE, facets=FALSE, ...){
     if(NCOL(object) <= 1){
       return(autoplot.ts(object))
     }
+    
+    cn <- colnames(object)
+    if(is.null(cn)){
+      cn <- paste("Series", seq_len(NCOL(object)))
+    }
+    
     data <- data.frame(y=as.numeric(c(object)), x=rep(as.numeric(time(object)),NCOL(object)),
-                       series=factor(rep(colnames(object), each=NROW(object)), levels=colnames(object)))
+                       series=factor(rep(cn, each=NROW(object)), levels=cn))
 
     #Initialise ggplot object
     mapping <- ggplot2::aes_(y=~y, x=~x, group=~series)

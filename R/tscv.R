@@ -27,26 +27,31 @@
 #' \code{forecast}. Its first argument must be a univariate time series, and it
 #' must have an argument \code{h} for the forecast horizon.
 #' @param h Forecast horizon
+#' @param window Length of the rolling window, if NULL, a rolling window will not be used.
 #' @param ... Other arguments are passed to \code{forecastfunction}.
 #' @return Numerical time series object containing the forecast errors.
 #' @author Rob J Hyndman
-#' @seealso \link{CV}, \link{CVar}, \link{residuals.Arima}.
+#' @seealso \link{CV}, \link{CVar}, \link{residuals.Arima}, \url{https://robjhyndman.com/hyndsight/tscv/}.
+#' 
 #' @keywords ts
 #' @examples
 #'
-#' #Fit an AR(2) model to each subset
+#' #Fit an AR(2) model to each rolling origin subset
 #' far2 <- function(x, h){forecast(Arima(x, order=c(2,0,0)), h=h)}
 #' e <- tsCV(lynx, far2, h=1)
+#' 
+#' #Fit the same model with a rolling window of length 30
+#' e <- tsCV(lynx, far2, h=1, window=30)
 #'
 #' @export
-tsCV <- function(y, forecastfunction, h=1, ...)
+tsCV <- function(y, forecastfunction, h=1, window=NULL, ...)
 {
   y <- as.ts(y)
   n <- length(y)
   e <- y*NA
   for(i in seq_len(n-h))
   {
-    fc <- try(suppressWarnings(forecastfunction(subset(y, end=i), h=h, ...)), silent=TRUE)
+    fc <- try(suppressWarnings(forecastfunction(subset(y, start=ifelse(is.null(window),1,ifelse(i-window >= 0, i-window + 1, stop("small window"))), end=i), h=h, ...)), silent=TRUE)
     if(!is.element("try-error", class(fc)))
       e[i+h] <- y[i+h] - fc$mean[h]
   }

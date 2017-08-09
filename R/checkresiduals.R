@@ -1,11 +1,11 @@
 #' Check that residuals from a time series model look like white noise
-#' 
+#'
 #' If \code{plot=TRUE}, produces a time plot of the residuals, the
 #' corresponding ACF, and a histogram. If the degrees of freedom for the model
 #' can be determined and \code{test} is not \code{FALSE}, the output from
 #' either a Ljung-Box test or Breusch-Godfrey test is printed.
-#' 
-#' 
+#'
+#'
 #' @param object Either a time series model, a forecast object, or a time
 #' series (assumed to be residuals).
 #' @param lag Number of lags to use in the Ljung-Box or Breusch-Godfrey test.
@@ -25,10 +25,10 @@
 #' @seealso \code{\link{ggtsdisplay}}, \code{\link[stats]{Box.test}},
 #' \code{\link[lmtest]{bgtest}}
 #' @examples
-#' 
+#'
 #' fit <- ets(WWWusage)
 #' checkresiduals(fit)
-#' 
+#'
 #' @export
 checkresiduals <- function(object, lag, df=NULL, test, plot=TRUE, ...)
 {
@@ -62,12 +62,20 @@ checkresiduals <- function(object, lag, df=NULL, test, plot=TRUE, ...)
   if(length(residuals) == 0L)
     stop("No residuals found")
 
-  if(!is.null(object$method))
+  if("ar" %in% class(object))
+    method <- paste("AR(",object$order,")",sep="")
+  else if(!is.null(object$method))
     method <- object$method
+  else if("HoltWinters" %in% class(object))
+    method <- "HoltWinters"
+  else if("StructTS" %in% class(object))
+    method <- "StructTS"
   else
   {
     method <- try(as.character(object), silent=TRUE)
     if("try-error" %in% class(method))
+      method <- "Missing"
+    else if(length(method) > 1 | base::nchar(method[1]) > 50)
       method <- "Missing"
   }
   if(method=="Missing")

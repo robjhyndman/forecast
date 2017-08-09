@@ -153,7 +153,7 @@ plot.</p></td>
 
     <p>Hyndman and Athanasopoulos (2014) <em>Forecasting: principles
 and practice</em>, OTexts: Melbourne, Australia.
-<a href = 'http://www.otexts.org/fpp/'>http://www.otexts.org/fpp/</a></p>
+<a href='http://www.otexts.org/fpp/'>http://www.otexts.org/fpp/</a></p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -166,12 +166,12 @@ and practice</em>, OTexts: Melbourne, Australia.
 <span class='no'>lungDeaths</span> <span class='kw'>&lt;-</span> <span class='fu'>cbind</span>(<span class='no'>mdeaths</span>, <span class='no'>fdeaths</span>)
 <span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='tslm.html'>tslm</a></span>(<span class='no'>lungDeaths</span> ~ <span class='no'>trend</span> + <span class='no'>season</span>)
 <span class='no'>fcast</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>, <span class='kw'>h</span><span class='kw'>=</span><span class='fl'>10</span>)
-<span class='fu'>plot</span>(<span class='no'>fcast</span>)</div><img src='plot.mforecast-2.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>autoplot</span>(<span class='no'>fcast</span>)</div><img src='plot.mforecast-4.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>fcast</span>)</div><div class='img'><img src='plot.mforecast-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>fcast</span>)</div><div class='img'><img src='plot.mforecast-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='no'>carPower</span> <span class='kw'>&lt;-</span> <span class='fu'>as.matrix</span>(<span class='no'>mtcars</span>[,<span class='fu'>c</span>(<span class='st'>"qsec"</span>,<span class='st'>"hp"</span>)])
 <span class='no'>carmpg</span> <span class='kw'>&lt;-</span> <span class='no'>mtcars</span>[,<span class='st'>"mpg"</span>]
 <span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>lm</span>(<span class='no'>carPower</span> ~ <span class='no'>carmpg</span>)
 <span class='no'>fcast</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='fu'>data.frame</span>(<span class='kw'>carmpg</span><span class='kw'>=</span><span class='fl'>30</span>))
-<span class='fu'>plot</span>(<span class='no'>fcast</span>, <span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>"Year"</span>)</div><img src='plot.mforecast-6.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>autoplot</span>(<span class='no'>fcast</span>, <span class='kw'>xlab</span><span class='kw'>=</span><span class='fu'>rep</span>(<span class='st'>"Year"</span>,<span class='fl'>2</span>))</div><img src='plot.mforecast-8.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>fcast</span>, <span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>"Year"</span>)</div><div class='img'><img src='plot.mforecast-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>fcast</span>, <span class='kw'>xlab</span><span class='kw'>=</span><span class='fu'>rep</span>(<span class='st'>"Year"</span>,<span class='fl'>2</span>))</div><div class='img'><img src='plot.mforecast-4.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

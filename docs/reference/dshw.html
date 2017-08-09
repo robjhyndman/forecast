@@ -198,7 +198,7 @@ using double seasonal exponential smoothing. <em>Journal of the
 Operational Research Society</em>, <b>54</b>, 799-805.</p>
 <p>Hyndman, R.J., Koehler, A.B., Ord, J.K., and Snyder, R.D. (2008)
 <em>Forecasting with exponential smoothing: the state space approach</em>,
-Springer-Verlag. <a href = 'http://www.exponentialsmoothing.net'>http://www.exponentialsmoothing.net</a>.</p>
+Springer-Verlag. <a href='http://www.exponentialsmoothing.net'>http://www.exponentialsmoothing.net</a>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -207,15 +207,16 @@ Springer-Verlag. <a href = 'http://www.exponentialsmoothing.net'>http://www.expo
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'>not_run</span>({
-  <span class='no'>fcast</span> <span class='kw'>&lt;-</span> <span class='fu'>dshw</span>(<span class='no'>taylor</span>)
-  <span class='fu'>plot</span>(<span class='no'>fcast</span>)
+</div><span class='co'># NOT RUN {</span>
+<span class='no'>fcast</span> <span class='kw'>&lt;-</span> <span class='fu'>dshw</span>(<span class='no'>taylor</span>)
+<span class='fu'>plot</span>(<span class='no'>fcast</span>)
 
-  <span class='no'>t</span> <span class='kw'>&lt;-</span> <span class='fu'>seq</span>(<span class='fl'>0</span>,<span class='fl'>5</span>,<span class='kw'>by</span><span class='kw'>=</span><span class='fl'>1</span>/<span class='fl'>20</span>)
-  <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>exp</span>(<span class='fu'>sin</span>(<span class='fl'>2</span>*<span class='no'>pi</span>*<span class='no'>t</span>) + <span class='fu'>cos</span>(<span class='fl'>2</span>*<span class='no'>pi</span>*<span class='no'>t</span>*<span class='fl'>4</span>) + <span class='fu'>rnorm</span>(<span class='fu'>length</span>(<span class='no'>t</span>),<span class='fl'>0</span>,<span class='fl'>.1</span>))
-  <span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>dshw</span>(<span class='no'>x</span>,<span class='fl'>20</span>,<span class='fl'>5</span>)
-  <span class='fu'>plot</span>(<span class='no'>fit</span>)
-})</div></pre>
+<span class='no'>t</span> <span class='kw'>&lt;-</span> <span class='fu'>seq</span>(<span class='fl'>0</span>,<span class='fl'>5</span>,<span class='kw'>by</span><span class='kw'>=</span><span class='fl'>1</span>/<span class='fl'>20</span>)
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>exp</span>(<span class='fu'>sin</span>(<span class='fl'>2</span>*<span class='no'>pi</span>*<span class='no'>t</span>) + <span class='fu'>cos</span>(<span class='fl'>2</span>*<span class='no'>pi</span>*<span class='no'>t</span>*<span class='fl'>4</span>) + <span class='fu'>rnorm</span>(<span class='fu'>length</span>(<span class='no'>t</span>),<span class='fl'>0</span>,<span class='fl'>.1</span>))
+<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>dshw</span>(<span class='no'>x</span>,<span class='fl'>20</span>,<span class='fl'>5</span>)
+<span class='fu'>plot</span>(<span class='no'>fit</span>)
+<span class='co'># }</span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

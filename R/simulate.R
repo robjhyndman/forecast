@@ -1,20 +1,20 @@
 #' Simulation from a time series model
-#' 
+#'
 #' Returns a time series based on the model object \code{object}.
-#' 
+#'
 #' With \code{simulate.Arima()}, the \code{object} should be produced by
 #' \code{\link{Arima}} or \code{\link{auto.arima}}, rather than
 #' \code{\link[stats]{arima}}. By default, the error series is assumed normally
 #' distributed and generated using \code{\link[stats]{rnorm}}. If \code{innov}
 #' is present, it is used instead. If \code{bootstrap=TRUE} and
 #' \code{innov=NULL}, the residuals are resampled instead.
-#' 
+#'
 #' When \code{future=TRUE}, the sample paths are conditional on the data. When
 #' \code{future=FALSE} and the model is stationary, the sample paths do not
 #' depend on the data at all. When \code{future=FALSE} and the model is
 #' non-stationary, the location of the sample paths is arbitrary, so they all
 #' start at the value of the first observation.
-#' 
+#'
 #' @param object An object of class "\code{ets}", "\code{Arima}", "\code{ar}"
 #' or "\code{nnetar}".
 #' @param nsim Number of periods for the simulated series. Ignored if either
@@ -45,7 +45,7 @@
 #' fit <- ets(USAccDeaths)
 #' plot(USAccDeaths, xlim=c(1973,1982))
 #' lines(simulate(fit, 36), col="red")
-#' 
+#'
 #' @export
 simulate.ets <- function(object, nsim=length(object$x), seed=NULL, future=TRUE, bootstrap=FALSE, innov=NULL, ...)
 {
@@ -75,7 +75,7 @@ simulate.ets <- function(object, nsim=length(object$x), seed=NULL, future=TRUE, 
 
   if(bootstrap)
   {
-    res <- na.omit(object$residuals - mean(object$residuals, na.rm=TRUE))
+    res <- na.omit(c(object$residuals) - mean(object$residuals, na.rm=TRUE))
     e <- sample(res,nsim,replace=TRUE)
   }
   else if(is.null(innov))
@@ -379,7 +379,7 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
   n <- length(x)
   if(bootstrap)
   {
-    res <- na.omit(model$residuals - mean(model$residuals, na.rm=TRUE))
+    res <- na.omit(c(model$residuals) - mean(model$residuals, na.rm=TRUE))
     e <- sample(res,nsim,replace=TRUE)
   }
   else if(is.null(innov))
@@ -500,7 +500,7 @@ simulate.ar <- function(object, nsim=object$n.used, seed=NULL, future=TRUE, boot
   object$x <- object$x - x.mean
   if(bootstrap)
   {
-    res <- na.omit(model$residuals - mean(model$residuals, na.rm=TRUE))
+    res <- na.omit(c(model$residuals) - mean(model$residuals, na.rm=TRUE))
     e <- sample(res,nsim,replace=TRUE)
   }
   else if(is.null(innov))
@@ -569,7 +569,7 @@ simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL,
   ## set simulation innovations
   if(bootstrap)
   {
-    res <- na.omit(residuals(object, type="innovation"))
+    res <- na.omit(c(residuals(object, type="innovation")))
     res <- res - mean(res)
     ## scale if appropriate
     if(!is.null(object$scalex$scale))
@@ -578,7 +578,7 @@ simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL,
   }
   else if(is.null(innov))
   {
-    res <- na.omit(residuals(object, type="innovation"))
+    res <- na.omit(c(residuals(object, type="innovation")))
     ## scale if appropriate
     if(!is.null(object$scalex$scale))
       res <- res/object$scalex$scale

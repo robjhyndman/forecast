@@ -85,14 +85,14 @@ if(require(testthat))
     refit <- bats(fdeaths, model=fit)
     expect_true(identical(fit$parameters, refit$parameters))
     expect_false(identical(fit$x, refit$x))
-    expect_false(identical(as.numeric(fit$fitted.values), refit$fitted.values)) # Why does the first value match?
-    expect_false(identical(as.numeric(residuals(fit)), residuals(refit)))
+    expect_false(identical(fit$fitted.values, refit$fitted.values))
+    expect_false(identical(residuals(fit), residuals(refit)))
     
     refit_same <- bats(mdeaths, model=fit)
     expect_true(identical(fit$model$par, refit_same$model$par))
     expect_true(identical(fit$x, refit_same$x))
-    expect_true(identical(as.numeric(fit$fitted), refit_same$fitted))
-    expect_true(identical(as.numeric(residuals(fit)), residuals(refit_same)))
+    expect_true(identical(fit$fitted, refit_same$fitted))
+    expect_true(identical(residuals(fit), residuals(refit_same)))
     
     #tbats
     fit <- tbats(mdeaths)
@@ -100,14 +100,14 @@ if(require(testthat))
     refit <- tbats(fdeaths, model=fit)
     expect_true(identical(fit$parameters, refit$parameters))
     expect_false(identical(fit$x, refit$x))
-    expect_false(identical(as.numeric(fit$fitted.values), refit$fitted.values)) # Why does the first value match?
-    expect_false(identical(as.numeric(residuals(fit)), residuals(refit)))
+    expect_false(identical(fit$fitted.values, refit$fitted.values))
+    expect_false(identical(residuals(fit), residuals(refit)))
     
     refit_same <- tbats(mdeaths, model=fit)
     expect_true(identical(fit$model$par, refit_same$model$par))
     expect_true(identical(fit$x, refit_same$x))
-    expect_true(identical(as.numeric(fit$fitted), refit_same$fitted))
-    expect_true(identical(as.numeric(residuals(fit)), residuals(refit_same)))
+    expect_true(identical(fit$fitted, refit_same$fitted))
+    expect_true(identical(residuals(fit), residuals(refit_same)))
     
     #nnetar
     fit <- nnetar(mdeaths)

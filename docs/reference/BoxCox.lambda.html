@@ -139,7 +139,7 @@ transformations. <em>Journal of Forecasting</em>, <b>12</b>, 37--48.</p>
 <span class='no'>lambda</span> <span class='kw'>&lt;-</span> <span class='fu'>BoxCox.lambda</span>(<span class='no'>AirPassengers</span>,<span class='kw'>lower</span><span class='kw'>=</span><span class='fl'>0</span>)
 <span class='no'>air.fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Arima.html'>Arima</a></span>(<span class='no'>AirPassengers</span>, <span class='kw'>order</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>),
                  <span class='kw'>seasonal</span><span class='kw'>=</span><span class='fu'>list</span>(<span class='kw'>order</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>),<span class='kw'>period</span><span class='kw'>=</span><span class='fl'>12</span>), <span class='kw'>lambda</span><span class='kw'>=</span><span class='no'>lambda</span>)
-<span class='fu'>plot</span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>air.fit</span>))</div><img src='BoxCox.lambda-2.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>plot</span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>air.fit</span>))</div><div class='img'><img src='BoxCox.lambda-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

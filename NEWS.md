@@ -1,5 +1,6 @@
 ## Version 8.2
   * Added pkgdown site
+  * Bug fixes
 
 ## Version 8.1 (17 June 2017)
   * Added as.character.ets, as.character.bats, as.character.tbats

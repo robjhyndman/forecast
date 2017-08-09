@@ -204,7 +204,7 @@ accordingly.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>WWWusage</span> <span class='kw'>%&gt;%</span> <span class='no'>forecast</span> <span class='kw'>%&gt;%</span> <span class='no'>plot</span></div><img src='forecast-2.png' alt='' width='540' height='400' /><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ets.html'>ets</a></span>(<span class='fu'>window</span>(<span class='no'>WWWusage</span>, <span class='kw'>end</span><span class='kw'>=</span><span class='fl'>60</span>))
+<span class='no'>WWWusage</span> <span class='kw'>%&gt;%</span> <span class='no'>forecast</span> <span class='kw'>%&gt;%</span> <span class='no'>plot</span></div><div class='img'><img src='forecast-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ets.html'>ets</a></span>(<span class='fu'>window</span>(<span class='no'>WWWusage</span>, <span class='kw'>end</span><span class='kw'>=</span><span class='fl'>60</span>))
 <span class='no'>fc</span> <span class='kw'>&lt;-</span> <span class='fu'>forecast</span>(<span class='no'>WWWusage</span>, <span class='kw'>model</span><span class='kw'>=</span><span class='no'>fit</span>)</div><div class='output co'>#&gt; <span class='message'>Model is being refit with current smoothing parameters but initial states are being re-estimated.</span>
 #&gt; <span class='message'>Set 'use.initial.values=TRUE' if you want to re-use existing initial values.</span></div><div class='input'>
 </div></pre>
