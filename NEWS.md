@@ -39,6 +39,7 @@
   * Better bias adjustment support after Box-Cox transformation
   * print.ARIMA has better labelling of constants
   * Bug fixes
+  * Removed fortify method for forecast objects
 
 ## Version 7.3 (12 October 2016)
   * Added prediction intervals and simulation for nnetar().
