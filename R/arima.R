@@ -156,7 +156,7 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
 #' (1988) test is used (with null hypothesis that a seasonal unit root exists).
 #'
 #' @param x A univariate time series
-#' @param alpha Level of the test
+#' @param alpha Level of the test, possible values range from 0.01 to 0.1.
 #' @param m Length of seasonal period
 #' @param test Type of unit root test to use
 #' @param max.d Maximum number of non-seasonal differences allowed
@@ -204,9 +204,11 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), max.d=2)
 
   if(alpha < 0.01){
     warning("Specified alpha value is less than the minimum, setting alpha=0.01")
+    alpha <- 0.01
   }
   else if(alpha > 0.1){
     warning("Specified alpha value is larger than the maximum, setting alpha=0.1")
+    alpha <- 0.1
   }
   
   if(is.constant(x))
