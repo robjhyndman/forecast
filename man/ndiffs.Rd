@@ -8,7 +8,7 @@
 ndiffs(x, alpha = 0.05, test = c("kpss", "adf", "pp"), type = c("level",
   "trend"), max.d = 2)
 
-nsdiffs(x, m = frequency(x), test = c("ocsb", "ch", "hegy"), max.D = 1)
+nsdiffs(x, m = frequency(x), test = c("ocsb", "ch"), max.D = 1)
 }
 \arguments{
 \item{x}{A univariate time series}
