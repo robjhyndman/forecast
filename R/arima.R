@@ -191,6 +191,10 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
 #' ndiffs(WWWusage)
 #' ndiffs(diff(log(AirPassengers),12))
 #'
+#' @importFrom urca ur.kpss
+#' @importFrom urca ur.df
+#' @importFrom urca ur.pp
+#'
 #' @export
 ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), max.d=2)
 {
@@ -200,15 +204,18 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), max.d=2)
 
   if(is.constant(x))
     return(d)
+  
+  urca_pval <- function(urca_test, alpha){
+    pv <- approx(urca_test@cval, as.numeric(sub("pct", "", colnames(urca_test@cval)))/100, xout=urca_test@teststat, rule=2)$y
+  }
 
-  if(test=="kpss")
-    suppressWarnings(dodiff <- tseries::kpss.test(x)$p.value < alpha)
-  else if(test=="adf")
-    suppressWarnings(dodiff <- tseries::adf.test(x)$p.value > alpha)
-  else if(test=="pp")
-    suppressWarnings(dodiff <- tseries::pp.test(x)$p.value > alpha)
-  else
-    stop("This shouldn't happen")
+  dodiff <- suppressWarnings(
+    switch(test,
+           kpss = urca_pval(ur.kpss(x)) < alpha,
+           adf = urca_pval(ur.df(x)) > alpha,
+           pp = urca_pval(ur.pp(x, type="Z-tau")) > alpha,
+           stop("This shouldn't happen")))
+  
   if(is.na(dodiff))
   {
     return(d)
@@ -219,14 +226,12 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), max.d=2)
     x <- diff(x)
     if(is.constant(x))
       return(d)
-    if(test=="kpss")
-      suppressWarnings(dodiff <- tseries::kpss.test(x)$p.value < alpha)
-    else if(test=="adf")
-      suppressWarnings(dodiff <- tseries::adf.test(x)$p.value > alpha)
-    else if(test=="pp")
-      suppressWarnings(dodiff <- tseries::pp.test(x)$p.value > alpha)
-    else
-      stop("This shouldn't happen")
+    dodiff <- suppressWarnings(
+      switch(test,
+             kpss = urca_pval(ur.kpss(x)) < alpha,
+             adf = urca_pval(ur.df(x)) > alpha,
+             pp = urca_pval(ur.pp(x, type="Z-tau")) > alpha,
+             stop("This shouldn't happen")))
     if(is.na(dodiff))
       return(d-1)
   }
