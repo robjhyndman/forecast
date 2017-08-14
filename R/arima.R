@@ -202,6 +202,13 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), max.d=2)
   x <- c(na.omit(c(x)))
   d <- 0
 
+  if(alpha < 0.01){
+    warning("Specified alpha value is less than the minimum, setting alpha=0.01")
+  }
+  else if(alpha > 0.1){
+    warning("Specified alpha value is larger than the maximum, setting alpha=0.1")
+  }
+  
   if(is.constant(x))
     return(d)
   
