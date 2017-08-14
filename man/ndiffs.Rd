@@ -5,9 +5,10 @@
 \alias{nsdiffs}
 \title{Number of differences required for a stationary series}
 \usage{
-ndiffs(x, alpha = 0.05, test = c("kpss", "adf", "pp"), max.d = 2)
+ndiffs(x, alpha = 0.05, test = c("kpss", "adf", "pp"), type = c("level",
+  "trend"), max.d = 2)
 
-nsdiffs(x, m = frequency(x), test = c("ocsb", "ch"), max.D = 1)
+nsdiffs(x, m = frequency(x), test = c("ocsb", "ch", "hegy"), max.D = 1)
 }
 \arguments{
 \item{x}{A univariate time series}
@@ -15,6 +16,8 @@ nsdiffs(x, m = frequency(x), test = c("ocsb", "ch"), max.D = 1)
 \item{alpha}{Level of the test, possible values range from 0.01 to 0.1.}
 
 \item{test}{Type of unit root test to use}
+
+\item{type}{Specification of the deterministic component in the regression}
 
 \item{max.d}{Maximum number of non-seasonal differences allowed}
 
