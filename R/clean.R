@@ -20,8 +20,7 @@
 #' @param lambda a numeric value suggesting Box-cox transformation
 #' @return Time series
 #' @author Rob J Hyndman
-#' @seealso \code{\link[forecast]{na.interp}},
-#' \code{\link[forecast]{tsoutliers}}
+#' @seealso \code{\link[forecast]{tsoutliers}}
 #' @keywords ts
 #' @examples
 #' 

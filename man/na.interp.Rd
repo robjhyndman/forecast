@@ -29,7 +29,6 @@ plot(na.interp(gold))
 
 }
 \seealso{
-\code{\link[forecast]{na.interp}},
 \code{\link[forecast]{tsoutliers}}
 }
 \author{
