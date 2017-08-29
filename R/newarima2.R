@@ -161,9 +161,10 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     attr(lambda, "biasadj") <- biasadj
   }
 
-  # Choose order of differencing
+  # Check xreg and do regression if necessary
   if(!is.null(xreg))
   {
+    # Make sure it is a matrix with column names
     nmxreg <- deparse(substitute(xreg))
     xregg <- as.matrix(xreg)
     if(ncol(xregg)==1 & length(nmxreg) > 1)
@@ -171,6 +172,20 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     if (is.null(colnames(xregg)))
       colnames(xregg) <- if (ncol(xregg) == 1) nmxreg
     else paste(nmxreg, 1:ncol(xregg), sep = "")
+
+    # Check that xreg is not rank deficient
+    # First check if any columns are constant
+    constant_columns <- apply(xregg, 2, is.constant)
+    if(any(constant_columns)) # Remove first one
+      xregg <- xregg[,-which(constant_columns)[1]]
+
+    # Now check if it is rank deficient
+    sv <- svd(cbind(rep(1,NROW(xregg)), xregg))$d
+    if(min(sv)/sum(sv) < .Machine$double.eps)
+      stop("xreg is rank deficient")
+
+    # Finally find residuals from regression in order
+    # to estimate appropriate level of differencing
     j <- !is.na(x) & !is.na(rowSums(xregg))
     xx <- x
     xx[j] <- residuals(lm(x ~ xregg))
@@ -180,6 +195,8 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     xx <- x
     xregg <- NULL
   }
+
+  # Choose order of differencing
   if(stationary)
     d <- D <- 0
   if(m == 1)
