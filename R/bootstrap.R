@@ -79,9 +79,14 @@ MBB <- function(x, window_size) {
 #' bootstrapped_series <- bld.mbb.bootstrap(WWWusage, 100)
 #'
 #' @export
-bld.mbb.bootstrap <- function(x, num, block_size = if(frequency(x)>1) 2*frequency(x) else 8 ) {
+bld.mbb.bootstrap <- function(x, num, block_size=NULL)
+{
 
   freq <- frequency(x)
+  if(is.null(block_size))
+  {
+    block_size <- ifelse(freq > 1, 2*freq, min(8, floor(length(x)/ 2)))
+  }
 
   xs <- list()
   xs[[1]] <- x # the first series is the original one
