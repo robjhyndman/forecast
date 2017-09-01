@@ -38,7 +38,7 @@ na.interp <- function(x, lambda=NULL)
   # Convert to ts
   if(is.null(tsp(x)))
     x <- ts(x)
-  if(!is.null(dim(x)))
+  if(length(dim(x)) > 1)
     stop("The time series is not univariate.")
 
   #Transform if requested
