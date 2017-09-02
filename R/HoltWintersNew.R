@@ -11,7 +11,8 @@ HoltWintersZZ  <- function (x,
 				exponential = FALSE, # exponential
 				phi = NULL, # damp
 				lambda = NULL, # box-cox
-				biasadj = FALSE # adjusted back-transformed mean for box-cox
+				biasadj = FALSE, # adjusted back-transformed mean for box-cox
+        warnings = TRUE # return optimization warnings
 )
 {
 	x <- as.ts(x)
@@ -124,7 +125,8 @@ HoltWintersZZ  <- function (x,
 		sol <- optim(optim.start, error, method = "L-BFGS-B", lower = lower[select], upper = upper[select], select=select)
 		if(sol$convergence || any(sol$par < 0 | sol$par > 1)) {
 			if (sol$convergence > 50) {
-				warning(gettextf("optimization difficulties: %s", sol$message), domain = NA)
+        if(warnings)
+  				warning(gettextf("optimization difficulties: %s", sol$message), domain = NA)
 			} else stop("optimization failure")
 		}
 		if(select[1]>0)
