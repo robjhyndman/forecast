@@ -110,6 +110,9 @@ dshw <- function(y, period1=NULL, period2=NULL, h=2*max(period1,period2),
   if(any(class(y) != "msts"))
     y <- msts(y, c(period1, period2))
 
+  if(length(y) < 2*max(period2))
+    stop("Insufficient data to estimate model")
+
   if(!armethod)
     phi <- 0
 
