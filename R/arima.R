@@ -778,8 +778,8 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
   origx <- y
   if(!is.null(lambda)){
     x <- BoxCox(x, lambda)
-	  
-    if(is.null(attr(lambda, "biasadj"))
+
+    if(is.null(attr(lambda, "biasadj")))
       attr(lambda, "biasadj") <- biasadj
   }
 
