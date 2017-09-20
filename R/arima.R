@@ -920,7 +920,7 @@ arima2 <- function (x, model, xreg, method)
 #' @export
 print.ARIMA <- function (x, digits=max(3, getOption("digits") - 3), se=TRUE, ...){
     cat("Series:",x$series,"\n")
-    cat(arima.string(x, padding=TRUE),"\n")
+    cat(arima.string(x, padding=FALSE),"\n")
     if(!is.null(x$lambda))
         cat("Box Cox transformation: lambda=",x$lambda,"\n")
 
