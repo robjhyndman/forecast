@@ -180,7 +180,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
       xregg <- xregg[,-which(constant_columns)[1]]
 
     # Now check if it is rank deficient
-    sv <- svd(cbind(rep(1,NROW(xregg)), xregg))$d
+    sv <- svd(na.omit(cbind(rep(1,NROW(xregg)), xregg)))$d
     if(min(sv)/sum(sv) < .Machine$double.eps)
       stop("xreg is rank deficient")
 
