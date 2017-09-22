@@ -1,5 +1,7 @@
-## Version 8.2
+## Version 8.2 (22 September 2017)
   * Added pkgdown site
+  * Added rolling window option to tsCV()
+  * Improved robustness to short time series and missing values
   * Bug fixes
 
 ## Version 8.1 (17 June 2017)
