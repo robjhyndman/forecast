@@ -2,7 +2,10 @@
 year <- sub("-.*", "", meta$Date)
 if(!length(year))
   year <- substr(Sys.Date(),1,4)
-vers <- paste("R package version", packageVersion("forecast"))
+vers <- meta$Version
+if(is.null(vers))
+  vers <- packageVersion("forecast")
+vers <- paste("R package version", vers)
 
 citHeader("To cite the forecast package in publications, please use:")
 
