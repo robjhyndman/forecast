@@ -4,8 +4,7 @@
 \alias{bld.mbb.bootstrap}
 \title{Box-Cox and Loess-based decomposition bootstrap.}
 \usage{
-bld.mbb.bootstrap(x, num, block_size = if (frequency(x) > 1) 2 * frequency(x)
-  else 8)
+bld.mbb.bootstrap(x, num, block_size = NULL)
 }
 \arguments{
 \item{x}{Original time series.}

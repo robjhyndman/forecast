@@ -280,7 +280,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
         alpha=alpha, beta=beta, gamma=gamma, phi=phi,
         exponential=(trendtype=="M"),
         seasonal=ifelse(seasontype!="A","multiplicative","additive"),
-        lambda=lambda, biasadj=biasadj), silent=TRUE)
+        lambda=lambda, biasadj=biasadj, warnings=FALSE), silent=TRUE)
       if(!("try-error" %in% class(fit)))
       {
         fit$call <- match.call()
@@ -296,7 +296,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
       fit <- try(HoltWintersZZ(orig.y,
         alpha=alpha, beta=beta, gamma=FALSE, phi=phi,
         exponential=(trendtype=="M"),
-        lambda=lambda, biasadj=biasadj), silent=TRUE)
+        lambda=lambda, biasadj=biasadj, warnings=FALSE), silent=TRUE)
       if(!("try-error" %in% class(fit)))
       {
         fit$call <- match.call()
@@ -311,7 +311,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
     {
       fit <- try(HoltWintersZZ(orig.y,
         alpha=alpha, beta=FALSE, gamma=FALSE,
-        lambda=lambda, biasadj=biasadj), silent=TRUE)
+        lambda=lambda, biasadj=biasadj, warnings=FALSE), silent=TRUE)
       if(!("try-error" %in% class(fit)))
       {
         fit$call <- match.call()
@@ -324,11 +324,11 @@ ets <- function(y, model="ZZZ", damped=NULL,
     fit1 <- try(HoltWintersZZ(orig.y,
         alpha=alpha, beta=beta, gamma=FALSE, phi=phi,
         exponential=(trendtype=="M"),
-        lambda=lambda, biasadj=biasadj), silent=TRUE)
+        lambda=lambda, biasadj=biasadj, warnings=FALSE), silent=TRUE)
     fit2 <- try(HoltWintersZZ(orig.y,
         alpha=alpha, beta=FALSE, gamma=FALSE, phi=phi,
         exponential=(trendtype=="M"),
-        lambda=lambda, biasadj=biasadj), silent=TRUE)
+        lambda=lambda, biasadj=biasadj, warnings=FALSE), silent=TRUE)
     if("try-error" %in% class(fit1))
       fit <- fit2
     else if(fit1$sigma2 < fit2$sigma2)

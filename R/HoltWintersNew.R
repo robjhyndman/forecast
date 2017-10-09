@@ -11,7 +11,8 @@ HoltWintersZZ  <- function (x,
 				exponential = FALSE, # exponential
 				phi = NULL, # damp
 				lambda = NULL, # box-cox
-				biasadj = FALSE # adjusted back-transformed mean for box-cox
+				biasadj = FALSE, # adjusted back-transformed mean for box-cox
+        warnings = TRUE # return optimization warnings
 )
 {
 	x <- as.ts(x)
@@ -124,7 +125,8 @@ HoltWintersZZ  <- function (x,
 		sol <- optim(optim.start, error, method = "L-BFGS-B", lower = lower[select], upper = upper[select], select=select)
 		if(sol$convergence || any(sol$par < 0 | sol$par > 1)) {
 			if (sol$convergence > 50) {
-				warning(gettextf("optimization difficulties: %s", sol$message), domain = NA)
+        if(warnings)
+  				warning(gettextf("optimization difficulties: %s", sol$message), domain = NA)
 			} else stop("optimization failure")
 		}
 		if(select[1]>0)
@@ -141,6 +143,7 @@ HoltWintersZZ  <- function (x,
 
 	tspx <- tsp(x)
 	fitted <- ts(final.fit$fitted,frequency=m,start=tspx[1])
+  res <- ts(final.fit$residuals, frequency=m, start=tspx[1])
 	if(!is.null(lambda))
 	{
 	  fitted <- InvBoxCox(fitted, lambda, biasadj, var(final.fit$residuals))
@@ -211,23 +214,22 @@ HoltWintersZZ  <- function (x,
   }
 
   if(components[1]=="A")
-  	sigma2 <- mean(final.fit$residuals^2)
+  	sigma2 <- mean(res^2)
   else
-  	sigma2 <- mean((final.fit$residuals/fitted)^2)
-	structure(list(fitted    = fitted,
-			residuals=final.fit$residuals,
-			components=components,
-					x        = x,
-					par=c(param,initstate),
-					initstate=initstate,
-					states=states,
-					SSE       = final.fit$SSE,
-					sigma2 = sigma2,
-					call      = match.call(),
-					m = m
-			),
-			class = "ets"
-	)
+  	sigma2 <- mean((res/fitted)^2)
+	structure(list(
+      fitted     = fitted,
+      residuals  = res,
+      components = components,
+      x          = x,
+      par        = c(param,initstate),
+      initstate  = initstate,
+      states     = states,
+      SSE        = final.fit$SSE,
+      sigma2     = sigma2,
+      call       = match.call(),
+      m          = m),
+		class = "ets")
 }
 
 ###################################################################################
@@ -339,13 +341,13 @@ zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, seasonal="additive"
 }
 
 #' Exponential smoothing forecasts
-#' 
+#'
 #' Returns forecasts and other information for exponential smoothing forecasts
 #' applied to \code{y}.
-#' 
+#'
 #' ses, holt and hw are simply convenient wrapper functions for
 #' \code{forecast(ets(...))}.
-#' 
+#'
 #' @param y a numeric vector or time series of class \code{ts}
 #' @param h Number of periods for forecasting.
 #' @param damped If TRUE, use a damped trend.
@@ -379,15 +381,15 @@ zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, seasonal="additive"
 #' @param x Deprecated. Included for backwards compatibility.
 #' @param ... Other arguments passed to \code{forecast.ets}.
 #' @return An object of class "\code{forecast}".
-#' 
+#'
 #' The function \code{summary} is used to obtain and print a summary of the
 #' results, while the function \code{plot} produces a plot of the forecasts and
 #' prediction intervals.
-#' 
+#'
 #' The generic accessor functions \code{fitted.values} and \code{residuals}
 #' extract useful features of the value returned by \code{ets} and associated
 #' functions.
-#' 
+#'
 #' An object of class \code{"forecast"} is a list containing at least the
 #' following elements: \item{model}{A list containing information about the
 #' fitted model} \item{method}{The name of the forecasting method as a
@@ -404,17 +406,17 @@ zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, seasonal="additive"
 #' @references Hyndman, R.J., Koehler, A.B., Ord, J.K., Snyder, R.D. (2008)
 #' \emph{Forecasting with exponential smoothing: the state space approach},
 #' Springer-Verlag: New York. \url{http://www.exponentialsmoothing.net}.
-#' 
+#'
 #' Hyndman, R.J., Athanasopoulos (2014) \emph{Forecasting: principles and
 #' practice}, OTexts: Melbourne, Australia. \url{http://www.otexts.org/fpp}.
 #' @keywords ts
 #' @examples
-#' 
+#'
 #' fcast <- holt(airmiles)
 #' plot(fcast)
 #' deaths.fcast <- hw(USAccDeaths,h=48)
 #' plot(deaths.fcast)
-#' 
+#'
 #' @export
 ses <- function (y, h = 10, level = c(80, 95), fan = FALSE, initial=c("optimal","simple"),
   alpha=NULL, lambda=NULL, biasadj=FALSE, x=y, ...)

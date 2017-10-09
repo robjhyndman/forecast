@@ -79,9 +79,9 @@ testaccuracy <- function(f,x,test,d,D)
       }
       scale <- mean(abs(nd), na.rm = TRUE)
     } else { # not time series
-      scale <- mean(abs(dx-mean(dx)),na.rm=TRUE)
+      scale <- mean(abs(dx-mean(dx, na.rm=TRUE)),na.rm=TRUE)
     }
-    mase <- mean(abs(error/scale))
+    mase <- mean(abs(error/scale), na.rm=TRUE)
     out <- c(out,mase)
     names(out)[length(out)] <- "MASE"
   }
@@ -156,7 +156,7 @@ trainingaccuracy <- function(f,test,d, D)
       }
       scale <- mean(abs(nd), na.rm = TRUE)
     } else { # not time series
-      scale <- mean(abs(dx-mean(dx)),na.rm=TRUE)
+      scale <- mean(abs(dx-mean(dx, na.rm=TRUE)),na.rm=TRUE)
     }
     mase <- mean(abs(res/scale), na.rm=TRUE)
     out <- c(out,mase)

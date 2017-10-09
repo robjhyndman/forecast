@@ -8,7 +8,10 @@ PKG_NAME=$(shell grep -i ^package DESCRIPTION | cut -d : -d \  -f 2)
 all: install
 
 check:
-	rcheck
+	Rscript -e "devtools::check(document=TRUE)"
+
+check_cran:
+	Rscript -e "devtools::check(document=TRUE, run_dont_test=TRUE, check_version=TRUE, manual=TRUE)"
 
 build:
 	R CMD build .
@@ -30,3 +33,6 @@ docs:
 
 pkgdown:
 	mv vignettes /tmp/; Rscript -e "rt::rpkgdown()"; mv /tmp/vignettes .
+
+revdep:
+	Rscript -e "revdepcheck::revdep_check(num_workers=4)"
