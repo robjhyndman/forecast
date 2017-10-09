@@ -19,7 +19,8 @@ Imports:
   magrittr,
   lmtest,
   zoo,
-  timeDate
+  timeDate,
+  urca
 Suggests:
   testthat,
   knitr,

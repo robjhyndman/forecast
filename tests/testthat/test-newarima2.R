@@ -24,7 +24,7 @@ if(require(testthat))
 
   test_that("test parallel = TRUE and stepwise = FALSE for auto.arima()", {
     skip_on_travis()
-    expect_equal(auto.arima(WWWusage, parallel = TRUE, stepwise = FALSE)$arma,  c(3L,0L,0L,0L,1L,1L,0L))
+    expect_equal(auto.arima(WWWusage, parallel = TRUE, stepwise = FALSE)$arma,  c(4L,0L,0L,0L,1L,0L,0L))
   })
 
   test_that("tests for nsdiffs()", {

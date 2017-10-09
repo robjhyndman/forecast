@@ -156,9 +156,10 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
 #' (1988) test is used (with null hypothesis that a seasonal unit root exists).
 #'
 #' @param x A univariate time series
-#' @param alpha Level of the test
+#' @param alpha Level of the test, possible values range from 0.01 to 0.1.
 #' @param m Length of seasonal period
 #' @param test Type of unit root test to use
+#' @param type Specification of the deterministic component in the regression
 #' @param max.d Maximum number of non-seasonal differences allowed
 #' @param max.D Maximum number of seasonal differences allowed
 #' @return An integer.
@@ -191,24 +192,41 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
 #' ndiffs(WWWusage)
 #' ndiffs(diff(log(AirPassengers),12))
 #'
+#' @importFrom urca ur.kpss
+#' @importFrom urca ur.df
+#' @importFrom urca ur.pp
+#'
 #' @export
-ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), max.d=2)
+ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), type=c("level", "trend"), max.d=2)
 {
   test <- match.arg(test)
+  type <- match(match.arg(type), c("level","trend"))
   x <- c(na.omit(c(x)))
   d <- 0
 
+  if(alpha < 0.01){
+    warning("Specified alpha value is less than the minimum, setting alpha=0.01")
+    alpha <- 0.01
+  }
+  else if(alpha > 0.1){
+    warning("Specified alpha value is larger than the maximum, setting alpha=0.1")
+    alpha <- 0.1
+  }
+  
   if(is.constant(x))
     return(d)
-
-  if(test=="kpss")
-    suppressWarnings(dodiff <- tseries::kpss.test(x)$p.value < alpha)
-  else if(test=="adf")
-    suppressWarnings(dodiff <- tseries::adf.test(x)$p.value > alpha)
-  else if(test=="pp")
-    suppressWarnings(dodiff <- tseries::pp.test(x)$p.value > alpha)
-  else
-    stop("This shouldn't happen")
+  
+  urca_pval <- function(urca_test){
+    approx(urca_test@cval, as.numeric(sub("pct", "", colnames(urca_test@cval)))/100, xout=urca_test@teststat[1], rule=2)$y
+  }
+  
+  dodiff <- suppressWarnings(switch(test,
+              kpss = urca_pval(ur.kpss(x, type=c("mu","tau")[type])) < alpha,
+              adf = urca_pval(ur.df(x, type=c("drift","trend")[type])) > alpha,
+              pp = urca_pval(ur.pp(x, type="Z-tau", model=c("constant","trend")[type])) > alpha,
+              stop("This shouldn't happen"))
+            )
+  
   if(is.na(dodiff))
   {
     return(d)
@@ -219,14 +237,12 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), max.d=2)
     x <- diff(x)
     if(is.constant(x))
       return(d)
-    if(test=="kpss")
-      suppressWarnings(dodiff <- tseries::kpss.test(x)$p.value < alpha)
-    else if(test=="adf")
-      suppressWarnings(dodiff <- tseries::adf.test(x)$p.value > alpha)
-    else if(test=="pp")
-      suppressWarnings(dodiff <- tseries::pp.test(x)$p.value > alpha)
-    else
-      stop("This shouldn't happen")
+    dodiff <- suppressWarnings(switch(test,
+                kpss = urca_pval(ur.kpss(x, type=c("mu","tau")[type])) < alpha,
+                adf = urca_pval(ur.df(x, type=c("drift","trend")[type])) > alpha,
+                pp = urca_pval(ur.pp(x, type="Z-tau", model=c("constant","trend")[type])) > alpha,
+                stop("This shouldn't happen"))
+              )
     if(is.na(dodiff))
       return(d-1)
   }
