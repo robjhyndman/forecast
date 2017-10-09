@@ -120,8 +120,11 @@ head.ts <- function(x, n=6L, ...)
   else if((length(x) + n) > 0)
     hx <- head(c(x), n=n, ...)
   else
-    hx <- numeric(0)
+    return(numeric(0))
   attr_x$tsp[2] <- attr_x$tsp[1] + (NROW(hx)-1)/attr_x$tsp[3]
+  if(!is.null(dim(x))){
+    attr_x$dim[1] <- NROW(hx)
+  }
   attributes(hx) <- attr_x
   return(hx)
 }
@@ -136,8 +139,11 @@ tail.ts <- function(x, n=6L, ...)
   else if((length(x) + n) > 0)
     hx <- tail(c(x), n=n, ...)
   else
-    hx <- numeric(0)
+    return(numeric(0))
   attr_x$tsp[1] <- attr_x$tsp[2] - (NROW(hx)-1)/attr_x$tsp[3]
+  if(!is.null(dim(x))){
+    attr_x$dim[1] <- NROW(hx)
+  }
   attributes(hx) <- attr_x
   return(hx)
 }
