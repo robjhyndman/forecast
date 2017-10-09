@@ -111,32 +111,40 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL,
 }
 
 #' @export
+#' @importFrom utils head.matrix
 head.ts <- function(x, n=6L, ...)
 {
-  tspx <- tsp(x)
+  attr_x <- attributes(x)
   if(NCOL(x) > 1)
-    hx <- ts(utils::head.matrix(as.matrix(x), n=n, ...),
-      start=tspx[1], frequency=tspx[3])
+    hx <- head.matrix(as.matrix(x), n=n, ...)
   else if((length(x) + n) > 0)
-    hx <- ts(head(c(x), n=n, ...),
-             start=tspx[1], frequency=tspx[3])
+    hx <- head(c(x), n=n, ...)
   else
-    hx <- numeric(0)
+    return(numeric(0))
+  attr_x$tsp[2] <- attr_x$tsp[1] + (NROW(hx)-1)/attr_x$tsp[3]
+  if(!is.null(dim(x))){
+    attr_x$dim[1] <- NROW(hx)
+  }
+  attributes(hx) <- attr_x
   return(hx)
 }
 
 #' @export
+#' @importFrom utils tail.matrix
 tail.ts <- function(x, n=6L, ...)
 {
-  tspx <- tsp(x)
+  attr_x <- attributes(x)
   if(NCOL(x) > 1)
-    hx <- ts(utils::tail.matrix(as.matrix(x), n=n, ...),
-             end=tspx[2], frequency=tspx[3])
+    hx <- tail.matrix(as.matrix(x), n=n, ...)
   else if((length(x) + n) > 0)
-    hx <- ts(tail(c(x), n=n, ...),
-             end=tspx[2], frequency=tspx[3])
+    hx <- tail(c(x), n=n, ...)
   else
-    hx <- numeric(0)
+    return(numeric(0))
+  attr_x$tsp[1] <- attr_x$tsp[2] - (NROW(hx)-1)/attr_x$tsp[3]
+  if(!is.null(dim(x))){
+    attr_x$dim[1] <- NROW(hx)
+  }
+  attributes(hx) <- attr_x
   return(hx)
 }
 
