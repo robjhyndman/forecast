@@ -555,7 +555,7 @@ hfitted <- function(object, h=1, FUN=NULL, ...)
       refitarg$xreg <- ts(object$xreg[1:i,], start=tspx[1], frequency=tspx[3])
       fcarg$xreg <- ts(object$xreg[(i+1):(i+h),], start=tspx[1]+i/tspx[3], frequency=tspx[3])
     }
-    fcarg$object <- try(do.call(FUN, refitarg), silent=TRUE)
+    fcarg$object <- try(suppressWarnings(do.call(FUN, refitarg)), silent=TRUE)
     if(!is.element("try-error", class(fcarg$object)))
       fits[i+h] <- suppressWarnings(do.call("forecast", fcarg)$mean[h])
   }
