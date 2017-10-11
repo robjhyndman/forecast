@@ -412,7 +412,7 @@ print.bats <- function(x,...) {
 #' Plot components from BATS model
 #' 
 #' Produces a plot of the level, slope and seasonal components from a BATS or
-#' TBATS model. The plotted components are Box-Cox transformed with the estimated transformation parameter.
+#' TBATS model. The plotted components are Box-Cox transformed using the estimated transformation parameter.
 #' 
 #' @param x Object of class \dQuote{bats/tbats}.
 #' @param object Object of class \dQuote{bats/tbats}.
