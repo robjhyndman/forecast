@@ -10,10 +10,10 @@ tbats.components(x)
 \item{x}{A tbats object created by \code{\link{tbats}}.}
 }
 \value{
-A multiple time series (\code{mts}) object.
+A multiple time series (\code{mts}) object. The first series is the observed time series. The second series is the trend component of the fitted model. Series three onwards are the seasonal components of the fitted model with one time series for each of the seasonal components. All components are transformed using estimated Box-Cox parameter.
 }
 \description{
-Extract the level, slope and seasonal components of a TBATS model.
+Extract the level, slope and seasonal components of a TBATS model. The extracted components are Box-Cox transformed using the estimated transformation parameter.
 }
 \examples{
 
