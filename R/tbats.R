@@ -625,11 +625,11 @@ plot.tbats <- function (x, main="Decomposition by TBATS model", ...)
 
 #' Extract components of a TBATS model
 #' 
-#' Extract the level, slope and seasonal components of a TBATS model. The extracted components are Box-Cox transformed if the time series was transformed prior to fitting.
+#' Extract the level, slope and seasonal components of a TBATS model. The extracted components are Box-Cox transformed with the estimated transformation parameter.
 #' 
 #' 
 #' @param x A tbats object created by \code{\link{tbats}}.
-#' @return A multiple time series (\code{mts}) object. The first series is the observed times series. The second series is the trend component of the fitted model. Series three onwards are the seasonal components of the fitted model with one time series for each of the seasonal components. All components are based on Box-Cox transformed input time series. 
+#' @return A multiple time series (\code{mts}) object. The first series is the observed time series. The second series is the trend component of the fitted model. Series three onwards are the seasonal components of the fitted model with one time series for each of the seasonal components. All components are transformed with estimated Box-Cox parameter. 
 #' @author Slava Razbash and Rob J Hyndman
 #' @seealso \code{\link{tbats}}.
 #' @references De Livera, A.M., Hyndman, R.J., & Snyder, R. D. (2011),
