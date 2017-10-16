@@ -221,7 +221,7 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), type=c("level", "tren
   }
   
   dodiff <- suppressWarnings(switch(test,
-              kpss = urca_pval(ur.kpss(x, type=c("mu","tau")[type])) < alpha,
+              kpss = urca_pval(ur.kpss(x, type=c("mu","tau")[type], use.lag=trunc(10*sqrt(length(x))/14))) < alpha,
               adf = urca_pval(ur.df(x, type=c("drift","trend")[type])) > alpha,
               pp = urca_pval(ur.pp(x, type="Z-tau", model=c("constant","trend")[type])) > alpha,
               stop("This shouldn't happen"))
