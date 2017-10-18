@@ -76,6 +76,7 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
   seriesname <- deparse(substitute(y))
 
   origy <- y
+  attr_y <- attributes(origy)
 
   # Get seasonal periods
   if(is.null(seasonal.periods))
@@ -102,8 +103,11 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
 
   ny <- length(y)
   y <- na.contiguous(y)
-  if (ny != length(y))
+  if (ny != length(y)){
     warning("Missing values encountered. Using longest contiguous portion of time series")
+    if(!is.null(attr_y$tsp))
+      attr_y$tsp[1:2] <- range(time(y))
+  }
 
   # Refit model if available
   if(!is.null(model))
@@ -245,7 +249,7 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
     warning("optim() did not converge.")
   }
 
-  attributes(best.model$fitted.values) <- attributes(best.model$errors) <- attributes(origy)
+  attributes(best.model$fitted.values) <- attributes(best.model$errors) <- attr_y
   best.model$y <- origy
   best.model$series <- seriesname
   best.model$method <- "BATS"
@@ -412,7 +416,7 @@ print.bats <- function(x,...) {
 #' Plot components from BATS model
 #' 
 #' Produces a plot of the level, slope and seasonal components from a BATS or
-#' TBATS model.
+#' TBATS model. The plotted components are Box-Cox transformed using the estimated transformation parameter.
 #' 
 #' @param x Object of class \dQuote{bats/tbats}.
 #' @param object Object of class \dQuote{bats/tbats}.

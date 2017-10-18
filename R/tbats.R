@@ -80,6 +80,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
   seriesname <- deparse(substitute(y))
 
   origy <- y
+  attr_y <- attributes(origy)
 
   # Get seasonal periods
   if(is.null(seasonal.periods))
@@ -106,8 +107,11 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
 
   ny <- length(y)
   y <- na.contiguous(y)
-  if (ny != length(y))
+  if (ny != length(y)){
     warning("Missing values encountered. Using longest contiguous portion of time series")
+    if(!is.null(attr_y$tsp))
+      attr_y$tsp[1:2] <- range(time(y))
+  }
 
   # Refit model if available
   if(!is.null(model))
@@ -406,7 +410,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
 	}
 
 	best.model$call <- match.call()
-	attributes(best.model$fitted.values) <- attributes(best.model$errors) <- attributes(origy)
+	attributes(best.model$fitted.values) <- attributes(best.model$errors) <- attr_y
 	best.model$y <- origy
 	best.model$series <- seriesname
 	best.model$method <- "TBATS"
@@ -625,11 +629,11 @@ plot.tbats <- function (x, main="Decomposition by TBATS model", ...)
 
 #' Extract components of a TBATS model
 #' 
-#' Extract the level, slope and seasonal components of a TBATS model.
+#' Extract the level, slope and seasonal components of a TBATS model. The extracted components are Box-Cox transformed using the estimated transformation parameter.
 #' 
 #' 
 #' @param x A tbats object created by \code{\link{tbats}}.
-#' @return A multiple time series (\code{mts}) object.
+#' @return A multiple time series (\code{mts}) object. The first series is the observed time series. The second series is the trend component of the fitted model. Series three onwards are the seasonal components of the fitted model with one time series for each of the seasonal components. All components are transformed using estimated Box-Cox parameter. 
 #' @author Slava Razbash and Rob J Hyndman
 #' @seealso \code{\link{tbats}}.
 #' @references De Livera, A.M., Hyndman, R.J., & Snyder, R. D. (2011),
