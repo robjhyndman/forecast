@@ -929,6 +929,12 @@ arima2 <- function (x, model, xreg, method)
     refit$xreg <- xreg
   refit$sigma2 <- sigma2
 
+  if (!is.null(model$lambda))
+  {
+    refit$fitted <- InvBoxCox(x - refit$residuals, model$lambda, NULL,
+      var(refit$residuals))
+  }
+
   return(refit)
 }
 
