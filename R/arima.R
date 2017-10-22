@@ -840,6 +840,8 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
   {
     tmp <- arima2(x,model,xreg=xreg,method=method)
     xreg <- tmp$xreg
+    tmp$fitted <- NULL
+    tmp$lambda <- model$lambda
   }
   else
   {
