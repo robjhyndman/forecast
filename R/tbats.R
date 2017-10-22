@@ -80,6 +80,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
   seriesname <- deparse(substitute(y))
 
   origy <- y
+  attr_y <- attributes(origy)
 
   # Get seasonal periods
   if(is.null(seasonal.periods))
@@ -106,8 +107,11 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
 
   ny <- length(y)
   y <- na.contiguous(y)
-  if (ny != length(y))
+  if (ny != length(y)){
     warning("Missing values encountered. Using longest contiguous portion of time series")
+    if(!is.null(attr_y$tsp))
+      attr_y$tsp[1:2] <- range(time(y))
+  }
 
   # Refit model if available
   if(!is.null(model))
@@ -406,7 +410,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
 	}
 
 	best.model$call <- match.call()
-	attributes(best.model$fitted.values) <- attributes(best.model$errors) <- attributes(origy)
+	attributes(best.model$fitted.values) <- attributes(best.model$errors) <- attr_y
 	best.model$y <- origy
 	best.model$series <- seriesname
 	best.model$method <- "TBATS"

@@ -93,7 +93,10 @@ bld.mbb.bootstrap <- function(x, num, block_size=NULL)
 
   if (num>1){
     # Box-Cox transformation
-    lambda <- BoxCox.lambda(x, lower=0, upper=1)
+    if(min(x) > 1e-6)
+      lambda <- BoxCox.lambda(x, lower=0, upper=1)
+    else
+      lambda <- 1
     x.bc <- BoxCox(x, lambda)
 
     if (freq>1){
