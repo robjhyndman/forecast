@@ -480,6 +480,22 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
   else
     m <- 1
 
+
+  # Modify limits if alpha, beta or gamma have been specified.
+  if(!is.null(alpha))
+  {
+    upper[2] <- min(alpha - 1e-6, upper[2])
+    upper[3] <- min(1 - alpha - 1e-6, upper[3])
+  }
+  if(!is.null(beta))
+  {
+    lower[1] <- max(beta + 1e-6, lower[1])
+  }
+  if(!is.null(gamma))
+  {
+    upper[1] <- min(1 - gamma - 1e-6, upper[1])
+  }
+  
   # Initialize smoothing parameters
   par <- initparam(alpha,beta,gamma,phi,trendtype,seasontype,damped,lower,upper,m)
   names(alpha) <- names(beta) <- names(gamma) <- names(phi) <- NULL
