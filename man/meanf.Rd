@@ -5,7 +5,7 @@
 \title{Mean Forecast}
 \usage{
 meanf(y, h = 10, level = c(80, 95), fan = FALSE, lambda = NULL,
-  biasadj = FALSE, x = y)
+  biasadj = FALSE, bootstrap = FALSE, npaths = 5000, x = y)
 }
 \arguments{
 \item{y}{a numeric vector or time series of class \code{ts}}
@@ -24,6 +24,11 @@ forecasts back-transformed via an inverse Box-Cox transformation.}
 transformations. If TRUE, point forecasts and fitted values are mean
 forecast. Otherwise, these points can be considered the median of the
 forecast densities.}
+
+\item{bootstrap}{If TRUE, use a bootstrap method to compute prediction intervals.
+Otherwise, assume a normal distribution.}
+
+\item{npaths}{Number of bootstrapped sample paths to use if \code{bootstrap==TRUE}.}
 
 \item{x}{Deprecated. Included for backwards compatibility.}
 }

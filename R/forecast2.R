@@ -20,6 +20,9 @@
 #' transformations. If TRUE, point forecasts and fitted values are mean
 #' forecast. Otherwise, these points can be considered the median of the
 #' forecast densities.
+#' @param bootstrap If TRUE, use a bootstrap method to compute prediction intervals.
+#' Otherwise, assume a normal distribution.
+#' @param npaths Number of bootstrapped sample paths to use if \code{bootstrap==TRUE}.
 #' @param x Deprecated. Included for backwards compatibility.
 #' @return An object of class "\code{forecast}".
 #'
@@ -49,7 +52,8 @@
 #' plot(nile.fcast)
 #'
 #' @export
-meanf <- function(y,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE, x=y)
+meanf <- function(y,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE, 
+  bootstrap=FALSE, npaths=5000, x=y)
 {
   n <- length(x)
   if(!is.null(lambda))
@@ -71,17 +75,28 @@ meanf <- function(y,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE, x
       stop("Confidence limit out of range")
   }
   nconf <- length(level)
-  lower <- upper <- matrix(NA,nrow=h,ncol=nconf)
-  s <- sd(x,na.rm=TRUE)
-  for(i in 1:nconf)
+  if(bootstrap)
   {
-    if(n > 1)
-      tfrac <- qt( 0.5 - level[i]/200, n-1)
-    else
-      tfrac <- -Inf
-    w <- -tfrac * s*sqrt(1+1/n)
-    lower[,i] <- f-w
-    upper[,i] <- f+w
+    e <- na.omit(res) - mean(res, na.rm=TRUE)
+    sim <- matrix(sample(e, size=npaths*h, replace=TRUE), ncol=npaths, nrow=h)
+    sim <- sweep(sim, 1, f, "+")
+    lower <- t(apply(sim, 1, quantile, prob=.5-level/200))
+    upper <- t(apply(sim, 1, quantile, prob=.5+level/200))
+  }
+  else
+  {
+    lower <- upper <- matrix(NA,nrow=h,ncol=nconf)
+    s <- sd(x,na.rm=TRUE)
+    for(i in 1:nconf)
+    {
+      if(n > 1)
+        tfrac <- qt( 0.5 - level[i]/200, n-1)
+      else
+        tfrac <- -Inf
+      w <- -tfrac * s*sqrt(1+1/n)
+      lower[,i] <- f-w
+      upper[,i] <- f+w
+    }
   }
   colnames(lower) <- colnames(upper) <- paste(level,"%",sep="")
   if(is.ts(x))

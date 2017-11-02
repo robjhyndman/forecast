@@ -4,7 +4,7 @@
 # lag=m corresponds to seasonal naive method
 
 lagwalk <- function(y, lag=1, h=10, drift=FALSE,
-  level=c(80,95), fan=FALSE, lambda=NULL, biasadj=FALSE)
+  level=c(80,95), fan=FALSE, lambda=NULL, biasadj=FALSE, bootstrap=FALSE, npaths=5000)
 {
   n <- length(y)
   m <- frequency(y)
@@ -33,11 +33,11 @@ lagwalk <- function(y, lag=1, h=10, drift=FALSE,
 
   fits <- ts(c(rep(NA,lag),head(y,-lag)) + b, start=tsp(y)[1], frequency=m)
   res <- y - fits
-  fullperiods <- (h-1)/lag+1
+  fullperiods <- trunc((h-1)/lag) + 1
   if(lag==1)
-    steps <- 1:h
+    steps <- seq_len(h)
   else
-    steps <- rep(1:fullperiods, rep(m,fullperiods))[1:h]
+    steps <- rep(1:fullperiods, rep(lag, fullperiods))[1:h]
   f <- rep(tail(y,lag), fullperiods)[1:h] + steps*b
   mse <- mean(res^2, na.rm=TRUE)
   se  <- sqrt(mse*steps  + (steps*b.se)^2)
@@ -52,17 +52,33 @@ lagwalk <- function(y, lag=1, h=10, drift=FALSE,
       stop("Confidence limit out of range")
   }
   nconf <- length(level)
-  z <- qnorm(.5 + level/200)
-  lower <- upper <- matrix(NA,nrow=h,ncol=nconf)
-  for(i in 1:nconf)
+  if(bootstrap)
   {
-    lower[,i] <- f - z[i]*se
-    upper[,i] <- f + z[i]*se
+    e <- na.omit(res) - mean(res, na.rm=TRUE)
+    sim <- matrix(NA_real_, ncol=npaths, nrow=h)
+    for(i in seq_len(npaths))
+    {
+      estar <- matrix(sample(e, size=lag*fullperiods, replace=TRUE), nrow=fullperiods)
+      estar <- c(t(apply(estar, 2, cumsum)))
+      sim[, i] <- f + estar[1L:h]
+    }
+    lower <- t(apply(sim, 1, quantile, prob=.5-level/200))
+    upper <- t(apply(sim, 1, quantile, prob=.5+level/200))
   }
-  lower <- ts(lower,start=tsp(y)[2]+1/m,frequency=m)
-  upper <- ts(upper,start=tsp(y)[2]+1/m,frequency=m)
+  else
+  {
+    lower <- upper <- matrix(NA_real_,nrow=h,ncol=nconf)
+    z <- qnorm(.5 + level/200)
+    for(i in 1:nconf)
+    {
+      lower[,i] <- f - z[i]*se
+      upper[,i] <- f + z[i]*se
+    }
+  }
+  lower <- ts(lower, start=tsp(y)[2]+1/m, frequency=m)
+  upper <- ts(upper, start=tsp(y)[2]+1/m, frequency=m)
   colnames(lower) <- colnames(upper) <- paste(level,"%",sep="")
-  fcast <- ts(f,start=tsp(y)[2]+1/m,frequency=m)
+  fcast <- ts(f, start=tsp(y)[2]+1/m, frequency=m)
   if(!is.null(lambda))
   {
     y <- origy
@@ -90,10 +106,11 @@ lagwalk <- function(y, lag=1, h=10, drift=FALSE,
 #' plot(gold.fcast)
 #' 
 #' @export
-rwf <- function(y,h=10,drift=FALSE,level=c(80,95),fan=FALSE,lambda=NULL,biasadj=FALSE,x=y)
+rwf <- function(y,h=10,drift=FALSE,level=c(80,95),fan=FALSE,lambda=NULL,biasadj=FALSE,
+  bootstrap=FALSE,npaths=5000,x=y)
 {
   fc <- lagwalk(x, lag=1, h=h, drift=drift, level=level, fan=fan,
-    lambda=lambda, biasadj=biasadj)
+    lambda=lambda, biasadj=biasadj, bootstrap=bootstrap, npaths=npaths)
   fc$model$call <- match.call()
   fc$series <- deparse(substitute(y))
 
@@ -148,6 +165,9 @@ rwf <- function(y,h=10,drift=FALSE,level=c(80,95),fan=FALSE,lambda=NULL,biasadj=
 #' transformations. If TRUE, point forecasts and fitted values are mean
 #' forecast. Otherwise, these points can be considered the median of the
 #' forecast densities.
+#' @param bootstrap If TRUE, use a bootstrap method to compute prediction intervals.
+#' Otherwise, assume a normal distribution.
+#' @param npaths Number of bootstrapped sample paths to use if \code{bootstrap==TRUE}.
 #' @param x Deprecated. Included for backwards compatibility.
 #' @return An object of class "\code{forecast}".
 #' 
@@ -178,9 +198,11 @@ rwf <- function(y,h=10,drift=FALSE,level=c(80,95),fan=FALSE,lambda=NULL,biasadj=
 #' plot(naive(gold,h=50),include=200)
 #' 
 #' @export
-naive <- function(y,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE,x=y)
+naive <- function(y,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE,
+  bootstrap=FALSE, npaths=5000, x=y)
 {
-  fc <- rwf(x, h=h, level=level, fan=fan, lambda=lambda, drift=FALSE, biasadj=biasadj)
+  fc <- rwf(x, h=h, level=level, fan=fan, lambda=lambda, drift=FALSE, 
+    biasadj=biasadj, bootstrap=bootstrap, npaths=npaths)
   fc$model$call <- match.call()
   fc$series <- deparse(substitute(y))
   fc$method <- "Naive method"
@@ -206,10 +228,11 @@ naive <- function(y,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE,x=
 #' plot(snaive(wineind))
 #' 
 #' @export
-snaive <- function(y, h=2*frequency(x), level=c(80,95), fan=FALSE, lambda=NULL, biasadj=FALSE,x=y)
+snaive <- function(y, h=2*frequency(x), level=c(80,95), fan=FALSE, lambda=NULL, biasadj=FALSE,
+  bootstrap=FALSE, npaths=5000, x=y)
 {
   fc <- lagwalk(x, lag=frequency(x), h=h, drift=FALSE, level=level, fan=fan,
-    lambda=lambda, biasadj=biasadj)
+    lambda=lambda, biasadj=biasadj, bootstrap=bootstrap, npaths=npaths)
   fc$model$call <- match.call()
   fc$series <- deparse(substitute(y))
   fc$method <- "Seasonal naive method"
