@@ -75,19 +75,18 @@ meanf <- function(y,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE,
       stop("Confidence limit out of range")
   }
   nconf <- length(level)
+  s <- sd(x,na.rm=TRUE)
   if(bootstrap)
   {
     e <- na.omit(res) - mean(res, na.rm=TRUE)
     sim <- matrix(sample(e, size=npaths*h, replace=TRUE), ncol=npaths, nrow=h)
     sim <- sweep(sim, 1, f, "+")
-    s <- mean(apply(sim, 2, sd))
     lower <- t(apply(sim, 1, quantile, prob=.5-level/200))
     upper <- t(apply(sim, 1, quantile, prob=.5+level/200))
   }
   else
   {
     lower <- upper <- matrix(NA,nrow=h,ncol=nconf)
-    s <- sd(x,na.rm=TRUE)
     for(i in 1:nconf)
     {
       if(n > 1)
