@@ -75,6 +75,7 @@ meanf <- function(y,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE,
       stop("Confidence limit out of range")
   }
   nconf <- length(level)
+  s <- sd(x,na.rm=TRUE)
   if(bootstrap)
   {
     e <- na.omit(res) - mean(res, na.rm=TRUE)
@@ -86,7 +87,6 @@ meanf <- function(y,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE,
   else
   {
     lower <- upper <- matrix(NA,nrow=h,ncol=nconf)
-    s <- sd(x,na.rm=TRUE)
     for(i in 1:nconf)
     {
       if(n > 1)
@@ -120,7 +120,7 @@ meanf <- function(y,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE,
   }
 
   out <- list(method="Mean",level=level,x=x,series=deparse(substitute(y)),mean=f,lower=lower,upper=upper,
-    model=list(mu=f[1],mu.se=s/sqrt(length(x)),sd=s), lambda=lambda, fitted=fits, residuals=res)
+    model=list(mu=f[1],mu.se=s/sqrt(length(x)),sd=s, bootstrap=bootstrap), lambda=lambda, fitted=fits, residuals=res)
   out$model$call <- match.call()
 
   return(structure(out,class="forecast"))
