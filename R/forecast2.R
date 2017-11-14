@@ -80,6 +80,7 @@ meanf <- function(y,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE,
     e <- na.omit(res) - mean(res, na.rm=TRUE)
     sim <- matrix(sample(e, size=npaths*h, replace=TRUE), ncol=npaths, nrow=h)
     sim <- sweep(sim, 1, f, "+")
+    s <- mean(apply(sim, 2, sd))
     lower <- t(apply(sim, 1, quantile, prob=.5-level/200))
     upper <- t(apply(sim, 1, quantile, prob=.5+level/200))
   }
@@ -120,7 +121,7 @@ meanf <- function(y,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE,
   }
 
   out <- list(method="Mean",level=level,x=x,series=deparse(substitute(y)),mean=f,lower=lower,upper=upper,
-    model=list(mu=f[1],mu.se=s/sqrt(length(x)),sd=s), lambda=lambda, fitted=fits, residuals=res)
+    model=list(mu=f[1],mu.se=s/sqrt(length(x)),sd=s, bootstrap=bootstrap), lambda=lambda, fitted=fits, residuals=res)
   out$model$call <- match.call()
 
   return(structure(out,class="forecast"))
