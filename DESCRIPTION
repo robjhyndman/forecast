@@ -34,8 +34,9 @@ LazyData: yes
 ByteCompile: TRUE
 Authors@R: c(
   person("Rob", "Hyndman", email="Rob.Hyndman@monash.edu", role=c("aut", "cre", "cph")),
-  person("Mitchell", "O'Hara-Wild", role="aut"),
   person("Christoph", "Bergmeir", role="aut"),
+  person("Gabriel", "Caceres", role="aut"),
+  person("Mitchell", "O'Hara-Wild", role="aut"),
   person("Slava", "Razbash", role="aut"),
   person("Earo", "Wang", role="aut")
   )
