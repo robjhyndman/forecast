@@ -156,16 +156,16 @@ prediction mean squared errors. <em>International Journal of forecasting</em>,
 <span class='co'># Test on in-sample one-step forecasts</span>
 <span class='no'>f1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ets.html'>ets</a></span>(<span class='no'>WWWusage</span>)
 <span class='no'>f2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='auto.arima.html'>auto.arima</a></span>(<span class='no'>WWWusage</span>)
-<span class='fu'><a href='accuracy.html'>accuracy</a></span>(<span class='no'>f1</span>)</div><div class='output co'>#&gt;                     ME     RMSE      MAE       MPE     MAPE      MASE      ACF1
-#&gt; Training set 0.2364937 3.461057 2.798415 0.2642011 2.208328 0.6183997 0.1999073</div><div class='input'><span class='fu'><a href='accuracy.html'>accuracy</a></span>(<span class='no'>f2</span>)</div><div class='output co'>#&gt;                     ME     RMSE      MAE       MPE     MAPE      MASE
+<span class='fu'><a href='accuracy.html'>accuracy</a></span>(<span class='no'>f1</span>)</div><div class='output co'>#&gt;                     ME    RMSE      MAE       MPE     MAPE      MASE      ACF1
+#&gt; Training set 0.2243266 3.40781 2.761668 0.2629465 2.162415 0.6102792 0.2308014</div><div class='input'><span class='fu'><a href='accuracy.html'>accuracy</a></span>(<span class='no'>f2</span>)</div><div class='output co'>#&gt;                     ME     RMSE      MAE       MPE     MAPE      MASE
 #&gt; Training set 0.3035616 3.113754 2.405275 0.2805566 1.917463 0.5315228
 #&gt;                     ACF1
 #&gt; Training set -0.01715517</div><div class='input'><span class='fu'>dm.test</span>(<span class='fu'>residuals</span>(<span class='no'>f1</span>),<span class='fu'>residuals</span>(<span class='no'>f2</span>),<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='output co'>#&gt; 
 #&gt; 	Diebold-Mariano Test
 #&gt; 
 #&gt; data:  residuals(f1)residuals(f2)
-#&gt; DM = 2.1293, Forecast horizon = 1, Loss function power = 2, p-value =
-#&gt; 0.03571
+#&gt; DM = 1.9078, Forecast horizon = 1, Loss function power = 2, p-value =
+#&gt; 0.05932
 #&gt; alternative hypothesis: two.sided
 #&gt; </div><div class='input'>
 <span class='co'># Test on out-of-sample one-step forecasts</span>
@@ -173,18 +173,16 @@ prediction mean squared errors. <em>International Journal of forecasting</em>,
 <span class='no'>f2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='auto.arima.html'>auto.arima</a></span>(<span class='no'>WWWusage</span>[<span class='fl'>1</span>:<span class='fl'>80</span>])
 <span class='no'>f1.out</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ets.html'>ets</a></span>(<span class='no'>WWWusage</span>[<span class='fl'>81</span>:<span class='fl'>100</span>],<span class='kw'>model</span><span class='kw'>=</span><span class='no'>f1</span>)</div><div class='output co'>#&gt; <span class='message'>Model is being refit with current smoothing parameters but initial states are being re-estimated.</span>
 #&gt; <span class='message'>Set 'use.initial.values=TRUE' if you want to re-use existing initial values.</span></div><div class='input'><span class='no'>f2.out</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Arima.html'>Arima</a></span>(<span class='no'>WWWusage</span>[<span class='fl'>81</span>:<span class='fl'>100</span>],<span class='kw'>model</span><span class='kw'>=</span><span class='no'>f2</span>)
-<span class='fu'><a href='accuracy.html'>accuracy</a></span>(<span class='no'>f1.out</span>)</div><div class='output co'>#&gt;                      ME     RMSE      MAE       MPE     MAPE      MASE
-#&gt; Training set 0.05468787 3.285823 2.617099 0.0331609 1.382365 0.4323903
-#&gt;                   ACF1
-#&gt; Training set 0.2208391</div><div class='input'><span class='fu'><a href='accuracy.html'>accuracy</a></span>(<span class='no'>f2.out</span>)</div><div class='output co'>#&gt;                    ME     RMSE      MAE       MPE     MAPE      MASE
+<span class='fu'><a href='accuracy.html'>accuracy</a></span>(<span class='no'>f1.out</span>)</div><div class='output co'>#&gt;                     ME    RMSE      MAE       MPE     MAPE      MASE      ACF1
+#&gt; Training set 0.2100836 3.24835 2.570459 0.1203497 1.352355 0.4246845 0.2287215</div><div class='input'><span class='fu'><a href='accuracy.html'>accuracy</a></span>(<span class='no'>f2.out</span>)</div><div class='output co'>#&gt;                    ME     RMSE      MAE       MPE     MAPE      MASE
 #&gt; Training set 1.081679 3.329012 2.437119 0.6810673 1.375924 0.4026544
 #&gt;                      ACF1
 #&gt; Training set -0.004460367</div><div class='input'><span class='fu'>dm.test</span>(<span class='fu'>residuals</span>(<span class='no'>f1.out</span>),<span class='fu'>residuals</span>(<span class='no'>f2.out</span>),<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='output co'>#&gt; 
 #&gt; 	Diebold-Mariano Test
 #&gt; 
 #&gt; data:  residuals(f1.out)residuals(f2.out)
-#&gt; DM = -0.076092, Forecast horizon = 1, Loss function power = 2, p-value
-#&gt; = 0.9401
+#&gt; DM = -0.14392, Forecast horizon = 1, Loss function power = 2, p-value =
+#&gt; 0.8871
 #&gt; alternative hypothesis: two.sided
 #&gt; </div><div class='input'>
 </div></pre>
@@ -212,7 +210,7 @@ George Athanasopoulos
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://robjhyndman.com'>Rob Hyndman</a>, <a href='https://github.com/mitchelloharawild'>Mitchell O'Hara-Wild</a>, <a href='https://github.com/cbergmeir'>Christoph Bergmeir</a>, <a href='https://github.com/slavarazbash'>Slava Razbash</a>, <a href='http://earo.me'>Earo Wang</a>.</p>
+  <p>Developed by <a href='http://robjhyndman.com'>Rob Hyndman</a>, <a href='https://github.com/cbergmeir'>Christoph Bergmeir</a>, Gabriel Caceres, <a href='https://github.com/mitchelloharawild'>Mitchell O'Hara-Wild</a>, <a href='https://github.com/slavarazbash'>Slava Razbash</a>, <a href='http://earo.me'>Earo Wang</a>.</p>
 </div>
 
 <div class="pkgdown">

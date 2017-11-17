@@ -88,7 +88,7 @@
     
 
     <pre class="usage"><span class='fu'>meanf</span>(<span class='no'>y</span>, <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>80</span>, <span class='fl'>95</span>), <span class='kw'>fan</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>)</pre>
+  <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>npaths</span> <span class='kw'>=</span> <span class='fl'>5000</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -121,6 +121,15 @@ forecasts back-transformed via an inverse Box-Cox transformation.</p></td>
 transformations. If TRUE, point forecasts and fitted values are mean
 forecast. Otherwise, these points can be considered the median of the
 forecast densities.</p></td>
+    </tr>
+    <tr>
+      <th>bootstrap</th>
+      <td><p>If TRUE, use a bootstrap method to compute prediction intervals.
+Otherwise, assume a normal distribution.</p></td>
+    </tr>
+    <tr>
+      <th>npaths</th>
+      <td><p>Number of bootstrapped sample paths to use if <code>bootstrap==TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -189,7 +198,7 @@ Rob J Hyndman
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://robjhyndman.com'>Rob Hyndman</a>, <a href='https://github.com/mitchelloharawild'>Mitchell O'Hara-Wild</a>, <a href='https://github.com/cbergmeir'>Christoph Bergmeir</a>, <a href='https://github.com/slavarazbash'>Slava Razbash</a>, <a href='http://earo.me'>Earo Wang</a>.</p>
+  <p>Developed by <a href='http://robjhyndman.com'>Rob Hyndman</a>, <a href='https://github.com/cbergmeir'>Christoph Bergmeir</a>, Gabriel Caceres, <a href='https://github.com/mitchelloharawild'>Mitchell O'Hara-Wild</a>, <a href='https://github.com/slavarazbash'>Slava Razbash</a>, <a href='http://earo.me'>Earo Wang</a>.</p>
 </div>
 
 <div class="pkgdown">

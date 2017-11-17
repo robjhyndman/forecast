@@ -210,8 +210,10 @@ The additional objects returned are</p>
 <span class='co'># in-sample one-step forecasts.</span>
 <span class='fu'><a href='accuracy.html'>accuracy</a></span>(<span class='no'>air.model</span>)</div><div class='output co'>#&gt;                     ME    RMSE      MAE       MPE     MAPE      MASE       ACF1
 #&gt; Training set 0.3576253 7.89734 5.788344 0.1458472 2.670181 0.1982148 0.05807465</div><div class='input'><span class='co'># out-of-sample one-step forecasts.</span>
-<span class='fu'><a href='accuracy.html'>accuracy</a></span>(<span class='no'>air.model2</span>)</div><div class='output co'>#&gt;                    ME     RMSE      MAE      MPE     MAPE     MASE     ACF1
-#&gt; Training set 407.4725 414.7769 407.4725 98.50678 98.50678 11.34494 0.791506</div><div class='input'><span class='co'># out-of-sample multi-step forecasts</span>
+<span class='fu'><a href='accuracy.html'>accuracy</a></span>(<span class='no'>air.model2</span>)</div><div class='output co'>#&gt;                     ME     RMSE     MAE        MPE     MAPE      MASE
+#&gt; Training set 0.5159268 12.13132 8.14054 0.07949083 1.900931 0.2266508
+#&gt;                    ACF1
+#&gt; Training set -0.2166661</div><div class='input'><span class='co'># out-of-sample multi-step forecasts</span>
 <span class='fu'><a href='accuracy.html'>accuracy</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>air.model</span>,<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>48</span>,<span class='kw'>lambda</span><span class='kw'>=</span><span class='kw'>NULL</span>),
          <span class='fu'>log</span>(<span class='fu'>window</span>(<span class='no'>AirPassengers</span>,<span class='kw'>start</span><span class='kw'>=</span><span class='fl'>1957</span>)))</div><div class='output co'>#&gt;                       ME      RMSE        MAE        MPE     MAPE      MASE
 #&gt; Training set  0.35762533 7.8973404 5.78834425  0.1458472 2.670181 0.1982148
@@ -244,7 +246,7 @@ Rob J Hyndman
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://robjhyndman.com'>Rob Hyndman</a>, <a href='https://github.com/mitchelloharawild'>Mitchell O'Hara-Wild</a>, <a href='https://github.com/cbergmeir'>Christoph Bergmeir</a>, <a href='https://github.com/slavarazbash'>Slava Razbash</a>, <a href='http://earo.me'>Earo Wang</a>.</p>
+  <p>Developed by <a href='http://robjhyndman.com'>Rob Hyndman</a>, <a href='https://github.com/cbergmeir'>Christoph Bergmeir</a>, Gabriel Caceres, <a href='https://github.com/mitchelloharawild'>Mitchell O'Hara-Wild</a>, <a href='https://github.com/slavarazbash'>Slava Razbash</a>, <a href='http://earo.me'>Earo Wang</a>.</p>
 </div>
 
 <div class="pkgdown">

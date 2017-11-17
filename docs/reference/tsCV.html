@@ -120,7 +120,8 @@ must have an argument <code>h</code> for the forecast horizon.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Numerical time series object containing the forecast errors.</p>
+    <p>Numerical time series object containing the forecast errors as a vector (if h=1)
+and a matrix otherwise.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -128,8 +129,10 @@ must have an argument <code>h</code> for the forecast horizon.</p></td>
 <code>forecastfunction</code> is applied successively to the time series
 \(y_1,\dots,y_t\), for \(t=1,\dots,T-h\), making predictions
 \(\hat{y}_{t+h|t}\). The errors are given by \(e_{t+h} =
-y_{t+h}-\hat{y}_{t+h|t}\). These are returned as a
-vector, \(e_1,\dots,e_T\). The first few errors may be missing as
+y_{t+h}-\hat{y}_{t+h|t}\). If h=1, these are returned as a
+vector, \(e_1,\dots,e_T\). For h&gt;1, they are returned as a matrix with
+the hth column containing errors for forecast horizon h.
+ The first few errors may be missing as
 it may not be possible to apply <code>forecastfunction</code> to very short time
 series.</p>
     
@@ -170,7 +173,7 @@ Rob J Hyndman
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://robjhyndman.com'>Rob Hyndman</a>, <a href='https://github.com/mitchelloharawild'>Mitchell O'Hara-Wild</a>, <a href='https://github.com/cbergmeir'>Christoph Bergmeir</a>, <a href='https://github.com/slavarazbash'>Slava Razbash</a>, <a href='http://earo.me'>Earo Wang</a>.</p>
+  <p>Developed by <a href='http://robjhyndman.com'>Rob Hyndman</a>, <a href='https://github.com/cbergmeir'>Christoph Bergmeir</a>, Gabriel Caceres, <a href='https://github.com/mitchelloharawild'>Mitchell O'Hara-Wild</a>, <a href='https://github.com/slavarazbash'>Slava Razbash</a>, <a href='http://earo.me'>Earo Wang</a>.</p>
 </div>
 
 <div class="pkgdown">
