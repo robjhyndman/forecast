@@ -192,10 +192,10 @@ forecast.ts <- function(object, h=ifelse(frequency(object)>1, 2*frequency(object
       fit <- ets(object, model=model, ...)
     else if(inherits(model, "Arima"))
       fit <- Arima(object, model=model, ...)
-    else if(inherits(model, "bats"))
-      fit <- bats(object, model=model, ...)
     else if(inherits(model, "tbats"))
       fit <- tbats(object, model=model, ...)
+    else if(inherits(model, "bats"))
+      fit <- bats(object, model=model, ...)
     else if(inherits(model, "nnetar"))
       fit <- nnetar(object, model=model, ...)
     else
