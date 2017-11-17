@@ -17,8 +17,10 @@
 #' \code{forecastfunction} is applied successively to the time series
 #' \eqn{y_1,\dots,y_t}{y[1:t]}, for \eqn{t=1,\dots,T-h}, making predictions
 #' \eqn{\hat{y}_{t+h|t}}{f[t+h]}. The errors are given by \eqn{e_{t+h} =
-#' y_{t+h}-\hat{y}_{t+h|t}}{e[t+h] = y[t+h]-f[t+h]}. These are returned as a
-#' vector, \eqn{e_1,\dots,e_T}{e[1:T]}. The first few errors may be missing as
+#' y_{t+h}-\hat{y}_{t+h|t}}{e[t+h] = y[t+h]-f[t+h]}. If h=1, these are returned as a
+#' vector, \eqn{e_1,\dots,e_T}{e[1:T]}. For h>1, they are returned as a matrix with
+#' the hth column containing errors for forecast horizon h.
+#'  The first few errors may be missing as
 #' it may not be possible to apply \code{forecastfunction} to very short time
 #' series.
 #'
@@ -29,7 +31,8 @@
 #' @param h Forecast horizon
 #' @param window Length of the rolling window, if NULL, a rolling window will not be used.
 #' @param ... Other arguments are passed to \code{forecastfunction}.
-#' @return Numerical time series object containing the forecast errors.
+#' @return Numerical time series object containing the forecast errors as a vector (if h=1)
+#' and a matrix otherwise.
 #' @author Rob J Hyndman
 #' @seealso \link{CV}, \link{CVar}, \link{residuals.Arima}, \url{https://robjhyndman.com/hyndsight/tscv/}.
 #' 
@@ -48,14 +51,21 @@ tsCV <- function(y, forecastfunction, h=1, window=NULL, ...)
 {
   y <- as.ts(y)
   n <- length(y)
-  e <- y*NA
+  e <- matrix(NA_real_, nrow=n, ncol=h)
   for(i in seq_len(n-h))
   {
-    fc <- try(suppressWarnings(forecastfunction(subset(y, start=ifelse(is.null(window),1,ifelse(i-window >= 0, i-window + 1, stop("small window"))), end=i), h=h, ...)), silent=TRUE)
+    fc <- try(suppressWarnings(
+      forecastfunction(subset(y, 
+        start=ifelse(is.null(window),1L, 
+                ifelse(i-window >= 0L, i-window + 1L, stop("small window"))), 
+        end=i), h=h, ...)), silent=TRUE)
     if(!is.element("try-error", class(fc)))
-      e[i+h] <- y[i+h] - fc$mean[h]
+      e[i,] <- y[i+(1:h)] - fc$mean
   }
-  return(e)
+  if(h==1)
+    return(e[,1L])
+  else
+    return(e)
 }
 
 ## Cross-validation for AR models

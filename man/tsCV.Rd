@@ -20,7 +20,8 @@ must have an argument \code{h} for the forecast horizon.}
 \item{...}{Other arguments are passed to \code{forecastfunction}.}
 }
 \value{
-Numerical time series object containing the forecast errors.
+Numerical time series object containing the forecast errors as a vector (if h=1)
+and a matrix otherwise.
 }
 \description{
 \code{tsCV} computes the forecast errors obtained by applying
@@ -32,8 +33,10 @@ Let \code{y} contain the time series \eqn{y_1,\dots,y_T}{y[1:T]}. Then
 \code{forecastfunction} is applied successively to the time series
 \eqn{y_1,\dots,y_t}{y[1:t]}, for \eqn{t=1,\dots,T-h}, making predictions
 \eqn{\hat{y}_{t+h|t}}{f[t+h]}. The errors are given by \eqn{e_{t+h} =
-y_{t+h}-\hat{y}_{t+h|t}}{e[t+h] = y[t+h]-f[t+h]}. These are returned as a
-vector, \eqn{e_1,\dots,e_T}{e[1:T]}. The first few errors may be missing as
+y_{t+h}-\hat{y}_{t+h|t}}{e[t+h] = y[t+h]-f[t+h]}. If h=1, these are returned as a
+vector, \eqn{e_1,\dots,e_T}{e[1:T]}. For h>1, they are returned as a matrix with
+the hth column containing errors for forecast horizon h.
+ The first few errors may be missing as
 it may not be possible to apply \code{forecastfunction} to very short time
 series.
 }
