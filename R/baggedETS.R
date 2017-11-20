@@ -7,8 +7,9 @@
 #' The bagged ETS forecasting method.
 #' 
 #' This function implements the bagged ETS forecasting method described in
-#' Bergmeir et al. The \code{\link{ets}} function is applied to all
-#' bootstrapped series. Using the default parameters, the function
+#' Bergmeir et al. By default, the \code{\link{ets}} function is applied to all
+#' bootstrapped series. Base models other than \code{\link{ets}} can be given by the
+#' parameter \code{fn}. Using the default parameters, the function
 #' \code{\link{bld.mbb.bootstrap}} is used to calculate the bootstrapped series
 #' with the Box-Cox and Loess-based decomposition (BLD) bootstrap. The function
 #' \code{\link{forecast.baggedETS}} can then be used to calculate forecasts.
@@ -17,7 +18,8 @@
 #' 
 #' @param y A numeric vector or time series of class \code{ts}.
 #' @param bootstrapped_series bootstrapped versions of y.
-#' @param \dots Other arguments passed to \code{\link{ets}}.
+#' @param fn the forecast function to use. Default is \code{\link{ets}} 
+#' @param \dots Other arguments passed to the forecast function.
 #' @return Returns an object of class "\code{baggedETS}".
 #' 
 #' The function \code{print} is used to obtain and print a summary of the
@@ -41,10 +43,13 @@
 #' plot(fcast)
 #' 
 #' @export
-baggedETS <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), ...)
+baggedETS <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), fn=c("ets", "auto.arima"), ...)
 {
+
+  fn <- match.fun(match.arg(fn))
+
   mod_boot <- lapply(bootstrapped_series, function(x) {
-        mod <- ets(x, ...)
+        mod <- fn(x, ...)
       })
 
   # Return results
@@ -101,7 +106,7 @@ baggedETS <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), ...)
 #' stored as \code{object}).} \item{xreg}{The external regressors used in
 #' fitting (if given).} \item{residuals}{Residuals from the fitted model. That
 #' is x minus fitted values.} \item{fitted}{Fitted values (one-step forecasts)}
-#' \item{...}{Other arguments}
+#' \item{...}{Other arguments, passed on to the forecast function of the original method}
 #' @author Christoph Bergmeir, Fotios Petropoulos
 #' @seealso \code{\link{baggedETS}}.
 #' @references Bergmeir, C., R. J. Hyndman, and J. M. Benitez (2016). Bagging
@@ -113,6 +118,11 @@ baggedETS <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), ...)
 #' fcast <- forecast(fit)
 #' plot(fcast)
 #' 
+#' fit2 <- baggedETS(WWWusage, fn="auto.arima")
+#' fcast2 <- forecast(fit2)
+#' plot(fcast2)
+#' accuracy(fcast2)
+#' 
 #' @export
 forecast.baggedETS <- function(object, h=ifelse(frequency(object$x)>1, 2*frequency(object$x), 10), ...) {
 
@@ -122,7 +132,10 @@ forecast.baggedETS <- function(object, h=ifelse(frequency(object$x)>1, 2*frequen
   tspx <- tsp(out$x)
 
   forecasts_boot <- lapply(out$model$models, function(mod) {
-        forecast(mod, PI=FALSE, h=h)$mean
+        if(inherits(mod, "ets"))
+          forecast(mod, PI=FALSE, h=h, ...)$mean
+        else
+          forecast(mod, h=h, ...)$mean        
       })
 
   forecasts_boot <- as.matrix(as.data.frame(forecasts_boot))
@@ -136,6 +149,9 @@ forecast.baggedETS <- function(object, h=ifelse(frequency(object$x)>1, 2*frequen
   #out <- list()
   out$forecasts_boot <- forecasts_boot
 
+#  browser()
+#  out$model$models
+  
   out$mean <- ts(apply(forecasts_boot, 1, mean),frequency=frequency(out$x),start=start.f)
   out$median <- ts(apply(forecasts_boot, 1, median))
   out$lower <- ts(apply(forecasts_boot, 1, min))

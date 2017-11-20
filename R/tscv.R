@@ -77,7 +77,12 @@ tsCV <- function(y, forecastfunction, h=1, window=NULL, ...)
 #'
 #' \code{CVar} computes the errors obtained by applying an autoregressive
 #' modelling function to subsets of the time series \code{y} using k-fold
-#' cross-validation as described in Bergmeir, Hyndman and Koo (2015).
+#' cross-validation as described in Bergmeir, Hyndman and Koo (2015). It also 
+#' applies a Ljung-Box test to the residuals. If this test is significant
+#' (see returned pvalue), there is serial correlation in the residuals and the
+#' model can be considered to be underfitting the data. In this case, the 
+#' cross-validated errors can underestimate the generalization error and should
+#' not be used.  
 #'
 #' @aliases print.CVar
 #'
@@ -86,6 +91,8 @@ tsCV <- function(y, forecastfunction, h=1, window=NULL, ...)
 #' @param FUN Function to fit an autoregressive model. Currently, it only works
 #' with the \code{\link{nnetar}} function.
 #' @param cvtrace Provide progress information.
+#' @param blocked choose folds randomly or as blocks?
+#' @param LBlags lags for the Ljung-Box test, defaults to 24, for yearly series can be set to 20
 #' @param ... Other arguments are passed to \code{FUN}.
 #' @return A list containing information about the model and accuracy for each
 #' fold, plus other summary information computed across folds.
@@ -102,8 +109,13 @@ tsCV <- function(y, forecastfunction, h=1, window=NULL, ...)
 #' print(modelcv)
 #' print(modelcv$fold1)
 #'
+#' plot(lynx)
+#' lines(modelcv$testfit, col="green")
+#' lines(modelcv$residuals, col="red")
+#' Acf(modelcv$residuals)
+#' 
 #' @export
-CVar <- function(y, k=10, FUN=nnetar, cvtrace=FALSE, ...){
+CVar <- function(y, k=10, FUN=nnetar, cvtrace=FALSE, blocked=FALSE, LBlags=24, ...){
   nx <- length(y)
   ## n-folds at most equal number of points
   k <- min(as.integer(k), nx)
@@ -111,10 +123,14 @@ CVar <- function(y, k=10, FUN=nnetar, cvtrace=FALSE, ...){
     stop("k must be at least 2")
   # Set up folds
   ind <- seq_len(nx)
-  fold <- sample(rep(1:k, length.out=nx))
+  fold <- if(blocked) 
+            sort(rep(1:k, length.out=nx))
+          else 
+            sample(rep(1:k, length.out=nx))
 
   cvacc <- matrix(NA_real_, nrow=k, ncol=7)
   out <- list()
+  alltestfit <- rep(NA, length.out=nx)
   for (i in 1:k)
   {
     out[[paste0("fold", i)]] <- list()
@@ -127,12 +143,25 @@ CVar <- function(y, k=10, FUN=nnetar, cvtrace=FALSE, ...){
     cvacc[i, ] <- acc
     out[[paste0("fold", i)]]$model <- trainmodel
     out[[paste0("fold", i)]]$accuracy <- acc
+    
+    out[[paste0("fold", i)]]$testfit <- testfit
+    out[[paste0("fold", i)]]$testset <- testset
+    
+    alltestfit[testset] <- testfit[testset]
+    
     if (isTRUE(cvtrace)){
       cat("Fold", i, "\n")
       print(acc)
       cat("\n")
     }
   }
+  
+  out$testfit <- ts(alltestfit)
+  tsp(out$testfit) <- tsp(y)
+  
+  out$residuals <- out$testfit - y
+  out$LBpvalue <- Box.test(out$residuals, type="Ljung", lag=LBlags)$p.value
+  
   out$k <- k
   ## calculate mean accuracy accross all folds
   CVmean <- matrix(apply(cvacc, 2, FUN=mean, na.rm=TRUE), dimnames=list(colnames(acc), "Mean"))
@@ -157,5 +186,11 @@ print.CVar <- function(x, ...)
   cat("\n", x$k, "-fold cross-validation\n", sep="")
   ## Print mean & sd accuracy() results
   print(x$CVsummary)
+  
+  cat("\n")
+  cat("p-value of Ljung-Box test of residuals is ", x$LBpvalue, "\n")
+  cat("if this value is significant (<0.05),\n")
+  cat("the result of the cross-validation should not be used\n") 
+  cat("as the model is underfitting the data.\n")
   invisible(x)
 }
