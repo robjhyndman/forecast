@@ -5,14 +5,17 @@
 \alias{print.baggedETS}
 \title{Forecasting using the bagged ETS method}
 \usage{
-baggedETS(y, bootstrapped_series = bld.mbb.bootstrap(y, 100), ...)
+baggedETS(y, bootstrapped_series = bld.mbb.bootstrap(y, 100), fn = c("ets",
+  "auto.arima"), ...)
 }
 \arguments{
 \item{y}{A numeric vector or time series of class \code{ts}.}
 
 \item{bootstrapped_series}{bootstrapped versions of y.}
 
-\item{\dots}{Other arguments passed to \code{\link{ets}}.}
+\item{fn}{the forecast function to use. Default is \code{\link{ets}}}
+
+\item{\dots}{Other arguments passed to the forecast function.}
 }
 \value{
 Returns an object of class "\code{baggedETS}".
@@ -33,8 +36,9 @@ The bagged ETS forecasting method.
 }
 \details{
 This function implements the bagged ETS forecasting method described in
-Bergmeir et al. The \code{\link{ets}} function is applied to all
-bootstrapped series. Using the default parameters, the function
+Bergmeir et al. By default, the \code{\link{ets}} function is applied to all
+bootstrapped series. Base models other than \code{\link{ets}} can be given by the
+parameter \code{fn}. Using the default parameters, the function
 \code{\link{bld.mbb.bootstrap}} is used to calculate the bootstrapped series
 with the Box-Cox and Loess-based decomposition (BLD) bootstrap. The function
 \code{\link{forecast.baggedETS}} can then be used to calculate forecasts.
@@ -45,12 +49,13 @@ fcast <- forecast(fit)
 plot(fcast)
 
 }
+\author{
+Christoph Bergmeir, Fotios Petropoulos
+}
 \references{
 Bergmeir, C., R. J. Hyndman, and J. M. Benitez (2016). Bagging
 Exponential Smoothing Methods using STL Decomposition and Box-Cox
 Transformation. International Journal of Forecasting 32, 303-312.
 }
-\author{
-Christoph Bergmeir, Fotios Petropoulos
-}
 \keyword{ts}
+
