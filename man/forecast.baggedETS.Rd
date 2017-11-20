@@ -33,7 +33,7 @@ associated with the prediction intervals} \item{x}{The original time series
 stored as \code{object}).} \item{xreg}{The external regressors used in
 fitting (if given).} \item{residuals}{Residuals from the fitted model. That
 is x minus fitted values.} \item{fitted}{Fitted values (one-step forecasts)}
-\item{...}{Other arguments}
+\item{...}{Other arguments, passed on to the forecast function of the original method}
 }
 \description{
 Returns forecasts and other information for bagged ETS models.
@@ -49,6 +49,14 @@ fit <- baggedETS(WWWusage)
 fcast <- forecast(fit)
 plot(fcast)
 
+fit2 <- baggedETS(WWWusage, fn="auto.arima")
+fcast2 <- forecast(fit2)
+plot(fcast2)
+accuracy(fcast2)
+
+}
+\author{
+Christoph Bergmeir, Fotios Petropoulos
 }
 \references{
 Bergmeir, C., R. J. Hyndman, and J. M. Benitez (2016). Bagging
@@ -58,7 +66,5 @@ Transformation. International Journal of Forecasting 32, 303-312.
 \seealso{
 \code{\link{baggedETS}}.
 }
-\author{
-Christoph Bergmeir, Fotios Petropoulos
-}
 \keyword{ts}
+

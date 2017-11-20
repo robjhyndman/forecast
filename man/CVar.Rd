@@ -5,7 +5,8 @@
 \alias{print.CVar}
 \title{k-fold Cross-Validation applied to an autoregressive model}
 \usage{
-CVar(y, k = 10, FUN = nnetar, cvtrace = FALSE, ...)
+CVar(y, k = 10, FUN = nnetar, cvtrace = FALSE, blocked = FALSE,
+  LBlags = 24, ...)
 }
 \arguments{
 \item{y}{Univariate time series}
@@ -17,6 +18,10 @@ with the \code{\link{nnetar}} function.}
 
 \item{cvtrace}{Provide progress information.}
 
+\item{blocked}{choose folds randomly or as blocks?}
+
+\item{LBlags}{lags for the Ljung-Box test, defaults to 24, for yearly series can be set to 20}
+
 \item{...}{Other arguments are passed to \code{FUN}.}
 }
 \value{
@@ -26,7 +31,12 @@ fold, plus other summary information computed across folds.
 \description{
 \code{CVar} computes the errors obtained by applying an autoregressive
 modelling function to subsets of the time series \code{y} using k-fold
-cross-validation as described in Bergmeir, Hyndman and Koo (2015).
+cross-validation as described in Bergmeir, Hyndman and Koo (2015). It also 
+applies a Ljung-Box test to the residuals. If this test is significant
+(see returned pvalue), there is serial correlation in the residuals and the
+model can be considered to be underfitting the data. In this case, the 
+cross-validated errors can underestimate the generalization error and should
+not be used.
 }
 \examples{
 
@@ -34,6 +44,14 @@ modelcv <- CVar(lynx, k=5, lambda=0.15)
 print(modelcv)
 print(modelcv$fold1)
 
+plot(lynx)
+lines(modelcv$testfit, col="green")
+lines(modelcv$residuals, col="red")
+Acf(modelcv$residuals)
+
+}
+\author{
+Gabriel Caceres and Rob J Hyndman
 }
 \references{
 Bergmeir, C., Hyndman, R.J., Koo, B. (2015) A note on the
@@ -44,7 +62,5 @@ working paper 10/15.
 \seealso{
 \link{CV}, \link{tsCV}.
 }
-\author{
-Gabriel Caceres and Rob J Hyndman
-}
 \keyword{ts}
+
