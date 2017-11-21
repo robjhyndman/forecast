@@ -2,35 +2,36 @@
 
 
 
-#' Forecasting using the bagged ETS method
+#' Forecasting using a bagged model
 #' 
-#' The bagged ETS forecasting method.
+#' The bagged model forecasting method.
 #' 
-#' This function implements the bagged ETS forecasting method described in
+#' This function implements the bagged model forecasting method described in
 #' Bergmeir et al. By default, the \code{\link{ets}} function is applied to all
 #' bootstrapped series. Base models other than \code{\link{ets}} can be given by the
 #' parameter \code{fn}. Using the default parameters, the function
 #' \code{\link{bld.mbb.bootstrap}} is used to calculate the bootstrapped series
 #' with the Box-Cox and Loess-based decomposition (BLD) bootstrap. The function
-#' \code{\link{forecast.baggedETS}} can then be used to calculate forecasts.
+#' \code{\link{forecast.baggedModel}} can then be used to calculate forecasts.
 #' 
-#' @aliases print.baggedETS
+#' @aliases print.baggedModel
 #' 
 #' @param y A numeric vector or time series of class \code{ts}.
 #' @param bootstrapped_series bootstrapped versions of y.
 #' @param fn the forecast function to use. Default is \code{\link{ets}} 
 #' @param \dots Other arguments passed to the forecast function.
-#' @return Returns an object of class "\code{baggedETS}".
+#' @return Returns an object of class "\code{baggedModel}".
 #' 
 #' The function \code{print} is used to obtain and print a summary of the
 #' results.
 #' 
-#' \item{models}{A list containing the fitted ETS ensemble models.}
+#' \item{models}{A list containing the fitted ensemble models.}
 #' \item{method}{The name of the forecasting method as a character string}
-#' \item{y}{The original time series.} \item{bootstrapped_series}{The
-#' bootstrapped series.} \item{etsargs}{The arguments passed through to
-#' \code{\link{ets}}.} \item{fitted}{Fitted values (one-step forecasts). The
-#' mean is of the fitted values is calculated over the ensemble.}
+#' \item{y}{The original time series.} 
+#' \item{bootstrapped_series}{The bootstrapped series.} 
+#' \item{modelargs}{The arguments passed through to \code{fn}.} 
+#' \item{fitted}{Fitted values (one-step forecasts). The
+#' mean of the fitted values is calculated over the ensemble.}
 #' \item{residuals}{Original values minus fitted values.}
 #' @author Christoph Bergmeir, Fotios Petropoulos
 #' @references Bergmeir, C., R. J. Hyndman, and J. M. Benitez (2016). Bagging
@@ -38,12 +39,12 @@
 #' Transformation. International Journal of Forecasting 32, 303-312.
 #' @keywords ts
 #' @examples
-#' fit <- baggedETS(WWWusage)
+#' fit <- baggedModel(WWWusage)
 #' fcast <- forecast(fit)
 #' plot(fcast)
 #' 
 #' @export
-baggedETS <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), fn=c("ets", "auto.arima"), ...)
+baggedModel <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), fn=c("ets", "auto.arima"), ...)
 {
 
   fn <- match.fun(match.arg(fn))
@@ -58,7 +59,7 @@ baggedETS <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), fn=c("et
   out$bootstrapped_series <- bootstrapped_series
   out$models <- mod_boot
 
-  out$etsargs <- list(...)
+  out$modelargs <- list(...)
 
   fitted_boot <- lapply(out$models, fitted)
   fitted_boot <- as.matrix(as.data.frame(fitted_boot))
@@ -67,48 +68,25 @@ baggedETS <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), fn=c("et
   out$residuals <- out$y - out$fitted
 
   out$series <- deparse(substitute(y))
-  out$method <- "baggedETS"
+  out$method <- "baggedModel"
 
   out$call <- match.call()
-  return(structure(out,class=c("baggedETS")))
+  return(structure(out,class=c("baggedModel")))
 }
 
 
-
-
-#' Forecasting using the bagged ETS method
+#' Forecasting using bagged ETS
 #' 
-#' Returns forecasts and other information for bagged ETS models.
+#' The bagged ETS forecasting method.
 #' 
-#' Intervals are calculated as min and max values over the point forecasts from
-#' the ETS models in the ensemble. I.e., the intervals are not prediction
-#' intervals, but give an indication of how different the forecasts within the
-#' ensemble are.
+#' This function is only a wrapper for \code{\link{baggedModel}}, setting \code{fn} to "ets". 
+#' See detailed documentation there.
 #' 
-#' @param object An object of class "\code{baggedETS}" resulting from a call to
-#' \code{\link{baggedETS}}.
-#' @param h Number of periods for forecasting.
-#' @param ... Additional arguments passed to \code{\link{ets}}
-#' @return An object of class "\code{forecast}".
+#' @param y A numeric vector or time series of class \code{ts}.
+#' @param bootstrapped_series bootstrapped versions of y.
+#' @param \dots Other arguments passed to the "ets" forecast function.
+#' @return Returns an object of class "\code{baggedModel}".
 #' 
-#' The function \code{summary} is used to obtain and print a summary of the
-#' results, while the function \code{plot} produces a plot of the forecasts and
-#' prediction intervals.
-#' 
-#' An object of class "\code{forecast}" is a list containing at least the
-#' following elements: \item{model}{A list containing information about the
-#' fitted model} \item{method}{The name of the forecasting method as a
-#' character string} \item{mean}{Point forecasts as a time series}
-#' \item{lower}{Lower limits for prediction intervals} \item{upper}{Upper
-#' limits for prediction intervals} \item{level}{The confidence values
-#' associated with the prediction intervals} \item{x}{The original time series
-#' (either \code{object} itself or the time series used to create the model
-#' stored as \code{object}).} \item{xreg}{The external regressors used in
-#' fitting (if given).} \item{residuals}{Residuals from the fitted model. That
-#' is x minus fitted values.} \item{fitted}{Fitted values (one-step forecasts)}
-#' \item{...}{Other arguments, passed on to the forecast function of the original method}
-#' @author Christoph Bergmeir, Fotios Petropoulos
-#' @seealso \code{\link{baggedETS}}.
 #' @references Bergmeir, C., R. J. Hyndman, and J. M. Benitez (2016). Bagging
 #' Exponential Smoothing Methods using STL Decomposition and Box-Cox
 #' Transformation. International Journal of Forecasting 32, 303-312.
@@ -118,13 +96,64 @@ baggedETS <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), fn=c("et
 #' fcast <- forecast(fit)
 #' plot(fcast)
 #' 
-#' fit2 <- baggedETS(WWWusage, fn="auto.arima")
+#' @export
+baggedETS <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), ...)
+{
+  baggedModel(y, bootstrapped_series, fn="ets", ...)
+}
+
+
+#' Forecasting using a bagged model
+#' 
+#' Returns forecasts and other information for bagged models.
+#' 
+#' Intervals are calculated as min and max values over the point forecasts from
+#' the models in the ensemble. I.e., the intervals are not prediction
+#' intervals, but give an indication of how different the forecasts within the
+#' ensemble are.
+#' 
+#' @param object An object of class "\code{baggedModel}" resulting from a call to
+#' \code{\link{baggedModel}}.
+#' @param h Number of periods for forecasting.
+#' @param ... Other arguments, passed on to the \code{\link{forecast}} function of the original method
+#' @return An object of class "\code{forecast}".
+#' 
+#' The function \code{summary} is used to obtain and print a summary of the
+#' results, while the function \code{plot} produces a plot of the forecasts and
+#' prediction intervals.
+#' 
+#' An object of class "\code{forecast}" is a list containing at least the
+#' following elements: 
+#' \item{model}{A list containing information about the fitted model} 
+#' \item{method}{The name of the forecasting method as a character string} 
+#' \item{mean}{Point forecasts as a time series}
+#' \item{lower}{Lower limits for prediction intervals} 
+#' \item{upper}{Upper limits for prediction intervals} 
+#' \item{level}{The confidence values associated with the prediction intervals} 
+#' \item{x}{The original time series (either \code{object} itself or the 
+#' time series used to create the model stored as \code{object}).} 
+#' \item{xreg}{The external regressors used in fitting (if given).} 
+#' \item{residuals}{Residuals from the fitted model. That
+#' is x minus fitted values.} 
+#' \item{fitted}{Fitted values (one-step forecasts)}
+#' @author Christoph Bergmeir, Fotios Petropoulos
+#' @seealso \code{\link{baggedModel}}.
+#' @references Bergmeir, C., R. J. Hyndman, and J. M. Benitez (2016). Bagging
+#' Exponential Smoothing Methods using STL Decomposition and Box-Cox
+#' Transformation. International Journal of Forecasting 32, 303-312.
+#' @keywords ts
+#' @examples
+#' fit <- baggedModel(WWWusage)
+#' fcast <- forecast(fit)
+#' plot(fcast)
+#' 
+#' fit2 <- baggedModel(WWWusage, fn="auto.arima")
 #' fcast2 <- forecast(fit2)
 #' plot(fcast2)
 #' accuracy(fcast2)
 #' 
 #' @export
-forecast.baggedETS <- function(object, h=ifelse(frequency(object$x)>1, 2*frequency(object$x), 10), ...) {
+forecast.baggedModel <- function(object, h=ifelse(frequency(object$x)>1, 2*frequency(object$x), 10), ...) {
 
   out <- list(model=object, series=object$series, x=object$y, method=object$method, fitted=object$fitted,
     residuals=object$residuals)
@@ -166,7 +195,7 @@ forecast.baggedETS <- function(object, h=ifelse(frequency(object$x)>1, 2*frequen
 }
 
 
-#fitted.baggedETS <- function(object, h=1, accum_func=mean, ...){
+#fitted.baggedModel <- function(object, h=1, accum_func=mean, ...){
 #
 #  fitted_boot <- lapply(object$models, fitted, h)
 #  fitted_boot <- as.matrix(as.data.frame(fitted_boot))
@@ -174,7 +203,7 @@ forecast.baggedETS <- function(object, h=ifelse(frequency(object$x)>1, 2*frequen
 #  fitted_boot
 #}
 
-#residuals.baggedETS <- function(object, h=1, ...){
+#residuals.baggedModel <- function(object, h=1, ...){
 #
 #  residuals_boot <- lapply(object$models, residuals, h)
 #  residuals_boot <- as.matrix(as.data.frame(residuals_boot))
@@ -185,7 +214,7 @@ forecast.baggedETS <- function(object, h=ifelse(frequency(object$x)>1, 2*frequen
 #}
 
 #' @export
-print.baggedETS <- function(x, digits = max(3, getOption("digits") - 3), ...)
+print.baggedModel <- function(x, digits = max(3, getOption("digits") - 3), ...)
 {
   cat("Series:", x$series, "\n")
   cat("Model: ", x$method, "\n")
@@ -200,8 +229,8 @@ print.baggedETS <- function(x, digits = max(3, getOption("digits") - 3), ...)
 
 #' @rdname is.ets
 #' @export
-is.baggedETS <- function(x){
-  inherits(x, "baggedETS")
+is.baggedModel <- function(x){
+  inherits(x, "baggedModel")
 }
 
 

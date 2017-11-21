@@ -30,6 +30,9 @@ remainder is bootstrapped using a moving block bootstrap.
 bootstrapped_series <- bld.mbb.bootstrap(WWWusage, 100)
 
 }
+\author{
+Christoph Bergmeir, Fotios Petropoulos
+}
 \references{
 Bergmeir, C., R. J. Hyndman, and J. M. Benitez (2016). Bagging
 Exponential Smoothing Methods using STL Decomposition and Box-Cox
@@ -38,7 +41,5 @@ Transformation. International Journal of Forecasting 32, 303-312.
 \seealso{
 \code{\link{baggedETS}}.
 }
-\author{
-Christoph Bergmeir, Fotios Petropoulos
-}
 \keyword{ts}
+
