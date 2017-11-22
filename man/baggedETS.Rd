@@ -2,55 +2,32 @@
 % Please edit documentation in R/baggedETS.R
 \name{baggedETS}
 \alias{baggedETS}
-\alias{print.baggedETS}
-\title{Forecasting using the bagged ETS method}
+\title{Forecasting using bagged ETS}
 \usage{
-baggedETS(y, bootstrapped_series = bld.mbb.bootstrap(y, 100), fn = c("ets",
-  "auto.arima"), ...)
+baggedETS(y, bootstrapped_series = bld.mbb.bootstrap(y, 100), ...)
 }
 \arguments{
 \item{y}{A numeric vector or time series of class \code{ts}.}
 
 \item{bootstrapped_series}{bootstrapped versions of y.}
 
-\item{fn}{the forecast function to use. Default is \code{\link{ets}}}
-
-\item{\dots}{Other arguments passed to the forecast function.}
+\item{\dots}{Other arguments passed to the "ets" forecast function.}
 }
 \value{
-Returns an object of class "\code{baggedETS}".
-
-The function \code{print} is used to obtain and print a summary of the
-results.
-
-\item{models}{A list containing the fitted ETS ensemble models.}
-\item{method}{The name of the forecasting method as a character string}
-\item{y}{The original time series.} \item{bootstrapped_series}{The
-bootstrapped series.} \item{etsargs}{The arguments passed through to
-\code{\link{ets}}.} \item{fitted}{Fitted values (one-step forecasts). The
-mean is of the fitted values is calculated over the ensemble.}
-\item{residuals}{Original values minus fitted values.}
+Returns an object of class "\code{baggedModel}".
 }
 \description{
 The bagged ETS forecasting method.
 }
 \details{
-This function implements the bagged ETS forecasting method described in
-Bergmeir et al. By default, the \code{\link{ets}} function is applied to all
-bootstrapped series. Base models other than \code{\link{ets}} can be given by the
-parameter \code{fn}. Using the default parameters, the function
-\code{\link{bld.mbb.bootstrap}} is used to calculate the bootstrapped series
-with the Box-Cox and Loess-based decomposition (BLD) bootstrap. The function
-\code{\link{forecast.baggedETS}} can then be used to calculate forecasts.
+This function is only a wrapper for \code{\link{baggedModel}}, setting \code{fn} to "ets". 
+See detailed documentation there.
 }
 \examples{
 fit <- baggedETS(WWWusage)
 fcast <- forecast(fit)
 plot(fcast)
 
-}
-\author{
-Christoph Bergmeir, Fotios Petropoulos
 }
 \references{
 Bergmeir, C., R. J. Hyndman, and J. M. Benitez (2016). Bagging
