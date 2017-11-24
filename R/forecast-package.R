@@ -14,6 +14,7 @@
 #' @importFrom utils packageVersion tail head
 #' @importFrom ggplot2 autoplot fortify
 #' @importFrom lmtest bgtest
+#' @importFrom stats supsmu
 #' @importFrom magrittr %>%
 #'
 #' @useDynLib forecast, .registration = TRUE

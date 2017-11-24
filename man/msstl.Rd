@@ -18,17 +18,22 @@ lambda takes a numerical value, it is used as the parameter of the Box-Cox trans
 \item{s.window}{Seasonal windows to be used in the  decompositions. If scalar,
 the same value is used for all seasonal components. Otherwise, it should be a vector
 of the same length as the number of seasonal components.}
+
+\item{...}{Other arguments are passed to \code{\link[stats]{stl}}.}
 }
 \description{
 Decompose a multiple seasonal time series into seasonal, trend and remainder
 components. Seasonal components are estimated iteratively using STL. The trend
 component is computed for the last iteration of STL. Non-seasonal time series
-are decomposed into trend and remainder only. In this case, a penalized
-regression spline is used to estimate the trend.
+are decomposed into trend and remainder only. In this case, \code{\link[stats]{supsmu}} 
+is used to estimate the trend.
 Optionally, the time series may be Box-Cox transformed before decomposition.
 }
 \examples{
 library(ggplot2)
 msstl(taylor) \%>\% autoplot(facet=TRUE)
 msstl(AirPassengers, lambda='auto') \%>\% autoplot(facet=TRUE)
+}
+\seealso{
+\code{\link[stats]{stl}}
 }

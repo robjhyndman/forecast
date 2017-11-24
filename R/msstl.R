@@ -4,8 +4,8 @@
 #' Decompose a multiple seasonal time series into seasonal, trend and remainder
 #' components. Seasonal components are estimated iteratively using STL. The trend
 #' component is computed for the last iteration of STL. Non-seasonal time series
-#' are decomposed into trend and remainder only. In this case, a penalized
-#' regression spline is used to estimate the trend.
+#' are decomposed into trend and remainder only. In this case, \code{\link[stats]{supsmu}} 
+#' is used to estimate the trend.
 #' Optionally, the time series may be Box-Cox transformed before decomposition.
 #' @param x Univariate time series of class \code{msts} or \code{ts}.
 #' @param lambda Box-Cox decomposition parameter. If \code{NULL}, no transformation
@@ -15,6 +15,8 @@
 #' @param s.window Seasonal windows to be used in the  decompositions. If scalar,
 #' the same value is used for all seasonal components. Otherwise, it should be a vector
 #' of the same length as the number of seasonal components.
+#' @param ... Other arguments are passed to \code{\link[stats]{stl}}.
+#' @seealso \code{\link[stats]{stl}}, \code{link[stats]{supsmu}}
 #' @examples
 #' library(ggplot2)
 #' msstl(taylor) %>% autoplot(facet=TRUE)
@@ -84,8 +86,7 @@ msstl <- function(x, lambda=NULL, iterate=2, s.window=21, ...)
   {
     msts <- NULL
     deseas <- x
-    tt <- seq_len(n)
-    trend <- ts(fitted(mgcv::gam(deseas ~ s(tt), na.action=na.exclude)))
+    trend <- ts(stats::supsmu(seq_len(n), x)$y)
   }
   attributes(trend) <- attributes(x)
 
