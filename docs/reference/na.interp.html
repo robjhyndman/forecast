@@ -99,7 +99,9 @@ decomposition with seasonal series to replace missing values.</p>
     </tr>
     <tr>
       <th>lambda</th>
-      <td><p>a numeric value suggesting Box-cox transformation</p></td>
+      <td><p>Box-Cox decomposition parameter. If <code>NULL</code>, no transformation
+is used. If <code>lambda="auto"</code>, a transformation is automatically selected. If
+lambda takes a numerical value, it is used as the parameter of the Box-Cox transformation.</p></td>
     </tr>
     </table>
     
@@ -146,7 +148,7 @@ Rob J Hyndman
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://robjhyndman.com'>Rob Hyndman</a>, <a href='https://github.com/cbergmeir'>Christoph Bergmeir</a>, Gabriel Caceres, <a href='https://github.com/mitchelloharawild'>Mitchell O'Hara-Wild</a>, <a href='https://github.com/slavarazbash'>Slava Razbash</a>, <a href='http://earo.me'>Earo Wang</a>.</p>
+  <p>Developed by <a href='http://robjhyndman.com'>Rob Hyndman</a>, <a href='https://github.com/cbergmeir'>Christoph Bergmeir</a>, <a href='https://github.com/gabrielcaceres'>Gabriel Caceres</a>, <a href='https://github.com/mitchelloharawild'>Mitchell O'Hara-Wild</a>, <a href='https://github.com/slavarazbash'>Slava Razbash</a>, <a href='http://earo.me'>Earo Wang</a>.</p>
 </div>
 
 <div class="pkgdown">

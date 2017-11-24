@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Forecasting using the bagged ETS method — forecast.baggedETS • forecast</title>
+<title>Forecasting using a bagged model — forecast.baggedModel • forecast</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,14 +80,14 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Forecasting using the bagged ETS method</h1>
+    <h1>Forecasting using a bagged model</h1>
     </div>
 
     
-    <p>Returns forecasts and other information for bagged ETS models.</p>
+    <p>Returns forecasts and other information for bagged models.</p>
     
 
-    <pre class="usage"><span class='co'># S3 method for baggedETS</span>
+    <pre class="usage"><span class='co'># S3 method for baggedModel</span>
 <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>object</span>, <span class='kw'>h</span> <span class='kw'>=</span> <span class='fu'>ifelse</span>(<span class='fu'>frequency</span>(<span class='no'>object</span>$<span class='no'>x</span>) <span class='kw'>&gt;</span> <span class='fl'>1</span>, <span class='fl'>2</span> *
   <span class='fu'>frequency</span>(<span class='no'>object</span>$<span class='no'>x</span>), <span class='fl'>10</span>), <span class='no'>...</span>)</pre>
     
@@ -96,8 +96,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>An object of class "<code>baggedETS</code>" resulting from a call to
-<code><a href='baggedETS.html'>baggedETS</a></code>.</p></td>
+      <td><p>An object of class "<code>baggedModel</code>" resulting from a call to
+<code><a href='baggedModel.html'>baggedModel</a></code>.</p></td>
     </tr>
     <tr>
       <th>h</th>
@@ -105,7 +105,7 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional arguments passed to <code><a href='ets.html'>ets</a></code></p></td>
+      <td><p>Other arguments, passed on to the <code><a href='forecast.html'>forecast</a></code> function of the original method</p></td>
     </tr>
     </table>
     
@@ -117,23 +117,24 @@ results, while the function <code>plot</code> produces a plot of the forecasts a
 prediction intervals.</p>
 <p>An object of class "<code>forecast</code>" is a list containing at least the
 following elements:</p>
-<dt>model</dt><dd><p>A list containing information about the
-fitted model</p></dd> <dt>method</dt><dd><p>The name of the forecasting method as a
-character string</p></dd> <dt>mean</dt><dd><p>Point forecasts as a time series</p></dd>
-<dt>lower</dt><dd><p>Lower limits for prediction intervals</p></dd> <dt>upper</dt><dd><p>Upper
-limits for prediction intervals</p></dd> <dt>level</dt><dd><p>The confidence values
-associated with the prediction intervals</p></dd> <dt>x</dt><dd><p>The original time series
-(either <code>object</code> itself or the time series used to create the model
-stored as <code>object</code>).</p></dd> <dt>xreg</dt><dd><p>The external regressors used in
-fitting (if given).</p></dd> <dt>residuals</dt><dd><p>Residuals from the fitted model. That
-is x minus fitted values.</p></dd> <dt>fitted</dt><dd><p>Fitted values (one-step forecasts)</p></dd>
-<dt>...</dt><dd><p>Other arguments</p></dd>
+<dt>model</dt><dd><p>A list containing information about the fitted model</p></dd> 
+<dt>method</dt><dd><p>The name of the forecasting method as a character string</p></dd> 
+<dt>mean</dt><dd><p>Point forecasts as a time series</p></dd>
+<dt>lower</dt><dd><p>Lower limits for prediction intervals</p></dd> 
+<dt>upper</dt><dd><p>Upper limits for prediction intervals</p></dd> 
+<dt>level</dt><dd><p>The confidence values associated with the prediction intervals</p></dd> 
+<dt>x</dt><dd><p>The original time series (either <code>object</code> itself or the 
+time series used to create the model stored as <code>object</code>).</p></dd> 
+<dt>xreg</dt><dd><p>The external regressors used in fitting (if given).</p></dd> 
+<dt>residuals</dt><dd><p>Residuals from the fitted model. That
+is x minus fitted values.</p></dd> 
+<dt>fitted</dt><dd><p>Fitted values (one-step forecasts)</p></dd>
 
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Intervals are calculated as min and max values over the point forecasts from
-the ETS models in the ensemble. I.e., the intervals are not prediction
+the models in the ensemble. I.e., the intervals are not prediction
 intervals, but give an indication of how different the forecasts within the
 ensemble are.</p>
     
@@ -145,13 +146,17 @@ Transformation. International Journal of Forecasting 32, 303-312.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='baggedETS.html'>baggedETS</a></code>.</p>
+    <p><code><a href='baggedModel.html'>baggedModel</a></code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='baggedETS.html'>baggedETS</a></span>(<span class='no'>WWWusage</span>)
+    <pre class="examples"><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='baggedModel.html'>baggedModel</a></span>(<span class='no'>WWWusage</span>)
 <span class='no'>fcast</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>)
-<span class='fu'>plot</span>(<span class='no'>fcast</span>)</div><div class='img'><img src='forecast.baggedETS-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>fcast</span>)</div><div class='img'><img src='forecast.baggedModel-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='no'>fit2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='baggedModel.html'>baggedModel</a></span>(<span class='no'>WWWusage</span>, <span class='kw'>fn</span><span class='kw'>=</span><span class='st'>"auto.arima"</span>)
+<span class='no'>fcast2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit2</span>)
+<span class='fu'>plot</span>(<span class='no'>fcast2</span>)</div><div class='img'><img src='forecast.baggedModel-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'><a href='accuracy.html'>accuracy</a></span>(<span class='no'>fcast2</span>)</div><div class='output co'>#&gt;                     ME   RMSE      MAE      MPE     MAPE      MASE      ACF1
+#&gt; Training set 0.3753138 2.1963 1.730933 0.257088 1.297925 0.3825052 0.4738924</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -179,7 +184,7 @@ Christoph Bergmeir, Fotios Petropoulos
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://robjhyndman.com'>Rob Hyndman</a>, <a href='https://github.com/cbergmeir'>Christoph Bergmeir</a>, Gabriel Caceres, <a href='https://github.com/mitchelloharawild'>Mitchell O'Hara-Wild</a>, <a href='https://github.com/slavarazbash'>Slava Razbash</a>, <a href='http://earo.me'>Earo Wang</a>.</p>
+  <p>Developed by <a href='http://robjhyndman.com'>Rob Hyndman</a>, <a href='https://github.com/cbergmeir'>Christoph Bergmeir</a>, <a href='https://github.com/gabrielcaceres'>Gabriel Caceres</a>, <a href='https://github.com/mitchelloharawild'>Mitchell O'Hara-Wild</a>, <a href='https://github.com/slavarazbash'>Slava Razbash</a>, <a href='http://earo.me'>Earo Wang</a>.</p>
 </div>
 
 <div class="pkgdown">

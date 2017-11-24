@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a seasonal subseries ggplot — ggmonthplot • forecast</title>
+<title>Multiple seasonal  decomposition — msstl • forecast</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,81 +80,57 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a seasonal subseries ggplot</h1>
+    <h1>Multiple seasonal  decomposition</h1>
     </div>
 
     
-    <p>Plots a subseries plot using ggplot. Each season is plotted as a separate
-mini time series. The blue lines represent the mean of the observations
-within each season.</p>
+    <p>Decompose a multiple seasonal time series into seasonal, trend and remainder
+components. Seasonal components are estimated iteratively using STL. The trend
+component is computed for the last iteration of STL. Non-seasonal time series
+are decomposed into trend and remainder only. In this case, a penalized
+regression spline is used to estimate the trend.
+Optionally, the time series may be Box-Cox transformed before decomposition.</p>
     
 
-    <pre class="usage"><span class='fu'>ggmonthplot</span>(<span class='no'>x</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fu'>time</span>(<span class='no'>x</span>), <span class='kw'>phase</span> <span class='kw'>=</span> <span class='fu'>cycle</span>(<span class='no'>x</span>), <span class='no'>...</span>)
-
-<span class='fu'>ggsubseriesplot</span>(<span class='no'>x</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fu'>time</span>(<span class='no'>x</span>), <span class='kw'>phase</span> <span class='kw'>=</span> <span class='fu'>cycle</span>(<span class='no'>x</span>), <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>msstl</span>(<span class='no'>x</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>iterate</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>s.window</span> <span class='kw'>=</span> <span class='fl'>21</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a time series object (type <code>ts</code>).</p></td>
+      <td><p>Univariate time series of class <code>msts</code> or <code>ts</code>.</p></td>
     </tr>
     <tr>
-      <th>labels</th>
-      <td><p>A vector of labels to use for each 'season'</p></td>
+      <th>lambda</th>
+      <td><p>Box-Cox decomposition parameter. If <code>NULL</code>, no transformation
+is used. If <code>lambda="auto"</code>, a transformation is automatically selected. If
+lambda takes a numerical value, it is used as the parameter of the Box-Cox transformation.</p></td>
     </tr>
     <tr>
-      <th>times</th>
-      <td><p>A vector of times for each observation</p></td>
+      <th>iterate</th>
+      <td><p>Number of iterations to use to refine the seasonal component.</p></td>
     </tr>
     <tr>
-      <th>phase</th>
-      <td><p>A vector of seasonal components</p></td>
-    </tr>
-    <tr>
-      <th>&#8230;</th>
-      <td><p>Not used (for consistency with monthplot)</p></td>
+      <th>s.window</th>
+      <td><p>Seasonal windows to be used in the  decompositions. If scalar,
+the same value is used for all seasonal components. Otherwise, it should be a vector
+of the same length as the number of seasonal components.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Returns an object of class <code>ggplot</code>.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>The <code>ggmonthplot</code> function is simply a wrapper for
-<code>ggsubseriesplot</code> as a convenience for users familiar with
-<code><a href='http://www.rdocumentation.org/packages/stats/topics/monthplot'>monthplot</a></code>.</p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <p><code><a href='http://www.rdocumentation.org/packages/stats/topics/monthplot'>monthplot</a></code></p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='fu'>ggsubseriesplot</span>(<span class='no'>AirPassengers</span>)</div><div class='img'><img src='ggmonthplot-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>ggsubseriesplot</span>(<span class='no'>woolyrnq</span>)</div><div class='img'><img src='ggmonthplot-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>)
+<span class='fu'>msstl</span>(<span class='no'>taylor</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='kw'>facet</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='msstl-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>msstl</span>(<span class='no'>AirPassengers</span>, <span class='kw'>lambda</span><span class='kw'>=</span><span class='st'>'auto'</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='kw'>facet</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='msstl-2.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
-
-    <h2>Author</h2>
-    
-Mitchell O'Hara-Wild
 
   </div>
 </div>

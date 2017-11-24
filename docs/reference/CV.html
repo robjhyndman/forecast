@@ -114,9 +114,9 @@ R^2 values for a linear model.</p>
 <span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'>ts</span>(<span class='fu'>rnorm</span>(<span class='fl'>120</span>,<span class='fl'>0</span>,<span class='fl'>3</span>) + <span class='fl'>20</span>*<span class='fu'>sin</span>(<span class='fl'>2</span>*<span class='no'>pi</span>*(<span class='fl'>1</span>:<span class='fl'>120</span>)/<span class='fl'>12</span>), <span class='kw'>frequency</span><span class='kw'>=</span><span class='fl'>12</span>)
 <span class='no'>fit1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='tslm.html'>tslm</a></span>(<span class='no'>y</span> ~ <span class='no'>trend</span> + <span class='no'>season</span>)
 <span class='no'>fit2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='tslm.html'>tslm</a></span>(<span class='no'>y</span> ~ <span class='no'>season</span>)
-<span class='fu'>CV</span>(<span class='no'>fit1</span>)</div><div class='output co'>#&gt;         CV        AIC       AICc        BIC      AdjR2 
-#&gt;   7.368574 240.049806 244.049806 279.074691   0.970244 </div><div class='input'><span class='fu'>CV</span>(<span class='no'>fit2</span>)</div><div class='output co'>#&gt;          CV         AIC        AICc         BIC       AdjR2 
-#&gt;   7.2697275 238.7597324 242.1936947 274.9971251   0.9703446 </div><div class='input'>
+<span class='fu'>CV</span>(<span class='no'>fit1</span>)</div><div class='output co'>#&gt;          CV         AIC        AICc         BIC       AdjR2 
+#&gt;  10.5450269 283.3525903 287.3525903 322.3774747   0.9569543 </div><div class='input'><span class='fu'>CV</span>(<span class='no'>fit2</span>)</div><div class='output co'>#&gt;          CV         AIC        AICc         BIC       AdjR2 
+#&gt;  10.7437095 285.6319264 289.0658887 321.8693190   0.9558046 </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -140,7 +140,7 @@ Rob J Hyndman
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://robjhyndman.com'>Rob Hyndman</a>, <a href='https://github.com/cbergmeir'>Christoph Bergmeir</a>, Gabriel Caceres, <a href='https://github.com/mitchelloharawild'>Mitchell O'Hara-Wild</a>, <a href='https://github.com/slavarazbash'>Slava Razbash</a>, <a href='http://earo.me'>Earo Wang</a>.</p>
+  <p>Developed by <a href='http://robjhyndman.com'>Rob Hyndman</a>, <a href='https://github.com/cbergmeir'>Christoph Bergmeir</a>, <a href='https://github.com/gabrielcaceres'>Gabriel Caceres</a>, <a href='https://github.com/mitchelloharawild'>Mitchell O'Hara-Wild</a>, <a href='https://github.com/slavarazbash'>Slava Razbash</a>, <a href='http://earo.me'>Earo Wang</a>.</p>
 </div>
 
 <div class="pkgdown">

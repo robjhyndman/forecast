@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a seasonal subseries ggplot — ggmonthplot • forecast</title>
+<title>Forecasting using a bagged model — baggedModel • forecast</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,62 +80,73 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a seasonal subseries ggplot</h1>
+    <h1>Forecasting using a bagged model</h1>
     </div>
 
     
-    <p>Plots a subseries plot using ggplot. Each season is plotted as a separate
-mini time series. The blue lines represent the mean of the observations
-within each season.</p>
+    <p>The bagged model forecasting method.</p>
     
 
-    <pre class="usage"><span class='fu'>ggmonthplot</span>(<span class='no'>x</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fu'>time</span>(<span class='no'>x</span>), <span class='kw'>phase</span> <span class='kw'>=</span> <span class='fu'>cycle</span>(<span class='no'>x</span>), <span class='no'>...</span>)
-
-<span class='fu'>ggsubseriesplot</span>(<span class='no'>x</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fu'>time</span>(<span class='no'>x</span>), <span class='kw'>phase</span> <span class='kw'>=</span> <span class='fu'>cycle</span>(<span class='no'>x</span>), <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>baggedModel</span>(<span class='no'>y</span>, <span class='kw'>bootstrapped_series</span> <span class='kw'>=</span> <span class='fu'><a href='bld.mbb.bootstrap.html'>bld.mbb.bootstrap</a></span>(<span class='no'>y</span>, <span class='fl'>100</span>),
+  <span class='kw'>fn</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ets"</span>, <span class='st'>"auto.arima"</span>), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>a time series object (type <code>ts</code>).</p></td>
+      <th>y</th>
+      <td><p>A numeric vector or time series of class <code>ts</code>.</p></td>
     </tr>
     <tr>
-      <th>labels</th>
-      <td><p>A vector of labels to use for each 'season'</p></td>
+      <th>bootstrapped_series</th>
+      <td><p>bootstrapped versions of y.</p></td>
     </tr>
     <tr>
-      <th>times</th>
-      <td><p>A vector of times for each observation</p></td>
-    </tr>
-    <tr>
-      <th>phase</th>
-      <td><p>A vector of seasonal components</p></td>
+      <th>fn</th>
+      <td><p>the forecast function to use. Default is <code><a href='ets.html'>ets</a></code></p></td>
     </tr>
     <tr>
       <th>&#8230;</th>
-      <td><p>Not used (for consistency with monthplot)</p></td>
+      <td><p>Other arguments passed to the forecast function.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns an object of class <code>ggplot</code>.</p>
+    <p>Returns an object of class "<code>baggedModel</code>".</p>
+<p>The function <code>print</code> is used to obtain and print a summary of the
+results.</p>
+<dt>models</dt><dd><p>A list containing the fitted ensemble models.</p></dd>
+<dt>method</dt><dd><p>The name of the forecasting method as a character string</p></dd>
+<dt>y</dt><dd><p>The original time series.</p></dd> 
+<dt>bootstrapped_series</dt><dd><p>The bootstrapped series.</p></dd> 
+<dt>modelargs</dt><dd><p>The arguments passed through to <code>fn</code>.</p></dd> 
+<dt>fitted</dt><dd><p>Fitted values (one-step forecasts). The
+mean of the fitted values is calculated over the ensemble.</p></dd>
+<dt>residuals</dt><dd><p>Original values minus fitted values.</p></dd>
+
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The <code>ggmonthplot</code> function is simply a wrapper for
-<code>ggsubseriesplot</code> as a convenience for users familiar with
-<code><a href='http://www.rdocumentation.org/packages/stats/topics/monthplot'>monthplot</a></code>.</p>
+    <p>This function implements the bagged model forecasting method described in
+Bergmeir et al. By default, the <code><a href='ets.html'>ets</a></code> function is applied to all
+bootstrapped series. Base models other than <code><a href='ets.html'>ets</a></code> can be given by the
+parameter <code>fn</code>. Using the default parameters, the function
+<code><a href='bld.mbb.bootstrap.html'>bld.mbb.bootstrap</a></code> is used to calculate the bootstrapped series
+with the Box-Cox and Loess-based decomposition (BLD) bootstrap. The function
+<code><a href='forecast.baggedModel.html'>forecast.baggedModel</a></code> can then be used to calculate forecasts.</p>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p><code><a href='http://www.rdocumentation.org/packages/stats/topics/monthplot'>monthplot</a></code></p>
+    <p>Bergmeir, C., R. J. Hyndman, and J. M. Benitez (2016). Bagging
+Exponential Smoothing Methods using STL Decomposition and Box-Cox
+Transformation. International Journal of Forecasting 32, 303-312.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='fu'>ggsubseriesplot</span>(<span class='no'>AirPassengers</span>)</div><div class='img'><img src='ggmonthplot-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>ggsubseriesplot</span>(<span class='no'>woolyrnq</span>)</div><div class='img'><img src='ggmonthplot-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>baggedModel</span>(<span class='no'>WWWusage</span>)
+<span class='no'>fcast</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>)
+<span class='fu'>plot</span>(<span class='no'>fcast</span>)</div><div class='img'><img src='baggedModel-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -147,14 +158,14 @@ within each season.</p>
 
       <li><a href="#details">Details</a></li>
 
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#references">References</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
 
     <h2>Author</h2>
     
-Mitchell O'Hara-Wild
+Christoph Bergmeir, Fotios Petropoulos
 
   </div>
 </div>

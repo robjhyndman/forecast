@@ -86,10 +86,16 @@
     
     <p><code>CVar</code> computes the errors obtained by applying an autoregressive
 modelling function to subsets of the time series <code>y</code> using k-fold
-cross-validation as described in Bergmeir, Hyndman and Koo (2015).</p>
+cross-validation as described in Bergmeir, Hyndman and Koo (2015). It also 
+applies a Ljung-Box test to the residuals. If this test is significant
+(see returned pvalue), there is serial correlation in the residuals and the
+model can be considered to be underfitting the data. In this case, the 
+cross-validated errors can underestimate the generalization error and should
+not be used.</p>
     
 
-    <pre class="usage"><span class='fu'>CVar</span>(<span class='no'>y</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>nnetar</span>, <span class='kw'>cvtrace</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>CVar</span>(<span class='no'>y</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>nnetar</span>, <span class='kw'>cvtrace</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>blocked</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>LBlags</span> <span class='kw'>=</span> <span class='fl'>24</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -110,6 +116,14 @@ with the <code><a href='nnetar.html'>nnetar</a></code> function.</p></td>
     <tr>
       <th>cvtrace</th>
       <td><p>Provide progress information.</p></td>
+    </tr>
+    <tr>
+      <th>blocked</th>
+      <td><p>choose folds randomly or as blocks?</p></td>
+    </tr>
+    <tr>
+      <th>LBlags</th>
+      <td><p>lags for the Ljung-Box test, defaults to 24, for yearly series can be set to 20</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -141,14 +155,19 @@ working paper 10/15.
 #&gt; Call:   CVar(y = lynx, k = 5, lambda = 0.15)
 #&gt; 
 #&gt; 5-fold cross-validation
-#&gt;                    Mean          SD
-#&gt; ME        -117.82171245 207.4297895
-#&gt; RMSE       865.97203798 245.8837532
-#&gt; MAE        578.72048791 190.6054503
-#&gt; MPE        -27.84715313  35.0711508
-#&gt; MAPE        60.02540438  27.5811199
-#&gt; ACF1        -0.01593769   0.2704894
-#&gt; Theil's U    0.90977105   0.1692362</div><div class='input'><span class='fu'>print</span>(<span class='no'>modelcv</span>$<span class='no'>fold1</span>)</div><div class='output co'>#&gt; $model
+#&gt;                  Mean           SD
+#&gt; ME         34.3170286 118.23748500
+#&gt; RMSE      908.0840012 230.80882158
+#&gt; MAE       600.1250910 185.26477213
+#&gt; MPE       -11.0306429  28.95238768
+#&gt; MAPE       53.4944996  22.39654009
+#&gt; ACF1        0.1285218   0.25750606
+#&gt; Theil's U   0.7593091   0.08782801
+#&gt; 
+#&gt; p-value of Ljung-Box test of residuals is  0.9526885 
+#&gt; if this value is significant (&lt;0.05),
+#&gt; the result of the cross-validation should not be used
+#&gt; as the model is underfitting the data.</div><div class='input'><span class='fu'>print</span>(<span class='no'>modelcv</span>$<span class='no'>fold1</span>)</div><div class='output co'>#&gt; $model
 #&gt; Series: y 
 #&gt; Model:  NNAR(11,6) 
 #&gt; Call:   FUN(y = y, lambda = 0.15, subset = trainset)
@@ -157,12 +176,42 @@ working paper 10/15.
 #&gt; a 11-6-1 network with 79 weights
 #&gt; options were - linear output units 
 #&gt; 
-#&gt; sigma^2 estimated as 0.0949
+#&gt; sigma^2 estimated as 0.06502
 #&gt; 
 #&gt; $accuracy
-#&gt;                 ME     RMSE      MAE       MPE     MAPE      ACF1 Theil's U
-#&gt; Test set -352.3341 1070.599 760.3141 -89.87951 109.2968 0.3525681 0.9065455
+#&gt;                ME    RMSE      MAE       MPE     MAPE        ACF1 Theil's U
+#&gt; Test set 39.69921 821.628 618.7438 -17.67441 52.81213 -0.03941567 0.7987637
+#&gt; 
+#&gt; $testfit
+#&gt; Time Series:
+#&gt; Start = 1821 
+#&gt; End = 1934 
+#&gt; Frequency = 1 
+#&gt;   [1]         NA         NA         NA         NA         NA         NA
+#&gt;   [7]         NA         NA         NA         NA         NA  101.45344
+#&gt;  [13]  179.92873  290.54250  417.77780 2185.71590 2653.58102 3140.71426
+#&gt;  [19] 1894.30702  424.05328  150.61286   46.78822   66.85503  211.57178
+#&gt;  [25]  572.66329 2028.54260 2213.35052 2574.60403  975.06483  356.02165
+#&gt;  [31]  248.38653  251.92375  358.26216  730.97933 1643.29779 2735.18875
+#&gt;  [37] 2958.20495 2813.81563  706.23360  313.73031  241.35236  238.80861
+#&gt;  [43]  541.15924 1560.57962 2914.39432 6677.39683 5965.11481 1645.27462
+#&gt;  [49]  245.22161  435.85376  356.29253  796.76285 1600.72632 1742.54836
+#&gt;  [55] 2443.56361 1471.19866  745.85343  300.82158  195.43297  232.52639
+#&gt;  [61]  443.59992  736.84514 2079.06849 2866.62202 4245.69055 2594.22068
+#&gt;  [67]  395.48109   75.15146   41.70534   50.72292   60.54382  159.07451
+#&gt;  [73] 1484.81732 1732.17541 3725.22805 1779.82065  606.19510  105.82682
+#&gt;  [79]  151.42270  231.33910  750.09297 2036.43744 3451.52949 6872.03051
+#&gt;  [85] 6271.97086 3764.53102  451.28795  355.99591  166.34632  806.30285
+#&gt;  [91] 1371.88417 2680.54462 3021.13581 3061.28593 2968.52319 3763.76129
+#&gt;  [97]  662.51890   80.85359  223.29949  110.23886  229.18701  404.37317
+#&gt; [103] 1139.04229 2409.62754 2278.74773 2941.11009 1482.86922  489.99105
+#&gt; [109]  472.11771  648.53710  977.17901 1833.16900 2669.38332 3360.33358
+#&gt; 
+#&gt; $testset
+#&gt;  [1]   4  18  25  26  31  33  38  45  47  48  55  72  73  74  76  80  82  87  89
+#&gt; [20]  93  99 105 112
 #&gt; </div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>lynx</span>)</div><div class='input'><span class='fu'>lines</span>(<span class='no'>modelcv</span>$<span class='no'>testfit</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>"green"</span>)</div><div class='input'><span class='fu'>lines</span>(<span class='no'>modelcv</span>$<span class='no'>residuals</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>"red"</span>)</div><div class='img'><img src='CVar-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'><a href='Acf.html'>Acf</a></span>(<span class='no'>modelcv</span>$<span class='no'>residuals</span>)</div><div class='img'><img src='CVar-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -188,7 +237,7 @@ Gabriel Caceres and Rob J Hyndman
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://robjhyndman.com'>Rob Hyndman</a>, <a href='https://github.com/cbergmeir'>Christoph Bergmeir</a>, Gabriel Caceres, <a href='https://github.com/mitchelloharawild'>Mitchell O'Hara-Wild</a>, <a href='https://github.com/slavarazbash'>Slava Razbash</a>, <a href='http://earo.me'>Earo Wang</a>.</p>
+  <p>Developed by <a href='http://robjhyndman.com'>Rob Hyndman</a>, <a href='https://github.com/cbergmeir'>Christoph Bergmeir</a>, <a href='https://github.com/gabrielcaceres'>Gabriel Caceres</a>, <a href='https://github.com/mitchelloharawild'>Mitchell O'Hara-Wild</a>, <a href='https://github.com/slavarazbash'>Slava Razbash</a>, <a href='http://earo.me'>Earo Wang</a>.</p>
 </div>
 
 <div class="pkgdown">

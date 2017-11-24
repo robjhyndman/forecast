@@ -5,10 +5,12 @@ template:
 authors:
   Rob Hyndman:
     href: http://robjhyndman.com
-  Mitchell O'Hara-Wild:
-    href: https://github.com/mitchelloharawild
   Christoph Bergmeir:
     href: https://github.com/cbergmeir
+  Gabriel Caceres:
+    href: https://github.com/gabrielcaceres
+  Mitchell O'Hara-Wild:
+    href: https://github.com/mitchelloharawild
   Slava Razbash:
     href: https://github.com/slavarazbash
   Earo Wang:
@@ -58,6 +60,7 @@ reference:
     desc: "Functions used in seasonal decomposition"
     contents:
       - ma
+      - msstl
       - seasadj
       - seasonal
       - trendcycle
@@ -69,7 +72,7 @@ reference:
       - Arima
       - auto.arima
       - ets
-      - baggedETS
+      - baggedModel
       - bats
       - tbats
       - nnetar
@@ -94,7 +97,7 @@ reference:
       - forecast
       - forecast.Arima
       - forecast.ets
-      - forecast.baggedETS
+      - forecast.baggedModel
       - forecast.bats
       - forecast.tbats
       - forecast.fracdiff
