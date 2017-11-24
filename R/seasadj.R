@@ -32,6 +32,13 @@ seasadj.stl <- function(object, ...)
 
 #' @rdname seasadj
 #' @export
+seasadj.msstl <- function(object, ...)
+{
+   return(trendcycle(object) + remainder(object))
+}
+
+#' @rdname seasadj
+#' @export
 seasadj.decomposed.ts <- function(object, ...)
 {
   if(object$type=="additive")

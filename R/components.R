@@ -32,7 +32,12 @@
 #' @export
 seasonal <- function(object)
 {
-	if("stl" %in% class(object))
+  if("msstl" %in% class(object))
+  {
+    cols <- grep("Season", colnames(object))
+    return(object[,cols])
+  }
+	else if("stl" %in% class(object))
 		return(object$time.series[,"seasonal"])
 	else if("decomposed.ts" %in% class(object))
 		return(object$seasonal)
@@ -56,7 +61,9 @@ seasonal <- function(object)
 #' @export
 trendcycle <- function(object)
 {
-	if("stl" %in% class(object))
+    if("msstl" %in% class(object))
+        return(object[,"Trend"])
+	else if("stl" %in% class(object))
 		return(object$time.series[,"trend"])
 	else if("decomposed.ts" %in% class(object))
 		return(object$trend)
@@ -77,7 +84,9 @@ trendcycle <- function(object)
 #' @export
 remainder <- function(object)
 {
-	if("stl" %in% class(object))
+    if("msstl" %in% class(object))
+        return(object[,"Remainder"])
+	else if("stl" %in% class(object))
 		return(object$time.series[,"remainder"])
 	else if("decomposed.ts" %in% class(object))
 		return(object$random)

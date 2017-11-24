@@ -3,6 +3,7 @@
 \name{seasadj}
 \alias{seasadj}
 \alias{seasadj.stl}
+\alias{seasadj.msstl}
 \alias{seasadj.decomposed.ts}
 \alias{seasadj.tbats}
 \alias{seasadj.seas}
@@ -11,6 +12,8 @@
 seasadj(object, ...)
 
 \method{seasadj}{stl}(object, ...)
+
+\method{seasadj}{msstl}(object, ...)
 
 \method{seasadj}{decomposed.ts}(object, ...)
 

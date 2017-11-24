@@ -17,7 +17,9 @@
 #' the \code{zoo} package.
 #' 
 #' @param x time series
-#' @param lambda a numeric value suggesting Box-cox transformation
+#' @param lambda Box-Cox decomposition parameter. If \code{NULL}, no transformation
+#' is used. If \code{lambda="auto"}, a transformation is automatically selected. If
+#' lambda takes a numerical value, it is used as the parameter of the Box-Cox transformation.
 #' @return Time series
 #' @author Rob J Hyndman
 #' @seealso \code{\link[forecast]{tsoutliers}}
@@ -43,7 +45,11 @@ na.interp <- function(x, lambda=NULL)
 
   #Transform if requested
   if(!is.null(lambda))
+  {
+    if(lambda=="auto")
+      lambda <- BoxCox.lambda(x)
     x <- BoxCox(x, lambda=lambda)
+  }
 
   freq <- frequency(x)
   tspx <- tsp(x)
@@ -60,20 +66,26 @@ na.interp <- function(x, lambda=NULL)
   # Then add to linear interpolation of seasonally adjusted series
   else
   {
-    # Fit Fourier series for seasonality and a cubic polynomial for the trend,
+    # Fit Fourier series for seasonality and a polynomial for the trend,
     #just to get something reasonable to start with
-    K <- min(trunc(freq/2),3)
-    X <- cbind(fourier(x,K),poly(tt,degree=3))
+    if("msts" %in% class(x))
+      K <- pmin(trunc(attributes(x)$msts/2), 20L)
+    else
+      K <- min(trunc(freq/2),5)
+    X <- cbind(fourier(x,K),poly(tt,degree=pmin(trunc(n/10), 6L)))
     fit <- lm(x ~ X, na.action=na.exclude)
     pred <- predict(fit, newdata =data.frame(X))
     x[missng] <- pred[missng]
     # Now re-do it with stl to get better results
-    fit <- stl(x,s.window=11,robust=TRUE)
+    fit <- msstl(x, robust=TRUE)
     # Interpolate seasonally adjusted values
     sa <- seasadj(fit)
     sa <- approx(idx,sa[idx],1:n, rule=2)$y
     # Replace original missing values
-    x[missng] <- sa[missng] + fit$time.series[missng,"seasonal"]
+    seas <- seasonal(fit)
+    if(NCOL(seas) > 1)
+      seas <- rowSums(seas)
+    x[missng] <- sa[missng] + seas[missng]
   }
 
   # Backtransform if required
