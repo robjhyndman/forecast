@@ -50,9 +50,6 @@ lines(modelcv$residuals, col="red")
 Acf(modelcv$residuals)
 
 }
-\author{
-Gabriel Caceres and Rob J Hyndman
-}
 \references{
 Bergmeir, C., Hyndman, R.J., Koo, B. (2015) A note on the
 validity of cross-validation for evaluating time series prediction. Monash
@@ -62,5 +59,7 @@ working paper 10/15.
 \seealso{
 \link{CV}, \link{tsCV}.
 }
+\author{
+Gabriel Caceres and Rob J Hyndman
+}
 \keyword{ts}
-
