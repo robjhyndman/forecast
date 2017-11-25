@@ -60,7 +60,7 @@ reference:
     desc: "Functions used in seasonal decomposition"
     contents:
       - ma
-      - msstl
+      - mstl
       - seasadj
       - seasonal
       - trendcycle

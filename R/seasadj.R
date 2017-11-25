@@ -32,7 +32,7 @@ seasadj.stl <- function(object, ...)
 
 #' @rdname seasadj
 #' @export
-seasadj.msstl <- function(object, ...)
+seasadj.mstl <- function(object, ...)
 {
    return(trendcycle(object) + remainder(object))
 }

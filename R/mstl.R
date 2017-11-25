@@ -19,10 +19,10 @@
 #' @seealso \code{\link[stats]{stl}}, \code{link[stats]{supsmu}}
 #' @examples
 #' library(ggplot2)
-#' msstl(taylor) %>% autoplot(facet=TRUE)
-#' msstl(AirPassengers, lambda='auto') %>% autoplot(facet=TRUE)
+#' mstl(taylor) %>% autoplot(facet=TRUE)
+#' mstl(AirPassengers, lambda='auto') %>% autoplot(facet=TRUE)
 #' @export
-msstl <- function(x, lambda=NULL, iterate=2, s.window=21, ...)
+mstl <- function(x, lambda=NULL, iterate=2, s.window=21, ...)
 {
   # What is x?
   n <- length(x)
@@ -106,12 +106,12 @@ msstl <- function(x, lambda=NULL, iterate=2, s.window=21, ...)
     colnames(output)[2L+seq_along(msts)] <- paste0("Seasonal",round(msts,2))
   colnames(output)[NCOL(output)] <- "Remainder"
 
-  return(structure(output, class=c("msstl","mts")))
+  return(structure(output, class=c("mstl","mts")))
 }
 
 #' @rdname autoplot.seas
 #' @export
-autoplot.msstl <- function(object, ...)
+autoplot.mstl <- function(object, ...)
 {
-  autoplot.mts(object,facets=TRUE,...)
+  autoplot.mts(object,facets=TRUE,ylab="",...)
 }

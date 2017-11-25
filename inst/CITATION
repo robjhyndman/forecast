@@ -7,11 +7,18 @@ if(is.null(vers))
   vers <- packageVersion("forecast")
 vers <- paste("R package version", vers)
 
+# Grab authors from DESCRIPTION file
+authors <- unclass(desc::desc_get_authors()) %>%
+ purrr::keep(~any(.$role %in% "aut")) %>%
+ purrr::map_chr(function(x){paste(x$given,x$family,"and")})
+authors[length(authors)] <- unlist(strsplit(tail(authors,1)," and"))
+authors <- paste0(authors, collapse=" ")
+
 citHeader("To cite the forecast package in publications, please use:")
 
 bibentry(bibtype = "Manual",
   title = "{forecast}: Forecasting functions for time series and linear models",
-  author = as.person("Rob J Hyndman"),
+  author = authors,
   year = year,
   note = vers,
   url = "http://pkg.robjhyndman.com/forecast")

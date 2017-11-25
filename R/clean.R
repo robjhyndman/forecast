@@ -77,7 +77,7 @@ na.interp <- function(x, lambda=NULL)
     pred <- predict(fit, newdata =data.frame(X))
     x[missng] <- pred[missng]
     # Now re-do it with stl to get better results
-    fit <- msstl(x, robust=TRUE)
+    fit <- mstl(x, robust=TRUE)
     # Interpolate seasonally adjusted values
     sa <- seasadj(fit)
     sa <- approx(idx,sa[idx],1:n, rule=2)$y

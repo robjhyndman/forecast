@@ -32,7 +32,7 @@
 #' @export
 seasonal <- function(object)
 {
-  if("msstl" %in% class(object))
+  if("mstl" %in% class(object))
   {
     cols <- grep("Season", colnames(object))
     return(object[,cols])
@@ -61,7 +61,7 @@ seasonal <- function(object)
 #' @export
 trendcycle <- function(object)
 {
-    if("msstl" %in% class(object))
+    if("mstl" %in% class(object))
         return(object[,"Trend"])
 	else if("stl" %in% class(object))
 		return(object$time.series[,"trend"])
@@ -84,7 +84,7 @@ trendcycle <- function(object)
 #' @export
 remainder <- function(object)
 {
-    if("msstl" %in% class(object))
+    if("mstl" %in% class(object))
         return(object[,"Remainder"])
 	else if("stl" %in% class(object))
 		return(object$time.series[,"remainder"])

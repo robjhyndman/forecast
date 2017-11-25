@@ -1,3 +1,13 @@
+## Version 8.3
+  * Added mstl() to handle multiple seasonal decomposition
+  * Added baggedModel() function to generalize baggedETS()
+  * Updated tsCV() to handle multiple horizons
+  * Added bootstrapped PI to more functions
+  * Switched unit root tests in ndiffs to use urca package
+  * Updated author list to include all major contributors
+  * Documentation improvements
+  * Bug fixes
+
 ## Version 8.2 (25 September 2017)
   * Added pkgdown site
   * Added rolling window option to tsCV()
