@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Multiple seasonal  decomposition — msstl • forecast</title>
+<title>Multiple seasonal  decomposition — mstl • forecast</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -92,7 +92,7 @@ is used to estimate the trend.
 Optionally, the time series may be Box-Cox transformed before decomposition.</p>
     
 
-    <pre class="usage"><span class='fu'>msstl</span>(<span class='no'>x</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>iterate</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>s.window</span> <span class='kw'>=</span> <span class='fl'>21</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>mstl</span>(<span class='no'>x</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>iterate</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>s.window</span> <span class='kw'>=</span> <span class='fl'>21</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -130,7 +130,7 @@ of the same length as the number of seasonal components.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>)
-<span class='fu'>msstl</span>(<span class='no'>taylor</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='kw'>facet</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='msstl-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>msstl</span>(<span class='no'>AirPassengers</span>, <span class='kw'>lambda</span><span class='kw'>=</span><span class='st'>'auto'</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='kw'>facet</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='msstl-2.png' alt='' width='700' height='432.632880098887' /></div></pre>
+<span class='fu'>mstl</span>(<span class='no'>taylor</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='kw'>facet</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='mstl-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>mstl</span>(<span class='no'>AirPassengers</span>, <span class='kw'>lambda</span><span class='kw'>=</span><span class='st'>'auto'</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='kw'>facet</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='mstl-2.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
