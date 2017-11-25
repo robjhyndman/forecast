@@ -88,7 +88,9 @@
     
 
     <pre class="usage"><span class='fu'>baggedModel</span>(<span class='no'>y</span>, <span class='kw'>bootstrapped_series</span> <span class='kw'>=</span> <span class='fu'><a href='bld.mbb.bootstrap.html'>bld.mbb.bootstrap</a></span>(<span class='no'>y</span>, <span class='fl'>100</span>),
-  <span class='kw'>fn</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ets"</span>, <span class='st'>"auto.arima"</span>), <span class='no'>...</span>)</pre>
+  <span class='kw'>fn</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ets"</span>, <span class='st'>"auto.arima"</span>), <span class='no'>...</span>)
+
+<span class='fu'>baggedETS</span>(<span class='no'>y</span>, <span class='kw'>bootstrapped_series</span> <span class='kw'>=</span> <span class='fu'><a href='bld.mbb.bootstrap.html'>bld.mbb.bootstrap</a></span>(<span class='no'>y</span>, <span class='fl'>100</span>), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -134,7 +136,10 @@ bootstrapped series. Base models other than <code><a href='ets.html'>ets</a></co
 parameter <code>fn</code>. Using the default parameters, the function
 <code><a href='bld.mbb.bootstrap.html'>bld.mbb.bootstrap</a></code> is used to calculate the bootstrapped series
 with the Box-Cox and Loess-based decomposition (BLD) bootstrap. The function
-<code><a href='forecast.baggedModel.html'>forecast.baggedModel</a></code> can then be used to calculate forecasts.</p>
+<code><a href='forecast.baggedModel.html'>forecast.baggedModel</a></code> can then be used to calculate forecasts.
+    <code>baggedETS</code> is a wrapper for <code>baggedModel</code>, setting <code>fn</code> to "ets". 
+This function is included for backwards compatibility only, and may be 
+deprecated in the future.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 

@@ -153,10 +153,12 @@ Transformation. International Journal of Forecasting 32, 303-312.</p>
     <pre class="examples"><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='baggedModel.html'>baggedModel</a></span>(<span class='no'>WWWusage</span>)
 <span class='no'>fcast</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>)
 <span class='fu'>plot</span>(<span class='no'>fcast</span>)</div><div class='img'><img src='forecast.baggedModel-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+</div><span class='co'># NOT RUN {</span>
 <span class='no'>fit2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='baggedModel.html'>baggedModel</a></span>(<span class='no'>WWWusage</span>, <span class='kw'>fn</span><span class='kw'>=</span><span class='st'>"auto.arima"</span>)
 <span class='no'>fcast2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit2</span>)
-<span class='fu'>plot</span>(<span class='no'>fcast2</span>)</div><div class='img'><img src='forecast.baggedModel-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'><a href='accuracy.html'>accuracy</a></span>(<span class='no'>fcast2</span>)</div><div class='output co'>#&gt;                     ME   RMSE      MAE      MPE     MAPE      MASE      ACF1
-#&gt; Training set 0.3753138 2.1963 1.730933 0.257088 1.297925 0.3825052 0.4738924</div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>fcast2</span>)
+<span class='fu'><a href='accuracy.html'>accuracy</a></span>(<span class='no'>fcast2</span>)
+<span class='co'># }</span><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

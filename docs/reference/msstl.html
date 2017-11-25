@@ -87,8 +87,8 @@
     <p>Decompose a multiple seasonal time series into seasonal, trend and remainder
 components. Seasonal components are estimated iteratively using STL. The trend
 component is computed for the last iteration of STL. Non-seasonal time series
-are decomposed into trend and remainder only. In this case, a penalized
-regression spline is used to estimate the trend.
+are decomposed into trend and remainder only. In this case, <code><a href='http://www.rdocumentation.org/packages/stats/topics/supsmu'>supsmu</a></code> 
+is used to estimate the trend.
 Optionally, the time series may be Box-Cox transformed before decomposition.</p>
     
 
@@ -117,7 +117,15 @@ lambda takes a numerical value, it is used as the parameter of the Box-Cox trans
 the same value is used for all seasonal components. Otherwise, it should be a vector
 of the same length as the number of seasonal components.</p></td>
     </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Other arguments are passed to <code><a href='http://www.rdocumentation.org/packages/stats/topics/stl'>stl</a></code>.</p></td>
+    </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <p><code><a href='http://www.rdocumentation.org/packages/stats/topics/stl'>stl</a></code>, <code>link[stats]{supsmu}</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -128,7 +136,9 @@ of the same length as the number of seasonal components.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#see-also">See also</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
