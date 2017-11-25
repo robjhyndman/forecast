@@ -35,5 +35,5 @@ msstl(taylor) \%>\% autoplot(facet=TRUE)
 msstl(AirPassengers, lambda='auto') \%>\% autoplot(facet=TRUE)
 }
 \seealso{
-\code{\link[stats]{stl}}
+\code{\link[stats]{stl}}, \code{link[stats]{supsmu}}
 }
