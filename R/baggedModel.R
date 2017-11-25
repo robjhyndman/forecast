@@ -14,6 +14,10 @@
 #' with the Box-Cox and Loess-based decomposition (BLD) bootstrap. The function
 #' \code{\link{forecast.baggedModel}} can then be used to calculate forecasts.
 #' 
+#' \code{baggedETS} is a wrapper for \code{baggedModel}, setting \code{fn} to "ets". 
+#' This function is included for backwards compatibility only, and may be 
+#' deprecated in the future.
+#' 
 #' @aliases print.baggedModel
 #' 
 #' @param y A numeric vector or time series of class \code{ts}.
@@ -75,27 +79,7 @@ baggedModel <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), fn=c("
 }
 
 
-#' Forecasting using bagged ETS
-#' 
-#' The bagged ETS forecasting method.
-#' 
-#' This function is only a wrapper for \code{\link{baggedModel}}, setting \code{fn} to "ets". 
-#' See detailed documentation there.
-#' 
-#' @param y A numeric vector or time series of class \code{ts}.
-#' @param bootstrapped_series bootstrapped versions of y.
-#' @param \dots Other arguments passed to the "ets" forecast function.
-#' @return Returns an object of class "\code{baggedModel}".
-#' 
-#' @references Bergmeir, C., R. J. Hyndman, and J. M. Benitez (2016). Bagging
-#' Exponential Smoothing Methods using STL Decomposition and Box-Cox
-#' Transformation. International Journal of Forecasting 32, 303-312.
-#' @keywords ts
-#' @examples
-#' fit <- baggedETS(WWWusage)
-#' fcast <- forecast(fit)
-#' plot(fcast)
-#' 
+#' @rdname baggedModel
 #' @export
 baggedETS <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), ...)
 {
@@ -147,10 +131,11 @@ baggedETS <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), ...)
 #' fcast <- forecast(fit)
 #' plot(fcast)
 #' 
+#' \dontrun{
 #' fit2 <- baggedModel(WWWusage, fn="auto.arima")
 #' fcast2 <- forecast(fit2)
 #' plot(fcast2)
-#' accuracy(fcast2)
+#' accuracy(fcast2)}
 #' 
 #' @export
 forecast.baggedModel <- function(object, h=ifelse(frequency(object$x)>1, 2*frequency(object$x), 10), ...) {

@@ -3,10 +3,13 @@
 \name{baggedModel}
 \alias{baggedModel}
 \alias{print.baggedModel}
+\alias{baggedETS}
 \title{Forecasting using a bagged model}
 \usage{
 baggedModel(y, bootstrapped_series = bld.mbb.bootstrap(y, 100),
   fn = c("ets", "auto.arima"), ...)
+
+baggedETS(y, bootstrapped_series = bld.mbb.bootstrap(y, 100), ...)
 }
 \arguments{
 \item{y}{A numeric vector or time series of class \code{ts}.}
@@ -43,6 +46,10 @@ parameter \code{fn}. Using the default parameters, the function
 \code{\link{bld.mbb.bootstrap}} is used to calculate the bootstrapped series
 with the Box-Cox and Loess-based decomposition (BLD) bootstrap. The function
 \code{\link{forecast.baggedModel}} can then be used to calculate forecasts.
+
+\code{baggedETS} is a wrapper for \code{baggedModel}, setting \code{fn} to "ets". 
+This function is included for backwards compatibility only, and may be 
+deprecated in the future.
 }
 \examples{
 fit <- baggedModel(WWWusage)

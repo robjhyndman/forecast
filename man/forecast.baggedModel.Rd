@@ -51,10 +51,11 @@ fit <- baggedModel(WWWusage)
 fcast <- forecast(fit)
 plot(fcast)
 
+\dontrun{
 fit2 <- baggedModel(WWWusage, fn="auto.arima")
 fcast2 <- forecast(fit2)
 plot(fcast2)
-accuracy(fcast2)
+accuracy(fcast2)}
 
 }
 \references{
