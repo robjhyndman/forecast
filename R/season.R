@@ -74,14 +74,14 @@ monthdays <- function(x)
 #' @export
 sindexf <- function(object,h)
 {
-    if(class(object)=="stl")
+    if("stl" %in% class(object))
     {
         ss <- object$time.series[,1]
         m <- frequency(ss)
         ss <- ss[length(ss)-(m:1)+1]
         tsp.x <- tsp(object$time.series)
     }
-    else if(class(object)=="decomposed.ts")
+    else if("decomposed.ts" %in% class(object))
     {
         ss <- object$figure
         m <- frequency(object$seasonal)
