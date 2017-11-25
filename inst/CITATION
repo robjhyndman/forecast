@@ -8,9 +8,9 @@ if(is.null(vers))
 vers <- paste("R package version", vers)
 
 # Grab authors from DESCRIPTION file
-authors <- unclass(desc::desc_get_authors()) %>%
- purrr::keep(~any(.$role %in% "aut")) %>%
- purrr::map_chr(function(x){paste(x$given,x$family,"and")})
+authors <- unclass(desc::desc_get_authors())
+authors <- purrr::keep(authors, ~any(.$role %in% "aut"))
+authors <- purrr::map_chr(authors, function(x){paste(x$given,x$family,"and")})
 authors[length(authors)] <- unlist(strsplit(tail(authors,1)," and"))
 authors <- paste0(authors, collapse=" ")
 
