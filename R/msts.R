@@ -6,7 +6,7 @@
 #' contains the vector of seasonal periods. All methods that work on a ts
 #' class, should also work on a msts class.
 #' 
-#' @aliases print.msts window.msts
+#' @aliases print.msts window.msts `[.msts`
 #' 
 #' @param data A numeric vector, ts object, matrix or data frame. It is
 #' intended that the time series data is univariate, otherwise treated the same
@@ -71,3 +71,10 @@ window.msts <- function(x, ...) {
 	return(x)
 }
 
+#' @export
+`[.msts` <- function(x, i, j, drop = TRUE){
+  y <- NextMethod("[")
+  class(y) <- c("msts", class(y))
+  attr(y, "msts") <- attr(x, "msts")
+  y
+}

@@ -4,6 +4,7 @@
 \alias{msts}
 \alias{print.msts}
 \alias{window.msts}
+\alias{`[.msts`}
 \title{Multi-Seasonal Time Series}
 \usage{
 msts(data, seasonal.periods, ts.frequency = floor(max(seasonal.periods)), ...)
