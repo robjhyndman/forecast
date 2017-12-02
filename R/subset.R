@@ -115,6 +115,7 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL,
 head.ts <- function(x, n=6L, ...)
 {
   attr_x <- attributes(x)
+  attr_x$names <- NULL
   if(NCOL(x) > 1)
     hx <- head.matrix(as.matrix(x), n=n, ...)
   else if((length(x) + n) > 0)
@@ -134,6 +135,7 @@ head.ts <- function(x, n=6L, ...)
 tail.ts <- function(x, n=6L, ...)
 {
   attr_x <- attributes(x)
+  attr_x$names <- NULL
   if(NCOL(x) > 1)
     hx <- tail.matrix(as.matrix(x), n=n, ...)
   else if((length(x) + n) > 0)
