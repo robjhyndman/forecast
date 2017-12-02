@@ -1918,7 +1918,10 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom, # Produces both 
   },
 
   draw_group = function(data, panel_scales, coord){
-    data <- split(data, !is.na(data$level))
+    data <- if(!is.null(data$level))
+      split(data, !is.na(data$level))
+    else
+      list(data)
 
     #Draw forecasted points and intervals
     if(length(data) == 1){ #PI=FALSE
