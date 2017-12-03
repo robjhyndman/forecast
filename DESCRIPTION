@@ -27,7 +27,8 @@ Suggests:
   rmarkdown,
   expsmooth,
   rticles,
-  desc
+  desc,
+  purrr
 LinkingTo:
   Rcpp (>= 0.11.0),
   RcppArmadillo (>= 0.2.35)
