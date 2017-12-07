@@ -39,7 +39,7 @@ msts <- function(data, seasonal.periods, ts.frequency=floor(max(seasonal.periods
 	if(length(seasonal.periods) > 1L)
 	{
 		class(object) <- c("msts", "ts")
-		attr(object, "msts") <- seasonal.periods
+		attr(object, "msts") <- sort(seasonal.periods)
 	}
 	return(object)
 }
