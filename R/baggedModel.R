@@ -50,8 +50,8 @@
 #' @export
 baggedModel <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), fn=c("ets", "auto.arima"), ...)
 {
-
-  fn <- match.fun(match.arg(fn))
+  # Add package info in case forecast not loaded
+  fn <- utils::getFromNamespace(match.arg(fn), "forecast")
 
   mod_boot <- lapply(bootstrapped_series, function(x) {
         mod <- fn(x, ...)
