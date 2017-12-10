@@ -106,7 +106,7 @@ mstl <- function(x, lambda=NULL, iterate=2, s.window=21, ...)
     colnames(output)[2L+seq_along(msts)] <- paste0("Seasonal",round(msts,2))
   colnames(output)[NCOL(output)] <- "Remainder"
 
-  return(structure(output, class=c("mstl","mts")))
+  return(structure(output, class=c("mstl","mts", "ts")))
 }
 
 #' @rdname autoplot.seas
@@ -115,3 +115,4 @@ autoplot.mstl <- function(object, ...)
 {
   autoplot.mts(object,facets=TRUE,ylab="",...)
 }
+
