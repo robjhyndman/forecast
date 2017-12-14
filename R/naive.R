@@ -6,94 +6,53 @@
 lagwalk <- function(y, lag=1, h=10, drift=FALSE,
   level=c(80,95), fan=FALSE, lambda=NULL, biasadj=FALSE, bootstrap=FALSE, npaths=5000)
 {
-  n <- length(y)
-  m <- frequency(y)
-  nn <- 1:h
-  if(!is.ts(y))
-    y <- ts(y)
-  if(!is.null(lambda))
+  if(!is.null(lambda)) 
   {
     origy <- y
-    y <- BoxCox(y,lambda)
+    y <- BoxCox(y, lambda)
   }
+
+  # Fit equivalent ARIMA model
+  # This handles missing values properly
+  if(lag==1L)
+    fit <- Arima(y, c(0,1,0), include.constant=drift)
+  else
+    fit <- Arima(y, seasonal=list(order=c(0,1,0), period=lag), include.constant=drift)
+
+  # Compute forecasts
+  fc <- forecast(fit, h=h, level=level, bootstrap=bootstrap, npaths=npaths)
+
+  # Adjust prediction intervals to allow for drift coefficient standard error
   if(drift)
   {
-    fit <- summary(lm(diff(y, lag=lag) ~ 1,na.action=na.exclude))
-    b <- fit$coefficients[1,1]
-    b.se <- fit$coefficients[1,2]
-    s <- fit$sigma
-    method <- "Lag walk with drift"
+    b <- fit$coef["drift"]
+    b.se <- sqrt(fit$var.coef[1,1])
+    fse <- (fc$upper[,1]-fc$lower[,1])/(2*qnorm(.5+level[1]/200))
+    ratio  <- sqrt(fse^2 + seq(h)*(b.se)^2)/fse
+    fc$upper <- fc$mean + (fc$upper - fc$mean)*ratio
+    fc$lower <- fc$mean - (fc$mean - fc$lower)*ratio
   }
   else
-  {
     b <- b.se <- 0
-    s <- sd(diff(y, lag=lag),na.rm=TRUE)
-    method <- "Lag walk"
+  if(!is.null(lambda)) 
+  {
+    fc$x <- origy
+    fc$mean <- InvBoxCox(fc$mean, lambda, biasadj, 
+      list(level = fc$level, upper = fc$upper, lower = fc$lower))
+    fc$fitted <- InvBoxCox(fc$fitted, lambda)
+    fc$upper <- InvBoxCox(fc$upper, lambda)
+    fc$lower <- InvBoxCox(fc$lower, lambda)
   }
 
-  fits <- ts(c(rep(NA,lag),head(y,-lag)) + b, start=tsp(y)[1], frequency=m)
-  res <- y - fits
-  fullperiods <- trunc((h-1)/lag) + 1
-  if(lag==1)
-    steps <- seq_len(h)
-  else
-    steps <- rep(1:fullperiods, rep(lag, fullperiods))[1:h]
-  f <- rep(tail(y,lag), fullperiods)[1:h] + steps*b
-  mse <- mean(res^2, na.rm=TRUE)
-  se  <- sqrt(mse*steps  + (steps*b.se)^2)
+  # Remove initial fitted values and residuals
+  fc$fitted[seq(lag)] <- NA
+  fc$residuals[seq(lag)] <- NA
 
-  if(fan)
-    level <- seq(51,99,by=3)
-  else
-  {
-    if(min(level) > 0 & max(level) < 1)
-      level <- 100*level
-    else if(min(level) < 0 | max(level) > 99.99)
-      stop("Confidence limit out of range")
-  }
-  nconf <- length(level)
-  if(bootstrap)
-  {
-    e <- na.omit(res) - mean(res, na.rm=TRUE)
-    sim <- matrix(NA_real_, ncol=npaths, nrow=h)
-    for(i in seq_len(npaths))
-    {
-      estar <- matrix(sample(e, size=lag*fullperiods, replace=TRUE), nrow=fullperiods)
-      estar <- c(t(apply(estar, 2, cumsum)))
-      sim[, i] <- f + estar[1L:h]
-    }
-    lower <- t(apply(sim, 1, quantile, prob=.5-level/200))
-    upper <- t(apply(sim, 1, quantile, prob=.5+level/200))
-  }
-  else
-  {
-    lower <- upper <- matrix(NA_real_,nrow=h,ncol=nconf)
-    z <- qnorm(.5 + level/200)
-    for(i in 1:nconf)
-    {
-      lower[,i] <- f - z[i]*se
-      upper[,i] <- f + z[i]*se
-    }
-  }
-  lower <- ts(lower, start=tsp(y)[2]+1/m, frequency=m)
-  upper <- ts(upper, start=tsp(y)[2]+1/m, frequency=m)
-  colnames(lower) <- colnames(upper) <- paste(level,"%",sep="")
-  fcast <- ts(f, start=tsp(y)[2]+1/m, frequency=m)
-  if(!is.null(lambda))
-  {
-    y <- origy
-    fcast <- InvBoxCox(fcast, lambda, biasadj, list(level = level, upper = upper, lower = lower))
-    fits <- InvBoxCox(fits,lambda)
-    upper <- InvBoxCox(upper,lambda)
-    lower <- InvBoxCox(lower,lambda)
-  }
+  fc$model <- structure(
+    list(includedrift=drift, drift=b, drift.se=b.se, sd=sqrt(fit$sigma2)),  
+    class='naive')
 
-  out <- list(method=method,level=level,x=y,mean=fcast,lower=lower,upper=upper,
-      model=structure(list(includedrift=drift,drift=b,drift.se=b.se,sd=s),class='naive'),
-      fitted = fits, residuals = res, lambda=lambda)
-  out$model$call <- match.call()
-
-  return(structure(out,class="forecast"))
+  return(structure(fc,class="forecast"))
 }
 
 
@@ -121,18 +80,6 @@ rwf <- function(y,h=10,drift=FALSE,level=c(80,95),fan=FALSE,lambda=NULL,biasadj=
   return(fc)
 }
 
-# naive <- function(x,h=10,level=c(80,95),fan=FALSE, lambda=NULL)
-# {
-#     fc <- forecast(Arima(x,order=c(0,1,0),lambda=lambda),h,level=level,fan=fan)
-#     # Remove initial fitted values and error
-#     fc$fitted[1] <- NA
-#     fc$residuals[1] <- NA
-#     fc$method <- "Naive method"
-#     return(fc)
-# }
-
-
-
 #' Naive and Random Walk Forecasts
 #' 
 #' \code{rwf()} returns forecasts and prediction intervals for a random walk
@@ -146,7 +93,8 @@ rwf <- function(y,h=10,drift=FALSE,level=c(80,95),fan=FALSE,lambda=NULL,biasadj=
 #' Y[t-1] + Z[t]} where \eqn{Z_t}{Z[t]} is a normal iid error. Forecasts are
 #' given by \deqn{Y_n(h)=ch+Y_n}{Y[n+h]=ch+Y[n]}. If there is no drift (as in
 #' \code{naive}), the drift parameter c=0. Forecast standard errors allow for
-#' uncertainty in estimating the drift parameter.
+#' uncertainty in estimating the drift parameter (unlike the corresponding 
+#' forecasts obtained by fitting an ARIMA model directly).
 #' 
 #' The seasonal naive model is \deqn{Y_t= Y_{t-m} + Z_t}{Y[t]=Y[t-m] + Z[t]}
 #' where \eqn{Z_t}{Z[t]} is a normal iid error.
@@ -208,18 +156,6 @@ naive <- function(y,h=10,level=c(80,95),fan=FALSE, lambda=NULL, biasadj=FALSE,
   fc$method <- "Naive method"
   return(fc)
 }
-
-# snaive <- function(x,h=2*frequency(x),level=c(80,95),fan=FALSE, lambda=NULL)
-# {
-#     fc <- forecast(Arima(x,seasonal=list(order=c(0,1,0),period=frequency(x)), lambda=lambda),
-#       h=h,level=level,fan=fan)
-#     # Remove initial fitted values and error
-#     m <- frequency(x)
-#     fc$fitted[1:m] <- NA
-#     fc$residuals[1:m] <- NA
-#     fc$method <- "Seasonal naive method"
-#     return(fc)
-# }
 
 #' @rdname naive
 #' 
