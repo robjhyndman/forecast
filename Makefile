@@ -5,16 +5,17 @@
 
 PKG_NAME=$(shell grep -i ^package DESCRIPTION | cut -d : -d \  -f 2)
 
+
 all: install
 
 check:
 	Rscript -e "devtools::check(document=TRUE)"
 
 check_cran:
-	Rscript -e "devtools::check(document=TRUE, run_dont_test=TRUE, check_version=TRUE, manual=TRUE)"
+	Rscript -e 'source("cran_check.R")'
 
 build:
-	R CMD build .
+	R CMD build --compact-vignettes="gs+qpdf" .
 	mv -f *.tar.gz ..
 
 install:

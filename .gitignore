@@ -8,3 +8,4 @@ symbols.rds
 revdep
 tests/testthat/Rplots.pdf
 inst/doc
+cran_check.R
