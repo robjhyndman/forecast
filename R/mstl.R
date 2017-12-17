@@ -437,7 +437,7 @@ stlm <- function(y ,s.window=7, robust=FALSE, method=c("ets","arima"), modelfunc
 
   # Fitted values and residuals
   seascols <- grep("Seasonal",colnames(stld))
-  allseas <- rowSums(stld[,seascols])
+  allseas <- rowSums(stld[,seascols,drop=FALSE])
 
   fits <- fitted(fit) + allseas
   res <- residuals(fit)
@@ -463,9 +463,23 @@ forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE
   if(fan)
     level <- seq(51, 99, by = 3)
 
-  m <- frequency(object$stl$time.series)
-  n <- nrow(object$stl$time.series)
-  lastseas <- rep(object$stl$time.series[n-(m:1)+1,"seasonal"],trunc(1+(h-1)/m))[1:h]
+  seasonal.periods <- attributes(object$stl)$seasonal.periods
+  seascomp <- matrix(0, ncol=length(seasonal.periods), nrow=h)
+  for(i in seq_along(seasonal.periods))
+  {
+    mp <- seasonal.periods[i]
+    n <- NROW(object$stl)
+    colname <- paste0("Seasonal",mp)
+    seascomp[,i] <- rep(object$stl[n-rev(seq_len(mp))+1,colname], trunc(1+(h-1)/mp))[seq_len(h)]
+  }
+  lastseas <- rowSums(seascomp)
+  xdata <- object$stl[,"Data"]
+  seascols <- grep("Seasonal",colnames(object$stl))
+  allseas <- rowSums(object$stl[,seascols,drop=FALSE])
+  series <- NULL
+
+#  m <- frequency(object$stl$time.series)
+  n <- NROW(xdata)
 
   # Forecast seasonally adjusted series
   if(is.element("Arima",class(object$model)) & !is.null(newxreg))
@@ -484,7 +498,8 @@ forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE
   fcast$series <- object$series
   #fcast$seasonal <- ts(lastseas[1:m],frequency=m,start=tsp(object$stl$time.series)[2]-1+1/m)
   #fcast$residuals <- residuals()
-  fcast$fitted <- fitted(fcast)+object$stl$time.series[,"seasonal"]
+  fcast$fitted <- fitted(fcast)+allseas
+  fcast$residuals <- residuals(fcast)
 
   if (!is.null(lambda))
   {
