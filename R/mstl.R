@@ -103,7 +103,7 @@ mstl <- function(x, lambda=NULL, iterate=2, s.window=21, ...) {
   colnames(output)[NCOL(output)] <- "Remainder"
 
   if(msts[1L] > 1)
-    output$seasonal.periods <- msts
+    attr(output, "seasonal.periods") <- msts
 
   return(structure(output, class=c("mstl","mts", "ts")))
 }
@@ -280,28 +280,38 @@ forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsm
     stop("xreg and newxreg arguments must both be supplied")
   if(!is.null(newxreg))
   {
-    if(nrow(as.matrix(newxreg))!=h)
+    if(NROW(as.matrix(newxreg))!=h)
       stop("newxreg should have the same number of rows as the forecast horizon h")
   }
   if(fan)
     level <- seq(51, 99, by = 3)
 
-  if(!is.null(object$time.series))
+  if("mstl" %in% class(object))
   {
-    m <- frequency(object$time.series)
-    n <- nrow(object$time.series)
-    lastseas <- rep(object$time.series[n-(m:1)+1,"seasonal"],trunc(1+(h-1)/m))[1:h]
-  }
-  else if("mstl" %in% class(object))
-  {
-    seascomp <- matrix(0, ncol=length(object$seasonal.periods), nrow=h)
-    for(i in seq_along(object$seasonal.periods))
+    seasonal.periods <- attributes(object)$seasonal.periods
+    seascomp <- matrix(0, ncol=length(seasonal.periods), nrow=h)
+    for(i in seq_along(seasonal.periods))
     {
-      mp <- object$seasonal.periods[i]
+      mp <- seasonal.periods[i]
+      n <- NROW(object)
       colname <- paste0("Seasonal",mp)
       seascomp[,i] <- rep(object[n-rev(seq_len(mp))+1,colname], trunc(1+(h-1)/mp))[seq_len(h)]
     }
     lastseas <- rowSums(seascomp)
+    xdata <- object[,"Data"]
+    seascols <- grep("Seasonal",colnames(object))
+    allseas <- rowSums(object[,seascols])
+    series <- NULL
+  }
+  else if("stl" %in% class(object))
+  {
+    m <- frequency(object$time.series)
+    n <- NROW(object$time.series)
+    lastseas <- rep(object$time.series[n-(m:1)+1,"seasonal"],trunc(1+(h-1)/m))[1:h]
+    xdata <- ts(rowSums(object$time.series))
+    tsp(xdata) <- tsp(object$time.series)
+    allseas <- object$time.series[,"seasonal"]
+    series <- deparse(object$call$x)
   }
   else
     stop("Unknown object class")
@@ -315,12 +325,11 @@ forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsm
   fcast$mean <- fcast$mean + lastseas
   fcast$upper <- fcast$upper + lastseas
   fcast$lower <- fcast$lower + lastseas
-  fcast$x <- ts(rowSums(object$time.series))
-  tsp(fcast$x) <- tsp(object$time.series)
+  fcast$x <- xdata
   fcast$method <- paste("STL + ",fcast$method)
-  fcast$series <- deparse(object$call$x)
-  fcast$seasonal <- ts(lastseas[1:m],frequency=m,start=tsp(object$time.series)[2]-1+1/m)
-  fcast$fitted <- fitted(fcast)+object$time.series[,1]
+  fcast$series <- series
+  #fcast$seasonal <- ts(lastseas[1:m],frequency=m,start=tsp(object$time.series)[2]-1+1/m)
+  fcast$fitted <- fitted(fcast)+allseas
   fcast$residuals <- fcast$x - fcast$fitted
 
   if (!is.null(lambda))
@@ -337,6 +346,16 @@ forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsm
    return(fcast)
 }
 
+#' @export
+forecast.mstl <- function(object, method=c("ets","arima","naive","rwdrift"), etsmodel="ZZN",
+     forecastfunction=NULL,
+     h = frequency(object)*2, level = c(80, 95), fan = FALSE,
+     lambda=NULL, biasadj=NULL, xreg=NULL, newxreg=NULL, allow.multiplicative.trend=FALSE, ...)
+{
+  forecast.stl(object, method=method, etsmodel=etsmodel, 
+     forecastfunction=forecastfunction, h=h, level=level, fan=fan, lambda=lambda,
+     biasadj=biasadj, xreg=xreg, newxreg=newxreg, allow.multiplicative.trend=allow.multiplicative.trend, ...)
+}
 
 # Function takes time series, does STL decomposition, and fits a model to seasonally adjusted series
 # But it does not forecast. Instead, the result can be passed to forecast().
@@ -460,9 +479,9 @@ forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE
   fcast$lower <- fcast$lower + lastseas
   fcast$method <- paste("STL + ",fcast$method)
   fcast$series <- object$series
-  fcast$seasonal <- ts(lastseas[1:m],frequency=m,start=tsp(object$stl$time.series)[2]-1+1/m)
+  #fcast$seasonal <- ts(lastseas[1:m],frequency=m,start=tsp(object$stl$time.series)[2]-1+1/m)
   #fcast$residuals <- residuals()
-  fcast$fitted <- fitted(fcast)+object$stl$time.series[,1]
+  fcast$fitted <- fitted(fcast)+object$stl$time.series[,"seasonal"]
 
   if (!is.null(lambda))
   {
