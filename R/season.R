@@ -350,9 +350,16 @@ forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsm
   if(fan)
     level <- seq(51, 99, by = 3)
 
-  m <- frequency(object$time.series)
-  n <- nrow(object$time.series)
-  lastseas <- rep(object$time.series[n-(m:1)+1,"seasonal"],trunc(1+(h-1)/m))[1:h]
+  if(!is.null(object$time.series))
+  {
+    m <- frequency(object$time.series)
+    n <- nrow(object$time.series)
+    lastseas <- rep(object$time.series[n-(m:1)+1,"seasonal"],trunc(1+(h-1)/m))[1:h]
+  }
+  else # assume an mstl object
+  {
+    stop("Not yet implemented")
+  }
   # De-seasonalize
   x.sa <- seasadj(object)
   # Forecast
