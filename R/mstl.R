@@ -390,7 +390,7 @@ stlm <- function(y ,s.window=7, robust=FALSE, method=c("ets","arima"), modelfunc
     x <- BoxCox(x, lambda)
 
   # Do STL decomposition
-  stld <- stl(x,s.window=s.window,robust=robust)
+  stld <- mstl(x,s.window=s.window,robust=robust)
 
   if(!is.null(model)){
     if(inherits(model$model, "ets")){
@@ -436,7 +436,10 @@ stlm <- function(y ,s.window=7, robust=FALSE, method=c("ets","arima"), modelfunc
   fit$x <- x.sa
 
   # Fitted values and residuals
-  fits <- fitted(fit) + stld$time.series[,"seasonal"]
+  seascols <- grep("Seasonal",colnames(stld))
+  allseas <- rowSums(stld[,seascols])
+
+  fits <- fitted(fit) + allseas
   res <- residuals(fit)
   if(!is.null(lambda)){
     fits <- InvBoxCox(fits, lambda, biasadj, var(res))
