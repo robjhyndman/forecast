@@ -41,7 +41,12 @@ na.interp <- function(x, lambda=NULL)
   if(is.null(tsp(x)))
     x <- ts(x)
   if(length(dim(x)) > 1)
-    stop("The time series is not univariate.")
+  {
+    if(NCOL(x)==1)
+      x <- x[,1]
+    else
+      stop("The time series is not univariate.")
+  }
 
   #Transform if requested
   if(!is.null(lambda))
