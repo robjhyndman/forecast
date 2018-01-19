@@ -1137,6 +1137,9 @@ ggsubseriesplot <- function (x, labels = NULL, times = time(x), phase = cycle(x)
     if (!inherits(x, "ts")){
       stop("ggsubseriesplot requires a ts object, use x=object")
     }
+    
+    if(round(frequency(x)) <= 1)
+      stop("Data are not seasonal")
 
     data <- data.frame(y=as.numeric(x),year=trunc(time(x)),season=as.numeric(phase))
     seasonwidth <- (max(data$year)-min(data$year))*1.05
