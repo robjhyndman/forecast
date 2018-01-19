@@ -187,7 +187,7 @@ ggAcf <- function(x, lag.max = NULL,
   if(plot){
     cl$plot=FALSE
   }
-  cl[[1]] <- quote(Acf)
+  cl[[1]] <- quote(forecast::Acf)
   object <- eval.parent(cl)
   object$tsp <- tsp(x)
   object$periods <- attributes(x)$msts
