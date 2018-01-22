@@ -3,25 +3,25 @@
 
 
 #' Number of days in each season
-#' 
+#'
 #' Returns number of days in each month or quarter of the observed time period.
-#' 
+#'
 #' Useful for month length adjustments
-#' 
+#'
 #' @param x time series
 #' @return Time series
 #' @author Rob J Hyndman
 #' @seealso \code{\link[forecast]{bizdays}}
 #' @keywords ts
 #' @examples
-#' 
+#'
 #' par(mfrow=c(2,1))
 #' plot(ldeaths,xlab="Year",ylab="pounds",
 #'     main="Monthly deaths from lung disease (UK)")
 #' ldeaths.adj <- ldeaths/monthdays(ldeaths)*365.25/12
 #' plot(ldeaths.adj,xlab="Year",ylab="pounds",
 #'     main="Adjusted monthly deaths from lung disease (UK)")
-#' 
+#'
 #' @export
 monthdays <- function(x)
 {
@@ -49,11 +49,11 @@ monthdays <- function(x)
 
 
 #' Forecast seasonal index
-#' 
+#'
 #' Returns vector containing the seasonal index for \code{h} future periods. If
 #' the seasonal index is non-periodic, it uses the last values of the index.
-#' 
-#' 
+#'
+#'
 #' @param object Output from \code{\link[stats]{decompose}} or
 #' \link[stats]{stl}.
 #' @param h Number of periods ahead to forecast
@@ -70,7 +70,7 @@ monthdays <- function(x)
 #' uk.fcast$upper <- uk.fcast$upper + cbind(seasf,seasf)
 #' uk.fcast$x <- UKDriverDeaths
 #' plot(uk.fcast,main="Forecasts from Holt's method with seasonal adjustment")
-#' 
+#'
 #' @export
 sindexf <- function(object,h)
 {
@@ -101,21 +101,21 @@ sindexf <- function(object,h)
 
 
 #' Seasonal dummy variables
-#' 
+#'
 #' \code{seasonaldummy} returns a matrix of dummy variables suitable for use in
 #' \code{\link{Arima}}, \code{\link{auto.arima}} or \code{\link{tslm}}. The
 #' last season is omitted and used as the control.
-#' 
+#'
 #' \code{seasonaldummyf} is deprecated, instead use the \code{h} argument in
 #' \code{seasonaldummy}.
-#' 
+#'
 #' The number of dummy variables is determined from the time series
 #' characteristics of \code{x}. When \code{h} is missing, the length of
 #' \code{x} also determines the number of rows for the matrix returned by
 #' \code{seasonaldummy}. the value of \code{h} determines the number of rows
 #' for the matrix returned by \code{seasonaldummy}, typically used for
 #' forecasting. The values within \code{x} are not used.
-#' 
+#'
 #' @param x Seasonal time series: a \code{ts} or a \code{msts} object
 #' @param h Number of periods ahead to forecast (optional)
 #' @return Numerical matrix.
@@ -123,9 +123,9 @@ sindexf <- function(object,h)
 #' @seealso \code{\link{fourier}}
 #' @keywords ts
 #' @examples
-#' 
+#'
 #' plot(ldeaths)
-#' 
+#'
 #' # Using seasonal dummy variables
 #' month <- seasonaldummy(ldeaths)
 #' deaths.lm  <- tslm(ldeaths ~ month)
@@ -133,12 +133,12 @@ sindexf <- function(object,h)
 #' ldeaths.fcast <- forecast(deaths.lm,
 #'     data.frame(month=I(seasonaldummy(ldeaths,36))))
 #' plot(ldeaths.fcast)
-#' 
+#'
 #' # A simpler approach to seasonal dummy variables
 #' deaths.lm  <- tslm(ldeaths ~ season)
 #' ldeaths.fcast <- forecast(deaths.lm, h=36)
 #' plot(ldeaths.fcast)
-#' 
+#'
 #' @export
 seasonaldummy <- function(x, h=NULL)
 {
@@ -181,37 +181,37 @@ seasonaldummyf <- function(x, h)
 
 
 #' Forecasting using stl objects
-#' 
+#'
 #' Forecasts of STL objects are obtained by applying a non-seasonal forecasting
 #' method to the seasonally adjusted data and re-seasonalizing using the last
 #' year of the seasonal component.
-#' 
+#'
 #' \code{stlm} takes a time series \code{y}, applies an STL decomposition, and
 #' models the seasonally adjusted data using the model passed as
 #' \code{modelfunction} or specified using \code{method}. It returns an object
 #' that includes the original STL decomposition and a time series model fitted
 #' to the seasonally adjusted data. This object can be passed to the
 #' \code{forecast.stlm} for forecasting.
-#' 
+#'
 #' \code{forecast.stlm} forecasts the seasonally adjusted data, then
 #' re-seasonalizes the results by adding back the last year of the estimated
 #' seasonal component.
-#' 
+#'
 #' \code{stlf} combines \code{stlm} and \code{forecast.stlm}. It takes a
 #' \code{ts} argument, applies an STL decomposition, models the seasonally
 #' adjusted data, reseasonalizes, and returns the forecasts. However, it allows
 #' more general forecasting methods to be specified via
 #' \code{forecastfunction}.
-#' 
+#'
 #' \code{forecast.stl} is similar to \code{stlf} except that it takes the STL
 #' decomposition as the first argument, instead of the time series.
-#' 
+#'
 #' Note that the prediction intervals ignore the uncertainty associated with
 #' the seasonal component. They are computed using the prediction intervals
 #' from the seasonally adjusted series, which are then reseasonalized using the
 #' last year of the seasonal component. The uncertainty in the seasonal
 #' component is ignored.
-#' 
+#'
 #' The time series model for the seasonally adjusted data can be specified in
 #' \code{stlm} using either \code{method} or \code{modelfunction}. The
 #' \code{method} argument provides a shorthand way of specifying
@@ -220,7 +220,7 @@ seasonaldummyf <- function(x, h)
 #' object, that returns an object that can be passed to \code{\link{forecast}}.
 #' For example, \code{forecastfunction=ar} uses the \code{\link{ar}} function
 #' for modelling the seasonally adjusted series.
-#' 
+#'
 #' The forecasting method for the seasonally adjusted data can be specified in
 #' \code{stlf} and \code{forecast.stl} using either \code{method} or
 #' \code{forecastfunction}. The \code{method} argument provides a shorthand way
@@ -230,7 +230,7 @@ seasonaldummyf <- function(x, h)
 #' object of class \code{\link{forecast}}. For example,
 #' \code{forecastfunction=thetaf} uses the \code{\link{thetaf}} function for
 #' forecasting the seasonally adjusted series.
-#' 
+#'
 #' @param y A univariate numeric time series of class \code{ts}
 #' @param object An object of class \code{stl} or \code{stlm}. Usually the
 #' result of a call to \code{\link[stats]{stl}} or \code{stlm}.
@@ -278,7 +278,7 @@ seasonaldummyf <- function(x, h)
 #' \code{modelfunction} or \code{forecastfunction}.
 #' @return \code{stlm} returns an object of class \code{stlm}. The other
 #' functions return objects of class \code{forecast}.
-#' 
+#'
 #' There are many methods for working with \code{\link{forecast}} objects
 #' including \code{summary} to obtain and print a summary of the results, while
 #' \code{plot} produces a plot of the forecasts and prediction intervals. The
@@ -289,13 +289,13 @@ seasonaldummyf <- function(x, h)
 #' \code{\link{forecast.Arima}}.
 #' @keywords ts
 #' @examples
-#' 
+#'
 #' tsmod <- stlm(USAccDeaths, modelfunction=ar)
 #' plot(forecast(tsmod, h=36))
-#' 
+#'
 #' decomp <- stl(USAccDeaths,s.window="periodic")
 #' plot(forecast(decomp))
-#' 
+#'
 #' @export
 forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsmodel="ZZN",
      forecastfunction=NULL,
@@ -396,7 +396,7 @@ forecast.stl <- function(object, method=c("ets","arima","naive","rwdrift"), etsm
 # But it does not forecast. Instead, the result can be passed to forecast().
 #' @rdname forecast.stl
 #' @export
-stlm <- function(y ,s.window=7, robust=FALSE, method=c("ets","arima"), modelfunction=NULL, model=NULL,
+stlm <- function(y ,s.window=7, t.window = NULL, robust=FALSE, method=c("ets","arima"), modelfunction=NULL, model=NULL,
                  etsmodel="ZZN", lambda=NULL, biasadj=FALSE, xreg=NULL, allow.multiplicative.trend=FALSE, x=y, ...)
 {
   method <- match.arg(method)
@@ -425,7 +425,7 @@ stlm <- function(y ,s.window=7, robust=FALSE, method=c("ets","arima"), modelfunc
     x <- BoxCox(x, lambda)
 
   # Do STL decomposition
-  stld <- stl(x,s.window=s.window,robust=robust)
+  stld <- stl(x, s.window=s.window, t.window=t.window, robust=robust)
 
   if(!is.null(model)){
     if(inherits(model$model, "ets")){
@@ -533,11 +533,11 @@ forecast.stlm <- function(object, h = 2*object$m, level = c(80, 95), fan = FALSE
 }
 
 #' @rdname forecast.stl
-#' 
-#' @examples 
-#' 
+#'
+#' @examples
+#'
 #' plot(stlf(AirPassengers, lambda=0))
-#' 
+#'
 #' @export
 stlf <- function(y, h=frequency(x)*2, s.window=7, t.window=NULL, robust=FALSE, lambda=NULL, biasadj=FALSE, x=y, ...)
 {
@@ -585,30 +585,30 @@ stlf <- function(y, h=frequency(x)*2, s.window=7, t.window=NULL, robust=FALSE, l
 
 
 #' Fourier terms for modelling seasonality
-#' 
+#'
 #' \code{fourier} returns a matrix containing terms from a Fourier series, up
 #' to order \code{K}, suitable for use in \code{\link{Arima}},
 #' \code{\link{auto.arima}}, or \code{\link{tslm}}.
-#' 
+#'
 #' \code{fourierf} is deprecated, instead use the \code{h} argument in
 #' \code{fourier}.
-#' 
+#'
 #' The period of the Fourier terms is determined from the time series
 #' characteristics of \code{x}. When \code{h} is missing, the length of
 #' \code{x} also determines the number of rows for the matrix returned by
 #' \code{fourier}. Otherwise, the value of \code{h} determines the number of
 #' rows for the matrix returned by \code{fourier}, typically used for
 #' forecasting. The values within \code{x} are not used.
-#' 
+#'
 #' When \code{x} is a \code{ts} object, the value of \code{K} should be an
 #' integer and specifies the number of sine and cosine terms to return. Thus,
 #' the matrix returned has \code{2*K} columns.
-#' 
+#'
 #' When \code{x} is a \code{msts} object, then \code{K} should be a vector of
 #' integers specifying the number of sine and cosine terms for each of the
 #' seasonal periods. Then the matrix returned will have \code{2*sum(K)}
 #' columns.
-#' 
+#'
 #' @param x Seasonal time series: a \code{ts} or a \code{msts} object
 #' @param K Maximum order(s) of Fourier terms
 #' @param h Number of periods ahead to forecast (optional)
@@ -617,21 +617,21 @@ stlf <- function(y, h=frequency(x)*2, s.window=7, t.window=NULL, robust=FALSE, l
 #' @seealso \code{\link{seasonaldummy}}
 #' @keywords ts
 #' @examples
-#' 
+#'
 #' library(ggplot2)
-#' 
+#'
 #' # Using Fourier series for a "ts" object
 #' # K is chosen to minimize the AICc
 #' deaths.model  <- auto.arima(USAccDeaths, xreg=fourier(USAccDeaths,K=5), seasonal=FALSE)
 #' deaths.fcast <- forecast(deaths.model, xreg=fourier(USAccDeaths, K=5, h=36))
 #' autoplot(deaths.fcast) + xlab("Year")
-#' 
+#'
 #' # Using Fourier series for a "msts" object
 #' taylor.lm <- tslm(taylor ~ fourier(taylor, K = c(3, 3)))
 #' taylor.fcast <- forecast(taylor.lm,
 #'     data.frame(fourier(taylor, K = c(3, 3), h = 270)))
 #' autoplot(taylor.fcast)
-#' 
+#'
 #' @export
 fourier <- function(x, K, h=NULL)
 {
@@ -712,9 +712,9 @@ fourierf <- function(x, K, h)
 
 
 #' Moving-average smoothing
-#' 
+#'
 #' \code{ma} computes a simple moving average smoother of a given time series.
-#' 
+#'
 #' The moving average smoother averages the nearest \code{order} periods of
 #' each observation. As neighbouring observations of a time series are likely
 #' to be similar in value, averaging eliminates some of the randomness in the
@@ -722,13 +722,13 @@ fourierf <- function(x, K, h)
 #' \frac{1}{m} \sum_{j=-k}^k
 #' y_{t+j}}{T[t]=1/m(y[t-k]+y[t-k+1]+\ldots+y[t]+\ldots+y[t+k-1]+y[t+k])} where
 #' \eqn{k=\frac{m-1}{2}}{k=(m-1)/2}
-#' 
+#'
 #' When an even \code{order} is specified, the observations averaged will
 #' include one more observation from the future than the past (k is rounded
 #' up). If centre is TRUE, the value from two moving averages (where k is
 #' rounded up and down respectively) are averaged, centering the moving
 #' average.
-#' 
+#'
 #' @param x Univariate time series
 #' @param order Order of moving average smoother
 #' @param centre If TRUE, then the moving average is centred for even orders.
@@ -738,11 +738,11 @@ fourierf <- function(x, K, h)
 #' @seealso \code{\link[stats]{decompose}}
 #' @keywords ts
 #' @examples
-#' 
+#'
 #' plot(wineind)
 #' sm <- ma(wineind,order=12)
 #' lines(sm,col="red")
-#' 
+#'
 #' @export
 ma <- function(x, order, centre=TRUE)
 {
