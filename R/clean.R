@@ -174,6 +174,10 @@ tsoutliers <- function(x, iterate=2, lambda=NULL)
   else
     xx <- x
 
+  # Check if constant
+  if(is.constant(xx))
+    return(list(index=integer(0), replacements=numeric(0)))
+
   #Transform if requested
   if(!is.null(lambda))
     xx <- BoxCox(xx, lambda = lambda)
