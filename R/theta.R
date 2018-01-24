@@ -82,7 +82,7 @@ thetaf <- function(y, h=ifelse(frequency(y)>1, 2*frequency(y), 10),
   n <- length(x)
   x <- as.ts(x)
   m <- frequency(x)
-  if(m > 1)
+  if(m > 1 & !is.constant(x))
   {
     r <- as.numeric(acf(x, lag.max=m, plot=FALSE)$acf)[-1]
     stat <- sqrt((1 + 2*sum(r[-m]^2)) / n)

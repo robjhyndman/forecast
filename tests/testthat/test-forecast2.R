@@ -12,13 +12,6 @@ if(require(testthat))
     expect_error(meanf(wineind, level = 110))
   })
 
-  test_that("test thetaf()", {
-    thetafc <- thetaf(WWWusage)$mean
-    expect_true(all(thetafc == thetaf(WWWusage, fan = TRUE)$mean))
-    expect_error(thetaf(WWWusage, level = -10))
-    expect_error(thetaf(WWWusage, level = 110))
-  })
-
   test_that("test rwf()", {
     rwfc <- rwf(airmiles)$mean
     expect_true(all(rwfc == naive(airmiles)$mean))
