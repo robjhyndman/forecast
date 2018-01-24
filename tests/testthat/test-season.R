@@ -67,7 +67,8 @@ if(require(testthat))
   # Constant series should not error
   series <- ts(rep(950, 20), f = 4)
   constantForecast <- expect_error(stlf(series), NA)
-  expect_true(is.constant(constantForecast$mean))
+  # Small eps
+  expect_true(all(abs(constantForecast$mean - mean(series)) < 10^-8))
   })
 
   test_that("tests for ma",{
