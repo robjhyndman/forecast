@@ -10,6 +10,10 @@ if(require(testthat))
     expect_true(all(meanf(wineind, fan = TRUE)$mean == meanfc))
     expect_error(meanf(wineind, level = -10))
     expect_error(meanf(wineind, level = 110))
+    # Constant series should not error
+    series <- ts(rep(950, 20), f = 4)
+    constantForecast <- expect_error(rwf(series), NA)
+    expect_true(is.constant(constantForecast$mean))
   })
 
   test_that("test rwf()", {
@@ -19,6 +23,10 @@ if(require(testthat))
     expect_true(all(rwf(airmiles, fan = TRUE)$mean == rwfc))
     expect_true(length(rwf(airmiles, lambda = 0.15)$mean) == 10)
     expect_false(identical(rwf(airmiles, lambda = 0.15, biasadj = FALSE)$mean, rwf(airmiles, lambda = 0.15, biasadj = TRUE)$mean))
+    # Constant series should not error
+    series <- ts(rep(950, 20), f = 4)
+    constantForecast <- expect_error(rwf(series), NA)
+    expect_true(is.constant(constantForecast$mean))
   })
 
   test_that("test forecast.HoltWinters()", {
@@ -72,5 +80,9 @@ if(require(testthat))
     expect_true(all(snaive(WWWusage, h = 10)$mean == naive(WWWusage)$mean))
     expect_true(all(snaive(WWWusage, h = 10)$upper == naive(WWWusage)$upper))
     expect_true(all(snaive(WWWusage, h = 10)$lower == naive(WWWusage)$lower))
+    # Constant series should not error
+    series <- ts(rep(950, 20), f = 4)
+    constantForecast <- expect_error(snaive(series), NA)
+    expect_true(is.constant(constantForecast$mean))
   })
 }
