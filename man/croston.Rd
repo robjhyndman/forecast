@@ -47,9 +47,7 @@ elements of the time series. The smoothing parameters of the two
 applications of SES are assumed to be equal and are denoted by \code{alpha}.
 
 Note that prediction intervals are not computed as Croston's method has no
-underlying stochastic model. The separate forecasts for the non-zero
-demands, and for the times between non-zero demands do have prediction
-intervals based on ETS(A,N,N) models.
+underlying stochastic model.
 }
 \examples{
 y <- rpois(20,lambda=.3)
