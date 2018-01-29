@@ -181,7 +181,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
       else
         model$fitted <- ts(y/(1+e$e),frequency=tsp.y[3],start=tsp.y[1])
       model$residuals <- ts(e$e,frequency=tsp.y[3],start=tsp.y[1])
-      model$sigma2 <- mean(model$residuals^2,na.rm=TRUE)
+      model$sigma2 <- sum(model$residuals^2,na.rm=TRUE)/(ny-np)
       model$x <- orig.y
       model$series <- seriesname
       if(!is.null(lambda))
