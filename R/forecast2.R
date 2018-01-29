@@ -474,9 +474,7 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x)>1,2*freque
 #' applications of SES are assumed to be equal and are denoted by \code{alpha}.
 #'
 #' Note that prediction intervals are not computed as Croston's method has no
-#' underlying stochastic model. The separate forecasts for the non-zero
-#' demands, and for the times between non-zero demands do have prediction
-#' intervals based on ETS(A,N,N) models.
+#' underlying stochastic model.
 #'
 #' @param y a numeric vector or time series of class \code{ts}
 #' @param h Number of periods for forecasting.

@@ -64,6 +64,11 @@ if(require(testthat))
   fit1 <- stlf(wineind,lambda=.2,biasadj=FALSE)
   fit2 <- stlf(wineind,lambda=.2,biasadj=TRUE)
   expect_false(identical(fit1$mean, fit2$mean))
+  # Constant series should not error
+  series <- ts(rep(950, 20), f = 4)
+  constantForecast <- expect_error(stlf(series), NA)
+  # Small eps
+  expect_true(all(abs(constantForecast$mean - mean(series)) < 10^-8))
   })
 
   test_that("tests for ma",{
