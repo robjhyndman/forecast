@@ -22,7 +22,7 @@
 #' @param max.d Maximum number of non-seasonal differences allowed
 #' @return An integer indicating the number of differences required for stationarity.
 #' @author Rob J Hyndman, Slava Razbash & Mitchell O'Hara-Wild
-#' @seealso \code{\link{auto.arima}}
+#' @seealso \code{\link{auto.arima}} and \code{\link{ndiffs}}
 #' @references 
 #' Dickey DA and Fuller WA (1979), "Distribution of the Estimators for
 #' Autoregressive Time Series with a Unit Root", \emph{Journal of the American
@@ -117,7 +117,9 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), type=c("level", "tren
 #' seasonality) and if \code{test="ocsb"}, the Osborn-Chui-Smith-Birchenhall
 #' (1988) test is used (with null hypothesis that a seasonal unit root exists).
 #' 
-#' @inheritParams ndiffs
+#' @param x A univariate time series
+#' @param alpha Level of the test, possible values range from 0.01 to 0.1.
+#' @param test Type of unit root test to use
 #' @param m Deprecated. Length of seasonal period
 #' @param max.D Maximum number of seasonal differences allowed
 #' 
@@ -137,7 +139,7 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), type=c("level", "tren
 #'
 #' @author Rob J Hyndman, Slava Razbash and Mitchell O'Hara-Wild
 #' 
-#' @seealso \code{\link{auto.arima}}, \code{\link{ocsb.test}}, \code{\link[uroot]{hegy.test}}, and \code{\link[uroot]{ch.test}}
+#' @seealso \code{\link{auto.arima}}, \code{\link{ndiffs}}, \code{\link{ocsb.test}}, \code{\link[uroot]{hegy.test}}, and \code{\link[uroot]{ch.test}}
 #'
 #' @examples
 #' nsdiffs(AirPassengers)
@@ -240,11 +242,13 @@ nsdiffs <- function(x, alpha = 0.05, m=frequency(x), test=c("ocsb", "hegy", "ch"
 #' and Statistics} \bold{50}(4):361-377.
 #'   
 #' @seealso \code{\link{nsdiffs}}
-#'   
-#' @export
 #'
 #' @examples
 #' ocsb.test(AirPassengers)
+#' 
+#' @importFrom stats AIC BIC
+#' 
+#' @export
 ocsb.test <- function(x, lag.method = c("fixed", "AIC", "BIC", "AICc"), maxlag = 0)
 {
   lag.method <- match.arg(lag.method)
@@ -345,7 +349,7 @@ calcOCSBCritVal <- function(seasonal.period)
 
 #' @rdname ocsb.test
 #' @export
-print.OCSBtest <- function(x){
+print.OCSBtest <- function(x, ...){
   cat("\n")
   cat(strwrap(x$method, prefix = "\t"), sep = "\n")
   cat("\n")
