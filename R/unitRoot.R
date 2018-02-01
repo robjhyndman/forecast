@@ -121,7 +121,7 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), type=c("level", "tren
 #' @param m Deprecated. Length of seasonal period
 #' @param max.D Maximum number of seasonal differences allowed
 #' 
-#' @inheritSection return
+#' @return An integer indicating the number of differences required for stationarity.
 #' 
 #' @references 
 #' Osborn DR, Chui APL, Smith J, and Birchenhall CR (1988) "Seasonality and the
