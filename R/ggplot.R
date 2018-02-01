@@ -1374,8 +1374,8 @@ ggseasonplot <- function(x, season.labels=NULL, year.labels=FALSE, year.labels.l
     xLab <- "Season"
   }
 
-  if(!is.null(season.labels)){
-    if(length(season.labels) != length(labs)){
+  if (!is.null(season.labels)) {
+    if (length(season.labels) != length(labs)) {
       warning(paste0("Provided season.labels have length ", length(season.labels), ", but ", length(labs), " are required. Ignoring season.labels."))
     }
     else {
@@ -1384,15 +1384,15 @@ ggseasonplot <- function(x, season.labels=NULL, year.labels=FALSE, year.labels.l
   }
 
   breaks <- sort(unique(data$time))
-  if(polar){
+  if (polar) {
     breaks <- head(breaks, -1)
     p <- p + ggplot2::coord_polar()
   }
 
-  p <- p + ggplot2::scale_x_continuous(breaks=breaks, minor_breaks=NULL, labels=labs)
+  p <- p + ggplot2::scale_x_continuous(breaks = breaks, minor_breaks = NULL, labels = labs)
 
-  #Graph title and axes
-  p <- p + ggAddExtras(main=paste("Seasonal plot:", xname), xlab=xLab, ylab=NULL)
+  # Graph title and axes
+  p <- p + ggAddExtras(main = paste("Seasonal plot:", xname), xlab = xLab, ylab = NULL)
   return(p)
 }
 
