@@ -1,13 +1,13 @@
 #' Multi-Seasonal Time Series
-#' 
+#'
 #' msts is an S3 class for multi seasonal time series objects, intended to be
 #' used for models that support multiple seasonal periods. The msts class
 #' inherits from the ts class and has an additional "msts" attribute which
 #' contains the vector of seasonal periods. All methods that work on a ts
 #' class, should also work on a msts class.
-#' 
+#'
 #' @aliases print.msts window.msts `[.msts`
-#' 
+#'
 #' @param data A numeric vector, ts object, matrix or data frame. It is
 #' intended that the time series data is univariate, otherwise treated the same
 #' as ts().
@@ -22,57 +22,56 @@
 #' @author Slava Razbash and Rob J Hyndman
 #' @keywords ts
 #' @examples
-#' 
+#'
 #' x <- msts(taylor, seasonal.periods=c(48,336), start=2000+22/52)
-#' y <- msts(USAccDeaths, seasonal.periods=12, start=1949)  
-#' 
+#' y <- msts(USAccDeaths, seasonal.periods=12, start=1949)
+#'
 #' @export
-msts <- function(data, seasonal.periods, ts.frequency=floor(max(seasonal.periods)), ...)
-{
-	#if(!is.element(ts.frequency, round(seasonal.periods-0.5+1e-12)))
+msts <- function(data, seasonal.periods, ts.frequency=floor(max(seasonal.periods)), ...) {
+  # if(!is.element(ts.frequency, round(seasonal.periods-0.5+1e-12)))
   #  stop("ts.frequency should be one of the seasonal periods")
 
-	if(inherits(data, "ts") & frequency(data) == ts.frequency & length(list(...)) == 0)
-		object <- data
-  else
-	  object <- ts(data=data, frequency=ts.frequency, ...)
-	if(length(seasonal.periods) > 1L)
-	{
-		class(object) <- c("msts", "ts")
-		attr(object, "msts") <- sort(seasonal.periods)
-	}
-	return(object)
+  if (inherits(data, "ts") & frequency(data) == ts.frequency & length(list(...)) == 0) {
+    object <- data
+  } else {
+    object <- ts(data = data, frequency = ts.frequency, ...)
+  }
+  if (length(seasonal.periods) > 1L) {
+    class(object) <- c("msts", "ts")
+    attr(object, "msts") <- sort(seasonal.periods)
+  }
+  return(object)
 }
 
 #' @export
 print.msts <- function(x, ...) {
-	cat("Multi-Seasonal Time Series:\n")
-	cat("Start: ")
-	cat(start(x))
-	#cat("\nEnd: ")
-	#cat(x$end)
-	cat("\nSeasonal Periods: ")
-	cat(attr(x,"msts"))
-	cat("\nData:\n")
+  cat("Multi-Seasonal Time Series:\n")
+  cat("Start: ")
+  cat(start(x))
+  # cat("\nEnd: ")
+  # cat(x$end)
+  cat("\nSeasonal Periods: ")
+  cat(attr(x, "msts"))
+  cat("\nData:\n")
   xx <- unclass(x) # handles both univariate and multivariate ts
   attr(xx, "tsp") <- attr(xx, "msts") <- NULL
-	print(xx)
-	#print(matrix(x, ncol=length(x)), nrow=1)
-	cat("\n")
+  print(xx)
+  # print(matrix(x, ncol=length(x)), nrow=1)
+  cat("\n")
 }
 
 #' @export
 window.msts <- function(x, ...) {
-	seasonal.periods <- attr(x,"msts")
-	class(x) <- c("ts")
-	x <- window(x, ...)
-	class(x) <- c("msts", "ts")
-	attr(x, "msts") <- seasonal.periods
-	return(x)
+  seasonal.periods <- attr(x, "msts")
+  class(x) <- c("ts")
+  x <- window(x, ...)
+  class(x) <- c("msts", "ts")
+  attr(x, "msts") <- seasonal.periods
+  return(x)
 }
 
 #' @export
-`[.msts` <- function(x, i, j, drop = TRUE){
+`[.msts` <- function(x, i, j, drop = TRUE) {
   y <- NextMethod("[")
   class(y) <- c("msts", class(y))
   attr(y, "msts") <- attr(x, "msts")

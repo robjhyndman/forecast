@@ -1,5 +1,4 @@
-.onAttach <- function(...)
-{
+.onAttach <- function(...) {
   if (!interactive() || stats::runif(1) > 0.2) return()
 
   tips <- c(
@@ -11,6 +10,6 @@
     "Want to meet other forecasters? Join the International Institute of Forecasters:\n  http://forecasters.org/"
   )
   tip <- sample(tips, 1)
-  msg <- paste("This is forecast", packageVersion("forecast"),"\n ",tip)
+  msg <- paste("This is forecast", packageVersion("forecast"), "\n ", tip)
   packageStartupMessage(msg)
 }

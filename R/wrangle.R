@@ -1,37 +1,37 @@
-toMat <- function(x){
-  if(NCOL(x)>1 && !is.matrix(x)){
-    x <- matrix(x,ncol=NCOL(x))
+toMat <- function(x) {
+  if (NCOL(x) > 1 && !is.matrix(x)) {
+    x <- matrix(x, ncol = NCOL(x))
   }
   return(x)
 }
 
-#Converts arguments into data.frame, whilst retaining mts/ts/matrix properties
-datamat <- function(..., flatten=TRUE, functions=TRUE){
+# Converts arguments into data.frame, whilst retaining mts/ts/matrix properties
+datamat <- function(..., flatten=TRUE, functions=TRUE) {
   vars <- list(...)
-  if(length(vars)==0){
+  if (length(vars) == 0) {
     return(data.frame())
   }
-  if(!is.null(names(vars))){
+  if (!is.null(names(vars))) {
     names(vars)[!nzchar(names(vars))] <- as.character(substitute(list(...))[-1])[!nzchar(names(vars))]
   }
-  else{
+  else {
     names(vars) <- as.character(substitute(list(...))[-1])
   }
-  if(flatten){
+  if (flatten) {
     i <- 1
-    while (i <= length(vars)){
-      if (is.data.frame(vars[[i]])){
-        vars <- c(vars,c(vars[[i]])) #Append data.frame components
-        vars[[i]] <- NULL #Remove data.frame
+    while (i <= length(vars)) {
+      if (is.data.frame(vars[[i]])) {
+        vars <- c(vars, c(vars[[i]])) # Append data.frame components
+        vars[[i]] <- NULL # Remove data.frame
       }
-      else if (is.matrix(vars[[i]])){
-        for (j in 1:NCOL(vars[[i]])){
-          vars[[length(vars)+1]] <- vars[[i]][,j]
+      else if (is.matrix(vars[[i]])) {
+        for (j in 1:NCOL(vars[[i]])) {
+          vars[[length(vars) + 1]] <- vars[[i]][, j]
           names(vars)[length(vars)] <- make.names(colnames(vars[[i]])[j])
         }
         i <- i + 1
       }
-      else{
+      else {
         i <- i + 1
       }
     }
@@ -51,8 +51,8 @@ datamat <- function(..., flatten=TRUE, functions=TRUE){
   return(vars)
 }
 
-recoverTSP <- function(times.x){
-  freq <- sort(unique(round(times.x%%1,digits=6))) #The subset cannot increase frequency
+recoverTSP <- function(times.x) {
+  freq <- sort(unique(round(times.x %% 1, digits = 6))) # The subset cannot increase frequency
   freq <- length(freq)
-  return(c(min(times.x),min(times.x)+(length(times.x)-1)/freq,freq))
+  return(c(min(times.x), min(times.x) + (length(times.x) - 1) / freq, freq))
 }

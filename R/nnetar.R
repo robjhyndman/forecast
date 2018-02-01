@@ -1,9 +1,9 @@
 # Defaults:
-#For non-seasonal data, p chosen using AIC from linear AR(p) model
-#For seasonal data, p chosen using AIC from linear AR(p) model after
+# For non-seasonal data, p chosen using AIC from linear AR(p) model
+# For seasonal data, p chosen using AIC from linear AR(p) model after
 #    seasonally adjusting with STL decomposition, and P=1
-#size set to average of number of inputs and number of outputs: (p+P+1)/2
-#if xreg is included then size = (p+P+ncol(xreg)+1)/2
+# size set to average of number of inputs and number of outputs: (p+P+1)/2
+# if xreg is included then size = (p+P+ncol(xreg)+1)/2
 
 
 
@@ -67,12 +67,12 @@
 #'
 #' \item{model}{A list containing information about the fitted model}
 #' \item{method}{The name of the forecasting method as a character string}
-#' \item{x}{The original time series.} 
-#' \item{xreg}{The external regressors used in fitting (if given).} 
-#' \item{residuals}{Residuals from the fitted model. That is x minus fitted values.} 
-#' \item{fitted}{Fitted values (one-step forecasts)} 
+#' \item{x}{The original time series.}
+#' \item{xreg}{The external regressors used in fitting (if given).}
+#' \item{residuals}{Residuals from the fitted model. That is x minus fitted values.}
+#' \item{fitted}{Fitted values (one-step forecasts)}
 #' \item{...}{Other arguments}
-#' 
+#'
 #' @author Rob J Hyndman
 #' @keywords ts
 #' @examples
@@ -94,108 +94,113 @@
 #' fit2 <- nnetar(window(lynx,start=1921), model=fit)
 #'
 #' @export
-nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NULL, subset=NULL, scale.inputs=TRUE, x=y, ...)
-{
+nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NULL, subset=NULL, scale.inputs=TRUE, x=y, ...) {
   useoldmodel <- FALSE
   yname <- deparse(substitute(y))
-  if (!is.null(model))
-  {
+  if (!is.null(model)) {
     # Use previously fitted model
     useoldmodel <- TRUE
     # Check for conflicts between new and old data:
     # Check model class
-    if (!is.nnetar(model))
+    if (!is.nnetar(model)) {
       stop("Model must be a nnetar object")
+    }
     # Check new data
-    m <- max(round(frequency(model$x)),1L)
-    minlength <- max(c(model$p, model$P*m))
-    if (length(x) < minlength)
+    m <- max(round(frequency(model$x)), 1L)
+    minlength <- max(c(model$p, model$P * m))
+    if (length(x) < minlength) {
       stop(paste("Series must be at least of length", minlength, "to use fitted model"))
-    if (tsp(as.ts(x))[3] != m)
-    {
+    }
+    if (tsp(as.ts(x))[3] != m) {
       warning(paste("Data frequency doesn't match fitted model, coercing to frequency =", m))
-      x <- ts(x, frequency=m)
+      x <- ts(x, frequency = m)
     }
     # Check xreg
-    if (!is.null(model$xreg))
-    {
-      if (is.null(xreg))
+    if (!is.null(model$xreg)) {
+      if (is.null(xreg)) {
         stop("No external regressors provided")
-      if (NCOL(xreg) != NCOL(model$xreg))
+      }
+      if (NCOL(xreg) != NCOL(model$xreg)) {
         stop("Number of external regressors does not match fitted model")
+      }
     }
     # Update parameters with previous model
     lambda <- model$lambda
     size <- model$size
     p <- model$p
     P <- model$P
-    if (is.null(model$scalex))
+    if (is.null(model$scalex)) {
       scale.inputs <- FALSE
+    }
   }
-  else
-  {
-    if(length(y) < 3)
+  else {
+    if (length(y) < 3) {
       stop("Not enough data to fit a model")
+    }
   }
   # Check for NAs in x
-  if (any(is.na(x)))
+  if (any(is.na(x))) {
     warning("Missing values in x, omitting rows")
+  }
   # Check for constant data
   constant_data <- is.constant(na.interp(x))
-  if(constant_data)
+  if (constant_data) {
     scale.inputs <- FALSE
+  }
 
   # Transform data
-  if(!is.null(lambda) & !constant_data)
-    xx <- BoxCox(x,lambda)
-  else
+  if (!is.null(lambda) & !constant_data) {
+    xx <- BoxCox(x, lambda)
+  } else {
     xx <- x
+  }
   ## Check whether to use a subset of the data
   xsub <- rep(TRUE, length(x))
-  if (is.numeric(subset))
+  if (is.numeric(subset)) {
     xsub[-subset] <- FALSE
-  if (is.logical(subset))
+  }
+  if (is.logical(subset)) {
     xsub <- subset
+  }
   # Scale series
   scalex <- NULL
-  if(scale.inputs & !constant_data)
-  {
-    if (useoldmodel)
-    {
+  if (scale.inputs & !constant_data) {
+    if (useoldmodel) {
       scalex <- model$scalex
     }
-    else
-    {
+    else {
       tmpx <- scale(xx[xsub], center = TRUE, scale = TRUE)
-      scalex <- list(center = attr(tmpx,"scaled:center"),
-                     scale = attr(tmpx,"scaled:scale"))
+      scalex <- list(
+        center = attr(tmpx, "scaled:center"),
+        scale = attr(tmpx, "scaled:scale")
+      )
     }
     xx <- scale(xx, center = scalex$center, scale = scalex$scale)
-    xx <- xx[,1]
+    xx <- xx[, 1]
   }
   # Check xreg class & dim
   xxreg <- NULL
   scalexreg <- NULL
-  if(!is.null(xreg))
-  {
+  if (!is.null(xreg)) {
     xxreg <- xreg <- as.matrix(xreg)
-    if(length(x) != NROW(xreg))
+    if (length(x) != NROW(xreg)) {
       stop("Number of rows in xreg does not match series length")
+    }
     # Check for NAs in xreg
-    if(any(is.na(xreg)))
+    if (any(is.na(xreg))) {
       warning("Missing values in xreg, omitting rows")
+    }
     # Scale xreg
-    if(scale.inputs)
-    {
-      if (useoldmodel)
-      {
-      scalexreg <- model$scalexreg
+    if (scale.inputs) {
+      if (useoldmodel) {
+        scalexreg <- model$scalexreg
       }
-      else
-      {
+      else {
         tmpx <- scale(xxreg[xsub, ], center = TRUE, scale = TRUE)
-        scalexreg <- list(center = attr(tmpx,"scaled:center"),
-                          scale = attr(tmpx,"scaled:scale"))
+        scalexreg <- list(
+          center = attr(tmpx, "scaled:center"),
+          scale = attr(tmpx, "scaled:scale")
+        )
       }
       xxreg <- scale(xxreg, center = scalexreg$center, scale = scalexreg$scale)
     }
@@ -204,44 +209,41 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   n <- length(xx)
   xx <- as.ts(xx)
   m <- max(round(frequency(xx)), 1L)
-  if(constant_data)
+  if (constant_data) {
     p <- 1
-  if(m==1)
-  {
-    if(missing(p))
-      p <- max(length(ar(na.interp(xx))$ar),1)
-    if(p >= n-1)
-    {
+  }
+  if (m == 1) {
+    if (missing(p)) {
+      p <- max(length(ar(na.interp(xx))$ar), 1)
+    }
+    if (p >= n - 1) {
       warning("Reducing number of lagged inputs due to short series")
-      p <- n-2
+      p <- n - 2
     }
     lags <- 1:p
-    if(P>1)
+    if (P > 1) {
       warning("Non-seasonal data, ignoring seasonal lags")
+    }
     P <- 0
   }
-  else
-  {
-    if(missing(p))
-    {
-      if(n >= 2*m)
-        x.sa <- seasadj(stl(na.interp(xx),s.window=7))
-      else
+  else {
+    if (missing(p)) {
+      if (n >= 2 * m) {
+        x.sa <- seasadj(stl(na.interp(xx), s.window = 7))
+      } else {
         x.sa <- na.interp(xx)
-      p <- max(length(ar(x.sa)$ar),1)
+      }
+      p <- max(length(ar(x.sa)$ar), 1)
     }
-    if(p >= n-1)
-    {
+    if (p >= n - 1) {
       warning("Reducing number of lagged inputs due to short series")
-      p <- n-2
+      p <- n - 2
     }
-    if(P > 0 & n >= m*P+2)
-      lags <- sort(unique(c(1:p,m*(1:P))))
-    else
-    {
+    if (P > 0 & n >= m * P + 2) {
+      lags <- sort(unique(c(1:p, m * (1:P))))
+    } else {
       lags <- 1:p
-      if(P>0)
-      {
+      if (P > 0) {
         warning("Series too short for seasonal lags")
         P <- 0
       }
@@ -250,22 +252,24 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   maxlag <- max(lags)
   nlag <- length(lags)
   y <- xx[-(1:maxlag)]
-  lags.X <- matrix(NA_real_,ncol=nlag,nrow=n-maxlag)
-  for(i in 1:nlag)
-    lags.X[,i] <- xx[(maxlag-lags[i]+1):(n-lags[i])]
+  lags.X <- matrix(NA_real_, ncol = nlag, nrow = n - maxlag)
+  for (i in 1:nlag)
+    lags.X[, i] <- xx[(maxlag - lags[i] + 1):(n - lags[i])]
   # Add xreg into lagged matrix
   lags.X <- cbind(lags.X, xxreg[-(1:maxlag), ])
-  if(missing(size))
-    size <- round((NCOL(lags.X)+1)/2)
+  if (missing(size)) {
+    size <- round((NCOL(lags.X) + 1) / 2)
+  }
   # Remove missing values if present
-  j <- complete.cases(lags.X,y)
+  j <- complete.cases(lags.X, y)
   ## Remove values not in subset
   j <- j & xsub[-(1:maxlag)]
   ## Fit average ANN.
-  if(useoldmodel)
-    fit <- oldmodel_avnnet(lags.X[j,],y[j],size=size, model)
-  else
-    fit <- avnnet(lags.X[j,],y[j],size=size,repeats=repeats, ...)
+  if (useoldmodel) {
+    fit <- oldmodel_avnnet(lags.X[j, ], y[j], size = size, model)
+  } else {
+    fit <- avnnet(lags.X[j, ], y[j], size = size, repeats = repeats, ...)
+  }
   # Return results
   out <- list()
   out$x <- as.ts(x)
@@ -280,61 +284,63 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   out$subset <- (1:length(x))[xsub]
   out$model <- fit
   out$nnetargs <- list(...)
-  if (useoldmodel)
+  if (useoldmodel) {
     out$nnetargs <- model$nnetargs
-  fits <- c(rep(NA_real_,maxlag), rowMeans(sapply(fit, predict)))
-  if(scale.inputs)
+  }
+  fits <- c(rep(NA_real_, maxlag), rowMeans(sapply(fit, predict)))
+  if (scale.inputs) {
     fits <- fits * scalex$scale + scalex$center
+  }
   fits <- ts(fits)
-  if(!is.null(lambda))
-    fits <- InvBoxCox(fits,lambda)
+  if (!is.null(lambda)) {
+    fits <- InvBoxCox(fits, lambda)
+  }
   out$fitted <- ts(rep(NA_real_, length(out$x)))
   out$fitted[c(rep(TRUE, maxlag), j)] <- fits
   tsp(out$fitted) <- tsp(out$x)
   out$residuals <- out$x - out$fitted
   out$lags <- lags
   out$series <- yname
-  out$method <- paste("NNAR(",p,sep="")
-  if(P>0)
-    out$method <- paste(out$method,",",P,sep="")
-  out$method <- paste(out$method,",",size,")",sep="")
-  if(P>0)
-    out$method <- paste(out$method,"[",m,"]",sep="")
+  out$method <- paste("NNAR(", p, sep = "")
+  if (P > 0) {
+    out$method <- paste(out$method, ",", P, sep = "")
+  }
+  out$method <- paste(out$method, ",", size, ")", sep = "")
+  if (P > 0) {
+    out$method <- paste(out$method, "[", m, "]", sep = "")
+  }
   out$call <- match.call()
-  return(structure(out,class=c("nnetar")))
+  return(structure(out, class = c("nnetar")))
 }
 
 # Aggregate several neural network models
-avnnet <- function(x,y,repeats, linout=TRUE, trace=FALSE, ...)
-{
+avnnet <- function(x, y, repeats, linout=TRUE, trace=FALSE, ...) {
   mods <- list()
-  for(i in 1:repeats)
-    mods[[i]] <- nnet::nnet(x, y, linout=linout, trace=trace, ...)
-  return(structure(mods,class="nnetarmodels"))
+  for (i in 1:repeats)
+    mods[[i]] <- nnet::nnet(x, y, linout = linout, trace = trace, ...)
+  return(structure(mods, class = "nnetarmodels"))
 }
 
 # Fit old model to new data
-oldmodel_avnnet <- function(x, y, size, model)
-{
+oldmodel_avnnet <- function(x, y, size, model) {
   repeats <- length(model$model)
-  args <- list(x=x, y=y, size=size, linout=1, trace=FALSE)
+  args <- list(x = x, y = y, size = size, linout = 1, trace = FALSE)
   # include additional nnet arguments
   args <- c(args, model$nnetargs)
   # set iterations to zero (i.e. weights stay fixed)
   args$maxit <- 0
   mods <- list()
-  for(i in 1:repeats)
+  for (i in 1:repeats)
   {
     args$Wts <- model$model[[i]]$wts
     mods[[i]] <- do.call(nnet::nnet, args)
   }
-  return(structure(mods,class="nnetarmodels"))
+  return(structure(mods, class = "nnetarmodels"))
 }
 
 #' @export
-print.nnetarmodels <- function(x, ...)
-{
-  cat(paste("\nAverage of",length(x),"networks, each of which is\n"))
+print.nnetarmodels <- function(x, ...) {
+  cat(paste("\nAverage of", length(x), "networks, each of which is\n"))
   print(x[[1]])
 }
 
@@ -384,20 +390,20 @@ print.nnetarmodels <- function(x, ...)
 #' extract useful features of the value returned by \code{forecast.nnetar}.
 #'
 #' An object of class "\code{forecast}" is a list containing at least the
-#' following elements: 
-#'   \item{model}{A list containing information about the fitted model} 
-#'   \item{method}{The name of the forecasting method as a character string} 
+#' following elements:
+#'   \item{model}{A list containing information about the fitted model}
+#'   \item{method}{The name of the forecasting method as a character string}
 #'   \item{mean}{Point forecasts as a time series}
-#'   \item{lower}{Lower limits for prediction intervals} 
-#'   \item{upper}{Upper limits for prediction intervals} 
-#'   \item{level}{The confidence values associated with the prediction intervals} 
-#'   \item{x}{The original time series (either \code{object} itself or the time series 
-#'            used to create the model stored as \code{object}).} 
-#'   \item{xreg}{The external regressors used in fitting (if given).} 
-#'   \item{residuals}{Residuals from the fitted model. That is x minus fitted values.} 
+#'   \item{lower}{Lower limits for prediction intervals}
+#'   \item{upper}{Upper limits for prediction intervals}
+#'   \item{level}{The confidence values associated with the prediction intervals}
+#'   \item{x}{The original time series (either \code{object} itself or the time series
+#'            used to create the model stored as \code{object}).}
+#'   \item{xreg}{The external regressors used in fitting (if given).}
+#'   \item{residuals}{Residuals from the fitted model. That is x minus fitted values.}
 #'   \item{fitted}{Fitted values (one-step forecasts)}
 #'   \item{...}{Other arguments}
-#' 
+#'
 #' @author Rob J Hyndman
 #' @seealso \code{\link{nnetar}}.
 #' @keywords ts
@@ -407,100 +413,101 @@ print.nnetarmodels <- function(x, ...)
 #' plot(fcast)
 #'
 #' @export
-forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI=FALSE, level=c(80, 95), fan=FALSE, xreg=NULL, lambda=object$lambda, bootstrap=FALSE, npaths=1000, innov=NULL, ...)
-{
-#  require(nnet)
+forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI=FALSE, level=c(80, 95), fan=FALSE, xreg=NULL, lambda=object$lambda, bootstrap=FALSE, npaths=1000, innov=NULL, ...) {
+  #  require(nnet)
   out <- object
   tspx <- tsp(out$x)
   #
-  if(fan)
-    level <- seq(51,99,by=3)
-  else
-  {
-    if(min(level) > 0 & max(level) < 1)
-      level <- 100*level
-    else if(min(level) < 0 | max(level) > 99.99)
+  if (fan) {
+    level <- seq(51, 99, by = 3)
+  } else {
+    if (min(level) > 0 & max(level) < 1) {
+      level <- 100 * level
+    } else if (min(level) < 0 | max(level) > 99.99) {
       stop("Confidence limit out of range")
+    }
   }
   # Check if xreg was used in fitted model
-  if(is.null(object$xreg))
-  {
-    if(!is.null(xreg))
+  if (is.null(object$xreg)) {
+    if (!is.null(xreg)) {
       warning("External regressors were not used in fitted model, xreg will be ignored")
+    }
     xreg <- NULL
   }
-  else
-  {
-    if(is.null(xreg))
+  else {
+    if (is.null(xreg)) {
       stop("No external regressors provided")
+    }
     xreg <- as.matrix(xreg)
-    if(NCOL(xreg) != NCOL(object$xreg))
+    if (NCOL(xreg) != NCOL(object$xreg)) {
       stop("Number of external regressors does not match fitted model")
+    }
     h <- NROW(xreg)
   }
   fcast <- numeric(h)
   xx <- object$x
   xxreg <- xreg
-  if(!is.null(lambda))
-    xx <- BoxCox(xx,lambda)
+  if (!is.null(lambda)) {
+    xx <- BoxCox(xx, lambda)
+  }
   # Check and apply scaling of fitted model
-  if(!is.null(object$scalex))
-  {
+  if (!is.null(object$scalex)) {
     xx <- scale(xx, center = object$scalex$center, scale = object$scalex$scale)
-    if(!is.null(xreg))
+    if (!is.null(xreg)) {
       xxreg <- scale(xreg, center = object$scalexreg$center, scale = object$scalexreg$scale)
+    }
   }
 
   # Get lags used in fitted model
   lags <- object$lags
   maxlag <- max(lags)
-  flag <- rev(tail(xx, n=maxlag))
+  flag <- rev(tail(xx, n = maxlag))
   # Iterative 1-step forecast
-  for(i in 1:h)
+  for (i in 1:h)
   {
     newdata <- c(flag[lags], xxreg[i, ])
-    if(any(is.na(newdata)))
+    if (any(is.na(newdata))) {
       stop("I can't forecast when there are missing values near the end of the series.")
-    fcast[i] <- mean(sapply(object$model, predict, newdata=newdata))
-    flag <- c(fcast[i],flag[-maxlag])
+    }
+    fcast[i] <- mean(sapply(object$model, predict, newdata = newdata))
+    flag <- c(fcast[i], flag[-maxlag])
   }
   # Re-scale point forecasts
-  if(!is.null(object$scalex))
+  if (!is.null(object$scalex)) {
     fcast <- fcast * object$scalex$scale + object$scalex$center
+  }
   # Add ts properties
-  fcast <- ts(fcast,start=tspx[2]+1/tspx[3],frequency=tspx[3])
+  fcast <- ts(fcast, start = tspx[2] + 1 / tspx[3], frequency = tspx[3])
   # Back-transform point forecasts
-  if(!is.null(lambda))
-    fcast <- InvBoxCox(fcast,lambda)
+  if (!is.null(lambda)) {
+    fcast <- InvBoxCox(fcast, lambda)
+  }
   # Compute prediction intervals using simulations
-  if(isTRUE(PI))
-  {
+  if (isTRUE(PI)) {
     nint <- length(level)
-    sim <- matrix(NA,nrow=npaths,ncol=h)
-    if(!is.null(innov))
-    {
-      if(length(innov) != h*npaths)
+    sim <- matrix(NA, nrow = npaths, ncol = h)
+    if (!is.null(innov)) {
+      if (length(innov) != h * npaths) {
         stop("Incorrect number of innovations, need h*npaths values")
-      innov <- matrix(innov, nrow=h, ncol=npaths)
+      }
+      innov <- matrix(innov, nrow = h, ncol = npaths)
       bootstrap <- FALSE
     }
-    for(i in 1:npaths)
-      sim[i,] <- simulate(object, nsim=h, bootstrap=bootstrap, xreg=xreg, lambda=lambda, innov=innov[, i], ...)
-    lower <- apply(sim, 2, quantile, 0.5 - level/200, type = 8)
-    upper <- apply(sim, 2, quantile, 0.5 + level/200, type = 8)
+    for (i in 1:npaths)
+      sim[i, ] <- simulate(object, nsim = h, bootstrap = bootstrap, xreg = xreg, lambda = lambda, innov = innov[, i], ...)
+    lower <- apply(sim, 2, quantile, 0.5 - level / 200, type = 8)
+    upper <- apply(sim, 2, quantile, 0.5 + level / 200, type = 8)
     if (nint > 1L) {
       lower <- ts(t(lower))
       upper <- ts(t(upper))
     }
-    else
-    {
-      lower <- ts(matrix(lower, ncol=1L))
-      upper <- ts(matrix(upper, ncol=1L))
+    else {
+      lower <- ts(matrix(lower, ncol = 1L))
+      upper <- ts(matrix(upper, ncol = 1L))
     }
     tsp(lower) <- tsp(upper) <- tsp(fcast)
   }
-  else
-  {
+  else {
     level <- NULL
     lower <- NULL
     upper <- NULL
@@ -509,51 +516,51 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI
   out$level <- level
   out$lower <- lower
   out$upper <- upper
-  return(structure(out,class="forecast"))
+  return(structure(out, class = "forecast"))
 }
 
 #' @rdname fitted.Arima
 #' @export
-fitted.nnetar <- function(object, h=1, ...){
-  if(h==1){
+fitted.nnetar <- function(object, h=1, ...) {
+  if (h == 1) {
     return(object$fitted)
   }
-  else{
-    return(hfitted(object=object, h=h, FUN="nnetar", ...))
+  else {
+    return(hfitted(object = object, h = h, FUN = "nnetar", ...))
   }
 }
 
 #' @export
-print.nnetar <- function(x, digits = max(3, getOption("digits") - 3), ...)
-{
+print.nnetar <- function(x, digits = max(3, getOption("digits") - 3), ...) {
   cat("Series:", x$series, "\n")
   cat("Model: ", x$method, "\n")
-  #cat("  one hidden layer with",x$size,"nodes\n")
+  # cat("  one hidden layer with",x$size,"nodes\n")
   cat("Call:   ")
   print(x$call)
   print(x$model)
-  cat("\nsigma^2 estimated as ", format(mean(residuals(x)^2,na.rm=TRUE), digits = digits),
-      "\n", sep = "")
+  cat(
+    "\nsigma^2 estimated as ", format(mean(residuals(x) ^ 2, na.rm = TRUE), digits = digits),
+    "\n", sep = ""
+  )
   invisible(x)
 }
 
 #' @rdname is.ets
 #' @export
-is.nnetar <- function(x){
+is.nnetar <- function(x) {
   inherits(x, "nnetar")
 }
 
 #' @rdname is.ets
 #' @export
-is.nnetarmodels <- function(x){
+is.nnetarmodels <- function(x) {
   inherits(x, "nnetarmodels")
 }
 
 # Scale a univariate time series
-scale.ts <- function(x, center=TRUE, scale=TRUE)
-{
+scale.ts <- function(x, center=TRUE, scale=TRUE) {
   tspx <- tsp(x)
-  x <- as.ts(scale.default(x, center=center, scale=scale))
+  x <- as.ts(scale.default(x, center = center, scale = scale))
   tsp(x) <- tspx
   return(x)
 }

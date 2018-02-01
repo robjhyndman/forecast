@@ -4,7 +4,7 @@
 #' Decompose a multiple seasonal time series into seasonal, trend and remainder
 #' components. Seasonal components are estimated iteratively using STL. The trend
 #' component is computed for the last iteration of STL. Non-seasonal time series
-#' are decomposed into trend and remainder only. In this case, \code{\link[stats]{supsmu}} 
+#' are decomposed into trend and remainder only. In this case, \code{\link[stats]{supsmu}}
 #' is used to estimate the trend.
 #' Optionally, the time series may be Box-Cox transformed before decomposition.
 #' @param x Univariate time series of class \code{msts} or \code{ts}.
@@ -22,68 +22,65 @@
 #' mstl(taylor) %>% autoplot(facet=TRUE)
 #' mstl(AirPassengers, lambda='auto') %>% autoplot(facet=TRUE)
 #' @export
-mstl <- function(x, lambda=NULL, iterate=2, s.window=21, ...)
-{
+mstl <- function(x, lambda=NULL, iterate=2, s.window=21, ...) {
   # What is x?
   n <- length(x)
-  if("msts" %in% class(x))
-  {
+  if ("msts" %in% class(x)) {
     msts <- attributes(x)$msts
-    if(any(msts >= n/2))
-    {
+    if (any(msts >= n / 2)) {
       warning("Dropping seasonal components with fewer than two full periods.")
-      msts <- msts[msts < n/2]
+      msts <- msts[msts < n / 2]
       x <- forecast::msts(x, seasonal.periods = msts)
     }
     msts <- sort(msts, decreasing = FALSE)
   }
-  else if("ts" %in% class(x))
-  {
+  else if ("ts" %in% class(x)) {
     msts <- frequency(x)
     iterate <- 1L
   }
-  else
+  else {
     msts <- 1L
+  }
 
   # Transform if necessary
-  if(!is.null(lambda))
-  {
-    if(lambda=="auto")
+  if (!is.null(lambda)) {
+    if (lambda == "auto") {
       lambda <- forecast::BoxCox.lambda(x, ...)
-    x <- forecast::BoxCox(x, lambda=lambda)
+    }
+    x <- forecast::BoxCox(x, lambda = lambda)
   }
   tt <- seq_len(n)
 
   # Replace missing values if necessary
   origx <- x
-  if(anyNA(x))
-    x <- na.interp(x, lambda=lambda)
-  
-  
+  if (anyNA(x)) {
+    x <- na.interp(x, lambda = lambda)
+  }
+
+
   # Now fit stl models with only one type of seasonality at a time
-  if(msts[1L] > 1)
-  {
+  if (msts[1L] > 1) {
     stlfits <- list()
-    seas <- as.list(rep(0,length(msts)))
+    seas <- as.list(rep(0, length(msts)))
     deseas <- x
-    if(length(s.window)==1L)
+    if (length(s.window) == 1L) {
       s.window <- rep(s.window, length(msts))
+    }
     iterate <- pmax(1L, iterate)
-    for(j in seq_len(iterate))
+    for (j in seq_len(iterate))
     {
-      for(i in seq_along(msts))
+      for (i in seq_along(msts))
       {
         deseas <- deseas + seas[[i]]
-        fit <- stl(ts(deseas, frequency=msts[i]), s.window=s.window[i], ...)
-        seas[[i]] <- msts(fit$time.series[,"seasonal"], seasonal.periods=msts)
+        fit <- stl(ts(deseas, frequency = msts[i]), s.window = s.window[i], ...)
+        seas[[i]] <- msts(fit$time.series[, "seasonal"], seasonal.periods = msts)
         attributes(seas[[i]]) <- attributes(x)
         deseas <- deseas - seas[[i]]
       }
     }
-    trend <- msts(fit$time.series[,'trend'], seasonal.periods=msts)
+    trend <- msts(fit$time.series[, "trend"], seasonal.periods = msts)
   }
-  else
-  {
+  else {
     msts <- NULL
     deseas <- x
     trend <- ts(stats::supsmu(seq_len(n), x)$y)
@@ -93,26 +90,24 @@ mstl <- function(x, lambda=NULL, iterate=2, s.window=21, ...)
   # Estimate remainder
   remainder <- deseas - trend
 
-    # Package into matrix
+  # Package into matrix
   output <- cbind(origx, trend)
-  if(!is.null(msts))
-  {
-    for(i in seq_along(msts))
+  if (!is.null(msts)) {
+    for (i in seq_along(msts))
       output <- cbind(output, seas[[i]])
   }
   output <- cbind(output, remainder)
-  colnames(output)[1L:2L] <- c("Data","Trend")
-  if(!is.null(msts))
-    colnames(output)[2L+seq_along(msts)] <- paste0("Seasonal",round(msts,2))
+  colnames(output)[1L:2L] <- c("Data", "Trend")
+  if (!is.null(msts)) {
+    colnames(output)[2L + seq_along(msts)] <- paste0("Seasonal", round(msts, 2))
+  }
   colnames(output)[NCOL(output)] <- "Remainder"
 
-  return(structure(output, class=c("mstl","mts", "ts")))
+  return(structure(output, class = c("mstl", "mts", "ts")))
 }
 
 #' @rdname autoplot.seas
 #' @export
-autoplot.mstl <- function(object, ...)
-{
-  autoplot.mts(object,facets=TRUE,ylab="",...)
+autoplot.mstl <- function(object, ...) {
+  autoplot.mts(object, facets = TRUE, ylab = "", ...)
 }
-
