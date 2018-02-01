@@ -1,6 +1,5 @@
 # A unit test functions in newarima2.R
-if(require(testthat))
-{
+if (require(testthat)) {
   test_that("test auto.arima() and associated methods", {
     expect_warning(auto.arima(rep(1, 100), stepwise = TRUE, parallel = TRUE))
     set.seed(345)
@@ -17,14 +16,14 @@ if(require(testthat))
     expect_output(summary(auto.arima(testseries2, xreg = xregmat, approximation = TRUE, stepwise = FALSE)), regexp = "Series: testseries2")
     expect_output(print(auto.arima(ts(testseries2, f = 4), approximation = TRUE, trace = TRUE)), regexp = "ARIMA")
 
-    fit1 <- auto.arima(testseries1, stepwise=FALSE, lambda=2, biasadj=FALSE)
-    fit2 <- auto.arima(testseries1, stepwise=FALSE, lambda=2, biasadj=TRUE)
+    fit1 <- auto.arima(testseries1, stepwise = FALSE, lambda = 2, biasadj = FALSE)
+    fit2 <- auto.arima(testseries1, stepwise = FALSE, lambda = 2, biasadj = TRUE)
     expect_false(identical(fit1$fitted, fit2$fitted))
   })
 
   test_that("test parallel = TRUE and stepwise = FALSE for auto.arima()", {
     skip_on_travis()
-    expect_equal(auto.arima(WWWusage, parallel = TRUE, stepwise = FALSE)$arma,  c(3L,0L,0L,0L,1L,1L,0L))
+    expect_equal(auto.arima(WWWusage, parallel = TRUE, stepwise = FALSE)$arma, c(3L, 0L, 0L, 0L, 1L, 1L, 0L))
   })
 
   test_that("tests for nsdiffs()", {

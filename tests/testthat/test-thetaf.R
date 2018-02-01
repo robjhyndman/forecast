@@ -1,6 +1,5 @@
 # A unit test for thetaf.R
-if(require(testthat))
-{
+if (require(testthat)) {
   test_that("test thetaf()", {
     thetafc <- thetaf(WWWusage)$mean
     expect_true(all(thetafc == thetaf(WWWusage, fan = TRUE)$mean))

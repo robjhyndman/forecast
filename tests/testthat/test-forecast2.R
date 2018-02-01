@@ -1,6 +1,5 @@
 # A unit test for forecast2.R
-if(require(testthat))
-{
+if (require(testthat)) {
   context("Test forecast2.R")
   test_that("test meanf()", {
     meanfc <- mean(wineind)
@@ -37,11 +36,11 @@ if(require(testthat))
     # Forecasts transformed manually with Box-Cox should match
     # forecasts when lambda is passed as an argument
     hwmodbc <- stats::HoltWinters(BoxCox(UKgas, lambda = 0.25))
-    hwfc <- forecast(hwmodbc, lambda = 0.25, biasadj=FALSE)$mean
-    hwfc2 <- forecast(hwmodbc, lambda = 0.25, biasadj=TRUE)$mean
+    hwfc <- forecast(hwmodbc, lambda = 0.25, biasadj = FALSE)$mean
+    hwfc2 <- forecast(hwmodbc, lambda = 0.25, biasadj = TRUE)$mean
     hwbcfc <- InvBoxCox(forecast(hwmodbc)$mean, lambda = 0.25)
     expect_true(all(hwfc == hwbcfc))
-    expect_false(identical(hwfc,hwfc2))
+    expect_false(identical(hwfc, hwfc2))
   })
 
   test_that("test for forecast.StructTS()", {
@@ -54,10 +53,10 @@ if(require(testthat))
     # forecasts when lambda is passed as an argument
     bcseries <- BoxCox(woolyrnq, lambda = 0.19)
     fc2 <- InvBoxCox(forecast(stats::StructTS(bcseries))$mean, lambda = 0.19)
-    fc3 <- forecast(stats::StructTS(bcseries), lambda = 0.19, biasadj=FALSE)$mean
-    fc4 <- forecast(stats::StructTS(bcseries), lambda = 0.19, biasadj=TRUE)$mean
+    fc3 <- forecast(stats::StructTS(bcseries), lambda = 0.19, biasadj = FALSE)$mean
+    fc4 <- forecast(stats::StructTS(bcseries), lambda = 0.19, biasadj = TRUE)$mean
     expect_true(all(fc2 == fc3))
-    expect_false(identical(fc3,fc4))
+    expect_false(identical(fc3, fc4))
   })
 
   test_that("test croston()", {

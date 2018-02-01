@@ -1,6 +1,5 @@
 # A unit test for tbats function
-if(require(testthat))
-{
+if (require(testthat)) {
   context("Tests on tbats() functions")
   test_that("Test simple cases for tbats", {
     expect_error(tbats(data.frame(x1 = 1, x2 = 2), use.parallel = FALSE))
@@ -29,7 +28,7 @@ if(require(testthat))
     expect_output(print(summary(tbatsfit2)), regexp = "Length")
     expect_output(print(summary(tbatsfit3)), regexp = "Length")
     expect_output(print(summary(tbatsfit4)), regexp = "Length")
-    #Test fitted length
+    # Test fitted length
     expect_true(length(fitted(tbatsfit1)) == 50)
     expect_true(length(fitted(tbatsfit2)) == length(WWWusage))
     expect_true(length(fitted(tbatsfit3)) == length(woolyrnq))
@@ -37,7 +36,7 @@ if(require(testthat))
     # Test length of forecast
     expect_true(length(forecast(tbatsfit1)$mean) == 2 * frequency(wineind))
     expect_true(length(forecast(tbatsfit2)$mean) == 10)
-    #expect_true(length(forecast(tbatsfit3)$mean) == 2 * frequency(woolyrnq))
+    # expect_true(length(forecast(tbatsfit3)$mean) == 2 * frequency(woolyrnq))
     expect_true(length(forecast(tbatsfit4)$mean) == 10)
     # Test inappropriate levels
     expect_error(forecast(tbatsfit1, level = -10))
@@ -48,7 +47,7 @@ if(require(testthat))
 
   test_that("Test tbats() with parallel", {
     # Tests will not run on Travis in parallel
-    #expect_output(print(tbats(woolyrnq, num.cores = 1)), regexp = "TBATS")
-    #expect_output(print(tbats(elecsales, num.cores = 1, use.trend = FALSE)), regexp = "BATS")
+    # expect_output(print(tbats(woolyrnq, num.cores = 1)), regexp = "TBATS")
+    # expect_output(print(tbats(elecsales, num.cores = 1, use.trend = FALSE)), regexp = "BATS")
   })
 }
