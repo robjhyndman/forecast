@@ -179,17 +179,14 @@ ets <- function(y, model="ZZZ", damped=NULL,
       colnames(model$states)[1] <- "l"
       if (trendtype != "N") {
         colnames(model$states)[2] <- "b"
-      }
-      if (seasontype != "N") {
-        colnames(model$states)[(2 + (trendtype != "N")):ncol(model$states)] <- paste("s", 1:m, sep = "")
-      }
-      if (errortype == "A") {
-        model$fitted <- ts(y - e$e, frequency = tsp.y[3], start = tsp.y[1])
-      } else {
-        model$fitted <- ts(y / (1 + e$e), frequency = tsp.y[3], start = tsp.y[1])
-      }
-      model$residuals <- ts(e$e, frequency = tsp.y[3], start = tsp.y[1])
-      model$sigma2 <- mean(model$residuals ^ 2, na.rm = TRUE)
+      if(seasontype!="N")
+        colnames(model$states)[(2+(trendtype!="N")):ncol(model$states)] <- paste("s",1:m,sep="")
+      if(errortype=="A")
+        model$fitted <- ts(y-e$e,frequency=tsp.y[3],start=tsp.y[1])
+      else
+        model$fitted <- ts(y/(1+e$e),frequency=tsp.y[3],start=tsp.y[1])
+      model$residuals <- ts(e$e,frequency=tsp.y[3],start=tsp.y[1])
+      model$sigma2 <- sum(model$residuals^2,na.rm=TRUE)/(ny-np)
       model$x <- orig.y
       model$series <- seriesname
       if (!is.null(lambda)) {
