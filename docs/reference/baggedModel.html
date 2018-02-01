@@ -120,9 +120,9 @@
 results.</p>
 <dt>models</dt><dd><p>A list containing the fitted ensemble models.</p></dd>
 <dt>method</dt><dd><p>The name of the forecasting method as a character string</p></dd>
-<dt>y</dt><dd><p>The original time series.</p></dd> 
-<dt>bootstrapped_series</dt><dd><p>The bootstrapped series.</p></dd> 
-<dt>modelargs</dt><dd><p>The arguments passed through to <code>fn</code>.</p></dd> 
+<dt>y</dt><dd><p>The original time series.</p></dd>
+<dt>bootstrapped_series</dt><dd><p>The bootstrapped series.</p></dd>
+<dt>modelargs</dt><dd><p>The arguments passed through to <code>fn</code>.</p></dd>
 <dt>fitted</dt><dd><p>Fitted values (one-step forecasts). The
 mean of the fitted values is calculated over the ensemble.</p></dd>
 <dt>residuals</dt><dd><p>Original values minus fitted values.</p></dd>
@@ -137,8 +137,8 @@ parameter <code>fn</code>. Using the default parameters, the function
 <code><a href='bld.mbb.bootstrap.html'>bld.mbb.bootstrap</a></code> is used to calculate the bootstrapped series
 with the Box-Cox and Loess-based decomposition (BLD) bootstrap. The function
 <code><a href='forecast.baggedModel.html'>forecast.baggedModel</a></code> can then be used to calculate forecasts.
-    <code>baggedETS</code> is a wrapper for <code>baggedModel</code>, setting <code>fn</code> to "ets". 
-This function is included for backwards compatibility only, and may be 
+    <code>baggedETS</code> is a wrapper for <code>baggedModel</code>, setting <code>fn</code> to "ets".
+This function is included for backwards compatibility only, and may be
 deprecated in the future.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
@@ -181,7 +181,7 @@ Christoph Bergmeir, Fotios Petropoulos
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

@@ -182,7 +182,8 @@ forecasts)</p></dd>
     <p>The random walk with drift model is $$Y_t=c + Y_{t-1} + Z_t$$ where \(Z_t\) is a normal iid error. Forecasts are
 given by $$Y_n(h)=ch+Y_n$$. If there is no drift (as in
 <code>naive</code>), the drift parameter c=0. Forecast standard errors allow for
-uncertainty in estimating the drift parameter.</p>
+uncertainty in estimating the drift parameter (unlike the corresponding
+forecasts obtained by fitting an ARIMA model directly).</p>
 <p>The seasonal naive model is $$Y_t= Y_{t-m} + Z_t$$
 where \(Z_t\) is a normal iid error.</p>
     
@@ -228,7 +229,7 @@ Rob J Hyndman
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
