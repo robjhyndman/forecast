@@ -18,7 +18,7 @@ if(require(testthat))
     expect_true(all.equal(forecast(fit), forecast(fit, biasadj=TRUE)))
     
     #arima
-    fit1 <- Arima(USAccDeaths, order = c(0,1,1), seasonal = c(0,1,1), lambda = 0.5, biasadj = TRUE)
+    fit1 <- Arima(USAccDeaths, order = c(0,0,1), seasonal = c(0,0,1), lambda = 0.5, biasadj = TRUE)
     fit2 <- auto.arima(USAccDeaths, max.p=0, max.d=1, max.q=1, max.P=0, max.D=1, max.Q=1, lambda = 0.5, biasadj = TRUE)
     expect_true(all.equal(forecast(fit1), forecast(fit1, biasadj=TRUE)))
     expect_true(all.equal(forecast(fit2), forecast(fit2, biasadj=TRUE)))

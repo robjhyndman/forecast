@@ -28,8 +28,7 @@ if(require(testthat))
   })
 
   test_that("tests for nsdiffs()", {
-    expect_true(nsdiffs(wineind) == 1)
-    expect_true(nsdiffs(woolyrnq) == 1)
+    expect_true(nsdiffs(AirPassengers) == 1)
     expect_error(nsdiffs(airmiles))
     expect_true(nsdiffs(rep(1, 100)) == 0)
     expect_warning(nsdiffs(ts(rnorm(10), f = 0.1)))
