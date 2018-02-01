@@ -28,9 +28,9 @@ results.
 
 \item{models}{A list containing the fitted ensemble models.}
 \item{method}{The name of the forecasting method as a character string}
-\item{y}{The original time series.} 
-\item{bootstrapped_series}{The bootstrapped series.} 
-\item{modelargs}{The arguments passed through to \code{fn}.} 
+\item{y}{The original time series.}
+\item{bootstrapped_series}{The bootstrapped series.}
+\item{modelargs}{The arguments passed through to \code{fn}.}
 \item{fitted}{Fitted values (one-step forecasts). The
 mean of the fitted values is calculated over the ensemble.}
 \item{residuals}{Original values minus fitted values.}
@@ -47,8 +47,8 @@ parameter \code{fn}. Using the default parameters, the function
 with the Box-Cox and Loess-based decomposition (BLD) bootstrap. The function
 \code{\link{forecast.baggedModel}} can then be used to calculate forecasts.
 
-\code{baggedETS} is a wrapper for \code{baggedModel}, setting \code{fn} to "ets". 
-This function is included for backwards compatibility only, and may be 
+\code{baggedETS} is a wrapper for \code{baggedModel}, setting \code{fn} to "ets".
+This function is included for backwards compatibility only, and may be
 deprecated in the future.
 }
 \examples{

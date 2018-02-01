@@ -25,7 +25,7 @@ of the same length as the number of seasonal components.}
 Decompose a multiple seasonal time series into seasonal, trend and remainder
 components. Seasonal components are estimated iteratively using STL. The trend
 component is computed for the last iteration of STL. Non-seasonal time series
-are decomposed into trend and remainder only. In this case, \code{\link[stats]{supsmu}} 
+are decomposed into trend and remainder only. In this case, \code{\link[stats]{supsmu}}
 is used to estimate the trend.
 Optionally, the time series may be Box-Cox transformed before decomposition.
 }

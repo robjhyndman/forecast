@@ -31,10 +31,10 @@ fold, plus other summary information computed across folds.
 \description{
 \code{CVar} computes the errors obtained by applying an autoregressive
 modelling function to subsets of the time series \code{y} using k-fold
-cross-validation as described in Bergmeir, Hyndman and Koo (2015). It also 
+cross-validation as described in Bergmeir, Hyndman and Koo (2015). It also
 applies a Ljung-Box test to the residuals. If this test is significant
 (see returned pvalue), there is serial correlation in the residuals and the
-model can be considered to be underfitting the data. In this case, the 
+model can be considered to be underfitting the data. In this case, the
 cross-validated errors can underestimate the generalization error and should
 not be used.
 }

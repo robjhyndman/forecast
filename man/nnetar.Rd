@@ -59,10 +59,10 @@ extract useful features of the value returned by \code{nnetar}.
 
 \item{model}{A list containing information about the fitted model}
 \item{method}{The name of the forecasting method as a character string}
-\item{x}{The original time series.} 
-\item{xreg}{The external regressors used in fitting (if given).} 
-\item{residuals}{Residuals from the fitted model. That is x minus fitted values.} 
-\item{fitted}{Fitted values (one-step forecasts)} 
+\item{x}{The original time series.}
+\item{xreg}{The external regressors used in fitting (if given).}
+\item{residuals}{Residuals from the fitted model. That is x minus fitted values.}
+\item{fitted}{Fitted values (one-step forecasts)}
 \item{...}{Other arguments}
 }
 \description{
