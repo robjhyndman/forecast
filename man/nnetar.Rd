@@ -107,6 +107,6 @@ fit2 <- nnetar(window(lynx,start=1921), model=fit)
 
 }
 \author{
-Rob J Hyndman
+Rob J Hyndman and Gabriel Caceres
 }
 \keyword{ts}
