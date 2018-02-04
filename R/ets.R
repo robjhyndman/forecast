@@ -431,6 +431,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
   model$components <- c(best.e, best.t, best.s, best.d)
   model$call <- match.call()
   model$initstate <- model$states[1, ]
+  np <- length(model$par) + 1
   model$sigma2 <- sum(model$residuals ^ 2, na.rm = TRUE) / (ny - np)
   model$x <- orig.y
   if (!is.null(lambda)) {
