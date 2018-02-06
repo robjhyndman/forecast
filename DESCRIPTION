@@ -43,7 +43,7 @@ Authors@R: c(
   person("Earo", "Wang", role="aut"),
   person("Daniel", "Reid", role='ctb'),
   person("David", "Shaub", role='ctb'),
-  person("Yuan (Terry)", "Tang", role='ctb'),
+  person("Yuan", "Tang", role='ctb', email="terrytangyuan@gmail.com"),
   person("Zhenyu","Zhou", role='ctb')
   )
 BugReports: https://github.com/robjhyndman/forecast/issues
