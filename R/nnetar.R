@@ -229,7 +229,7 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   else {
     if (missing(p)) {
       if (n >= 2 * m) {
-        x.sa <- seasadj(stl(na.interp(xx), s.window = 7))
+        x.sa <- seasadj(mstl(na.interp(xx)))
       } else {
         x.sa <- na.interp(xx)
       }
