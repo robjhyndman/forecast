@@ -558,7 +558,7 @@ stlf <- function(y, h=frequency(x) * 2, s.window=21, t.window=NULL, robust=FALSE
     x <- BoxCox(x, lambda)
   }
 
-  fit <- stl(x, s.window = s.window, t.window = t.window, robust = robust)
+  fit <- mstl(x, s.window = s.window, t.window = t.window, robust = robust)
   fcast <- forecast(fit, h = h, lambda = lambda, biasadj = biasadj, ...)
 
   # if (!is.null(lambda))
