@@ -357,7 +357,7 @@ forecast.mstl <- function(object, method=c("ets", "arima", "naive", "rwdrift"), 
 # But it does not forecast. Instead, the result can be passed to forecast().
 #' @rdname forecast.stl
 #' @export
-stlm <- function(y, s.window=7, robust=FALSE, method=c("ets", "arima"), modelfunction=NULL, model=NULL,
+stlm <- function(y, s.window=21, robust=FALSE, method=c("ets", "arima"), modelfunction=NULL, model=NULL,
                  etsmodel="ZZN", lambda=NULL, biasadj=FALSE, xreg=NULL, allow.multiplicative.trend=FALSE, x=y, ...) {
   method <- match.arg(method)
 
@@ -533,7 +533,7 @@ forecast.stlm <- function(object, h = 2 * object$m, level = c(80, 95), fan = FAL
 #' plot(stlf(AirPassengers, lambda=0))
 #'
 #' @export
-stlf <- function(y, h=frequency(x) * 2, s.window=7, t.window=NULL, robust=FALSE, lambda=NULL, biasadj=FALSE, x=y, ...) {
+stlf <- function(y, h=frequency(x) * 2, s.window=21, t.window=NULL, robust=FALSE, lambda=NULL, biasadj=FALSE, x=y, ...) {
   seriesname <- deparse(substitute(y))
 
   # Check univariate
