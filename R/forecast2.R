@@ -332,7 +332,8 @@ forecast.StructTS <- function(object, h=ifelse(object$coef["epsilon"] > 1e-10, 2
     method <- "Local level structural model"
   }
 
-  fits <- x - residuals(object)
+  fits <- ts(c(x - residuals(object)))
+  tsp(fits) <- tsp(x)
   if (!is.null(lambda)) {
     fits <- InvBoxCox(fits, lambda)
     x <- InvBoxCox(x, lambda)
@@ -345,13 +346,11 @@ forecast.StructTS <- function(object, h=ifelse(object$coef["epsilon"] > 1e-10, 2
   return(structure(
     list(
       method = method, model = object, level = level, mean = pred$pred,
-      lower = lower, upper = upper, x = x, series = object$series, fitted = fits, residuals = residuals(object)
+      lower = lower, upper = upper, x = x, series = object$series, fitted = fits, residuals = x-fits
     ),
     class = "forecast"
   ))
 }
-
-
 
 #' Forecasting using Holt-Winters objects
 #'
