@@ -103,8 +103,11 @@ mstl <- function(x, lambda=NULL, iterate=2, s.window=13, ...) {
   }
   colnames(output)[NCOL(output)] <- "Remainder"
 
-  if (msts[1L] > 1) {
-    attr(output, "seasonal.periods") <- msts
+  if(!is.null(msts))
+  {
+    if (msts[1L] > 1) {
+      attr(output, "seasonal.periods") <- msts
+    }
   }
 
   return(structure(output, class = c("mstl", "mts", "ts")))
