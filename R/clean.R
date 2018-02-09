@@ -188,16 +188,17 @@ tsoutliers <- function(x, iterate=2, lambda=NULL) {
   }
 
   # Seasonally adjust data if necessary
-  if (freq > 1 & n > 2 * freq) {
-    fit <- stl(xx, s.window = "periodic", robust = TRUE)
-    # Check if seasonality is sufficient to use these results
-    rem <- fit$time.series[, "remainder"]
-    detrend <- rem + fit$time.series[, "seasonal"]
+  if (freq > 1 & n > 2 * freq) { 
+    fit <- mstl(xx, robust=TRUE)
+    # Check if seasonality is sufficient to warrant adjustment
+    rem <- remainder(fit)
+    detrend <- xx - trendcycle(fit)
     strength <- 1 - var(rem) / var(detrend)
     if (strength >= 0.5) {
       xx <- seasadj(fit)
     }
   }
+
   # Use super-smoother on the (seasonally adjusted) data
   tt <- 1:n
   mod <- supsmu(tt, xx)
