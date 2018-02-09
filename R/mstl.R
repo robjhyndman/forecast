@@ -73,12 +73,12 @@ mstl <- function(x, lambda=NULL, iterate=2, s.window=21, ...) {
       {
         deseas <- deseas + seas[[i]]
         fit <- stl(ts(deseas, frequency = msts[i]), s.window = s.window[i], ...)
-        seas[[i]] <- msts(fit$time.series[, "seasonal"], seasonal.periods = msts)
+        seas[[i]] <- msts(seasonal(fit), seasonal.periods = msts)
         attributes(seas[[i]]) <- attributes(x)
         deseas <- deseas - seas[[i]]
       }
     }
-    trend <- msts(fit$time.series[, "trend"], seasonal.periods = msts)
+    trend <- msts(trendcycle(fit), seasonal.periods = msts)
   }
   else {
     msts <- NULL
@@ -303,10 +303,10 @@ forecast.stl <- function(object, method=c("ets", "arima", "naive", "rwdrift"), e
   else if ("stl" %in% class(object)) {
     m <- frequency(object$time.series)
     n <- NROW(object$time.series)
-    lastseas <- rep(object$time.series[n - (m:1) + 1, "seasonal"], trunc(1 + (h - 1) / m))[1:h]
+    lastseas <- rep(seasonal(object)[n - (m:1) + 1], trunc(1 + (h-1)/m))[1:h]
     xdata <- ts(rowSums(object$time.series))
     tsp(xdata) <- tsp(object$time.series)
-    allseas <- object$time.series[, "seasonal"]
+    allseas <- seasonal(object)
     series <- deparse(object$call$x)
   }
   else {
