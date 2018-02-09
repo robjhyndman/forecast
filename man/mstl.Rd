@@ -22,12 +22,13 @@ of the same length as the number of seasonal components.}
 \item{...}{Other arguments are passed to \code{\link[stats]{stl}}.}
 }
 \description{
-Decompose a multiple seasonal time series into seasonal, trend and remainder
-components. Seasonal components are estimated iteratively using STL. The trend
-component is computed for the last iteration of STL. Non-seasonal time series
-are decomposed into trend and remainder only. In this case, \code{\link[stats]{supsmu}}
-is used to estimate the trend.
+Decompose a time series into seasonal, trend and remainder components. 
+Seasonal components are estimated iteratively using STL. Multiple seasonal periods are
+allowed. The trend component is computed for the last iteration of STL. 
+Non-seasonal time series are decomposed into trend and remainder only. 
+In this case, \code{\link[stats]{supsmu}} is used to estimate the trend.
 Optionally, the time series may be Box-Cox transformed before decomposition.
+Unlike \code{\link[stats]{stl}}, \code{mstl} is completely automated.
 }
 \examples{
 library(ggplot2)

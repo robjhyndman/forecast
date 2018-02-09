@@ -1,11 +1,12 @@
 #' Multiple seasonal  decomposition
 #'
-#' Decompose a multiple seasonal time series into seasonal, trend and remainder
-#' components. Seasonal components are estimated iteratively using STL. The trend
-#' component is computed for the last iteration of STL. Non-seasonal time series
-#' are decomposed into trend and remainder only. In this case, \code{\link[stats]{supsmu}}
-#' is used to estimate the trend.
+#' Decompose a time series into seasonal, trend and remainder components. 
+#' Seasonal components are estimated iteratively using STL. Multiple seasonal periods are
+#' allowed. The trend component is computed for the last iteration of STL. 
+#' Non-seasonal time series are decomposed into trend and remainder only. 
+#' In this case, \code{\link[stats]{supsmu}} is used to estimate the trend.
 #' Optionally, the time series may be Box-Cox transformed before decomposition.
+#' Unlike \code{\link[stats]{stl}}, \code{mstl} is completely automated. 
 #' @param x Univariate time series of class \code{msts} or \code{ts}.
 #' @param lambda Box-Cox decomposition parameter. If \code{NULL}, no transformation
 #' is used. If \code{lambda="auto"}, a transformation is automatically selected. If
