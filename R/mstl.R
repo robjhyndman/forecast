@@ -296,7 +296,7 @@ forecast.stl <- function(object, method=c("ets", "arima", "naive", "rwdrift"), e
     lastseas <- rowSums(seascomp)
     xdata <- object[, "Data"]
     seascols <- grep("Seasonal", colnames(object))
-    allseas <- rowSums(object[, seascols])
+    allseas <- rowSums(object[, seascols, drop=FALSE])
     series <- NULL
   }
   else if ("stl" %in% class(object)) {
