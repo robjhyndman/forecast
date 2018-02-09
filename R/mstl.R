@@ -22,7 +22,7 @@
 #' mstl(taylor) %>% autoplot(facet=TRUE)
 #' mstl(AirPassengers, lambda='auto') %>% autoplot(facet=TRUE)
 #' @export
-mstl <- function(x, lambda=NULL, iterate=2, s.window=21, ...) {
+mstl <- function(x, lambda=NULL, iterate=2, s.window=13, ...) {
   # What is x?
   n <- length(x)
   if ("msts" %in% class(x)) {
@@ -358,7 +358,7 @@ forecast.mstl <- function(object, method=c("ets", "arima", "naive", "rwdrift"), 
 # But it does not forecast. Instead, the result can be passed to forecast().
 #' @rdname forecast.stl
 #' @export
-stlm <- function(y, s.window=21, robust=FALSE, method=c("ets", "arima"), modelfunction=NULL, model=NULL,
+stlm <- function(y, s.window=13, robust=FALSE, method=c("ets", "arima"), modelfunction=NULL, model=NULL,
                  etsmodel="ZZN", lambda=NULL, biasadj=FALSE, xreg=NULL, allow.multiplicative.trend=FALSE, x=y, ...) {
   method <- match.arg(method)
 
@@ -534,7 +534,7 @@ forecast.stlm <- function(object, h = 2 * object$m, level = c(80, 95), fan = FAL
 #' plot(stlf(AirPassengers, lambda=0))
 #'
 #' @export
-stlf <- function(y, h=frequency(x) * 2, s.window=21, t.window=NULL, robust=FALSE, lambda=NULL, biasadj=FALSE, x=y, ...) {
+stlf <- function(y, h=frequency(x) * 2, s.window=13, t.window=NULL, robust=FALSE, lambda=NULL, biasadj=FALSE, x=y, ...) {
   seriesname <- deparse(substitute(y))
 
   # Check univariate

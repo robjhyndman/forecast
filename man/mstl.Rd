@@ -4,7 +4,7 @@
 \alias{mstl}
 \title{Multiple seasonal  decomposition}
 \usage{
-mstl(x, lambda = NULL, iterate = 2, s.window = 21, ...)
+mstl(x, lambda = NULL, iterate = 2, s.window = 13, ...)
 }
 \arguments{
 \item{x}{Univariate time series of class \code{msts} or \code{ts}.}
