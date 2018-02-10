@@ -298,7 +298,7 @@ forecast.stl <- function(object, method=c("ets", "arima", "naive", "rwdrift"), e
     seascomp <- matrix(0, ncol = length(seasonal.periods), nrow = h)
     for (i in seq_along(seasonal.periods))
     {
-      mp <- seasonal.periods[i]
+      mp <- round(seasonal.periods[i],2)
       n <- NROW(object)
       colname <- paste0("Seasonal", mp)
       seascomp[, i] <- rep(object[n - rev(seq_len(mp)) + 1, colname], trunc(1 + (h - 1) / mp))[seq_len(h)]
