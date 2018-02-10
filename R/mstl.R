@@ -41,6 +41,12 @@ mstl <- function(x, lambda=NULL, iterate=2, s.window=13, ...) {
   else {
     msts <- 1L
   }
+  # Check dimension
+  if(!is.null(dim(x)))
+  {
+    if(NCOL(x)==1L)
+      x <- x[,1]
+  }
 
   # Transform if necessary
   if (!is.null(lambda)) {
