@@ -207,6 +207,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   }
   if (m == 1) {
     D <- max.P <- max.Q <- 0
+  }
   else if(is.na(D))
   {
     D <- nsdiffs(xx, test=seasonal.test, max.D=max.D)
