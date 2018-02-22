@@ -11,7 +11,7 @@
 #' @name forecast-package
 #' @author Rob J Hyndman
 #'
-#' Maintainer: Rob.Hyndman@@monash.edu
+#' Maintainer: Rob.Hyndman@monash.edu
 #' @keywords package
 NULL # Instead of "_PACKAGE" to remove inclusion of \alias{forecast}
 # "_PACKAGE"
