@@ -103,7 +103,7 @@ simulate.ets <- function(object, nsim=length(object$x), seed=NULL, future=TRUE, 
     as.double(numeric(nsim)),
     as.double(e),
     PACKAGE = "forecast"
-  )[[11]], frequency = object$m, start = tsp(object$x)[2] + 1 / tsp(object$x)[3])
+  )[[11]], frequency = object$m, start = ifelse(future, tsp(object$x)[2] + 1 / tsp(object$x)[3], tsp(object$x)[1]))
   if (is.na(tmp[1])) {
     stop("Problem with multiplicative damped trend")
   }
