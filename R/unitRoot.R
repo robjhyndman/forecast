@@ -46,10 +46,7 @@
 #' ndiffs(WWWusage)
 #' ndiffs(diff(log(AirPassengers),12))
 #'
-#' @importFrom urca ur.kpss
-#' @importFrom urca ur.df
-#' @importFrom urca ur.pp
-#'
+#' @importFrom urca ur.kpss ur.df ur.pp
 #' @export
 ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), type=c("level", "trend"), max.d=2)
 {

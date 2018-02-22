@@ -771,50 +771,6 @@ summary.Arima <- function(object,...)
   print(accuracy(object))
 }
 
-
-
-# Number of seasonal differences
-#' @rdname ndiffs
-#'
-#' @examples
-#' nsdiffs(log(AirPassengers))
-#'
-#' @export
-nsdiffs <- function(x, m=frequency(x), test=c("ocsb", "ch"), max.D=1)
-{
-
-  if(is.constant(x))
-    return(0)
-
-  test <- match.arg(test)
-  if(m==1)
-    stop("Non seasonal data")
-  else if(m < 1)
-  {
-    warning("I can't handle data with frequency less than 1. Seasonality will be ignored.")
-    return(0)
-  }
-
-  D <- 0
-  if(test=="ch")
-    dodiff <- CHtest(x,m)
-  else
-    dodiff <- OCSBtest(x,m)
-
-  while(dodiff==1 & D < max.D)
-  {
-    D <- D + 1
-    x <- diff(x, lag=m)
-    if(is.constant(x))
-      return(D)
-    if(test=="ch")
-      dodiff <- CHtest(x,m)
-    else
-      dodiff <- OCSBtest(x,m)
-  }
-  return(D)
-}
-
 CHtest <- function(x,m)
 {
   m <- round(m) # Avoid non-integer seasonal period
