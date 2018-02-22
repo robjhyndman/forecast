@@ -249,7 +249,7 @@ accuracy <- function(f, ...) {
 accuracy.default <- function(f, x, test=NULL, d=NULL, D=NULL, ...) {
   if (!any(is.element(class(f), c(
     "mforecast", "forecast", "ts", "integer", "numeric",
-    "Arima", "ets", "lm", "bats", "tbats", "nnetar", "stlm"
+    "Arima", "ets", "lm", "bats", "tbats", "nnetar", "stlm", "baggedModel"
   )))) {
     stop("First argument should be a forecast object or a time series.")
   }
