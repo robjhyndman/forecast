@@ -323,7 +323,7 @@ ocsb.test <- function(x, lag.method = c("fixed", "AIC", "BIC", "AICc"), maxlag =
   stat <- summary(regression)$coefficients[c("xregZ4", "xregZ5"), "t value"]
   
   if(any(is.na(stat))){
-    browser()
+    stop("Model did not reach a solution. Consider using a longer series or a different test.")
   }
   
   structure(list(statistics = stat[2],
