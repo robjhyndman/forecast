@@ -7,7 +7,7 @@
 \usage{
 ocsb.test(x, lag.method = c("fixed", "AIC", "BIC", "AICc"), maxlag = 0)
 
-\method{print}{OCSBtest}(x)
+\method{print}{OCSBtest}(x, ...)
 }
 \arguments{
 \item{x}{a univariate seasonal time series.}
@@ -34,6 +34,7 @@ Critical values for the test are based on simulations, which has been smoothed o
 }
 \examples{
 ocsb.test(AirPassengers)
+
 }
 \references{
 Osborn DR, Chui APL, Smith J, and Birchenhall CR (1988) "Seasonality and the
