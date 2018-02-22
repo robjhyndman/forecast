@@ -222,7 +222,7 @@ nsdiffs <- function(x, alpha = 0.05, m=frequency(x), test=c("ocsb", "hegy", "ch"
 #' An implementation of the Osborn, Chui, Smith, and Birchenhall (OCSB) test.
 #'
 #' @inheritParams uroot::hegy.test
-#'
+#' @aliases print.OCSBtest
 #' @details 
 #' The regression equation may include lags of the dependent variable. When lag.method = "fixed", the lag order is fixed to maxlag; otherwise, maxlag is the maximum number of lags considered in a lag selection procedure that minimises the lag.method criterion, which can be AIC or BIC or corrected AIC, AICc, obtained as AIC + (2k(k+1))/(n-k-1), where k is the number of parameters and n is the number of available observations in the model.
 #'
@@ -347,7 +347,6 @@ calcOCSBCritVal <- function(seasonal.period)
   return(-0.2937411*exp(-0.2850853*(log.m-0.7656451)+(-0.05983644)*((log.m-0.7656451)^2))-1.652202)
 }
 
-#' @rdname ocsb.test
 #' @export
 print.OCSBtest <- function(x, ...){
   cat("\n")

@@ -6,8 +6,6 @@
 \title{Osborn, Chui, Smith, and Birchenhall Test for Seasonal Unit Roots}
 \usage{
 ocsb.test(x, lag.method = c("fixed", "AIC", "BIC", "AICc"), maxlag = 0)
-
-\method{print}{OCSBtest}(x, ...)
 }
 \arguments{
 \item{x}{a univariate seasonal time series.}
