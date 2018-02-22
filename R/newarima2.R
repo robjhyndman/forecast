@@ -752,31 +752,6 @@ summary.Arima <- function(object, ...) {
   print(accuracy(object))
 }
 
-CHtest <- function(x,m)
-{
-  m <- round(m) # Avoid non-integer seasonal period
-  if (length(x) < 2 * m + 5) {
-    return(0)
-  }
-  chstat <- SD.test(x, m)
-  crit.values <- c(
-    0.4617146, 0.7479655, 1.0007818, 1.2375350, 1.4625240, 1.6920200, 1.9043096, 2.1169602,
-    2.3268562, 2.5406922, 2.7391007
-  )
-  if (m <= 12) {
-    D <- as.numeric(chstat > crit.values[m - 1])
-  } else if (m == 24) {
-    D <- as.numeric(chstat > 5.098624)
-  } else if (m == 52) {
-    D <- as.numeric(chstat > 10.341416)
-  } else if (m == 365) {
-    D <- as.numeric(chstat > 65.44445)
-  } else {
-    D <- as.numeric(chstat > 0.269 * m ^ (0.928))
-  }
-  return(D)
-}
-
 # Check that Arima object has positive coefficient variances without returning warnings
 checkarima <- function(object) {
   suppressWarnings(test <- any(is.nan(sqrt(diag(object$var.coef)))))
