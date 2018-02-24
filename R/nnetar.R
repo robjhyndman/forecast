@@ -149,7 +149,7 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   }
 
   # Transform data
-  if (!is.null(lambda) & !constant_data) {
+  if (!is.null(lambda) && !constant_data) {
     xx <- BoxCox(x, lambda)
   } else {
     xx <- x
@@ -164,7 +164,7 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   }
   # Scale series
   scalex <- NULL
-  if (scale.inputs & !constant_data) {
+  if (scale.inputs && !constant_data) {
     if (useoldmodel) {
       scalex <- model$scalex
     }
@@ -239,7 +239,7 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
       warning("Reducing number of lagged inputs due to short series")
       p <- n - 2
     }
-    if (P > 0 & n >= m * P + 2) {
+    if (P > 0 && n >= m * P + 2) {
       lags <- sort(unique(c(1:p, m * (1:P))))
     } else {
       lags <- 1:p
@@ -421,9 +421,9 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI
   if (fan) {
     level <- seq(51, 99, by = 3)
   } else {
-    if (min(level) > 0 & max(level) < 1) {
+    if (min(level) > 0 && max(level) < 1) {
       level <- 100 * level
-    } else if (min(level) < 0 | max(level) > 99.99) {
+    } else if (min(level) < 0 || max(level) > 99.99) {
       stop("Confidence limit out of range")
     }
   }

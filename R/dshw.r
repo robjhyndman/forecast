@@ -94,10 +94,10 @@ dshw <- function(y, period1=NULL, period2=NULL, h=2 * max(period1, period2),
   if (!is.null(model) && model$method == "DSHW") {
     period1 <- model$period1
     period2 <- model$period2
-  } else if (any(class(y) == "msts") & (length(attr(y, "msts")) == 2)) {
+  } else if (inherits(y, "msts") && (length(attr(y, "msts")) == 2)) {
     period1 <- as.integer(sort(attr(y, "msts"))[1])
     period2 <- as.integer(sort(attr(y, "msts"))[2])
-  } else if (is.null(period1) | is.null(period2)) {
+  } else if (is.null(period1) || is.null(period2)) {
     stop("Error in dshw(): y must either be an msts object with two seasonal periods OR the seasonal periods should be specified with period1= and period2=")
   } else {
     if (period1 > period2) {
@@ -118,7 +118,7 @@ dshw <- function(y, period1=NULL, period2=NULL, h=2 * max(period1, period2),
     phi <- 0
   }
 
-  if (period1 < 1 | period1 == period2) {
+  if (period1 < 1 || period1 == period2) {
     stop("Inappropriate periods")
   }
   ratio <- period2 / period1

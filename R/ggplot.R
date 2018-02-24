@@ -118,7 +118,7 @@ autoplot.acf <- function(object, ci=0.95, ...) {
     }
 
     data <- data.frame(Lag = object$lag, ACF = object$acf)
-    if (data$Lag[1] == 0 & object$type == "correlation") {
+    if (data$Lag[1] == 0 && object$type == "correlation") {
       data <- data[-1, ]
     }
 
@@ -368,11 +368,11 @@ autoplot.Arima <- function(object, type = c("both", "ar", "ma"), ...) {
     # Prepare data
     arData <- maData <- NULL
     allRoots <- data.frame(roots = numeric(0), type = character(0))
-    if ("ar" %in% type & p > 0) {
+    if ("ar" %in% type && p > 0) {
       arData <- arroots(object)
       allRoots <- rbind(allRoots, data.frame(roots = arData$roots, type = arData$type))
     }
-    if ("ma" %in% type & q > 0) {
+    if ("ma" %in% type && q > 0) {
       maData <- maroots(object)
       allRoots <- rbind(allRoots, data.frame(roots = maData$roots, type = maData$type))
     }
@@ -584,7 +584,7 @@ autoplot.forecast <- function(object, include, PI=TRUE, shadecols=c("#596DD5", "
     if (!is.forecast(object)) {
       stop("autoplot.forecast requires a forecast object, use object=object")
     }
-    if (is.null(object$lower) | is.null(object$upper) | is.null(object$level)) {
+    if (is.null(object$lower) || is.null(object$upper) || is.null(object$level)) {
       PI <- FALSE
     }
     else if (!is.finite(max(object$upper))) {
@@ -1337,7 +1337,7 @@ ggseasonplot <- function(x, season.labels=NULL, year.labels=FALSE, year.labels.l
       yrlab <- rbind(yrlab, yrlabL)
     }
   }
-  if (year.labels | year.labels.left) {
+  if (year.labels || year.labels.left) {
     yrlab <- merge(yrlab, data)
     yrlab$time <- yrlab$time + yrlab$offset
     p <- p + ggplot2::guides(colour = FALSE)
@@ -1824,7 +1824,7 @@ autoplot.mts <- function(object, colour=TRUE, facets=FALSE, ...) {
 
     # Initialise ggplot object
     mapping <- ggplot2::aes_(y = ~y, x = ~x, group = ~series)
-    if (colour & (!facets | !missing(colour))) {
+    if (colour && (!facets || !missing(colour))) {
       mapping$colour <- quote(series)
     }
     p <- ggplot2::ggplot(mapping, data = data)
@@ -1888,7 +1888,7 @@ forecast2plotdf <- function(model, data=as.data.frame(model), PI=TRUE, showgap=T
   }
   Hiloc <- grep("Hi ", names(data))
   Loloc <- grep("Lo ", names(data))
-  if (PI & !is.null(model$level)) { # PI
+  if (PI && !is.null(model$level)) { # PI
     if (length(Hiloc) == length(Loloc)) {
       if (length(Hiloc) > 0) {
         out <- data.frame(
@@ -2304,7 +2304,7 @@ gghistogram <- function(x, add.normal=FALSE, add.kde=FALSE, add.rug=TRUE, bins, 
       ggplot2::geom_histogram(ggplot2::aes(x), data = data, binwidth = binwidth, boundary = boundary) +
       ggplot2::xlab(deparse(substitute(x)))
     # Add normal density estimate
-    if (add.normal | add.kde) {
+    if (add.normal || add.kde) {
       xmin <- min(x, na.rm = TRUE)
       xmax <- max(x, na.rm = TRUE)
       if (add.kde) {

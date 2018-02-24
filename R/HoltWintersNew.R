@@ -210,7 +210,7 @@ HoltWintersZZ <- function(x,
     components <- c("A", trendtype, seasontype, damped)
   } else if (seasonal == "multiplicative") {
     components <- c("M", trendtype, seasontype, damped)
-  } else if (seasonal == "none" & exponential) {
+  } else if (seasonal == "none" && exponential) {
     components <- c("M", trendtype, seasontype, damped)
   } else { # if(seasonal=="none" & !exponential)
     components <- c("A", trendtype, seasontype, damped)
@@ -479,7 +479,7 @@ holt <- function(y, h = 10, damped = FALSE, level = c(80, 95), fan = FALSE,
   if (length(y) <= 1L) {
     stop("I need at least two observations to estimate trend.")
   }
-  if (initial == "optimal" | damped) {
+  if (initial == "optimal" || damped) {
     if (exponential) {
       fcast <- forecast(ets(x, "MMN", alpha = alpha, beta = beta, phi = phi, damped = damped, opt.crit = "mse", lambda = lambda, biasadj = biasadj), h, level = level, fan = fan, ...)
     } else {
@@ -525,12 +525,12 @@ hw <- function(y, h = 2 * frequency(x), seasonal = c("additive", "multiplicative
   if (length(y) < m + 3) {
     stop(paste("I need at least", m + 3, "observations to estimate seasonality."))
   }
-  if (initial == "optimal" | damped) {
-    if (seasonal == "additive" & exponential) {
+  if (initial == "optimal" || damped) {
+    if (seasonal == "additive" && exponential) {
       stop("Forbidden model combination")
-    } else if (seasonal == "additive" & !exponential) {
+    } else if (seasonal == "additive" && !exponential) {
       fcast <- forecast(ets(x, "AAA", alpha = alpha, beta = beta, gamma = gamma, phi = phi, damped = damped, opt.crit = "mse", lambda = lambda, biasadj = biasadj), h, level = level, fan = fan, ...)
-    } else if (seasonal != "additive" & exponential) {
+    } else if (seasonal != "additive" && exponential) {
       fcast <- forecast(ets(x, "MMM", alpha = alpha, beta = beta, gamma = gamma, phi = phi, damped = damped, opt.crit = "mse", lambda = lambda, biasadj = biasadj), h, level = level, fan = fan, ...)
     } else { # if(seasonal!="additive" & !exponential)
       fcast <- forecast(ets(x, "MAM", alpha = alpha, beta = beta, gamma = gamma, phi = phi, damped = damped, opt.crit = "mse", lambda = lambda, biasadj = biasadj), h, level = level, fan = fan, ...)

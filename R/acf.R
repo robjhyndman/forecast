@@ -161,14 +161,14 @@ seasonalaxis <- function(frequency, nlags, type, plot=TRUE) {
     }
 
     if (frequency == 1) {
-      if (type == "acf" & nlags <= 16) {
+      if (type == "acf" && nlags <= 16) {
         out <- 1:nlags
-      } else if (type == "ccf" & nlags <= 8) {
+      } else if (type == "ccf" && nlags <= 8) {
         out <- (-nlags:nlags)
       } else {
-        if (nlags <= 30 & type == "acf") {
+        if (nlags <= 30 && type == "acf") {
           out2 <- 1:nlags
-        } else if (nlags <= 15 & type == "ccf") {
+        } else if (nlags <= 15 && type == "ccf") {
           out2 <- (-nlags:nlags)
         }
         if (!is.null(out2)) {
@@ -176,21 +176,21 @@ seasonalaxis <- function(frequency, nlags, type, plot=TRUE) {
         }
       }
     }
-    else if (frequency > 1 &
-      ((type == "acf" & np >= 2L) | (type == "ccf" & np >= 1L))) {
-      if (type == "acf" & nlags <= 40) {
+    else if (frequency > 1 &&
+      ((type == "acf" && np >= 2L) || (type == "ccf" && np >= 1L))) {
+      if (type == "acf" && nlags <= 40) {
         out <- frequency * (1:np)
         out2 <- 1:nlags
         # Add half-years
-        if (nlags <= 30 & evenfreq & np <= 3) {
+        if (nlags <= 30 && evenfreq && np <= 3) {
           out <- c(out, frequency * ((1:np) - 0.5))
         }
       }
-      else if (type == "ccf" & nlags <= 20) {
+      else if (type == "ccf" && nlags <= 20) {
         out <- frequency * (-np:np)
         out2 <- (-nlags:nlags)
         # Add half-years
-        if (nlags <= 15 & evenfreq & np <= 3) {
+        if (nlags <= 15 && evenfreq && np <= 3) {
           out <- c(out, frequency * ((-np:np) + 0.5))
         }
       }
@@ -322,7 +322,7 @@ wacf <- function(x, lag.max = length(x) - 1) {
   l <- 0
   k <- 1
   N <- length(j) - 4
-  while (l < 1 & k <= N) {
+  while (l < 1 && k <= N) {
     if (all(j[k:(k + 4)])) {
       l <- k
     } else {

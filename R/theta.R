@@ -70,9 +70,9 @@ thetaf <- function(y, h=ifelse(frequency(y) > 1, 2 * frequency(y), 10),
   if (fan) {
     level <- seq(51, 99, by = 3)
   } else {
-    if (min(level) > 0 & max(level) < 1) {
+    if (min(level) > 0 && max(level) < 1) {
       level <- 100 * level
-    } else if (min(level) < 0 | max(level) > 99.99) {
+    } else if (min(level) < 0 || max(level) > 99.99) {
       stop("Confidence limit out of range")
     }
   }
@@ -81,7 +81,7 @@ thetaf <- function(y, h=ifelse(frequency(y) > 1, 2 * frequency(y), 10),
   n <- length(x)
   x <- as.ts(x)
   m <- frequency(x)
-  if (m > 1 & !is.constant(x)) {
+  if (m > 1 && !is.constant(x)) {
     r <- as.numeric(acf(x, lag.max = m, plot = FALSE)$acf)[-1]
     stat <- sqrt((1 + 2 * sum(r[-m] ^ 2)) / n)
     seasonal <- (abs(r[m]) / stat > qnorm(0.95))

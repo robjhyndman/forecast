@@ -109,7 +109,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
   y <- as.ts(y)
 
   # Check if data is constant
-  if (missing(model) & is.constant(y)) {
+  if (missing(model) && is.constant(y)) {
     return(ses(y, alpha = 0.99999, initial = "simple")$model)
   }
 
@@ -121,7 +121,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
   }
 
   orig.y <- y
-  if (class(model) == "ets" & is.null(lambda)) {
+  if (identical(class(model), "ets") && is.null(lambda)) {
     lambda <- model$lambda
   }
   if (!is.null(lambda)) {
@@ -129,7 +129,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
     additive.only <- TRUE
   }
 
-  if (nmse < 1 | nmse > 30) {
+  if (nmse < 1 || nmse > 30) {
     stop("nmse out of range")
   }
   m <- frequency(y)
@@ -223,12 +223,12 @@ ets <- function(y, model="ZZZ", damped=NULL,
     stop("Invalid season type")
   }
 
-  if (m < 1 | length(y) <= m) {
+  if (m < 1 || length(y) <= m) {
     # warning("I can't handle data with frequency less than 1. Seasonality will be ignored.")
     seasontype <- "N"
   }
   if (m == 1) {
-    if (seasontype == "A" | seasontype == "M") {
+    if (seasontype == "A" || seasontype == "M") {
       stop("Nonseasonal data")
     } else {
       substr(model, 3, 3) <- seasontype <- "N"
@@ -246,21 +246,21 @@ ets <- function(y, model="ZZZ", damped=NULL,
 
   # Check inputs
   if (restrict) {
-    if ((errortype == "A" & (trendtype == "M" | seasontype == "M")) |
-      (errortype == "M" & trendtype == "M" & seasontype == "A") |
-      (additive.only & (errortype == "M" | trendtype == "M" | seasontype == "M"))) {
+    if ((errortype == "A" && (trendtype == "M" || seasontype == "M")) |
+      (errortype == "M" && trendtype == "M" && seasontype == "A") ||
+      (additive.only && (errortype == "M" || trendtype == "M" || seasontype == "M"))) {
       stop("Forbidden model combination")
     }
   }
 
   data.positive <- (min(y) > 0)
 
-  if (!data.positive & errortype == "M") {
+  if (!data.positive && errortype == "M") {
     stop("Inappropriate model for data with negative or zero values")
   }
 
   if (!is.null(damped)) {
-    if (damped & trendtype == "N") {
+    if (damped && trendtype == "N") {
       stop("Forbidden model combination")
     }
   }
@@ -268,10 +268,10 @@ ets <- function(y, model="ZZZ", damped=NULL,
   n <- length(y)
   # Check we have enough data to fit a model
   npars <- 2L # alpha + l0
-  if (trendtype == "A" | trendtype == "M") {
+  if (trendtype == "A" || trendtype == "M") {
     npars <- npars + 2L
   } # beta + b0
-  if (seasontype == "A" | seasontype == "M") {
+  if (seasontype == "A" || seasontype == "M") {
     npars <- npars + m
   } # gamma + s
   if (!is.null(damped)) {
@@ -285,7 +285,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
         warning("Not enough data to use damping")
       }
     }
-    if (seasontype == "A" | seasontype == "M") {
+    if (seasontype == "A" || seasontype == "M") {
       fit <- try(HoltWintersZZ(
         orig.y,
         alpha = alpha, beta = beta, gamma = gamma, phi = phi,
@@ -303,7 +303,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
         warning("Seasonal component could not be estimated")
       }
     }
-    if (trendtype == "A" | trendtype == "M") {
+    if (trendtype == "A" || trendtype == "M") {
       fit <- try(HoltWintersZZ(
         orig.y,
         alpha = alpha, beta = beta, gamma = FALSE, phi = phi,
@@ -320,7 +320,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
         warning("Trend component could not be estimated")
       }
     }
-    if (trendtype == "N" & seasontype == "N") {
+    if (trendtype == "N" && seasontype == "N") {
       fit <- try(HoltWintersZZ(
         orig.y,
         alpha = alpha, beta = FALSE, gamma = FALSE,
@@ -385,21 +385,21 @@ ets <- function(y, model="ZZZ", damped=NULL,
       {
         for (l in 1:length(damped))
         {
-          if (trendtype[j] == "N" & damped[l]) {
+          if (trendtype[j] == "N" && damped[l]) {
             next
           }
           if (restrict) {
-            if (errortype[i] == "A" & (trendtype[j] == "M" | seasontype[k] == "M")) {
+            if (errortype[i] == "A" && (trendtype[j] == "M" || seasontype[k] == "M")) {
               next
             }
-            if (errortype[i] == "M" & trendtype[j] == "M" & seasontype[k] == "A") {
+            if (errortype[i] == "M" && trendtype[j] == "M" && seasontype[k] == "A") {
               next
             }
-            if (additive.only & (errortype[i] == "M" | trendtype[j] == "M" | seasontype[k] == "M")) {
+            if (additive.only && (errortype[i] == "M" || trendtype[j] == "M" || seasontype[k] == "M")) {
               next
             }
           }
-          if (!data.positive & errortype[i] == "M") {
+          if (!data.positive && errortype[i] == "M") {
             next
           }
           fit <- etsmodel(
@@ -840,7 +840,7 @@ initparam <- function(alpha, beta, gamma, phi, trendtype, seasontype, damped, lo
   # Select alpha
   if (is.null(alpha)) {
     alpha <- lower[1] + 0.2 * (upper[1] - lower[1]) / m
-    if (alpha > 1 | alpha < 0) {
+    if (alpha > 1 || alpha < 0) {
       alpha <- lower[1] + 2e-3
     }
     par <- c(alpha = alpha)
@@ -850,31 +850,31 @@ initparam <- function(alpha, beta, gamma, phi, trendtype, seasontype, damped, lo
   }
 
   # Select beta
-  if (trendtype != "N" & is.null(beta)) {
+  if (trendtype != "N" && is.null(beta)) {
     # Ensure beta < alpha
     upper[2] <- min(upper[2], alpha)
     beta <- lower[2] + 0.1 * (upper[2] - lower[2])
-    if (beta < 0 | beta > alpha) {
+    if (beta < 0 || beta > alpha) {
       beta <- alpha - 1e-3
     }
     par <- c(par, beta = beta)
   }
 
   # Select gamma
-  if (seasontype != "N" & is.null(gamma)) {
+  if (seasontype != "N" && is.null(gamma)) {
     # Ensure gamma < 1-alpha
     upper[3] <- min(upper[3], 1 - alpha)
     gamma <- lower[3] + 0.05 * (upper[3] - lower[3])
-    if (gamma < 0 | gamma > 1 - alpha) {
+    if (gamma < 0 || gamma > 1 - alpha) {
       gamma <- 1 - alpha - 1e-3
     }
     par <- c(par, gamma = gamma)
   }
 
   # Select phi
-  if (damped & is.null(phi)) {
+  if (damped && is.null(phi)) {
     phi <- lower[4] + .99 * (upper[4] - lower[4])
-    if (phi < 0 | phi > 1) {
+    if (phi < 0 || phi > 1) {
       phi <- upper[4] - 1e-3
     }
     par <- c(par, phi = phi)
@@ -886,22 +886,22 @@ initparam <- function(alpha, beta, gamma, phi, trendtype, seasontype, damped, lo
 check.param <- function(alpha, beta, gamma, phi, lower, upper, bounds, m) {
   if (bounds != "admissible") {
     if (!is.null(alpha)) {
-      if (alpha < lower[1] | alpha > upper[1]) {
+      if (alpha < lower[1] || alpha > upper[1]) {
         return(0)
       }
     }
     if (!is.null(beta)) {
-      if (beta < lower[2] | beta > alpha | beta > upper[2]) {
+      if (beta < lower[2] || beta > alpha || beta > upper[2]) {
         return(0)
       }
     }
     if (!is.null(phi)) {
-      if (phi < lower[4] | phi > upper[4]) {
+      if (phi < lower[4] || phi > upper[4]) {
         return(0)
       }
     }
     if (!is.null(gamma)) {
-      if (gamma < lower[3] | gamma > 1 - alpha | gamma > upper[3]) {
+      if (gamma < lower[3] || gamma > 1 - alpha || gamma > upper[3]) {
         return(0)
       }
     }
@@ -985,7 +985,7 @@ initstate <- function(y, trendtype, seasontype) {
       if (abs(b0) > 1e10) { # Avoid infinite slopes
         b0 <- sign(b0) * 1e10
       }
-      if (l0 < 1e-8 | b0 < 1e-8) # Simple linear approximation didn't work.
+      if (l0 < 1e-8 || b0 < 1e-8) # Simple linear approximation didn't work.
       {
         l0 <- max(y.sa[1], 1e-3)
         b0 <- max(y.sa[2] / y.sa[1], 1e-3)
@@ -1199,15 +1199,15 @@ admissible <- function(alpha, beta, gamma, phi, m) {
   if (is.null(phi)) {
     phi <- 1
   }
-  if (phi < 0 | phi > 1 + 1e-8) {
+  if (phi < 0 || phi > 1 + 1e-8) {
     return(0)
   }
   if (is.null(gamma)) {
-    if (alpha < 1 - 1 / phi | alpha > 1 + 1 / phi) {
+    if (alpha < 1 - 1 / phi || alpha > 1 + 1 / phi) {
       return(0)
     }
     if (!is.null(beta)) {
-      if (beta < alpha * (phi - 1) | beta > (1 + phi) * (2 - alpha)) {
+      if (beta < alpha * (phi - 1) || beta > (1 + phi) * (2 - alpha)) {
         return(0)
       }
     }
@@ -1217,7 +1217,7 @@ admissible <- function(alpha, beta, gamma, phi, m) {
     if (is.null(beta)) {
       beta <- 0
     }
-    if (gamma < max(1 - 1 / phi - alpha, 0) | gamma > 1 + 1 / phi - alpha) {
+    if (gamma < max(1 - 1 / phi - alpha, 0) || gamma > 1 + 1 / phi - alpha) {
       return(0)
     }
     if (alpha < 1 - 1 / phi - gamma * (1 - m + phi + phi * m) / (2 * phi * m)) {
@@ -1278,7 +1278,7 @@ plot.ets <- function(x, ...) {
   } else {
     y <- x$x
   }
-  if (x$components[3] == "N" & x$components[2] == "N") {
+  if (x$components[3] == "N" && x$components[2] == "N") {
     plot(
       cbind(observed = y, level = x$states[, 1]),
       main = paste("Decomposition by", x$method, "method"), ...
