@@ -82,7 +82,7 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), type=c("level", "tren
   {
     return(d)
   }
-  while(dodiff & d < max.d)
+  while(dodiff && d < max.d)
   {
     d <- d+1
     x <- diff(x)
@@ -156,7 +156,7 @@ nsdiffs <- function(x, alpha = 0.05, m=frequency(x), test=c("ocsb", "hegy", "ch"
     warning("Specified alpha value is larger than the maximum, setting alpha=0.1")
     alpha <- 0.1
   }
-  if(test == "ocsb" & alpha != 0.05){
+  if(test == "ocsb" && alpha != 0.05){
     warning("Significance levels other than 5% are not currently supported by test='ocsb', defaulting to alpha = 0.05.")
     alpha <- 0.05
   }
@@ -198,7 +198,7 @@ nsdiffs <- function(x, alpha = 0.05, m=frequency(x), test=c("ocsb", "hegy", "ch"
   
   dodiff <- runTests(x, test, alpha)
   
-  while(dodiff==1 & D < max.D)
+  while(dodiff==1 && D < max.D)
   {
     D <- D + 1
     x <- diff(x, lag=m)

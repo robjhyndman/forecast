@@ -31,7 +31,7 @@ msts <- function(data, seasonal.periods, ts.frequency=floor(max(seasonal.periods
   # if(!is.element(ts.frequency, round(seasonal.periods-0.5+1e-12)))
   #  stop("ts.frequency should be one of the seasonal periods")
 
-  if (inherits(data, "ts") & frequency(data) == ts.frequency & length(list(...)) == 0) {
+  if (inherits(data, "ts") && frequency(data) == ts.frequency && length(list(...)) == 0) {
     object <- data
   } else {
     object <- ts(data = data, frequency = ts.frequency, ...)

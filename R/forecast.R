@@ -373,7 +373,7 @@ plot.forecast <- function(x, include, PI=TRUE, showgap = TRUE, shaded=TRUE, shad
   } else {
     xx <- NULL
   }
-  if (is.null(x$lower) | is.null(x$upper) | is.null(x$level)) {
+  if (is.null(x$lower) || is.null(x$upper) || is.null(x$level)) {
     PI <- FALSE
   }
   else if (!is.finite(max(x$upper))) {
@@ -391,7 +391,7 @@ plot.forecast <- function(x, include, PI=TRUE, showgap = TRUE, shaded=TRUE, shad
     x$lower <- as.matrix(x$lower)
   }
 
-  if (is.element("lm", class(x$model)) & !is.element("ts", class(x$mean))) # Non time series linear model
+  if (is.element("lm", class(x$model)) && !is.element("ts", class(x$mean))) # Non time series linear model
   {
     plotlmforecast(
       x, PI = PI, shaded = shaded, shadecols = shadecols, col = col, fcol = fcol, pi.col = pi.col, pi.lty = pi.lty,
@@ -512,7 +512,7 @@ plot.forecast <- function(x, include, PI=TRUE, showgap = TRUE, shaded=TRUE, shad
       }
     }
   }
-  if (npred > 1 & !shadebars & tsx) {
+  if (npred > 1 && !shadebars && tsx) {
     lines(pred.mean, lty = flty, lwd = flwd, col = fcol)
   } else {
     points(pred.mean, col = fcol, pch = 19)
@@ -659,7 +659,7 @@ as.data.frame.forecast <- function(x, ...) {
     attributes(out)$tsp <- attributes(x$mean)$tsp
   }
   names <- c("Point Forecast")
-  if (!is.null(x$lower) & !is.null(x$upper) & !is.null(x$level)) {
+  if (!is.null(x$lower) && !is.null(x$upper) && !is.null(x$level)) {
     x$upper <- as.matrix(x$upper)
     x$lower <- as.matrix(x$lower)
     for (i in 1:nconf)

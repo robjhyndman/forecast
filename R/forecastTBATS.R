@@ -27,9 +27,9 @@ forecast.tbats <- function(object, h, level=c(80, 95), fan=FALSE, biasadj=NULL, 
   if (fan) {
     level <- seq(51, 99, by = 3)
   } else {
-    if (min(level) > 0 & max(level) < 1) {
+    if (min(level) > 0 && max(level) < 1) {
       level <- 100 * level
-    } else if (min(level) < 0 | max(level) > 99.99) {
+    } else if (min(level) < 0 || max(level) > 99.99) {
       stop("Confidence limit out of range")
     }
   }
