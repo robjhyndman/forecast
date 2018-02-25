@@ -382,11 +382,11 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
     best.model <- non.seasonal.model
   }
 
-  if ((length(use.box.cox) == 1) & (use.trend[1] == TRUE) & (length(use.trend) == 1) & (length(use.damped.trend) == 1) & (use.parallel)) {
+  if ((length(use.box.cox) == 1) && use.trend[1] && (length(use.trend) == 1) && (length(use.damped.trend) == 1) && (use.parallel)) {
     # In the this case, there is only one alternative.
     use.parallel <- FALSE
     stopCluster(clus)
-  } else if ((length(use.box.cox) == 1) & (use.trend[1] == FALSE) & (length(use.trend) == 1) & (use.parallel)) {
+  } else if ((length(use.box.cox) == 1) && !use.trend[1] && (length(use.trend) == 1) && (use.parallel)) {
     # As above, in the this case, there is only one alternative.
     use.parallel <- FALSE
     stopCluster(clus)
@@ -398,7 +398,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
     for (box.cox in use.box.cox) {
       for (trend in use.trend) {
         for (damping in use.damped.trend) {
-          if ((trend == FALSE) & (damping == TRUE)) {
+          if (!trend && damping) {
             next
           }
           control.line <- c(box.cox, trend, damping)
@@ -429,7 +429,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
         for (damping in use.damped.trend) {
           if (all((model.params == c(box.cox, trend, damping)))) {
             new.model <- filterTBATSSpecifics(y, box.cox, trend, damping, seasonal.periods, k.vector, use.arma.errors, aux.model = aux.model, init.box.cox = init.box.cox, bc.lower = bc.lower, bc.upper = bc.upper, biasadj = biasadj, ...)
-          } else if (!((trend == FALSE) & (damping == TRUE))) {
+          } else if (trend || !damping) {
             new.model <- filterTBATSSpecifics(y, box.cox, trend, damping, seasonal.periods, k.vector, use.arma.errors, init.box.cox = init.box.cox, bc.lower = bc.lower, bc.upper = bc.upper, biasadj = biasadj, ...)
           }
           if (new.model$AIC < best.model$AIC) {
@@ -471,7 +471,7 @@ parFilterTBATSSpecifics <- function(control.number, y, control.array, model.para
     if (!is.element("try-error", class(arma))) {
       p <- arma$arma[1]
       q <- arma$arma[2]
-      if ((p != 0) | (q != 0)) { # Did auto.arima() find any AR() or MA() coefficients?
+      if ((p != 0) || (q != 0)) { # Did auto.arima() find any AR() or MA() coefficients?
         if (p != 0) {
           ar.coefs <- numeric(p)
         } else {
@@ -539,7 +539,7 @@ filterTBATSSpecifics <- function(y, box.cox, trend, damping, seasonal.periods, k
     if (!is.element("try-error", class(arma))) {
       p <- arma$arma[1]
       q <- arma$arma[2]
-      if ((p != 0) | (q != 0)) { # Did auto.arima() find any AR() or MA() coefficients?
+      if ((p != 0) || (q != 0)) { # Did auto.arima() find any AR() or MA() coefficients?
         if (p != 0) {
           ar.coefs <- numeric(p)
         } else {

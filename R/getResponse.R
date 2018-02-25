@@ -113,3 +113,14 @@ getResponse.bats <- function(object, ...) {
 getResponse.mforecast <- function(object, ...) {
   return(do.call(cbind, lapply(object$forecast, function(x) x$x)))
 }
+
+#' @rdname getResponse
+#' @export
+getResponse.baggedModel <- function(object, ...) {
+  if (is.element("y", names(object))) {
+    y <- object$y
+  } else {
+    return(NULL)
+  }
+  return(as.ts(y))
+}

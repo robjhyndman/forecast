@@ -350,7 +350,7 @@ ma <- function(x, order, centre=TRUE) {
     stop("order must be an integer")
   }
 
-  if (order %% 2 == 0 & centre) { # centred and even
+  if (order %% 2 == 0 && centre) { # centred and even
     w <- c(0.5, rep(1, order - 1), 0.5) / order
   } else { # odd or not centred
     w <- rep(1, order) / order

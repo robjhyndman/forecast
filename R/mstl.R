@@ -250,7 +250,7 @@ forecast.stl <- function(object, method=c("ets", "arima", "naive", "rwdrift"), e
                          lambda=NULL, biasadj=NULL, xreg=NULL, newxreg=NULL, allow.multiplicative.trend=FALSE, ...) {
   method <- match.arg(method)
   if (is.null(forecastfunction)) {
-    if (method != "arima" & (!is.null(xreg) | !is.null(newxreg))) {
+    if (method != "arima" && (!is.null(xreg) || !is.null(newxreg))) {
       stop("xreg and newxreg arguments can only be used with ARIMA models")
     }
     if (method == "ets") {
@@ -422,7 +422,7 @@ stlm <- function(y, s.window=13, robust=FALSE, method=c("ets", "arima"), modelfu
   }
   # Construct modelfunction if not passed as an argument
   else if (is.null(modelfunction)) {
-    if (method != "arima" & !is.null(xreg)) {
+    if (method != "arima" && !is.null(xreg)) {
       stop("xreg arguments can only be used with ARIMA models")
     }
     if (method == "ets") {
@@ -501,7 +501,7 @@ forecast.stlm <- function(object, h = 2 * object$m, level = c(80, 95), fan = FAL
   n <- NROW(xdata)
 
   # Forecast seasonally adjusted series
-  if (is.element("Arima", class(object$model)) & !is.null(newxreg)) {
+  if (is.element("Arima", class(object$model)) && !is.null(newxreg)) {
     fcast <- forecast(object$model, h = h, level = level, xreg = newxreg, ...)
   } else if (is.element("ets", class(object$model))) {
     fcast <- forecast(

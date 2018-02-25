@@ -63,7 +63,7 @@ na.interp <- function(x, lambda=NULL) {
   tt <- 1:n
   idx <- tt[!missng]
 
-  if (freq <= 1 | n <= 2 * freq) # Non-seasonal -- use linear interpolation
+  if (freq <= 1 || n <= 2 * freq) # Non-seasonal -- use linear interpolation
   {
     x <- ts(approx(idx, x[idx], tt, rule = 2)$y)
   }
@@ -188,7 +188,7 @@ tsoutliers <- function(x, iterate=2, lambda=NULL) {
   }
 
   # Seasonally adjust data if necessary
-  if (freq > 1 & n > 2 * freq) { 
+  if (freq > 1 && n > 2 * freq) { 
     fit <- mstl(xx, robust=TRUE)
     # Check if seasonality is sufficient to warrant adjustment
     rem <- remainder(fit)

@@ -60,7 +60,7 @@ cutW <- function(use.beta, w.tilda.transpose, seasonal.periods, p=0, q=0) {
       for (j in (s - 1):1) {
         hcf <- findGCD(seasonal.periods[s], seasonal.periods[j])
         if (hcf != 1) {
-          if ((mask.vector[s] != 1) & (mask.vector[j] != 1)) {
+          if ((mask.vector[s] != 1) && (mask.vector[j] != 1)) {
             mask.vector[s] <- hcf * -1
           }
         }

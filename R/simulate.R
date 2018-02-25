@@ -103,7 +103,7 @@ simulate.ets <- function(object, nsim=length(object$x), seed=NULL, future=TRUE, 
     as.double(numeric(nsim)),
     as.double(e),
     PACKAGE = "forecast"
-  )[[11]], frequency = object$m, start = tsp(object$x)[2] + 1 / tsp(object$x)[3])
+  )[[11]], frequency = object$m, start = ifelse(future, tsp(object$x)[2] + 1 / tsp(object$x)[3], tsp(object$x)[1]))
   if (is.na(tmp[1])) {
     stop("Problem with multiplicative damped trend")
   }
@@ -178,7 +178,7 @@ myarima.sim <- function(model, n, x, e, ...) {
   ## AR "filtering"
   len.ar <- length(model$ar)
 
-  if (length(model$ar) & (len.ar <= length(data))) {
+  if (length(model$ar) && (len.ar <= length(data))) {
     if ((D != 0) && (d != 0)) {
       diff.data <- diff(data, lag = 1, differences = d)
       diff.data <- diff(diff.data, lag = m, differences = D)
@@ -221,7 +221,7 @@ myarima.sim <- function(model, n, x, e, ...) {
       xdiff <- model$x - x[1:n.start]
     }
     # If all same sign, choose last
-    if (all(sign(xdiff) == 1) | all(sign(xdiff) == -1)) {
+    if (all(sign(xdiff) == 1) || all(sign(xdiff) == -1)) {
       xdiff <- xdiff[length(xdiff)]
     } else { # choose mean.
       xdiff <- mean(xdiff)
@@ -452,7 +452,7 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
     }
     tsp(sim) <- tsp(x)
     # If model is non-stationary, then condition simulated data on first observation
-    if (model$order[2] > 0 | flag.seasonal.diff) {
+    if (model$order[2] > 0 || flag.seasonal.diff) {
       sim <- sim - sim[1] + x[1]
     }
   }

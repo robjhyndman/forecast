@@ -20,7 +20,8 @@ Imports:
   lmtest,
   zoo,
   timeDate,
-  urca
+  urca,
+  uroot
 Suggests:
   testthat,
   knitr,

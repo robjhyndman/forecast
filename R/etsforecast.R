@@ -78,7 +78,7 @@ forecast.ets <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10),
       biasadj <- FALSE
     }
   }
-  if (!PI & !biasadj) {
+  if (!PI && !biasadj) {
     simulate <- bootstrap <- fan <- FALSE
     if (!biasadj) {
       npaths <- 2
@@ -88,9 +88,9 @@ forecast.ets <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10),
   if (fan) {
     level <- seq(51, 99, by = 3)
   } else {
-    if (min(level) > 0 & max(level) < 1) {
+    if (min(level) > 0 && max(level) < 1) {
       level <- 100 * level
-    } else if (min(level) < 0 | max(level) > 99.99) {
+    } else if (min(level) < 0 || max(level) > 99.99) {
       stop("Confidence limit out of range")
     }
   }
@@ -105,11 +105,11 @@ forecast.ets <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10),
 
   if (simulate) {
     f <- pegelsfcast.C(h, object, level = level, bootstrap = bootstrap, npaths = npaths)
-  } else if (object$components[1] == "A" & is.element(object$components[2], c("A", "N")) & is.element(object$components[3], c("N", "A"))) {
+  } else if (object$components[1] == "A" && is.element(object$components[2], c("A", "N")) && is.element(object$components[3], c("N", "A"))) {
     f <- class1(h, object$states[n + 1, ], object$components[2], object$components[3], damped, object$m, object$sigma2, object$par)
-  } else if (object$components[1] == "M" & is.element(object$components[2], c("A", "N")) & is.element(object$components[3], c("N", "A"))) {
+  } else if (object$components[1] == "M" && is.element(object$components[2], c("A", "N")) && is.element(object$components[3], c("N", "A"))) {
     f <- class2(h, object$states[n + 1, ], object$components[2], object$components[3], damped, object$m, object$sigma2, object$par)
-  } else if (object$components[1] == "M" & object$components[3] == "M" & object$components[2] != "M") {
+  } else if (object$components[1] == "M" && object$components[3] == "M" && object$components[2] != "M") {
     f <- class3(h, object$states[n + 1, ], object$components[2], object$components[3], damped, object$m, object$sigma2, object$par)
   } else {
     f <- pegelsfcast.C(h, object, level = level, bootstrap = bootstrap, npaths = npaths)
@@ -122,7 +122,7 @@ forecast.ets <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10),
     start.f <- length(object$x) + 1
   }
   out <- list(model = object, mean = ts(f$mu, frequency = object$m, start = start.f), level = level, x = object$x)
-  if (PI | biasadj) {
+  if (PI || biasadj) {
     if (!is.null(f$var)) {
       out$lower <- out$upper <- ts(matrix(NA, ncol = length(level), nrow = h))
       colnames(out$lower) <- colnames(out$upper) <- paste(level, "%", sep = "")

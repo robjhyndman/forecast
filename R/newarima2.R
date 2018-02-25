@@ -99,7 +99,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
                        allowdrift=TRUE, allowmean=TRUE, lambda=NULL, biasadj=FALSE,
                        parallel=FALSE, num.cores=2, x=y, ...) {
   # Only non-stepwise parallel implemented so far.
-  if (stepwise == TRUE & parallel == TRUE) {
+  if (stepwise && parallel) {
     warning("Parallel computer is only implemented when stepwise=FALSE, the model will be fit in serial.")
     parallel <- FALSE
   }
@@ -166,7 +166,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     # Make sure it is a matrix with column names
     nmxreg <- deparse(substitute(xreg))
     xregg <- as.matrix(xreg)
-    if (ncol(xregg) == 1 & length(nmxreg) > 1) {
+    if (ncol(xregg) == 1 && length(nmxreg) > 1) {
       nmxreg <- "xreg"
     }
     if (is.null(colnames(xregg))) {
@@ -207,10 +207,12 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   }
   if (m == 1) {
     D <- max.P <- max.Q <- 0
-  } else if (is.na(D)) {
-    D <- nsdiffs(xx, m = m, test = seasonal.test, max.D = max.D)
+  }
+  else if(is.na(D))
+  {
+    D <- nsdiffs(xx, test=seasonal.test, max.D=max.D)
     # Make sure xreg is not null after differencing
-    if (D > 0 & !is.null(xregg)) {
+    if (D > 0 && !is.null(xregg)) {
       diffxreg <- diff(xregg, differences = D, lag = m)
       if (any(apply(diffxreg, 2, is.constant))) {
         D <- D - 1
@@ -232,7 +234,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   if (is.na(d)) {
     d <- ndiffs(dx, test = test, max.d = max.d)
     # Make sure xreg is not null after differencing
-    if (d > 0 & !is.null(xregg)) {
+    if (d > 0 && !is.null(xregg)) {
       diffxreg <- diff(diffxreg, differences = d, lag = 1)
       if (any(apply(diffxreg, 2, is.constant))) {
         d <- d - 1
@@ -348,7 +350,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
 
   results <- matrix(NA, nrow = 100, ncol = 8)
 
-  if (approximation & trace) {
+  if (approximation && trace) {
     cat("\n Fitting models using approximations to speed things up...\n")
   }
 
@@ -362,7 +364,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     p <- q <- P <- Q <- 0
   }
   # Basic AR model
-  if (max.p > 0 | max.P > 0) {
+  if (max.p > 0 || max.P > 0) {
     fit <- myarima(x, order = c(max.p > 0, d, 0), seasonal = c((m > 1) & (max.P > 0), D, 0), constant = constant, ic, trace, approximation, offset = offset, xreg = xreg, ...)
     results[3, ] <- c(1, d, 0, m > 1, D, 0, constant, fit$ic)
     if (fit$ic < bestfit$ic) {
@@ -373,7 +375,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     }
   }
   # Basic MA model
-  if (max.q > 0 | max.Q > 0) {
+  if (max.q > 0 || max.Q > 0) {
     fit <- myarima(x, order = c(0, d, max.q > 0), seasonal = c(0, D, (m > 1) & (max.Q > 0)), constant = constant, ic, trace, approximation, offset = offset, xreg = xreg, ...)
     results[4, ] <- c(0, d, 1, 0, D, m > 1, constant, fit$ic)
     if (fit$ic < bestfit$ic) {
@@ -396,9 +398,9 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   }
 
   startk <- 0
-  while (startk < k & k < 94) {
+  while (startk < k && k < 94) {
     startk <- k
-    if (P > 0 & newmodel(p, d, q, P - 1, D, Q, constant, results[1:k, ])) {
+    if (P > 0 && newmodel(p, d, q, P - 1, D, Q, constant, results[1:k, ])) {
       k <- k + 1
       fit <- myarima(x, order = c(p, d, q), seasonal = c(P - 1, D, Q), constant = constant, ic, trace, approximation, offset = offset, xreg = xreg, ...)
       results[k, ] <- c(p, d, q, P - 1, D, Q, constant, fit$ic)
@@ -407,7 +409,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
         P <- (P - 1)
       }
     }
-    if (P < max.P & newmodel(p, d, q, P + 1, D, Q, constant, results[1:k, ])) {
+    if (P < max.P && newmodel(p, d, q, P + 1, D, Q, constant, results[1:k, ])) {
       k <- k + 1
       fit <- myarima(x, order = c(p, d, q), seasonal = c(P + 1, D, Q), constant = constant, ic, trace, approximation, offset = offset, xreg = xreg, ...)
       results[k, ] <- c(p, d, q, P + 1, D, Q, constant, fit$ic)
@@ -416,7 +418,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
         P <- (P + 1)
       }
     }
-    if (Q > 0 & newmodel(p, d, q, P, D, Q - 1, constant, results[1:k, ])) {
+    if (Q > 0 && newmodel(p, d, q, P, D, Q - 1, constant, results[1:k, ])) {
       k <- k + 1
       fit <- myarima(x, order = c(p, d, q), seasonal = c(P, D, Q - 1), constant = constant, ic, trace, approximation, offset = offset, xreg = xreg, ...)
       results[k, ] <- c(p, d, q, P, D, Q - 1, constant, fit$ic)
@@ -425,7 +427,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
         Q <- (Q - 1)
       }
     }
-    if (Q < max.Q & newmodel(p, d, q, P, D, Q + 1, constant, results[1:k, ])) {
+    if (Q < max.Q && newmodel(p, d, q, P, D, Q + 1, constant, results[1:k, ])) {
       k <- k + 1
       fit <- myarima(x, order = c(p, d, q), seasonal = c(P, D, Q + 1), constant = constant, ic, trace, approximation, offset = offset, xreg = xreg, ...)
       results[k, ] <- c(p, d, q, P, D, Q + 1, constant, fit$ic)
@@ -434,7 +436,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
         Q <- (Q + 1)
       }
     }
-    if (Q > 0 & P > 0 & newmodel(p, d, q, P - 1, D, Q - 1, constant, results[1:k, ])) {
+    if (Q > 0 && P > 0 && newmodel(p, d, q, P - 1, D, Q - 1, constant, results[1:k, ])) {
       k <- k + 1
       fit <- myarima(x, order = c(p, d, q), seasonal = c(P - 1, D, Q - 1), constant = constant, ic, trace, approximation, offset = offset, xreg = xreg, ...)
       results[k, ] <- c(p, d, q, P - 1, D, Q - 1, constant, fit$ic)
@@ -444,7 +446,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
         P <- (P - 1)
       }
     }
-    if (Q < max.Q & P < max.P & newmodel(p, d, q, P + 1, D, Q + 1, constant, results[1:k, ])) {
+    if (Q < max.Q && P < max.P && newmodel(p, d, q, P + 1, D, Q + 1, constant, results[1:k, ])) {
       k <- k + 1
       fit <- myarima(x, order = c(p, d, q), seasonal = c(P + 1, D, Q + 1), constant = constant, ic, trace, approximation, offset = offset, xreg = xreg, ...)
       results[k, ] <- c(p, d, q, P + 1, D, Q + 1, constant, fit$ic)
@@ -455,7 +457,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
       }
     }
 
-    if (p > 0 & newmodel(p - 1, d, q, P, D, Q, constant, results[1:k, ])) {
+    if (p > 0 && newmodel(p - 1, d, q, P, D, Q, constant, results[1:k, ])) {
       k <- k + 1
       fit <- myarima(x, order = c(p - 1, d, q), seasonal = c(P, D, Q), constant = constant, ic, trace, approximation, offset = offset, xreg = xreg, ...)
       results[k, ] <- c(p - 1, d, q, P, D, Q, constant, fit$ic)
@@ -464,7 +466,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
         p <- (p - 1)
       }
     }
-    if (p < max.p & newmodel(p + 1, d, q, P, D, Q, constant, results[1:k, ])) {
+    if (p < max.p && newmodel(p + 1, d, q, P, D, Q, constant, results[1:k, ])) {
       k <- k + 1
       fit <- myarima(x, order = c(p + 1, d, q), seasonal = c(P, D, Q), constant = constant, ic, trace, approximation, offset = offset, xreg = xreg, ...)
       results[k, ] <- c(p + 1, d, q, P, D, Q, constant, fit$ic)
@@ -473,7 +475,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
         p <- (p + 1)
       }
     }
-    if (q > 0 & newmodel(p, d, q - 1, P, D, Q, constant, results[1:k, ])) {
+    if (q > 0 && newmodel(p, d, q - 1, P, D, Q, constant, results[1:k, ])) {
       k <- k + 1
       fit <- myarima(x, order = c(p, d, q - 1), seasonal = c(P, D, Q), constant = constant, ic, trace, approximation, offset = offset, xreg = xreg, ...)
       results[k, ] <- c(p, d, q - 1, P, D, Q, constant, fit$ic)
@@ -482,7 +484,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
         q <- (q - 1)
       }
     }
-    if (q < max.q & newmodel(p, d, q + 1, P, D, Q, constant, results[1:k, ])) {
+    if (q < max.q && newmodel(p, d, q + 1, P, D, Q, constant, results[1:k, ])) {
       k <- k + 1
       fit <- myarima(x, order = c(p, d, q + 1), seasonal = c(P, D, Q), constant = constant, ic, trace, approximation, offset = offset, xreg = xreg, ...)
       results[k, ] <- c(p, d, q + 1, P, D, Q, constant, fit$ic)
@@ -491,7 +493,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
         q <- (q + 1)
       }
     }
-    if (q > 0 & p > 0 & newmodel(p - 1, d, q - 1, P, D, Q, constant, results[1:k, ])) {
+    if (q > 0 && p > 0 && newmodel(p - 1, d, q - 1, P, D, Q, constant, results[1:k, ])) {
       k <- k + 1
       fit <- myarima(x, order = c(p - 1, d, q - 1), seasonal = c(P, D, Q), constant = constant, ic, trace, approximation, offset = offset, xreg = xreg, ...)
       results[k, ] <- c(p - 1, d, q - 1, P, D, Q, constant, fit$ic)
@@ -501,7 +503,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
         p <- (p - 1)
       }
     }
-    if (q < max.q & p < max.p & newmodel(p + 1, d, q + 1, P, D, Q, constant, results[1:k, ])) {
+    if (q < max.q && p < max.p && newmodel(p + 1, d, q + 1, P, D, Q, constant, results[1:k, ])) {
       k <- k + 1
       fit <- myarima(x, order = c(p + 1, d, q + 1), seasonal = c(P, D, Q), constant = constant, ic, trace, approximation, offset = offset, xreg = xreg, ...)
       results[k, ] <- c(p + 1, d, q + 1, P, D, Q, constant, fit$ic)
@@ -511,7 +513,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
         p <- (p + 1)
       }
     }
-    if (allowdrift | allowmean) {
+    if (allowdrift || allowmean) {
       if (newmodel(p, d, q, P, D, Q, !constant, results[1:k, ])) {
         k <- k + 1
         fit <- myarima(x, order = c(p, d, q), seasonal = c(P, D, Q), constant = !constant, ic, trace, approximation, offset = offset, xreg = xreg, ...)
@@ -525,7 +527,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   }
 
   # Refit using ML if approximation used for IC
-  if (approximation & !is.null(bestfit$arma)) {
+  if (approximation && !is.null(bestfit$arma)) {
     if (trace) {
       cat("\n\n Now re-fitting the best model(s) without approximations...\n")
     }
@@ -586,7 +588,7 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
   } else {
     method <- "CSS-ML"
   }
-  if (diffs == 1 & constant) {
+  if (diffs == 1 && constant) {
     xreg <- cbind(drift = 1:length(x), xreg)
     if (use.season) {
       suppressWarnings(fit <- try(stats::arima(x = x, order = order, seasonal = list(order = seasonal, period = m), xreg = xreg, method = method, ...), silent = TRUE))
@@ -608,7 +610,7 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
   }
   if (!is.element("try-error", class(fit))) {
     nstar <- n - order[2] - seasonal[2] * m
-    if (diffs == 1 & constant) {
+    if (diffs == 1 && constant) {
       # fitnames <- names(fit$coef)
       # fitnames[length(fitnames)-nxreg] <- "drift"
       # names(fit$coef) <- fitnames
@@ -678,11 +680,11 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
       if (use.season) {
         cat("(", seasonal[1], ",", seasonal[2], ",", seasonal[3], ")[", m, "]", sep = "")
       }
-      if (constant & (order[2] + seasonal[2] == 0)) {
+      if (constant && (order[2] + seasonal[2] == 0)) {
         cat(" with non-zero mean")
-      } else if (constant & (order[2] + seasonal[2] == 1)) {
+      } else if (constant && (order[2] + seasonal[2] == 1)) {
         cat(" with drift        ")
-      } else if (!constant & (order[2] + seasonal[2] == 0)) {
+      } else if (!constant && (order[2] + seasonal[2] == 0)) {
         cat(" with zero mean    ")
       } else {
         cat("                   ")
@@ -708,10 +710,10 @@ arima.string <- function(object, padding=FALSE) {
   order <- object$arma[c(1, 6, 2, 3, 7, 4, 5)]
   m <- order[7]
   result <- paste("ARIMA(", order[1], ",", order[2], ",", order[3], ")", sep = "")
-  if (m > 1 & sum(order[4:6]) > 0) {
+  if (m > 1 && sum(order[4:6]) > 0) {
     result <- paste(result, "(", order[4], ",", order[5], ",", order[6], ")[", m, "]", sep = "")
   }
-  if (padding & m > 1 & sum(order[4:6]) == 0) {
+  if (padding && m > 1 && sum(order[4:6]) == 0) {
     result <- paste(result, "         ", sep = "")
     if (m <= 9) {
       result <- paste(result, " ", sep = "")
@@ -722,16 +724,16 @@ arima.string <- function(object, padding=FALSE) {
     }
   }
   if (!is.null(object$xreg)) {
-    if (NCOL(object$xreg) == 1 & is.element("drift", names(object$coef))) {
+    if (NCOL(object$xreg) == 1 && is.element("drift", names(object$coef))) {
       result <- paste(result, "with drift        ")
     } else {
       result <- paste("Regression with", result, "errors")
     }
   }
   else {
-    if (is.element("constant", names(object$coef)) | is.element("intercept", names(object$coef))) {
+    if (is.element("constant", names(object$coef)) || is.element("intercept", names(object$coef))) {
       result <- paste(result, "with non-zero mean")
-    } else if (order[2] == 0 & order[5] == 0) {
+    } else if (order[2] == 0 && order[5] == 0) {
       result <- paste(result, "with zero mean    ")
     } else {
       result <- paste(result, "                  ")
@@ -749,160 +751,6 @@ summary.Arima <- function(object, ...) {
   print(object)
   cat("\nTraining set error measures:\n")
   print(accuracy(object))
-}
-
-
-
-# Number of seasonal differences
-#' @rdname ndiffs
-#'
-#' @examples
-#' nsdiffs(log(AirPassengers))
-#'
-#' @export
-nsdiffs <- function(x, m=frequency(x), test=c("ocsb", "ch"), max.D=1) {
-  if (is.constant(x)) {
-    return(0)
-  }
-
-  test <- match.arg(test)
-  if (m == 1) {
-    stop("Non seasonal data")
-  } else if (m < 1) {
-    warning("I can't handle data with frequency less than 1. Seasonality will be ignored.")
-    return(0)
-  }
-
-  D <- 0
-  if (test == "ch") {
-    dodiff <- CHtest(x, m)
-  } else {
-    dodiff <- OCSBtest(x, m)
-  }
-
-  while (dodiff == 1 & D < max.D) {
-    D <- D + 1
-    x <- diff(x, lag = m)
-    if (is.constant(x)) {
-      return(D)
-    }
-    if (test == "ch") {
-      dodiff <- CHtest(x, m)
-    } else {
-      dodiff <- OCSBtest(x, m)
-    }
-  }
-  return(D)
-}
-
-CHtest <- function(x, m) {
-  m <- round(m) # Avoid non-integer seasonal period
-  if (length(x) < 2 * m + 5) {
-    return(0)
-  }
-  chstat <- SD.test(x, m)
-  crit.values <- c(
-    0.4617146, 0.7479655, 1.0007818, 1.2375350, 1.4625240, 1.6920200, 1.9043096, 2.1169602,
-    2.3268562, 2.5406922, 2.7391007
-  )
-  if (m <= 12) {
-    D <- as.numeric(chstat > crit.values[m - 1])
-  } else if (m == 24) {
-    D <- as.numeric(chstat > 5.098624)
-  } else if (m == 52) {
-    D <- as.numeric(chstat > 10.341416)
-  } else if (m == 365) {
-    D <- as.numeric(chstat > 65.44445)
-  } else {
-    D <- as.numeric(chstat > 0.269 * m ^ (0.928))
-  }
-  return(D)
-}
-
-# Return critical values for OCSB test at 5% level
-# Approximation based on extensive simulations.
-calcOCSBCritVal <- function(seasonal.period) {
-  log.m <- log(seasonal.period)
-  return(-0.2937411 * exp(-0.2850853 * (log.m - 0.7656451) + (-0.05983644) * ((log.m - 0.7656451) ^ 2)) - 1.652202)
-}
-
-
-OCSBtest <- function(time.series, period) {
-  period <- round(period) # Avoid non-integer seasonal period
-  if (length(time.series) < (2 * period + 5)) {
-    # warning("Time series too short for seasonal differencing")
-    return(0)
-  }
-
-  # Compute (1-B)(1-B^m)y_t
-  seas.diff.series <- diff(time.series, lag = period, differences = 1)
-  diff.series <- diff(seas.diff.series, lag = 1, differences = 1)
-
-  # Compute (1-B^m)y_{t-1}
-  y.one <- time.series[2:length(time.series)]
-  y.one <- diff(y.one, lag = period, differences = 1)
-
-  # Compute (1-B)y_{t-m}
-  y.two <- time.series[(1 + period):length(time.series)]
-  y.two <- diff(y.two, lag = 1, differences = 1)
-
-  # Make all series of the same length and matching time periods
-  y.one <- y.one[(1 + period):(length(y.one) - 1)]
-  y.two <- y.two[2:(length(y.two) - period)]
-  diff.series <- diff.series[(1 + period + 1):(length(diff.series))]
-  contingent.series <- diff.series
-
-  x.reg <- cbind(y.one, y.two)
-  diff.series <- ts(data = diff.series, frequency = period)
-
-  regression <- try(Arima(diff.series, order = c(3, 0, 0), seasonal = list(order = c(1, 0, 0), period = period), xreg = x.reg), silent = TRUE)
-
-  if (is.element("try-error", class(regression)) | tryCatch(checkarima(regression), error = function(e) TRUE)) {
-    regression <- try(Arima(diff.series, order = c(3, 0, 0), seasonal = list(order = c(0, 0, 0), period = period), xreg = x.reg), silent = TRUE)
-
-    if (is.element("try-error", class(regression)) | tryCatch(checkarima(regression), error = function(e) TRUE)) {
-      regression <- try(Arima(diff.series, order = c(2, 0, 0), seasonal = list(order = c(0, 0, 0), period = period), xreg = x.reg), silent = TRUE)
-
-      if (is.element("try-error", class(regression)) | tryCatch(checkarima(regression), error = function(e) TRUE)) {
-        regression <- try(Arima(diff.series, order = c(1, 0, 0), seasonal = list(order = c(0, 0, 0), period = period), xreg = x.reg), silent = TRUE)
-
-        if (is.element("try-error", class(regression)) | tryCatch(checkarima(regression), error = function(e) TRUE)) {
-          regression <- try(lm(contingent.series ~ y.one + y.two - 1, na.action = NULL), silent = TRUE)
-          if (is.element("try-error", class(regression))) {
-            stop("The OCSB regression model cannot be estimated")
-          }
-          # Check if perfect regression. In that case, safest to do no differencing
-          meanratio <- mean(abs(regression$residuals), na.rm = TRUE) / mean(abs(contingent.series), na.rm = TRUE)
-          if (is.nan(meanratio)) {
-            return(0)
-          }
-          if (meanratio < 1e-10) {
-            return(0)
-          }
-          # Proceed to do OCSB test.
-          reg.summary <- summary(regression)
-          reg.coefs <- reg.summary$coefficients
-          y.two.pos <- grep("y.two", rownames(reg.coefs), fixed = TRUE)
-          if (length(y.two.pos) != 0) {
-            y.two <- reg.coefs[y.two.pos, 3]
-          } else {
-            y.two <- NA
-          }
-
-          if ((is.nan(y.two)) | (is.infinite(y.two)) | (is.na(y.two)) | (is.element("try-error", class(regression)))) {
-            return(1)
-          } else {
-            return(as.numeric(y.two >= calcOCSBCritVal(period)))
-          }
-        }
-      }
-    }
-  }
-
-  suppressWarnings(se <- sqrt(diag(regression$var.coef)))
-  y.two <- regression$coef[names(regression$coef) == "y.two"] / se[names(se) == "y.two"]
-
-  return(as.numeric(y.two >= calcOCSBCritVal(period)))
 }
 
 # Check that Arima object has positive coefficient variances without returning warnings

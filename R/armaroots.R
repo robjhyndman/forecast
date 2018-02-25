@@ -127,7 +127,7 @@ plot.Arima <- function(x, type=c("both", "ar", "ma"), main,
     }
   }
 
-  if (p == 0 & q == 0) {
+  if (p == 0 && q == 0) {
     stop("No roots to plot")
   }
   # Check for MA parts
@@ -138,7 +138,7 @@ plot.Arima <- function(x, type=c("both", "ar", "ma"), main,
       type <- "ar"
     }
   }
-  if ((type == "ar" & (p == 0)) | (type == "ma" & (q == 0))) {
+  if ((type == "ar" && (p == 0)) || (type == "ma" && (q == 0))) {
     stop("No roots to plot")
   }
 

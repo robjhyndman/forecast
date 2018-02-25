@@ -22,7 +22,7 @@ testaccuracy <- function(f, x, test, d, D) {
       stop("Unknown list structure")
     }
   }
-  if (is.ts(x) & is.ts(f)) {
+  if (is.ts(x) && is.ts(f)) {
     tspf <- tsp(f)
     tspx <- tsp(x)
     start <- max(tspf[1], tspx[1])
@@ -36,7 +36,7 @@ testaccuracy <- function(f, x, test, d, D) {
   n <- length(x)
   if (is.null(test)) {
     test <- 1:n
-  } else if (min(test) < 1 | max(test) > n) {
+  } else if (min(test) < 1 || max(test) > n) {
     warning("test elements must be within sample")
     test <- test[test >= 1 & test <= n]
   }
@@ -84,7 +84,7 @@ testaccuracy <- function(f, x, test, d, D) {
   }
 
   # Additional time series measures
-  if (!is.null(tsp(x)) & n > 1) {
+  if (!is.null(tsp(x)) && n > 1) {
     fpe <- (c(ff[2:n]) / c(xx[1:(n - 1)]) - 1)[test - 1]
     ape <- (c(xx[2:n]) / c(xx[1:(n - 1)]) - 1)[test - 1]
     theil <- sqrt(sum((fpe - ape) ^ 2, na.rm = TRUE) / sum(ape ^ 2, na.rm = TRUE))
@@ -118,7 +118,7 @@ trainingaccuracy <- function(f, test, d, D) {
   if (is.null(test)) {
     test <- 1:n
   }
-  if (min(test) < 1 | max(test) > n) {
+  if (min(test) < 1 || max(test) > n) {
     warning("test elements must be within sample")
     test <- test[test >= 1 & test <= n]
   }
@@ -249,7 +249,7 @@ accuracy <- function(f, ...) {
 accuracy.default <- function(f, x, test=NULL, d=NULL, D=NULL, ...) {
   if (!any(is.element(class(f), c(
     "mforecast", "forecast", "ts", "integer", "numeric",
-    "Arima", "ets", "lm", "bats", "tbats", "nnetar", "stlm"
+    "Arima", "ets", "lm", "bats", "tbats", "nnetar", "stlm", "baggedModel"
   )))) {
     stop("First argument should be a forecast object or a time series.")
   }
@@ -259,15 +259,15 @@ accuracy.default <- function(f, x, test=NULL, d=NULL, D=NULL, ...) {
 
   trainset <- (is.list(f))
   testset <- (!missing(x))
-  if (testset & !is.null(test)) {
+  if (testset && !is.null(test)) {
     trainset <- FALSE
   }
-  if (!trainset & !testset) {
+  if (!trainset && !testset) {
     stop("Unable to compute forecast accuracy measures")
   }
 
   # Find d and D
-  if (is.null(D) & is.null(d)) {
+  if (is.null(D) && is.null(d)) {
     if (testset) {
       d <- as.numeric(frequency(x) == 1)
       D <- as.numeric(frequency(x) > 1)
