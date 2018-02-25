@@ -6,3 +6,4 @@
 ^_pkgdown\.yml$
 Makefile
 cran_check.R
+^revdep$
