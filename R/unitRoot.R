@@ -190,7 +190,7 @@ nsdiffs <- function(x, alpha = 0.05, m=frequency(x), test=c("ocsb", "hegy", "ch"
         diff
       },
       error = function(e){
-        warning("The chosen test encountered an error, so no seasonal differencing is selected. Consider using a different test or a longer series.")
+        warning("The chosen test encountered an error, so no seasonal differencing is selected. Check the time series data.")
         0
       }
     )
@@ -319,6 +319,8 @@ ocsb.test <- function(x, lag.method = c("fixed", "AIC", "BIC", "AICc"), maxlag =
   }
   
   regression <- fitOCSB(x, maxlag, maxlag)
+  if(any(is.na(regression$coefficients)))
+    stop("Model did not reach a solution. Check the time series data.")
   
   stat <- summary(regression)$coefficients[c("xregZ4", "xregZ5"), "t value"]
   
