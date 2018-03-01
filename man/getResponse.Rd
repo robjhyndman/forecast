@@ -10,6 +10,7 @@
 \alias{getResponse.tbats}
 \alias{getResponse.bats}
 \alias{getResponse.mforecast}
+\alias{getResponse.baggedModel}
 \title{Get response variable from time series model.}
 \usage{
 getResponse(object, ...)
@@ -29,6 +30,8 @@ getResponse(object, ...)
 \method{getResponse}{bats}(object, ...)
 
 \method{getResponse}{mforecast}(object, ...)
+
+\method{getResponse}{baggedModel}(object, ...)
 }
 \arguments{
 \item{object}{a time series model or forecast object.}
