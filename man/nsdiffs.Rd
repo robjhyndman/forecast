@@ -4,8 +4,8 @@
 \alias{nsdiffs}
 \title{Number of differences required for a seasonally stationary series}
 \usage{
-nsdiffs(x, alpha = 0.05, m = frequency(x), test = c("ocsb", "hegy", "ch"),
-  max.D = 1)
+nsdiffs(x, alpha = 0.05, m = frequency(x), test = c("seas", "ocsb",
+  "hegy", "ch"), max.D = 1)
 }
 \arguments{
 \item{x}{A univariate time series}
@@ -23,22 +23,34 @@ An integer indicating the number of differences required for stationarity.
 }
 \description{
 Functions to estimate the number of differences required to make a given
-time series stationary. \code{nsdiffs} estimates the number of seasonal differences 
+time series stationary. \code{nsdiffs} estimates the number of seasonal differences
 necessary.
 }
 \details{
 \code{nsdiffs} uses seasonal unit root tests to determine the number of
 seasonal differences required for time series \code{x} to be made stationary
-(possibly with some lag-one differencing as well). If \code{test="ch"}, the
-Canova-Hansen (1995) test is used (with null hypothesis of deterministic
-seasonality) and if \code{test="ocsb"}, the Osborn-Chui-Smith-Birchenhall
+(possibly with some lag-one differencing as well).
+
+Several different tests are available:
+\itemize{
+\item If \code{test="seas"} (default), a heuristic of seasonal strength is used, where differencing is
+selected if the seasonal_strength (Hyndman, Wang and Laptev, 2015) exceeds 0.64 (based on M3 auto.arima performance).
+\item If \code{test="ch"}, the Canova-Hansen (1995) test is used
+(with null hypothesis of deterministic seasonality)
+\item If \code{test="hegy"}, the Hylleberg, Engle, Granger and Yoo (1990) test is used.
+\item If \code{test="ocsb"}, the Osborn-Chui-Smith-Birchenhall
 (1988) test is used (with null hypothesis that a seasonal unit root exists).
+}
 }
 \examples{
 nsdiffs(AirPassengers)
 
 }
 \references{
+Hyndman RJ, Wang E, and Laptev N (2015) "Large-scale unusual time series
+detection", In \emph{Data Mining Workshop (ICDMW), 2015 IEEE International
+Conference}, pp. 1616-1619.
+
 Osborn DR, Chui APL, Smith J, and Birchenhall CR (1988) "Seasonality and the
 order of integration for consumption", \emph{Oxford Bulletin of Economics
 and Statistics} \bold{50}(4):361-377.
@@ -47,8 +59,8 @@ Canova F and Hansen BE (1995) "Are Seasonal Patterns Constant
 over Time? A Test for Seasonal Stability", \emph{Journal of Business and
 Economic Statistics} \bold{13}(3):237-252.
 
-Hylleberg, S., Engle, R., Granger, C. and Yoo, B. (1990) "Seasonal integration
- and cointegration.", \emph{Journal of Econometrics} \bold{44}(1), pp. 215-238.
+Hylleberg S, Engle R, Granger C and Yoo B (1990) "Seasonal integration
+and cointegration.", \emph{Journal of Econometrics} \bold{44}(1), pp. 215-238.
 }
 \seealso{
 \code{\link{auto.arima}}, \code{\link{ndiffs}}, \code{\link{ocsb.test}}, \code{\link[uroot]{hegy.test}}, and \code{\link[uroot]{ch.test}}

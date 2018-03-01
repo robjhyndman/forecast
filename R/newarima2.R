@@ -95,7 +95,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
                        stepwise=TRUE, trace=FALSE,
                        approximation=(length(x) > 150 | frequency(x) > 12),
                        truncate=NULL, xreg=NULL,
-                       test=c("kpss", "adf", "pp"), seasonal.test=c("ocsb", "hegy", "ch"),
+                       test=c("kpss", "adf", "pp"), seasonal.test=c("seas", "ocsb", "hegy", "ch"),
                        allowdrift=TRUE, allowmean=TRUE, lambda=NULL, biasadj=FALSE,
                        parallel=FALSE, num.cores=2, x=y, ...) {
   # Only non-stepwise parallel implemented so far.
