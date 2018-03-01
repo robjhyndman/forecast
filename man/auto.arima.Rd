@@ -10,7 +10,7 @@ auto.arima(y, d = NA, D = NA, max.p = 5, max.q = 5, max.P = 2,
   seasonal = TRUE, ic = c("aicc", "aic", "bic"), stepwise = TRUE,
   trace = FALSE, approximation = (length(x) > 150 | frequency(x) > 12),
   truncate = NULL, xreg = NULL, test = c("kpss", "adf", "pp"),
-  seasonal.test = c("ocsb", "hegy", "ch"), allowdrift = TRUE,
+  seasonal.test = c("seas", "ocsb", "hegy", "ch"), allowdrift = TRUE,
   allowmean = TRUE, lambda = NULL, biasadj = FALSE, parallel = FALSE,
   num.cores = 2, x = y, ...)
 }
