@@ -148,7 +148,7 @@ residuals.fracdiff <- function(object, type=c("innovation", "response"), ...) {
 #' @export
 residuals.nnetar <- function(object, type=c("innovation", "response"), h=1, ...) {
   type <- match.arg(type)
-  if (type == "innovation" & !is.null(object$lambda)) {
+  if (type == "innovation" && !is.null(object$lambda)) {
     res <- matrix(unlist(lapply(object$model, residuals)), ncol = length(object$model))
     if (!is.null(object$scalex$scale)) {
       res <- res * object$scalex$scale

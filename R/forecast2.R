@@ -66,9 +66,9 @@ meanf <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALS
   if (fan) {
     level <- seq(51, 99, by = 3)
   } else {
-    if (min(level) > 0 & max(level) < 1) {
+    if (min(level) > 0 && max(level) < 1) {
       level <- 100 * level
-    } else if (min(level) < 0 | max(level) > 99.99) {
+    } else if (min(level) < 0 || max(level) > 99.99) {
       stop("Confidence limit out of range")
     }
   }
@@ -202,7 +202,7 @@ InvBoxCox <- function(x, lambda, biasadj=FALSE, fvar=NULL) {
     }
     if (is.list(fvar)) { # Create fvar from forecast interval
       level <- max(fvar$level)
-      if (NCOL(fvar$upper) > 1 & NCOL(fvar$lower)) {
+      if (NCOL(fvar$upper) > 1 && NCOL(fvar$lower)) {
         i <- match(level, fvar$level)
         fvar$upper <- fvar$upper[, i]
         fvar$lower <- fvar$lower[, i]
@@ -230,7 +230,7 @@ InvBoxCoxf <- function(x=NULL, fvar=NULL, lambda=NULL) {
   }
   if (is.null(fvar)) {
     level <- max(x$level)
-    if (NCOL(x$upper) > 1 & NCOL(x$lower)) {
+    if (NCOL(x$upper) > 1 && NCOL(x$lower)) {
       i <- match(level, x$level)
       x$upper <- x$upper[, i]
       x$lower <- x$lower[, i]
@@ -309,9 +309,9 @@ forecast.StructTS <- function(object, h=ifelse(object$coef["epsilon"] > 1e-10, 2
   if (fan) {
     level <- seq(51, 99, by = 3)
   } else {
-    if (min(level) > 0 & max(level) < 1) {
+    if (min(level) > 0 && max(level) < 1) {
       level <- 100 * level
-    } else if (min(level) < 0 | max(level) > 99.99) {
+    } else if (min(level) < 0 || max(level) > 99.99) {
       stop("Confidence limit out of range")
     }
   }
@@ -417,9 +417,9 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x) > 1, 2 * f
   if (fan) {
     level <- seq(51, 99, by = 3)
   } else {
-    if (min(level) > 0 & max(level) < 1) {
+    if (min(level) > 0 && max(level) < 1) {
       level <- 100 * level
-    } else if (min(level) < 0 | max(level) > 99.99) {
+    } else if (min(level) < 0 || max(level) > 99.99) {
       stop("Confidence limit out of range")
     }
   }
@@ -552,12 +552,12 @@ croston2 <- function(x, h=10, alpha=0.1, nofits=FALSE) {
     }
   }
   tt <- diff(c(0, (1:length(x))[x > 0])) # Times between non-zero observations
-  if (length(y) == 1 & length(tt) == 1) # Only one non-zero observation
+  if (length(y) == 1 && length(tt) == 1) # Only one non-zero observation
   {
     y.f <- list(mean = ts(rep(y, h), start = start.f, frequency = freq.x))
     p.f <- list(mean = ts(rep(tt, h), start = start.f, frequency = freq.x))
   }
-  else if (length(y) <= 1 | length(tt) <= 1) { # length(tt)==0 but length(y)>0. How does that happen?
+  else if (length(y) <= 1 || length(tt) <= 1) { # length(tt)==0 but length(y)>0. How does that happen?
     return(list(mean = ts(rep(NA, h), start = start.f, frequency = freq.x)))
   } else {
     y.f <- ses(y, alpha = alpha, initial = "simple", h = h, PI = FALSE)

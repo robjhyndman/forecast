@@ -82,7 +82,7 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), type=c("level", "tren
   {
     return(d)
   }
-  while(dodiff & d < max.d)
+  while(dodiff && d < max.d)
   {
     d <- d+1
     x <- diff(x)
@@ -169,7 +169,7 @@ nsdiffs <- function(x, alpha = 0.05, m=frequency(x), test=c("seas", "ocsb", "heg
     warning("Specified alpha value is larger than the maximum, setting alpha=0.1")
     alpha <- 0.1
   }
-  if(test == "ocsb" & alpha != 0.05){
+  if(test == "ocsb" && alpha != 0.05){
     warning("Significance levels other than 5% are not currently supported by test='ocsb', defaulting to alpha = 0.05.")
     alpha <- 0.05
   }
@@ -204,7 +204,7 @@ nsdiffs <- function(x, alpha = 0.05, m=frequency(x), test=c("seas", "ocsb", "heg
         diff
       },
       error = function(e){
-        warning("The chosen test encountered an error, so no seasonal differencing is selected. Consider using a different test or a longer series.")
+        warning("The chosen test encountered an error, so no seasonal differencing is selected. Check the time series data.")
         0
       }
     )
@@ -212,7 +212,7 @@ nsdiffs <- function(x, alpha = 0.05, m=frequency(x), test=c("seas", "ocsb", "heg
   
   dodiff <- runTests(x, test, alpha)
   
-  while(dodiff==1 & D < max.D)
+  while(dodiff==1 && D < max.D)
   {
     D <- D + 1
     x <- diff(x, lag=m)
@@ -361,6 +361,8 @@ ocsb.test <- function(x, lag.method = c("fixed", "AIC", "BIC", "AICc"), maxlag =
   }
   
   regression <- fitOCSB(x, maxlag, maxlag)
+  #if(any(is.na(regression$coefficients)))
+  #  stop("Model did not reach a solution. Check the time series data.")
   
   stat <- summary(regression)$coefficients[c("xregZ4", "xregZ5"), "t value"]
   

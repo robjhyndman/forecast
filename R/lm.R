@@ -92,7 +92,7 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...) {
   }
 
   ## Set column name of univariate dataset
-  if (is.null(dim(data)) & length(data) != 0) {
+  if (is.null(dim(data)) && length(data) != 0) {
     cn <- as.character(vars)[2]
   } else {
     cn <- colnames(data)
@@ -120,7 +120,7 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...) {
     data <- cbind(data, trend)
   }
   if (tsdat[2] == 0) { # &tsvar[2]!=0){#If "season" is not in data, but is in formula
-    if (tsvar[2] != 0 & tspx[3] <= 1) { # Nonseasonal data, and season requested
+    if (tsvar[2] != 0 && tspx[3] <= 1) { # Nonseasonal data, and season requested
       stop("Non-seasonal data cannot be modelled using a seasonal factor")
     }
     season <- as.factor(cycle(data[, 1]))
@@ -141,7 +141,7 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...) {
     warning("Subset has been assumed contiguous")
     timesx <- time(data[, 1])[subset]
     tspx <- recoverTSP(timesx)
-    if (tspx[3] == 1 & tsdat[2] == 0 & tsvar[2] != 0) {
+    if (tspx[3] == 1 && tsdat[2] == 0 && tsvar[2] != 0) {
       stop("Non-seasonal data cannot be modelled using a seasonal factor")
     }
     data <- data[subset, ] # model.frame(formula,as.data.frame(data[subsetTF,]))
@@ -149,7 +149,7 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...) {
   if (!is.null(lambda)) {
     data[, 1] <- BoxCox(data[, 1], lambda)
   }
-  if (tsdat[2] == 0 & tsvar[2] != 0) {
+  if (tsdat[2] == 0 && tsvar[2] != 0) {
     data$season <- factor(data$season) # fix for lost factor information, may not be needed?
   }
 
@@ -238,9 +238,9 @@ forecast.lm <- function(object, newdata, h=10, level=c(80, 95), fan=FALSE, lambd
   if (fan) {
     level <- seq(51, 99, by = 3)
   } else {
-    if (min(level) > 0 & max(level) < 1) {
+    if (min(level) > 0 && max(level) < 1) {
       level <- 100 * level
-    } else if (min(level) < 0 | max(level) > 99.99) {
+    } else if (min(level) < 0 || max(level) > 99.99) {
       stop("Confidence limit out of range")
     }
   }
@@ -268,15 +268,15 @@ forecast.lm <- function(object, newdata, h=10, level=c(80, 95), fan=FALSE, lambd
   }
 
   # Check if the forecasts will be time series
-  if (ts & is.element("ts", class(origdata))) {
+  if (ts && is.element("ts", class(origdata))) {
     tspx <- tsp(origdata)
     timesx <- time(origdata)
   }
-  else if (ts & is.element("ts", class(origdata[, 1]))) {
+  else if (ts && is.element("ts", class(origdata[, 1]))) {
     tspx <- tsp(origdata[, 1])
     timesx <- time(origdata[, 1])
   }
-  else if (ts & is.element("ts", class(fitted(object)))) {
+  else if (ts && is.element("ts", class(fitted(object)))) {
     tspx <- tsp(fitted(object))
     timesx <- time(fitted(object))
   }
@@ -347,7 +347,7 @@ forecast.lm <- function(object, newdata, h=10, level=c(80, 95), fan=FALSE, lambd
             # Check for misnamed columns
             fsub <- grep(paste(make.names(subvars), collapse = "|"), newvars)
           }
-          if (all(fsub != 0) & length(fsub) == length(subvars)) {
+          if (all(fsub != 0) && length(fsub) == length(subvars)) {
             imat <- as.matrix(newdata[, fsub], ncol = length(fsub))
             colnames(imat) <- subvars
             tmpdata[[length(tmpdata) + 1]] <- imat
@@ -399,7 +399,7 @@ forecast.lm <- function(object, newdata, h=10, level=c(80, 95), fan=FALSE, lambd
     oldnewdata <- newdata
   }
   # If only one column, assume its name.
-  if (ncol(newdata) == 1 & colnames(newdata)[1] == "newdata") {
+  if (ncol(newdata) == 1 && colnames(newdata)[1] == "newdata") {
     colnames(newdata) <- as.character(formula(object$model))[3]
   }
 

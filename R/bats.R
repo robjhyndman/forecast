@@ -129,8 +129,8 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
     use.box.cox <- FALSE
   }
 
-  if ((!is.null(use.box.cox)) & (!is.null(use.trend)) & (use.parallel)) {
-    if ((use.trend == TRUE) & (!is.null(use.damped.trend))) {
+  if ((!is.null(use.box.cox)) && (!is.null(use.trend)) && (use.parallel)) {
+    if (use.trend && (!is.null(use.damped.trend))) {
       # In the this case, there is only one alternative.
       use.parallel <- FALSE
     }
@@ -145,7 +145,7 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
     seasonal.periods <- seasonal.periods[!seasonal.mask]
   }
   # Check if there is anything to parallelise
-  if (is.null(seasonal.periods) & !is.null(use.box.cox) & !is.null(use.trend)) {
+  if (is.null(seasonal.periods) && !is.null(use.box.cox) && !is.null(use.trend)) {
     use.parallel <- FALSE
   }
 
@@ -180,7 +180,7 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
       {
         for (damping in use.damped.trend)
         {
-          if ((trend == FALSE) & (damping == TRUE)) {
+          if (!trend && damping) {
             next
           }
           control.line <- c(box.cox, trend, damping)
@@ -244,13 +244,13 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
 
 filterSpecifics <- function(y, box.cox, trend, damping, seasonal.periods, use.arma.errors,
                             force.seasonality=FALSE, init.box.cox=NULL, bc.lower=0, bc.upper=1, biasadj=FALSE, ...) {
-  if ((trend == FALSE) & (damping == TRUE)) {
+  if (!trend && damping) {
     return(list(AIC = Inf))
   }
 
 
   first.model <- fitSpecificBATS(y, use.box.cox = box.cox, use.beta = trend, use.damping = damping, seasonal.periods = seasonal.periods, init.box.cox = init.box.cox, bc.lower = bc.lower, bc.upper = bc.upper, biasadj = biasadj)
-  if ((!is.null(seasonal.periods)) & (!force.seasonality)) {
+  if (!is.null(seasonal.periods) && !force.seasonality) {
     non.seasonal.model <- fitSpecificBATS(y, use.box.cox = box.cox, use.beta = trend, use.damping = damping, seasonal.periods = NULL, init.box.cox = init.box.cox, bc.lower = bc.lower, bc.upper = bc.upper, biasadj = biasadj)
     if (first.model$AIC > non.seasonal.model$AIC) {
       seasonal.periods <- NULL
@@ -261,7 +261,7 @@ filterSpecifics <- function(y, box.cox, trend, damping, seasonal.periods, use.ar
     suppressWarnings(arma <- auto.arima(as.numeric(first.model$errors), d = 0, ...))
     p <- arma$arma[1]
     q <- arma$arma[2]
-    if ((p != 0) | (q != 0)) { # Did auto.arima() find any AR() or MA() coefficients?
+    if (p != 0 || q != 0) { # Did auto.arima() find any AR() or MA() coefficients?
       if (p != 0) {
         ar.coefs <- numeric(p)
       } else {
@@ -294,13 +294,13 @@ parFilterSpecifics <- function(control.number, control.array, y, seasonal.period
   damping <- control.array[control.number, 3]
 
 
-  if ((trend == FALSE) & (damping == TRUE)) {
+  if (!trend && damping) {
     return(list(AIC = Inf))
   }
 
 
   first.model <- fitSpecificBATS(y, use.box.cox = box.cox, use.beta = trend, use.damping = damping, seasonal.periods = seasonal.periods, init.box.cox = init.box.cox, bc.lower = bc.lower, bc.upper = bc.upper, biasadj = biasadj)
-  if ((!is.null(seasonal.periods)) & (!force.seasonality)) {
+  if (!is.null(seasonal.periods) && !force.seasonality) {
     non.seasonal.model <- fitSpecificBATS(y, use.box.cox = box.cox, use.beta = trend, use.damping = damping, seasonal.periods = NULL, init.box.cox = init.box.cox, bc.lower = bc.lower, bc.upper = bc.upper, biasadj = biasadj)
     if (first.model$AIC > non.seasonal.model$AIC) {
       seasonal.periods <- NULL
@@ -311,7 +311,7 @@ parFilterSpecifics <- function(control.number, control.array, y, seasonal.period
     suppressWarnings(arma <- auto.arima(as.numeric(first.model$errors), d = 0, ...))
     p <- arma$arma[1]
     q <- arma$arma[2]
-    if ((p != 0) | (q != 0)) { # Did auto.arima() find any AR() or MA() coefficients?
+    if (p != 0 || q != 0) { # Did auto.arima() find any AR() or MA() coefficients?
       if (p != 0) {
         ar.coefs <- numeric(p)
       } else {
