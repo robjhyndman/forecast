@@ -109,10 +109,18 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), type=c("level", "tren
 #'
 #' \code{nsdiffs} uses seasonal unit root tests to determine the number of
 #' seasonal differences required for time series \code{x} to be made stationary
-#' (possibly with some lag-one differencing as well). If \code{test="ch"}, the
-#' Canova-Hansen (1995) test is used (with null hypothesis of deterministic
-#' seasonality) and if \code{test="ocsb"}, the Osborn-Chui-Smith-Birchenhall
+#' (possibly with some lag-one differencing as well). 
+#' 
+#' Several different tests are available:
+#' * If \code{test="seas"} (default), a heuristic of seasonal strength is used, where differencing is
+#' selected if the seasonal_strength (Hyndman, Wang and Laptev, 2015) exceeds 0.64 (based on M3 auto.arima performance).
+#' * If \code{test="ch"}, the Canova-Hansen (1995) test is used 
+#' (with null hypothesis of deterministic seasonality) 
+#' * If \code{test="hegy"}, the Hylleberg, Engle, Granger and Yoo (1990) test is used.
+#' * If \code{test="ocsb"}, the Osborn-Chui-Smith-Birchenhall
 #' (1988) test is used (with null hypothesis that a seasonal unit root exists).
+#' 
+#' @md
 #' 
 #' @param x A univariate time series
 #' @param alpha Level of the test, possible values range from 0.01 to 0.1.
@@ -123,6 +131,11 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), type=c("level", "tren
 #' @return An integer indicating the number of differences required for stationarity.
 #' 
 #' @references 
+#' 
+#' Hyndman RJ, Wang E, and Laptev N (2015) "Large-scale unusual time series
+#' detection", In \emph{Data Mining Workshop (ICDMW), 2015 IEEE International 
+#' Conference}, pp. 1616-1619.
+#' 
 #' Osborn DR, Chui APL, Smith J, and Birchenhall CR (1988) "Seasonality and the
 #' order of integration for consumption", \emph{Oxford Bulletin of Economics
 #' and Statistics} \bold{50}(4):361-377.
@@ -131,8 +144,8 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), type=c("level", "tren
 #' over Time? A Test for Seasonal Stability", \emph{Journal of Business and
 #' Economic Statistics} \bold{13}(3):237-252.
 #'
-#' Hylleberg, S., Engle, R., Granger, C. and Yoo, B. (1990) "Seasonal integration
-#'  and cointegration.", \emph{Journal of Econometrics} \bold{44}(1), pp. 215-238.
+#' Hylleberg S, Engle R, Granger C and Yoo B (1990) "Seasonal integration
+#' and cointegration.", \emph{Journal of Econometrics} \bold{44}(1), pp. 215-238.
 #'
 #' @author Rob J Hyndman, Slava Razbash and Mitchell O'Hara-Wild
 #' 
@@ -143,7 +156,7 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), type=c("level", "tren
 #'
 #' @importFrom uroot hegy.test ch.test
 #' @export
-nsdiffs <- function(x, alpha = 0.05, m=frequency(x), test=c("ocsb", "hegy", "ch"), max.D=1)
+nsdiffs <- function(x, alpha = 0.05, m=frequency(x), test=c("seas", "ocsb", "hegy", "ch"), max.D=1)
 {
   test <- match.arg(test)
   D <- 0
@@ -182,6 +195,7 @@ nsdiffs <- function(x, alpha = 0.05, m=frequency(x), test=c("ocsb", "hegy", "ch"
     tryCatch(
       {suppressWarnings(
         diff <- switch(test,
+               seas = seas.heuristic(x) > 0.64, # Threshold chosen based on seasonal M3 auto.arima accuracy.
                ocsb = with(ocsb.test(x, maxlag = 3, lag.method = "AIC"), statistics>critical),
                hegy = tail(hegy.test(x, deterministic = c(1,1,0), maxlag = 3, lag.method = "AIC")$pvalues, 2)[-2] > alpha,
                ch = ch.test(x, type = "trig")$pvalues["joint"] < alpha)
@@ -207,6 +221,34 @@ nsdiffs <- function(x, alpha = 0.05, m=frequency(x), test=c("ocsb", "hegy", "ch"
     dodiff <- runTests(x, test, alpha)
   }
   return(D)
+}
+
+# Adjusted from robjhyndman/tsfeatures
+seas.heuristic <- function(x){
+  if ("msts" %in% class(x)) {
+    msts <- attributes(x)$msts
+    nperiods <- length(msts)
+  }
+  else if ("ts" %in% class(x)) {
+    msts <- frequency(x)
+    nperiods <- msts > 1
+    season <- 0
+  }
+  else {
+    stop("The object provided must be a time-series object (`msts` or `ts`)")
+  }
+  season <- NA
+  stlfit <- mstl(x)
+  remainder <- stlfit[, "Remainder"]
+  seasonal <- stlfit[, grep("Season", colnames(stlfit)), drop = FALSE]
+  vare <- var(remainder, na.rm = TRUE)
+  nseas <- NCOL(seasonal)
+  if (nseas > 0) {
+    season <- numeric(nseas)
+    for (i in seq(nseas)) season[i] <- max(0, min(1, 1 - vare/var(remainder + seasonal[, i], na.rm = TRUE)))
+
+  }
+  return(season)
 }
 
 # Model specification from Osborn DR, Chui APL, Smith J, and Birchenhall CR (1988) "Seasonality and the order of integration for consumption", Oxford Bulletin of Economics and Statistics 50(4):361-377.
@@ -319,8 +361,8 @@ ocsb.test <- function(x, lag.method = c("fixed", "AIC", "BIC", "AICc"), maxlag =
   }
   
   regression <- fitOCSB(x, maxlag, maxlag)
-  if(any(is.na(regression$coefficients)))
-    stop("Model did not reach a solution. Check the time series data.")
+  #if(any(is.na(regression$coefficients)))
+  #  stop("Model did not reach a solution. Check the time series data.")
   
   stat <- summary(regression)$coefficients[c("xregZ4", "xregZ5"), "t value"]
   

@@ -81,7 +81,9 @@ baggedModel <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), fn=c("
 #' @rdname baggedModel
 #' @export
 baggedETS <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), ...) {
-  baggedModel(y, bootstrapped_series, fn = "ets", ...)
+  out <- baggedModel(y, bootstrapped_series, fn = "ets", ...)
+  class(out) <- c("baggedETS", class(out))
+  out
 }
 
 
