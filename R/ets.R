@@ -353,6 +353,8 @@ ets <- function(y, model="ZZZ", damped=NULL,
     } else {
       fit <- fit2
     }
+    if("try-error" %in% class(fit))
+      stop("Unable to estimate a model.")
     fit$call <- match.call()
     fit$method <- as.character(fit)
     fit$series <- deparse(substitute(y))
