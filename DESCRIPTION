@@ -7,29 +7,29 @@ Description: Methods and tools for displaying and analysing
 Depends:
   R (>= 3.0.2),
 Imports:
-  stats,
-  graphics,
-  tseries,
-  fracdiff,
-  Rcpp (>= 0.11.0),
-  nnet,
   colorspace,
-  parallel,
+  fracdiff,
   ggplot2 (>= 2.0.0),
-  magrittr,
+  graphics,
   lmtest,
-  zoo,
+  magrittr,
+  nnet,
+  parallel,
+  Rcpp (>= 0.11.0),
+  stats,
   timeDate,
+  tseries,
   urca,
   uroot
+  zoo,
 Suggests:
-  testthat,
-  knitr,
-  rmarkdown,
-  expsmooth,
-  rticles,
   desc,
+  expsmooth,
+  knitr,
   purrr
+  rmarkdown,
+  rticles,
+  testthat,
 LinkingTo:
   Rcpp (>= 0.11.0),
   RcppArmadillo (>= 0.2.35)
@@ -51,4 +51,3 @@ BugReports: https://github.com/robjhyndman/forecast/issues
 License: GPL-3
 URL: http://pkg.robjhyndman.com/forecast, https://github.com/robjhyndman/forecast
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1.9000
