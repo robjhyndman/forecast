@@ -18,6 +18,8 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -25,6 +27,14 @@
 <script src="../pkgdown.js"></script>
   
   
+<meta property="og:title" content="Number of differences required for a stationary series — ndiffs" />
+
+<meta property="og:description" content="Functions to estimate the number of differences required to make a given
+time series stationary. ndiffs estimates the number of first
+differences necessary." />
+
+<meta property="og:image" content="/logo.png" />
+<meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -86,13 +96,11 @@
     
     <p>Functions to estimate the number of differences required to make a given
 time series stationary. <code>ndiffs</code> estimates the number of first
-differences and <code>nsdiffs</code> estimates the number of seasonal differences.</p>
+differences necessary.</p>
     
 
     <pre class="usage"><span class='fu'>ndiffs</span>(<span class='no'>x</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"kpss"</span>, <span class='st'>"adf"</span>, <span class='st'>"pp"</span>), <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"level"</span>,
-  <span class='st'>"trend"</span>), <span class='kw'>max.d</span> <span class='kw'>=</span> <span class='fl'>2</span>)
-
-<span class='fu'>nsdiffs</span>(<span class='no'>x</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fu'>frequency</span>(<span class='no'>x</span>), <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ocsb"</span>, <span class='st'>"ch"</span>), <span class='kw'>max.D</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+  <span class='st'>"trend"</span>), <span class='kw'>max.d</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -117,19 +125,11 @@ differences and <code>nsdiffs</code> estimates the number of seasonal difference
       <th>max.d</th>
       <td><p>Maximum number of non-seasonal differences allowed</p></td>
     </tr>
-    <tr>
-      <th>m</th>
-      <td><p>Length of seasonal period</p></td>
-    </tr>
-    <tr>
-      <th>max.D</th>
-      <td><p>Maximum number of seasonal differences allowed</p></td>
-    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An integer.</p>
+    <p>An integer indicating the number of differences required for stationarity.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -142,42 +142,31 @@ the level <code>alpha</code>. If <code>test="adf"</code>, the Augmented Dickey-F
 test is used and if <code>test="pp"</code> the Phillips-Perron test is used. In
 both of these cases, the null hypothesis is that <code>x</code> has a unit root
 against a stationary root alternative. Then the test returns the least
-number of differences required to fail the test at the level <code>alpha</code>.
-    <code>nsdiffs</code> uses seasonal unit root tests to determine the number of
-seasonal differences required for time series <code>x</code> to be made stationary
-(possibly with some lag-one differencing as well). If <code>test="ch"</code>, the
-Canova-Hansen (1995) test is used (with null hypothesis of deterministic
-seasonality) and if <code>test="ocsb"</code>, the Osborn-Chui-Smith-Birchenhall
-(1988) test is used (with null hypothesis that a seasonal unit root exists).</p>
+number of differences required to fail the test at the level <code>alpha</code>.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Canova F and Hansen BE (1995) "Are Seasonal Patterns Constant
-over Time? A Test for Seasonal Stability", <em>Journal of Business and
-Economic Statistics</em> <b>13</b>(3):237-252.</p>
-<p>Dickey DA and Fuller WA (1979), "Distribution of the Estimators for
+    <p>Dickey DA and Fuller WA (1979), "Distribution of the Estimators for
 Autoregressive Time Series with a Unit Root", <em>Journal of the American
 Statistical Association</em> <b>74</b>:427-431.</p>
 <p>Kwiatkowski D, Phillips PCB, Schmidt P and Shin Y (1992) "Testing the Null
 Hypothesis of Stationarity against the Alternative of a Unit Root",
 <em>Journal of Econometrics</em> <b>54</b>:159-178.</p>
-<p>Osborn DR, Chui APL, Smith J, and Birchenhall CR (1988) "Seasonality and the
-order of integration for consumption", <em>Oxford Bulletin of Economics
-and Statistics</em> <b>50</b>(4):361-377.</p>
 <p>Osborn, D.R. (1990) "A survey of seasonality in UK macroeconomic variables",
 <em>International Journal of Forecasting</em>, <b>6</b>:327-336.</p>
+<p>Phillips, P.C.B. and Perron, P. (1988) "Testing for a unit root in time series regression",
+<em>Biometrika</em>, <b>72</b>(2), 335-346.</p>
 <p>Said E and Dickey DA (1984), "Testing for Unit Roots in Autoregressive
 Moving Average Models of Unknown Order", <em>Biometrika</em>
 <b>71</b>:599-607.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='auto.arima.html'>auto.arima</a></code></p>
+    <p><code><a href='auto.arima.html'>auto.arima</a></code> and <code>ndiffs</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>ndiffs</span>(<span class='no'>WWWusage</span>)</div><div class='output co'>#&gt; [1] 1</div><div class='input'><span class='fu'>ndiffs</span>(<span class='fu'>diff</span>(<span class='fu'>log</span>(<span class='no'>AirPassengers</span>),<span class='fl'>12</span>))</div><div class='output co'>#&gt; [1] 1</div><div class='input'>
-<span class='fu'>nsdiffs</span>(<span class='fu'>log</span>(<span class='no'>AirPassengers</span>))</div><div class='output co'>#&gt; [1] 1</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -198,7 +187,7 @@ Moving Average Models of Unknown Order", <em>Biometrika</em>
 
     <h2>Author</h2>
     
-Rob J Hyndman and Slava Razbash
+Rob J Hyndman, Slava Razbash &amp; Mitchell O'Hara-Wild
 
   </div>
 </div>

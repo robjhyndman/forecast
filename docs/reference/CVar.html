@@ -18,6 +18,8 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -25,6 +27,19 @@
 <script src="../pkgdown.js"></script>
   
   
+<meta property="og:title" content="k-fold Cross-Validation applied to an autoregressive model — CVar" />
+
+<meta property="og:description" content="CVar computes the errors obtained by applying an autoregressive
+modelling function to subsets of the time series y using k-fold
+cross-validation as described in Bergmeir, Hyndman and Koo (2015). It also
+applies a Ljung-Box test to the residuals. If this test is significant
+(see returned pvalue), there is serial correlation in the residuals and the
+model can be considered to be underfitting the data. In this case, the
+cross-validated errors can underestimate the generalization error and should
+not be used." />
+
+<meta property="og:image" content="/logo.png" />
+<meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -155,16 +170,16 @@ working paper 10/15.
 #&gt; Call:   CVar(y = lynx, k = 5, lambda = 0.15)
 #&gt; 
 #&gt; 5-fold cross-validation
-#&gt;                    Mean          SD
-#&gt; ME        -117.82171245 207.4297895
-#&gt; RMSE       865.97203798 245.8837532
-#&gt; MAE        578.72048791 190.6054503
-#&gt; MPE        -27.84715313  35.0711508
-#&gt; MAPE        60.02540438  27.5811199
-#&gt; ACF1        -0.01593769   0.2704894
-#&gt; Theil's U    0.90977105   0.1692362
+#&gt;                   Mean           SD
+#&gt; ME        -47.94024811 168.45264852
+#&gt; RMSE      941.32651587 312.32265027
+#&gt; MAE       590.53751580 186.42613185
+#&gt; MPE       -18.38857601  11.25029762
+#&gt; MAPE       53.09867080  13.27799759
+#&gt; ACF1        0.03351767   0.18600230
+#&gt; Theil's U   0.74429498   0.09406432
 #&gt; 
-#&gt; p-value of Ljung-Box test of residuals is  0.395016 
+#&gt; p-value of Ljung-Box test of residuals is  0.7000251 
 #&gt; if this value is significant (&lt;0.05),
 #&gt; the result of the cross-validation should not be used
 #&gt; as the model is underfitting the data.</div><div class='input'><span class='fu'>print</span>(<span class='no'>modelcv</span>$<span class='no'>fold1</span>)</div><div class='output co'>#&gt; $model
@@ -176,11 +191,11 @@ working paper 10/15.
 #&gt; a 11-6-1 network with 79 weights
 #&gt; options were - linear output units 
 #&gt; 
-#&gt; sigma^2 estimated as 0.0949
+#&gt; sigma^2 estimated as 0.09849
 #&gt; 
 #&gt; $accuracy
-#&gt;                 ME     RMSE      MAE       MPE     MAPE      ACF1 Theil's U
-#&gt; Test set -352.3341 1070.599 760.3141 -89.87951 109.2968 0.3525681 0.9065455
+#&gt;               ME     RMSE      MAE       MPE     MAPE      ACF1 Theil's U
+#&gt; Test set 54.5283 669.1654 393.0634 -28.47463 53.24511 0.1040563 0.6553205
 #&gt; 
 #&gt; $testfit
 #&gt; Time Series:
@@ -188,28 +203,28 @@ working paper 10/15.
 #&gt; End = 1934 
 #&gt; Frequency = 1 
 #&gt;   [1]         NA         NA         NA         NA         NA         NA
-#&gt;   [7]         NA         NA         NA         NA         NA  101.75376
-#&gt;  [13]   75.63250  279.18481  401.45385 2260.07758 2776.36220 3301.93016
-#&gt;  [19] 2091.84926  422.70874  152.82627   49.92780   66.70592  212.78961
-#&gt;  [25]  539.00780 1208.53829 2186.79354 2651.64690 1627.16474   97.54252
-#&gt;  [31]  331.27797  262.02623  380.68528  708.80436 1615.80876 2810.97789
-#&gt;  [37] 2986.69049 1465.02411  670.90534   48.18993  264.94739  244.84388
-#&gt;  [43]  537.02595 1568.35232 2448.78899 6631.84452 5743.22310  696.78049
-#&gt;  [49]   91.22638  406.82358  367.96936  777.19384 1595.11859 1703.15883
-#&gt;  [55] 2280.19615 1493.19194  746.90906  309.70980   49.57798  235.10176
-#&gt;  [61]  450.93504  772.98062 2005.29294 4215.68561 4349.51306 2599.72257
-#&gt;  [67]  389.46891   71.27874   56.42066   50.12881   62.15109  187.23463
-#&gt;  [73]  384.90933 1281.58867 3636.50640 3465.97163  602.56479  108.39331
-#&gt;  [79]  151.22400  352.06409  776.84117 1330.62400 1303.26188 6720.89559
-#&gt;  [85] 3717.38720 1927.20156 1354.89526  667.76736  369.26665  784.32177
-#&gt;  [91] 1398.79763 2679.84181 3669.54660 3033.69807 2957.75479 3378.76086
-#&gt;  [97]  692.67101   80.35001   82.21984  115.48522  224.56574  404.59910
-#&gt; [103] 1171.73316 2505.62325 2304.73469 2913.80476 1444.11455  516.79534
-#&gt; [109]  361.01307  488.04164 1002.86808 1610.44373 2586.07776 3344.61237
+#&gt;   [7]         NA         NA         NA         NA         NA  105.21504
+#&gt;  [13]  173.53080  286.81383  427.76973 2237.13163 2757.61403 3238.53147
+#&gt;  [19] 3444.50705  513.36004  156.14849   46.60305   69.77331  205.89523
+#&gt;  [25]  534.67536 1045.54882 2166.50062 2809.28424  964.44677  352.69546
+#&gt;  [31]  355.51756  242.29041  348.68280  745.43335 1287.35967 2906.52296
+#&gt;  [37] 3047.12261 1845.34837  715.91621  194.66933  257.27823  217.94619
+#&gt;  [43]  445.70225 1513.70832 3199.27674 6176.38809 4333.43277  719.76326
+#&gt;  [49]  176.42534  418.40068  360.08275  487.32443 1591.68267 1767.98777
+#&gt;  [55] 2327.85152 1477.34294  739.16119  294.98107  203.57957  226.52017
+#&gt;  [61]  180.21405  941.25544 1943.38268 3014.77741 4223.73641 4575.36955
+#&gt;  [67]  419.77833  180.02903   39.17359   52.26742   63.24813  184.93638
+#&gt;  [73]  405.95237  614.39117 3742.22197 3384.20758  587.25797  104.19192
+#&gt;  [79]  158.04398  141.19296  751.69124 1316.49408 3356.31448 6748.68018
+#&gt;  [85] 6171.41779 3721.28521 1737.52499  365.17075  376.97026  815.86490
+#&gt;  [91] 1354.86611 2745.67193 3713.46794 3042.56180 3087.87837 3692.32603
+#&gt;  [97]  689.80358   81.77819  120.49390  107.47938  220.57929  431.06549
+#&gt; [103] 1133.61505 2435.64993 3405.33786 3039.67200  743.28852  520.01698
+#&gt; [109]  452.49698  663.33892 1028.01775 1588.04980 2667.86157 3455.24028
 #&gt; 
 #&gt; $testset
-#&gt;  [1]   4   9  10  13  26  29  30  38  40  45  47  49  59  64  69  83  85  86  87
-#&gt; [20]  88 105 109 110
+#&gt;  [1]   3   5   8  10  19  20  35  38  39  40  43  49  52  55  61  62  66  68  74
+#&gt; [20]  80  99 107 110
 #&gt; </div><div class='input'>
 <span class='fu'>plot</span>(<span class='no'>lynx</span>)</div><div class='input'><span class='fu'>lines</span>(<span class='no'>modelcv</span>$<span class='no'>testfit</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>"green"</span>)</div><div class='input'><span class='fu'>lines</span>(<span class='no'>modelcv</span>$<span class='no'>residuals</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>"red"</span>)</div><div class='img'><img src='CVar-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'><a href='Acf.html'>Acf</a></span>(<span class='no'>modelcv</span>$<span class='no'>residuals</span>)</div><div class='img'><img src='CVar-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Interpolate missing values in a time series — na.interp • forecast</title>
+<title>Osborn, Chui, Smith, and Birchenhall Test for Seasonal Unit Roots — ocsb.test • forecast</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -27,10 +27,9 @@
 <script src="../pkgdown.js"></script>
   
   
-<meta property="og:title" content="Interpolate missing values in a time series — na.interp" />
+<meta property="og:title" content="Osborn, Chui, Smith, and Birchenhall Test for Seasonal Unit Roots — ocsb.test" />
 
-<meta property="og:description" content="Uses linear interpolation for non-seasonal series and a periodic stl
-decomposition with seasonal series to replace missing values." />
+<meta property="og:description" content="An implementation of the Osborn, Chui, Smith, and Birchenhall (OCSB) test." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -89,49 +88,67 @@ decomposition with seasonal series to replace missing values." />
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Interpolate missing values in a time series</h1>
+    <h1>Osborn, Chui, Smith, and Birchenhall Test for Seasonal Unit Roots</h1>
     </div>
 
     
-    <p>Uses linear interpolation for non-seasonal series and a periodic stl
-decomposition with seasonal series to replace missing values.</p>
+    <p>An implementation of the Osborn, Chui, Smith, and Birchenhall (OCSB) test.</p>
     
 
-    <pre class="usage"><span class='fu'>na.interp</span>(<span class='no'>x</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>ocsb.test</span>(<span class='no'>x</span>, <span class='kw'>lag.method</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"fixed"</span>, <span class='st'>"AIC"</span>, <span class='st'>"BIC"</span>, <span class='st'>"AICc"</span>), <span class='kw'>maxlag</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>time series</p></td>
+      <td><p>a univariate seasonal time series.</p></td>
     </tr>
     <tr>
-      <th>lambda</th>
-      <td><p>Box-Cox decomposition parameter. If <code>NULL</code>, no transformation
-is used. If <code>lambda="auto"</code>, a transformation is automatically selected. If
-lambda takes a numerical value, it is used as the parameter of the Box-Cox transformation.</p></td>
+      <th>lag.method</th>
+      <td><p>a character specifying the lag order selection method.</p></td>
+    </tr>
+    <tr>
+      <th>maxlag</th>
+      <td><p>the maximum lag order to be considered by <code>lag.method</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Time series</p>
+    <p>ocsb.test returns a list of class "OCSBtest" with the following components:
+* statistics the value of the test statistics.
+* pvalues the p-values for each test statistics.
+* method a character string describing the type of test.
+* data.name a character string giving the name of the data.
+* fitted.model	the fitted regression model.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>A more general and flexible approach is available using <code>na.approx</code> in
-the <code>zoo</code> package.</p>
+    <p>The regression equation may include lags of the dependent variable. When lag.method = "fixed", the lag order is fixed to maxlag; otherwise, maxlag is the maximum number of lags considered in a lag selection procedure that minimises the lag.method criterion, which can be AIC or BIC or corrected AIC, AICc, obtained as AIC + (2k(k+1))/(n-k-1), where k is the number of parameters and n is the number of available observations in the model.</p>
+<p>Critical values for the test are based on simulations, which has been smoothed over to produce critical values for all seasonal periods.</p>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Osborn DR, Chui APL, Smith J, and Birchenhall CR (1988) "Seasonality and the
+order of integration for consumption", <em>Oxford Bulletin of Economics
+and Statistics</em> <b>50</b>(4):361-377.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='tsoutliers.html'>tsoutliers</a></code></p>
+    <p><code><a href='nsdiffs.html'>nsdiffs</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='fu'>data</span>(<span class='no'>gold</span>)
-<span class='fu'>plot</span>(<span class='fu'>na.interp</span>(<span class='no'>gold</span>))</div><div class='img'><img src='na.interp-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>ocsb.test</span>(<span class='no'>AirPassengers</span>)</div><div class='output co'>#&gt; 
+#&gt; 	OCSB test
+#&gt; 
+#&gt; data:  AirPassengers
+#&gt; 
+#&gt; Test statistic: 1.5188, 5% critical value: -1.803
+#&gt; alternative hypothesis: stationary
+#&gt; 
+#&gt; Lag order 0 was selected using fixed</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -143,14 +160,12 @@ the <code>zoo</code> package.</p>
 
       <li><a href="#details">Details</a></li>
 
+      <li><a href="#references">References</a></li>
+
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
-
-    <h2>Author</h2>
-    
-Rob J Hyndman
 
   </div>
 </div>

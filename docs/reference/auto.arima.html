@@ -18,6 +18,8 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -25,6 +27,14 @@
 <script src="../pkgdown.js"></script>
   
   
+<meta property="og:title" content="Fit best ARIMA model to univariate time series — auto.arima" />
+
+<meta property="og:description" content="Returns best ARIMA model according to either AIC, AICc or BIC value. The
+function conducts a search over possible model within the order constraints
+provided." />
+
+<meta property="og:image" content="/logo.png" />
+<meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -95,9 +105,9 @@ provided.</p>
   <span class='kw'>seasonal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>ic</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"aicc"</span>, <span class='st'>"aic"</span>, <span class='st'>"bic"</span>), <span class='kw'>stepwise</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>trace</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>approximation</span> <span class='kw'>=</span> (<span class='fu'>length</span>(<span class='no'>x</span>) <span class='kw'>&gt;</span> <span class='fl'>150</span> <span class='kw'>|</span> <span class='fu'>frequency</span>(<span class='no'>x</span>) <span class='kw'>&gt;</span> <span class='fl'>12</span>),
   <span class='kw'>truncate</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>xreg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"kpss"</span>, <span class='st'>"adf"</span>, <span class='st'>"pp"</span>),
-  <span class='kw'>seasonal.test</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ocsb"</span>, <span class='st'>"ch"</span>), <span class='kw'>allowdrift</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>allowmean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num.cores</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>seasonal.test</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"seas"</span>, <span class='st'>"ocsb"</span>, <span class='st'>"hegy"</span>, <span class='st'>"ch"</span>), <span class='kw'>allowdrift</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>allowmean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>num.cores</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -213,7 +223,7 @@ details.</p></td>
     <tr>
       <th>seasonal.test</th>
       <td><p>This determines which seasonal unit root test is used.
-See <code><a href='ndiffs.html'>nsdiffs</a></code> for details.</p></td>
+See <code><a href='nsdiffs.html'>nsdiffs</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>allowdrift</th>

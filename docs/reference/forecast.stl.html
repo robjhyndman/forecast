@@ -18,6 +18,8 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -25,6 +27,14 @@
 <script src="../pkgdown.js"></script>
   
   
+<meta property="og:title" content="Forecasting using stl objects — forecast.stl" />
+
+<meta property="og:description" content="Forecasts of STL objects are obtained by applying a non-seasonal forecasting
+method to the seasonally adjusted data and re-seasonalizing using the last
+year of the seasonal component." />
+
+<meta property="og:image" content="/logo.png" />
+<meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -96,7 +106,7 @@ year of the seasonal component.</p>
   <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>xreg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>newxreg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>allow.multiplicative.trend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
-<span class='fu'>stlm</span>(<span class='no'>y</span>, <span class='kw'>s.window</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ets"</span>, <span class='st'>"arima"</span>),
+<span class='fu'>stlm</span>(<span class='no'>y</span>, <span class='kw'>s.window</span> <span class='kw'>=</span> <span class='fl'>13</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ets"</span>, <span class='st'>"arima"</span>),
   <span class='kw'>modelfunction</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>etsmodel</span> <span class='kw'>=</span> <span class='st'>"ZZN"</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>xreg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>allow.multiplicative.trend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>, <span class='no'>...</span>)
@@ -106,7 +116,7 @@ year of the seasonal component.</p>
   <span class='kw'>fan</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='no'>object</span>$<span class='no'>lambda</span>, <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>newxreg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>allow.multiplicative.trend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
-<span class='fu'>stlf</span>(<span class='no'>y</span>, <span class='kw'>h</span> <span class='kw'>=</span> <span class='fu'>frequency</span>(<span class='no'>x</span>) * <span class='fl'>2</span>, <span class='kw'>s.window</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>t.window</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+<span class='fu'>stlf</span>(<span class='no'>y</span>, <span class='kw'>h</span> <span class='kw'>=</span> <span class='fu'>frequency</span>(<span class='no'>x</span>) * <span class='fl'>2</span>, <span class='kw'>s.window</span> <span class='kw'>=</span> <span class='fl'>13</span>, <span class='kw'>t.window</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
