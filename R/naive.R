@@ -8,6 +8,7 @@ lagwalk <- function(y, lag=1, h=10, drift=FALSE,
   if (!is.null(lambda)) {
     origy <- y
     y <- BoxCox(y, lambda)
+    lambda <- attr(y, "lambda")
   }
 
   # Fit equivalent ARIMA model

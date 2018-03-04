@@ -93,6 +93,7 @@ bld.mbb.bootstrap <- function(x, num, block_size=NULL) {
       lambda <- 1
     }
     x.bc <- BoxCox(x, lambda)
+    lambda <- attr(x.bc, "lambda")
 
     if (freq > 1) {
       # STL decomposition

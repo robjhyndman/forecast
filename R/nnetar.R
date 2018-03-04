@@ -151,6 +151,7 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   # Transform data
   if (!is.null(lambda) && !constant_data) {
     xx <- BoxCox(x, lambda)
+    lambda <- attr(xx, "lambda")
   } else {
     xx <- x
   }
@@ -449,6 +450,7 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI
   xxreg <- xreg
   if (!is.null(lambda)) {
     xx <- BoxCox(xx, lambda)
+    lambda <- attr(xx, "lambda")
   }
   # Check and apply scaling of fitted model
   if (!is.null(object$scalex)) {

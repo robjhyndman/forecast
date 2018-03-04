@@ -161,6 +161,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
 
   if (!is.null(lambda)) {
     x <- BoxCox(x, lambda)
+    lambda <- attr(x, "lambda")
     attr(lambda, "biasadj") <- biasadj
   }
 

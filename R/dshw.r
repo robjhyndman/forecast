@@ -133,6 +133,7 @@ dshw <- function(y, period1=NULL, period2=NULL, h=2 * max(period1, period2),
   if (!is.null(lambda)) {
     origy <- y
     y <- BoxCox(y, lambda)
+    lambda <- attr(y, "lambda")
   }
 
   if (!is.null(model)) {

@@ -29,6 +29,7 @@ fitPreviousBATSModel <- function(y, model, biasadj=FALSE) {
   y.touse <- y
   if (!is.null(lambda)) {
     y.touse <- BoxCox(y, lambda = lambda)
+    lambda <- attr(y.touse, "lambda")
   }
   fitted.values.and.errors <- calcModel(y.touse, model$seed.states, F, g$g, w)
   e <- fitted.values.and.errors$e
@@ -106,6 +107,7 @@ fitSpecificBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.peri
         lambda <- BoxCox.lambda(y, lower = 0, upper = 1.5)
       }
       y.transformed <- BoxCox(y, lambda = lambda)
+      lambda <- attr(y.transformed, "lambda")
     } else { # the "else" is not needed at the moment
       lambda <- NULL
     }
@@ -166,6 +168,7 @@ fitSpecificBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.peri
   ## Set up matrices to find the seed states
   if (use.box.cox) {
     y.transformed <- BoxCox(y, lambda = lambda)
+    lambda <- attr(y.transformed, "lambda")
     # x.nought <- BoxCox(x.nought, lambda=lambda)
     y.tilda <- calcModel(y.transformed, x.nought, F, g$g, w)$e
   } else {
@@ -241,6 +244,7 @@ fitSpecificBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.peri
     ma.coefs <- paramz$ma.coefs
     # Transform the seed states
     x.nought <- BoxCox(opt.env$x.nought.untransformed, lambda = lambda)
+    lambda <- attr(x.nought, "lambda")
 
     ## Calculate the variance:
     # 1. Re-set up the matrices
@@ -251,6 +255,7 @@ fitSpecificBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.peri
     F <- makeFMatrix(alpha = alpha, beta = beta.v, small.phi = small.phi, seasonal.periods = seasonal.periods, gamma.bold.matrix = g$gamma.bold.matrix, ar.coefs = ar.coefs, ma.coefs = ma.coefs)
     # 2. Calculate!
     y.transformed <- BoxCox(y, lambda = lambda)
+    lambda <- attr(y.transformed, "lambda")
     fitted.values.and.errors <- calcModel(y.transformed, x.nought, F, g$g, w)
     e <- fitted.values.and.errors$e
     variance <- sum((e * e)) / length(y)
@@ -354,6 +359,7 @@ calcLikelihood <- function(param.vector, opt.env, use.beta, use.small.phi, seaso
     ma.coefs <- NULL
   }
   x.nought <- BoxCox(opt.env$x.nought.untransformed, lambda = box.cox.parameter)
+  lambda <- attr(x.nought, "lambda")
   # w <- makeWMatrix(small.phi=small.phi, seasonal.periods=seasonal.periods, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
   # w <- .Call("makeBATSWMatrix", smallPhi_s = small.phi, sPeriods_s = seasonal.periods, arCoefs_s = ar.coefs, maCoefs_s = ma.coefs, PACKAGE = "forecast")
   .Call("updateWtransposeMatrix", wTranspose_s = opt.env$w.transpose, smallPhi_s = small.phi, tau_s = as.integer(tau), arCoefs_s = ar.coefs, maCoefs_s = ma.coefs, p_s = as.integer(p), q_s = as.integer(q), PACKAGE = "forecast")
@@ -367,6 +373,7 @@ calcLikelihood <- function(param.vector, opt.env, use.beta, use.small.phi, seaso
   .Call("updateFMatrix", opt.env$F, small.phi, alpha, beta.v, opt.env$gamma.bold.matrix, ar.coefs, ma.coefs, tau, PACKAGE = "forecast")
 
   mat.transformed.y <- BoxCox(opt.env$y, box.cox.parameter)
+  lambda <- attr(mat.transformed.y, "lambda")
   n <- ncol(opt.env$y)
 
   .Call("calcBATSFaster", ys = mat.transformed.y, yHats = opt.env$y.hat, wTransposes = opt.env$w.transpose, Fs = opt.env$F, xs = opt.env$x, gs = opt.env$g, es = opt.env$e, xNought_s = x.nought, sPeriods_s = seasonal.periods, betaV = beta.v, tau_s = as.integer(tau), p_s = as.integer(p), q_s = as.integer(q), PACKAGE = "forecast")
