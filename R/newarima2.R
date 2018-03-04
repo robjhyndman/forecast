@@ -8,15 +8,12 @@
 #' If you are analysing just one time series, and can afford to take some more time, it
 #' is recommended that you set \code{stepwise=FALSE} and \code{approximation=FALSE}.
 #'
-#' The number of seasonal differences is sometimes poorly chosen. If your data shows strong
-#' seasonality, try setting \code{D=1} rather than relying on the automatic selection of \code{D}.
-#'
 #' Non-stepwise selection can be slow, especially for seasonal data. The stepwise
-#' algorithm outlined in Hyndman and Khandakar (2008) is used except that the default
-#' method for selecting seasonal differences is now the OCSB test rather than
-#' the Canova-Hansen test. There are also some other minor variations to the
-#' algorithm described in Hyndman and Khandakar (2008).
-#'
+#' algorithm outlined in Hyndman & Khandakar (2008) is used except that the default
+#' method for selecting seasonal differences is now based on an estimate of seasonal
+#' strength (Wang, Smith & Hyndman, 2006) rather than the Canova-Hansen test. 
+#' There are also some other minor variations to the algorithm described in 
+#' Hyndman and Khandakar (2008).
 #'
 #' @param y a univariate time series
 #' @param d Order of first-differencing. If missing, will choose a value based
@@ -79,9 +76,13 @@
 #' @return Same as for \code{\link{Arima}}
 #' @author Rob J Hyndman
 #' @seealso \code{\link{Arima}}
-#' @references Hyndman, R.J. and Khandakar, Y. (2008) "Automatic time series
+#' @references Hyndman, RJ and Khandakar, Y (2008) "Automatic time series
 #' forecasting: The forecast package for R", \emph{Journal of Statistical
 #' Software}, \bold{26}(3).
+#' 
+#' Wang, X, Smith, KA, Hyndman, RJ (2006) "Characteristic-based clustering
+#' for time series data", \emph{Data Mining and Knowledge Discovery},
+#' \bold{13}(3), 335-364.
 #' @keywords ts
 #' @examples
 #' fit <- auto.arima(WWWusage)
