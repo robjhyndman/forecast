@@ -17,8 +17,9 @@ lambda takes a numerical value, it is used as the parameter of the Box-Cox trans
 Time series
 }
 \description{
-Uses linear interpolation for non-seasonal series and a periodic stl
-decomposition with seasonal series to replace missing values.
+Uses linear interpolation for non-seasonal series. For seasonal series, a 
+robust STL decomposition is used. A linear interpolation is applied to the 
+seasonally adjusted data, and then the seasonal component is added back.
 }
 \details{
 A more general and flexible approach is available using \code{na.approx} in

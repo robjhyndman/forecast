@@ -51,3 +51,4 @@ BugReports: https://github.com/robjhyndman/forecast/issues
 License: GPL-3
 URL: http://pkg.robjhyndman.com/forecast, https://github.com/robjhyndman/forecast
 VignetteBuilder: knitr
+RoxygenNote: 6.0.1.9000

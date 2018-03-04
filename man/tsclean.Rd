@@ -12,16 +12,17 @@ tsclean(x, replace.missing = TRUE, lambda = NULL)
 \item{replace.missing}{If TRUE, it not only replaces outliers, but also
 interpolates missing values}
 
-\item{lambda}{a numeric value giving the Box-Cox transformation parameter}
+\item{lambda}{Box-Cox decomposition parameter. If \code{NULL}, no transformation
+is used. If \code{lambda="auto"}, a transformation is automatically selected. If
+lambda takes a numerical value, it is used as the parameter of the Box-Cox transformation.}
 }
 \value{
 Time series
 }
 \description{
-Uses supsmu for non-seasonal series and a periodic stl decomposition with
-seasonal series to identify outliers. To estimate missing values and outlier
-replacements, linear interpolation is used on the (possibly seasonally
-adjusted) series
+Uses supsmu for non-seasonal series and a robust STL decomposition for 
+seasonal series. To estimate missing values and outlier replacements, 
+linear interpolation is used on the (possibly seasonally adjusted) series
 }
 \examples{
 

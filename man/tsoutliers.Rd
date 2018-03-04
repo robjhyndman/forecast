@@ -11,7 +11,7 @@ tsoutliers(x, iterate = 2, lambda = NULL)
 
 \item{iterate}{the number of iteration only for non-seasonal series}
 
-\item{lambda}{Allowing Box-cox transformation}
+\item{lambda}{Allowing Box-Cox transformation}
 }
 \value{
 \item{index}{Indicating the index of outlier(s)}
