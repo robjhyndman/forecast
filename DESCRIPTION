@@ -20,16 +20,16 @@ Imports:
   timeDate,
   tseries,
   urca,
-  uroot
-  zoo,
+  uroot,
+  zoo
 Suggests:
   desc,
   expsmooth,
   knitr,
-  purrr
+  purrr,
   rmarkdown,
   rticles,
-  testthat,
+  testthat
 LinkingTo:
   Rcpp (>= 0.11.0),
   RcppArmadillo (>= 0.2.35)
