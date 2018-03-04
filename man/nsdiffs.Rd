@@ -33,11 +33,11 @@ seasonal differences required for time series \code{x} to be made stationary
 
 Several different tests are available:
 \itemize{
-\item If \code{test="seas"} (default), a heuristic of seasonal strength is used, where differencing is
-selected if the seasonal_strength (Hyndman, Wang and Laptev, 2015) exceeds 0.64 (based on M3 auto.arima performance).
+\item If \code{test="seas"} (default), a measure of seasonal strength is used, where differencing is
+selected if the seasonal strength (Wang, Smith & Hyndman, 2006) exceeds 0.64 (based on M3 auto.arima performance).
 \item If \code{test="ch"}, the Canova-Hansen (1995) test is used
 (with null hypothesis of deterministic seasonality)
-\item If \code{test="hegy"}, the Hylleberg, Engle, Granger and Yoo (1990) test is used.
+\item If \code{test="hegy"}, the Hylleberg, Engle, Granger & Yoo (1990) test is used.
 \item If \code{test="ocsb"}, the Osborn-Chui-Smith-Birchenhall
 (1988) test is used (with null hypothesis that a seasonal unit root exists).
 }
@@ -47,9 +47,9 @@ nsdiffs(AirPassengers)
 
 }
 \references{
-Hyndman RJ, Wang E, and Laptev N (2015) "Large-scale unusual time series
-detection", In \emph{Data Mining Workshop (ICDMW), 2015 IEEE International
-Conference}, pp. 1616-1619.
+Wang, X, Smith, KA, Hyndman, RJ (2006) "Characteristic-based clustering
+for time series data", \emph{Data Mining and Knowledge Discovery},
+\bold{13}(3), 335-364.
 
 Osborn DR, Chui APL, Smith J, and Birchenhall CR (1988) "Seasonality and the
 order of integration for consumption", \emph{Oxford Bulletin of Economics
