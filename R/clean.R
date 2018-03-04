@@ -4,14 +4,15 @@
 # na.interp fills in missing values
 # Uses linear interpolation for non-seasonal series
 # Adds seasonality based on a periodic stl decomposition with seasonal series
-# Argument lambda allows for Box-cox transformation
+# Argument lambda allows for Box-Cox transformation
 
 
 
 #' Interpolate missing values in a time series
 #'
-#' Uses linear interpolation for non-seasonal series and a periodic stl
-#' decomposition with seasonal series to replace missing values.
+#' Uses linear interpolation for non-seasonal series. For seasonal series, a 
+#' robust STL decomposition is used. A linear interpolation is applied to the 
+#' seasonally adjusted data, and then the seasonal component is added back.
 #'
 #' A more general and flexible approach is available using \code{na.approx} in
 #' the \code{zoo} package.
@@ -112,16 +113,16 @@ na.interp <- function(x, lambda=NULL) {
 
 #' Identify and replace outliers and missing values in a time series
 #'
-#' Uses supsmu for non-seasonal series and a periodic stl decomposition with
-#' seasonal series to identify outliers. To estimate missing values and outlier
-#' replacements, linear interpolation is used on the (possibly seasonally
-#' adjusted) series
-#'
+#' Uses supsmu for non-seasonal series and a robust STL decomposition for 
+#' seasonal series. To estimate missing values and outlier replacements, 
+#' linear interpolation is used on the (possibly seasonally adjusted) series
 #'
 #' @param x time series
 #' @param replace.missing If TRUE, it not only replaces outliers, but also
 #' interpolates missing values
-#' @param lambda a numeric value giving the Box-Cox transformation parameter
+#' @param lambda Box-Cox decomposition parameter. If \code{NULL}, no transformation
+#' is used. If \code{lambda="auto"}, a transformation is automatically selected. If
+#' lambda takes a numerical value, it is used as the parameter of the Box-Cox transformation.
 #' @return Time series
 #' @author Rob J Hyndman
 #' @seealso \code{\link[forecast]{na.interp}},
@@ -152,7 +153,7 @@ tsclean <- function(x, replace.missing=TRUE, lambda = NULL) {
 #'
 #' @param x time series
 #' @param iterate the number of iteration only for non-seasonal series
-#' @param lambda Allowing Box-cox transformation
+#' @param lambda Allowing Box-Cox transformation
 #' @return \item{index}{Indicating the index of outlier(s)}
 #' \item{replacement}{Suggested numeric values to replace identified outliers}
 #' @author Rob J Hyndman
