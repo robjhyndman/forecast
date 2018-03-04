@@ -21,6 +21,7 @@ HoltWintersZZ <- function(x,
 
   if (!is.null(lambda)) {
     x <- BoxCox(x, lambda)
+    lambda <- attr(x, "lambda")
   }
 
   if (is.null(phi) || !is.numeric(phi)) {

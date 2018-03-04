@@ -12,7 +12,8 @@ InvBoxCox(x, lambda, biasadj = FALSE, fvar = NULL)
 \arguments{
 \item{x}{a numeric vector or time series of class \code{ts}.}
 
-\item{lambda}{transformation parameter.}
+\item{lambda}{transformation parameter. If \code{lambda} = "auto", then 
+the transformation parameter lambda is chosen using BoxCox.lambda.}
 
 \item{biasadj}{Use adjusted back-transformed mean for Box-Cox
 transformations. If TRUE, point forecasts and fitted values are mean

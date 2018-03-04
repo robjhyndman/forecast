@@ -374,6 +374,7 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
 
   if (!is.null(lambda)) {
     x <- BoxCox(x, lambda)
+    lambda <- attr(x, "lambda")
   }
 
   n <- length(x)
@@ -613,6 +614,7 @@ simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL,
   xx <- object$x
   if (!is.null(lambda)) {
     xx <- BoxCox(xx, lambda)
+    lambda <- attr(xx, "lambda")
   }
   # Check and apply scaling of fitted model
   if (!is.null(object$scalex)) {

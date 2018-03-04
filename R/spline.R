@@ -115,6 +115,7 @@ splinef <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FA
   if (!is.null(lambda)) {
     origx <- x
     x <- BoxCox(x, lambda)
+    lambda <- attr(x, "lambda")
   }
 
   # Find optimal beta using likelihood approach in Hyndman et al paper.

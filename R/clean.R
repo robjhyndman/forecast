@@ -52,10 +52,8 @@ na.interp <- function(x, lambda=NULL) {
 
   # Transform if requested
   if (!is.null(lambda)) {
-    if (lambda == "auto") {
-      lambda <- BoxCox.lambda(x)
-    }
     x <- BoxCox(x, lambda = lambda)
+    lambda <- attr(x, "lambda")
   }
 
   freq <- frequency(x)
@@ -186,6 +184,7 @@ tsoutliers <- function(x, iterate=2, lambda=NULL) {
   # Transform if requested
   if (!is.null(lambda)) {
     xx <- BoxCox(xx, lambda = lambda)
+    lambda <- attr(xx, "lambda")
   }
 
   # Seasonally adjust data if necessary

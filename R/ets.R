@@ -126,6 +126,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
   }
   if (!is.null(lambda)) {
     y <- BoxCox(y, lambda)
+    lambda <- attr(y, "lambda")
     additive.only <- TRUE
   }
 

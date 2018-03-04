@@ -58,6 +58,7 @@ meanf <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALS
   if (!is.null(lambda)) {
     origx <- x
     x <- BoxCox(x, lambda)
+    lambda <- attr(x, "lambda")
   }
   meanx <- mean(x, na.rm = TRUE)
   fits <- rep(meanx, length(x))
@@ -137,7 +138,8 @@ meanf <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALS
 #' \deqn{f_0(x)=\log(x)}{f(x;0)=log(x)}.
 #'
 #' @param x a numeric vector or time series of class \code{ts}.
-#' @param lambda transformation parameter.
+#' @param lambda transformation parameter. If \code{lambda} = "auto", then 
+#' the transformation parameter lambda is chosen using BoxCox.lambda.
 #' @param biasadj Use adjusted back-transformed mean for Box-Cox
 #' transformations. If TRUE, point forecasts and fitted values are mean
 #' forecast. Otherwise, these points can be considered the median of the
@@ -159,6 +161,9 @@ meanf <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALS
 #'
 #' @export
 BoxCox <- function(x, lambda) {
+  if (lambda == "auto") {
+    lambda <- BoxCox.lambda(x)
+  }
   if (lambda < 0) {
     x[x < 0] <- NA
   }
@@ -170,6 +175,7 @@ BoxCox <- function(x, lambda) {
   if (!is.null(colnames(x))) {
     colnames(out) <- colnames(x)
   }
+  attr(out, "lambda") <- lambda
   return(out)
 }
 

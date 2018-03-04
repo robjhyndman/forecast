@@ -131,6 +131,7 @@ arfima <- function(y, drange = c(0, 0.5), estim = c("mle", "ls"), model = NULL, 
   orig.x <- x
   if (!is.null(lambda)) {
     x <- BoxCox(x, lambda)
+    lambda <- attr(x, "lambda")
   }
 
   # Re-fit arfima model
@@ -213,6 +214,7 @@ forecast.fracdiff <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=o
 
   if (!is.null(lambda)) {
     x <- BoxCox(x, lambda)
+    lambda <- attr(x, "lambda")
   }
 
   xx <- na.ends(x)

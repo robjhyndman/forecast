@@ -1,6 +1,6 @@
-# A unit test for biasadj argument
+# A unit test for boxcox transformations
 if (require(testthat)) {
-  context("Tests for biasadj")
+  context("Tests for BoxCox")
 
   test_that("tests for biasadj automatically set based on model fit", {
     # lm
@@ -34,5 +34,21 @@ if (require(testthat)) {
     # tbats
     # fit <- tbats(USAccDeaths, use.box.cox = TRUE, biasadj = TRUE)
     # expect_true(all.equal(forecast(fit), forecast(fit, biasadj=TRUE)))
+  })
+  
+  test_that("tests for automatic lambda selection in BoxCox transformation", {
+    lambda_auto <- BoxCox.lambda(USAccDeaths)
+    
+    # lm
+    fit <- tslm(USAccDeaths ~ trend, lambda = "auto", biasadj = TRUE)
+    expect_equal(as.numeric(fit$lambda), lambda_auto)
+    
+    # ets
+    fit <- ets(USAccDeaths, model = "ANA", lambda = "auto", biasadj = TRUE)
+    expect_equal(as.numeric(fit$lambda), lambda_auto)
+    
+    # arima
+    fit <- Arima(USAccDeaths, order = c(0,1,1), seasonal = c(0,1,1), lambda = "auto", biasadj = TRUE)
+    expect_equal(as.numeric(fit$lambda), lambda_auto)
   })
 }

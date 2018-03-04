@@ -50,10 +50,8 @@ mstl <- function(x, lambda=NULL, iterate=2, s.window=13, ...) {
 
   # Transform if necessary
   if (!is.null(lambda)) {
-    if (lambda == "auto") {
-      lambda <- forecast::BoxCox.lambda(x, ...)
-    }
     x <- forecast::BoxCox(x, lambda = lambda)
+    lambda <- attr(x, "lambda")
   }
   tt <- seq_len(n)
 
@@ -393,6 +391,7 @@ stlm <- function(y, s.window=13, robust=FALSE, method=c("ets", "arima"), modelfu
   origx <- x
   if (!is.null(lambda)) {
     x <- BoxCox(x, lambda)
+    lambda <- attr(x, "lambda")
   }
 
   # Do STL decomposition
@@ -566,6 +565,7 @@ stlf <- function(y, h=frequency(x) * 2, s.window=13, t.window=NULL, robust=FALSE
 
   if (!is.null(lambda)) {
     x <- BoxCox(x, lambda)
+    lambda <- attr(x, "lambda")
   }
 
   fit <- mstl(x, s.window = s.window, t.window = t.window, robust = robust)

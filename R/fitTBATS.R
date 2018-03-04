@@ -50,6 +50,7 @@ fitPreviousTBATSModel <- function(y, model, biasadj=FALSE) {
   y.touse <- y
   if (is.null(lambda) == FALSE) {
     y.touse <- BoxCox(y, lambda = lambda)
+    lambda <- attr(y.touse, "lambda")
   }
 
   ## Calculate the variance:
@@ -133,6 +134,7 @@ fitSpecificTBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.per
         lambda <- BoxCox.lambda(y, lower = 0, upper = 1.5)
       }
       y.transformed <- BoxCox(y, lambda = lambda)
+      lambda <- attr(y.transformed, "lambda")
     } else { # the "else" is not needed at the moment
       lambda <- NULL
     }
@@ -228,6 +230,7 @@ fitSpecificTBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.per
   ## Set up matrices to find the seed states
   if (use.box.cox) {
     y.transformed <- BoxCox(y, lambda = lambda)
+    lambda <- attr(y.transformed, "lambda")
     .Call("calcTBATSFaster", ys = matrix(y.transformed, nrow = 1, ncol = length(y.transformed)), yHats = opt.env$y.hat, wTransposes = opt.env$w.transpose, Fs = opt.env$F, xs = opt.env$x, gs = opt.env$g, es = opt.env$e, xNought_s = x.nought, PACKAGE = "forecast")
     y.tilda <- opt.env$e
   } else {
@@ -288,7 +291,7 @@ fitSpecificTBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.per
     }
     # Transform the seed states
     x.nought <- BoxCox(opt.env$x.nought.untransformed, lambda = lambda)
-
+    lambda <- attr(x.nought, "lambda")
 
 
     ## Calculate the variance:
@@ -302,6 +305,7 @@ fitSpecificTBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.per
 
     # 2. Calculate!
     y.transformed <- BoxCox(y, lambda = lambda)
+    lambda <- attr(y.transformed, "lambda")
     fitted.values.and.errors <- calcModel(y.transformed, x.nought, F, g, w)
     e <- fitted.values.and.errors$e
     variance <- sum((e * e)) / length(y)
@@ -401,6 +405,7 @@ calcLikelihoodTBATS <- function(param.vector, opt.env, use.beta, use.small.phi, 
     q <- 0
   }
   x.nought <- BoxCox(opt.env$x.nought.untransformed, lambda = box.cox.parameter)
+  lambda <- attr(x.nought, "lambda")
 
 
   .Call("updateWtransposeMatrix", wTranspose_s = opt.env$w.transpose, smallPhi_s = small.phi, tau_s = as.integer(tau), arCoefs_s = ar.coefs, maCoefs_s = ma.coefs, p_s = as.integer(p), q_s = as.integer(q), PACKAGE = "forecast")
@@ -413,6 +418,7 @@ calcLikelihoodTBATS <- function(param.vector, opt.env, use.beta, use.small.phi, 
   .Call("updateFMatrix", opt.env$F, small.phi, alpha, beta.v, opt.env$gamma.bold, ar.coefs, ma.coefs, tau, PACKAGE = "forecast")
 
   mat.transformed.y <- BoxCox(opt.env$y, box.cox.parameter)
+  lambda <- attr(mat.transformed.y, "lambda")
   n <- ncol(opt.env$y)
 
 
