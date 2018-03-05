@@ -171,7 +171,7 @@ findfrequency <- function(x) {
 #' @rdname forecast
 #' @export
 forecast.ts <- function(object, h=ifelse(frequency(object) > 1, 2 * frequency(object), 10),
-                        level=c(80, 95), fan=FALSE, robust=FALSE, lambda = NULL, find.frequency = FALSE,
+                        level=c(80, 95), fan=FALSE, robust=FALSE, lambda = NULL, biasadj = FALSE, find.frequency = FALSE,
                         allow.multiplicative.trend=FALSE, model=NULL, ...) {
   n <- length(object)
   if (find.frequency) {
@@ -207,23 +207,23 @@ forecast.ts <- function(object, h=ifelse(frequency(object) > 1, 2 * frequency(ob
   if (n > 3) {
     if (obj.freq < 13) {
       out <- forecast(
-        ets(object, lambda = lambda, allow.multiplicative.trend = allow.multiplicative.trend, ...),
+        ets(object, lambda = lambda, biasadj = biasadj, allow.multiplicative.trend = allow.multiplicative.trend, ...),
         h = h, level = level, fan = fan
       )
     } else if (n > 2 * obj.freq) {
       out <- stlf(
-        object, h = h, level = level, fan = fan, lambda = lambda,
+        object, h = h, level = level, fan = fan, lambda = lambda, biasadj = biasadj,
         allow.multiplicative.trend = allow.multiplicative.trend, ...
       )
     } else {
       out <- forecast(
-        ets(object, model = "ZZN", lambda = lambda, allow.multiplicative.trend = allow.multiplicative.trend, ...),
+        ets(object, model = "ZZN", lambda = lambda, biasadj = biasadj, allow.multiplicative.trend = allow.multiplicative.trend, ...),
         h = h, level = level, fan = fan
       )
     }
   }
   else {
-    out <- meanf(object, h = h, level = level, fan = fan, lambda = lambda, ...)
+    out <- meanf(object, h = h, level = level, fan = fan, lambda = lambda, biasadj = biasadj, ...)
   }
   out$series <- deparse(substitute(object))
   return(out)

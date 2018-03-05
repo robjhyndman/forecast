@@ -133,13 +133,13 @@ forecast.mlm <- function(object, newdata, h=10, level=c(80, 95), fan=FALSE, lamb
 #' @param robust If TRUE, the function is robust to missing values and outliers
 #' in \code{object}. This argument is only valid when \code{object} is of class
 #' \code{mts}.
-#' @param lambda Box-Cox transformation parameter.
 #' @param find.frequency If TRUE, the function determines the appropriate
 #' period, if the data is of unknown period.
 #' @param allow.multiplicative.trend If TRUE, then ETS models with
 #' multiplicative trends are allowed. Otherwise, only additive or no trend ETS
 #' models are permitted.
 #' @param ... Additional arguments affecting the forecasts produced.
+#' @inheritParams tslm
 #' @return An object of class "\code{mforecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the
@@ -167,7 +167,7 @@ forecast.mlm <- function(object, newdata, h=10, level=c(80, 95), fan=FALSE, lamb
 #'
 #' @export
 forecast.mts <- function(object, h=ifelse(frequency(object) > 1, 2 * frequency(object), 10),
-                         level=c(80, 95), fan=FALSE, robust=FALSE, lambda = NULL, find.frequency = FALSE,
+                         level=c(80, 95), fan=FALSE, robust=FALSE, lambda = NULL, biasadj = FALSE, find.frequency = FALSE,
                          allow.multiplicative.trend=FALSE, ...) {
   out <- list(forecast = vector("list", NCOL(object)))
   cl <- match.call()
