@@ -9,9 +9,10 @@ na.interp(x, lambda = NULL)
 \arguments{
 \item{x}{time series}
 
-\item{lambda}{Box-Cox decomposition parameter. If \code{NULL}, no transformation
-is used. If \code{lambda="auto"}, a transformation is automatically selected. If
-lambda takes a numerical value, it is used as the parameter of the Box-Cox transformation.}
+\item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
+then a transformation is automatically selected using \code{BoxCox.lambda}.
+The transformation is ignored if NULL. Otherwise,
+data transformed before model is estimated.}
 }
 \value{
 Time series

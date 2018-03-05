@@ -18,9 +18,7 @@
 #' the \code{zoo} package.
 #'
 #' @param x time series
-#' @param lambda Box-Cox decomposition parameter. If \code{NULL}, no transformation
-#' is used. If \code{lambda="auto"}, a transformation is automatically selected. If
-#' lambda takes a numerical value, it is used as the parameter of the Box-Cox transformation.
+#' @inheritParams forecast
 #' @return Time series
 #' @author Rob J Hyndman
 #' @seealso \code{\link[forecast]{tsoutliers}}
@@ -118,9 +116,7 @@ na.interp <- function(x, lambda=NULL) {
 #' @param x time series
 #' @param replace.missing If TRUE, it not only replaces outliers, but also
 #' interpolates missing values
-#' @param lambda Box-Cox decomposition parameter. If \code{NULL}, no transformation
-#' is used. If \code{lambda="auto"}, a transformation is automatically selected. If
-#' lambda takes a numerical value, it is used as the parameter of the Box-Cox transformation.
+#' @inheritParams forecast
 #' @return Time series
 #' @author Rob J Hyndman
 #' @seealso \code{\link[forecast]{na.interp}},
@@ -151,7 +147,7 @@ tsclean <- function(x, replace.missing=TRUE, lambda = NULL) {
 #'
 #' @param x time series
 #' @param iterate the number of iteration only for non-seasonal series
-#' @param lambda Allowing Box-Cox transformation
+#' @inheritParams forecast
 #' @return \item{index}{Indicating the index of outlier(s)}
 #' \item{replacement}{Suggested numeric values to replace identified outliers}
 #' @author Rob J Hyndman

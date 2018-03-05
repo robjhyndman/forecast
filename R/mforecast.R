@@ -53,17 +53,13 @@ mlmsplit <- function(x, index=NULL) {
 #' for fan plots.
 #' @param h Number of periods for forecasting. Ignored if \code{newdata}
 #' present.
-#' @param lambda Box-Cox transformation parameter. Ignored if \code{NULL}.
-#' Otherwise, forecasts back-transformed via an inverse Box-Cox transformation.
-#' @param biasadj Use adjusted back-transformed mean for Box-Cox
-#' transformations. If TRUE, point forecasts and fitted values are mean
-#' forecast. Otherwise, these points can be considered the median of the
-#' forecast densities.
 #' @param ts If \code{TRUE}, the forecasts will be treated as time series
 #' provided the original data is a time series; the \code{newdata} will be
 #' interpreted as related to the subsequent time periods. If \code{FALSE}, any
 #' time series attributes of the original data will be ignored.
 #' @param ... Other arguments passed to \code{\link[forecast]{forecast.lm}()}.
+#' @inheritParams forecast
+#' 
 #' @return An object of class "\code{mforecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the
@@ -139,7 +135,7 @@ forecast.mlm <- function(object, newdata, h=10, level=c(80, 95), fan=FALSE, lamb
 #' multiplicative trends are allowed. Otherwise, only additive or no trend ETS
 #' models are permitted.
 #' @param ... Additional arguments affecting the forecasts produced.
-#' @inheritParams tslm
+#' @inheritParams forecast
 #' @return An object of class "\code{mforecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the

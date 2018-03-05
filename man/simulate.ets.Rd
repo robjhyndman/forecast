@@ -52,9 +52,10 @@ to length of \code{innov}.}
 of \code{nsim} is set to the number of rows of \code{xreg} if it is not
 \code{NULL}.}
 
-\item{lambda}{Box-Cox parameter. If not \code{NULL}, the simulated series is
-transformed using an inverse Box-Cox transformation with parameter
-\code{lamda}.}
+\item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
+then a transformation is automatically selected using \code{BoxCox.lambda}.
+The transformation is ignored if NULL. Otherwise,
+data transformed before model is estimated.}
 }
 \value{
 An object of class "\code{ts}".

@@ -8,14 +8,13 @@
 #' Optionally, the time series may be Box-Cox transformed before decomposition.
 #' Unlike \code{\link[stats]{stl}}, \code{mstl} is completely automated. 
 #' @param x Univariate time series of class \code{msts} or \code{ts}.
-#' @param lambda Box-Cox decomposition parameter. If \code{NULL}, no transformation
-#' is used. If \code{lambda="auto"}, a transformation is automatically selected. If
-#' lambda takes a numerical value, it is used as the parameter of the Box-Cox transformation.
 #' @param iterate Number of iterations to use to refine the seasonal component.
 #' @param s.window Seasonal windows to be used in the  decompositions. If scalar,
 #' the same value is used for all seasonal components. Otherwise, it should be a vector
 #' of the same length as the number of seasonal components.
 #' @param ... Other arguments are passed to \code{\link[stats]{stl}}.
+#' @inheritParams forecast
+#' 
 #' @seealso \code{\link[stats]{stl}}, \code{link[stats]{supsmu}}
 #' @examples
 #' library(ggplot2)
@@ -202,13 +201,6 @@ autoplot.mstl <- function(object, ...) {
 #' @param level Confidence level for prediction intervals.
 #' @param fan If \code{TRUE}, level is set to seq(51,99,by=3). This is suitable
 #' for fan plots.
-#' @param lambda Box-Cox transformation parameter. Ignored if \code{NULL}.
-#' Otherwise, data transformed before decomposition and back-transformed after
-#' forecasts are computed.
-#' @param biasadj Use adjusted back-transformed mean for Box-Cox
-#' transformations. If TRUE, point forecasts and fitted values are mean
-#' forecast. Otherwise, these points can be considered the median of the
-#' forecast densities.
 #' @param s.window Either the character string ``periodic'' or the span (in
 #' lags) of the loess window for seasonal extraction.
 #' @param t.window A number to control the smoothness of the trend. See
@@ -221,6 +213,8 @@ autoplot.mstl <- function(object, ...) {
 #' @param x Deprecated. Included for backwards compatibility.
 #' @param ... Other arguments passed to \code{forecast.stl},
 #' \code{modelfunction} or \code{forecastfunction}.
+#' @inheritParams forecast
+#' 
 #' @return \code{stlm} returns an object of class \code{stlm}. The other
 #' functions return objects of class \code{forecast}.
 #'

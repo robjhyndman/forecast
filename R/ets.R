@@ -35,13 +35,11 @@
 #' @param phi Value of phi. If NULL, it is estimated.
 #' @param additive.only If TRUE, will only consider additive models. Default is
 #' FALSE.
-#' @param lambda Box-Cox transformation parameter. Ignored if NULL. Otherwise,
+#' @param lambda Box-Cox transformation parameter. If \code{lambda="auto"},
+#' then a transformation is automatically selected using \code{BoxCox.lambda}.
+#' The transformation is ignored if NULL. Otherwise,
 #' data transformed before model is estimated. When \code{lambda} is specified,
 #' \code{additive.only} is set to \code{TRUE}.
-#' @param biasadj Use adjusted back-transformed mean for Box-Cox
-#' transformations. If TRUE, point forecasts and fitted values are mean
-#' forecast. Otherwise, these points can be considered the median of the
-#' forecast densities.
 #' @param lower Lower bounds for the parameters (alpha, beta, gamma, phi)
 #' @param upper Upper bounds for the parameters (alpha, beta, gamma, phi)
 #' @param opt.crit Optimization criterion. One of "mse" (Mean Square Error),
@@ -64,6 +62,8 @@
 #' \code{"ets"}, then the initial values in the model are also not
 #' re-estimated.
 #' @param ... Other undocumented arguments.
+#' @inheritParams forecast
+#' 
 #' @return An object of class "\code{ets}".
 #'
 #' The generic accessor functions \code{fitted.values} and \code{residuals}

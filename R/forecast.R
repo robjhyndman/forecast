@@ -50,7 +50,10 @@ NULL # Instead of "_PACKAGE" to remove inclusion of \alias{forecast}
 #' @param robust If TRUE, the function is robust to missing values and outliers
 #' in \code{object}. This argument is only valid when \code{object} is of class
 #' \code{ts}.
-#' @param lambda Box-Cox transformation parameter.
+#' @param lambda Box-Cox transformation parameter. If \code{lambda="auto"},
+#' then a transformation is automatically selected using \code{BoxCox.lambda}.
+#' The transformation is ignored if NULL. Otherwise,
+#' data transformed before model is estimated.
 #' @param find.frequency If TRUE, the function determines the appropriate
 #' period, if the data is of unknown period.
 #' @param allow.multiplicative.trend If TRUE, then ETS models with
@@ -63,6 +66,8 @@ NULL # Instead of "_PACKAGE" to remove inclusion of \alias{forecast}
 #' \code{\link{stlf}} depending on the frequency of the time series. If
 #' \code{model} is not \code{NULL}, the arguments are passed to the relevant
 #' modelling function.
+#' @inheritParams BoxCox
+#' 
 #' @return An object of class "\code{forecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the
