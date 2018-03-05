@@ -114,10 +114,11 @@ tsCV <- function(y, forecastfunction, h=1, window=NULL, ...) {
 #' print(modelcv)
 #' print(modelcv$fold1)
 #'
-#' plot(lynx)
-#' lines(modelcv$testfit, col="green")
-#' lines(modelcv$residuals, col="red")
-#' Acf(modelcv$residuals)
+#' library(ggplot2)
+#' autoplot(lynx, series="Data") +
+#'   autolayer(modelcv$testfit, series="Fits") +
+#'   autolayer(modelcv$residuals, series="Residuals")
+#' ggAcf(modelcv$residuals)
 #'
 #' @export
 CVar <- function(y, k=10, FUN=nnetar, cvtrace=FALSE, blocked=FALSE, LBlags=24, ...) {

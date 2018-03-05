@@ -44,10 +44,11 @@ modelcv <- CVar(lynx, k=5, lambda=0.15)
 print(modelcv)
 print(modelcv$fold1)
 
-plot(lynx)
-lines(modelcv$testfit, col="green")
-lines(modelcv$residuals, col="red")
-Acf(modelcv$residuals)
+library(ggplot2)
+autoplot(lynx, series="Data") +
+  autolayer(modelcv$testfit, series="Fits") +
+  autolayer(modelcv$residuals, series="Residuals")
+ggAcf(modelcv$residuals)
 
 }
 \references{
