@@ -89,15 +89,11 @@ unfracdiff <- function(x, y, n, h, d) {
 #' function.
 #' @param model Output from a previous call to \code{arfima}. If model is
 #' passed, this same model is fitted to y without re-estimating any parameters.
-#' @param lambda Box-Cox transformation parameter. Ignored if \code{NULL}.
-#' Otherwise, data transformed before model is estimated.
-#' @param biasadj Use adjusted back-transformed mean for Box-Cox
-#' transformations. If \code{TRUE}, point forecasts and fitted values are mean
-#' forecast. Otherwise, these points can be considered the median of the
-#' forecast densities.
 #' @param x Deprecated. Included for backwards compatibility.
 #' @param \dots Other arguments passed to \code{\link{auto.arima}} when
 #' selecting p and q.
+#' @inheritParams forecast
+#' 
 #' @return A list object of S3 class \code{"fracdiff"}, which is described in
 #' the \code{\link[fracdiff]{fracdiff}} documentation. A few additional objects
 #' are added to the list including \code{x} (the original time series), and the

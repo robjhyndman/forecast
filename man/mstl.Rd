@@ -9,9 +9,10 @@ mstl(x, lambda = NULL, iterate = 2, s.window = 13, ...)
 \arguments{
 \item{x}{Univariate time series of class \code{msts} or \code{ts}.}
 
-\item{lambda}{Box-Cox decomposition parameter. If \code{NULL}, no transformation
-is used. If \code{lambda="auto"}, a transformation is automatically selected. If
-lambda takes a numerical value, it is used as the parameter of the Box-Cox transformation.}
+\item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
+then a transformation is automatically selected using \code{BoxCox.lambda}.
+The transformation is ignored if NULL. Otherwise,
+data transformed before model is estimated.}
 
 \item{iterate}{Number of iterations to use to refine the seasonal component.}
 

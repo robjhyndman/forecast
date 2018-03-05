@@ -58,17 +58,12 @@ spline.loglik <- function(beta, y, cc=1e2) {
 #' @param level Confidence level for prediction intervals.
 #' @param fan If TRUE, level is set to seq(51,99,by=3). This is suitable for
 #' fan plots.
-#' @param lambda Box-Cox transformation parameter. Ignored if NULL. Otherwise,
-#' forecasts back-transformed via an inverse Box-Cox transformation.
-#' @param biasadj Use adjusted back-transformed mean for Box-Cox
-#' transformations. If TRUE, point forecasts and fitted values are mean
-#' forecast. Otherwise, these points can be considered the median of the
-#' forecast densities.
 #' @param method Method for selecting the smoothing parameter. If
 #' \code{method="gcv"}, the generalized cross-validation method from
 #' \code{\link[stats]{smooth.spline}} is used. If \code{method="mle"}, the
 #' maximum likelihood method from Hyndman et al (2002) is used.
 #' @param x Deprecated. Included for backwards compatibility.
+#' @inheritParams forecast
 #' @return An object of class "\code{forecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the

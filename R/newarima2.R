@@ -58,12 +58,6 @@
 #' See \code{\link{nsdiffs}} for details.
 #' @param allowdrift If \code{TRUE}, models with drift terms are considered.
 #' @param allowmean If \code{TRUE}, models with a non-zero mean are considered.
-#' @param lambda Box-Cox transformation parameter. Ignored if NULL. Otherwise,
-#' data transformed before model is estimated.
-#' @param biasadj Use adjusted back-transformed mean for Box-Cox
-#' transformations. If TRUE, point forecasts and fitted values are mean
-#' forecast. Otherwise, these points can be considered the median of the
-#' forecast densities.
 #' @param parallel If \code{TRUE} and \code{stepwise = FALSE}, then the
 #' specification search is done in parallel. This can give a significant
 #' speedup on mutlicore machines.
@@ -73,6 +67,8 @@
 #' all available cores are used.
 #' @param x Deprecated. Included for backwards compatibility.
 #' @param ... Additional arguments to be passed to \code{\link[stats]{arima}}.
+#' @inheritParams forecast
+#' 
 #' @return Same as for \code{\link{Arima}}
 #' @author Rob J Hyndman
 #' @seealso \code{\link{Arima}}

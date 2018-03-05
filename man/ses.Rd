@@ -38,14 +38,15 @@ observations. See Hyndman & Athanasopoulos (2014) for details.}
 \item{alpha}{Value of smoothing parameter for the level. If \code{NULL}, it
 will be estimated.}
 
-\item{lambda}{Box-Cox transformation parameter. Ignored if NULL. Otherwise,
-data transformed before model is estimated. When \code{lambda=TRUE},
-\code{additive.only} is set to FALSE.}
+\item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
+then a transformation is automatically selected using \code{BoxCox.lambda}.
+The transformation is ignored if NULL. Otherwise,
+data transformed before model is estimated.}
 
 \item{biasadj}{Use adjusted back-transformed mean for Box-Cox
-transformations. If TRUE, point forecasts and fitted values are mean
-forecast. Otherwise, these points can be considered the median of the
-forecast densities.}
+transformations. If transformed data is used to produce forecasts and fitted values,
+a regular back transformation will result in median forecasts. If biasadj is TRUE,
+an adjustment will be made to produce mean forecasts and fitted values.}
 
 \item{x}{Deprecated. Included for backwards compatibility.}
 

@@ -35,17 +35,12 @@
 #' \code{NULL}, the parameter is estimated using least squares.
 #' @param phi Autoregressive parameter. If \code{NULL}, the parameter is
 #' estimated using least squares.
-#' @param lambda Box-Cox transformation parameter. Ignored if \code{NULL}.
-#' Otherwise, data transformed before model is estimated.
-#' @param biasadj Use adjusted back-transformed mean for Box-Cox
-#' transformations. If TRUE, point forecasts and fitted values are mean
-#' forecast. Otherwise, these points can be considered the median of the
-#' forecast densities. By default, the value is taken from what was used when
-#' fitting the model.
 #' @param armethod If TRUE, the forecasts are adjusted using an AR(1) model for
 #' the errors.
 #' @param model If it's specified, an existing model is applied to a new data
 #' set.
+#' @inheritParams forecast
+#' 
 #' @return An object of class "\code{forecast}" which is a list that includes the
 #' following elements:
 #'   \item{model}{A list containing information about the fitted model}

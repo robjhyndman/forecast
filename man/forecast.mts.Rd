@@ -10,7 +10,7 @@
 \usage{
 \method{forecast}{mts}(object, h = ifelse(frequency(object) > 1, 2 *
   frequency(object), 10), level = c(80, 95), fan = FALSE, robust = FALSE,
-  lambda = NULL, find.frequency = FALSE,
+  lambda = NULL, biasadj = FALSE, find.frequency = FALSE,
   allow.multiplicative.trend = FALSE, ...)
 }
 \arguments{
@@ -28,7 +28,15 @@ suitable for fan plots.}
 in \code{object}. This argument is only valid when \code{object} is of class
 \code{mts}.}
 
-\item{lambda}{Box-Cox transformation parameter.}
+\item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
+then a transformation is automatically selected using \code{BoxCox.lambda}.
+The transformation is ignored if NULL. Otherwise,
+data transformed before model is estimated.}
+
+\item{biasadj}{Use adjusted back-transformed mean for Box-Cox
+transformations. If transformed data is used to produce forecasts and fitted values,
+a regular back transformation will result in median forecasts. If biasadj is TRUE,
+an adjustment will be made to produce mean forecasts and fitted values.}
 
 \item{find.frequency}{If TRUE, the function determines the appropriate
 period, if the data is of unknown period.}

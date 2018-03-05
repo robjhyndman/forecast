@@ -12,9 +12,10 @@ tsclean(x, replace.missing = TRUE, lambda = NULL)
 \item{replace.missing}{If TRUE, it not only replaces outliers, but also
 interpolates missing values}
 
-\item{lambda}{Box-Cox decomposition parameter. If \code{NULL}, no transformation
-is used. If \code{lambda="auto"}, a transformation is automatically selected. If
-lambda takes a numerical value, it is used as the parameter of the Box-Cox transformation.}
+\item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
+then a transformation is automatically selected using \code{BoxCox.lambda}.
+The transformation is ignored if NULL. Otherwise,
+data transformed before model is estimated.}
 }
 \value{
 Time series

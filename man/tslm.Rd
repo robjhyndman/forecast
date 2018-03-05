@@ -19,13 +19,15 @@ typically the environment from which lm is called.}
 results, pass a logical vector of rows to keep. Also supports
 \code{\link[base]{subset}()} functions.}
 
-\item{lambda}{Box-Cox transformation parameter. Ignored if NULL. Otherwise,
-data are transformed via a Box-Cox transformation.}
+\item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
+then a transformation is automatically selected using \code{BoxCox.lambda}.
+The transformation is ignored if NULL. Otherwise,
+data transformed before model is estimated.}
 
 \item{biasadj}{Use adjusted back-transformed mean for Box-Cox
-transformations. If TRUE, point forecasts and fitted values are mean
-forecast. Otherwise, these points can be considered the median of the
-forecast densities.}
+transformations. If transformed data is used to produce forecasts and fitted values,
+a regular back transformation will result in median forecasts. If biasadj is TRUE,
+an adjustment will be made to produce mean forecasts and fitted values.}
 
 \item{...}{Other arguments passed to \code{\link[stats]{lm}()}}
 }

@@ -18,12 +18,8 @@
 #' @param subset an optional subset containing rows of data to keep. For best
 #' results, pass a logical vector of rows to keep. Also supports
 #' \code{\link[base]{subset}()} functions.
-#' @param lambda Box-Cox transformation parameter. Ignored if NULL. Otherwise,
-#' data are transformed via a Box-Cox transformation.
-#' @param biasadj Use adjusted back-transformed mean for Box-Cox
-#' transformations. If TRUE, point forecasts and fitted values are mean
-#' forecast. Otherwise, these points can be considered the median of the
-#' forecast densities.
+#' @inheritParams forecast
+#' 
 #' @param ... Other arguments passed to \code{\link[stats]{lm}()}
 #' @return Returns an object of class "lm".
 #' @author Mitchell O'Hara-Wild and Rob J Hyndman
@@ -196,17 +192,13 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...) {
 #' for fan plots.
 #' @param h Number of periods for forecasting. Ignored if \code{newdata}
 #' present.
-#' @param lambda Box-Cox transformation parameter. Ignored if \code{NULL}.
-#' Otherwise, forecasts back-transformed via an inverse Box-Cox transformation.
-#' @param biasadj Use adjusted back-transformed mean for Box-Cox
-#' transformations. If TRUE, point forecasts and fitted values are mean
-#' forecast. Otherwise, these points can be considered the median of the
-#' forecast densities.
 #' @param ts If \code{TRUE}, the forecasts will be treated as time series
 #' provided the original data is a time series; the \code{newdata} will be
 #' interpreted as related to the subsequent time periods. If \code{FALSE}, any
 #' time series attributes of the original data will be ignored.
 #' @param ... Other arguments passed to \code{\link[stats]{predict.lm}()}.
+#' @inheritParams forecast
+#' 
 #' @return An object of class "\code{forecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the

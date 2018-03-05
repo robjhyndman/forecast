@@ -33,14 +33,15 @@ forecasts are calculated. If \code{PI} is FALSE, then \code{level},
 \code{fan}, \code{simulate}, \code{bootstrap} and \code{npaths} are all
 ignored.}
 
-\item{lambda}{Box-Cox transformation parameter. Ignored if NULL. Otherwise,
-forecasts back-transformed via an inverse Box-Cox transformation.}
+\item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
+then a transformation is automatically selected using \code{BoxCox.lambda}.
+The transformation is ignored if NULL. Otherwise,
+data transformed before model is estimated.}
 
 \item{biasadj}{Use adjusted back-transformed mean for Box-Cox
-transformations. If TRUE, point forecasts and fitted values are mean
-forecast. Otherwise, these points can be considered the median of the
-forecast densities. By default, the value is taken from what was used when
-fitting the model.}
+transformations. If transformed data is used to produce forecasts and fitted values,
+a regular back transformation will result in median forecasts. If biasadj is TRUE,
+an adjustment will be made to produce mean forecasts and fitted values.}
 
 \item{...}{Other arguments.}
 }
