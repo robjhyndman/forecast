@@ -7,6 +7,7 @@
   * Changed method for choosing D in auto.arima() to a measure of seasonal strength.
   * Added baggedModel() function to generalize baggedETS()
   * Added bootstrapped PI to more functions
+  * Allowed lambda='auto' for all functions with lambda argument.
   * Updated author list to include all major contributors
   * Documentation improvements
   * Bug fixes
