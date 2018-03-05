@@ -164,9 +164,10 @@ of <code>nsim</code> is set to the number of rows of <code>xreg</code> if it is 
     </tr>
     <tr>
       <th>lambda</th>
-      <td><p>Box-Cox parameter. If not <code>NULL</code>, the simulated series is
-transformed using an inverse Box-Cox transformation with parameter
-<code>lamda</code>.</p></td>
+      <td><p>Box-Cox transformation parameter. If <code>lambda="auto"</code>,
+then a transformation is automatically selected using <code>BoxCox.lambda</code>.
+The transformation is ignored if NULL. Otherwise,
+data transformed before model is estimated.</p></td>
     </tr>
     </table>
     
@@ -234,3 +235,4 @@ Rob J Hyndman
 
   </body>
 </html>
+

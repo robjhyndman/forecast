@@ -153,9 +153,9 @@ fold, plus other summary information computed across folds.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Bergmeir, C., Hyndman, R.J., Koo, B. (2015) A note on the
-validity of cross-validation for evaluating time series prediction. Monash
-working paper 10/15.
+    <p>Bergmeir, C., Hyndman, R.J., Koo, B. (2018) A note on the
+validity of cross-validation for evaluating time series prediction. 
+<em>Computational Statistics &amp; Data Analysis</em>, <b>120</b>, 70-83.
 <a href='https://robjhyndman.com/publications/cv-time-series/'>https://robjhyndman.com/publications/cv-time-series/</a>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -226,7 +226,10 @@ working paper 10/15.
 #&gt;  [1]   3   5   8  10  19  20  35  38  39  40  43  49  52  55  61  62  66  68  74
 #&gt; [20]  80  99 107 110
 #&gt; </div><div class='input'>
-<span class='fu'>plot</span>(<span class='no'>lynx</span>)</div><div class='input'><span class='fu'>lines</span>(<span class='no'>modelcv</span>$<span class='no'>testfit</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>"green"</span>)</div><div class='input'><span class='fu'>lines</span>(<span class='no'>modelcv</span>$<span class='no'>residuals</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>"red"</span>)</div><div class='img'><img src='CVar-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'><a href='Acf.html'>Acf</a></span>(<span class='no'>modelcv</span>$<span class='no'>residuals</span>)</div><div class='img'><img src='CVar-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>library</span>(<span class='no'>ggplot2</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>lynx</span>, <span class='kw'>series</span><span class='kw'>=</span><span class='st'>"Data"</span>) +
+  <span class='fu'><a href='autolayer.html'>autolayer</a></span>(<span class='no'>modelcv</span>$<span class='no'>testfit</span>, <span class='kw'>series</span><span class='kw'>=</span><span class='st'>"Fits"</span>) +
+  <span class='fu'><a href='autolayer.html'>autolayer</a></span>(<span class='no'>modelcv</span>$<span class='no'>residuals</span>, <span class='kw'>series</span><span class='kw'>=</span><span class='st'>"Residuals"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 11 rows containing missing values (geom_path).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 11 rows containing missing values (geom_path).</span></div><div class='img'><img src='CVar-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'><a href='autoplot.acf.html'>ggAcf</a></span>(<span class='no'>modelcv</span>$<span class='no'>residuals</span>)</div><div class='img'><img src='CVar-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -264,3 +267,4 @@ Gabriel Caceres and Rob J Hyndman
 
   </body>
 </html>
+

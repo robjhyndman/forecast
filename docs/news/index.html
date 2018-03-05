@@ -91,15 +91,18 @@
     </div>
 
     <div class="contents">
-    <div id="version-8-3" class="section level2">
+    <div id="version-8-3-6-march-2018" class="section level2">
 <h2 class="hasAnchor">
-<a href="#version-8-3" class="anchor"></a>Version 8.3</h2>
+<a href="#version-8-3-6-march-2018" class="anchor"></a>Version 8.3 (6 March 2018)</h2>
 <ul>
 <li>Added mstl() to handle multiple seasonal decomposition</li>
-<li>Added baggedModel() function to generalize baggedETS()</li>
+<li>stlf(), stlm(), tsoutliers() and tsclean() all now use mstl().</li>
 <li>Updated tsCV() to handle multiple horizons</li>
+<li>Switched unit root tests in ndiffs() to use urca package</li>
+<li>Added ocsb.test()</li>
+<li>Changed method for choosing D in auto.arima() to a measure of seasonal strength.</li>
+<li>Added baggedModel() function to generalize baggedETS()</li>
 <li>Added bootstrapped PI to more functions</li>
-<li>Switched unit root tests in ndiffs to use urca package</li>
 <li>Updated author list to include all major contributors</li>
 <li>Documentation improvements</li>
 <li>Bug fixes</li>
@@ -1284,7 +1287,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#version-8-3">8.3</a></li>
+        <li><a href="#version-8-3-6-march-2018">8.3</a></li>
         <li><a href="#version-8-2-25-september-2017">8.2</a></li>
         <li><a href="#version-8-1-17-june-2017">8.1</a></li>
         <li><a href="#version-8-0-22-february-2017">8.0</a></li>
@@ -1418,3 +1421,4 @@
 
   </body>
 </html>
+

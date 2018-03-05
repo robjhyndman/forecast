@@ -155,15 +155,17 @@ polynomial trends would be induced.</p></td>
     </tr>
     <tr>
       <th>lambda</th>
-      <td><p>Box-Cox transformation parameter. Ignored if <code>NULL</code>.
-Otherwise, data transformed before model is estimated.</p></td>
+      <td><p>Box-Cox transformation parameter. If <code>lambda="auto"</code>,
+then a transformation is automatically selected using <code>BoxCox.lambda</code>.
+The transformation is ignored if NULL. Otherwise,
+data transformed before model is estimated.</p></td>
     </tr>
     <tr>
       <th>biasadj</th>
       <td><p>Use adjusted back-transformed mean for Box-Cox
-transformations. If <code>TRUE</code>, point forecasts and fitted values are mean
-forecast. Otherwise, these points can be considered the median of the
-forecast densities.</p></td>
+transformations. If transformed data is used to produce forecasts and fitted values,
+a regular back transformation will result in median forecasts. If biasadj is TRUE,
+an adjustment will be made to produce mean forecasts and fitted values.</p></td>
     </tr>
     <tr>
       <th>method</th>
@@ -205,10 +207,8 @@ The additional objects returned are</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘ggplot2’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:forecast’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    autolayer</span></div><div class='input'><span class='no'>WWWusage</span> <span class='kw'>%&gt;%</span>
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>)
+<span class='no'>WWWusage</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>Arima</span>(<span class='kw'>order</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>3</span>,<span class='fl'>1</span>,<span class='fl'>0</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>20</span>) <span class='kw'>%&gt;%</span>
   <span class='no'>autoplot</span></div><div class='img'><img src='Arima-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
@@ -271,3 +271,4 @@ Rob J Hyndman
 
   </body>
 </html>
+

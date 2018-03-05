@@ -52,9 +52,9 @@ ggAcf(modelcv$residuals)
 
 }
 \references{
-Bergmeir, C., Hyndman, R.J., Koo, B. (2015) A note on the
-validity of cross-validation for evaluating time series prediction. Monash
-working paper 10/15.
+Bergmeir, C., Hyndman, R.J., Koo, B. (2018) A note on the
+validity of cross-validation for evaluating time series prediction. 
+\emph{Computational Statistics & Data Analysis}, \bold{120}, 70-83.
 \url{https://robjhyndman.com/publications/cv-time-series/}.
 }
 \seealso{

@@ -137,20 +137,20 @@ necessary.</p>
 seasonal differences required for time series <code>x</code> to be made stationary
 (possibly with some lag-one differencing as well).</p>
 <p>Several different tests are available:</p><ul>
-<li><p>If <code>test="seas"</code> (default), a heuristic of seasonal strength is used, where differencing is
-selected if the seasonal_strength (Hyndman, Wang and Laptev, 2015) exceeds 0.64 (based on M3 auto.arima performance).</p></li>
+<li><p>If <code>test="seas"</code> (default), a measure of seasonal strength is used, where differencing is
+selected if the seasonal strength (Wang, Smith &amp; Hyndman, 2006) exceeds 0.64 (based on M3 auto.arima performance).</p></li>
 <li><p>If <code>test="ch"</code>, the Canova-Hansen (1995) test is used
 (with null hypothesis of deterministic seasonality)</p></li>
-<li><p>If <code>test="hegy"</code>, the Hylleberg, Engle, Granger and Yoo (1990) test is used.</p></li>
+<li><p>If <code>test="hegy"</code>, the Hylleberg, Engle, Granger &amp; Yoo (1990) test is used.</p></li>
 <li><p>If <code>test="ocsb"</code>, the Osborn-Chui-Smith-Birchenhall
 (1988) test is used (with null hypothesis that a seasonal unit root exists).</p></li>
 </ul>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Hyndman RJ, Wang E, and Laptev N (2015) "Large-scale unusual time series
-detection", In <em>Data Mining Workshop (ICDMW), 2015 IEEE International
-Conference</em>, pp. 1616-1619.</p>
+    <p>Wang, X, Smith, KA, Hyndman, RJ (2006) "Characteristic-based clustering
+for time series data", <em>Data Mining and Knowledge Discovery</em>,
+<b>13</b>(3), 335-364.</p>
 <p>Osborn DR, Chui APL, Smith J, and Birchenhall CR (1988) "Seasonality and the
 order of integration for consumption", <em>Oxford Bulletin of Economics
 and Statistics</em> <b>50</b>(4):361-377.</p>
@@ -206,3 +206,4 @@ Rob J Hyndman, Slava Razbash and Mitchell O'Hara-Wild
 
   </body>
 </html>
+
