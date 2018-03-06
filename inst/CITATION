@@ -8,11 +8,10 @@ if(is.null(vers))
 vers <- paste("R package version", vers)
 
 # Grab authors from DESCRIPTION file
-authors <- unclass(desc::desc_get_authors())
-authors <- purrr::keep(authors, ~any("aut" %in% .$role))
-authors <- purrr::map_chr(authors, function(x){paste(x$given,x$family,"and")})
-authors[length(authors)] <- unlist(strsplit(tail(authors,1)," and"))
-authors <- paste0(authors, collapse=" ")
+authors <- eval(parse(text=packageDescription("forecast")$`Authors@R`))
+authors <- authors[sapply(authors$role, function(roles) "aut" %in% roles)]
+authors <- sapply(authors, function(author) paste(author$given, author$family))
+authors <- paste(authors, collapse = " and ")
 
 citHeader("To cite the forecast package in publications, please use:")
 
