@@ -23,10 +23,8 @@ Imports:
   uroot,
   zoo
 Suggests:
-  desc,
   expsmooth,
   knitr,
-  purrr,
   rmarkdown,
   rticles,
   testthat
