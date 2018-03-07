@@ -2,3 +2,6 @@
 ## This assume that we can call Rscript to ask Rcpp about its locations
 ## Use the R_HOME indirection to support installations of multiple R version
 PKG_LIBS=$(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
+
+## Use C++11 compiler
+CXX_STD = CXX11

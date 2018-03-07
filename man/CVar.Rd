@@ -44,16 +44,17 @@ modelcv <- CVar(lynx, k=5, lambda=0.15)
 print(modelcv)
 print(modelcv$fold1)
 
-plot(lynx)
-lines(modelcv$testfit, col="green")
-lines(modelcv$residuals, col="red")
-Acf(modelcv$residuals)
+library(ggplot2)
+autoplot(lynx, series="Data") +
+  autolayer(modelcv$testfit, series="Fits") +
+  autolayer(modelcv$residuals, series="Residuals")
+ggAcf(modelcv$residuals)
 
 }
 \references{
-Bergmeir, C., Hyndman, R.J., Koo, B. (2015) A note on the
-validity of cross-validation for evaluating time series prediction. Monash
-working paper 10/15.
+Bergmeir, C., Hyndman, R.J., Koo, B. (2018) A note on the
+validity of cross-validation for evaluating time series prediction. 
+\emph{Computational Statistics & Data Analysis}, \bold{120}, 70-83.
 \url{https://robjhyndman.com/publications/cv-time-series/}.
 }
 \seealso{

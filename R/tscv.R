@@ -103,9 +103,9 @@ tsCV <- function(y, forecastfunction, h=1, window=NULL, ...) {
 #' fold, plus other summary information computed across folds.
 #' @author Gabriel Caceres and Rob J Hyndman
 #' @seealso \link{CV}, \link{tsCV}.
-#' @references Bergmeir, C., Hyndman, R.J., Koo, B. (2015) A note on the
-#' validity of cross-validation for evaluating time series prediction. Monash
-#' working paper 10/15.
+#' @references Bergmeir, C., Hyndman, R.J., Koo, B. (2018) A note on the
+#' validity of cross-validation for evaluating time series prediction. 
+#' \emph{Computational Statistics & Data Analysis}, \bold{120}, 70-83.
 #' \url{https://robjhyndman.com/publications/cv-time-series/}.
 #' @keywords ts
 #' @examples
@@ -114,10 +114,11 @@ tsCV <- function(y, forecastfunction, h=1, window=NULL, ...) {
 #' print(modelcv)
 #' print(modelcv$fold1)
 #'
-#' plot(lynx)
-#' lines(modelcv$testfit, col="green")
-#' lines(modelcv$residuals, col="red")
-#' Acf(modelcv$residuals)
+#' library(ggplot2)
+#' autoplot(lynx, series="Data") +
+#'   autolayer(modelcv$testfit, series="Fits") +
+#'   autolayer(modelcv$residuals, series="Residuals")
+#' ggAcf(modelcv$residuals)
 #'
 #' @export
 CVar <- function(y, k=10, FUN=nnetar, cvtrace=FALSE, blocked=FALSE, LBlags=24, ...) {

@@ -8,6 +8,7 @@ lagwalk <- function(y, lag=1, h=10, drift=FALSE,
   if (!is.null(lambda)) {
     origy <- y
     y <- BoxCox(y, lambda)
+    lambda <- attr(y, "lambda")
   }
 
   # Fit equivalent ARIMA model
@@ -110,16 +111,12 @@ rwf <- function(y, h=10, drift=FALSE, level=c(80, 95), fan=FALSE, lambda=NULL, b
 #' @param level Confidence levels for prediction intervals.
 #' @param fan If TRUE, level is set to seq(51,99,by=3). This is suitable for
 #' fan plots.
-#' @param lambda Box-Cox transformation parameter. Ignored if NULL. Otherwise,
-#' forecasts back-transformed via an inverse Box-Cox transformation.
-#' @param biasadj Use adjusted back-transformed mean for Box-Cox
-#' transformations. If TRUE, point forecasts and fitted values are mean
-#' forecast. Otherwise, these points can be considered the median of the
-#' forecast densities.
 #' @param bootstrap If TRUE, use a bootstrap method to compute prediction intervals.
 #' Otherwise, assume a normal distribution.
 #' @param npaths Number of bootstrapped sample paths to use if \code{bootstrap==TRUE}.
 #' @param x Deprecated. Included for backwards compatibility.
+#' @inheritParams forecast
+#' 
 #' @return An object of class "\code{forecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the

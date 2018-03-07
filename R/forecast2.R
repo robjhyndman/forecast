@@ -14,16 +14,12 @@
 #' @param level Confidence levels for prediction intervals.
 #' @param fan If TRUE, level is set to seq(51,99,by=3). This is suitable for
 #' fan plots.
-#' @param lambda Box-Cox transformation parameter. Ignored if NULL. Otherwise,
-#' forecasts back-transformed via an inverse Box-Cox transformation.
-#' @param biasadj Use adjusted back-transformed mean for Box-Cox
-#' transformations. If TRUE, point forecasts and fitted values are mean
-#' forecast. Otherwise, these points can be considered the median of the
-#' forecast densities.
 #' @param bootstrap If TRUE, use a bootstrap method to compute prediction intervals.
 #' Otherwise, assume a normal distribution.
 #' @param npaths Number of bootstrapped sample paths to use if \code{bootstrap==TRUE}.
 #' @param x Deprecated. Included for backwards compatibility.
+#' @inheritParams forecast
+#' 
 #' @return An object of class "\code{forecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the
@@ -58,6 +54,7 @@ meanf <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALS
   if (!is.null(lambda)) {
     origx <- x
     x <- BoxCox(x, lambda)
+    lambda <- attr(x, "lambda")
   }
   meanx <- mean(x, na.rm = TRUE)
   fits <- rep(meanx, length(x))
@@ -137,11 +134,12 @@ meanf <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALS
 #' \deqn{f_0(x)=\log(x)}{f(x;0)=log(x)}.
 #'
 #' @param x a numeric vector or time series of class \code{ts}.
-#' @param lambda transformation parameter.
+#' @param lambda transformation parameter. If \code{lambda = "auto"}, then 
+#' the transformation parameter lambda is chosen using BoxCox.lambda.
 #' @param biasadj Use adjusted back-transformed mean for Box-Cox
-#' transformations. If TRUE, point forecasts and fitted values are mean
-#' forecast. Otherwise, these points can be considered the median of the
-#' forecast densities.
+#' transformations. If transformed data is used to produce forecasts and fitted values,
+#' a regular back transformation will result in median forecasts. If biasadj is TRUE,
+#' an adjustment will be made to produce mean forecasts and fitted values.
 #' @param fvar Optional parameter required if biasadj=TRUE. Can either be the
 #' forecast variance, or a list containing the interval \code{level}, and the
 #' corresponding \code{upper} and \code{lower} intervals.
@@ -159,6 +157,9 @@ meanf <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALS
 #'
 #' @export
 BoxCox <- function(x, lambda) {
+  if (lambda == "auto") {
+    lambda <- BoxCox.lambda(x)
+  }
   if (lambda < 0) {
     x[x < 0] <- NA
   }
@@ -170,6 +171,7 @@ BoxCox <- function(x, lambda) {
   if (!is.null(colnames(x))) {
     colnames(out) <- colnames(x)
   }
+  attr(out, "lambda") <- lambda
   return(out)
 }
 
@@ -268,13 +270,9 @@ InvBoxCoxf <- function(x=NULL, fvar=NULL, lambda=NULL) {
 #' @param level Confidence level for prediction intervals.
 #' @param fan If TRUE, level is set to seq(51,99,by=3). This is suitable for
 #' fan plots.
-#' @param lambda Box-Cox transformation parameter. Ignored if NULL. Otherwise,
-#' forecasts back-transformed via an inverse Box-Cox transformation.
-#' @param biasadj Use adjusted back-transformed mean for Box-Cox
-#' transformations. If TRUE, point forecasts and fitted values are mean
-#' forecast. Otherwise, these points can be considered the median of the
-#' forecast densities.
 #' @param ... Other arguments.
+#' @inheritParams forecast
+#' 
 #' @return An object of class "\code{forecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the
@@ -369,13 +367,9 @@ forecast.StructTS <- function(object, h=ifelse(object$coef["epsilon"] > 1e-10, 2
 #' @param level Confidence level for prediction intervals.
 #' @param fan If TRUE, level is set to seq(51,99,by=3). This is suitable for
 #' fan plots.
-#' @param lambda Box-Cox transformation parameter. Ignored if NULL. Otherwise,
-#' forecasts back-transformed via an inverse Box-Cox transformation.
-#' @param biasadj Use adjusted back-transformed mean for Box-Cox
-#' transformations. If TRUE, point forecasts and fitted values are mean
-#' forecast. Otherwise, these points can be considered the median of the
-#' forecast densities.
 #' @param ... Other arguments.
+#' @inheritParams forecast
+#' 
 #' @return An object of class "\code{forecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the

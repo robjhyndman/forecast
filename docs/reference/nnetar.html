@@ -136,7 +136,10 @@ must have the same number of rows as <code>y</code>. Must be numeric.</p></td>
     </tr>
     <tr>
       <th>lambda</th>
-      <td><p>Box-Cox transformation parameter.</p></td>
+      <td><p>Box-Cox transformation parameter. If <code>lambda="auto"</code>,
+then a transformation is automatically selected using <code>BoxCox.lambda</code>.
+The transformation is ignored if NULL. Otherwise,
+data transformed before model is estimated.</p></td>
     </tr>
     <tr>
       <th>model</th>
@@ -248,3 +251,4 @@ Rob J Hyndman and Gabriel Caceres
 
   </body>
 </html>
+

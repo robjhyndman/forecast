@@ -102,7 +102,7 @@ particular <em>methods</em> which depend on the class of the first argument.</p>
     <pre class="usage"><span class='co'># S3 method for mts</span>
 <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>object</span>, <span class='kw'>h</span> <span class='kw'>=</span> <span class='fu'>ifelse</span>(<span class='fu'>frequency</span>(<span class='no'>object</span>) <span class='kw'>&gt;</span> <span class='fl'>1</span>, <span class='fl'>2</span> *
   <span class='fu'>frequency</span>(<span class='no'>object</span>), <span class='fl'>10</span>), <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>80</span>, <span class='fl'>95</span>), <span class='kw'>fan</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>find.frequency</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>find.frequency</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>allow.multiplicative.trend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -134,7 +134,17 @@ in <code>object</code>. This argument is only valid when <code>object</code> is 
     </tr>
     <tr>
       <th>lambda</th>
-      <td><p>Box-Cox transformation parameter.</p></td>
+      <td><p>Box-Cox transformation parameter. If <code>lambda="auto"</code>,
+then a transformation is automatically selected using <code>BoxCox.lambda</code>.
+The transformation is ignored if NULL. Otherwise,
+data transformed before model is estimated.</p></td>
+    </tr>
+    <tr>
+      <th>biasadj</th>
+      <td><p>Use adjusted back-transformed mean for Box-Cox
+transformations. If transformed data is used to produce forecasts and fitted values,
+a regular back transformation will result in median forecasts. If biasadj is TRUE,
+an adjustment will be made to produce mean forecasts and fitted values.</p></td>
     </tr>
     <tr>
       <th>find.frequency</th>
@@ -221,3 +231,4 @@ Rob J Hyndman &amp; Mitchell O'Hara-Wild
 
   </body>
 </html>
+

@@ -227,18 +227,13 @@ SD.test <- function(wts, s=frequency(wts)) {
 #' suitable for fan plots.
 #' @param xreg Future values of an regression variables (for class \code{Arima}
 #' objects only).
-#' @param lambda Box-Cox transformation parameter. Ignored if NULL. Otherwise,
-#' forecasts back-transformed via an inverse Box-Cox transformation.
-#' @param biasadj Use adjusted back-transformed mean for Box-Cox
-#' transformations. If TRUE, point forecasts and fitted values are mean
-#' forecast. Otherwise, these points can be considered the median of the
-#' forecast densities. By default, the value is taken from what was used when
-#' fitting the model.
 #' @param bootstrap If \code{TRUE}, then prediction intervals computed using
 #' simulation with resampled errors.
 #' @param npaths Number of sample paths used in computing simulated prediction
 #' intervals when \code{bootstrap=TRUE}.
 #' @param ... Other arguments.
+#' @inheritParams forecast
+#' 
 #' @return An object of class "\code{forecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the
@@ -610,12 +605,6 @@ fitted.Arima <- function(object, h = 1, ...) {
 #' difference taken, no constant is included regardless of the value of this
 #' argument. This is deliberate as otherwise quadratic and higher order
 #' polynomial trends would be induced.
-#' @param lambda Box-Cox transformation parameter. Ignored if \code{NULL}.
-#' Otherwise, data transformed before model is estimated.
-#' @param biasadj Use adjusted back-transformed mean for Box-Cox
-#' transformations. If \code{TRUE}, point forecasts and fitted values are mean
-#' forecast. Otherwise, these points can be considered the median of the
-#' forecast densities.
 #' @param method Fitting method: maximum likelihood or minimize conditional
 #' sum-of-squares. The default (unless there are missing values) is to use
 #' conditional-sum-of-squares to find starting values, then maximum likelihood.
@@ -624,6 +613,7 @@ fitted.Arima <- function(object, h = 1, ...) {
 #' parameters.
 #' @param x Deprecated. Included for backwards compatibility.
 #' @param ... Additional arguments to be passed to \code{\link[stats]{arima}}.
+#' @inheritParams forecast
 #' @return See the \code{\link[stats]{arima}} function in the stats package.
 #' The additional objects returned are \item{x}{The time series data}
 #' \item{xreg}{The regressors used in fitting (when relevant).}
@@ -672,6 +662,7 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
   origx <- y
   if (!is.null(lambda)) {
     x <- BoxCox(x, lambda)
+    lambda <- attr(x, "lambda")
 
     if (is.null(attr(lambda, "biasadj"))) {
       attr(lambda, "biasadj") <- biasadj

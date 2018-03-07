@@ -50,7 +50,10 @@ NULL # Instead of "_PACKAGE" to remove inclusion of \alias{forecast}
 #' @param robust If TRUE, the function is robust to missing values and outliers
 #' in \code{object}. This argument is only valid when \code{object} is of class
 #' \code{ts}.
-#' @param lambda Box-Cox transformation parameter.
+#' @param lambda Box-Cox transformation parameter. If \code{lambda="auto"},
+#' then a transformation is automatically selected using \code{BoxCox.lambda}.
+#' The transformation is ignored if NULL. Otherwise,
+#' data transformed before model is estimated.
 #' @param find.frequency If TRUE, the function determines the appropriate
 #' period, if the data is of unknown period.
 #' @param allow.multiplicative.trend If TRUE, then ETS models with
@@ -63,6 +66,8 @@ NULL # Instead of "_PACKAGE" to remove inclusion of \alias{forecast}
 #' \code{\link{stlf}} depending on the frequency of the time series. If
 #' \code{model} is not \code{NULL}, the arguments are passed to the relevant
 #' modelling function.
+#' @inheritParams BoxCox
+#' 
 #' @return An object of class "\code{forecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the
@@ -171,7 +176,7 @@ findfrequency <- function(x) {
 #' @rdname forecast
 #' @export
 forecast.ts <- function(object, h=ifelse(frequency(object) > 1, 2 * frequency(object), 10),
-                        level=c(80, 95), fan=FALSE, robust=FALSE, lambda = NULL, find.frequency = FALSE,
+                        level=c(80, 95), fan=FALSE, robust=FALSE, lambda = NULL, biasadj = FALSE, find.frequency = FALSE,
                         allow.multiplicative.trend=FALSE, model=NULL, ...) {
   n <- length(object)
   if (find.frequency) {
@@ -207,23 +212,23 @@ forecast.ts <- function(object, h=ifelse(frequency(object) > 1, 2 * frequency(ob
   if (n > 3) {
     if (obj.freq < 13) {
       out <- forecast(
-        ets(object, lambda = lambda, allow.multiplicative.trend = allow.multiplicative.trend, ...),
+        ets(object, lambda = lambda, biasadj = biasadj, allow.multiplicative.trend = allow.multiplicative.trend, ...),
         h = h, level = level, fan = fan
       )
     } else if (n > 2 * obj.freq) {
       out <- stlf(
-        object, h = h, level = level, fan = fan, lambda = lambda,
+        object, h = h, level = level, fan = fan, lambda = lambda, biasadj = biasadj,
         allow.multiplicative.trend = allow.multiplicative.trend, ...
       )
     } else {
       out <- forecast(
-        ets(object, model = "ZZN", lambda = lambda, allow.multiplicative.trend = allow.multiplicative.trend, ...),
+        ets(object, model = "ZZN", lambda = lambda, biasadj = biasadj, allow.multiplicative.trend = allow.multiplicative.trend, ...),
         h = h, level = level, fan = fan
       )
     }
   }
   else {
-    out <- meanf(object, h = h, level = level, fan = fan, lambda = lambda, ...)
+    out <- meanf(object, h = h, level = level, fan = fan, lambda = lambda, biasadj = biasadj, ...)
   }
   out$series <- deparse(substitute(object))
   return(out)

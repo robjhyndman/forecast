@@ -416,6 +416,7 @@ plot.bats <- function(x, main="Decomposition by BATS model", ...) {
   # Get original data, transform if necessary
   if (!is.null(x$lambda)) {
     y <- BoxCox(x$y, x$lambda)
+    lambda <- attr(y, "lambda")
   } else {
     y <- x$y
   }

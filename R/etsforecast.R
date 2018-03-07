@@ -19,14 +19,8 @@
 #' forecasts are calculated. If \code{PI} is FALSE, then \code{level},
 #' \code{fan}, \code{simulate}, \code{bootstrap} and \code{npaths} are all
 #' ignored.
-#' @param lambda Box-Cox transformation parameter. Ignored if NULL. Otherwise,
-#' forecasts back-transformed via an inverse Box-Cox transformation.
-#' @param biasadj Use adjusted back-transformed mean for Box-Cox
-#' transformations. If TRUE, point forecasts and fitted values are mean
-#' forecast. Otherwise, these points can be considered the median of the
-#' forecast densities. By default, the value is taken from what was used when
-#' fitting the model.
 #' @param ... Other arguments.
+#' @inheritParams forecast
 #' @return An object of class "\code{forecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the

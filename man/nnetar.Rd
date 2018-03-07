@@ -29,7 +29,10 @@ weights. These are then averaged when producing forecasts.}
 \item{xreg}{Optionally, a vector or matrix of external regressors, which
 must have the same number of rows as \code{y}. Must be numeric.}
 
-\item{lambda}{Box-Cox transformation parameter.}
+\item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
+then a transformation is automatically selected using \code{BoxCox.lambda}.
+The transformation is ignored if NULL. Otherwise,
+data transformed before model is estimated.}
 
 \item{model}{Output from a previous call to \code{nnetar}. If model is
 passed, this same model is fitted to \code{y} without re-estimating any

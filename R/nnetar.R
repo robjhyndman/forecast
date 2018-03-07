@@ -44,7 +44,6 @@
 #' weights. These are then averaged when producing forecasts.
 #' @param xreg Optionally, a vector or matrix of external regressors, which
 #' must have the same number of rows as \code{y}. Must be numeric.
-#' @param lambda Box-Cox transformation parameter.
 #' @param model Output from a previous call to \code{nnetar}. If model is
 #' passed, this same model is fitted to \code{y} without re-estimating any
 #' parameters.
@@ -57,6 +56,8 @@
 #' @param x Deprecated. Included for backwards compatibility.
 #' @param \dots Other arguments passed to \code{\link[nnet]{nnet}} for
 #' \code{nnetar}.
+#' @inheritParams forecast
+#' 
 #' @return Returns an object of class "\code{nnetar}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the
@@ -151,6 +152,7 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   # Transform data
   if (!is.null(lambda) && !constant_data) {
     xx <- BoxCox(x, lambda)
+    lambda <- attr(xx, "lambda")
   } else {
     xx <- x
   }
@@ -369,8 +371,6 @@ print.nnetarmodels <- function(x, ...) {
 #' @param fan If \code{TRUE}, level is set to \code{seq(51,99,by=3)}. This is
 #' suitable for fan plots.
 #' @param xreg Future values of external regressor variables.
-#' @param lambda Box-Cox transformation parameter. Ignored if NULL. Otherwise,
-#' forecasts back-transformed via an inverse Box-Cox transformation.
 #' @param bootstrap If \code{TRUE}, then prediction intervals computed using
 #' simulations with resampled residuals rather than normally distributed
 #' errors. Ignored if \code{innov} is not \code{NULL}.
@@ -380,6 +380,8 @@ print.nnetarmodels <- function(x, ...) {
 #' a matrix with \code{h} rows and \code{npaths} columns (vectors are coerced
 #' into a matrix). If present, \code{bootstrap} is ignored.
 #' @param ... Additional arguments passed to \code{\link{simulate.nnetar}}
+#' @inheritParams forecast
+#' 
 #' @return An object of class "\code{forecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the
@@ -449,6 +451,7 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI
   xxreg <- xreg
   if (!is.null(lambda)) {
     xx <- BoxCox(xx, lambda)
+    lambda <- attr(xx, "lambda")
   }
   # Check and apply scaling of fitted model
   if (!is.null(object$scalex)) {

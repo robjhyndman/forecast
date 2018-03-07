@@ -112,7 +112,10 @@ seasonal series to identify outliers and estimate their replacements.</p>
     </tr>
     <tr>
       <th>lambda</th>
-      <td><p>Allowing Box-cox transformation</p></td>
+      <td><p>Box-Cox transformation parameter. If <code>lambda="auto"</code>,
+then a transformation is automatically selected using <code>BoxCox.lambda</code>.
+The transformation is ignored if NULL. Otherwise,
+data transformed before model is estimated.</p></td>
     </tr>
     </table>
     
@@ -173,3 +176,4 @@ Rob J Hyndman
 
   </body>
 </html>
+

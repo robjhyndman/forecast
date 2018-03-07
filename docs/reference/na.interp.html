@@ -29,8 +29,9 @@
   
 <meta property="og:title" content="Interpolate missing values in a time series — na.interp" />
 
-<meta property="og:description" content="Uses linear interpolation for non-seasonal series and a periodic stl
-decomposition with seasonal series to replace missing values." />
+<meta property="og:description" content="Uses linear interpolation for non-seasonal series. For seasonal series, a 
+robust STL decomposition is used. A linear interpolation is applied to the 
+seasonally adjusted data, and then the seasonal component is added back." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -93,8 +94,9 @@ decomposition with seasonal series to replace missing values." />
     </div>
 
     
-    <p>Uses linear interpolation for non-seasonal series and a periodic stl
-decomposition with seasonal series to replace missing values.</p>
+    <p>Uses linear interpolation for non-seasonal series. For seasonal series, a 
+robust STL decomposition is used. A linear interpolation is applied to the 
+seasonally adjusted data, and then the seasonal component is added back.</p>
     
 
     <pre class="usage"><span class='fu'>na.interp</span>(<span class='no'>x</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
@@ -108,9 +110,10 @@ decomposition with seasonal series to replace missing values.</p>
     </tr>
     <tr>
       <th>lambda</th>
-      <td><p>Box-Cox decomposition parameter. If <code>NULL</code>, no transformation
-is used. If <code>lambda="auto"</code>, a transformation is automatically selected. If
-lambda takes a numerical value, it is used as the parameter of the Box-Cox transformation.</p></td>
+      <td><p>Box-Cox transformation parameter. If <code>lambda="auto"</code>,
+then a transformation is automatically selected using <code>BoxCox.lambda</code>.
+The transformation is ignored if NULL. Otherwise,
+data transformed before model is estimated.</p></td>
     </tr>
     </table>
     
@@ -169,3 +172,4 @@ Rob J Hyndman
 
   </body>
 </html>
+

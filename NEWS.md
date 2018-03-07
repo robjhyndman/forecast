@@ -1,9 +1,13 @@
-## Version 8.3
+## Version 8.3 (6 March 2018)
   * Added mstl() to handle multiple seasonal decomposition
-  * Added baggedModel() function to generalize baggedETS()
+  * stlf(), stlm(), tsoutliers() and tsclean() all now use mstl().
   * Updated tsCV() to handle multiple horizons
+  * Switched unit root tests in ndiffs() to use urca package
+  * Added ocsb.test()
+  * Changed method for choosing D in auto.arima() to a measure of seasonal strength.
+  * Added baggedModel() function to generalize baggedETS()
   * Added bootstrapped PI to more functions
-  * Switched unit root tests in ndiffs to use urca package
+  * Allowed lambda='auto' for all functions with lambda argument.
   * Updated author list to include all major contributors
   * Documentation improvements
   * Bug fixes

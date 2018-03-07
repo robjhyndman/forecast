@@ -11,7 +11,10 @@ tsoutliers(x, iterate = 2, lambda = NULL)
 
 \item{iterate}{the number of iteration only for non-seasonal series}
 
-\item{lambda}{Allowing Box-cox transformation}
+\item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
+then a transformation is automatically selected using \code{BoxCox.lambda}.
+The transformation is ignored if NULL. Otherwise,
+data transformed before model is estimated.}
 }
 \value{
 \item{index}{Indicating the index of outlier(s)}

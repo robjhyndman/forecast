@@ -118,9 +118,10 @@ Unlike <code><a href='http://www.rdocumentation.org/packages/stats/topics/stl'>s
     </tr>
     <tr>
       <th>lambda</th>
-      <td><p>Box-Cox decomposition parameter. If <code>NULL</code>, no transformation
-is used. If <code>lambda="auto"</code>, a transformation is automatically selected. If
-lambda takes a numerical value, it is used as the parameter of the Box-Cox transformation.</p></td>
+      <td><p>Box-Cox transformation parameter. If <code>lambda="auto"</code>,
+then a transformation is automatically selected using <code>BoxCox.lambda</code>.
+The transformation is ignored if NULL. Otherwise,
+data transformed before model is estimated.</p></td>
     </tr>
     <tr>
       <th>iterate</th>
@@ -174,3 +175,4 @@ of the same length as the number of seasonal components.</p></td>
 
   </body>
 </html>
+

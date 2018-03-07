@@ -29,10 +29,9 @@
   
 <meta property="og:title" content="Identify and replace outliers and missing values in a time series — tsclean" />
 
-<meta property="og:description" content="Uses supsmu for non-seasonal series and a periodic stl decomposition with
-seasonal series to identify outliers. To estimate missing values and outlier
-replacements, linear interpolation is used on the (possibly seasonally
-adjusted) series" />
+<meta property="og:description" content="Uses supsmu for non-seasonal series and a robust STL decomposition for 
+seasonal series. To estimate missing values and outlier replacements, 
+linear interpolation is used on the (possibly seasonally adjusted) series" />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -95,10 +94,9 @@ adjusted) series" />
     </div>
 
     
-    <p>Uses supsmu for non-seasonal series and a periodic stl decomposition with
-seasonal series to identify outliers. To estimate missing values and outlier
-replacements, linear interpolation is used on the (possibly seasonally
-adjusted) series</p>
+    <p>Uses supsmu for non-seasonal series and a robust STL decomposition for 
+seasonal series. To estimate missing values and outlier replacements, 
+linear interpolation is used on the (possibly seasonally adjusted) series</p>
     
 
     <pre class="usage"><span class='fu'>tsclean</span>(<span class='no'>x</span>, <span class='kw'>replace.missing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
@@ -117,7 +115,10 @@ interpolates missing values</p></td>
     </tr>
     <tr>
       <th>lambda</th>
-      <td><p>a numeric value giving the Box-Cox transformation parameter</p></td>
+      <td><p>Box-Cox transformation parameter. If <code>lambda="auto"</code>,
+then a transformation is automatically selected using <code>BoxCox.lambda</code>.
+The transformation is ignored if NULL. Otherwise,
+data transformed before model is estimated.</p></td>
     </tr>
     </table>
     
@@ -168,3 +169,4 @@ Rob J Hyndman
 
   </body>
 </html>
+

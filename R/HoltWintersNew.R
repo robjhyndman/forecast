@@ -21,6 +21,7 @@ HoltWintersZZ <- function(x,
 
   if (!is.null(lambda)) {
     x <- BoxCox(x, lambda)
+    lambda <- attr(x, "lambda")
   }
 
   if (is.null(phi) || !is.numeric(phi)) {
@@ -406,15 +407,10 @@ zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, seasonal="additive"
 #' \code{NULL}, it will be estimated.
 #' @param phi Value of damping parameter if \code{damped=TRUE}. If \code{NULL},
 #' it will be estimated.
-#' @param lambda Box-Cox transformation parameter. Ignored if NULL. Otherwise,
-#' data transformed before model is estimated. When \code{lambda=TRUE},
-#' \code{additive.only} is set to FALSE.
-#' @param biasadj Use adjusted back-transformed mean for Box-Cox
-#' transformations. If TRUE, point forecasts and fitted values are mean
-#' forecast. Otherwise, these points can be considered the median of the
-#' forecast densities.
 #' @param x Deprecated. Included for backwards compatibility.
 #' @param ... Other arguments passed to \code{forecast.ets}.
+#' @inheritParams forecast
+#' 
 #' @return An object of class "\code{forecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the

@@ -12,12 +12,13 @@ InvBoxCox(x, lambda, biasadj = FALSE, fvar = NULL)
 \arguments{
 \item{x}{a numeric vector or time series of class \code{ts}.}
 
-\item{lambda}{transformation parameter.}
+\item{lambda}{transformation parameter. If \code{lambda = "auto"}, then 
+the transformation parameter lambda is chosen using BoxCox.lambda.}
 
 \item{biasadj}{Use adjusted back-transformed mean for Box-Cox
-transformations. If TRUE, point forecasts and fitted values are mean
-forecast. Otherwise, these points can be considered the median of the
-forecast densities.}
+transformations. If transformed data is used to produce forecasts and fitted values,
+a regular back transformation will result in median forecasts. If biasadj is TRUE,
+an adjustment will be made to produce mean forecasts and fitted values.}
 
 \item{fvar}{Optional parameter required if biasadj=TRUE. Can either be the
 forecast variance, or a list containing the interval \code{level}, and the

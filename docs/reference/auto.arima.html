@@ -235,15 +235,17 @@ See <code><a href='nsdiffs.html'>nsdiffs</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>lambda</th>
-      <td><p>Box-Cox transformation parameter. Ignored if NULL. Otherwise,
+      <td><p>Box-Cox transformation parameter. If <code>lambda="auto"</code>,
+then a transformation is automatically selected using <code>BoxCox.lambda</code>.
+The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.</p></td>
     </tr>
     <tr>
       <th>biasadj</th>
       <td><p>Use adjusted back-transformed mean for Box-Cox
-transformations. If TRUE, point forecasts and fitted values are mean
-forecast. Otherwise, these points can be considered the median of the
-forecast densities.</p></td>
+transformations. If transformed data is used to produce forecasts and fitted values,
+a regular back transformation will result in median forecasts. If biasadj is TRUE,
+an adjustment will be made to produce mean forecasts and fitted values.</p></td>
     </tr>
     <tr>
       <th>parallel</th>
@@ -277,19 +279,21 @@ all available cores are used.</p></td>
     <p>The default arguments are designed for rapid estimation of models for many time series.
 If you are analysing just one time series, and can afford to take some more time, it
 is recommended that you set <code>stepwise=FALSE</code> and <code>approximation=FALSE</code>.</p>
-<p>The number of seasonal differences is sometimes poorly chosen. If your data shows strong
-seasonality, try setting <code>D=1</code> rather than relying on the automatic selection of <code>D</code>.</p>
 <p>Non-stepwise selection can be slow, especially for seasonal data. The stepwise
-algorithm outlined in Hyndman and Khandakar (2008) is used except that the default
-method for selecting seasonal differences is now the OCSB test rather than
-the Canova-Hansen test. There are also some other minor variations to the
-algorithm described in Hyndman and Khandakar (2008).</p>
+algorithm outlined in Hyndman &amp; Khandakar (2008) is used except that the default
+method for selecting seasonal differences is now based on an estimate of seasonal
+strength (Wang, Smith &amp; Hyndman, 2006) rather than the Canova-Hansen test. 
+There are also some other minor variations to the algorithm described in 
+Hyndman and Khandakar (2008).</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Hyndman, R.J. and Khandakar, Y. (2008) "Automatic time series
+    <p>Hyndman, RJ and Khandakar, Y (2008) "Automatic time series
 forecasting: The forecast package for R", <em>Journal of Statistical
 Software</em>, <b>26</b>(3).</p>
+<p>Wang, X, Smith, KA, Hyndman, RJ (2006) "Characteristic-based clustering
+for time series data", <em>Data Mining and Knowledge Discovery</em>,
+<b>13</b>(3), 335-364.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -338,3 +342,4 @@ Rob J Hyndman
 
   </body>
 </html>
+

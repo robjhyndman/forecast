@@ -1198,6 +1198,15 @@ ggsubseriesplot <- function(x, labels = NULL, times = time(x), phase = cycle(x),
     if (round(frequency(x)) <= 1) {
       stop("Data are not seasonal")
     }
+    
+    if("1" %in% dimnames(table(table(phase)))[[1]]){
+      stop(paste("Each season requires at least 2 observations.",
+                  ifelse(frequency(x)%%1 == 0,
+                         "Your series length may be too short for this graphic.",
+                         "This may be caused from specifying a time-series with non-integer frequency.")
+                  )
+           )
+    }
 
     data <- data.frame(y = as.numeric(x), year = trunc(time(x)), season = as.numeric(phase))
     seasonwidth <- (max(data$year) - min(data$year)) * 1.05

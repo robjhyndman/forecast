@@ -32,10 +32,9 @@
 #' @param xreg New values of \code{xreg} to be used for forecasting. The value
 #' of \code{nsim} is set to the number of rows of \code{xreg} if it is not
 #' \code{NULL}.
-#' @param lambda Box-Cox parameter. If not \code{NULL}, the simulated series is
-#' transformed using an inverse Box-Cox transformation with parameter
-#' \code{lamda}.
 #' @param ... Other arguments, not currently used.
+#' @inheritParams forecast
+#' 
 #' @return An object of class "\code{ts}".
 #' @author Rob J Hyndman
 #' @seealso \code{\link{ets}}, \code{\link{Arima}}, \code{\link{auto.arima}},
@@ -374,6 +373,7 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
 
   if (!is.null(lambda)) {
     x <- BoxCox(x, lambda)
+    lambda <- attr(x, "lambda")
   }
 
   n <- length(x)
@@ -613,6 +613,7 @@ simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL,
   xx <- object$x
   if (!is.null(lambda)) {
     xx <- BoxCox(xx, lambda)
+    lambda <- attr(xx, "lambda")
   }
   # Check and apply scaling of fitted model
   if (!is.null(object$scalex)) {
