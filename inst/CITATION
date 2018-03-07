@@ -8,16 +8,16 @@ if(is.null(vers))
 vers <- paste("R package version", vers)
 
 # Grab authors from DESCRIPTION file
-authors <- eval(parse(text=packageDescription("forecast")$`Authors@R`))
-authors <- authors[sapply(authors$role, function(roles) "aut" %in% roles)]
-authors <- sapply(authors, function(author) paste(author$given, author$family))
-authors <- paste(authors, collapse = " and ")
+# authors <- eval(parse(text=as.list(read.dcf("../DESCRIPTION")[1, ])$`Authors@R`))
+# authors <- authors[sapply(authors$role, function(roles) "aut" %in% roles)]
+# authors <- sapply(authors, function(author) paste(author$given, author$family))
+# authors <- paste(authors, collapse = " and ")
 
 citHeader("To cite the forecast package in publications, please use:")
 
 bibentry(bibtype = "Manual",
   title = "{forecast}: Forecasting functions for time series and linear models",
-  author = authors,
+  author = "Rob Hyndman and Christoph Bergmeir and Gabriel Caceres and Mitchell O'Hara-Wild and Slava Razbash and Earo Wang",
   year = year,
   note = vers,
   url = "http://pkg.robjhyndman.com/forecast")
