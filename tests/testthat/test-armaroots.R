@@ -6,6 +6,6 @@ if (require(testthat)) {
     plot(arimafit)
     plot(arimafit, type = "ma")
     plot(arimafit, type = "ar")
-    expect_error(plot(Arima(lynx, c(0, 1, 0))))
+    expect_warning(plot(Arima(lynx, c(0, 1, 0))))
   })
 }
