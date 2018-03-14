@@ -190,7 +190,7 @@ tsoutliers <- function(x, iterate=2, lambda=NULL) {
     rem <- remainder(fit)
     detrend <- xx - trendcycle(fit)
     strength <- 1 - var(rem) / var(detrend)
-    if (strength >= 0.5) {
+    if (strength >= 0.6) {
       xx <- seasadj(fit)
     }
   }
