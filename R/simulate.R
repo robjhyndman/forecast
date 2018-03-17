@@ -586,9 +586,9 @@ simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL,
     if (!is.null(object$scalex$scale)){
       e <- e/object$scalex$scale
     }
-  } else if (length(innov) == 1) {
+  } else if (isTRUE(innov == 0L)) {
     ## to pass innov=0 so simulation equals mean forecast
-    e <- rep(innov, nsim) / object$scalex$scale
+    e <- rep(innov, nsim)
   } else {
     stop("Length of innov must be equal to nsim")
   }
