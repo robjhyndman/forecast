@@ -34,7 +34,7 @@
 #' \code{NULL}.
 #' @param ... Other arguments, not currently used.
 #' @inheritParams forecast
-#' 
+#'
 #' @return An object of class "\code{ts}".
 #' @author Rob J Hyndman
 #' @seealso \code{\link{ets}}, \code{\link{Arima}}, \code{\link{auto.arima}},
@@ -582,7 +582,10 @@ simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL,
     e <- rnorm(nsim, 0, sd(res, na.rm = TRUE))
   }
   else if (length(innov) == nsim) {
-    e <- innov / object$scalex$scale
+    e <- innov
+    if (!is.null(object$scalex$scale)){
+      e <- e/object$scalex$scale
+    }
   } else if (length(innov) == 1) {
     ## to pass innov=0 so simulation equals mean forecast
     e <- rep(innov, nsim) / object$scalex$scale
