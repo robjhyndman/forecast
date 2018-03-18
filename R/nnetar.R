@@ -133,24 +133,25 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     if (is.null(model$scalex)) {
       scale.inputs <- FALSE
     }
-  }
-  else {
+  } else {                 # when not using and old model
     if (length(y) < 3) {
       stop("Not enough data to fit a model")
+    }
+    # Check for constant data
+    constant_data <- is.constant(na.interp(x))
+    if (constant_data){
+      scale.inputs <- FALSE
+      lambda <- NULL
+      p <- 1
     }
   }
   # Check for NAs in x
   if (any(is.na(x))) {
     warning("Missing values in x, omitting rows")
   }
-  # Check for constant data
-  constant_data <- is.constant(na.interp(x))
-  if (constant_data) {
-    scale.inputs <- FALSE
-  }
 
   # Transform data
-  if (!is.null(lambda) && !constant_data) {
+  if (!is.null(lambda)) {
     xx <- BoxCox(x, lambda)
     lambda <- attr(xx, "lambda")
   } else {
@@ -166,7 +167,7 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   }
   # Scale series
   scalex <- NULL
-  if (scale.inputs && !constant_data) {
+  if (scale.inputs) {
     if (useoldmodel) {
       scalex <- model$scalex
     }
@@ -211,43 +212,41 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   n <- length(xx)
   xx <- as.ts(xx)
   m <- max(round(frequency(xx)), 1L)
-  if (constant_data) {
-    p <- 1
-  }
-  if (m == 1) {
-    if (missing(p)) {
-      p <- max(length(ar(na.interp(xx))$ar), 1)
-    }
-    if (p >= n) {
-      warning("Reducing number of lagged inputs due to short series")
-      p <- n - 1
-    }
-    lags <- 1:p
-    if (P > 1) {
-      warning("Non-seasonal data, ignoring seasonal lags")
-    }
-    P <- 0
-  }
-  else {
-    if (missing(p)) {
-      if (n >= 2 * m) {
-        x.sa <- seasadj(mstl(na.interp(xx)))
-      } else {
-        x.sa <- na.interp(xx)
+  if (!useoldmodel) {
+    if (m == 1) {
+      if (missing(p)) {
+        p <- max(length(ar(na.interp(xx))$ar), 1)
       }
-      p <- max(length(ar(x.sa)$ar), 1)
-    }
-    if (p >= n) {
-      warning("Reducing number of lagged inputs due to short series")
-      p <- n - 1
-    }
-    if (P > 0 && n >= m * P + 2) {
-      lags <- sort(unique(c(1:p, m * (1:P))))
-    } else {
+      if (p >= n) {
+        warning("Reducing number of lagged inputs due to short series")
+        p <- n - 1
+      }
       lags <- 1:p
-      if (P > 0) {
-        warning("Series too short for seasonal lags")
-        P <- 0
+      if (P > 1) {
+        warning("Non-seasonal data, ignoring seasonal lags")
+      }
+      P <- 0
+    } else {
+      if (missing(p)) {
+        if (n >= 2 * m) {
+          x.sa <- seasadj(mstl(na.interp(xx)))
+        } else {
+          x.sa <- na.interp(xx)
+        }
+        p <- max(length(ar(x.sa)$ar), 1)
+      }
+      if (p >= n) {
+        warning("Reducing number of lagged inputs due to short series")
+        p <- n - 1
+      }
+      if (P > 0 && n >= m * P + 2) {
+        lags <- sort(unique(c(1:p, m * (1:P))))
+      } else {
+        lags <- 1:p
+        if (P > 0) {
+          warning("Series too short for seasonal lags")
+          P <- 0
+        }
       }
     }
   }
