@@ -57,7 +57,7 @@
 #' @param \dots Other arguments passed to \code{\link[nnet]{nnet}} for
 #' \code{nnetar}.
 #' @inheritParams forecast
-#' 
+#'
 #' @return Returns an object of class "\code{nnetar}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the
@@ -218,9 +218,9 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     if (missing(p)) {
       p <- max(length(ar(na.interp(xx))$ar), 1)
     }
-    if (p >= n - 1) {
+    if (p >= n) {
       warning("Reducing number of lagged inputs due to short series")
-      p <- n - 2
+      p <- n - 1
     }
     lags <- 1:p
     if (P > 1) {
@@ -237,9 +237,9 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
       }
       p <- max(length(ar(x.sa)$ar), 1)
     }
-    if (p >= n - 1) {
+    if (p >= n) {
       warning("Reducing number of lagged inputs due to short series")
-      p <- n - 2
+      p <- n - 1
     }
     if (P > 0 && n >= m * P + 2) {
       lags <- sort(unique(c(1:p, m * (1:P))))
@@ -268,9 +268,9 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   j <- j & xsub[-(1:maxlag)]
   ## Fit average ANN.
   if (useoldmodel) {
-    fit <- oldmodel_avnnet(lags.X[j, ], y[j], size = size, model)
+    fit <- oldmodel_avnnet(lags.X[j, , drop = FALSE], y[j], size = size, model)
   } else {
-    fit <- avnnet(lags.X[j, ], y[j], size = size, repeats = repeats, ...)
+    fit <- avnnet(lags.X[j, , drop=FALSE], y[j], size = size, repeats = repeats, ...)
   }
   # Return results
   out <- list()
@@ -289,7 +289,11 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   if (useoldmodel) {
     out$nnetargs <- model$nnetargs
   }
-  fits <- c(rep(NA_real_, maxlag), rowMeans(sapply(fit, predict)))
+  if (NROW(lags.X[j,, drop=FALSE]) == 1){
+    fits <- c(rep(NA_real_, maxlag), mean(sapply(fit, predict)))
+  } else{
+    fits <- c(rep(NA_real_, maxlag), rowMeans(sapply(fit, predict)))
+  }
   if (scale.inputs) {
     fits <- fits * scalex$scale + scalex$center
   }
@@ -381,7 +385,7 @@ print.nnetarmodels <- function(x, ...) {
 #' into a matrix). If present, \code{bootstrap} is ignored.
 #' @param ... Additional arguments passed to \code{\link{simulate.nnetar}}
 #' @inheritParams forecast
-#' 
+#'
 #' @return An object of class "\code{forecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the
