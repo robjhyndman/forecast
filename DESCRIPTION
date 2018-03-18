@@ -34,15 +34,15 @@ LinkingTo:
 LazyData: yes
 ByteCompile: TRUE
 Authors@R: c(
-  person("Rob", "Hyndman", email="Rob.Hyndman@monash.edu", role=c("aut", "cre", "cph")),
-  person("Christoph", "Bergmeir", role="aut"),
+  person("Rob", "Hyndman", email="Rob.Hyndman@monash.edu", role=c("aut", "cre", "cph"), comment = c(ORCID = "0000-0002-2140-5352")),
+  person("Christoph", "Bergmeir", role="aut", comment = c(ORCID = "0000-0002-3665-9021")),
   person("Gabriel", "Caceres", role="aut"),
   person("Mitchell", "O'Hara-Wild", role="aut"),
   person("Slava", "Razbash", role="aut"),
   person("Earo", "Wang", role="aut"),
   person("Daniel", "Reid", role='ctb'),
   person("David", "Shaub", role='ctb'),
-  person("Yuan", "Tang", role='ctb', email = "terrytangyuan@gmail.com", comment = c(ORCID = "0000-0001-5243-233X")),
+  person("Yuan", "Tang", role='ctb', comment = c(ORCID = "0000-0001-5243-233X")),
   person("Zhenyu","Zhou", role='ctb')
   )
 BugReports: https://github.com/robjhyndman/forecast/issues
