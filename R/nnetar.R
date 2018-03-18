@@ -140,9 +140,11 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     # Check for constant data
     constant_data <- is.constant(na.interp(x))
     if (constant_data){
+      warning("Constant data, setting p=1, P=0, lambda=NULL, scale.inputs=FALSE")
       scale.inputs <- FALSE
       lambda <- NULL
       p <- 1
+      P <- 0
     }
   }
   # Check for NAs in x
