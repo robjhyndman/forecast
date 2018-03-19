@@ -108,7 +108,7 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     }
     # Check new data
     m <- max(round(frequency(model$x)), 1L)
-    minlength <- max(c(model$p, model$P * m))
+    minlength <- max(c(model$p, model$P * m)) + 1
     if (length(x) < minlength) {
       stop(paste("Series must be at least of length", minlength, "to use fitted model"))
     }
@@ -130,6 +130,11 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     size <- model$size
     p <- model$p
     P <- model$P
+    if (P > 0) {
+      lags <- sort(unique(c(1:p, m * (1:P))))
+    } else {
+      lags <- 1:p
+    }
     if (is.null(model$scalex)) {
       scale.inputs <- FALSE
     }
