@@ -63,9 +63,11 @@ tsCV <- function(y, forecastfunction, h=1, window=NULL, ...) {
       ), h = h, ...)
     ), silent = TRUE)
     if (!is.element("try-error", class(fc))) {
-      e[i, ] <- y[i + (1:h)] - fc$mean
+      e[i+h, ] <- y[i + (1:h)] - fc$mean
     }
   }
+  tspy <- tsp(y)
+  tsp(e) <- tsp(y)
   if (h == 1) {
     return(e[, 1L])
   } else {
