@@ -32,7 +32,8 @@
 #' @param window Length of the rolling window, if NULL, a rolling window will not be used.
 #' @param ... Other arguments are passed to \code{forecastfunction}.
 #' @return Numerical time series object containing the forecast errors as a vector (if h=1)
-#' and a matrix otherwise.
+#' and a matrix otherwise. The time index corresponds to the last period of the training
+#' data. The columns correspond to the forecast horizons.
 #' @author Rob J Hyndman
 #' @seealso \link{CV}, \link{CVar}, \link{residuals.Arima}, \url{https://robjhyndman.com/hyndsight/tscv/}.
 #'
@@ -50,8 +51,9 @@
 tsCV <- function(y, forecastfunction, h=1, window=NULL, ...) {
   y <- as.ts(y)
   n <- length(y)
-  e <- matrix(NA_real_, nrow = n, ncol = h)
-  for (i in seq_len(n - h))
+  e <- ts(matrix(NA_real_, nrow = n, ncol = h))
+  tsp(e) <- tsp(y)
+  for (i in seq_len(n-1))
   {
     fc <- try(suppressWarnings(
       forecastfunction(subset(
@@ -63,14 +65,13 @@ tsCV <- function(y, forecastfunction, h=1, window=NULL, ...) {
       ), h = h, ...)
     ), silent = TRUE)
     if (!is.element("try-error", class(fc))) {
-      e[i+h, ] <- y[i + (1:h)] - fc$mean
+      e[i, ] <- y[i + (1:h)] - fc$mean
     }
   }
-  tspy <- tsp(y)
-  tsp(e) <- tsp(y)
   if (h == 1) {
     return(e[, 1L])
   } else {
+    colnames(e) <- paste("h=",1:h,sep="")
     return(e)
   }
 }

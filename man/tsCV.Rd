@@ -21,7 +21,8 @@ must have an argument \code{h} for the forecast horizon.}
 }
 \value{
 Numerical time series object containing the forecast errors as a vector (if h=1)
-and a matrix otherwise.
+and a matrix otherwise. The time index corresponds to the last period of the training
+data. The columns correspond to the forecast horizons.
 }
 \description{
 \code{tsCV} computes the forecast errors obtained by applying
