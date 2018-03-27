@@ -23,7 +23,7 @@ the observations and their fitted values.}
 \item{...}{Other arguments not used.}
 }
 \value{
-A \code{ts} object of residuals. When \code{type="innovations"} and \code{lambda} is used, a matrix of time-series consisting of the residuals from each node in the network is returned.
+A \code{ts} object of residuals. When \code{type="innovations"} and \code{lambda} is used, matrix of time-series consisting of the residuals from each of the fitted neural networks is returned.
 }
 \description{
 Returns time series of residuals from a fitted model.
