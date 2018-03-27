@@ -144,7 +144,8 @@ residuals.fracdiff <- function(object, type=c("innovation", "response"), ...) {
   }
 }
 
-#' @rdname residuals.forecast
+#' @inherit residuals.forecast
+#' @return A \code{ts} object of residuals. When \code{type="innovations"} and \code{lambda} is used, matrix of time-series consisting of the residuals from each of the fitted neural networks is returned.
 #' @export
 residuals.nnetar <- function(object, type=c("innovation", "response"), h=1, ...) {
   type <- match.arg(type)
