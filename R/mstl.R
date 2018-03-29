@@ -15,7 +15,7 @@
 #' @param ... Other arguments are passed to \code{\link[stats]{stl}}.
 #' @inheritParams forecast
 #' 
-#' @seealso \code{\link[stats]{stl}}, \code{link[stats]{supsmu}}
+#' @seealso \code{\link[stats]{stl}}, \code{\link[stats]{supsmu}}
 #' @examples
 #' library(ggplot2)
 #' mstl(taylor) %>% autoplot(facet=TRUE)
