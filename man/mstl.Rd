@@ -2,7 +2,7 @@
 % Please edit documentation in R/mstl.R
 \name{mstl}
 \alias{mstl}
-\title{Multiple seasonal  decomposition}
+\title{Multiple seasonal decomposition}
 \usage{
 mstl(x, lambda = NULL, iterate = 2, s.window = 13, ...)
 }

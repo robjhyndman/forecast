@@ -1,4 +1,4 @@
-#' Multiple seasonal  decomposition
+#' Multiple seasonal decomposition
 #'
 #' Decompose a time series into seasonal, trend and remainder components. 
 #' Seasonal components are estimated iteratively using STL. Multiple seasonal periods are
