@@ -13,6 +13,8 @@
 #' variables, the errors will be identical to the original series (possibly
 #' adjusted to have zero mean).  \code{arima.errors} is a deprecated function
 #' which is identical to \code{residuals.Arima(object, type="regression")}.
+#' For \code{nnetar} objects, when \code{type="innovations"} and \code{lambda} is used, a
+#' matrix of time-series consisting of the residuals from each of the fitted neural networks is returned.
 #'
 #' @param object An object containing a time series model of class \code{ar},
 #' \code{Arima}, \code{bats}, \code{ets}, \code{fracdiff}, \code{nnetar} or
@@ -24,7 +26,7 @@
 #' @param h If \code{type='response'}, then the fitted values are computed for
 #' \code{h}-step forecasts.
 #' @param ... Other arguments not used.
-#' @return A \code{ts} object
+#' @return A \code{ts} object.
 #' @author Rob J Hyndman
 #' @seealso \code{\link{fitted.Arima}}, \code{\link{checkresiduals}}.
 #' @keywords ts
@@ -144,8 +146,7 @@ residuals.fracdiff <- function(object, type=c("innovation", "response"), ...) {
   }
 }
 
-#' @inherit residuals.forecast
-#' @return A \code{ts} object of residuals. When \code{type="innovations"} and \code{lambda} is used, matrix of time-series consisting of the residuals from each of the fitted neural networks is returned.
+#' @rdname residuals.forecast
 #' @export
 residuals.nnetar <- function(object, type=c("innovation", "response"), h=1, ...) {
   type <- match.arg(type)
@@ -174,4 +175,10 @@ residuals.stlm <- function(object, type=c("innovation", "response"), ...) {
   } else {
     getResponse(object) - fitted(object)
   }
+}
+
+#' @rdname residuals.forecast
+#' @export
+residuals.tslm <- function(object, ...) {
+  object$residuals
 }

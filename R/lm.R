@@ -19,7 +19,7 @@
 #' results, pass a logical vector of rows to keep. Also supports
 #' \code{\link[base]{subset}()} functions.
 #' @inheritParams forecast
-#' 
+#'
 #' @param ... Other arguments passed to \code{\link[stats]{lm}()}
 #' @return Returns an object of class "lm".
 #' @author Mitchell O'Hara-Wild and Rob J Hyndman
@@ -198,7 +198,7 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...) {
 #' time series attributes of the original data will be ignored.
 #' @param ... Other arguments passed to \code{\link[stats]{predict.lm}()}.
 #' @inheritParams forecast
-#' 
+#'
 #' @return An object of class "\code{forecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the
@@ -501,10 +501,4 @@ CV <- function(obj) {
   out <- c(cv, aic, aicc, bic, adjr2)
   names(out) <- c("CV", "AIC", "AICc", "BIC", "AdjR2")
   return(out)
-}
-
-#' @rdname residuals.forecast
-#' @export
-residuals.tslm <- function(object, ...) {
-  object$residuals
 }
