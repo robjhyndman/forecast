@@ -118,6 +118,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
   y <- na.contiguous(y)
   if (ny != length(y)) {
     warning("Missing values encountered. Using longest contiguous portion of time series")
+    ny <- length(y)
   }
 
   orig.y <- y
