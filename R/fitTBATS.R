@@ -1,7 +1,7 @@
 fitPreviousTBATSModel <- function(y, model, biasadj=FALSE) {
   seasonal.periods <- model$seasonal.periods
   if (is.null(seasonal.periods) == FALSE) {
-    seasonal.periods <- as.integer(sort(seasonal.periods))
+    seasonal.periods <- sort(seasonal.periods)
   }
   # Get the parameters out of the param.vector
   paramz <- unParameteriseTBATS(model$parameters$vect, model$parameters$control)
