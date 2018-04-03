@@ -1,12 +1,12 @@
 #' Multiple seasonal decomposition
 #'
-#' Decompose a time series into seasonal, trend and remainder components. 
+#' Decompose a time series into seasonal, trend and remainder components.
 #' Seasonal components are estimated iteratively using STL. Multiple seasonal periods are
-#' allowed. The trend component is computed for the last iteration of STL. 
-#' Non-seasonal time series are decomposed into trend and remainder only. 
+#' allowed. The trend component is computed for the last iteration of STL.
+#' Non-seasonal time series are decomposed into trend and remainder only.
 #' In this case, \code{\link[stats]{supsmu}} is used to estimate the trend.
 #' Optionally, the time series may be Box-Cox transformed before decomposition.
-#' Unlike \code{\link[stats]{stl}}, \code{mstl} is completely automated. 
+#' Unlike \code{\link[stats]{stl}}, \code{mstl} is completely automated.
 #' @param x Univariate time series of class \code{msts} or \code{ts}.
 #' @param iterate Number of iterations to use to refine the seasonal component.
 #' @param s.window Seasonal windows to be used in the  decompositions. If scalar,
@@ -14,7 +14,7 @@
 #' of the same length as the number of seasonal components.
 #' @param ... Other arguments are passed to \code{\link[stats]{stl}}.
 #' @inheritParams forecast
-#' 
+#'
 #' @seealso \code{\link[stats]{stl}}, \code{\link[stats]{supsmu}}
 #' @examples
 #' library(ggplot2)
@@ -47,19 +47,18 @@ mstl <- function(x, lambda=NULL, iterate=2, s.window=13, ...) {
       x <- x[,1]
   }
 
-  # Transform if necessary
-  if (!is.null(lambda)) {
-    x <- forecast::BoxCox(x, lambda = lambda)
-    lambda <- attr(x, "lambda")
-  }
-  tt <- seq_len(n)
-
   # Replace missing values if necessary
   origx <- x
   if (anyNA(x)) {
     x <- na.interp(x, lambda = lambda)
   }
 
+  # Transform if necessary
+  if (!is.null(lambda)) {
+    x <- forecast::BoxCox(x, lambda = lambda)
+    lambda <- attr(x, "lambda")
+  }
+  tt <- seq_len(n)
 
   # Now fit stl models with only one type of seasonality at a time
   if (msts[1L] > 1) {
@@ -214,7 +213,7 @@ autoplot.mstl <- function(object, ...) {
 #' @param ... Other arguments passed to \code{forecast.stl},
 #' \code{modelfunction} or \code{forecastfunction}.
 #' @inheritParams forecast
-#' 
+#'
 #' @return \code{stlm} returns an object of class \code{stlm}. The other
 #' functions return objects of class \code{forecast}.
 #'
