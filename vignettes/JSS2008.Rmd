@@ -40,6 +40,7 @@ preamble: >
   \def\damped{$_{\mbox{\footnotesize d}}$}
   \let\var=\VAR
   \def\R{\proglang{R}}
+  \def\dampfactor{\phi_h}
 bibliography: JSS-paper.bib
 vignette: >
   %\VignetteIndexEntry{Automatic Time Series Forecasting: the forecast Package for R (Hyndman & Khandakar, JSS 2008)}
@@ -158,7 +159,6 @@ Holt-Winters' method.
 
 
 \begin{sidewaystable}
-\def\dampfactor{\phi_h}
 \begin{small}
 \begin{center}
 \begin{tabular}{|c|lll|} \hline
