@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Residuals for various time series models — residuals.tslm • forecast</title>
+<title>Residuals for various time series models — residuals.forecast • forecast</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -27,7 +27,7 @@
 <script src="../pkgdown.js"></script>
   
   
-<meta property="og:title" content="Residuals for various time series models — residuals.tslm" />
+<meta property="og:title" content="Residuals for various time series models — residuals.forecast" />
 
 <meta property="og:description" content="Returns time series of residuals from a fitted model." />
 
@@ -95,10 +95,7 @@
     <p>Returns time series of residuals from a fitted model.</p>
     
 
-    <pre class="usage"><span class='co'># S3 method for tslm</span>
-<span class='fu'>residuals</span>(<span class='no'>object</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for forecast</span>
+    <pre class="usage"><span class='co'># S3 method for forecast</span>
 <span class='fu'>residuals</span>(<span class='no'>object</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"innovation"</span>, <span class='st'>"response"</span>), <span class='no'>...</span>)
 
 <span class='co'># S3 method for ar</span>
@@ -128,7 +125,10 @@
   <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for stlm</span>
-<span class='fu'>residuals</span>(<span class='no'>object</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"innovation"</span>, <span class='st'>"response"</span>), <span class='no'>...</span>)</pre>
+<span class='fu'>residuals</span>(<span class='no'>object</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"innovation"</span>, <span class='st'>"response"</span>), <span class='no'>...</span>)
+
+<span class='co'># S3 method for tslm</span>
+<span class='fu'>residuals</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -143,12 +143,12 @@ If <code>object</code> is of class <code>forecast</code>, then the function will
 the observations and their fitted values.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Other arguments not used.</p></td>
-    </tr>
-    <tr>
       <th>type</th>
       <td><p>Type of residual.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Other arguments not used.</p></td>
     </tr>
     <tr>
       <th>h</th>
@@ -159,7 +159,7 @@ the observations and their fitted values.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>ts</code> object</p>
+    <p>A <code>ts</code> object.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -173,7 +173,9 @@ regression models with ARIMA errors, and are equal to the original data
 minus the effect of the regression variables. If there are no regression
 variables, the errors will be identical to the original series (possibly
 adjusted to have zero mean).  <code>arima.errors</code> is a deprecated function
-which is identical to <code>residuals.Arima(object, type="regression")</code>.</p>
+which is identical to <code>residuals.Arima(object, type="regression")</code>.
+For <code>nnetar</code> objects, when <code>type="innovations"</code> and <code>lambda</code> is used, a
+matrix of time-series consisting of the residuals from each of the fitted neural networks is returned.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

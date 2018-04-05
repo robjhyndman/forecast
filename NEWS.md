@@ -1,4 +1,4 @@
-## Version 8.3 (14 March 2018)
+## Version 8.3 (5 April 2018)
   * Added mstl() to handle multiple seasonal decomposition
   * stlf(), stlm(), tsoutliers() and tsclean() all now use mstl().
   * Updated tsCV() to handle multiple horizons

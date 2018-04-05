@@ -62,75 +62,71 @@
       
       </header><div class="row">
   <div class="contents col-md-9">
-    <div id="forecast" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#forecast" class="anchor"></a>forecast <img src="reference/figures/logo.png" align="right">
+    <div class="section level1">
+<div class="page-header"><h1>forecast <img src="reference/figures/logo.png" align="right">
 </h1></div>
 
 <p>The R package <em>forecast</em> provides methods and tools for displaying and analysing univariate time series forecasts including exponential smoothing via state space models and automatic ARIMA modelling.</p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="section level2">
+<h2>Installation</h2>
 <p>You can install the <strong>stable</strong> version from <a href="https://cran.r-project.org/package=forecast">CRAN</a>.</p>
-<div class="sourceCode"><pre class="sourceCode s"><code class="sourceCode gnuassembler">install.packages(<span class="ch">'f</span>orecast<span class="ch">',</span> dependencies = TRUE)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><a class="sourceLine" id="cb1-1" data-line-number="1">install.packages(<span class="ch">'f</span>orecast<span class="ch">',</span> dependencies = TRUE)</a></code></pre></div>
 <p>You can install the <strong>development</strong> version from <a href="https://github.com/robjhyndman/forecast">Github</a></p>
-<div class="sourceCode"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><span class="co"># install.packages("devtools")</span>
-<span class="kw">devtools::</span>install_github(<span class="st">"robjhyndman/forecast"</span>)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">devtools::</span>install_github(<span class="st">"robjhyndman/forecast"</span>)</a></code></pre></div>
 </div>
-<div id="usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
-<div class="sourceCode"><pre class="sourceCode s"><code class="sourceCode gnuassembler">library(forecast)
-library(ggplot2)
-
-<span class="co"># ETS forecasts</span>
-USAccDeaths %&gt;%
-  ets() %&gt;%
-  forecast() %&gt;%
-  autoplot()
-
-<span class="co"># Automatic ARIMA forecasts</span>
-WWWusage %&gt;%
-  auto.arima() %&gt;%
-  forecast(h=<span class="dv">20</span>) %&gt;%
-  autoplot()
-
-<span class="co"># ARFIMA forecasts</span>
-library(fracdiff)
-x &lt;- fracdiff.sim( <span class="dv">100</span>, ma=-.4, d=.3)$series
-arfima(x) %&gt;%
-  forecast(h=<span class="dv">30</span>) %&gt;%
-  autoplot()
-
-<span class="co"># Forecasting with STL</span>
-USAccDeaths %&gt;%
-  stlm(modelfunction=ar) %&gt;%
-  forecast(h=<span class="dv">36</span>) %&gt;%
-  autoplot()
-
-AirPassengers %&gt;%
-  stlf(lambda=<span class="dv">0</span>) %&gt;%
-  autoplot()
-
-USAccDeaths %&gt;%
-  stl(s.window=<span class="ch">'p</span>eriodic<span class="ch">')</span> %&gt;%
-  forecast() %&gt;%
-  autoplot()
-
-<span class="co"># TBATS forecasts</span>
-USAccDeaths %&gt;%
-  tbats() %&gt;%
-  forecast() %&gt;%
-  autoplot()
-
-taylor %&gt;%
-  tbats() %&gt;%
-  forecast() %&gt;%
-  autoplot()</code></pre></div>
+<div class="section level2">
+<h2>Usage</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><a class="sourceLine" id="cb3-1" data-line-number="1">library(forecast)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">library(ggplot2)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co"># ETS forecasts</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">USAccDeaths %&gt;%</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">  ets() %&gt;%</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">  forecast() %&gt;%</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">  autoplot()</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co"># Automatic ARIMA forecasts</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">WWWusage %&gt;%</a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">  auto.arima() %&gt;%</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">  forecast(h=<span class="dv">20</span>) %&gt;%</a>
+<a class="sourceLine" id="cb3-14" data-line-number="14">  autoplot()</a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co"># ARFIMA forecasts</span></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17">library(fracdiff)</a>
+<a class="sourceLine" id="cb3-18" data-line-number="18">x &lt;- fracdiff.sim( <span class="dv">100</span>, ma=-.4, d=.3)$series</a>
+<a class="sourceLine" id="cb3-19" data-line-number="19">arfima(x) %&gt;%</a>
+<a class="sourceLine" id="cb3-20" data-line-number="20">  forecast(h=<span class="dv">30</span>) %&gt;%</a>
+<a class="sourceLine" id="cb3-21" data-line-number="21">  autoplot()</a>
+<a class="sourceLine" id="cb3-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb3-23" data-line-number="23"><span class="co"># Forecasting with STL</span></a>
+<a class="sourceLine" id="cb3-24" data-line-number="24">USAccDeaths %&gt;%</a>
+<a class="sourceLine" id="cb3-25" data-line-number="25">  stlm(modelfunction=ar) %&gt;%</a>
+<a class="sourceLine" id="cb3-26" data-line-number="26">  forecast(h=<span class="dv">36</span>) %&gt;%</a>
+<a class="sourceLine" id="cb3-27" data-line-number="27">  autoplot()</a>
+<a class="sourceLine" id="cb3-28" data-line-number="28"></a>
+<a class="sourceLine" id="cb3-29" data-line-number="29">AirPassengers %&gt;%</a>
+<a class="sourceLine" id="cb3-30" data-line-number="30">  stlf(lambda=<span class="dv">0</span>) %&gt;%</a>
+<a class="sourceLine" id="cb3-31" data-line-number="31">  autoplot()</a>
+<a class="sourceLine" id="cb3-32" data-line-number="32"></a>
+<a class="sourceLine" id="cb3-33" data-line-number="33">USAccDeaths %&gt;%</a>
+<a class="sourceLine" id="cb3-34" data-line-number="34">  stl(s.window=<span class="ch">'p</span>eriodic<span class="ch">')</span> %&gt;%</a>
+<a class="sourceLine" id="cb3-35" data-line-number="35">  forecast() %&gt;%</a>
+<a class="sourceLine" id="cb3-36" data-line-number="36">  autoplot()</a>
+<a class="sourceLine" id="cb3-37" data-line-number="37"></a>
+<a class="sourceLine" id="cb3-38" data-line-number="38"><span class="co"># TBATS forecasts</span></a>
+<a class="sourceLine" id="cb3-39" data-line-number="39">USAccDeaths %&gt;%</a>
+<a class="sourceLine" id="cb3-40" data-line-number="40">  tbats() %&gt;%</a>
+<a class="sourceLine" id="cb3-41" data-line-number="41">  forecast() %&gt;%</a>
+<a class="sourceLine" id="cb3-42" data-line-number="42">  autoplot()</a>
+<a class="sourceLine" id="cb3-43" data-line-number="43"></a>
+<a class="sourceLine" id="cb3-44" data-line-number="44">taylor %&gt;%</a>
+<a class="sourceLine" id="cb3-45" data-line-number="45">  tbats() %&gt;%</a>
+<a class="sourceLine" id="cb3-46" data-line-number="46">  forecast() %&gt;%</a>
+<a class="sourceLine" id="cb3-47" data-line-number="47">  autoplot()</a></code></pre></div>
 </div>
-<div id="for-more-information" class="section level2">
-<h2 class="hasAnchor">
-<a href="#for-more-information" class="anchor"></a>For more information</h2>
+<div class="section level2">
+<h2>For more information</h2>
 <ul>
 <li>Get started in forecasting with the online textbook at <a href="http://OTexts.org/fpp2/" class="uri">http://OTexts.org/fpp2/</a>
 </li>
@@ -144,9 +140,8 @@ taylor %&gt;%
 </li>
 </ul>
 </div>
-<div id="license" class="section level2">
-<h2 class="hasAnchor">
-<a href="#license" class="anchor"></a>License</h2>
+<div class="section level2">
+<h2>License</h2>
 <p>This package is free and open source software, licensed under GPL-3.</p>
 </div>
 </div>
@@ -171,9 +166,9 @@ taylor %&gt;%
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>
-<a href="http://robjhyndman.com">Rob Hyndman</a> <br><small class="roles"> Author, maintainer, copyright holder </small>  </li>
+<a href="http://robjhyndman.com">Rob Hyndman</a> <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0002-2140-5352" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid"></a> </li>
 <li>
-<a href="https://github.com/cbergmeir">Christoph Bergmeir</a> <br><small class="roles"> Author </small>  </li>
+<a href="https://github.com/cbergmeir">Christoph Bergmeir</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-3665-9021" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid"></a> </li>
 <li>
 <a href="https://github.com/gabrielcaceres">Gabriel Caceres</a> <br><small class="roles"> Author </small>  </li>
 <li>
