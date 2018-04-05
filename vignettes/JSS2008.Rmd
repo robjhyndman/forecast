@@ -41,6 +41,7 @@ preamble: >
   \let\var=\VAR
   \def\R{\proglang{R}}
   \def\dampfactor{\phi_h}
+  \raggedbottom
 bibliography: JSS-paper.bib
 vignette: >
   %\VignetteIndexEntry{Automatic Time Series Forecasting: the forecast Package for R (Hyndman & Khandakar, JSS 2008)}
