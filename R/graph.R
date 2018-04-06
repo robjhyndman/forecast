@@ -34,9 +34,9 @@
 #' @author Rob J Hyndman
 #' @seealso \code{\link[stats]{plot.ts}}, \code{\link{Acf}},
 #' \code{\link[stats]{spec.ar}}
-#' @references Hyndman and Athanasopoulos (2014) \emph{Forecasting: principles
-#' and practice}, OTexts: Melbourne, Australia.
-#' \url{http://www.otexts.org/fpp/}
+#' @references Hyndman and Athanasopoulos (2018) \emph{Forecasting: principles
+#' and practice}, 2nd edition, OTexts: Melbourne, Australia.
+#' \url{https://OTexts.org/fpp2/}
 #' @keywords ts
 #' @examples
 #' tsdisplay(diff(WWWusage))
@@ -128,9 +128,9 @@ tsdisplay <- function(x, plot.type=c("partial", "histogram", "scatter", "spectru
 #' @return None.
 #' @author Rob J Hyndman & Mitchell O'Hara-Wild
 #' @seealso \code{\link[stats]{monthplot}}
-#' @references Hyndman and Athanasopoulos (2014) \emph{Forecasting: principles
-#' and practice}, OTexts: Melbourne, Australia.
-#' \url{http://www.otexts.org/fpp/}
+#' @references Hyndman and Athanasopoulos (2018) \emph{Forecasting: principles
+#' and practice}, 2nd edition, OTexts: Melbourne, Australia.
+#' \url{https://OTexts.org/fpp2/}
 #' @keywords ts
 #' @examples
 #' seasonplot(AirPassengers, col=rainbow(12), year.labels=TRUE)

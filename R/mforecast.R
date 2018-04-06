@@ -213,9 +213,9 @@ print.mforecast <- function(x, ...) {
 #' @param \dots additional arguments to each individual \code{plot}.
 #' @author Mitchell O'Hara-Wild
 #' @seealso \code{\link[forecast]{plot.forecast}}, \code{\link[stats]{plot.ts}}
-#' @references Hyndman and Athanasopoulos (2014) \emph{Forecasting: principles
-#' and practice}, OTexts: Melbourne, Australia.
-#' \url{http://www.otexts.org/fpp/}
+#' @references Hyndman and Athanasopoulos (2018) \emph{Forecasting: principles
+#' and practice}, 2nd edition, OTexts: Melbourne, Australia.
+#' \url{https://OTexts.org/fpp2/}
 #' @keywords ts
 #' @examples
 #' library(ggplot2)

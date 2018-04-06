@@ -438,8 +438,9 @@ zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, seasonal="additive"
 #' \emph{Forecasting with exponential smoothing: the state space approach},
 #' Springer-Verlag: New York. \url{http://www.exponentialsmoothing.net}.
 #'
-#' Hyndman, R.J., Athanasopoulos (2014) \emph{Forecasting: principles and
-#' practice}, OTexts: Melbourne, Australia. \url{http://www.otexts.org/fpp}.
+#' @references Hyndman and Athanasopoulos (2018) \emph{Forecasting: principles
+#' and practice}, 2nd edition, OTexts: Melbourne, Australia.
+#' \url{https://OTexts.org/fpp2/}
 #' @keywords ts
 #' @examples
 #'
