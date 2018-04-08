@@ -25,8 +25,6 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
 <meta property="og:title" content="Forecasting using a bagged model — baggedModel" />
 
 <meta property="og:description" content="The bagged model forecasting method." />
@@ -89,6 +87,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Forecasting using a bagged model</h1>
+    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/baggedModel.R'><code>R/baggedModel.R</code></a></small>
     </div>
 
     
@@ -144,8 +143,8 @@ bootstrapped series. Base models other than <code><a href='ets.html'>ets</a></co
 parameter <code>fn</code>. Using the default parameters, the function
 <code><a href='bld.mbb.bootstrap.html'>bld.mbb.bootstrap</a></code> is used to calculate the bootstrapped series
 with the Box-Cox and Loess-based decomposition (BLD) bootstrap. The function
-<code><a href='forecast.baggedModel.html'>forecast.baggedModel</a></code> can then be used to calculate forecasts.
-    <code>baggedETS</code> is a wrapper for <code>baggedModel</code>, setting <code>fn</code> to "ets".
+<code><a href='forecast.baggedModel.html'>forecast.baggedModel</a></code> can then be used to calculate forecasts.</p>
+<p><code>baggedETS</code> is a wrapper for <code>baggedModel</code>, setting <code>fn</code> to "ets".
 This function is included for backwards compatibility only, and may be
 deprecated in the future.</p>
     
@@ -185,7 +184,7 @@ Christoph Bergmeir, Fotios Petropoulos
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://robjhyndman.com'>Rob Hyndman</a>, <a href='https://github.com/cbergmeir'>Christoph Bergmeir</a>, <a href='https://github.com/gabrielcaceres'>Gabriel Caceres</a>, <a href='https://github.com/mitchelloharawild'>Mitchell O'Hara-Wild</a>, <a href='https://github.com/slavarazbash'>Slava Razbash</a>, <a href='http://earo.me'>Earo Wang</a>.</p>
+  <p>Developed by <a href='http://robjhyndman.com'>Rob Hyndman</a>, <a href='https://github.com/cbergmeir'>Christoph Bergmeir</a>, <a href='https://github.com/gabrielcaceres'>Gabriel Caceres</a>, <a href='https://github.com/mitchelloharawild'>Mitchell O'Hara-Wild</a>, Fotios Petropoulos, <a href='https://github.com/slavarazbash'>Slava Razbash</a>, <a href='http://earo.me'>Earo Wang</a>, Farah Yasmeen.</p>
 </div>
 
 <div class="pkgdown">

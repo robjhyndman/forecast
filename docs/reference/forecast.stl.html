@@ -25,8 +25,6 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
 <meta property="og:title" content="Forecasting using stl objects — forecast.stl" />
 
 <meta property="og:description" content="Forecasts of STL objects are obtained by applying a non-seasonal forecasting
@@ -91,6 +89,7 @@ year of the seasonal component." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Forecasting using stl objects</h1>
+    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/mstl.R'><code>R/mstl.R</code></a></small>
     </div>
 
     
@@ -247,16 +246,16 @@ models the seasonally adjusted data using the model passed as
 <code>modelfunction</code> or specified using <code>method</code>. It returns an object
 that includes the original STL decomposition and a time series model fitted
 to the seasonally adjusted data. This object can be passed to the
-<code>forecast.stlm</code> for forecasting.
-    <code>forecast.stlm</code> forecasts the seasonally adjusted data, then
+<code>forecast.stlm</code> for forecasting.</p>
+<p><code>forecast.stlm</code> forecasts the seasonally adjusted data, then
 re-seasonalizes the results by adding back the last year of the estimated
-seasonal component.
-    <code>stlf</code> combines <code>stlm</code> and <code>forecast.stlm</code>. It takes a
+seasonal component.</p>
+<p><code>stlf</code> combines <code>stlm</code> and <code>forecast.stlm</code>. It takes a
 <code>ts</code> argument, applies an STL decomposition, models the seasonally
 adjusted data, reseasonalizes, and returns the forecasts. However, it allows
 more general forecasting methods to be specified via
-<code>forecastfunction</code>.
-    <code>forecast.stl</code> is similar to <code>stlf</code> except that it takes the STL
+<code>forecastfunction</code>.</p>
+<p><code>forecast.stl</code> is similar to <code>stlf</code> except that it takes the STL
 decomposition as the first argument, instead of the time series.</p>
 <p>Note that the prediction intervals ignore the uncertainty associated with
 the seasonal component. They are computed using the prediction intervals
@@ -320,7 +319,7 @@ Rob J Hyndman
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='http://robjhyndman.com'>Rob Hyndman</a>, <a href='https://github.com/cbergmeir'>Christoph Bergmeir</a>, <a href='https://github.com/gabrielcaceres'>Gabriel Caceres</a>, <a href='https://github.com/mitchelloharawild'>Mitchell O'Hara-Wild</a>, <a href='https://github.com/slavarazbash'>Slava Razbash</a>, <a href='http://earo.me'>Earo Wang</a>.</p>
+  <p>Developed by <a href='http://robjhyndman.com'>Rob Hyndman</a>, <a href='https://github.com/cbergmeir'>Christoph Bergmeir</a>, <a href='https://github.com/gabrielcaceres'>Gabriel Caceres</a>, <a href='https://github.com/mitchelloharawild'>Mitchell O'Hara-Wild</a>, Fotios Petropoulos, <a href='https://github.com/slavarazbash'>Slava Razbash</a>, <a href='http://earo.me'>Earo Wang</a>, Farah Yasmeen.</p>
 </div>
 
 <div class="pkgdown">
