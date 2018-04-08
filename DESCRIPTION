@@ -35,9 +35,10 @@ LazyData: yes
 ByteCompile: TRUE
 Authors@R: c(
   person("Rob", "Hyndman", email="Rob.Hyndman@monash.edu", role=c("aut", "cre", "cph"), comment = c(ORCID = "0000-0002-2140-5352")),
+  person("George", "Athanasopoulos", role='aut'),
   person("Christoph", "Bergmeir", role="aut", comment = c(ORCID = "0000-0002-3665-9021")),
   person("Gabriel", "Caceres", role="aut"),
-  person("Leanne", "Chhay", role='ctb'),
+  person("Leanne", "Chhay", role='aut'),
   person("Mitchell", "O'Hara-Wild", role="aut"),
   person("Fotios", "Petropoulos", role='aut', comment=c(ORCID = "0000-0003-3039-4955")),
   person("Slava", "Razbash", role="aut"),
