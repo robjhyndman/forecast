@@ -62,21 +62,24 @@
       
       </header><div class="row">
   <div class="contents col-md-9">
-    <div class="section level1">
-<div class="page-header"><h1>forecast <img src="reference/figures/logo.png" align="right">
+    <div id="forecast" class="section level1">
+<div class="page-header"><h1 class="hasAnchor">
+<a href="#forecast" class="anchor"></a>forecast <img src="reference/figures/logo.png" align="right">
 </h1></div>
 
 <p>The R package <em>forecast</em> provides methods and tools for displaying and analysing univariate time series forecasts including exponential smoothing via state space models and automatic ARIMA modelling.</p>
-<div class="section level2">
-<h2>Installation</h2>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install the <strong>stable</strong> version from <a href="https://cran.r-project.org/package=forecast">CRAN</a>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><a class="sourceLine" id="cb1-1" data-line-number="1">install.packages(<span class="ch">'f</span>orecast<span class="ch">',</span> dependencies = TRUE)</a></code></pre></div>
 <p>You can install the <strong>development</strong> version from <a href="https://github.com/robjhyndman/forecast">Github</a></p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">devtools::</span>install_github(<span class="st">"robjhyndman/forecast"</span>)</a></code></pre></div>
 </div>
-<div class="section level2">
-<h2>Usage</h2>
+<div id="usage" class="section level2">
+<h2 class="hasAnchor">
+<a href="#usage" class="anchor"></a>Usage</h2>
 <div class="sourceCode" id="cb3"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><a class="sourceLine" id="cb3-1" data-line-number="1">library(forecast)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">library(ggplot2)</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"></a>
@@ -125,8 +128,9 @@
 <a class="sourceLine" id="cb3-46" data-line-number="46">  forecast() %&gt;%</a>
 <a class="sourceLine" id="cb3-47" data-line-number="47">  autoplot()</a></code></pre></div>
 </div>
-<div class="section level2">
-<h2>For more information</h2>
+<div id="for-more-information" class="section level2">
+<h2 class="hasAnchor">
+<a href="#for-more-information" class="anchor"></a>For more information</h2>
 <ul>
 <li>Get started in forecasting with the online textbook at <a href="http://OTexts.org/fpp2/" class="uri">http://OTexts.org/fpp2/</a>
 </li>
@@ -140,8 +144,9 @@
 </li>
 </ul>
 </div>
-<div class="section level2">
-<h2>License</h2>
+<div id="license" class="section level2">
+<h2 class="hasAnchor">
+<a href="#license" class="anchor"></a>License</h2>
 <p>This package is free and open source software, licensed under GPL-3.</p>
 </div>
 </div>
@@ -167,16 +172,21 @@
 <ul class="list-unstyled">
 <li>
 <a href="http://robjhyndman.com">Rob Hyndman</a> <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0002-2140-5352" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid"></a> </li>
+<li>George Athanasopoulos <br><small class="roles"> Author </small>  </li>
 <li>
 <a href="https://github.com/cbergmeir">Christoph Bergmeir</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-3665-9021" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid"></a> </li>
 <li>
 <a href="https://github.com/gabrielcaceres">Gabriel Caceres</a> <br><small class="roles"> Author </small>  </li>
+<li>Leanne Chhay <br><small class="roles"> Author </small>  </li>
 <li>
 <a href="https://github.com/mitchelloharawild">Mitchell O'Hara-Wild</a> <br><small class="roles"> Author </small>  </li>
+<li>
+<a href="http://fpetropoulos.eu">Fotios Petropoulos</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-3039-4955" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid"></a> </li>
 <li>
 <a href="https://github.com/slavarazbash">Slava Razbash</a> <br><small class="roles"> Author </small>  </li>
 <li>
 <a href="http://earo.me">Earo Wang</a> <br><small class="roles"> Author </small>  </li>
+<li>Farah Yasmeen <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-1479-5401" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid"></a> </li>
 <li><a href="authors.html">All authors...</a></li>
 </ul>
 <h2>Dev status</h2>
@@ -191,7 +201,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="http://robjhyndman.com">Rob Hyndman</a>, <a href="https://github.com/cbergmeir">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres">Gabriel Caceres</a>, <a href="https://github.com/mitchelloharawild">Mitchell O'Hara-Wild</a>, <a href="https://github.com/slavarazbash">Slava Razbash</a>, <a href="http://earo.me">Earo Wang</a>.</p>
+  <p>Developed by <a href="http://robjhyndman.com">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres">Gabriel Caceres</a>, Leanne Chhay, <a href="https://github.com/mitchelloharawild">Mitchell O'Hara-Wild</a>, <a href="http://fpetropoulos.eu">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash">Slava Razbash</a>, <a href="http://earo.me">Earo Wang</a>, Farah Yasmeen.</p>
 </div>
 
 <div class="pkgdown">

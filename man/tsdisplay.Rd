@@ -69,9 +69,9 @@ ggtsdisplay(USAccDeaths, plot.type="scatter")
 
 }
 \references{
-Hyndman and Athanasopoulos (2014) \emph{Forecasting: principles
-and practice}, OTexts: Melbourne, Australia.
-\url{http://www.otexts.org/fpp/}
+Hyndman and Athanasopoulos (2018) \emph{Forecasting: principles
+and practice}, 2nd edition, OTexts: Melbourne, Australia.
+\url{https://OTexts.org/fpp2/}
 }
 \seealso{
 \code{\link[stats]{plot.ts}}, \code{\link{Acf}},
