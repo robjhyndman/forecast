@@ -524,7 +524,7 @@ autoplot.ets <- function(object, range.bars = NULL, ...) {
       p <- p + ggplot2::geom_rect(ggplot2::aes_(xmin = ~left, xmax = ~right, ymax = ~top, ymin = ~bottom), data = barpos, fill = "gray75", colour = "black", size = 1 / 3)
     }
 
-    p <- p + ggAddExtras(xlab = NULL, ylab = "", main = paste("Decomposition by", object$method, "method"))
+    p <- p + ggAddExtras(xlab = NULL, ylab = "", main = paste("Components of", object$method, "method"))
     return(p)
   }
 }
@@ -570,7 +570,7 @@ autoplot.bats <- function(object, range.bars = FALSE, ...) {
     p <- p + ggplot2::geom_rect(ggplot2::aes_(xmin = ~left, xmax = ~right, ymax = ~top, ymin = ~bottom), data = barpos, fill = "gray75", colour = "black", size = 1 / 3)
   }
 
-  p <- p + ggAddExtras(xlab = NULL, ylab = "", main = paste("Decomposition by", object$method, "method"))
+  p <- p + ggAddExtras(xlab = NULL, ylab = "", main = paste("Components of", object$method, "method"))
   return(p)
 }
 
