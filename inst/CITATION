@@ -17,7 +17,7 @@ citHeader("To cite the forecast package in publications, please use:")
 
 bibentry(bibtype = "Manual",
   title = "{forecast}: Forecasting functions for time series and linear models",
-  author = "Rob Hyndman and Christoph Bergmeir and Gabriel Caceres and Leanne Chhay and Mitchell O'Hara-Wild and Fotios Petropoulos and Slava Razbash and Earo Wang and Farah Yasmeen",
+  author = "Rob Hyndman and George Athanasopoulos and Christoph Bergmeir and Gabriel Caceres and Leanne Chhay and Mitchell O'Hara-Wild and Fotios Petropoulos and Slava Razbash and Earo Wang and Farah Yasmeen",
   year = year,
   note = vers,
   url = "http://pkg.robjhyndman.com/forecast")
