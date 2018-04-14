@@ -27,9 +27,20 @@ if (require(testthat)) {
           iextracted <- fitarima$arma[6]
           maextracted <- fitarima$arma[2]
           expect_true(all(arimaorder(fitarima) == c(arextracted, iextracted, maextracted)))
+          expect_true(all(names(arimaorder(fitarima)) %in% c("p", "d", "q")))
+          expect_true(arimaorder(fitarima)["p"] == ar)
+          expect_true(arimaorder(fitarima)["d"] == i)
+          expect_true(arimaorder(fitarima)["q"] == ma)
         }
       }
     }
+
+    # Test ar
+    arMod <- ar(lynx, order.max = 2)
+    expect_true(arimaorder(arMod)["p"] == 2)
+    expect_true(arimaorder(arMod)["d"] == 0)
+    expect_true(arimaorder(arMod)["q"] == 0)
+    expect_true(all(names(arimaorder(arMod)) == c("p", "d", "q"))
   })
 
   test_that("tests for forecast.Arima", {

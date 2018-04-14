@@ -895,6 +895,7 @@ print.ARIMA <- function(x, digits=max(3, getOption("digits") - 3), se=TRUE, ...)
 arimaorder <- function(object) {
   if (is.element("Arima", class(object))) {
     order <- object$arma[c(1, 6, 2, 3, 7, 4, 5)]
+    names(order) <- c("p", "d", "q", "P", "D", "Q", "Frequency")
     seasonal <- (order[7] > 1 & sum(order[4:6]) > 0)
     if (seasonal) {
       return(order)
@@ -903,10 +904,10 @@ arimaorder <- function(object) {
     }
   }
   else if (is.element("ar", class(object))) {
-    return(c(object$order, 0, 0))
+    return(c("p" = object$order, "d" = 0, "q" = 0))
   }
   else if (is.element("fracdiff", class(object))) {
-    return(c(length(object$ar), object$d, length(object$ma)))
+    return(c("p" = length(object$ar), "d" = object$d, "q" = length(object$ma)))
   }
   else {
     stop("object not of class Arima, ar or fracdiff")
