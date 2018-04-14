@@ -52,6 +52,15 @@ if (require(testthat)) {
     expect_true(arimaorder(sarimaMod)["D"] == 1)
     expect_true(arimaorder(sarimaMod)["Q"] == 1)
     expect_true(arimaorder(sarimaMod)["Frequency"] == frequency(wineind))
+
+    # Test fracdiff
+    set.seed(4)
+    fracdiffMod <- fracdiff::fracdiff(lynx, nar = 2, nma = 2)
+    expect_true(all(names(arimaorder(fracdiffMod)) == c("p", "d", "q")))
+    expect_true(arimaorder(fracdiffMod)["p"] == 2)
+    expect_true(arimaorder(fracdiffMod)["d"] >= 0)
+    expect_true(arimaorder(fracdiffMod)["d"] <= 1)
+    expect_true(arimaorder(fracdiffMod)["p"] == 2)
   })
 
   test_that("tests for forecast.Arima", {
