@@ -1,3 +1,5 @@
+## Version 8.4
+
 ## Version 8.3 (5 April 2018)
   * Added mstl() to handle multiple seasonal decomposition
   * stlf(), stlm(), tsoutliers() and tsclean() all now use mstl().
