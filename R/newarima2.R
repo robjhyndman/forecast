@@ -100,6 +100,11 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     warning("Parallel computer is only implemented when stepwise=FALSE, the model will be fit in serial.")
     parallel <- FALSE
   }
+  
+  if (trace && parallel) {
+    message("Tracing model searching in parallel is not supported.")
+    trace <- FALSE
+  }
 
   series <- deparse(substitute(y))
   x <- as.ts(x)
