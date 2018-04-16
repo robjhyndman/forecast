@@ -68,7 +68,7 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), type=c("level", "tren
     return(d)
   
   urca_pval <- function(urca_test){
-    approx(urca_test@cval, as.numeric(sub("pct", "", colnames(urca_test@cval)))/100, xout=urca_test@teststat[1], rule=2)$y
+    approx(urca_test@cval[1,], as.numeric(sub("pct", "", colnames(urca_test@cval)))/100, xout=urca_test@teststat[1], rule=2)$y
   }
   
   dodiff <- suppressWarnings(switch(test,
