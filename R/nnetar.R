@@ -138,11 +138,11 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     if (is.null(model$scalex)) {
       scale.inputs <- FALSE
     }
-  } else {                 # when not using and old model
+  } else {                 # when not using an old model
     if (length(y) < 3) {
       stop("Not enough data to fit a model")
     }
-    # Check for constant data
+    # Check for constant data in time series
     constant_data <- is.constant(na.interp(x))
     if (constant_data){
       warning("Constant data, setting p=1, P=0, lambda=NULL, scale.inputs=FALSE")
@@ -151,7 +151,16 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
       p <- 1
       P <- 0
     }
+    ## Check for constant data in xreg
+    if (!is.null(xreg)){
+      constant_xreg <- any(apply(as.matrix(xreg), 2, function(x) is.constant(na.interp(x))))
+      if (constant_xreg){
+        warning("Constant xreg column, setting scale.inputs=FALSE")
+        scale.inputs <- FALSE
+      }
+    }
   }
+
   # Check for NAs in x
   if (any(is.na(x))) {
     warning("Missing values in x, omitting rows")
