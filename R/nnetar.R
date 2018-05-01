@@ -272,6 +272,10 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   j <- complete.cases(lags.X, y)
   ## Remove values not in subset
   j <- j & xsub[-(1:maxlag)]
+  ## Stop if there's no data to fit (e.g. due to NAs or NaNs)
+  if (NROW(lags.X[j,, drop=FALSE]) == 0) {
+    stop("No data to fit (possibly due to NA or NaN)")
+  }
   ## Fit average ANN.
   if (useoldmodel) {
     fit <- oldmodel_avnnet(lags.X[j, , drop = FALSE], y[j], size = size, model)
