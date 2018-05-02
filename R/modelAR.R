@@ -94,7 +94,7 @@
 #' fit2 <- nnetar(window(lynx,start=1921), model=fit)
 #'
 #' @export
-modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=NULL, subset=NULL, scale.inputs=TRUE, x=y, ...) {
+modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=NULL, subset=NULL, scale.inputs=FALSE, x=y, ...) {
   useoldmodel <- FALSE
   yname <- deparse(substitute(y))
   if (!is.null(model)) {
@@ -399,8 +399,7 @@ modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=N
 #' plot(fcast)
 #'
 #' @export
-forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI=FALSE, level=c(80, 95), fan=FALSE, xreg=NULL, lambda=object$lambda, bootstrap=FALSE, npaths=1000, innov=NULL, ...) {
-  #  require(nnet)
+forecast.modelAR <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI=FALSE, level=c(80, 95), fan=FALSE, xreg=NULL, lambda=object$lambda, bootstrap=FALSE, npaths=1000, innov=NULL, ...) {
   out <- object
   tspx <- tsp(out$x)
   #
@@ -456,7 +455,7 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI
     if (any(is.na(newdata))) {
       stop("I can't forecast when there are missing values near the end of the series.")
     }
-    fcast[i] <- mean(sapply(object$model, predict, newdata = newdata))
+    fcast[i] <- object$predict.FUN(object$model, newdata)
     flag <- c(fcast[i], flag[-maxlag])
   }
   # Re-scale point forecasts
