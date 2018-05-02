@@ -383,7 +383,7 @@ print.nnetarmodels <- function(x, ...) {
 #' could lead to misleadingly small values.
 #'
 #' @param object An object of class "\code{nnetar}" resulting from a call to
-#' \code{\link{arima}}.
+#' \code{\link{nnetar}}.
 #' @param h Number of periods for forecasting. If \code{xreg} is used, \code{h}
 #' is ignored and the number of forecast periods is set to the number of rows
 #' of \code{xreg}.
