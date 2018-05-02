@@ -2,33 +2,24 @@
 # For non-seasonal data, p chosen using AIC from linear AR(p) model
 # For seasonal data, p chosen using AIC from linear AR(p) model after
 #    seasonally adjusting with STL decomposition, and P=1
-# size set to average of number of inputs and number of outputs: (p+P+1)/2
-# if xreg is included then size = (p+P+ncol(xreg)+1)/2
 
 
-#' Neural Network Time Series Forecasts
+#' Time Series Forecasts with a user-defined model
 #'
-#' Feed-forward neural networks with a single hidden layer and lagged inputs
-#' for forecasting univariate time series.
+#' Experimental function to forecast univariate time series with a
+#' user-defined model
 #'
-#' A feed-forward neural network is fitted with lagged values of \code{y} as
-#' inputs and a single hidden layer with \code{size} nodes. The inputs are for
+#' This is an experimental function and only recommended for advanced users.
+#' The selected model is fitted with lagged values of \code{y} as
+#' inputs. The inputs are for
 #' lags 1 to \code{p}, and lags \code{m} to \code{mP} where
 #' \code{m=frequency(y)}. If \code{xreg} is provided, its columns are also
 #' used as inputs. If there are missing values in \code{y} or
 #' \code{xreg}, the corresponding rows (and any others which depend on them as
-#' lags) are omitted from the fit. A total of \code{repeats} networks are
-#' fitted, each with random starting weights. These are then averaged when
-#' computing forecasts. The network is trained for one-step forecasting.
-#' Multi-step forecasts are computed recursively.
+#' lags) are omitted from the fit. The model is trained for one-step
+#' forecasting. Multi-step forecasts are computed recursively.
 #'
-#' For non-seasonal data, the fitted model is denoted as an NNAR(p,k) model,
-#' where k is the number of hidden nodes. This is analogous to an AR(p) model
-#' but with nonlinear functions. For seasonal data, the fitted model is called
-#' an NNAR(p,P,k)[m] model, which is analogous to an ARIMA(p,0,0)(P,0,0)[m]
-#' model but with nonlinear functions.
-#'
-#' @aliases print.nnetar print.nnetarmodels
+#' @aliases print.modelAR
 #'
 #' @param y A numeric vector or time series of class \code{ts}.
 #' @param p Embedding dimension for non-seasonal time series. Number of
@@ -37,10 +28,13 @@
 #' model. For seasonal time series, the same method is used but applied to
 #' seasonally adjusted data (from an stl decomposition).
 #' @param P Number of seasonal lags used as inputs.
-#' @param size Number of nodes in the hidden layer. Default is half of the
-#' number of input nodes (including external regressors, if given) plus 1.
-#' @param repeats Number of networks to fit with different random starting
-#' weights. These are then averaged when producing forecasts.
+#' @param FUN Function used for model fitting. Must accept argument \code{x}
+#' and \code{y} for the predictors and response, respectively (\code{formula}
+#' object not currently supported).
+#' @param predict.FUN Prediction function used to apply \code{FUN} to new data.
+#' Must accept an object of class \code{FUN} as its first argument, and a
+#' data frame or matrix of new data for its second argument. Additionally,
+#' it should return fitted values when new data is omitted.
 #' @param xreg Optionally, a vector or matrix of external regressors, which
 #' must have the same number of rows as \code{y}. Must be numeric.
 #' @param model Output from a previous call to \code{nnetar}. If model is
@@ -53,11 +47,11 @@
 #' means and dividing by their respective standard deviations. If \code{lambda}
 #' is not \code{NULL}, scaling is applied after Box-Cox transformation.
 #' @param x Deprecated. Included for backwards compatibility.
-#' @param \dots Other arguments passed to \code{\link[nnet]{nnet}} for
-#' \code{nnetar}.
+#' @param \dots Other arguments passed to \code{FUN} for
+#' \code{modelAR}.
 #' @inheritParams forecast
 #'
-#' @return Returns an object of class "\code{nnetar}".
+#' @return Returns an object of class "\code{modelAR}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the
 #' results.
@@ -76,22 +70,6 @@
 #' @author Rob J Hyndman and Gabriel Caceres
 #' @keywords ts
 #' @examples
-#' fit <- nnetar(lynx)
-#' fcast <- forecast(fit)
-#' plot(fcast)
-#'
-#' ## Arguments can be passed to nnet()
-#' fit <- nnetar(lynx, decay=0.5, maxit=150)
-#' plot(forecast(fit))
-#' lines(lynx)
-#'
-#' ## Fit model to first 100 years of lynx data
-#' fit <- nnetar(window(lynx,end=1920), decay=0.5, maxit=150)
-#' plot(forecast(fit,h=14))
-#' lines(lynx)
-#'
-#' ## Apply fitted model to later data, including all optional arguments
-#' fit2 <- nnetar(window(lynx,start=1921), model=fit)
 #'
 #' @export
 modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=NULL, subset=NULL, scale.inputs=FALSE, x=y, ...) {
@@ -333,18 +311,18 @@ modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=N
 }
 
 
-#' Forecasting using neural network models
+#' Forecasting using user-defined model
 #'
-#' Returns forecasts and other information for univariate neural network
+#' Returns forecasts and other information for user-defined
 #' models.
 #'
 #' Prediction intervals are calculated through simulations and can be slow.
-#' Note that if the network is too complex and overfits the data, the residuals
+#' Note that if the model is too complex and overfits the data, the residuals
 #' can be arbitrarily small; if used for prediction interval calculations, they
 #' could lead to misleadingly small values.
 #'
-#' @param object An object of class "\code{nnetar}" resulting from a call to
-#' \code{\link{arima}}.
+#' @param object An object of class "\code{modelAR}" resulting from a call to
+#' \code{\link{modelAR}}.
 #' @param h Number of periods for forecasting. If \code{xreg} is used, \code{h}
 #' is ignored and the number of forecast periods is set to the number of rows
 #' of \code{xreg}.
@@ -390,13 +368,10 @@ modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=N
 #'   \item{fitted}{Fitted values (one-step forecasts)}
 #'   \item{...}{Other arguments}
 #'
-#' @author Rob J Hyndman
+#' @author Rob J Hyndman and Gabriel Caceres
 #' @seealso \code{\link{nnetar}}.
 #' @keywords ts
 #' @examples
-#' fit <- nnetar(lynx)
-#' fcast <- forecast(fit)
-#' plot(fcast)
 #'
 #' @export
 forecast.modelAR <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI=FALSE, level=c(80, 95), fan=FALSE, xreg=NULL, lambda=object$lambda, bootstrap=FALSE, npaths=1000, innov=NULL, ...) {

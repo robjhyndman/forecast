@@ -429,7 +429,7 @@ print.nnetarmodels <- function(x, ...) {
 #'   \item{fitted}{Fitted values (one-step forecasts)}
 #'   \item{...}{Other arguments}
 #'
-#' @author Rob J Hyndman
+#' @author Rob J Hyndman and Gabriel Caceres
 #' @seealso \code{\link{nnetar}}.
 #' @keywords ts
 #' @examples
