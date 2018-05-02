@@ -651,3 +651,116 @@ simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL,
   }
   return(path)
 }
+
+
+#' @rdname simulate.ets
+#' @export
+simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, future=TRUE, bootstrap=FALSE, innov=NULL, lambda=object$lambda, ...) {
+  if (is.null(innov)) {
+    if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE)) {
+      runif(1)
+    }
+    if (is.null(seed)) {
+      RNGstate <- get(".Random.seed", envir = .GlobalEnv)
+    } else {
+      R.seed <- get(".Random.seed", envir = .GlobalEnv)
+      set.seed(seed)
+      RNGstate <- structure(seed, kind = as.list(RNGkind()))
+      on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
+    }
+  }
+  else {
+    nsim <- length(innov)
+  }
+  ## only future currently implemented
+  if (!future) {
+    warning("simulate.nnetar() currently only supports future=TRUE")
+  }
+  ## set simulation innovations
+  if (bootstrap) {
+    res <- na.omit(c(residuals(object, type = "innovation")))
+    res <- res - mean(res)
+    ## scale if appropriate
+    if (!is.null(object$scalex$scale)) {
+      res <- res / object$scalex$scale
+    }
+    e <- sample(res, nsim, replace = TRUE)
+  }
+  else if (is.null(innov)) {
+    res <- na.omit(c(residuals(object, type = "innovation")))
+    ## scale if appropriate
+    if (!is.null(object$scalex$scale)) {
+      res <- res / object$scalex$scale
+    }
+    e <- rnorm(nsim, 0, sd(res, na.rm = TRUE))
+  }
+  else if (length(innov) == nsim) {
+    e <- innov
+    if (!is.null(object$scalex$scale)){
+      e <- e/object$scalex$scale
+    }
+  } else if (isTRUE(innov == 0L)) {
+    ## to pass innov=0 so simulation equals mean forecast
+    e <- rep(innov, nsim)
+  } else {
+    stop("Length of innov must be equal to nsim")
+  }
+  ##
+  tspx <- tsp(object$x)
+  # Check if xreg was used in fitted model
+  if (is.null(object$xreg)) {
+    if (!is.null(xreg)) {
+      warning("External regressors were not used in fitted model, xreg will be ignored")
+    }
+    xreg <- NULL
+  }
+  else {
+    if (is.null(xreg)) {
+      stop("No external regressors provided")
+    }
+    xreg <- as.matrix(xreg)
+    if (NCOL(xreg) != NCOL(object$xreg)) {
+      stop("Number of external regressors does not match fitted model")
+    }
+    if (NROW(xreg) != nsim) {
+      stop("Number of rows in xreg does not match nsim")
+    }
+  }
+  xx <- object$x
+  if (!is.null(lambda)) {
+    xx <- BoxCox(xx, lambda)
+    lambda <- attr(xx, "lambda")
+  }
+  # Check and apply scaling of fitted model
+  if (!is.null(object$scalex)) {
+    xx <- scale(xx, center = object$scalex$center, scale = object$scalex$scale)
+    if (!is.null(xreg)) {
+      xreg <- scale(xreg, center = object$scalexreg$center, scale = object$scalexreg$scale)
+    }
+  }
+  ## Get lags used in fitted model
+  lags <- object$lags
+  maxlag <- max(lags)
+  flag <- rev(tail(xx, n = maxlag))
+  ## Simulate by iteratively forecasting and adding innovation
+  path <- numeric(nsim)
+  for (i in 1:nsim) {
+    newdata <- c(flag[lags], xreg[i, ])
+    if (any(is.na(newdata))) {
+      stop("I can't simulate when there are missing values near the end of the series.")
+    }
+    path[i] <- mean(sapply(object$model, predict, newdata = newdata)) + e[i]
+    flag <- c(path[i], flag[-maxlag])
+  }
+  ## Re-scale simulated points
+  if (!is.null(object$scalex)) {
+    path <- path * object$scalex$scale + object$scalex$center
+  }
+  ## Add ts properties
+  path <- ts(path, start = tspx[2] + 1 / tspx[3], frequency = tspx[3])
+  ## Back-transform simulated points
+  if (!is.null(lambda)) {
+    path <- InvBoxCox(path, lambda)
+  }
+  return(path)
+}
