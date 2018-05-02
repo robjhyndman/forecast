@@ -113,8 +113,8 @@ modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=N
     } else {
       lags <- 1:p
     }
-    if (is.null(model$scalex)) {
-      scale.inputs <- FALSE
+    if (!is.null(model$scalex)) {
+      scale.inputs <- TRUE
     }
   } else {                 # when not using an old model
     if (length(y) < 3) {
