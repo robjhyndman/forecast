@@ -655,7 +655,7 @@ simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL,
 
 #' @rdname simulate.ets
 #' @export
-simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, future=TRUE, bootstrap=FALSE, innov=NULL, lambda=object$lambda, ...) {
+simulate.modelAR <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, future=TRUE, bootstrap=FALSE, innov=NULL, lambda=object$lambda, ...) {
   if (is.null(innov)) {
     if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE)) {
       runif(1)
@@ -749,7 +749,7 @@ simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL,
     if (any(is.na(newdata))) {
       stop("I can't simulate when there are missing values near the end of the series.")
     }
-    path[i] <- mean(sapply(object$model, predict, newdata = newdata)) + e[i]
+    path[i] <- object$predict.FUN(object$model, newdata) + e[i]
     flag <- c(path[i], flag[-maxlag])
   }
   ## Re-scale simulated points
