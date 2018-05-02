@@ -57,7 +57,7 @@
 #' @param \dots Other arguments passed to \code{\link[nnet]{nnet}} for
 #' \code{nnetar}.
 #' @inheritParams forecast
-#' 
+#'
 #' @return Returns an object of class "\code{nnetar}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the
@@ -108,7 +108,7 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     }
     # Check new data
     m <- max(round(frequency(model$x)), 1L)
-    minlength <- max(c(model$p, model$P * m))
+    minlength <- max(c(model$p, model$P * m)) + 1
     if (length(x) < minlength) {
       stop(paste("Series must be at least of length", minlength, "to use fitted model"))
     }
@@ -130,27 +130,44 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     size <- model$size
     p <- model$p
     P <- model$P
+    if (P > 0) {
+      lags <- sort(unique(c(1:p, m * (1:P))))
+    } else {
+      lags <- 1:p
+    }
     if (is.null(model$scalex)) {
       scale.inputs <- FALSE
     }
-  }
-  else {
+  } else {                 # when not using an old model
     if (length(y) < 3) {
       stop("Not enough data to fit a model")
     }
+    # Check for constant data in time series
+    constant_data <- is.constant(na.interp(x))
+    if (constant_data){
+      warning("Constant data, setting p=1, P=0, lambda=NULL, scale.inputs=FALSE")
+      scale.inputs <- FALSE
+      lambda <- NULL
+      p <- 1
+      P <- 0
+    }
+    ## Check for constant data in xreg
+    if (!is.null(xreg)){
+      constant_xreg <- any(apply(as.matrix(xreg), 2, function(x) is.constant(na.interp(x))))
+      if (constant_xreg){
+        warning("Constant xreg column, setting scale.inputs=FALSE")
+        scale.inputs <- FALSE
+      }
+    }
   }
+
   # Check for NAs in x
   if (any(is.na(x))) {
     warning("Missing values in x, omitting rows")
   }
-  # Check for constant data
-  constant_data <- is.constant(na.interp(x))
-  if (constant_data) {
-    scale.inputs <- FALSE
-  }
 
   # Transform data
-  if (!is.null(lambda) && !constant_data) {
+  if (!is.null(lambda)) {
     xx <- BoxCox(x, lambda)
     lambda <- attr(xx, "lambda")
   } else {
@@ -166,7 +183,7 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   }
   # Scale series
   scalex <- NULL
-  if (scale.inputs && !constant_data) {
+  if (scale.inputs) {
     if (useoldmodel) {
       scalex <- model$scalex
     }
@@ -211,43 +228,41 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   n <- length(xx)
   xx <- as.ts(xx)
   m <- max(round(frequency(xx)), 1L)
-  if (constant_data) {
-    p <- 1
-  }
-  if (m == 1) {
-    if (missing(p)) {
-      p <- max(length(ar(na.interp(xx))$ar), 1)
-    }
-    if (p >= n - 1) {
-      warning("Reducing number of lagged inputs due to short series")
-      p <- n - 2
-    }
-    lags <- 1:p
-    if (P > 1) {
-      warning("Non-seasonal data, ignoring seasonal lags")
-    }
-    P <- 0
-  }
-  else {
-    if (missing(p)) {
-      if (n >= 2 * m) {
-        x.sa <- seasadj(mstl(na.interp(xx)))
-      } else {
-        x.sa <- na.interp(xx)
+  if (!useoldmodel) {
+    if (m == 1) {
+      if (missing(p)) {
+        p <- max(length(ar(na.interp(xx))$ar), 1)
       }
-      p <- max(length(ar(x.sa)$ar), 1)
-    }
-    if (p >= n - 1) {
-      warning("Reducing number of lagged inputs due to short series")
-      p <- n - 2
-    }
-    if (P > 0 && n >= m * P + 2) {
-      lags <- sort(unique(c(1:p, m * (1:P))))
-    } else {
+      if (p >= n) {
+        warning("Reducing number of lagged inputs due to short series")
+        p <- n - 1
+      }
       lags <- 1:p
-      if (P > 0) {
-        warning("Series too short for seasonal lags")
-        P <- 0
+      if (P > 1) {
+        warning("Non-seasonal data, ignoring seasonal lags")
+      }
+      P <- 0
+    } else {
+      if (missing(p)) {
+        if (n >= 2 * m) {
+          x.sa <- seasadj(mstl(na.interp(xx)))
+        } else {
+          x.sa <- na.interp(xx)
+        }
+        p <- max(length(ar(x.sa)$ar), 1)
+      }
+      if (p >= n) {
+        warning("Reducing number of lagged inputs due to short series")
+        p <- n - 1
+      }
+      if (P > 0 && n >= m * P + 2) {
+        lags <- sort(unique(c(1:p, m * (1:P))))
+      } else {
+        lags <- 1:p
+        if (P > 0) {
+          warning("Series too short for seasonal lags")
+          P <- 0
+        }
       }
     }
   }
@@ -266,11 +281,15 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   j <- complete.cases(lags.X, y)
   ## Remove values not in subset
   j <- j & xsub[-(1:maxlag)]
+  ## Stop if there's no data to fit (e.g. due to NAs or NaNs)
+  if (NROW(lags.X[j,, drop=FALSE]) == 0) {
+    stop("No data to fit (possibly due to NA or NaN)")
+  }
   ## Fit average ANN.
   if (useoldmodel) {
-    fit <- oldmodel_avnnet(lags.X[j, ], y[j], size = size, model)
+    fit <- oldmodel_avnnet(lags.X[j, , drop = FALSE], y[j], size = size, model)
   } else {
-    fit <- avnnet(lags.X[j, ], y[j], size = size, repeats = repeats, ...)
+    fit <- avnnet(lags.X[j, , drop=FALSE], y[j], size = size, repeats = repeats, ...)
   }
   # Return results
   out <- list()
@@ -289,7 +308,11 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   if (useoldmodel) {
     out$nnetargs <- model$nnetargs
   }
-  fits <- c(rep(NA_real_, maxlag), rowMeans(sapply(fit, predict)))
+  if (NROW(lags.X[j,, drop=FALSE]) == 1){
+    fits <- c(rep(NA_real_, maxlag), mean(sapply(fit, predict)))
+  } else{
+    fits <- c(rep(NA_real_, maxlag), rowMeans(sapply(fit, predict)))
+  }
   if (scale.inputs) {
     fits <- fits * scalex$scale + scalex$center
   }
@@ -381,7 +404,7 @@ print.nnetarmodels <- function(x, ...) {
 #' into a matrix). If present, \code{bootstrap} is ignored.
 #' @param ... Additional arguments passed to \code{\link{simulate.nnetar}}
 #' @inheritParams forecast
-#' 
+#'
 #' @return An object of class "\code{forecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the
