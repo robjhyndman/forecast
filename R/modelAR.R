@@ -6,7 +6,6 @@
 # if xreg is included then size = (p+P+ncol(xreg)+1)/2
 
 
-
 #' Neural Network Time Series Forecasts
 #'
 #' Feed-forward neural networks with a single hidden layer and lagged inputs
@@ -95,7 +94,7 @@
 #' fit2 <- nnetar(window(lynx,start=1921), model=fit)
 #'
 #' @export
-nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NULL, subset=NULL, scale.inputs=TRUE, x=y, ...) {
+modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=NULL, subset=NULL, scale.inputs=TRUE, x=y, ...) {
   useoldmodel <- FALSE
   yname <- deparse(substitute(y))
   if (!is.null(model)) {
@@ -103,8 +102,8 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     useoldmodel <- TRUE
     # Check for conflicts between new and old data:
     # Check model class
-    if (!is.nnetar(model)) {
-      stop("Model must be a nnetar object")
+    if (!is.modelAR(model)) {
+      stop("Model must be a modelAR object")
     }
     # Check new data
     m <- max(round(frequency(model$x)), 1L)
@@ -127,9 +126,10 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     }
     # Update parameters with previous model
     lambda <- model$lambda
-    size <- model$size
     p <- model$p
     P <- model$P
+    FUN <- model$FUN
+    predict.FUN <- model$predict.FUN
     if (P > 0) {
       lags <- sort(unique(c(1:p, m * (1:P))))
     } else {
@@ -270,13 +270,11 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   nlag <- length(lags)
   y <- xx[-(1:maxlag)]
   lags.X <- matrix(NA_real_, ncol = nlag, nrow = n - maxlag)
-  for (i in 1:nlag)
+  for (i in 1:nlag){
     lags.X[, i] <- xx[(maxlag - lags[i] + 1):(n - lags[i])]
+  }
   # Add xreg into lagged matrix
   lags.X <- cbind(lags.X, xxreg[-(1:maxlag), ])
-  if (missing(size)) {
-    size <- round((NCOL(lags.X) + 1) / 2)
-  }
   # Remove missing values if present
   j <- complete.cases(lags.X, y)
   ## Remove values not in subset
@@ -285,11 +283,11 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   if (NROW(lags.X[j,, drop=FALSE]) == 0) {
     stop("No data to fit (possibly due to NA or NaN)")
   }
-  ## Fit average ANN.
+  ## Fit selected model
   if (useoldmodel) {
-    fit <- oldmodel_avnnet(lags.X[j, , drop = FALSE], y[j], size = size, model)
+    fit <- model$model
   } else {
-    fit <- avnnet(lags.X[j, , drop=FALSE], y[j], size = size, repeats = repeats, ...)
+    fit <- FUN(x = lags.X[j,, drop=FALSE], y = y[j], ...)
   }
   # Return results
   out <- list()
@@ -297,21 +295,20 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   out$m <- m
   out$p <- p
   out$P <- P
+  out$FUN <- FUN
+  out$predict.FUN <- predict.FUN
   out$scalex <- scalex
   out$scalexreg <- scalexreg
-  out$size <- size
   out$xreg <- xreg
   out$lambda <- lambda
   out$subset <- (1:length(x))[xsub]
   out$model <- fit
-  out$nnetargs <- list(...)
+  out$modelargs <- list(...)
   if (useoldmodel) {
-    out$nnetargs <- model$nnetargs
-  }
-  if (NROW(lags.X[j,, drop=FALSE]) == 1){
-    fits <- c(rep(NA_real_, maxlag), mean(sapply(fit, predict)))
-  } else{
-    fits <- c(rep(NA_real_, maxlag), rowMeans(sapply(fit, predict)))
+    out$modelargs <- model$modelargs
+    fits <- c(rep(NA_real_, maxlag), predict.FUN(fit, lags.X[j,, drop=FALSE]))
+  } else {
+    fits <- c(rep(NA_real_, maxlag), predict.FUN(fit))
   }
   if (scale.inputs) {
     fits <- fits * scalex$scale + scalex$center
@@ -326,16 +323,13 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   out$residuals <- out$x - out$fitted
   out$lags <- lags
   out$series <- yname
-  out$method <- paste("NNAR(", p, sep = "")
-  if (P > 0) {
-    out$method <- paste(out$method, ",", P, sep = "")
-  }
-  out$method <- paste(out$method, ",", size, ")", sep = "")
-  if (P > 0) {
-    out$method <- paste(out$method, "[", m, "]", sep = "")
-  }
+  out$method <- deparse(substitute(FUN))
+  out$method <- paste0(out$method, "-AR(", p)
+  if (P > 0) out$method <- paste(out$method, ",", P, sep = "")
+  out$method <- paste0(out$method, ")")
+  if (P > 0) out$method <- paste(out$method, "[", m, "]", sep = "")
   out$call <- match.call()
-  return(structure(out, class = c("nnetar")))
+  return(structure(out, class = c("modelAR")))
 }
 
 
