@@ -6,6 +6,7 @@
 # if xreg is included then size = (p+P+ncol(xreg)+1)/2
 
 
+
 #' Neural Network Time Series Forecasts
 #'
 #' Feed-forward neural networks with a single hidden layer and lagged inputs
@@ -513,20 +514,19 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI
 
 #' @rdname fitted.Arima
 #' @export
-fitted.nnetar <- function(object, h=1, ...) {
+fitted.modelAR <- function(object, h=1, ...) {
   if (h == 1) {
     return(object$fitted)
   }
   else {
-    return(hfitted(object = object, h = h, FUN = "nnetar", ...))
+    return(hfitted(object = object, h = h, FUN = "modelAR", ...))
   }
 }
 
 #' @export
-print.nnetar <- function(x, digits = max(3, getOption("digits") - 3), ...) {
+print.modelAR <- function(x, digits = max(3, getOption("digits") - 3), ...) {
   cat("Series:", x$series, "\n")
   cat("Model: ", x$method, "\n")
-  # cat("  one hidden layer with",x$size,"nodes\n")
   cat("Call:   ")
   print(x$call)
   print(x$model)
@@ -539,6 +539,6 @@ print.nnetar <- function(x, digits = max(3, getOption("digits") - 3), ...) {
 
 #' @rdname is.ets
 #' @export
-is.nnetar <- function(x) {
-  inherits(x, "nnetar")
+is.modelAR <- function(x) {
+  inherits(x, "modelAR")
 }
