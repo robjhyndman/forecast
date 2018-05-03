@@ -1121,7 +1121,7 @@ print.ets <- function(x, ...) {
     ncoef <- ncoef + 1
   }
   if (x$components[3] != "N") {
-    cat("    s=")
+    cat("    s = ")
     if (ncoef <= 8) {
       cat(round(x$initstate[3:ncoef], 4))
     } else {
