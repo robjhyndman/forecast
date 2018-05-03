@@ -9,9 +9,11 @@
 #' @param object Either a time series model, a forecast object, or a time
 #' series (assumed to be residuals).
 #' @param lag Number of lags to use in the Ljung-Box or Breusch-Godfrey test.
-#' If missing, it is set to \code{max(10,df+3)} for non-seasonal data, and
-#' \code{max(2m, df+3)} for seasonal data, where \code{df} is the degrees of
-#' freedom of the model, and \code{m} is the seasonal period of the data.
+#' If missing, it is set to \code{min(10,n/5)} for non-seasonal data, and
+#' \code{min(2m, n/5)} for seasonal data, where \code{n} is the length of the series,
+#' and \code{m} is the seasonal period of the data. It is further constrained to be
+#' at least \code{df+3} where \code{df} is the degrees of freedom of the model. This
+#' ensures there are at least 3 degrees of freedom used in the chi-squared test.
 #' @param df Number of degrees of freedom for fitted model, required for the
 #' Ljung-Box or Breusch-Godfrey test. Ignored if the degrees of freedom can be
 #' extracted from \code{object}.
@@ -121,8 +123,9 @@ checkresiduals <- function(object, lag, df=NULL, test, plot=TRUE, ...) {
     df <- NULL
   }
   if (missing(lag)) {
-    lag <- max(df + 3, ifelse(freq > 1, 2 * freq, 10))
-    lag <- min(lag, length(residuals) - 1L)
+    lag <- ifelse(freq > 1, 2 * freq, 10)
+    lag <- min(lag, length(residuals)/5)
+    lag <- max(df+3, lag)
   }
 
   if (!is.null(df)) {
