@@ -11,7 +11,7 @@
 }
 \arguments{
 \item{object}{An object of class "\code{nnetar}" resulting from a call to
-\code{\link{arima}}.}
+\code{\link{nnetar}}.}
 
 \item{h}{Number of periods for forecasting. If \code{xreg} is used, \code{h}
 is ignored and the number of forecast periods is set to the number of rows
