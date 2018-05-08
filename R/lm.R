@@ -152,6 +152,7 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...) {
 
   ## Fit the model and prepare model structure
   fit <- lm(formula, data = data, na.action = na.exclude, ...)
+  fit$data <- data
   fit$residuals <- ts(residuals(fit))
   fit$fitted.values <- ts(fitted(fit))
   tsp(fit$residuals) <- tsp(fit$fitted.values) <- tsp(data[, 1]) <- tspx
