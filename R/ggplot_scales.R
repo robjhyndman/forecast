@@ -20,10 +20,9 @@ NULL
 #' @inheritParams ggplot2::scale_colour_gradient
 #' @param low,high Colours for low and high ends of the gradient.
 #'
-#' @importFrom scales seq_gradient_pal
 #' @export
 scale_level_gradient <- function(..., low = "#888888", high = "#BBBBBB", space = "Lab", na.value = NA, guide = "level_colourbar") {
-  continuous_scale("level", "gradient", seq_gradient_pal(low, high, space),
+  continuous_scale("level", "gradient", scales::seq_gradient_pal(low, high, space),
                    na.value = na.value, guide = guide, ...)
 }
 #' @rdname scale_level
