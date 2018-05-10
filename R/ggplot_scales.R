@@ -1,121 +1,19 @@
-#' Edge colour scales
+#' Level colour scales
 #'
-#' This set of scales defines new colour scales for edge geoms equivalent to the
+#' This set of scales defines new colour scales for level geoms equivalent to the
 #' ones already defined by ggplot2. The parameters are equivalent to the ones
 #' from ggplot2 so there is nothing new under the sun. The different geoms will
-#' know whether to use edge scales or the standard scales so it is not necessary
+#' know whether to use level scales or the standard scales so it is not necessary
 #' to write `level` in the call to the geom - just use `colour`.
 #'
 #' @return A ggproto object inheriting from `Scale`
 #'
-#' @family scale_edge_*
+#' @family scale_level_*
 #'
 #' @name scale_level
 #' @rdname scale_level
 #'
 NULL
-
-#' @rdname scale_level
-#'
-#' @inheritParams ggplot2::scale_colour_hue
-#'
-#' @importFrom scales hue_pal
-#' @export
-scale_level_hue <- function(..., h = c(0, 360) + 15, c = 100, l = 65, h.start = 0, direction = 1, na.value = "grey50") {
-  discrete_scale("level", "hue", hue_pal(h, c, l, h.start, direction),
-                 na.value = na.value, ...)
-}
-#' @rdname scale_level
-#'
-#' @inheritParams ggplot2::scale_colour_brewer
-#'
-#' @importFrom scales brewer_pal
-#' @export
-scale_level_brewer <- function(..., type = "seq", palette = 1, direction = 1) {
-  discrete_scale("level", "brewer", brewer_pal(type, palette, direction), ...)
-}
-#' @rdname scale_level
-#'
-#' @inheritParams ggplot2::scale_colour_distiller
-#'
-#' @importFrom scales gradient_n_pal brewer_pal
-#' @export
-scale_level_distiller <- function(..., type = "seq", palette = 1, direction = -1, values = NULL, space = "Lab", na.value = "grey50", guide = "level_colourbar") {
-  # warn about using a qualitative brewer palette to generate the gradient
-  type <- match.arg(type, c("seq", "div", "qual"))
-  if (type == "qual") {
-    warning("Using a discrete colour palette in a continuous scale.\n  Consider using type = \"seq\" or type = \"div\" instead", call. = FALSE)
-  }
-  continuous_scale("level", "distiller",
-                   gradient_n_pal(brewer_pal(type, palette, direction)(6), values, space), na.value = na.value, guide = guide, ...)
-  # NB: 6 colours per palette gives nice gradients; more results in more saturated colours which do not look as good
-}
-
-#' @rdname scale_level
-#'
-#' @inheritParams ggplot2::scale_colour_gradient2
-#'
-#' @importFrom scales div_gradient_pal muted
-#' @export
-scale_level_gradient2 <- function(..., low = muted("red"), mid = "white", high = muted("blue"), midpoint = 0, space = "Lab", na.value = "grey50", guide = "level_colourbar") {
-  continuous_scale("level", "gradient2",
-                   div_gradient_pal(low, mid, high, space), na.value = na.value, guide = guide, ...,
-                   rescaler =
-                     function(x, to = c(0, 1), from = range(x, na.rm = TRUE)) {
-                       scales::rescale_mid(x, to, from, midpoint)
-                     }
-  )
-}
-#' @rdname scale_level
-#'
-#' @inheritParams ggplot2::scale_colour_gradientn
-#' @param colours,colors Vector of colours to use for n-colour gradient.
-#'
-#' @importFrom scales gradient_n_pal
-#' @export
-scale_level_gradientn <- function(..., colours, values = NULL, space = "Lab", na.value = "grey50", guide = "level_colourbar", colors) {
-  colours <- if (missing(colours)) colors else colours
-  
-  continuous_scale("level", "gradientn",
-                   gradient_n_pal(colours, values, space), na.value = na.value, guide = guide, ...)
-}
-#' @rdname scale_level
-#'
-#' @inheritParams ggplot2::scale_colour_grey
-#'
-#' @importFrom scales grey_pal
-#' @export
-scale_level_grey <- function(..., start = 0.2, end = 0.8, na.value = "red") {
-  discrete_scale("level", "grey", grey_pal(start, end),
-                 na.value = na.value, ...)
-}
-#' @rdname scale_level
-#'
-#' @inheritParams ggplot2::scale_colour_identity
-#'
-#' @importFrom scales identity_pal
-#' @export
-scale_level_identity <- function(..., guide = "none") {
-  sc <- discrete_scale("level", "identity", identity_pal(), ...,
-                       guide = guide, super = ScaleDiscreteIdentity)
-  sc
-}
-#' @rdname scale_level
-#'
-#' @inheritParams ggplot2::scale_colour_manual
-#'
-#' @export
-scale_level_manual <- function(..., values) {
-  pal <- function(n) {
-    if (n > length(values)) {
-      stop("Insufficient values in manual scale. ", n,
-           " needed but only ", length(values), " provided.",
-           call. = FALSE)
-    }
-    values
-  }
-  discrete_scale("level", "manual", pal, ...)
-}
 
 #' @rdname scale_level
 #'
@@ -133,45 +31,6 @@ scale_level_gradient <- function(..., low = "#888888", high = "#BBBBBB", space =
 #' @export
 scale_level_continuous <- scale_level_gradient
 #' @rdname scale_level
-
-#' @export
-scale_level_discrete <- scale_level_hue
-
-# level_scale <- function (aesthetics, scale_name, palette, name = waiver(), 
-#           breaks = waiver(), minor_breaks = waiver(), labels = waiver(), 
-#           limits = NULL, rescaler = rescale, oob = censor, expand = waiver(), 
-#           na.value = NA_real_, trans = "identity", guide = "legend", 
-#           position = "left", super = ScaleContinuous){
-#   check_breaks_labels(breaks, labels)
-#   position <- match.arg(position, c("left", "right", "top", 
-#                                     "bottom"))
-#   if (is.null(breaks) && !is_position_aes(aesthetics) && guide != 
-#       "none") {
-#     guide <- "none"
-#   }
-#   trans <- as.trans(trans)
-#   if (!is.null(limits)) {
-#     limits <- trans$transform(limits)
-#   }
-#   ggproto(NULL, super, call = match.call(), aesthetics = aesthetics, 
-#           scale_name = scale_name, palette = palette, range = level_range(), 
-#           limits = limits, trans = trans, na.value = na.value, 
-#           expand = expand, rescaler = rescaler, oob = oob, name = name, 
-#           breaks = breaks, minor_breaks = minor_breaks, labels = labels, 
-#           guide = guide, position = position)
-# }
-# 
-# level_range <- ggplot2::ggproto(NULL, ggplot2::RangeContinuous,
-#                                 train = function(self, x){
-#                                   train_level <- function(new, existing = NULL){
-#                                     if (is.null(new)){
-#                                       return(existing)
-#                                     }
-#                                     suppressWarnings(range(existing, new, na.rm = TRUE, finite = TRUE))
-#                                   }
-#                                   self$range <- train_level(x, self$range)
-#                                 })
-
 
 #' @export
 guide_level_colourbar <- function(title = waiver(), title.position = NULL,
