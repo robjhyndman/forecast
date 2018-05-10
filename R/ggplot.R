@@ -2082,7 +2082,7 @@ GeomForecastPoint <- ggplot2::ggproto(
 
 blendHex <- function(mixcol, seqcol, alpha=1) {
   requireNamespace("colorspace")
-  if (is.na(seqcol)) {
+  if (all(is.na(seqcol))) {
     return(mixcol)
   }
 
