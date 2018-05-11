@@ -1875,18 +1875,18 @@ fortify.ts <- function(model, data, ...) {
     return(ggplot2::fortify(model))
   }
   else {
-    model <- cbind(x = as.numeric(time(model)), y = as.numeric(model),
-                   series = deparse(substitute(model)))
-    as.data.frame(model)
+    model <- cbind(x = as.numeric(time(model)), y = as.numeric(model))
+    transform(as.data.frame(model), 
+              series = deparse(substitute(model)))
   }
 }
 
 #' @rdname autoplot.ts
 #' @export
 fortify.mts <- function(model, data, ...){
-  model <- cbind(x = as.numeric(time(model)), y = as.numeric(model),
-                 series = rep(colnames(model), each = NROW(model)))
-  as.data.frame(model)
+  model <- cbind(x = as.numeric(time(model)), y = as.numeric(model))
+  transform(as.data.frame(model), 
+            series = rep(colnames(model), each = NROW(model)))
 }
 
 # Produce nice histogram with appropriately chosen bin widths
