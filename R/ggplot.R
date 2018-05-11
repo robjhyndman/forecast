@@ -1886,10 +1886,14 @@ fortify.ts <- function(model, data, ...) {
 #' @rdname autoplot.ts
 #' @export
 fortify.mts <- function(model, data, ...){
+  cn <- colnames(model)
+  if (is.null(cn)) {
+    cn <- paste("Series", seq_len(NCOL(model)))
+  }
   model <- cbind(x = as.numeric(time(model)), y = as.numeric(model))
   transform(as.data.frame(model), 
             time = x,
-            series = rep(colnames(model), each = NROW(model)))
+            series = rep(cn, each = NROW(model)))
 }
 
 # Produce nice histogram with appropriately chosen bin widths
