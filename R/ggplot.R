@@ -1862,7 +1862,7 @@ autoplot.msts <- function(object, series = NULL, ...) {
 
 #' @rdname autoplot.ts
 #' @export
-fortify.ts <- function(model, data, ...) {
+fortify.ts <- function(model, data, series = NULL, ...) {
   # Use ggfortify version if it is loaded
   # to prevent cran errors
   if (exists("ggfreqplot")) {
@@ -1875,7 +1875,12 @@ fortify.ts <- function(model, data, ...) {
     return(ggplot2::fortify(model))
   }
   else {
-    sname <- deparse(substitute(model))
+    if(is.null(series)){
+      sname <- deparse(substitute(model))
+    }
+    else{
+      sname <- series
+    }
     model <- cbind(x = as.numeric(time(model)), y = as.numeric(model))
     transform(as.data.frame(model), 
               time = x,
@@ -1885,15 +1890,17 @@ fortify.ts <- function(model, data, ...) {
 
 #' @rdname autoplot.ts
 #' @export
-fortify.mts <- function(model, data, ...){
-  cn <- colnames(model)
-  if (is.null(cn)) {
-    cn <- paste("Series", seq_len(NCOL(model)))
+fortify.mts <- function(model, data, series = NULL, ...){
+  if(is.null(series)){
+    series <- colnames(model)
+    if (is.null(series)) {
+      series <- paste("Series", seq_len(NCOL(model)))
+    }
   }
   model <- cbind(x = as.numeric(time(model)), y = as.numeric(model))
   transform(as.data.frame(model), 
             time = x,
-            series = rep(cn, each = NROW(model)))
+            series = rep(series, each = NROW(model)))
 }
 
 # Produce nice histogram with appropriately chosen bin widths
