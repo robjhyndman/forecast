@@ -76,7 +76,7 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom,
                                      # Compute alpha transparency
                                      interval_data$alpha <- grDevices::col2rgb(interval_data$fillcol, alpha = TRUE)[4, ] / 255 * interval_data$alpha
                                      GrobList <- lapply(
-                                       split(interval_data, interval_data$level),
+                                       split(interval_data, interval_data$fillcol),
                                        function(x){
                                          # Select appropriate Geom and set defaults
                                          if (NROW(x) == 1) { # Linerange
