@@ -1878,6 +1878,7 @@ fortify.ts <- function(model, data, ...) {
     sname <- deparse(substitute(model))
     model <- cbind(x = as.numeric(time(model)), y = as.numeric(model))
     transform(as.data.frame(model), 
+              time = x,
               series = sname)
   }
 }
@@ -1887,6 +1888,7 @@ fortify.ts <- function(model, data, ...) {
 fortify.mts <- function(model, data, ...){
   model <- cbind(x = as.numeric(time(model)), y = as.numeric(model))
   transform(as.data.frame(model), 
+            time = x,
             series = rep(colnames(model), each = NROW(model)))
 }
 
