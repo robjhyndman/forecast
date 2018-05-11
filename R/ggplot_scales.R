@@ -1,10 +1,8 @@
 #' Level colour scales
 #'
-#' This set of scales defines new colour scales for level geoms equivalent to the
-#' ones already defined by ggplot2. The parameters are equivalent to the ones
-#' from ggplot2 so there is nothing new under the sun. The different geoms will
-#' know whether to use level scales or the standard scales so it is not necessary
-#' to write `level` in the call to the geom - just use `colour`.
+#' This set of scales defines new scales for level geoms equivalent to the
+#' ones already defined by ggplot2. This allows the shade of confidence intervals
+#' to work with the legend output.
 #'
 #' @return A ggproto object inheriting from `Scale`
 #'
@@ -22,17 +20,24 @@ NULL
 #'
 #' @export
 scale_level_gradient <- function(..., low = "#888888", high = "#BBBBBB", space = "Lab", na.value = NA, guide = "level_colourbar") {
-  continuous_scale("level", "gradient", scales::seq_gradient_pal(low, high, space),
+  ggplot2::continuous_scale("level", "gradient", scales::seq_gradient_pal(low, high, space),
                    na.value = na.value, guide = guide, ...)
 }
 #' @rdname scale_level
 #'
 #' @export
 scale_level_continuous <- scale_level_gradient
-#' @rdname scale_level
 
+#' Level shade bar guide
+#' 
+#' The level colourbar shows the colour from the forecast intervals which is blended with the series colour.
+#' 
+#' @inheritParams ggplot2::guide_colourbar
+#' 
+#' @rdname guide_level_colourbar
+#' 
 #' @export
-guide_level_colourbar <- function(title = waiver(), title.position = NULL,
+guide_level_colourbar <- function(title = ggplot2::waiver(), title.position = NULL,
                                  title.theme = NULL, title.hjust = NULL,
                                  title.vjust = NULL, label = TRUE,
                                  label.position = NULL, label.theme = NULL,
@@ -60,10 +65,16 @@ guide_level_colourbar <- function(title = waiver(), title.position = NULL,
     class = c("guide", "level_colourbar", "colorbar")
   )
 }
+
+#' @rdname guide_level_colourbar
 #' @export
 guide_level_colorbar <- guide_level_colourbar
 
+#' Helper methods for guides
+#'
 #' @export
+#' @rdname guide-helpers
+#' @keywords internal
 guide_train.level_colourbar <- function(guide, scale) {
   if (length(intersect(scale$aesthetics, c("level"))) == 0) {
     warning("level_colourbar guide needs level scales.")

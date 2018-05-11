@@ -62,6 +62,12 @@ observations and the forecasts is removed.}
 \item{series}{Matches an unidentified forecast layer with a coloured object
 on the plot.}
 
+\item{model}{The time-series model used to produce the forecast. The data
+must be \code{y} (indicating aesthetic \code{y}), and the time index for \code{y} is determined from the
+\code{x} aesthetic.}
+
+\item{fc.args}{A list of arguments to be used in the \code{\link{forecast}} function}
+
 \item{...}{Additional arguments for \code{\link{forecast.ts}}, other
 arguments are passed on to \code{\link{layer}}. These are often aesthetics,
 used to set an aesthetic to a fixed value, like \code{color = "red"} or

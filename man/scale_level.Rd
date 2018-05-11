@@ -4,7 +4,6 @@
 \alias{scale_level}
 \alias{scale_level_gradient}
 \alias{scale_level_continuous}
-\alias{guide_level_colourbar}
 \title{Level colour scales}
 \usage{
 scale_level_gradient(..., low = "#888888", high = "#BBBBBB",
@@ -12,14 +11,6 @@ scale_level_gradient(..., low = "#888888", high = "#BBBBBB",
 
 scale_level_continuous(..., low = "#888888", high = "#BBBBBB",
   space = "Lab", na.value = NA, guide = "level_colourbar")
-
-guide_level_colourbar(title = waiver(), title.position = NULL,
-  title.theme = NULL, title.hjust = NULL, title.vjust = NULL,
-  label = TRUE, label.position = NULL, label.theme = NULL,
-  label.hjust = NULL, label.vjust = NULL, barwidth = NULL,
-  barheight = NULL, nbin = 20, raster = TRUE, ticks = TRUE,
-  draw.ulim = TRUE, draw.llim = TRUE, direction = NULL,
-  default.unit = "line", reverse = FALSE, order = 0, ...)
 }
 \arguments{
 \item{...}{Other arguments passed on to \code{\link{continuous_scale}}
@@ -39,9 +30,7 @@ colour bar, or \code{"legend"} for discrete colour legend.}
 A ggproto object inheriting from `Scale`
 }
 \description{
-This set of scales defines new colour scales for level geoms equivalent to the
-ones already defined by ggplot2. The parameters are equivalent to the ones
-from ggplot2 so there is nothing new under the sun. The different geoms will
-know whether to use level scales or the standard scales so it is not necessary
-to write `level` in the call to the geom - just use `colour`.
+This set of scales defines new scales for level geoms equivalent to the
+ones already defined by ggplot2. This allows the shade of confidence intervals
+to work with the legend output.
 }

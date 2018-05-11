@@ -83,7 +83,7 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom,
                                  }
 )
 
-
+globalVariables("y")
 #' Forecast plot
 #'
 #' Generates forecasts from \code{forecast.ts} and adds them to the plot.
@@ -134,6 +134,10 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom,
 #' observations and the forecasts is removed.
 #' @param series Matches an unidentified forecast layer with a coloured object
 #' on the plot.
+#' @param model The time-series model used to produce the forecast. The data
+#' must be \code{y} (indicating aesthetic \code{y}), and the time index for \code{y} is determined from the
+#' \code{x} aesthetic.
+#' @param fc.args A list of arguments to be used in the \code{\link{forecast}} function
 #' @param ... Additional arguments for \code{\link{forecast.ts}}, other
 #' arguments are passed on to \code{\link{layer}}. These are often aesthetics,
 #' used to set an aesthetic to a fixed value, like \code{color = "red"} or
@@ -203,7 +207,7 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
   else {
     paramlist <- list(na.rm = na.rm, ...)
   }
-  layer(
+  ggplot2::layer(
     geom = GeomForecast, mapping = mapping,  data = data, stat = stat, 
     position = position, show.legend = show.legend, inherit.aes = inherit.aes,
     params = paramlist
