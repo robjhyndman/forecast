@@ -33,6 +33,39 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom,
                                    data
                                  },
                                  
+                                 draw_key = function(data, params, size) { 
+                                   lwd <- min(data$size, min(size) / 4) 
+                                   
+                                   # Calculate and set colour 
+                                   linecol <- blendHex(data$col, "gray30", 1) 
+                                   fillcol <- blendHex(data$col, "#CCCCCC", 0.8) 
+                                   
+                                   grid::grobTree( 
+                                     grid::rectGrob( 
+                                       width = grid::unit(1, "npc") - grid::unit(lwd, "mm"), 
+                                       height = grid::unit(1, "npc") - grid::unit(lwd, "mm"), 
+                                       gp = grid::gpar( 
+                                         col = fillcol, 
+                                         fill = scales::alpha(fillcol, data$alpha), 
+                                         lty = data$linetype, 
+                                         lwd = lwd * ggplot2::.pt, 
+                                         linejoin = "mitre" 
+                                       ) 
+                                     ), 
+                                     grid::linesGrob( 
+                                       x = c(0, 0.4, 0.6, 1), 
+                                       y = c(0.2, 0.6, 0.4, 0.9), 
+                                       gp = grid::gpar( 
+                                         col = linecol, 
+                                         fill = scales::alpha(linecol, data$alpha), 
+                                         lty = data$linetype, 
+                                         lwd = lwd * ggplot2::.pt, 
+                                         linejoin = "mitre" 
+                                       ) 
+                                     ) 
+                                   ) 
+                                 }, 
+                                 
                                  draw_panel = function(data, panel_scales, coord) {
                                    line_data <- data[is.na(data$level),]
                                    interval_data <- data[!is.na(data$level),]
