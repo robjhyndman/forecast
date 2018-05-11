@@ -1875,9 +1875,10 @@ fortify.ts <- function(model, data, ...) {
     return(ggplot2::fortify(model))
   }
   else {
+    sname <- deparse(substitute(model))
     model <- cbind(x = as.numeric(time(model)), y = as.numeric(model))
     transform(as.data.frame(model), 
-              series = deparse(substitute(model)))
+              series = sname)
   }
 }
 
