@@ -1771,7 +1771,7 @@ autolayer.mforecast <- function(object, series = NULL, PI = TRUE, ...) {
 #' autoplot(lungDeaths, facets=TRUE)
 #'
 #' @export
-autoplot.ts <- function(object, series=NULL, ...) {
+autoplot.ts <- function(object, series=NULL, colour = FALSE, ...) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
@@ -1779,27 +1779,25 @@ autoplot.ts <- function(object, series=NULL, ...) {
     if (!is.ts(object)) {
       stop("autoplot.ts requires a ts object, use object=object")
     }
+    
+    sname <- if(is.null(series)) {deparse(substitute(object))} else {series}
 
     # Create data frame with time as a column labelled x
     # and time series as a column labelled y.
-    data <- data.frame(y = as.numeric(object), x = as.numeric(time(object)))
-    if (!is.null(series)) {
-      data <- transform(data, series = series)
-    }
 
     # Initialise ggplot object
-    p <- ggplot2::ggplot(ggplot2::aes_(y = ~y, x = ~x), data = data)
+    p <- ggplot2::ggplot(fortify(object, series=series), ggplot2::aes_(y = ~y, x = ~time, group = ~series))
 
     # Add data
-    if (!is.null(series)) {
-      p <- p + ggplot2::geom_line(ggplot2::aes_(group = ~series, colour = ~series), na.rm = TRUE)
+    if (!is.null(series) || colour) {
+      p <- p + ggplot2::geom_line(ggplot2::aes_(colour = ~series), na.rm = TRUE)
     }
     else {
       p <- p + ggplot2::geom_line(na.rm = TRUE)
     }
 
     # Add labels
-    p <- p + ggAddExtras(xlab = "Time", ylab = deparse(substitute(object)))
+    p <- p + ggAddExtras(xlab = "Time", ylab = sname)
 
     # Make x axis contain only whole numbers (e.g., years)
     p <- p + ggplot2::scale_x_continuous(breaks = ggtsbreaks)
