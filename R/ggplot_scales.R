@@ -20,13 +20,21 @@ NULL
 #'
 #' @export
 scale_level_gradient <- function(..., low = "#888888", high = "#BBBBBB", space = "Lab", na.value = NA, guide = "level_colourbar") {
-  ggplot2::continuous_scale("level", "gradient", scales::seq_gradient_pal(low, high, space),
-                   na.value = na.value, guide = guide, ...)
+  level_scale("level", "gradient", scales::seq_gradient_pal(low, high, space),
+              na.value = na.value, guide = guide, ...)
 }
 #' @rdname scale_level
 #'
 #' @export
 scale_level_continuous <- scale_level_gradient
+
+#' @importFrom ggplot2 waiver
+level_scale <- function (...) 
+{
+  ggplot2::ggproto(NULL, continuous_scale(...),
+                   range = level_range()
+  )
+}
 
 #' Level shade bar guide
 #' 
