@@ -9,7 +9,7 @@ Depends:
 Imports:
   colorspace,
   fracdiff,
-  ggplot2 (>= 2.0.0),
+  ggplot2 (>= 2.2.1.9000),
   graphics,
   lmtest,
   magrittr,
@@ -28,6 +28,7 @@ Suggests:
   rmarkdown,
   rticles,
   testthat
+Remotes: tidyverse/ggplot2
 LinkingTo:
   Rcpp (>= 0.11.0),
   RcppArmadillo (>= 0.2.35)
