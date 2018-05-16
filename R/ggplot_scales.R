@@ -89,7 +89,7 @@ guide_train.level_guide <- function(guide, scale, aesthetic) {
   else{
     guide <- do.call("guide_colourbar", args)
     breaks <- scale$get_breaks()
-    ticks <- as.data.frame(setNames(list(scale$map(breaks)), 
+    ticks <- as.data.frame(stats::setNames(list(scale$map(breaks)), 
                                     aesthetic %||% scale$aesthetics[1]))
     ticks$.value <- breaks
     ticks$.label <- scale$get_labels(breaks)
@@ -112,6 +112,7 @@ guide_train.level_guide <- function(guide, scale, aesthetic) {
 }
 
 #' @export
+#' @importFrom ggplot2 guide_geom
 #' @rdname guide-helpers
 guide_geom.guide_level <- function (guide, layers, default_mapping) 
 {
