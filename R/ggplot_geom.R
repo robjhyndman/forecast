@@ -38,7 +38,7 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom,
                                    
                                    # Calculate and set colour 
                                    linecol <- blendHex(data$col, "gray30", 1) 
-                                   fillcol <- blendHex(data$col, "#CCCCCC", 0.8) 
+                                   fillcol <- blendHex(data$col, "#BBBBBB", 0.7) 
                                    
                                    grid::grobTree( 
                                      grid::rectGrob( 

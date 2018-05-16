@@ -7,10 +7,10 @@
 \title{Level colour scales}
 \usage{
 scale_level_gradient(..., low = "#888888", high = "#BBBBBB",
-  space = "Lab", na.value = NA, guide = "level_colourbar")
+  space = "Lab", na.value = NA, guide = "level")
 
 scale_level_continuous(..., low = "#888888", high = "#BBBBBB",
-  space = "Lab", na.value = NA, guide = "level_colourbar")
+  space = "Lab", na.value = NA, guide = "level")
 }
 \arguments{
 \item{...}{Arguments passed on to \code{continuous_scale}

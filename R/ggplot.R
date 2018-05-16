@@ -1819,6 +1819,7 @@ autoplot.msts <- function(object, series = NULL, ...) {
   autoplot(object, series = series, ...) + ggAddExtras(ylab = sname)
 }
 
+globalVariables("x")
 #' @rdname autoplot.ts
 #' @export
 fortify.ts <- function(model, data, series = NULL, ...) {
