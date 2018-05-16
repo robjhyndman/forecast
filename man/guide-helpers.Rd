@@ -7,7 +7,7 @@
 \usage{
 guide_train.level_guide(guide, scale, aesthetic)
 
-guide_geom.guide_level(guide, layers, default_mapping)
+\method{guide_geom}{guide_level}(guide, layers, default_mapping)
 }
 \description{
 Helper methods for guides
