@@ -43,6 +43,9 @@ level_scale <- function (...)
 #' The level guide shows the colour from the forecast intervals which is blended with the series colour.
 #' 
 #' @inheritParams ggplot2::guide_colourbar
+#' @param max_discrete The maximum number of levels to be shown using \code{\link[ggplot2]{guide_legend}}.
+#' If the number of levels exceeds this value, level shades are shown with \code{\link[ggplot2]{guide_colourbar}}.
+#' @param ... Further arguments passed onto either \code{\link[ggplot2]{guide_colourbar}} or \code{\link[ggplot2]{guide_legend}}
 #' 
 #' @export
 guide_level <- function(title = waiver(), max_discrete = 5, ...) {
