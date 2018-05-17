@@ -324,7 +324,11 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   allowmean <- allowmean & (d + D) == 0
 
   constant <- allowdrift | allowmean
-
+  
+  if (approximation && trace) {
+    cat("\n Fitting models using approximations to speed things up...\n")
+  }
+  
   if (!stepwise) {
     bestfit <- search.arima(
       x, d, D, max.p, max.q, max.P, max.Q, max.order, stationary,
@@ -338,6 +342,9 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     bestfit$x <- orig.x
     bestfit$series <- series
     bestfit$fitted <- fitted(bestfit)
+    if (trace) {
+      cat("\n\n Best model:", arima.string(bestfit, padding = TRUE), "\n\n")
+    }
     return(bestfit)
   }
 
@@ -354,10 +361,6 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   Q <- start.Q <- min(start.Q, max.Q)
 
   results <- matrix(NA, nrow = 100, ncol = 8)
-
-  if (approximation && trace) {
-    cat("\n Fitting models using approximations to speed things up...\n")
-  }
 
   bestfit <- myarima(x, order = c(p, d, q), seasonal = c(P, D, Q), constant = constant, ic, trace, approximation, offset = offset, xreg = xreg, ...)
   results[1, ] <- c(p, d, q, P, D, Q, constant, bestfit$ic)

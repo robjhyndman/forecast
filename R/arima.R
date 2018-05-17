@@ -86,6 +86,9 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   if (exists("bestfit")) {
     # Refit using ML if approximation used for IC
     if (approximation) {
+      if (trace) {
+        cat("\n\n Now re-fitting the best model(s) without approximations...\n")
+      }
       # constant <- length(bestfit$coef) - ncol(xreg) > sum(bestfit$arma[1:4])
       newbestfit <- myarima(
         x, order = bestfit$arma[c(1, 6, 2)],
