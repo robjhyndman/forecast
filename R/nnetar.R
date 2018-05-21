@@ -380,7 +380,8 @@ print.nnetarmodels <- function(x, ...) {
 #' Prediction intervals are calculated through simulations and can be slow.
 #' Note that if the network is too complex and overfits the data, the residuals
 #' can be arbitrarily small; if used for prediction interval calculations, they
-#' could lead to misleadingly small values.
+#' could lead to misleadingly small values. It is possible to use out-of-sample
+#' residuals to ameliorate this, see examples.
 #'
 #' @param object An object of class "\code{nnetar}" resulting from a call to
 #' \code{\link{nnetar}}.
@@ -433,9 +434,25 @@ print.nnetarmodels <- function(x, ...) {
 #' @seealso \code{\link{nnetar}}.
 #' @keywords ts
 #' @examples
-#' fit <- nnetar(lynx)
-#' fcast <- forecast(fit)
+#' ## Fit & forecast model
+#' fit <- nnetar(USAccDeaths, size=2)
+#' fcast <- forecast(fit, h=20)
 #' plot(fcast)
+#'
+#' \dontrun{
+#' ## Include prediction intervals in forecast
+#' fcast2 <- forecast(fit, h=20, PI=TRUE, npaths=100)
+#' plot(fcast2)
+#'
+#' ## Set up out-of-sample innovations using cross-validation
+#' fit_cv <- CVar(USAccDeaths,  size=2)
+#' res_sd <- sd(fit_cv$residuals, na.rm=TRUE)
+#' myinnovs <- rnorm(20*100, mean=0, sd=res_sd)
+#' ## Forecast using new innovations
+#' fcast3 <- forecast(fit, h=20, PI=TRUE, npaths=100, innov=myinnovs)
+#' plot(fcast3)
+#' }
+
 #'
 #' @export
 forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI=FALSE, level=c(80, 95), fan=FALSE, xreg=NULL, lambda=object$lambda, bootstrap=FALSE, npaths=1000, innov=NULL, ...) {
