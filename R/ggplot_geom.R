@@ -91,7 +91,7 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom,
                                          }
                                          return(list(
                                            grob = GeomForecastIntervalGeom(x, panel_scales, coord),
-                                           range1 = x[1,"ymax"] - x[1,"ymin"]
+                                           range1 = mean(x[,"ymax"] - x[,"ymin"], na.rm=TRUE)
                                          )) ## Create list pair with average ymin/ymax to order layers
                                        }
                                      )
