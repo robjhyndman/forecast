@@ -13,3 +13,9 @@
   msg <- paste("This is forecast", packageVersion("forecast"), "\n ", tip)
   packageStartupMessage(msg)
 }
+
+.onLoad <- function(...) {
+  if (exists("autolayer", getNamespace("ggplot2"))) {
+    autolayer <<- ggplot2::autolayer
+  }
+}
