@@ -1,6 +1,6 @@
 blendHex <- function(mixcol, seqcol, alpha=1) {
   if(!requireNamespace("colorspace")){
-    error('The `colorspace` package is missing, please install it using `install.packages("colorspace")`')
+    stop('The `colorspace` package is missing, please install it using `install.packages("colorspace")`')
   }
   if (all(is.na(seqcol))) {
     return(mixcol)
