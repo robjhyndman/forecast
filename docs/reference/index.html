@@ -25,10 +25,15 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Function reference" />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -74,6 +83,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -81,605 +91,595 @@
       
       </header>
 
-      <div class="row">
-  <div class="col-md-9">
+<div class="row">
+  <div class="contents col-md-9">
     <div class="page-header">
-      <h1>
-        Reference
-        <small>version&nbsp;8.3</small>
-      </h1>
+      <h1>Reference</h1>
     </div>
 
-    <div class="contents">
-      <table class="ref-index">
+    <table class="ref-index">
 
-      <colgroup>
-        <col class="alias" />
-        <col class="title" />
-      </colgroup>
+    <colgroup>
+      
+      <col class="alias" />
+      <col class="title" />
+    </colgroup>
 
-      <tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-package" class="hasAnchor"><a href="#section-package" class="anchor"></a>Package</h2>
-            <p class="section-desc"><p>Forecast package</p></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="forecast-package.html">forecast-package</a></code> </p>
-          </td>
-          <td><p>Forecasting Functions for Time Series and Linear Models</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-time-series-analysis" class="hasAnchor"><a href="#section-time-series-analysis" class="anchor"></a>Time series analysis</h2>
-            <p class="section-desc"><p>Functions for working with time series</p></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="msts.html">msts()</a></code> </p>
-          </td>
-          <td><p>Multi-Seasonal Time Series</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="subset.ts.html">subset(<i>&lt;ts&gt;</i>)</a></code> <code><a href="subset.ts.html">subset(<i>&lt;msts&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>Subsetting a time series</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="bizdays.html">bizdays()</a></code> </p>
-          </td>
-          <td><p>Number of trading days in each season</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="easter.html">easter()</a></code> </p>
-          </td>
-          <td><p>Easter holidays in each season</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="monthdays.html">monthdays()</a></code> </p>
-          </td>
-          <td><p>Number of days in each season</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="fourier.html">fourier()</a></code> <code><a href="fourier.html">fourierf()</a></code> </p>
-          </td>
-          <td><p>Fourier terms for modelling seasonality</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="seasonaldummy.html">seasonaldummy()</a></code> <code><a href="seasonaldummy.html">seasonaldummyf()</a></code> </p>
-          </td>
-          <td><p>Seasonal dummy variables</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="findfrequency.html">findfrequency()</a></code> </p>
-          </td>
-          <td><p>Find dominant frequency of a time series</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="BoxCox.html">BoxCox()</a></code> <code><a href="BoxCox.html">InvBoxCox()</a></code> </p>
-          </td>
-          <td><p>Box Cox Transformation</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="BoxCox.lambda.html">BoxCox.lambda()</a></code> </p>
-          </td>
-          <td><p>Automatic selection of Box Cox transformation parameter</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="tsclean.html">tsclean()</a></code> </p>
-          </td>
-          <td><p>Identify and replace outliers and missing values in a time series</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="tsoutliers.html">tsoutliers()</a></code> </p>
-          </td>
-          <td><p>Identify and replace outliers in a time series</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="na.interp.html">na.interp()</a></code> </p>
-          </td>
-          <td><p>Interpolate missing values in a time series</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="ndiffs.html">ndiffs()</a></code> </p>
-          </td>
-          <td><p>Number of differences required for a stationary series</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nsdiffs.html">nsdiffs()</a></code> </p>
-          </td>
-          <td><p>Number of differences required for a seasonally stationary series</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="bld.mbb.bootstrap.html">bld.mbb.bootstrap()</a></code> </p>
-          </td>
-          <td><p>Box-Cox and Loess-based decomposition bootstrap.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="is.constant.html">is.constant()</a></code> </p>
-          </td>
-          <td><p>Is an object constant?</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-seasonal-decomposition" class="hasAnchor"><a href="#section-seasonal-decomposition" class="anchor"></a>Seasonal decomposition</h2>
-            <p class="section-desc"><p>Functions used in seasonal decomposition</p></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="ma.html">ma()</a></code> </p>
-          </td>
-          <td><p>Moving-average smoothing</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="mstl.html">mstl()</a></code> </p>
-          </td>
-          <td><p>Multiple seasonal decomposition</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="seasadj.html">seasadj()</a></code> </p>
-          </td>
-          <td><p>Seasonal adjustment</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="seasonal.html">seasonal()</a></code> <code><a href="seasonal.html">trendcycle()</a></code> <code><a href="seasonal.html">remainder()</a></code> </p>
-          </td>
-          <td><p>Extract components from a time series decomposition</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-modelling" class="hasAnchor"><a href="#section-modelling" class="anchor"></a>Modelling</h2>
-            <p class="section-desc"><p>Functions for estimating time series models</p></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="arfima.html">arfima()</a></code> </p>
-          </td>
-          <td><p>Fit a fractionally differenced ARFIMA model</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="Arima.html">Arima()</a></code> </p>
-          </td>
-          <td><p>Fit ARIMA model to univariate time series</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="auto.arima.html">auto.arima()</a></code> </p>
-          </td>
-          <td><p>Fit best ARIMA model to univariate time series</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="ets.html">ets()</a></code> </p>
-          </td>
-          <td><p>Exponential smoothing state space model</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="baggedModel.html">baggedModel()</a></code> <code><a href="baggedModel.html">baggedETS()</a></code> </p>
-          </td>
-          <td><p>Forecasting using a bagged model</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="bats.html">bats()</a></code> </p>
-          </td>
-          <td><p>BATS model (Exponential smoothing state space model with Box-Cox
+    <tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-package" class="hasAnchor"><a href="#section-package" class="anchor"></a>Package</h2>
+          <p class="section-desc"><p>Forecast package</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="forecast-package.html">forecast-package</a></code> </p>
+        </td>
+        <td><p>Forecasting Functions for Time Series and Linear Models</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-time-series-analysis" class="hasAnchor"><a href="#section-time-series-analysis" class="anchor"></a>Time series analysis</h2>
+          <p class="section-desc"><p>Functions for working with time series</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="msts.html">msts()</a></code> </p>
+        </td>
+        <td><p>Multi-Seasonal Time Series</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="subset.ts.html">subset(<i>&lt;ts&gt;</i>)</a></code> <code><a href="subset.ts.html">subset(<i>&lt;msts&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Subsetting a time series</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="bizdays.html">bizdays()</a></code> </p>
+        </td>
+        <td><p>Number of trading days in each season</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="easter.html">easter()</a></code> </p>
+        </td>
+        <td><p>Easter holidays in each season</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="monthdays.html">monthdays()</a></code> </p>
+        </td>
+        <td><p>Number of days in each season</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="fourier.html">fourier()</a></code> <code><a href="fourier.html">fourierf()</a></code> </p>
+        </td>
+        <td><p>Fourier terms for modelling seasonality</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="seasonaldummy.html">seasonaldummy()</a></code> <code><a href="seasonaldummy.html">seasonaldummyf()</a></code> </p>
+        </td>
+        <td><p>Seasonal dummy variables</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="findfrequency.html">findfrequency()</a></code> </p>
+        </td>
+        <td><p>Find dominant frequency of a time series</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="BoxCox.html">BoxCox()</a></code> <code><a href="BoxCox.html">InvBoxCox()</a></code> </p>
+        </td>
+        <td><p>Box Cox Transformation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="BoxCox.lambda.html">BoxCox.lambda()</a></code> </p>
+        </td>
+        <td><p>Automatic selection of Box Cox transformation parameter</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="tsclean.html">tsclean()</a></code> </p>
+        </td>
+        <td><p>Identify and replace outliers and missing values in a time series</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="tsoutliers.html">tsoutliers()</a></code> </p>
+        </td>
+        <td><p>Identify and replace outliers in a time series</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="na.interp.html">na.interp()</a></code> </p>
+        </td>
+        <td><p>Interpolate missing values in a time series</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ndiffs.html">ndiffs()</a></code> </p>
+        </td>
+        <td><p>Number of differences required for a stationary series</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="nsdiffs.html">nsdiffs()</a></code> </p>
+        </td>
+        <td><p>Number of differences required for a seasonally stationary series</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="bld.mbb.bootstrap.html">bld.mbb.bootstrap()</a></code> </p>
+        </td>
+        <td><p>Box-Cox and Loess-based decomposition bootstrap.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="is.constant.html">is.constant()</a></code> </p>
+        </td>
+        <td><p>Is an object constant?</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-seasonal-decomposition" class="hasAnchor"><a href="#section-seasonal-decomposition" class="anchor"></a>Seasonal decomposition</h2>
+          <p class="section-desc"><p>Functions used in seasonal decomposition</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="ma.html">ma()</a></code> </p>
+        </td>
+        <td><p>Moving-average smoothing</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="mstl.html">mstl()</a></code> </p>
+        </td>
+        <td><p>Multiple seasonal decomposition</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="seasadj.html">seasadj()</a></code> </p>
+        </td>
+        <td><p>Seasonal adjustment</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="seasonal.html">seasonal()</a></code> <code><a href="seasonal.html">trendcycle()</a></code> <code><a href="seasonal.html">remainder()</a></code> </p>
+        </td>
+        <td><p>Extract components from a time series decomposition</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-modelling" class="hasAnchor"><a href="#section-modelling" class="anchor"></a>Modelling</h2>
+          <p class="section-desc"><p>Functions for estimating time series models</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="arfima.html">arfima()</a></code> </p>
+        </td>
+        <td><p>Fit a fractionally differenced ARFIMA model</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Arima.html">Arima()</a></code> </p>
+        </td>
+        <td><p>Fit ARIMA model to univariate time series</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="auto.arima.html">auto.arima()</a></code> </p>
+        </td>
+        <td><p>Fit best ARIMA model to univariate time series</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ets.html">ets()</a></code> </p>
+        </td>
+        <td><p>Exponential smoothing state space model</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="baggedModel.html">baggedModel()</a></code> <code><a href="baggedModel.html">baggedETS()</a></code> </p>
+        </td>
+        <td><p>Forecasting using a bagged model</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="bats.html">bats()</a></code> </p>
+        </td>
+        <td><p>BATS model (Exponential smoothing state space model with Box-Cox
 transformation, ARMA errors, Trend and Seasonal components)</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="tbats.html">tbats()</a></code> </p>
-          </td>
-          <td><p>TBATS model (Exponential smoothing state space model with Box-Cox
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="tbats.html">tbats()</a></code> </p>
+        </td>
+        <td><p>TBATS model (Exponential smoothing state space model with Box-Cox
 transformation, ARMA errors, Trend and Seasonal components)</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nnetar.html">nnetar()</a></code> </p>
-          </td>
-          <td><p>Neural Network Time Series Forecasts</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="forecast.stl.html">forecast(<i>&lt;stl&gt;</i>)</a></code> <code><a href="forecast.stl.html">stlm()</a></code> <code><a href="forecast.stl.html">forecast(<i>&lt;stlm&gt;</i>)</a></code> <code><a href="forecast.stl.html">stlf()</a></code> </p>
-          </td>
-          <td><p>Forecasting using stl objects</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="tslm.html">tslm()</a></code> </p>
-          </td>
-          <td><p>Fit a linear model with time series components</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-forecasting" class="hasAnchor"><a href="#section-forecasting" class="anchor"></a>Forecasting</h2>
-            <p class="section-desc"><p>Functions for producing forecasts</p></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="naive.html">rwf()</a></code> <code><a href="naive.html">naive()</a></code> <code><a href="naive.html">snaive()</a></code> </p>
-          </td>
-          <td><p>Naive and Random Walk Forecasts</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="meanf.html">meanf()</a></code> </p>
-          </td>
-          <td><p>Mean Forecast</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="ses.html">ses()</a></code> <code><a href="ses.html">holt()</a></code> <code><a href="ses.html">hw()</a></code> </p>
-          </td>
-          <td><p>Exponential smoothing forecasts</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="dshw.html">dshw()</a></code> </p>
-          </td>
-          <td><p>Double-Seasonal Holt-Winters Forecasting</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="forecast.stl.html">forecast(<i>&lt;stl&gt;</i>)</a></code> <code><a href="forecast.stl.html">stlm()</a></code> <code><a href="forecast.stl.html">forecast(<i>&lt;stlm&gt;</i>)</a></code> <code><a href="forecast.stl.html">stlf()</a></code> </p>
-          </td>
-          <td><p>Forecasting using stl objects</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="splinef.html">splinef()</a></code> </p>
-          </td>
-          <td><p>Cubic Spline Forecast</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="thetaf.html">thetaf()</a></code> </p>
-          </td>
-          <td><p>Theta method forecast</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="croston.html">croston()</a></code> </p>
-          </td>
-          <td><p>Forecasts for intermittent demand using Croston's method</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="sindexf.html">sindexf()</a></code> </p>
-          </td>
-          <td><p>Forecast seasonal index</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="forecast.html">forecast()</a></code> </p>
-          </td>
-          <td><p>Forecasting time series</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="forecast.Arima.html">forecast(<i>&lt;fracdiff&gt;</i>)</a></code> <code><a href="forecast.Arima.html">forecast(<i>&lt;Arima&gt;</i>)</a></code> <code><a href="forecast.Arima.html">forecast(<i>&lt;ar&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>Forecasting using ARIMA or ARFIMA models</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="forecast.ets.html">forecast(<i>&lt;ets&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>Forecasting using ETS models</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="forecast.baggedModel.html">forecast(<i>&lt;baggedModel&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>Forecasting using a bagged model</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="forecast.bats.html">forecast(<i>&lt;bats&gt;</i>)</a></code> <code><a href="forecast.bats.html">forecast(<i>&lt;tbats&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>Forecasting using BATS and TBATS models</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="forecast.HoltWinters.html">forecast(<i>&lt;HoltWinters&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>Forecasting using Holt-Winters objects</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="forecast.lm.html">forecast(<i>&lt;lm&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>Forecast a linear model with possible time series components</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="forecast.mlm.html">forecast(<i>&lt;mlm&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>Forecast a multiple linear model with possible time series components</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="forecast.mts.html">forecast(<i>&lt;mts&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>Forecasting time series</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="forecast.nnetar.html">forecast(<i>&lt;nnetar&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>Forecasting using neural network models</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="forecast.StructTS.html">forecast(<i>&lt;StructTS&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>Forecasting using Structural Time Series models</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-plotting" class="hasAnchor"><a href="#section-plotting" class="anchor"></a>Plotting</h2>
-            <p class="section-desc"><p>Functions for plotting time series and forecasts</p></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="gghistogram.html">gghistogram()</a></code> </p>
-          </td>
-          <td><p>Histogram with optional normal and kernel density functions</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="seasonplot.html">ggseasonplot()</a></code> <code><a href="seasonplot.html">seasonplot()</a></code> </p>
-          </td>
-          <td><p>Seasonal plot</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="ggmonthplot.html">ggmonthplot()</a></code> <code><a href="ggmonthplot.html">ggsubseriesplot()</a></code> </p>
-          </td>
-          <td><p>Create a seasonal subseries ggplot</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="gglagplot.html">gglagplot()</a></code> <code><a href="gglagplot.html">gglagchull()</a></code> </p>
-          </td>
-          <td><p>Time series lag ggplots</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="Acf.html">Acf()</a></code> <code><a href="Acf.html">Pacf()</a></code> <code><a href="Acf.html">Ccf()</a></code> <code><a href="Acf.html">taperedacf()</a></code> <code><a href="Acf.html">taperedpacf()</a></code> </p>
-          </td>
-          <td><p>(Partial) Autocorrelation and Cross-Correlation Function Estimation</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="autoplot.acf.html">autoplot(<i>&lt;acf&gt;</i>)</a></code> <code><a href="autoplot.acf.html">ggAcf()</a></code> <code><a href="autoplot.acf.html">ggPacf()</a></code> <code><a href="autoplot.acf.html">ggCcf()</a></code> <code><a href="autoplot.acf.html">autoplot(<i>&lt;mpacf&gt;</i>)</a></code> <code><a href="autoplot.acf.html">ggtaperedacf()</a></code> <code><a href="autoplot.acf.html">ggtaperedpacf()</a></code> </p>
-          </td>
-          <td><p>ggplot (Partial) Autocorrelation and Cross-Correlation Function Estimation
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="nnetar.html">nnetar()</a></code> </p>
+        </td>
+        <td><p>Neural Network Time Series Forecasts</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="forecast.stl.html">forecast(<i>&lt;stl&gt;</i>)</a></code> <code><a href="forecast.stl.html">stlm()</a></code> <code><a href="forecast.stl.html">forecast(<i>&lt;stlm&gt;</i>)</a></code> <code><a href="forecast.stl.html">stlf()</a></code> </p>
+        </td>
+        <td><p>Forecasting using stl objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="tslm.html">tslm()</a></code> </p>
+        </td>
+        <td><p>Fit a linear model with time series components</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-forecasting" class="hasAnchor"><a href="#section-forecasting" class="anchor"></a>Forecasting</h2>
+          <p class="section-desc"><p>Functions for producing forecasts</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="naive.html">rwf()</a></code> <code><a href="naive.html">naive()</a></code> <code><a href="naive.html">snaive()</a></code> </p>
+        </td>
+        <td><p>Naive and Random Walk Forecasts</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="meanf.html">meanf()</a></code> </p>
+        </td>
+        <td><p>Mean Forecast</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ses.html">ses()</a></code> <code><a href="ses.html">holt()</a></code> <code><a href="ses.html">hw()</a></code> </p>
+        </td>
+        <td><p>Exponential smoothing forecasts</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="dshw.html">dshw()</a></code> </p>
+        </td>
+        <td><p>Double-Seasonal Holt-Winters Forecasting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="forecast.stl.html">forecast(<i>&lt;stl&gt;</i>)</a></code> <code><a href="forecast.stl.html">stlm()</a></code> <code><a href="forecast.stl.html">forecast(<i>&lt;stlm&gt;</i>)</a></code> <code><a href="forecast.stl.html">stlf()</a></code> </p>
+        </td>
+        <td><p>Forecasting using stl objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="splinef.html">splinef()</a></code> </p>
+        </td>
+        <td><p>Cubic Spline Forecast</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="thetaf.html">thetaf()</a></code> </p>
+        </td>
+        <td><p>Theta method forecast</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="croston.html">croston()</a></code> </p>
+        </td>
+        <td><p>Forecasts for intermittent demand using Croston's method</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sindexf.html">sindexf()</a></code> </p>
+        </td>
+        <td><p>Forecast seasonal index</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="forecast.html">forecast()</a></code> </p>
+        </td>
+        <td><p>Forecasting time series</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="forecast.Arima.html">forecast(<i>&lt;fracdiff&gt;</i>)</a></code> <code><a href="forecast.Arima.html">forecast(<i>&lt;Arima&gt;</i>)</a></code> <code><a href="forecast.Arima.html">forecast(<i>&lt;ar&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Forecasting using ARIMA or ARFIMA models</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="forecast.ets.html">forecast(<i>&lt;ets&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Forecasting using ETS models</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="forecast.baggedModel.html">forecast(<i>&lt;baggedModel&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Forecasting using a bagged model</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="forecast.bats.html">forecast(<i>&lt;bats&gt;</i>)</a></code> <code><a href="forecast.bats.html">forecast(<i>&lt;tbats&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Forecasting using BATS and TBATS models</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="forecast.HoltWinters.html">forecast(<i>&lt;HoltWinters&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Forecasting using Holt-Winters objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="forecast.lm.html">forecast(<i>&lt;lm&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Forecast a linear model with possible time series components</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="forecast.mlm.html">forecast(<i>&lt;mlm&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Forecast a multiple linear model with possible time series components</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="forecast.mts.html">forecast(<i>&lt;mts&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Forecasting time series</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="forecast.nnetar.html">forecast(<i>&lt;nnetar&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Forecasting using neural network models</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="forecast.StructTS.html">forecast(<i>&lt;StructTS&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Forecasting using Structural Time Series models</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-plotting" class="hasAnchor"><a href="#section-plotting" class="anchor"></a>Plotting</h2>
+          <p class="section-desc"><p>Functions for plotting time series and forecasts</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="gghistogram.html">gghistogram()</a></code> </p>
+        </td>
+        <td><p>Histogram with optional normal and kernel density functions</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="seasonplot.html">ggseasonplot()</a></code> <code><a href="seasonplot.html">seasonplot()</a></code> </p>
+        </td>
+        <td><p>Seasonal plot</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ggmonthplot.html">ggmonthplot()</a></code> <code><a href="ggmonthplot.html">ggsubseriesplot()</a></code> </p>
+        </td>
+        <td><p>Create a seasonal subseries ggplot</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="gglagplot.html">gglagplot()</a></code> <code><a href="gglagplot.html">gglagchull()</a></code> </p>
+        </td>
+        <td><p>Time series lag ggplots</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Acf.html">Acf()</a></code> <code><a href="Acf.html">Pacf()</a></code> <code><a href="Acf.html">Ccf()</a></code> <code><a href="Acf.html">taperedacf()</a></code> <code><a href="Acf.html">taperedpacf()</a></code> </p>
+        </td>
+        <td><p>(Partial) Autocorrelation and Cross-Correlation Function Estimation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="autoplot.acf.html">autoplot(<i>&lt;acf&gt;</i>)</a></code> <code><a href="autoplot.acf.html">ggAcf()</a></code> <code><a href="autoplot.acf.html">ggPacf()</a></code> <code><a href="autoplot.acf.html">ggCcf()</a></code> <code><a href="autoplot.acf.html">autoplot(<i>&lt;mpacf&gt;</i>)</a></code> <code><a href="autoplot.acf.html">ggtaperedacf()</a></code> <code><a href="autoplot.acf.html">ggtaperedpacf()</a></code> </p>
+        </td>
+        <td><p>ggplot (Partial) Autocorrelation and Cross-Correlation Function Estimation
 and Plotting</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="tsdisplay.html">ggtsdisplay()</a></code> <code><a href="tsdisplay.html">tsdisplay()</a></code> </p>
-          </td>
-          <td><p>Time series display</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="checkresiduals.html">checkresiduals()</a></code> </p>
-          </td>
-          <td><p>Check that residuals from a time series model look like white noise</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plot.Arima.html">plot(<i>&lt;Arima&gt;</i>)</a></code> <code><a href="plot.Arima.html">plot(<i>&lt;ar&gt;</i>)</a></code> <code><a href="plot.Arima.html">autoplot(<i>&lt;Arima&gt;</i>)</a></code> <code><a href="plot.Arima.html">autoplot(<i>&lt;ar&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>Plot characteristic roots from ARIMA model</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plot.bats.html">plot(<i>&lt;bats&gt;</i>)</a></code> <code><a href="plot.bats.html">autoplot(<i>&lt;tbats&gt;</i>)</a></code> <code><a href="plot.bats.html">autoplot(<i>&lt;bats&gt;</i>)</a></code> <code><a href="plot.bats.html">plot(<i>&lt;tbats&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>Plot components from BATS model</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plot.ets.html">plot(<i>&lt;ets&gt;</i>)</a></code> <code><a href="plot.ets.html">autoplot(<i>&lt;ets&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>Plot components from ETS model</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plot.forecast.html">plot(<i>&lt;forecast&gt;</i>)</a></code> <code><a href="plot.forecast.html">autoplot(<i>&lt;forecast&gt;</i>)</a></code> <code><a href="plot.forecast.html">autoplot(<i>&lt;splineforecast&gt;</i>)</a></code> <code><a href="plot.forecast.html">autolayer(<i>&lt;forecast&gt;</i>)</a></code> <code><a href="plot.forecast.html">plot(<i>&lt;splineforecast&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>Forecast plot</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plot.mforecast.html">autoplot(<i>&lt;mforecast&gt;</i>)</a></code> <code><a href="plot.mforecast.html">autolayer(<i>&lt;mforecast&gt;</i>)</a></code> <code><a href="plot.mforecast.html">plot(<i>&lt;mforecast&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>Multivariate forecast plot</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="autoplot.seas.html">autoplot(<i>&lt;decomposed.ts&gt;</i>)</a></code> <code><a href="autoplot.seas.html">autoplot(<i>&lt;stl&gt;</i>)</a></code> <code><a href="autoplot.seas.html">autoplot(<i>&lt;StructTS&gt;</i>)</a></code> <code><a href="autoplot.seas.html">autoplot(<i>&lt;seas&gt;</i>)</a></code> <code><a href="autoplot.seas.html">autoplot(<i>&lt;mstl&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>Plot time series decomposition components using ggplot</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="autoplot.ts.html">autolayer(<i>&lt;mts&gt;</i>)</a></code> <code><a href="autoplot.ts.html">autolayer(<i>&lt;msts&gt;</i>)</a></code> <code><a href="autoplot.ts.html">autolayer(<i>&lt;ts&gt;</i>)</a></code> <code><a href="autoplot.ts.html">autoplot(<i>&lt;ts&gt;</i>)</a></code> <code><a href="autoplot.ts.html">autoplot(<i>&lt;mts&gt;</i>)</a></code> <code><a href="autoplot.ts.html">autoplot(<i>&lt;msts&gt;</i>)</a></code> <code><a href="autoplot.ts.html">fortify(<i>&lt;ts&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>Automatically create a ggplot for time series objects</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="autolayer.html">autolayer()</a></code> </p>
-          </td>
-          <td><p>Create a ggplot layer appropriate to a particular data type</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-model-analysis" class="hasAnchor"><a href="#section-model-analysis" class="anchor"></a>Model analysis</h2>
-            <p class="section-desc"><p>Functions for analysing time series models</p></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="fitted.Arima.html">fitted(<i>&lt;fracdiff&gt;</i>)</a></code> <code><a href="fitted.Arima.html">fitted(<i>&lt;Arima&gt;</i>)</a></code> <code><a href="fitted.Arima.html">fitted(<i>&lt;ar&gt;</i>)</a></code> <code><a href="fitted.Arima.html">fitted(<i>&lt;bats&gt;</i>)</a></code> <code><a href="fitted.Arima.html">fitted(<i>&lt;ets&gt;</i>)</a></code> <code><a href="fitted.Arima.html">fitted(<i>&lt;nnetar&gt;</i>)</a></code> <code><a href="fitted.Arima.html">fitted(<i>&lt;tbats&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>h-step in-sample forecasts for time series models.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="residuals.forecast.html">residuals(<i>&lt;forecast&gt;</i>)</a></code> <code><a href="residuals.forecast.html">residuals(<i>&lt;ar&gt;</i>)</a></code> <code><a href="residuals.forecast.html">residuals(<i>&lt;Arima&gt;</i>)</a></code> <code><a href="residuals.forecast.html">residuals(<i>&lt;bats&gt;</i>)</a></code> <code><a href="residuals.forecast.html">residuals(<i>&lt;tbats&gt;</i>)</a></code> <code><a href="residuals.forecast.html">residuals(<i>&lt;ets&gt;</i>)</a></code> <code><a href="residuals.forecast.html">residuals(<i>&lt;fracdiff&gt;</i>)</a></code> <code><a href="residuals.forecast.html">residuals(<i>&lt;nnetar&gt;</i>)</a></code> <code><a href="residuals.forecast.html">residuals(<i>&lt;stlm&gt;</i>)</a></code> <code><a href="residuals.forecast.html">residuals(<i>&lt;tslm&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>Residuals for various time series models</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="checkresiduals.html">checkresiduals()</a></code> </p>
-          </td>
-          <td><p>Check that residuals from a time series model look like white noise</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="arimaorder.html">arimaorder()</a></code> </p>
-          </td>
-          <td><p>Return the order of an ARIMA or ARFIMA model</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="simulate.ets.html">simulate(<i>&lt;ets&gt;</i>)</a></code> <code><a href="simulate.ets.html">simulate(<i>&lt;Arima&gt;</i>)</a></code> <code><a href="simulate.ets.html">simulate(<i>&lt;ar&gt;</i>)</a></code> <code><a href="simulate.ets.html">simulate(<i>&lt;fracdiff&gt;</i>)</a></code> <code><a href="simulate.ets.html">simulate(<i>&lt;nnetar&gt;</i>)</a></code> </p>
-          </td>
-          <td><p>Simulation from a time series model</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="tbats.components.html">tbats.components()</a></code> </p>
-          </td>
-          <td><p>Extract components of a TBATS model</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-forecast-evaluation" class="hasAnchor"><a href="#section-forecast-evaluation" class="anchor"></a>Forecast evaluation</h2>
-            <p class="section-desc"><p>Functions used for evaluating forecasts</p></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="accuracy.html">accuracy()</a></code> </p>
-          </td>
-          <td><p>Accuracy measures for a forecast model</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="CVar.html">CVar()</a></code> </p>
-          </td>
-          <td><p>k-fold Cross-Validation applied to an autoregressive model</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="CV.html">CV()</a></code> </p>
-          </td>
-          <td><p>Cross-validation statistic</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="tsCV.html">tsCV()</a></code> </p>
-          </td>
-          <td><p>Time series cross-validation</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="dm.test.html">dm.test()</a></code> </p>
-          </td>
-          <td><p>Diebold-Mariano test for predictive accuracy</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-data" class="hasAnchor"><a href="#section-data" class="anchor"></a>Data</h2>
-            <p class="section-desc"><p>Data sets included in the package</p></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="gas.html">gas</a></code> </p>
-          </td>
-          <td><p>Australian monthly gas production</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="gold.html">gold</a></code> </p>
-          </td>
-          <td><p>Daily morning gold prices</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="taylor.html">taylor</a></code> </p>
-          </td>
-          <td><p>Half-hourly electricity demand</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="wineind.html">wineind</a></code> </p>
-          </td>
-          <td><p>Australian total wine sales</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="woolyrnq.html">woolyrnq</a></code> </p>
-          </td>
-          <td><p>Quarterly production of woollen yarn in Australia</p></td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="tsdisplay.html">ggtsdisplay()</a></code> <code><a href="tsdisplay.html">tsdisplay()</a></code> </p>
+        </td>
+        <td><p>Time series display</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="checkresiduals.html">checkresiduals()</a></code> </p>
+        </td>
+        <td><p>Check that residuals from a time series model look like white noise</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot.Arima.html">plot(<i>&lt;Arima&gt;</i>)</a></code> <code><a href="plot.Arima.html">plot(<i>&lt;ar&gt;</i>)</a></code> <code><a href="plot.Arima.html">autoplot(<i>&lt;Arima&gt;</i>)</a></code> <code><a href="plot.Arima.html">autoplot(<i>&lt;ar&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Plot characteristic roots from ARIMA model</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot.bats.html">plot(<i>&lt;bats&gt;</i>)</a></code> <code><a href="plot.bats.html">autoplot(<i>&lt;tbats&gt;</i>)</a></code> <code><a href="plot.bats.html">autoplot(<i>&lt;bats&gt;</i>)</a></code> <code><a href="plot.bats.html">plot(<i>&lt;tbats&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Plot components from BATS model</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot.ets.html">plot(<i>&lt;ets&gt;</i>)</a></code> <code><a href="plot.ets.html">autoplot(<i>&lt;ets&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Plot components from ETS model</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot.forecast.html">plot(<i>&lt;forecast&gt;</i>)</a></code> <code><a href="plot.forecast.html">autoplot(<i>&lt;forecast&gt;</i>)</a></code> <code><a href="plot.forecast.html">autoplot(<i>&lt;splineforecast&gt;</i>)</a></code> <code><a href="plot.forecast.html">autolayer(<i>&lt;forecast&gt;</i>)</a></code> <code><a href="plot.forecast.html">plot(<i>&lt;splineforecast&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Forecast plot</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot.mforecast.html">autoplot(<i>&lt;mforecast&gt;</i>)</a></code> <code><a href="plot.mforecast.html">autolayer(<i>&lt;mforecast&gt;</i>)</a></code> <code><a href="plot.mforecast.html">plot(<i>&lt;mforecast&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Multivariate forecast plot</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="autoplot.seas.html">autoplot(<i>&lt;decomposed.ts&gt;</i>)</a></code> <code><a href="autoplot.seas.html">autoplot(<i>&lt;stl&gt;</i>)</a></code> <code><a href="autoplot.seas.html">autoplot(<i>&lt;StructTS&gt;</i>)</a></code> <code><a href="autoplot.seas.html">autoplot(<i>&lt;seas&gt;</i>)</a></code> <code><a href="autoplot.seas.html">autoplot(<i>&lt;mstl&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Plot time series decomposition components using ggplot</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="autoplot.ts.html">autolayer(<i>&lt;mts&gt;</i>)</a></code> <code><a href="autoplot.ts.html">autolayer(<i>&lt;msts&gt;</i>)</a></code> <code><a href="autoplot.ts.html">autolayer(<i>&lt;ts&gt;</i>)</a></code> <code><a href="autoplot.ts.html">autoplot(<i>&lt;ts&gt;</i>)</a></code> <code><a href="autoplot.ts.html">autoplot(<i>&lt;mts&gt;</i>)</a></code> <code><a href="autoplot.ts.html">autoplot(<i>&lt;msts&gt;</i>)</a></code> <code><a href="autoplot.ts.html">fortify(<i>&lt;ts&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Automatically create a ggplot for time series objects</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-model-analysis" class="hasAnchor"><a href="#section-model-analysis" class="anchor"></a>Model analysis</h2>
+          <p class="section-desc"><p>Functions for analysing time series models</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="fitted.Arima.html">fitted(<i>&lt;fracdiff&gt;</i>)</a></code> <code><a href="fitted.Arima.html">fitted(<i>&lt;Arima&gt;</i>)</a></code> <code><a href="fitted.Arima.html">fitted(<i>&lt;ar&gt;</i>)</a></code> <code><a href="fitted.Arima.html">fitted(<i>&lt;bats&gt;</i>)</a></code> <code><a href="fitted.Arima.html">fitted(<i>&lt;ets&gt;</i>)</a></code> <code><a href="fitted.Arima.html">fitted(<i>&lt;nnetar&gt;</i>)</a></code> <code><a href="fitted.Arima.html">fitted(<i>&lt;tbats&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>h-step in-sample forecasts for time series models.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="residuals.forecast.html">residuals(<i>&lt;forecast&gt;</i>)</a></code> <code><a href="residuals.forecast.html">residuals(<i>&lt;ar&gt;</i>)</a></code> <code><a href="residuals.forecast.html">residuals(<i>&lt;Arima&gt;</i>)</a></code> <code><a href="residuals.forecast.html">residuals(<i>&lt;bats&gt;</i>)</a></code> <code><a href="residuals.forecast.html">residuals(<i>&lt;tbats&gt;</i>)</a></code> <code><a href="residuals.forecast.html">residuals(<i>&lt;ets&gt;</i>)</a></code> <code><a href="residuals.forecast.html">residuals(<i>&lt;fracdiff&gt;</i>)</a></code> <code><a href="residuals.forecast.html">residuals(<i>&lt;nnetar&gt;</i>)</a></code> <code><a href="residuals.forecast.html">residuals(<i>&lt;stlm&gt;</i>)</a></code> <code><a href="residuals.forecast.html">residuals(<i>&lt;tslm&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Residuals for various time series models</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="checkresiduals.html">checkresiduals()</a></code> </p>
+        </td>
+        <td><p>Check that residuals from a time series model look like white noise</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="arimaorder.html">arimaorder()</a></code> </p>
+        </td>
+        <td><p>Return the order of an ARIMA or ARFIMA model</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="simulate.ets.html">simulate(<i>&lt;ets&gt;</i>)</a></code> <code><a href="simulate.ets.html">simulate(<i>&lt;Arima&gt;</i>)</a></code> <code><a href="simulate.ets.html">simulate(<i>&lt;ar&gt;</i>)</a></code> <code><a href="simulate.ets.html">simulate(<i>&lt;fracdiff&gt;</i>)</a></code> <code><a href="simulate.ets.html">simulate(<i>&lt;nnetar&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Simulation from a time series model</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="tbats.components.html">tbats.components()</a></code> </p>
+        </td>
+        <td><p>Extract components of a TBATS model</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-forecast-evaluation" class="hasAnchor"><a href="#section-forecast-evaluation" class="anchor"></a>Forecast evaluation</h2>
+          <p class="section-desc"><p>Functions used for evaluating forecasts</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="accuracy.html">accuracy()</a></code> </p>
+        </td>
+        <td><p>Accuracy measures for a forecast model</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="CVar.html">CVar()</a></code> </p>
+        </td>
+        <td><p>k-fold Cross-Validation applied to an autoregressive model</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="CV.html">CV()</a></code> </p>
+        </td>
+        <td><p>Cross-validation statistic</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="tsCV.html">tsCV()</a></code> </p>
+        </td>
+        <td><p>Time series cross-validation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="dm.test.html">dm.test()</a></code> </p>
+        </td>
+        <td><p>Diebold-Mariano test for predictive accuracy</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-data" class="hasAnchor"><a href="#section-data" class="anchor"></a>Data</h2>
+          <p class="section-desc"><p>Data sets included in the package</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="gas.html">gas</a></code> </p>
+        </td>
+        <td><p>Australian monthly gas production</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="gold.html">gold</a></code> </p>
+        </td>
+        <td><p>Daily morning gold prices</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="taylor.html">taylor</a></code> </p>
+        </td>
+        <td><p>Half-hourly electricity demand</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="wineind.html">wineind</a></code> </p>
+        </td>
+        <td><p>Australian total wine sales</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="woolyrnq.html">woolyrnq</a></code> </p>
+        </td>
+        <td><p>Quarterly production of woollen yarn in Australia</p></td>
+      </tr>
+    </tbody>
+    </table>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -709,6 +709,8 @@ and Plotting</p></td>
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

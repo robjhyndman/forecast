@@ -25,12 +25,17 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Residuals for various time series models — residuals.forecast" />
 
 <meta property="og:description" content="Returns time series of residuals from a fitted model." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +58,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -76,6 +85,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -83,16 +93,19 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Residuals for various time series models</h1>
-    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/residuals.R'><code>R/residuals.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/residuals.R'><code>R/residuals.R</code></a></small>
+    <div class="hidden name"><code>residuals.forecast.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Returns time series of residuals from a fitted model.</p>
     
+    </div>
 
     <pre class="usage"><span class='co'># S3 method for forecast</span>
 <span class='fu'>residuals</span>(<span class='no'>object</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"innovation"</span>, <span class='st'>"response"</span>), <span class='no'>...</span>)
@@ -129,7 +142,7 @@
 <span class='co'># S3 method for tslm</span>
 <span class='fu'>residuals</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -178,13 +191,13 @@ matrix of time-series consisting of the residuals from each of the fitted neural
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='fitted.Arima.html'>fitted.Arima</a></code>, <code><a href='checkresiduals.html'>checkresiduals</a></code>.</p>
+    <div class='dont-index'><p><code><a href='fitted.Arima.html'>fitted.Arima</a></code>, <code><a href='checkresiduals.html'>checkresiduals</a></code>.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Arima.html'>Arima</a></span>(<span class='no'>lynx</span>,<span class='kw'>order</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>4</span>,<span class='fl'>0</span>,<span class='fl'>0</span>), <span class='kw'>lambda</span><span class='kw'>=</span><span class='fl'>0.5</span>)
 
-<span class='fu'>plot</span>(<span class='fu'>residuals</span>(<span class='no'>fit</span>))</div><div class='img'><img src='residuals.forecast-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>plot</span>(<span class='fu'>residuals</span>(<span class='no'>fit</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>'response'</span>))</div><div class='img'><img src='residuals.forecast-2.png' alt='' width='700' height='432.632880098887' /></div></pre>
+<span class='fu'>plot</span>(<span class='fu'>residuals</span>(<span class='no'>fit</span>))</div><div class='img'><img src='residuals.forecast-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='fu'>residuals</span>(<span class='no'>fit</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>'response'</span>))</div><div class='img'><img src='residuals.forecast-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -218,6 +231,8 @@ Rob J Hyndman
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

@@ -25,12 +25,17 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Multivariate forecast plot — autoplot.mforecast" />
 
 <meta property="og:description" content="Plots historical data with multivariate forecasts and prediction intervals." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +58,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -76,6 +85,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -83,29 +93,32 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Multivariate forecast plot</h1>
-    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/ggplot.R'><code>R/ggplot.R</code></a>, <a href='https:/github.com/robjhyndman/forecast/blob/master/R/mforecast.R'><code>R/mforecast.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/ggplot.R'><code>R/ggplot.R</code></a>, <a href='https://github.com/robjhyndman/forecast/blob/master/R/mforecast.R'><code>R/mforecast.R</code></a></small>
+    <div class="hidden name"><code>plot.mforecast.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Plots historical data with multivariate forecasts and prediction intervals.</p>
     
+    </div>
 
     <pre class="usage"><span class='co'># S3 method for mforecast</span>
-<span class='fu'>autoplot</span>(<span class='no'>object</span>, <span class='kw'>PI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>facets</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>object</span>, <span class='kw'>PI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>facets</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>colour</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for mforecast</span>
-<span class='fu'><a href='autolayer.html'>autolayer</a></span>(<span class='no'>object</span>, <span class='kw'>series</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>PI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autolayer'>autolayer</a></span>(<span class='no'>object</span>, <span class='kw'>series</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>PI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for mforecast</span>
 <span class='fu'>plot</span>(<span class='no'>x</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='fu'>paste</span>(<span class='st'>"Forecasts from"</span>, <span class='fu'>unique</span>(<span class='no'>x</span>$<span class='no'>method</span>)),
   <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"time"</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -164,7 +177,7 @@ and practice</em>, 2nd edition, OTexts: Melbourne, Australia.
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='plot.forecast.html'>plot.forecast</a></code>, <code><a href='http://www.rdocumentation.org/packages/stats/topics/plot.ts'>plot.ts</a></code></p>
+    <div class='dont-index'><p><code><a href='plot.forecast.html'>plot.forecast</a></code>, <code><a href='http://www.rdocumentation.org/packages/stats/topics/plot.ts'>plot.ts</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -173,12 +186,12 @@ and practice</em>, 2nd edition, OTexts: Melbourne, Australia.
 <span class='no'>lungDeaths</span> <span class='kw'>&lt;-</span> <span class='fu'>cbind</span>(<span class='no'>mdeaths</span>, <span class='no'>fdeaths</span>)
 <span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='tslm.html'>tslm</a></span>(<span class='no'>lungDeaths</span> ~ <span class='no'>trend</span> + <span class='no'>season</span>)
 <span class='no'>fcast</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>, <span class='kw'>h</span><span class='kw'>=</span><span class='fl'>10</span>)
-<span class='fu'>plot</span>(<span class='no'>fcast</span>)</div><div class='img'><img src='plot.mforecast-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>fcast</span>)</div><div class='img'><img src='plot.mforecast-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>fcast</span>)</div><div class='img'><img src='plot.mforecast-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>fcast</span>)</div><div class='img'><img src='plot.mforecast-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>carPower</span> <span class='kw'>&lt;-</span> <span class='fu'>as.matrix</span>(<span class='no'>mtcars</span>[,<span class='fu'>c</span>(<span class='st'>"qsec"</span>,<span class='st'>"hp"</span>)])
 <span class='no'>carmpg</span> <span class='kw'>&lt;-</span> <span class='no'>mtcars</span>[,<span class='st'>"mpg"</span>]
 <span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>lm</span>(<span class='no'>carPower</span> ~ <span class='no'>carmpg</span>)
 <span class='no'>fcast</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='fu'>data.frame</span>(<span class='kw'>carmpg</span><span class='kw'>=</span><span class='fl'>30</span>))
-<span class='fu'>plot</span>(<span class='no'>fcast</span>, <span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>"Year"</span>)</div><div class='img'><img src='plot.mforecast-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>fcast</span>, <span class='kw'>xlab</span><span class='kw'>=</span><span class='fu'>rep</span>(<span class='st'>"Year"</span>,<span class='fl'>2</span>))</div><div class='img'><img src='plot.mforecast-4.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>fcast</span>, <span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>"Year"</span>)</div><div class='img'><img src='plot.mforecast-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>fcast</span>, <span class='kw'>xlab</span><span class='kw'>=</span><span class='fu'>rep</span>(<span class='st'>"Year"</span>,<span class='fl'>2</span>))</div><div class='img'><img src='plot.mforecast-4.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -213,6 +226,8 @@ Mitchell O'Hara-Wild
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

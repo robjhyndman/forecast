@@ -25,12 +25,17 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Return the order of an ARIMA or ARFIMA model — arimaorder" />
 
 <meta property="og:description" content="Returns the order of a univariate ARIMA or ARFIMA model." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +58,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -76,6 +85,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -83,20 +93,23 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Return the order of an ARIMA or ARFIMA model</h1>
-    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/arima.R'><code>R/arima.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/arima.R'><code>R/arima.R</code></a></small>
+    <div class="hidden name"><code>arimaorder.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Returns the order of a univariate ARIMA or ARFIMA model.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>arimaorder</span>(<span class='no'>object</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -118,12 +131,13 @@ contains the values \(p\), \(d\), \(q\), \(P\), \(D\), \(Q\) and
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='http://www.rdocumentation.org/packages/stats/topics/ar'>ar</a></code>, <code><a href='auto.arima.html'>auto.arima</a></code>,
-<code><a href='Arima.html'>Arima</a></code>, <code><a href='http://www.rdocumentation.org/packages/stats/topics/arima'>arima</a></code>, <code><a href='arfima.html'>arfima</a></code>.</p>
+    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/stats/topics/ar'>ar</a></code>, <code><a href='auto.arima.html'>auto.arima</a></code>,
+<code><a href='Arima.html'>Arima</a></code>, <code><a href='http://www.rdocumentation.org/packages/stats/topics/arima'>arima</a></code>, <code><a href='arfima.html'>arfima</a></code>.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>WWWusage</span> <span class='kw'>%&gt;%</span> <span class='no'>auto.arima</span> <span class='kw'>%&gt;%</span> <span class='no'>arimaorder</span></div><div class='output co'>#&gt; [1] 1 1 1</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='no'>WWWusage</span> <span class='kw'>%&gt;%</span> <span class='no'>auto.arima</span> <span class='kw'>%&gt;%</span> <span class='no'>arimaorder</span></div><div class='output co'>#&gt; p d q 
+#&gt; 1 1 1 </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -156,6 +170,8 @@ Rob J Hyndman
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

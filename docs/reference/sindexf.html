@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Forecast seasonal index — sindexf" />
 
 <meta property="og:description" content="Returns vector containing the seasonal index for h future periods. If
@@ -32,6 +35,8 @@ the seasonal index is non-periodic, it uses the last values of the index." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -54,8 +59,12 @@ the seasonal index is non-periodic, it uses the last values of the index." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -77,6 +86,7 @@ the seasonal index is non-periodic, it uses the last values of the index." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -84,21 +94,24 @@ the seasonal index is non-periodic, it uses the last values of the index." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Forecast seasonal index</h1>
-    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/season.R'><code>R/season.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/season.R'><code>R/season.R</code></a></small>
+    <div class="hidden name"><code>sindexf.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Returns vector containing the seasonal index for <code>h</code> future periods. If
 the seasonal index is non-periodic, it uses the last values of the index.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>sindexf</span>(<span class='no'>object</span>, <span class='no'>h</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -126,7 +139,7 @@ the seasonal index is non-periodic, it uses the last values of the index.</p>
 <span class='no'>uk.fcast</span>$<span class='no'>lower</span> <span class='kw'>&lt;-</span> <span class='no'>uk.fcast</span>$<span class='no'>lower</span> + <span class='fu'>cbind</span>(<span class='no'>seasf</span>,<span class='no'>seasf</span>)
 <span class='no'>uk.fcast</span>$<span class='no'>upper</span> <span class='kw'>&lt;-</span> <span class='no'>uk.fcast</span>$<span class='no'>upper</span> + <span class='fu'>cbind</span>(<span class='no'>seasf</span>,<span class='no'>seasf</span>)
 <span class='no'>uk.fcast</span>$<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>UKDriverDeaths</span>
-<span class='fu'>plot</span>(<span class='no'>uk.fcast</span>,<span class='kw'>main</span><span class='kw'>=</span><span class='st'>"Forecasts from Holt's method with seasonal adjustment"</span>)</div><div class='img'><img src='sindexf-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>uk.fcast</span>,<span class='kw'>main</span><span class='kw'>=</span><span class='st'>"Forecasts from Holt's method with seasonal adjustment"</span>)</div><div class='img'><img src='sindexf-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -157,6 +170,8 @@ Rob J Hyndman
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

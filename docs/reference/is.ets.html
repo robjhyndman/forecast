@@ -25,12 +25,17 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Is an object a particular model type? — is.acf" />
 
 <meta property="og:description" content="Returns true if the model object is of a particular type" />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +58,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -76,6 +85,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -83,16 +93,19 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Is an object a particular model type?</h1>
-    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/acf.R'><code>R/acf.R</code></a>, <a href='https:/github.com/robjhyndman/forecast/blob/master/R/arima.R'><code>R/arima.R</code></a>, <a href='https:/github.com/robjhyndman/forecast/blob/master/R/baggedModel.R'><code>R/baggedModel.R</code></a>, and 5 more</small>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/acf.R'><code>R/acf.R</code></a>, <a href='https://github.com/robjhyndman/forecast/blob/master/R/arima.R'><code>R/arima.R</code></a>, <a href='https://github.com/robjhyndman/forecast/blob/master/R/baggedModel.R'><code>R/baggedModel.R</code></a>, and 5 more</small>
+    <div class="hidden name"><code>is.ets.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Returns true if the model object is of a particular type</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>is.acf</span>(<span class='no'>x</span>)
 
@@ -110,7 +123,7 @@
 
 <span class='fu'>is.nnetarmodels</span>(<span class='no'>x</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -141,6 +154,8 @@
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

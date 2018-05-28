@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Get response variable from time series model. — getResponse" />
 
 <meta property="og:description" content="getResponse is a generic function for extracting the historical data
@@ -35,6 +38,8 @@ the first argument." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -57,8 +62,12 @@ the first argument." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -80,6 +89,7 @@ the first argument." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -87,13 +97,15 @@ the first argument." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Get response variable from time series model.</h1>
-    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/getResponse.R'><code>R/getResponse.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/getResponse.R'><code>R/getResponse.R</code></a></small>
+    <div class="hidden name"><code>getResponse.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p><code>getResponse</code> is a generic function for extracting the historical data
 from a time series model (including <code>Arima</code>, <code>ets</code>, <code>ar</code>,
@@ -101,6 +113,7 @@ from a time series model (including <code>Arima</code>, <code>ets</code>, <code>
 The function invokes particular <em>methods</em> which depend on the class of
 the first argument.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>getResponse</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
@@ -131,7 +144,7 @@ the first argument.</p>
 <span class='co'># S3 method for baggedModel</span>
 <span class='fu'>getResponse</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -176,6 +189,8 @@ Rob J Hyndman
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

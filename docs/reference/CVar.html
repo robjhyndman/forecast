@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="k-fold Cross-Validation applied to an autoregressive model — CVar" />
 
 <meta property="og:description" content="CVar computes the errors obtained by applying an autoregressive
@@ -38,6 +41,8 @@ not be used." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -60,8 +65,12 @@ not be used." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -83,6 +92,7 @@ not be used." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -90,13 +100,15 @@ not be used." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>k-fold Cross-Validation applied to an autoregressive model</h1>
-    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/tscv.R'><code>R/tscv.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/tscv.R'><code>R/tscv.R</code></a></small>
+    <div class="hidden name"><code>CVar.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p><code>CVar</code> computes the errors obtained by applying an autoregressive
 modelling function to subsets of the time series <code>y</code> using k-fold
@@ -107,11 +119,12 @@ model can be considered to be underfitting the data. In this case, the
 cross-validated errors can underestimate the generalization error and should
 not be used.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>CVar</span>(<span class='no'>y</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>nnetar</span>, <span class='kw'>cvtrace</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>blocked</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>LBlags</span> <span class='kw'>=</span> <span class='fl'>24</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -159,7 +172,7 @@ validity of cross-validation for evaluating time series prediction.
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><a href='CV.html'>CV</a>, <a href='tsCV.html'>tsCV</a>.</p>
+    <div class='dont-index'><p><a href='CV.html'>CV</a>, <a href='tsCV.html'>tsCV</a>.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -227,8 +240,8 @@ validity of cross-validation for evaluating time series prediction.
 #&gt; </div><div class='input'>
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>lynx</span>, <span class='kw'>series</span><span class='kw'>=</span><span class='st'>"Data"</span>) +
-  <span class='fu'><a href='autolayer.html'>autolayer</a></span>(<span class='no'>modelcv</span>$<span class='no'>testfit</span>, <span class='kw'>series</span><span class='kw'>=</span><span class='st'>"Fits"</span>) +
-  <span class='fu'><a href='autolayer.html'>autolayer</a></span>(<span class='no'>modelcv</span>$<span class='no'>residuals</span>, <span class='kw'>series</span><span class='kw'>=</span><span class='st'>"Residuals"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 11 rows containing missing values (geom_path).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 11 rows containing missing values (geom_path).</span></div><div class='img'><img src='CVar-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'><a href='autoplot.acf.html'>ggAcf</a></span>(<span class='no'>modelcv</span>$<span class='no'>residuals</span>)</div><div class='img'><img src='CVar-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autolayer'>autolayer</a></span>(<span class='no'>modelcv</span>$<span class='no'>testfit</span>, <span class='kw'>series</span><span class='kw'>=</span><span class='st'>"Fits"</span>) +
+  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autolayer'>autolayer</a></span>(<span class='no'>modelcv</span>$<span class='no'>residuals</span>, <span class='kw'>series</span><span class='kw'>=</span><span class='st'>"Residuals"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 11 rows containing missing values (geom_path).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 11 rows containing missing values (geom_path).</span></div><div class='img'><img src='CVar-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='autoplot.acf.html'>ggAcf</a></span>(<span class='no'>modelcv</span>$<span class='no'>residuals</span>)</div><div class='img'><img src='CVar-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -263,6 +276,8 @@ Gabriel Caceres and Rob J Hyndman
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

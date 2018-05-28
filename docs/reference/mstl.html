@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Multiple seasonal decomposition — mstl" />
 
 <meta property="og:description" content="Decompose a time series into seasonal, trend and remainder components.
@@ -37,6 +40,8 @@ Unlike stl, mstl is completely automated." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -59,8 +64,12 @@ Unlike stl, mstl is completely automated." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -82,6 +91,7 @@ Unlike stl, mstl is completely automated." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -89,13 +99,15 @@ Unlike stl, mstl is completely automated." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Multiple seasonal decomposition</h1>
-    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/mstl.R'><code>R/mstl.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/mstl.R'><code>R/mstl.R</code></a></small>
+    <div class="hidden name"><code>mstl.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Decompose a time series into seasonal, trend and remainder components.
 Seasonal components are estimated iteratively using STL. Multiple seasonal periods are
@@ -105,10 +117,11 @@ In this case, <code><a href='http://www.rdocumentation.org/packages/stats/topics
 Optionally, the time series may be Box-Cox transformed before decomposition.
 Unlike <code><a href='http://www.rdocumentation.org/packages/stats/topics/stl'>stl</a></code>, <code>mstl</code> is completely automated.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>mstl</span>(<span class='no'>x</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>iterate</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>s.window</span> <span class='kw'>=</span> <span class='fl'>13</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -140,12 +153,12 @@ of the same length as the number of seasonal components.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='http://www.rdocumentation.org/packages/stats/topics/stl'>stl</a></code>, <code><a href='http://www.rdocumentation.org/packages/stats/topics/supsmu'>supsmu</a></code></p>
+    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/stats/topics/stl'>stl</a></code>, <code><a href='http://www.rdocumentation.org/packages/stats/topics/supsmu'>supsmu</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>)
-<span class='fu'>mstl</span>(<span class='no'>taylor</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='kw'>facet</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='mstl-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>mstl</span>(<span class='no'>AirPassengers</span>, <span class='kw'>lambda</span><span class='kw'>=</span><span class='st'>'auto'</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='kw'>facet</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='mstl-2.png' alt='' width='700' height='432.632880098887' /></div></pre>
+<span class='fu'>mstl</span>(<span class='no'>taylor</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='kw'>facet</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='mstl-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>mstl</span>(<span class='no'>AirPassengers</span>, <span class='kw'>lambda</span><span class='kw'>=</span><span class='st'>'auto'</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='kw'>facet</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='mstl-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -171,6 +184,8 @@ of the same length as the number of seasonal components.</p></td>
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

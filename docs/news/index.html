@@ -25,10 +25,15 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Changelog" />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -74,6 +83,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -81,15 +91,17 @@
       
       </header>
 
-      <div class="row">
-
-  <div class="col-md-9">
+<div class="row">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Change log <small></small></h1>
-      <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+      <h1>Changelog <small></small></h1>
+      <small>Source: <a href='https://github.com/robjhyndman/forecast/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="contents">
+    <div id="version-8-4" class="section level2">
+<h2 class="hasAnchor">
+<a href="#version-8-4" class="anchor"></a>Version 8.4</h2>
+</div>
     <div id="version-8-3-5-april-2018" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-8-3-5-april-2018" class="anchor"></a>Version 8.3 (5 April 2018)</h2>
@@ -1280,13 +1292,13 @@
 <li>Fixed the motel data set (columns were swapped)</li>
 </ul>
 </div>
-    </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#version-8-4">8.4</a></li>
         <li><a href="#version-8-3-5-april-2018">8.3</a></li>
         <li><a href="#version-8-2-25-september-2017">8.2</a></li>
         <li><a href="#version-8-1-17-june-2017">8.1</a></li>
@@ -1418,6 +1430,8 @@
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

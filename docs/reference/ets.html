@@ -25,12 +25,17 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Exponential smoothing state space model — ets" />
 
 <meta property="og:description" content="Returns ets model applied to y." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +58,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -76,6 +85,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -83,16 +93,19 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Exponential smoothing state space model</h1>
-    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/ets.R'><code>R/ets.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/ets.R'><code>R/ets.R</code></a></small>
+    <div class="hidden name"><code>ets.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Returns ets model applied to <code>y</code>.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>ets</span>(<span class='no'>y</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"ZZZ"</span>, <span class='kw'>damped</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>beta</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>gamma</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>phi</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>additive.only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -102,7 +115,7 @@
   <span class='kw'>restrict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>allow.multiplicative.trend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>use.initial.values</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -251,13 +264,13 @@ Springer-Verlag. <a href='http://www.exponentialsmoothing.net'>http://www.expone
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='http://www.rdocumentation.org/packages/stats/topics/HoltWinters'>HoltWinters</a></code>, <code><a href='naive.html'>rwf</a></code>,
-<code><a href='Arima.html'>Arima</a></code>.</p>
+    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/stats/topics/HoltWinters'>HoltWinters</a></code>, <code><a href='naive.html'>rwf</a></code>,
+<code><a href='Arima.html'>Arima</a></code>.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>ets</span>(<span class='no'>USAccDeaths</span>)
-<span class='fu'>plot</span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>))</div><div class='img'><img src='ets-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>))</div><div class='img'><img src='ets-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -294,6 +307,8 @@ Rob J Hyndman
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

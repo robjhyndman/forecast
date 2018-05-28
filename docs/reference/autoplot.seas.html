@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Plot time series decomposition components using ggplot — autoplot.decomposed.ts" />
 
 <meta property="og:description" content="Produces a ggplot object of seasonally decomposed time series for objects of
@@ -34,6 +37,8 @@ class &#8220;stl&#8221; (created with stl), class
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -56,8 +61,12 @@ class &#8220;stl&#8221; (created with stl), class
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -79,6 +88,7 @@ class &#8220;stl&#8221; (created with stl), class
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -86,37 +96,40 @@ class &#8220;stl&#8221; (created with stl), class
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot time series decomposition components using ggplot</h1>
-    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/ggplot.R'><code>R/ggplot.R</code></a>, <a href='https:/github.com/robjhyndman/forecast/blob/master/R/mstl.R'><code>R/mstl.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/ggplot.R'><code>R/ggplot.R</code></a>, <a href='https://github.com/robjhyndman/forecast/blob/master/R/mstl.R'><code>R/mstl.R</code></a></small>
+    <div class="hidden name"><code>autoplot.seas.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Produces a ggplot object of seasonally decomposed time series for objects of
 class &#8220;<code>stl</code>&#8221; (created with <code><a href='http://www.rdocumentation.org/packages/stats/topics/stl'>stl</a></code>), class
 &#8220;<code>seas</code>&#8221; (created with <code><a href='http://www.rdocumentation.org/packages/seasonal/topics/seas'>seas</a></code>), or class
 &#8220;<code>decomposed.ts</code>&#8221; (created with <code><a href='http://www.rdocumentation.org/packages/stats/topics/decompose'>decompose</a></code>).</p>
     
+    </div>
 
     <pre class="usage"><span class='co'># S3 method for decomposed.ts</span>
-<span class='fu'>autoplot</span>(<span class='no'>object</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>range.bars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>object</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>range.bars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>...</span>)
 
 <span class='co'># S3 method for stl</span>
-<span class='fu'>autoplot</span>(<span class='no'>object</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>range.bars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>object</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>range.bars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for StructTS</span>
-<span class='fu'>autoplot</span>(<span class='no'>object</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>range.bars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>object</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>range.bars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for seas</span>
-<span class='fu'>autoplot</span>(<span class='no'>object</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>range.bars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>object</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>range.bars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for mstl</span>
-<span class='fu'>autoplot</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -147,15 +160,15 @@ takes place.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='http://www.rdocumentation.org/packages/seasonal/topics/seas'>seas</a></code>, <code><a href='http://www.rdocumentation.org/packages/stats/topics/stl'>stl</a></code>,
+    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/seasonal/topics/seas'>seas</a></code>, <code><a href='http://www.rdocumentation.org/packages/stats/topics/stl'>stl</a></code>,
 <code><a href='http://www.rdocumentation.org/packages/stats/topics/decompose'>decompose</a></code>, <code><a href='http://www.rdocumentation.org/packages/stats/topics/StructTS'>StructTS</a></code>,
-<code><a href='http://www.rdocumentation.org/packages/stats/topics/stlmethods'>plot.stl</a></code>.</p>
+<code><a href='http://www.rdocumentation.org/packages/stats/topics/stlmethods'>plot.stl</a></code>.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
-<span class='no'>co2</span> <span class='kw'>%&gt;%</span> <span class='no'>decompose</span> <span class='kw'>%&gt;%</span> <span class='no'>autoplot</span></div><div class='img'><img src='autoplot.seas-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='no'>nottem</span> <span class='kw'>%&gt;%</span> <span class='fu'>stl</span>(<span class='kw'>s.window</span><span class='kw'>=</span><span class='st'>'periodic'</span>) <span class='kw'>%&gt;%</span> <span class='no'>autoplot</span></div><div class='img'><img src='autoplot.seas-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='no'>co2</span> <span class='kw'>%&gt;%</span> <span class='no'>decompose</span> <span class='kw'>%&gt;%</span> <span class='no'>autoplot</span></div><div class='img'><img src='autoplot.seas-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>nottem</span> <span class='kw'>%&gt;%</span> <span class='fu'>stl</span>(<span class='kw'>s.window</span><span class='kw'>=</span><span class='st'>'periodic'</span>) <span class='kw'>%&gt;%</span> <span class='no'>autoplot</span></div><div class='img'><img src='autoplot.seas-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div><span class='co'># NOT RUN {</span>
 <span class='fu'>library</span>(<span class='no'>seasonal</span>)
 <span class='fu'><a href='http://www.rdocumentation.org/packages/seasonal/topics/seas'>seas</a></span>(<span class='no'>USAccDeaths</span>) <span class='kw'>%&gt;%</span> <span class='no'>autoplot</span>
@@ -192,6 +205,8 @@ Mitchell O'Hara-Wild
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

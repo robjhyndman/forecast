@@ -25,12 +25,17 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Time series lag ggplots — gglagplot" />
 
 <meta property="og:description" content="Plots a lag plot using ggplot." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +58,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -76,6 +85,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -83,16 +93,19 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Time series lag ggplots</h1>
-    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/ggplot.R'><code>R/ggplot.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/ggplot.R'><code>R/ggplot.R</code></a></small>
+    <div class="hidden name"><code>gglagplot.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Plots a lag plot using ggplot.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>gglagplot</span>(<span class='no'>x</span>, <span class='kw'>lags</span> <span class='kw'>=</span> <span class='fu'>ifelse</span>(<span class='fu'>frequency</span>(<span class='no'>x</span>) <span class='kw'>&gt;</span> <span class='fl'>9</span>, <span class='fl'>16</span>, <span class='fl'>9</span>), <span class='kw'>set.lags</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='no'>lags</span>,
   <span class='kw'>diag</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>diag.col</span> <span class='kw'>=</span> <span class='st'>"gray"</span>, <span class='kw'>do.lines</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
@@ -101,7 +114,7 @@
 <span class='fu'>gglagchull</span>(<span class='no'>x</span>, <span class='kw'>lags</span> <span class='kw'>=</span> <span class='fu'>ifelse</span>(<span class='fu'>frequency</span>(<span class='no'>x</span>) <span class='kw'>&gt;</span> <span class='fl'>1</span>, <span class='fu'>min</span>(<span class='fl'>12</span>, <span class='fu'>frequency</span>(<span class='no'>x</span>)), <span class='fl'>4</span>),
   <span class='kw'>set.lags</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='no'>lags</span>, <span class='kw'>diag</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>diag.col</span> <span class='kw'>=</span> <span class='st'>"gray"</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -167,15 +180,15 @@ plot. This helps visualise the change in 'auto-dependence' as lags increase.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='http://www.rdocumentation.org/packages/stats/topics/lag.plot'>lag.plot</a></code></p>
+    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/stats/topics/lag.plot'>lag.plot</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'>gglagplot</span>(<span class='no'>woolyrnq</span>)</div><div class='img'><img src='gglagplot-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>gglagplot</span>(<span class='no'>woolyrnq</span>,<span class='kw'>seasonal</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='img'><img src='gglagplot-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>gglagplot</span>(<span class='no'>woolyrnq</span>)</div><div class='img'><img src='gglagplot-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>gglagplot</span>(<span class='no'>woolyrnq</span>,<span class='kw'>seasonal</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='img'><img src='gglagplot-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>lungDeaths</span> <span class='kw'>&lt;-</span> <span class='fu'>cbind</span>(<span class='no'>mdeaths</span>, <span class='no'>fdeaths</span>)
-<span class='fu'>gglagplot</span>(<span class='no'>lungDeaths</span>, <span class='kw'>lags</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='img'><img src='gglagplot-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>gglagchull</span>(<span class='no'>lungDeaths</span>, <span class='kw'>lags</span><span class='kw'>=</span><span class='fl'>6</span>)</div><div class='img'><img src='gglagplot-4.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
-<span class='fu'>gglagchull</span>(<span class='no'>woolyrnq</span>)</div><div class='img'><img src='gglagplot-5.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>gglagplot</span>(<span class='no'>lungDeaths</span>, <span class='kw'>lags</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='img'><img src='gglagplot-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>gglagchull</span>(<span class='no'>lungDeaths</span>, <span class='kw'>lags</span><span class='kw'>=</span><span class='fl'>6</span>)</div><div class='img'><img src='gglagplot-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>gglagchull</span>(<span class='no'>woolyrnq</span>)</div><div class='img'><img src='gglagplot-5.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -210,6 +223,8 @@ Mitchell O'Hara-Wild
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

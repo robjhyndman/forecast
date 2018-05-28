@@ -25,12 +25,17 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Number of days in each season — monthdays" />
 
 <meta property="og:description" content="Returns number of days in each month or quarter of the observed time period." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +58,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -76,6 +85,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -83,20 +93,23 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Number of days in each season</h1>
-    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/season.R'><code>R/season.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/season.R'><code>R/season.R</code></a></small>
+    <div class="hidden name"><code>monthdays.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Returns number of days in each month or quarter of the observed time period.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>monthdays</span>(<span class='no'>x</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -115,7 +128,7 @@
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='bizdays.html'>bizdays</a></code></p>
+    <div class='dont-index'><p><code><a href='bizdays.html'>bizdays</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -125,7 +138,7 @@
     <span class='kw'>main</span><span class='kw'>=</span><span class='st'>"Monthly deaths from lung disease (UK)"</span>)
 <span class='no'>ldeaths.adj</span> <span class='kw'>&lt;-</span> <span class='no'>ldeaths</span>/<span class='fu'>monthdays</span>(<span class='no'>ldeaths</span>)*<span class='fl'>365.25</span>/<span class='fl'>12</span>
 <span class='fu'>plot</span>(<span class='no'>ldeaths.adj</span>,<span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>"Year"</span>,<span class='kw'>ylab</span><span class='kw'>=</span><span class='st'>"pounds"</span>,
-    <span class='kw'>main</span><span class='kw'>=</span><span class='st'>"Adjusted monthly deaths from lung disease (UK)"</span>)</div><div class='img'><img src='monthdays-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+    <span class='kw'>main</span><span class='kw'>=</span><span class='st'>"Adjusted monthly deaths from lung disease (UK)"</span>)</div><div class='img'><img src='monthdays-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -160,6 +173,8 @@ Rob J Hyndman
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

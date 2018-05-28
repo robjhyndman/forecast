@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Fit a linear model with time series components — tslm" />
 
 <meta property="og:description" content="tslm is used to fit linear models to time series including trend and
@@ -32,6 +35,8 @@ seasonality components." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -54,8 +59,12 @@ seasonality components." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -77,6 +86,7 @@ seasonality components." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -84,21 +94,24 @@ seasonality components." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Fit a linear model with time series components</h1>
-    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/lm.R'><code>R/lm.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/lm.R'><code>R/lm.R</code></a></small>
+    <div class="hidden name"><code>tslm.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p><code>tslm</code> is used to fit linear models to time series including trend and
 seasonality components.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>tslm</span>(<span class='no'>formula</span>, <span class='no'>data</span>, <span class='no'>subset</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -153,14 +166,14 @@ month or the quarter depending on the frequency of the data).</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='forecast.lm.html'>forecast.lm</a></code>, <code><a href='http://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></code>.</p>
+    <div class='dont-index'><p><code><a href='forecast.lm.html'>forecast.lm</a></code>, <code><a href='http://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></code>.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'>ts</span>(<span class='fu'>rnorm</span>(<span class='fl'>120</span>,<span class='fl'>0</span>,<span class='fl'>3</span>) + <span class='fl'>1</span>:<span class='fl'>120</span> + <span class='fl'>20</span>*<span class='fu'>sin</span>(<span class='fl'>2</span>*<span class='no'>pi</span>*(<span class='fl'>1</span>:<span class='fl'>120</span>)/<span class='fl'>12</span>), <span class='kw'>frequency</span><span class='kw'>=</span><span class='fl'>12</span>)
 <span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>tslm</span>(<span class='no'>y</span> ~ <span class='no'>trend</span> + <span class='no'>season</span>)
-<span class='fu'>plot</span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>, <span class='kw'>h</span><span class='kw'>=</span><span class='fl'>20</span>))</div><div class='img'><img src='tslm-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>, <span class='kw'>h</span><span class='kw'>=</span><span class='fl'>20</span>))</div><div class='img'><img src='tslm-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -195,6 +208,8 @@ Mitchell O'Hara-Wild and Rob J Hyndman
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

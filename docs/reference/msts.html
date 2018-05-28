@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Multi-Seasonal Time Series — msts" />
 
 <meta property="og:description" content="msts is an S3 class for multi seasonal time series objects, intended to be
@@ -35,6 +38,8 @@ class, should also work on a msts class." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -57,8 +62,12 @@ class, should also work on a msts class." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -80,6 +89,7 @@ class, should also work on a msts class." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -87,13 +97,15 @@ class, should also work on a msts class." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Multi-Seasonal Time Series</h1>
-    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/msts.R'><code>R/msts.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/msts.R'><code>R/msts.R</code></a></small>
+    <div class="hidden name"><code>msts.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>msts is an S3 class for multi seasonal time series objects, intended to be
 used for models that support multiple seasonal periods. The msts class
@@ -101,10 +113,11 @@ inherits from the ts class and has an additional "msts" attribute which
 contains the vector of seasonal periods. All methods that work on a ts
 class, should also work on a msts class.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>msts</span>(<span class='no'>data</span>, <span class='no'>seasonal.periods</span>, <span class='kw'>ts.frequency</span> <span class='kw'>=</span> <span class='fu'>floor</span>(<span class='fu'>max</span>(<span class='no'>seasonal.periods</span>)), <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -169,6 +182,8 @@ Slava Razbash and Rob J Hyndman
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

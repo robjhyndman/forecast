@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Time series cross-validation — tsCV" />
 
 <meta property="og:description" content="tsCV computes the forecast errors obtained by applying
@@ -33,6 +36,8 @@ rolling forecast origin." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -55,8 +60,12 @@ rolling forecast origin." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -78,6 +87,7 @@ rolling forecast origin." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -85,22 +95,25 @@ rolling forecast origin." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Time series cross-validation</h1>
-    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/tscv.R'><code>R/tscv.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/tscv.R'><code>R/tscv.R</code></a></small>
+    <div class="hidden name"><code>tsCV.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p><code>tsCV</code> computes the forecast errors obtained by applying
 <code>forecastfunction</code> to subsets of the time series <code>y</code> using a
 rolling forecast origin.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>tsCV</span>(<span class='no'>y</span>, <span class='no'>forecastfunction</span>, <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>window</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -148,7 +161,7 @@ series.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><a href='CV.html'>CV</a>, <a href='CVar.html'>CVar</a>, <a href='residuals.forecast.html'>residuals.Arima</a>, <a href='https://robjhyndman.com/hyndsight/tscv/'>https://robjhyndman.com/hyndsight/tscv/</a>.</p>
+    <div class='dont-index'><p><a href='CV.html'>CV</a>, <a href='CVar.html'>CVar</a>, <a href='residuals.forecast.html'>residuals.Arima</a>, <a href='https://robjhyndman.com/hyndsight/tscv/'>https://robjhyndman.com/hyndsight/tscv/</a>.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -192,6 +205,8 @@ Rob J Hyndman
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

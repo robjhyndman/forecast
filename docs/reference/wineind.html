@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Australian total wine sales — wineind" />
 
 <meta property="og:description" content="Australian total wine sales by wine makers in bottles &lt;= 1 litre. Jan 1980
@@ -32,6 +35,8 @@
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -54,8 +59,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -77,6 +86,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -84,17 +94,20 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Australian total wine sales</h1>
-    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/data.R'><code>R/data.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/data.R'><code>R/data.R</code></a></small>
+    <div class="hidden name"><code>wineind.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Australian total wine sales by wine makers in bottles &lt;= 1 litre. Jan 1980
 -- Aug 1994.</p>
     
+    </div>
 
     <pre class="usage"><span class='no'>wineind</span></pre>
         
@@ -108,7 +121,7 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='tsdisplay.html'>tsdisplay</a></span>(<span class='no'>wineind</span>)</div><div class='img'><img src='wineind-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'><a href='tsdisplay.html'>tsdisplay</a></span>(<span class='no'>wineind</span>)</div><div class='img'><img src='wineind-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -136,6 +149,8 @@
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

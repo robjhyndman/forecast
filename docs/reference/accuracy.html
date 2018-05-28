@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Accuracy measures for a forecast model — accuracy" />
 
 <meta property="og:description" content="Returns range of summary measures of the forecast accuracy. If x is
@@ -36,6 +39,8 @@ and Koehler (2006)." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -58,8 +63,12 @@ and Koehler (2006)." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -81,6 +90,7 @@ and Koehler (2006)." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -88,13 +98,15 @@ and Koehler (2006)." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Accuracy measures for a forecast model</h1>
-    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/errors.R'><code>R/errors.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/errors.R'><code>R/errors.R</code></a></small>
+    <div class="hidden name"><code>accuracy.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Returns range of summary measures of the forecast accuracy. If <code>x</code> is
 provided, the function measures test set forecast accuracy
@@ -103,13 +115,14 @@ training set accuracy measures of the forecasts based on
 <code>f["x"]-fitted(f)</code>. All measures are defined and discussed in Hyndman
 and Koehler (2006).</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>accuracy</span>(<span class='no'>f</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>accuracy</span>(<span class='no'>f</span>, <span class='no'>x</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>d</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>D</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -193,7 +206,7 @@ Section 3.4 "Evaluating forecast accuracy".
 #&gt; Training set -0.007760885
 #&gt; Test set               NA</div><div class='input'><span class='fu'>accuracy</span>(<span class='no'>fit2</span>,<span class='no'>EuStockMarkets</span>[<span class='fl'>201</span>:<span class='fl'>300</span>,<span class='fl'>1</span>])</div><div class='output co'>#&gt;                        ME      RMSE       MAE        MPE     MAPE     MASE
 #&gt; Training set 6.249910e-14  57.83723  46.98108 -0.1240662 2.865357 1.000000
-#&gt; Test set     8.429485e+01 114.96571 105.65361  4.7004265 6.075968 2.248855</div><div class='input'><span class='fu'>plot</span>(<span class='no'>fit1</span>)</div><div class='input'><span class='fu'>lines</span>(<span class='no'>EuStockMarkets</span>[<span class='fl'>1</span>:<span class='fl'>300</span>,<span class='fl'>1</span>])</div><div class='img'><img src='accuracy-1.png' alt='' width='700' height='432.632880098887' /></div></pre>
+#&gt; Test set     8.429485e+01 114.96571 105.65361  4.7004265 6.075968 2.248855</div><div class='input'><span class='fu'>plot</span>(<span class='no'>fit1</span>)</div><div class='input'><span class='fu'>lines</span>(<span class='no'>EuStockMarkets</span>[<span class='fl'>1</span>:<span class='fl'>300</span>,<span class='fl'>1</span>])</div><div class='img'><img src='accuracy-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -227,6 +240,8 @@ Rob J Hyndman
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

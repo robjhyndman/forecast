@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Diebold-Mariano test for predictive accuracy — dm.test" />
 
 <meta property="og:description" content="The Diebold-Mariano test compares the forecast accuracy of two forecast
@@ -32,6 +35,8 @@ methods." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -54,8 +59,12 @@ methods." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -77,6 +86,7 @@ methods." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -84,22 +94,25 @@ methods." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Diebold-Mariano test for predictive accuracy</h1>
-    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/DM2.R'><code>R/DM2.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/DM2.R'><code>R/DM2.R</code></a></small>
+    <div class="hidden name"><code>dm.test.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>The Diebold-Mariano test compares the forecast accuracy of two forecast
 methods.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>dm.test</span>(<span class='no'>e1</span>, <span class='no'>e2</span>, <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"two.sided"</span>, <span class='st'>"less"</span>, <span class='st'>"greater"</span>), <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>power</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -227,6 +240,8 @@ George Athanasopoulos
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

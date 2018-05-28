@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Forecasting using neural network models — forecast.nnetar" />
 
 <meta property="og:description" content="Returns forecasts and other information for univariate neural network
@@ -32,6 +35,8 @@ models." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -54,8 +59,12 @@ models." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -77,6 +86,7 @@ models." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -84,17 +94,20 @@ models." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Forecasting using neural network models</h1>
-    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/nnetar.R'><code>R/nnetar.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/nnetar.R'><code>R/nnetar.R</code></a></small>
+    <div class="hidden name"><code>forecast.nnetar.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Returns forecasts and other information for univariate neural network
 models.</p>
     
+    </div>
 
     <pre class="usage"><span class='co'># S3 method for nnetar</span>
 <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>object</span>, <span class='kw'>h</span> <span class='kw'>=</span> <span class='fu'>ifelse</span>(<span class='no'>object</span>$<span class='no'>m</span> <span class='kw'>&gt;</span> <span class='fl'>1</span>, <span class='fl'>2</span> * <span class='no'>object</span>$<span class='no'>m</span>, <span class='fl'>10</span>),
@@ -102,13 +115,13 @@ models.</p>
   <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='no'>object</span>$<span class='no'>lambda</span>, <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>npaths</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
   <span class='kw'>innov</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
       <td><p>An object of class "<code>nnetar</code>" resulting from a call to
-<code>arima</code>.</p></td>
+<code><a href='nnetar.html'>nnetar</a></code>.</p></td>
     </tr>
     <tr>
       <th>h</th>
@@ -194,17 +207,32 @@ following elements:</p>
     <p>Prediction intervals are calculated through simulations and can be slow.
 Note that if the network is too complex and overfits the data, the residuals
 can be arbitrarily small; if used for prediction interval calculations, they
-could lead to misleadingly small values.</p>
+could lead to misleadingly small values. It is possible to use out-of-sample
+residuals to ameliorate this, see examples.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='nnetar.html'>nnetar</a></code>.</p>
+    <div class='dont-index'><p><code><a href='nnetar.html'>nnetar</a></code>.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='nnetar.html'>nnetar</a></span>(<span class='no'>lynx</span>)
-<span class='no'>fcast</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>)
-<span class='fu'>plot</span>(<span class='no'>fcast</span>)</div><div class='img'><img src='forecast.nnetar-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='co'>## Fit &amp; forecast model</span>
+<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='nnetar.html'>nnetar</a></span>(<span class='no'>USAccDeaths</span>, <span class='kw'>size</span><span class='kw'>=</span><span class='fl'>2</span>)
+<span class='no'>fcast</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>, <span class='kw'>h</span><span class='kw'>=</span><span class='fl'>20</span>)
+<span class='fu'>plot</span>(<span class='no'>fcast</span>)</div><div class='img'><img src='forecast.nnetar-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><span class='co'># NOT RUN {</span>
+<span class='co'>## Include prediction intervals in forecast</span>
+<span class='no'>fcast2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>, <span class='kw'>h</span><span class='kw'>=</span><span class='fl'>20</span>, <span class='kw'>PI</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>npaths</span><span class='kw'>=</span><span class='fl'>100</span>)
+<span class='fu'>plot</span>(<span class='no'>fcast2</span>)
+
+<span class='co'>## Set up out-of-sample innovations using cross-validation</span>
+<span class='no'>fit_cv</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='CVar.html'>CVar</a></span>(<span class='no'>USAccDeaths</span>,  <span class='kw'>size</span><span class='kw'>=</span><span class='fl'>2</span>)
+<span class='no'>res_sd</span> <span class='kw'>&lt;-</span> <span class='fu'>sd</span>(<span class='no'>fit_cv</span>$<span class='no'>residuals</span>, <span class='kw'>na.rm</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
+<span class='no'>myinnovs</span> <span class='kw'>&lt;-</span> <span class='fu'>rnorm</span>(<span class='fl'>20</span>*<span class='fl'>100</span>, <span class='kw'>mean</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>sd</span><span class='kw'>=</span><span class='no'>res_sd</span>)
+<span class='co'>## Forecast using new innovations</span>
+<span class='no'>fcast3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>, <span class='kw'>h</span><span class='kw'>=</span><span class='fl'>20</span>, <span class='kw'>PI</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>npaths</span><span class='kw'>=</span><span class='fl'>100</span>, <span class='kw'>innov</span><span class='kw'>=</span><span class='no'>myinnovs</span>)
+<span class='fu'>plot</span>(<span class='no'>fcast3</span>)
+<span class='co'># }</span><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -239,6 +267,8 @@ Rob J Hyndman
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

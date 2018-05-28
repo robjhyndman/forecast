@@ -26,6 +26,9 @@ and Plotting — autoplot.acf • forecast</title>
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="ggplot (Partial) Autocorrelation and Cross-Correlation Function Estimation
 and Plotting — autoplot.acf" />
 
@@ -34,6 +37,8 @@ taperedpacf functions." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -56,8 +61,12 @@ taperedpacf functions." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -79,6 +88,7 @@ taperedpacf functions." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -86,21 +96,24 @@ taperedpacf functions." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>ggplot (Partial) Autocorrelation and Cross-Correlation Function Estimation
 and Plotting</h1>
-    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/ggplot.R'><code>R/ggplot.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/ggplot.R'><code>R/ggplot.R</code></a></small>
+    <div class="hidden name"><code>autoplot.acf.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Produces a ggplot object of their equivalent Acf, Pacf, Ccf, taperedacf and
 taperedpacf functions.</p>
     
+    </div>
 
     <pre class="usage"><span class='co'># S3 method for acf</span>
-<span class='fu'>autoplot</span>(<span class='no'>object</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='no'>...</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>object</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='no'>...</span>)
 
 <span class='fu'>ggAcf</span>(<span class='no'>x</span>, <span class='kw'>lag.max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"correlation"</span>, <span class='st'>"covariance"</span>, <span class='st'>"partial"</span>),
   <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='no'>na.contiguous</span>, <span class='kw'>demean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
@@ -112,14 +125,14 @@ taperedpacf functions.</p>
   <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='no'>na.contiguous</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for mpacf</span>
-<span class='fu'>autoplot</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='fu'>ggtaperedacf</span>(<span class='no'>x</span>, <span class='kw'>lag.max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"correlation"</span>, <span class='st'>"partial"</span>),
   <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>calc.ci</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fl'>95</span>, <span class='kw'>nsim</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='no'>...</span>)
 
 <span class='fu'>ggtaperedpacf</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -197,18 +210,18 @@ appropriate ggplot object will be created.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='http://www.rdocumentation.org/packages/stats/topics/plot.acf'>plot.acf</a></code>, <code><a href='Acf.html'>Acf</a></code>,
-<code><a href='http://www.rdocumentation.org/packages/stats/topics/acf'>acf</a></code>, <code><a href='Acf.html'>taperedacf</a></code></p>
+    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/stats/topics/plot.acf'>plot.acf</a></code>, <code><a href='Acf.html'>Acf</a></code>,
+<code><a href='http://www.rdocumentation.org/packages/stats/topics/acf'>acf</a></code>, <code><a href='Acf.html'>taperedacf</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
-<span class='fu'>ggAcf</span>(<span class='no'>wineind</span>)</div><div class='img'><img src='autoplot.acf-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='no'>wineind</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='Acf.html'>Acf</a></span>(<span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span> <span class='no'>autoplot</span></div><div class='img'><img src='autoplot.acf-2.png' alt='' width='700' height='432.632880098887' /></div><span class='co'># NOT RUN {</span>
+<span class='fu'>ggAcf</span>(<span class='no'>wineind</span>)</div><div class='img'><img src='autoplot.acf-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>wineind</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='Acf.html'>Acf</a></span>(<span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span> <span class='no'>autoplot</span></div><div class='img'><img src='autoplot.acf-2.png' alt='' width='700' height='433' /></div><span class='co'># NOT RUN {</span>
 <span class='no'>wineind</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='Acf.html'>taperedacf</a></span>(<span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span> <span class='no'>autoplot</span>
 <span class='fu'>ggtaperedacf</span>(<span class='no'>wineind</span>)
 <span class='fu'>ggtaperedpacf</span>(<span class='no'>wineind</span>)
-<span class='co'># }</span><div class='input'><span class='fu'>ggCcf</span>(<span class='no'>mdeaths</span>, <span class='no'>fdeaths</span>)</div><div class='img'><img src='autoplot.acf-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='co'># }</span><div class='input'><span class='fu'>ggCcf</span>(<span class='no'>mdeaths</span>, <span class='no'>fdeaths</span>)</div><div class='img'><img src='autoplot.acf-3.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -243,6 +256,8 @@ Mitchell O'Hara-Wild
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Cubic Spline Forecast — splinef" />
 
 <meta property="og:description" content="Returns local linear forecasts and prediction intervals using cubic
@@ -32,6 +35,8 @@ smoothing splines." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -54,8 +59,12 @@ smoothing splines." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -77,6 +86,7 @@ smoothing splines." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -84,22 +94,25 @@ smoothing splines." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Cubic Spline Forecast</h1>
-    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/spline.R'><code>R/spline.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/spline.R'><code>R/spline.R</code></a></small>
+    <div class="hidden name"><code>splinef.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Returns local linear forecasts and prediction intervals using cubic
 smoothing splines.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>splinef</span>(<span class='no'>y</span>, <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>80</span>, <span class='fl'>95</span>), <span class='kw'>fan</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"gcv"</span>, <span class='st'>"mle"</span>), <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -186,13 +199,13 @@ Statistics</em>, <b>47</b>(1), 87-99.
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='http://www.rdocumentation.org/packages/stats/topics/smooth.spline'>smooth.spline</a></code>, <code><a href='http://www.rdocumentation.org/packages/stats/topics/arima'>arima</a></code>,
-<code><a href='ses.html'>holt</a></code>.</p>
+    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/stats/topics/smooth.spline'>smooth.spline</a></code>, <code><a href='http://www.rdocumentation.org/packages/stats/topics/arima'>arima</a></code>,
+<code><a href='ses.html'>holt</a></code>.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>fcast</span> <span class='kw'>&lt;-</span> <span class='fu'>splinef</span>(<span class='no'>uspop</span>,<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>5</span>)
-<span class='fu'>plot</span>(<span class='no'>fcast</span>)</div><div class='img'><img src='splinef-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>summary</span>(<span class='no'>fcast</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>plot</span>(<span class='no'>fcast</span>)</div><div class='img'><img src='splinef-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>summary</span>(<span class='no'>fcast</span>)</div><div class='output co'>#&gt; 
 #&gt; Forecast method: Cubic Smoothing Spline
 #&gt; 
 #&gt; Model Information:
@@ -252,6 +265,8 @@ Rob J Hyndman
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

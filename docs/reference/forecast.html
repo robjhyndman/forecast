@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Forecasting time series — forecast" />
 
 <meta property="og:description" content="forecast is a generic function for forecasting from time series or
@@ -33,6 +36,8 @@ depend on the class of the first argument." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -55,8 +60,12 @@ depend on the class of the first argument." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -78,6 +87,7 @@ depend on the class of the first argument." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -85,18 +95,21 @@ depend on the class of the first argument." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Forecasting time series</h1>
-    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/forecast.R'><code>R/forecast.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/forecast.R'><code>R/forecast.R</code></a></small>
+    <div class="hidden name"><code>forecast.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p><code>forecast</code> is a generic function for forecasting from time series or
 time series models. The function invokes particular <em>methods</em> which
 depend on the class of the first argument.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>forecast</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
@@ -109,7 +122,7 @@ depend on the class of the first argument.</p>
   <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>find.frequency</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>allow.multiplicative.trend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -213,17 +226,17 @@ accordingly.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other functions which return objects of class <code>"forecast"</code> are
+    <div class='dont-index'><p>Other functions which return objects of class <code>"forecast"</code> are
 <code><a href='forecast.ets.html'>forecast.ets</a></code>, <code><a href='forecast.Arima.html'>forecast.Arima</a></code>,
 <code><a href='forecast.HoltWinters.html'>forecast.HoltWinters</a></code>, <code><a href='forecast.StructTS.html'>forecast.StructTS</a></code>,
 <code><a href='meanf.html'>meanf</a></code>, <code><a href='naive.html'>rwf</a></code>, <code><a href='splinef.html'>splinef</a></code>,
 <code><a href='thetaf.html'>thetaf</a></code>, <code><a href='croston.html'>croston</a></code>, <code><a href='ses.html'>ses</a></code>,
-<code><a href='ses.html'>holt</a></code>, <code><a href='ses.html'>hw</a></code>.</p>
+<code><a href='ses.html'>holt</a></code>, <code><a href='ses.html'>hw</a></code>.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>WWWusage</span> <span class='kw'>%&gt;%</span> <span class='no'>forecast</span> <span class='kw'>%&gt;%</span> <span class='no'>plot</span></div><div class='img'><img src='forecast-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ets.html'>ets</a></span>(<span class='fu'>window</span>(<span class='no'>WWWusage</span>, <span class='kw'>end</span><span class='kw'>=</span><span class='fl'>60</span>))
+<span class='no'>WWWusage</span> <span class='kw'>%&gt;%</span> <span class='no'>forecast</span> <span class='kw'>%&gt;%</span> <span class='no'>plot</span></div><div class='img'><img src='forecast-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ets.html'>ets</a></span>(<span class='fu'>window</span>(<span class='no'>WWWusage</span>, <span class='kw'>end</span><span class='kw'>=</span><span class='fl'>60</span>))
 <span class='no'>fc</span> <span class='kw'>&lt;-</span> <span class='fu'>forecast</span>(<span class='no'>WWWusage</span>, <span class='kw'>model</span><span class='kw'>=</span><span class='no'>fit</span>)</div><div class='output co'>#&gt; <span class='message'>Model is being refit with current smoothing parameters but initial states are being re-estimated.</span>
 #&gt; <span class='message'>Set 'use.initial.values=TRUE' if you want to re-use existing initial values.</span></div><div class='input'>
 </div></pre>
@@ -260,6 +273,8 @@ Rob J Hyndman
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

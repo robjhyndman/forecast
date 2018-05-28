@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Automatic selection of Box Cox transformation parameter — BoxCox.lambda" />
 
 <meta property="og:description" content="If method=="guerrero", Guerrero's (1993) method is used, where lambda
@@ -32,6 +35,8 @@ minimizes the coefficient of variation for subseries of x." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -54,8 +59,12 @@ minimizes the coefficient of variation for subseries of x." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -77,6 +86,7 @@ minimizes the coefficient of variation for subseries of x." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -84,21 +94,24 @@ minimizes the coefficient of variation for subseries of x." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Automatic selection of Box Cox transformation parameter</h1>
-    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/guerrero.R'><code>R/guerrero.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/guerrero.R'><code>R/guerrero.R</code></a></small>
+    <div class="hidden name"><code>BoxCox.lambda.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>If <code>method=="guerrero"</code>, Guerrero's (1993) method is used, where lambda
 minimizes the coefficient of variation for subseries of <code>x</code>.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>BoxCox.lambda</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"guerrero"</span>, <span class='st'>"loglik"</span>), <span class='kw'>lower</span> <span class='kw'>=</span> -<span class='fl'>1</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -139,7 +152,7 @@ transformations. <em>Journal of Forecasting</em>, <b>12</b>, 37--48.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='BoxCox.html'>BoxCox</a></code></p>
+    <div class='dont-index'><p><code><a href='BoxCox.html'>BoxCox</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -147,7 +160,7 @@ transformations. <em>Journal of Forecasting</em>, <b>12</b>, 37--48.</p>
 <span class='no'>lambda</span> <span class='kw'>&lt;-</span> <span class='fu'>BoxCox.lambda</span>(<span class='no'>AirPassengers</span>,<span class='kw'>lower</span><span class='kw'>=</span><span class='fl'>0</span>)
 <span class='no'>air.fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Arima.html'>Arima</a></span>(<span class='no'>AirPassengers</span>, <span class='kw'>order</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>),
                  <span class='kw'>seasonal</span><span class='kw'>=</span><span class='fu'>list</span>(<span class='kw'>order</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>),<span class='kw'>period</span><span class='kw'>=</span><span class='fl'>12</span>), <span class='kw'>lambda</span><span class='kw'>=</span><span class='no'>lambda</span>)
-<span class='fu'>plot</span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>air.fit</span>))</div><div class='img'><img src='BoxCox.lambda-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>air.fit</span>))</div><div class='img'><img src='BoxCox.lambda-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -184,6 +197,8 @@ Leanne Chhay and Rob J Hyndman
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

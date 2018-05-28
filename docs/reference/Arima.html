@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Fit ARIMA model to univariate time series — Arima" />
 
 <meta property="og:description" content="Largely a wrapper for the arima function in the stats
@@ -34,6 +37,8 @@ and re-apply it to the data y." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -56,8 +61,12 @@ and re-apply it to the data y." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -79,6 +88,7 @@ and re-apply it to the data y." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -86,26 +96,29 @@ and re-apply it to the data y." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Fit ARIMA model to univariate time series</h1>
-    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/arima.R'><code>R/arima.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/arima.R'><code>R/arima.R</code></a></small>
+    <div class="hidden name"><code>Arima.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Largely a wrapper for the <code><a href='http://www.rdocumentation.org/packages/stats/topics/arima'>arima</a></code> function in the stats
 package. The main difference is that this function allows a drift term. It
 is also possible to take an ARIMA model from a previous call to <code>Arima</code>
 and re-apply it to the data <code>y</code>.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>Arima</span>(<span class='no'>y</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>), <span class='kw'>seasonal</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>), <span class='kw'>xreg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>include.mean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>include.drift</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>include.constant</span>,
   <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='no'>model</span>$<span class='no'>lambda</span>, <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"CSS-ML"</span>, <span class='st'>"ML"</span>,
   <span class='st'>"CSS"</span>), <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -202,7 +215,7 @@ The additional objects returned are</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='auto.arima.html'>auto.arima</a></code>, <code><a href='forecast.Arima.html'>forecast.Arima</a></code>.</p>
+    <div class='dont-index'><p><code><a href='auto.arima.html'>auto.arima</a></code>, <code><a href='forecast.Arima.html'>forecast.Arima</a></code>.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -210,11 +223,11 @@ The additional objects returned are</p>
 <span class='no'>WWWusage</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>Arima</span>(<span class='kw'>order</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>3</span>,<span class='fl'>1</span>,<span class='fl'>0</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>20</span>) <span class='kw'>%&gt;%</span>
-  <span class='no'>autoplot</span></div><div class='img'><img src='Arima-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+  <span class='no'>autoplot</span></div><div class='img'><img src='Arima-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Fit model to first few years of AirPassengers data</span>
 <span class='no'>air.model</span> <span class='kw'>&lt;-</span> <span class='fu'>Arima</span>(<span class='fu'>window</span>(<span class='no'>AirPassengers</span>,<span class='kw'>end</span><span class='kw'>=</span><span class='fl'>1956</span>+<span class='fl'>11</span>/<span class='fl'>12</span>),<span class='kw'>order</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>),
                    <span class='kw'>seasonal</span><span class='kw'>=</span><span class='fu'>list</span>(<span class='kw'>order</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>),<span class='kw'>period</span><span class='kw'>=</span><span class='fl'>12</span>),<span class='kw'>lambda</span><span class='kw'>=</span><span class='fl'>0</span>)
-<span class='fu'>plot</span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>air.model</span>,<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>48</span>))</div><div class='input'><span class='fu'>lines</span>(<span class='no'>AirPassengers</span>)</div><div class='img'><img src='Arima-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>air.model</span>,<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>48</span>))</div><div class='input'><span class='fu'>lines</span>(<span class='no'>AirPassengers</span>)</div><div class='img'><img src='Arima-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Apply fitted model to later data</span>
 <span class='no'>air.model2</span> <span class='kw'>&lt;-</span> <span class='fu'>Arima</span>(<span class='fu'>window</span>(<span class='no'>AirPassengers</span>,<span class='kw'>start</span><span class='kw'>=</span><span class='fl'>1957</span>),<span class='kw'>model</span><span class='kw'>=</span><span class='no'>air.model</span>)
 
@@ -267,6 +280,8 @@ Rob J Hyndman
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

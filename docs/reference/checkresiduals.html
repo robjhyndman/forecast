@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Check that residuals from a time series model look like white noise — checkresiduals" />
 
 <meta property="og:description" content="If plot=TRUE, produces a time plot of the residuals, the
@@ -34,6 +37,8 @@ either a Ljung-Box test or Breusch-Godfrey test is printed." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -56,8 +61,12 @@ either a Ljung-Box test or Breusch-Godfrey test is printed." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">forecast</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">forecast</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -79,6 +88,7 @@ either a Ljung-Box test or Breusch-Godfrey test is printed." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -86,23 +96,26 @@ either a Ljung-Box test or Breusch-Godfrey test is printed." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Check that residuals from a time series model look like white noise</h1>
-    <small>Source: <a href='https:/github.com/robjhyndman/forecast/blob/master/R/checkresiduals.R'><code>R/checkresiduals.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/checkresiduals.R'><code>R/checkresiduals.R</code></a></small>
+    <div class="hidden name"><code>checkresiduals.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>If <code>plot=TRUE</code>, produces a time plot of the residuals, the
 corresponding ACF, and a histogram. If the degrees of freedom for the model
 can be determined and <code>test</code> is not <code>FALSE</code>, the output from
 either a Ljung-Box test or Breusch-Godfrey test is printed.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>checkresiduals</span>(<span class='no'>object</span>, <span class='no'>lag</span>, <span class='kw'>df</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>test</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -113,9 +126,11 @@ series (assumed to be residuals).</p></td>
     <tr>
       <th>lag</th>
       <td><p>Number of lags to use in the Ljung-Box or Breusch-Godfrey test.
-If missing, it is set to <code>max(10,df+3)</code> for non-seasonal data, and
-<code>max(2m, df+3)</code> for seasonal data, where <code>df</code> is the degrees of
-freedom of the model, and <code>m</code> is the seasonal period of the data.</p></td>
+If missing, it is set to <code>min(10,n/5)</code> for non-seasonal data, and
+<code>min(2m, n/5)</code> for seasonal data, where <code>n</code> is the length of the series,
+and <code>m</code> is the seasonal period of the data. It is further constrained to be
+at least <code>df+3</code> where <code>df</code> is the degrees of freedom of the model. This
+ensures there are at least 3 degrees of freedom used in the chi-squared test.</p></td>
     </tr>
     <tr>
       <th>df</th>
@@ -145,14 +160,14 @@ Setting <code>test=FALSE</code> will prevent the test results being printed.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='tsdisplay.html'>ggtsdisplay</a></code>, <code><a href='http://www.rdocumentation.org/packages/stats/topics/box.test'>Box.test</a></code>,
-<code><a href='http://www.rdocumentation.org/packages/lmtest/topics/bgtest'>bgtest</a></code></p>
+    <div class='dont-index'><p><code><a href='tsdisplay.html'>ggtsdisplay</a></code>, <code><a href='http://www.rdocumentation.org/packages/stats/topics/box.test'>Box.test</a></code>,
+<code><a href='http://www.rdocumentation.org/packages/lmtest/topics/bgtest'>bgtest</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ets.html'>ets</a></span>(<span class='no'>WWWusage</span>)
-<span class='fu'>checkresiduals</span>(<span class='no'>fit</span>)</div><div class='img'><img src='checkresiduals-1.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; 
+<span class='fu'>checkresiduals</span>(<span class='no'>fit</span>)</div><div class='img'><img src='checkresiduals-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
 #&gt; 	Ljung-Box test
 #&gt; 
 #&gt; data:  Residuals from ETS(A,Ad,N)
@@ -192,6 +207,8 @@ Rob J Hyndman
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>
