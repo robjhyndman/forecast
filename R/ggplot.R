@@ -1,6 +1,8 @@
-#' @importFrom ggplot2 autolayer
+#' @inherit ggplot2::autolayer
 #' @export
-ggplot2::autolayer
+autolayer <- function(object, ...){
+  UseMethod("autolayer")
+}
 
 #' @importFrom ggplot2 autoplot
 #' @export
