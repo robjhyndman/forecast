@@ -44,6 +44,7 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) {
 .onLoad <- function(...) {
   ns <- getNamespace("ggplot2")
   if (exists("autolayer", ns)) {
+    autolayer <<- ns$autolayer
     register_s3_method("ggplot2", "autolayer", "ts")
     register_s3_method("ggplot2", "autolayer", "mts")
     register_s3_method("ggplot2", "autolayer", "msts")
