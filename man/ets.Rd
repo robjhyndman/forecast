@@ -15,7 +15,8 @@ ets(y, model = "ZZZ", damped = NULL, alpha = NULL, beta = NULL,
   3), 0.98), opt.crit = c("lik", "amse", "mse", "sigma", "mae"), nmse = 3,
   bounds = c("both", "usual", "admissible"), ic = c("aicc", "aic", "bic"),
   restrict = TRUE, allow.multiplicative.trend = FALSE,
-  use.initial.values = FALSE, ...)
+  use.initial.values = FALSE, na.action = c("na.contiguous", "na.interp",
+  "na.fail"), ...)
 }
 \arguments{
 \item{y}{a numeric vector or time series of class \code{ts}}
