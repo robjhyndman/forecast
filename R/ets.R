@@ -61,6 +61,9 @@
 #' @param use.initial.values If \code{TRUE} and \code{model} is of class
 #' \code{"ets"}, then the initial values in the model are also not
 #' re-estimated.
+#' @param na.action A function which indicates what should happen when the data 
+#' contains NA values. By default, the largest contiguous portion of the 
+#' time-series will be used.
 #' @param ... Other undocumented arguments.
 #' @inheritParams forecast
 #'
@@ -95,11 +98,15 @@ ets <- function(y, model="ZZZ", damped=NULL,
                 lower=c(rep(0.0001, 3), 0.8), upper=c(rep(0.9999, 3), 0.98),
                 opt.crit=c("lik", "amse", "mse", "sigma", "mae"), nmse=3, bounds=c("both", "usual", "admissible"),
                 ic=c("aicc", "aic", "bic"), restrict=TRUE, allow.multiplicative.trend=FALSE,
-                use.initial.values=FALSE, ...) {
+                use.initial.values=FALSE, na.action = c("na.contiguous", "na.interp", "na.fail"), ...) {
   # dataname <- substitute(y)
   opt.crit <- match.arg(opt.crit)
   bounds <- match.arg(bounds)
   ic <- match.arg(ic)
+  if(!is.function(na.action)){
+    na.fn_name <- match.arg(na.action)
+    na.action <- get(na.fn_name)
+  }
 
   seriesname <- deparse(substitute(y))
 
@@ -115,8 +122,8 @@ ets <- function(y, model="ZZZ", damped=NULL,
 
   # Remove missing values near ends
   ny <- length(y)
-  y <- na.contiguous(y)
-  if (ny != length(y)) {
+  y <- na.action(y)
+  if (ny != length(y) && na.fn_name == "na.contiguous") {
     warning("Missing values encountered. Using longest contiguous portion of time series")
     ny <- length(y)
   }
