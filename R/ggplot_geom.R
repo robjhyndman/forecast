@@ -31,8 +31,7 @@ GeomForecast <- ggplot2::ggproto("GeomForecast", ggplot2::Geom,
                                    linetype = 1, weight = 1, alpha = 1, level = NA
                                  ),
                                  handle_na = function(self, data, params) {
-                                   # TODO, add smart NA handler.
-                                   data
+                                   data[!is.na(data$level) | !is.na(data$y),]
                                  },
                                  
                                  draw_key = function(data, params, size) { 
