@@ -676,11 +676,50 @@ autoplot.forecast <- function(object, include, PI=TRUE, shadecols=c("#596DD5", "
     }
     else {
       # Time series objects (assumed)
-      p <- autoplot(object$x) + 
-        autolayer(object)
+
+      # Data points
+      if (!is.null(time(object$x))) {
+        timex <- time(object$x)
+      }
+      else if (!is.null(time(object$model$residuals))) {
+        timex <- time(object$model$residuals)
+      }
+      data <- data.frame(yvar = as.numeric(data$yvar), datetime = as.numeric(timex))
+      if (!missing(include)) {
+        data <- tail(data, include)
+      }
+      p <- p + ggplot2::scale_x_continuous()
+      p <- p + ggplot2::geom_line(ggplot2::aes_(x = ~datetime, y = ~yvar), data = data) +
+        ggplot2::labs(y = vars["yvar"], x = "Time")
+
+      # Forecasted intervals
+      predicted <- data.frame(xvar = time(object$mean), yvar = object$mean)
+      colnames(predicted) <- c("datetime", "ypred")
+      if (PI) {
+        levels <- NROW(object$level)
+        interval <- data.frame(datetime = rep(predicted$datetime, levels), lower = c(object$lower), upper = c(object$upper), level = rep(object$level, each = NROW(object$mean)))
+        interval <- interval[order(interval$level, decreasing = TRUE), ] # Must be ordered for gg z-index
+        p <- p + ggplot2::geom_ribbon(ggplot2::aes_(x = ~datetime, ymin = ~lower, ymax = ~upper, group = ~-level, fill = ~level), data = interval)
+        if (min(object$level) < 50) {
+          scalelimit <- c(1, 99)
+        }
+        else {
+          scalelimit <- c(50, 99)
+        }
+        if (length(object$level) <= 5) {
+          p <- p + ggplot2::scale_fill_gradientn(breaks = object$level, colours = shadecols, limit = scalelimit, guide = "legend")
+        }
+        else {
+          p <- p + ggplot2::scale_fill_gradientn(colours = shadecols, limit = scalelimit)
+        }
+        # Negative group is a work around for missing z-index
+      }
+
+      # Forecasted points
+      p <- p + ggplot2::geom_line(ggplot2::aes_(x = ~datetime, y = ~ypred), data = predicted, color = fcol, size = flwd)
     }
 
-    p <- p + ggAddExtras(main = paste("Forecasts from ", object$method, sep = ""), ylab = object$series)
+    p <- p + ggAddExtras(main = paste("Forecasts from ", object$method, sep = ""))
     return(p)
   }
 }
@@ -1366,7 +1405,8 @@ autoplot.splineforecast <- function(object, PI=TRUE, ...) {
   else {
     p <- autoplot(object$x) + autolayer(object)
     p <- p + ggplot2::geom_point(size = 2)
-    p <- p + ggplot2::geom_line(ggplot2::aes_(x = ~time, y = ~y), colour = "red", data = object$fitted)
+    fit <- data.frame(datetime = as.numeric(time(object$fitted)), y = as.numeric(object$fitted))
+    p <- p + ggplot2::geom_line(ggplot2::aes_(x = ~datetime, y = ~y), colour = "red", data = fit)
     p <- p + ggAddExtras(ylab = deparse(object$model$call$x))
     if (!is.null(object$series)) {
       p <- p + ggplot2::ylab(object$series)
@@ -1722,7 +1762,7 @@ autolayer.mforecast <- function(object, series = NULL, PI = TRUE, ...) {
 #' autoplot(lungDeaths, facets=TRUE)
 #'
 #' @export
-autoplot.ts <- function(object, series=NULL, colour = FALSE, ...) {
+autoplot.ts <- function(object, series=NULL, ...) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
@@ -1730,25 +1770,27 @@ autoplot.ts <- function(object, series=NULL, colour = FALSE, ...) {
     if (!is.ts(object)) {
       stop("autoplot.ts requires a ts object, use object=object")
     }
-    
-    sname <- if(is.null(series)) {deparse(substitute(object))} else {series}
 
     # Create data frame with time as a column labelled x
     # and time series as a column labelled y.
+    data <- data.frame(y = as.numeric(object), x = as.numeric(time(object)))
+    if (!is.null(series)) {
+      data <- transform(data, series = series)
+    }
 
     # Initialise ggplot object
-    p <- ggplot2::ggplot(fortify(object, series=series), ggplot2::aes_(y = ~y, x = ~time, group = ~series))
+    p <- ggplot2::ggplot(ggplot2::aes_(y = ~y, x = ~x), data = data)
 
     # Add data
-    if (!is.null(series) || colour) {
-      p <- p + ggplot2::geom_line(ggplot2::aes_(colour = ~series), na.rm = TRUE)
+    if (!is.null(series)) {
+      p <- p + ggplot2::geom_line(ggplot2::aes_(group = ~series, colour = ~series), na.rm = TRUE)
     }
     else {
       p <- p + ggplot2::geom_line(na.rm = TRUE)
     }
 
     # Add labels
-    p <- p + ggAddExtras(xlab = "Time", ylab = sname)
+    p <- p + ggAddExtras(xlab = "Time", ylab = deparse(substitute(object)))
 
     # Make x axis contain only whole numbers (e.g., years)
     p <- p + ggplot2::scale_x_continuous(breaks = ggtsbreaks)
@@ -1809,10 +1851,9 @@ autoplot.msts <- function(object, series = NULL, ...) {
   autoplot(object, series = series, ...) + ggAddExtras(ylab = sname)
 }
 
-globalVariables("x")
 #' @rdname autoplot.ts
 #' @export
-fortify.ts <- function(model, data, series = NULL, ...) {
+fortify.ts <- function(model, data, ...) {
   # Use ggfortify version if it is loaded
   # to prevent cran errors
   if (exists("ggfreqplot")) {
@@ -1825,32 +1866,401 @@ fortify.ts <- function(model, data, series = NULL, ...) {
     return(ggplot2::fortify(model))
   }
   else {
-    if(is.null(series)){
-      sname <- deparse(substitute(model))
-    }
-    else{
-      sname <- series
-    }
     model <- cbind(x = as.numeric(time(model)), y = as.numeric(model))
-    transform(as.data.frame(model), 
-              time = x,
-              series = sname)
+    as.data.frame(model)
   }
 }
 
-#' @rdname autoplot.ts
-#' @export
-fortify.mts <- function(model, data, series = NULL, ...){
-  if(is.null(series)){
-    series <- colnames(model)
-    if (is.null(series)) {
-      series <- paste("Series", seq_len(NCOL(model)))
+forecast2plotdf <- function(model, data=as.data.frame(model), PI=TRUE, showgap=TRUE, ...) {
+  # Time series forecasts
+  if (is.element("ts", class(model$mean))) {
+    xVals <- as.numeric(time(model$mean)) # x axis is time
+  }
+  # Cross-sectional forecasts
+  else if (!is.null(model[["newdata"]])) {
+    xVals <- as.numeric(model[["newdata"]][, 1]) # Only display the first column of newdata, should be generalised.
+    if (NCOL(model[["newdata"]]) > 1) {
+      message("Note: only extracting first column of data")
     }
   }
-  model <- cbind(x = as.numeric(time(model)), y = as.numeric(model))
-  transform(as.data.frame(model), 
-            time = x,
-            series = rep(series, each = NROW(model)))
+  else {
+    stop("Could not find forecast x axis")
+  }
+  Hiloc <- grep("Hi ", names(data))
+  Loloc <- grep("Lo ", names(data))
+  if (PI && !is.null(model$level)) { # PI
+    if (length(Hiloc) == length(Loloc)) {
+      if (length(Hiloc) > 0) {
+        out <- data.frame(
+          x = rep(xVals, length(Hiloc) + 1),
+          y = c(rep(NA, NROW(data) * (length(Hiloc))), data[, 1]),
+          level = c(as.numeric(rep(gsub("Hi ", "", names(data)[Hiloc]), each = NROW(data))), rep(NA, NROW(data))),
+          ymax = c(unlist(data[, Hiloc]), rep(NA, NROW(data))), ymin = c(unlist(data[, Loloc]), rep(NA, NROW(data)))
+        )
+        numInterval <- length(model$level)
+      }
+    }
+    else {
+      warning("missing intervals detected, plotting point predictions only")
+      PI <- FALSE
+    }
+  }
+  if (!PI) { # No PI
+    out <- data.frame(x = xVals, y = as.numeric(model$mean), level = rep(NA, NROW(model$mean)), ymax = rep(NA, NROW(model$mean)), ymin = rep(NA, NROW(model$mean)))
+    numInterval <- 0
+  }
+  if (!showgap) {
+    if (is.null(model$x)) {
+      warning("Removing the gap requires historical data, provide this via model$x. Defaulting showgap to TRUE.")
+    }
+    else {
+      intervalGap <- data.frame(
+        x = rep(time(model$x)[length(model$x)], numInterval + 1),
+        y = c(model$x[length(model$x)], rep(NA, numInterval)),
+        level = c(NA, model$level)[seq_along(1:(numInterval + 1))],
+        ymax = c(NA, rep(model$x[length(model$x)], numInterval)),
+        ymin = c(NA, rep(model$x[length(model$x)], numInterval))
+      )
+      out <- rbind(intervalGap, out)
+    }
+  }
+  return(out)
+}
+
+#' @rdname geom_forecast
+#' @export
+StatForecast <- ggplot2::ggproto(
+  "StatForecast", ggplot2::Stat,
+  required_aes = c("x", "y"),
+
+  compute_group = function(data, scales, params, PI=TRUE, showgap=TRUE, series=NULL,
+                           h=NULL, level=c(80, 95), fan=FALSE, robust=FALSE, lambda=NULL,
+                           find.frequency=FALSE, allow.multiplicative.trend=FALSE, ...) {
+    ## TODO: Rewrite
+    tspx <- recoverTSP(data$x)
+    if (is.null(h)) {
+      h <- ifelse(tspx[3] > 1, 2 * tspx[3], 10)
+    }
+    tsdat <- ts(data = data$y, start = tspx[1], frequency = tspx[3])
+    fcast <- forecast(
+      tsdat, h = h, level = level, fan = fan, robust = robust,
+      lambda = lambda, find.frequency = find.frequency,
+      allow.multiplicative.trend = allow.multiplicative.trend
+    )
+
+    fcast <- forecast2plotdf(fcast, PI = PI, showgap = showgap)
+
+    # Add ggplot & series information
+    extraInfo <- as.list(data[1, !colnames(data) %in% colnames(fcast)])
+    extraInfo$`_data` <- quote(fcast)
+    if (!is.null(series)) {
+      if (data$group[1] > length(series)) {
+        message("Recycling series argument, please provide a series name for each time series")
+      }
+      extraInfo[["series"]] <- series[(abs(data$group[1]) - 1) %% length(series) + 1]
+    }
+    do.call("transform", extraInfo)
+  }
+)
+
+#' @rdname geom_forecast
+#' @export
+GeomForecast <- ggplot2::ggproto(
+  "GeomForecast", ggplot2::Geom, # Produces both point forecasts and intervals on graph
+  required_aes = c("x", "y"),
+  optional_aes = c("ymin", "ymax", "level"),
+  default_aes = ggplot2::aes(
+    colour = "blue", fill = "grey60", size = .5,
+    linetype = 1, weight = 1, alpha = 1
+  ),
+  draw_key = function(data, params, size) {
+    lwd <- min(data$size, min(size) / 4)
+
+    # Calculate and set colour
+    linecol <- blendHex(data$col, "gray30", 1)
+    fillcol <- blendHex(data$col, "#CCCCCC", 0.8)
+
+    grid::grobTree(
+      grid::rectGrob(
+        width = grid::unit(1, "npc") - grid::unit(lwd, "mm"),
+        height = grid::unit(1, "npc") - grid::unit(lwd, "mm"),
+        gp = grid::gpar(
+          col = fillcol,
+          fill = scales::alpha(fillcol, data$alpha),
+          lty = data$linetype,
+          lwd = lwd * ggplot2::.pt,
+          linejoin = "mitre"
+        )
+      ),
+      grid::linesGrob(
+        x = c(0, 0.4, 0.6, 1),
+        y = c(0.2, 0.6, 0.4, 0.9),
+        gp = grid::gpar(
+          col = linecol,
+          fill = scales::alpha(linecol, data$alpha),
+          lty = data$linetype,
+          lwd = lwd * ggplot2::.pt,
+          linejoin = "mitre"
+        )
+      )
+    )
+  },
+
+  handle_na = function(self, data, params) { ## TODO: Consider removing/changing
+    data
+  },
+
+  draw_group = function(data, panel_scales, coord) {
+    data <- if (!is.null(data$level)) {
+      split(data, !is.na(data$level))
+    } else {
+      list(data)
+    }
+
+    # Draw forecasted points and intervals
+    if (length(data) == 1) { # PI=FALSE
+      ggplot2:::ggname(
+        "geom_forecast",
+        GeomForecastPoint$draw_panel(data[[1]], panel_scales, coord)
+      )
+    }
+    else { # PI=TRUE
+      ggplot2:::ggname(
+        "geom_forecast",
+        grid::addGrob(
+          GeomForecastInterval$draw_group(data[[2]], panel_scales, coord),
+          GeomForecastPoint$draw_panel(data[[1]], panel_scales, coord)
+        )
+      )
+    }
+  }
+)
+
+GeomForecastPoint <- ggplot2::ggproto(
+  "GeomForecastPoint", GeomForecast, ## Produces only point forecasts
+  required_aes = c("x", "y"),
+
+  setup_data = function(data, params) {
+    data[!is.na(data$y), ] # Extract only forecast points
+  },
+
+  draw_group = function(data, panel_scales, coord) {
+    linecol <- blendHex(data$colour[1], "gray30", 1)
+    # Compute alpha transparency
+    data$alpha <- grDevices::col2rgb(linecol, alpha = TRUE)[4, ] / 255 * data$alpha
+
+    # Select appropriate Geom and set defaults
+    if (NROW(data) == 0) { # Blank
+      ggplot2::GeomBlank$draw_panel
+    }
+    else if (NROW(data) == 1) { # Point
+      GeomForecastPointGeom <- ggplot2::GeomPoint$draw_panel
+      pointpred <- transform(data, fill = NA, colour = linecol, size = 1, shape = 19, stroke = 0.5)
+    }
+    else { # Line
+      GeomForecastPointGeom <- ggplot2::GeomLine$draw_panel
+      pointpred <- transform(data, fill = NA, colour = linecol)
+    }
+
+    # Draw forecast points
+    ggplot2:::ggname(
+      "geom_forecast_point",
+      grid::grobTree(GeomForecastPointGeom(pointpred, panel_scales, coord))
+    )
+  }
+)
+
+
+blendHex <- function(mixcol, seqcol, alpha=1) {
+  requireNamespace("colorspace")
+  if (is.na(seqcol)) {
+    return(mixcol)
+  }
+
+  # transform to hue/lightness/saturation colorspace
+  seqcol <- grDevices::col2rgb(seqcol, alpha = TRUE)
+  mixcol <- grDevices::col2rgb(mixcol, alpha = TRUE)
+  seqcolHLS <- suppressWarnings(colorspace::coerce(colorspace::RGB(R = seqcol[1, ] / 255, G = seqcol[2, ] / 255, B = seqcol[3, ] / 255), structure(NULL, class = "HLS")))
+  mixcolHLS <- suppressWarnings(colorspace::coerce(colorspace::RGB(R = mixcol[1, ] / 255, G = mixcol[2, ] / 255, B = mixcol[3, ] / 255), structure(NULL, class = "HLS")))
+
+  # copy luminence
+  mixcolHLS@coords[, "L"] <- seqcolHLS@coords[, "L"]
+  mixcolHLS@coords[, "S"] <- alpha * mixcolHLS@coords[, "S"] + (1 - alpha) * seqcolHLS@coords[, "S"]
+  mixcolHex <- suppressWarnings(colorspace::coerce(mixcolHLS, structure(NULL, class = "RGB")))
+  mixcolHex <- colorspace::hex(mixcolHex)
+  mixcolHex <- ggplot2::alpha(mixcolHex, mixcol[4, ] / 255)
+  return(mixcolHex)
+}
+
+GeomForecastInterval <- ggplot2::ggproto(
+  "GeomForecastInterval", GeomForecast, ## Produces only forecasts intervals on graph
+  required_aes = c("x", "ymin", "ymax"),
+
+  setup_data = function(data, params) {
+    data[is.na(data$y), ] # Extract only forecast intervals
+  },
+
+  draw_group = function(data, panel_scales, coord) {
+    leveldiff <- diff(range(data$level))
+    if (leveldiff == 0) {
+      leveldiff <- 1
+    }
+    shadeVal <- (data$level - min(data$level)) / leveldiff * 0.2 + 8 / 15
+    data$shadeCol <- rgb(shadeVal, shadeVal, shadeVal)
+    intervalGrobList <- lapply(
+      split(data, data$level),
+      FUN = function(x) {
+        # Calculate colour
+        fillcol <- blendHex(x$colour[1], x$shadeCol[1], 0.7)
+        # Compute alpha transparency
+        x$alpha <- grDevices::col2rgb(fillcol, alpha = TRUE)[4, ] / 255 * x$alpha
+
+        # Select appropriate Geom and set defaults
+        if (NROW(x) == 0) { # Blank
+          ggplot2::GeomBlank$draw_panel
+        }
+        else if (NROW(x) == 1) { # Linerange
+          GeomForecastIntervalGeom <- ggplot2::GeomLinerange$draw_panel
+          x <- transform(x, colour = fillcol, fill = NA, size = 1)
+        }
+        else { # Ribbon
+          GeomForecastIntervalGeom <- ggplot2::GeomRibbon$draw_group
+          x <- transform(x, colour = NA, fill = fillcol)
+        }
+        # Create grob
+        return(GeomForecastIntervalGeom(x, panel_scales, coord)) ## Create list pair with average ymin/ymax to order layers
+      }
+    )
+
+    # Draw forecast intervals
+    ggplot2:::ggname("geom_forecast_interval", do.call(grid::grobTree, rev(intervalGrobList))) # TODO: Find reliable method to stacking them correctly
+  }
+)
+
+
+
+
+#' Forecast plot
+#'
+#' Generates forecasts from \code{forecast.ts} and adds them to the plot.
+#' Forecasts can be modified via sending forecast specific arguments above.
+#'
+#' Multivariate forecasting is supported by having each time series on a
+#' different group.
+#'
+#' You can also pass \code{geom_forecast} a \code{forecast} object to add it to
+#' the plot.
+#'
+#' The aesthetics required for the forecasting to work includes forecast
+#' observations on the y axis, and the \code{time} of the observations on the x
+#' axis. Refer to the examples below. To automatically set up aesthetics, use
+#' \code{autoplot}.
+#'
+#' @param mapping Set of aesthetic mappings created by \code{\link{aes}} or
+#' \code{\link{aes_}}. If specified and \code{inherit.aes = TRUE} (the
+#' default), it is combined with the default mapping at the top level of the
+#' plot. You must supply \code{mapping} if there is no plot mapping.
+#' @param data The data to be displayed in this layer. There are three options:
+#'
+#' If \code{NULL}, the default, the data is inherited from the plot data as
+#' specified in the call to \code{\link{ggplot}}.
+#'
+#' A \code{data.frame}, or other object, will override the plot data. All
+#' objects will be fortified to produce a data frame. See \code{\link{fortify}}
+#' for which variables will be created.
+#'
+#' A \code{function} will be called with a single argument, the plot data. The
+#' return value must be a \code{data.frame}, and will be used as the layer
+#' data.
+#' @param stat The stat object to use calculate the data.
+#' @param position Position adjustment, either as a string, or the result of a
+#' call to a position adjustment function.
+#' @param na.rm If \code{FALSE} (the default), removes missing values with a
+#' warning.  If \code{TRUE} silently removes missing values.
+#' @param show.legend logical. Should this layer be included in the legends?
+#' \code{NA}, the default, includes if any aesthetics are mapped. \code{FALSE}
+#' never includes, and \code{TRUE} always includes.
+#' @param inherit.aes If \code{FALSE}, overrides the default aesthetics, rather
+#' than combining with them. This is most useful for helper functions that
+#' define both data and aesthetics and shouldn't inherit behaviour from the
+#' default plot specification, e.g. \code{\link{borders}}.
+#' @param PI If \code{FALSE}, confidence intervals will not be plotted, giving
+#' only the forecast line.
+#' @param showgap If \code{showgap=FALSE}, the gap between the historical
+#' observations and the forecasts is removed.
+#' @param series Matches an unidentified forecast layer with a coloured object
+#' on the plot.
+#' @param ... Additional arguments for \code{\link{forecast.ts}}, other
+#' arguments are passed on to \code{\link{layer}}. These are often aesthetics,
+#' used to set an aesthetic to a fixed value, like \code{color = "red"} or
+#' \code{alpha = .5}. They may also be parameters to the paired geom/stat.
+#' @return A layer for a ggplot graph.
+#' @author Mitchell O'Hara-Wild
+#' @seealso \code{\link{forecast}}, \code{\link[ggplot2]{ggproto}}
+#' @examples
+#'
+#' \dontrun{
+#' library(ggplot2)
+#' autoplot(USAccDeaths) + geom_forecast()
+#'
+#' lungDeaths <- cbind(mdeaths, fdeaths)
+#' autoplot(lungDeaths) + geom_forecast()
+#'
+#' # Using fortify.ts
+#' p <- ggplot(aes(x=x, y=y), data=USAccDeaths)
+#' p <- p + geom_line()
+#' p + geom_forecast()
+#'
+#' # Without fortify.ts
+#' data <- data.frame(USAccDeaths=as.numeric(USAccDeaths), time=as.numeric(time(USAccDeaths)))
+#' p <- ggplot(aes(x=time, y=USAccDeaths), data=data)
+#' p <- p + geom_line()
+#' p + geom_forecast()
+#'
+#' p + geom_forecast(h=60)
+#' p <- ggplot(aes(x=time, y=USAccDeaths), data=data)
+#' p + geom_forecast(level=c(70,98))
+#' p + geom_forecast(level=c(70,98),colour="lightblue")
+#'
+#' #Add forecasts to multivariate series with colour groups
+#' lungDeaths <- cbind(mdeaths, fdeaths)
+#' autoplot(lungDeaths) + geom_forecast(forecast(mdeaths), series="mdeaths")
+#' }
+#'
+#' @export
+geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
+                          position = "identity", na.rm = FALSE, show.legend = NA,
+                          inherit.aes = TRUE, PI=TRUE, showgap=TRUE, series=NULL, ...) {
+  if (is.forecast(mapping) || is.mforecast(mapping)) {
+    warning("Use autolayer instead of geom_forecast to add a forecast layer to your ggplot object.")
+    cl <- match.call()
+    cl[[1]] <- quote(autolayer)
+    names(cl)[names(cl) == "mapping"] <- "object"
+    return(eval.parent(cl))
+  }
+  if (is.ts(mapping)) {
+    data <- data.frame(y = as.numeric(mapping), x = as.numeric(time(mapping)))
+    mapping <- ggplot2::aes_(y = ~y, x = ~x)
+  }
+  if (stat == "forecast") {
+    paramlist <- list(na.rm = na.rm, PI = PI, showgap = showgap, series = series, ...)
+    if (!is.null(series)) {
+      if (inherits(mapping, "uneval")) {
+        mapping$colour <- quote(..series..)
+      }
+      else {
+        mapping <- ggplot2::aes_(colour = ~..series..)
+      }
+    }
+  }
+  else {
+    paramlist <- list(na.rm = na.rm, ...)
+  }
+  ggplot2::layer(
+    geom = GeomForecast, mapping = mapping, data = data, stat = stat,
+    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+    params = paramlist
+  )
 }
 
 # Produce nice histogram with appropriately chosen bin widths
