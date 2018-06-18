@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Forecasting using Holt-Winters objects — forecast.HoltWinters • forecast</title>
+<title>Time Series Forecasts with a user-defined model — modelAR • forecast</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,10 +30,10 @@
 
 
 
-<meta property="og:title" content="Forecasting using Holt-Winters objects — forecast.HoltWinters" />
+<meta property="og:title" content="Time Series Forecasts with a user-defined model — modelAR" />
 
-<meta property="og:description" content="Returns forecasts and other information for univariate Holt-Winters time
-series models." />
+<meta property="og:description" content="Experimental function to forecast univariate time series with a
+user-defined model" />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -100,43 +100,57 @@ series models." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Forecasting using Holt-Winters objects</h1>
-    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/forecast2.R'><code>R/forecast2.R</code></a></small>
-    <div class="hidden name"><code>forecast.HoltWinters.Rd</code></div>
+    <h1>Time Series Forecasts with a user-defined model</h1>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/modelAR.R'><code>R/modelAR.R</code></a></small>
+    <div class="hidden name"><code>modelAR.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Returns forecasts and other information for univariate Holt-Winters time
-series models.</p>
+    <p>Experimental function to forecast univariate time series with a
+user-defined model</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for HoltWinters</span>
-<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>object</span>, <span class='kw'>h</span> <span class='kw'>=</span> <span class='fu'>ifelse</span>(<span class='fu'>frequency</span>(<span class='no'>object</span>$<span class='no'>x</span>) <span class='kw'>&gt;</span> <span class='fl'>1</span>, <span class='fl'>2</span> *
-  <span class='fu'>frequency</span>(<span class='no'>object</span>$<span class='no'>x</span>), <span class='fl'>10</span>), <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>80</span>, <span class='fl'>95</span>), <span class='kw'>fan</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>modelAR</span>(<span class='no'>y</span>, <span class='no'>p</span>, <span class='kw'>P</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>FUN</span>, <span class='no'>predict.FUN</span>, <span class='kw'>xreg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale.inputs</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
-      <td><p>An object of class "<code>HoltWinters</code>". Usually the result of
-a call to <code><a href='http://www.rdocumentation.org/packages/stats/topics/HoltWinters'>HoltWinters</a></code>.</p></td>
+      <th>y</th>
+      <td><p>A numeric vector or time series of class <code>ts</code>.</p></td>
     </tr>
     <tr>
-      <th>h</th>
-      <td><p>Number of periods for forecasting</p></td>
+      <th>p</th>
+      <td><p>Embedding dimension for non-seasonal time series. Number of
+non-seasonal lags used as inputs. For non-seasonal time series, the default
+is the optimal number of lags (according to the AIC) for a linear AR(p)
+model. For seasonal time series, the same method is used but applied to
+seasonally adjusted data (from an stl decomposition).</p></td>
     </tr>
     <tr>
-      <th>level</th>
-      <td><p>Confidence level for prediction intervals.</p></td>
+      <th>P</th>
+      <td><p>Number of seasonal lags used as inputs.</p></td>
     </tr>
     <tr>
-      <th>fan</th>
-      <td><p>If TRUE, level is set to seq(51,99,by=3). This is suitable for
-fan plots.</p></td>
+      <th>FUN</th>
+      <td><p>Function used for model fitting. Must accept argument <code>x</code>
+and <code>y</code> for the predictors and response, respectively (<code>formula</code>
+object not currently supported).</p></td>
+    </tr>
+    <tr>
+      <th>predict.FUN</th>
+      <td><p>Prediction function used to apply <code>FUN</code> to new data.
+Must accept an object of class <code>FUN</code> as its first argument, and a
+data frame or matrix of new data for its second argument. Additionally,
+it should return fitted values when new data is omitted.</p></td>
+    </tr>
+    <tr>
+      <th>xreg</th>
+      <td><p>Optionally, a vector or matrix of external regressors, which
+must have the same number of rows as <code>y</code>. Must be numeric.</p></td>
     </tr>
     <tr>
       <th>lambda</th>
@@ -146,57 +160,63 @@ The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.</p></td>
     </tr>
     <tr>
-      <th>biasadj</th>
-      <td><p>Use adjusted back-transformed mean for Box-Cox
-transformations. If transformed data is used to produce forecasts and fitted values,
-a regular back transformation will result in median forecasts. If biasadj is TRUE,
-an adjustment will be made to produce mean forecasts and fitted values.</p></td>
+      <th>model</th>
+      <td><p>Output from a previous call to <code>nnetar</code>. If model is
+passed, this same model is fitted to <code>y</code> without re-estimating any
+parameters.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Other arguments.</p></td>
+      <th>subset</th>
+      <td><p>Optional vector specifying a subset of observations to be used
+in the fit. Can be an integer index vector or a logical vector the same
+length as <code>y</code>. All observations are used by default.</p></td>
+    </tr>
+    <tr>
+      <th>scale.inputs</th>
+      <td><p>If TRUE, inputs are scaled by subtracting the column
+means and dividing by their respective standard deviations. If <code>lambda</code>
+is not <code>NULL</code>, scaling is applied after Box-Cox transformation.</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>Deprecated. Included for backwards compatibility.</p></td>
+    </tr>
+    <tr>
+      <th>&#8230;</th>
+      <td><p>Other arguments passed to <code>FUN</code> for
+<code>modelAR</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class "<code>forecast</code>".</p>
+    <p>Returns an object of class "<code>modelAR</code>".</p>
 <p>The function <code>summary</code> is used to obtain and print a summary of the
-results, while the function <code>plot</code> produces a plot of the forecasts and
-prediction intervals.</p>
+results.</p>
 <p>The generic accessor functions <code>fitted.values</code> and <code>residuals</code>
-extract useful features of the value returned by
-<code>forecast.HoltWinters</code>.</p>
-<p>An object of class <code>"forecast"</code> is a list containing at least the
-following elements:</p>
-<dt>model</dt><dd><p>A list containing information about the
-fitted model</p></dd> <dt>method</dt><dd><p>The name of the forecasting method as a
-character string</p></dd> <dt>mean</dt><dd><p>Point forecasts as a time series</p></dd>
-<dt>lower</dt><dd><p>Lower limits for prediction intervals</p></dd> <dt>upper</dt><dd><p>Upper
-limits for prediction intervals</p></dd> <dt>level</dt><dd><p>The confidence values
-associated with the prediction intervals</p></dd> <dt>x</dt><dd><p>The original time series
-(either <code>object</code> itself or the time series used to create the model
-stored as <code>object</code>).</p></dd> <dt>residuals</dt><dd><p>Residuals from the fitted
-model.</p></dd> <dt>fitted</dt><dd><p>Fitted values (one-step forecasts)</p></dd>
+extract useful features of the value returned by <code>nnetar</code>.</p>
+<dt>model</dt><dd><p>A list containing information about the fitted model</p></dd>
+<dt>method</dt><dd><p>The name of the forecasting method as a character string</p></dd>
+<dt>x</dt><dd><p>The original time series.</p></dd>
+<dt>xreg</dt><dd><p>The external regressors used in fitting (if given).</p></dd>
+<dt>residuals</dt><dd><p>Residuals from the fitted model. That is x minus fitted values.</p></dd>
+<dt>fitted</dt><dd><p>Fitted values (one-step forecasts)</p></dd>
+<dt>...</dt><dd><p>Other arguments</p></dd>
 
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function calls <code><a href='http://www.rdocumentation.org/packages/stats/topics/predict.HoltWinters'>predict.HoltWinters</a></code> and constructs
-an object of class "<code>forecast</code>" from the results.</p>
-<p>It is included for completeness, but the <code><a href='ets.html'>ets</a></code> is recommended
-for use instead of <code><a href='http://www.rdocumentation.org/packages/stats/topics/HoltWinters'>HoltWinters</a></code>.</p>
+    <p>This is an experimental function and only recommended for advanced users.
+The selected model is fitted with lagged values of <code>y</code> as
+inputs. The inputs are for
+lags 1 to <code>p</code>, and lags <code>m</code> to <code>mP</code> where
+<code>m=frequency(y)</code>. If <code>xreg</code> is provided, its columns are also
+used as inputs. If there are missing values in <code>y</code> or
+<code>xreg</code>, the corresponding rows (and any others which depend on them as
+lags) are omitted from the fit. The model is trained for one-step
+forecasting. Multi-step forecasts are computed recursively.</p>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/stats/topics/predict.HoltWinters'>predict.HoltWinters</a></code>,
-<code><a href='http://www.rdocumentation.org/packages/stats/topics/HoltWinters'>HoltWinters</a></code>.</p></div>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>HoltWinters</span>(<span class='no'>WWWusage</span>,<span class='kw'>gamma</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
-<span class='fu'>plot</span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>))</div><div class='img'><img src='forecast.HoltWinters-1.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -206,15 +226,11 @@ for use instead of <code><a href='http://www.rdocumentation.org/packages/stats/t
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
     <h2>Author</h2>
     
-Rob J Hyndman
+Rob J Hyndman and Gabriel Caceres
 
   </div>
 </div>

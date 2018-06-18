@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Is an object constant? — is.constant • forecast</title>
+<title>Create a ggplot layer appropriate to a particular data type — autolayer • forecast</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,11 @@
 
 
 
-<meta property="og:title" content="Is an object constant? — is.constant" />
+<meta property="og:title" content="Create a ggplot layer appropriate to a particular data type — autolayer" />
 
-<meta property="og:description" content="Returns true if the object's numerical values do not vary." />
+<meta property="og:description" content="autolayer uses ggplot2 to draw a particular layer for an object of a
+particular class in a single command. This defines the S3 generic that
+other classes and packages can extend." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -99,27 +101,41 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Is an object constant?</h1>
-    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/newarima2.R'><code>R/newarima2.R</code></a></small>
-    <div class="hidden name"><code>is.constant.Rd</code></div>
+    <h1>Create a ggplot layer appropriate to a particular data type</h1>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/ggplot.R'><code>R/ggplot.R</code></a></small>
+    <div class="hidden name"><code>autolayer.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Returns true if the object's numerical values do not vary.</p>
+    <p><code>autolayer</code> uses ggplot2 to draw a particular layer for an object of a
+particular class in a single command. This defines the S3 generic that
+other classes and packages can extend.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>is.constant</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>autolayer</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>object to be tested</p></td>
+      <th>object</th>
+      <td><p>an object, whose class will determine the behaviour of autolayer</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>other arguments passed to specific methods</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>a ggplot layer</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot()</a></code>, <code>ggplot()</code> and <code>fortify()</code></p></div>
     
 
   </div>
@@ -127,7 +143,11 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#see-also">See also</a></li>
+          </ul>
 
   </div>
 </div>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Is an object constant? — is.constant • forecast</title>
+<title>Level shade bar guide — guide_level • forecast</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Is an object constant? — is.constant" />
+<meta property="og:title" content="Level shade bar guide — guide_level" />
 
-<meta property="og:description" content="Returns true if the object's numerical values do not vary." />
+<meta property="og:description" content="The level guide shows the colour from the forecast intervals which is blended with the series colour." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -99,25 +99,37 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Is an object constant?</h1>
-    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/newarima2.R'><code>R/newarima2.R</code></a></small>
-    <div class="hidden name"><code>is.constant.Rd</code></div>
+    <h1>Level shade bar guide</h1>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/ggplot_scales.R'><code>R/ggplot_scales.R</code></a></small>
+    <div class="hidden name"><code>guide_level.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Returns true if the object's numerical values do not vary.</p>
+    <p>The level guide shows the colour from the forecast intervals which is blended with the series colour.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>is.constant</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>guide_level</span>(<span class='kw'>title</span> <span class='kw'>=</span> <span class='fu'>waiver</span>(), <span class='kw'>max_discrete</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>object to be tested</p></td>
+      <th>title</th>
+      <td><p>A character string or expression indicating a title of guide.
+If <code>NULL</code>, the title is not shown. By default
+(<code>waiver()</code>), the name of the scale object or the name
+specified in <code>labs()</code> is used for the title.</p></td>
+    </tr>
+    <tr>
+      <th>max_discrete</th>
+      <td><p>The maximum number of levels to be shown using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/guide_legend'>guide_legend</a></code>.
+If the number of levels exceeds this value, level shades are shown with <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/guide_colourbar'>guide_colourbar</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Further arguments passed onto either <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/guide_colourbar'>guide_colourbar</a></code> or <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/guide_legend'>guide_legend</a></code></p></td>
     </tr>
     </table>
     

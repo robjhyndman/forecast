@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Forecast plot — StatForecast • forecast</title>
+<title>Forecast plot — GeomForecast • forecast</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -21,20 +21,23 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
 
-<meta property="og:title" content="Forecast plot — StatForecast" />
+<meta property="og:title" content="Forecast plot — GeomForecast" />
 
 <meta property="og:description" content="Generates forecasts from forecast.ts and adds them to the plot.
 Forecasts can be modified via sending forecast specific arguments above." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -98,7 +101,7 @@ Forecasts can be modified via sending forecast specific arguments above." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Forecast plot</h1>
-    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/ggplot.R'><code>R/ggplot.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/R/ggplot_geom.R'><code>R/ggplot_geom.R</code></a>, <a href='https://github.com/robjhyndman/forecast/blob/master/R/ggplot_stat.R'><code>R/ggplot_stat.R</code></a></small>
     <div class="hidden name"><code>geom_forecast.Rd</code></div>
     </div>
 
@@ -109,13 +112,14 @@ Forecasts can be modified via sending forecast specific arguments above.</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>StatForecast</span>
-
-<span class='no'>GeomForecast</span>
+    <pre class="usage"><span class='no'>GeomForecast</span>
 
 <span class='fu'>geom_forecast</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"forecast"</span>,
   <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>PI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>showgap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>series</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>PI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>showgap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>series</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>model</span> <span class='kw'>=</span> <span class='fu'><a href='ets.html'>ets</a></span>(<span class='no'>y</span>), <span class='kw'>fc.args</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='no'>...</span>)
+
+<span class='no'>StatForecast</span></pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -182,6 +186,16 @@ observations and the forecasts is removed.</p></td>
 on the plot.</p></td>
     </tr>
     <tr>
+      <th>model</th>
+      <td><p>The time-series model used to produce the forecast. The data
+must be <code>y</code> (indicating aesthetic <code>y</code>), and the time index for <code>y</code> is determined from the
+<code>x</code> aesthetic.</p></td>
+    </tr>
+    <tr>
+      <th>fc.args</th>
+      <td><p>A list of arguments to be used in the <code><a href='forecast.html'>forecast</a></code> function</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Additional arguments for <code><a href='forecast.html'>forecast.ts</a></code>, other
 arguments are passed on to <code>layer</code>. These are often aesthetics,
@@ -192,7 +206,7 @@ used to set an aesthetic to a fixed value, like <code>color = "red"</code> or
     
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>An object of class <code>StatForecast</code> (inherits from <code>Stat</code>, <code>ggproto</code>, <code>gg</code>) of length 3.</p>
+    <p>An object of class <code>GeomForecast</code> (inherits from <code>Geom</code>, <code>ggproto</code>, <code>gg</code>) of length 7.</p>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
