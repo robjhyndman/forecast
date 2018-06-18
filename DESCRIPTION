@@ -9,7 +9,7 @@ Depends:
 Imports: 
   colorspace,
   fracdiff,
-  ggplot2 (>= 2.2.1.9000),
+  ggplot2 (>= 2.2.1),
   graphics,
   lmtest,
   magrittr,
