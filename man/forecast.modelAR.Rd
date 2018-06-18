@@ -81,9 +81,6 @@ Note that if the model is too complex and overfits the data, the residuals
 can be arbitrarily small; if used for prediction interval calculations, they
 could lead to misleadingly small values.
 }
-\examples{
-
-}
 \seealso{
 \code{\link{nnetar}}.
 }

@@ -69,7 +69,6 @@
 #'
 #' @author Rob J Hyndman and Gabriel Caceres
 #' @keywords ts
-#' @examples
 #'
 #' @export
 modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=NULL, subset=NULL, scale.inputs=FALSE, x=y, ...) {
@@ -371,7 +370,6 @@ modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=N
 #' @author Rob J Hyndman and Gabriel Caceres
 #' @seealso \code{\link{nnetar}}.
 #' @keywords ts
-#' @examples
 #'
 #' @export
 forecast.modelAR <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI=FALSE, level=c(80, 95), fan=FALSE, xreg=NULL, lambda=object$lambda, bootstrap=FALSE, npaths=1000, innov=NULL, ...) {

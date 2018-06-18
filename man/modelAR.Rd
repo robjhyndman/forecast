@@ -85,9 +85,6 @@ used as inputs. If there are missing values in \code{y} or
 lags) are omitted from the fit. The model is trained for one-step
 forecasting. Multi-step forecasts are computed recursively.
 }
-\examples{
-
-}
 \author{
 Rob J Hyndman and Gabriel Caceres
 }
