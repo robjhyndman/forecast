@@ -6,6 +6,7 @@
 \alias{simulate.ar}
 \alias{simulate.fracdiff}
 \alias{simulate.nnetar}
+\alias{simulate.modelAR}
 \title{Simulation from a time series model}
 \usage{
 \method{simulate}{ets}(object, nsim = length(object$x), seed = NULL,
@@ -22,6 +23,10 @@
   future = TRUE, bootstrap = FALSE, innov = NULL, ...)
 
 \method{simulate}{nnetar}(object, nsim = length(object$x), seed = NULL,
+  xreg = NULL, future = TRUE, bootstrap = FALSE, innov = NULL,
+  lambda = object$lambda, ...)
+
+\method{simulate}{modelAR}(object, nsim = length(object$x), seed = NULL,
   xreg = NULL, future = TRUE, bootstrap = FALSE, innov = NULL,
   lambda = object$lambda, ...)
 }
