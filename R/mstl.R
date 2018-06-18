@@ -398,7 +398,7 @@ stlm <- function(y, s.window=13, robust=FALSE, method=c("ets", "arima"), modelfu
     }
     else if (inherits(model$model, "Arima")) {
       modelfunction <- function(x, ...) {
-        return(Arima(x, model = model$model, ...))
+        return(Arima(x, model = model$model, xreg=xreg, ...))
       }
     }
     else if (!is.null(model$modelfunction)) {
