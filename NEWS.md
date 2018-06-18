@@ -1,7 +1,6 @@
 ## Version 8.4
   * Added modelAR(), generalising nnetar() to support user-defined functions
   * Added na.action argument to ets
-  * geom_forecast rewritten, now supports custom models and interval legends
   * Documentation improvements
   * Bug fixes
   
