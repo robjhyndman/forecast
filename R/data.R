@@ -24,7 +24,6 @@
 #'
 #'
 #' @format Time series data
-#' @source Time Series Data Library. \url{http://data.is/TSDLdemo}
 #' @keywords datasets
 #' @examples
 #' tsdisplay(gold)
@@ -64,7 +63,7 @@
 #'
 #'
 #' @format Time series data
-#' @source Time Series Data Library. \url{http://data.is/TSDLdemo}
+#' @source Time Series Data Library. \url{bit.ly/1XZluZ3}
 #' @keywords datasets
 #' @examples
 #' tsdisplay(wineind)
@@ -82,7 +81,7 @@
 #'
 #'
 #' @format Time series data
-#' @source Time Series Data Library. \url{http://data.is/TSDLdemo}
+#' @source Time Series Data Library. \url{http://bit.ly/1BqwTa0}
 #' @keywords datasets
 #' @examples
 #' tsdisplay(woolyrnq)
