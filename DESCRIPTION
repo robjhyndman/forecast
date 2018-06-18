@@ -6,7 +6,7 @@ Description: Methods and tools for displaying and analysing
              via state space models and automatic ARIMA modelling.
 Depends:
   R (>= 3.0.2),
-Imports:
+Imports: 
   colorspace,
   fracdiff,
   ggplot2 (>= 2.2.1.9000),
@@ -21,7 +21,9 @@ Imports:
   tseries,
   urca,
   uroot,
-  zoo
+  zoo,
+  scales,
+  digest
 Suggests:
   expsmooth,
   knitr,
