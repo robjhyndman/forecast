@@ -2,34 +2,24 @@
 # For non-seasonal data, p chosen using AIC from linear AR(p) model
 # For seasonal data, p chosen using AIC from linear AR(p) model after
 #    seasonally adjusting with STL decomposition, and P=1
-# size set to average of number of inputs and number of outputs: (p+P+1)/2
-# if xreg is included then size = (p+P+ncol(xreg)+1)/2
 
 
-
-#' Neural Network Time Series Forecasts
+#' Time Series Forecasts with a user-defined model
 #'
-#' Feed-forward neural networks with a single hidden layer and lagged inputs
-#' for forecasting univariate time series.
+#' Experimental function to forecast univariate time series with a
+#' user-defined model
 #'
-#' A feed-forward neural network is fitted with lagged values of \code{y} as
-#' inputs and a single hidden layer with \code{size} nodes. The inputs are for
+#' This is an experimental function and only recommended for advanced users.
+#' The selected model is fitted with lagged values of \code{y} as
+#' inputs. The inputs are for
 #' lags 1 to \code{p}, and lags \code{m} to \code{mP} where
 #' \code{m=frequency(y)}. If \code{xreg} is provided, its columns are also
 #' used as inputs. If there are missing values in \code{y} or
 #' \code{xreg}, the corresponding rows (and any others which depend on them as
-#' lags) are omitted from the fit. A total of \code{repeats} networks are
-#' fitted, each with random starting weights. These are then averaged when
-#' computing forecasts. The network is trained for one-step forecasting.
-#' Multi-step forecasts are computed recursively.
+#' lags) are omitted from the fit. The model is trained for one-step
+#' forecasting. Multi-step forecasts are computed recursively.
 #'
-#' For non-seasonal data, the fitted model is denoted as an NNAR(p,k) model,
-#' where k is the number of hidden nodes. This is analogous to an AR(p) model
-#' but with nonlinear functions. For seasonal data, the fitted model is called
-#' an NNAR(p,P,k)[m] model, which is analogous to an ARIMA(p,0,0)(P,0,0)[m]
-#' model but with nonlinear functions.
-#'
-#' @aliases print.nnetar print.nnetarmodels
+#' @aliases print.modelAR
 #'
 #' @param y A numeric vector or time series of class \code{ts}.
 #' @param p Embedding dimension for non-seasonal time series. Number of
@@ -38,10 +28,13 @@
 #' model. For seasonal time series, the same method is used but applied to
 #' seasonally adjusted data (from an stl decomposition).
 #' @param P Number of seasonal lags used as inputs.
-#' @param size Number of nodes in the hidden layer. Default is half of the
-#' number of input nodes (including external regressors, if given) plus 1.
-#' @param repeats Number of networks to fit with different random starting
-#' weights. These are then averaged when producing forecasts.
+#' @param FUN Function used for model fitting. Must accept argument \code{x}
+#' and \code{y} for the predictors and response, respectively (\code{formula}
+#' object not currently supported).
+#' @param predict.FUN Prediction function used to apply \code{FUN} to new data.
+#' Must accept an object of class \code{FUN} as its first argument, and a
+#' data frame or matrix of new data for its second argument. Additionally,
+#' it should return fitted values when new data is omitted.
 #' @param xreg Optionally, a vector or matrix of external regressors, which
 #' must have the same number of rows as \code{y}. Must be numeric.
 #' @param model Output from a previous call to \code{nnetar}. If model is
@@ -54,11 +47,11 @@
 #' means and dividing by their respective standard deviations. If \code{lambda}
 #' is not \code{NULL}, scaling is applied after Box-Cox transformation.
 #' @param x Deprecated. Included for backwards compatibility.
-#' @param \dots Other arguments passed to \code{\link[nnet]{nnet}} for
-#' \code{nnetar}.
+#' @param \dots Other arguments passed to \code{FUN} for
+#' \code{modelAR}.
 #' @inheritParams forecast
 #'
-#' @return Returns an object of class "\code{nnetar}".
+#' @return Returns an object of class "\code{modelAR}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the
 #' results.
@@ -77,25 +70,9 @@
 #' @author Rob J Hyndman and Gabriel Caceres
 #' @keywords ts
 #' @examples
-#' fit <- nnetar(lynx)
-#' fcast <- forecast(fit)
-#' plot(fcast)
-#'
-#' ## Arguments can be passed to nnet()
-#' fit <- nnetar(lynx, decay=0.5, maxit=150)
-#' plot(forecast(fit))
-#' lines(lynx)
-#'
-#' ## Fit model to first 100 years of lynx data
-#' fit <- nnetar(window(lynx,end=1920), decay=0.5, maxit=150)
-#' plot(forecast(fit,h=14))
-#' lines(lynx)
-#'
-#' ## Apply fitted model to later data, including all optional arguments
-#' fit2 <- nnetar(window(lynx,start=1921), model=fit)
 #'
 #' @export
-nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NULL, subset=NULL, scale.inputs=TRUE, x=y, ...) {
+modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=NULL, subset=NULL, scale.inputs=FALSE, x=y, ...) {
   useoldmodel <- FALSE
   yname <- deparse(substitute(y))
   if (!is.null(model)) {
@@ -103,8 +80,8 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     useoldmodel <- TRUE
     # Check for conflicts between new and old data:
     # Check model class
-    if (!is.nnetar(model)) {
-      stop("Model must be a nnetar object")
+    if (!is.modelAR(model)) {
+      stop("Model must be a modelAR object")
     }
     # Check new data
     m <- max(round(frequency(model$x)), 1L)
@@ -127,16 +104,17 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     }
     # Update parameters with previous model
     lambda <- model$lambda
-    size <- model$size
     p <- model$p
     P <- model$P
+    FUN <- model$FUN
+    predict.FUN <- model$predict.FUN
     if (P > 0) {
       lags <- sort(unique(c(1:p, m * (1:P))))
     } else {
       lags <- 1:p
     }
-    if (is.null(model$scalex)) {
-      scale.inputs <- FALSE
+    if (!is.null(model$scalex)) {
+      scale.inputs <- TRUE
     }
   } else {                 # when not using an old model
     if (length(y) < 3) {
@@ -270,13 +248,11 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   nlag <- length(lags)
   y <- xx[-(1:maxlag)]
   lags.X <- matrix(NA_real_, ncol = nlag, nrow = n - maxlag)
-  for (i in 1:nlag)
+  for (i in 1:nlag){
     lags.X[, i] <- xx[(maxlag - lags[i] + 1):(n - lags[i])]
+  }
   # Add xreg into lagged matrix
   lags.X <- cbind(lags.X, xxreg[-(1:maxlag), ])
-  if (missing(size)) {
-    size <- round((NCOL(lags.X) + 1) / 2)
-  }
   # Remove missing values if present
   j <- complete.cases(lags.X, y)
   ## Remove values not in subset
@@ -285,11 +261,11 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   if (NROW(lags.X[j,, drop=FALSE]) == 0) {
     stop("No data to fit (possibly due to NA or NaN)")
   }
-  ## Fit average ANN.
+  ## Fit selected model
   if (useoldmodel) {
-    fit <- oldmodel_avnnet(lags.X[j, , drop = FALSE], y[j], size = size, model)
+    fit <- model$model
   } else {
-    fit <- avnnet(lags.X[j, , drop=FALSE], y[j], size = size, repeats = repeats, ...)
+    fit <- FUN(x = lags.X[j,, drop=FALSE], y = y[j], ...)
   }
   # Return results
   out <- list()
@@ -297,21 +273,20 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   out$m <- m
   out$p <- p
   out$P <- P
+  out$FUN <- FUN
+  out$predict.FUN <- predict.FUN
   out$scalex <- scalex
   out$scalexreg <- scalexreg
-  out$size <- size
   out$xreg <- xreg
   out$lambda <- lambda
   out$subset <- (1:length(x))[xsub]
   out$model <- fit
-  out$nnetargs <- list(...)
+  out$modelargs <- list(...)
   if (useoldmodel) {
-    out$nnetargs <- model$nnetargs
-  }
-  if (NROW(lags.X[j,, drop=FALSE]) == 1){
-    fits <- c(rep(NA_real_, maxlag), mean(sapply(fit, predict)))
-  } else{
-    fits <- c(rep(NA_real_, maxlag), rowMeans(sapply(fit, predict)))
+    out$modelargs <- model$modelargs
+    fits <- c(rep(NA_real_, maxlag), predict.FUN(fit, lags.X[j,, drop=FALSE]))
+  } else {
+    fits <- c(rep(NA_real_, maxlag), predict.FUN(fit))
   }
   if (scale.inputs) {
     fits <- fits * scalex$scale + scalex$center
@@ -326,65 +301,28 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   out$residuals <- out$x - out$fitted
   out$lags <- lags
   out$series <- yname
-  out$method <- paste("NNAR(", p, sep = "")
-  if (P > 0) {
-    out$method <- paste(out$method, ",", P, sep = "")
-  }
-  out$method <- paste(out$method, ",", size, ")", sep = "")
-  if (P > 0) {
-    out$method <- paste(out$method, "[", m, "]", sep = "")
-  }
+  out$method <- deparse(substitute(FUN))
+  out$method <- paste0(out$method, "-AR(", p)
+  if (P > 0) out$method <- paste(out$method, ",", P, sep = "")
+  out$method <- paste0(out$method, ")")
+  if (P > 0) out$method <- paste(out$method, "[", m, "]", sep = "")
   out$call <- match.call()
-  return(structure(out, class = c("nnetar")))
-}
-
-# Aggregate several neural network models
-avnnet <- function(x, y, repeats, linout=TRUE, trace=FALSE, ...) {
-  mods <- list()
-  for (i in 1:repeats)
-    mods[[i]] <- nnet::nnet(x, y, linout = linout, trace = trace, ...)
-  return(structure(mods, class = "nnetarmodels"))
-}
-
-# Fit old model to new data
-oldmodel_avnnet <- function(x, y, size, model) {
-  repeats <- length(model$model)
-  args <- list(x = x, y = y, size = size, linout = 1, trace = FALSE)
-  # include additional nnet arguments
-  args <- c(args, model$nnetargs)
-  # set iterations to zero (i.e. weights stay fixed)
-  args$maxit <- 0
-  mods <- list()
-  for (i in 1:repeats)
-  {
-    args$Wts <- model$model[[i]]$wts
-    mods[[i]] <- do.call(nnet::nnet, args)
-  }
-  return(structure(mods, class = "nnetarmodels"))
-}
-
-#' @export
-print.nnetarmodels <- function(x, ...) {
-  cat(paste("\nAverage of", length(x), "networks, each of which is\n"))
-  print(x[[1]])
+  return(structure(out, class = c("modelAR")))
 }
 
 
-
-
-#' Forecasting using neural network models
+#' Forecasting using user-defined model
 #'
-#' Returns forecasts and other information for univariate neural network
+#' Returns forecasts and other information for user-defined
 #' models.
 #'
 #' Prediction intervals are calculated through simulations and can be slow.
-#' Note that if the network is too complex and overfits the data, the residuals
+#' Note that if the model is too complex and overfits the data, the residuals
 #' can be arbitrarily small; if used for prediction interval calculations, they
-#' could lead to misleadingly small values. It is possible to use out-of-sample
-#' residuals to ameliorate this, see examples.
+#' could lead to misleadingly small values.
 #'
-#' @param object An object of class "\code{nnetar}" resulting from a call to
-#' \code{\link{nnetar}}.
+#' @param object An object of class "\code{modelAR}" resulting from a call to
+#' \code{\link{modelAR}}.
 #' @param h Number of periods for forecasting. If \code{xreg} is used, \code{h}
 #' is ignored and the number of forecast periods is set to the number of rows
 #' of \code{xreg}.
@@ -434,29 +372,9 @@ print.nnetarmodels <- function(x, ...) {
 #' @seealso \code{\link{nnetar}}.
 #' @keywords ts
 #' @examples
-#' ## Fit & forecast model
-#' fit <- nnetar(USAccDeaths, size=2)
-#' fcast <- forecast(fit, h=20)
-#' plot(fcast)
-#'
-#' \dontrun{
-#' ## Include prediction intervals in forecast
-#' fcast2 <- forecast(fit, h=20, PI=TRUE, npaths=100)
-#' plot(fcast2)
-#'
-#' ## Set up out-of-sample innovations using cross-validation
-#' fit_cv <- CVar(USAccDeaths,  size=2)
-#' res_sd <- sd(fit_cv$residuals, na.rm=TRUE)
-#' myinnovs <- rnorm(20*100, mean=0, sd=res_sd)
-#' ## Forecast using new innovations
-#' fcast3 <- forecast(fit, h=20, PI=TRUE, npaths=100, innov=myinnovs)
-#' plot(fcast3)
-#' }
-
 #'
 #' @export
-forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI=FALSE, level=c(80, 95), fan=FALSE, xreg=NULL, lambda=object$lambda, bootstrap=FALSE, npaths=1000, innov=NULL, ...) {
-  #  require(nnet)
+forecast.modelAR <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI=FALSE, level=c(80, 95), fan=FALSE, xreg=NULL, lambda=object$lambda, bootstrap=FALSE, npaths=1000, innov=NULL, ...) {
   out <- object
   tspx <- tsp(out$x)
   #
@@ -512,7 +430,7 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI
     if (any(is.na(newdata))) {
       stop("I can't forecast when there are missing values near the end of the series.")
     }
-    fcast[i] <- mean(sapply(object$model, predict, newdata = newdata))
+    fcast[i] <- object$predict.FUN(object$model, newdata)
     flag <- c(fcast[i], flag[-maxlag])
   }
   # Re-scale point forecasts
@@ -564,20 +482,19 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI
 
 #' @rdname fitted.Arima
 #' @export
-fitted.nnetar <- function(object, h=1, ...) {
+fitted.modelAR <- function(object, h=1, ...) {
   if (h == 1) {
     return(object$fitted)
   }
   else {
-    return(hfitted(object = object, h = h, FUN = "nnetar", ...))
+    return(hfitted(object = object, h = h, FUN = "modelAR", ...))
   }
 }
 
 #' @export
-print.nnetar <- function(x, digits = max(3, getOption("digits") - 3), ...) {
+print.modelAR <- function(x, digits = max(3, getOption("digits") - 3), ...) {
   cat("Series:", x$series, "\n")
   cat("Model: ", x$method, "\n")
-  # cat("  one hidden layer with",x$size,"nodes\n")
   cat("Call:   ")
   print(x$call)
   print(x$model)
@@ -590,20 +507,6 @@ print.nnetar <- function(x, digits = max(3, getOption("digits") - 3), ...) {
 
 #' @rdname is.ets
 #' @export
-is.nnetar <- function(x) {
-  inherits(x, "nnetar")
-}
-
-#' @rdname is.ets
-#' @export
-is.nnetarmodels <- function(x) {
-  inherits(x, "nnetarmodels")
-}
-
-# Scale a univariate time series
-scale.ts <- function(x, center=TRUE, scale=TRUE) {
-  tspx <- tsp(x)
-  x <- as.ts(scale.default(x, center = center, scale = scale))
-  tsp(x) <- tspx
-  return(x)
+is.modelAR <- function(x) {
+  inherits(x, "modelAR")
 }
