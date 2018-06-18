@@ -8,6 +8,6 @@ if (require(testthat)) {
     # Constant series should not error
     series <- ts(rep(950, 20), f = 4)
     constantForecast <- expect_error(thetaf(series), NA)
-    expect_true(is.constant(constantForecast$mean))
+    expect_true(is.constant(round(constantForecast$mean,12)))
   })
 }
