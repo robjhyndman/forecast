@@ -30,7 +30,6 @@ Suggests:
   rmarkdown,
   rticles,
   testthat
-Remotes: tidyverse/ggplot2
 LinkingTo:
   Rcpp (>= 0.11.0),
   RcppArmadillo (>= 0.2.35)
