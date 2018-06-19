@@ -1,5 +1,9 @@
 ## Version 8.4
-
+  * Added modelAR(), generalising nnetar() to support user-defined functions
+  * Added na.action argument to ets
+  * Documentation improvements
+  * Bug fixes
+  
 ## Version 8.3 (5 April 2018)
   * Added mstl() to handle multiple seasonal decomposition
   * stlf(), stlm(), tsoutliers() and tsclean() all now use mstl().

@@ -8,7 +8,6 @@
 \alias{autoplot.mts}
 \alias{autoplot.msts}
 \alias{fortify.ts}
-\alias{fortify.mts}
 \title{Automatically create a ggplot for time series objects}
 \usage{
 \method{autolayer}{mts}(object, colour = TRUE, series = NULL, ...)
@@ -17,15 +16,13 @@
 
 \method{autolayer}{ts}(object, colour = TRUE, series = NULL, ...)
 
-\method{autoplot}{ts}(object, series = NULL, colour = FALSE, ...)
+\method{autoplot}{ts}(object, series = NULL, ...)
 
 \method{autoplot}{mts}(object, colour = TRUE, facets = FALSE, ...)
 
 \method{autoplot}{msts}(object, series = NULL, ...)
 
-\method{fortify}{ts}(model, data, series = NULL, ...)
-
-\method{fortify}{mts}(model, data, series = NULL, ...)
+\method{fortify}{ts}(model, data, ...)
 }
 \arguments{
 \item{object}{Object of class \dQuote{\code{ts}} or \dQuote{\code{mts}}.}

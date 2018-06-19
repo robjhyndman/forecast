@@ -5,9 +5,6 @@
 \alias{gold}
 \title{Daily morning gold prices}
 \format{Time series data}
-\source{
-Time Series Data Library. \url{http://data.is/TSDLdemo}
-}
 \usage{
 gold
 }

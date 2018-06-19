@@ -6,10 +6,10 @@ Description: Methods and tools for displaying and analysing
              via state space models and automatic ARIMA modelling.
 Depends:
   R (>= 3.0.2),
-Imports: 
+Imports:
   colorspace,
   fracdiff,
-  ggplot2 (>= 2.2.1.9000),
+  ggplot2 (>= 2.2.1),
   graphics,
   lmtest,
   magrittr,
@@ -21,16 +21,13 @@ Imports:
   tseries,
   urca,
   uroot,
-  zoo,
-  scales,
-  digest
+  zoo
 Suggests:
   expsmooth,
   knitr,
   rmarkdown,
   rticles,
   testthat
-Remotes: tidyverse/ggplot2
 LinkingTo:
   Rcpp (>= 0.11.0),
   RcppArmadillo (>= 0.2.35)

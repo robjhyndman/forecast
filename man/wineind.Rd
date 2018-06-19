@@ -6,7 +6,7 @@
 \title{Australian total wine sales}
 \format{Time series data}
 \source{
-Time Series Data Library. \url{http://data.is/TSDLdemo}
+Time Series Data Library. \url{bit.ly/1XZluZ3}
 }
 \usage{
 wineind
