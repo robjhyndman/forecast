@@ -779,5 +779,5 @@ checkarima <- function(object) {
 is.constant <- function(x) {
   x <- as.numeric(x)
   y <- rep(x[1], length(x))
-  return(identical(x, y))
+  return(isTRUE(all.equal(x, y)))
 }
