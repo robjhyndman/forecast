@@ -1,3 +1,6 @@
+## Version 8.5
+  * Bug fixes
+
 ## Version 8.4 (20 June 2018)
   * Added modelAR(), generalising nnetar() to support user-defined functions
   * Added na.action argument to ets
