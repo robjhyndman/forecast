@@ -50,8 +50,8 @@
 #' select a model when \code{truncate} is not \code{NULL} and
 #' \code{approximation=TRUE}. All observations are used if either
 #' \code{truncate=NULL} or \code{approximation=FALSE}.
-#' @param xreg Optionally, a vector or matrix of external regressors, which
-#' must have the same number of rows as \code{y}.
+#' @param xreg Optionally, a numerical vector or matrix of external regressors, which
+#' must have the same number of rows as \code{y}. (It should not be a data frame.)
 #' @param test Type of unit root test to use. See \code{\link{ndiffs}} for
 #' details.
 #' @param seasonal.test This determines which seasonal unit root test is used.
@@ -169,6 +169,8 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   # Check xreg and do regression if necessary
   if (!is.null(xreg)) {
     # Make sure it is a matrix with column names
+    if("data.frame" %in% class(xreg))
+      stop("xreg should be a numeric matrix or vector")
     nmxreg <- deparse(substitute(xreg))
     xregg <- as.matrix(xreg)
     if (ncol(xregg) == 1 && length(nmxreg) > 1) {

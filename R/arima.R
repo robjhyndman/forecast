@@ -229,7 +229,7 @@ SD.test <- function(wts, s=frequency(wts)) {
 #' @param fan If \code{TRUE}, level is set to \code{seq(51,99,by=3)}. This is
 #' suitable for fan plots.
 #' @param xreg Future values of an regression variables (for class \code{Arima}
-#' objects only).
+#' objects only). A numerical vector or matrix of external regressors; it should not be a data frame.
 #' @param bootstrap If \code{TRUE}, then prediction intervals computed using
 #' simulation with resampled errors.
 #' @param npaths Number of sample paths used in computing simulated prediction
@@ -292,6 +292,8 @@ forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[
   usexreg <- (!is.null(xreg) | use.drift | is.element("xreg", names(object))) # | use.constant)
 
   if (!is.null(xreg)) {
+    if("data.frame" %in% class(xreg))
+      stop("xreg should be a numeric matrix or a numeric vector")
     origxreg <- xreg <- as.matrix(xreg)
     h <- nrow(xreg)
   }
@@ -594,8 +596,8 @@ fitted.Arima <- function(object, h = 1, ...) {
 #' components order and period, but a specification of just a numeric vector of
 #' length 3 will be turned into a suitable list with the specification as the
 #' order.
-#' @param xreg Optionally, a vector or matrix of external regressors, which
-#' must have the same number of rows as y.
+#' @param xreg Optionally, a numerical vector or matrix of external regressors, which
+#' must have the same number of rows as y. It should not be a data frame.
 #' @param include.mean Should the ARIMA model include a mean term? The default
 #' is \code{TRUE} for undifferenced series, \code{FALSE} for differenced ones
 #' (where a mean would not affect the fit nor predictions).
@@ -673,6 +675,8 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
   }
 
   if (!is.null(xreg)) {
+    if("data.frame" %in% class(xreg))
+      stop("xreg should be a numeric matrix or a numeric vector")
     nmxreg <- deparse(substitute(xreg))
     xreg <- as.matrix(xreg)
     if (ncol(xreg) == 1 & length(nmxreg) > 1) {

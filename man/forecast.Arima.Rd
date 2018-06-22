@@ -46,7 +46,7 @@ an adjustment will be made to produce mean forecasts and fitted values.}
 \item{...}{Other arguments.}
 
 \item{xreg}{Future values of an regression variables (for class \code{Arima}
-objects only).}
+objects only). A numerical vector or matrix of external regressors; it should not be a data frame.}
 
 \item{bootstrap}{If \code{TRUE}, then prediction intervals computed using
 simulation with resampled errors.}

@@ -25,8 +25,8 @@ components order and period, but a specification of just a numeric vector of
 length 3 will be turned into a suitable list with the specification as the
 order.}
 
-\item{xreg}{Optionally, a vector or matrix of external regressors, which
-must have the same number of rows as y.}
+\item{xreg}{Optionally, a numerical vector or matrix of external regressors, which
+must have the same number of rows as y. It should not be a data frame.}
 
 \item{include.mean}{Should the ARIMA model include a mean term? The default
 is \code{TRUE} for undifferenced series, \code{FALSE} for differenced ones
