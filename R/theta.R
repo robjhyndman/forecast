@@ -3,8 +3,6 @@
 
 # Author: RJH
 
-
-
 #' Theta method forecast
 #'
 #' Returns forecasts and prediction intervals for a theta method forecast.
@@ -109,7 +107,9 @@ thetaf <- function(y, h=ifelse(frequency(y) > 1, 2 * frequency(y), 10),
   # Reseasonalize
   if (seasonal) {
     fcast$mean <- fcast$mean * rep(tail(decomp$seasonal, m), trunc(1 + h / m))[1:h]
+    fcast$fitted <- fcast$fitted * decomp$seasonal
   }
+  fcast$residuals <- origx-fcast$fitted
 
   # Find prediction intervals
   fcast.se <- sqrt(fcast$model$sigma) * sqrt((0:(h - 1)) * alpha ^ 2 + 1)
