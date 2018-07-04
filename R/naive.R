@@ -28,8 +28,10 @@ lagwalk <- function(y, lag=1, h=10, drift=FALSE,
     b.se <- sqrt(fit$var.coef[1, 1])
     fse <- (fc$upper[, 1] - fc$lower[, 1]) / (2 * qnorm(.5 + level[1] / 200))
     ratio <- sqrt(fse^2 + (seq(h) * b.se)^2) / fse
+    cn <- colnames(fc$upper)
     fc$upper <- fc$mean + (fc$upper - fc$mean) * ratio
     fc$lower <- fc$mean - (fc$mean - fc$lower) * ratio
+    colnames(fc$upper) <- colnames(fc$lower) <- cn
   }
   else {
     b <- b.se <- 0
