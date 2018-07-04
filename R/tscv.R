@@ -30,6 +30,7 @@
 #' must have an argument \code{h} for the forecast horizon.
 #' @param h Forecast horizon
 #' @param window Length of the rolling window, if NULL, a rolling window will not be used.
+#' @param xreg Exogeneous predictor variables passed to the forecast function if required.
 #' @param ... Other arguments are passed to \code{forecastfunction}.
 #' @return Numerical time series object containing the forecast errors as a vector (if h=1)
 #' and a matrix otherwise. The time index corresponds to the last period of the training
@@ -48,22 +49,41 @@
 #' e <- tsCV(lynx, far2, h=1, window=30)
 #'
 #' @export
-tsCV <- function(y, forecastfunction, h=1, window=NULL, ...) {
+tsCV <- function(y, forecastfunction, h=1, window=NULL, xreg=NULL,...) {
   y <- as.ts(y)
   n <- length(y)
   e <- ts(matrix(NA_real_, nrow = n, ncol = h))
   tsp(e) <- tsp(y)
-  for (i in seq_len(n-1))
+  if(!is.null(xreg))
   {
-    fc <- try(suppressWarnings(
-      forecastfunction(subset(
-        y,
+    # Make xreg a ts object to allow easy subsetting later
+    xreg <- ts(as.matrix(xreg))
+    tsp(xreg) <- tsp(y)
+  }
+  if(is.null(window))
+    indx <- seq_len(n-1L)
+  else
+    indx <- seq(window, n-1L, by=1L)
+  for (i in indx)
+  {
+    y_subset <- subset(
+      y,
+      start = ifelse(is.null(window), 1L,
+                     ifelse(i - window >= 0L, i - window + 1L, stop("small window"))
+      ),
+      end = i
+    )
+    if(is.null(xreg)) {
+      fc <- try(suppressWarnings(forecastfunction(y_subset, h = h, ...)), silent = TRUE)
+    }
+    else {
+      xreg_subset <- as.matrix(subset(
+        xreg,
         start = ifelse(is.null(window), 1L,
-          ifelse(i - window >= 0L, i - window + 1L, stop("small window"))
-        ),
-        end = i
-      ), h = h, ...)
-    ), silent = TRUE)
+                       ifelse(i - window >= 0L, i - window + 1L, stop("small window")))
+      ))
+      fc <- try(suppressWarnings(forecastfunction(y_subset, h = h, xreg=xreg_subset, ...)), silent = TRUE)
+    }
     if (!is.element("try-error", class(fc))) {
       e[i, ] <- y[i + (1:h)] - fc$mean
     }
