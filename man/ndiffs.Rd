@@ -5,7 +5,7 @@
 \title{Number of differences required for a stationary series}
 \usage{
 ndiffs(x, alpha = 0.05, test = c("kpss", "adf", "pp"), type = c("level",
-  "trend"), max.d = 2)
+  "trend"), max.d = 2, ...)
 }
 \arguments{
 \item{x}{A univariate time series}
@@ -17,6 +17,8 @@ ndiffs(x, alpha = 0.05, test = c("kpss", "adf", "pp"), type = c("level",
 \item{type}{Specification of the deterministic component in the regression}
 
 \item{max.d}{Maximum number of non-seasonal differences allowed}
+
+\item{...}{Additional arguments to be passed on to the unit root test}
 }
 \value{
 An integer indicating the number of differences required for stationarity.

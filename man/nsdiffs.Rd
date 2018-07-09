@@ -5,7 +5,7 @@
 \title{Number of differences required for a seasonally stationary series}
 \usage{
 nsdiffs(x, alpha = 0.05, m = frequency(x), test = c("seas", "ocsb",
-  "hegy", "ch"), max.D = 1)
+  "hegy", "ch"), max.D = 1, ...)
 }
 \arguments{
 \item{x}{A univariate time series}
@@ -17,6 +17,8 @@ nsdiffs(x, alpha = 0.05, m = frequency(x), test = c("seas", "ocsb",
 \item{test}{Type of unit root test to use}
 
 \item{max.D}{Maximum number of seasonal differences allowed}
+
+\item{...}{Additional arguments to be passed on to the unit root test}
 }
 \value{
 An integer indicating the number of differences required for stationarity.
