@@ -10,9 +10,10 @@ auto.arima(y, d = NA, D = NA, max.p = 5, max.q = 5, max.P = 2,
   seasonal = TRUE, ic = c("aicc", "aic", "bic"), stepwise = TRUE,
   trace = FALSE, approximation = (length(x) > 150 | frequency(x) > 12),
   truncate = NULL, xreg = NULL, test = c("kpss", "adf", "pp"),
-  seasonal.test = c("seas", "ocsb", "hegy", "ch"), allowdrift = TRUE,
-  allowmean = TRUE, lambda = NULL, biasadj = FALSE, parallel = FALSE,
-  num.cores = 2, x = y, ...)
+  test.args = list(), seasonal.test = c("seas", "ocsb", "hegy", "ch"),
+  seasonal.test.args = list(), allowdrift = TRUE, allowmean = TRUE,
+  lambda = NULL, biasadj = FALSE, parallel = FALSE, num.cores = 2,
+  x = y, ...)
 }
 \arguments{
 \item{y}{a univariate time series}
@@ -77,7 +78,12 @@ must have the same number of rows as \code{y}. (It should not be a data frame.)}
 \item{test}{Type of unit root test to use. See \code{\link{ndiffs}} for
 details.}
 
-\item{seasonal.test}{This determines which seasonal unit root test is used.
+\item{test.args}{Additional arguments to be passed to the unit root test.}
+
+\item{seasonal.test}{This determines which seasonal unit root test is used.}
+
+\item{seasonal.test.args}{Additional arguments to be passed to the seasonal
+unit root test.
 See \code{\link{nsdiffs}} for details.}
 
 \item{allowdrift}{If \code{TRUE}, models with drift terms are considered.}

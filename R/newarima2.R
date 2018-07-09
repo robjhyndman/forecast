@@ -54,7 +54,10 @@
 #' must have the same number of rows as \code{y}. (It should not be a data frame.)
 #' @param test Type of unit root test to use. See \code{\link{ndiffs}} for
 #' details.
+#' @param test.args Additional arguments to be passed to the unit root test.
 #' @param seasonal.test This determines which seasonal unit root test is used.
+#' @param seasonal.test.args Additional arguments to be passed to the seasonal
+#' unit root test.
 #' See \code{\link{nsdiffs}} for details.
 #' @param allowdrift If \code{TRUE}, models with drift terms are considered.
 #' @param allowmean If \code{TRUE}, models with a non-zero mean are considered.
@@ -91,8 +94,9 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
                        stationary=FALSE, seasonal=TRUE, ic=c("aicc", "aic", "bic"),
                        stepwise=TRUE, trace=FALSE,
                        approximation=(length(x) > 150 | frequency(x) > 12),
-                       truncate=NULL, xreg=NULL,
-                       test=c("kpss", "adf", "pp"), seasonal.test=c("seas", "ocsb", "hegy", "ch"),
+                       truncate=NULL, xreg=NULL, 
+                       test=c("kpss", "adf", "pp"), test.args = list(),
+                       seasonal.test=c("seas", "ocsb", "hegy", "ch"), seasonal.test.args = list(),
                        allowdrift=TRUE, allowmean=TRUE, lambda=NULL, biasadj=FALSE,
                        parallel=FALSE, num.cores=2, x=y, ...) {
   # Only non-stepwise parallel implemented so far.
@@ -217,7 +221,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   }
   else if(is.na(D))
   {
-    D <- nsdiffs(xx, test=seasonal.test, max.D=max.D)
+    D <- do.call("nsdiffs", c(list(xx, test=seasonal.test, max.D=max.D), seasonal.test.args))
     # Make sure xreg is not null after differencing
     if (D > 0 && !is.null(xregg)) {
       diffxreg <- diff(xregg, differences = D, lag = m)
@@ -239,7 +243,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     }
   }
   if (is.na(d)) {
-    d <- ndiffs(dx, test = test, max.d = max.d)
+    d <- do.call("ndiffs", c(list(dx, test = test, max.d = max.d), test.args))
     # Make sure xreg is not null after differencing
     if (d > 0 && !is.null(xregg)) {
       diffxreg <- diff(diffxreg, differences = d, lag = 1)
