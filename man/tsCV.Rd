@@ -4,7 +4,7 @@
 \alias{tsCV}
 \title{Time series cross-validation}
 \usage{
-tsCV(y, forecastfunction, h = 1, window = NULL, ...)
+tsCV(y, forecastfunction, h = 1, window = NULL, xreg = NULL, ...)
 }
 \arguments{
 \item{y}{Univariate time series}
@@ -16,6 +16,8 @@ must have an argument \code{h} for the forecast horizon.}
 \item{h}{Forecast horizon}
 
 \item{window}{Length of the rolling window, if NULL, a rolling window will not be used.}
+
+\item{xreg}{Exogeneous predictor variables passed to the forecast function if required.}
 
 \item{...}{Other arguments are passed to \code{forecastfunction}.}
 }
