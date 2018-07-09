@@ -409,12 +409,13 @@ forecast.lm <- function(object, newdata, h=10, level=c(80, 95), fan=FALSE, lambd
   # object$x <- model.frame(object$model)[,responsevar]
 
   # Remove missing values from residuals
-  object$residuals <- na.omit(as.numeric(object$residuals))
+  predict_object <- object
+  predict_object$residuals <- na.omit(as.numeric(object$residuals))
   
   out <- list()
   nl <- length(level)
   for (i in 1:nl)
-    out[[i]] <- predict(object, newdata = newdata, se.fit = TRUE, interval = "prediction", level = level[i] / 100, ...)
+    out[[i]] <- predict(predict_object, newdata = newdata, se.fit = TRUE, interval = "prediction", level = level[i] / 100, ...)
 
   if (nrow(newdata) != length(out[[1]]$fit[, 1])) {
     stop("Variables not found in newdata")
