@@ -65,7 +65,7 @@ necessary." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.5</span>
       </span>
     </div>
 
@@ -115,7 +115,7 @@ necessary.</p>
     </div>
 
     <pre class="usage"><span class='fu'>nsdiffs</span>(<span class='no'>x</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fu'>frequency</span>(<span class='no'>x</span>), <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"seas"</span>, <span class='st'>"ocsb"</span>,
-  <span class='st'>"hegy"</span>, <span class='st'>"ch"</span>), <span class='kw'>max.D</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+  <span class='st'>"hegy"</span>, <span class='st'>"ch"</span>), <span class='kw'>max.D</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -139,6 +139,10 @@ necessary.</p>
     <tr>
       <th>max.D</th>
       <td><p>Maximum number of seasonal differences allowed</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments to be passed on to the unit root test</p></td>
     </tr>
     </table>
     

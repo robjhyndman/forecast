@@ -65,7 +65,7 @@ provided." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">8.5</span>
       </span>
     </div>
 
@@ -120,9 +120,10 @@ provided.</p>
   <span class='kw'>seasonal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>ic</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"aicc"</span>, <span class='st'>"aic"</span>, <span class='st'>"bic"</span>), <span class='kw'>stepwise</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>trace</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>approximation</span> <span class='kw'>=</span> (<span class='fu'>length</span>(<span class='no'>x</span>) <span class='kw'>&gt;</span> <span class='fl'>150</span> <span class='kw'>|</span> <span class='fu'>frequency</span>(<span class='no'>x</span>) <span class='kw'>&gt;</span> <span class='fl'>12</span>),
   <span class='kw'>truncate</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>xreg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"kpss"</span>, <span class='st'>"adf"</span>, <span class='st'>"pp"</span>),
-  <span class='kw'>seasonal.test</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"seas"</span>, <span class='st'>"ocsb"</span>, <span class='st'>"hegy"</span>, <span class='st'>"ch"</span>), <span class='kw'>allowdrift</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>allowmean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>num.cores</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>test.args</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>seasonal.test</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"seas"</span>, <span class='st'>"ocsb"</span>, <span class='st'>"hegy"</span>, <span class='st'>"ch"</span>),
+  <span class='kw'>seasonal.test.args</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>allowdrift</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>allowmean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num.cores</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -227,8 +228,8 @@ select a model when <code>truncate</code> is not <code>NULL</code> and
     </tr>
     <tr>
       <th>xreg</th>
-      <td><p>Optionally, a vector or matrix of external regressors, which
-must have the same number of rows as <code>y</code>.</p></td>
+      <td><p>Optionally, a numerical vector or matrix of external regressors, which
+must have the same number of rows as <code>y</code>. (It should not be a data frame.)</p></td>
     </tr>
     <tr>
       <th>test</th>
@@ -236,8 +237,17 @@ must have the same number of rows as <code>y</code>.</p></td>
 details.</p></td>
     </tr>
     <tr>
+      <th>test.args</th>
+      <td><p>Additional arguments to be passed to the unit root test.</p></td>
+    </tr>
+    <tr>
       <th>seasonal.test</th>
-      <td><p>This determines which seasonal unit root test is used.
+      <td><p>This determines which seasonal unit root test is used.</p></td>
+    </tr>
+    <tr>
+      <th>seasonal.test.args</th>
+      <td><p>Additional arguments to be passed to the seasonal
+unit root test.
 See <code><a href='nsdiffs.html'>nsdiffs</a></code> for details.</p></td>
     </tr>
     <tr>
