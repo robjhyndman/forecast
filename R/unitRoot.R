@@ -126,7 +126,8 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), type=c("level", "tren
 #' 
 #' Several different tests are available:
 #' * If \code{test="seas"} (default), a measure of seasonal strength is used, where differencing is
-#' selected if the seasonal strength (Wang, Smith & Hyndman, 2006) exceeds 0.64 (based on M3 auto.arima performance).
+#' selected if the seasonal strength (Wang, Smith & Hyndman, 2006) exceeds 0.64 
+#' (based on minimizing MASE when forecasting using auto.arima on M3 and M4 data).
 #' * If \code{test="ch"}, the Canova-Hansen (1995) test is used 
 #' (with null hypothesis of deterministic seasonality) 
 #' * If \code{test="hegy"}, the Hylleberg, Engle, Granger & Yoo (1990) test is used.
