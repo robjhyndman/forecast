@@ -49,8 +49,7 @@ checkresiduals <- function(object, lag, df=NULL, test, plot=TRUE, ...) {
   else {
     showtest <- FALSE
   }
-
-
+  
   # Extract residuals
   if (is.element("ts", class(object)) | is.element("numeric", class(object))) {
     residuals <- object
@@ -63,7 +62,7 @@ checkresiduals <- function(object, lag, df=NULL, test, plot=TRUE, ...) {
   if (length(residuals) == 0L) {
     stop("No residuals found")
   }
-
+  
   if ("ar" %in% class(object)) {
     method <- paste("AR(", object$order, ")", sep = "")
   } else if (!is.null(object$method)) {
@@ -103,25 +102,11 @@ checkresiduals <- function(object, lag, df=NULL, test, plot=TRUE, ...) {
   freq <- frequency(residuals)
 
   # Find model df
-  if (is.element("ets", class(object))) {
-    df <- length(object$par)
-  } else if (is.element("Arima", class(object))) {
-    df <- length(object$coef)
-  } else if (is.element("bats", class(object))) {
-    df <- length(object$parameters$vect) + NROW(object$seed.states)
-  } else if (is.element("lm", class(object))) {
-    df <- length(object$coefficients)
-  } else if (method == "Mean") {
-    df <- 1
-  } else if (grepl("Naive", method, ignore.case = TRUE)) {
-    df <- 0
-  } else if (method == "Random walk") {
-    df <- 0
-  } else if (method == "Random walk with drift") {
-    df <- 1
-  } else {
-    df <- NULL
+  if(grepl("STL \\+ ", method)){
+    warning("The fitted degrees of freedom is based on the model used for the seasonally adjusted data.")
   }
+  df <- modeldf(object)
+  
   if (missing(lag)) {
     lag <- ifelse(freq > 1, 2 * freq, 10)
     lag <- min(lag, length(residuals)/5)
@@ -145,4 +130,37 @@ checkresiduals <- function(object, lag, df=NULL, test, plot=TRUE, ...) {
       cat(paste("Model df: ", df, ".   Total lags used: ", lag, "\n\n", sep = ""))
     }
   }
+}
+
+modeldf <- function(object, ...){
+  UseMethod("modeldf")
+}
+
+modeldf.default <- function(object, ...){
+  warning("Could not find appropriate degrees of freedom for this model.")
+  NULL
+}
+
+modeldf.ets <- function(object, ...){
+  length(object$par)
+}
+
+modeldf.Arima <- function(object, ...){
+  length(object$coef)
+}
+
+modeldf.bats <- function(object, ...){
+  length(object$parameters$vect) + NROW(object$seed.states)
+}
+
+modeldf.lm <- function(object, ...){
+  length(object$coefficients)
+}
+
+modeldf.naive <- function(object, ...){
+  as.numeric(object$includedrift)
+}
+
+modeldf.meanf <- function(object, ...){
+  1
 }

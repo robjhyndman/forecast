@@ -113,7 +113,7 @@ meanf <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALS
 
   out <- list(
     method = "Mean", level = level, x = x, series = deparse(substitute(y)), mean = f, lower = lower, upper = upper,
-    model = list(mu = f[1], mu.se = s / sqrt(length(x)), sd = s, bootstrap = bootstrap), lambda = lambda, fitted = fits, residuals = res
+    model = structure(list(mu = f[1], mu.se = s / sqrt(length(x)), sd = s, bootstrap = bootstrap), class = "meanf"), lambda = lambda, fitted = fits, residuals = res
   )
   out$model$call <- match.call()
 
