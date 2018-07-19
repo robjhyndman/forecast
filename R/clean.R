@@ -75,7 +75,7 @@ na.interp <- function(x, lambda=NULL) {
     } else {
       K <- min(trunc(freq / 2), 5)
     }
-    X <- cbind(fourier(x, K), poly(tt, degree = pmin(trunc(n / 10), 6L)))
+    X <- cbind(fourier(x, K), poly(tt, degree = pmin(pmax(trunc(n / 10), 1), 6L)))
     fit <- lm(x ~ X, na.action = na.exclude)
     pred <- predict(fit, newdata = data.frame(X))
     x[missng] <- pred[missng]
