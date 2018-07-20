@@ -20,10 +20,10 @@ Imports:
   timeDate,
   tseries,
   urca,
-  uroot,
   zoo
 Suggests:
   expsmooth,
+  uroot,
   knitr,
   rmarkdown,
   rticles,

@@ -169,7 +169,6 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), type=c("level", "tren
 #' @examples
 #' nsdiffs(AirPassengers)
 #'
-#' @importFrom uroot hegy.test ch.test
 #' @export
 nsdiffs <- function(x, alpha = 0.05, m=frequency(x), test=c("seas", "ocsb", "hegy", "ch"), max.D=1, ...)
 {
@@ -187,6 +186,11 @@ nsdiffs <- function(x, alpha = 0.05, m=frequency(x), test=c("seas", "ocsb", "heg
   if(test == "ocsb" && alpha != 0.05){
     warning("Significance levels other than 5% are not currently supported by test='ocsb', defaulting to alpha = 0.05.")
     alpha <- 0.05
+  }
+  if(test %in% c("hegy", "ch")){
+    if(!requireNamespace("uroot", quietly = TRUE)){
+      stop(paste0("Using a ", test, ' test requires the uroot package. Please install it using `install.packages("uroot")`'))
+    }
   }
   
   if(is.constant(x))
@@ -212,8 +216,8 @@ nsdiffs <- function(x, alpha = 0.05, m=frequency(x), test=c("seas", "ocsb", "heg
         diff <- switch(test,
                seas = seas.heuristic(x, ...) > 0.64, # Threshold chosen based on seasonal M3 auto.arima accuracy.
                ocsb = with(ocsb.test(x, maxlag = 3, lag.method = "AIC", ...), statistics>critical),
-               hegy = tail(hegy.test(x, deterministic = c(1,1,0), maxlag = 3, lag.method = "AIC", ...)$pvalues, 2)[-2] > alpha,
-               ch = ch.test(x, type = "trig", ...)$pvalues["joint"] < alpha)
+               hegy = tail(uroot::hegy.test(x, deterministic = c(1,1,0), maxlag = 3, lag.method = "AIC", ...)$pvalues, 2)[-2] > alpha,
+               ch = uroot::ch.test(x, type = "trig", ...)$pvalues["joint"] < alpha)
         )
         stopifnot(diff %in% c(0,1))
         diff
