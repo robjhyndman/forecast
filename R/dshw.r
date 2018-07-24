@@ -4,8 +4,6 @@
 ## y can be an msts object, or periods can be passed explicitly.
 ####################################################################
 
-
-
 #' Double-Seasonal Holt-Winters Forecasting
 #'
 #' Returns forecasts using Taylor's (2003) Double-Seasonal Holt-Winters method.
@@ -204,12 +202,11 @@ dshw <- function(y, period1=NULL, period2=NULL, h=2 * max(period1, period2),
   e <- msts(e, c(period1, period2))
   if (armethod) {
     yhat <- yhat + phi * c(0, e[-n])
-    e <- y - yhat
     fcast <- fcast + phi ^ (1:h) * e[n]
+    e <- y - yhat
   }
   mse <- mean(e ^ 2)
   mape <- mean(abs(e) / y) * 100
-
 
   end.y <- end(y)
   if (end.y[2] == frequency(y)) {
@@ -228,14 +225,15 @@ dshw <- function(y, period1=NULL, period2=NULL, h=2 * max(period1, period2),
     # Does this also need a biasadj backtransform?
     yhat <- InvBoxCox(yhat, lambda)
   }
-
+  
   return(structure(list(
-    mean = fcast, method = "DSHW", x = y, residuals = e, fitted = yhat, series = seriesname,
+    mean = fcast, method = "DSHW", x = y, 
+    residuals = e, fitted = yhat, series = seriesname,
     model = list(
-      mape = mape, mse = mse, alpha = alpha, beta = beta, gamma = gamma, omega = omega, phi = phi,
+      mape = mape, mse = mse, 
+      alpha = alpha, beta = beta, gamma = gamma, omega = omega, phi = phi,
       lambda = lambda, l0 = s.start, b0 = t.start, s10 = wstart, s20 = I
-    ), period1 = period1,
-    period2 = period2
+    ), period1 = period1, period2 = period2
   ), class = "forecast"))
 }
 
@@ -251,15 +249,16 @@ par_dshw <- function(y, period1, period2, pars) {
 dshw.mse <- function(par, y, period1, period2, pars) {
   pars[is.na(pars)] <- par
   if (max(pars) > 0.99 | min(pars) < 0 | pars[5] > .9) {
-    return(1e20)
+    return(Inf)
   } else {
-    return(dshw(y, period1, period2, h = 1, pars[1], pars[2], pars[3], pars[4], pars[5], armethod = (abs(pars[5]) > 1e-7))$model$mse)
+    return(dshw(y, period1, period2, h = 1, 
+    	pars[1], pars[2], pars[3], pars[4], pars[5], 
+    	armethod = (abs(pars[5]) > 1e-7))$model$mse)
   }
 }
 
 ### Calculating seasonal indexes
 seasindex <- function(y, p) {
-  # require(zoo)
   n <- length(y)
   n2 <- 2 * p
   shorty <- y[1:n2]
