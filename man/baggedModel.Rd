@@ -6,8 +6,8 @@
 \alias{baggedETS}
 \title{Forecasting using a bagged model}
 \usage{
-baggedModel(y, bootstrapped_series = bld.mbb.bootstrap(y, 100),
-  fn = c("ets", "auto.arima"), ...)
+baggedModel(y, bootstrapped_series = bld.mbb.bootstrap(y, 100), fn = ets,
+  ...)
 
 baggedETS(y, bootstrapped_series = bld.mbb.bootstrap(y, 100), ...)
 }
@@ -16,7 +16,7 @@ baggedETS(y, bootstrapped_series = bld.mbb.bootstrap(y, 100), ...)
 
 \item{bootstrapped_series}{bootstrapped versions of y.}
 
-\item{fn}{the forecast function to use. Default is \code{\link{ets}}}
+\item{fn}{the forecast function to use. Default is \code{\link{ets}}.}
 
 \item{\dots}{Other arguments passed to the forecast function.}
 }
@@ -27,7 +27,7 @@ The function \code{print} is used to obtain and print a summary of the
 results.
 
 \item{models}{A list containing the fitted ensemble models.}
-\item{method}{The name of the forecasting method as a character string}
+\item{method}{The function for producing a forecastable model.}
 \item{y}{The original time series.}
 \item{bootstrapped_series}{The bootstrapped series.}
 \item{modelargs}{The arguments passed through to \code{fn}.}

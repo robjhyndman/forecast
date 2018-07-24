@@ -30,7 +30,7 @@
 #' results.
 #'
 #' \item{models}{A list containing the fitted ensemble models.}
-#' \item{method}{The name of the forecasting method as a character string}
+#' \item{method}{The function for producing a forecastable model.}
 #' \item{y}{The original time series.}
 #' \item{bootstrapped_series}{The bootstrapped series.}
 #' \item{modelargs}{The arguments passed through to \code{fn}.}
@@ -48,10 +48,11 @@
 #' plot(fcast)
 #'
 #' @export
-baggedModel <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), fn=c("ets", "auto.arima"), ...) {
+baggedModel <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), fn=ets, ...) {
   # Add package info in case forecast not loaded
   if(!is.function(fn)){
-    fn <- utils::getFromNamespace(match.arg(fn), "forecast")
+    warning(paste0("Using character specification for `fn` is deprecated. Please use `fn = ", match.arg(fn,c("ets", "auto.arima")), "`."))
+    fn <- utils::getFromNamespace(match.arg(fn,c("ets", "auto.arima")), "forecast")
   }
 
   mod_boot <- lapply(bootstrapped_series, function(x) {
@@ -83,7 +84,7 @@ baggedModel <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), fn=c("
 #' @rdname baggedModel
 #' @export
 baggedETS <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), ...) {
-  out <- baggedModel(y, bootstrapped_series, fn = "ets", ...)
+  out <- baggedModel(y, bootstrapped_series, fn = ets, ...)
   class(out) <- c("baggedETS", class(out))
   out
 }
