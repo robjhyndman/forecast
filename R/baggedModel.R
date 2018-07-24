@@ -22,7 +22,7 @@
 #'
 #' @param y A numeric vector or time series of class \code{ts}.
 #' @param bootstrapped_series bootstrapped versions of y.
-#' @param fn the forecast function to use. Default is \code{\link{ets}}
+#' @param fn the forecast function to use. Default is \code{\link{ets}}.
 #' @param \dots Other arguments passed to the forecast function.
 #' @return Returns an object of class "\code{baggedModel}".
 #'
@@ -50,7 +50,9 @@
 #' @export
 baggedModel <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), fn=c("ets", "auto.arima"), ...) {
   # Add package info in case forecast not loaded
-  fn <- utils::getFromNamespace(match.arg(fn), "forecast")
+  if(!is.function(fn)){
+    fn <- utils::getFromNamespace(match.arg(fn), "forecast")
+  }
 
   mod_boot <- lapply(bootstrapped_series, function(x) {
     mod <- fn(x, ...)
