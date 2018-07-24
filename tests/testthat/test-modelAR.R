@@ -105,7 +105,7 @@ if (require(testthat)) {
     airna <- airmiles
     airna[12] <- NA
     expect_warning(airnnet <- modelAR(airna, FUN = avnnet2, predict.FUN = predict.avnnet2, scale.inputs = TRUE, p = 1, size = 0, skip = TRUE, Wts = c(0, 1), maxit = 0, repeats = 5))
-    expect_true(identical(airnnet$fitted[-c(1, 12, 13)], airna[-c(11, 12, length(airna))]))
+    expect_equal(airnnet$fitted[-c(1, 12, 13)], airna[-c(11, 12, length(airna))])
     ## Test model argument
     expect_silent({
       set.seed(123)
