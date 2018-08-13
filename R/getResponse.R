@@ -36,9 +36,13 @@ getResponse.default <- function(object, ...) {
 #' @rdname getResponse
 #' @export
 getResponse.lm <- function(object, ...) {
-  responsevar <- deparse(formula(object)[[2]])
-  ans <- model.frame(object$model)[, responsevar]
-  return(ans)
+  if(!is.null(object$x)){
+    object$x
+  }
+  else{
+    responsevar <- deparse(formula(object)[[2]])
+    model.frame(object$model)[, responsevar]
+  }
 }
 
 #' @rdname getResponse

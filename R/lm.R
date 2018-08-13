@@ -152,10 +152,13 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...) {
 
   ## Fit the model and prepare model structure
   fit <- lm(formula, data = data, na.action = na.exclude, ...)
+  
   fit$data <- data
+  responsevar <- deparse(formula[[2]])
+  fit$x <- ts(model.frame(fit)[, responsevar])
   fit$residuals <- ts(residuals(fit))
   fit$fitted.values <- ts(fitted(fit))
-  tsp(fit$residuals) <- tsp(fit$fitted.values) <- tsp(data[, 1]) <- tspx
+  tsp(fit$residuals) <- tsp(fit$x) <- tsp(fit$fitted.values) <- tsp(data[, 1]) <- tspx
   fit$call <- cl
   fit$method <- "Linear regression model"
   if (exists("dataname")) {
