@@ -62,7 +62,6 @@ mstl <- function(x, lambda=NULL, iterate=2, s.window=13, ...) {
 
   # Now fit stl models with only one type of seasonality at a time
   if (msts[1L] > 1) {
-    stlfits <- list()
     seas <- as.list(rep(0, length(msts)))
     deseas <- x
     if (length(s.window) == 1L) {
