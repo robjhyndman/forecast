@@ -1783,10 +1783,10 @@ autoplot.ts <- function(object, series=NULL, ...) {
 
     # Add data
     if (!is.null(series)) {
-      p <- p + ggplot2::geom_line(ggplot2::aes_(group = ~series, colour = ~series), na.rm = TRUE)
+      p <- p + ggplot2::geom_line(ggplot2::aes_(group = ~series, colour = ~series), na.rm = TRUE, ...)
     }
     else {
-      p <- p + ggplot2::geom_line(na.rm = TRUE)
+      p <- p + ggplot2::geom_line(na.rm = TRUE, ...)
     }
 
     # Add labels
@@ -1828,7 +1828,7 @@ autoplot.mts <- function(object, colour=TRUE, facets=FALSE, ...) {
       mapping$colour <- quote(series)
     }
     p <- ggplot2::ggplot(mapping, data = data)
-    p <- p + ggplot2::geom_line(na.rm = TRUE)
+    p <- p + ggplot2::geom_line(na.rm = TRUE, ...)
     if (facets) {
       p <- p + ggplot2::facet_grid(series~., scales = "free_y")
     }
