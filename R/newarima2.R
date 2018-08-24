@@ -138,7 +138,11 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
 
   # Use AIC if npar <= 3
   # AICc won't work for tiny samples.
-  serieslength <- length(x)
+  # Trim leading and trailing NAs
+  missing <- is.na(x)
+  firstnonmiss <- head(which(!missing),1)
+  lastnonmiss <- tail(which(!missing),1)
+  serieslength <- lastnonmiss - firstnonmiss + 1
   if (serieslength <= 3L) {
     ic <- "aic"
   }
@@ -593,7 +597,11 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
 # Also allows refitting to new data
 # and drift terms to be included.
 myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE, ic="aic", trace=FALSE, approximation=FALSE, offset=0, xreg=NULL, ...) {
-  n <- length(x)
+  # Length of non-missing interior
+  missing <- is.na(x)
+  firstnonmiss <- head(which(!missing),1)
+  lastnonmiss <- tail(which(!missing),1)
+  n <- lastnonmiss - firstnonmiss + 1
   m <- frequency(x)
   use.season <- (sum(seasonal) > 0) & m > 0
   diffs <- order[2] + seasonal[2]
