@@ -733,7 +733,11 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
 
   # Calculate aicc & bic based on tmp$aic
   npar <- length(tmp$coef) + 1
-  nstar <- length(na.omit(tmp$residuals)) - tmp$arma[6] - tmp$arma[7] * tmp$arma[5]
+  missing <- is.na(tmp$residuals)
+  firstnonmiss <- head(which(!missing),1)
+  lastnonmiss <- tail(which(!missing),1)
+  n <- lastnonmiss - firstnonmiss + 1
+  nstar <- n - tmp$arma[6] - tmp$arma[7] * tmp$arma[5]
   tmp$aicc <- tmp$aic + 2 * npar * (nstar / (nstar - npar - 1) - 1)
   tmp$bic <- tmp$aic + npar * (log(nstar) - 2)
   tmp$series <- series
@@ -859,7 +863,11 @@ print.ARIMA <- function(x, digits=max(3, getOption("digits") - 3), se=TRUE, ...)
     )
     # npar <- length(x$coef) + 1
     npar <- length(x$coef[x$mask]) + 1
-    nstar <- length(na.omit(x$residuals)) - x$arma[6] - x$arma[7] * x$arma[5]
+    missing <- is.na(x$residuals)
+    firstnonmiss <- head(which(!missing),1)
+    lastnonmiss <- tail(which(!missing),1)
+    n <- lastnonmiss - firstnonmiss + 1
+    nstar <- n - x$arma[6] - x$arma[7] * x$arma[5]
     bic <- x$aic + npar * (log(nstar) - 2)
     aicc <- x$aic + 2 * npar * (nstar / (nstar - npar - 1) - 1)
     cat("AIC=", format(round(x$aic, 2L)), sep = "")
