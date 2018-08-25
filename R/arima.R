@@ -236,7 +236,7 @@ SD.test <- function(wts, s=frequency(wts)) {
 #' intervals when \code{bootstrap=TRUE}.
 #' @param ... Other arguments.
 #' @inheritParams forecast
-#' 
+#'
 #' @return An object of class "\code{forecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the
@@ -312,7 +312,9 @@ forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[
   }
   level <- sort(level)
   if (use.drift) {
-    n <- length(x)
+    missing <- is.na(x)
+    firstnonmiss <- head(which(!missing),1)
+    n <- length(x) - firstnonmiss + 1
     if (!is.null(xreg)) {
       xreg <- cbind((1:h) + n, xreg)
     } else {
@@ -731,7 +733,7 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
 
   # Calculate aicc & bic based on tmp$aic
   npar <- length(tmp$coef) + 1
-  nstar <- length(tmp$residuals) - tmp$arma[6] - tmp$arma[7] * tmp$arma[5]
+  nstar <- length(na.omit(tmp$residuals)) - tmp$arma[6] - tmp$arma[7] * tmp$arma[5]
   tmp$aicc <- tmp$aic + 2 * npar * (nstar / (nstar - npar - 1) - 1)
   tmp$bic <- tmp$aic + npar * (log(nstar) - 2)
   tmp$series <- series
@@ -857,7 +859,7 @@ print.ARIMA <- function(x, digits=max(3, getOption("digits") - 3), se=TRUE, ...)
     )
     # npar <- length(x$coef) + 1
     npar <- length(x$coef[x$mask]) + 1
-    nstar <- length(x$residuals) - x$arma[6] - x$arma[7] * x$arma[5]
+    nstar <- length(na.omit(x$residuals)) - x$arma[6] - x$arma[7] * x$arma[5]
     bic <- x$aic + npar * (log(nstar) - 2)
     aicc <- x$aic + 2 * npar * (nstar / (nstar - npar - 1) - 1)
     cat("AIC=", format(round(x$aic, 2L)), sep = "")

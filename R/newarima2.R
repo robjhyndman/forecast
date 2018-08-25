@@ -11,8 +11,8 @@
 #' Non-stepwise selection can be slow, especially for seasonal data. The stepwise
 #' algorithm outlined in Hyndman & Khandakar (2008) is used except that the default
 #' method for selecting seasonal differences is now based on an estimate of seasonal
-#' strength (Wang, Smith & Hyndman, 2006) rather than the Canova-Hansen test. 
-#' There are also some other minor variations to the algorithm described in 
+#' strength (Wang, Smith & Hyndman, 2006) rather than the Canova-Hansen test.
+#' There are also some other minor variations to the algorithm described in
 #' Hyndman and Khandakar (2008).
 #'
 #' @param y a univariate time series
@@ -71,14 +71,14 @@
 #' @param x Deprecated. Included for backwards compatibility.
 #' @param ... Additional arguments to be passed to \code{\link[stats]{arima}}.
 #' @inheritParams forecast
-#' 
+#'
 #' @return Same as for \code{\link{Arima}}
 #' @author Rob J Hyndman
 #' @seealso \code{\link{Arima}}
 #' @references Hyndman, RJ and Khandakar, Y (2008) "Automatic time series
 #' forecasting: The forecast package for R", \emph{Journal of Statistical
 #' Software}, \bold{26}(3).
-#' 
+#'
 #' Wang, X, Smith, KA, Hyndman, RJ (2006) "Characteristic-based clustering
 #' for time series data", \emph{Data Mining and Knowledge Discovery},
 #' \bold{13}(3), 335-364.
@@ -94,7 +94,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
                        stationary=FALSE, seasonal=TRUE, ic=c("aicc", "aic", "bic"),
                        stepwise=TRUE, trace=FALSE,
                        approximation=(length(x) > 150 | frequency(x) > 12),
-                       truncate=NULL, xreg=NULL, 
+                       truncate=NULL, xreg=NULL,
                        test=c("kpss", "adf", "pp"), test.args = list(),
                        seasonal.test=c("seas", "ocsb", "hegy", "ch"), seasonal.test.args = list(),
                        allowdrift=TRUE, allowmean=TRUE, lambda=NULL, biasadj=FALSE,
@@ -104,7 +104,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     warning("Parallel computer is only implemented when stepwise=FALSE, the model will be fit in serial.")
     parallel <- FALSE
   }
-  
+
   if (trace && parallel) {
     message("Tracing model searching in parallel is not supported.")
     trace <- FALSE
@@ -116,6 +116,16 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     stop("auto.arima can only handle univariate time series")
   }
 
+  # Trim leading NAs and find length of non-missing data
+  orig.x <- x
+  missing <- is.na(x)
+  firstnonmiss <- head(which(!missing),1)
+  lastnonmiss <- tail(which(!missing),1)
+  serieslength <- lastnonmiss - firstnonmiss + 1
+
+  # Trim initial missing values
+  x <- subset(x, start=firstnonmiss)
+
   # Check for constant data
   if (is.constant(x)) {
     if(all(is.na(x)))
@@ -125,7 +135,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     } else {
       fit <- Arima(x, order = c(0, 0, 0), include.mean = FALSE, ...)
     }
-    fit$x <- x
+    fit$x <- orig.x
     fit$series <- series
     fit$call <- match.call()
     fit$call$x <- data.frame(x = x)
@@ -135,17 +145,6 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   ic <- match.arg(ic)
   test <- match.arg(test)
   seasonal.test <- match.arg(seasonal.test)
-
-  # Use AIC if npar <= 3
-  # AICc won't work for tiny samples.
-  # Trim leading and trailing NAs
-  missing <- is.na(x)
-  firstnonmiss <- head(which(!missing),1)
-  lastnonmiss <- tail(which(!missing),1)
-  serieslength <- lastnonmiss - firstnonmiss + 1
-  if (serieslength <= 3L) {
-    ic <- "aic"
-  }
 
   # Only consider non-seasonal models
   if (seasonal) {
@@ -166,8 +165,13 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   max.P <- min(max.P, floor(serieslength / 3 / m))
   max.Q <- min(max.Q, floor(serieslength / 3 / m))
 
-  orig.x <- x
+  # Use AIC if npar <= 3
+  # AICc won't work for tiny samples.
+  if (serieslength <= 3L) {
+    ic <- "aic"
+  }
 
+  # Transform data if requested
   if (!is.null(lambda)) {
     x <- BoxCox(x, lambda)
     lambda <- attr(x, "lambda")
@@ -334,11 +338,11 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   allowmean <- allowmean & (d + D) == 0
 
   constant <- allowdrift | allowmean
-  
+
   if (approximation && trace) {
     cat("\n Fitting models using approximations to speed things up...\n")
   }
-  
+
   if (!stepwise) {
     bestfit <- search.arima(
       x, d, D, max.p, max.q, max.P, max.Q, max.order, stationary,
@@ -551,7 +555,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     }
     icorder <- order(results[, 8])
     nmodels <- sum(!is.na(results[, 8]))
-    for (i in 1:nmodels)
+    for (i in seq(nmodels))
     {
       k <- icorder[i]
       fit <- myarima(
@@ -591,7 +595,6 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
 
   return(bestfit)
 }
-
 
 # Calls arima from stats package and adds data to the returned object
 # Also allows refitting to new data
@@ -780,8 +783,6 @@ checkarima <- function(object) {
   suppressWarnings(test <- any(is.nan(sqrt(diag(object$var.coef)))))
   return(test)
 }
-
-
 
 #' Is an object constant?
 #'
