@@ -5,7 +5,8 @@
 \title{Forecast a multiple linear model with possible time series components}
 \usage{
 \method{forecast}{mlm}(object, newdata, h = 10, level = c(80, 95),
-  fan = FALSE, lambda = object$lambda, biasadj = NULL, ts = TRUE, ...)
+  fan = FALSE, lambda = object$lambda, biasadj = NULL, ts = TRUE,
+  ...)
 }
 \arguments{
 \item{object}{Object of class "mlm", usually the result of a call to

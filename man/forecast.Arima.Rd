@@ -15,7 +15,8 @@
   biasadj = NULL, ...)
 
 \method{forecast}{ar}(object, h = 10, level = c(80, 95), fan = FALSE,
-  lambda = NULL, bootstrap = FALSE, npaths = 5000, biasadj = FALSE, ...)
+  lambda = NULL, bootstrap = FALSE, npaths = 5000, biasadj = FALSE,
+  ...)
 }
 \arguments{
 \item{object}{An object of class "\code{Arima}", "\code{ar}" or

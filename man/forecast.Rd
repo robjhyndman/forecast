@@ -15,9 +15,10 @@ forecast(object, ...)
 \method{forecast}{default}(object, ...)
 
 \method{forecast}{ts}(object, h = ifelse(frequency(object) > 1, 2 *
-  frequency(object), 10), level = c(80, 95), fan = FALSE, robust = FALSE,
-  lambda = NULL, biasadj = FALSE, find.frequency = FALSE,
-  allow.multiplicative.trend = FALSE, model = NULL, ...)
+  frequency(object), 10), level = c(80, 95), fan = FALSE,
+  robust = FALSE, lambda = NULL, biasadj = FALSE,
+  find.frequency = FALSE, allow.multiplicative.trend = FALSE,
+  model = NULL, ...)
 }
 \arguments{
 \item{object}{a time series or time series model for which forecasts are

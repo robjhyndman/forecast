@@ -7,7 +7,8 @@
 \usage{
 accuracy(f, ...)
 
-\method{accuracy}{default}(f, x, test = NULL, d = NULL, D = NULL, ...)
+\method{accuracy}{default}(f, x, test = NULL, d = NULL, D = NULL,
+  ...)
 }
 \arguments{
 \item{f}{An object of class \dQuote{\code{forecast}}, or a numerical vector

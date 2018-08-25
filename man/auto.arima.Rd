@@ -129,8 +129,8 @@ is recommended that you set \code{stepwise=FALSE} and \code{approximation=FALSE}
 Non-stepwise selection can be slow, especially for seasonal data. The stepwise
 algorithm outlined in Hyndman & Khandakar (2008) is used except that the default
 method for selecting seasonal differences is now based on an estimate of seasonal
-strength (Wang, Smith & Hyndman, 2006) rather than the Canova-Hansen test. 
-There are also some other minor variations to the algorithm described in 
+strength (Wang, Smith & Hyndman, 2006) rather than the Canova-Hansen test.
+There are also some other minor variations to the algorithm described in
 Hyndman and Khandakar (2008).
 }
 \examples{

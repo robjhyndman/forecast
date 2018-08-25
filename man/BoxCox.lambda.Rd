@@ -4,7 +4,8 @@
 \alias{BoxCox.lambda}
 \title{Automatic selection of Box Cox transformation parameter}
 \usage{
-BoxCox.lambda(x, method = c("guerrero", "loglik"), lower = -1, upper = 2)
+BoxCox.lambda(x, method = c("guerrero", "loglik"), lower = -1,
+  upper = 2)
 }
 \arguments{
 \item{x}{a numeric vector or time series of class \code{ts}}

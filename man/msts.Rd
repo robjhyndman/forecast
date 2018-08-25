@@ -7,7 +7,8 @@
 \alias{`[.msts`}
 \title{Multi-Seasonal Time Series}
 \usage{
-msts(data, seasonal.periods, ts.frequency = floor(max(seasonal.periods)), ...)
+msts(data, seasonal.periods, ts.frequency = floor(max(seasonal.periods)),
+  ...)
 }
 \arguments{
 \item{data}{A numeric vector, ts object, matrix or data frame. It is

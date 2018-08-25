@@ -4,7 +4,6 @@
 \name{reexports}
 \alias{reexports}
 \alias{\%>\%}
-\alias{reexports}
 \alias{autoplot}
 \title{Objects exported from other packages}
 \keyword{internal}

@@ -11,18 +11,20 @@
 \method{plot}{forecast}(x, include, PI = TRUE, showgap = TRUE,
   shaded = TRUE, shadebars = (length(x$mean) < 5), shadecols = NULL,
   col = 1, fcol = 4, pi.col = 1, pi.lty = 2, ylim = NULL,
-  main = NULL, xlab = "", ylab = "", type = "l", flty = 1, flwd = 2,
-  ...)
+  main = NULL, xlab = "", ylab = "", type = "l", flty = 1,
+  flwd = 2, ...)
 
 \method{autoplot}{forecast}(object, include, PI = TRUE,
-  shadecols = c("#596DD5", "#D5DBFF"), fcol = "#0000AA", flwd = 0.5, ...)
+  shadecols = c("#596DD5", "#D5DBFF"), fcol = "#0000AA", flwd = 0.5,
+  ...)
 
 \method{autoplot}{splineforecast}(object, PI = TRUE, ...)
 
 \method{autolayer}{forecast}(object, series = NULL, PI = TRUE,
   showgap = TRUE, ...)
 
-\method{plot}{splineforecast}(x, fitcol = 2, type = "o", pch = 19, ...)
+\method{plot}{splineforecast}(x, fitcol = 2, type = "o", pch = 19,
+  ...)
 }
 \arguments{
 \item{x}{Forecast object produced by \code{\link{forecast}}.}

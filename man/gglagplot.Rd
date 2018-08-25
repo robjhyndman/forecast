@@ -7,7 +7,8 @@
 \usage{
 gglagplot(x, lags = ifelse(frequency(x) > 9, 16, 9), set.lags = 1:lags,
   diag = TRUE, diag.col = "gray", do.lines = TRUE, colour = TRUE,
-  continuous = frequency(x) > 12, labels = FALSE, seasonal = TRUE, ...)
+  continuous = frequency(x) > 12, labels = FALSE, seasonal = TRUE,
+  ...)
 
 gglagchull(x, lags = ifelse(frequency(x) > 1, min(12, frequency(x)), 4),
   set.lags = 1:lags, diag = TRUE, diag.col = "gray", ...)

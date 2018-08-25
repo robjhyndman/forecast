@@ -11,8 +11,8 @@
 
 \method{autolayer}{mforecast}(object, series = NULL, PI = TRUE, ...)
 
-\method{plot}{mforecast}(x, main = paste("Forecasts from", unique(x$method)),
-  xlab = "time", ...)
+\method{plot}{mforecast}(x, main = paste("Forecasts from",
+  unique(x$method)), xlab = "time", ...)
 }
 \arguments{
 \item{object}{Multivariate forecast object of class \code{mforecast}. Used

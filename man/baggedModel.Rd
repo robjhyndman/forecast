@@ -6,8 +6,8 @@
 \alias{baggedETS}
 \title{Forecasting using a bagged model}
 \usage{
-baggedModel(y, bootstrapped_series = bld.mbb.bootstrap(y, 100), fn = ets,
-  ...)
+baggedModel(y, bootstrapped_series = bld.mbb.bootstrap(y, 100),
+  fn = ets, ...)
 
 baggedETS(y, bootstrapped_series = bld.mbb.bootstrap(y, 100), ...)
 }

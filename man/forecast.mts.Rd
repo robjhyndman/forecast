@@ -9,9 +9,9 @@
 \title{Forecasting time series}
 \usage{
 \method{forecast}{mts}(object, h = ifelse(frequency(object) > 1, 2 *
-  frequency(object), 10), level = c(80, 95), fan = FALSE, robust = FALSE,
-  lambda = NULL, biasadj = FALSE, find.frequency = FALSE,
-  allow.multiplicative.trend = FALSE, ...)
+  frequency(object), 10), level = c(80, 95), fan = FALSE,
+  robust = FALSE, lambda = NULL, biasadj = FALSE,
+  find.frequency = FALSE, allow.multiplicative.trend = FALSE, ...)
 }
 \arguments{
 \item{object}{a multivariate time series or multivariate time series model

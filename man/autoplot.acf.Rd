@@ -13,8 +13,9 @@ and Plotting}
 \usage{
 \method{autoplot}{acf}(object, ci = 0.95, ...)
 
-ggAcf(x, lag.max = NULL, type = c("correlation", "covariance", "partial"),
-  plot = TRUE, na.action = na.contiguous, demean = TRUE, ...)
+ggAcf(x, lag.max = NULL, type = c("correlation", "covariance",
+  "partial"), plot = TRUE, na.action = na.contiguous, demean = TRUE,
+  ...)
 
 ggPacf(x, lag.max = NULL, plot = TRUE, na.action = na.contiguous,
   demean = TRUE, ...)
