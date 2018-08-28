@@ -692,8 +692,12 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
   if (!is.list(seasonal)) {
     if (frequency(x) <= 1) {
       seasonal <- list(order = c(0, 0, 0), period = NA)
+      if(length(x) <= order[2L])
+        stop("Not enough data to fit the model")
     } else {
       seasonal <- list(order = seasonal, period = frequency(x))
+      if(length(x) <= order[2L] + seasonal$order[2L] * seasonal$period)
+        stop("Not enough data to fit the model")
     }
   }
 
