@@ -26,12 +26,13 @@ lagwalk <- function(y, lag=1, h=10, drift=FALSE,
   if (drift) {
     b <- fit$coef["drift"]
     b.se <- sqrt(fit$var.coef[1, 1])
-    fse <- (fc$upper[, 1] - fc$lower[, 1]) / (2 * qnorm(.5 + level[1] / 200))
-    ratio <- sqrt(fse^2 + (seq(h) * b.se)^2) / fse
-    cn <- colnames(fc$upper)
-    fc$upper <- fc$mean + (fc$upper - fc$mean) * ratio
-    fc$lower <- fc$mean - (fc$mean - fc$lower) * ratio
-    colnames(fc$upper) <- colnames(fc$lower) <- cn
+    fse <- as.numeric(fc$upper[, 1] - fc$lower[, 1]) / (2 * qnorm(.5 + level[1] / 200))
+    newfse <- sqrt(fse^2 + (seq(h) * b.se)^2) 
+    for(j in seq_along(level))
+    {
+      fc$lower[,j] <- fc$mean - qnorm(.5 + level[j] / 200) * newfse
+      fc$upper[,j] <- fc$mean + qnorm(.5 + level[j] / 200) * newfse
+    }
   }
   else {
     b <- b.se <- 0
