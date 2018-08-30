@@ -46,8 +46,6 @@ monthdays <- function(x) {
   return(ts(xx, start = start(x), frequency = f))
 }
 
-
-
 #' Forecast seasonal index
 #'
 #' Returns vector containing the seasonal index for \code{h} future periods. If
@@ -94,9 +92,6 @@ sindexf <- function(object, h) {
 
   return(out)
 }
-
-
-
 
 #' Seasonal dummy variables
 #'
@@ -179,8 +174,6 @@ seasonaldummyf <- function(x, h) {
   return(seasonaldummy(ts(rep(0, h), start = tsp(x)[2] + 1 / f, frequency = f)))
 }
 
-
-
 #' Fourier terms for modelling seasonality
 #'
 #' \code{fourier} returns a matrix containing terms from a Fourier series, up
@@ -196,6 +189,9 @@ seasonaldummyf <- function(x, h) {
 #' \code{fourier}. Otherwise, the value of \code{h} determines the number of
 #' rows for the matrix returned by \code{fourier}, typically used for
 #' forecasting. The values within \code{x} are not used.
+#'
+#' Typical use would omit \code{h} when generating Fourier terms for training a model
+#' and include \code{h} when generating Fourier terms for forecasting.
 #'
 #' When \code{x} is a \code{ts} object, the value of \code{K} should be an
 #' integer and specifies the number of sine and cosine terms to return. Thus,
@@ -245,7 +241,6 @@ fourierf <- function(x, K, h) {
   warning("fourierf() is deprecated, please use fourier()")
   return(...fourier(x, K, length(x) + (1:h)))
 }
-
 
 # Function to do the work.
 ...fourier <- function(x, K, times) {
@@ -309,8 +304,6 @@ fourierf <- function(x, K, h) {
 
   return(X)
 }
-
-
 
 #' Moving-average smoothing
 #'
