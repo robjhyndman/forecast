@@ -19,7 +19,7 @@
 #' @param d Order of first-differencing. If missing, will choose a value based
 #' on KPSS test.
 #' @param D Order of seasonal-differencing. If missing, will choose a value
-#' based on OCSB test.
+#' based on \code{season.test}.
 #' @param max.p Maximum value of p
 #' @param max.q Maximum value of q
 #' @param max.P Maximum value of P
@@ -55,7 +55,9 @@
 #' @param test Type of unit root test to use. See \code{\link{ndiffs}} for
 #' details.
 #' @param test.args Additional arguments to be passed to the unit root test.
-#' @param seasonal.test This determines which seasonal unit root test is used.
+#' @param seasonal.test This determines which method is used to select the number of seasonal differences.
+#' The default method is to use a measure of seasonal strength computed from an STL decomposition.
+#' Other possibilities involve seasonal unit root tests.
 #' @param seasonal.test.args Additional arguments to be passed to the seasonal
 #' unit root test.
 #' See \code{\link{nsdiffs}} for details.
