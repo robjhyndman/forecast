@@ -179,6 +179,11 @@ residuals.stlm <- function(object, type=c("innovation", "response"), ...) {
 
 #' @rdname residuals.forecast
 #' @export
-residuals.tslm <- function(object, ...) {
-  object$residuals
+residuals.tslm <- function(object, type=c("innovation", "response"), ...) {
+  type <- match.arg(type)
+  if (type == "innovation") {
+    object$residuals
+  } else {
+    getResponse(object) - fitted(object)
+  }
 }
