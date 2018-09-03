@@ -22,7 +22,7 @@ auto.arima(y, d = NA, D = NA, max.p = 5, max.q = 5, max.P = 2,
 on KPSS test.}
 
 \item{D}{Order of seasonal-differencing. If missing, will choose a value
-based on OCSB test.}
+based on \code{season.test}.}
 
 \item{max.p}{Maximum value of p}
 
@@ -80,7 +80,9 @@ details.}
 
 \item{test.args}{Additional arguments to be passed to the unit root test.}
 
-\item{seasonal.test}{This determines which seasonal unit root test is used.}
+\item{seasonal.test}{This determines which method is used to select the number of seasonal differences.
+The default method is to use a measure of seasonal strength computed from an STL decomposition.
+Other possibilities involve seasonal unit root tests.}
 
 \item{seasonal.test.args}{Additional arguments to be passed to the seasonal
 unit root test.

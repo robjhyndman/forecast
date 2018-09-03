@@ -35,6 +35,9 @@ characteristics of \code{x}. When \code{h} is missing, the length of
 rows for the matrix returned by \code{fourier}, typically used for
 forecasting. The values within \code{x} are not used.
 
+Typical use would omit \code{h} when generating Fourier terms for training a model
+and include \code{h} when generating Fourier terms for forecasting.
+
 When \code{x} is a \code{ts} object, the value of \code{K} should be an
 integer and specifies the number of sine and cosine terms to return. Thus,
 the matrix returned has \code{2*K} columns.
