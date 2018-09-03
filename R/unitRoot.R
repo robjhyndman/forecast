@@ -231,10 +231,15 @@ nsdiffs <- function(x, alpha = 0.05, m=frequency(x), test=c("seas", "ocsb", "heg
   
   dodiff <- runTests(x, test, alpha)
   
+  if(dodiff && frequency(x) %% 1 != 0){
+    warning("The time series frequency has been rounded to support seasonal differencing.", call. = FALSE)
+    x <- ts(x, frequency = round(frequency(x)))
+  }
+  
   while(dodiff==1 && D < max.D)
   {
     D <- D + 1
-    x <- diff(x, lag=m)
+    x <- diff(x, lag=frequency(x))
     if(is.constant(x))
       return(D)
     dodiff <- runTests(x, test, alpha)
