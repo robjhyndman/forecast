@@ -38,7 +38,8 @@
 
 \method{residuals}{stlm}(object, type = c("innovation", "response"), ...)
 
-\method{residuals}{tslm}(object, type = c("innovation", "response"), ...)
+\method{residuals}{tslm}(object, type = c("innovation", "response",
+  "deviance"), ...)
 }
 \arguments{
 \item{object}{An object containing a time series model of class \code{ar},
