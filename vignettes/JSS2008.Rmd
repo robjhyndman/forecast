@@ -712,7 +712,7 @@ set $c=0$. Of these four models, we select the one with the smallest
 AIC value. This is called the ``current'' model and is denoted by
 ARIMA($p,d,q$) if $m=1$ or ARIMA($p,d,q)(P,D,Q)_m$ if $m>1$.
 
-\item[Step 2:] We consider up to thirteen variations on the current
+\item[Step 2:] We consider up to seventeen variations on the current
 model:
 \begin{itemize}
 \item where one of $p$, $q$, $P$ and $Q$ is allowed to vary by
