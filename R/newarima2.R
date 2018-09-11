@@ -387,29 +387,31 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     bestfit <- fit
     p <- q <- P <- Q <- 0
   }
+  k <- 2
   # Basic AR model
   if (max.p > 0 || max.P > 0) {
     fit <- myarima(x, order = c(max.p > 0, d, 0), seasonal = c((m > 1) & (max.P > 0), D, 0), constant = constant, ic, trace, approximation, offset = offset, xreg = xreg, ...)
-    results[3, ] <- c(1, d, 0, m > 1, D, 0, constant, fit$ic)
+    results[3, ] <- c(max.p > 0, d, 0, (m > 1) & (max.P > 0), D, 0, constant, fit$ic)
     if (fit$ic < bestfit$ic) {
       bestfit <- fit
       p <- (max.p > 0)
       P <- (m > 1) & (max.P > 0)
       q <- Q <- 0
     }
+    k <- k + 1
   }
   # Basic MA model
   if (max.q > 0 || max.Q > 0) {
     fit <- myarima(x, order = c(0, d, max.q > 0), seasonal = c(0, D, (m > 1) & (max.Q > 0)), constant = constant, ic, trace, approximation, offset = offset, xreg = xreg, ...)
-    results[4, ] <- c(0, d, 1, 0, D, m > 1, constant, fit$ic)
+    results[4, ] <- c(0, d, max.q > 0, 0, D, (m > 1) & (max.Q > 0), constant, fit$ic)
     if (fit$ic < bestfit$ic) {
       bestfit <- fit
       p <- P <- 0
       Q <- (m > 1) & (max.Q > 0)
       q <- (max.q > 0)
     }
+    k <- k + 1
   }
-  k <- 4
   # Null model with no constant
   if (constant) {
     fit <- myarima(x, order = c(0, d, 0), seasonal = c(0, D, 0), constant = FALSE, ic, trace, approximation, offset = offset, xreg = xreg, ...)
@@ -418,7 +420,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
       bestfit <- fit
       p <- q <- P <- Q <- 0
     }
-    k <- 5
+    k <- k + 1
   }
 
   startk <- 0
