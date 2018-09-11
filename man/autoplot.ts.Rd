@@ -16,9 +16,12 @@
 
 \method{autolayer}{ts}(object, colour = TRUE, series = NULL, ...)
 
-\method{autoplot}{ts}(object, series = NULL, ...)
+\method{autoplot}{ts}(object, series = NULL, xlab = "Time",
+  ylab = deparse(substitute(object)), main = NULL, ...)
 
-\method{autoplot}{mts}(object, colour = TRUE, facets = FALSE, ...)
+\method{autoplot}{mts}(object, colour = TRUE, facets = FALSE,
+  xlab = "Time", ylab = deparse(substitute(object)), main = NULL,
+  ...)
 
 \method{autoplot}{msts}(object, series = NULL, ...)
 

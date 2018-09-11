@@ -1762,7 +1762,8 @@ autolayer.mforecast <- function(object, series = NULL, PI = TRUE, ...) {
 #' autoplot(lungDeaths, facets=TRUE)
 #'
 #' @export
-autoplot.ts <- function(object, series=NULL, ...) {
+autoplot.ts <- function(object, series=NULL, xlab = "Time", ylab = deparse(substitute(object)), 
+                        main = NULL,  ...) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
@@ -1790,7 +1791,7 @@ autoplot.ts <- function(object, series=NULL, ...) {
     }
 
     # Add labels
-    p <- p + ggAddExtras(xlab = "Time", ylab = deparse(substitute(object)))
+    p <- p + ggAddExtras(xlab = xlab, ylab = ylab, main = main)
 
     # Make x axis contain only whole numbers (e.g., years)
     p <- p + ggplot2::scale_x_continuous(breaks = ggtsbreaks)
@@ -1800,7 +1801,8 @@ autoplot.ts <- function(object, series=NULL, ...) {
 
 #' @rdname autoplot.ts
 #' @export
-autoplot.mts <- function(object, colour=TRUE, facets=FALSE, ...) {
+autoplot.mts <- function(object, colour=TRUE, facets=FALSE, xlab = "Time", ylab = deparse(substitute(object)), 
+                         main = NULL, ...) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
@@ -1809,7 +1811,7 @@ autoplot.mts <- function(object, colour=TRUE, facets=FALSE, ...) {
       stop("autoplot.mts requires a mts object, use x=object")
     }
     if (NCOL(object) <= 1) {
-      return(autoplot.ts(object))
+      return(autoplot.ts(object, ...))
     }
 
     cn <- colnames(object)
@@ -1832,7 +1834,7 @@ autoplot.mts <- function(object, colour=TRUE, facets=FALSE, ...) {
     if (facets) {
       p <- p + ggplot2::facet_grid(series~., scales = "free_y")
     }
-    p <- p + ggAddExtras(xlab = "Time", ylab = deparse(substitute(object)))
+    p <- p + ggAddExtras(xlab = xlab, ylab = ylab, main = main)
     return(p)
   }
 }
