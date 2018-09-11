@@ -1749,6 +1749,7 @@ autolayer.mforecast <- function(object, series = NULL, PI = TRUE, ...) {
 #' \dQuote{\code{data.frame}}.
 #' @param data Not used (required for \link{fortify} method)
 #' @param ... Other plotting parameters to affect the plot.
+#' @inheritParams plot.forecast
 #' @return None. Function produces a ggplot graph.
 #' @author Mitchell O'Hara-Wild
 #' @seealso \code{\link[stats]{plot.ts}}, \code{\link[ggplot2]{fortify}}
