@@ -476,6 +476,28 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
         next
       }
     }
+    if (Q < max.Q && P > 0 && newmodel(p, d, q, P - 1, D, Q + 1, constant, results[1:k, ])) {
+      k <- k + 1
+      fit <- myarima(x, order = c(p, d, q), seasonal = c(P - 1, D, Q + 1), constant = constant, ic, trace, approximation, offset = offset, xreg = xreg, ...)
+      results[k, ] <- c(p, d, q, P - 1, D, Q + 1, constant, fit$ic)
+      if (fit$ic < bestfit$ic) {
+        bestfit <- fit
+        Q <- (Q + 1)
+        P <- (P - 1)
+        next
+      }
+    }
+    if (Q > 0 && P < max.P && newmodel(p, d, q, P + 1, D, Q - 1, constant, results[1:k, ])) {
+      k <- k + 1
+      fit <- myarima(x, order = c(p, d, q), seasonal = c(P + 1, D, Q - 1), constant = constant, ic, trace, approximation, offset = offset, xreg = xreg, ...)
+      results[k, ] <- c(p, d, q, P + 1, D, Q - 1, constant, fit$ic)
+      if (fit$ic < bestfit$ic) {
+        bestfit <- fit
+        Q <- (Q - 1)
+        P <- (P + 1)
+        next
+      }
+    }
     if (Q < max.Q && P < max.P && newmodel(p, d, q, P + 1, D, Q + 1, constant, results[1:k, ])) {
       k <- k + 1
       fit <- myarima(x, order = c(p, d, q), seasonal = c(P + 1, D, Q + 1), constant = constant, ic, trace, approximation, offset = offset, xreg = xreg, ...)
@@ -536,6 +558,28 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
         bestfit <- fit
         q <- (q - 1)
         p <- (p - 1)
+        next
+      }
+    }
+    if (q < max.q && p > 0 && newmodel(p - 1, d, q + 1, P, D, Q, constant, results[1:k, ])) {
+      k <- k + 1
+      fit <- myarima(x, order = c(p - 1, d, q + 1), seasonal = c(P, D, Q), constant = constant, ic, trace, approximation, offset = offset, xreg = xreg, ...)
+      results[k, ] <- c(p - 1, d, q + 1, P, D, Q, constant, fit$ic)
+      if (fit$ic < bestfit$ic) {
+        bestfit <- fit
+        q <- (q + 1)
+        p <- (p - 1)
+        next
+      }
+    }
+    if (q > 0 && p < max.p && newmodel(p + 1, d, q - 1, P, D, Q, constant, results[1:k, ])) {
+      k <- k + 1
+      fit <- myarima(x, order = c(p + 1, d, q - 1), seasonal = c(P, D, Q), constant = constant, ic, trace, approximation, offset = offset, xreg = xreg, ...)
+      results[k, ] <- c(p + 1, d, q - 1, P, D, Q, constant, fit$ic)
+      if (fit$ic < bestfit$ic) {
+        bestfit <- fit
+        q <- (q - 1)
+        p <- (p + 1)
         next
       }
     }
