@@ -433,6 +433,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
       if (fit$ic < bestfit$ic) {
         bestfit <- fit
         P <- (P - 1)
+        next
       }
     }
     if (P < max.P && newmodel(p, d, q, P + 1, D, Q, constant, results[1:k, ])) {
@@ -442,6 +443,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
       if (fit$ic < bestfit$ic) {
         bestfit <- fit
         P <- (P + 1)
+        next
       }
     }
     if (Q > 0 && newmodel(p, d, q, P, D, Q - 1, constant, results[1:k, ])) {
@@ -451,6 +453,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
       if (fit$ic < bestfit$ic) {
         bestfit <- fit
         Q <- (Q - 1)
+        next
       }
     }
     if (Q < max.Q && newmodel(p, d, q, P, D, Q + 1, constant, results[1:k, ])) {
@@ -470,6 +473,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
         bestfit <- fit
         Q <- (Q - 1)
         P <- (P - 1)
+        next
       }
     }
     if (Q < max.Q && P < max.P && newmodel(p, d, q, P + 1, D, Q + 1, constant, results[1:k, ])) {
@@ -480,6 +484,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
         bestfit <- fit
         Q <- (Q + 1)
         P <- (P + 1)
+        next
       }
     }
 
@@ -490,6 +495,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
       if (fit$ic < bestfit$ic) {
         bestfit <- fit
         p <- (p - 1)
+        next
       }
     }
     if (p < max.p && newmodel(p + 1, d, q, P, D, Q, constant, results[1:k, ])) {
@@ -499,6 +505,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
       if (fit$ic < bestfit$ic) {
         bestfit <- fit
         p <- (p + 1)
+        next
       }
     }
     if (q > 0 && newmodel(p, d, q - 1, P, D, Q, constant, results[1:k, ])) {
@@ -508,6 +515,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
       if (fit$ic < bestfit$ic) {
         bestfit <- fit
         q <- (q - 1)
+        next
       }
     }
     if (q < max.q && newmodel(p, d, q + 1, P, D, Q, constant, results[1:k, ])) {
@@ -517,6 +525,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
       if (fit$ic < bestfit$ic) {
         bestfit <- fit
         q <- (q + 1)
+        next
       }
     }
     if (q > 0 && p > 0 && newmodel(p - 1, d, q - 1, P, D, Q, constant, results[1:k, ])) {
@@ -527,6 +536,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
         bestfit <- fit
         q <- (q - 1)
         p <- (p - 1)
+        next
       }
     }
     if (q < max.q && p < max.p && newmodel(p + 1, d, q + 1, P, D, Q, constant, results[1:k, ])) {
@@ -537,6 +547,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
         bestfit <- fit
         q <- (q + 1)
         p <- (p + 1)
+        next
       }
     }
     if (allowdrift || allowmean) {
