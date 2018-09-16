@@ -4,9 +4,6 @@
 # h is number of steps ahead to forecast
 # ... are passed to forecastfunction
 
-
-
-
 #' Time series cross-validation
 #'
 #' \code{tsCV} computes the forecast errors obtained by applying
@@ -49,40 +46,42 @@
 #' e <- tsCV(lynx, far2, h=1, window=30)
 #'
 #' @export
-tsCV <- function(y, forecastfunction, h=1, window=NULL, xreg=NULL,...) {
+tsCV <- function(y, forecastfunction, h=1, window=NULL, xreg=NULL, ...) {
   y <- as.ts(y)
   n <- length(y)
   e <- ts(matrix(NA_real_, nrow = n, ncol = h))
   tsp(e) <- tsp(y)
-  if(!is.null(xreg))
-  {
+  if (!is.null(xreg)) {
     # Make xreg a ts object to allow easy subsetting later
     xreg <- ts(as.matrix(xreg))
     tsp(xreg) <- tsp(y)
   }
-  if(is.null(window))
-    indx <- seq_len(n-1L)
+  if (is.null(window))
+    indx <- seq_len(n - 1L)
   else
-    indx <- seq(window, n-1L, by=1L)
-  for (i in indx)
-  {
+    indx <- seq(window, n - 1L, by = 1L)
+  for (i in indx) {
     y_subset <- subset(
       y,
       start = ifelse(is.null(window), 1L,
-                     ifelse(i - window >= 0L, i - window + 1L, stop("small window"))
+              ifelse(i - window >= 0L, i - window + 1L, stop("small window"))
       ),
       end = i
     )
-    if(is.null(xreg)) {
-      fc <- try(suppressWarnings(forecastfunction(y_subset, h = h, ...)), silent = TRUE)
+    if (is.null(xreg)) {
+      fc <- try(suppressWarnings(
+        forecastfunction(y_subset, h = h, ...)
+        ), silent = TRUE)
     }
     else {
       xreg_subset <- as.matrix(subset(
         xreg,
         start = ifelse(is.null(window), 1L,
-                       ifelse(i - window >= 0L, i - window + 1L, stop("small window")))
+                ifelse(i - window >= 0L, i - window + 1L, stop("small window")))
       ))
-      fc <- try(suppressWarnings(forecastfunction(y_subset, h = h, xreg=xreg_subset, ...)), silent = TRUE)
+      fc <- try(suppressWarnings(
+        forecastfunction(y_subset, h = h, xreg = xreg_subset, ...)
+        ), silent = TRUE)
     }
     if (!is.element("try-error", class(fc))) {
       e[i, ] <- y[i + (1:h)] - fc$mean
@@ -91,12 +90,12 @@ tsCV <- function(y, forecastfunction, h=1, window=NULL, xreg=NULL,...) {
   if (h == 1) {
     return(e[, 1L])
   } else {
-    colnames(e) <- paste("h=",1:h,sep="")
+    colnames(e) <- paste("h=", 1:h, sep = "")
     return(e)
   }
 }
 
-## Cross-validation for AR models
+# Cross-validation for AR models
 # By Gabriel Caceres
 ## Note arguments to pass must be named
 
@@ -127,7 +126,7 @@ tsCV <- function(y, forecastfunction, h=1, window=NULL, xreg=NULL,...) {
 #' @author Gabriel Caceres and Rob J Hyndman
 #' @seealso \link{CV}, \link{tsCV}.
 #' @references Bergmeir, C., Hyndman, R.J., Koo, B. (2018) A note on the
-#' validity of cross-validation for evaluating time series prediction. 
+#' validity of cross-validation for evaluating time series prediction.
 #' \emph{Computational Statistics & Data Analysis}, \bold{120}, 70-83.
 #' \url{https://robjhyndman.com/publications/cv-time-series/}.
 #' @keywords ts
@@ -146,7 +145,7 @@ tsCV <- function(y, forecastfunction, h=1, window=NULL, xreg=NULL,...) {
 #' @export
 CVar <- function(y, k=10, FUN=nnetar, cvtrace=FALSE, blocked=FALSE, LBlags=24, ...) {
   nx <- length(y)
-  ## n-folds at most equal number of points
+  # n-folds at most equal number of points
   k <- min(as.integer(k), nx)
   if (k <= 1L) {
     stop("k must be at least 2")
@@ -162,8 +161,7 @@ CVar <- function(y, k=10, FUN=nnetar, cvtrace=FALSE, blocked=FALSE, LBlags=24, .
   cvacc <- matrix(NA_real_, nrow = k, ncol = 7)
   out <- list()
   alltestfit <- rep(NA, length.out = nx)
-  for (i in 1:k)
-  {
+  for (i in 1:k) {
     out[[paste0("fold", i)]] <- list()
     testset <- ind[fold == i]
     trainset <- ind[fold != i]
@@ -194,10 +192,12 @@ CVar <- function(y, k=10, FUN=nnetar, cvtrace=FALSE, blocked=FALSE, LBlags=24, .
   out$LBpvalue <- Box.test(out$residuals, type = "Ljung", lag = LBlags)$p.value
 
   out$k <- k
-  ## calculate mean accuracy accross all folds
-  CVmean <- matrix(apply(cvacc, 2, FUN = mean, na.rm = TRUE), dimnames = list(colnames(acc), "Mean"))
-  ## calculate accuracy sd accross all folds --- include?
-  CVsd <- matrix(apply(cvacc, 2, FUN = sd, na.rm = TRUE), dimnames = list(colnames(acc), "SD"))
+  # calculate mean accuracy accross all folds
+  CVmean <- matrix(apply(cvacc, 2, FUN = mean, na.rm = TRUE),
+    dimnames = list(colnames(acc), "Mean"))
+  # calculate accuracy sd accross all folds --- include?
+  CVsd <- matrix(apply(cvacc, 2, FUN = sd, na.rm = TRUE),
+    dimnames = list(colnames(acc), "SD"))
   out$CVsummary <- cbind(CVmean, CVsd)
   out$series <- deparse(substitute(y))
   out$call <- match.call()
@@ -209,12 +209,12 @@ print.CVar <- function(x, ...) {
   cat("Series:", x$series, "\n")
   cat("Call:   ")
   print(x$call)
-  ## Add info about series, function, and parameters
-  ## Add note about any NA/NaN in folds?
-  ##
-  ## Print number of folds
+  # Add info about series, function, and parameters
+  # Add note about any NA/NaN in folds?
+  #
+  # Print number of folds
   cat("\n", x$k, "-fold cross-validation\n", sep = "")
-  ## Print mean & sd accuracy() results
+  # Print mean & sd accuracy() results
   print(x$CVsummary)
 
   cat("\n")
