@@ -727,10 +727,14 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
       }
       if (last.nonzero > 0) {
         testvec <- testvec[1:last.nonzero]
-        minroot <- min(minroot, abs(polyroot(c(1, -testvec))))
+        proots <- try(polyroot(c(1,-testvec)))
+        if (!is.element("try-error", class(proots))) {
+          minroot <- min(minroot, abs(proots))
+        }
+        else fit$ic <- Inf
       }
     }
-    if (order[3] + seasonal[3] > 0) {
+    if (order[3] + seasonal[3] > 0 & fit$ic < Inf) {
       testvec <- fit$model$theta
       k <- abs(testvec) > 1e-8
       if (sum(k) > 0) {
@@ -740,7 +744,11 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
       }
       if (last.nonzero > 0) {
         testvec <- testvec[1:last.nonzero]
-        minroot <- min(minroot, abs(polyroot(c(1, testvec))))
+        proots <- try(polyroot(c(1,testvec)))
+        if (!is.element("try-error", class(proots))) {
+          minroot <- min(minroot, abs(proots))
+        }
+        else fit$ic <- Inf
       }
     }
     if (minroot < 1 + 1e-2) { # Previously 1+1e-3
