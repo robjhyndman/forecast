@@ -28,6 +28,7 @@
 #' @param h Forecast horizon
 #' @param window Length of the rolling window, if NULL, a rolling window will not be used.
 #' @param xreg Exogeneous predictor variables passed to the forecast function if required.
+#' @param initial Initial period of the time series where no cross-validation is performed.
 #' @param ... Other arguments are passed to \code{forecastfunction}.
 #' @return Numerical time series object containing the forecast errors as a vector (if h=1)
 #' and a matrix otherwise. The time index corresponds to the last period of the training
@@ -46,10 +47,11 @@
 #' e <- tsCV(lynx, far2, h=1, window=30)
 #'
 #' @export
-tsCV <- function(y, forecastfunction, h=1, window=NULL, xreg=NULL, ...) {
+tsCV <- function(y, forecastfunction, h=1, window=NULL, xreg=NULL, initial=0, ...) {
   y <- as.ts(y)
   n <- length(y)
   e <- ts(matrix(NA_real_, nrow = n, ncol = h))
+  if(initial >= n) stop("initial period too long")
   tsp(e) <- tsp(y)
   if (!is.null(xreg)) {
     # Make xreg a ts object to allow easy subsetting later
@@ -57,9 +59,9 @@ tsCV <- function(y, forecastfunction, h=1, window=NULL, xreg=NULL, ...) {
     tsp(xreg) <- tsp(y)
   }
   if (is.null(window))
-    indx <- seq_len(n - 1L)
+    indx <- seq(1+initial, n - 1L)
   else
-    indx <- seq(window, n - 1L, by = 1L)
+    indx <- seq(window+initial, n - 1L, by = 1L)
   for (i in indx) {
     y_subset <- subset(
       y,
