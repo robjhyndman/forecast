@@ -51,7 +51,7 @@ tsCV <- function(y, forecastfunction, h=1, window=NULL, xreg=NULL, initial=0, ..
   y <- as.ts(y)
   n <- length(y)
   e <- ts(matrix(NA_real_, nrow = n, ncol = h))
-  if(initial >= n) stop("initial period to long")
+  if(initial >= n) stop("initial period too long")
   tsp(e) <- tsp(y)
   if (!is.null(xreg)) {
     # Make xreg a ts object to allow easy subsetting later
