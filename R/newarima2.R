@@ -267,6 +267,12 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
         d <- d - 1
       }
     }
+    # Make sure dx is not all missing after differencing
+    if (d > 0) {
+      diffdx <- diff(dx, differences=d, lag=1)
+      if(all(is.na(diffdx)))
+        d <- d - 1
+    }
   }
 
   # Check number of differences selected
