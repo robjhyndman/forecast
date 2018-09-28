@@ -239,6 +239,12 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
         D <- D - 1
       }
     }
+    # Make sure xx is not all missing after differencing
+    if (D > 0) {
+      dx <- diff(xx, differences = D, lag = m)
+      if (all(is.na(dx)))
+        D <- D - 1
+    }
   }
   if (D > 0) {
     dx <- diff(xx, differences = D, lag = m)
