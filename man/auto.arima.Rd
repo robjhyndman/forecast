@@ -9,8 +9,9 @@ auto.arima(y, d = NA, D = NA, max.p = 5, max.q = 5, max.P = 2,
   start.q = 2, start.P = 1, start.Q = 1, stationary = FALSE,
   seasonal = TRUE, ic = c("aicc", "aic", "bic"), stepwise = TRUE,
   trace = FALSE, approximation = (length(x) > 150 | frequency(x) > 12),
-  truncate = NULL, xreg = NULL, test = c("kpss", "adf", "pp"),
-  test.args = list(), seasonal.test = c("seas", "ocsb", "hegy", "ch"),
+  method = c("CSS-ML", "ML", "CSS"), truncate = NULL, xreg = NULL,
+  test = c("kpss", "adf", "pp"), test.args = list(),
+  seasonal.test = c("seas", "ocsb", "hegy", "ch"),
   seasonal.test.args = list(), allowdrift = TRUE, allowmean = TRUE,
   lambda = NULL, biasadj = FALSE, parallel = FALSE, num.cores = 2,
   x = y, ...)
@@ -65,6 +66,11 @@ squares and the information criteria used for model selection are
 approximated. The final model is still computed using maximum likelihood
 estimation. Approximation should be used for long time series or a high
 seasonal period to avoid excessive computation times.}
+
+\item{method}{fitting method: maximum likelihood or minimize
+    conditional sum-of-squares.  The default (unless there are missing
+    values) is to use conditional-sum-of-squares to find starting
+    values, then maximum likelihood.  Can be abbreviated.}
 
 \item{truncate}{An integer value indicating how many observations to use in
 model selection. The last \code{truncate} values of the series are used to
