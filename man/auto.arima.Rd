@@ -8,12 +8,13 @@ auto.arima(y, d = NA, D = NA, max.p = 5, max.q = 5, max.P = 2,
   max.Q = 2, max.order = 5, max.d = 2, max.D = 1, start.p = 2,
   start.q = 2, start.P = 1, start.Q = 1, stationary = FALSE,
   seasonal = TRUE, ic = c("aicc", "aic", "bic"), stepwise = TRUE,
-  trace = FALSE, approximation = (length(x) > 150 | frequency(x) > 12),
-  method = NULL, truncate = NULL, xreg = NULL, test = c("kpss",
-  "adf", "pp"), test.args = list(), seasonal.test = c("seas", "ocsb",
-  "hegy", "ch"), seasonal.test.args = list(), allowdrift = TRUE,
-  allowmean = TRUE, lambda = NULL, biasadj = FALSE,
-  parallel = FALSE, num.cores = 2, x = y, ...)
+  nmodels = 94, trace = FALSE, approximation = (length(x) > 150 |
+  frequency(x) > 12), method = NULL, truncate = NULL, xreg = NULL,
+  test = c("kpss", "adf", "pp"), test.args = list(),
+  seasonal.test = c("seas", "ocsb", "hegy", "ch"),
+  seasonal.test.args = list(), allowdrift = TRUE, allowmean = TRUE,
+  lambda = NULL, biasadj = FALSE, parallel = FALSE, num.cores = 2,
+  x = y, ...)
 }
 \arguments{
 \item{y}{a univariate time series}
@@ -56,6 +57,8 @@ stepwise.}
 \item{stepwise}{If \code{TRUE}, will do stepwise selection (faster).
 Otherwise, it searches over all models. Non-stepwise selection can be very
 slow, especially for seasonal models.}
+
+\item{nmodels}{Maximum number of models considered in the stepwise search.}
 
 \item{trace}{If \code{TRUE}, the list of ARIMA models considered will be
 reported.}
