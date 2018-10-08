@@ -149,6 +149,8 @@ characteristics of <code>x</code>. When <code>h</code> is missing, the length of
 <code>fourier</code>. Otherwise, the value of <code>h</code> determines the number of
 rows for the matrix returned by <code>fourier</code>, typically used for
 forecasting. The values within <code>x</code> are not used.</p>
+<p>Typical use would omit <code>h</code> when generating Fourier terms for training a model
+and include <code>h</code> when generating Fourier terms for forecasting.</p>
 <p>When <code>x</code> is a <code>ts</code> object, the value of <code>K</code> should be an
 integer and specifies the number of sine and cosine terms to return. Thus,
 the matrix returned has <code>2*K</code> columns.</p>

@@ -222,8 +222,8 @@ The additional objects returned are</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>)
-<span class='no'>WWWusage</span> <span class='kw'>%&gt;%</span>
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>ggplot2</span>)</div><div class='output co'>#&gt; <span class='message'>Want to understand how all the pieces fit together? See the R for Data</span>
+#&gt; <span class='message'>Science book: http://r4ds.had.co.nz/</span></div><div class='input'><span class='no'>WWWusage</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>Arima</span>(<span class='kw'>order</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>3</span>,<span class='fl'>1</span>,<span class='fl'>0</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>20</span>) <span class='kw'>%&gt;%</span>
   <span class='no'>autoplot</span></div><div class='img'><img src='Arima-1.png' alt='' width='700' height='433' /></div><div class='input'>

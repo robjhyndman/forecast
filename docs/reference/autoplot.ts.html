@@ -122,10 +122,13 @@ a ggplot object suitable for usage with <code>stat_forecast</code>.</p>
 <span class='fu'><a href='autolayer.html'>autolayer</a></span>(<span class='no'>object</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>series</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for ts</span>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>object</span>, <span class='kw'>series</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>object</span>, <span class='kw'>series</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"Time"</span>,
+  <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='fu'>deparse</span>(<span class='fu'>substitute</span>(<span class='no'>object</span>)), <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for mts</span>
-<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>object</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>facets</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>object</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>facets</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"Time"</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='fu'>deparse</span>(<span class='fu'>substitute</span>(<span class='no'>object</span>)), <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>)
 
 <span class='co'># S3 method for msts</span>
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/autoplot'>autoplot</a></span>(<span class='no'>object</span>, <span class='kw'>series</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
@@ -152,6 +155,18 @@ with the functionality of <a href='geom_forecast.html'>geom_forecast</a>.</p></t
     <tr>
       <th>...</th>
       <td><p>Other plotting parameters to affect the plot.</p></td>
+    </tr>
+    <tr>
+      <th>xlab</th>
+      <td><p>X-axis label.</p></td>
+    </tr>
+    <tr>
+      <th>ylab</th>
+      <td><p>Y-axis label.</p></td>
+    </tr>
+    <tr>
+      <th>main</th>
+      <td><p>Main title.</p></td>
     </tr>
     <tr>
       <th>facets</th>

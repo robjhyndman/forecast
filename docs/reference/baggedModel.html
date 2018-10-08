@@ -111,7 +111,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>baggedModel</span>(<span class='no'>y</span>, <span class='kw'>bootstrapped_series</span> <span class='kw'>=</span> <span class='fu'><a href='bld.mbb.bootstrap.html'>bld.mbb.bootstrap</a></span>(<span class='no'>y</span>, <span class='fl'>100</span>),
-  <span class='kw'>fn</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ets"</span>, <span class='st'>"auto.arima"</span>), <span class='no'>...</span>)
+  <span class='kw'>fn</span> <span class='kw'>=</span> <span class='no'>ets</span>, <span class='no'>...</span>)
 
 <span class='fu'>baggedETS</span>(<span class='no'>y</span>, <span class='kw'>bootstrapped_series</span> <span class='kw'>=</span> <span class='fu'><a href='bld.mbb.bootstrap.html'>bld.mbb.bootstrap</a></span>(<span class='no'>y</span>, <span class='fl'>100</span>), <span class='no'>...</span>)</pre>
     
@@ -128,7 +128,7 @@
     </tr>
     <tr>
       <th>fn</th>
-      <td><p>the forecast function to use. Default is <code><a href='ets.html'>ets</a></code></p></td>
+      <td><p>the forecast function to use. Default is <code><a href='ets.html'>ets</a></code>.</p></td>
     </tr>
     <tr>
       <th>&#8230;</th>
@@ -142,7 +142,7 @@
 <p>The function <code>print</code> is used to obtain and print a summary of the
 results.</p>
 <dt>models</dt><dd><p>A list containing the fitted ensemble models.</p></dd>
-<dt>method</dt><dd><p>The name of the forecasting method as a character string</p></dd>
+<dt>method</dt><dd><p>The function for producing a forecastable model.</p></dd>
 <dt>y</dt><dd><p>The original time series.</p></dd>
 <dt>bootstrapped_series</dt><dd><p>The bootstrapped series.</p></dd>
 <dt>modelargs</dt><dd><p>The arguments passed through to <code>fn</code>.</p></dd>

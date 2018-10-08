@@ -9,12 +9,11 @@ auto.arima(y, d = NA, D = NA, max.p = 5, max.q = 5, max.P = 2,
   start.q = 2, start.P = 1, start.Q = 1, stationary = FALSE,
   seasonal = TRUE, ic = c("aicc", "aic", "bic"), stepwise = TRUE,
   trace = FALSE, approximation = (length(x) > 150 | frequency(x) > 12),
-  method = c("CSS-ML", "ML", "CSS"), truncate = NULL, xreg = NULL,
-  test = c("kpss", "adf", "pp"), test.args = list(),
-  seasonal.test = c("seas", "ocsb", "hegy", "ch"),
-  seasonal.test.args = list(), allowdrift = TRUE, allowmean = TRUE,
-  lambda = NULL, biasadj = FALSE, parallel = FALSE, num.cores = 2,
-  x = y, ...)
+  method = NULL, truncate = NULL, xreg = NULL, test = c("kpss",
+  "adf", "pp"), test.args = list(), seasonal.test = c("seas", "ocsb",
+  "hegy", "ch"), seasonal.test.args = list(), allowdrift = TRUE,
+  allowmean = TRUE, lambda = NULL, biasadj = FALSE,
+  parallel = FALSE, num.cores = 2, x = y, ...)
 }
 \arguments{
 \item{y}{a univariate time series}

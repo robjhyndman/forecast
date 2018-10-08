@@ -119,11 +119,11 @@ provided.</p>
   <span class='kw'>start.q</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>start.P</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>start.Q</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>stationary</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>seasonal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>ic</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"aicc"</span>, <span class='st'>"aic"</span>, <span class='st'>"bic"</span>), <span class='kw'>stepwise</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>trace</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>approximation</span> <span class='kw'>=</span> (<span class='fu'>length</span>(<span class='no'>x</span>) <span class='kw'>&gt;</span> <span class='fl'>150</span> <span class='kw'>|</span> <span class='fu'>frequency</span>(<span class='no'>x</span>) <span class='kw'>&gt;</span> <span class='fl'>12</span>),
-  <span class='kw'>truncate</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>xreg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"kpss"</span>, <span class='st'>"adf"</span>, <span class='st'>"pp"</span>),
-  <span class='kw'>test.args</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>seasonal.test</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"seas"</span>, <span class='st'>"ocsb"</span>, <span class='st'>"hegy"</span>, <span class='st'>"ch"</span>),
-  <span class='kw'>seasonal.test.args</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>allowdrift</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>allowmean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num.cores</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>truncate</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>xreg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"kpss"</span>,
+  <span class='st'>"adf"</span>, <span class='st'>"pp"</span>), <span class='kw'>test.args</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>seasonal.test</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"seas"</span>, <span class='st'>"ocsb"</span>,
+  <span class='st'>"hegy"</span>, <span class='st'>"ch"</span>), <span class='kw'>seasonal.test.args</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>allowdrift</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>allowmean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num.cores</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -140,7 +140,7 @@ on KPSS test.</p></td>
     <tr>
       <th>D</th>
       <td><p>Order of seasonal-differencing. If missing, will choose a value
-based on OCSB test.</p></td>
+based on <code>season.test</code>.</p></td>
     </tr>
     <tr>
       <th>max.p</th>
@@ -219,6 +219,13 @@ estimation. Approximation should be used for long time series or a high
 seasonal period to avoid excessive computation times.</p></td>
     </tr>
     <tr>
+      <th>method</th>
+      <td><p>fitting method: maximum likelihood or minimize
+    conditional sum-of-squares.  The default (unless there are missing
+    values) is to use conditional-sum-of-squares to find starting
+    values, then maximum likelihood.  Can be abbreviated.</p></td>
+    </tr>
+    <tr>
       <th>truncate</th>
       <td><p>An integer value indicating how many observations to use in
 model selection. The last <code>truncate</code> values of the series are used to
@@ -242,7 +249,9 @@ details.</p></td>
     </tr>
     <tr>
       <th>seasonal.test</th>
-      <td><p>This determines which seasonal unit root test is used.</p></td>
+      <td><p>This determines which method is used to select the number of seasonal differences.
+The default method is to use a measure of seasonal strength computed from an STL decomposition.
+Other possibilities involve seasonal unit root tests.</p></td>
     </tr>
     <tr>
       <th>seasonal.test.args</th>
@@ -307,8 +316,8 @@ is recommended that you set <code>stepwise=FALSE</code> and <code>approximation=
 <p>Non-stepwise selection can be slow, especially for seasonal data. The stepwise
 algorithm outlined in Hyndman &amp; Khandakar (2008) is used except that the default
 method for selecting seasonal differences is now based on an estimate of seasonal
-strength (Wang, Smith &amp; Hyndman, 2006) rather than the Canova-Hansen test. 
-There are also some other minor variations to the algorithm described in 
+strength (Wang, Smith &amp; Hyndman, 2006) rather than the Canova-Hansen test.
+There are also some other minor variations to the algorithm described in
 Hyndman and Khandakar (2008).</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
