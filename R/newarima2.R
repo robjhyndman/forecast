@@ -147,7 +147,6 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   }
   ic <- match.arg(ic)
   test <- match.arg(test)
-  method <- match.arg(method)
   seasonal.test <- match.arg(seasonal.test)
 
   # Only consider non-seasonal models
