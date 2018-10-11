@@ -370,6 +370,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     if (!is.null(xreg)) {
       d <- arimaorder(bestfit)[2]
       D <- arimaorder(bestfit)[5]
+      bestfit$x <- orig.x
       res <- residuals(bestfit, type = "regression")
       if (ndiffs(res) != d) {
         # Refit model with revised differencing
@@ -675,6 +676,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   if (!is.null(xreg)) {
     d <- arimaorder(bestfit)[2]
     D <- arimaorder(bestfit)[5]
+    bestfit$x <- orig.x
     res <- residuals(bestfit, type = "regression")
     if (ndiffs(res) != d) {
       # Refit model with revised differencing
