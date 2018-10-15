@@ -39,7 +39,7 @@ Authors@R: c(
   person("Christoph", "Bergmeir", role="aut", comment = c(ORCID = "0000-0002-3665-9021")),
   person("Gabriel", "Caceres", role="aut"),
   person("Leanne", "Chhay", role='aut'),
-  person("Mitchell", "O'Hara-Wild", role="aut"),
+  person("Mitchell", "O'Hara-Wild", role="aut", comment=c(ORCID = "0000-0001-6729-7695")),
   person("Fotios", "Petropoulos", role='aut', comment=c(ORCID = "0000-0003-3039-4955")),
   person("Slava", "Razbash", role="aut"),
   person("Earo", "Wang", role="aut"),
