@@ -109,6 +109,15 @@ lagwalk <- function(y, lag=1, h=10, drift=FALSE,
   )
 }
 
+#' @export
+print.lagwalk <- function(x, ...) {
+  cat(paste("Call:", deparse(x$call), "\n\n"))
+  if (x$par$includedrift) {
+    cat(paste("Drift: ", round(x$par$drift, 4), "  (se ", round(x$par$drift.se, 4), ")\n", sep = ""))
+  }
+  cat(paste("Residual sd:", round(sqrt(x$sigma2), 4), "\n"))
+}
+
 
 # Random walk
 #' @rdname naive
@@ -227,13 +236,4 @@ snaive <- function(y, h=2 * frequency(x), level=c(80, 95), fan=FALSE, lambda=NUL
   fc$series <- deparse(substitute(y))
   fc$method <- "Seasonal naive method"
   return(fc)
-}
-
-#' @export
-print.lagwalk <- function(x, ...) {
-  cat(paste("Call:", deparse(x$call), "\n\n"))
-  if (x$par$includedrift) {
-    cat(paste("Drift: ", round(x$par$drift, 4), "  (se ", round(x$par$drift.se, 4), ")\n", sep = ""))
-  }
-  cat(paste("Residual sd:", round(sqrt(x$sigma2), 4), "\n"))
 }
