@@ -5,59 +5,108 @@
 
 lagwalk <- function(y, lag=1, h=10, drift=FALSE,
                     level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALSE, bootstrap=FALSE, npaths=5000) {
+  origy <- y
   if (!is.null(lambda)) {
-    origy <- y
     y <- BoxCox(y, lambda)
     lambda <- attr(y, "lambda")
   }
-
-  # Fit equivalent ARIMA model
-  # This handles missing values properly
-  if (lag == 1L) {
-    fit <- Arima(y, c(0, 1, 0), include.constant = drift)
-  } else {
-    fit <- Arima(y, seasonal = list(order = c(0, 1, 0), period = lag), include.constant = drift)
+  
+  if(!missing(bootstrap) || !missing(npaths)){
+    warning("Bootstrapping forecasts from this model is not supported.")
   }
-
-  # Compute forecasts
-  fc <- forecast(fit, h = h, level = level, bootstrap = bootstrap, npaths = npaths)
-
-  # Adjust prediction intervals to allow for drift coefficient standard error
-  if (drift) {
-    b <- fit$coef["drift"]
-    b.se <- sqrt(fit$var.coef[1, 1])
-    fse <- as.numeric(fc$upper[, 1] - fc$lower[, 1]) / (2 * qnorm(.5 + level[1] / 200))
-    newfse <- sqrt(fse^2 + (seq(h) * b.se)^2) 
-    for(j in seq_along(level))
-    {
-      fc$lower[,j] <- fc$mean - qnorm(.5 + level[j] / 200) * newfse
-      fc$upper[,j] <- fc$mean + qnorm(.5 + level[j] / 200) * newfse
+  
+  m <- frequency(y)
+  # Complete missing values with lagged values
+  y_na <- which(is.na(y))
+  y_na <- y_na[y_na>lag]
+  fits <- lag(y, -lag)
+  for(i in y_na){
+    if(is.na(fits)[i]){
+      fits[i] <- fits[i-lag]
     }
   }
-  else {
+  
+  fitted <- ts(c(rep(NA, lag), head(fits, -lag)), start = start(y), frequency = m)
+  if(drift){
+    fit <- summary(lm(y-fitted ~ 1, na.action=na.exclude))
+    b <- fit$coefficients[1,1]
+    b.se <- fit$coefficients[1,2]
+    sigma <- fit$sigma
+    fitted <- fitted + b
+    method <- "Lag walk with drift"
+  }
+  else{
     b <- b.se <- 0
+    sigma <- sd(y-fitted, na.rm=TRUE)
+    method <- "Lag walk"
   }
-  if (!is.null(lambda)) {
-    fc$x <- origy
-    fc$mean <- InvBoxCox(
-      fc$mean, lambda, biasadj,
-      list(level = fc$level, upper = fc$upper, lower = fc$lower)
-    )
-    fc$fitted <- InvBoxCox(fc$fitted, lambda)
-    fc$upper <- InvBoxCox(fc$upper, lambda)
-    fc$lower <- InvBoxCox(fc$lower, lambda)
-  }
-
-  # Remove initial fitted values and residuals
-  fc$fitted[seq(lag)] <- NA
-  fc$residuals[seq(lag)] <- NA
-
-  fc$model <- structure(
-    list(includedrift = drift, drift = b, drift.se = b.se, sd = sqrt(fit$sigma2)),
-    class = "naive"
+  res <- y - fitted
+  
+  model <- structure(
+    list(
+      x = origy,
+      fitted = fits,
+      residuals = res,
+      series = deparse(substitute(y)),
+      sigma2 = sigma^2,
+      par = list(includedrift = drift, drift = b, drift.se = b.se, lag = lag),
+      call = match.call()
+    ),
+    class = "lagwalk"
   )
-
-  return(structure(fc, class = "forecast"))
+  
+  fullperiods <- (h-1)/lag+1
+  steps <- rep(1:fullperiods, rep(lag,fullperiods))[1:h]
+  
+  # Point forecasts
+  fc <- rep(tail(fits,lag), fullperiods)[1:h] + steps*b
+  
+  # Intervals
+  mse <- mean(res^2, na.rm=TRUE)
+  se  <- sqrt(mse*steps  + (steps*b.se)^2)
+  # Adjust prediction intervals to allow for drift coefficient standard error
+  if (drift) {
+    se <- sqrt(se^2 + (seq(h) * b.se)^2)
+  }
+  
+  if(fan)
+    level <- seq(51,99,by=3)
+  else
+  {
+    if(min(level) > 0 & max(level) < 1)
+      level <- 100*level
+    else if(min(level) < 0 | max(level) > 99.99)
+      stop("Confidence limit out of range")
+  }
+  nconf <- length(level)
+  z <- qnorm(.5 + level/200)
+  lower <- upper <- matrix(NA,nrow=h,ncol=nconf)
+  for(i in 1:nconf)
+  {
+    lower[,i] <- fc - z[i]*se
+    upper[,i] <- fc + z[i]*se
+  }
+  
+  if (!is.null(lambda)) {
+    fc <- InvBoxCox(fc, lambda, biasadj, se^2)
+    model$fitted <- InvBoxCox(fits, lambda)
+    upper <- InvBoxCox(upper, lambda)
+    lower <- InvBoxCox(lower, lambda)
+  }
+  
+  # Set tsp
+  fc <- ts(fc,start=tsp(y)[2]+1/m,frequency=m)
+  lower <- ts(lower,start=tsp(y)[2]+1/m,frequency=m)
+  upper <- ts(upper,start=tsp(y)[2]+1/m,frequency=m)
+  colnames(lower) <- colnames(upper) <- paste(level,"%",sep="")
+  
+  return(structure(
+    list(
+      method = method, model = model, lambda = lambda,
+      x = origy, series = deparse(substitute(y)),
+      mean = fc, level = level, lower = lower, upper = upper
+    ), class = "forecast")
+  )
 }
 
 
@@ -71,10 +120,10 @@ lagwalk <- function(y, lag=1, h=10, drift=FALSE,
 #'
 #' @export
 rwf <- function(y, h=10, drift=FALSE, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALSE,
-                bootstrap=FALSE, npaths=5000, x=y) {
+                ..., x=y) {
   fc <- lagwalk(
     x, lag = 1, h = h, drift = drift, level = level, fan = fan,
-    lambda = lambda, biasadj = biasadj, bootstrap = bootstrap, npaths = npaths
+    lambda = lambda, biasadj = biasadj, ...
   )
   fc$model$call <- match.call()
   fc$series <- deparse(substitute(y))
@@ -150,10 +199,10 @@ rwf <- function(y, h=10, drift=FALSE, level=c(80, 95), fan=FALSE, lambda=NULL, b
 #'
 #' @export
 naive <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALSE,
-                  bootstrap=FALSE, npaths=5000, x=y) {
+                  ..., x=y) {
   fc <- rwf(
     x, h = h, level = level, fan = fan, lambda = lambda, drift = FALSE,
-    biasadj = biasadj, bootstrap = bootstrap, npaths = npaths
+    biasadj = biasadj, ...
   )
   fc$model$call <- match.call()
   fc$series <- deparse(substitute(y))
@@ -169,10 +218,10 @@ naive <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALS
 #'
 #' @export
 snaive <- function(y, h=2 * frequency(x), level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALSE,
-                   bootstrap=FALSE, npaths=5000, x=y) {
+                   ..., x=y) {
   fc <- lagwalk(
     x, lag = frequency(x), h = h, drift = FALSE, level = level, fan = fan,
-    lambda = lambda, biasadj = biasadj, bootstrap = bootstrap, npaths = npaths
+    lambda = lambda, biasadj = biasadj, ...
   )
   fc$model$call <- match.call()
   fc$series <- deparse(substitute(y))
@@ -181,10 +230,10 @@ snaive <- function(y, h=2 * frequency(x), level=c(80, 95), fan=FALSE, lambda=NUL
 }
 
 #' @export
-print.naive <- function(x, ...) {
+print.lagwalk <- function(x, ...) {
   cat(paste("Call:", deparse(x$call), "\n\n"))
-  if (x$includedrift) {
-    cat(paste("Drift: ", round(x$drift, 4), "  (se ", round(x$drift.se, 4), ")\n", sep = ""))
+  if (x$par$includedrift) {
+    cat(paste("Drift: ", round(x$par$drift, 4), "  (se ", round(x$par$drift.se, 4), ")\n", sep = ""))
   }
-  cat(paste("Residual sd:", round(x$sd, 4), "\n"))
+  cat(paste("Residual sd:", round(sqrt(x$sigma2), 4), "\n"))
 }
