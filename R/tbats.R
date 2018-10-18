@@ -73,7 +73,7 @@
 tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
                   seasonal.periods=NULL, use.arma.errors=TRUE, use.parallel=length(y) > 1000, num.cores=2,
                   bc.lower=0, bc.upper=1, biasadj=FALSE, model=NULL, ...) {
-  if (any(class(y) %in% c("data.frame", "list", "matrix", "mts"))) {
+  if (!is.numeric(y) || NCOL(y) > 1) {
     stop("y should be a univariate time series")
   }
 
