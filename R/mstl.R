@@ -48,7 +48,6 @@ mstl <- function(x, lambda=NULL, iterate=2, s.window=13, ...) {
   }
 
   # Replace missing values if necessary
-  origx <- x
   if (anyNA(x)) {
     x <- na.interp(x, lambda = lambda)
   }
@@ -92,7 +91,7 @@ mstl <- function(x, lambda=NULL, iterate=2, s.window=13, ...) {
   remainder <- deseas - trend
 
   # Package into matrix
-  output <- cbind(origx, trend)
+  output <- cbind(x, trend)
   if (!is.null(msts)) {
     for (i in seq_along(msts))
       output <- cbind(output, seas[[i]])
