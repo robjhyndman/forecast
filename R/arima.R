@@ -451,8 +451,8 @@ forecast.ar <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=NULL,
   colnames(lower) <- colnames(upper) <- paste(level, "%", sep = "")
   method <- paste("AR(", object$order, ")", sep = "")
   f <- frequency(x)
-  res <- residuals.Arima(object)
-  fits <- fitted.Arima(object)
+  res <- residuals.ar(object)
+  fits <- fitted.ar(object)
 
   if (!is.null(lambda)) {
     pred$pred <- InvBoxCox(pred$pred, lambda, biasadj, list(level = level, upper = upper, lower = lower))
