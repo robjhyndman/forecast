@@ -316,9 +316,9 @@ forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[
     firstnonmiss <- head(which(!missing),1)
     n <- length(x) - firstnonmiss + 1
     if (!is.null(xreg)) {
-      xreg <- cbind((1:h) + n, xreg)
+      xreg <- cbind(drift = (1:h) + n, xreg)
     } else {
-      xreg <- as.matrix((1:h) + n)
+      xreg <- `colnames<-`(as.matrix((1:h) + n), "drift")
     }
   }
 
@@ -337,6 +337,9 @@ forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[
     object$call$xreg <- getxreg(object)
     if (NCOL(xreg) != NCOL(object$call$xreg)) {
       stop("Number of regressors does not match fitted model")
+    }
+    if(!identical(colnames(xreg), colnames(object$call$xreg))){
+      warning("Provided xreg contains different column names, check that the regressors are provided in the same order as the model.")
     }
     pred <- predict(object, n.ahead = h, newxreg = xreg)
   }
