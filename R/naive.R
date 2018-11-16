@@ -3,16 +3,11 @@
 # lag=1 corresponds to standard random walk (i.e., naive forecast)
 # lag=m corresponds to seasonal naive method
 
-lagwalk <- function(y, lag=1, h=10, drift=FALSE,
-                    level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALSE, bootstrap=FALSE, npaths=5000) {
+lagwalk <- function(y, lag=1, drift=FALSE, lambda=NULL, biasadj=FALSE) {
   origy <- y
   if (!is.null(lambda)) {
     y <- BoxCox(y, lambda)
     lambda <- attr(y, "lambda")
-  }
-  
-  if(!missing(bootstrap) || !missing(npaths)){
-    warning("Bootstrapping forecasts from this model is not supported.")
   }
   
   m <- frequency(y)
@@ -42,31 +37,48 @@ lagwalk <- function(y, lag=1, h=10, drift=FALSE,
   }
   res <- y - fitted
   
+  if (!is.null(lambda)) {
+    fitted <- InvBoxCox(fitted, lambda, biasadj, var(res))
+    attr(lambda, "biasadj") <- biasadj
+  }
+  
   model <- structure(
     list(
       x = origy,
-      fitted = fits,
+      fitted = fitted,
+      future = tail(fits, lag),
       residuals = res,
+      method = method,
       series = deparse(substitute(y)),
       sigma2 = sigma^2,
       par = list(includedrift = drift, drift = b, drift.se = b.se, lag = lag),
+      lambda = lambda,
       call = match.call()
     ),
     class = "lagwalk"
   )
+}
+
+#' @export
+forecast.lagwalk <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=NULL,
+                        bootstrap=FALSE, npaths=5000, biasadj=FALSE, ...) {
+  if(!missing(bootstrap) || !missing(npaths)){
+    warning("Bootstrapping forecasts from this model is not supported.")
+  }
   
+  lag <- object$par$lag
   fullperiods <- (h-1)/lag+1
   steps <- rep(1:fullperiods, rep(lag,fullperiods))[1:h]
   
   # Point forecasts
-  fc <- rep(tail(fits,lag), fullperiods)[1:h] + steps*b
+  fc <- rep(object$future, fullperiods)[1:h] + steps*object$par$drift
   
   # Intervals
-  mse <- mean(res^2, na.rm=TRUE)
-  se  <- sqrt(mse*steps  + (steps*b.se)^2)
+  mse <- mean(object$residuals^2, na.rm=TRUE)
+  se  <- sqrt(mse*steps + (steps*object$par$drift.se)^2)
   # Adjust prediction intervals to allow for drift coefficient standard error
-  if (drift) {
-    se <- sqrt(se^2 + (seq(h) * b.se)^2)
+  if (object$par$includedrift) {
+    se <- sqrt(se^2 + (seq(h) * object$par$drift.se)^2)
   }
   
   if(fan)
@@ -89,26 +101,25 @@ lagwalk <- function(y, lag=1, h=10, drift=FALSE,
   
   if (!is.null(lambda)) {
     fc <- InvBoxCox(fc, lambda, biasadj, se^2)
-    model$fitted <- InvBoxCox(fits, lambda)
     upper <- InvBoxCox(upper, lambda)
     lower <- InvBoxCox(lower, lambda)
   }
   
   # Set tsp
-  fc <- ts(fc,start=tsp(y)[2]+1/m,frequency=m)
-  lower <- ts(lower,start=tsp(y)[2]+1/m,frequency=m)
-  upper <- ts(upper,start=tsp(y)[2]+1/m,frequency=m)
+  m <- frequency(object$x)
+  fc <- ts(fc,start=tsp(object$x)[2]+1/m,frequency=m)
+  lower <- ts(lower,start=tsp(object$x)[2]+1/m,frequency=m)
+  upper <- ts(upper,start=tsp(object$x)[2]+1/m,frequency=m)
   colnames(lower) <- colnames(upper) <- paste(level,"%",sep="")
   
   return(structure(
     list(
-      method = method, model = model, lambda = lambda,
-      x = origy, series = deparse(substitute(y)),
+      method = object$method, model = object, lambda = lambda,
+      x = object$x, series = object$series,
       mean = fc, level = level, lower = lower, upper = upper
     ), class = "forecast")
   )
 }
-
 #' @export
 print.lagwalk <- function(x, ...) {
   cat(paste("Call:", deparse(x$call), "\n\n"))
