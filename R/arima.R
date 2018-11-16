@@ -339,7 +339,7 @@ forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[
       stop("Number of regressors does not match fitted model")
     }
     if(!identical(colnames(xreg), colnames(object$call$xreg))){
-      warning("Provided xreg contains different column names, check that the regressors are provided in the same order as the model.")
+      warning("xreg contains different column names from the xreg used in training. Please check that the regressors are in the same order.")
     }
     pred <- predict(object, n.ahead = h, newxreg = xreg)
   }
