@@ -141,10 +141,15 @@ print.lagwalk <- function(x, ...) {
 #' @export
 rwf <- function(y, h=10, drift=FALSE, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALSE,
                 ..., x=y) {
-  fc <- lagwalk(
-    x, lag = 1, h = h, drift = drift, level = level, fan = fan,
-    lambda = lambda, biasadj = biasadj, ...
+  fit <- lagwalk(
+    x, lag = 1, drift = drift,
+    lambda = lambda, biasadj = biasadj
   )
+  
+  fc <- forecast(fit, h = h,
+                 level = level, fan = fan,
+                 lambda = lambda, biasadj = biasadj, ...)
+  
   fc$model$call <- match.call()
   fc$series <- deparse(substitute(y))
 
@@ -239,10 +244,13 @@ naive <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALS
 #' @export
 snaive <- function(y, h=2 * frequency(x), level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALSE,
                    ..., x=y) {
-  fc <- lagwalk(
-    x, lag = frequency(x), h = h, drift = FALSE, level = level, fan = fan,
-    lambda = lambda, biasadj = biasadj, ...
+  fit <- lagwalk(
+    x, lag = frequency(x), drift = FALSE,
+    lambda = lambda, biasadj = biasadj
   )
+  fc <- forecast(fit, h = h,
+                 level = level, fan = fan,
+                 lambda = lambda, biasadj = biasadj, ...)
   fc$model$call <- match.call()
   fc$series <- deparse(substitute(y))
   fc$method <- "Seasonal naive method"
