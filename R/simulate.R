@@ -541,38 +541,39 @@ simulate.lagwalk <- function(object, nsim=length(object$x), seed=NULL, future=TR
     e <- innov
   }
   
+  # Cumulate errors
   lag_grp <- rep_len(seq_len(object$par$lag), length(e))
   e <- split(e, lag_grp)
   cumulative_e <- unsplit(lapply(e, cumsum), lag_grp)
   
+  # Find starting position
   if(future){
-    start <- object$future
+    start <- tail(object$x, object$par$lag)
   }
   else{
     start <- head(object$x, object$par$lag)
   }
   
-  # dir <- future*2 - 1
-  # if(any(na_pos <- is.na(start))){
-  #   if(!is.null(innov)){
-  #     warning("Missing values encountered at simulation starting values,
-  #             simulating starting values from closest observed value.")
-  #   }
-  #   if(future){
-  #     pos <- length(object$x) - object$par$lag - 1
-  #   }
-  #   else{
-  #     pos <- object$par$lag
-  #   }
-  #   while(any(na_pos)){
-  #     start[na_pos] <- object$x[pos + which(na_pos)] + rnorm()
-  #     na_pos <- is.na(start)
-  #     pos <- pos + dir * object$par$lag
-  #   }
-  # }
-  # 
+  # Handle missing values
+  if(any(na_pos <- is.na(start))){
+    if(!is.null(innov)){
+      warning("Missing values encountered at simulation starting values,
+              simulating starting values from closest observed value.")
+    }
+    lag_grp <- rep_len(seq_len(object$par$lag), length(object$x))
+    start[na_pos] <- vapply(split(object$x, lag_grp)[na_pos], function(x){
+      if(future){
+        x <- rev(x)
+      }
+      pos <- which.min(is.na(x))
+      x[pos] + sum(rnorm(pos-1, 0, sqrt(object$sigma2)))
+    }, numeric(1L))
+  }
+
+  # Construct simulated ts
+  tspx <- tsp(object$x)
   ts(as.numeric(start) + cumulative_e,
-     start = start(start), frequency = frequency(start))
+     start = ifelse(future, tspx[2] + 1/tspx[3], tspx[1]), frequency = tspx[3])
 }
 
 #' @rdname simulate.ets
