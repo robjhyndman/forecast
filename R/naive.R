@@ -4,6 +4,9 @@
 # lag=m corresponds to seasonal naive method
 
 lagwalk <- function(y, lag=1, drift=FALSE, lambda=NULL, biasadj=FALSE) {
+  if(!is.ts(y)){
+    y <- as.ts(y)
+  }
   origy <- y
   if (!is.null(lambda)) {
     y <- BoxCox(y, lambda)
