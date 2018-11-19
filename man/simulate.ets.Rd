@@ -21,7 +21,8 @@
   future = TRUE, bootstrap = FALSE, innov = NULL, ...)
 
 \method{simulate}{lagwalk}(object, nsim = length(object$x),
-  seed = NULL, future = TRUE, bootstrap = FALSE, innov = NULL, ...)
+  seed = NULL, future = TRUE, bootstrap = FALSE, innov = NULL,
+  lambda = object$lambda, ...)
 
 \method{simulate}{fracdiff}(object, nsim = object$n, seed = NULL,
   future = TRUE, bootstrap = FALSE, innov = NULL, ...)
