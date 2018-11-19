@@ -62,10 +62,6 @@ lagwalk <- function(y, lag=1, drift=FALSE, lambda=NULL, biasadj=FALSE) {
 #' @export
 forecast.lagwalk <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=NULL,
                         bootstrap=FALSE, npaths=5000, biasadj=FALSE, ...) {
-  if(!missing(bootstrap) || !missing(npaths)){
-    warning("Bootstrapping forecasts from this model is not supported.")
-  }
-  
   lag <- object$par$lag
   fullperiods <- (h-1)/lag+1
   steps <- rep(1:fullperiods, rep(lag,fullperiods))[1:h]
@@ -90,19 +86,41 @@ forecast.lagwalk <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=NU
     else if(min(level) < 0 | max(level) > 99.99)
       stop("Confidence limit out of range")
   }
+  
   nconf <- length(level)
-  z <- qnorm(.5 + level/200)
-  lower <- upper <- matrix(NA,nrow=h,ncol=nconf)
-  for(i in 1:nconf)
+  
+  if (bootstrap) # Compute prediction intervals using simulations
   {
-    lower[,i] <- fc - z[i]*se
-    upper[,i] <- fc + z[i]*se
+    sim <- matrix(NA, nrow = npaths, ncol = h)
+    for (i in 1:npaths)
+      sim[i, ] <- simulate(object, nsim = h, bootstrap = TRUE, lambda = lambda)
+    lower <- apply(sim, 2, quantile, 0.5 - level / 200, type = 8)
+    upper <- apply(sim, 2, quantile, 0.5 + level / 200, type = 8)
+    if (nconf > 1L) {
+      lower <- t(lower)
+      upper <- t(upper)
+    }
+    else {
+      lower <- matrix(lower, ncol = 1)
+      upper <- matrix(upper, ncol = 1)
+    }
+  }
+  else {
+    z <- qnorm(.5 + level/200)
+    lower <- upper <- matrix(NA,nrow=h,ncol=nconf)
+    for(i in 1:nconf)
+    {
+      lower[,i] <- fc - z[i]*se
+      upper[,i] <- fc + z[i]*se
+    }
   }
   
   if (!is.null(lambda)) {
     fc <- InvBoxCox(fc, lambda, biasadj, se^2)
-    upper <- InvBoxCox(upper, lambda)
-    lower <- InvBoxCox(lower, lambda)
+    if(!bootstrap){ # Bootstrap intervals are already backtransformed
+      upper <- InvBoxCox(upper, lambda)
+      lower <- InvBoxCox(lower, lambda)
+    }
   }
   
   # Set tsp
