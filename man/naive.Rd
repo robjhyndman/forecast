@@ -45,11 +45,6 @@ an adjustment will be made to produce mean forecasts and fitted values.}
 modelling function.}
 
 \item{x}{Deprecated. Included for backwards compatibility.}
-
-\item{bootstrap}{If TRUE, use a bootstrap method to compute prediction intervals.
-Otherwise, assume a normal distribution.}
-
-\item{npaths}{Number of bootstrapped sample paths to use if \code{bootstrap==TRUE}.}
 }
 \value{
 An object of class "\code{forecast}".
