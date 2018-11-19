@@ -472,6 +472,22 @@ forecast.stlm <- function(object, h = 2 * object$m, level = c(80, 95), fan = FAL
     level <- seq(51, 99, by = 3)
   }
 
+  # Forecast seasonally adjusted series
+  if (is.element("Arima", class(object$model)) && !is.null(newxreg)) {
+    fcast <- forecast(object$model, h = h, level = level, xreg = newxreg, ...)
+  } else if (is.element("ets", class(object$model))) {
+    fcast <- forecast(
+      object$model, h = h, level = level,
+      allow.multiplicative.trend = allow.multiplicative.trend, ...
+    )
+  } else {
+    fcast <- forecast(object$model, h = h, level = level, ...)
+  }
+  
+  # In-case forecast method uses different horizon length (such as using xregs)
+  h <- NROW(fcast$mean)
+  
+  # Forecast seasonal series with seasonal naive
   seasonal.periods <- attributes(object$stl)$seasonal.periods
   seascomp <- matrix(0, ncol = length(seasonal.periods), nrow = h)
   for (i in seq_along(seasonal.periods))
@@ -486,21 +502,10 @@ forecast.stlm <- function(object, h = 2 * object$m, level = c(80, 95), fan = FAL
   seascols <- grep("Seasonal", colnames(object$stl))
   allseas <- rowSums(object$stl[, seascols, drop = FALSE])
   series <- NULL
-
+  
   #  m <- frequency(object$stl$time.series)
   n <- NROW(xdata)
-
-  # Forecast seasonally adjusted series
-  if (is.element("Arima", class(object$model)) && !is.null(newxreg)) {
-    fcast <- forecast(object$model, h = h, level = level, xreg = newxreg, ...)
-  } else if (is.element("ets", class(object$model))) {
-    fcast <- forecast(
-      object$model, h = h, level = level,
-      allow.multiplicative.trend = allow.multiplicative.trend, ...
-    )
-  } else {
-    fcast <- forecast(object$model, h = h, level = level, ...)
-  }
+  
 
   # Reseasonalize
   fcast$mean <- fcast$mean + lastseas

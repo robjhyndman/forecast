@@ -214,7 +214,7 @@ InvBoxCox <- function(x, lambda, biasadj=FALSE, fvar=NULL) {
       }
       level <- mean(c(level, 1))
       # Note: Use BoxCox transformed upper and lower values
-      fvar <- ((fvar$upper - fvar$lower) / stats::qnorm(level) / 2) ^ 2
+      fvar <- as.numeric((fvar$upper - fvar$lower) / stats::qnorm(level) / 2) ^ 2
     }
     if (NCOL(fvar) > 1) {
       fvar <- diag(fvar)

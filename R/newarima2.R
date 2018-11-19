@@ -371,7 +371,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
       d <- arimaorder(bestfit)[2]
       D <- arimaorder(bestfit)[5]
       bestfit$x <- orig.x
-      res <- residuals(bestfit, type = "regression")
+      res <- residuals.Arima(bestfit, type = "regression")
       if (ndiffs(res) != d) {
         # Refit model with revised differencing
         bestfit <- search.arima(
@@ -387,7 +387,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     bestfit$lambda <- lambda
     bestfit$x <- orig.x
     bestfit$series <- series
-    bestfit$fitted <- fitted(bestfit)
+    bestfit$fitted <- fitted.Arima(bestfit)
     if (trace) {
       cat("\n\n Best model:", arima.string(bestfit, padding = TRUE), "\n\n")
     }
@@ -636,7 +636,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
       }
     }
   }
-  
+
   if(k > nmodels){
     warning(sprintf("Stepwise search was stopped early due to reaching the model number limit: `nmodels = %i`", nmodels))
   }
@@ -677,7 +677,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     d <- arimaorder(bestfit)[2]
     D <- arimaorder(bestfit)[5]
     bestfit$x <- orig.x
-    res <- residuals(bestfit, type = "regression")
+    res <- residuals.Arima(bestfit, type = "regression")
     if (ndiffs(res) != d) {
       # Refit model with revised differencing
       bestfit <- auto.arima(
@@ -698,7 +698,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   bestfit$call <- match.call()
   bestfit$call$x <- data.frame(x = x)
   bestfit$lambda <- lambda
-  bestfit$fitted <- fitted(bestfit)
+  bestfit$fitted <- fitted.Arima(bestfit)
 
   if (trace) {
     cat("\n\n Best model:", arima.string(bestfit, padding = TRUE), "\n\n")

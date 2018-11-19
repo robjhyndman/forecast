@@ -400,9 +400,9 @@ forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[
   else {
     object$call$y
   }
-  fits <- fitted(object)
+  fits <- fitted.Arima(object)
   if (!is.null(lambda) & is.null(object$constant)) { # Back-transform point forecasts and prediction intervals
-    pred$pred <- InvBoxCox(pred$pred, lambda, biasadj, var(residuals(object), na.rm = TRUE))
+    pred$pred <- InvBoxCox(pred$pred, lambda, biasadj, var(residuals.Arima(object), na.rm = TRUE))
     if (!bootstrap) { # Bootstrapped intervals already back-transformed
       lower <- InvBoxCox(lower, lambda)
       upper <- InvBoxCox(upper, lambda)
@@ -412,7 +412,7 @@ forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[
     list(
       method = method, model = object, level = level,
       mean = pred$pred, lower = lower, upper = upper, x = x, series = seriesname,
-      fitted = fits, residuals = residuals(object)
+      fitted = fits, residuals = residuals.Arima(object)
     ),
     class = "forecast"
   ))
@@ -451,8 +451,8 @@ forecast.ar <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=NULL,
   colnames(lower) <- colnames(upper) <- paste(level, "%", sep = "")
   method <- paste("AR(", object$order, ")", sep = "")
   f <- frequency(x)
-  res <- residuals(object)
-  fits <- fitted(object)
+  res <- residuals.ar(object)
+  fits <- fitted.ar(object)
 
   if (!is.null(lambda)) {
     pred$pred <- InvBoxCox(pred$pred, lambda, biasadj, list(level = level, upper = upper, lower = lower))
@@ -519,7 +519,7 @@ getxreg <- function(z) {
 #' @export
 arima.errors <- function(object) {
   message("Deprecated, use residuals.Arima(object, type='regression') instead")
-  residuals(object, type = "regression")
+  residuals.Arima(object, type = "regression")
 }
 
 # Return one-step fits
@@ -755,7 +755,7 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
     tmp$sigma2 <- sum(tmp$residuals ^ 2, na.rm = TRUE) / (nstar - npar + 1)
   }
   out <- structure(tmp, class = c("ARIMA", "Arima"))
-  out$fitted <- fitted(out)
+  out$fitted <- fitted.Arima(out)
   out$series <- series
   return(out)
 }
