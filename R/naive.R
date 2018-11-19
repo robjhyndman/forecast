@@ -136,11 +136,12 @@ forecast.lagwalk <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=NU
   return(structure(
     list(
       method = object$method, model = object, lambda = lambda,
-      x = object$x, series = object$series,
+      x = object$x, fitted = fitted(object), series = object$series,
       mean = fc, level = level, lower = lower, upper = upper
     ), class = "forecast")
   )
 }
+
 #' @export
 print.lagwalk <- function(x, ...) {
   cat(paste("Call:", deparse(x$call), "\n\n"))
@@ -148,6 +149,11 @@ print.lagwalk <- function(x, ...) {
     cat(paste("Drift: ", round(x$par$drift, 4), "  (se ", round(x$par$drift.se, 4), ")\n", sep = ""))
   }
   cat(paste("Residual sd:", round(sqrt(x$sigma2), 4), "\n"))
+}
+
+#' @export
+fitted.lagwalk <- function(object, ...){
+  object$fitted
 }
 
 
