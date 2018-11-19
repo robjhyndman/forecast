@@ -513,7 +513,9 @@ simulate.ar <- function(object, nsim=object$n.used, seed=NULL, future=TRUE, boot
 
 #' @rdname simulate.ets
 #' @export
-simulate.lagwalk <- function(object, nsim=length(object$x), seed=NULL, future=TRUE, bootstrap=FALSE, innov=NULL, ...) {
+simulate.lagwalk <- function(object, nsim=length(object$x), seed=NULL,
+                             future=TRUE, bootstrap=FALSE, innov=NULL, 
+                             lambda = object$lambda, ...) {
   if (is.null(innov)) {
     if (!exists(".Random.seed", envir = .GlobalEnv)) {
       runif(1)
@@ -547,11 +549,15 @@ simulate.lagwalk <- function(object, nsim=length(object$x), seed=NULL, future=TR
   cumulative_e <- unsplit(lapply(e, cumsum), lag_grp)
   
   # Find starting position
+  x <- object$x
+  if(!is.null(lambda)){
+    x <- BoxCox(x, lambda)
+  }
   if(future){
-    start <- tail(object$x, object$par$lag)
+    start <- tail(x, object$par$lag)
   }
   else{
-    start <- head(object$x, object$par$lag)
+    start <- head(x, object$par$lag)
   }
   
   # Handle missing values
@@ -560,8 +566,8 @@ simulate.lagwalk <- function(object, nsim=length(object$x), seed=NULL, future=TR
       warning("Missing values encountered at simulation starting values,
               simulating starting values from closest observed value.")
     }
-    lag_grp <- rep_len(seq_len(object$par$lag), length(object$x))
-    start[na_pos] <- vapply(split(object$x, lag_grp)[na_pos], function(x){
+    lag_grp <- rep_len(seq_len(object$par$lag), length(x))
+    start[na_pos] <- vapply(split(x, lag_grp)[na_pos], function(x){
       if(future){
         x <- rev(x)
       }
@@ -571,9 +577,12 @@ simulate.lagwalk <- function(object, nsim=length(object$x), seed=NULL, future=TR
   }
 
   # Construct simulated ts
-  tspx <- tsp(object$x)
-  ts(as.numeric(start) + cumulative_e,
-     start = ifelse(future, tspx[2] + 1/tspx[3], tspx[1]), frequency = tspx[3])
+  sim <- as.numeric(start) + cumulative_e
+  if(!is.null(lambda)){
+    sim <- InvBoxCox(sim, lambda)
+  }
+  tspx <- tsp(x)
+  ts(sim, start = ifelse(future, tspx[2] + 1/tspx[3], tspx[1]), frequency = tspx[3])
 }
 
 #' @rdname simulate.ets
