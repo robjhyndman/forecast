@@ -88,11 +88,8 @@ Acf <- function(x, lag.max = NULL,
 
   acf.out$tsp <- tsp(x)
   acf.out$periods <- attributes(x)$msts
-
-  if (nseries == 1) {
-    vname <- deparse(substitute(x))
-    acf.out$series <- vname
-  }
+  acf.out$series <- deparse(substitute(x))
+  
   # Make lags in integer units
   nlags <- dim(acf.out$lag)[1]
   if (type == "partial") {
