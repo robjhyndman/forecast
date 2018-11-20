@@ -8,15 +8,13 @@
 \title{Naive and Random Walk Forecasts}
 \usage{
 rwf(y, h = 10, drift = FALSE, level = c(80, 95), fan = FALSE,
-  lambda = NULL, biasadj = FALSE, bootstrap = FALSE, npaths = 5000,
-  x = y)
+  lambda = NULL, biasadj = FALSE, ..., x = y)
 
 naive(y, h = 10, level = c(80, 95), fan = FALSE, lambda = NULL,
-  biasadj = FALSE, bootstrap = FALSE, npaths = 5000, x = y)
+  biasadj = FALSE, ..., x = y)
 
 snaive(y, h = 2 * frequency(x), level = c(80, 95), fan = FALSE,
-  lambda = NULL, biasadj = FALSE, bootstrap = FALSE, npaths = 5000,
-  x = y)
+  lambda = NULL, biasadj = FALSE, ..., x = y)
 }
 \arguments{
 \item{y}{a numeric vector or time series of class \code{ts}}
@@ -40,10 +38,11 @@ transformations. If transformed data is used to produce forecasts and fitted val
 a regular back transformation will result in median forecasts. If biasadj is TRUE,
 an adjustment will be made to produce mean forecasts and fitted values.}
 
-\item{bootstrap}{If TRUE, use a bootstrap method to compute prediction intervals.
-Otherwise, assume a normal distribution.}
-
-\item{npaths}{Number of bootstrapped sample paths to use if \code{bootstrap==TRUE}.}
+\item{...}{Additional arguments affecting the forecasts produced. If
+\code{model=NULL}, \code{forecast.ts} passes these to \code{\link{ets}} or
+\code{\link{stlf}} depending on the frequency of the time series. If
+\code{model} is not \code{NULL}, the arguments are passed to the relevant
+modelling function.}
 
 \item{x}{Deprecated. Included for backwards compatibility.}
 }

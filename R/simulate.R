@@ -513,6 +513,80 @@ simulate.ar <- function(object, nsim=object$n.used, seed=NULL, future=TRUE, boot
 
 #' @rdname simulate.ets
 #' @export
+simulate.lagwalk <- function(object, nsim=length(object$x), seed=NULL,
+                             future=TRUE, bootstrap=FALSE, innov=NULL, 
+                             lambda = object$lambda, ...) {
+  if (is.null(innov)) {
+    if (!exists(".Random.seed", envir = .GlobalEnv)) {
+      runif(1)
+    }
+    if (is.null(seed)) {
+      RNGstate <- .Random.seed
+    } else {
+      R.seed <- .Random.seed
+      set.seed(seed)
+      RNGstate <- structure(seed, kind = as.list(RNGkind()))
+      on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
+    }
+  }
+  else {
+    nsim <- length(innov)
+  }
+  
+  if (bootstrap) {
+    res <- na.omit(c(object$residuals) - mean(object$residuals, na.rm = TRUE))
+    e <- sample(res, nsim, replace = TRUE)
+  }
+  else if (is.null(innov)) {
+    e <- rnorm(nsim, 0, sqrt(object$sigma2))
+  } else {
+    e <- innov
+  }
+  
+  # Cumulate errors
+  lag_grp <- rep_len(seq_len(object$par$lag), length(e))
+  e <- split(e, lag_grp)
+  cumulative_e <- unsplit(lapply(e, cumsum), lag_grp)
+  
+  # Find starting position
+  x <- object$x
+  if(!is.null(lambda)){
+    x <- BoxCox(x, lambda)
+  }
+  if(future){
+    start <- tail(x, object$par$lag)
+  }
+  else{
+    start <- head(x, object$par$lag)
+  }
+  
+  # Handle missing values
+  if(any(na_pos <- is.na(start))){
+    if(!is.null(innov)){
+      warning("Missing values encountered at simulation starting values,
+              simulating starting values from closest observed value.")
+    }
+    lag_grp <- rep_len(seq_len(object$par$lag), length(x))
+    start[na_pos] <- vapply(split(x, lag_grp)[na_pos], function(x){
+      if(future){
+        x <- rev(x)
+      }
+      pos <- which.min(is.na(x))
+      x[pos] + sum(rnorm(pos-1, 0, sqrt(object$sigma2)))
+    }, numeric(1L))
+  }
+
+  # Construct simulated ts
+  sim <- as.numeric(start) + cumulative_e
+  if(!is.null(lambda)){
+    sim <- InvBoxCox(sim, lambda)
+  }
+  tspx <- tsp(x)
+  ts(sim, start = ifelse(future, tspx[2] + 1/tspx[3], tspx[1]), frequency = tspx[3])
+}
+
+#' @rdname simulate.ets
+#' @export
 simulate.fracdiff <- function(object, nsim=object$n, seed=NULL, future=TRUE, bootstrap=FALSE, innov=NULL, ...) {
   x <- getResponse(object)
 
