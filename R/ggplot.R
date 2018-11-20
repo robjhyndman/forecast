@@ -107,15 +107,20 @@ autoplot.acf <- function(object, ci=0.95, ...) {
     if (!inherits(object, "acf")) {
       stop("autoplot.acf requires a acf object, use object=object")
     }
-
-    data <- data.frame(Lag = object$lag, ACF = object$acf)
-    if (data$Lag[1] == 0 && object$type == "correlation") {
-      data <- data[-1, ]
+    
+    acf <- `dimnames<-`(object$acf, list(NULL, object$snames, object$snames))
+    lag <- `dimnames<-`(object$lag, list(NULL, object$snames, object$snames))
+    
+    data <- as.data.frame.table(acf)[-1]
+    data$lag <- as.numeric(lag)
+    
+    if (object$type == "correlation") {
+      data <- data[data$lag != 0, ]
     }
 
     # Initialise ggplot object
     p <- ggplot2::ggplot(
-      ggplot2::aes_(x = ~Lag, xend = ~Lag, y = 0, yend = ~ACF),
+      ggplot2::aes_(x = ~lag, xend = ~lag, y = 0, yend = ~Freq),
       data = data
     )
     p <- p + ggplot2::geom_hline(yintercept = 0)
@@ -127,24 +132,31 @@ autoplot.acf <- function(object, ci=0.95, ...) {
     ci <- qnorm((1 + ci) / 2) / sqrt(object$n.used)
     p <- p + ggplot2::geom_hline(yintercept = c(-ci, ci), colour = "blue", linetype = "dashed")
 
+    # Add facets if needed
+    if(any(dim(object$acf)[2:3] != c(1,1))){
+      p <- p + ggplot2::facet_grid(
+        as.formula(paste0(colnames(data)[1:2], collapse = "~"))
+      )
+    }
+    
     # Prepare graph labels
     if (!is.null(object$ccf)) {
       ylab <- "CCF"
       ticktype <- "ccf"
       main <- paste("Series:", object$snames)
-      nlags <- round(length(data$Lag) / 2)
+      nlags <- round(dim(object$lag)[1] / 2)
     }
     else if (object$type == "partial") {
       ylab <- "PACF"
       ticktype <- "acf"
       main <- paste("Series:", object$series)
-      nlags <- length(data$Lag)
+      nlags <- dim(object$lag)[1]
     }
     else if (object$type == "correlation") {
       ylab <- "ACF"
       ticktype <- "acf"
       main <- paste("Series:", object$series)
-      nlags <- length(data$Lag)
+      nlags <- dim(object$lag)[1]
     }
     else {
       ylab <- NULL
