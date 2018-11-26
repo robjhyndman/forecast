@@ -17,7 +17,7 @@ lagwalk <- function(y, lag=1, drift=FALSE, lambda=NULL, biasadj=FALSE) {
   # Complete missing values with lagged values
   y_na <- which(is.na(y))
   y_na <- y_na[y_na>lag]
-  fits <- lag(y, -lag)
+  fits <- stats::lag(y, -lag)
   for(i in y_na){
     if(is.na(fits)[i]){
       fits[i] <- fits[i-lag]
