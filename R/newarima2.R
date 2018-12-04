@@ -200,24 +200,29 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
       }
     }
 
+    xx <- x
     # Check that xreg is not rank deficient
     # First check if any columns are constant
     constant_columns <- apply(xregg, 2, is.constant)
-    if (any(constant_columns)) { # Remove first one
-      xregg <- xregg[, -which(constant_columns)[1]]
+    if (all(constant_columns)) {
+      xregg <- NULL
     }
-
-    # Now check if it is rank deficient
-    sv <- svd(na.omit(cbind(rep(1, NROW(xregg)), xregg)))$d
-    if (min(sv) / sum(sv) < .Machine$double.eps) {
-      stop("xreg is rank deficient")
+    else{
+      if (any(constant_columns)) {
+        xregg <- xregg[, -which(constant_columns)]
+      }
+      
+      # Now check if it is rank deficient
+      sv <- svd(na.omit(cbind(rep(1, NROW(xregg)), xregg)))$d
+      if (min(sv) / sum(sv) < .Machine$double.eps) {
+        stop("xreg is rank deficient")
+      }
+      
+      # Finally find residuals from regression in order
+      # to estimate appropriate level of differencing
+      j <- !is.na(x) & !is.na(rowSums(xregg))
+      xx[j] <- residuals(lm(x ~ xregg))
     }
-
-    # Finally find residuals from regression in order
-    # to estimate appropriate level of differencing
-    j <- !is.na(x) & !is.na(rowSums(xregg))
-    xx <- x
-    xx[j] <- residuals(lm(x ~ xregg))
   }
   else {
     xx <- x
