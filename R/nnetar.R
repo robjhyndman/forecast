@@ -484,6 +484,9 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI
     if (NCOL(xreg) != NCOL(object$xreg)) {
       stop("Number of external regressors does not match fitted model")
     }
+    if(!identical(colnames(xreg), colnames(object$xreg))){
+      warning("xreg contains different column names from the xreg used in training. Please check that the regressors are in the same order.")
+    }
     h <- NROW(xreg)
   }
   fcast <- numeric(h)
