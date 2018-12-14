@@ -577,7 +577,7 @@ simulate.lagwalk <- function(object, nsim=length(object$x), seed=NULL,
   }
 
   # Construct simulated ts
-  sim <- as.numeric(start) + cumulative_e
+  sim <- rep_len(start, nsim) + cumulative_e
   if(!is.null(lambda)){
     sim <- InvBoxCox(sim, lambda)
   }
