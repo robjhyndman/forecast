@@ -141,7 +141,7 @@ baggedETS <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), ...) {
 #' accuracy(fcast2)}
 #'
 #' @export
-forecast.baggedModel <- function(object, h=ifelse(frequency(object$x) > 1, 2 * frequency(object$x), 10), ...) {
+forecast.baggedModel <- function(object, h=ifelse(frequency(object$y) > 1, 2 * frequency(object$y), 10), ...) {
   out <- list(
     model = object, series = object$series, x = object$y, method = object$method, fitted = object$fitted,
     residuals = object$residuals
