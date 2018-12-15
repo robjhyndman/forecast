@@ -81,7 +81,9 @@ if (require(testthat)) {
     fit4 <- Arima(wineind, order = c(1, 1, 2), seasonal = c(0, 1, 1), xreg = rnorm(length(wineind)))
     expect_error(forecast.Arima(fit4))
     expect_error(forecast.Arima(fit4, xreg = matrix(rnorm(40), ncol = 2)))
-    expect_true(length(forecast.Arima(fit4, xreg = rnorm(20))$mean) == 20)
+    expect_warning(forecast.Arima(fit4, xreg = rnorm(20))$mean, "different column names") %>% 
+      length %>% 
+      expect_equal(20)
 
     fit5 <- Arima(wineind[1:150], order = c(1, 1, 2), seasonal = c(0, 1, 1), method = "ML")
     expect_true(accuracy(fit5)[1, "MAPE"] < accuracy(Arima(wineind, model = fit5))[1, "MAPE"])

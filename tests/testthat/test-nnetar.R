@@ -53,9 +53,11 @@ if (require(testthat)) {
       wineind,
       xreg = cbind(bizdays(wineind), fourier(wineind, 1))
     )
-    expect_true(length(forecast(creditnnet, h = 2, xreg = matrix(2, 2, 3))$mean) == 2L)
+    expect_warning(forecast(creditnnet, h = 2, xreg = matrix(2, 2, 3))$mean, "different column names") %>% 
+      expect_length(2L)
     # Test if h doesn't match xreg
-    expect_true(length(forecast(creditnnet, h = 5, xreg = matrix(2, 2, 3))$mean) == 2L)
+    expect_warning(forecast(creditnnet, h = 5, xreg = matrix(2, 2, 3))$mean, "different column names") %>% 
+      expect_length(2L)
     # Test that P is ignored if m=1
     expect_warning(creditnnet <- nnetar(WWWusage, p = 2, P = 4, xreg = 1:length(WWWusage)))
     expect_output(
