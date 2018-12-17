@@ -498,6 +498,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
       if (fit$ic < bestfit$ic) {
         bestfit <- fit
         Q <- (Q + 1)
+        next
       }
     }
     if (Q > 0 && P > 0 && newmodel(p, d, q, P - 1, D, Q - 1, constant, results[1:k, ])) {
