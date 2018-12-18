@@ -371,22 +371,6 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
       allowdrift = allowdrift, allowmean = allowmean,
       parallel = parallel, num.cores = num.cores, ...
     )
-    # Check stationarity of regression residuals.
-    if (!is.null(xreg)) {
-      d <- arimaorder(bestfit)[2]
-      D <- arimaorder(bestfit)[5]
-      bestfit$x <- orig.x
-      res <- residuals.Arima(bestfit, type = "regression")
-      if (ndiffs(res) != d) {
-        # Refit model with revised differencing
-        bestfit <- search.arima(
-          x, d = ndiffs(res), D, max.p, max.q, max.P, max.Q, max.order, stationary,
-          ic, trace, approximation, method = method, xreg = xreg, offset = offset,
-          allowdrift = allowdrift, allowmean = allowmean,
-          parallel = parallel, num.cores = num.cores, ...
-        )
-      }
-    }
     bestfit$call <- match.call()
     bestfit$call$x <- data.frame(x = x)
     bestfit$lambda <- lambda
@@ -678,26 +662,8 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     stop("No suitable ARIMA model found")
   }
 
-  # Check stationarity of regression residuals.
-  if (!is.null(xreg)) {
-    d <- arimaorder(bestfit)[2]
-    D <- arimaorder(bestfit)[5]
-    bestfit$x <- orig.x
-    res <- residuals.Arima(bestfit, type = "regression")
-    if (ndiffs(res) != d) {
-      # Refit model with revised differencing
-      bestfit <- auto.arima(
-        x, d = ndiffs(res), D=D, max.p=max.p, max.q=max.q, max.P=max.P, max.Q=max.Q,
-        start.p=start.p, start.q=start.q, start.P=start.P, start.Q=start.Q,
-        seasonal=seasonal, ic=ic, trace=trace, approximation=approximation,
-        method = method, truncate=truncate, xreg=xreg,
-        allowdrift=allowdrift, allowmean=allowmean, lambda=lambda, biasadj=biasadj,
-        parallel=parallel, num.cores=num.cores, ...
-      )
-    }
-  }
-
   # Return best fit
+
   bestfit$x <- orig.x
   bestfit$series <- series
   bestfit$ic <- NULL
