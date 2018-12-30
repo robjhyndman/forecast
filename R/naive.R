@@ -135,8 +135,8 @@ forecast.lagwalk <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=NU
   
   return(structure(
     list(
-      method = object$method, model = object, lambda = lambda,
-      x = object$x, fitted = fitted(object), series = object$series,
+      method = object$method, model = object, lambda = lambda, x = object$x, 
+      fitted = fitted(object), residuals = residuals(object), series = object$series,
       mean = fc, level = level, lower = lower, upper = upper
     ), class = "forecast")
   )

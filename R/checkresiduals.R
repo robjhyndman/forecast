@@ -157,8 +157,8 @@ modeldf.lm <- function(object, ...){
   length(object$coefficients)
 }
 
-modeldf.naive <- function(object, ...){
-  as.numeric(object$includedrift)
+modeldf.lagwalk <- function(object, ...){
+  as.numeric(object$par$includedrift)
 }
 
 modeldf.meanf <- function(object, ...){
