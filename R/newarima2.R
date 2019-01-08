@@ -211,13 +211,13 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
       if (any(constant_columns)) {
         xregg <- xregg[, -which(constant_columns)]
       }
-      
+
       # Now check if it is rank deficient
       sv <- svd(na.omit(cbind(rep(1, NROW(xregg)), xregg)))$d
       if (min(sv) / sum(sv) < .Machine$double.eps) {
         stop("xreg is rank deficient")
       }
-      
+
       # Finally find residuals from regression in order
       # to estimate appropriate level of differencing
       j <- !is.na(x) & !is.na(rowSums(xregg))
@@ -410,7 +410,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   # Basic AR model
   if (max.p > 0 || max.P > 0) {
     fit <- myarima(x, order = c(max.p > 0, d, 0), seasonal = c((m > 1) & (max.P > 0), D, 0), constant = constant, ic, trace, approximation, method = method, offset = offset, xreg = xreg, ...)
-    results[3, ] <- c(max.p > 0, d, 0, (m > 1) & (max.P > 0), D, 0, constant, fit$ic)
+    results[k+1, ] <- c(max.p > 0, d, 0, (m > 1) & (max.P > 0), D, 0, constant, fit$ic)
     if (fit$ic < bestfit$ic) {
       bestfit <- fit
       p <- (max.p > 0)
@@ -422,7 +422,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   # Basic MA model
   if (max.q > 0 || max.Q > 0) {
     fit <- myarima(x, order = c(0, d, max.q > 0), seasonal = c(0, D, (m > 1) & (max.Q > 0)), constant = constant, ic, trace, approximation, method = method, offset = offset, xreg = xreg, ...)
-    results[4, ] <- c(0, d, max.q > 0, 0, D, (m > 1) & (max.Q > 0), constant, fit$ic)
+    results[k+1, ] <- c(0, d, max.q > 0, 0, D, (m > 1) & (max.Q > 0), constant, fit$ic)
     if (fit$ic < bestfit$ic) {
       bestfit <- fit
       p <- P <- 0
@@ -434,7 +434,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   # Null model with no constant
   if (constant) {
     fit <- myarima(x, order = c(0, d, 0), seasonal = c(0, D, 0), constant = FALSE, ic, trace, approximation, method = method, offset = offset, xreg = xreg, ...)
-    results[5, ] <- c(0, d, 0, 0, D, 0, 0, fit$ic)
+    results[k+1, ] <- c(0, d, 0, 0, D, 0, 0, fit$ic)
     if (fit$ic < bestfit$ic) {
       bestfit <- fit
       p <- q <- P <- Q <- 0
@@ -815,10 +815,11 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
 
 newmodel <- function(p, d, q, P, D, Q, constant, results) {
   n <- nrow(results)
-  for (i in 1:n)
-  {
-    if (all(c(p, d, q, P, D, Q, constant) == results[i, 1:7])) {
-      return(FALSE)
+  for (i in 1:n) {
+    if(!all(is.na(results[i, seq(7)]))) {
+      if (all(c(p, d, q, P, D, Q, constant) == results[i, 1:7])) {
+        return(FALSE)
+      }
     }
   }
   return(TRUE)
