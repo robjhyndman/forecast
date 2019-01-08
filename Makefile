@@ -11,18 +11,12 @@ all: install
 check:
 	Rscript -e "devtools::check(document=TRUE)"
 
-check_cran:
-	Rscript -e 'source("cran_check.R")'
-
 build:
-	R CMD build --compact-vignettes="gs+qpdf" .
-	mv -f *.tar.gz ..
+	Rscript -e "roxygen2::roxygenize()"
+	Rscript -e "devtools::build()"
 
 install:
-	rmake
-
-winbuild:
-	Rscript -e "rt::rwinbuild(devel=TRUE)"
+	R CMD INSTALL .
 
 clean:
 	-rm -f ../$(PKG_NAME)_*.tar.gz
@@ -30,10 +24,10 @@ clean:
 	-rm -r -f NAMESPACE
 
 docs:
-	Rscript -e "rt::rdoc()"
+	Rscript -e "roxygen2::roxygenize()"
 
 pkgdown:
-	mv vignettes /tmp/; Rscript -e "rt::rpkgdown()"; mv /tmp/vignettes .
+	Rscript -e "pkgdown::build_site()"
 
 revdep:
-	Rscript -e "revdepcheck::revdep_check(num_workers=4)"
+	Rscript -e "revdepcheck::revdep_check(num_workers=3)"
