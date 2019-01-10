@@ -1,4 +1,4 @@
-## Version 8.5
+## Version 8.5 (10 Jan 2019)
   * Updated tsCV() to handle exogenous regressors
   * Reimplemented lagwalk methods (naive, snaive, rwf) for speed improvements
   * Added support for passing arguments to auto.arima() unit root tests
