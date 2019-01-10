@@ -31,7 +31,7 @@ HoltWintersZZ <- function(x,
     stop("cannot fit models without level ('alpha' must not be 0 or FALSE).")
   }
   if (!all(is.null(c(alpha, beta, gamma))) &&
-    any(c(alpha, beta, gamma) < 0 || c(alpha, beta, gamma) > 1)) {
+    any(c(alpha, beta, gamma) < 0 | c(alpha, beta, gamma) > 1)) {
     stop("'alpha', 'beta' and 'gamma' must be within the unit interval.")
   }
   if ((is.null(gamma) || gamma > 0)) {
