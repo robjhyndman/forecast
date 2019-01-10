@@ -11,7 +11,7 @@ ggplot2::autoplot
 ggAddExtras <- function(xlab=NA, ylab=NA, main=NA) {
   dots <- eval.parent(quote(list(...)))
   extras <- list()
-  if ("xlab" %in% names(dots) || is.null(xlab) || !is.na(xlab)) {
+  if ("xlab" %in% names(dots) || is.null(xlab) || !is.na(xlab <- paste0(xlab, collapse = "\n"))) {
     if ("xlab" %in% names(dots)) {
       extras[[length(extras) + 1]] <- ggplot2::xlab(dots$xlab)
     }
@@ -19,7 +19,7 @@ ggAddExtras <- function(xlab=NA, ylab=NA, main=NA) {
       extras[[length(extras) + 1]] <- ggplot2::xlab(xlab)
     }
   }
-  if ("ylab" %in% names(dots) || is.null(ylab) || !is.na(ylab)) {
+  if ("ylab" %in% names(dots) || is.null(ylab) || !is.na(ylab <- paste0(ylab, collapse = "\n"))) {
     if ("ylab" %in% names(dots)) {
       extras[[length(extras) + 1]] <- ggplot2::ylab(dots$ylab)
     }
