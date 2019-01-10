@@ -27,7 +27,7 @@ ggAddExtras <- function(xlab=NA, ylab=NA, main=NA) {
       extras[[length(extras) + 1]] <- ggplot2::ylab(ylab)
     }
   }
-  if ("main" %in% names(dots) || is.null(main) || !is.na(main)) {
+  if ("main" %in% names(dots) || is.null(main) || !is.na(main <- paste0(main, collapse = "\n"))) {
     if ("main" %in% names(dots)) {
       extras[[length(extras) + 1]] <- ggplot2::ggtitle(dots$main)
     }
