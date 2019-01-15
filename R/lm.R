@@ -155,8 +155,9 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...) {
   
   fit$data <- data
   responsevar <- deparse(formula[[2]])
-  fit$x <- ts(model.frame(fit)[, responsevar])
   fit$residuals <- ts(residuals(fit))
+  fit$x <- fit$residuals
+  fit$x[!is.na(fit$x)] <- model.frame(fit)[, responsevar]
   fit$fitted.values <- ts(fitted(fit))
   tsp(fit$residuals) <- tsp(fit$x) <- tsp(fit$fitted.values) <- tsp(data[, 1]) <- tspx
   fit$call <- cl
