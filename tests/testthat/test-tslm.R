@@ -89,4 +89,14 @@ if (require(testthat)) {
     # forecast(fit2, newdata=data.frame(v_x=ts(1:2,freq=12)))
     # tslm(v_y ~ trend + season + I(v_x)*fourier(v_x,3),data=data)
   })
+  
+  test_that("Missing values", {
+    USMissingDeaths <- USAccDeaths
+    USMissingDeaths[c(1,44, 72)] <- NA
+    timetrend <- 1:72
+    fit <- tslm(USMissingDeaths ~ season + timetrend)
+    expect_equal(sum(is.na(residuals(fit))), 3)
+    fc <- forecast(fit, newdata = data.frame(timetrend = 73))
+    expect_length(fc$mean, 1)
+  })
 }

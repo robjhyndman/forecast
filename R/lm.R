@@ -174,7 +174,10 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...) {
   return(fit)
 }
 
-
+#' @export
+fitted.tslm <- function(object, ...){
+  object$fitted.values
+}
 
 #' Forecast a linear model with possible time series components
 #'
