@@ -184,20 +184,11 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
 
   # Check xreg and do regression if necessary
   if (!is.null(xreg)) {
-    # Make sure it is a matrix with column names
-    if("data.frame" %in% class(xreg))
-      stop("xreg should be a numeric matrix or vector")
-    nmxreg <- deparse(substitute(xreg))
+    if(!is.numeric(xreg))
+      stop("xreg should be a numeric matrix or a numeric vector")
     xregg <- as.matrix(xreg)
-    if (ncol(xregg) == 1 && length(nmxreg) > 1) {
-      nmxreg <- "xreg"
-    }
     if (is.null(colnames(xregg))) {
-      colnames(xregg) <- if (ncol(xregg) == 1) {
-        nmxreg
-      } else {
-        paste(nmxreg, 1:ncol(xregg), sep = "")
-      }
+      colnames(xregg) <- if (ncol(xregg) == 1) "xreg" else paste("xreg", 1:ncol(xregg), sep = "")
     }
 
     xx <- x
