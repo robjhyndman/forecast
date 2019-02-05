@@ -175,7 +175,7 @@ rwf <- function(y, h=10, drift=FALSE, level=c(80, 95), fan=FALSE, lambda=NULL, b
   
   fc <- forecast(fit, h = h,
                  level = level, fan = fan,
-                 lambda = lambda, biasadj = biasadj, ...)
+                 lambda = fit$lambda, biasadj = biasadj, ...)
   
   fc$model$call <- match.call()
   fc$series <- deparse(substitute(y))
@@ -274,7 +274,7 @@ snaive <- function(y, h=2 * frequency(x), level=c(80, 95), fan=FALSE, lambda=NUL
   )
   fc <- forecast(fit, h = h,
                  level = level, fan = fan,
-                 lambda = lambda, biasadj = biasadj, ...)
+                 lambda = fit$lambda, biasadj = biasadj, ...)
   fc$model$call <- match.call()
   fc$series <- deparse(substitute(y))
   fc$method <- "Seasonal naive method"
