@@ -11,28 +11,28 @@ ggplot2::autoplot
 ggAddExtras <- function(xlab=NA, ylab=NA, main=NA) {
   dots <- eval.parent(quote(list(...)))
   extras <- list()
-  if ("xlab" %in% names(dots) || is.null(xlab) || !is.na(xlab <- paste0(xlab, collapse = "\n"))) {
+  if ("xlab" %in% names(dots) || is.null(xlab) || any(!is.na(xlab))) {
     if ("xlab" %in% names(dots)) {
       extras[[length(extras) + 1]] <- ggplot2::xlab(dots$xlab)
     }
     else {
-      extras[[length(extras) + 1]] <- ggplot2::xlab(xlab)
+      extras[[length(extras) + 1]] <- ggplot2::xlab(paste0(xlab[!is.na(xlab)], collapse = " "))
     }
   }
-  if ("ylab" %in% names(dots) || is.null(ylab) || !is.na(ylab <- paste0(ylab, collapse = "\n"))) {
+  if ("ylab" %in% names(dots) || is.null(ylab) || any(!is.na(ylab))) {
     if ("ylab" %in% names(dots)) {
       extras[[length(extras) + 1]] <- ggplot2::ylab(dots$ylab)
     }
     else {
-      extras[[length(extras) + 1]] <- ggplot2::ylab(ylab)
+      extras[[length(extras) + 1]] <- ggplot2::ylab(paste0(ylab[!is.na(ylab)], collapse = " "))
     }
   }
-  if ("main" %in% names(dots) || is.null(main) || !is.na(main <- paste0(main, collapse = "\n"))) {
+  if ("main" %in% names(dots) || is.null(main) || any(!is.na(main))) {
     if ("main" %in% names(dots)) {
       extras[[length(extras) + 1]] <- ggplot2::ggtitle(dots$main)
     }
     else {
-      extras[[length(extras) + 1]] <- ggplot2::ggtitle(main)
+      extras[[length(extras) + 1]] <- ggplot2::ggtitle(paste0(main[!is.na(main)], collapse = " "))
     }
   }
   if ("xlim" %in% names(dots)) {
