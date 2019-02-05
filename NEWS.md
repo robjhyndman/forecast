@@ -1,3 +1,5 @@
+## Version 8.5.0.9000 (DEV)
+
 ## Version 8.5 (18 Jan 2019)
   * Updated tsCV() to handle exogenous regressors
   * Reimplemented lagwalk methods (naive, snaive, rwf) for speed improvements
