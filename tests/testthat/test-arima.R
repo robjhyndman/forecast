@@ -65,7 +65,7 @@ if (require(testthat)) {
 
   test_that("tests for forecast.Arima", {
     fit1 <- Arima(wineind, order = c(1, 1, 2), seasonal = c(0, 1, 1), method = "CSS")
-    expect_error(forecast.Arima(fit1, xreg = 1:10))
+    expect_warning(forecast.Arima(fit1, xreg = 1:10), "xreg not required")
     expect_warning(forecast.Arima(fit1, include.drift = TRUE))
     expect_true(all.equal(forecast.Arima(fit1, bootstrap = TRUE, npaths = 100)$ mean, forecast.Arima(fit1)$mean))
 
@@ -81,7 +81,7 @@ if (require(testthat)) {
     fit4 <- Arima(wineind, order = c(1, 1, 2), seasonal = c(0, 1, 1), xreg = rnorm(length(wineind)))
     expect_error(forecast.Arima(fit4))
     expect_error(forecast.Arima(fit4, xreg = matrix(rnorm(40), ncol = 2)))
-    expect_warning(forecast.Arima(fit4, xreg = rnorm(20))$mean, "different column names") %>% 
+    forecast.Arima(fit4, xreg = rnorm(20))$mean %>% 
       length %>% 
       expect_equal(20)
 

@@ -289,15 +289,24 @@ forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[
 
   use.drift <- is.element("drift", names(object$coef))
   x <- object$x <- getResponse(object)
-  usexreg <- (!is.null(xreg) | use.drift | is.element("xreg", names(object))) # | use.constant)
+  usexreg <- (use.drift | is.element("xreg", names(object))) # | use.constant)
 
-  if (!is.null(xreg)) {
-    if("data.frame" %in% class(xreg))
+  if (!is.null(xreg) && usexreg) {
+    if(!is.numeric(xreg))
       stop("xreg should be a numeric matrix or a numeric vector")
+    xreg <- as.matrix(xreg)
+    if (is.null(colnames(xreg))) {
+      colnames(xreg) <- if (ncol(xreg) == 1) "xreg" else paste("xreg", 1:ncol(xreg), sep = "")
+    }
+    
     origxreg <- xreg <- as.matrix(xreg)
     h <- nrow(xreg)
   }
   else {
+    if(!is.null(xreg)){
+      warning("xreg not required by this model, ignoring the provided regressors")
+      xreg <- NULL
+    }
     origxreg <- NULL
   }
 
@@ -680,15 +689,11 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
   }
 
   if (!is.null(xreg)) {
-    if("data.frame" %in% class(xreg))
+    if(!is.numeric(xreg))
       stop("xreg should be a numeric matrix or a numeric vector")
-    nmxreg <- deparse(substitute(xreg))
     xreg <- as.matrix(xreg)
-    if (ncol(xreg) == 1 & length(nmxreg) > 1) {
-      nmxreg <- "xreg"
-    }
     if (is.null(colnames(xreg))) {
-      colnames(xreg) <- if (ncol(xreg) == 1) nmxreg else paste(nmxreg, 1:ncol(xreg), sep = "")
+      colnames(xreg) <- if (ncol(xreg) == 1) "xreg" else paste("xreg", 1:ncol(xreg), sep = "")
     }
   }
 
