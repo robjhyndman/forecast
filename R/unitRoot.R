@@ -72,15 +72,11 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), type=c("level", "tren
     approx(urca_test@cval[1,], as.numeric(sub("pct", "", colnames(urca_test@cval)))/100, xout=urca_test@teststat[1], rule=2)$y
   }
   
-  kpss_wrap <- function(..., use.lag = trunc(3*sqrt(length(x))/13)){
-    ur.kpss(..., use.lag = use.lag)
-  }
-  
   runTests <- function(x, test, alpha){
     tryCatch(
       {suppressWarnings(
         diff <- switch(test,
-                       kpss = urca_pval(kpss_wrap(x, type=c("mu","tau")[type], ...)) < alpha,
+                       kpss = urca_pval(ur.kpss(x, type=c("mu","tau")[type], ...)) < alpha,
                        adf = urca_pval(ur.df(x, type=c("drift","trend")[type], ...)) > alpha,
                        pp = urca_pval(ur.pp(x, type="Z-tau", model=c("constant","trend")[type], ...)) > alpha,
                        stop("This shouldn't happen"))
