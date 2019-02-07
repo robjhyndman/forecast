@@ -84,7 +84,12 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), type=c("level", "tren
       diff
       },
       error = function(e){
-        warning("The chosen test encountered an error, so no differencing is selected. Check the time series data.")
+        warning(
+          sprintf(
+            "The chosen unit root test encountered an error when testing for the %s difference. %i differences will be used. Consider using a different unit root test.",
+            switch(as.character(d), `0` = "first", `1` = "second", `2` = "third", paste0(d+1, "th")), d
+          )
+        )
         FALSE
       }
     )
@@ -219,7 +224,12 @@ nsdiffs <- function(x, alpha = 0.05, m=frequency(x), test=c("seas", "ocsb", "heg
         diff
       },
       error = function(e){
-        warning("The chosen test encountered an error, so no seasonal differencing is selected. Check the time series data.")
+        warning(
+          sprintf(
+            "The chosen seasonal unit root test encountered an error when testing for the %s difference. %i seasonal differences will be used. Consider using a different unit root test.",
+            switch(as.character(D), `0` = "first", `1` = "second", `2` = "third", paste0(D+1, "th")), D
+          )
+        )
         0
       }
     )
