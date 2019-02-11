@@ -54,5 +54,9 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) {
     ggseasonplot <<- getNamespace("feasts")$ggseasonplot
     register_s3_method("feasts", "ggseasonplot", "ts")
   }
+  if (tryCatch(exists("ggsubseriesplot", getNamespace("feasts")), error = function(e) FALSE)) {
+    ggsubseriesplot <<- getNamespace("feasts")$ggsubseriesplot
+    register_s3_method("feasts", "ggsubseriesplot", "ts")
+  }
   invisible()
 }

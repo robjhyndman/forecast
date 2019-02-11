@@ -3,12 +3,15 @@
 \name{ggmonthplot}
 \alias{ggmonthplot}
 \alias{ggsubseriesplot}
+\alias{ggsubseriesplot.ts}
 \title{Create a seasonal subseries ggplot}
 \usage{
 ggmonthplot(x, labels = NULL, times = time(x), phase = cycle(x), ...)
 
-ggsubseriesplot(x, labels = NULL, times = time(x), phase = cycle(x),
-  ...)
+ggsubseriesplot(x, ...)
+
+\method{ggsubseriesplot}{ts}(x, labels = NULL, times = time(x),
+  phase = cycle(x), ...)
 }
 \arguments{
 \item{x}{a time series object (type \code{ts}).}

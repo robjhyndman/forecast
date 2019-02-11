@@ -1177,19 +1177,26 @@ gglagchull <- function(x,
 #' @return Returns an object of class \code{ggplot}.
 #' @author Mitchell O'Hara-Wild
 #' @seealso \code{\link[stats]{monthplot}}
-#' @examples
-#'
-#' ggsubseriesplot(AirPassengers)
-#' ggsubseriesplot(woolyrnq)
 #'
 #' @export
 ggmonthplot <- function(x, labels = NULL, times = time(x), phase = cycle(x), ...) {
   ggsubseriesplot(x, labels, times, phase, ...)
 }
 
+#' @examples
+#'
+#' ggsubseriesplot(AirPassengers)
+#' ggsubseriesplot(woolyrnq)
+#' 
 #' @rdname ggmonthplot
 #' @export
-ggsubseriesplot <- function(x, labels = NULL, times = time(x), phase = cycle(x), ...) {
+ggsubseriesplot <- function(x, ...){
+  UseMethod("ggsubseriesplot")
+}
+
+#' @rdname ggmonthplot
+#' @export
+ggsubseriesplot.ts <- function(x, labels = NULL, times = time(x), phase = cycle(x), ...) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
