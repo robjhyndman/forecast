@@ -42,14 +42,17 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) {
 }
 
 .onLoad <- function(...) {
-  ns <- getNamespace("ggplot2")
-  if (exists("autolayer", ns)) {
-    autolayer <<- ns$autolayer
+  if (tryCatch(exists("autolayer", getNamespace("ggplot2")), error = function(e) FALSE)) {
+    autolayer <<- getNamespace("ggplot2")$autolayer
     register_s3_method("ggplot2", "autolayer", "ts")
     register_s3_method("ggplot2", "autolayer", "mts")
     register_s3_method("ggplot2", "autolayer", "msts")
     register_s3_method("ggplot2", "autolayer", "forecast")
     register_s3_method("ggplot2", "autolayer", "mforecast")
+  }
+  if (tryCatch(exists("ggseasonplot", getNamespace("feasts")), error = function(e) FALSE)) {
+    ggseasonplot <<- getNamespace("feasts")$ggseasonplot
+    register_s3_method("feasts", "ggseasonplot", "ts")
   }
   invisible()
 }

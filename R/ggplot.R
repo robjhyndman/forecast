@@ -1271,8 +1271,15 @@ ggsubseriesplot <- function(x, labels = NULL, times = time(x), phase = cycle(x),
 #' ggseasonplot(AirPassengers, col=rainbow(12), year.labels=TRUE)
 #' ggseasonplot(AirPassengers, year.labels=TRUE, continuous=TRUE)
 #'
+#' @rdname ggseasonplot
 #' @export
-ggseasonplot <- function(x, season.labels=NULL, year.labels=FALSE, year.labels.left=FALSE, type=NULL, col=NULL, continuous=FALSE, polar=FALSE, labelgap=0.04, ...) {
+ggseasonplot <- function(x, ...){
+  UseMethod("ggseasonplot")
+}
+
+#' @rdname ggseasonplot
+#' @export
+ggseasonplot.ts <- function(x, season.labels=NULL, year.labels=FALSE, year.labels.left=FALSE, type=NULL, col=NULL, continuous=FALSE, polar=FALSE, labelgap=0.04, ...) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
