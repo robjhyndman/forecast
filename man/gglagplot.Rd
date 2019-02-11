@@ -2,19 +2,24 @@
 % Please edit documentation in R/ggplot.R
 \name{gglagplot}
 \alias{gglagplot}
+\alias{gglagplot.ts}
 \alias{gglagchull}
 \title{Time series lag ggplots}
 \usage{
-gglagplot(x, lags = ifelse(frequency(x) > 9, 16, 9), set.lags = 1:lags,
-  diag = TRUE, diag.col = "gray", do.lines = TRUE, colour = TRUE,
-  continuous = frequency(x) > 12, labels = FALSE, seasonal = TRUE,
-  ...)
+gglagplot(x, ...)
+
+\method{gglagplot}{ts}(x, lags = ifelse(frequency(x) > 9, 16, 9),
+  set.lags = 1:lags, diag = TRUE, diag.col = "gray",
+  do.lines = TRUE, colour = TRUE, continuous = frequency(x) > 12,
+  labels = FALSE, seasonal = TRUE, ...)
 
 gglagchull(x, lags = ifelse(frequency(x) > 1, min(12, frequency(x)), 4),
   set.lags = 1:lags, diag = TRUE, diag.col = "gray", ...)
 }
 \arguments{
 \item{x}{a time series object (type \code{ts}).}
+
+\item{\dots}{Not used (for consistency with lag.plot)}
 
 \item{lags}{number of lag plots desired, see arg set.lags.}
 
@@ -36,8 +41,6 @@ discrete?}
 
 \item{seasonal}{Should the line colour be based on seasonal characteristics
 (TRUE), or sequential (FALSE).}
-
-\item{\dots}{Not used (for consistency with lag.plot)}
 }
 \value{
 None.
