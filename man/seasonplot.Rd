@@ -38,11 +38,6 @@ supported for ggseasonplot.}
 \item{col}{Colour}
 
 \item{labelgap}{Distance between year labels and plotted lines}
-
-\item{continuous}{Should the colour scheme for years be continuous or
-discrete?}
-
-\item{polar}{Plot the graph on seasonal coordinates}
 }
 \value{
 None.

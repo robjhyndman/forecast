@@ -1285,13 +1285,14 @@ ggsubseriesplot.ts <- function(x, labels = NULL, times = time(x), phase = cycle(
 #' ggseasonplot(AirPassengers, col=rainbow(12), year.labels=TRUE)
 #' ggseasonplot(AirPassengers, year.labels=TRUE, continuous=TRUE)
 #'
-#' @rdname ggseasonplot
 #' @export
 ggseasonplot <- function(x, ...){
   UseMethod("ggseasonplot")
 }
 
-#' @rdname ggseasonplot
+#' @param continuous Should the colour scheme for years be continuous or
+#' discrete?
+#' @param polar Plot the graph on seasonal coordinates
 #' @export
 ggseasonplot.ts <- function(x, season.labels=NULL, year.labels=FALSE, year.labels.left=FALSE, type=NULL, col=NULL, continuous=FALSE, polar=FALSE, labelgap=0.04, ...) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
