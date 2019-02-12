@@ -211,6 +211,9 @@ nsdiffs <- function(x, alpha = 0.05, m=frequency(x), test=c("seas", "ocsb", "heg
     return(0)
   }
   
+  if(frequency(x) >= length(x))
+    return(0) # Can't take differences
+  
   runTests <- function(x, test, alpha){
     tryCatch(
       {suppressWarnings(
