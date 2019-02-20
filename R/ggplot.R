@@ -817,7 +817,12 @@ autoplot.mforecast <- function(object, PI = TRUE, facets = TRUE, colour = FALSE,
 #' ggtsdisplay(USAccDeaths, plot.type="scatter", theme=theme_bw())
 #'
 #' @export
-ggtsdisplay <- function(x, plot.type=c("partial", "histogram", "scatter", "spectrum"),
+ggtsdisplay <- function(x, ...){
+  UseMethod("ggseasonplot")
+}
+
+#' @export
+ggtsdisplay.ts <- function(x, plot.type=c("partial", "histogram", "scatter", "spectrum"),
                         points=TRUE, smooth=FALSE,
                         lag.max, na.action=na.contiguous, theme=NULL, ...) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
