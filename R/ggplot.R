@@ -818,7 +818,7 @@ autoplot.mforecast <- function(object, PI = TRUE, facets = TRUE, colour = FALSE,
 #'
 #' @export
 ggtsdisplay <- function(x, ...){
-  UseMethod("ggseasonplot")
+  UseMethod("ggtsdisplay")
 }
 
 #' @rdname tsdisplay
