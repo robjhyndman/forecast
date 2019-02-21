@@ -126,7 +126,7 @@ autoplot.acf <- function(object, ci=0.95, ...) {
     p <- p + ggplot2::geom_hline(yintercept = 0)
 
     # Add data
-    p <- p + ggplot2::geom_segment(lineend = "butt")
+    p <- p + ggplot2::geom_segment(lineend = "butt", ...)
 
     # Add ci lines (assuming white noise input)
     ci <- qnorm((1 + ci) / 2) / sqrt(object$n.used)
