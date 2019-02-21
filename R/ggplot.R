@@ -821,6 +821,7 @@ ggtsdisplay <- function(x, ...){
   UseMethod("ggseasonplot")
 }
 
+#' @rdname tsdisplay
 #' @export
 ggtsdisplay.ts <- function(x, plot.type=c("partial", "histogram", "scatter", "spectrum"),
                         points=TRUE, smooth=FALSE,
