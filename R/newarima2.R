@@ -18,7 +18,7 @@
 #' @inheritParams stats::arima
 #' @param y a univariate time series
 #' @param d Order of first-differencing. If missing, will choose a value based
-#' on KPSS test.
+#' on \code{test}.
 #' @param D Order of seasonal-differencing. If missing, will choose a value
 #' based on \code{season.test}.
 #' @param max.p Maximum value of p
