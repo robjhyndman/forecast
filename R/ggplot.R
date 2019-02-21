@@ -1296,6 +1296,7 @@ ggseasonplot <- function(x, ...){
   UseMethod("ggseasonplot")
 }
 
+#' @rdname seasonplot
 #' @param continuous Should the colour scheme for years be continuous or
 #' discrete?
 #' @param polar Plot the graph on seasonal coordinates
