@@ -688,7 +688,12 @@ autoplot.forecast <- function(object, include, PI=TRUE, shadecols=c("#596DD5", "
     }
     else {
       # Time series objects (assumed)
-
+      if(!missing(shadecols)){
+        warning(
+"The `schadecols` argument is deprecated for time series forecasts. 
+Interval shading is now done automatically based on the level and `fcol`.", 
+          call. = FALSE)
+      }
       # Data points
       if (!is.null(time(object$x))) {
         timex <- time(object$x)
@@ -705,30 +710,33 @@ autoplot.forecast <- function(object, include, PI=TRUE, shadecols=c("#596DD5", "
         ggplot2::labs(y = vars["yvar"], x = "Time")
 
       # Forecasted intervals
-      predicted <- data.frame(xvar = time(object$mean), yvar = object$mean)
-      colnames(predicted) <- c("datetime", "ypred")
-      if (PI) {
-        levels <- NROW(object$level)
-        interval <- data.frame(datetime = rep(predicted$datetime, levels), lower = c(object$lower), upper = c(object$upper), level = rep(object$level, each = NROW(object$mean)))
-        interval <- interval[order(interval$level, decreasing = TRUE), ] # Must be ordered for gg z-index
-        p <- p + ggplot2::geom_ribbon(ggplot2::aes_(x = ~datetime, ymin = ~lower, ymax = ~upper, group = ~-level, fill = ~level), data = interval)
-        if (min(object$level) < 50) {
-          scalelimit <- c(1, 99)
-        }
-        else {
-          scalelimit <- c(50, 99)
-        }
-        if (length(object$level) <= 5) {
-          p <- p + ggplot2::scale_fill_gradientn(breaks = object$level, colours = shadecols, limit = scalelimit, guide = "legend")
-        }
-        else {
-          p <- p + ggplot2::scale_fill_gradientn(colours = shadecols, limit = scalelimit)
-        }
-        # Negative group is a work around for missing z-index
-      }
+      p <- p + autolayer(object, colour = fcol)
+      
+      # predicted <- data.frame(xvar = time(object$mean), yvar = object$mean)
+      # colnames(predicted) <- c("datetime", "ypred")
+      # if (PI) {
+      #   levels <- NROW(object$level)
+      #   interval <- data.frame(datetime = rep(predicted$datetime, levels), lower = c(object$lower), upper = c(object$upper), level = rep(object$level, each = NROW(object$mean)))
+      #   interval <- interval[order(interval$level, decreasing = TRUE), ] # Must be ordered for gg z-index
+      #   p <- p + ggplot2::geom_ribbon(ggplot2::aes_(x = ~datetime, ymin = ~lower, ymax = ~upper, group = ~-level, fill = ~level), data = interval)
+      #   if (min(object$level) < 50) {
+      #     scalelimit <- c(1, 99)
+      #   }
+      #   else {
+      #     scalelimit <- c(50, 99)
+      #   }
+      #   if (length(object$level) <= 5) {
+      #     p <- p + ggplot2::scale_fill_gradientn(breaks = object$level, colours = shadecols, limit = scalelimit, guide = "legend")
+      #   }
+      #   else {
+      #     p <- p + ggplot2::scale_fill_gradientn(colours = shadecols, limit = scalelimit)
+      #   }
+      #   # Negative group is a work around for missing z-index
+      # }
+      
 
-      # Forecasted points
-      p <- p + ggplot2::geom_line(ggplot2::aes_(x = ~datetime, y = ~ypred), data = predicted, color = fcol, size = flwd)
+      # # Forecasted points
+      # p <- p + ggplot2::geom_line(ggplot2::aes_(x = ~datetime, y = ~ypred), data = predicted, color = fcol, size = flwd)
     }
 
     p <- p + ggAddExtras(main = paste("Forecasts from ", object$method, sep = ""))
