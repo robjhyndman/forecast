@@ -126,7 +126,7 @@ autoplot.acf <- function(object, ci=0.95, ...) {
     p <- p + ggplot2::geom_hline(yintercept = 0)
 
     # Add data
-    p <- p + ggplot2::geom_segment(lineend = "butt")
+    p <- p + ggplot2::geom_segment(lineend = "butt", ...)
 
     # Add ci lines (assuming white noise input)
     ci <- qnorm((1 + ci) / 2) / sqrt(object$n.used)
@@ -688,7 +688,12 @@ autoplot.forecast <- function(object, include, PI=TRUE, shadecols=c("#596DD5", "
     }
     else {
       # Time series objects (assumed)
-
+      if(!missing(shadecols)){
+        warning(
+"The `schadecols` argument is deprecated for time series forecasts. 
+Interval shading is now done automatically based on the level and `fcol`.", 
+          call. = FALSE)
+      }
       # Data points
       if (!is.null(time(object$x))) {
         timex <- time(object$x)
@@ -705,30 +710,33 @@ autoplot.forecast <- function(object, include, PI=TRUE, shadecols=c("#596DD5", "
         ggplot2::labs(y = vars["yvar"], x = "Time")
 
       # Forecasted intervals
-      predicted <- data.frame(xvar = time(object$mean), yvar = object$mean)
-      colnames(predicted) <- c("datetime", "ypred")
-      if (PI) {
-        levels <- NROW(object$level)
-        interval <- data.frame(datetime = rep(predicted$datetime, levels), lower = c(object$lower), upper = c(object$upper), level = rep(object$level, each = NROW(object$mean)))
-        interval <- interval[order(interval$level, decreasing = TRUE), ] # Must be ordered for gg z-index
-        p <- p + ggplot2::geom_ribbon(ggplot2::aes_(x = ~datetime, ymin = ~lower, ymax = ~upper, group = ~-level, fill = ~level), data = interval)
-        if (min(object$level) < 50) {
-          scalelimit <- c(1, 99)
-        }
-        else {
-          scalelimit <- c(50, 99)
-        }
-        if (length(object$level) <= 5) {
-          p <- p + ggplot2::scale_fill_gradientn(breaks = object$level, colours = shadecols, limit = scalelimit, guide = "legend")
-        }
-        else {
-          p <- p + ggplot2::scale_fill_gradientn(colours = shadecols, limit = scalelimit)
-        }
-        # Negative group is a work around for missing z-index
-      }
+      p <- p + autolayer(object, colour = fcol)
+      
+      # predicted <- data.frame(xvar = time(object$mean), yvar = object$mean)
+      # colnames(predicted) <- c("datetime", "ypred")
+      # if (PI) {
+      #   levels <- NROW(object$level)
+      #   interval <- data.frame(datetime = rep(predicted$datetime, levels), lower = c(object$lower), upper = c(object$upper), level = rep(object$level, each = NROW(object$mean)))
+      #   interval <- interval[order(interval$level, decreasing = TRUE), ] # Must be ordered for gg z-index
+      #   p <- p + ggplot2::geom_ribbon(ggplot2::aes_(x = ~datetime, ymin = ~lower, ymax = ~upper, group = ~-level, fill = ~level), data = interval)
+      #   if (min(object$level) < 50) {
+      #     scalelimit <- c(1, 99)
+      #   }
+      #   else {
+      #     scalelimit <- c(50, 99)
+      #   }
+      #   if (length(object$level) <= 5) {
+      #     p <- p + ggplot2::scale_fill_gradientn(breaks = object$level, colours = shadecols, limit = scalelimit, guide = "legend")
+      #   }
+      #   else {
+      #     p <- p + ggplot2::scale_fill_gradientn(colours = shadecols, limit = scalelimit)
+      #   }
+      #   # Negative group is a work around for missing z-index
+      # }
+      
 
-      # Forecasted points
-      p <- p + ggplot2::geom_line(ggplot2::aes_(x = ~datetime, y = ~ypred), data = predicted, color = fcol, size = flwd)
+      # # Forecasted points
+      # p <- p + ggplot2::geom_line(ggplot2::aes_(x = ~datetime, y = ~ypred), data = predicted, color = fcol, size = flwd)
     }
 
     p <- p + ggAddExtras(main = paste("Forecasts from ", object$method, sep = ""))
@@ -817,7 +825,13 @@ autoplot.mforecast <- function(object, PI = TRUE, facets = TRUE, colour = FALSE,
 #' ggtsdisplay(USAccDeaths, plot.type="scatter", theme=theme_bw())
 #'
 #' @export
-ggtsdisplay <- function(x, plot.type=c("partial", "histogram", "scatter", "spectrum"),
+ggtsdisplay <- function(x, ...){
+  UseMethod("ggtsdisplay")
+}
+
+#' @rdname tsdisplay
+#' @export
+ggtsdisplay.ts <- function(x, plot.type=c("partial", "histogram", "scatter", "spectrum"),
                         points=TRUE, smooth=FALSE,
                         lag.max, na.action=na.contiguous, theme=NULL, ...) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
@@ -972,8 +986,15 @@ ggtsdisplay <- function(x, plot.type=c("partial", "histogram", "scatter", "spect
 #' gglagplot(lungDeaths, lags=2)
 #' gglagchull(lungDeaths, lags=6)
 #'
+#' @rdname gglagplot
 #' @export
-gglagplot <- function(x, lags=ifelse(frequency(x) > 9, 16, 9),
+gglagplot <- function(x, ...){
+  UseMethod("gglagplot")
+}
+
+#' @rdname gglagplot
+#' @export
+gglagplot.ts  <- function(x, lags=ifelse(frequency(x) > 9, 16, 9),
                       set.lags = 1:lags, diag=TRUE, diag.col="gray", do.lines = TRUE, colour = TRUE,
                       continuous = frequency(x) > 12, labels = FALSE, seasonal = TRUE, ...) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
@@ -1177,19 +1198,26 @@ gglagchull <- function(x,
 #' @return Returns an object of class \code{ggplot}.
 #' @author Mitchell O'Hara-Wild
 #' @seealso \code{\link[stats]{monthplot}}
-#' @examples
-#'
-#' ggsubseriesplot(AirPassengers)
-#' ggsubseriesplot(woolyrnq)
 #'
 #' @export
 ggmonthplot <- function(x, labels = NULL, times = time(x), phase = cycle(x), ...) {
   ggsubseriesplot(x, labels, times, phase, ...)
 }
 
+#' @examples
+#'
+#' ggsubseriesplot(AirPassengers)
+#' ggsubseriesplot(woolyrnq)
+#' 
 #' @rdname ggmonthplot
 #' @export
-ggsubseriesplot <- function(x, labels = NULL, times = time(x), phase = cycle(x), ...) {
+ggsubseriesplot <- function(x, ...){
+  UseMethod("ggsubseriesplot")
+}
+
+#' @rdname ggmonthplot
+#' @export
+ggsubseriesplot.ts <- function(x, labels = NULL, times = time(x), phase = cycle(x), ...) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
@@ -1272,7 +1300,16 @@ ggsubseriesplot <- function(x, labels = NULL, times = time(x), phase = cycle(x),
 #' ggseasonplot(AirPassengers, year.labels=TRUE, continuous=TRUE)
 #'
 #' @export
-ggseasonplot <- function(x, season.labels=NULL, year.labels=FALSE, year.labels.left=FALSE, type=NULL, col=NULL, continuous=FALSE, polar=FALSE, labelgap=0.04, ...) {
+ggseasonplot <- function(x, ...){
+  UseMethod("ggseasonplot")
+}
+
+#' @rdname seasonplot
+#' @param continuous Should the colour scheme for years be continuous or
+#' discrete?
+#' @param polar Plot the graph on seasonal coordinates
+#' @export
+ggseasonplot.ts <- function(x, season.labels=NULL, year.labels=FALSE, year.labels.left=FALSE, type=NULL, col=NULL, continuous=FALSE, polar=FALSE, labelgap=0.04, ...) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }

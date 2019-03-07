@@ -2,11 +2,14 @@
 % Please edit documentation in R/ggplot.R, R/graph.R
 \name{ggtsdisplay}
 \alias{ggtsdisplay}
+\alias{ggtsdisplay.ts}
 \alias{tsdisplay}
 \title{Time series display}
 \usage{
-ggtsdisplay(x, plot.type = c("partial", "histogram", "scatter",
-  "spectrum"), points = TRUE, smooth = FALSE, lag.max,
+ggtsdisplay(x, ...)
+
+\method{ggtsdisplay}{ts}(x, plot.type = c("partial", "histogram",
+  "scatter", "spectrum"), points = TRUE, smooth = FALSE, lag.max,
   na.action = na.contiguous, theme = NULL, ...)
 
 tsdisplay(x, plot.type = c("partial", "histogram", "scatter",
@@ -16,6 +19,8 @@ tsdisplay(x, plot.type = c("partial", "histogram", "scatter",
 }
 \arguments{
 \item{x}{a numeric vector or time series of class \code{ts}.}
+
+\item{\dots}{additional arguments to \code{\link[stats]{acf}}.}
 
 \item{plot.type}{type of plot to include in lower right corner.}
 
@@ -33,8 +38,6 @@ calculations. The default is \code{\link[stats]{na.contiguous}}. Useful
 alternatives are \code{\link[stats]{na.pass}} and \code{\link{na.interp}}.}
 
 \item{theme}{Adds a ggplot element to each plot, typically a theme.}
-
-\item{\dots}{additional arguments to \code{\link[stats]{acf}}.}
 
 \item{ci.type}{type of confidence limits for ACF that is passed to
 \code{\link[stats]{acf}}. Should the confidence limits assume a white noise

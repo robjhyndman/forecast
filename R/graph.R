@@ -120,9 +120,6 @@ tsdisplay <- function(x, plot.type=c("partial", "histogram", "scatter", "spectru
 #' @param xlab X-axis label.
 #' @param ylab Y-axis label.
 #' @param col Colour
-#' @param continuous Should the colour scheme for years be continuous or
-#' discrete?
-#' @param polar Plot the graph on seasonal coordinates
 #' @param labelgap Distance between year labels and plotted lines
 #' @param \dots additional arguments to \code{\link[graphics]{plot}}.
 #' @return None.

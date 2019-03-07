@@ -2,10 +2,13 @@
 % Please edit documentation in R/ggplot.R, R/graph.R
 \name{ggseasonplot}
 \alias{ggseasonplot}
+\alias{ggseasonplot.ts}
 \alias{seasonplot}
 \title{Seasonal plot}
 \usage{
-ggseasonplot(x, season.labels = NULL, year.labels = FALSE,
+ggseasonplot(x, ...)
+
+\method{ggseasonplot}{ts}(x, season.labels = NULL, year.labels = FALSE,
   year.labels.left = FALSE, type = NULL, col = NULL,
   continuous = FALSE, polar = FALSE, labelgap = 0.04, ...)
 
@@ -15,6 +18,8 @@ seasonplot(x, s, season.labels = NULL, year.labels = FALSE,
 }
 \arguments{
 \item{x}{a numeric vector or time series of class \code{ts}.}
+
+\item{\dots}{additional arguments to \code{\link[graphics]{plot}}.}
 
 \item{season.labels}{Labels for each season in the "year"}
 
@@ -35,8 +40,6 @@ discrete?}
 \item{polar}{Plot the graph on seasonal coordinates}
 
 \item{labelgap}{Distance between year labels and plotted lines}
-
-\item{\dots}{additional arguments to \code{\link[graphics]{plot}}.}
 
 \item{s}{seasonal frequency of x}
 
