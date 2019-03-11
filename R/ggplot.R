@@ -1275,6 +1275,10 @@ ggsubseriesplot <- function(x, labels = NULL, times = time(x), phase = cycle(x),
 
 #' @rdname seasonplot
 #'
+#' @param continuous Should the colour scheme for years be continuous or
+#' discrete?
+#' @param polar Plot the graph on seasonal coordinates
+#' 
 #' @examples
 #' ggseasonplot(AirPassengers, col=rainbow(12), year.labels=TRUE)
 #' ggseasonplot(AirPassengers, year.labels=TRUE, continuous=TRUE)
