@@ -230,7 +230,7 @@ ggCcf <- function(x, y, lag.max=NULL, type=c("correlation", "covariance"),
   }
   cl[[1]] <- quote(Ccf)
   object <- eval.parent(cl)
-  object$snames <- paste(substitute(x), "&", substitute(y))
+  object$snames <- paste(deparse(substitute(x)), "&", deparse(substitute(y)))
   object$ccf <- TRUE
   if (plot) {
     return(autoplot(object, ...))
@@ -1139,7 +1139,7 @@ gglagchull <- function(x,
       for (lag in set.lags) {
         sname <- colnames(x)[i]
         if (is.null(sname)) {
-          sname <- substitute(x)
+          sname <- deparse(substitute(x))
         }
         data <- rbind(data, data.frame(orig = x[(lag + 1):n, i], lagged = x[1:(n - lag), i], lag = rep(lag, n - lag), series = rep(sname, n - lag))[grDevices::chull(x[(lag + 1):n, i], x[1:(n - lag), i]), ])
       }
