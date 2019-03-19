@@ -50,5 +50,12 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) {
     register_s3_method("ggplot2", "autolayer", "forecast")
     register_s3_method("ggplot2", "autolayer", "mforecast")
   }
+  if (tryCatch(exists("forecast", getNamespace("fablelite")), error = function(e) FALSE)) {
+    methods <- strsplit(methods("forecast"), ".", fixed = TRUE)
+    forecast <<- getNamespace("fablelite")$forecast
+    for(method in methods){
+      register_s3_method("fablelite", method[1], method[2])
+    }
+  }
   invisible()
 }
