@@ -57,5 +57,12 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) {
       register_s3_method("fablelite", method[1], method[2])
     }
   }
+  if (tryCatch(exists("accuracy", getNamespace("fablelite")), error = function(e) FALSE)) {
+    methods <- strsplit(methods("accuracy"), ".", fixed = TRUE)
+    accuracy <<- getNamespace("fablelite")$accuracy
+    for(method in methods){
+      register_s3_method("fablelite", method[1], method[2])
+    }
+  }
   invisible()
 }
