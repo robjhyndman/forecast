@@ -77,3 +77,8 @@ window.msts <- function(x, ...) {
   attr(y, "msts") <- attr(x, "msts")
   y
 }
+
+#' @export
+Ops.msts <- function(e1, e2){
+  structure(NextMethod(), msts = attr(e1, "msts"), class = c("msts", "ts"))
+}
