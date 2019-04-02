@@ -107,6 +107,8 @@ mstl <- function(x, lambda=NULL, iterate=2, s.window=13, ...) {
   {
     if (msts[1L] > 1) {
       attr(output, "seasonal.periods") <- msts
+      return(structure(output, seasonal.periods = msts, 
+                       class = c("mstl", "mts", "msts", "ts")))
     }
   }
 
