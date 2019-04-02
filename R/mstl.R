@@ -38,6 +38,7 @@ mstl <- function(x, lambda=NULL, iterate=2, s.window=13, ...) {
     iterate <- 1L
   }
   else {
+    x <- as.ts(x)
     msts <- 1L
   }
   # Check dimension
