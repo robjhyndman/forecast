@@ -298,7 +298,7 @@ forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[
     if (is.null(colnames(xreg))) {
       colnames(xreg) <- if (ncol(xreg) == 1) "xreg" else paste("xreg", 1:ncol(xreg), sep = "")
     }
-    
+
     origxreg <- xreg <- as.matrix(xreg)
     h <- nrow(xreg)
   }
@@ -748,7 +748,7 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
   missing <- is.na(tmp$residuals)
   firstnonmiss <- head(which(!missing),1)
   lastnonmiss <- tail(which(!missing),1)
-  n <- lastnonmiss - firstnonmiss + 1
+  n <- sum(!missing[firstnonmiss:lastnonmiss])
   nstar <- n - tmp$arma[6] - tmp$arma[7] * tmp$arma[5]
   tmp$aicc <- tmp$aic + 2 * npar * (nstar / (nstar - npar - 1) - 1)
   tmp$bic <- tmp$aic + npar * (log(nstar) - 2)
