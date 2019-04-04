@@ -20,7 +20,7 @@ auto.arima(y, d = NA, D = NA, max.p = 5, max.q = 5, max.P = 2,
 \item{y}{a univariate time series}
 
 \item{d}{Order of first-differencing. If missing, will choose a value based
-on KPSS test.}
+on \code{test}.}
 
 \item{D}{Order of seasonal-differencing. If missing, will choose a value
 based on \code{season.test}.}

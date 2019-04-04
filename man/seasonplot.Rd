@@ -5,7 +5,9 @@
 \alias{seasonplot}
 \title{Seasonal plot}
 \usage{
-ggseasonplot(x, ...)
+ggseasonplot(x, season.labels = NULL, year.labels = FALSE,
+  year.labels.left = FALSE, type = NULL, col = NULL,
+  continuous = FALSE, polar = FALSE, labelgap = 0.04, ...)
 
 seasonplot(x, s, season.labels = NULL, year.labels = FALSE,
   year.labels.left = FALSE, type = "o", main, xlab = NULL,
@@ -13,10 +15,6 @@ seasonplot(x, s, season.labels = NULL, year.labels = FALSE,
 }
 \arguments{
 \item{x}{a numeric vector or time series of class \code{ts}.}
-
-\item{\dots}{additional arguments to \code{\link[graphics]{plot}}.}
-
-\item{s}{seasonal frequency of x}
 
 \item{season.labels}{Labels for each season in the "year"}
 
@@ -29,15 +27,24 @@ of data should be plotted on the left.}
 \item{type}{plot type (as for \code{\link[graphics]{plot}}). Not yet
 supported for ggseasonplot.}
 
+\item{col}{Colour}
+
+\item{continuous}{Should the colour scheme for years be continuous or
+discrete?}
+
+\item{polar}{Plot the graph on seasonal coordinates}
+
+\item{labelgap}{Distance between year labels and plotted lines}
+
+\item{\dots}{additional arguments to \code{\link[graphics]{plot}}.}
+
+\item{s}{seasonal frequency of x}
+
 \item{main}{Main title.}
 
 \item{xlab}{X-axis label.}
 
 \item{ylab}{Y-axis label.}
-
-\item{col}{Colour}
-
-\item{labelgap}{Distance between year labels and plotted lines}
 }
 \value{
 None.

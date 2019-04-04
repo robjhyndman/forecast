@@ -38,6 +38,7 @@ mstl <- function(x, lambda=NULL, iterate=2, s.window=13, ...) {
     iterate <- 1L
   }
   else {
+    x <- as.ts(x)
     msts <- 1L
   }
   # Check dimension
@@ -103,11 +104,10 @@ mstl <- function(x, lambda=NULL, iterate=2, s.window=13, ...) {
   }
   colnames(output)[NCOL(output)] <- "Remainder"
 
-  if(!is.null(msts))
-  {
-    if (msts[1L] > 1) {
-      attr(output, "seasonal.periods") <- msts
-    }
+  if (length(msts) > 1) {
+    attr(output, "seasonal.periods") <- msts
+    return(structure(output, seasonal.periods = msts, 
+                     class = c("mstl", "mts", "msts", "ts")))
   }
 
   return(structure(output, class = c("mstl", "mts", "ts")))

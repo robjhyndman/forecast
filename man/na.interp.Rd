@@ -4,7 +4,8 @@
 \alias{na.interp}
 \title{Interpolate missing values in a time series}
 \usage{
-na.interp(x, lambda = NULL)
+na.interp(x, lambda = NULL, linear = (frequency(x) <= 1 |
+  sum(!is.na(x)) <= 2 * frequency(x)))
 }
 \arguments{
 \item{x}{time series}
@@ -13,14 +14,16 @@ na.interp(x, lambda = NULL)
 then a transformation is automatically selected using \code{BoxCox.lambda}.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.}
+
+\item{linear}{Should a linear interpolation be used.}
 }
 \value{
 Time series
 }
 \description{
-Uses linear interpolation for non-seasonal series. For seasonal series, a 
-robust STL decomposition is used. A linear interpolation is applied to the 
-seasonally adjusted data, and then the seasonal component is added back.
+By default, uses linear interpolation for non-seasonal series. For seasonal series, a 
+robust STL decomposition is first computed. Then a linear interpolation is applied to the 
+seasonally adjusted data, and the seasonal component is added back.
 }
 \details{
 A more general and flexible approach is available using \code{na.approx} in

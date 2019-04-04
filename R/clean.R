@@ -10,14 +10,15 @@
 
 #' Interpolate missing values in a time series
 #'
-#' Uses linear interpolation for non-seasonal series. For seasonal series, a 
-#' robust STL decomposition is used. A linear interpolation is applied to the 
-#' seasonally adjusted data, and then the seasonal component is added back.
+#' By default, uses linear interpolation for non-seasonal series. For seasonal series, a 
+#' robust STL decomposition is first computed. Then a linear interpolation is applied to the 
+#' seasonally adjusted data, and the seasonal component is added back.
 #'
 #' A more general and flexible approach is available using \code{na.approx} in
 #' the \code{zoo} package.
 #'
 #' @param x time series
+#' @param linear Should a linear interpolation be used.
 #' @inheritParams forecast
 #' @return Time series
 #' @author Rob J Hyndman
@@ -29,7 +30,8 @@
 #' plot(na.interp(gold))
 #'
 #' @export
-na.interp <- function(x, lambda=NULL) {
+na.interp <- function(x, lambda=NULL, 
+                      linear=(frequency(x) <= 1 | sum(!is.na(x)) <= 2 * frequency(x))) {
   missng <- is.na(x)
   # Do nothing if no missing values
   if (sum(missng) == 0L) {
@@ -60,14 +62,12 @@ na.interp <- function(x, lambda=NULL) {
   tt <- 1:n
   idx <- tt[!missng]
 
-  if (freq <= 1 || n <= 2 * freq) # Non-seasonal -- use linear interpolation
-  {
+  if (linear) { 
+    # Use linear interpolation
     x <- ts(approx(idx, x[idx], tt, rule = 2)$y)
-  }
-  # Otherwise a seasonal series
-  # Estimate seasonal component robustly
-  # Then add to linear interpolation of seasonally adjusted series
-  else {
+  }  else {
+    # Otherwise estimate seasonal component robustly
+    # Then add to linear interpolation of seasonally adjusted series
     # Fit Fourier series for seasonality and a polynomial for the trend,
     # just to get something reasonable to start with
     if ("msts" %in% class(x)) {

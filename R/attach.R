@@ -50,13 +50,19 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) {
     register_s3_method("ggplot2", "autolayer", "forecast")
     register_s3_method("ggplot2", "autolayer", "mforecast")
   }
-  if (tryCatch(exists("ggseasonplot", getNamespace("feasts")), error = function(e) FALSE)) {
-    ggseasonplot <<- getNamespace("feasts")$ggseasonplot
-    register_s3_method("feasts", "ggseasonplot", "ts")
+  if (tryCatch(exists("forecast", getNamespace("fablelite")), error = function(e) FALSE)) {
+    methods <- strsplit(methods("forecast"), ".", fixed = TRUE)
+    forecast <<- getNamespace("fablelite")$forecast
+    for(method in methods){
+      register_s3_method("fablelite", method[1], method[2])
+    }
   }
-  if (tryCatch(exists("gglagplot", getNamespace("feasts")), error = function(e) FALSE)) {
-    gglagplot <<- getNamespace("feasts")$gglagplot
-    register_s3_method("feasts", "gglagplot", "ts")
+  if (tryCatch(exists("accuracy", getNamespace("fablelite")), error = function(e) FALSE)) {
+    methods <- strsplit(methods("accuracy"), ".", fixed = TRUE)
+    accuracy <<- getNamespace("fablelite")$accuracy
+    for(method in methods){
+      register_s3_method("fablelite", method[1], method[2])
+    }
   }
   invisible()
 }
