@@ -957,5 +957,5 @@ is.Arima <- function(x) {
 #' @rdname fitted.Arima
 #' @export
 fitted.ar <- function(object, ...) {
-  as.numeric(getResponse(object)) - residuals(object)
+  getResponse(object) - residuals(object)
 }

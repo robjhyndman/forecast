@@ -79,21 +79,21 @@ window.msts <- function(x, ...) {
   y
 }
 
-#' @export
-Ops.msts <- function(e1, e2){
-  msts <- attr(e1, "msts")
-  if(is.null(msts)){
-    msts <- attr(e2, "msts")
-    class(e2) <- setdiff("msts", class(e2))
-  }
-  else{
-    if(is.null(attr(e2, "msts"))){
-      class(e1) <- setdiff("msts", class(e1))
-    } else {
-      if(!identical(msts, attr(e2, "msts"))){
-        "Cannot combine time series with different seasonal specifications."
-      }
-    }
-  }
-  structure(NextMethod(), msts = msts, class = c("msts", "ts"))
-}
+# #' @export
+# Ops.msts <- function(e1, e2){
+#   msts <- attr(e1, "msts")
+#   if(is.null(msts)){
+#     msts <- attr(e2, "msts")
+#     class(e2) <- setdiff("msts", class(e2))
+#   }
+#   else{
+#     if(is.null(attr(e2, "msts"))){
+#       class(e1) <- setdiff("msts", class(e1))
+#     } else {
+#       if(!identical(msts, attr(e2, "msts"))){
+#         "Cannot combine time series with different seasonal specifications."
+#       }
+#     }
+#   }
+#   structure(NextMethod(), msts = msts, class = c("msts", "ts"))
+# }
