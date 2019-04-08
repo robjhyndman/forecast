@@ -73,6 +73,7 @@ window.msts <- function(x, ...) {
 #' @export
 `[.msts` <- function(x, i, j, drop = TRUE) {
   y <- NextMethod("[")
+  if(!inherits(y, "ts")) return(y)
   class(y) <- c("msts", class(y))
   attr(y, "msts") <- attr(x, "msts")
   y
@@ -80,5 +81,19 @@ window.msts <- function(x, ...) {
 
 #' @export
 Ops.msts <- function(e1, e2){
-  structure(NextMethod(), msts = attr(e1, "msts"), class = c("msts", "ts"))
+  msts <- attr(e1, "msts")
+  if(is.null(msts)){
+    msts <- attr(e2, "msts")
+    class(e2) <- setdiff("msts", class(e2))
+  }
+  else{
+    if(is.null(attr(e2, "msts"))){
+      class(e1) <- setdiff("msts", class(e1))
+    } else {
+      if(!identical(msts, attr(e2, "msts"))){
+        "Cannot combine time series with different seasonal specifications."
+      }
+    }
+  }
+  structure(NextMethod(), msts = msts, class = c("msts", "ts"))
 }
