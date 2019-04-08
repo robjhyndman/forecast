@@ -15,7 +15,7 @@ mlmsplit <- function(x, index=NULL) {
   class(x) <- "lm"
   y <- attr(x$terms, "response")
 
-  yName <- colnames(x$model[[y]])[index]
+  yName <- make.names(colnames(x$model[[y]])[index])
   x$model[[y]] <- x$model[[y]][, index]
   colnames(x$model)[y] <- yName
   attr(x$model, "terms") <- terms(reformulate(attr(x$terms, "term.labels"), response = yName), data = x$model)
