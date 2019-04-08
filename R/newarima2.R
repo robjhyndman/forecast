@@ -125,7 +125,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   missing <- is.na(x)
   firstnonmiss <- head(which(!missing),1)
   lastnonmiss <- tail(which(!missing),1)
-  serieslength <- lastnonmiss - firstnonmiss + 1
+  serieslength <- sum(!missing[firstnonmiss:lastnonmiss])
 
   # Trim initial missing values
   x <- subset(x, start=firstnonmiss)
