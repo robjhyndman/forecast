@@ -204,7 +204,7 @@ trainingaccuracy <- function(f, test, d, D) {
 #' See Hyndman and Koehler (2006) and Hyndman and Athanasopoulos (2014, Section
 #' 2.5) for further details.
 #'
-#' @param f An object of class \dQuote{\code{forecast}}, or a numerical vector
+#' @param object An object of class \dQuote{\code{forecast}}, or a numerical vector
 #' containing forecasts. It will also work with \code{Arima}, \code{ets} and
 #' \code{lm} objects if \code{x} is omitted -- in which case training set accuracy
 #' measures are returned.
@@ -240,25 +240,25 @@ trainingaccuracy <- function(f, test, d, D) {
 #' plot(fit1)
 #' lines(EuStockMarkets[1:300,1])
 #' @export
-accuracy <- function(f, ...) {
+accuracy <- function(object, ...) {
   UseMethod("accuracy")
 }
 
 #' @rdname accuracy
 #' @method accuracy default
 #' @export
-accuracy.default <- function(f, x, test=NULL, d=NULL, D=NULL, ...) {
-  if (!any(is.element(class(f), c(
+accuracy.default <- function(object, x, test=NULL, d=NULL, D=NULL, ...) {
+  if (!any(is.element(class(object), c(
     "mforecast", "forecast", "ts", "integer", "numeric",
     "Arima", "ets", "lm", "bats", "tbats", "nnetar", "stlm", "baggedModel"
   )))) {
     stop("First argument should be a forecast object or a time series.")
   }
-  if (is.element("mforecast", class(f))) {
-    return(accuracy.mforecast(f, x, test, d, D))
+  if (is.element("mforecast", class(object))) {
+    return(accuracy.mforecast(object, x, test, d, D))
   }
 
-  trainset <- (is.list(f))
+  trainset <- (is.list(object))
   testset <- (!missing(x))
   if (testset && !is.null(test)) {
     trainset <- FALSE
@@ -274,31 +274,31 @@ accuracy.default <- function(f, x, test=NULL, d=NULL, D=NULL, ...) {
       D <- as.numeric(frequency(x) > 1)
     }
     else if (trainset) {
-      if (!is.null(f$mean)) {
-        d <- as.numeric(frequency(f$mean) == 1)
-        D <- as.numeric(frequency(f$mean) > 1)
+      if (!is.null(object$mean)) {
+        d <- as.numeric(frequency(object$mean) == 1)
+        D <- as.numeric(frequency(object$mean) > 1)
       }
       else {
-        d <- as.numeric(frequency(f$x) == 1)
-        D <- as.numeric(frequency(f$x) > 1)
+        d <- as.numeric(frequency(object$x) == 1)
+        D <- as.numeric(frequency(object$x) > 1)
       }
     }
     else {
-      d <- as.numeric(frequency(f) == 1)
-      D <- as.numeric(frequency(f) > 1)
+      d <- as.numeric(frequency(object) == 1)
+      D <- as.numeric(frequency(object) > 1)
     }
   }
 
 
   if (trainset) {
-    trainout <- trainingaccuracy(f, test, d, D)
+    trainout <- trainingaccuracy(object, test, d, D)
     trainnames <- names(trainout)
   }
   else {
     trainnames <- NULL
   }
   if (testset) {
-    testout <- testaccuracy(f, x, test, d, D)
+    testout <- testaccuracy(object, x, test, d, D)
     testnames <- names(testout)
   }
   else {
@@ -327,8 +327,7 @@ accuracy.default <- function(f, x, test=NULL, d=NULL, D=NULL, ...) {
 
 # Compute accuracy for an mforecast object
 #' @export
-accuracy.mforecast <- function(f, x, test=NULL, d, D, ...) {
-  object <- f
+accuracy.mforecast <- function(object, x, test=NULL, d, D, ...) {
   out <- NULL
   nox <- missing(x)
   i <- 1

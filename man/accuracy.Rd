@@ -5,13 +5,13 @@
 \alias{accuracy.default}
 \title{Accuracy measures for a forecast model}
 \usage{
-accuracy(f, ...)
+accuracy(object, ...)
 
-\method{accuracy}{default}(f, x, test = NULL, d = NULL, D = NULL,
-  ...)
+\method{accuracy}{default}(object, x, test = NULL, d = NULL,
+  D = NULL, ...)
 }
 \arguments{
-\item{f}{An object of class \dQuote{\code{forecast}}, or a numerical vector
+\item{object}{An object of class \dQuote{\code{forecast}}, or a numerical vector
 containing forecasts. It will also work with \code{Arima}, \code{ets} and
 \code{lm} objects if \code{x} is omitted -- in which case training set accuracy
 measures are returned.}
