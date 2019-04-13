@@ -450,7 +450,8 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
     else {
       sim <- ts(tail(arima.sim(model, nsim, innov = e), nsim) + xm)
     }
-    tsp(sim) <- tsp(x)
+    if(nsim==n)
+      tsp(sim) <- tsp(x)
     # If model is non-stationary, then condition simulated data on first observation
     if (model$order[2] > 0 || flag.seasonal.diff) {
       sim <- sim - sim[1] + x[1]
@@ -514,7 +515,7 @@ simulate.ar <- function(object, nsim=object$n.used, seed=NULL, future=TRUE, boot
 #' @rdname simulate.ets
 #' @export
 simulate.lagwalk <- function(object, nsim=length(object$x), seed=NULL,
-                             future=TRUE, bootstrap=FALSE, innov=NULL, 
+                             future=TRUE, bootstrap=FALSE, innov=NULL,
                              lambda = object$lambda, ...) {
   if (is.null(innov)) {
     if (!exists(".Random.seed", envir = .GlobalEnv)) {
@@ -532,7 +533,7 @@ simulate.lagwalk <- function(object, nsim=length(object$x), seed=NULL,
   else {
     nsim <- length(innov)
   }
-  
+
   if (bootstrap) {
     res <- na.omit(c(object$residuals) - mean(object$residuals, na.rm = TRUE))
     e <- sample(res, nsim, replace = TRUE)
@@ -542,12 +543,12 @@ simulate.lagwalk <- function(object, nsim=length(object$x), seed=NULL,
   } else {
     e <- innov
   }
-  
+
   # Cumulate errors
   lag_grp <- rep_len(seq_len(object$par$lag), length(e))
   e <- split(e, lag_grp)
   cumulative_e <- unsplit(lapply(e, cumsum), lag_grp)
-  
+
   # Find starting position
   x <- object$x
   if(!is.null(lambda)){
@@ -559,7 +560,7 @@ simulate.lagwalk <- function(object, nsim=length(object$x), seed=NULL,
   else{
     start <- head(x, object$par$lag)
   }
-  
+
   # Handle missing values
   if(any(na_pos <- is.na(start))){
     if(!is.null(innov)){
