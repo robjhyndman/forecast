@@ -41,6 +41,7 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) {
   )
 }
 
+#' @importFrom utils methods
 .onLoad <- function(...) {
   if (tryCatch(exists("autolayer", getNamespace("ggplot2")), error = function(e) FALSE)) {
     autolayer <<- getNamespace("ggplot2")$autolayer
