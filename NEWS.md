@@ -1,6 +1,7 @@
 ## Version 8.6 (15 Apr 2019)
-  * Updated to allow tidy versions of forecasting
-  * Improved docs
+  * Reduced conflicts with tidy forecasting packages
+  * Forecast autoplots are now use same colour shading as autolayer() and geom_forecast()
+  * Documentation improvements
   * Bug fixes
 
 ## Version 8.5 (18 Jan 2019)
