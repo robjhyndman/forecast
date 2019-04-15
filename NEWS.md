@@ -1,4 +1,7 @@
-## Version 8.5.0.9000 (DEV)
+## Version 8.6 (15 Apr 2019)
+  * Updated to allow tidy versions of forecasting
+  * Improved docs
+  * Bug fixes
 
 ## Version 8.5 (18 Jan 2019)
   * Updated tsCV() to handle exogenous regressors
