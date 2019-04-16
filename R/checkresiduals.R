@@ -109,7 +109,7 @@ checkresiduals <- function(object, lag, df=NULL, test, plot=TRUE, ...) {
   
   if (missing(lag)) {
     lag <- ifelse(freq > 1, 2 * freq, 10)
-    lag <- min(lag, length(residuals)/5)
+    lag <- min(lag, round(length(residuals)/5))
     lag <- max(df+3, lag)
   }
 
