@@ -1,3 +1,8 @@
+## Resubmission
+This is a resubmission. In this version I have:
+
+* Resolved reverse dependency issues flagged in the previous submission.
+
 ## Test environments
 * ubuntu 16.04 (on travis-ci), R 3.5.1
 * ubuntu 18.04
