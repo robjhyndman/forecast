@@ -283,7 +283,10 @@ forecast.stl <- function(object, method=c("ets", "arima", "naive", "rwdrift"), e
   }
 
   if ("mstl" %in% class(object)) {
-    seasonal.periods <- attributes(object)$seasonal.periods
+    seasonal.periods <- attr(object, "seasonal.periods")
+    if(is.null(seasonal.periods)){
+      seasonal.periods <- frequency(object)
+    }
     seascomp <- matrix(0, ncol = length(seasonal.periods), nrow = h)
     for (i in seq_along(seasonal.periods))
     {

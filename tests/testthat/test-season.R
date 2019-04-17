@@ -68,6 +68,9 @@ if (require(testthat)) {
     constantForecast <- expect_error(stlf(series), NA)
     # Small eps
     expect_true(all(abs(constantForecast$mean - mean(series)) < 10 ^ -8))
+    
+    y <- ts(rep(1:7, 3), frequency = 7)
+    expect_equal(c(stlf(y)$mean), rep(1:7, 2))
   })
 
   test_that("tests for ma", {
