@@ -119,6 +119,7 @@ checkresiduals <- function(object, lag, df=NULL, test, plot=TRUE, ...) {
       BGtest <- lmtest::bgtest(object, order = lag)
       BGtest$data.name <- main
       print(BGtest)
+      return(BGtest)
     }
     else {
       # Do Ljung-Box test
@@ -128,6 +129,7 @@ checkresiduals <- function(object, lag, df=NULL, test, plot=TRUE, ...) {
       names(LBtest$statistic) <- "Q*"
       print(LBtest)
       cat(paste("Model df: ", df, ".   Total lags used: ", lag, "\n\n", sep = ""))
+      return(LBtest)
     }
   }
 }
