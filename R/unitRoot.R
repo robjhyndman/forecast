@@ -88,11 +88,14 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), type=c("level", "tren
       diff
       },
       error = function(e){
-        warning(
-          sprintf(
-            "The chosen unit root test encountered an error when testing for the %s difference. %i differences will be used. Consider using a different unit root test.",
-            switch(as.character(d), `0` = "first", `1` = "second", `2` = "third", paste0(d+1, "th")), d
-          )
+        warning(call. = FALSE,
+                sprintf(
+"The chosen unit root test encountered an error when testing for the %s difference.
+Error in %s: %s
+%i differences will be used. Consider using a different unit root test.",
+                  switch(as.character(d), `0` = "first", `1` = "second", `2` = "third", paste0(d+1, "th")),
+                  deparse(e$call[[1]]), e$message, d
+                )
         )
         FALSE
       }
@@ -231,10 +234,13 @@ nsdiffs <- function(x, alpha = 0.05, m=frequency(x), test=c("seas", "ocsb", "heg
         diff
       },
       error = function(e){
-        warning(
+        warning(call. = FALSE,
           sprintf(
-            "The chosen seasonal unit root test encountered an error when testing for the %s difference. %i seasonal differences will be used. Consider using a different unit root test.",
-            switch(as.character(D), `0` = "first", `1` = "second", `2` = "third", paste0(D+1, "th")), D
+"The chosen seasonal unit root test encountered an error when testing for the %s difference.
+Error in %s: %s
+%i seasonal differences will be used. Consider using a different unit root test.",
+            switch(as.character(D), `0` = "first", `1` = "second", `2` = "third", paste0(D+1, "th")),
+            deparse(e$call[[1]]), e$message, D
           )
         )
         0
