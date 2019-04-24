@@ -91,7 +91,7 @@ ndiffs <- function(x,alpha=0.05,test=c("kpss","adf","pp"), type=c("level", "tren
         warning(call. = FALSE,
                 sprintf(
 "The chosen unit root test encountered an error when testing for the %s difference.
-From %s: %s
+From %s(): %s
 %i differences will be used. Consider using a different unit root test.",
                   switch(as.character(d), `0` = "first", `1` = "second", `2` = "third", paste0(d+1, "th")),
                   deparse(e$call[[1]]), e$message, d
@@ -237,7 +237,7 @@ nsdiffs <- function(x, alpha = 0.05, m=frequency(x), test=c("seas", "ocsb", "heg
         warning(call. = FALSE,
           sprintf(
 "The chosen seasonal unit root test encountered an error when testing for the %s difference.
-From %s: %s
+From %s(): %s
 %i seasonal differences will be used. Consider using a different unit root test.",
             switch(as.character(D), `0` = "first", `1` = "second", `2` = "third", paste0(D+1, "th")),
             deparse(e$call[[1]]), e$message, D
