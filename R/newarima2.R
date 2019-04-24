@@ -286,8 +286,12 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
 
   if (is.constant(dx)) {
     if (is.null(xreg)) {
-      if (D > 0) {
+      if (D > 0 && d == 0) {
         fit <- Arima(x, order = c(0, d, 0), seasonal = list(order = c(0, D, 0), period = m), include.constant = TRUE, fixed = mean(dx/m, na.rm = TRUE), method = method, ...)
+      } else if (D > 0 && d > 0) {
+        fit <- Arima(x, order = c(0, d, 0), seasonal = list(order = c(0, D, 0), period = m), method = method, ...)
+      } else if (d == 2) {
+        fit <- Arima(x, order = c(0, d, 0), method = method, ...)
       } else if (d < 2) {
         fit <- Arima(x, order = c(0, d, 0), include.constant = TRUE, fixed = mean(dx, na.rm = TRUE), method = method, ...)
       } else {
