@@ -1309,7 +1309,7 @@ ggseasonplot <- function(x, season.labels=NULL, year.labels=FALSE, year.labels.l
   
   data <- data.frame(
     y = as.numeric(x),
-    year = trunc(time(x)),
+    year = trunc(round(time(x), 8)),
     cycle = as.numeric(cycle(x)),
     time = as.numeric((cycle(x) - 1) / s)
   )
