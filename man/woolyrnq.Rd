@@ -6,7 +6,7 @@
 \title{Quarterly production of woollen yarn in Australia}
 \format{Time series data}
 \source{
-Time Series Data Library. \url{http://bit.ly/1BqwTa0}
+Time Series Data Library. \url{https://pkg.yangzhuoranyang.com/tsdl/}
 }
 \usage{
 woolyrnq
