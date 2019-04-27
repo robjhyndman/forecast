@@ -14,10 +14,6 @@
 #'
 "gas"
 
-
-
-
-
 #' Daily morning gold prices
 #'
 #' Daily morning gold prices in US dollars. 1 January 1985 -- 31 March 1989.
@@ -29,10 +25,6 @@
 #' tsdisplay(gold)
 #'
 "gold"
-
-
-
-
 
 #' Half-hourly electricity demand
 #'
@@ -52,10 +44,6 @@
 #'
 "taylor"
 
-
-
-
-
 #' Australian total wine sales
 #'
 #' Australian total wine sales by wine makers in bottles <= 1 litre. Jan 1980
@@ -63,16 +51,12 @@
 #'
 #'
 #' @format Time series data
-#' @source Time Series Data Library. \url{bit.ly/1XZluZ3}
+#' @source Time Series Data Library. \url{https://pkg.yangzhuoranyang.com/tsdl/}
 #' @keywords datasets
 #' @examples
 #' tsdisplay(wineind)
 #'
 "wineind"
-
-
-
-
 
 #' Quarterly production of woollen yarn in Australia
 #'
@@ -81,7 +65,7 @@
 #'
 #'
 #' @format Time series data
-#' @source Time Series Data Library. \url{http://bit.ly/1BqwTa0}
+#' @source Time Series Data Library. \url{https://pkg.yangzhuoranyang.com/tsdl/}
 #' @keywords datasets
 #' @examples
 #' tsdisplay(woolyrnq)
