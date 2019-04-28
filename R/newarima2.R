@@ -186,10 +186,11 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   if (!is.null(xreg)) {
     if(!is.numeric(xreg))
       stop("xreg should be a numeric matrix or a numeric vector")
-    xregg <- as.matrix(xreg)
-    if (is.null(colnames(xregg))) {
-      colnames(xregg) <- if (ncol(xregg) == 1) "xreg" else paste("xreg", 1:ncol(xregg), sep = "")
+    xreg <- as.matrix(xreg)
+    if (is.null(colnames(xreg))) {
+      colnames(xreg) <- if (ncol(xreg) == 1) "xreg" else paste("xreg", 1:ncol(xreg), sep = "")
     }
+    xregg <- xreg
 
     xx <- x
     # Check that xreg is not rank deficient
@@ -694,7 +695,8 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
     }
   }
   if (diffs == 1 && constant) {
-    xreg <- `colnames<-`(cbind(drift = 1:length(x), xreg), make.names(c("drift", colnames(xreg))))
+    xreg <- `colnames<-`(cbind(drift = 1:length(x), xreg), 
+      make.unique(c("drift", ifelse(is.null(colnames(xreg)), rep("", NCOL(xreg)), colnames(xreg)))))
     if (use.season) {
       suppressWarnings(fit <- try(stats::arima(x = x, order = order, seasonal = list(order = seasonal, period = m), xreg = xreg, method = method, ...), silent = TRUE))
     } else {
