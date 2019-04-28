@@ -327,7 +327,7 @@ forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[
     n <- length(x) - firstnonmiss + 1
     if (!is.null(xreg)) {
       xreg <- `colnames<-`(cbind(drift = (1:h) + n, xreg), 
-                           make.unique(c("drift", ifelse(is.null(colnames(xreg)), rep("", NCOL(xreg)), colnames(xreg)))))
+        make.unique(c("drift", if(is.null(colnames(xreg)) && !is.null(xreg)) rep("", NCOL(xreg)) else colnames(xreg))))
     } else {
       xreg <- `colnames<-`(as.matrix((1:h) + n), "drift")
     }

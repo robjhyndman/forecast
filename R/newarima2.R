@@ -696,7 +696,7 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
   }
   if (diffs == 1 && constant) {
     xreg <- `colnames<-`(cbind(drift = 1:length(x), xreg), 
-      make.unique(c("drift", ifelse(is.null(colnames(xreg)), rep("", NCOL(xreg)), colnames(xreg)))))
+      make.unique(c("drift", if(is.null(colnames(xreg)) && !is.null(xreg)) rep("", NCOL(xreg)) else colnames(xreg))))
     if (use.season) {
       suppressWarnings(fit <- try(stats::arima(x = x, order = order, seasonal = list(order = seasonal, period = m), xreg = xreg, method = method, ...), silent = TRUE))
     } else {
