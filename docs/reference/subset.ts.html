@@ -16,7 +16,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -68,7 +69,7 @@ to extract all values for the month of May from a time series." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.7</span>
       </span>
     </div>
 
@@ -78,7 +79,7 @@ to extract all values for the month of May from a time series." />
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="https://github.com/robjhyndman/forecast/raw/master/vignettes/JSS2008.pdf">JSS paper</a>
+  <a href="https://cran.r-project.org/web/packages/forecast/vignettes/JSS2008.pdf">JSS paper</a>
 </li>
 <li>
   <a href="../news/index.html">Change Log</a>
@@ -112,18 +113,18 @@ to extract all values for the month of May from a time series." />
     <div class="ref-description">
     
     <p>Various types of subsetting of a time series. Allows subsetting by index
-values (unlike <code><a href='https://www.rdocumentation.org/packages/stats/topics/window'>window</a></code>). Also allows extraction of the
+values (unlike <code><a href='https://rdrr.io/r/stats/window.html'>window</a></code>). Also allows extraction of the
 values of a specific season or subset of seasons in each year. For example,
 to extract all values for the month of May from a time series.</p>
     
     </div>
 
     <pre class="usage"><span class='co'># S3 method for ts</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/subset'>subset</a></span>(<span class='no'>x</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>month</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quarter</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>x</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>month</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quarter</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>season</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for msts</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/subset'>subset</a></span>(<span class='no'>x</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>x</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -183,16 +184,16 @@ values for quarters are <code>"Q1"</code>, <code>"Q2"</code>, <code>"Q3"</code>,
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/base/topics/subset'>subset</a></code>, <code><a href='https://www.rdocumentation.org/packages/stats/topics/window'>window</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://rdrr.io/r/base/subset.html'>subset</a></code>, <code><a href='https://rdrr.io/r/stats/window.html'>window</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/subset'>subset</a></span>(<span class='no'>gas</span>,<span class='kw'>month</span><span class='kw'>=</span><span class='st'>"November"</span>))</div><div class='img'><img src='subset.ts-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/subset'>subset</a></span>(<span class='no'>woolyrnq</span>,<span class='kw'>quarter</span><span class='kw'>=</span><span class='fl'>3</span>)</div><div class='output co'>#&gt; Time Series:
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>gas</span>,<span class='kw'>month</span><span class='kw'>=</span><span class='st'>"November"</span>))</div><div class='img'><img src='subset.ts-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>woolyrnq</span>,<span class='kw'>quarter</span><span class='kw'>=</span><span class='fl'>3</span>)</div><div class='output co'>#&gt; Time Series:
 #&gt; Start = 1965.5 
 #&gt; End = 1994.5 
 #&gt; Frequency = 1 
 #&gt;  [1] 6633 6730 6946 6915 7190 7105 6840 7819 7045 5540 5906 5505 5318 5466 5696
-#&gt; [16] 5341 5464 5129 5524 6080 6540 6339 6590 6077 5146 5127 5222 4954 5309 6396</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/subset'>subset</a></span>(<span class='no'>USAccDeaths</span>, <span class='kw'>start</span><span class='kw'>=</span><span class='fl'>49</span>)</div><div class='output co'>#&gt;        Jan   Feb   Mar   Apr   May   Jun   Jul   Aug   Sep   Oct   Nov   Dec
+#&gt; [16] 5341 5464 5129 5524 6080 6540 6339 6590 6077 5146 5127 5222 4954 5309 6396</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>USAccDeaths</span>, <span class='kw'>start</span><span class='kw'>=</span><span class='fl'>49</span>)</div><div class='output co'>#&gt;        Jan   Feb   Mar   Apr   May   Jun   Jul   Aug   Sep   Oct   Nov   Dec
 #&gt; 1977  7792  6957  7726  8106  8890  9299 10625  9302  8314  8850  8265  8796
 #&gt; 1978  7836  6892  7791  8192  9115  9434 10484  9827  9110  9070  8633  9240</div><div class='input'>
 </div></pre>

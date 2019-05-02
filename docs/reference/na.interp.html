@@ -16,7 +16,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -32,9 +33,9 @@
 
 <meta property="og:title" content="Interpolate missing values in a time series — na.interp" />
 
-<meta property="og:description" content="Uses linear interpolation for non-seasonal series. For seasonal series, a 
-robust STL decomposition is used. A linear interpolation is applied to the 
-seasonally adjusted data, and then the seasonal component is added back." />
+<meta property="og:description" content="By default, uses linear interpolation for non-seasonal series. For seasonal series, a 
+robust STL decomposition is first computed. Then a linear interpolation is applied to the 
+seasonally adjusted data, and the seasonal component is added back." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -67,7 +68,7 @@ seasonally adjusted data, and then the seasonal component is added back." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.7</span>
       </span>
     </div>
 
@@ -77,7 +78,7 @@ seasonally adjusted data, and then the seasonal component is added back." />
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="https://github.com/robjhyndman/forecast/raw/master/vignettes/JSS2008.pdf">JSS paper</a>
+  <a href="https://cran.r-project.org/web/packages/forecast/vignettes/JSS2008.pdf">JSS paper</a>
 </li>
 <li>
   <a href="../news/index.html">Change Log</a>
@@ -110,13 +111,14 @@ seasonally adjusted data, and then the seasonal component is added back." />
 
     <div class="ref-description">
     
-    <p>Uses linear interpolation for non-seasonal series. For seasonal series, a 
-robust STL decomposition is used. A linear interpolation is applied to the 
-seasonally adjusted data, and then the seasonal component is added back.</p>
+    <p>By default, uses linear interpolation for non-seasonal series. For seasonal series, a 
+robust STL decomposition is first computed. Then a linear interpolation is applied to the 
+seasonally adjusted data, and the seasonal component is added back.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>na.interp</span>(<span class='no'>x</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>na.interp</span>(<span class='no'>x</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>linear</span> <span class='kw'>=</span> (<span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='no'>x</span>) <span class='kw'>&lt;=</span> <span class='fl'>1</span> <span class='kw'>|</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(!<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>x</span>)) <span class='kw'>&lt;=</span> <span class='fl'>2</span> * <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='no'>x</span>)))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -131,6 +133,10 @@ seasonally adjusted data, and then the seasonal component is added back.</p>
 then a transformation is automatically selected using <code>BoxCox.lambda</code>.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.</p></td>
+    </tr>
+    <tr>
+      <th>linear</th>
+      <td><p>Should a linear interpolation be used.</p></td>
     </tr>
     </table>
     
@@ -150,8 +156,8 @@ the <code>zoo</code> package.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>gold</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='fu'>na.interp</span>(<span class='no'>gold</span>))</div><div class='img'><img src='na.interp-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>gold</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'>na.interp</span>(<span class='no'>gold</span>))</div><div class='img'><img src='na.interp-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

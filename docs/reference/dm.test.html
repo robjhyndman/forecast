@@ -16,7 +16,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -66,7 +67,7 @@ methods." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.7</span>
       </span>
     </div>
 
@@ -76,7 +77,7 @@ methods." />
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="https://github.com/robjhyndman/forecast/raw/master/vignettes/JSS2008.pdf">JSS paper</a>
+  <a href="https://cran.r-project.org/web/packages/forecast/vignettes/JSS2008.pdf">JSS paper</a>
 </li>
 <li>
   <a href="../news/index.html">Change Log</a>
@@ -114,7 +115,7 @@ methods.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>dm.test</span>(<span class='no'>e1</span>, <span class='no'>e2</span>, <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"two.sided"</span>, <span class='st'>"less"</span>, <span class='st'>"greater"</span>), <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+    <pre class="usage"><span class='fu'>dm.test</span>(<span class='no'>e1</span>, <span class='no'>e2</span>, <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"two.sided"</span>, <span class='st'>"less"</span>, <span class='st'>"greater"</span>), <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>power</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -186,7 +187,7 @@ prediction mean squared errors. <em>International Journal of forecasting</em>,
 #&gt; Training set 0.2243266 3.40781 2.761668 0.2629465 2.162415 0.6102792 0.2308014</div><div class='input'><span class='fu'><a href='accuracy.html'>accuracy</a></span>(<span class='no'>f2</span>)</div><div class='output co'>#&gt;                     ME     RMSE      MAE       MPE     MAPE      MASE
 #&gt; Training set 0.3035616 3.113754 2.405275 0.2805566 1.917463 0.5315228
 #&gt;                     ACF1
-#&gt; Training set -0.01715517</div><div class='input'><span class='fu'>dm.test</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/residuals'>residuals</a></span>(<span class='no'>f1</span>),<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/residuals'>residuals</a></span>(<span class='no'>f2</span>),<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='output co'>#&gt; 
+#&gt; Training set -0.01715517</div><div class='input'><span class='fu'>dm.test</span>(<span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span>(<span class='no'>f1</span>),<span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span>(<span class='no'>f2</span>),<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='output co'>#&gt; 
 #&gt; 	Diebold-Mariano Test
 #&gt; 
 #&gt; data:  residuals(f1)residuals(f2)
@@ -203,7 +204,7 @@ prediction mean squared errors. <em>International Journal of forecasting</em>,
 #&gt; Training set 0.2100836 3.24835 2.570459 0.1203497 1.352355 0.4246845 0.2287215</div><div class='input'><span class='fu'><a href='accuracy.html'>accuracy</a></span>(<span class='no'>f2.out</span>)</div><div class='output co'>#&gt;                    ME     RMSE      MAE       MPE     MAPE      MASE
 #&gt; Training set 1.081679 3.329012 2.437119 0.6810673 1.375924 0.4026544
 #&gt;                      ACF1
-#&gt; Training set -0.004460367</div><div class='input'><span class='fu'>dm.test</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/residuals'>residuals</a></span>(<span class='no'>f1.out</span>),<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/residuals'>residuals</a></span>(<span class='no'>f2.out</span>),<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='output co'>#&gt; 
+#&gt; Training set -0.004460367</div><div class='input'><span class='fu'>dm.test</span>(<span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span>(<span class='no'>f1.out</span>),<span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span>(<span class='no'>f2.out</span>),<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>1</span>)</div><div class='output co'>#&gt; 
 #&gt; 	Diebold-Mariano Test
 #&gt; 
 #&gt; data:  residuals(f1.out)residuals(f2.out)

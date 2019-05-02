@@ -16,7 +16,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -72,7 +73,7 @@ not be used." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.7</span>
       </span>
     </div>
 
@@ -82,7 +83,7 @@ not be used." />
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="https://github.com/robjhyndman/forecast/raw/master/vignettes/JSS2008.pdf">JSS paper</a>
+  <a href="https://cran.r-project.org/web/packages/forecast/vignettes/JSS2008.pdf">JSS paper</a>
 </li>
 <li>
   <a href="../news/index.html">Change Log</a>
@@ -183,23 +184,23 @@ validity of cross-validation for evaluating time series prediction.
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='no'>modelcv</span> <span class='kw'>&lt;-</span> <span class='fu'>CVar</span>(<span class='no'>lynx</span>, <span class='kw'>k</span><span class='kw'>=</span><span class='fl'>5</span>, <span class='kw'>lambda</span><span class='kw'>=</span><span class='fl'>0.15</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>modelcv</span>)</div><div class='output co'>#&gt; Series: lynx 
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>modelcv</span>)</div><div class='output co'>#&gt; Series: lynx 
 #&gt; Call:   CVar(y = lynx, k = 5, lambda = 0.15)
 #&gt; 
 #&gt; 5-fold cross-validation
-#&gt;                   Mean           SD
-#&gt; ME        -47.94024811 168.45264852
-#&gt; RMSE      941.32651587 312.32265027
-#&gt; MAE       590.53751580 186.42613185
-#&gt; MPE       -18.38857601  11.25029762
-#&gt; MAPE       53.09867080  13.27799759
-#&gt; ACF1        0.03351767   0.18600230
-#&gt; Theil's U   0.74429498   0.09406432
+#&gt;                    Mean          SD
+#&gt; ME        -7.399046e+01 209.5564233
+#&gt; RMSE       1.008670e+03 255.8655547
+#&gt; MAE        6.679454e+02 172.1851052
+#&gt; MPE       -2.689215e+01  51.6590776
+#&gt; MAPE       6.685048e+01  36.9979203
+#&gt; ACF1      -4.401883e-03   0.1321075
+#&gt; Theil's U  1.058446e+00   0.2532232
 #&gt; 
-#&gt; p-value of Ljung-Box test of residuals is  0.7000251 
+#&gt; p-value of Ljung-Box test of residuals is  0.1454125 
 #&gt; if this value is significant (&lt;0.05),
 #&gt; the result of the cross-validation should not be used
-#&gt; as the model is underfitting the data.</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>modelcv</span>$<span class='no'>fold1</span>)</div><div class='output co'>#&gt; $model
+#&gt; as the model is underfitting the data.</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>modelcv</span>$<span class='no'>fold1</span>)</div><div class='output co'>#&gt; $model
 #&gt; Series: y 
 #&gt; Model:  NNAR(11,6) 
 #&gt; Call:   FUN(y = y, lambda = 0.15, subset = trainset)
@@ -208,11 +209,11 @@ validity of cross-validation for evaluating time series prediction.
 #&gt; a 11-6-1 network with 79 weights
 #&gt; options were - linear output units 
 #&gt; 
-#&gt; sigma^2 estimated as 0.09849
+#&gt; sigma^2 estimated as 0.09578
 #&gt; 
 #&gt; $accuracy
-#&gt;               ME     RMSE      MAE       MPE     MAPE      ACF1 Theil's U
-#&gt; Test set 54.5283 669.1654 393.0634 -28.47463 53.24511 0.1040563 0.6553205
+#&gt;                ME     RMSE      MAE      MPE     MAPE       ACF1 Theil's U
+#&gt; Test set 76.85482 1185.761 715.7763 2.319121 53.37024 0.03753834  1.303367
 #&gt; 
 #&gt; $testfit
 #&gt; Time Series:
@@ -220,31 +221,31 @@ validity of cross-validation for evaluating time series prediction.
 #&gt; End = 1934 
 #&gt; Frequency = 1 
 #&gt;   [1]         NA         NA         NA         NA         NA         NA
-#&gt;   [7]         NA         NA         NA         NA         NA  105.21504
-#&gt;  [13]  173.53080  286.81383  427.76973 2237.13163 2757.61403 3238.53147
-#&gt;  [19] 3444.50705  513.36004  156.14849   46.60305   69.77331  205.89523
-#&gt;  [25]  534.67536 1045.54882 2166.50062 2809.28424  964.44677  352.69546
-#&gt;  [31]  355.51756  242.29041  348.68280  745.43335 1287.35967 2906.52296
-#&gt;  [37] 3047.12261 1845.34837  715.91621  194.66933  257.27823  217.94619
-#&gt;  [43]  445.70225 1513.70832 3199.27674 6176.38809 4333.43277  719.76326
-#&gt;  [49]  176.42534  418.40068  360.08275  487.32443 1591.68267 1767.98777
-#&gt;  [55] 2327.85152 1477.34294  739.16119  294.98107  203.57957  226.52017
-#&gt;  [61]  180.21405  941.25544 1943.38268 3014.77741 4223.73641 4575.36955
-#&gt;  [67]  419.77833  180.02903   39.17359   52.26742   63.24813  184.93638
-#&gt;  [73]  405.95237  614.39117 3742.22197 3384.20758  587.25797  104.19192
-#&gt;  [79]  158.04398  141.19296  751.69124 1316.49408 3356.31448 6748.68018
-#&gt;  [85] 6171.41779 3721.28521 1737.52499  365.17075  376.97026  815.86490
-#&gt;  [91] 1354.86611 2745.67193 3713.46794 3042.56180 3087.87837 3692.32603
-#&gt;  [97]  689.80358   81.77819  120.49390  107.47938  220.57929  431.06549
-#&gt; [103] 1133.61505 2435.64993 3405.33786 3039.67200  743.28852  520.01698
-#&gt; [109]  452.49698  663.33892 1028.01775 1588.04980 2667.86157 3455.24028
+#&gt;   [7]         NA         NA         NA         NA         NA  287.19570
+#&gt;  [13]  184.21320  282.91496  409.19593 2192.03796 2877.01565 3417.18383
+#&gt;  [19] 2022.21190 1599.00233  149.74329   47.64919   67.24354  211.40517
+#&gt;  [25]  532.11622 1052.86007 2092.77341 2549.59355  987.47308  376.91182
+#&gt;  [31]  352.80268  246.88152  358.68024  741.97139 1650.64997 2654.73639
+#&gt;  [37] 3219.93677 2165.79913  730.32194  301.26331  365.38976  236.18078
+#&gt;  [43]  522.28826 1577.03121 3280.64183 5675.68453 4409.60188 3106.08733
+#&gt;  [49]  250.89901  424.84849  370.97720  762.50398 1617.20849 1772.41722
+#&gt;  [55] 2325.21047 2529.90193  767.97707  296.31146  171.03166  258.69082
+#&gt;  [61]  443.41225  762.85045 1975.78213 2924.22641 4344.50209 2604.72846
+#&gt;  [67] 1570.87275  149.85585   40.30856   50.70034   66.53577  139.63290
+#&gt;  [73]  377.87726  585.66515 3965.98800 3512.01272 1134.45446  106.48592
+#&gt;  [79]  155.49786  365.45650  770.68567 1319.06535 3391.92019 3441.94281
+#&gt;  [85] 5951.02581 3771.51527 1781.75796  370.88750  382.15521  789.27459
+#&gt;  [91] 1395.54100 2761.97997 3672.80096 3164.25896 2874.32795 3572.64580
+#&gt;  [97]  672.93393   84.42843   53.25289  106.46359  222.59445  411.01094
+#&gt; [103] 1147.65876 1042.18122 3431.96897 2909.09437 1483.21392  498.12837
+#&gt; [109]  454.26605  707.99385 1175.52810 1648.48632 2659.55348 3352.11426
 #&gt; 
 #&gt; $testset
-#&gt;  [1]   3   5   8  10  19  20  35  38  39  40  43  49  52  55  61  62  66  68  74
-#&gt; [20]  80  99 107 110
+#&gt;  [1]   1   6   8   9  10  12  20  30  41  48  56  59  67  68  72  74  77  84  99
+#&gt; [20] 104 110 111 112
 #&gt; </div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>ggplot2</span>)
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>lynx</span>, <span class='kw'>series</span><span class='kw'>=</span><span class='st'>"Data"</span>) +
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/autoplot.html'>autoplot</a></span>(<span class='no'>lynx</span>, <span class='kw'>series</span><span class='kw'>=</span><span class='st'>"Data"</span>) +
   <span class='fu'><a href='autolayer.html'>autolayer</a></span>(<span class='no'>modelcv</span>$<span class='no'>testfit</span>, <span class='kw'>series</span><span class='kw'>=</span><span class='st'>"Fits"</span>) +
   <span class='fu'><a href='autolayer.html'>autolayer</a></span>(<span class='no'>modelcv</span>$<span class='no'>residuals</span>, <span class='kw'>series</span><span class='kw'>=</span><span class='st'>"Residuals"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 11 rows containing missing values (geom_path).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 11 rows containing missing values (geom_path).</span></div><div class='img'><img src='CVar-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='autoplot.acf.html'>ggAcf</a></span>(<span class='no'>modelcv</span>$<span class='no'>residuals</span>)</div><div class='img'><img src='CVar-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
