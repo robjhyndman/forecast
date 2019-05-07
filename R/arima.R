@@ -746,7 +746,7 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
   }
 
   # Calculate aicc & bic based on tmp$aic
-  npar <- length(tmp$coef) + 1
+  npar <- length(tmp$coef[tmp$mask]) + 1
   missing <- is.na(tmp$residuals)
   firstnonmiss <- head(which(!missing),1)
   lastnonmiss <- tail(which(!missing),1)

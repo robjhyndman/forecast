@@ -723,7 +723,7 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
       # names(fit$coef) <- fitnames
       fit$xreg <- xreg
     }
-    npar <- length(fit$coef) + 1
+    npar <- length(fit$coef[fit$mask]) + 1
     if (method == "CSS") {
       fit$aic <- offset + nstar * log(fit$sigma2) + 2 * npar
     }
