@@ -56,6 +56,8 @@ tsCV <- function(y, forecastfunction, h=1, window=NULL, xreg=NULL, initial=0, ..
   if (!is.null(xreg)) {
     # Make xreg a ts object to allow easy subsetting later
     xreg <- ts(as.matrix(xreg))
+    if(NROW(xreg) != length(y))
+      stop("xreg must be of the same size as y")
     tsp(xreg) <- tsp(y)
   }
   if (is.null(window))
