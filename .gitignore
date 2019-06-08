@@ -1,6 +1,7 @@
 *.o
 *.so
 symbols.rds
+.directory
 .Rhistory
 .Rproj.user
 .Rbuildignore
