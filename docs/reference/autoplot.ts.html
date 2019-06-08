@@ -16,7 +16,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -66,7 +67,7 @@ a ggplot object suitable for usage with stat_forecast." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.7</span>
       </span>
     </div>
 
@@ -76,7 +77,7 @@ a ggplot object suitable for usage with stat_forecast." />
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="https://github.com/robjhyndman/forecast/raw/master/vignettes/JSS2008.pdf">JSS paper</a>
+  <a href="https://cran.r-project.org/web/packages/forecast/vignettes/JSS2008.pdf">JSS paper</a>
 </li>
 <li>
   <a href="../news/index.html">Change Log</a>
@@ -124,16 +125,16 @@ a ggplot object suitable for usage with <code>stat_forecast</code>.</p>
 <span class='fu'><a href='autolayer.html'>autolayer</a></span>(<span class='no'>object</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>series</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for ts</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>object</span>, <span class='kw'>series</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"Time"</span>,
-  <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/deparse'>deparse</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>object</span>)), <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/autoplot.html'>autoplot</a></span>(<span class='no'>object</span>, <span class='kw'>series</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"Time"</span>,
+  <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span>(<span class='no'>object</span>)), <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for mts</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>object</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>facets</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"Time"</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/deparse'>deparse</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/substitute'>substitute</a></span>(<span class='no'>object</span>)), <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+<span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/autoplot.html'>autoplot</a></span>(<span class='no'>object</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>facets</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"Time"</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>substitute</a></span>(<span class='no'>object</span>)), <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>...</span>)
 
 <span class='co'># S3 method for msts</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>object</span>, <span class='kw'>series</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/autoplot.html'>autoplot</a></span>(<span class='no'>object</span>, <span class='kw'>series</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for ts</span>
 <span class='fu'>fortify</span>(<span class='no'>model</span>, <span class='no'>data</span>, <span class='no'>...</span>)</pre>
@@ -198,15 +199,15 @@ colour.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/stats/topics/plot.ts'>plot.ts</a></code>, <code><a href='https://ggplot2.tidyverse.org/reference/fortify.html'>fortify</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://rdrr.io/r/stats/plot.ts.html'>plot.ts</a></code>, <code><a href='https://rdrr.io/pkg/ggplot2/man/fortify.html'>fortify</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>ggplot2</span>)
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>USAccDeaths</span>)</div><div class='img'><img src='autoplot.ts-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='no'>lungDeaths</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cbind'>cbind</a></span>(<span class='no'>mdeaths</span>, <span class='no'>fdeaths</span>)
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>lungDeaths</span>)</div><div class='img'><img src='autoplot.ts-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>lungDeaths</span>, <span class='kw'>facets</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='autoplot.ts-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/autoplot.html'>autoplot</a></span>(<span class='no'>USAccDeaths</span>)</div><div class='img'><img src='autoplot.ts-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>lungDeaths</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='no'>mdeaths</span>, <span class='no'>fdeaths</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/autoplot.html'>autoplot</a></span>(<span class='no'>lungDeaths</span>)</div><div class='img'><img src='autoplot.ts-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/autoplot.html'>autoplot</a></span>(<span class='no'>lungDeaths</span>, <span class='kw'>facets</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='autoplot.ts-3.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -320,12 +320,14 @@ forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[
     }
   }
   level <- sort(level)
+  
   if (use.drift) {
     missing <- is.na(x)
     firstnonmiss <- head(which(!missing),1)
     n <- length(x) - firstnonmiss + 1
     if (!is.null(xreg)) {
-      xreg <- cbind(drift = (1:h) + n, xreg)
+      xreg <- `colnames<-`(cbind(drift = (1:h) + n, xreg), 
+        make.unique(c("drift", if(is.null(colnames(xreg)) && !is.null(xreg)) rep("", NCOL(xreg)) else colnames(xreg))))
     } else {
       xreg <- `colnames<-`(as.matrix((1:h) + n), "drift")
     }
@@ -733,8 +735,8 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
   }
   else {
     if (include.drift) {
-      drift <- 1:length(x)
-      xreg <- cbind(drift = drift, xreg)
+      xreg <- `colnames<-`(cbind(drift = 1:length(x), xreg), 
+                           make.unique(c("drift", if(is.null(colnames(xreg)) && !is.null(xreg)) rep("", NCOL(xreg)) else colnames(xreg))))
     }
     if (is.null(xreg)) {
       suppressWarnings(tmp <- stats::arima(x = x, order = order, seasonal = seasonal, include.mean = include.mean, method = method, ...))
@@ -744,7 +746,7 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
   }
 
   # Calculate aicc & bic based on tmp$aic
-  npar <- length(tmp$coef) + 1
+  npar <- length(tmp$coef[tmp$mask]) + 1
   missing <- is.na(tmp$residuals)
   firstnonmiss <- head(which(!missing),1)
   lastnonmiss <- tail(which(!missing),1)

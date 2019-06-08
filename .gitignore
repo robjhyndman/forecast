@@ -11,3 +11,6 @@ tests/testthat/Rplots.pdf
 inst/doc
 cran_check.R
 vignettes/*_cache
+doc/*.R
+doc/*.Rmd
+Meta

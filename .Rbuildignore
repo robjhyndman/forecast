@@ -9,3 +9,5 @@
 Makefile
 cran_check.R
 ^revdep$
+^doc$
+^Meta$

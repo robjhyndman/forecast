@@ -16,7 +16,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -67,7 +68,7 @@ necessary." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.7</span>
       </span>
     </div>
 
@@ -77,7 +78,7 @@ necessary." />
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="https://github.com/robjhyndman/forecast/raw/master/vignettes/JSS2008.pdf">JSS paper</a>
+  <a href="https://cran.r-project.org/web/packages/forecast/vignettes/JSS2008.pdf">JSS paper</a>
 </li>
 <li>
   <a href="../news/index.html">Change Log</a>
@@ -116,7 +117,7 @@ necessary.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>nsdiffs</span>(<span class='no'>x</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/time'>frequency</a></span>(<span class='no'>x</span>), <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"seas"</span>, <span class='st'>"ocsb"</span>,
+    <pre class="usage"><span class='fu'>nsdiffs</span>(<span class='no'>x</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='no'>x</span>), <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"seas"</span>, <span class='st'>"ocsb"</span>,
   <span class='st'>"hegy"</span>, <span class='st'>"ch"</span>), <span class='kw'>max.D</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -184,7 +185,7 @@ and cointegration.", <em>Journal of Econometrics</em> <b>44</b>(1), pp. 215-238.
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='auto.arima.html'>auto.arima</a></code>, <code><a href='ndiffs.html'>ndiffs</a></code>, <code><a href='ocsb.test.html'>ocsb.test</a></code>, <code><a href='https://www.rdocumentation.org/packages/uroot/topics/hegy-test'>hegy.test</a></code>, and <code><a href='https://www.rdocumentation.org/packages/uroot/topics/ch-test'>ch.test</a></code></p></div>
+    <div class='dont-index'><p><code><a href='auto.arima.html'>auto.arima</a></code>, <code><a href='ndiffs.html'>ndiffs</a></code>, <code><a href='ocsb.test.html'>ocsb.test</a></code>, <code><a href='https://rdrr.io/pkg/uroot/man/hegy-test.html'>hegy.test</a></code>, and <code><a href='https://rdrr.io/pkg/uroot/man/ch-test.html'>ch.test</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
