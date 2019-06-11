@@ -782,7 +782,7 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
     }
     fit$xreg <- xreg
 
-    return(structure(fit, class = c("ARIMA", "forecast_ARIMA", "Arima")))
+    return(structure(fit, class = c("forecast_ARIMA", "ARIMA", "Arima")))
   }
   else {
     # Catch errors due to unused arguments

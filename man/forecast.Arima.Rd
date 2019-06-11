@@ -3,6 +3,7 @@
 \name{forecast.fracdiff}
 \alias{forecast.fracdiff}
 \alias{forecast.Arima}
+\alias{forecast.forecast_ARIMA}
 \alias{forecast.ar}
 \title{Forecasting using ARIMA or ARFIMA models}
 \usage{
