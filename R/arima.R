@@ -559,6 +559,7 @@ arima.errors <- function(object) {
 #' \code{\link{residuals.bats}}, \code{\link{residuals.tbats}},
 #' \code{\link{residuals.ets}}, \code{\link{residuals.nnetar}}.
 #' @keywords ts
+#' @aliases fitted.forecast_ARIMA
 #' @examples
 #' fit <- ets(WWWusage)
 #' plot(WWWusage)
@@ -590,6 +591,9 @@ fitted.Arima <- function(object, h = 1, ...) {
     return(hfitted(object = object, h = h, FUN = "Arima", ...))
   }
 }
+
+#' @export
+fitted.forecast_ARIMA <- fitted.Arima
 
 # Calls arima from stats package and adds data to the returned object
 # Also allows refitting to new data

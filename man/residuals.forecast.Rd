@@ -4,6 +4,7 @@
 \alias{residuals.forecast}
 \alias{residuals.ar}
 \alias{residuals.Arima}
+\alias{residuals.forecast_ARIMA}
 \alias{residuals.bats}
 \alias{residuals.tbats}
 \alias{residuals.ets}

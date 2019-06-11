@@ -4,6 +4,7 @@
 \name{fitted.fracdiff}
 \alias{fitted.fracdiff}
 \alias{fitted.Arima}
+\alias{fitted.forecast_ARIMA}
 \alias{fitted.ar}
 \alias{fitted.bats}
 \alias{fitted.ets}

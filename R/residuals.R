@@ -51,6 +51,7 @@ residuals.ar <- function(object, type=c("innovation", "response"), ...) {
 
 #' @rdname residuals.forecast
 #'
+#' @aliases residuals.forecast_ARIMA
 #' @examples
 #' fit <- Arima(lynx,order=c(4,0,0), lambda=0.5)
 #'
@@ -85,6 +86,9 @@ residuals.Arima <- function(object, type=c("innovation", "response", "regression
     }
   }
 }
+
+#' @export
+residuals.forecast_ARIMA <- residuals.Arima
 
 #' @rdname residuals.forecast
 #' @export
