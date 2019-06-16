@@ -1866,7 +1866,7 @@ autoplot.mts <- function(object, colour=TRUE, facets=FALSE, xlab = "Time", ylab 
 
 #' @rdname autoplot.ts
 #' @export
-autoplot.msts <- function(object, series = NULL, ...) {
+autoplot.msts <- function(object, ...) {
   sname <- deparse(substitute(object))
   if (NCOL(object) > 1) {
     class(object) <- c("mts", "ts", "matrix")
@@ -1875,7 +1875,7 @@ autoplot.msts <- function(object, series = NULL, ...) {
     class(object) <- c("ts")
   }
   attr(object, "msts") <- NULL
-  autoplot(object, series = series, ...) + ggAddExtras(ylab = sname)
+  autoplot(object, ...) + ggAddExtras(ylab = sname)
 }
 
 #' @rdname autoplot.ts

@@ -23,7 +23,7 @@
   xlab = "Time", ylab = deparse(substitute(object)), main = NULL,
   ...)
 
-\method{autoplot}{msts}(object, series = NULL, ...)
+\method{autoplot}{msts}(object, ...)
 
 \method{fortify}{ts}(model, data, ...)
 }
