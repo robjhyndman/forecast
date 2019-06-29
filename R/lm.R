@@ -152,7 +152,7 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...) {
 
   ## Fit the model and prepare model structure
   fit <- lm(formula, data = data, na.action = na.exclude, ...)
-  
+
   fit$data <- data
   responsevar <- deparse(formula[[2]])
   fit$residuals <- ts(residuals(fit))
@@ -169,6 +169,7 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...) {
     attr(lambda, "biasadj") <- biasadj
     fit$lambda <- lambda
     fit$fitted.values <- InvBoxCox(fit$fitted.values, lambda, biasadj, var(fit$residuals))
+    fit$x <- InvBoxCox(fit$x, lambda)
   }
   class(fit) <- c("tslm", class(fit))
   return(fit)
@@ -418,7 +419,7 @@ forecast.lm <- function(object, newdata, h=10, level=c(80, 95), fan=FALSE, lambd
   # Remove missing values from residuals
   predict_object <- object
   predict_object$residuals <- na.omit(as.numeric(object$residuals))
-  
+
   out <- list()
   nl <- length(level)
   for (i in 1:nl)
