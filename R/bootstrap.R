@@ -77,7 +77,14 @@ MBB <- function(x, window_size) {
 #'
 #' @export
 bld.mbb.bootstrap <- function(x, num, block_size=NULL) {
+
+  if(length(x) <= 1L)
+    return(rep(list(x), num))
+
   freq <- frequency(x)
+  if(length(x) <= 2*freq)
+    freq <- 1L
+
   if (is.null(block_size)) {
     block_size <- ifelse(freq > 1, 2 * freq, min(8, floor(length(x) / 2)))
   }
