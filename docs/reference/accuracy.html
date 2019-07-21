@@ -80,7 +80,7 @@ and Koehler (2006)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.8</span>
       </span>
     </div>
 
@@ -133,7 +133,7 @@ and Koehler (2006).</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>accuracy</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>accuracy</span>(<span class='no'>f</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>accuracy</span>(<span class='no'>f</span>, <span class='no'>x</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>d</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>D</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -143,15 +143,15 @@ and Koehler (2006).</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>...</th>
-      <td><p>Additional arguments depending on the specific method.</p></td>
-    </tr>
-    <tr>
       <th>f</th>
       <td><p>An object of class &#8220;<code>forecast</code>&#8221;, or a numerical vector
 containing forecasts. It will also work with <code>Arima</code>, <code>ets</code> and
 <code>lm</code> objects if <code>x</code> is omitted -- in which case training set accuracy
 measures are returned.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments depending on the specific method.</p></td>
     </tr>
     <tr>
       <th>x</th>

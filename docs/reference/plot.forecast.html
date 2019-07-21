@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.8</span>
       </span>
     </div>
 
@@ -131,12 +131,12 @@
   <span class='kw'>flwd</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for forecast</span>
-<span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/autoplot.html'>autoplot</a></span>(<span class='no'>object</span>, <span class='no'>include</span>, <span class='kw'>PI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>object</span>, <span class='no'>include</span>, <span class='kw'>PI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>shadecols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"#596DD5"</span>, <span class='st'>"#D5DBFF"</span>), <span class='kw'>fcol</span> <span class='kw'>=</span> <span class='st'>"#0000AA"</span>, <span class='kw'>flwd</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
   <span class='no'>...</span>)
 
 <span class='co'># S3 method for splineforecast</span>
-<span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/autoplot.html'>autoplot</a></span>(<span class='no'>object</span>, <span class='kw'>PI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>object</span>, <span class='kw'>PI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for forecast</span>
 <span class='fu'><a href='autolayer.html'>autolayer</a></span>(<span class='no'>object</span>, <span class='kw'>series</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>PI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
@@ -279,12 +279,12 @@ and practice</em>, 2nd edition, OTexts: Melbourne, Australia.
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
 
 <span class='no'>wine.fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ses.html'>hw</a></span>(<span class='no'>wineind</span>,<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>48</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>wine.fit</span>)</div><div class='img'><img src='plot.forecast-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/autoplot.html'>autoplot</a></span>(<span class='no'>wine.fit</span>)</div><div class='img'><img src='plot.forecast-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>wine.fit</span>)</div><div class='img'><img src='plot.forecast-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>wine.fit</span>)</div><div class='img'><img src='plot.forecast-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='tslm.html'>tslm</a></span>(<span class='no'>wineind</span> ~ <span class='fu'><a href='fourier.html'>fourier</a></span>(<span class='no'>wineind</span>,<span class='fl'>4</span>))
 <span class='no'>fcast</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='fourier.html'>fourier</a></span>(<span class='no'>wineind</span>,<span class='fl'>4</span>,<span class='fl'>20</span>)))
-<span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/autoplot.html'>autoplot</a></span>(<span class='no'>fcast</span>)</div><div class='img'><img src='plot.forecast-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>fcast</span>)</div><div class='img'><img src='plot.forecast-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>fcast</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='splinef.html'>splinef</a></span>(<span class='no'>airmiles</span>,<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>5</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fcast</span>)</div><div class='img'><img src='plot.forecast-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/autoplot.html'>autoplot</a></span>(<span class='no'>fcast</span>)</div><div class='img'><img src='plot.forecast-5.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fcast</span>)</div><div class='img'><img src='plot.forecast-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>fcast</span>)</div><div class='img'><img src='plot.forecast-5.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

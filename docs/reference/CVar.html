@@ -82,7 +82,7 @@ not be used." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.8</span>
       </span>
     </div>
 
@@ -255,7 +255,7 @@ validity of cross-validation for evaluating time series prediction.
 #&gt; [20] 104 110 111 112
 #&gt; </div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/autoplot.html'>autoplot</a></span>(<span class='no'>lynx</span>, <span class='kw'>series</span><span class='kw'>=</span><span class='st'>"Data"</span>) +
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>lynx</span>, <span class='kw'>series</span><span class='kw'>=</span><span class='st'>"Data"</span>) +
   <span class='fu'><a href='autolayer.html'>autolayer</a></span>(<span class='no'>modelcv</span>$<span class='no'>testfit</span>, <span class='kw'>series</span><span class='kw'>=</span><span class='st'>"Fits"</span>) +
   <span class='fu'><a href='autolayer.html'>autolayer</a></span>(<span class='no'>modelcv</span>$<span class='no'>residuals</span>, <span class='kw'>series</span><span class='kw'>=</span><span class='st'>"Residuals"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 11 rows containing missing values (geom_path).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 11 rows containing missing values (geom_path).</span></div><div class='img'><img src='CVar-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='autoplot.acf.html'>ggAcf</a></span>(<span class='no'>modelcv</span>$<span class='no'>residuals</span>)</div><div class='img'><img src='CVar-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
