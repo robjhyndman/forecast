@@ -11,4 +11,5 @@ cran_check.R
 ^revdep$
 ^doc$
 ^Meta$
+^pkgdown$
 vignettes/*_cache
