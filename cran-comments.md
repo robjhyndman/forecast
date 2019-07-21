@@ -1,14 +1,12 @@
-## Resubmission
-This is a resubmission. In this version I have:
+## Submission
 
-* Replaced broken datamarket links
-* Fixed reverse dependency issue with forecastHybrid
+* Fixed vignette rmarkdown error
 
 ## Test environments
 * ubuntu 16.04 (on travis-ci), R 3.5.3
-* ubuntu 18.04, R 3.5.1
+* ubuntu 18.04, R 3.6.1
 * rhub (Debian, Ubuntu, Fedora), R-devel
-* win-builder, R-devevl
+* win-builder, R-devel
 
 ## R CMD check results
 
