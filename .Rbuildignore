@@ -11,3 +11,4 @@ cran_check.R
 ^revdep$
 ^doc$
 ^Meta$
+vignettes/*_cache
