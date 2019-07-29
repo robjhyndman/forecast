@@ -201,7 +201,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     }
     else{
       if (any(constant_columns)) {
-        xregg <- xregg[, -which(constant_columns)]
+        xregg <- xregg[, -which(constant_columns), drop = FALSE]
       }
 
       # Now check if it is rank deficient
