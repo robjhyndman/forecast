@@ -10,8 +10,8 @@
 
 #' Interpolate missing values in a time series
 #'
-#' By default, uses linear interpolation for non-seasonal series. For seasonal series, a 
-#' robust STL decomposition is first computed. Then a linear interpolation is applied to the 
+#' By default, uses linear interpolation for non-seasonal series. For seasonal series, a
+#' robust STL decomposition is first computed. Then a linear interpolation is applied to the
 #' seasonally adjusted data, and the seasonal component is added back.
 #'
 #' A more general and flexible approach is available using \code{na.approx} in
@@ -30,13 +30,17 @@
 #' plot(na.interp(gold))
 #'
 #' @export
-na.interp <- function(x, lambda=NULL, 
+na.interp <- function(x, lambda=NULL,
                       linear=(frequency(x) <= 1 | sum(!is.na(x)) <= 2 * frequency(x))) {
   missng <- is.na(x)
   # Do nothing if no missing values
   if (sum(missng) == 0L) {
     return(x)
   }
+
+  origx <- x
+  rangex <- range(x, na.rm=TRUE)
+  drangex <- rangex[2L] - rangex[1L]
 
   # Convert to ts
   if (is.null(tsp(x))) {
@@ -62,7 +66,7 @@ na.interp <- function(x, lambda=NULL,
   tt <- 1:n
   idx <- tt[!missng]
 
-  if (linear) { 
+  if (linear) {
     # Use linear interpolation
     x <- ts(approx(idx, x[idx], tt, rule = 2)$y)
   }  else {
@@ -99,7 +103,12 @@ na.interp <- function(x, lambda=NULL,
 
   # Ensure time series characteristics not lost
   tsp(x) <- tspx
-  return(x)
+
+  # Check stability and use linear interpolation if there is a problem
+  if(!linear & (max(x) > rangex[2L]+0.5*drangex | min(x) < rangex[1L]-0.5*drangex))
+    return(na.interp(origx, lambda=lambda, linear=TRUE))
+  else
+    return(x)
 }
 
 # Function to identify outliers and replace them with better values
@@ -109,8 +118,8 @@ na.interp <- function(x, lambda=NULL,
 
 #' Identify and replace outliers and missing values in a time series
 #'
-#' Uses supsmu for non-seasonal series and a robust STL decomposition for 
-#' seasonal series. To estimate missing values and outlier replacements, 
+#' Uses supsmu for non-seasonal series and a robust STL decomposition for
+#' seasonal series. To estimate missing values and outlier replacements,
 #' linear interpolation is used on the (possibly seasonally adjusted) series
 #'
 #' @param x time series
@@ -184,7 +193,7 @@ tsoutliers <- function(x, iterate=2, lambda=NULL) {
   }
 
   # Seasonally adjust data if necessary
-  if (freq > 1 && n > 2 * freq) { 
+  if (freq > 1 && n > 2 * freq) {
     fit <- mstl(xx, robust=TRUE)
     # Check if seasonality is sufficient to warrant adjustment
     rem <- remainder(fit)
