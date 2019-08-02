@@ -803,29 +803,26 @@ almost all real business and economic time series.
 The algorithms and modelling frameworks for automatic univariate
 time series forecasting are implemented in the \pkg{forecast}
 package in \R. We illustrate the methods using the following four
-real time series shown in Figure \ref{fexamples}.
+real time series shown in Figure \ref{fig:etsexamples}.
 \begin{compactitem}
-\item Figure \ref{fexamples}(a) shows 125 monthly US government
+\item Figure \ref{fig:etsexamples}(a) shows 125 monthly US government
 bond yields (percent per annum) from January 1994 to May 2004.
 
-\item Figure \ref{fexamples}(b) displays 55 observations of annual
+\item Figure \ref{fig:etsexamples}(b) displays 55 observations of annual
 US net electricity generation (billion kwh) for 1949 through 2003.
 
-\item Figure \ref{fexamples}(c) presents 113 quarterly observations
+\item Figure \ref{fig:etsexamples}(c) presents 113 quarterly observations
 of passenger motor vehicle production in the U.K. (thousands of
 cars) for the first quarter of 1977 through the first quarter of
 2005.
 
-\item Figure \ref{fexamples}(d) shows 240 monthly observations of
+\item Figure \ref{fig:etsexamples}(d) shows 240 monthly observations of
 the number of short term overseas visitors to Australia from May
 1985 to April 2005.
 \end{compactitem}
 
 
-\begin{figure}[!htb]
-\centering
-
-```{r ets-forecast, fig.height=7, fig.width=9, echo=FALSE, cache=TRUE}
+```{r etsexamples, fig.height=7, fig.width=9, echo=FALSE, fig.cap="Four time series showing point forecasts and 80\\% \\& 95\\% prediction intervals obtained using exponential smoothing state space models."}
 par(mfrow = c(2,2))
 mod1 <- ets(bonds)
 mod2 <- ets(usnetelec)
@@ -837,11 +834,6 @@ plot(forecast(mod2), main="(b) US net electricity generation", xlab="Year", ylab
 plot(forecast(mod3), main="(c) UK passenger motor vehicle production", xlab="Year", ylab="Thousands of cars")
 plot(forecast(mod4), main="(d) Overseas visitors to Australia", xlab="Year", ylab="Thousands of people")
 ```
-
-\caption{Four time series showing point forecasts and 80\% \& 95\%
-prediction intervals obtained using exponential smoothing state
-space models.\label{fexamples}}
-\end{figure}
 
 ```{r etsnames, echo=FALSE}
 etsnames <- c(mod1$method, mod2$method, mod3$method, mod4$method)
@@ -898,7 +890,7 @@ algorithm for the four data sets were:
 \end{compactitem}
 Although there is a lot of computation involved, it can be handled
 remarkably quickly on modern computers. Each of the forecasts shown
-in Figure \ref{fexamples} took no more than a few seconds on a
+in Figure \ref{fig:etsexamples} took no more than a few seconds on a
 standard PC. The US electricity generation series took the longest
 as there are no analytical prediction intervals available for the
 ETS(M,M\damped,N) model. Consequently, the prediction intervals for
@@ -908,7 +900,7 @@ paths.
 To apply the algorithm to the US net electricity generation time
 series \code{usnetelec}, we use the following command.
 
-```{r ets-usnetelec, echo=TRUE, cache=TRUE}
+```{r ets-usnetelec, echo=TRUE}
 etsfit <- ets(usnetelec)
 ```
 
@@ -918,13 +910,13 @@ parameters, the value of the state vector $\bm{x}_t$ for all $t$,
 residuals and so on. Printing the \code{etsfit} object shows the
 main items of interest.
 
-```{r ets-usnetelec-print,echo=TRUE, cache=TRUE}
+```{r ets-usnetelec-print,echo=TRUE}
 etsfit
 ```
 
 Some goodness-of-fit measures [defined in @HK06] are obtained using \code{accuracy()}.
 
-```{r ets-usnetelec-accuracy,eval=TRUE,echo=TRUE, cache=TRUE}
+```{r ets-usnetelec-accuracy,eval=TRUE,echo=TRUE}
 accuracy(etsfit)
 ```
 
@@ -934,9 +926,9 @@ There are also \code{coef()}, \code{plot()}, \code{summary()}, \code{residuals()
 along with the extracted components (level, growth and seasonal).
 
 The \code{forecast()} function computes the required forecasts which
-are then plotted as in Figure \ref{fexamples}(b).
+are then plotted as in Figure \ref{fig:etsexamples}(b).
 
-```{r ets-usnetelec-fcast, fig.height=5, fig.width=8, message=FALSE, warning=FALSE, cache=TRUE, include=FALSE, output=FALSE}
+```{r ets-usnetelec-fcast, fig.height=5, fig.width=8, message=FALSE, warning=FALSE, include=FALSE, output=FALSE}
 fcast <- forecast(etsfit)
 plot(fcast)
 ```
@@ -944,7 +936,7 @@ plot(fcast)
 Printing the \code{fcast} object gives a table showing the
 prediction intervals.
 
-```{r ets-usnetelec-fcast-print,eval=TRUE,echo=TRUE, cache=TRUE}
+```{r ets-usnetelec-fcast-print,eval=TRUE,echo=TRUE}
 fcast
 ```
 
@@ -954,7 +946,7 @@ withhold 10 observations from the \code{usnetelec} data set when
 fitting, then compute the one-step forecast errors for the
 out-of-sample data.
 
-```{r ets-usnetelec-newdata,eval=FALSE,echo=TRUE, cache=TRUE}
+```{r ets-usnetelec-newdata,eval=FALSE,echo=TRUE}
 fit <- ets(usnetelec[1:45])
 test <- ets(usnetelec[46:55], model = fit)
 accuracy(test)
@@ -963,7 +955,7 @@ accuracy(test)
 We can also look at the measures of forecast accuracy where the
 forecasts are based on only the fitting data.
 
-```{r ets-usnetelec-fcast-accuracy,eval=FALSE,echo=TRUE, cache=TRUE}
+```{r ets-usnetelec-fcast-accuracy,eval=FALSE,echo=TRUE}
 accuracy(forecast(fit,10), usnetelec[46:55])
 ```
 
@@ -997,11 +989,7 @@ not possible using the \code{HoltWinters()} function.
 
 ## Implementation of the automatic ARIMA algorithm
 
-
-\begin{figure}[!b]
-\centering
-
-```{r arima-forecast-plots, fig.height=7, fig.width=9, echo=FALSE, cache=TRUE}
+```{r arimaexamples, fig.height=7, fig.width=9, echo=FALSE, fig.cap="Four time series showing point forecasts and 80\\% \\& 95\\% prediction intervals obtained using ARIMA models."}
 mod1 <- auto.arima(bonds, seasonal=FALSE, approximation=FALSE)
 mod2 <- auto.arima(usnetelec)
 mod3 <- auto.arima(ukcars)
@@ -1012,12 +1000,6 @@ plot(forecast(mod2), main="(b) US net electricity generation", xlab="Year", ylab
 plot(forecast(mod3), main="(c) UK passenger motor vehicle production", xlab="Year", ylab="Thousands of cars")
 plot(forecast(mod4), main="(d) Overseas visitors to Australia", xlab="Year", ylab="Thousands of people")
 ```
-
-\caption{Four time series showing point forecasts and 80\% \& 95\%
-prediction intervals obtained using ARIMA
-models.\label{arimaexamples}}
-\end{figure}
-
 
 The algorithm of Section \ref{sec:arima} is applied to the same four
 time series. Unlike the exponential smoothing algorithm, the ARIMA
@@ -1031,7 +1013,7 @@ the probability coverage.
 To apply this algorithm to the US net electricity generation time
 series \code{usnetelec}, we use the following commands.
 
-```{r arima-auto-fcast,eval=TRUE,echo=TRUE,fig.show="hide", cache=TRUE}
+```{r arima-auto-fcast,eval=TRUE,echo=TRUE,fig.show="hide"}
 arimafit <- auto.arima(usnetelec)
 fcast <- forecast(arimafit)
 plot(fcast)
@@ -1050,7 +1032,7 @@ arimanames <-
 
 The function \code{auto.arima()} implements the algorithm of
 Section \ref{sec:arima} and returns an object of class \code{Arima}.
-The resulting forecasts are shown in Figure \ref{arimaexamples}. The
+The resulting forecasts are shown in Figure \ref{fig:arimaexamples}. The
 fitted models are as follows:
 \begin{compactitem}
 \item `r arimanames[1]` for monthly US 10-year bonds yield\\
@@ -1201,8 +1183,8 @@ observed data.
 \end{compactitem}
 
 There are \code{print()}, \code{plot()} and \code{summary()} methods
-for the ``\code{forecast}'' class. Figures \ref{fexamples}
-and \ref{arimaexamples} were produced using the \code{plot()} method.
+for the ``\code{forecast}'' class. Figures \ref{fig:etsexamples}
+and \ref{fig:arimaexamples} were produced using the \code{plot()} method.
 
 The prediction intervals are, by default, computed
 for 80\% and 95\% coverage, although other values are possible if
