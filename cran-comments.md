@@ -11,3 +11,8 @@
 ## R CMD check results
 
 0 errors | 0 warnings | 0 notes
+
+## revdep checks
+
+All revdeps have been checked. The only new problem that arose was with EventDetectR. We advised the maintainer of the issue and provided a pull request which resolved it about 10 days ago.
+
