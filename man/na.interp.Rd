@@ -21,8 +21,8 @@ data transformed before model is estimated.}
 Time series
 }
 \description{
-By default, uses linear interpolation for non-seasonal series. For seasonal series, a 
-robust STL decomposition is first computed. Then a linear interpolation is applied to the 
+By default, uses linear interpolation for non-seasonal series. For seasonal series, a
+robust STL decomposition is first computed. Then a linear interpolation is applied to the
 seasonally adjusted data, and the seasonal component is added back.
 }
 \details{
