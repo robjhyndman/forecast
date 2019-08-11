@@ -18,8 +18,8 @@
 #' @seealso \code{\link[stats]{stl}}, \code{\link[stats]{supsmu}}
 #' @examples
 #' library(ggplot2)
-#' mstl(taylor) %>% autoplot(facet=TRUE)
-#' mstl(AirPassengers, lambda='auto') %>% autoplot(facet=TRUE)
+#' mstl(taylor) %>% autoplot()
+#' mstl(AirPassengers, lambda='auto') %>% autoplot()
 #' @export
 mstl <- function(x, lambda=NULL, iterate=2, s.window=13, ...) {
   # What is x?
