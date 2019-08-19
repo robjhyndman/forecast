@@ -12,9 +12,8 @@ if (require(testthat)) {
     fcasts <- forecast(train, h = 6)
     expect_that(dim(accuracy(fcasts)), equals(c(1, 7)))
     expect_that(dim(accuracy(fcasts, test)), equals(c(2, 8)))
-    expect_that(
-      all(dim(accuracy(fcasts, test, test = 1:2)) == dim(accuracy(fcasts, test))),
-      is_false()
+    expect_false(
+      all(dim(accuracy(fcasts, test, test = 1:2)) == dim(accuracy(fcasts, test)))
     )
     expect_that(accuracy(fcasts, test = 1:length(train)), equals(accuracy(fcasts)))
   })
