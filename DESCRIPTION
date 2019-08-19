@@ -22,13 +22,13 @@ Imports:
   urca,
   zoo
 Suggests:
-    expsmooth,
-    uroot,
-    knitr,
-    rmarkdown,
-    rticles,
-    testthat,
-    methods
+  expsmooth,
+  uroot,
+  knitr,
+  rmarkdown,
+  rticles,
+  testthat,
+  methods
 LinkingTo:
   Rcpp (>= 0.11.0),
   RcppArmadillo (>= 0.2.35)

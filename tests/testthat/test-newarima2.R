@@ -36,10 +36,11 @@ if (require(testthat)) {
   test_that("tests for nsdiffs()", {
     expect_true(nsdiffs(AirPassengers, test = "seas") == 1)
     expect_true(nsdiffs(AirPassengers, test = "ocsb") == 1)
-    expect_true(nsdiffs(AirPassengers, test = "hegy") == 1)
-    expect_true(nsdiffs(AirPassengers, test = "ch") == 0)
     expect_error(nsdiffs(airmiles))
     expect_true(nsdiffs(rep(1, 100)) == 0)
     expect_warning(nsdiffs(ts(rnorm(10), f = 0.1)))
+    skip_if_not_installed("uroot")
+    expect_true(nsdiffs(AirPassengers, test = "hegy") == 1)
+    expect_true(nsdiffs(AirPassengers, test = "ch") == 0)
   })
 }
