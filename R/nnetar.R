@@ -541,8 +541,8 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI
     }
     for (i in 1:npaths)
       sim[i, ] <- simulate(object, nsim = h, bootstrap = bootstrap, xreg = xreg, lambda = lambda, innov = innov[, i], ...)
-    lower <- apply(sim, 2, quantile, 0.5 - level / 200, type = 8)
-    upper <- apply(sim, 2, quantile, 0.5 + level / 200, type = 8)
+    lower <- apply(sim, 2, quantile, 0.5 - level / 200, type = 8, na.rm = TRUE)
+    upper <- apply(sim, 2, quantile, 0.5 + level / 200, type = 8, na.rm = TRUE)
     if (nint > 1L) {
       lower <- ts(t(lower))
       upper <- ts(t(upper))
