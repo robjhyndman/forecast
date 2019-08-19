@@ -404,10 +404,10 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
   }
   if (use.drift) {
     # Remove existing drift column
-    if (NCOL(xreg) == 1) {
+    if (NCOL(xreg) == 1 && all(diff(xreg)==1)) {
       xreg <- NULL
-    } else {
-      xreg <- xreg[, !is.element(colnames(xreg), "drift"), drop = FALSE]
+    } else if(!is.null(colnames(xreg))) {
+      xreg <- xreg[, colnames(xreg)!="drift", drop = FALSE]
     }
     # Create new drift column for historical simulation
     dft <- as.matrix(1:nsim)
