@@ -22,7 +22,6 @@ Imports:
   urca,
   zoo
 Suggests:
-  expsmooth,
   uroot,
   knitr,
   rmarkdown,
