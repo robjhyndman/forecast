@@ -1,3 +1,7 @@
+## forecast 8.9 (22 August 2019)
+  * Updates for CRAN policies on Suggests packages
+  * Bug fixes
+
 ## forecast 8.8 (22 July 2019)
   * Updates for compatibility with fable
   * Bug fixes
@@ -8,7 +12,7 @@
 
 ## Version 8.6 (15 Apr 2019)
   * Reduced conflicts with tidy forecasting packages
-  * Forecast autoplots are now use same colour shading as autolayer() and geom_forecast()
+  * Forecast autoplots now use same colour shading as autolayer() and geom_forecast()
   * Documentation improvements
   * Bug fixes
 
