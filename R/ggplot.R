@@ -710,7 +710,7 @@ Interval shading is now done automatically based on the level and `fcol`.",
         ggplot2::labs(y = vars["yvar"], x = "Time")
 
       # Forecasted intervals
-      p <- p + autolayer(object, colour = fcol)
+      p <- p + autolayer(object, PI = PI, colour = fcol, size = flwd)
       
       # predicted <- data.frame(xvar = time(object$mean), yvar = object$mean)
       # colnames(predicted) <- c("datetime", "ypred")
