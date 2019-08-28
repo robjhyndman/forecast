@@ -61,8 +61,8 @@
 #' @param use.initial.values If \code{TRUE} and \code{model} is of class
 #' \code{"ets"}, then the initial values in the model are also not
 #' re-estimated.
-#' @param na.action A function which indicates what should happen when the data 
-#' contains NA values. By default, the largest contiguous portion of the 
+#' @param na.action A function which indicates what should happen when the data
+#' contains NA values. By default, the largest contiguous portion of the
 #' time-series will be used.
 #' @param ... Other undocumented arguments.
 #' @inheritParams forecast
@@ -413,11 +413,14 @@ ets <- function(y, model="ZZZ", damped=NULL,
           if (!data.positive && errortype[i] == "M") {
             next
           }
-          fit <- etsmodel(
+          fit <- try(etsmodel(
             y, errortype[i], trendtype[j], seasontype[k], damped[l], alpha, beta, gamma, phi,
             lower = lower, upper = upper, opt.crit = opt.crit, nmse = nmse, bounds = bounds, ...
-          )
-          fit.ic <- switch(ic, aic = fit$aic, bic = fit$bic, aicc = fit$aicc)
+          ), silent=TRUE)
+          if(is.element("try-error", class(fit)))
+            fit.ic <- Inf
+          else
+            fit.ic <- switch(ic, aic = fit$aic, bic = fit$bic, aicc = fit$aicc)
           if (!is.na(fit.ic)) {
             if (fit.ic < best.ic) {
               model <- fit
