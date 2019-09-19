@@ -683,7 +683,7 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
   missing <- is.na(x)
   firstnonmiss <- head(which(!missing),1)
   lastnonmiss <- tail(which(!missing),1)
-  n <- lastnonmiss - firstnonmiss + 1
+  n <- sum(!missing[firstnonmiss:lastnonmiss])
   m <- frequency(x)
   use.season <- (sum(seasonal) > 0) & m > 0
   diffs <- order[2] + seasonal[2]
@@ -695,7 +695,7 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
     }
   }
   if (diffs == 1 && constant) {
-    xreg <- `colnames<-`(cbind(drift = 1:length(x), xreg), 
+    xreg <- `colnames<-`(cbind(drift = 1:length(x), xreg),
       make.unique(c("drift", if(is.null(colnames(xreg)) && !is.null(xreg)) rep("", NCOL(xreg)) else colnames(xreg))))
     if (use.season) {
       suppressWarnings(fit <- try(stats::arima(x = x, order = order, seasonal = list(order = seasonal, period = m), xreg = xreg, method = method, ...), silent = TRUE))
