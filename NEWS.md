@@ -1,3 +1,5 @@
+# forecast (development version)
+
 ## forecast 8.9 (22 August 2019)
   * Updates for CRAN policies on Suggests packages
   * Bug fixes
