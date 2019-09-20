@@ -539,7 +539,8 @@ simulate.lagwalk <- function(object, nsim=length(object$x), seed=NULL,
     e <- sample(res, nsim, replace = TRUE)
   }
   else if (is.null(innov)) {
-    e <- rnorm(nsim, 0, sqrt(object$sigma2))
+    se <- sqrt(object$sigma2*steps + (steps*object$par$drift.se)^2)
+    e <- rnorm(nsim, 0, se)
   } else {
     e <- innov
   }
@@ -578,7 +579,7 @@ simulate.lagwalk <- function(object, nsim=length(object$x), seed=NULL,
   }
 
   # Construct simulated ts
-  sim <- rep_len(start, nsim) + cumulative_e
+  sim <- rep_len(start, nsim) + seq_len(nsim)*object$par$drift + cumulative_e
   if(!is.null(lambda)){
     sim <- InvBoxCox(sim, lambda)
   }
