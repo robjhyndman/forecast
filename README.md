@@ -22,8 +22,8 @@ You can install the **development** version from
 [Github](https://github.com/robjhyndman/forecast)
 
 ```s
-# install.packages("devtools")
-devtools::install_github("robjhyndman/forecast")
+# install.packages("remotes")
+remotes::install_github("robjhyndman/forecast")
 ```
 
 ## Usage
