@@ -79,7 +79,7 @@ thetaf <- function(y, h=ifelse(frequency(y) > 1, 2 * frequency(y), 10),
   n <- length(x)
   x <- as.ts(x)
   m <- frequency(x)
-  if (m > 1 && !is.constant(x) && n > m) {
+  if (m > 1 && !is.constant(x) && n > 2*m) {
     r <- as.numeric(acf(x, lag.max = m, plot = FALSE)$acf)[-1]
     stat <- sqrt((1 + 2 * sum(r[-m] ^ 2)) / n)
     seasonal <- (abs(r[m]) / stat > qnorm(0.95))
