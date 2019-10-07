@@ -55,10 +55,11 @@ testaccuracy <- function(f, x, test, d, D) {
   me <- mean(error, na.rm = TRUE)
   mse <- mean(error ^ 2, na.rm = TRUE)
   mae <- mean(abs(error), na.rm = TRUE)
-  mape <- mean(abs(pe), na.rm = TRUE)
   mpe <- mean(pe, na.rm = TRUE)
+  mape <- mean(abs(pe), na.rm = TRUE)
+  maape <- mean(atan(abs(pe)), na.rm = TRUE) 
   out <- c(me, sqrt(mse), mae, mpe, mape)
-  names(out) <- c("ME", "RMSE", "MAE", "MPE", "MAPE")
+  names(out) <- c("ME", "RMSE", "MAE", "MPE", "MAPE", "MAAPE")
 
   # Compute MASE if historical data available
   if (!is.null(dx)) {
@@ -132,10 +133,11 @@ trainingaccuracy <- function(f, test, d, D) {
   me <- mean(res, na.rm = TRUE)
   mse <- mean(res ^ 2, na.rm = TRUE)
   mae <- mean(abs(res), na.rm = TRUE)
-  mape <- mean(abs(pe), na.rm = TRUE)
   mpe <- mean(pe, na.rm = TRUE)
+  mape <- mean(abs(pe), na.rm = TRUE)
+  maape <- mean(atan(abs(pe)), na.rm = TRUE) 
   out <- c(me, sqrt(mse), mae, mpe, mape)
-  names(out) <- c("ME", "RMSE", "MAE", "MPE", "MAPE")
+  names(out) <- c("ME", "RMSE", "MAE", "MPE", "MAPE", "MAAPE")
 
   # Compute MASE if historical data available
   if (!is.null(dx)) {
@@ -192,6 +194,7 @@ trainingaccuracy <- function(f, test, d, D) {
 #'   \item MAE: Mean Absolute Error
 #'   \item MPE: Mean Percentage Error
 #'   \item MAPE: Mean Absolute Percentage Error
+#'   \item MAAPE: Mean Arctangent Absolute Percentage Error
 #'   \item MASE: Mean Absolute Scaled Error
 #'   \item ACF1: Autocorrelation of errors at lag 1.
 #' }
@@ -228,6 +231,9 @@ trainingaccuracy <- function(f, test, d, D) {
 #' "Forecasting: principles and practice", 2nd ed., OTexts, Melbourne, Australia. 
 #' Section 3.4 "Evaluating forecast accuracy". 
 #' \url{https://otexts.org/fpp2/accuracy.html}.
+#' Kim, Sungil and Heeyoung Kim (2016) "A new metric of absolute percentage error
+#' for intermittent demand forecasts". \emph{International Journal of Forecasting},
+#' \bold{32}(3), 669-679.
 #' @keywords ts
 #' @examples
 #'
