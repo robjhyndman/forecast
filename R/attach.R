@@ -19,19 +19,19 @@
 register_s3_method <- function(pkg, generic, class, fun = NULL) {
   stopifnot(is.character(pkg), length(pkg) == 1)
   envir <- asNamespace(pkg)
-  
+
   stopifnot(is.character(generic), length(generic) == 1)
   stopifnot(is.character(class), length(class) == 1)
   if (is.null(fun)) {
     fun <- get(paste0(generic, ".", class), envir = parent.frame())
   }
   stopifnot(is.function(fun))
-  
-  
+
+
   if (pkg %in% loadedNamespaces()) {
     registerS3method(generic, class, fun, envir = envir)
   }
-  
+
   # Always register hook in case package is later unloaded & reloaded
   setHook(
     packageEvent(pkg, "onLoad"),
@@ -51,18 +51,18 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) {
     register_s3_method("ggplot2", "autolayer", "forecast")
     register_s3_method("ggplot2", "autolayer", "mforecast")
   }
-  if (tryCatch(exists("forecast", getNamespace("fablelite")), error = function(e) FALSE)) {
+  if (tryCatch(exists("forecast", getNamespace("fabletools")), error = function(e) FALSE)) {
     methods <- strsplit(methods("forecast"), ".", fixed = TRUE)
-    forecast <<- getNamespace("fablelite")$forecast
+    forecast <<- getNamespace("fabletools")$forecast
     for(method in methods){
-      register_s3_method("fablelite", method[1], method[2])
+      register_s3_method("fabletools", method[1], method[2])
     }
   }
-  if (tryCatch(exists("accuracy", getNamespace("fablelite")), error = function(e) FALSE)) {
+  if (tryCatch(exists("accuracy", getNamespace("fabletools")), error = function(e) FALSE)) {
     methods <- strsplit(methods("accuracy"), ".", fixed = TRUE)
-    accuracy <<- getNamespace("fablelite")$accuracy
+    accuracy <<- getNamespace("fabletools")$accuracy
     for(method in methods){
-      register_s3_method("fablelite", method[1], method[2])
+      register_s3_method("fabletools", method[1], method[2])
     }
   }
   invisible()
