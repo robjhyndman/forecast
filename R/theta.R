@@ -101,7 +101,7 @@ thetaf <- function(y, h=ifelse(frequency(y) > 1, 2 * frequency(y), 10),
   # Find theta lines
   fcast <- ses(x, h = h)
   tmp2 <- lsfit(0:(n - 1), x)$coef[2] / 2
-  alpha <- fcast$model$par["alpha"]
+  alpha <- pmax(1e-10,fcast$model$par["alpha"])
   fcast$mean <- fcast$mean + tmp2 * (0:(h - 1) + (1 - (1 - alpha) ^ n) / alpha)
 
   # Reseasonalize
