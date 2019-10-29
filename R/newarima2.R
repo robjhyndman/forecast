@@ -285,7 +285,10 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     dx <- diff(dx, differences = d, lag = 1)
   }
 
-  if (is.constant(dx)) {
+
+  if(length(dx) == 0L)
+    stop("Not enough data to proceed")
+  else if (is.constant(dx)) {
     if (is.null(xreg)) {
       if (D > 0 && d == 0) {
         fit <- Arima(x, order = c(0, d, 0), seasonal = list(order = c(0, D, 0), period = m), include.constant = TRUE, fixed = mean(dx/m, na.rm = TRUE), method = method, ...)
