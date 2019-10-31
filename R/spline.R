@@ -133,7 +133,7 @@ splinef <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FA
   {
     splinefit <- smooth.spline(1:n, x, cv = FALSE, spar = NULL)
     sfits <- splinefit$y
-    beta.est <- pmax(1e-8, splinefit$lambda * (n - 1) ^ 3 / n ^ 3)
+    beta.est <- pmax(1e-7, splinefit$lambda * (n - 1) ^ 3 / n ^ 3)
   }
 
   # Compute matrices for optimal beta
