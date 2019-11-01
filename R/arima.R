@@ -646,6 +646,7 @@ fitted.forecast_ARIMA <- fitted.Arima
 #' @return See the \code{\link[stats]{arima}} function in the stats package.
 #' The additional objects returned are \item{x}{The time series data}
 #' \item{xreg}{The regressors used in fitting (when relevant).}
+#' \item{sigma2}{The bias adjusted MLE of the innovations variance.}
 #'
 #' @export
 #'
