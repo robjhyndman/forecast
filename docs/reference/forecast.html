@@ -15,16 +15,18 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -39,14 +41,14 @@
 
 
 
-<meta property="og:title" content="Forecasting time series — forecast" />
 
+<meta property="og:title" content="Forecasting time series — forecast" />
 <meta property="og:description" content="forecast is a generic function for forecasting from time series or
 time series models. The function invokes particular methods which
 depend on the class of the first argument." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -77,7 +79,7 @@ depend on the class of the first argument." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.9.0.9000</span>
       </span>
     </div>
 
@@ -93,7 +95,6 @@ depend on the class of the first argument." />
   <a href="../news/index.html">Change Log</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/robjhyndman/forecast">
@@ -120,11 +121,9 @@ depend on the class of the first argument." />
     </div>
 
     <div class="ref-description">
-    
     <p><code>forecast</code> is a generic function for forecasting from time series or
 time series models. The function invokes particular <em>methods</em> which
 depend on the class of the first argument.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>forecast</span>(<span class='no'>object</span>, <span class='no'>...</span>)
@@ -138,7 +137,7 @@ depend on the class of the first argument.</p>
   <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>find.frequency</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>allow.multiplicative.trend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -205,7 +204,7 @@ models are permitted.</p></td>
 <code>ets</code>, <code>Arima</code>, <code>bats</code>, <code>tbats</code>, or <code>nnetar</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class "<code>forecast</code>".</p>
@@ -228,7 +227,6 @@ stored as <code>object</code>).</p></dd> <dt>residuals</dt><dd><p>Residuals from
 For models with additive errors, the residuals will be x minus the fitted
 values.</p></dd> <dt>fitted</dt><dd><p>Fitted values (one-step forecasts)</p></dd>
 
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>For example, the function <code><a href='forecast.Arima.html'>forecast.Arima</a></code> makes forecasts based
@@ -240,7 +238,6 @@ more).</p>
 <p>If <code>model</code> is not <code>NULL</code>, <code>forecast.ts</code> will apply the
 <code>model</code> to the <code>object</code> time series, and then generate forecasts
 accordingly.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other functions which return objects of class <code>"forecast"</code> are
@@ -249,7 +246,6 @@ accordingly.</p>
 <code><a href='meanf.html'>meanf</a></code>, <code><a href='naive.html'>rwf</a></code>, <code><a href='splinef.html'>splinef</a></code>,
 <code><a href='thetaf.html'>thetaf</a></code>, <code><a href='croston.html'>croston</a></code>, <code><a href='ses.html'>ses</a></code>,
 <code><a href='ses.html'>holt</a></code>, <code><a href='ses.html'>hw</a></code>.</p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -262,13 +258,9 @@ accordingly.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -284,7 +276,7 @@ accordingly.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9100.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
 </div>
 
       </footer>

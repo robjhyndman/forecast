@@ -15,16 +15,18 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -39,15 +41,15 @@
 
 
 
-<meta property="og:title" content="Subsetting a time series — subset.ts" />
 
+<meta property="og:title" content="Subsetting a time series — subset.ts" />
 <meta property="og:description" content="Various types of subsetting of a time series. Allows subsetting by index
 values (unlike window). Also allows extraction of the
 values of a specific season or subset of seasons in each year. For example,
 to extract all values for the month of May from a time series." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -78,7 +80,7 @@ to extract all values for the month of May from a time series." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.9.0.9000</span>
       </span>
     </div>
 
@@ -94,7 +96,6 @@ to extract all values for the month of May from a time series." />
   <a href="../news/index.html">Change Log</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/robjhyndman/forecast">
@@ -121,12 +122,10 @@ to extract all values for the month of May from a time series." />
     </div>
 
     <div class="ref-description">
-    
     <p>Various types of subsetting of a time series. Allows subsetting by index
 values (unlike <code><a href='https://rdrr.io/r/stats/window.html'>window</a></code>). Also allows extraction of the
 values of a specific season or subset of seasons in each year. For example,
 to extract all values for the month of May from a time series.</p>
-    
     </div>
 
     <pre class="usage"><span class='co'># S3 method for ts</span>
@@ -136,7 +135,7 @@ to extract all values for the month of May from a time series.</p>
 <span class='co'># S3 method for msts</span>
 <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>x</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -176,7 +175,7 @@ matching on month names used.</p></td>
       <td><p>Other arguments, unused.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>If <code>subset</code> is used, a numeric vector is returned with no ts
@@ -184,18 +183,15 @@ attributes. If <code>start</code> and/or <code>end</code> are used, a ts object 
 returned consisting of x[start:end], with the appropriate time series
 attributes retained. Otherwise, a ts object is returned with frequency equal
 to the length of <code>month</code>, <code>quarter</code> or <code>season</code>.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If character values for months are used, either upper or lower case may be
 used, and partial unambiguous names are acceptable. Possible character
 values for quarters are <code>"Q1"</code>, <code>"Q2"</code>, <code>"Q3"</code>, and
 <code>"Q4"</code>.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/r/base/subset.html'>subset</a></code>, <code><a href='https://rdrr.io/r/stats/window.html'>window</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>gas</span>,<span class='kw'>month</span><span class='kw'>=</span><span class='st'>"November"</span>))</div><div class='img'><img src='subset.ts-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>woolyrnq</span>,<span class='kw'>quarter</span><span class='kw'>=</span><span class='fl'>3</span>)</div><div class='output co'>#&gt; Time Series:
@@ -212,13 +208,9 @@ values for quarters are <code>"Q1"</code>, <code>"Q2"</code>, <code>"Q3"</code>,
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -234,7 +226,7 @@ values for quarters are <code>"Q1"</code>, <code>"Q2"</code>, <code>"Q3"</code>,
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9100.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
 </div>
 
       </footer>

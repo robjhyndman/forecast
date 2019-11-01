@@ -15,16 +15,18 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -39,12 +41,12 @@
 
 
 
+
 <meta property="og:title" content="Double-Seasonal Holt-Winters Forecasting — dshw" />
-
 <meta property="og:description" content="Returns forecasts using Taylor's (2003) Double-Seasonal Holt-Winters method." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -75,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.9.0.9000</span>
       </span>
     </div>
 
@@ -91,7 +93,6 @@
   <a href="../news/index.html">Change Log</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/robjhyndman/forecast">
@@ -118,16 +119,14 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Returns forecasts using Taylor's (2003) Double-Seasonal Holt-Winters method.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>dshw</span>(<span class='no'>y</span>, <span class='kw'>period1</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>period2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>2</span> * <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='no'>period1</span>,
   <span class='no'>period2</span>), <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>beta</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>gamma</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>omega</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>phi</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>armethod</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -200,7 +199,7 @@ the errors.</p></td>
 set.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class "<code>forecast</code>" which is a list that includes the
@@ -218,7 +217,6 @@ results, while the function plot produces a plot of the forecasts.
 The generic accessor functions fitted.values and residuals
 extract useful features of the value returned by dshw.
 
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Taylor's (2003) double-seasonal Holt-Winters method uses additive trend and
@@ -228,7 +226,6 @@ would set <code>period1=48</code> for the daily period and <code>period2=336</co
 the weekly period. The smoothing parameter notation used here is different
 from that in Taylor (2003); instead it matches that used in Hyndman et al
 (2008) and that used for the <code><a href='ets.html'>ets</a></code> function.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Taylor, J.W. (2003) Short-term electricity demand forecasting
@@ -237,15 +234,13 @@ Operational Research Society</em>, <b>54</b>, 799-805.</p>
 <p>Hyndman, R.J., Koehler, A.B., Ord, J.K., and Snyder, R.D. (2008)
 <em>Forecasting with exponential smoothing: the state space approach</em>,
 Springer-Verlag. <a href='http://www.exponentialsmoothing.net'>http://www.exponentialsmoothing.net</a>.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/r/stats/HoltWinters.html'>HoltWinters</a></code>, <code><a href='ets.html'>ets</a></code>.</p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-</div><span class='co'># NOT RUN {</span>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='no'>fcast</span> <span class='kw'>&lt;-</span> <span class='fu'>dshw</span>(<span class='no'>taylor</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fcast</span>)
 
@@ -253,22 +248,16 @@ Springer-Verlag. <a href='http://www.exponentialsmoothing.net'>http://www.expone
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>sin</a></span>(<span class='fl'>2</span>*<span class='no'>pi</span>*<span class='no'>t</span>) + <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>cos</a></span>(<span class='fl'>2</span>*<span class='no'>pi</span>*<span class='no'>t</span>*<span class='fl'>4</span>) + <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>t</span>),<span class='fl'>0</span>,<span class='fl'>.1</span>))
 <span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>dshw</span>(<span class='no'>x</span>,<span class='fl'>20</span>,<span class='fl'>5</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fit</span>)
-<span class='co'># }</span><div class='input'>
-</div></pre>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -284,7 +273,7 @@ Springer-Verlag. <a href='http://www.exponentialsmoothing.net'>http://www.expone
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9100.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
 </div>
 
       </footer>

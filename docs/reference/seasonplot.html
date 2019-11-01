@@ -15,16 +15,18 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -39,14 +41,14 @@
 
 
 
-<meta property="og:title" content="Seasonal plot — ggseasonplot" />
 
+<meta property="og:title" content="Seasonal plot — ggseasonplot" />
 <meta property="og:description" content="Plots a seasonal plot as described in Hyndman and Athanasopoulos (2014,
 chapter 2). This is like a time plot except that the data are plotted
 against the seasons in separate years." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -77,7 +79,7 @@ against the seasons in separate years." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.9.0.9000</span>
       </span>
     </div>
 
@@ -93,7 +95,6 @@ against the seasons in separate years." />
   <a href="../news/index.html">Change Log</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/robjhyndman/forecast">
@@ -120,11 +121,9 @@ against the seasons in separate years." />
     </div>
 
     <div class="ref-description">
-    
     <p>Plots a seasonal plot as described in Hyndman and Athanasopoulos (2014,
 chapter 2). This is like a time plot except that the data are plotted
 against the seasons in separate years.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>ggseasonplot</span>(<span class='no'>x</span>, <span class='kw'>season.labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>year.labels</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -134,7 +133,7 @@ against the seasons in separate years.</p>
 <span class='fu'>seasonplot</span>(<span class='no'>x</span>, <span class='no'>s</span>, <span class='kw'>season.labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>year.labels</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>year.labels.left</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"o"</span>, <span class='no'>main</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>labelgap</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -179,7 +178,7 @@ discrete?</p></td>
       <td><p>Distance between year labels and plotted lines</p></td>
     </tr>
     <tr>
-      <th>&#8230;</th>
+      <th>...</th>
       <td><p>additional arguments to <code><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></code>.</p></td>
     </tr>
     <tr>
@@ -199,21 +198,18 @@ discrete?</p></td>
       <td><p>Y-axis label.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>None.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Hyndman and Athanasopoulos (2018) <em>Forecasting: principles
 and practice</em>, 2nd edition, OTexts: Melbourne, Australia.
 <a href='https://OTexts.org/fpp2/'>https://OTexts.org/fpp2/</a></p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/r/stats/monthplot.html'>monthplot</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>ggseasonplot</span>(<span class='no'>AirPassengers</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>rainbow</a></span>(<span class='fl'>12</span>), <span class='kw'>year.labels</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='seasonplot-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>ggseasonplot</span>(<span class='no'>AirPassengers</span>, <span class='kw'>year.labels</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>continuous</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='seasonplot-2.png' alt='' width='700' height='433' /></div><div class='input'>
@@ -224,13 +220,9 @@ and practice</em>, 2nd edition, OTexts: Melbourne, Australia.
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -246,7 +238,7 @@ and practice</em>, 2nd edition, OTexts: Melbourne, Australia.
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9100.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
 </div>
 
       </footer>

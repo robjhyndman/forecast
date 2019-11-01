@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>true • forecast</title>
+<title>Automatic Time Series Forecasting:\newline the \pkg{forecast} Package for \proglang{R},Automatic Time Series Forecasting: the forecast Package for R,\pkg{forecast}: Automatic Time Series Forecasting • forecast</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -13,10 +13,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="true">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Automatic Time Series Forecasting:\newline the \pkg{forecast} Package for \proglang{R},Automatic Time Series Forecasting: the forecast Package for R,\pkg{forecast}: Automatic Time Series Forecasting">
 <meta property="og:description" content="">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.9.0.9000</span>
       </span>
     </div>
 
@@ -90,7 +90,7 @@
     
         <div class="abstract">
       <p class="abstract">Abstract</p>
-      This vignette to the  package  is an updated version of <span class="citation">Hyndman and Khandakar (2008)</span>, published in the <em>Journal of Statistical Software</em>. Automatic forecasts of large numbers of univariate time series are often needed in business and other contexts. We describe two automatic forecasting algorithms that have been implemented in the  package for . The first is based on innovations state space models that underly exponential smoothing methods. The second is a step-wise algorithm for forecasting with ARIMA models. The algorithms are applicable to both seasonal and non-seasonal data, and are compared and illustrated using four real time series. We also briefly describe some of the other functionality available in the  package.}
+      <p>This vignette to the  package  is an updated version of <span class="citation">Hyndman and Khandakar (2008)</span>, published in the <em>Journal of Statistical Software</em>. Automatic forecasts of large numbers of univariate time series are often needed in business and other contexts. We describe two automatic forecasting algorithms that have been implemented in the  package for . The first is based on innovations state space models that underly exponential smoothing methods. The second is a step-wise algorithm for forecasting with ARIMA models. The algorithms are applicable to both seasonal and non-seasonal data, and are compared and illustrated using four real time series. We also briefly describe some of the other functionality available in the  package.}</p>
     </div>
     
 <div id="introduction" class="section level1">
@@ -98,7 +98,7 @@
 <a href="#introduction" class="anchor"></a>Introduction</h1>
 <p>Automatic forecasts of large numbers of univariate time series are often needed in business. It is common to have over one thousand product lines that need forecasting at least monthly. Even when a smaller number of forecasts are required, there may be nobody suitably trained in the use of time series models to produce them. In these circumstances, an automatic forecasting algorithm is an essential tool. Automatic forecasting algorithms must determine an appropriate time series model, estimate the parameters and compute the forecasts. They must be robust to unusual time series patterns, and applicable to large numbers of series without user intervention. The most popular automatic forecasting algorithms are based on either exponential smoothing or ARIMA models.</p>
 <p>In this article, we discuss the implementation of two automatic univariate forecasting methods in the  package for . We also briefly describe some univariate forecasting methods that are part of the  package.</p>
-<p>The  package for the  system for statistical computing <span class="citation">( Development Core Team 2008)</span> is available from the Comprehensive  Archive Network at . Version 8.8 of the package was used for this paper. The  package contains functions for univariate forecasting and a few examples of real time series data. For more extensive testing of forecasting methods, the  package contains the 90 data sets from <span class="citation">Makridakis, Wheelwright, and Hyndman (1998)</span>, the  package contains 24 data sets from <span class="citation">Hyndman, Koehler, et al. (2008)</span>, and the  package contains the 1001 time series from the M-competition <span class="citation">(Makridakis et al. 1982)</span> and the 3003 time series from the M3-competition <span class="citation">(Makridakis and Hibon 2000)</span>.</p>
+<p>The  package for the  system for statistical computing <span class="citation">( Development Core Team 2008)</span> is available from the Comprehensive  Archive Network at . Version 8.9.0.9000 of the package was used for this paper. The  package contains functions for univariate forecasting and a few examples of real time series data. For more extensive testing of forecasting methods, the  package contains the 90 data sets from <span class="citation">Makridakis, Wheelwright, and Hyndman (1998)</span>, the  package contains 24 data sets from <span class="citation">Hyndman, Koehler, et al. (2008)</span>, and the  package contains the 1001 time series from the M-competition <span class="citation">(Makridakis et al. 1982)</span> and the 3003 time series from the M3-competition <span class="citation">(Makridakis and Hibon 2000)</span>.</p>
 <p>The  package implements automatic forecasting using exponential smoothing, ARIMA models, the Theta method <span class="citation">(Assimakopoulos and Nikolopoulos 2000)</span>, cubic splines <span class="citation">(Hyndman, King, et al. 2005)</span>, as well as other common forecasting methods. In this article, we primarily discuss the exponential smoothing approach (in Section ) and the ARIMA modelling approach (in Section ) to automatic forecasting. In Section , we describe the implementation of these methods in the  package, along with other features of the package.</p>
 </div>
 <div id="sec:expsmooth" class="section level1">
@@ -253,10 +253,11 @@ There are several constraints on the fitted models to avoid problems with conver
 <a href="#sec:package" class="anchor"></a>The forecast package</h1>
 The algorithms and modelling frameworks for automatic univariate time series forecasting are implemented in the  package in . We illustrate the methods using the following four real time series shown in Figure .
 
-<p>\begin{figure}[!htb] </p>
-<p><img src="JSS2008_files/figure-html/ets-forecast-1.png" width="864"></p>
-
-<p>\end{figure}</p>
+<div class="figure">
+<img src="JSS2008_files/figure-html/etsexamples-1.png" alt="Four time series showing point forecasts and 80\% \&amp; 95\% prediction intervals obtained using exponential smoothing state space models." width="864"><p class="caption">
+Four time series showing point forecasts and 80% &amp; 95% prediction intervals obtained using exponential smoothing state space models.
+</p>
+</div>
 <div id="implementation-of-the-automatic-exponential-smoothing-algorithm" class="section level2">
 <h2 class="hasAnchor">
 <a href="#implementation-of-the-automatic-exponential-smoothing-algorithm" class="anchor"></a>Implementation of the automatic exponential smoothing algorithm</h2>
@@ -264,9 +265,9 @@ The innovations state space modelling framework described in Section  is impleme
 
 <p>Although there is a lot of computation involved, it can be handled remarkably quickly on modern computers. Each of the forecasts shown in Figure  took no more than a few seconds on a standard PC. The US electricity generation series took the longest as there are no analytical prediction intervals available for the ETS(M,M,N) model. Consequently, the prediction intervals for this series were computed using simulation of 5000 future sample paths.</p>
 <p>To apply the algorithm to the US net electricity generation time series , we use the following command.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">etsfit &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ets.html">ets</a></span>(usnetelec)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>etsfit &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ets.html">ets</a></span>(usnetelec)</span></code></pre></div>
 <p>The object  is of class ``’’ and contains all of the necessary information about the fitted model including model parameters, the value of the state vector <span class="math inline">\(\bm{x}_t\)</span> for all <span class="math inline">\(t\)</span>, residuals and so on. Printing the  object shows the main items of interest.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">etsfit</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>etsfit</span></code></pre></div>
 <pre><code>## ETS(M,A,N) 
 ## 
 ## Call:
@@ -285,7 +286,7 @@ The innovations state space modelling framework described in Section  is impleme
 ##      AIC     AICc      BIC 
 ## 634.0437 635.2682 644.0803</code></pre>
 <p>Some goodness-of-fit measures <span class="citation">(defined in Hyndman and Koehler 2006)</span> are obtained using .</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../reference/accuracy.html">accuracy</a></span>(etsfit)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw"><a href="../reference/accuracy.html">accuracy</a></span>(etsfit)</span></code></pre></div>
 <pre><code>##                    ME     RMSE      MAE       MPE     MAPE      MASE
 ## Training set 1.162583 52.00363 36.77721 0.2629582 1.942062 0.5211014
 ##                     ACF1
@@ -293,7 +294,7 @@ The innovations state space modelling framework described in Section  is impleme
 <p>There are also , , , ,  and  methods for objects of class ``’’. The  function shows time plots of the original time series along with the extracted components (level, growth and seasonal).</p>
 <p>The  function computes the required forecasts which are then plotted as in Figure (b).</p>
 <p>Printing the  object gives a table showing the prediction intervals.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">fcast</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>fcast</span></code></pre></div>
 <pre><code>##      Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
 ## 2004       3900.329 3770.801 4029.857 3702.233 4098.425
 ## 2005       3952.650 3747.279 4158.022 3638.562 4266.738
@@ -306,11 +307,11 @@ The innovations state space modelling framework described in Section  is impleme
 ## 2012       4318.898 3528.985 5108.812 3110.830 5526.967
 ## 2013       4371.220 3482.552 5259.888 3012.119 5730.320</code></pre>
 <p>The  function also provides the useful feature of applying a fitted model to a new data set. For example, we could withhold 10 observations from the  data set when fitting, then compute the one-step forecast errors for the out-of-sample data.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">fit &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ets.html">ets</a></span>(usnetelec[<span class="dv">1</span><span class="op">:</span><span class="dv">45</span>])</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">test &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ets.html">ets</a></span>(usnetelec[<span class="dv">46</span><span class="op">:</span><span class="dv">55</span>], <span class="dt">model =</span> fit)</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw"><a href="../reference/accuracy.html">accuracy</a></span>(test)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>fit &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ets.html">ets</a></span>(usnetelec[<span class="dv">1</span><span class="op">:</span><span class="dv">45</span>])</span>
+<span id="cb8-2"><a href="#cb8-2"></a>test &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ets.html">ets</a></span>(usnetelec[<span class="dv">46</span><span class="op">:</span><span class="dv">55</span>], <span class="dt">model =</span> fit)</span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="kw"><a href="../reference/accuracy.html">accuracy</a></span>(test)</span></code></pre></div>
 <p>We can also look at the measures of forecast accuracy where the forecasts are based on only the fitting data.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="../reference/accuracy.html">accuracy</a></span>(<span class="kw"><a href="../reference/forecast.html">forecast</a></span>(fit,<span class="dv">10</span>), usnetelec[<span class="dv">46</span><span class="op">:</span><span class="dv">55</span>])</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw"><a href="../reference/accuracy.html">accuracy</a></span>(<span class="kw"><a href="../reference/forecast.html">forecast</a></span>(fit,<span class="dv">10</span>), usnetelec[<span class="dv">46</span><span class="op">:</span><span class="dv">55</span>])</span></code></pre></div>
 </div>
 <div id="the-holtwinters-function" class="section level2">
 <h2 class="hasAnchor">
@@ -321,15 +322,16 @@ The innovations state space modelling framework described in Section  is impleme
 <div id="implementation-of-the-automatic-arima-algorithm" class="section level2">
 <h2 class="hasAnchor">
 <a href="#implementation-of-the-automatic-arima-algorithm" class="anchor"></a>Implementation of the automatic ARIMA algorithm</h2>
-<p>\begin{figure}[!b] </p>
-<p><img src="JSS2008_files/figure-html/arima-forecast-plots-1.png" width="864"></p>
-
-<p>\end{figure}</p>
+<div class="figure">
+<img src="JSS2008_files/figure-html/arimaexamples-1.png" alt="Four time series showing point forecasts and 80\% \&amp; 95\% prediction intervals obtained using ARIMA models." width="864"><p class="caption">
+Four time series showing point forecasts and 80% &amp; 95% prediction intervals obtained using ARIMA models.
+</p>
+</div>
 <p>The algorithm of Section  is applied to the same four time series. Unlike the exponential smoothing algorithm, the ARIMA class of models assumes homoscedasticity, which is not always appropriate. Consequently, transformations are sometimes necessary. For these four time series, we model the raw data for series (a)–(c), but the logged data for series (d). The prediction intervals are back-transformed with the point forecasts to preserve the probability coverage.</p>
 <p>To apply this algorithm to the US net electricity generation time series , we use the following commands.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">arimafit &lt;-<span class="st"> </span><span class="kw"><a href="../reference/auto.arima.html">auto.arima</a></span>(usnetelec)</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">fcast &lt;-<span class="st"> </span><span class="kw"><a href="../reference/forecast.html">forecast</a></span>(arimafit)</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(fcast)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>arimafit &lt;-<span class="st"> </span><span class="kw"><a href="../reference/auto.arima.html">auto.arima</a></span>(usnetelec)</span>
+<span id="cb10-2"><a href="#cb10-2"></a>fcast &lt;-<span class="st"> </span><span class="kw"><a href="../reference/forecast.html">forecast</a></span>(arimafit)</span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(fcast)</span></code></pre></div>
 The function  implements the algorithm of Section  and returns an object of class . The resulting forecasts are shown in Figure . The fitted models are as follows:
 
 <p>Note that the  parameterization has <span class="math inline">\(\theta(B) = (1 + \theta_1B + \dots + \theta_qB)\)</span> and <span class="math inline">\(\phi(B) = (1 - \phi_1B + \dots - \phi_qB)\)</span>, and similarly for the seasonal terms.</p>
@@ -440,7 +442,7 @@ The output from the  function is an object of class ``’’ and includes at lea
 <p>: provides a time plot along with an ACF and PACF.</p>
 
 <p>: produces a seasonal plot as described in <span class="citation">Makridakis, Wheelwright, and Hyndman (1998)</span>.</p>
-
+<div style="page-break-after: always;"></div>
 </div>
 </div>
 <div id="bibliography" class="section level1 unnumbered">
@@ -490,10 +492,10 @@ The output from the  function is an object of class ``’’ and includes at lea
 <p>Goodrich, Robert L. 2000. “The Forecast Pro Methodology.” <em>International Journal of Forecasting</em> 16 (4): 533–35.</p>
 </div>
 <div id="ref-Gomez98">
-<p>Gómez, Victor. 1998. “Automatic Model Identification in the Presence of Missing Observations and Outliers.” Working paper D-98009. Ministerio de Economı'a y Hacienda, Dirección General de Análisis y Programación Presupuestaria.</p>
+<p>Gómez, Victor. 1998. “Automatic Model Identification in the Presence of Missing Observations and Outliers.” Working paper D-98009. Ministerio de Economı́a y Hacienda, Dirección General de Análisis y Programación Presupuestaria.</p>
 </div>
 <div id="ref-TRAMOSEATS98">
-<p>Gómez, Victor, and Agustín Maravall. 1998. “Programs TRAMO and SEATS, Instructions for the Users.” Working paper 97001. Beta version. Ministerio de Economı'a y Hacienda, Dirección General de Análisis y Programación Presupuestaria.</p>
+<p>Gómez, Victor, and Agustín Maravall. 1998. “Programs TRAMO and SEATS, Instructions for the Users.” Working paper 97001. Beta version. Ministerio de Economı́a y Hacienda, Dirección General de Análisis y Programación Presupuestaria.</p>
 </div>
 <div id="ref-HR82">
 <p>Hannan, E. J., and J. Rissanen. 1982. “Recursive Estimation of Mixed Autoregressive-Moving Average Order.” <em>Biometrika</em> 69 (1): 81–94.</p>
@@ -535,7 +537,7 @@ The output from the  function is an object of class ``’’ and includes at lea
 <p>Hyndman, Rob J, and Andrey V Kostenko. 2007. “Minimum Sample Size Requirements for Seasonal Forecasting Models.” <em>Foresight: The International Journal of Applied Forecasting</em> 6: 12–15.</p>
 </div>
 <div id="ref-KPSS92">
-<p>Kwiatkowski, Denis, Peter C.B. Phillips, Peter Schmidt, and Yongcheol Shin. 1992. “Testing the Null Hypothesis of Stationarity Against the Alternative of a Unit Root.” <em>Journal of Econometrics</em> 54: 159–78.</p>
+<p>Kwiatkowski, Denis, Peter C. B. Phillips, Peter Schmidt, and Yongcheol Shin. 1992. “Testing the Null Hypothesis of Stationarity Against the Alternative of a Unit Root.” <em>Journal of Econometrics</em> 54: 159–78.</p>
 </div>
 <div id="ref-Liu89">
 <p>Liu, L. M. 1989. “Identification of Seasonal Arima Models Using a Filtering Method.” <em>Communications in Statistics: Theory &amp; Methods</em> 18: 2279–88.</p>
@@ -584,6 +586,7 @@ The output from the  function is an object of class ``’’ and includes at lea
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -629,7 +632,7 @@ The output from the  function is an object of class ``’’ and includes at lea
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9100.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
 </div>
 
       </footer>

@@ -15,16 +15,18 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -39,17 +41,17 @@
 
 
 
-<meta property="og:title" content="(Partial) Autocorrelation and Cross-Correlation Function Estimation — Acf" />
 
+<meta property="og:title" content="(Partial) Autocorrelation and Cross-Correlation Function Estimation — Acf" />
 <meta property="og:description" content="The function Acf computes (and by default plots) an estimate of the
 autocorrelation function of a (possibly multivariate) time series. Function
 Pacf computes (and by default plots) an estimate of the partial
 autocorrelation function of a (possibly multivariate) time series. Function
 Ccf computes the cross-correlation or cross-covariance of two
 univariate series." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -80,7 +82,7 @@ univariate series." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.9.0.9000</span>
       </span>
     </div>
 
@@ -96,7 +98,6 @@ univariate series." />
   <a href="../news/index.html">Change Log</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/robjhyndman/forecast">
@@ -123,14 +124,12 @@ univariate series." />
     </div>
 
     <div class="ref-description">
-    
     <p>The function <code>Acf</code> computes (and by default plots) an estimate of the
 autocorrelation function of a (possibly multivariate) time series. Function
 <code>Pacf</code> computes (and by default plots) an estimate of the partial
 autocorrelation function of a (possibly multivariate) time series. Function
 <code>Ccf</code> computes the cross-correlation or cross-covariance of two
 univariate series.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>Acf</span>(<span class='no'>x</span>, <span class='kw'>lag.max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"correlation"</span>, <span class='st'>"covariance"</span>,
@@ -147,7 +146,7 @@ univariate series.</p>
   <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>calc.ci</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fl'>95</span>, <span class='kw'>nsim</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='no'>...</span>)
 
 <span class='fu'>taperedpacf</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -207,14 +206,13 @@ estimates are calculated.</p></td>
 confidence intervals.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>The <code>Acf</code>, <code>Pacf</code> and <code>Ccf</code> functions return objects
 of class "acf" as described in <code><a href='https://rdrr.io/r/stats/acf.html'>acf</a></code> from the stats
 package. The <code>taperedacf</code> and <code>taperedpacf</code> functions return
 objects of class "mpacf".</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The functions improve the <code><a href='https://rdrr.io/r/stats/acf.html'>acf</a></code>,
@@ -225,7 +223,6 @@ lags in time units rather than seasonal units.</p>
 <p>The tapered versions implement the ACF and PACF estimates and plots
 described in Hyndman (2015), based on the banded and tapered estimates of
 autocovariance proposed by McMurry and Politis (2010).</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Hyndman, R.J. (2015). Discussion of ``High-dimensional
@@ -234,34 +231,26 @@ Journal of Statistics</em>, 9, 792-796.</p>
 <p>McMurry, T. L., &amp; Politis, D. N. (2010). Banded and tapered estimates for
 autocovariance matrices and the linear process bootstrap. <em>Journal of
 Time Series Analysis</em>, 31(6), 471-482.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/r/stats/acf.html'>acf</a></code>, <code><a href='https://rdrr.io/r/stats/acf.html'>pacf</a></code>,
 <code><a href='https://rdrr.io/r/stats/acf.html'>ccf</a></code>, <code><a href='tsdisplay.html'>tsdisplay</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'>Acf</span>(<span class='no'>wineind</span>)</div><div class='img'><img src='Acf-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>Pacf</span>(<span class='no'>wineind</span>)</div><div class='img'><img src='Acf-2.png' alt='' width='700' height='433' /></div><span class='co'># NOT RUN {</span>
+<span class='fu'>Acf</span>(<span class='no'>wineind</span>)</div><div class='img'><img src='Acf-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>Pacf</span>(<span class='no'>wineind</span>)</div><div class='img'><img src='Acf-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'>taperedacf</span>(<span class='no'>wineind</span>, <span class='kw'>nsim</span><span class='kw'>=</span><span class='fl'>50</span>)
 <span class='fu'>taperedpacf</span>(<span class='no'>wineind</span>, <span class='kw'>nsim</span><span class='kw'>=</span><span class='fl'>50</span>)
-<span class='co'># }</span><div class='input'>
-</div></pre>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -277,7 +266,7 @@ Time Series Analysis</em>, 31(6), 471-482.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9100.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
 </div>
 
       </footer>

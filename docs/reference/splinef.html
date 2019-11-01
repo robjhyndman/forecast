@@ -15,16 +15,18 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -39,13 +41,13 @@
 
 
 
-<meta property="og:title" content="Cubic Spline Forecast — splinef" />
 
+<meta property="og:title" content="Cubic Spline Forecast — splinef" />
 <meta property="og:description" content="Returns local linear forecasts and prediction intervals using cubic
 smoothing splines." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -76,7 +78,7 @@ smoothing splines." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.9.0.9000</span>
       </span>
     </div>
 
@@ -92,7 +94,6 @@ smoothing splines." />
   <a href="../news/index.html">Change Log</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/robjhyndman/forecast">
@@ -119,15 +120,13 @@ smoothing splines." />
     </div>
 
     <div class="ref-description">
-    
     <p>Returns local linear forecasts and prediction intervals using cubic
 smoothing splines.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>splinef</span>(<span class='no'>y</span>, <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>), <span class='kw'>fan</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"gcv"</span>, <span class='st'>"mle"</span>), <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -174,7 +173,7 @@ maximum likelihood method from Hyndman et al (2002) is used.</p></td>
       <td><p>Deprecated. Included for backwards compatibility.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class "<code>forecast</code>".</p>
@@ -196,7 +195,6 @@ series used to create the model stored as <code>object</code>).</p></dd>
 <dt>residuals</dt><dd><p>Residuals from the fitted model. That is x minus one-step
 forecasts.</p></dd>
 
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The cubic smoothing spline model is equivalent to an ARIMA(0,2,2) model but
@@ -205,19 +203,16 @@ the full ARIMA model is that it provides a smooth historical trend as well
 as a linear forecast function. Hyndman, King, Pitrun, and Billah (2002) show
 that the forecast performance of the method is hardly affected by the
 restricted parameter space.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Hyndman, King, Pitrun and Billah (2005) Local linear forecasts
 using cubic smoothing splines. <em>Australian and New Zealand Journal of
 Statistics</em>, <b>47</b>(1), 87-99.
 <a href='https://robjhyndman.com/publications/splinefcast/'>https://robjhyndman.com/publications/splinefcast/</a>.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/r/stats/smooth.spline.html'>smooth.spline</a></code>, <code><a href='https://rdrr.io/r/stats/arima.html'>arima</a></code>,
 <code><a href='ses.html'>holt</a></code>.</p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>fcast</span> <span class='kw'>&lt;-</span> <span class='fu'>splinef</span>(<span class='no'>uspop</span>,<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>5</span>)
@@ -226,40 +221,35 @@ Statistics</em>, <b>47</b>(1), 87-99.
 #&gt; 
 #&gt; Model Information:
 #&gt; $beta
-#&gt; [1] 9.280668e-14
+#&gt; [1] 0.0006859
 #&gt; 
 #&gt; $call
 #&gt; splinef(y = uspop, h = 5)
 #&gt; 
 #&gt; 
 #&gt; Error measures:
-#&gt;                     ME     RMSE      MAE       MPE     MAPE       MASE
-#&gt; Training set 0.7288723 4.643268 3.247273 -1.379552 9.580963 0.04654289
+#&gt;                     ME     RMSE      MAE        MPE     MAPE       MASE
+#&gt; Training set 0.7704553 4.572546 3.165298 -0.6110405 8.174722 0.04536795
 #&gt;                    ACF1
-#&gt; Training set -0.4369553
+#&gt; Training set -0.4363661
 #&gt; 
 #&gt; Forecasts:
 #&gt;      Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
-#&gt; 1980       225.6523 219.6912 231.6133 216.5356 234.7689
-#&gt; 1990       248.1045 233.3293 262.8798 225.5077 270.7013
-#&gt; 2000       270.5568 244.8162 296.2974 231.1900 309.9236
-#&gt; 2010       293.0091 254.5045 331.5136 234.1214 351.8967
-#&gt; 2020       315.4613 262.6160 368.3067 234.6413 396.2814</div><div class='input'>
+#&gt; 1980       225.6937 219.8454 231.5419 216.7496 234.6378
+#&gt; 1990       248.1814 233.7246 262.6382 226.0717 270.2912
+#&gt; 2000       270.6692 245.5023 295.8361 232.1798 309.1586
+#&gt; 2010       293.1569 255.5241 330.7897 235.6025 350.7113
+#&gt; 2020       315.6447 264.0068 367.2826 236.6713 394.6181</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -275,7 +265,7 @@ Statistics</em>, <b>47</b>(1), 87-99.
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9100.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
 </div>
 
       </footer>

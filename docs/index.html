@@ -13,8 +13,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Forecasting Functions for Time Series and Linear Models">
 <meta property="og:description" content="Methods and tools for displaying and analysing
@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.9.0.9000</span>
       </span>
     </div>
 
@@ -75,71 +75,72 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="forecast" class="section level1">
+<div id="forecast-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#forecast" class="anchor"></a>forecast <img src="reference/figures/logo.png" align="right">
+<a href="#forecast-" class="anchor"></a>forecast <img src="reference/figures/logo.png" align="right">
 </h1></div>
 
 <p>The R package <em>forecast</em> provides methods and tools for displaying and analysing univariate time series forecasts including exponential smoothing via state space models and automatic ARIMA modelling.</p>
+<p>This package is now retired in favour of the <a href="http://fable.tidyverts.org/">fable</a> package. The forecast package will remain in its current state, and maintained with bug fixes only. For the latest features and development, we recommend forecasting with the fable package.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install the <strong>stable</strong> version from <a href="https://cran.r-project.org/package=forecast">CRAN</a>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><a class="sourceLine" id="cb1-1" data-line-number="1">install.packages(<span class="ch">'f</span>orecast<span class="ch">',</span> dependencies = TRUE)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><span id="cb1-1"><a href="#cb1-1"></a>install.packages(<span class="ch">'f</span>orecast<span class="ch">',</span> dependencies = TRUE)</span></code></pre></div>
 <p>You can install the <strong>development</strong> version from <a href="https://github.com/robjhyndman/forecast">Github</a></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">devtools::</span>install_github(<span class="st">"robjhyndman/forecast"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># install.packages("remotes")</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">remotes::</span>install_github(<span class="st">"robjhyndman/forecast"</span>)</span></code></pre></div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><a class="sourceLine" id="cb3-1" data-line-number="1">library(forecast)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">library(ggplot2)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co"># ETS forecasts</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">USAccDeaths %&gt;%</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">  ets() %&gt;%</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">  forecast() %&gt;%</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">  autoplot()</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co"># Automatic ARIMA forecasts</span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11">WWWusage %&gt;%</a>
-<a class="sourceLine" id="cb3-12" data-line-number="12">  auto.arima() %&gt;%</a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">  forecast(h=<span class="dv">20</span>) %&gt;%</a>
-<a class="sourceLine" id="cb3-14" data-line-number="14">  autoplot()</a>
-<a class="sourceLine" id="cb3-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co"># ARFIMA forecasts</span></a>
-<a class="sourceLine" id="cb3-17" data-line-number="17">library(fracdiff)</a>
-<a class="sourceLine" id="cb3-18" data-line-number="18">x &lt;- fracdiff.sim( <span class="dv">100</span>, ma=-.4, d=.3)$series</a>
-<a class="sourceLine" id="cb3-19" data-line-number="19">arfima(x) %&gt;%</a>
-<a class="sourceLine" id="cb3-20" data-line-number="20">  forecast(h=<span class="dv">30</span>) %&gt;%</a>
-<a class="sourceLine" id="cb3-21" data-line-number="21">  autoplot()</a>
-<a class="sourceLine" id="cb3-22" data-line-number="22"></a>
-<a class="sourceLine" id="cb3-23" data-line-number="23"><span class="co"># Forecasting with STL</span></a>
-<a class="sourceLine" id="cb3-24" data-line-number="24">USAccDeaths %&gt;%</a>
-<a class="sourceLine" id="cb3-25" data-line-number="25">  stlm(modelfunction=ar) %&gt;%</a>
-<a class="sourceLine" id="cb3-26" data-line-number="26">  forecast(h=<span class="dv">36</span>) %&gt;%</a>
-<a class="sourceLine" id="cb3-27" data-line-number="27">  autoplot()</a>
-<a class="sourceLine" id="cb3-28" data-line-number="28"></a>
-<a class="sourceLine" id="cb3-29" data-line-number="29">AirPassengers %&gt;%</a>
-<a class="sourceLine" id="cb3-30" data-line-number="30">  stlf(lambda=<span class="dv">0</span>) %&gt;%</a>
-<a class="sourceLine" id="cb3-31" data-line-number="31">  autoplot()</a>
-<a class="sourceLine" id="cb3-32" data-line-number="32"></a>
-<a class="sourceLine" id="cb3-33" data-line-number="33">USAccDeaths %&gt;%</a>
-<a class="sourceLine" id="cb3-34" data-line-number="34">  stl(s.window=<span class="ch">'p</span>eriodic<span class="ch">')</span> %&gt;%</a>
-<a class="sourceLine" id="cb3-35" data-line-number="35">  forecast() %&gt;%</a>
-<a class="sourceLine" id="cb3-36" data-line-number="36">  autoplot()</a>
-<a class="sourceLine" id="cb3-37" data-line-number="37"></a>
-<a class="sourceLine" id="cb3-38" data-line-number="38"><span class="co"># TBATS forecasts</span></a>
-<a class="sourceLine" id="cb3-39" data-line-number="39">USAccDeaths %&gt;%</a>
-<a class="sourceLine" id="cb3-40" data-line-number="40">  tbats() %&gt;%</a>
-<a class="sourceLine" id="cb3-41" data-line-number="41">  forecast() %&gt;%</a>
-<a class="sourceLine" id="cb3-42" data-line-number="42">  autoplot()</a>
-<a class="sourceLine" id="cb3-43" data-line-number="43"></a>
-<a class="sourceLine" id="cb3-44" data-line-number="44">taylor %&gt;%</a>
-<a class="sourceLine" id="cb3-45" data-line-number="45">  tbats() %&gt;%</a>
-<a class="sourceLine" id="cb3-46" data-line-number="46">  forecast() %&gt;%</a>
-<a class="sourceLine" id="cb3-47" data-line-number="47">  autoplot()</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><span id="cb3-1"><a href="#cb3-1"></a>library(forecast)</span>
+<span id="cb3-2"><a href="#cb3-2"></a>library(ggplot2)</span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co"># ETS forecasts</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>USAccDeaths %&gt;%</span>
+<span id="cb3-6"><a href="#cb3-6"></a>  ets() %&gt;%</span>
+<span id="cb3-7"><a href="#cb3-7"></a>  forecast() %&gt;%</span>
+<span id="cb3-8"><a href="#cb3-8"></a>  autoplot()</span>
+<span id="cb3-9"><a href="#cb3-9"></a></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="co"># Automatic ARIMA forecasts</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a>WWWusage %&gt;%</span>
+<span id="cb3-12"><a href="#cb3-12"></a>  auto.arima() %&gt;%</span>
+<span id="cb3-13"><a href="#cb3-13"></a>  forecast(h=<span class="dv">20</span>) %&gt;%</span>
+<span id="cb3-14"><a href="#cb3-14"></a>  autoplot()</span>
+<span id="cb3-15"><a href="#cb3-15"></a></span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="co"># ARFIMA forecasts</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a>library(fracdiff)</span>
+<span id="cb3-18"><a href="#cb3-18"></a>x &lt;- fracdiff.sim( <span class="dv">100</span>, ma=-.4, d=.3)$series</span>
+<span id="cb3-19"><a href="#cb3-19"></a>arfima(x) %&gt;%</span>
+<span id="cb3-20"><a href="#cb3-20"></a>  forecast(h=<span class="dv">30</span>) %&gt;%</span>
+<span id="cb3-21"><a href="#cb3-21"></a>  autoplot()</span>
+<span id="cb3-22"><a href="#cb3-22"></a></span>
+<span id="cb3-23"><a href="#cb3-23"></a><span class="co"># Forecasting with STL</span></span>
+<span id="cb3-24"><a href="#cb3-24"></a>USAccDeaths %&gt;%</span>
+<span id="cb3-25"><a href="#cb3-25"></a>  stlm(modelfunction=ar) %&gt;%</span>
+<span id="cb3-26"><a href="#cb3-26"></a>  forecast(h=<span class="dv">36</span>) %&gt;%</span>
+<span id="cb3-27"><a href="#cb3-27"></a>  autoplot()</span>
+<span id="cb3-28"><a href="#cb3-28"></a></span>
+<span id="cb3-29"><a href="#cb3-29"></a>AirPassengers %&gt;%</span>
+<span id="cb3-30"><a href="#cb3-30"></a>  stlf(lambda=<span class="dv">0</span>) %&gt;%</span>
+<span id="cb3-31"><a href="#cb3-31"></a>  autoplot()</span>
+<span id="cb3-32"><a href="#cb3-32"></a></span>
+<span id="cb3-33"><a href="#cb3-33"></a>USAccDeaths %&gt;%</span>
+<span id="cb3-34"><a href="#cb3-34"></a>  stl(s.window=<span class="ch">'p</span>eriodic<span class="ch">')</span> %&gt;%</span>
+<span id="cb3-35"><a href="#cb3-35"></a>  forecast() %&gt;%</span>
+<span id="cb3-36"><a href="#cb3-36"></a>  autoplot()</span>
+<span id="cb3-37"><a href="#cb3-37"></a></span>
+<span id="cb3-38"><a href="#cb3-38"></a><span class="co"># TBATS forecasts</span></span>
+<span id="cb3-39"><a href="#cb3-39"></a>USAccDeaths %&gt;%</span>
+<span id="cb3-40"><a href="#cb3-40"></a>  tbats() %&gt;%</span>
+<span id="cb3-41"><a href="#cb3-41"></a>  forecast() %&gt;%</span>
+<span id="cb3-42"><a href="#cb3-42"></a>  autoplot()</span>
+<span id="cb3-43"><a href="#cb3-43"></a></span>
+<span id="cb3-44"><a href="#cb3-44"></a>taylor %&gt;%</span>
+<span id="cb3-45"><a href="#cb3-45"></a>  tbats() %&gt;%</span>
+<span id="cb3-46"><a href="#cb3-46"></a>  forecast() %&gt;%</span>
+<span id="cb3-47"><a href="#cb3-47"></a>  autoplot()</span></code></pre></div>
 </div>
 <div id="for-more-information" class="section level2">
 <h2 class="hasAnchor">
@@ -193,22 +194,22 @@
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>
-<a href="http://robjhyndman.com">Rob Hyndman</a> <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0002-2140-5352" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
+<a href="http://robjhyndman.com">Rob Hyndman</a> <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0002-2140-5352" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>George Athanasopoulos <br><small class="roles"> Author </small>  </li>
 <li>
-<a href="https://github.com/cbergmeir">Christoph Bergmeir</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-3665-9021" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
+<a href="https://github.com/cbergmeir">Christoph Bergmeir</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-3665-9021" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>
 <a href="https://github.com/gabrielcaceres">Gabriel Caceres</a> <br><small class="roles"> Author </small>  </li>
 <li>Leanne Chhay <br><small class="roles"> Author </small>  </li>
 <li>
-<a href="https://github.com/mitchelloharawild">Mitchell O'Hara-Wild</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-6729-7695" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
+<a href="https://github.com/mitchelloharawild">Mitchell O'Hara-Wild</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-6729-7695" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>
-<a href="http://fpetropoulos.eu">Fotios Petropoulos</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-3039-4955" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
+<a href="http://fpetropoulos.eu">Fotios Petropoulos</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-3039-4955" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>
 <a href="https://github.com/slavarazbash">Slava Razbash</a> <br><small class="roles"> Author </small>  </li>
 <li>
 <a href="http://earo.me">Earo Wang</a> <br><small class="roles"> Author </small>  </li>
-<li>Farah Yasmeen <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-1479-5401" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
+<li>Farah Yasmeen <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-1479-5401" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li><a href="authors.html">All authors...</a></li>
 </ul>
 </div>
@@ -218,7 +219,8 @@
 <ul class="list-unstyled">
 <li><a href="https://travis-ci.org/robjhyndman/forecast"><img src="https://travis-ci.org/robjhyndman/forecast.svg?branch=master" alt="Travis-CI Build Status"></a></li>
 <li><a href="https://cran.r-project.org/package=forecast"><img src="https://www.r-pkg.org/badges/version/forecast" alt="CRAN_Status_Badge"></a></li>
-<li><a href="https://www.tidyverse.org/lifecycle/#stable"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="lifecycle"></a></li>
+<li><a href="https://cran.r-project.org/web/checks/check_results_forecast.html"><img src="https://cranchecks.info/badges/worst/forecast" alt="cran checks"></a></li>
+<li><a href="https://www.tidyverse.org/lifecycle/#retired"><img src="https://img.shields.io/badge/lifecycle-retired-orange.svg" alt="Lifecycle: retired"></a></li>
 <li><a href="https://cran.r-project.org/package=forecast"><img src="https://cranlogs.r-pkg.org/badges/forecast" alt="Downloads"></a></li>
 <li><a href="https://www.gnu.org/licenses/gpl-3.0.en.html"><img src="https://img.shields.io/badge/licence-GPL--3-blue.svg" alt="Licence"></a></li>
 </ul>
@@ -232,7 +234,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9100.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
 </div>
 
       </footer>

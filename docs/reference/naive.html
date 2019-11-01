@@ -15,16 +15,18 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -39,17 +41,17 @@
 
 
 
-<meta property="og:title" content="Naive and Random Walk Forecasts — rwf" />
 
+<meta property="og:title" content="Naive and Random Walk Forecasts — rwf" />
 <meta property="og:description" content="rwf() returns forecasts and prediction intervals for a random walk
 with drift model applied to y. This is equivalent to an ARIMA(0,1,0)
 model with an optional drift coefficient. naive() is simply a wrapper
 to rwf() for simplicity. snaive() returns forecasts and
 prediction intervals from an ARIMA(0,0,0)(0,1,0)m model where m is the
 seasonal period." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -80,7 +82,7 @@ seasonal period." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.9.0.9000</span>
       </span>
     </div>
 
@@ -96,7 +98,6 @@ seasonal period." />
   <a href="../news/index.html">Change Log</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/robjhyndman/forecast">
@@ -123,14 +124,12 @@ seasonal period." />
     </div>
 
     <div class="ref-description">
-    
     <p><code>rwf()</code> returns forecasts and prediction intervals for a random walk
 with drift model applied to <code>y</code>. This is equivalent to an ARIMA(0,1,0)
 model with an optional drift coefficient. <code>naive()</code> is simply a wrapper
 to <code>rwf()</code> for simplicity. <code>snaive()</code> returns forecasts and
 prediction intervals from an ARIMA(0,0,0)(0,1,0)m model where m is the
 seasonal period.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>rwf</span>(<span class='no'>y</span>, <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>drift</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>), <span class='kw'>fan</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -141,7 +140,7 @@ seasonal period.</p>
 
 <span class='fu'>snaive</span>(<span class='no'>y</span>, <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>2</span> * <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='no'>x</span>), <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>), <span class='kw'>fan</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -193,7 +192,7 @@ modelling function.</p></td>
       <td><p>Deprecated. Included for backwards compatibility.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class "<code>forecast</code>".</p>
@@ -216,7 +215,6 @@ stored as <code>object</code>).</p></dd> <dt>residuals</dt><dd><p>Residuals from
 That is x minus fitted values.</p></dd> <dt>fitted</dt><dd><p>Fitted values (one-step
 forecasts)</p></dd>
 
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The random walk with drift model is $$Y_t=c + Y_{t-1} + Z_t$$ where \(Z_t\) is a normal iid error. Forecasts are
@@ -226,11 +224,9 @@ uncertainty in estimating the drift parameter (unlike the corresponding
 forecasts obtained by fitting an ARIMA model directly).</p>
 <p>The seasonal naive model is $$Y_t= Y_{t-m} + Z_t$$
 where \(Z_t\) is a normal iid error.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='Arima.html'>Arima</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -246,13 +242,9 @@ where \(Z_t\) is a normal iid error.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -268,7 +260,7 @@ where \(Z_t\) is a normal iid error.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9100.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
 </div>
 
       </footer>
