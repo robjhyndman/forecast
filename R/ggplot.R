@@ -1336,6 +1336,9 @@ ggseasonplot <- function(x, season.labels=NULL, year.labels=FALSE, year.labels.l
   p <- p + ggplot2::geom_line()
 
   if (!is.null(col)) {
+    if(is.numeric(col)){
+      col <- palette()[(col-1)%%(length(palette())) + 1]
+    }
     if (continuous) {
       p <- p + ggplot2::scale_color_gradientn(colours = col)
     }

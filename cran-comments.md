@@ -1,6 +1,6 @@
 ## Submission
 
-* All Suggested packages now conditional 
+* Fixed problems on CRAN check page.
 
 ## Test environments
 * ubuntu 16.04 (on travis-ci), R 3.5.3
