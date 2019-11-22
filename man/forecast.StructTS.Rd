@@ -4,9 +4,15 @@
 \alias{forecast.StructTS}
 \title{Forecasting using Structural Time Series models}
 \usage{
-\method{forecast}{StructTS}(object, h = ifelse(object$coef["epsilon"] >
-  1e-10, 2 * object$xtsp[3], 10), level = c(80, 95), fan = FALSE,
-  lambda = NULL, biasadj = NULL, ...)
+\method{forecast}{StructTS}(
+  object,
+  h = ifelse(object$coef["epsilon"] > 1e-10, 2 * object$xtsp[3], 10),
+  level = c(80, 95),
+  fan = FALSE,
+  lambda = NULL,
+  biasadj = NULL,
+  ...
+)
 }
 \arguments{
 \item{object}{An object of class "\code{StructTS}". Usually the result of a

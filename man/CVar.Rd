@@ -5,8 +5,15 @@
 \alias{print.CVar}
 \title{k-fold Cross-Validation applied to an autoregressive model}
 \usage{
-CVar(y, k = 10, FUN = nnetar, cvtrace = FALSE, blocked = FALSE,
-  LBlags = 24, ...)
+CVar(
+  y,
+  k = 10,
+  FUN = nnetar,
+  cvtrace = FALSE,
+  blocked = FALSE,
+  LBlags = 24,
+  ...
+)
 }
 \arguments{
 \item{y}{Univariate time series}

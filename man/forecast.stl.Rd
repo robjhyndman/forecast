@@ -7,23 +7,61 @@
 \alias{stlf}
 \title{Forecasting using stl objects}
 \usage{
-\method{forecast}{stl}(object, method = c("ets", "arima", "naive",
-  "rwdrift"), etsmodel = "ZZN", forecastfunction = NULL,
-  h = frequency(object$time.series) * 2, level = c(80, 95),
-  fan = FALSE, lambda = NULL, biasadj = NULL, xreg = NULL,
-  newxreg = NULL, allow.multiplicative.trend = FALSE, ...)
+\method{forecast}{stl}(
+  object,
+  method = c("ets", "arima", "naive", "rwdrift"),
+  etsmodel = "ZZN",
+  forecastfunction = NULL,
+  h = frequency(object$time.series) * 2,
+  level = c(80, 95),
+  fan = FALSE,
+  lambda = NULL,
+  biasadj = NULL,
+  xreg = NULL,
+  newxreg = NULL,
+  allow.multiplicative.trend = FALSE,
+  ...
+)
 
-stlm(y, s.window = 13, robust = FALSE, method = c("ets", "arima"),
-  modelfunction = NULL, model = NULL, etsmodel = "ZZN",
-  lambda = NULL, biasadj = FALSE, xreg = NULL,
-  allow.multiplicative.trend = FALSE, x = y, ...)
+stlm(
+  y,
+  s.window = 13,
+  robust = FALSE,
+  method = c("ets", "arima"),
+  modelfunction = NULL,
+  model = NULL,
+  etsmodel = "ZZN",
+  lambda = NULL,
+  biasadj = FALSE,
+  xreg = NULL,
+  allow.multiplicative.trend = FALSE,
+  x = y,
+  ...
+)
 
-\method{forecast}{stlm}(object, h = 2 * object$m, level = c(80, 95),
-  fan = FALSE, lambda = object$lambda, biasadj = NULL,
-  newxreg = NULL, allow.multiplicative.trend = FALSE, ...)
+\method{forecast}{stlm}(
+  object,
+  h = 2 * object$m,
+  level = c(80, 95),
+  fan = FALSE,
+  lambda = object$lambda,
+  biasadj = NULL,
+  newxreg = NULL,
+  allow.multiplicative.trend = FALSE,
+  ...
+)
 
-stlf(y, h = frequency(x) * 2, s.window = 13, t.window = NULL,
-  robust = FALSE, lambda = NULL, biasadj = FALSE, x = y, ...)
+stlf(
+  y,
+  h = frequency(x) * 2,
+  s.window = 13,
+  t.window = NULL,
+  robust = FALSE,
+  lambda = NULL,
+  biasadj = FALSE,
+  x = y,
+  ...
+)
 }
 \arguments{
 \item{object}{An object of class \code{stl} or \code{stlm}. Usually the

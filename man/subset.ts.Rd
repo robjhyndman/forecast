@@ -5,11 +5,18 @@
 \alias{subset.msts}
 \title{Subsetting a time series}
 \usage{
-\method{subset}{ts}(x, subset = NULL, month = NULL, quarter = NULL,
-  season = NULL, start = NULL, end = NULL, ...)
+\method{subset}{ts}(
+  x,
+  subset = NULL,
+  month = NULL,
+  quarter = NULL,
+  season = NULL,
+  start = NULL,
+  end = NULL,
+  ...
+)
 
-\method{subset}{msts}(x, subset = NULL, start = NULL, end = NULL,
-  ...)
+\method{subset}{msts}(x, subset = NULL, start = NULL, end = NULL, ...)
 }
 \arguments{
 \item{x}{a univariate time series to be subsetted}

@@ -5,14 +5,31 @@
 \alias{tsdisplay}
 \title{Time series display}
 \usage{
-ggtsdisplay(x, plot.type = c("partial", "histogram", "scatter",
-  "spectrum"), points = TRUE, smooth = FALSE, lag.max,
-  na.action = na.contiguous, theme = NULL, ...)
+ggtsdisplay(
+  x,
+  plot.type = c("partial", "histogram", "scatter", "spectrum"),
+  points = TRUE,
+  smooth = FALSE,
+  lag.max,
+  na.action = na.contiguous,
+  theme = NULL,
+  ...
+)
 
-tsdisplay(x, plot.type = c("partial", "histogram", "scatter",
-  "spectrum"), points = TRUE, ci.type = c("white", "ma"), lag.max,
-  na.action = na.contiguous, main = NULL, xlab = "", ylab = "",
-  pch = 1, cex = 0.5, ...)
+tsdisplay(
+  x,
+  plot.type = c("partial", "histogram", "scatter", "spectrum"),
+  points = TRUE,
+  ci.type = c("white", "ma"),
+  lag.max,
+  na.action = na.contiguous,
+  main = NULL,
+  xlab = "",
+  ylab = "",
+  pch = 1,
+  cex = 0.5,
+  ...
+)
 }
 \arguments{
 \item{x}{a numeric vector or time series of class \code{ts}.}

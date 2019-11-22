@@ -4,10 +4,21 @@
 \alias{dshw}
 \title{Double-Seasonal Holt-Winters Forecasting}
 \usage{
-dshw(y, period1 = NULL, period2 = NULL, h = 2 * max(period1,
-  period2), alpha = NULL, beta = NULL, gamma = NULL, omega = NULL,
-  phi = NULL, lambda = NULL, biasadj = FALSE, armethod = TRUE,
-  model = NULL)
+dshw(
+  y,
+  period1 = NULL,
+  period2 = NULL,
+  h = 2 * max(period1, period2),
+  alpha = NULL,
+  beta = NULL,
+  gamma = NULL,
+  omega = NULL,
+  phi = NULL,
+  lambda = NULL,
+  biasadj = FALSE,
+  armethod = TRUE,
+  model = NULL
+)
 }
 \arguments{
 \item{y}{Either an \code{\link{msts}} object with two seasonal periods or a

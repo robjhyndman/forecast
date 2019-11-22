@@ -14,33 +14,25 @@
 \alias{residuals.tslm}
 \title{Residuals for various time series models}
 \usage{
-\method{residuals}{forecast}(object, type = c("innovation", "response"),
-  ...)
+\method{residuals}{forecast}(object, type = c("innovation", "response"), ...)
 
 \method{residuals}{ar}(object, type = c("innovation", "response"), ...)
 
-\method{residuals}{Arima}(object, type = c("innovation", "response",
-  "regression"), h = 1, ...)
+\method{residuals}{Arima}(object, type = c("innovation", "response", "regression"), h = 1, ...)
 
-\method{residuals}{bats}(object, type = c("innovation", "response"),
-  h = 1, ...)
+\method{residuals}{bats}(object, type = c("innovation", "response"), h = 1, ...)
 
-\method{residuals}{tbats}(object, type = c("innovation", "response"),
-  h = 1, ...)
+\method{residuals}{tbats}(object, type = c("innovation", "response"), h = 1, ...)
 
-\method{residuals}{ets}(object, type = c("innovation", "response"),
-  h = 1, ...)
+\method{residuals}{ets}(object, type = c("innovation", "response"), h = 1, ...)
 
-\method{residuals}{fracdiff}(object, type = c("innovation", "response"),
-  ...)
+\method{residuals}{fracdiff}(object, type = c("innovation", "response"), ...)
 
-\method{residuals}{nnetar}(object, type = c("innovation", "response"),
-  h = 1, ...)
+\method{residuals}{nnetar}(object, type = c("innovation", "response"), h = 1, ...)
 
 \method{residuals}{stlm}(object, type = c("innovation", "response"), ...)
 
-\method{residuals}{tslm}(object, type = c("innovation", "response",
-  "deviance"), ...)
+\method{residuals}{tslm}(object, type = c("innovation", "response", "deviance"), ...)
 }
 \arguments{
 \item{object}{An object containing a time series model of class \code{ar},

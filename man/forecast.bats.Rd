@@ -5,11 +5,9 @@
 \alias{forecast.tbats}
 \title{Forecasting using BATS and TBATS models}
 \usage{
-\method{forecast}{bats}(object, h, level = c(80, 95), fan = FALSE,
-  biasadj = NULL, ...)
+\method{forecast}{bats}(object, h, level = c(80, 95), fan = FALSE, biasadj = NULL, ...)
 
-\method{forecast}{tbats}(object, h, level = c(80, 95), fan = FALSE,
-  biasadj = NULL, ...)
+\method{forecast}{tbats}(object, h, level = c(80, 95), fan = FALSE, biasadj = NULL, ...)
 }
 \arguments{
 \item{object}{An object of class "\code{bats}". Usually the result of a call

@@ -5,8 +5,20 @@
 \alias{print.modelAR}
 \title{Time Series Forecasts with a user-defined model}
 \usage{
-modelAR(y, p, P = 1, FUN, predict.FUN, xreg = NULL, lambda = NULL,
-  model = NULL, subset = NULL, scale.inputs = FALSE, x = y, ...)
+modelAR(
+  y,
+  p,
+  P = 1,
+  FUN,
+  predict.FUN,
+  xreg = NULL,
+  lambda = NULL,
+  model = NULL,
+  subset = NULL,
+  scale.inputs = FALSE,
+  x = y,
+  ...
+)
 }
 \arguments{
 \item{y}{A numeric vector or time series of class \code{ts}.}

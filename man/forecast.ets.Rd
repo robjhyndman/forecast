@@ -4,10 +4,19 @@
 \alias{forecast.ets}
 \title{Forecasting using ETS models}
 \usage{
-\method{forecast}{ets}(object, h = ifelse(object$m > 1, 2 * object$m,
-  10), level = c(80, 95), fan = FALSE, simulate = FALSE,
-  bootstrap = FALSE, npaths = 5000, PI = TRUE,
-  lambda = object$lambda, biasadj = NULL, ...)
+\method{forecast}{ets}(
+  object,
+  h = ifelse(object$m > 1, 2 * object$m, 10),
+  level = c(80, 95),
+  fan = FALSE,
+  simulate = FALSE,
+  bootstrap = FALSE,
+  npaths = 5000,
+  PI = TRUE,
+  lambda = object$lambda,
+  biasadj = NULL,
+  ...
+)
 }
 \arguments{
 \item{object}{An object of class "\code{ets}". Usually the result of a call

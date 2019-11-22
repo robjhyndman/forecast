@@ -13,20 +13,47 @@ and Plotting}
 \usage{
 \method{autoplot}{acf}(object, ci = 0.95, ...)
 
-ggAcf(x, lag.max = NULL, type = c("correlation", "covariance",
-  "partial"), plot = TRUE, na.action = na.contiguous, demean = TRUE,
-  ...)
+ggAcf(
+  x,
+  lag.max = NULL,
+  type = c("correlation", "covariance", "partial"),
+  plot = TRUE,
+  na.action = na.contiguous,
+  demean = TRUE,
+  ...
+)
 
-ggPacf(x, lag.max = NULL, plot = TRUE, na.action = na.contiguous,
-  demean = TRUE, ...)
+ggPacf(
+  x,
+  lag.max = NULL,
+  plot = TRUE,
+  na.action = na.contiguous,
+  demean = TRUE,
+  ...
+)
 
-ggCcf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
-  plot = TRUE, na.action = na.contiguous, ...)
+ggCcf(
+  x,
+  y,
+  lag.max = NULL,
+  type = c("correlation", "covariance"),
+  plot = TRUE,
+  na.action = na.contiguous,
+  ...
+)
 
 \method{autoplot}{mpacf}(object, ...)
 
-ggtaperedacf(x, lag.max = NULL, type = c("correlation", "partial"),
-  plot = TRUE, calc.ci = TRUE, level = 95, nsim = 100, ...)
+ggtaperedacf(
+  x,
+  lag.max = NULL,
+  type = c("correlation", "partial"),
+  plot = TRUE,
+  calc.ci = TRUE,
+  level = 95,
+  nsim = 100,
+  ...
+)
 
 ggtaperedpacf(x, ...)
 }
@@ -85,7 +112,7 @@ library(ggplot2)
 ggAcf(wineind)
 wineind \%>\% Acf(plot=FALSE) \%>\% autoplot
 \dontrun{
-wineind \%>\% taperedacf(plot=FALSE) \%>\% autoplot
+wineind %>% taperedacf(plot=FALSE) %>% autoplot
 ggtaperedacf(wineind)
 ggtaperedpacf(wineind)}
 ggCcf(mdeaths, fdeaths)

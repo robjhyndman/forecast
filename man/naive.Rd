@@ -7,14 +7,39 @@
 \alias{snaive}
 \title{Naive and Random Walk Forecasts}
 \usage{
-rwf(y, h = 10, drift = FALSE, level = c(80, 95), fan = FALSE,
-  lambda = NULL, biasadj = FALSE, ..., x = y)
+rwf(
+  y,
+  h = 10,
+  drift = FALSE,
+  level = c(80, 95),
+  fan = FALSE,
+  lambda = NULL,
+  biasadj = FALSE,
+  ...,
+  x = y
+)
 
-naive(y, h = 10, level = c(80, 95), fan = FALSE, lambda = NULL,
-  biasadj = FALSE, ..., x = y)
+naive(
+  y,
+  h = 10,
+  level = c(80, 95),
+  fan = FALSE,
+  lambda = NULL,
+  biasadj = FALSE,
+  ...,
+  x = y
+)
 
-snaive(y, h = 2 * frequency(x), level = c(80, 95), fan = FALSE,
-  lambda = NULL, biasadj = FALSE, ..., x = y)
+snaive(
+  y,
+  h = 2 * frequency(x),
+  level = c(80, 95),
+  fan = FALSE,
+  lambda = NULL,
+  biasadj = FALSE,
+  ...,
+  x = y
+)
 }
 \arguments{
 \item{y}{a numeric vector or time series of class \code{ts}}

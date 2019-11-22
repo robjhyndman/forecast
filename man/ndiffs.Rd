@@ -4,8 +4,14 @@
 \alias{ndiffs}
 \title{Number of differences required for a stationary series}
 \usage{
-ndiffs(x, alpha = 0.05, test = c("kpss", "adf", "pp"),
-  type = c("level", "trend"), max.d = 2, ...)
+ndiffs(
+  x,
+  alpha = 0.05,
+  test = c("kpss", "adf", "pp"),
+  type = c("level", "trend"),
+  max.d = 2,
+  ...
+)
 }
 \arguments{
 \item{x}{A univariate time series}

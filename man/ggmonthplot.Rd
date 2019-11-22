@@ -7,8 +7,7 @@
 \usage{
 ggmonthplot(x, labels = NULL, times = time(x), phase = cycle(x), ...)
 
-ggsubseriesplot(x, labels = NULL, times = time(x), phase = cycle(x),
-  ...)
+ggsubseriesplot(x, labels = NULL, times = time(x), phase = cycle(x), ...)
 }
 \arguments{
 \item{x}{a time series object (type \code{ts}).}

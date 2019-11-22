@@ -4,8 +4,7 @@
 \alias{bizdays}
 \title{Number of trading days in each season}
 \usage{
-bizdays(x, FinCenter = c("New York", "London", "NERC", "Tokyo",
-  "Zurich"))
+bizdays(x, FinCenter = c("New York", "London", "NERC", "Tokyo", "Zurich"))
 }
 \arguments{
 \item{x}{Monthly or quarterly time series}

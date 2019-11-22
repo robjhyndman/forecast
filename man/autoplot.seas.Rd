@@ -8,13 +8,11 @@
 \alias{autoplot.mstl}
 \title{Plot time series decomposition components using ggplot}
 \usage{
-\method{autoplot}{decomposed.ts}(object, labels = NULL,
-  range.bars = NULL, ...)
+\method{autoplot}{decomposed.ts}(object, labels = NULL, range.bars = NULL, ...)
 
 \method{autoplot}{stl}(object, labels = NULL, range.bars = TRUE, ...)
 
-\method{autoplot}{StructTS}(object, labels = NULL, range.bars = TRUE,
-  ...)
+\method{autoplot}{StructTS}(object, labels = NULL, range.bars = TRUE, ...)
 
 \method{autoplot}{seas}(object, labels = NULL, range.bars = NULL, ...)
 
@@ -50,7 +48,7 @@ nottem \%>\% stl(s.window='periodic') \%>\% autoplot
 
 \dontrun{
 library(seasonal)
-seas(USAccDeaths) \%>\% autoplot
+seas(USAccDeaths) %>% autoplot
 }
 
 }

@@ -4,8 +4,14 @@
 \alias{nsdiffs}
 \title{Number of differences required for a seasonally stationary series}
 \usage{
-nsdiffs(x, alpha = 0.05, m = frequency(x), test = c("seas", "ocsb",
-  "hegy", "ch"), max.D = 1, ...)
+nsdiffs(
+  x,
+  alpha = 0.05,
+  m = frequency(x),
+  test = c("seas", "ocsb", "hegy", "ch"),
+  max.D = 1,
+  ...
+)
 }
 \arguments{
 \item{x}{A univariate time series}

@@ -4,8 +4,11 @@
 \alias{forecast.baggedModel}
 \title{Forecasting using a bagged model}
 \usage{
-\method{forecast}{baggedModel}(object, h = ifelse(frequency(object$y) >
-  1, 2 * frequency(object$y), 10), ...)
+\method{forecast}{baggedModel}(
+  object,
+  h = ifelse(frequency(object$y) > 1, 2 * frequency(object$y), 10),
+  ...
+)
 }
 \arguments{
 \item{object}{An object of class "\code{baggedModel}" resulting from a call to

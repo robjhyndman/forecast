@@ -7,8 +7,14 @@
 \alias{autoplot.ar}
 \title{Plot characteristic roots from ARIMA model}
 \usage{
-\method{plot}{Arima}(x, type = c("both", "ar", "ma"), main,
-  xlab = "Real", ylab = "Imaginary", ...)
+\method{plot}{Arima}(
+  x,
+  type = c("both", "ar", "ma"),
+  main,
+  xlab = "Real",
+  ylab = "Imaginary",
+  ...
+)
 
 \method{plot}{ar}(x, main, xlab = "Real", ylab = "Imaginary", ...)
 

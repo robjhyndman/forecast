@@ -12,10 +12,19 @@ StatForecast
 
 GeomForecast
 
-geom_forecast(mapping = NULL, data = NULL, stat = "forecast",
-  position = "identity", na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE, PI = TRUE, showgap = TRUE, series = NULL,
-  ...)
+geom_forecast(
+  mapping = NULL,
+  data = NULL,
+  stat = "forecast",
+  position = "identity",
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE,
+  PI = TRUE,
+  showgap = TRUE,
+  series = NULL,
+  ...
+)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link{aes}} or

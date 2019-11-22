@@ -4,8 +4,16 @@
 \alias{arfima}
 \title{Fit a fractionally differenced ARFIMA model}
 \usage{
-arfima(y, drange = c(0, 0.5), estim = c("mle", "ls"), model = NULL,
-  lambda = NULL, biasadj = FALSE, x = y, ...)
+arfima(
+  y,
+  drange = c(0, 0.5),
+  estim = c("mle", "ls"),
+  model = NULL,
+  lambda = NULL,
+  biasadj = FALSE,
+  x = y,
+  ...
+)
 }
 \arguments{
 \item{y}{a univariate time series (numeric vector).}

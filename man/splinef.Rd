@@ -4,8 +4,16 @@
 \alias{splinef}
 \title{Cubic Spline Forecast}
 \usage{
-splinef(y, h = 10, level = c(80, 95), fan = FALSE, lambda = NULL,
-  biasadj = FALSE, method = c("gcv", "mle"), x = y)
+splinef(
+  y,
+  h = 10,
+  level = c(80, 95),
+  fan = FALSE,
+  lambda = NULL,
+  biasadj = FALSE,
+  method = c("gcv", "mle"),
+  x = y
+)
 }
 \arguments{
 \item{y}{a numeric vector or time series of class \code{ts}}

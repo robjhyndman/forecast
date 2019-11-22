@@ -4,8 +4,14 @@
 \alias{gghistogram}
 \title{Histogram with optional normal and kernel density functions}
 \usage{
-gghistogram(x, add.normal = FALSE, add.kde = FALSE, add.rug = TRUE,
-  bins, boundary = 0)
+gghistogram(
+  x,
+  add.normal = FALSE,
+  add.kde = FALSE,
+  add.rug = TRUE,
+  bins,
+  boundary = 0
+)
 }
 \arguments{
 \item{x}{a numerical vector.}

@@ -6,20 +6,54 @@
 \alias{hw}
 \title{Exponential smoothing forecasts}
 \usage{
-ses(y, h = 10, level = c(80, 95), fan = FALSE,
-  initial = c("optimal", "simple"), alpha = NULL, lambda = NULL,
-  biasadj = FALSE, x = y, ...)
+ses(
+  y,
+  h = 10,
+  level = c(80, 95),
+  fan = FALSE,
+  initial = c("optimal", "simple"),
+  alpha = NULL,
+  lambda = NULL,
+  biasadj = FALSE,
+  x = y,
+  ...
+)
 
-holt(y, h = 10, damped = FALSE, level = c(80, 95), fan = FALSE,
-  initial = c("optimal", "simple"), exponential = FALSE,
-  alpha = NULL, beta = NULL, phi = NULL, lambda = NULL,
-  biasadj = FALSE, x = y, ...)
+holt(
+  y,
+  h = 10,
+  damped = FALSE,
+  level = c(80, 95),
+  fan = FALSE,
+  initial = c("optimal", "simple"),
+  exponential = FALSE,
+  alpha = NULL,
+  beta = NULL,
+  phi = NULL,
+  lambda = NULL,
+  biasadj = FALSE,
+  x = y,
+  ...
+)
 
-hw(y, h = 2 * frequency(x), seasonal = c("additive", "multiplicative"),
-  damped = FALSE, level = c(80, 95), fan = FALSE,
-  initial = c("optimal", "simple"), exponential = FALSE,
-  alpha = NULL, beta = NULL, gamma = NULL, phi = NULL,
-  lambda = NULL, biasadj = FALSE, x = y, ...)
+hw(
+  y,
+  h = 2 * frequency(x),
+  seasonal = c("additive", "multiplicative"),
+  damped = FALSE,
+  level = c(80, 95),
+  fan = FALSE,
+  initial = c("optimal", "simple"),
+  exponential = FALSE,
+  alpha = NULL,
+  beta = NULL,
+  gamma = NULL,
+  phi = NULL,
+  lambda = NULL,
+  biasadj = FALSE,
+  x = y,
+  ...
+)
 }
 \arguments{
 \item{y}{a numeric vector or time series of class \code{ts}}

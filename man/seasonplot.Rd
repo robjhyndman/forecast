@@ -5,13 +5,33 @@
 \alias{seasonplot}
 \title{Seasonal plot}
 \usage{
-ggseasonplot(x, season.labels = NULL, year.labels = FALSE,
-  year.labels.left = FALSE, type = NULL, col = NULL,
-  continuous = FALSE, polar = FALSE, labelgap = 0.04, ...)
+ggseasonplot(
+  x,
+  season.labels = NULL,
+  year.labels = FALSE,
+  year.labels.left = FALSE,
+  type = NULL,
+  col = NULL,
+  continuous = FALSE,
+  polar = FALSE,
+  labelgap = 0.04,
+  ...
+)
 
-seasonplot(x, s, season.labels = NULL, year.labels = FALSE,
-  year.labels.left = FALSE, type = "o", main, xlab = NULL,
-  ylab = "", col = 1, labelgap = 0.1, ...)
+seasonplot(
+  x,
+  s,
+  season.labels = NULL,
+  year.labels = FALSE,
+  year.labels.left = FALSE,
+  type = "o",
+  main,
+  xlab = NULL,
+  ylab = "",
+  col = 1,
+  labelgap = 0.1,
+  ...
+)
 }
 \arguments{
 \item{x}{a numeric vector or time series of class \code{ts}.}

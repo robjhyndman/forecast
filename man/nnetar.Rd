@@ -6,8 +6,20 @@
 \alias{print.nnetarmodels}
 \title{Neural Network Time Series Forecasts}
 \usage{
-nnetar(y, p, P = 1, size, repeats = 20, xreg = NULL, lambda = NULL,
-  model = NULL, subset = NULL, scale.inputs = TRUE, x = y, ...)
+nnetar(
+  y,
+  p,
+  P = 1,
+  size,
+  repeats = 20,
+  xreg = NULL,
+  lambda = NULL,
+  model = NULL,
+  subset = NULL,
+  scale.inputs = TRUE,
+  x = y,
+  ...
+)
 }
 \arguments{
 \item{y}{A numeric vector or time series of class \code{ts}.}

@@ -7,10 +7,21 @@
 \alias{as.character.Arima}
 \title{Fit ARIMA model to univariate time series}
 \usage{
-Arima(y, order = c(0, 0, 0), seasonal = c(0, 0, 0), xreg = NULL,
-  include.mean = TRUE, include.drift = FALSE, include.constant,
-  lambda = model$lambda, biasadj = FALSE, method = c("CSS-ML", "ML",
-  "CSS"), model = NULL, x = y, ...)
+Arima(
+  y,
+  order = c(0, 0, 0),
+  seasonal = c(0, 0, 0),
+  xreg = NULL,
+  include.mean = TRUE,
+  include.drift = FALSE,
+  include.constant,
+  lambda = model$lambda,
+  biasadj = FALSE,
+  method = c("CSS-ML", "ML", "CSS"),
+  model = NULL,
+  x = y,
+  ...
+)
 }
 \arguments{
 \item{y}{a univariate time series of class \code{ts}.}

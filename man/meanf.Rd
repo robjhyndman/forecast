@@ -4,8 +4,17 @@
 \alias{meanf}
 \title{Mean Forecast}
 \usage{
-meanf(y, h = 10, level = c(80, 95), fan = FALSE, lambda = NULL,
-  biasadj = FALSE, bootstrap = FALSE, npaths = 5000, x = y)
+meanf(
+  y,
+  h = 10,
+  level = c(80, 95),
+  fan = FALSE,
+  lambda = NULL,
+  biasadj = FALSE,
+  bootstrap = FALSE,
+  npaths = 5000,
+  x = y
+)
 }
 \arguments{
 \item{y}{a numeric vector or time series of class \code{ts}}

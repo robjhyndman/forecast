@@ -7,11 +7,21 @@
 \title{TBATS model (Exponential smoothing state space model with Box-Cox
 transformation, ARMA errors, Trend and Seasonal components)}
 \usage{
-tbats(y, use.box.cox = NULL, use.trend = NULL,
-  use.damped.trend = NULL, seasonal.periods = NULL,
-  use.arma.errors = TRUE, use.parallel = length(y) > 1000,
-  num.cores = 2, bc.lower = 0, bc.upper = 1, biasadj = FALSE,
-  model = NULL, ...)
+tbats(
+  y,
+  use.box.cox = NULL,
+  use.trend = NULL,
+  use.damped.trend = NULL,
+  seasonal.periods = NULL,
+  use.arma.errors = TRUE,
+  use.parallel = length(y) > 1000,
+  num.cores = 2,
+  bc.lower = 0,
+  bc.upper = 1,
+  biasadj = FALSE,
+  model = NULL,
+  ...
+)
 }
 \arguments{
 \item{y}{The time series to be forecast. Can be \code{numeric}, \code{msts}

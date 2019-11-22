@@ -4,8 +4,13 @@
 \alias{dm.test}
 \title{Diebold-Mariano test for predictive accuracy}
 \usage{
-dm.test(e1, e2, alternative = c("two.sided", "less", "greater"), h = 1,
-  power = 2)
+dm.test(
+  e1,
+  e2,
+  alternative = c("two.sided", "less", "greater"),
+  h = 1,
+  power = 2
+)
 }
 \arguments{
 \item{e1}{Forecast errors from method 1.}

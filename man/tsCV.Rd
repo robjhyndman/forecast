@@ -4,8 +4,7 @@
 \alias{tsCV}
 \title{Time series cross-validation}
 \usage{
-tsCV(y, forecastfunction, h = 1, window = NULL, xreg = NULL,
-  initial = 0, ...)
+tsCV(y, forecastfunction, h = 1, window = NULL, xreg = NULL, initial = 0, ...)
 }
 \arguments{
 \item{y}{Univariate time series}

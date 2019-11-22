@@ -7,8 +7,7 @@
 \usage{
 accuracy(object, ...)
 
-\method{accuracy}{default}(f, x, test = NULL, d = NULL, D = NULL,
-  ...)
+\method{accuracy}{default}(f, x, test = NULL, d = NULL, D = NULL, ...)
 }
 \arguments{
 \item{...}{Additional arguments depending on the specific method.}

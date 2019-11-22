@@ -4,8 +4,13 @@
 \alias{thetaf}
 \title{Theta method forecast}
 \usage{
-thetaf(y, h = ifelse(frequency(y) > 1, 2 * frequency(y), 10),
-  level = c(80, 95), fan = FALSE, x = y)
+thetaf(
+  y,
+  h = ifelse(frequency(y) > 1, 2 * frequency(y), 10),
+  level = c(80, 95),
+  fan = FALSE,
+  x = y
+)
 }
 \arguments{
 \item{y}{a numeric vector or time series of class \code{ts}}
