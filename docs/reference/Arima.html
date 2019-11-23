@@ -128,10 +128,21 @@ is also possible to take an ARIMA model from a previous call to <code>Arima</cod
 and re-apply it to the data <code>y</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>Arima</span>(<span class='no'>y</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>), <span class='kw'>seasonal</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>), <span class='kw'>xreg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>include.mean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>include.drift</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>include.constant</span>,
-  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='no'>model</span>$<span class='no'>lambda</span>, <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"CSS-ML"</span>, <span class='st'>"ML"</span>,
-  <span class='st'>"CSS"</span>), <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>Arima</span>(
+  <span class='no'>y</span>,
+  <span class='kw'>order</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>),
+  <span class='kw'>seasonal</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>),
+  <span class='kw'>xreg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>include.mean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>include.drift</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>include.constant</span>,
+  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='no'>model</span>$<span class='no'>lambda</span>,
+  <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"CSS-ML"</span>, <span class='st'>"ML"</span>, <span class='st'>"CSS"</span>),
+  <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

@@ -130,21 +130,48 @@ taperedpacf functions.</p>
     <pre class="usage"><span class='co'># S3 method for acf</span>
 <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>object</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='no'>...</span>)
 
-<span class='fu'>ggAcf</span>(<span class='no'>x</span>, <span class='kw'>lag.max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"correlation"</span>, <span class='st'>"covariance"</span>,
-  <span class='st'>"partial"</span>), <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='no'>na.contiguous</span>, <span class='kw'>demean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>)
+<span class='fu'>ggAcf</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>lag.max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"correlation"</span>, <span class='st'>"covariance"</span>, <span class='st'>"partial"</span>),
+  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='no'>na.contiguous</span>,
+  <span class='kw'>demean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>
+)
 
-<span class='fu'>ggPacf</span>(<span class='no'>x</span>, <span class='kw'>lag.max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='no'>na.contiguous</span>,
-  <span class='kw'>demean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'>ggPacf</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>lag.max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='no'>na.contiguous</span>,
+  <span class='kw'>demean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>
+)
 
-<span class='fu'>ggCcf</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>lag.max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"correlation"</span>, <span class='st'>"covariance"</span>),
-  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='no'>na.contiguous</span>, <span class='no'>...</span>)
+<span class='fu'>ggCcf</span>(
+  <span class='no'>x</span>,
+  <span class='no'>y</span>,
+  <span class='kw'>lag.max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"correlation"</span>, <span class='st'>"covariance"</span>),
+  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='no'>na.contiguous</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for mpacf</span>
 <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
-<span class='fu'>ggtaperedacf</span>(<span class='no'>x</span>, <span class='kw'>lag.max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"correlation"</span>, <span class='st'>"partial"</span>),
-  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>calc.ci</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fl'>95</span>, <span class='kw'>nsim</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='no'>...</span>)
+<span class='fu'>ggtaperedacf</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>lag.max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"correlation"</span>, <span class='st'>"partial"</span>),
+  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>calc.ci</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>level</span> <span class='kw'>=</span> <span class='fl'>95</span>,
+  <span class='kw'>nsim</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+  <span class='no'>...</span>
+)
 
 <span class='fu'>ggtaperedpacf</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
 
@@ -231,7 +258,7 @@ appropriate ggplot object will be created.</p>
     <pre class="examples"><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
 <span class='fu'>ggAcf</span>(<span class='no'>wineind</span>)</div><div class='img'><img src='autoplot.acf-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>wineind</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='Acf.html'>Acf</a></span>(<span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span> <span class='no'>autoplot</span></div><div class='img'><img src='autoplot.acf-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>wineind</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='Acf.html'>taperedacf</a></span>(<span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span> <span class='no'>autoplot</span>
+<span class='no'>wineind</span>
 <span class='fu'>ggtaperedacf</span>(<span class='no'>wineind</span>)
 <span class='fu'>ggtaperedpacf</span>(<span class='no'>wineind</span>)}
 <span class='fu'>ggCcf</span>(<span class='no'>mdeaths</span>, <span class='no'>fdeaths</span>)</div><div class='img'><img src='autoplot.acf-3.png' alt='' width='700' height='433' /></div><div class='input'>

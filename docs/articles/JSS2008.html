@@ -90,7 +90,7 @@
     
         <div class="abstract">
       <p class="abstract">Abstract</p>
-      <p>This vignette to the  package  is an updated version of <span class="citation">Hyndman and Khandakar (2008)</span>, published in the <em>Journal of Statistical Software</em>. Automatic forecasts of large numbers of univariate time series are often needed in business and other contexts. We describe two automatic forecasting algorithms that have been implemented in the  package for . The first is based on innovations state space models that underly exponential smoothing methods. The second is a step-wise algorithm for forecasting with ARIMA models. The algorithms are applicable to both seasonal and non-seasonal data, and are compared and illustrated using four real time series. We also briefly describe some of the other functionality available in the  package.}</p>
+      This vignette to the  package  is an updated version of <span class="citation">Hyndman and Khandakar (2008)</span>, published in the <em>Journal of Statistical Software</em>. Automatic forecasts of large numbers of univariate time series are often needed in business and other contexts. We describe two automatic forecasting algorithms that have been implemented in the  package for . The first is based on innovations state space models that underly exponential smoothing methods. The second is a step-wise algorithm for forecasting with ARIMA models. The algorithms are applicable to both seasonal and non-seasonal data, and are compared and illustrated using four real time series. We also briefly describe some of the other functionality available in the  package.}
     </div>
     
 <div id="introduction" class="section level1">
@@ -265,9 +265,9 @@ The innovations state space modelling framework described in Section  is impleme
 
 <p>Although there is a lot of computation involved, it can be handled remarkably quickly on modern computers. Each of the forecasts shown in Figure  took no more than a few seconds on a standard PC. The US electricity generation series took the longest as there are no analytical prediction intervals available for the ETS(M,M,N) model. Consequently, the prediction intervals for this series were computed using simulation of 5000 future sample paths.</p>
 <p>To apply the algorithm to the US net electricity generation time series , we use the following command.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>etsfit &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ets.html">ets</a></span>(usnetelec)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">etsfit &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ets.html">ets</a></span>(usnetelec)</a></code></pre></div>
 <p>The object  is of class ``’’ and contains all of the necessary information about the fitted model including model parameters, the value of the state vector <span class="math inline">\(\bm{x}_t\)</span> for all <span class="math inline">\(t\)</span>, residuals and so on. Printing the  object shows the main items of interest.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>etsfit</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">etsfit</a></code></pre></div>
 <pre><code>## ETS(M,A,N) 
 ## 
 ## Call:
@@ -286,7 +286,7 @@ The innovations state space modelling framework described in Section  is impleme
 ##      AIC     AICc      BIC 
 ## 634.0437 635.2682 644.0803</code></pre>
 <p>Some goodness-of-fit measures <span class="citation">(defined in Hyndman and Koehler 2006)</span> are obtained using .</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw"><a href="../reference/accuracy.html">accuracy</a></span>(etsfit)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="../reference/accuracy.html">accuracy</a></span>(etsfit)</a></code></pre></div>
 <pre><code>##                    ME     RMSE      MAE       MPE     MAPE      MASE
 ## Training set 1.162583 52.00363 36.77721 0.2629582 1.942062 0.5211014
 ##                     ACF1
@@ -294,7 +294,7 @@ The innovations state space modelling framework described in Section  is impleme
 <p>There are also , , , ,  and  methods for objects of class ``’’. The  function shows time plots of the original time series along with the extracted components (level, growth and seasonal).</p>
 <p>The  function computes the required forecasts which are then plotted as in Figure (b).</p>
 <p>Printing the  object gives a table showing the prediction intervals.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>fcast</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">fcast</a></code></pre></div>
 <pre><code>##      Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
 ## 2004       3900.329 3770.801 4029.857 3702.233 4098.425
 ## 2005       3952.650 3747.279 4158.022 3638.562 4266.738
@@ -307,11 +307,11 @@ The innovations state space modelling framework described in Section  is impleme
 ## 2012       4318.898 3528.985 5108.812 3110.830 5526.967
 ## 2013       4371.220 3482.552 5259.888 3012.119 5730.320</code></pre>
 <p>The  function also provides the useful feature of applying a fitted model to a new data set. For example, we could withhold 10 observations from the  data set when fitting, then compute the one-step forecast errors for the out-of-sample data.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>fit &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ets.html">ets</a></span>(usnetelec[<span class="dv">1</span><span class="op">:</span><span class="dv">45</span>])</span>
-<span id="cb8-2"><a href="#cb8-2"></a>test &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ets.html">ets</a></span>(usnetelec[<span class="dv">46</span><span class="op">:</span><span class="dv">55</span>], <span class="dt">model =</span> fit)</span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="kw"><a href="../reference/accuracy.html">accuracy</a></span>(test)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">fit &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ets.html">ets</a></span>(usnetelec[<span class="dv">1</span><span class="op">:</span><span class="dv">45</span>])</a>
+<a class="sourceLine" id="cb8-2" title="2">test &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ets.html">ets</a></span>(usnetelec[<span class="dv">46</span><span class="op">:</span><span class="dv">55</span>], <span class="dt">model =</span> fit)</a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="kw"><a href="../reference/accuracy.html">accuracy</a></span>(test)</a></code></pre></div>
 <p>We can also look at the measures of forecast accuracy where the forecasts are based on only the fitting data.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw"><a href="../reference/accuracy.html">accuracy</a></span>(<span class="kw"><a href="../reference/forecast.html">forecast</a></span>(fit,<span class="dv">10</span>), usnetelec[<span class="dv">46</span><span class="op">:</span><span class="dv">55</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="../reference/accuracy.html">accuracy</a></span>(<span class="kw"><a href="../reference/forecast.html">forecast</a></span>(fit,<span class="dv">10</span>), usnetelec[<span class="dv">46</span><span class="op">:</span><span class="dv">55</span>])</a></code></pre></div>
 </div>
 <div id="the-holtwinters-function" class="section level2">
 <h2 class="hasAnchor">
@@ -329,9 +329,9 @@ Four time series showing point forecasts and 80% &amp; 95% prediction intervals 
 </div>
 <p>The algorithm of Section  is applied to the same four time series. Unlike the exponential smoothing algorithm, the ARIMA class of models assumes homoscedasticity, which is not always appropriate. Consequently, transformations are sometimes necessary. For these four time series, we model the raw data for series (a)–(c), but the logged data for series (d). The prediction intervals are back-transformed with the point forecasts to preserve the probability coverage.</p>
 <p>To apply this algorithm to the US net electricity generation time series , we use the following commands.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>arimafit &lt;-<span class="st"> </span><span class="kw"><a href="../reference/auto.arima.html">auto.arima</a></span>(usnetelec)</span>
-<span id="cb10-2"><a href="#cb10-2"></a>fcast &lt;-<span class="st"> </span><span class="kw"><a href="../reference/forecast.html">forecast</a></span>(arimafit)</span>
-<span id="cb10-3"><a href="#cb10-3"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(fcast)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">arimafit &lt;-<span class="st"> </span><span class="kw"><a href="../reference/auto.arima.html">auto.arima</a></span>(usnetelec)</a>
+<a class="sourceLine" id="cb10-2" title="2">fcast &lt;-<span class="st"> </span><span class="kw"><a href="../reference/forecast.html">forecast</a></span>(arimafit)</a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(fcast)</a></code></pre></div>
 The function  implements the algorithm of Section  and returns an object of class . The resulting forecasts are shown in Figure . The fitted models are as follows:
 
 <p>Note that the  parameterization has <span class="math inline">\(\theta(B) = (1 + \theta_1B + \dots + \theta_qB)\)</span> and <span class="math inline">\(\phi(B) = (1 - \phi_1B + \dots - \phi_qB)\)</span>, and similarly for the seasonal terms.</p>
@@ -361,7 +361,7 @@ summary(fcast)
 ## 
 ## Error measures:
 ##                      ME     RMSE     MAE        MPE     MAPE      MASE
-## Training set 0.04640183 44.89414 32.3328 -0.6177064 2.101204 0.4581279
+## Training set 0.04640184 44.89414 32.3328 -0.6177064 2.101204 0.4581279
 ##                    ACF1
 ## Training set 0.02249247
 ## 
@@ -488,14 +488,14 @@ The output from the  function is an object of class ``’’ and includes at lea
 <div id="ref-GM85">
 <p>Gardner, Everette S., Jr, and Ed McKenzie. 1985. “Forecasting Trends in Time Series.” <em>Management Science</em> 31 (10): 1237–46.</p>
 </div>
-<div id="ref-ForecastPro00">
-<p>Goodrich, Robert L. 2000. “The Forecast Pro Methodology.” <em>International Journal of Forecasting</em> 16 (4): 533–35.</p>
-</div>
 <div id="ref-Gomez98">
 <p>Gómez, Victor. 1998. “Automatic Model Identification in the Presence of Missing Observations and Outliers.” Working paper D-98009. Ministerio de Economı́a y Hacienda, Dirección General de Análisis y Programación Presupuestaria.</p>
 </div>
 <div id="ref-TRAMOSEATS98">
 <p>Gómez, Victor, and Agustín Maravall. 1998. “Programs TRAMO and SEATS, Instructions for the Users.” Working paper 97001. Beta version. Ministerio de Economı́a y Hacienda, Dirección General de Análisis y Programación Presupuestaria.</p>
+</div>
+<div id="ref-ForecastPro00">
+<p>Goodrich, Robert L. 2000. “The Forecast Pro Methodology.” <em>International Journal of Forecasting</em> 16 (4): 533–35.</p>
 </div>
 <div id="ref-HR82">
 <p>Hannan, E. J., and J. Rissanen. 1982. “Recursive Estimation of Mixed Autoregressive-Moving Average Order.” <em>Biometrika</em> 69 (1): 81–94.</p>
@@ -537,7 +537,7 @@ The output from the  function is an object of class ``’’ and includes at lea
 <p>Hyndman, Rob J, and Andrey V Kostenko. 2007. “Minimum Sample Size Requirements for Seasonal Forecasting Models.” <em>Foresight: The International Journal of Applied Forecasting</em> 6: 12–15.</p>
 </div>
 <div id="ref-KPSS92">
-<p>Kwiatkowski, Denis, Peter C. B. Phillips, Peter Schmidt, and Yongcheol Shin. 1992. “Testing the Null Hypothesis of Stationarity Against the Alternative of a Unit Root.” <em>Journal of Econometrics</em> 54: 159–78.</p>
+<p>Kwiatkowski, Denis, Peter C.B. Phillips, Peter Schmidt, and Yongcheol Shin. 1992. “Testing the Null Hypothesis of Stationarity Against the Alternative of a Unit Root.” <em>Journal of Econometrics</em> 54: 159–78.</p>
 </div>
 <div id="ref-Liu89">
 <p>Liu, L. M. 1989. “Identification of Seasonal Arima Models Using a Filtering Method.” <em>Communications in Statistics: Theory &amp; Methods</em> 18: 2279–88.</p>
@@ -551,11 +551,11 @@ The output from the  function is an object of class ``’’ and includes at lea
 <div id="ref-MWH3">
 <p>Makridakis, Spyros, Steven C. Wheelwright, and Rob J Hyndman. 1998. <em>Forecasting: Methods and Applications</em>. 3rd ed. New York: John Wiley &amp; Sons. <a href="http://www.robhyndman.info/forecasting/">http://www.robhyndman.info/forecasting/</a>.</p>
 </div>
-<div id="ref-Meyer:2002">
-<p>Meyer, David. 2002. “Naive Time Series Forecasting Methods.” <em>R News</em> 2 (2): 7–10. <a href="http://CRAN.R-project.org/doc/Rnews/">http://CRAN.R-project.org/doc/Rnews/</a>.</p>
-</div>
 <div id="ref-MP00a">
 <p>Mélard, G., and J.-M Pasteels. 2000. “Automatic ARIMA Modeling Including Intervention, Using Time Series Expert Software.” <em>International Journal of Forecasting</em> 16: 497–508.</p>
+</div>
+<div id="ref-Meyer:2002">
+<p>Meyer, David. 2002. “Naive Time Series Forecasting Methods.” <em>R News</em> 2 (2): 7–10. <a href="http://CRAN.R-project.org/doc/Rnews/">http://CRAN.R-project.org/doc/Rnews/</a>.</p>
 </div>
 <div id="ref-OKS97">
 <p>Ord, J. Keith, Anne B. Koehler, and Ralph D. Snyder. 1997. “Estimation and Prediction for a Class of Dynamic Nonlinear Statistical Models.” <em>Journal of the American Statistical Association</em> 92: 1621–9.</p>

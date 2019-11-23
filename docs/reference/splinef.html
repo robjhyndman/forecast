@@ -124,8 +124,16 @@ smoothing splines." />
 smoothing splines.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>splinef</span>(<span class='no'>y</span>, <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>), <span class='kw'>fan</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"gcv"</span>, <span class='st'>"mle"</span>), <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>)</pre>
+    <pre class="usage"><span class='fu'>splinef</span>(
+  <span class='no'>y</span>,
+  <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
+  <span class='kw'>fan</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"gcv"</span>, <span class='st'>"mle"</span>),
+  <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

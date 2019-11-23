@@ -126,8 +126,14 @@ time series stationary. <code>nsdiffs</code> estimates the number of seasonal di
 necessary.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>nsdiffs</span>(<span class='no'>x</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='no'>x</span>), <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"seas"</span>, <span class='st'>"ocsb"</span>,
-  <span class='st'>"hegy"</span>, <span class='st'>"ch"</span>), <span class='kw'>max.D</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>nsdiffs</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
+  <span class='kw'>m</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='no'>x</span>),
+  <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"seas"</span>, <span class='st'>"ocsb"</span>, <span class='st'>"hegy"</span>, <span class='st'>"ch"</span>),
+  <span class='kw'>max.D</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

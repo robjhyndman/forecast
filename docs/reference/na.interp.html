@@ -126,8 +126,11 @@ robust STL decomposition is first computed. Then a linear interpolation is appli
 seasonally adjusted data, and the seasonal component is added back.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>na.interp</span>(<span class='no'>x</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>linear</span> <span class='kw'>=</span> (<span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='no'>x</span>) <span class='kw'>&lt;=</span> <span class='fl'>1</span> <span class='kw'>|</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(!<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>x</span>)) <span class='kw'>&lt;=</span> <span class='fl'>2</span> * <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='no'>x</span>)))</pre>
+    <pre class="usage"><span class='fu'>na.interp</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>linear</span> <span class='kw'>=</span> (<span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='no'>x</span>) <span class='kw'>&lt;=</span> <span class='fl'>1</span> <span class='kw'>|</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(!<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>x</span>)) <span class='kw'>&lt;=</span> <span class='fl'>2</span> * <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='no'>x</span>))
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

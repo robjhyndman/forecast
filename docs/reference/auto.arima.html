@@ -126,17 +126,44 @@ function conducts a search over possible model within the order constraints
 provided.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>auto.arima</span>(<span class='no'>y</span>, <span class='kw'>d</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>D</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>max.p</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>max.q</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>max.P</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>max.Q</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>max.order</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>max.d</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>max.D</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>start.p</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>start.q</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>start.P</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>start.Q</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>stationary</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>seasonal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>ic</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"aicc"</span>, <span class='st'>"aic"</span>, <span class='st'>"bic"</span>), <span class='kw'>stepwise</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>nmodels</span> <span class='kw'>=</span> <span class='fl'>94</span>, <span class='kw'>trace</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>approximation</span> <span class='kw'>=</span> (<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>x</span>) <span class='kw'>&gt;</span> <span class='fl'>150</span> <span class='kw'>|</span>
-  <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='no'>x</span>) <span class='kw'>&gt;</span> <span class='fl'>12</span>), <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>truncate</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>xreg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"kpss"</span>, <span class='st'>"adf"</span>, <span class='st'>"pp"</span>), <span class='kw'>test.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+    <pre class="usage"><span class='fu'>auto.arima</span>(
+  <span class='no'>y</span>,
+  <span class='kw'>d</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>D</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>max.p</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>max.q</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>max.P</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>max.Q</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>max.order</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>max.d</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>max.D</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>start.p</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>start.q</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>start.P</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>start.Q</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>stationary</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>seasonal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>ic</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"aicc"</span>, <span class='st'>"aic"</span>, <span class='st'>"bic"</span>),
+  <span class='kw'>stepwise</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>nmodels</span> <span class='kw'>=</span> <span class='fl'>94</span>,
+  <span class='kw'>trace</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>approximation</span> <span class='kw'>=</span> (<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>x</span>) <span class='kw'>&gt;</span> <span class='fl'>150</span> <span class='kw'>|</span> <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='no'>x</span>) <span class='kw'>&gt;</span> <span class='fl'>12</span>),
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>truncate</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>xreg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"kpss"</span>, <span class='st'>"adf"</span>, <span class='st'>"pp"</span>),
+  <span class='kw'>test.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
   <span class='kw'>seasonal.test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"seas"</span>, <span class='st'>"ocsb"</span>, <span class='st'>"hegy"</span>, <span class='st'>"ch"</span>),
-  <span class='kw'>seasonal.test.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='kw'>allowdrift</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>allowmean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num.cores</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>seasonal.test.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  <span class='kw'>allowdrift</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>allowmean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>num.cores</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

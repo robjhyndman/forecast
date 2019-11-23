@@ -122,14 +122,29 @@
     <p>Returns ets model applied to <code>y</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ets</span>(<span class='no'>y</span>, <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"ZZZ"</span>, <span class='kw'>damped</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>beta</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>gamma</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>phi</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>additive.only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1e-04</span>, <span class='fl'>3</span>), <span class='fl'>0.8</span>),
-  <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0.9999</span>, <span class='fl'>3</span>), <span class='fl'>0.98</span>), <span class='kw'>opt.crit</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lik"</span>, <span class='st'>"amse"</span>, <span class='st'>"mse"</span>,
-  <span class='st'>"sigma"</span>, <span class='st'>"mae"</span>), <span class='kw'>nmse</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"both"</span>, <span class='st'>"usual"</span>, <span class='st'>"admissible"</span>),
-  <span class='kw'>ic</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"aicc"</span>, <span class='st'>"aic"</span>, <span class='st'>"bic"</span>), <span class='kw'>restrict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>allow.multiplicative.trend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>use.initial.values</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"na.contiguous"</span>, <span class='st'>"na.interp"</span>, <span class='st'>"na.fail"</span>), <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>ets</span>(
+  <span class='no'>y</span>,
+  <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"ZZZ"</span>,
+  <span class='kw'>damped</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>beta</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>gamma</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>phi</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>additive.only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1e-04</span>, <span class='fl'>3</span>), <span class='fl'>0.8</span>),
+  <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0.9999</span>, <span class='fl'>3</span>), <span class='fl'>0.98</span>),
+  <span class='kw'>opt.crit</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lik"</span>, <span class='st'>"amse"</span>, <span class='st'>"mse"</span>, <span class='st'>"sigma"</span>, <span class='st'>"mae"</span>),
+  <span class='kw'>nmse</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"both"</span>, <span class='st'>"usual"</span>, <span class='st'>"admissible"</span>),
+  <span class='kw'>ic</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"aicc"</span>, <span class='st'>"aic"</span>, <span class='st'>"bic"</span>),
+  <span class='kw'>restrict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>allow.multiplicative.trend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>use.initial.values</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"na.contiguous"</span>, <span class='st'>"na.interp"</span>, <span class='st'>"na.fail"</span>),
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
