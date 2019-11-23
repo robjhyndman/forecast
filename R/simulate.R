@@ -539,7 +539,7 @@ simulate.lagwalk <- function(object, nsim=length(object$x), seed=NULL,
     e <- sample(res, nsim, replace = TRUE)
   }
   else if (is.null(innov)) {
-    se <- sqrt(object$sigma2*steps + (steps*object$par$drift.se)^2)
+    se <- sqrt(object$sigma2*nsim + (nsim*object$par$drift.se)^2)
     e <- rnorm(nsim, 0, se)
   } else {
     e <- innov
