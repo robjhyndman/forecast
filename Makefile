@@ -12,7 +12,6 @@ check:
 	Rscript -e "devtools::check(document=TRUE)"
 
 build:
-	Rscript -e "roxygen2::roxygenize()"
 	Rscript -e "devtools::build()"
 
 install:
