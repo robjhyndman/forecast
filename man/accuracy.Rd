@@ -5,7 +5,7 @@
 \alias{accuracy.default}
 \title{Accuracy measures for a forecast model}
 \usage{
-accuracy(object, ...)
+accuracy(f, ...)
 
 \method{accuracy}{default}(f, x, test = NULL, d = NULL, D = NULL, ...)
 }
