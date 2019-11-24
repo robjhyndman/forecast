@@ -74,8 +74,9 @@ forecast.lagwalk <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=NU
   
   # Intervals
   # Adjust prediction intervals to allow for drift coefficient standard error
-  se <- sqrt(object$sigma2*steps + (steps*object$par$drift.se)^2)
-
+  mse <- mean(object$residuals^2, na.rm=TRUE)
+  se <- sqrt(mse*steps + (steps*object$par$drift.se)^2)
+  
   if(fan)
     level <- seq(51,99,by=3)
   else
