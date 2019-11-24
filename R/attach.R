@@ -14,56 +14,66 @@
   packageStartupMessage(msg)
 }
 
-
-# Code from dtplyr: https://github.com/hadley/dtplyr/blob/master/R/compat-dplyr-0.6.0.R
 register_s3_method <- function(pkg, generic, class, fun = NULL) {
   stopifnot(is.character(pkg), length(pkg) == 1)
-  envir <- asNamespace(pkg)
-
   stopifnot(is.character(generic), length(generic) == 1)
   stopifnot(is.character(class), length(class) == 1)
+
   if (is.null(fun)) {
     fun <- get(paste0(generic, ".", class), envir = parent.frame())
+  } else {
+    stopifnot(is.function(fun))
   }
-  stopifnot(is.function(fun))
-
 
   if (pkg %in% loadedNamespaces()) {
-    registerS3method(generic, class, fun, envir = envir)
+    registerS3method(generic, class, fun, envir = asNamespace(pkg))
   }
 
   # Always register hook in case package is later unloaded & reloaded
   setHook(
     packageEvent(pkg, "onLoad"),
     function(...) {
-      registerS3method(generic, class, fun, envir = envir)
+      registerS3method(generic, class, fun, envir = asNamespace(pkg))
+    }
+  )
+}
+
+overwrite_s3_generic <- function(pkg, generic){
+  if (pkg %in% loadedNamespaces()) {
+    assign(generic, get(generic, asNamespace(pkg)), envir = asNamespace("forecast"))
+  }
+
+  # Always register hook in case package is later unloaded & reloaded
+  setHook(
+    packageEvent(pkg, "onLoad"),
+    function(...) {
+      pkg_env <- asNamespace("forecast")
+      unlockBinding(generic, pkg_env)
+      assign(generic, get(generic, asNamespace(pkg)), envir = pkg_env)
+      lockBinding(generic, pkg_env)
     }
   )
 }
 
 #' @importFrom utils methods
 .onLoad <- function(...) {
-  if (tryCatch(exists("autolayer", getNamespace("ggplot2")), error = function(e) FALSE)) {
-    autolayer <<- getNamespace("ggplot2")$autolayer
-    register_s3_method("ggplot2", "autolayer", "ts")
-    register_s3_method("ggplot2", "autolayer", "mts")
-    register_s3_method("ggplot2", "autolayer", "msts")
-    register_s3_method("ggplot2", "autolayer", "forecast")
-    register_s3_method("ggplot2", "autolayer", "mforecast")
+  overwrite_s3_generic("ggplot2", "autolayer")
+  register_s3_method("ggplot2", "autolayer", "ts")
+  register_s3_method("ggplot2", "autolayer", "mts")
+  register_s3_method("ggplot2", "autolayer", "msts")
+  register_s3_method("ggplot2", "autolayer", "forecast")
+  register_s3_method("ggplot2", "autolayer", "mforecast")
+
+  methods <- strsplit(methods("forecast"), ".", fixed = TRUE)
+  overwrite_s3_generic("fabletools", "forecast")
+  for(method in methods){
+    register_s3_method("fabletools", method[1], method[2])
   }
-  if (tryCatch(exists("forecast", getNamespace("fabletools")), error = function(e) FALSE)) {
-    methods <- strsplit(methods("forecast"), ".", fixed = TRUE)
-    forecast <<- getNamespace("fabletools")$forecast
-    for(method in methods){
-      register_s3_method("fabletools", method[1], method[2])
-    }
-  }
-  if (tryCatch(exists("accuracy", getNamespace("fabletools")), error = function(e) FALSE)) {
-    methods <- strsplit(methods("accuracy"), ".", fixed = TRUE)
-    accuracy <<- getNamespace("fabletools")$accuracy
-    for(method in methods){
-      register_s3_method("fabletools", method[1], method[2])
-    }
+
+  methods <- strsplit(methods("accuracy"), ".", fixed = TRUE)
+  overwrite_s3_generic("fabletools", "accuracy")
+  for(method in methods){
+    register_s3_method("fabletools", method[1], method[2])
   }
   invisible()
 }
