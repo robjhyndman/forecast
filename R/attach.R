@@ -44,15 +44,15 @@ overwrite_s3_generic <- function(pkg, generic){
   }
 
   # Always register hook in case package is later unloaded & reloaded
-  setHook(
-    packageEvent(pkg, "onLoad"),
-    function(...) {
-      pkg_env <- asNamespace("forecast")
-      unlockBinding(generic, pkg_env)
-      assign(generic, get(generic, asNamespace(pkg)), envir = pkg_env)
-      lockBinding(generic, pkg_env)
-    }
-  )
+  # setHook(
+  #   packageEvent(pkg, "onLoad"),
+  #   function(...) {
+  #     pkg_env <- asNamespace("forecast")
+  #     unlockBinding(generic, pkg_env)
+  #     assign(generic, get(generic, asNamespace(pkg)), envir = pkg_env)
+  #     lockBinding(generic, pkg_env)
+  #   }
+  # )
 }
 
 #' @importFrom utils methods
