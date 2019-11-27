@@ -48,7 +48,7 @@ nottem \%>\% stl(s.window='periodic') \%>\% autoplot
 
 \dontrun{
 library(seasonal)
-seas(USAccDeaths) %>% autoplot
+seas(USAccDeaths) \%>\% autoplot
 }
 
 }
