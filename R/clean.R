@@ -235,7 +235,7 @@ tsoutliers <- function(x, iterate=2, lambda=NULL) {
     tmp <- tsoutliers(x, iterate = 1, lambda = lambda)
     if (length(tmp$index) > 0) # Found some more
     {
-      outliers <- sort(c(outliers, tmp$index))
+      outliers <- sort(unique(c(outliers, tmp$index)))
       x[outliers] <- NA
       x <- na.interp(x, lambda = lambda)
     }
