@@ -1,4 +1,5 @@
-## forecast (development version)
+## forecast 8.10 (3 December 2019)
+  * Updates to remove new CRAN errors
   * Bug fixes
   
 ## forecast 8.9 (22 August 2019)
