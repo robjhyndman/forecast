@@ -14,5 +14,6 @@
 
 ## revdep checks
 
-All revdeps have been checked. No new problems were detected.
+All revdeps have been checked. One new problem was detected in the fable package which is now fixed. The fable maintainer has agreed to do a CRAN submission today.
+
 

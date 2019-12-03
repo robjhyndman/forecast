@@ -1,4 +1,4 @@
-## forecast 8.10 (3 December 2019)
+## forecast 8.10 (4 December 2019)
   * Updates to remove new CRAN errors
   * Bug fixes
   
