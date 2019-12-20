@@ -468,8 +468,15 @@ stlm <- function(y, s.window=13, robust=FALSE, method=c("ets", "arima"), modelfu
   seascols <- grep("Seasonal", colnames(stld))
   allseas <- rowSums(stld[, seascols, drop = FALSE])
 
-  fits <- fitted(fit) + allseas
-  res <- residuals(fit)
+  if (is.na(fit$x[1])){
+    no_NAs <- match(FALSE, is.na(fit$x)) - 1
+    header <- rep(NA, no_NAs)
+    fits <- c(header, fitted(fit)) + allseas
+    res <- c(header, residuals(fit))
+  } else {
+    fits <- fitted(fit) + allseas
+    res <- residuals(fit)
+  }
   if (!is.null(lambda)) {
     fits <- InvBoxCox(fits, lambda, biasadj, var(res))
     attr(lambda, "biasadj") <- biasadj
