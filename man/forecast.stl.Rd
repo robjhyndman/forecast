@@ -20,6 +20,7 @@
   xreg = NULL,
   newxreg = NULL,
   allow.multiplicative.trend = FALSE,
+  preserve.na = FALSE,
   ...
 )
 
@@ -36,6 +37,7 @@ stlm(
   xreg = NULL,
   allow.multiplicative.trend = FALSE,
   x = y,
+  preserve.na = FALSE,
   ...
 )
 
@@ -104,6 +106,11 @@ an adjustment will be made to produce mean forecasts and fitted values.}
 \item{allow.multiplicative.trend}{If TRUE, then ETS models with
 multiplicative trends are allowed. Otherwise, only additive or no trend ETS
 models are permitted.}
+
+\item{preserve.na}{If \code{TRUE}, \code{NA}s in \code{y} will propagate
+to \code{NA}s in the seasonally adjusted time series. This can be
+useful when fitting ARIMA models. But this is not compatible with
+ETS models, so the default is \code{FALSE}.}
 
 \item{...}{Other arguments passed to \code{forecast.stl},
 \code{modelfunction} or \code{forecastfunction}.}

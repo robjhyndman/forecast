@@ -106,7 +106,7 @@ mstl <- function(x, lambda=NULL, iterate=2, s.window=13, ...) {
 
   if (length(msts) > 1) {
     attr(output, "seasonal.periods") <- msts
-    return(structure(output, seasonal.periods = msts, 
+    return(structure(output, seasonal.periods = msts,
                      class = c("mstl", "mts", "msts", "ts")))
   }
 
@@ -208,6 +208,10 @@ autoplot.mstl <- function(object, ...) {
 #' multiplicative trends are allowed. Otherwise, only additive or no trend ETS
 #' models are permitted.
 #' @param x Deprecated. Included for backwards compatibility.
+#' @param preserve.na If \code{TRUE}, \code{NA}s in \code{y} will propagate
+#' to \code{NA}s in the seasonally adjusted time series. This can be
+#' useful when fitting ARIMA models. But this is not compatible with
+#' ETS models, so the default is \code{FALSE}.
 #' @param ... Other arguments passed to \code{forecast.stl},
 #' \code{modelfunction} or \code{forecastfunction}.
 #' @inheritParams forecast
@@ -236,11 +240,15 @@ autoplot.mstl <- function(object, ...) {
 forecast.stl <- function(object, method=c("ets", "arima", "naive", "rwdrift"), etsmodel="ZZN",
                          forecastfunction=NULL,
                          h = frequency(object$time.series) * 2, level = c(80, 95), fan = FALSE,
-                         lambda=NULL, biasadj=NULL, xreg=NULL, newxreg=NULL, allow.multiplicative.trend=FALSE, ...) {
+                         lambda=NULL, biasadj=NULL, xreg=NULL, newxreg=NULL, allow.multiplicative.trend=FALSE,
+                         preserve.na = FALSE, ...) {
   method <- match.arg(method)
   if (is.null(forecastfunction)) {
     if (method != "arima" && (!is.null(xreg) || !is.null(newxreg))) {
       stop("xreg and newxreg arguments can only be used with ARIMA models")
+    }
+    if (method == "ets" && preserve.na) {
+      stop("preserve.na must be FALSE when using ETS models")
     }
     if (method == "ets") {
       # Ensure non-seasonal model
@@ -316,6 +324,10 @@ forecast.stl <- function(object, method=c("ets", "arima", "naive", "rwdrift"), e
 
   # De-seasonalize
   x.sa <- seasadj(object)
+  if (preserve.na) {
+    x.sa[is.na(x)] <- NA
+  }
+
   # Forecast
   fcast <- forecastfunction(x.sa, h = h, level = level, ...)
 
@@ -360,7 +372,8 @@ forecast.mstl <- function(object, method=c("ets", "arima", "naive", "rwdrift"), 
 #' @rdname forecast.stl
 #' @export
 stlm <- function(y, s.window=13, robust=FALSE, method=c("ets", "arima"), modelfunction=NULL, model=NULL,
-                 etsmodel="ZZN", lambda=NULL, biasadj=FALSE, xreg=NULL, allow.multiplicative.trend=FALSE, x=y, ...) {
+                 etsmodel="ZZN", lambda=NULL, biasadj=FALSE, xreg=NULL, allow.multiplicative.trend=FALSE, x=y,
+                 preserve.na = FALSE, ...) {
   method <- match.arg(method)
 
   # Check univariate
@@ -418,6 +431,9 @@ stlm <- function(y, s.window=13, robust=FALSE, method=c("ets", "arima"), modelfu
     if (method != "arima" && !is.null(xreg)) {
       stop("xreg arguments can only be used with ARIMA models")
     }
+    if (method == "ets" && preserve.na) {
+      stop("preserve.na must be FALSE when using ETS models")
+    }
     if (method == "ets") {
       # Ensure non-seasonal model
       if (substr(etsmodel, 3, 3) != "N") {
@@ -440,7 +456,9 @@ stlm <- function(y, s.window=13, robust=FALSE, method=c("ets", "arima"), modelfu
 
   # De-seasonalize
   x.sa <- seasadj(stld)
-  x.sa[is.na(x)] <- NA
+  if (preserve.na) {
+    x.sa[is.na(x)] <- NA
+  }
 
   # Model seasonally adjusted data
   fit <- modelfunction(x.sa, ...)
@@ -487,7 +505,7 @@ forecast.stlm <- function(object, h = 2 * object$m, level = c(80, 95), fan = FAL
   } else {
     fcast <- forecast(object$model, h = h, level = level, ...)
   }
-  
+
   # In-case forecast method uses different horizon length (such as using xregs)
   h <- NROW(fcast$mean)
   # Forecast seasonal series with seasonal naive
@@ -508,10 +526,10 @@ forecast.stlm <- function(object, h = 2 * object$m, level = c(80, 95), fan = FAL
   seascols <- grep("Seasonal", colnames(object$stl))
   allseas <- rowSums(object$stl[, seascols, drop = FALSE])
   series <- NULL
-  
+
   #  m <- frequency(object$stl$time.series)
   n <- NROW(xdata)
-  
+
 
   # Reseasonalize
   fcast$mean <- fcast$mean + lastseas
