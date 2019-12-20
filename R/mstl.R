@@ -440,6 +440,7 @@ stlm <- function(y, s.window=13, robust=FALSE, method=c("ets", "arima"), modelfu
 
   # De-seasonalize
   x.sa <- seasadj(stld)
+  x.sa[is.na(x)] <- NA
 
   # Model seasonally adjusted data
   fit <- modelfunction(x.sa, ...)
