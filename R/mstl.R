@@ -23,6 +23,7 @@
 #' @export
 mstl <- function(x, lambda=NULL, iterate=2, s.window=13, ...) {
   # What is x?
+  origx <- x
   n <- length(x)
   if ("msts" %in% class(x)) {
     msts <- attributes(x)$msts
@@ -92,7 +93,7 @@ mstl <- function(x, lambda=NULL, iterate=2, s.window=13, ...) {
   remainder <- deseas - trend
 
   # Package into matrix
-  output <- cbind(x, trend)
+  output <- cbind(origx, trend)
   if (!is.null(msts)) {
     for (i in seq_along(msts))
       output <- cbind(output, seas[[i]])
