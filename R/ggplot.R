@@ -2001,7 +2001,7 @@ GeomForecast <- ggplot2::ggproto(
   optional_aes = c("ymin", "ymax", "level"),
   default_aes = ggplot2::aes(
     colour = "blue", fill = "grey60", size = .5,
-    linetype = 1, weight = 1, alpha = 1
+    linetype = 1, weight = 1, alpha = 1, level = NA
   ),
   draw_key = function(data, params, size) {
     lwd <- min(data$size, min(size) / 4)
@@ -2131,17 +2131,21 @@ GeomForecastInterval <- ggplot2::ggproto(
   },
 
   draw_group = function(data, panel_scales, coord) {
-    leveldiff <- diff(range(data$level))
-    if (leveldiff == 0) {
-      leveldiff <- 1
+    # If level scale from fabletools is not loaded, convert to colour
+    if(is.numeric(data$level)){
+      leveldiff <- diff(range(data$level))
+      if (leveldiff == 0) {
+        leveldiff <- 1
+      }
+      shadeVal <- (data$level - min(data$level)) / leveldiff * 0.2 + 8 / 15
+      data$level <- rgb(shadeVal, shadeVal, shadeVal)
     }
-    shadeVal <- (data$level - min(data$level)) / leveldiff * 0.2 + 8 / 15
-    data$shadeCol <- rgb(shadeVal, shadeVal, shadeVal)
+
     intervalGrobList <- lapply(
       split(data, data$level),
       FUN = function(x) {
         # Calculate colour
-        fillcol <- blendHex(x$colour[1], x$shadeCol[1], 0.7)
+        fillcol <- blendHex(x$colour[1], x$level[1], 0.7)
         # Compute alpha transparency
         x$alpha <- grDevices::col2rgb(fillcol, alpha = TRUE)[4, ] / 255 * x$alpha
 
