@@ -1034,7 +1034,7 @@ gglagplot <- function(x, lags=ifelse(frequency(x) > 9, 16, 9),
     }
 
     # Initialise ggplot object
-    p <- ggplot2::ggplot(ggplot2::aes_(x = ~lagged, y = ~orig), data = data)
+    p <- ggplot2::ggplot(ggplot2::aes_(x = ~orig, y = ~lagged), data = data)
 
     if (diag) {
       p <- p + ggplot2::geom_abline(colour = diag.col, linetype = "dashed")
