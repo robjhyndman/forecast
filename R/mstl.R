@@ -89,6 +89,9 @@ mstl <- function(x, lambda = NULL, iterate = 2, s.window = 13, ...) {
   }
   attributes(trend) <- attributes(x)
 
+  # Put back NAs
+  deseas[is.na(origx)] <- NA
+
   # Estimate remainder
   remainder <- deseas - trend
 
@@ -250,7 +253,7 @@ forecast.stl <- function(object, method = c("ets", "arima", "naive", "rwdrift"),
         substr(etsmodel, 3, 3) <- "N"
       }
       forecastfunction <- function(x, h, level, ...) {
-        fit <- ets(x, model = etsmodel, allow.multiplicative.trend = allow.multiplicative.trend, ...)
+        fit <- ets(na.interp(x), model = etsmodel, allow.multiplicative.trend = allow.multiplicative.trend, ...)
         return(forecast(fit, h = h, level = level))
       }
     }
