@@ -193,15 +193,13 @@ forecasting the seasonally adjusted series.
 }
 \examples{
 
-tsmod <- stlm(USAccDeaths, modelfunction=ar)
-plot(forecast(tsmod, h=36))
+tsmod <- stlm(USAccDeaths, modelfunction = ar)
+plot(forecast(tsmod, h = 36))
 
-decomp <- stl(USAccDeaths,s.window="periodic")
+decomp <- stl(USAccDeaths, s.window = "periodic")
 plot(forecast(decomp))
 
-
-plot(stlf(AirPassengers, lambda=0))
-
+plot(stlf(AirPassengers, lambda = 0))
 }
 \seealso{
 \code{\link[stats]{stl}}, \code{\link{forecast.ets}},

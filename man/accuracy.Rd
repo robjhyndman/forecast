@@ -10,12 +10,12 @@ accuracy(f, ...)
 \method{accuracy}{default}(f, x, test = NULL, d = NULL, D = NULL, ...)
 }
 \arguments{
-\item{...}{Additional arguments depending on the specific method.}
-
 \item{f}{An object of class \dQuote{\code{forecast}}, or a numerical vector
 containing forecasts. It will also work with \code{Arima}, \code{ets} and
 \code{lm} objects if \code{x} is omitted -- in which case training set accuracy
 measures are returned.}
+
+\item{...}{Additional arguments depending on the specific method.}
 
 \item{x}{An optional numerical vector containing actual values of the same
 length as object, or a time series overlapping with the times of \code{f}.}

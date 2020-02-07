@@ -34,7 +34,7 @@ Unlike \code{\link[stats]{stl}}, \code{mstl} is completely automated.
 \examples{
 library(ggplot2)
 mstl(taylor) \%>\% autoplot()
-mstl(AirPassengers, lambda='auto') \%>\% autoplot()
+mstl(AirPassengers, lambda = "auto") \%>\% autoplot()
 }
 \seealso{
 \code{\link[stats]{stl}}, \code{\link[stats]{supsmu}}

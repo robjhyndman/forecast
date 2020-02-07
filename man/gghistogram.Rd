@@ -26,8 +26,6 @@ gghistogram(
 using the Friedman-Diaconis rule given by \code{\link[grDevices]{nclass.FD}}}
 
 \item{boundary}{A boundary between two bins.}
-
-\item{\dots}{Not used (for consistency with lag.plot)}
 }
 \value{
 None.

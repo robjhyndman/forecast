@@ -2314,7 +2314,6 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
 #' @param bins The number of bins to use for the histogram. Selected by default
 #' using the Friedman-Diaconis rule given by \code{\link[grDevices]{nclass.FD}}
 #' @param boundary A boundary between two bins.
-#' @param \dots Not used (for consistency with lag.plot)
 #' @return None.
 #' @author Rob J Hyndman
 #' @seealso \code{\link[graphics]{hist}}, \code{\link[ggplot2]{geom_histogram}}
