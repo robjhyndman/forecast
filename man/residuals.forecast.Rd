@@ -8,7 +8,7 @@
 \alias{residuals.bats}
 \alias{residuals.tbats}
 \alias{residuals.ets}
-\alias{residuals.fracdiff}
+\alias{residuals.ARFIMA}
 \alias{residuals.nnetar}
 \alias{residuals.stlm}
 \alias{residuals.tslm}
@@ -26,7 +26,7 @@
 
 \method{residuals}{ets}(object, type = c("innovation", "response"), h = 1, ...)
 
-\method{residuals}{fracdiff}(object, type = c("innovation", "response"), ...)
+\method{residuals}{ARFIMA}(object, type = c("innovation", "response"), ...)
 
 \method{residuals}{nnetar}(object, type = c("innovation", "response"), h = 1, ...)
 
@@ -36,7 +36,7 @@
 }
 \arguments{
 \item{object}{An object containing a time series model of class \code{ar},
-\code{Arima}, \code{bats}, \code{ets}, \code{fracdiff}, \code{nnetar} or
+\code{Arima}, \code{bats}, \code{ets}, \code{arfima}, \code{nnetar} or
 \code{stlm}.
 If \code{object} is of class \code{forecast}, then the function will return
 \code{object$residuals} if it exists, otherwise it returns the differences between

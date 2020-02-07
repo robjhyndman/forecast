@@ -93,7 +93,7 @@ unfracdiff <- function(x, y, n, h, d) {
 #' @param \dots Other arguments passed to \code{\link{auto.arima}} when
 #' selecting p and q.
 #' @inheritParams forecast
-#' 
+#'
 #' @return A list object of S3 class \code{"fracdiff"}, which is described in
 #' the \code{\link[fracdiff]{fracdiff}} documentation. A few additional objects
 #' are added to the list including \code{x} (the original time series), and the
@@ -193,6 +193,7 @@ arfima <- function(y, drange = c(0, 0.5), estim = c("mle", "ls"), model = NULL, 
   fit$lambda <- lambda
   fit$call <- match.call()
   fit$series <- seriesname
+  fit <- structure(fit, class = c("ARFIMA","fracdiff"))
   # fit$call$data <- data.frame(x=x) #Consider replacing fit$call with match.call for consistency and tidyness
   return(fit)
 }
@@ -329,11 +330,11 @@ forecast.fracdiff <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=o
   ), class = "forecast"))
 }
 
-# Fitted values from arfima() or fracdiff()
+# Fitted values from arfima()
 
 #' @rdname fitted.Arima
 #' @export
-fitted.fracdiff <- function(object, h = 1, ...) {
+fitted.ARFIMA <- function(object, h = 1, ...) {
   if (!is.null(object$fitted)) { # Object produced by arfima()
     if (h == 1) {
       return(object$fitted)

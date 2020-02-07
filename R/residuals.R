@@ -17,7 +17,7 @@
 #' matrix of time-series consisting of the residuals from each of the fitted neural networks is returned.
 #'
 #' @param object An object containing a time series model of class \code{ar},
-#' \code{Arima}, \code{bats}, \code{ets}, \code{fracdiff}, \code{nnetar} or
+#' \code{Arima}, \code{bats}, \code{ets}, \code{arfima}, \code{nnetar} or
 #' \code{stlm}.
 #' If \code{object} is of class \code{forecast}, then the function will return
 #' \code{object$residuals} if it exists, otherwise it returns the differences between
@@ -125,7 +125,7 @@ residuals.ets <- function(object, type=c("innovation", "response"), h=1, ...) {
 
 #' @rdname residuals.forecast
 #' @export
-residuals.fracdiff <- function(object, type=c("innovation", "response"), ...) {
+residuals.ARFIMA <- function(object, type=c("innovation", "response"), ...) {
   type <- match.arg(type)
   if (type == "innovation") {
     if (!is.null(object$residuals)) { # Object produced by arfima()
