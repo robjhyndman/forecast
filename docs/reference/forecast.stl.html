@@ -79,7 +79,7 @@ year of the seasonal component." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.9.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.10.0.9000</span>
       </span>
     </div>
 
@@ -351,15 +351,13 @@ forecasting the seasonally adjusted series.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>tsmod</span> <span class='kw'>&lt;-</span> <span class='fu'>stlm</span>(<span class='no'>USAccDeaths</span>, <span class='kw'>modelfunction</span><span class='kw'>=</span><span class='no'>ar</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>tsmod</span>, <span class='kw'>h</span><span class='kw'>=</span><span class='fl'>36</span>))</div><div class='img'><img src='forecast.stl-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='no'>decomp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/stl.html'>stl</a></span>(<span class='no'>USAccDeaths</span>,<span class='kw'>s.window</span><span class='kw'>=</span><span class='st'>"periodic"</span>)
+<span class='no'>tsmod</span> <span class='kw'>&lt;-</span> <span class='fu'>stlm</span>(<span class='no'>USAccDeaths</span>, <span class='kw'>modelfunction</span> <span class='kw'>=</span> <span class='no'>ar</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>tsmod</span>, <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>36</span>))</div><div class='img'><img src='forecast.stl-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>decomp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/stl.html'>stl</a></span>(<span class='no'>USAccDeaths</span>, <span class='kw'>s.window</span> <span class='kw'>=</span> <span class='st'>"periodic"</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>decomp</span>))</div><div class='img'><img src='forecast.stl-2.png' alt='' width='700' height='433' /></div><div class='input'>
-
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'>stlf</span>(<span class='no'>AirPassengers</span>, <span class='kw'>lambda</span><span class='kw'>=</span><span class='fl'>0</span>))</div><div class='img'><img src='forecast.stl-3.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'>stlf</span>(<span class='no'>AirPassengers</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='fl'>0</span>))</div><div class='img'><img src='forecast.stl-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>

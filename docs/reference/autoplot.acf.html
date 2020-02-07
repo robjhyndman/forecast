@@ -80,7 +80,7 @@ taperedpacf functions." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.9.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.10.0.9000</span>
       </span>
     </div>
 
@@ -258,13 +258,13 @@ appropriate ggplot object will be created.</p>
     <pre class="examples"><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
 <span class='fu'>ggAcf</span>(<span class='no'>wineind</span>)</div><div class='img'><img src='autoplot.acf-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>wineind</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='Acf.html'>Acf</a></span>(<span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span> <span class='no'>autoplot</span></div><div class='img'><img src='autoplot.acf-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>wineind</span>
+<span class='no'>wineind</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='Acf.html'>taperedacf</a></span>(<span class='kw'>plot</span><span class='kw'>=</span><span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span> <span class='no'>autoplot</span>
 <span class='fu'>ggtaperedacf</span>(<span class='no'>wineind</span>)
 <span class='fu'>ggtaperedpacf</span>(<span class='no'>wineind</span>)}
 <span class='fu'>ggCcf</span>(<span class='no'>mdeaths</span>, <span class='no'>fdeaths</span>)</div><div class='img'><img src='autoplot.acf-3.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>

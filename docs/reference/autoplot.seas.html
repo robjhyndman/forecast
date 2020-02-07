@@ -80,7 +80,7 @@ class &amp;#8220;stl&amp;#8221; (created with stl), class
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.9.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.10.0.9000</span>
       </span>
     </div>
 
@@ -183,10 +183,10 @@ takes place.</p></td>
 <span class='no'>co2</span> <span class='kw'>%&gt;%</span> <span class='no'>decompose</span> <span class='kw'>%&gt;%</span> <span class='no'>autoplot</span></div><div class='img'><img src='autoplot.seas-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>nottem</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/stats/stl.html'>stl</a></span>(<span class='kw'>s.window</span><span class='kw'>=</span><span class='st'>'periodic'</span>) <span class='kw'>%&gt;%</span> <span class='no'>autoplot</span></div><div class='img'><img src='autoplot.seas-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>seasonal</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/seasonal/man/seas.html'>seas</a></span>(<span class='no'>USAccDeaths</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/seasonal/man/seas.html'>seas</a></span>(<span class='no'>USAccDeaths</span>) <span class='kw'>%&gt;%</span> <span class='no'>autoplot</span>
 }</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>

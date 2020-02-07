@@ -82,7 +82,7 @@ and Koehler (2006)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.9.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.10.0.9000</span>
       </span>
     </div>
 
@@ -141,15 +141,15 @@ and Koehler (2006).</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>...</th>
-      <td><p>Additional arguments depending on the specific method.</p></td>
-    </tr>
-    <tr>
       <th>f</th>
       <td><p>An object of class &#8220;<code>forecast</code>&#8221;, or a numerical vector
 containing forecasts. It will also work with <code>Arima</code>, <code>ets</code> and
 <code>lm</code> objects if <code>x</code> is omitted -- in which case training set accuracy
 measures are returned.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments depending on the specific method.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -220,7 +220,7 @@ Section 3.4 "Evaluating forecast accuracy".
 #&gt; Training set 6.249910e-14  57.83723  46.98108 -0.1240662 2.865357 1.000000
 #&gt; Test set     8.429485e+01 114.96571 105.65361  4.7004265 6.075968 2.248855</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fit1</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='no'>EuStockMarkets</span>[<span class='fl'>1</span>:<span class='fl'>300</span>,<span class='fl'>1</span>])</div><div class='img'><img src='accuracy-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
