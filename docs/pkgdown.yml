@@ -1,6 +1,6 @@
 pandoc: 2.7.3
 pkgdown: 1.4.1.9000
-pkgdown_sha: 134033d9d744c548c6fbe297bc0fbd1a2f498e83
+pkgdown_sha: 48e12e0fc836ec8ca423b44656b97f719cd856c7
 articles:
   JSS2008: JSS2008.html
 
