@@ -52,7 +52,7 @@ forecast.tbats <- function(object, h, level=c(80, 95), fan=FALSE, biasadj=NULL, 
 
   if (!is.null(object$seasonal.periods)) {
     gamma.bold <- matrix(0, nrow = 1, ncol = tau)
-    .Call("updateTBATSGammaBold", gammaBold_s = gamma.bold, kVector_s = as.integer(object$k.vector), gammaOne_s = object$gamma.one.v, gammaTwo_s = object$gamma.two.v, PACKAGE = "forecast")
+    .Call("updateTBATSGammaBold", gammaBold_s = gamma.bold, kVector_s = as.integer(object$k.vector), gammaOne_s = object$gamma.one.values, gammaTwo_s = object$gamma.two.values, PACKAGE = "forecast")
   } else {
     gamma.bold <- NULL
   }
