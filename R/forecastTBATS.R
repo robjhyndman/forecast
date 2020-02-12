@@ -1,6 +1,6 @@
 #' @rdname forecast.bats
 #' @export
-forecast.tbats <- function(object, h, level=c(80, 95), fan=FALSE, biasadj=NULL, ...) {
+forecast.tbats <- function(object, h, level = c(80, 95), fan = FALSE, biasadj = NULL, ...) {
   # Check if forecast.tbats called incorrectly
   if (identical(class(object), "bats")) {
     return(forecast.bats(object, h, level, fan, biasadj, ...))
@@ -91,7 +91,7 @@ forecast.tbats <- function(object, h, level=c(80, 95), fan=FALSE, biasadj=NULL, 
         f.running <- f.running %*% F
       }
       c.j <- w$w.transpose %*% f.running %*% g
-      variance.multiplier[(j + 1)] <- variance.multiplier[j] + c.j ^ 2
+      variance.multiplier[(j + 1)] <- variance.multiplier[j] + c.j^2
     }
   }
 
