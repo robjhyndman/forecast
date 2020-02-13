@@ -78,7 +78,7 @@ simulate.ets <- function(object, nsim=length(object$x), seed=NULL, future=TRUE, 
     e <- sample(res, nsim, replace = TRUE)
   }
   else if (is.null(innov)) {
-    e <- rnorm(nsim, 0, sqrt(object$sigma))
+    e <- rnorm(nsim, 0, sqrt(object$sigma2))
   } else if (length(innov) == nsim) {
     e <- innov
   } else {
