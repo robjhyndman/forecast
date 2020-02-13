@@ -5,12 +5,12 @@
 \alias{accuracy.default}
 \title{Accuracy measures for a forecast model}
 \usage{
-accuracy(f, ...)
+accuracy(object, ...)
 
-\method{accuracy}{default}(f, x, test = NULL, d = NULL, D = NULL, ...)
+\method{accuracy}{default}(object, x, test = NULL, d = NULL, D = NULL, f = NULL, ...)
 }
 \arguments{
-\item{f}{An object of class \dQuote{\code{forecast}}, or a numerical vector
+\item{object}{An object of class \dQuote{\code{forecast}}, or a numerical vector
 containing forecasts. It will also work with \code{Arima}, \code{ets} and
 \code{lm} objects if \code{x} is omitted -- in which case training set accuracy
 measures are returned.}
@@ -31,6 +31,8 @@ series and 0 for seasonal series.}
 \item{D}{An integer indicating the number of seasonal differences to be used
 for the denominator in MASE calculation. Default value is 0 for non-seasonal
 series and 1 for seasonal series.}
+
+\item{f}{Deprecated. Please use `object` instead.}
 }
 \value{
 Matrix giving forecast accuracy measures.
@@ -78,8 +80,8 @@ lines(EuStockMarkets[1:300,1])
 Hyndman, R.J. and Koehler, A.B. (2006) "Another look at measures
 of forecast accuracy". \emph{International Journal of Forecasting},
 \bold{22}(4), 679-688. Hyndman, R.J. and Athanasopoulos, G. (2018)
-"Forecasting: principles and practice", 2nd ed., OTexts, Melbourne, Australia. 
-Section 3.4 "Evaluating forecast accuracy". 
+"Forecasting: principles and practice", 2nd ed., OTexts, Melbourne, Australia.
+Section 3.4 "Evaluating forecast accuracy".
 \url{https://otexts.org/fpp2/accuracy.html}.
 }
 \author{
