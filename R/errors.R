@@ -284,8 +284,8 @@ accuracy.default <- function(object, x, test=NULL, d=NULL, D=NULL, f = NULL, ...
         D <- as.numeric(frequency(object$mean) > 1)
       }
       else {
-        d <- as.numeric(frequency(object$x) == 1)
-        D <- as.numeric(frequency(object$x) > 1)
+        d <- as.numeric(frequency(object[["x"]]) == 1)
+        D <- as.numeric(frequency(object[["x"]]) > 1)
       }
     }
     else {
