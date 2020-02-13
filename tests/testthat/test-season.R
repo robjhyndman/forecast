@@ -68,13 +68,13 @@ if (require(testthat)) {
     constantForecast <- expect_error(stlf(series), NA)
     # Small eps
     expect_true(all(abs(constantForecast$mean - mean(series)) < 10 ^ -8))
-    
+
     y <- ts(rep(1:7, 3), frequency = 7)
     expect_equal(c(stlf(y)$mean), rep(1:7, 2))
   })
 
   test_that("tests for ma", {
-    testseries <- ts(1:20, f = 4)
+    testseries <- ts(1:20, frequency = 4)
     expect_true(frequency(ma(testseries, order = 4)) == frequency(testseries))
     maseries <- ma(testseries, order = 3)
     expect_true(identical(which(is.na(maseries)), c(1L, 20L)))

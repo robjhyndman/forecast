@@ -215,7 +215,7 @@ tsoutliers <- function(x, iterate=2, lambda=NULL) {
   }
 
   # Limits of acceptable residuals
-  resid.q <- quantile(resid, prob = c(0.25, 0.75), na.rm = TRUE)
+  resid.q <- quantile(resid, probs = c(0.25, 0.75), na.rm = TRUE)
   iqr <- diff(resid.q)
   limits <- resid.q + 3 * iqr * c(-1, 1)
 

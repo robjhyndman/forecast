@@ -940,9 +940,9 @@ initstate <- function(y, trendtype, seasontype) {
       fouriery <- fourier(y, 1)
       fit <- tslm(y ~ trend + fouriery)
       if (seasontype == "A") {
-        y.d <- list(seasonal = y - fit$coef[1] - fit$coef[2] * (1:n))
+        y.d <- list(seasonal = y - fit$coefficients[1] - fit$coefficients[2] * (1:n))
       } else { # seasontype=="M". Biased method, but we only need a starting point
-        y.d <- list(seasonal = y / (fit$coef[1] + fit$coef[2] * (1:n)))
+        y.d <- list(seasonal = y / (fit$coefficients[1] + fit$coefficients[2] * (1:n)))
       }
     }
     else { # n is large enough to do a decomposition
@@ -979,8 +979,8 @@ initstate <- function(y, trendtype, seasontype) {
   {
     fit <- lsfit(1:maxn, y.sa[1:maxn])
     if (trendtype == "A") {
-      l0 <- fit$coef[1]
-      b0 <- fit$coef[2]
+      l0 <- fit$coefficients[1]
+      b0 <- fit$coefficients[2]
       # If error type is "M", then we don't want l0+b0=0.
       # So perturb just in case.
       if (abs(l0 + b0) < 1e-8) {
@@ -990,11 +990,11 @@ initstate <- function(y, trendtype, seasontype) {
     }
     else # if(trendtype=="M")
     {
-      l0 <- fit$coef[1] + fit$coef[2] # First fitted value
+      l0 <- fit$coefficients[1] + fit$coefficients[2] # First fitted value
       if (abs(l0) < 1e-8) {
         l0 <- 1e-7
       }
-      b0 <- (fit$coef[1] + 2 * fit$coef[2]) / l0 # Ratio of first two fitted values
+      b0 <- (fit$coefficients[1] + 2 * fit$coefficients[2]) / l0 # Ratio of first two fitted values
       l0 <- l0 / b0 # First fitted value divided by b0
       if (abs(b0) > 1e10) { # Avoid infinite slopes
         b0 <- sign(b0) * 1e10
