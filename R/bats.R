@@ -428,7 +428,7 @@ plot.bats <- function(x, main="Decomposition by BATS model", ...) {
   }
   nonseas <- 2 + !is.null(x$beta) # No. non-seasonal columns in out
   nseas <- length(x$gamma.values) # No. seasonal periods
-  if (!is.null(x$gamma)) {
+  if (!is.null(x$gamma.values)) {
     seas.states <- x$x[-(1:(1 + !is.null(x$beta))), ]
     j <- cumsum(c(1, x$seasonal.periods))
     for (i in 1:nseas)
