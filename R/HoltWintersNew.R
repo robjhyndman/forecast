@@ -148,13 +148,13 @@ HoltWintersZZ <- function(x,
       }
     }
     if (select[1] > 0) {
-      alpha <- sol$p[1L]
+      alpha <- sol$par[1L]
     }
     if (select[2] > 0) {
-      beta <- sol$p[1L + select[1]]
+      beta <- sol$par[1L + select[1]]
     }
     if (select[3] > 0) {
-      gamma <- sol$p[1L + select[1] + select[2]]
+      gamma <- sol$par[1L + select[1] + select[2]]
     }
   }
 
