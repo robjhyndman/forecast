@@ -52,7 +52,7 @@ plot.armaroots <- function(x, xlab, ylab, main, ...) {
   )
   axis(1, at = c(-1, 0, 1), line = 0.5, tck = -0.025)
   axis(2, at = c(-1, 0, 1), labels = c("-i", "0", "i"), line = 0.5, tck = -0.025)
-  circx <- seq(-1, 1, l = 501)
+  circx <- seq(-1, 1, length.out = 501)
   circy <- sqrt(1 - circx ^ 2)
   lines(c(circx, circx), c(circy, -circy), col = "gray")
   lines(c(-2, 2), c(0, 0), col = "gray")
