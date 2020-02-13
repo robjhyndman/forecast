@@ -20,14 +20,13 @@ as.Date.timeDate <- timeDate::as.Date.timeDate
 #' @keywords ts
 #' @examples
 #'
-#'   x <-  ts(rnorm(30), start = c(2013, 2), frequency = 12)
-#'   bizdays(x, FinCenter = "New York")
-#'
+#' x <- ts(rnorm(30), start = c(2013, 2), frequency = 12)
+#' bizdays(x, FinCenter = "New York")
 #' @export
 bizdays <- function(x, FinCenter = c(
-                    "New York", "London", "NERC", "Tokyo",
-                    "Zurich"
-                  )) {
+                      "New York", "London", "NERC", "Tokyo",
+                      "Zurich"
+                    )) {
   # Return the number of trading days corresponding to the input ts
   #
   # Args:
@@ -104,8 +103,7 @@ bizdays <- function(x, FinCenter = c(
 #' @keywords ts
 #' @examples
 #'
-#'   easter(wineind, easter.mon = TRUE)
-#'
+#' easter(wineind, easter.mon = TRUE)
 #' @export
 easter <- function(x, easter.mon = FALSE) {
   # Return a vector of 0's and 1's for easter holidays
