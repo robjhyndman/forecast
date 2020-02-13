@@ -58,7 +58,7 @@ bizdays <- function(x, FinCenter = c(
   if (freq == 12L) { # monthly data
     date <- zoo::as.Date(time(x))
     start <- date[1L]
-    end <- seq(date[length(date)], length = 2L, by = "month")[2L] - 1L
+    end <- seq(date[length(date)], length.out = 2L, by = "month")[2L] - 1L
     days.len <- timeDate::timeSequence(from = start, to = end)
     # Grab business days
     biz <- days.len[timeDate::isBizday(days.len, holidays = holidays)]
@@ -66,7 +66,7 @@ bizdays <- function(x, FinCenter = c(
   } else if (freq == 4L) { # Quarterly data
     date <- zoo::as.Date(time(x))
     start <- date[1L]
-    end <- seq(date[length(date)], length = 2L, by = "3 month")[2L] - 1L
+    end <- seq(date[length(date)], length.out = 2L, by = "3 month")[2L] - 1L
     days.len <- timeDate::timeSequence(from = start, to = end)
     # Grab business days
     biz <- days.len[timeDate::isBizday(days.len, holidays = holidays)]
