@@ -112,7 +112,7 @@ thetaf <- function(y, h = ifelse(frequency(y) > 1, 2 * frequency(y), 10),
   fcast$residuals <- origx - fcast$fitted
 
   # Find prediction intervals
-  fcast.se <- sqrt(fcast$model$sigma) * sqrt((0:(h - 1)) * alpha^2 + 1)
+  fcast.se <- sqrt(fcast$model$sigma2) * sqrt((0:(h - 1)) * alpha^2 + 1)
   nconf <- length(level)
   fcast$lower <- fcast$upper <- ts(matrix(NA, nrow = h, ncol = nconf))
   tsp(fcast$lower) <- tsp(fcast$upper) <- tsp(fcast$mean)
@@ -127,7 +127,7 @@ thetaf <- function(y, h = ifelse(frequency(y) > 1, 2 * frequency(y), 10),
   fcast$x <- origx
   fcast$level <- level
   fcast$method <- "Theta"
-  fcast$model <- list(alpha = alpha, drift = tmp2, sigma = fcast$model$sigma)
+  fcast$model <- list(alpha = alpha, drift = tmp2, sigma = fcast$model$sigma2)
   fcast$model$call <- match.call()
   return(fcast)
 }
