@@ -787,7 +787,7 @@ arima2 <- function(x, model, xreg, method) {
   sigma2 <- model$sigma2
   if (use.drift) {
     driftmod <- lm(model$xreg[, "drift"] ~ I(time(as.ts(model$x))))
-    newxreg <- driftmod$coeff[1] + driftmod$coeff[2] * time(as.ts(x))
+    newxreg <- driftmod$coefficients[1] + driftmod$coefficients[2] * time(as.ts(x))
     if (!is.null(xreg)) {
       origColNames <- colnames(xreg)
       xreg <- cbind(newxreg, xreg)
