@@ -26,13 +26,13 @@ if (require(testthat)) {
     expect_equal(auto.arima(WWWusage, parallel = TRUE, stepwise = FALSE)$arma, c(3L, 0L, 0L, 0L, 1L, 1L, 0L))
   })
 
-  
+
   test_that("tests for ndiffs()", {
     expect_true(ndiffs(AirPassengers, test = "kpss") == 1)
     expect_true(ndiffs(AirPassengers, test = "adf") == 1)
     expect_true(ndiffs(AirPassengers, test = "pp") == 1)
   })
-  
+
   test_that("tests for nsdiffs()", {
     expect_true(nsdiffs(AirPassengers, test = "seas") == 1)
     expect_true(nsdiffs(AirPassengers, test = "ocsb") == 1)
