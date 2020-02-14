@@ -76,16 +76,14 @@ if (require(testthat)) {
     expect_true(length(forecast(woolyrnqnnet, xreg = 120:130)$mean) == 11)
     expect_true(identical(forecast(woolyrnqnnet, xreg = 120:130)$mean, forecast(woolyrnqnnet2, xreg = 120:130)$mean))
     ## Test with multiple-column xreg
-    expect_silent({
-      set.seed(123)
-      winennet <- modelAR(wineind, FUN = avnnet2, predict.FUN = predict.avnnet2, scale.inputs = TRUE, xreg = cbind(bizdays(wineind), fourier(wineind, 1)), p = 2, P = 1, size = 4, repeats = 10)
-      set.seed(123)
-      winennet2 <- nnetar(
-        wineind,
-        xreg = cbind(bizdays(wineind), fourier(wineind, 1)),
-        p = 2, P = 1, size = 4, repeats = 10
-      )
-    })
+    set.seed(123)
+    winennet <- modelAR(wineind, FUN = avnnet2, predict.FUN = predict.avnnet2, scale.inputs = TRUE, xreg = cbind(bizdays(wineind), fourier(wineind, 1)), p = 2, P = 1, size = 4, repeats = 10)
+    set.seed(123)
+    winennet2 <- nnetar(
+      wineind,
+      xreg = cbind(bizdays(wineind), fourier(wineind, 1)),
+      p = 2, P = 1, size = 4, repeats = 10
+    )
     expect_true(length(forecast(winennet, h = 2, xreg = matrix(2, 2, 3))$mean) == 2L)
     ## Test if h matches xreg
     expect_true(length(forecast(winennet, h = 5, xreg = matrix(2, 2, 3))$mean) == 2L)
