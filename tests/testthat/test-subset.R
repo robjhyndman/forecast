@@ -2,7 +2,7 @@
 if (require(testthat)) {
   context("Tests on input")
 
-  mtsobj <- ts(matrix(rnorm(200), ncol = 2), freq = 4)
+  mtsobj <- ts(matrix(rnorm(200), ncol = 2), frequency = 4)
   test_that("tests specifying correct argument", {
     sub <- subset(wineind, month = "September")
     expect_that(length(sub), equals(tsp(sub)[2] - tsp(sub)[1] + 1))
