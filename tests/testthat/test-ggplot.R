@@ -68,7 +68,7 @@ if (require(testthat)) {
 
     autoplot(USAccDeaths)
     autoplot(lungDeaths)
-    autoplot(lungDeaths, facet = TRUE)
+    autoplot(lungDeaths, facets = TRUE)
 
     autoplot(USAccDeaths) + geom_forecast()
     autoplot(USAccDeaths) + autolayer(etsfcast, series = "ETS")
@@ -76,7 +76,7 @@ if (require(testthat)) {
     autoplot(lungDeaths) + autolayer(mfcast, series = c("mdeaths", "fdeaths"))
     autoplot(lungDeaths) + autolayer(mfcast)
     autoplot(lungDeaths) + autolayer(mfcast, series = TRUE)
-    autoplot(lungDeaths, facet = TRUE) + geom_forecast()
+    autoplot(lungDeaths, facets = TRUE) + geom_forecast()
 
     gghistogram(USAccDeaths, add.kde = TRUE)
   })
