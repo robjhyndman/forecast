@@ -53,7 +53,7 @@ testaccuracy <- function(f, x, test, d, D) {
   pe <- error / xx[test] * 100
 
   me <- mean(error, na.rm = TRUE)
-  mse <- mean(error ^ 2, na.rm = TRUE)
+  mse <- mean(error^2, na.rm = TRUE)
   mae <- mean(abs(error), na.rm = TRUE)
   mape <- mean(abs(pe), na.rm = TRUE)
   mpe <- mean(pe, na.rm = TRUE)
@@ -87,7 +87,7 @@ testaccuracy <- function(f, x, test, d, D) {
   if (!is.null(tsp(x)) && n > 1) {
     fpe <- (c(ff[2:n]) / c(xx[1:(n - 1)]) - 1)[test - 1]
     ape <- (c(xx[2:n]) / c(xx[1:(n - 1)]) - 1)[test - 1]
-    theil <- sqrt(sum((fpe - ape) ^ 2, na.rm = TRUE) / sum(ape ^ 2, na.rm = TRUE))
+    theil <- sqrt(sum((fpe - ape)^2, na.rm = TRUE) / sum(ape^2, na.rm = TRUE))
     if (length(error) > 1) {
       r1 <- acf(error, plot = FALSE, lag.max = 2, na.action = na.pass)$acf[2, 1, 1]
     } else {
@@ -130,7 +130,7 @@ trainingaccuracy <- function(f, test, d, D) {
   pe <- res / dx * 100 # Percentage error
 
   me <- mean(res, na.rm = TRUE)
-  mse <- mean(res ^ 2, na.rm = TRUE)
+  mse <- mean(res^2, na.rm = TRUE)
   mae <- mean(abs(res), na.rm = TRUE)
   mape <- mean(abs(pe), na.rm = TRUE)
   mpe <- mean(pe, na.rm = TRUE)
@@ -232,14 +232,14 @@ trainingaccuracy <- function(f, test, d, D) {
 #' @keywords ts
 #' @examples
 #'
-#' fit1 <- rwf(EuStockMarkets[1:200,1],h=100)
-#' fit2 <- meanf(EuStockMarkets[1:200,1],h=100)
+#' fit1 <- rwf(EuStockMarkets[1:200, 1], h = 100)
+#' fit2 <- meanf(EuStockMarkets[1:200, 1], h = 100)
 #' accuracy(fit1)
 #' accuracy(fit2)
-#' accuracy(fit1,EuStockMarkets[201:300,1])
-#' accuracy(fit2,EuStockMarkets[201:300,1])
+#' accuracy(fit1, EuStockMarkets[201:300, 1])
+#' accuracy(fit2, EuStockMarkets[201:300, 1])
 #' plot(fit1)
-#' lines(EuStockMarkets[1:300,1])
+#' lines(EuStockMarkets[1:300, 1])
 #' @export
 accuracy <- function(object, ...) {
   UseMethod("accuracy")
@@ -248,8 +248,8 @@ accuracy <- function(object, ...) {
 #' @rdname accuracy
 #' @method accuracy default
 #' @export
-accuracy.default <- function(object, x, test=NULL, d=NULL, D=NULL, f = NULL, ...) {
-  if(!is.null(f)){
+accuracy.default <- function(object, x, test = NULL, d = NULL, D = NULL, f = NULL, ...) {
+  if (!is.null(f)) {
     warning("Using `f` as the argument for `accuracy()` is deprecated. Please use `object` instead.")
     object <- f
   }
@@ -284,8 +284,8 @@ accuracy.default <- function(object, x, test=NULL, d=NULL, D=NULL, f = NULL, ...
         D <- as.numeric(frequency(object$mean) > 1)
       }
       else {
-        d <- as.numeric(frequency(object$x) == 1)
-        D <- as.numeric(frequency(object$x) > 1)
+        d <- as.numeric(frequency(object[["x"]]) == 1)
+        D <- as.numeric(frequency(object[["x"]]) > 1)
       }
     }
     else {
@@ -332,8 +332,8 @@ accuracy.default <- function(object, x, test=NULL, d=NULL, D=NULL, f = NULL, ...
 
 # Compute accuracy for an mforecast object
 #' @export
-accuracy.mforecast <- function(object, x, test=NULL, d, D, f = NULL, ...) {
-  if(!is.null(f)){
+accuracy.mforecast <- function(object, x, test = NULL, d, D, f = NULL, ...) {
+  if (!is.null(f)) {
     warning("Using `f` as the argument for `accuracy()` is deprecated. Please use `object` instead.")
     object <- f
   }

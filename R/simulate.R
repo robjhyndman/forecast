@@ -68,9 +68,9 @@ simulate.ets <- function(object, nsim=length(object$x), seed=NULL, future=TRUE, 
   }
 
   if (future) {
-    initstate <- object$state[length(object$x) + 1, ]
+    initstate <- object$states[length(object$x) + 1, ]
   } else { # choose a random starting point
-    initstate <- object$state[sample(1:length(object$x), 1), ]
+    initstate <- object$states[sample(1:length(object$x), 1), ]
   }
 
   if (bootstrap) {
@@ -78,7 +78,7 @@ simulate.ets <- function(object, nsim=length(object$x), seed=NULL, future=TRUE, 
     e <- sample(res, nsim, replace = TRUE)
   }
   else if (is.null(innov)) {
-    e <- rnorm(nsim, 0, sqrt(object$sigma))
+    e <- rnorm(nsim, 0, sqrt(object$sigma2))
   } else if (length(innov) == nsim) {
     e <- innov
   } else {

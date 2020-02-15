@@ -63,12 +63,13 @@
 #' plot(forecast(fit))
 #'
 #' taylor.fit <- bats(taylor)
-#' plot(forecast(taylor.fit))}
+#' plot(forecast(taylor.fit))
+#' }
 #'
 #' @export
-bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
-                 seasonal.periods=NULL, use.arma.errors=TRUE, use.parallel=length(y) > 1000, num.cores=2,
-                 bc.lower=0, bc.upper=1, biasadj = FALSE, model=NULL, ...) {
+bats <- function(y, use.box.cox = NULL, use.trend = NULL, use.damped.trend = NULL,
+                 seasonal.periods = NULL, use.arma.errors = TRUE, use.parallel = length(y) > 1000, num.cores = 2,
+                 bc.lower = 0, bc.upper = 1, biasadj = FALSE, model = NULL, ...) {
   if (!is.numeric(y) || NCOL(y) > 1) {
     stop("y should be a univariate time series")
   }
@@ -213,7 +214,8 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
       for (trend in use.trend) {
         for (damping in use.damped.trend) {
           current.model <- filterSpecifics(
-            y, box.cox = box.cox, trend = trend, damping = damping,
+            y,
+            box.cox = box.cox, trend = trend, damping = damping,
             seasonal.periods = seasonal.periods, use.arma.errors = use.arma.errors,
             init.box.cox = init.box.cox, bc.lower = bc.lower, bc.upper = bc.upper, biasadj = biasadj, ...
           )
@@ -243,7 +245,7 @@ bats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
 }
 
 filterSpecifics <- function(y, box.cox, trend, damping, seasonal.periods, use.arma.errors,
-                            force.seasonality=FALSE, init.box.cox=NULL, bc.lower=0, bc.upper=1, biasadj=FALSE, ...) {
+                            force.seasonality = FALSE, init.box.cox = NULL, bc.lower = 0, bc.upper = 1, biasadj = FALSE, ...) {
   if (!trend && damping) {
     return(list(AIC = Inf))
   }
@@ -288,7 +290,7 @@ filterSpecifics <- function(y, box.cox, trend, damping, seasonal.periods, use.ar
   }
 }
 
-parFilterSpecifics <- function(control.number, control.array, y, seasonal.periods, use.arma.errors, force.seasonality=FALSE, init.box.cox=NULL, bc.lower=0, bc.upper=1, biasadj=FALSE, ...) {
+parFilterSpecifics <- function(control.number, control.array, y, seasonal.periods, use.arma.errors, force.seasonality = FALSE, init.box.cox = NULL, bc.lower = 0, bc.upper = 1, biasadj = FALSE, ...) {
   box.cox <- control.array[control.number, 1]
   trend <- control.array[control.number, 2]
   damping <- control.array[control.number, 3]
@@ -340,7 +342,7 @@ parFilterSpecifics <- function(control.number, control.array, y, seasonal.period
 
 #' @rdname fitted.Arima
 #' @export
-fitted.bats <- function(object, h=1, ...) {
+fitted.bats <- function(object, h = 1, ...) {
   if (h == 1) {
     return(object$fitted.values)
   }
@@ -412,7 +414,7 @@ print.bats <- function(x, ...) {
 #' @keywords hplot
 #'
 #' @export
-plot.bats <- function(x, main="Decomposition by BATS model", ...) {
+plot.bats <- function(x, main = "Decomposition by BATS model", ...) {
   # Get original data, transform if necessary
   if (!is.null(x$lambda)) {
     y <- BoxCox(x$y, x$lambda)
@@ -428,11 +430,12 @@ plot.bats <- function(x, main="Decomposition by BATS model", ...) {
   }
   nonseas <- 2 + !is.null(x$beta) # No. non-seasonal columns in out
   nseas <- length(x$gamma.values) # No. seasonal periods
-  if (!is.null(x$gamma)) {
+  if (!is.null(x$gamma.values)) {
     seas.states <- x$x[-(1:(1 + !is.null(x$beta))), ]
     j <- cumsum(c(1, x$seasonal.periods))
-    for (i in 1:nseas)
+    for (i in 1:nseas) {
       out <- cbind(out, season = seas.states[j[i], ])
+    }
     if (nseas > 1) {
       colnames(out)[nonseas + 1:nseas] <- paste("season", 1:nseas, sep = "")
     }

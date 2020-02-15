@@ -47,13 +47,14 @@ plot.armaroots <- function(x, xlab, ylab, main, ...) {
   oldpar <- par(pty = "s")
   on.exit(par(oldpar))
   plot(
-    c(-1, 1), c(-1, 1), xlab = xlab, ylab = ylab,
+    c(-1, 1), c(-1, 1),
+    xlab = xlab, ylab = ylab,
     type = "n", bty = "n", xaxt = "n", yaxt = "n", main = main, ...
   )
   axis(1, at = c(-1, 0, 1), line = 0.5, tck = -0.025)
   axis(2, at = c(-1, 0, 1), labels = c("-i", "0", "i"), line = 0.5, tck = -0.025)
-  circx <- seq(-1, 1, l = 501)
-  circy <- sqrt(1 - circx ^ 2)
+  circx <- seq(-1, 1, length.out = 501)
+  circy <- sqrt(1 - circx^2)
   lines(c(circx, circx), c(circy, -circy), col = "gray")
   lines(c(-2, 2), c(0, 0), col = "gray")
   lines(c(0, 0), c(-2, 2), col = "gray")
@@ -92,20 +93,19 @@ plot.armaroots <- function(x, xlab, ylab, main, ...) {
 #'
 #' library(ggplot2)
 #'
-#' fit <- Arima(WWWusage, order=c(3,1,0))
+#' fit <- Arima(WWWusage, order = c(3, 1, 0))
 #' plot(fit)
 #' autoplot(fit)
 #'
-#' fit <- Arima(woolyrnq,order=c(2,0,0),seasonal=c(2,1,1))
+#' fit <- Arima(woolyrnq, order = c(2, 0, 0), seasonal = c(2, 1, 1))
 #' plot(fit)
 #' autoplot(fit)
 #'
 #' plot(ar.ols(gold[1:61]))
 #' autoplot(ar.ols(gold[1:61]))
-#'
 #' @export
-plot.Arima <- function(x, type=c("both", "ar", "ma"), main,
-                       xlab="Real", ylab="Imaginary", ...) {
+plot.Arima <- function(x, type = c("both", "ar", "ma"), main,
+                       xlab = "Real", ylab = "Imaginary", ...) {
   type <- match.arg(type)
   if (!is.element("Arima", class(x))) {
     stop("This function is for objects of class 'Arima'.")
@@ -137,7 +137,7 @@ plot.Arima <- function(x, type=c("both", "ar", "ma"), main,
   }
   if ((type == "ar" && (p == 0)) || (type == "ma" && (q == 0)) || (p == 0 && q == 0)) {
     warning("No roots to plot")
-    if(missing(main)){
+    if (missing(main)) {
       main <- "No AR or MA roots"
     }
   }
@@ -157,7 +157,7 @@ plot.Arima <- function(x, type=c("both", "ar", "ma"), main,
 
 #' @rdname plot.Arima
 #' @export
-plot.ar <- function(x, main, xlab="Real", ylab="Imaginary", ...) {
+plot.ar <- function(x, main, xlab = "Real", ylab = "Imaginary", ...) {
   if (!is.element("ar", class(x))) {
     stop("This function is for objects of class 'ar'.")
   }

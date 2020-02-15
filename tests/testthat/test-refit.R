@@ -90,7 +90,7 @@ if (require(testthat)) {
     refit_same <- bats(mdeaths, model = fit)
     expect_true(identical(fit$model$par, refit_same$model$par))
     expect_true(identical(fit$x, refit_same$x))
-    expect_true(identical(fit$fitted, refit_same$fitted))
+    expect_true(identical(fit$fitted.values, refit_same$fitted.values))
     expect_true(identical(residuals(fit), residuals(refit_same)))
 
     # tbats
@@ -105,7 +105,7 @@ if (require(testthat)) {
     refit_same <- tbats(mdeaths, model = fit)
     expect_true(identical(fit$model$par, refit_same$model$par))
     expect_true(identical(fit$x, refit_same$x))
-    expect_true(identical(fit$fitted, refit_same$fitted))
+    expect_true(identical(fit$fitted.values, refit_same$fitted.values))
     expect_true(identical(residuals(fit), residuals(refit_same)))
 
     # nnetar

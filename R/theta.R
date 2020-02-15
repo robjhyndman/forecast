@@ -60,10 +60,9 @@
 #' @examples
 #' nile.fcast <- thetaf(Nile)
 #' plot(nile.fcast)
-#'
 #' @export
-thetaf <- function(y, h=ifelse(frequency(y) > 1, 2 * frequency(y), 10),
-                   level=c(80, 95), fan=FALSE, x=y) {
+thetaf <- function(y, h = ifelse(frequency(y) > 1, 2 * frequency(y), 10),
+                   level = c(80, 95), fan = FALSE, x = y) {
   # Check inputs
   if (fan) {
     level <- seq(51, 99, by = 3)
@@ -79,9 +78,9 @@ thetaf <- function(y, h=ifelse(frequency(y) > 1, 2 * frequency(y), 10),
   n <- length(x)
   x <- as.ts(x)
   m <- frequency(x)
-  if (m > 1 && !is.constant(x) && n > 2*m) {
+  if (m > 1 && !is.constant(x) && n > 2 * m) {
     r <- as.numeric(acf(x, lag.max = m, plot = FALSE)$acf)[-1]
-    stat <- sqrt((1 + 2 * sum(r[-m] ^ 2)) / n)
+    stat <- sqrt((1 + 2 * sum(r[-m]^2)) / n)
     seasonal <- (abs(r[m]) / stat > qnorm(0.95))
   }
   else {
@@ -92,27 +91,28 @@ thetaf <- function(y, h=ifelse(frequency(y) > 1, 2 * frequency(y), 10),
   origx <- x
   if (seasonal) {
     decomp <- decompose(x, type = "multiplicative")
-    if(any(abs(seasonal(decomp)) < 1e-10))
+    if (any(abs(seasonal(decomp)) < 1e-10)) {
       warning("Seasonal indexes equal to zero. Using non-seasonal Theta method")
-    else
+    } else {
       x <- seasadj(decomp)
+    }
   }
 
   # Find theta lines
   fcast <- ses(x, h = h)
-  tmp2 <- lsfit(0:(n - 1), x)$coef[2] / 2
-  alpha <- pmax(1e-10,fcast$model$par["alpha"])
-  fcast$mean <- fcast$mean + tmp2 * (0:(h - 1) + (1 - (1 - alpha) ^ n) / alpha)
+  tmp2 <- lsfit(0:(n - 1), x)$coefficients[2] / 2
+  alpha <- pmax(1e-10, fcast$model$par["alpha"])
+  fcast$mean <- fcast$mean + tmp2 * (0:(h - 1) + (1 - (1 - alpha)^n) / alpha)
 
   # Reseasonalize
   if (seasonal) {
     fcast$mean <- fcast$mean * rep(tail(decomp$seasonal, m), trunc(1 + h / m))[1:h]
     fcast$fitted <- fcast$fitted * decomp$seasonal
   }
-  fcast$residuals <- origx-fcast$fitted
+  fcast$residuals <- origx - fcast$fitted
 
   # Find prediction intervals
-  fcast.se <- sqrt(fcast$model$sigma) * sqrt((0:(h - 1)) * alpha ^ 2 + 1)
+  fcast.se <- sqrt(fcast$model$sigma2) * sqrt((0:(h - 1)) * alpha^2 + 1)
   nconf <- length(level)
   fcast$lower <- fcast$upper <- ts(matrix(NA, nrow = h, ncol = nconf))
   tsp(fcast$lower) <- tsp(fcast$upper) <- tsp(fcast$mean)
@@ -127,7 +127,7 @@ thetaf <- function(y, h=ifelse(frequency(y) > 1, 2 * frequency(y), 10),
   fcast$x <- origx
   fcast$level <- level
   fcast$method <- "Theta"
-  fcast$model <- list(alpha = alpha, drift = tmp2, sigma = fcast$model$sigma)
+  fcast$model <- list(alpha = alpha, drift = tmp2, sigma = fcast$model$sigma2)
   fcast$model$call <- match.call()
   return(fcast)
 }

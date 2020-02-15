@@ -2351,7 +2351,7 @@ gghistogram <- function(x, add.normal=FALSE, add.kde=FALSE, add.rug=TRUE, bins, 
         xmin <- min(xmin, xmean - 3 * xsd)
         xmax <- max(xmax, xmean + 3 * xsd)
       }
-      xgrid <- seq(xmin, xmax, l = 512)
+      xgrid <- seq(xmin, xmax, length.out = 512)
       if (add.normal) {
         df <- data.frame(x = xgrid, y = length(x) * binwidth * stats::dnorm(xgrid, xmean, xsd))
         p <- p + ggplot2::geom_line(ggplot2::aes(df$x, df$y), col = "#ff8a62")

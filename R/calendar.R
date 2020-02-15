@@ -20,14 +20,13 @@ as.Date.timeDate <- timeDate::as.Date.timeDate
 #' @keywords ts
 #' @examples
 #'
-#'   x <-  ts(rnorm(30), start = c(2013, 2), frequency = 12)
-#'   bizdays(x, FinCenter = "New York")
-#'
+#' x <- ts(rnorm(30), start = c(2013, 2), frequency = 12)
+#' bizdays(x, FinCenter = "New York")
 #' @export
 bizdays <- function(x, FinCenter = c(
-                    "New York", "London", "NERC", "Tokyo",
-                    "Zurich"
-                  )) {
+                      "New York", "London", "NERC", "Tokyo",
+                      "Zurich"
+                    )) {
   # Return the number of trading days corresponding to the input ts
   #
   # Args:
@@ -58,7 +57,7 @@ bizdays <- function(x, FinCenter = c(
   if (freq == 12L) { # monthly data
     date <- zoo::as.Date(time(x))
     start <- date[1L]
-    end <- seq(date[length(date)], length = 2L, by = "month")[2L] - 1L
+    end <- seq(date[length(date)], length.out = 2L, by = "month")[2L] - 1L
     days.len <- timeDate::timeSequence(from = start, to = end)
     # Grab business days
     biz <- days.len[timeDate::isBizday(days.len, holidays = holidays)]
@@ -66,7 +65,7 @@ bizdays <- function(x, FinCenter = c(
   } else if (freq == 4L) { # Quarterly data
     date <- zoo::as.Date(time(x))
     start <- date[1L]
-    end <- seq(date[length(date)], length = 2L, by = "3 month")[2L] - 1L
+    end <- seq(date[length(date)], length.out = 2L, by = "3 month")[2L] - 1L
     days.len <- timeDate::timeSequence(from = start, to = end)
     # Grab business days
     biz <- days.len[timeDate::isBizday(days.len, holidays = holidays)]
@@ -104,8 +103,7 @@ bizdays <- function(x, FinCenter = c(
 #' @keywords ts
 #' @examples
 #'
-#'   easter(wineind, easter.mon = TRUE)
-#'
+#' easter(wineind, easter.mon = TRUE)
 #' @export
 easter <- function(x, easter.mon = FALSE) {
   # Return a vector of 0's and 1's for easter holidays

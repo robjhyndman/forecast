@@ -1,6 +1,6 @@
 #' @rdname forecast.bats
 #' @export
-forecast.tbats <- function(object, h, level=c(80, 95), fan=FALSE, biasadj=NULL, ...) {
+forecast.tbats <- function(object, h, level = c(80, 95), fan = FALSE, biasadj = NULL, ...) {
   # Check if forecast.tbats called incorrectly
   if (identical(class(object), "bats")) {
     return(forecast.bats(object, h, level, fan, biasadj, ...))
@@ -52,7 +52,7 @@ forecast.tbats <- function(object, h, level=c(80, 95), fan=FALSE, biasadj=NULL, 
 
   if (!is.null(object$seasonal.periods)) {
     gamma.bold <- matrix(0, nrow = 1, ncol = tau)
-    .Call("updateTBATSGammaBold", gammaBold_s = gamma.bold, kVector_s = as.integer(object$k.vector), gammaOne_s = object$gamma.one.v, gammaTwo_s = object$gamma.two.v, PACKAGE = "forecast")
+    .Call("updateTBATSGammaBold", gammaBold_s = gamma.bold, kVector_s = as.integer(object$k.vector), gammaOne_s = object$gamma.one.values, gammaTwo_s = object$gamma.two.values, PACKAGE = "forecast")
   } else {
     gamma.bold <- NULL
   }
@@ -91,7 +91,7 @@ forecast.tbats <- function(object, h, level=c(80, 95), fan=FALSE, biasadj=NULL, 
         f.running <- f.running %*% F
       }
       c.j <- w$w.transpose %*% f.running %*% g
-      variance.multiplier[(j + 1)] <- variance.multiplier[j] + c.j ^ 2
+      variance.multiplier[(j + 1)] <- variance.multiplier[j] + c.j^2
     }
   }
 
