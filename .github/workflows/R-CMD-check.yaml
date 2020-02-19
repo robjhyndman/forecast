@@ -60,7 +60,7 @@ jobs:
         run: Rscript -e "install.packages('remotes')" -e "remotes::install_deps(dependencies = TRUE)" -e "remotes::install_cran('rcmdcheck')"
 
       - name: Check
-        run: Rscript -e "rcmdcheck::rcmdcheck(args = '--no-manual', build_args = '--no-build-vignettes', error_on = 'warning', check_dir = 'check')"
+        run: Rscript -e "rcmdcheck::rcmdcheck(args = c('--no-manual', '--ignore-vignettes'), build_args = '--no-build-vignettes', error_on = 'warning', check_dir = 'check')"
 
       - name: Upload check results
         if: failure()
