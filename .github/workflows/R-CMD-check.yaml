@@ -60,7 +60,7 @@ jobs:
         run: Rscript -e "install.packages('remotes')" -e "remotes::install_deps(dependencies = TRUE)" -e "remotes::install_cran('rcmdcheck')"
 
       - name: Check
-        run: Rscript -e "rcmdcheck::rcmdcheck(args = '--no-manual', error_on = 'warning', check_dir = 'check')"
+        run: Rscript -e "rcmdcheck::rcmdcheck(args = '--no-manual', build_args = '--no-build-vignettes', error_on = 'warning', check_dir = 'check')"
 
       - name: Upload check results
         if: failure()
@@ -72,4 +72,4 @@ jobs:
       - name: Test coverage
         if: matrix.config.os == 'macOS-latest' && matrix.config.r == '3.6'
         run: |
-          Rscript -e 'covr::codecov(token = "${{secrets.CODECOV_TOKEN}}")'
+          Rscript -e "install.packages('covr')" -e 'covr::codecov(token = "${{secrets.CODECOV_TOKEN}}")'
