@@ -1,7 +1,8 @@
 ## forecast (development version)
+  * Fixed bias adjusted forecast mean for ARIMA forecasts.
 
 ## forecast 8.11 (9 February 2020)
-* The axis for `gglagplot()` have been reversed for consistency with `stats::lag.plot()`.
+  * The axis for `gglagplot()` have been reversed for consistency with `stats::lag.plot()`.
 
 ## forecast 8.10 (4 December 2019)
   * Updates to remove new CRAN errors

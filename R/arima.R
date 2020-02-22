@@ -417,7 +417,7 @@ forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[
   }
   fits <- fitted.Arima(object)
   if (!is.null(lambda) & is.null(object$constant)) { # Back-transform point forecasts and prediction intervals
-    pred$pred <- InvBoxCox(pred$pred, lambda, biasadj, var(residuals.Arima(object), na.rm = TRUE))
+    pred$pred <- InvBoxCox(pred$pred, lambda, biasadj, pred$se^2)
     if (!bootstrap) { # Bootstrapped intervals already back-transformed
       lower <- InvBoxCox(lower, lambda)
       upper <- InvBoxCox(upper, lambda)
