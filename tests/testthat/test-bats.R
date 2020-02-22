@@ -16,7 +16,6 @@ if (require(testthat)) {
   test_that("Test parallel of bats", {
     abc <- rnorm(50, 5, 1)
     skip_on_cran()
-    skip_on_travis()
     skip_if(identical(Sys.getenv("GITHUB_ACTIONS"), "true"))
     expect_gt(bats(abc, use.box.cox = TRUE, use.parallel = TRUE)$lambda, 0.999)
   })
