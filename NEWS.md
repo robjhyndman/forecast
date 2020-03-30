@@ -1,5 +1,7 @@
 ## forecast (development version)
   * Fixed bias adjusted forecast mean for ARIMA forecasts.
+  * Improved naming of `accuracy()` generic formals.
+  * Fix seasonal periods for `taylor` dataset.
 
 ## forecast 8.11 (9 February 2020)
   * The axis for `gglagplot()` have been reversed for consistency with `stats::lag.plot()`.
