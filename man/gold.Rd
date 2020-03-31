@@ -4,7 +4,9 @@
 \name{gold}
 \alias{gold}
 \title{Daily morning gold prices}
-\format{Time series data}
+\format{
+Time series data
+}
 \usage{
 gold
 }

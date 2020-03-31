@@ -4,7 +4,9 @@
 \name{gas}
 \alias{gas}
 \title{Australian monthly gas production}
-\format{Time series data}
+\format{
+Time series data
+}
 \source{
 Australian Bureau of Statistics.
 }

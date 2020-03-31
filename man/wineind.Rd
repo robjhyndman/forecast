@@ -4,7 +4,9 @@
 \name{wineind}
 \alias{wineind}
 \title{Australian total wine sales}
-\format{Time series data}
+\format{
+Time series data
+}
 \source{
 Time Series Data Library. \url{https://pkg.yangzhuoranyang.com/tsdl/}
 }

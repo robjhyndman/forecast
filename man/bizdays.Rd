@@ -24,9 +24,8 @@ days", please refer to \code{\link[timeDate]{isBizday}}.
 }
 \examples{
 
-  x <-  ts(rnorm(30), start = c(2013, 2), frequency = 12)
-  bizdays(x, FinCenter = "New York")
-
+x <- ts(rnorm(30), start = c(2013, 2), frequency = 12)
+bizdays(x, FinCenter = "New York")
 }
 \seealso{
 \code{\link[forecast]{monthdays}}

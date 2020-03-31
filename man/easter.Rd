@@ -26,8 +26,7 @@ Useful for adjusting calendar effects.
 }
 \examples{
 
-  easter(wineind, easter.mon = TRUE)
-
+easter(wineind, easter.mon = TRUE)
 }
 \author{
 Earo Wang

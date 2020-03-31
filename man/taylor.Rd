@@ -4,7 +4,9 @@
 \name{taylor}
 \alias{taylor}
 \title{Half-hourly electricity demand}
-\format{Time series data}
+\format{
+Time series data
+}
 \source{
 James W Taylor
 }

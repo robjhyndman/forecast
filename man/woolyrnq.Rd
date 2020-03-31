@@ -4,7 +4,9 @@
 \name{woolyrnq}
 \alias{woolyrnq}
 \title{Quarterly production of woollen yarn in Australia}
-\format{Time series data}
+\format{
+Time series data
+}
 \source{
 Time Series Data Library. \url{https://pkg.yangzhuoranyang.com/tsdl/}
 }

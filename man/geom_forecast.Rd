@@ -6,7 +6,11 @@
 \alias{GeomForecast}
 \alias{geom_forecast}
 \title{Forecast plot}
-\format{An object of class \code{StatForecast} (inherits from \code{Stat}, \code{ggproto}, \code{gg}) of length 3.}
+\format{
+An object of class \code{StatForecast} (inherits from \code{Stat}, \code{ggproto}, \code{gg}) of length 3.
+
+An object of class \code{GeomForecast} (inherits from \code{Geom}, \code{ggproto}, \code{gg}) of length 7.
+}
 \usage{
 StatForecast
 

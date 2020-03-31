@@ -67,7 +67,6 @@ More general theta methods are available in the
 \examples{
 nile.fcast <- thetaf(Nile)
 plot(nile.fcast)
-
 }
 \references{
 Assimakopoulos, V. and Nikolopoulos, K. (2000). The theta model:
