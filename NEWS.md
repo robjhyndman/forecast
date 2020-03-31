@@ -1,4 +1,4 @@
-## forecast (development version)
+## forecast 8.11 (21 March 2020)
   * Fixed bias adjusted forecast mean for ARIMA forecasts.
   * Improved naming of `accuracy()` generic formals.
   * Fix seasonal periods for `taylor` dataset.

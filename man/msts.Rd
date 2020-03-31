@@ -36,7 +36,7 @@ class, should also work on a msts class.
 }
 \examples{
 
-x <- msts(taylor, seasonal.periods=c(48,336), start=2000+22/52)
+x <- msts(taylor, seasonal.periods=c(2*24,2*24*7,2*24*365), start=2000+22/52)
 y <- msts(USAccDeaths, seasonal.periods=12, start=1949)
 
 }
