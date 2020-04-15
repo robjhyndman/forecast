@@ -1,4 +1,7 @@
-## forecast 8.11 (21 March 2020)
+# forecast (development version)
+  * Fixed forecasts from Arima with drift with initial NAs.
+
+## forecast 8.12 (21 March 2020)
   * Fixed bias adjusted forecast mean for ARIMA forecasts.
   * Improved naming of `accuracy()` generic formals.
   * Fix seasonal periods for `taylor` dataset.
@@ -9,7 +12,7 @@
 ## forecast 8.10 (4 December 2019)
   * Updates to remove new CRAN errors
   * Bug fixes
-  
+
 ## forecast 8.9 (22 August 2019)
   * Updates for CRAN policies on Suggests packages
   * Bug fixes
