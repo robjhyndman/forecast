@@ -78,7 +78,7 @@ period in a major financial center." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.11.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.12.0.9000</span>
       </span>
     </div>
 
@@ -152,12 +152,11 @@ days", please refer to <code><a href='https://rdrr.io/pkg/timeDate/man/calendar-
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-  <span class='no'>x</span> <span class='kw'>&lt;-</span>  <span class='fu'><a href='https://rdrr.io/r/stats/ts.html'>ts</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>30</span>), <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2013</span>, <span class='fl'>2</span>), <span class='kw'>frequency</span> <span class='kw'>=</span> <span class='fl'>12</span>)
-  <span class='fu'>bizdays</span>(<span class='no'>x</span>, <span class='kw'>FinCenter</span> <span class='kw'>=</span> <span class='st'>"New York"</span>)</div><div class='output co'>#&gt;      Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/ts.html'>ts</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>30</span>), <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2013</span>, <span class='fl'>2</span>), <span class='kw'>frequency</span> <span class='kw'>=</span> <span class='fl'>12</span>)
+<span class='fu'>bizdays</span>(<span class='no'>x</span>, <span class='kw'>FinCenter</span> <span class='kw'>=</span> <span class='st'>"New York"</span>)</div><div class='output co'>#&gt;      Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
 #&gt; 2013      19  20  22  22  20  22  22  20  23  20  21
 #&gt; 2014  21  19  21  21  21  21  22  21  21  23  19  22
-#&gt; 2015  20  19  22  21  20  22  22                    </div><div class='input'>
-</div></pre>
+#&gt; 2015  20  19  22  21  20  22  22                    </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

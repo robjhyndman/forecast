@@ -82,7 +82,7 @@ and Koehler (2006)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.11.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.12.0.9000</span>
       </span>
     </div>
 
@@ -211,18 +211,18 @@ Section 3.4 "Evaluating forecast accuracy".
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>fit1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='naive.html'>rwf</a></span>(<span class='no'>EuStockMarkets</span>[<span class='fl'>1</span>:<span class='fl'>200</span>,<span class='fl'>1</span>],<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>100</span>)
-<span class='no'>fit2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='meanf.html'>meanf</a></span>(<span class='no'>EuStockMarkets</span>[<span class='fl'>1</span>:<span class='fl'>200</span>,<span class='fl'>1</span>],<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>100</span>)
+<span class='no'>fit1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='naive.html'>rwf</a></span>(<span class='no'>EuStockMarkets</span>[<span class='fl'>1</span>:<span class='fl'>200</span>, <span class='fl'>1</span>], <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>100</span>)
+<span class='no'>fit2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='meanf.html'>meanf</a></span>(<span class='no'>EuStockMarkets</span>[<span class='fl'>1</span>:<span class='fl'>200</span>, <span class='fl'>1</span>], <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>100</span>)
 <span class='fu'>accuracy</span>(<span class='no'>fit1</span>)</div><div class='output co'>#&gt;                     ME    RMSE      MAE        MPE      MAPE MASE         ACF1
 #&gt; Training set 0.4393467 15.8461 8.959648 0.02128535 0.5533582    1 -0.007760885</div><div class='input'><span class='fu'>accuracy</span>(<span class='no'>fit2</span>)</div><div class='output co'>#&gt;                       ME     RMSE      MAE        MPE     MAPE MASE
-#&gt; Training set 6.24991e-14 57.83723 46.98108 -0.1240662 2.865357    1</div><div class='input'><span class='fu'>accuracy</span>(<span class='no'>fit1</span>,<span class='no'>EuStockMarkets</span>[<span class='fl'>201</span>:<span class='fl'>300</span>,<span class='fl'>1</span>])</div><div class='output co'>#&gt;                     ME    RMSE       MAE         MPE      MAPE    MASE
+#&gt; Training set 6.24991e-14 57.83723 46.98108 -0.1240662 2.865357    1</div><div class='input'><span class='fu'>accuracy</span>(<span class='no'>fit1</span>, <span class='no'>EuStockMarkets</span>[<span class='fl'>201</span>:<span class='fl'>300</span>, <span class='fl'>1</span>])</div><div class='output co'>#&gt;                     ME    RMSE       MAE         MPE      MAPE    MASE
 #&gt; Training set 0.4393467 15.8461  8.959648  0.02128535 0.5533582 1.00000
 #&gt; Test set     0.8900000 78.1811 63.311200 -0.16763307 3.7897316 7.06626
 #&gt;                      ACF1
 #&gt; Training set -0.007760885
-#&gt; Test set               NA</div><div class='input'><span class='fu'>accuracy</span>(<span class='no'>fit2</span>,<span class='no'>EuStockMarkets</span>[<span class='fl'>201</span>:<span class='fl'>300</span>,<span class='fl'>1</span>])</div><div class='output co'>#&gt;                        ME      RMSE       MAE        MPE     MAPE     MASE
+#&gt; Test set               NA</div><div class='input'><span class='fu'>accuracy</span>(<span class='no'>fit2</span>, <span class='no'>EuStockMarkets</span>[<span class='fl'>201</span>:<span class='fl'>300</span>, <span class='fl'>1</span>])</div><div class='output co'>#&gt;                        ME      RMSE       MAE        MPE     MAPE     MASE
 #&gt; Training set 6.249910e-14  57.83723  46.98108 -0.1240662 2.865357 1.000000
-#&gt; Test set     8.429485e+01 114.96571 105.65361  4.7004265 6.075968 2.248855</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fit1</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='no'>EuStockMarkets</span>[<span class='fl'>1</span>:<span class='fl'>300</span>,<span class='fl'>1</span>])</div><div class='img'><img src='accuracy-1.png' alt='' width='700' height='433' /></div></pre>
+#&gt; Test set     8.429485e+01 114.96571 105.65361  4.7004265 6.075968 2.248855</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fit1</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='no'>EuStockMarkets</span>[<span class='fl'>1</span>:<span class='fl'>300</span>, <span class='fl'>1</span>])</div><div class='img'><img src='accuracy-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
