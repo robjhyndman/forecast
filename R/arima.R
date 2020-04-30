@@ -65,6 +65,8 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
       num.cores <- detectCores()
     }
     cl <- makeCluster(num.cores)
+    #exporting the max.order object in the cluster
+    clusterExport(cl,c("max.order"))
     all.models <- parLapply(cl = cl, X = to.check, fun = par.all.arima)
     stopCluster(cl = cl)
 
