@@ -129,7 +129,12 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
 
   # Trim initial missing values
   x <- subset(x, start=firstnonmiss)
-  xreg <- subset(ts(xreg), start=firstnonmiss)
+  if(!is.null(xreg)) {
+    if(!is.numeric(xreg))
+      stop("xreg should be a numeric matrix or a numeric vector")
+    xreg <- as.matrix(xreg)
+    xreg <- xreg[firstnonmiss:NROW(xreg),,drop=FALSE]
+  }
 
   # Check for constant data
   if (is.constant(x)) {
@@ -185,9 +190,6 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
 
   # Check xreg and do regression if necessary
   if (!is.null(xreg)) {
-    if(!is.numeric(xreg))
-      stop("xreg should be a numeric matrix or a numeric vector")
-    xreg <- as.matrix(xreg)
     if (is.null(colnames(xreg))) {
       colnames(xreg) <- if (ncol(xreg) == 1) "xreg" else paste("xreg", 1:ncol(xreg), sep = "")
     }
