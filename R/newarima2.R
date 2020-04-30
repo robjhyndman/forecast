@@ -129,7 +129,9 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
 
   # Trim initial missing values
   x <- subset(x, start=firstnonmiss)
-  xreg <- subset(ts(xreg), start=firstnonmiss)
+  if (!is.null(xreg)){
+    xreg <- subset(ts(xreg), start=firstnonmiss)
+  }
 
   # Check for constant data
   if (is.constant(x)) {
