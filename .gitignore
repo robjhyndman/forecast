@@ -14,3 +14,4 @@ vignettes/*_cache
 doc/*.R
 doc/*.Rmd
 Meta
+docs/*
