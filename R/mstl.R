@@ -302,7 +302,7 @@ forecast.stl <- function(object, method = c("ets", "arima", "naive", "rwdrift"),
     lastseas <- rowSums(seascomp)
     xdata <- object[, "Data"]
     seascols <- grep("Seasonal", colnames(object))
-    allseas <- rowSums(object[, seascols, drop = FALSE])
+    allseas <- rowSumsTS(object[, seascols, drop = FALSE])
     series <- NULL
   }
   else if ("stl" %in% class(object)) {
@@ -358,6 +358,25 @@ forecast.mstl <- function(object, method = c("ets", "arima", "naive", "rwdrift")
     forecastfunction = forecastfunction, h = h, level = level, fan = fan, lambda = lambda,
     biasadj = biasadj, xreg = xreg, newxreg = newxreg, allow.multiplicative.trend = allow.multiplicative.trend, ...
   )
+}
+
+
+#' rowSums for mts objects
+#'
+#' Applies rowSums and returns ts with same tsp attributes as input. This
+#' allows the result to be added to other time series with different lengths
+#' but overlapping time indexes.
+#' @param mts a matrix or multivariate time series
+#' @result a vector of rowsums which is a ts if the \code{mts} is a ts
+rowSumsTS <- function (mts) {
+  the_tsp <- tsp(mts)
+  ret <- rowSums(mts)
+  if (is.null(the_tsp)){
+    ret
+  } else {
+    tsp(ret) <- the_tsp
+    as.ts(ret)
+  }
 }
 
 # Function takes time series, does STL decomposition, and fits a model to seasonally adjusted series
@@ -453,7 +472,7 @@ stlm <- function(y, s.window = 13, robust = FALSE, method = c("ets", "arima"), m
 
   # Fitted values and residuals
   seascols <- grep("Seasonal", colnames(stld))
-  allseas <- rowSums(stld[, seascols, drop = FALSE])
+  allseas <- rowSumsTS(stld[, seascols, drop = FALSE])
 
   fits <- fitted(fit) + allseas
   res <- residuals(fit)
@@ -512,7 +531,7 @@ forecast.stlm <- function(object, h = 2 * object$m, level = c(80, 95), fan = FAL
   lastseas <- rowSums(seascomp)
   xdata <- object$stl[, "Data"]
   seascols <- grep("Seasonal", colnames(object$stl))
-  allseas <- rowSums(object$stl[, seascols, drop = FALSE])
+  allseas <- rowSumsTS(object$stl[, seascols, drop = FALSE])
   series <- NULL
 
   #  m <- frequency(object$stl$time.series)
