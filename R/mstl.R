@@ -361,13 +361,13 @@ forecast.mstl <- function(object, method = c("ets", "arima", "naive", "rwdrift")
 }
 
 
-#' rowSums for mts objects
-#'
-#' Applies rowSums and returns ts with same tsp attributes as input. This
-#' allows the result to be added to other time series with different lengths
-#' but overlapping time indexes.
-#' @param mts a matrix or multivariate time series
-#' @result a vector of rowsums which is a ts if the \code{mts} is a ts
+# rowSums for mts objects
+#
+# Applies rowSums and returns ts with same tsp attributes as input. This
+# allows the result to be added to other time series with different lengths
+# but overlapping time indexes.
+# param mts a matrix or multivariate time series
+# return a vector of rowsums which is a ts if the \code{mts} is a ts
 rowSumsTS <- function (mts) {
   the_tsp <- tsp(mts)
   ret <- rowSums(mts)
