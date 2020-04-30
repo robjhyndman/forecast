@@ -253,12 +253,12 @@ Springer-Verlag. <a href='http://www.exponentialsmoothing.net'>http://www.expone
     <pre class="examples"><div class='input'>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='no'>fcast</span> <span class='kw'>&lt;-</span> <span class='fu'>dshw</span>(<span class='no'>taylor</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fcast</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>fcast</span>)
 
 <span class='no'>t</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>,<span class='fl'>5</span>,<span class='kw'>by</span><span class='kw'>=</span><span class='fl'>1</span>/<span class='fl'>20</span>)
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>sin</a></span>(<span class='fl'>2</span>*<span class='no'>pi</span>*<span class='no'>t</span>) + <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>cos</a></span>(<span class='fl'>2</span>*<span class='no'>pi</span>*<span class='no'>t</span>*<span class='fl'>4</span>) + <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>t</span>),<span class='fl'>0</span>,<span class='fl'>.1</span>))
 <span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>dshw</span>(<span class='no'>x</span>,<span class='fl'>20</span>,<span class='fl'>5</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fit</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>fit</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

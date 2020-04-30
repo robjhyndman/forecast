@@ -240,11 +240,11 @@ residuals to ameliorate this, see examples.</p>
     <pre class="examples"><div class='input'><span class='co'>## Fit &amp; forecast model</span>
 <span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='nnetar.html'>nnetar</a></span>(<span class='no'>USAccDeaths</span>, <span class='kw'>size</span><span class='kw'>=</span><span class='fl'>2</span>)
 <span class='no'>fcast</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>, <span class='kw'>h</span><span class='kw'>=</span><span class='fl'>20</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fcast</span>)</div><div class='img'><img src='forecast.nnetar-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>fcast</span>)</div><div class='img'><img src='forecast.nnetar-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'>## Include prediction intervals in forecast</span>
 <span class='no'>fcast2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>, <span class='kw'>h</span><span class='kw'>=</span><span class='fl'>20</span>, <span class='kw'>PI</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>npaths</span><span class='kw'>=</span><span class='fl'>100</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fcast2</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>fcast2</span>)
 
 <span class='co'>## Set up out-of-sample innovations using cross-validation</span>
 <span class='no'>fit_cv</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='CVar.html'>CVar</a></span>(<span class='no'>USAccDeaths</span>,  <span class='kw'>size</span><span class='kw'>=</span><span class='fl'>2</span>)
@@ -252,7 +252,7 @@ residuals to ameliorate this, see examples.</p>
 <span class='no'>myinnovs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>20</span>*<span class='fl'>100</span>, <span class='kw'>mean</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>sd</span><span class='kw'>=</span><span class='no'>res_sd</span>)
 <span class='co'>## Forecast using new innovations</span>
 <span class='no'>fcast3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>, <span class='kw'>h</span><span class='kw'>=</span><span class='fl'>20</span>, <span class='kw'>PI</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>npaths</span><span class='kw'>=</span><span class='fl'>100</span>, <span class='kw'>innov</span><span class='kw'>=</span><span class='no'>myinnovs</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fcast3</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>fcast3</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

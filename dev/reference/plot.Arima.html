@@ -125,7 +125,7 @@ roots outside the unit circle are shown in red.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for Arima</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(
   <span class='no'>x</span>,
   <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"both"</span>, <span class='st'>"ar"</span>, <span class='st'>"ma"</span>),
   <span class='no'>main</span>,
@@ -135,7 +135,7 @@ roots outside the unit circle are shown in red.</p>
 )
 
 <span class='co'># S3 method for ar</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='no'>main</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"Real"</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"Imaginary"</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='no'>main</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"Real"</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"Imaginary"</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for Arima</span>
 <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>object</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"both"</span>, <span class='st'>"ar"</span>, <span class='st'>"ma"</span>), <span class='no'>...</span>)
@@ -193,10 +193,10 @@ graphics (S3 method consistency).</p></td>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
 
 <span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Arima.html'>Arima</a></span>(<span class='no'>WWWusage</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>0</span>))
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fit</span>)</div><div class='img'><img src='plot.Arima-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>fit</span>)</div><div class='img'><img src='plot.Arima-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>fit</span>)</div><div class='img'><img src='plot.Arima-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>fit</span>)</div><div class='img'><img src='plot.Arima-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Arima.html'>Arima</a></span>(<span class='no'>woolyrnq</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>0</span>, <span class='fl'>0</span>), <span class='kw'>seasonal</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fit</span>)</div><div class='img'><img src='plot.Arima-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>fit</span>)</div><div class='img'><img src='plot.Arima-4.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/ar.ols.html'>ar.ols</a></span>(<span class='no'>gold</span>[<span class='fl'>1</span>:<span class='fl'>61</span>]))</div><div class='img'><img src='plot.Arima-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/ar.ols.html'>ar.ols</a></span>(<span class='no'>gold</span>[<span class='fl'>1</span>:<span class='fl'>61</span>]))</div><div class='img'><img src='plot.Arima-6.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>fit</span>)</div><div class='img'><img src='plot.Arima-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>fit</span>)</div><div class='img'><img src='plot.Arima-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/ar.ols.html'>ar.ols</a></span>(<span class='no'>gold</span>[<span class='fl'>1</span>:<span class='fl'>61</span>]))</div><div class='img'><img src='plot.Arima-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/ar.ols.html'>ar.ols</a></span>(<span class='no'>gold</span>[<span class='fl'>1</span>:<span class='fl'>61</span>]))</div><div class='img'><img src='plot.Arima-6.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
