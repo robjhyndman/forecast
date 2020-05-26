@@ -53,7 +53,6 @@ selected if the seasonal strength (Wang, Smith & Hyndman, 2006) exceeds 0.64
 }
 \examples{
 nsdiffs(AirPassengers)
-
 }
 \references{
 Wang, X, Smith, KA, Hyndman, RJ (2006) "Characteristic-based clustering

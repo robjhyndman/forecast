@@ -48,8 +48,7 @@ number of differences required to fail the test at the level \code{alpha}.
 }
 \examples{
 ndiffs(WWWusage)
-ndiffs(diff(log(AirPassengers),12))
-
+ndiffs(diff(log(AirPassengers), 12))
 }
 \references{
 Dickey DA and Fuller WA (1979), "Distribution of the Estimators for
