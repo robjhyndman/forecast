@@ -261,7 +261,11 @@ From %s(): %s
     x <- diff(x, lag=frequency(x))
     if(is.constant(x))
       return(D)
-    dodiff <- runTests(x, test, alpha)
+    if (length(x) >= 2 * frequency(x) & D < max.D) {
+      dodiff <- runTests(x, test, alpha)
+    } else {
+      dodiff <- FALSE
+    }
   }
   return(D)
 }
