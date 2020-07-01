@@ -1020,9 +1020,9 @@ gglagplot <- function(x, lags=ifelse(frequency(x) > 9, 16, 9),
           data,
           data.frame(
             lagnum = 1:(n - lagi),
-            freqcur = ifelse(rep(seasonal, n - lagi), linecol[1:(n - lagi)], 1:(n - lagi)),
-            orig = x[1:(n - lagi), i],
-            lagged = x[(lagi + 1):n, i],
+            freqcur = if(seasonal) linecol[(lagi + 1):n] else (lagi + 1):n,
+            orig = x[(lagi + 1):n, i],
+            lagged = x[1:(n - lagi), i],
             lagVal = rep(lagi, n - lagi),
             series = factor(rep(sname, n - lagi))
           )
@@ -1034,7 +1034,7 @@ gglagplot <- function(x, lags=ifelse(frequency(x) > 9, 16, 9),
     }
 
     # Initialise ggplot object
-    p <- ggplot2::ggplot(ggplot2::aes_(x = ~orig, y = ~lagged), data = data)
+    p <- ggplot2::ggplot(ggplot2::aes_(x = ~lagged, y = ~orig), data = data)
 
     if (diag) {
       p <- p + ggplot2::geom_abline(colour = diag.col, linetype = "dashed")
