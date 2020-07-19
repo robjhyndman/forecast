@@ -31,14 +31,15 @@ lagwalk <- function(y, lag=1, drift=FALSE, lambda=NULL, biasadj=FALSE) {
     b.se <- fit$coefficients[1,2]
     sigma <- fit$sigma
     fitted <- fitted + b
+    res <- y - fitted
     method <- "Lag walk with drift"
   }
   else{
+    res <- y - fitted
     b <- b.se <- 0
-    sigma <- sd(y-fitted, na.rm=TRUE)
+    sigma <- sqrt(mean(res^2, na.rm=TRUE))
     method <- "Lag walk"
   }
-  res <- y - fitted
 
   if (!is.null(lambda)) {
     fitted <- InvBoxCox(fitted, lambda, biasadj, var(res))
