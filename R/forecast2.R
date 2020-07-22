@@ -19,7 +19,7 @@
 #' @param npaths Number of bootstrapped sample paths to use if \code{bootstrap==TRUE}.
 #' @param x Deprecated. Included for backwards compatibility.
 #' @inheritParams forecast
-#' 
+#'
 #' @return An object of class "\code{forecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the
@@ -121,8 +121,6 @@ meanf <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALS
 }
 
 
-
-
 #' Box Cox Transformation
 #'
 #' BoxCox() returns a transformation of the input variable using a Box-Cox
@@ -134,7 +132,7 @@ meanf <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALS
 #' \deqn{f_0(x)=\log(x)}{f(x;0)=log(x)}.
 #'
 #' @param x a numeric vector or time series of class \code{ts}.
-#' @param lambda transformation parameter. If \code{lambda = "auto"}, then 
+#' @param lambda transformation parameter. If \code{lambda = "auto"}, then
 #' the transformation parameter lambda is chosen using BoxCox.lambda.
 #' @param biasadj Use adjusted back-transformed mean for Box-Cox
 #' transformations. If transformed data is used to produce forecasts and fitted values,
@@ -272,7 +270,7 @@ InvBoxCoxf <- function(x=NULL, fvar=NULL, lambda=NULL) {
 #' fan plots.
 #' @param ... Other arguments.
 #' @inheritParams forecast
-#' 
+#'
 #' @return An object of class "\code{forecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the
@@ -330,8 +328,11 @@ forecast.StructTS <- function(object, h=ifelse(object$coef["epsilon"] > 1e-10, 2
     method <- "Local level structural model"
   }
 
-  fits <- ts(c(x - residuals(object)))
-  tsp(fits) <- tsp(x)
+  # Compute fitted values and residuals
+  sigma2 <- c(predict(object, n.ahead=1)$se)
+  res <- residuals(object) * sigma2
+  fits <- x - res
+
   if (!is.null(lambda)) {
     fits <- InvBoxCox(fits, lambda)
     x <- InvBoxCox(x, lambda)
@@ -340,11 +341,10 @@ forecast.StructTS <- function(object, h=ifelse(object$coef["epsilon"] > 1e-10, 2
     upper <- InvBoxCox(upper, lambda)
   }
 
-
   return(structure(
     list(
       method = method, model = object, level = level, mean = pred$pred,
-      lower = lower, upper = upper, x = x, series = object$series, fitted = fits, residuals = x-fits
+      lower = lower, upper = upper, x = x, series = object$series, fitted = fits, residuals = res
     ),
     class = "forecast"
   ))
@@ -369,7 +369,7 @@ forecast.StructTS <- function(object, h=ifelse(object$coef["epsilon"] > 1e-10, 2
 #' fan plots.
 #' @param ... Other arguments.
 #' @inheritParams forecast
-#' 
+#'
 #' @return An object of class "\code{forecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the
@@ -461,8 +461,6 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x) > 1, 2 * f
 
 
 ## CROSTON
-
-
 
 #' Forecasts for intermittent demand using Croston's method
 #'
