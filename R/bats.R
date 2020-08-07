@@ -89,6 +89,9 @@ bats <- function(y, use.box.cox = NULL, use.trend = NULL, use.damped.trend = NUL
       y <- as.ts(y)
       seasonal.periods <- 1
     }
+    seasonal.periods <- seasonal.periods[seasonal.periods < length(y)]
+    if(length(seasonal.periods) == 0L)
+      seasonal.periods <- 1
   }
   else {
     # Add ts attributes
@@ -100,6 +103,7 @@ bats <- function(y, use.box.cox = NULL, use.trend = NULL, use.damped.trend = NUL
   if (all(seasonal.periods == 1)) {
     seasonal.periods <- NULL
   }
+
 
   ny <- length(y)
   y <- na.contiguous(y)
@@ -170,7 +174,6 @@ bats <- function(y, use.box.cox = NULL, use.trend = NULL, use.damped.trend = NUL
   }
 
   y <- as.numeric(y)
-  best.aic <- NULL
 
   if (use.parallel) {
     # Set up the control array
@@ -210,28 +213,31 @@ bats <- function(y, use.box.cox = NULL, use.trend = NULL, use.damped.trend = NUL
     best.number <- which.min(aics)
     best.model <- models.list[[best.number]]
   } else {
+    best.aic <- Inf
+    best.model <- NULL
     for (box.cox in use.box.cox) {
       for (trend in use.trend) {
         for (damping in use.damped.trend) {
-          current.model <- filterSpecifics(
-            y,
-            box.cox = box.cox, trend = trend, damping = damping,
-            seasonal.periods = seasonal.periods, use.arma.errors = use.arma.errors,
-            init.box.cox = init.box.cox, bc.lower = bc.lower, bc.upper = bc.upper, biasadj = biasadj, ...
+          current.model <- try(
+            filterSpecifics(y,
+              box.cox = box.cox, trend = trend, damping = damping,
+              seasonal.periods = seasonal.periods, use.arma.errors = use.arma.errors,
+              init.box.cox = init.box.cox, bc.lower = bc.lower, bc.upper = bc.upper, biasadj = biasadj, ...
+            ),
+            silent=TRUE
           )
-          if (!is.null(best.aic)) {
+          if(!("try-error" %in% class(current.model))) {
             if (current.model$AIC < best.aic) {
-              best.aic <- current.model$AIC
-              best.model <- current.model
+                best.aic <- current.model$AIC
+                best.model <- current.model
             }
-          } else {
-            best.model <- current.model
-            best.aic <- best.model$AIC
           }
         }
       }
     }
   }
+  if(is.null(best.model))
+    stop("Unable to fit a model")
   best.model$call <- match.call()
   if (best.model$optim.return.code != 0) {
     warning("optim() did not converge.")
