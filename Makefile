@@ -9,7 +9,7 @@ PKG_NAME=$(shell grep -i ^package DESCRIPTION | cut -d : -d \  -f 2)
 all: install
 
 check:
-	Rscript -e "devtools::check(document=TRUE)"
+	Rscript -e "rcmdcheck::rcmdcheck()"
 
 build:
 	Rscript -e "devtools::build()"
