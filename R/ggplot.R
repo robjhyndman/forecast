@@ -428,14 +428,14 @@ autoplot.decomposed.ts <- function(object, labels=NULL, range.bars = NULL, ...) 
     }
 
     if (is.null(labels)) {
-      labels <- c("seasonal", "trend", "remainder")
+      labels <- c("trend", "seasonal", "remainder")
     }
 
     cn <- c("data", labels)
 
     data <- data.frame(
       datetime = rep(time(object$x), 4),
-      y = c(object$x, object$seasonal, object$trend, object$random),
+      y = c(object$x, object$trend, object$seasonal, object$random),
       parts = factor(rep(cn, each = NROW(object$x)), levels = cn)
     )
 
@@ -450,7 +450,8 @@ autoplot.decomposed.ts <- function(object, labels=NULL, range.bars = NULL, ...) 
       data = subset(data, data$parts == cn[4]), lineend = "butt", na.rm = TRUE
     )
     p <- p + ggplot2::facet_grid("parts ~ .", scales = "free_y", switch = "y")
-    p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data = data.frame(y = int, parts = cn[4]))
+    p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y),
+                                 data = data.frame(y = int, parts = factor(cn[4], levels = cn)))
 
     if (is.null(range.bars)) {
       range.bars <- object$type == "additive"
