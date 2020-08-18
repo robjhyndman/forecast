@@ -465,7 +465,8 @@ autoplot.decomposed.ts <- function(object, labels=NULL, range.bars = NULL, ...) 
       barpos <- data.frame(
         left = xranges[2] + barwidth, right = xranges[2] + barwidth * 2,
         top = barmid + barlength / 2, bottom = barmid - barlength / 2,
-        parts = colnames(yranges), datetime = xranges[2], y = barmid
+        parts = factor(colnames(yranges), levels = cn),
+        datetime = xranges[2], y = barmid
       )
       p <- p + ggplot2::geom_rect(ggplot2::aes_(xmin = ~left, xmax = ~right, ymax = ~top, ymin = ~bottom), data = barpos, fill = "gray75", colour = "black", size = 1 / 3)
     }
@@ -523,7 +524,8 @@ autoplot.ets <- function(object, range.bars = NULL, ...) {
       barpos <- data.frame(
         left = xranges[2] + barwidth, right = xranges[2] + barwidth * 2,
         top = barmid + barlength / 2, bottom = barmid - barlength / 2,
-        parts = colnames(yranges), datetime = xranges[2], y = barmid
+        parts = factor(colnames(yranges), levels = cn),
+        datetime = xranges[2], y = barmid
       )
       p <- p + ggplot2::geom_rect(ggplot2::aes_(xmin = ~left, xmax = ~right, ymax = ~top, ymin = ~bottom), data = barpos, fill = "gray75", colour = "black", size = 1 / 3)
     }
@@ -569,7 +571,8 @@ autoplot.bats <- function(object, range.bars = FALSE, ...) {
     barpos <- data.frame(
       left = xranges[2] + barwidth, right = xranges[2] + barwidth * 2,
       top = barmid + barlength / 2, bottom = barmid - barlength / 2,
-      parts = colnames(yranges), datetime = xranges[2], y = barmid
+      parts = factor(colnames(yranges), levels = cn),
+      datetime = xranges[2], y = barmid
     )
     p <- p + ggplot2::geom_rect(ggplot2::aes_(xmin = ~left, xmax = ~right, ymax = ~top, ymin = ~bottom), data = barpos, fill = "gray75", colour = "black", size = 1 / 3)
   }
@@ -1487,14 +1490,16 @@ autoplot.stl <- function(object, labels = NULL, range.bars = TRUE, ...) {
       barpos <- data.frame(
         left = xranges[2] + barwidth, right = xranges[2] + barwidth * 2,
         top = barmid + barlength / 2, bottom = barmid - barlength / 2,
-        parts = colnames(yranges), datetime = xranges[2], y = barmid
+        parts = factor(colnames(yranges), levels = cn),
+        datetime = xranges[2], y = barmid
       )
       p <- p + ggplot2::geom_rect(ggplot2::aes_(xmin = ~left, xmax = ~right, ymax = ~top, ymin = ~bottom), data = barpos, fill = "gray75", colour = "black", size = 1 / 3)
     }
 
     # Remainder
     p <- p + ggplot2::facet_grid("parts ~ .", scales = "free_y", switch = "y")
-    p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data = data.frame(y = 0, parts = cn[4]))
+    p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y),
+                                 data = data.frame(y = 0, parts = factor(cn[4], levels = cn)))
 
     # Add axis labels
     p <- p + ggAddExtras(xlab = "Time", ylab = "")
@@ -1546,7 +1551,8 @@ autoplot.StructTS <- function(object, labels = NULL, range.bars = TRUE, ...) {
       barpos <- data.frame(
         left = xranges[2] + barwidth, right = xranges[2] + barwidth * 2,
         top = barmid + barlength / 2, bottom = barmid - barlength / 2,
-        parts = colnames(yranges), datetime = xranges[2], y = barmid
+        parts = factor(colnames(yranges), levels = cn),
+        datetime = xranges[2], y = barmid
       )
       p <- p + ggplot2::geom_rect(ggplot2::aes_(xmin = ~left, xmax = ~right, ymax = ~top, ymin = ~bottom), data = barpos, fill = "gray75", colour = "black", size = 1 / 3)
     }
@@ -1624,7 +1630,8 @@ autoplot.seas <- function(object, labels = NULL, range.bars = NULL, ...) {
       data = subset(data, data$parts == cn[4]), lineend = "butt"
     )
     p <- p + ggplot2::facet_grid("parts ~ .", scales = "free_y", switch = "y")
-    p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y), data = data.frame(y = 1, parts = cn[4]))
+    p <- p + ggplot2::geom_hline(ggplot2::aes_(yintercept = ~y),
+                                 data = data.frame(y = int, parts = factor(cn[4], levels = cn)))
 
     # Rangebars
     if (is.null(range.bars)) {
@@ -1639,7 +1646,8 @@ autoplot.seas <- function(object, labels = NULL, range.bars = NULL, ...) {
       barpos <- data.frame(
         left = xranges[2] + barwidth, right = xranges[2] + barwidth * 2,
         top = barmid + barlength / 2, bottom = barmid - barlength / 2,
-        parts = colnames(yranges), datetime = xranges[2], y = barmid
+        parts = factor(colnames(yranges), levels = cn),
+        datetime = xranges[2], y = barmid
       )
       p <- p + ggplot2::geom_rect(ggplot2::aes_(xmin = ~left, xmax = ~right, ymax = ~top, ymin = ~bottom), data = barpos, fill = "gray75", colour = "black", size = 1 / 3)
     }
