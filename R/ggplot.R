@@ -1610,15 +1610,20 @@ autoplot.seas <- function(object, labels = NULL, range.bars = NULL, ...) {
       stop("autoplot.seas requires a seas object")
     }
     if (is.null(labels)) {
-      labels <- c("seasonal", "trend", "remainder")
+      labels <- c("trend", "seasonal", "remainder")
     }
 
-    data <- cbind(object$x, object$data[, c("seasonal", "trend", "irregular")])
+    data <- cbind(object$x, object$data[, c("trend", "seasonal", "irregular")])
     cn <- c("data", labels)
     data <- data.frame(
       datetime = rep(time(data), NCOL(data)), y = c(data),
       parts = factor(rep(cn, each = NROW(data)), levels = cn)
     )
+
+    # Is it additive or multiplicative?
+    freq <- frequency(seasonal(object))
+    sum_first_year <- sum(seasonal(object)[seq(freq)])
+    int <- as.integer(sum_first_year > 0.5) # Closer to 1 than 0.
 
     # Initialise ggplot object
     p <- ggplot2::ggplot(ggplot2::aes_(x = ~datetime, y = ~y), data = data)
@@ -1626,7 +1631,7 @@ autoplot.seas <- function(object, labels = NULL, range.bars = NULL, ...) {
     # Add data
     p <- p + ggplot2::geom_line(ggplot2::aes_(x = ~datetime, y = ~y), data = subset(data, data$parts != cn[4]), na.rm = TRUE)
     p <- p + ggplot2::geom_segment(
-      ggplot2::aes_(x = ~datetime, xend = ~datetime, y = 1, yend = ~y),
+      ggplot2::aes_(x = ~datetime, xend = ~datetime, y = int, yend = ~y),
       data = subset(data, data$parts == cn[4]), lineend = "butt"
     )
     p <- p + ggplot2::facet_grid("parts ~ .", scales = "free_y", switch = "y")
