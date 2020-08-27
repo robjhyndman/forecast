@@ -5,13 +5,15 @@ if (require(testthat)) {
   arfimabc <- arfima(WWWusage, estim = "mle", lambda = 0.75, biasadj = FALSE)
   arfimabc2 <- arfima(WWWusage, estim = "mle", lambda = 0.75, biasadj = TRUE)
 
-  test_that("test fitted() and residuals().", {
+  test_that("test accuracy(), fitted(), and residuals().", {
     expect_true(all(arimaorder(arfima1) == arimaorder(arfima2)))
     fitarfima <- fitted(arfima1)
     residarfima <- residuals(arfima2)
     expect_true(length(fitarfima) == length(residarfima))
     expect_true(all(getResponse(arfima1) == WWWusage))
     expect_false(identical(arfimabc$fitted, arfimabc2$fitted))
+    expect_error(accuracy(arfima1), NA)
+    expect_equal(mean(residuals(arfima1)), accuracy(arfima1)[, "ME"])
   })
 
   test_that("test forecast.fracdiff()", {
