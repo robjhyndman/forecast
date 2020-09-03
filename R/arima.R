@@ -586,7 +586,7 @@ fitted.Arima <- function(object, h = 1, ...) {
       return(x - object$residuals)
     }
     else {
-      fits <- InvBoxCox(BoxCox(x, object$lambda) - object$residuals, object$lambda, NULL, var(object$residuals))
+      fits <- InvBoxCox(BoxCox(x, object$lambda) - object$residuals, object$lambda, NULL, var(object$residuals, na.rm=TRUE))
       return(fits)
     }
   }
