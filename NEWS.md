@@ -1,7 +1,8 @@
 # forecast (development version)
   * Fixed forecasts from Arima with drift with initial NAs.
-  * Fixed season colours in gglagplot() to match y-axis (original data).
+  * Fixed season colours in `gglagplot()` to match y-axis (original data).
   * Fixed facet order for classical decomposition `autoplot()`
+  * Fixed `summary()` erroring for `tslm()` models containing NA values.
 
 ## forecast 8.12 (21 March 2020)
   * Fixed bias adjusted forecast mean for ARIMA forecasts.

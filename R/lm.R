@@ -476,6 +476,14 @@ forecast.lm <- function(object, newdata, h=10, level=c(80, 95), fan=FALSE, lambd
   return(structure(fcast, class = "forecast"))
 }
 
+#' @export
+summary.tslm <- function(object, ...) {
+  # Remove NA from object structure as summary.lm() expects (#836)
+  object$residuals <- na.omit(as.numeric(object$residuals))
+  object$fitted.values <- na.omit(as.numeric(object$fitted.values))
+  NextMethod()
+}
+
 # Compute cross-validation and information criteria from a linear model
 
 
