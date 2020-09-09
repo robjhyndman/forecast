@@ -484,6 +484,9 @@ summary.tslm <- function(object, ...) {
   # Remove NA from object structure as summary.lm() expects (#836)
   object$residuals <- na.omit(as.numeric(object$residuals))
   object$fitted.values <- na.omit(as.numeric(object$fitted.values))
+  if(!is.null(object$lambda)) {
+    object$fitted.values <- BoxCox(object$fitted.values, object$lambda)
+  }
   NextMethod()
 }
 
