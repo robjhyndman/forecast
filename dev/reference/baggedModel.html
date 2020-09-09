@@ -125,9 +125,9 @@
     <p>The bagged model forecasting method.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>baggedModel</span>(<span class='no'>y</span>, <span class='kw'>bootstrapped_series</span> <span class='kw'>=</span> <span class='fu'><a href='bld.mbb.bootstrap.html'>bld.mbb.bootstrap</a></span>(<span class='no'>y</span>, <span class='fl'>100</span>), <span class='kw'>fn</span> <span class='kw'>=</span> <span class='no'>ets</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>baggedModel</span>(<span class='kw'>y</span>, bootstrapped_series = <span class='fu'><a href='bld.mbb.bootstrap.html'>bld.mbb.bootstrap</a></span>(<span class='kw'>y</span>, <span class='fl'>100</span>), fn = <span class='kw'>ets</span>, <span class='kw'>...</span>)
 
-<span class='fu'>baggedETS</span>(<span class='no'>y</span>, <span class='kw'>bootstrapped_series</span> <span class='kw'>=</span> <span class='fu'><a href='bld.mbb.bootstrap.html'>bld.mbb.bootstrap</a></span>(<span class='no'>y</span>, <span class='fl'>100</span>), <span class='no'>...</span>)</pre>
+<span class='fu'>baggedETS</span>(<span class='kw'>y</span>, bootstrapped_series = <span class='fu'><a href='bld.mbb.bootstrap.html'>bld.mbb.bootstrap</a></span>(<span class='kw'>y</span>, <span class='fl'>100</span>), <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -181,11 +181,15 @@ deprecated in the future.</p>
     <p>Bergmeir, C., R. J. Hyndman, and J. M. Benitez (2016). Bagging
 Exponential Smoothing Methods using STL Decomposition and Box-Cox
 Transformation. International Journal of Forecasting 32, 303-312.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Christoph Bergmeir, Fotios Petropoulos</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>baggedModel</span>(<span class='no'>WWWusage</span>)
-<span class='no'>fcast</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>fcast</span>)</div><div class='img'><img src='baggedModel-1.png' alt='' width='700' height='433' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='kw'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>baggedModel</span>(<span class='kw'>WWWusage</span>)
+<span class='kw'>fcast</span> <span class='op'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>fit</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>fcast</span>)
+</div><div class='img'><img src='baggedModel-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -202,7 +206,7 @@ Transformation. International Journal of Forecasting 32, 303-312.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

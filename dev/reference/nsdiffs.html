@@ -130,12 +130,12 @@ necessary.</p>
     </div>
 
     <pre class="usage"><span class='fu'>nsdiffs</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
-  <span class='kw'>m</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='no'>x</span>),
-  <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"seas"</span>, <span class='st'>"ocsb"</span>, <span class='st'>"hegy"</span>, <span class='st'>"ch"</span>),
-  <span class='kw'>max.D</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='no'>...</span>
+  <span class='kw'>x</span>,
+  alpha = <span class='fl'>0.05</span>,
+  m = <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='kw'>x</span>),
+  test = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"seas"</span>, <span class='st'>"ocsb"</span>, <span class='st'>"hegy"</span>, <span class='st'>"ch"</span>),
+  max.D = <span class='fl'>1</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -202,9 +202,13 @@ and cointegration.", <em>Journal of Econometrics</em> <b>44</b>(1), pp. 215-238.
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='auto.arima.html'>auto.arima</a></code>, <code><a href='ndiffs.html'>ndiffs</a></code>, <code><a href='ocsb.test.html'>ocsb.test</a></code>, <code><a href='https://rdrr.io/pkg/uroot/man/hegy-test.html'>hegy.test</a></code>, and <code><a href='https://rdrr.io/pkg/uroot/man/ch-test.html'>ch.test</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rob J Hyndman, Slava Razbash and Mitchell O'Hara-Wild</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>nsdiffs</span>(<span class='no'>AirPassengers</span>)</div><div class='output co'>#&gt; [1] 1</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>nsdiffs</span>(<span class='kw'>AirPassengers</span>)
+</div><div class='output co'>#&gt; [1] 1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -220,7 +224,7 @@ and cointegration.", <em>Journal of Econometrics</em> <b>44</b>(1), pp. 215-238.
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

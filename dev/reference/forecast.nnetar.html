@@ -129,17 +129,17 @@ models.</p>
 
     <pre class="usage"><span class='co'># S3 method for nnetar</span>
 <span class='fu'><a href='forecast.html'>forecast</a></span>(
-  <span class='no'>object</span>,
-  <span class='kw'>h</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>object</span>$<span class='no'>m</span> <span class='kw'>&gt;</span> <span class='fl'>1</span>, <span class='fl'>2</span> * <span class='no'>object</span>$<span class='no'>m</span>, <span class='fl'>10</span>),
-  <span class='kw'>PI</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
-  <span class='kw'>fan</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>xreg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='no'>object</span>$<span class='no'>lambda</span>,
-  <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>npaths</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>innov</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
+  <span class='kw'>object</span>,
+  h = <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='kw'>object</span><span class='op'>$</span><span class='kw'>m</span> <span class='op'>&gt;</span> <span class='fl'>1</span>, <span class='fl'>2</span> <span class='op'>*</span> <span class='kw'>object</span><span class='op'>$</span><span class='kw'>m</span>, <span class='fl'>10</span>),
+  PI = <span class='fl'>FALSE</span>,
+  level = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
+  fan = <span class='fl'>FALSE</span>,
+  xreg = <span class='kw'>NULL</span>,
+  lambda = <span class='kw'>object</span><span class='op'>$</span><span class='kw'>lambda</span>,
+  bootstrap = <span class='fl'>FALSE</span>,
+  npaths = <span class='fl'>1000</span>,
+  innov = <span class='kw'>NULL</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -238,25 +238,31 @@ residuals to ameliorate this, see examples.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='nnetar.html'>nnetar</a></code>.</p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rob J Hyndman and Gabriel Caceres</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Fit &amp; forecast model</span>
-<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='nnetar.html'>nnetar</a></span>(<span class='no'>USAccDeaths</span>, <span class='kw'>size</span><span class='kw'>=</span><span class='fl'>2</span>)
-<span class='no'>fcast</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>, <span class='kw'>h</span><span class='kw'>=</span><span class='fl'>20</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>fcast</span>)</div><div class='img'><img src='forecast.nnetar-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='nnetar.html'>nnetar</a></span>(<span class='kw'>USAccDeaths</span>, size=<span class='fl'>2</span>)
+<span class='kw'>fcast</span> <span class='op'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>fit</span>, h=<span class='fl'>20</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>fcast</span>)
+</div><div class='img'><img src='forecast.nnetar-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'>## Include prediction intervals in forecast</span>
-<span class='no'>fcast2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>, <span class='kw'>h</span><span class='kw'>=</span><span class='fl'>20</span>, <span class='kw'>PI</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>npaths</span><span class='kw'>=</span><span class='fl'>100</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>fcast2</span>)
+<span class='kw'>fcast2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>fit</span>, h=<span class='fl'>20</span>, PI=<span class='fl'>TRUE</span>, npaths=<span class='fl'>100</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>fcast2</span>)
 
 <span class='co'>## Set up out-of-sample innovations using cross-validation</span>
-<span class='no'>fit_cv</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='CVar.html'>CVar</a></span>(<span class='no'>USAccDeaths</span>,  <span class='kw'>size</span><span class='kw'>=</span><span class='fl'>2</span>)
-<span class='no'>res_sd</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span>(<span class='no'>fit_cv</span>$<span class='no'>residuals</span>, <span class='kw'>na.rm</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-<span class='no'>myinnovs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>20</span>*<span class='fl'>100</span>, <span class='kw'>mean</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>sd</span><span class='kw'>=</span><span class='no'>res_sd</span>)
+<span class='kw'>fit_cv</span> <span class='op'>&lt;-</span> <span class='fu'><a href='CVar.html'>CVar</a></span>(<span class='kw'>USAccDeaths</span>,  size=<span class='fl'>2</span>)
+<span class='kw'>res_sd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span>(<span class='kw'>fit_cv</span><span class='op'>$</span><span class='kw'>residuals</span>, na.rm=<span class='fl'>TRUE</span>)
+<span class='kw'>myinnovs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>20</span><span class='op'>*</span><span class='fl'>100</span>, mean=<span class='fl'>0</span>, sd=<span class='kw'>res_sd</span>)
 <span class='co'>## Forecast using new innovations</span>
-<span class='no'>fcast3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>, <span class='kw'>h</span><span class='kw'>=</span><span class='fl'>20</span>, <span class='kw'>PI</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>npaths</span><span class='kw'>=</span><span class='fl'>100</span>, <span class='kw'>innov</span><span class='kw'>=</span><span class='no'>myinnovs</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>fcast3</span>)
-}</div></pre>
+<span class='kw'>fcast3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>fit</span>, h=<span class='fl'>20</span>, PI=<span class='fl'>TRUE</span>, npaths=<span class='fl'>100</span>, innov=<span class='kw'>myinnovs</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>fcast3</span>)
+}
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -272,7 +278,7 @@ residuals to ameliorate this, see examples.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

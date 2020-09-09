@@ -127,17 +127,17 @@
 
     <pre class="usage"><span class='co'># S3 method for ets</span>
 <span class='fu'><a href='forecast.html'>forecast</a></span>(
-  <span class='no'>object</span>,
-  <span class='kw'>h</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>object</span>$<span class='no'>m</span> <span class='kw'>&gt;</span> <span class='fl'>1</span>, <span class='fl'>2</span> * <span class='no'>object</span>$<span class='no'>m</span>, <span class='fl'>10</span>),
-  <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
-  <span class='kw'>fan</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>simulate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>npaths</span> <span class='kw'>=</span> <span class='fl'>5000</span>,
-  <span class='kw'>PI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='no'>object</span>$<span class='no'>lambda</span>,
-  <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
+  <span class='kw'>object</span>,
+  h = <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='kw'>object</span><span class='op'>$</span><span class='kw'>m</span> <span class='op'>&gt;</span> <span class='fl'>1</span>, <span class='fl'>2</span> <span class='op'>*</span> <span class='kw'>object</span><span class='op'>$</span><span class='kw'>m</span>, <span class='fl'>10</span>),
+  level = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
+  fan = <span class='fl'>FALSE</span>,
+  simulate = <span class='fl'>FALSE</span>,
+  bootstrap = <span class='fl'>FALSE</span>,
+  npaths = <span class='fl'>5000</span>,
+  PI = <span class='fl'>TRUE</span>,
+  lambda = <span class='kw'>object</span><span class='op'>$</span><span class='kw'>lambda</span>,
+  biasadj = <span class='kw'>NULL</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -229,10 +229,14 @@ values) - 1.</p></dd> <dt>fitted</dt><dd><p>Fitted values (one-step forecasts)</
 
     <div class='dont-index'><p><code><a href='ets.html'>ets</a></code>, <code><a href='ses.html'>ses</a></code>, <code><a href='ses.html'>holt</a></code>,
 <code><a href='ses.html'>hw</a></code>.</p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ets.html'>ets</a></span>(<span class='no'>USAccDeaths</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>,<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>48</span>))</div><div class='img'><img src='forecast.ets-1.png' alt='' width='700' height='433' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='kw'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ets.html'>ets</a></span>(<span class='kw'>USAccDeaths</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>fit</span>,h=<span class='fl'>48</span>))
+</div><div class='img'><img src='forecast.ets-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -249,7 +253,7 @@ values) - 1.</p></dd> <dt>fitted</dt><dd><p>Fitted values (one-step forecasts)</
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

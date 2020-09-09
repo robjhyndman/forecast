@@ -127,7 +127,7 @@ minimizes the coefficient of variation for subseries of x." />
 minimizes the coefficient of variation for subseries of <code>x</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>BoxCox.lambda</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"guerrero"</span>, <span class='st'>"loglik"</span>), <span class='kw'>lower</span> <span class='kw'>=</span> -<span class='fl'>1</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
+    <pre class="usage"><span class='fu'>BoxCox.lambda</span>(<span class='kw'>x</span>, method = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"guerrero"</span>, <span class='st'>"loglik"</span>), lower = <span class='op'>-</span><span class='fl'>1</span>, upper = <span class='fl'>2</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,13 +168,17 @@ transformations. <em>Journal of Forecasting</em>, <b>12</b>, 37--48.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='BoxCox.html'>BoxCox</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Leanne Chhay and Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>lambda</span> <span class='kw'>&lt;-</span> <span class='fu'>BoxCox.lambda</span>(<span class='no'>AirPassengers</span>,<span class='kw'>lower</span><span class='kw'>=</span><span class='fl'>0</span>)
-<span class='no'>air.fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Arima.html'>Arima</a></span>(<span class='no'>AirPassengers</span>, <span class='kw'>order</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>),
-                 <span class='kw'>seasonal</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>order</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>),<span class='kw'>period</span><span class='kw'>=</span><span class='fl'>12</span>), <span class='kw'>lambda</span><span class='kw'>=</span><span class='no'>lambda</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>air.fit</span>))</div><div class='img'><img src='BoxCox.lambda-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='kw'>lambda</span> <span class='op'>&lt;-</span> <span class='fu'>BoxCox.lambda</span>(<span class='kw'>AirPassengers</span>,lower=<span class='fl'>0</span>)
+<span class='kw'>air.fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='Arima.html'>Arima</a></span>(<span class='kw'>AirPassengers</span>, order=<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>),
+                 seasonal=<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(order=<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>),period=<span class='fl'>12</span>), lambda=<span class='kw'>lambda</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>air.fit</span>))
+</div><div class='img'><img src='BoxCox.lambda-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -191,7 +195,7 @@ transformations. <em>Journal of Forecasting</em>, <b>12</b>, 37--48.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

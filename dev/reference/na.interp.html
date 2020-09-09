@@ -130,9 +130,9 @@ seasonally adjusted data, and the seasonal component is added back.</p>
     </div>
 
     <pre class="usage"><span class='fu'>na.interp</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>linear</span> <span class='kw'>=</span> (<span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='no'>x</span>) <span class='kw'>&lt;=</span> <span class='fl'>1</span> <span class='kw'>|</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(!<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>x</span>)) <span class='kw'>&lt;=</span> <span class='fl'>2</span> * <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='no'>x</span>))
+  <span class='kw'>x</span>,
+  lambda = <span class='kw'>NULL</span>,
+  linear = (<span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='kw'>x</span>) <span class='op'>&lt;=</span> <span class='fl'>1</span> <span class='op'>|</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='kw'>x</span>)) <span class='op'>&lt;=</span> <span class='fl'>2</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='kw'>x</span>))
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -165,11 +165,15 @@ the <code>zoo</code> package.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='tsoutliers.html'>tsoutliers</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>gold</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'>na.interp</span>(<span class='no'>gold</span>))</div><div class='img'><img src='na.interp-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>gold</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'>na.interp</span>(<span class='kw'>gold</span>))
+</div><div class='img'><img src='na.interp-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -186,7 +190,7 @@ the <code>zoo</code> package.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

@@ -129,17 +129,17 @@ models.</p>
 
     <pre class="usage"><span class='co'># S3 method for modelAR</span>
 <span class='fu'><a href='forecast.html'>forecast</a></span>(
-  <span class='no'>object</span>,
-  <span class='kw'>h</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>object</span>$<span class='no'>m</span> <span class='kw'>&gt;</span> <span class='fl'>1</span>, <span class='fl'>2</span> * <span class='no'>object</span>$<span class='no'>m</span>, <span class='fl'>10</span>),
-  <span class='kw'>PI</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
-  <span class='kw'>fan</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>xreg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='no'>object</span>$<span class='no'>lambda</span>,
-  <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>npaths</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>innov</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
+  <span class='kw'>object</span>,
+  h = <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='kw'>object</span><span class='op'>$</span><span class='kw'>m</span> <span class='op'>&gt;</span> <span class='fl'>1</span>, <span class='fl'>2</span> <span class='op'>*</span> <span class='kw'>object</span><span class='op'>$</span><span class='kw'>m</span>, <span class='fl'>10</span>),
+  PI = <span class='fl'>FALSE</span>,
+  level = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
+  fan = <span class='fl'>FALSE</span>,
+  xreg = <span class='kw'>NULL</span>,
+  lambda = <span class='kw'>object</span><span class='op'>$</span><span class='kw'>lambda</span>,
+  bootstrap = <span class='fl'>FALSE</span>,
+  npaths = <span class='fl'>1000</span>,
+  innov = <span class='kw'>NULL</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -237,6 +237,9 @@ could lead to misleadingly small values.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='nnetar.html'>nnetar</a></code>.</p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rob J Hyndman and Gabriel Caceres</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -253,7 +256,7 @@ could lead to misleadingly small values.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

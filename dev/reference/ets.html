@@ -126,27 +126,27 @@
     </div>
 
     <pre class="usage"><span class='fu'>ets</span>(
-  <span class='no'>y</span>,
-  <span class='kw'>model</span> <span class='kw'>=</span> <span class='st'>"ZZZ"</span>,
-  <span class='kw'>damped</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>beta</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>gamma</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>phi</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>additive.only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1e-04</span>, <span class='fl'>3</span>), <span class='fl'>0.8</span>),
-  <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0.9999</span>, <span class='fl'>3</span>), <span class='fl'>0.98</span>),
-  <span class='kw'>opt.crit</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lik"</span>, <span class='st'>"amse"</span>, <span class='st'>"mse"</span>, <span class='st'>"sigma"</span>, <span class='st'>"mae"</span>),
-  <span class='kw'>nmse</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-  <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"both"</span>, <span class='st'>"usual"</span>, <span class='st'>"admissible"</span>),
-  <span class='kw'>ic</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"aicc"</span>, <span class='st'>"aic"</span>, <span class='st'>"bic"</span>),
-  <span class='kw'>restrict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>allow.multiplicative.trend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>use.initial.values</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"na.contiguous"</span>, <span class='st'>"na.interp"</span>, <span class='st'>"na.fail"</span>),
-  <span class='no'>...</span>
+  <span class='kw'>y</span>,
+  model = <span class='st'>"ZZZ"</span>,
+  damped = <span class='kw'>NULL</span>,
+  alpha = <span class='kw'>NULL</span>,
+  beta = <span class='kw'>NULL</span>,
+  gamma = <span class='kw'>NULL</span>,
+  phi = <span class='kw'>NULL</span>,
+  additive.only = <span class='fl'>FALSE</span>,
+  lambda = <span class='kw'>NULL</span>,
+  biasadj = <span class='fl'>FALSE</span>,
+  lower = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1e-04</span>, <span class='fl'>3</span>), <span class='fl'>0.8</span>),
+  upper = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0.9999</span>, <span class='fl'>3</span>), <span class='fl'>0.98</span>),
+  opt.crit = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lik"</span>, <span class='st'>"amse"</span>, <span class='st'>"mse"</span>, <span class='st'>"sigma"</span>, <span class='st'>"mae"</span>),
+  nmse = <span class='fl'>3</span>,
+  bounds = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"both"</span>, <span class='st'>"usual"</span>, <span class='st'>"admissible"</span>),
+  ic = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"aicc"</span>, <span class='st'>"aic"</span>, <span class='st'>"bic"</span>),
+  restrict = <span class='fl'>TRUE</span>,
+  allow.multiplicative.trend = <span class='fl'>FALSE</span>,
+  use.initial.values = <span class='fl'>FALSE</span>,
+  na.action = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"na.contiguous"</span>, <span class='st'>"na.interp"</span>, <span class='st'>"na.fail"</span>),
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -301,12 +301,16 @@ Statistical Mathematics</em>, <b>60</b>(2), 407--426.</p>
 Springer-Verlag. <a href='http://www.exponentialsmoothing.net'>http://www.exponentialsmoothing.net</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/r/stats/HoltWinters.html'>HoltWinters</a></code>, <code><a href='naive.html'>rwf</a></code>,
+    <div class='dont-index'><p><code><a href='https://rdrr.io/r/stats/HoltWinters.html'>HoltWinters</a></code>, <code><a href='rwf.html'>rwf</a></code>,
 <code><a href='Arima.html'>Arima</a></code>.</p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>ets</span>(<span class='no'>USAccDeaths</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>))</div><div class='img'><img src='ets-1.png' alt='' width='700' height='433' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='kw'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>ets</span>(<span class='kw'>USAccDeaths</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>fit</span>))
+</div><div class='img'><img src='ets-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -323,7 +327,7 @@ Springer-Verlag. <a href='http://www.exponentialsmoothing.net'>http://www.expone
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

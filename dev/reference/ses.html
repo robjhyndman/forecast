@@ -128,52 +128,52 @@ applied to <code>y</code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>ses</span>(
-  <span class='no'>y</span>,
-  <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
-  <span class='kw'>fan</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>initial</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"optimal"</span>, <span class='st'>"simple"</span>),
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>,
-  <span class='no'>...</span>
+  <span class='kw'>y</span>,
+  h = <span class='fl'>10</span>,
+  level = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
+  fan = <span class='fl'>FALSE</span>,
+  initial = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"optimal"</span>, <span class='st'>"simple"</span>),
+  alpha = <span class='kw'>NULL</span>,
+  lambda = <span class='kw'>NULL</span>,
+  biasadj = <span class='fl'>FALSE</span>,
+  x = <span class='kw'>y</span>,
+  <span class='kw'>...</span>
 )
 
 <span class='fu'>holt</span>(
-  <span class='no'>y</span>,
-  <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>damped</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
-  <span class='kw'>fan</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>initial</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"optimal"</span>, <span class='st'>"simple"</span>),
-  <span class='kw'>exponential</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>beta</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>phi</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>,
-  <span class='no'>...</span>
+  <span class='kw'>y</span>,
+  h = <span class='fl'>10</span>,
+  damped = <span class='fl'>FALSE</span>,
+  level = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
+  fan = <span class='fl'>FALSE</span>,
+  initial = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"optimal"</span>, <span class='st'>"simple"</span>),
+  exponential = <span class='fl'>FALSE</span>,
+  alpha = <span class='kw'>NULL</span>,
+  beta = <span class='kw'>NULL</span>,
+  phi = <span class='kw'>NULL</span>,
+  lambda = <span class='kw'>NULL</span>,
+  biasadj = <span class='fl'>FALSE</span>,
+  x = <span class='kw'>y</span>,
+  <span class='kw'>...</span>
 )
 
 <span class='fu'>hw</span>(
-  <span class='no'>y</span>,
-  <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>2</span> * <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='no'>x</span>),
-  <span class='kw'>seasonal</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"additive"</span>, <span class='st'>"multiplicative"</span>),
-  <span class='kw'>damped</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
-  <span class='kw'>fan</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>initial</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"optimal"</span>, <span class='st'>"simple"</span>),
-  <span class='kw'>exponential</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>beta</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>gamma</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>phi</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>,
-  <span class='no'>...</span>
+  <span class='kw'>y</span>,
+  h = <span class='fl'>2</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='kw'>x</span>),
+  seasonal = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"additive"</span>, <span class='st'>"multiplicative"</span>),
+  damped = <span class='fl'>FALSE</span>,
+  level = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
+  fan = <span class='fl'>FALSE</span>,
+  initial = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"optimal"</span>, <span class='st'>"simple"</span>),
+  exponential = <span class='fl'>FALSE</span>,
+  alpha = <span class='kw'>NULL</span>,
+  beta = <span class='kw'>NULL</span>,
+  gamma = <span class='kw'>NULL</span>,
+  phi = <span class='kw'>NULL</span>,
+  lambda = <span class='kw'>NULL</span>,
+  biasadj = <span class='fl'>FALSE</span>,
+  x = <span class='kw'>y</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -298,13 +298,18 @@ and practice</em>, 2nd edition, OTexts: Melbourne, Australia.
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='ets.html'>ets</a></code>, <code><a href='https://rdrr.io/r/stats/HoltWinters.html'>HoltWinters</a></code>,
-<code><a href='naive.html'>rwf</a></code>, <code><a href='https://rdrr.io/r/stats/arima.html'>arima</a></code>.</p></div>
+<code><a href='rwf.html'>rwf</a></code>, <code><a href='https://rdrr.io/r/stats/arima.html'>arima</a></code>.</p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>fcast</span> <span class='kw'>&lt;-</span> <span class='fu'>holt</span>(<span class='no'>airmiles</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>fcast</span>)</div><div class='img'><img src='ses-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>deaths.fcast</span> <span class='kw'>&lt;-</span> <span class='fu'>hw</span>(<span class='no'>USAccDeaths</span>,<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>48</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>deaths.fcast</span>)</div><div class='img'><img src='ses-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='kw'>fcast</span> <span class='op'>&lt;-</span> <span class='fu'>holt</span>(<span class='kw'>airmiles</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>fcast</span>)
+</div><div class='img'><img src='ses-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='kw'>deaths.fcast</span> <span class='op'>&lt;-</span> <span class='fu'>hw</span>(<span class='kw'>USAccDeaths</span>,h=<span class='fl'>48</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>deaths.fcast</span>)
+</div><div class='img'><img src='ses-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -321,7 +326,7 @@ and practice</em>, 2nd edition, OTexts: Melbourne, Australia.
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

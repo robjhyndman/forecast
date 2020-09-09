@@ -126,15 +126,15 @@
     </div>
 
     <pre class="usage"><span class='fu'>meanf</span>(
-  <span class='no'>y</span>,
-  <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
-  <span class='kw'>fan</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>npaths</span> <span class='kw'>=</span> <span class='fl'>5000</span>,
-  <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>
+  <span class='kw'>y</span>,
+  h = <span class='fl'>10</span>,
+  level = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
+  fan = <span class='fl'>FALSE</span>,
+  lambda = <span class='kw'>NULL</span>,
+  biasadj = <span class='fl'>FALSE</span>,
+  bootstrap = <span class='fl'>FALSE</span>,
+  npaths = <span class='fl'>5000</span>,
+  x = <span class='kw'>y</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -214,11 +214,15 @@ is a normal iid error. Forecasts are given by $$Y_n(h)=\mu$$
 where \(\mu\) is estimated by the sample mean.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='naive.html'>rwf</a></code></p></div>
+    <div class='dont-index'><p><code><a href='rwf.html'>rwf</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>nile.fcast</span> <span class='kw'>&lt;-</span> <span class='fu'>meanf</span>(<span class='no'>Nile</span>, <span class='kw'>h</span><span class='kw'>=</span><span class='fl'>10</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>nile.fcast</span>)</div><div class='img'><img src='meanf-1.png' alt='' width='700' height='433' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='kw'>nile.fcast</span> <span class='op'>&lt;-</span> <span class='fu'>meanf</span>(<span class='kw'>Nile</span>, h=<span class='fl'>10</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>nile.fcast</span>)
+</div><div class='img'><img src='meanf-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -235,7 +239,7 @@ where \(\mu\) is estimated by the sample mean.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

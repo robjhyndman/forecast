@@ -129,7 +129,7 @@ rolling forecast origin." />
 rolling forecast origin.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tsCV</span>(<span class='no'>y</span>, <span class='no'>forecastfunction</span>, <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>window</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>xreg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>initial</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>tsCV</span>(<span class='kw'>y</span>, <span class='kw'>forecastfunction</span>, h = <span class='fl'>1</span>, window = <span class='kw'>NULL</span>, xreg = <span class='kw'>NULL</span>, initial = <span class='fl'>0</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -186,15 +186,20 @@ series.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='CV.html'>CV</a>, <a href='CVar.html'>CVar</a>, <a href='residuals.forecast.html'>residuals.Arima</a>, <a href='https://robjhyndman.com/hyndsight/tscv/'>https://robjhyndman.com/hyndsight/tscv/</a>.</p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'>#Fit an AR(2) model to each rolling origin subset</span>
-<span class='no'>far2</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>h</span>){<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='fu'><a href='Arima.html'>Arima</a></span>(<span class='no'>x</span>, <span class='kw'>order</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>0</span>,<span class='fl'>0</span>)), <span class='kw'>h</span><span class='kw'>=</span><span class='no'>h</span>)}
-<span class='no'>e</span> <span class='kw'>&lt;-</span> <span class='fu'>tsCV</span>(<span class='no'>lynx</span>, <span class='no'>far2</span>, <span class='kw'>h</span><span class='kw'>=</span><span class='fl'>1</span>)
+<span class='kw'>far2</span> <span class='op'>&lt;-</span> <span class='fu'>function</span>(<span class='kw'>x</span>, <span class='kw'>h</span>){<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='fu'><a href='Arima.html'>Arima</a></span>(<span class='kw'>x</span>, order=<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>0</span>,<span class='fl'>0</span>)), h=<span class='kw'>h</span>)}
+<span class='kw'>e</span> <span class='op'>&lt;-</span> <span class='fu'>tsCV</span>(<span class='kw'>lynx</span>, <span class='kw'>far2</span>, h=<span class='fl'>1</span>)
 
 <span class='co'>#Fit the same model with a rolling window of length 30</span>
-<span class='no'>e</span> <span class='kw'>&lt;-</span> <span class='fu'>tsCV</span>(<span class='no'>lynx</span>, <span class='no'>far2</span>, <span class='kw'>h</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>window</span><span class='kw'>=</span><span class='fl'>30</span>)</div></pre>
+<span class='kw'>e</span> <span class='op'>&lt;-</span> <span class='fu'>tsCV</span>(<span class='kw'>lynx</span>, <span class='kw'>far2</span>, h=<span class='fl'>1</span>, window=<span class='fl'>30</span>)
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -210,7 +215,7 @@ series.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

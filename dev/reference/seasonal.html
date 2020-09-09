@@ -129,11 +129,11 @@ trend-cycle component or remainder component from a time series
 decomposition.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>seasonal</span>(<span class='no'>object</span>)
+    <pre class="usage"><span class='fu'>seasonal</span>(<span class='kw'>object</span>)
 
-<span class='fu'>trendcycle</span>(<span class='no'>object</span>)
+<span class='fu'>trendcycle</span>(<span class='kw'>object</span>)
 
-<span class='fu'>remainder</span>(<span class='no'>object</span>)</pre>
+<span class='fu'>remainder</span>(<span class='kw'>object</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -152,18 +152,24 @@ decomposition.</p>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/r/stats/stl.html'>stl</a></code>, <code><a href='https://rdrr.io/r/stats/decompose.html'>decompose</a></code>,
 <code><a href='tbats.html'>tbats</a></code>, <code><a href='seasadj.html'>seasadj</a></code>.</p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>USAccDeaths</span>)</div><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/stl.html'>stl</a></span>(<span class='no'>USAccDeaths</span>, <span class='kw'>s.window</span><span class='kw'>=</span><span class='st'>"periodic"</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='fu'>trendcycle</span>(<span class='no'>fit</span>),<span class='kw'>col</span><span class='kw'>=</span><span class='st'>"red"</span>)</div><div class='img'><img src='seasonal-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>USAccDeaths</span>)
+</div><div class='input'><span class='kw'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/stl.html'>stl</a></span>(<span class='kw'>USAccDeaths</span>, s.window=<span class='st'>"periodic"</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='fu'>trendcycle</span>(<span class='kw'>fit</span>),col=<span class='st'>"red"</span>)
+</div><div class='img'><img src='seasonal-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span>)
 <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(
-            <span class='kw'>Data</span><span class='kw'>=</span><span class='no'>USAccDeaths</span>,
-            <span class='kw'>Seasonal</span><span class='kw'>=</span><span class='fu'>seasonal</span>(<span class='no'>fit</span>),
-          <span class='kw'>Trend</span><span class='kw'>=</span><span class='fu'>trendcycle</span>(<span class='no'>fit</span>),
-            <span class='kw'>Remainder</span><span class='kw'>=</span><span class='fu'>remainder</span>(<span class='no'>fit</span>)),
-    <span class='kw'>facets</span><span class='kw'>=</span><span class='fl'>TRUE</span>) +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>ylab</a></span>(<span class='st'>""</span>) + <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>xlab</a></span>(<span class='st'>"Year"</span>)</div><div class='img'><img src='seasonal-2.png' alt='' width='700' height='433' /></div><div class='input'>
+      Data=<span class='kw'>USAccDeaths</span>,
+      Seasonal=<span class='fu'>seasonal</span>(<span class='kw'>fit</span>),
+      Trend=<span class='fu'>trendcycle</span>(<span class='kw'>fit</span>),
+      Remainder=<span class='fu'>remainder</span>(<span class='kw'>fit</span>)),
+    facets=<span class='fl'>TRUE</span>) <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>ylab</a></span>(<span class='st'>""</span>) <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>xlab</a></span>(<span class='st'>"Year"</span>)
+</div><div class='img'><img src='seasonal-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -180,7 +186,7 @@ decomposition.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

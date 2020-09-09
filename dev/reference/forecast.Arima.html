@@ -127,40 +127,40 @@
 
     <pre class="usage"><span class='co'># S3 method for fracdiff</span>
 <span class='fu'><a href='forecast.html'>forecast</a></span>(
-  <span class='no'>object</span>,
-  <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
-  <span class='kw'>fan</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='no'>object</span>$<span class='no'>lambda</span>,
-  <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
+  <span class='kw'>object</span>,
+  h = <span class='fl'>10</span>,
+  level = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
+  fan = <span class='fl'>FALSE</span>,
+  lambda = <span class='kw'>object</span><span class='op'>$</span><span class='kw'>lambda</span>,
+  biasadj = <span class='kw'>NULL</span>,
+  <span class='kw'>...</span>
 )
 
 <span class='co'># S3 method for Arima</span>
 <span class='fu'><a href='forecast.html'>forecast</a></span>(
-  <span class='no'>object</span>,
-  <span class='kw'>h</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>object</span>$<span class='no'>arma</span>[<span class='fl'>5</span>] <span class='kw'>&gt;</span> <span class='fl'>1</span>, <span class='fl'>2</span> * <span class='no'>object</span>$<span class='no'>arma</span>[<span class='fl'>5</span>], <span class='fl'>10</span>),
-  <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
-  <span class='kw'>fan</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>xreg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='no'>object</span>$<span class='no'>lambda</span>,
-  <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>npaths</span> <span class='kw'>=</span> <span class='fl'>5000</span>,
-  <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
+  <span class='kw'>object</span>,
+  h = <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='kw'>object</span><span class='op'>$</span><span class='kw'>arma</span>[<span class='fl'>5</span>] <span class='op'>&gt;</span> <span class='fl'>1</span>, <span class='fl'>2</span> <span class='op'>*</span> <span class='kw'>object</span><span class='op'>$</span><span class='kw'>arma</span>[<span class='fl'>5</span>], <span class='fl'>10</span>),
+  level = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
+  fan = <span class='fl'>FALSE</span>,
+  xreg = <span class='kw'>NULL</span>,
+  lambda = <span class='kw'>object</span><span class='op'>$</span><span class='kw'>lambda</span>,
+  bootstrap = <span class='fl'>FALSE</span>,
+  npaths = <span class='fl'>5000</span>,
+  biasadj = <span class='kw'>NULL</span>,
+  <span class='kw'>...</span>
 )
 
 <span class='co'># S3 method for ar</span>
 <span class='fu'><a href='forecast.html'>forecast</a></span>(
-  <span class='no'>object</span>,
-  <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
-  <span class='kw'>fan</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>bootstrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>npaths</span> <span class='kw'>=</span> <span class='fl'>5000</span>,
-  <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
+  <span class='kw'>object</span>,
+  h = <span class='fl'>10</span>,
+  level = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
+  fan = <span class='fl'>FALSE</span>,
+  lambda = <span class='kw'>NULL</span>,
+  bootstrap = <span class='fl'>FALSE</span>,
+  npaths = <span class='fl'>5000</span>,
+  biasadj = <span class='fl'>FALSE</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -264,14 +264,19 @@ differenced ARIMA models, <em>Journal of Time Series Analysis</em>,
 <code><a href='https://rdrr.io/r/stats/ar.html'>predict.ar</a></code>, <code><a href='auto.arima.html'>auto.arima</a></code>,
 <code><a href='Arima.html'>Arima</a></code>, <code><a href='https://rdrr.io/r/stats/arima.html'>arima</a></code>, <code><a href='https://rdrr.io/r/stats/ar.html'>ar</a></code>,
 <code><a href='arfima.html'>arfima</a></code>.</p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Arima.html'>Arima</a></span>(<span class='no'>WWWusage</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>,<span class='fl'>1</span>,<span class='fl'>0</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>))</div><div class='img'><img src='forecast.Arima-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>fracdiff</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/fracdiff/man/fracdiff.sim.html'>fracdiff.sim</a></span>( <span class='fl'>100</span>, <span class='kw'>ma</span><span class='kw'>=</span>-<span class='fl'>.4</span>, <span class='kw'>d</span><span class='kw'>=</span><span class='fl'>.3</span>)$<span class='no'>series</span>
-<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='arfima.html'>arfima</a></span>(<span class='no'>x</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>,<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>30</span>))</div><div class='img'><img src='forecast.Arima-2.png' alt='' width='700' height='433' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='kw'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='Arima.html'>Arima</a></span>(<span class='kw'>WWWusage</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>,<span class='fl'>1</span>,<span class='fl'>0</span>))
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>fit</span>))
+</div><div class='img'><img src='forecast.Arima-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/mmaechler/fracdiff'>fracdiff</a></span>)
+<span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/fracdiff/man/fracdiff.sim.html'>fracdiff.sim</a></span>( <span class='fl'>100</span>, ma=<span class='op'>-</span><span class='fl'>.4</span>, d=<span class='fl'>.3</span>)<span class='op'>$</span><span class='kw'>series</span>
+<span class='kw'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='arfima.html'>arfima</a></span>(<span class='kw'>x</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>fit</span>,h=<span class='fl'>30</span>))
+</div><div class='img'><img src='forecast.Arima-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -288,7 +293,7 @@ differenced ARIMA models, <em>Journal of Time Series Analysis</em>,
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

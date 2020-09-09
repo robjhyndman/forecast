@@ -131,60 +131,60 @@ year of the seasonal component.</p>
 
     <pre class="usage"><span class='co'># S3 method for stl</span>
 <span class='fu'><a href='forecast.html'>forecast</a></span>(
-  <span class='no'>object</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ets"</span>, <span class='st'>"arima"</span>, <span class='st'>"naive"</span>, <span class='st'>"rwdrift"</span>),
-  <span class='kw'>etsmodel</span> <span class='kw'>=</span> <span class='st'>"ZZN"</span>,
-  <span class='kw'>forecastfunction</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>h</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='no'>object</span>$<span class='no'>time.series</span>) * <span class='fl'>2</span>,
-  <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
-  <span class='kw'>fan</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>xreg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>newxreg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>allow.multiplicative.trend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
+  <span class='kw'>object</span>,
+  method = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ets"</span>, <span class='st'>"arima"</span>, <span class='st'>"naive"</span>, <span class='st'>"rwdrift"</span>),
+  etsmodel = <span class='st'>"ZZN"</span>,
+  forecastfunction = <span class='kw'>NULL</span>,
+  h = <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='kw'>object</span><span class='op'>$</span><span class='kw'>time.series</span>) <span class='op'>*</span> <span class='fl'>2</span>,
+  level = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
+  fan = <span class='fl'>FALSE</span>,
+  lambda = <span class='kw'>NULL</span>,
+  biasadj = <span class='kw'>NULL</span>,
+  xreg = <span class='kw'>NULL</span>,
+  newxreg = <span class='kw'>NULL</span>,
+  allow.multiplicative.trend = <span class='fl'>FALSE</span>,
+  <span class='kw'>...</span>
 )
 
 <span class='fu'>stlm</span>(
-  <span class='no'>y</span>,
-  <span class='kw'>s.window</span> <span class='kw'>=</span> <span class='fl'>13</span>,
-  <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ets"</span>, <span class='st'>"arima"</span>),
-  <span class='kw'>modelfunction</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>etsmodel</span> <span class='kw'>=</span> <span class='st'>"ZZN"</span>,
-  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>xreg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>allow.multiplicative.trend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>,
-  <span class='no'>...</span>
+  <span class='kw'>y</span>,
+  s.window = <span class='fl'>13</span>,
+  robust = <span class='fl'>FALSE</span>,
+  method = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ets"</span>, <span class='st'>"arima"</span>),
+  modelfunction = <span class='kw'>NULL</span>,
+  model = <span class='kw'>NULL</span>,
+  etsmodel = <span class='st'>"ZZN"</span>,
+  lambda = <span class='kw'>NULL</span>,
+  biasadj = <span class='fl'>FALSE</span>,
+  xreg = <span class='kw'>NULL</span>,
+  allow.multiplicative.trend = <span class='fl'>FALSE</span>,
+  x = <span class='kw'>y</span>,
+  <span class='kw'>...</span>
 )
 
 <span class='co'># S3 method for stlm</span>
 <span class='fu'><a href='forecast.html'>forecast</a></span>(
-  <span class='no'>object</span>,
-  <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>2</span> * <span class='no'>object</span>$<span class='no'>m</span>,
-  <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
-  <span class='kw'>fan</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='no'>object</span>$<span class='no'>lambda</span>,
-  <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>newxreg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>allow.multiplicative.trend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
+  <span class='kw'>object</span>,
+  h = <span class='fl'>2</span> <span class='op'>*</span> <span class='kw'>object</span><span class='op'>$</span><span class='kw'>m</span>,
+  level = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
+  fan = <span class='fl'>FALSE</span>,
+  lambda = <span class='kw'>object</span><span class='op'>$</span><span class='kw'>lambda</span>,
+  biasadj = <span class='kw'>NULL</span>,
+  newxreg = <span class='kw'>NULL</span>,
+  allow.multiplicative.trend = <span class='fl'>FALSE</span>,
+  <span class='kw'>...</span>
 )
 
 <span class='fu'>stlf</span>(
-  <span class='no'>y</span>,
-  <span class='kw'>h</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='no'>x</span>) * <span class='fl'>2</span>,
-  <span class='kw'>s.window</span> <span class='kw'>=</span> <span class='fl'>13</span>,
-  <span class='kw'>t.window</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>,
-  <span class='no'>...</span>
+  <span class='kw'>y</span>,
+  h = <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='kw'>x</span>) <span class='op'>*</span> <span class='fl'>2</span>,
+  s.window = <span class='fl'>13</span>,
+  t.window = <span class='kw'>NULL</span>,
+  robust = <span class='fl'>FALSE</span>,
+  lambda = <span class='kw'>NULL</span>,
+  biasadj = <span class='fl'>FALSE</span>,
+  x = <span class='kw'>y</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -247,7 +247,7 @@ an adjustment will be made to produce mean forecasts and fitted values.</p></td>
     <tr>
       <th>newxreg</th>
       <td><p>Future regressors to be used in
-<code><a href='forecast.Arima.html'>forecast.Arima</a>()</code>.</p></td>
+<code><a href='forecast.fracdiff.html'>forecast.Arima</a>()</code>.</p></td>
     </tr>
     <tr>
       <th>allow.multiplicative.trend</th>
@@ -350,15 +350,21 @@ forecasting the seasonally adjusted series.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/r/stats/stl.html'>stl</a></code>, <code><a href='forecast.ets.html'>forecast.ets</a></code>,
-<code><a href='forecast.Arima.html'>forecast.Arima</a></code>.</p></div>
+<code><a href='forecast.fracdiff.html'>forecast.Arima</a></code>.</p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>tsmod</span> <span class='kw'>&lt;-</span> <span class='fu'>stlm</span>(<span class='no'>USAccDeaths</span>, <span class='kw'>modelfunction</span> <span class='kw'>=</span> <span class='no'>ar</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>tsmod</span>, <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>36</span>))</div><div class='img'><img src='forecast.stl-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='no'>decomp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/stl.html'>stl</a></span>(<span class='no'>USAccDeaths</span>, <span class='kw'>s.window</span> <span class='kw'>=</span> <span class='st'>"periodic"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>decomp</span>))</div><div class='img'><img src='forecast.stl-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'>stlf</span>(<span class='no'>AirPassengers</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='fl'>0</span>))</div><div class='img'><img src='forecast.stl-3.png' alt='' width='700' height='433' /></div></pre>
+<span class='kw'>tsmod</span> <span class='op'>&lt;-</span> <span class='fu'>stlm</span>(<span class='kw'>USAccDeaths</span>, modelfunction = <span class='kw'>ar</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>tsmod</span>, h = <span class='fl'>36</span>))
+</div><div class='img'><img src='forecast.stl-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='kw'>decomp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/stl.html'>stl</a></span>(<span class='kw'>USAccDeaths</span>, s.window = <span class='st'>"periodic"</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>decomp</span>))
+</div><div class='img'><img src='forecast.stl-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'>stlf</span>(<span class='kw'>AirPassengers</span>, lambda = <span class='fl'>0</span>))
+</div><div class='img'><img src='forecast.stl-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -374,7 +380,7 @@ forecasting the seasonally adjusted series.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

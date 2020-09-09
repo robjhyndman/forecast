@@ -126,12 +126,12 @@
     </div>
 
     <pre class="usage"><span class='fu'>gghistogram</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>add.normal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>add.kde</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>add.rug</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>bins</span>,
-  <span class='kw'>boundary</span> <span class='kw'>=</span> <span class='fl'>0</span>
+  <span class='kw'>x</span>,
+  add.normal = <span class='fl'>FALSE</span>,
+  add.kde = <span class='fl'>FALSE</span>,
+  add.rug = <span class='fl'>TRUE</span>,
+  <span class='kw'>bins</span>,
+  boundary = <span class='fl'>0</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -170,10 +170,14 @@ using the Friedman-Diaconis rule given by <code><a href='https://rdrr.io/r/grDev
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></code>, <code><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'>gghistogram</span>(<span class='no'>lynx</span>, <span class='kw'>add.kde</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='gghistogram-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>gghistogram</span>(<span class='kw'>lynx</span>, add.kde=<span class='fl'>TRUE</span>)
+</div><div class='img'><img src='gghistogram-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -190,7 +194,7 @@ using the Friedman-Diaconis rule given by <code><a href='https://rdrr.io/r/grDev
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

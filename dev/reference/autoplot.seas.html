@@ -132,19 +132,19 @@ class &#8220;<code>stl</code>&#8221; (created with <code><a href='https://rdrr.i
     </div>
 
     <pre class="usage"><span class='co'># S3 method for decomposed.ts</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>object</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>range.bars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='kw'>object</span>, labels = <span class='kw'>NULL</span>, range.bars = <span class='kw'>NULL</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for stl</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>object</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>range.bars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='kw'>object</span>, labels = <span class='kw'>NULL</span>, range.bars = <span class='fl'>TRUE</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for StructTS</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>object</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>range.bars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='kw'>object</span>, labels = <span class='kw'>NULL</span>, range.bars = <span class='fl'>TRUE</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for seas</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>object</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>range.bars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='kw'>object</span>, labels = <span class='kw'>NULL</span>, range.bars = <span class='kw'>NULL</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for mstl</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='kw'>object</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -179,15 +179,22 @@ takes place.</p></td>
     <div class='dont-index'><p><code>seas</code>, <code><a href='https://rdrr.io/r/stats/stl.html'>stl</a></code>,
 <code><a href='https://rdrr.io/r/stats/decompose.html'>decompose</a></code>, <code><a href='https://rdrr.io/r/stats/StructTS.html'>StructTS</a></code>,
 <code><a href='https://rdrr.io/r/stats/stlmethods.html'>plot.stl</a></code>.</p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Mitchell O'Hara-Wild</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
-<span class='no'>co2</span> <span class='kw'>%&gt;%</span> <span class='no'>decompose</span> <span class='kw'>%&gt;%</span> <span class='no'>autoplot</span></div><div class='img'><img src='autoplot.seas-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>nottem</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/stats/stl.html'>stl</a></span>(<span class='kw'>s.window</span><span class='kw'>=</span><span class='st'>'periodic'</span>) <span class='kw'>%&gt;%</span> <span class='no'>autoplot</span></div><div class='img'><img src='autoplot.seas-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>seasonal</span>)
-<span class='fu'>seas</span>(<span class='no'>USAccDeaths</span>) <span class='kw'>%&gt;%</span> <span class='no'>autoplot</span>
-}</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span>)
+<span class='kw'>co2</span> <span class='op'>%&gt;%</span> <span class='kw'>decompose</span> <span class='op'>%&gt;%</span> <span class='kw'>autoplot</span>
+</div><div class='img'><img src='autoplot.seas-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='kw'>nottem</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/stats/stl.html'>stl</a></span>(s.window=<span class='st'>'periodic'</span>) <span class='op'>%&gt;%</span> <span class='kw'>autoplot</span>
+</div><div class='img'><img src='autoplot.seas-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'>seasonal</span>)
+<span class='fu'>seas</span>(<span class='kw'>USAccDeaths</span>) <span class='op'>%&gt;%</span> <span class='kw'>autoplot</span>
+}
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -203,7 +210,7 @@ takes place.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

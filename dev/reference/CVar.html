@@ -140,13 +140,13 @@ not be used.</p>
     </div>
 
     <pre class="usage"><span class='fu'>CVar</span>(
-  <span class='no'>y</span>,
-  <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>nnetar</span>,
-  <span class='kw'>cvtrace</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>blocked</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>LBlags</span> <span class='kw'>=</span> <span class='fl'>24</span>,
-  <span class='no'>...</span>
+  <span class='kw'>y</span>,
+  k = <span class='fl'>10</span>,
+  FUN = <span class='kw'>nnetar</span>,
+  cvtrace = <span class='fl'>FALSE</span>,
+  blocked = <span class='fl'>FALSE</span>,
+  LBlags = <span class='fl'>24</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -196,11 +196,15 @@ validity of cross-validation for evaluating time series prediction.
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='CV.html'>CV</a>, <a href='tsCV.html'>tsCV</a>.</p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Gabriel Caceres and Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>modelcv</span> <span class='kw'>&lt;-</span> <span class='fu'>CVar</span>(<span class='no'>lynx</span>, <span class='kw'>k</span><span class='kw'>=</span><span class='fl'>5</span>, <span class='kw'>lambda</span><span class='kw'>=</span><span class='fl'>0.15</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>modelcv</span>)</div><div class='output co'>#&gt; Series: lynx 
+<span class='kw'>modelcv</span> <span class='op'>&lt;-</span> <span class='fu'>CVar</span>(<span class='kw'>lynx</span>, k=<span class='fl'>5</span>, lambda=<span class='fl'>0.15</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>modelcv</span>)
+</div><div class='output co'>#&gt; Series: lynx 
 #&gt; Call:   CVar(y = lynx, k = 5, lambda = 0.15)
 #&gt; 
 #&gt; 5-fold cross-validation
@@ -216,7 +220,8 @@ validity of cross-validation for evaluating time series prediction.
 #&gt; p-value of Ljung-Box test of residuals is  0.1454124 
 #&gt; if this value is significant (&lt;0.05),
 #&gt; the result of the cross-validation should not be used
-#&gt; as the model is underfitting the data.</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>modelcv</span>$<span class='no'>fold1</span>)</div><div class='output co'>#&gt; $model
+#&gt; as the model is underfitting the data.</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>modelcv</span><span class='op'>$</span><span class='kw'>fold1</span>)
+</div><div class='output co'>#&gt; $model
 #&gt; Series: y 
 #&gt; Model:  NNAR(11,6) 
 #&gt; Call:   FUN(y = y, lambda = 0.15, subset = trainset)
@@ -260,10 +265,12 @@ validity of cross-validation for evaluating time series prediction.
 #&gt;  [1]   1   6   8   9  10  12  20  30  41  48  56  59  67  68  72  74  77  84  99
 #&gt; [20] 104 110 111 112
 #&gt; </div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>lynx</span>, <span class='kw'>series</span><span class='kw'>=</span><span class='st'>"Data"</span>) +
-  <span class='fu'><a href='autolayer.html'>autolayer</a></span>(<span class='no'>modelcv</span>$<span class='no'>testfit</span>, <span class='kw'>series</span><span class='kw'>=</span><span class='st'>"Fits"</span>) +
-  <span class='fu'><a href='autolayer.html'>autolayer</a></span>(<span class='no'>modelcv</span>$<span class='no'>residuals</span>, <span class='kw'>series</span><span class='kw'>=</span><span class='st'>"Residuals"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 11 row(s) containing missing values (geom_path).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 11 row(s) containing missing values (geom_path).</span></div><div class='img'><img src='CVar-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='autoplot.acf.html'>ggAcf</a></span>(<span class='no'>modelcv</span>$<span class='no'>residuals</span>)</div><div class='img'><img src='CVar-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span>)
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='kw'>lynx</span>, series=<span class='st'>"Data"</span>) <span class='op'>+</span>
+  <span class='fu'><a href='autolayer.html'>autolayer</a></span>(<span class='kw'>modelcv</span><span class='op'>$</span><span class='kw'>testfit</span>, series=<span class='st'>"Fits"</span>) <span class='op'>+</span>
+  <span class='fu'><a href='autolayer.html'>autolayer</a></span>(<span class='kw'>modelcv</span><span class='op'>$</span><span class='kw'>residuals</span>, series=<span class='st'>"Residuals"</span>)
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 11 row(s) containing missing values (geom_path).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 11 row(s) containing missing values (geom_path).</span></div><div class='img'><img src='CVar-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='autoplot.acf.html'>ggAcf</a></span>(<span class='kw'>modelcv</span><span class='op'>$</span><span class='kw'>residuals</span>)
+</div><div class='img'><img src='CVar-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -280,7 +287,7 @@ validity of cross-validation for evaluating time series prediction.
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

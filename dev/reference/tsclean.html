@@ -129,7 +129,7 @@ seasonal series. To estimate missing values and outlier replacements,
 linear interpolation is used on the (possibly seasonally adjusted) series</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tsclean</span>(<span class='no'>x</span>, <span class='kw'>replace.missing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>tsclean</span>(<span class='kw'>x</span>, replace.missing = <span class='fl'>TRUE</span>, lambda = <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -159,10 +159,15 @@ data transformed before model is estimated.</p></td>
 
     <div class='dont-index'><p><code><a href='na.interp.html'>na.interp</a></code>,
 <code><a href='tsoutliers.html'>tsoutliers</a></code>, <code><a href='https://rdrr.io/r/stats/supsmu.html'>supsmu</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>cleangold</span> <span class='kw'>&lt;-</span> <span class='fu'>tsclean</span>(<span class='no'>gold</span>)</div></pre>
+<span class='kw'>cleangold</span> <span class='op'>&lt;-</span> <span class='fu'>tsclean</span>(<span class='kw'>gold</span>)
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -178,7 +183,7 @@ data transformed before model is estimated.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

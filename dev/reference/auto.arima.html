@@ -130,42 +130,42 @@ provided.</p>
     </div>
 
     <pre class="usage"><span class='fu'>auto.arima</span>(
-  <span class='no'>y</span>,
-  <span class='kw'>d</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>D</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>max.p</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>max.q</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>max.P</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>max.Q</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>max.order</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>max.d</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>max.D</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>start.p</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>start.q</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>start.P</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>start.Q</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>stationary</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>seasonal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>ic</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"aicc"</span>, <span class='st'>"aic"</span>, <span class='st'>"bic"</span>),
-  <span class='kw'>stepwise</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>nmodels</span> <span class='kw'>=</span> <span class='fl'>94</span>,
-  <span class='kw'>trace</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>approximation</span> <span class='kw'>=</span> (<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>x</span>) <span class='kw'>&gt;</span> <span class='fl'>150</span> <span class='kw'>|</span> <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='no'>x</span>) <span class='kw'>&gt;</span> <span class='fl'>12</span>),
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>truncate</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>xreg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"kpss"</span>, <span class='st'>"adf"</span>, <span class='st'>"pp"</span>),
-  <span class='kw'>test.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  <span class='kw'>seasonal.test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"seas"</span>, <span class='st'>"ocsb"</span>, <span class='st'>"hegy"</span>, <span class='st'>"ch"</span>),
-  <span class='kw'>seasonal.test.args</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
-  <span class='kw'>allowdrift</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>allowmean</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>num.cores</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>,
-  <span class='no'>...</span>
+  <span class='kw'>y</span>,
+  d = <span class='fl'>NA</span>,
+  D = <span class='fl'>NA</span>,
+  max.p = <span class='fl'>5</span>,
+  max.q = <span class='fl'>5</span>,
+  max.P = <span class='fl'>2</span>,
+  max.Q = <span class='fl'>2</span>,
+  max.order = <span class='fl'>5</span>,
+  max.d = <span class='fl'>2</span>,
+  max.D = <span class='fl'>1</span>,
+  start.p = <span class='fl'>2</span>,
+  start.q = <span class='fl'>2</span>,
+  start.P = <span class='fl'>1</span>,
+  start.Q = <span class='fl'>1</span>,
+  stationary = <span class='fl'>FALSE</span>,
+  seasonal = <span class='fl'>TRUE</span>,
+  ic = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"aicc"</span>, <span class='st'>"aic"</span>, <span class='st'>"bic"</span>),
+  stepwise = <span class='fl'>TRUE</span>,
+  nmodels = <span class='fl'>94</span>,
+  trace = <span class='fl'>FALSE</span>,
+  approximation = (<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='kw'>x</span>) <span class='op'>&gt;</span> <span class='fl'>150</span> <span class='op'>|</span> <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='kw'>x</span>) <span class='op'>&gt;</span> <span class='fl'>12</span>),
+  method = <span class='kw'>NULL</span>,
+  truncate = <span class='kw'>NULL</span>,
+  xreg = <span class='kw'>NULL</span>,
+  test = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"kpss"</span>, <span class='st'>"adf"</span>, <span class='st'>"pp"</span>),
+  test.args = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  seasonal.test = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"seas"</span>, <span class='st'>"ocsb"</span>, <span class='st'>"hegy"</span>, <span class='st'>"ch"</span>),
+  seasonal.test.args = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
+  allowdrift = <span class='fl'>TRUE</span>,
+  allowmean = <span class='fl'>TRUE</span>,
+  lambda = <span class='kw'>NULL</span>,
+  biasadj = <span class='fl'>FALSE</span>,
+  parallel = <span class='fl'>FALSE</span>,
+  num.cores = <span class='fl'>2</span>,
+  x = <span class='kw'>y</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -376,10 +376,14 @@ for time series data", <em>Data Mining and Knowledge Discovery</em>,
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='Arima.html'>Arima</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>auto.arima</span>(<span class='no'>WWWusage</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>,<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>20</span>))</div><div class='img'><img src='auto.arima-1.png' alt='' width='700' height='433' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='kw'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>auto.arima</span>(<span class='kw'>WWWusage</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>fit</span>,h=<span class='fl'>20</span>))
+</div><div class='img'><img src='auto.arima-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -396,7 +400,7 @@ for time series data", <em>Data Mining and Knowledge Discovery</em>,
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

@@ -127,7 +127,7 @@ seasonal series to identify outliers and estimate their replacements." />
 seasonal series to identify outliers and estimate their replacements.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tsoutliers</span>(<span class='no'>x</span>, <span class='kw'>iterate</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>tsoutliers</span>(<span class='kw'>x</span>, iterate = <span class='fl'>2</span>, lambda = <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -159,11 +159,15 @@ data transformed before model is estimated.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='na.interp.html'>na.interp</a></code>, <code><a href='tsclean.html'>tsclean</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>gold</span>)
-<span class='fu'>tsoutliers</span>(<span class='no'>gold</span>)</div><div class='output co'>#&gt; $index
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>gold</span>)
+<span class='fu'>tsoutliers</span>(<span class='kw'>gold</span>)
+</div><div class='output co'>#&gt; $index
 #&gt; [1] 770
 #&gt; 
 #&gt; $replacements
@@ -185,7 +189,7 @@ data transformed before model is estimated.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

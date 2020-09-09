@@ -129,7 +129,7 @@ series. For seasonal data, it will return the seasonal period. For cyclic
 data, it will return the average cycle length.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>findfrequency</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>findfrequency</span>(<span class='kw'>x</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -152,10 +152,16 @@ If there is a large (possibly local) maximum in the spectral density
 function at frequency \(f\), then the function will return the period
 \(1/f\) (rounded to the nearest integer). If no such dominant frequency
 can be found, the function will return 1.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'>findfrequency</span>(<span class='no'>USAccDeaths</span>) <span class='co'># Monthly data</span></div><div class='output co'>#&gt; [1] 12</div><div class='input'><span class='fu'>findfrequency</span>(<span class='no'>taylor</span>) <span class='co'># Half-hourly data</span></div><div class='output co'>#&gt; [1] 48</div><div class='input'><span class='fu'>findfrequency</span>(<span class='no'>lynx</span>) <span class='co'># Annual data</span></div><div class='output co'>#&gt; [1] 10</div><div class='input'>
+<span class='fu'>findfrequency</span>(<span class='kw'>USAccDeaths</span>) <span class='co'># Monthly data</span>
+</div><div class='output co'>#&gt; [1] 12</div><div class='input'><span class='fu'>findfrequency</span>(<span class='kw'>taylor</span>) <span class='co'># Half-hourly data</span>
+</div><div class='output co'>#&gt; [1] 48</div><div class='input'><span class='fu'>findfrequency</span>(<span class='kw'>lynx</span>) <span class='co'># Annual data</span>
+</div><div class='output co'>#&gt; [1] 10</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -172,7 +178,7 @@ can be found, the function will return 1.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

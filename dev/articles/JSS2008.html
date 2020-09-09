@@ -266,9 +266,13 @@ The innovations state space modelling framework described in Section  is impleme
 
 <p>Although there is a lot of computation involved, it can be handled remarkably quickly on modern computers. Each of the forecasts shown in Figure  took no more than a few seconds on a standard PC. The US electricity generation series took the longest as there are no analytical prediction intervals available for the ETS(M,M,N) model. Consequently, the prediction intervals for this series were computed using simulation of 5000 future sample paths.</p>
 <p>To apply the algorithm to the US net electricity generation time series , we use the following command.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="no">etsfit</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ets.html">ets</a></span>(<span class="no">usnetelec</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="kw">etsfit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ets.html">ets</a></span>(<span class="kw">usnetelec</span>)
+</pre></div>
 <p>The object  is of class ``’’ and contains all of the necessary information about the fitted model including model parameters, the value of the state vector <span class="math inline">\(\bm{x}_t\)</span> for all <span class="math inline">\(t\)</span>, residuals and so on. Printing the  object shows the main items of interest.</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">etsfit</span></pre></body></html></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="kw">etsfit</span>
+</pre></div>
 <pre><code>## ETS(M,A,N) 
 ## 
 ## Call:
@@ -287,7 +291,9 @@ The innovations state space modelling framework described in Section  is impleme
 ##      AIC     AICc      BIC 
 ## 634.0437 635.2682 644.0803</code></pre>
 <p>Some goodness-of-fit measures <span class="citation">(defined in Hyndman and Koehler 2006)</span> are obtained using .</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="../reference/accuracy.html">accuracy</a></span>(<span class="no">etsfit</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="fu"><a href="../reference/accuracy.html">accuracy</a></span>(<span class="kw">etsfit</span>)
+</pre></div>
 <pre><code>##                    ME     RMSE      MAE       MPE     MAPE      MASE
 ## Training set 1.162583 52.00363 36.77721 0.2629582 1.942062 0.5211014
 ##                     ACF1
@@ -295,7 +301,9 @@ The innovations state space modelling framework described in Section  is impleme
 <p>There are also , , , ,  and  methods for objects of class ``’’. The  function shows time plots of the original time series along with the extracted components (level, growth and seasonal).</p>
 <p>The  function computes the required forecasts which are then plotted as in Figure (b).</p>
 <p>Printing the  object gives a table showing the prediction intervals.</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">fcast</span></pre></body></html></div>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="kw">fcast</span>
+</pre></div>
 <pre><code>##      Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
 ## 2004       3900.329 3770.801 4029.857 3702.233 4098.425
 ## 2005       3952.650 3747.279 4158.022 3638.562 4266.738
@@ -308,11 +316,15 @@ The innovations state space modelling framework described in Section  is impleme
 ## 2012       4318.898 3528.985 5108.812 3110.830 5526.967
 ## 2013       4371.220 3482.552 5259.888 3012.119 5730.320</code></pre>
 <p>The  function also provides the useful feature of applying a fitted model to a new data set. For example, we could withhold 10 observations from the  data set when fitting, then compute the one-step forecast errors for the out-of-sample data.</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">fit</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ets.html">ets</a></span>(<span class="no">usnetelec</span>[<span class="fl">1</span>:<span class="fl">45</span>])
-<span class="no">test</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/ets.html">ets</a></span>(<span class="no">usnetelec</span>[<span class="fl">46</span>:<span class="fl">55</span>], <span class="kw">model</span> <span class="kw">=</span> <span class="no">fit</span>)
-<span class="fu"><a href="../reference/accuracy.html">accuracy</a></span>(<span class="no">test</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb8"><pre class="downlit">
+<span class="kw">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ets.html">ets</a></span>(<span class="kw">usnetelec</span>[<span class="fl">1</span><span class="op">:</span><span class="fl">45</span>])
+<span class="kw">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ets.html">ets</a></span>(<span class="kw">usnetelec</span>[<span class="fl">46</span><span class="op">:</span><span class="fl">55</span>], model = <span class="kw">fit</span>)
+<span class="fu"><a href="../reference/accuracy.html">accuracy</a></span>(<span class="kw">test</span>)
+</pre></div>
 <p>We can also look at the measures of forecast accuracy where the forecasts are based on only the fitting data.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="../reference/accuracy.html">accuracy</a></span>(<span class="fu"><a href="../reference/forecast.html">forecast</a></span>(<span class="no">fit</span>,<span class="fl">10</span>), <span class="no">usnetelec</span>[<span class="fl">46</span>:<span class="fl">55</span>])</pre></body></html></div>
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="fu"><a href="../reference/accuracy.html">accuracy</a></span>(<span class="fu"><a href="../reference/forecast.html">forecast</a></span>(<span class="kw">fit</span>,<span class="fl">10</span>), <span class="kw">usnetelec</span>[<span class="fl">46</span><span class="op">:</span><span class="fl">55</span>])
+</pre></div>
 </div>
 <div id="the-holtwinters-function" class="section level2">
 <h2 class="hasAnchor">
@@ -330,9 +342,11 @@ Four time series showing point forecasts and 80% &amp; 95% prediction intervals 
 </div>
 <p>The algorithm of Section  is applied to the same four time series. Unlike the exponential smoothing algorithm, the ARIMA class of models assumes homoscedasticity, which is not always appropriate. Consequently, transformations are sometimes necessary. For these four time series, we model the raw data for series (a)–(c), but the logged data for series (d). The prediction intervals are back-transformed with the point forecasts to preserve the probability coverage.</p>
 <p>To apply this algorithm to the US net electricity generation time series , we use the following commands.</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">arimafit</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/auto.arima.html">auto.arima</a></span>(<span class="no">usnetelec</span>)
-<span class="no">fcast</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/forecast.html">forecast</a></span>(<span class="no">arimafit</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">fcast</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb10"><pre class="downlit">
+<span class="kw">arimafit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto.arima.html">auto.arima</a></span>(<span class="kw">usnetelec</span>)
+<span class="kw">fcast</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/forecast.html">forecast</a></span>(<span class="kw">arimafit</span>)
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">fcast</span>)
+</pre></div>
 The function  implements the algorithm of Section  and returns an object of class . The resulting forecasts are shown in Figure . The fitted models are as follows:
 
 <p>Note that the  parameterization has <span class="math inline">\(\theta(B) = (1 + \theta_1B + \dots + \theta_qB)\)</span> and <span class="math inline">\(\phi(B) = (1 - \phi_1B + \dots - \phi_qB)\)</span>, and similarly for the seasonal terms.</p>
@@ -601,7 +615,7 @@ The output from the  function is an object of class ``’’ and includes at lea
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

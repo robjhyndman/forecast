@@ -130,31 +130,31 @@ against the seasons in separate years.</p>
     </div>
 
     <pre class="usage"><span class='fu'>ggseasonplot</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>season.labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>year.labels</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>year.labels.left</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>continuous</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>polar</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>labelgap</span> <span class='kw'>=</span> <span class='fl'>0.04</span>,
-  <span class='no'>...</span>
+  <span class='kw'>x</span>,
+  season.labels = <span class='kw'>NULL</span>,
+  year.labels = <span class='fl'>FALSE</span>,
+  year.labels.left = <span class='fl'>FALSE</span>,
+  type = <span class='kw'>NULL</span>,
+  col = <span class='kw'>NULL</span>,
+  continuous = <span class='fl'>FALSE</span>,
+  polar = <span class='fl'>FALSE</span>,
+  labelgap = <span class='fl'>0.04</span>,
+  <span class='kw'>...</span>
 )
 
 <span class='fu'>seasonplot</span>(
-  <span class='no'>x</span>,
-  <span class='no'>s</span>,
-  <span class='kw'>season.labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>year.labels</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>year.labels.left</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"o"</span>,
-  <span class='no'>main</span>,
-  <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>col</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>labelgap</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
-  <span class='no'>...</span>
+  <span class='kw'>x</span>,
+  <span class='kw'>s</span>,
+  season.labels = <span class='kw'>NULL</span>,
+  year.labels = <span class='fl'>FALSE</span>,
+  year.labels.left = <span class='fl'>FALSE</span>,
+  type = <span class='st'>"o"</span>,
+  <span class='kw'>main</span>,
+  xlab = <span class='kw'>NULL</span>,
+  ylab = <span class='st'>""</span>,
+  col = <span class='fl'>1</span>,
+  labelgap = <span class='fl'>0.1</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -233,10 +233,16 @@ and practice</em>, 2nd edition, OTexts: Melbourne, Australia.
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/r/stats/monthplot.html'>monthplot</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rob J Hyndman &amp; Mitchell O'Hara-Wild</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>ggseasonplot</span>(<span class='no'>AirPassengers</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>rainbow</a></span>(<span class='fl'>12</span>), <span class='kw'>year.labels</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='seasonplot-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>ggseasonplot</span>(<span class='no'>AirPassengers</span>, <span class='kw'>year.labels</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>continuous</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='seasonplot-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'>seasonplot</span>(<span class='no'>AirPassengers</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>rainbow</a></span>(<span class='fl'>12</span>), <span class='kw'>year.labels</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='seasonplot-3.png' alt='' width='700' height='433' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>ggseasonplot</span>(<span class='kw'>AirPassengers</span>, col=<span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>rainbow</a></span>(<span class='fl'>12</span>), year.labels=<span class='fl'>TRUE</span>)
+</div><div class='img'><img src='seasonplot-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>ggseasonplot</span>(<span class='kw'>AirPassengers</span>, year.labels=<span class='fl'>TRUE</span>, continuous=<span class='fl'>TRUE</span>)
+</div><div class='img'><img src='seasonplot-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>seasonplot</span>(<span class='kw'>AirPassengers</span>, col=<span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>rainbow</a></span>(<span class='fl'>12</span>), year.labels=<span class='fl'>TRUE</span>)
+</div><div class='img'><img src='seasonplot-3.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -253,7 +259,7 @@ and practice</em>, 2nd edition, OTexts: Melbourne, Australia.
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

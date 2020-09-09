@@ -128,29 +128,29 @@ scatterplot or spectrum.</p>
     </div>
 
     <pre class="usage"><span class='fu'>ggtsdisplay</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>plot.type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"partial"</span>, <span class='st'>"histogram"</span>, <span class='st'>"scatter"</span>, <span class='st'>"spectrum"</span>),
-  <span class='kw'>points</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>smooth</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>lag.max</span>,
-  <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='no'>na.contiguous</span>,
-  <span class='kw'>theme</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
+  <span class='kw'>x</span>,
+  plot.type = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"partial"</span>, <span class='st'>"histogram"</span>, <span class='st'>"scatter"</span>, <span class='st'>"spectrum"</span>),
+  points = <span class='fl'>TRUE</span>,
+  smooth = <span class='fl'>FALSE</span>,
+  <span class='kw'>lag.max</span>,
+  na.action = <span class='kw'>na.contiguous</span>,
+  theme = <span class='kw'>NULL</span>,
+  <span class='kw'>...</span>
 )
 
 <span class='fu'>tsdisplay</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>plot.type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"partial"</span>, <span class='st'>"histogram"</span>, <span class='st'>"scatter"</span>, <span class='st'>"spectrum"</span>),
-  <span class='kw'>points</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>ci.type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"white"</span>, <span class='st'>"ma"</span>),
-  <span class='no'>lag.max</span>,
-  <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='no'>na.contiguous</span>,
-  <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-  <span class='no'>...</span>
+  <span class='kw'>x</span>,
+  plot.type = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"partial"</span>, <span class='st'>"histogram"</span>, <span class='st'>"scatter"</span>, <span class='st'>"spectrum"</span>),
+  points = <span class='fl'>TRUE</span>,
+  ci.type = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"white"</span>, <span class='st'>"ma"</span>),
+  <span class='kw'>lag.max</span>,
+  na.action = <span class='kw'>na.contiguous</span>,
+  main = <span class='kw'>NULL</span>,
+  xlab = <span class='st'>""</span>,
+  ylab = <span class='st'>""</span>,
+  pch = <span class='fl'>1</span>,
+  cex = <span class='fl'>0.5</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -236,11 +236,17 @@ and practice</em>, 2nd edition, OTexts: Melbourne, Australia.
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/r/stats/plot.ts.html'>plot.ts</a></code>, <code><a href='Acf.html'>Acf</a></code>,
 <code><a href='https://rdrr.io/r/stats/spec.ar.html'>spec.ar</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
-<span class='fu'>ggtsdisplay</span>(<span class='no'>USAccDeaths</span>, <span class='kw'>plot.type</span><span class='kw'>=</span><span class='st'>"scatter"</span>, <span class='kw'>theme</span><span class='kw'>=</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_bw</a></span>())</div><div class='img'><img src='tsdisplay-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'>tsdisplay</span>(<span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span>(<span class='no'>WWWusage</span>))</div><div class='img'><img src='tsdisplay-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>ggtsdisplay</span>(<span class='no'>USAccDeaths</span>, <span class='kw'>plot.type</span><span class='kw'>=</span><span class='st'>"scatter"</span>)</div><div class='img'><img src='tsdisplay-3.png' alt='' width='700' height='433' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span>)
+<span class='fu'>ggtsdisplay</span>(<span class='kw'>USAccDeaths</span>, plot.type=<span class='st'>"scatter"</span>, theme=<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_bw</a></span>())
+</div><div class='img'><img src='tsdisplay-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>tsdisplay</span>(<span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span>(<span class='kw'>WWWusage</span>))
+</div><div class='img'><img src='tsdisplay-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>ggtsdisplay</span>(<span class='kw'>USAccDeaths</span>, plot.type=<span class='st'>"scatter"</span>)
+</div><div class='img'><img src='tsdisplay-3.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -257,7 +263,7 @@ and practice</em>, 2nd edition, OTexts: Melbourne, Australia.
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

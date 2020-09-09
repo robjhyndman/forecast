@@ -125,7 +125,7 @@
     <p>Returns the order of a univariate ARIMA or ARFIMA model.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>arimaorder</span>(<span class='no'>object</span>)</pre>
+    <pre class="usage"><span class='fu'>arimaorder</span>(<span class='kw'>object</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -150,9 +150,13 @@ contains the values \(p\), \(d\), \(q\), \(P\), \(D\), \(Q\) and
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/r/stats/ar.html'>ar</a></code>, <code><a href='auto.arima.html'>auto.arima</a></code>,
 <code><a href='Arima.html'>Arima</a></code>, <code><a href='https://rdrr.io/r/stats/arima.html'>arima</a></code>, <code><a href='arfima.html'>arfima</a></code>.</p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>WWWusage</span> <span class='kw'>%&gt;%</span> <span class='no'>auto.arima</span> <span class='kw'>%&gt;%</span> <span class='no'>arimaorder</span></div><div class='output co'>#&gt; p d q 
+    <pre class="examples"><div class='input'><span class='kw'>WWWusage</span> <span class='op'>%&gt;%</span> <span class='kw'>auto.arima</span> <span class='op'>%&gt;%</span> <span class='kw'>arimaorder</span>
+</div><div class='output co'>#&gt; p d q 
 #&gt; 1 1 1 </div><div class='input'>
 </div></pre>
   </div>
@@ -170,7 +174,7 @@ contains the values \(p\), \(d\), \(q\), \(P\), \(D\), \(Q\) and
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

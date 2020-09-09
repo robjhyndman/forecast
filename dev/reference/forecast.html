@@ -129,24 +129,24 @@ time series models. The function invokes particular <em>methods</em> which
 depend on the class of the first argument.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>forecast</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>forecast</span>(<span class='kw'>object</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>forecast</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+<span class='fu'>forecast</span>(<span class='kw'>object</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for ts</span>
 <span class='fu'>forecast</span>(
-  <span class='no'>object</span>,
-  <span class='kw'>h</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='no'>object</span>) <span class='kw'>&gt;</span> <span class='fl'>1</span>, <span class='fl'>2</span> * <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='no'>object</span>), <span class='fl'>10</span>),
-  <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
-  <span class='kw'>fan</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>robust</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>find.frequency</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>allow.multiplicative.trend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
+  <span class='kw'>object</span>,
+  h = <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='kw'>object</span>) <span class='op'>&gt;</span> <span class='fl'>1</span>, <span class='fl'>2</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='kw'>object</span>), <span class='fl'>10</span>),
+  level = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
+  fan = <span class='fl'>FALSE</span>,
+  robust = <span class='fl'>FALSE</span>,
+  lambda = <span class='kw'>NULL</span>,
+  biasadj = <span class='fl'>FALSE</span>,
+  find.frequency = <span class='fl'>FALSE</span>,
+  allow.multiplicative.trend = <span class='fl'>FALSE</span>,
+  model = <span class='kw'>NULL</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -240,7 +240,7 @@ values.</p></dd> <dt>fitted</dt><dd><p>Fitted values (one-step forecasts)</p></d
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>For example, the function <code><a href='forecast.Arima.html'>forecast.Arima</a></code> makes forecasts based
+    <p>For example, the function <code><a href='forecast.fracdiff.html'>forecast.Arima</a></code> makes forecasts based
 on the results produced by <code><a href='https://rdrr.io/r/stats/arima.html'>arima</a></code>.</p>
 <p>If <code>model=NULL</code>,the function <code>forecast.ts</code> makes forecasts
 using <code><a href='ets.html'>ets</a></code> models (if the data are non-seasonal or the seasonal
@@ -252,16 +252,21 @@ accordingly.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other functions which return objects of class <code>"forecast"</code> are
-<code><a href='forecast.ets.html'>forecast.ets</a></code>, <code><a href='forecast.Arima.html'>forecast.Arima</a></code>,
+<code><a href='forecast.ets.html'>forecast.ets</a></code>, <code><a href='forecast.fracdiff.html'>forecast.Arima</a></code>,
 <code><a href='forecast.HoltWinters.html'>forecast.HoltWinters</a></code>, <code><a href='forecast.StructTS.html'>forecast.StructTS</a></code>,
-<code><a href='meanf.html'>meanf</a></code>, <code><a href='naive.html'>rwf</a></code>, <code><a href='splinef.html'>splinef</a></code>,
+<code><a href='meanf.html'>meanf</a></code>, <code><a href='rwf.html'>rwf</a></code>, <code><a href='splinef.html'>splinef</a></code>,
 <code><a href='thetaf.html'>thetaf</a></code>, <code><a href='croston.html'>croston</a></code>, <code><a href='ses.html'>ses</a></code>,
 <code><a href='ses.html'>holt</a></code>, <code><a href='ses.html'>hw</a></code>.</p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>WWWusage</span> <span class='kw'>%&gt;%</span> <span class='no'>forecast</span> <span class='kw'>%&gt;%</span> <span class='no'>plot</span></div><div class='img'><img src='forecast-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ets.html'>ets</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/window.html'>window</a></span>(<span class='no'>WWWusage</span>, <span class='kw'>end</span><span class='kw'>=</span><span class='fl'>60</span>))
-<span class='no'>fc</span> <span class='kw'>&lt;-</span> <span class='fu'>forecast</span>(<span class='no'>WWWusage</span>, <span class='kw'>model</span><span class='kw'>=</span><span class='no'>fit</span>)</div><div class='output co'>#&gt; <span class='message'>Model is being refit with current smoothing parameters but initial states are being re-estimated.</span>
+<span class='kw'>WWWusage</span> <span class='op'>%&gt;%</span> <span class='kw'>forecast</span> <span class='op'>%&gt;%</span> <span class='kw'>plot</span>
+</div><div class='img'><img src='forecast-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='kw'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ets.html'>ets</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/window.html'>window</a></span>(<span class='kw'>WWWusage</span>, end=<span class='fl'>60</span>))
+<span class='kw'>fc</span> <span class='op'>&lt;-</span> <span class='fu'>forecast</span>(<span class='kw'>WWWusage</span>, model=<span class='kw'>fit</span>)
+</div><div class='output co'>#&gt; <span class='message'>Model is being refit with current smoothing parameters but initial states are being re-estimated.</span>
 #&gt; <span class='message'>Set 'use.initial.values=TRUE' if you want to re-use existing initial values.</span></div><div class='input'>
 </div></pre>
   </div>
@@ -279,7 +284,7 @@ accordingly.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

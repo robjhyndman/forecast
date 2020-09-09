@@ -127,7 +127,7 @@ seasonality components." />
 seasonality components.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tslm</span>(<span class='no'>formula</span>, <span class='no'>data</span>, <span class='no'>subset</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>tslm</span>(<span class='kw'>formula</span>, <span class='kw'>data</span>, <span class='kw'>subset</span>, lambda = <span class='kw'>NULL</span>, biasadj = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -183,12 +183,16 @@ month or the quarter depending on the frequency of the data).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='forecast.lm.html'>forecast.lm</a></code>, <code><a href='https://rdrr.io/r/stats/lm.html'>lm</a></code>.</p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Mitchell O'Hara-Wild and Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/ts.html'>ts</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>120</span>,<span class='fl'>0</span>,<span class='fl'>3</span>) + <span class='fl'>1</span>:<span class='fl'>120</span> + <span class='fl'>20</span>*<span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>sin</a></span>(<span class='fl'>2</span>*<span class='no'>pi</span>*(<span class='fl'>1</span>:<span class='fl'>120</span>)/<span class='fl'>12</span>), <span class='kw'>frequency</span><span class='kw'>=</span><span class='fl'>12</span>)
-<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>tslm</span>(<span class='no'>y</span> ~ <span class='no'>trend</span> + <span class='no'>season</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>, <span class='kw'>h</span><span class='kw'>=</span><span class='fl'>20</span>))</div><div class='img'><img src='tslm-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='kw'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/ts.html'>ts</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>120</span>,<span class='fl'>0</span>,<span class='fl'>3</span>) <span class='op'>+</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>120</span> <span class='op'>+</span> <span class='fl'>20</span><span class='op'>*</span><span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>sin</a></span>(<span class='fl'>2</span><span class='op'>*</span><span class='kw'>pi</span><span class='op'>*</span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>120</span>)<span class='op'>/</span><span class='fl'>12</span>), frequency=<span class='fl'>12</span>)
+<span class='kw'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>tslm</span>(<span class='kw'>y</span> <span class='op'>~</span> <span class='kw'>trend</span> <span class='op'>+</span> <span class='kw'>season</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>fit</span>, h=<span class='fl'>20</span>))
+</div><div class='img'><img src='tslm-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -205,7 +209,7 @@ month or the quarter depending on the frequency of the data).</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

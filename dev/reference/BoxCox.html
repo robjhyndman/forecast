@@ -127,9 +127,9 @@ transformation. InvBoxCox() reverses the transformation." />
 transformation. InvBoxCox() reverses the transformation.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>BoxCox</span>(<span class='no'>x</span>, <span class='no'>lambda</span>)
+    <pre class="usage"><span class='fu'>BoxCox</span>(<span class='kw'>x</span>, <span class='kw'>lambda</span>)
 
-<span class='fu'>InvBoxCox</span>(<span class='no'>x</span>, <span class='no'>lambda</span>, <span class='kw'>biasadj</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>fvar</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>InvBoxCox</span>(<span class='kw'>x</span>, <span class='kw'>lambda</span>, biasadj = <span class='fl'>FALSE</span>, fvar = <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -173,12 +173,16 @@ transformations. <em>JRSS B</em> <b>26</b> 211--246.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='BoxCox.lambda.html'>BoxCox.lambda</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rob J Hyndman &amp; Mitchell O'Hara-Wild</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>lambda</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BoxCox.lambda.html'>BoxCox.lambda</a></span>(<span class='no'>lynx</span>)
-<span class='no'>lynx.fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/ar.html'>ar</a></span>(<span class='fu'>BoxCox</span>(<span class='no'>lynx</span>,<span class='no'>lambda</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>lynx.fit</span>,<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>20</span>,<span class='kw'>lambda</span><span class='kw'>=</span><span class='no'>lambda</span>))</div><div class='output co'>#&gt; <span class='error'>Error in NextMethod(.Generic): cannot assign 'tsp' to zero-length vector</span></div><div class='input'>
+<span class='kw'>lambda</span> <span class='op'>&lt;-</span> <span class='fu'><a href='BoxCox.lambda.html'>BoxCox.lambda</a></span>(<span class='kw'>lynx</span>)
+<span class='kw'>lynx.fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/ar.html'>ar</a></span>(<span class='fu'>BoxCox</span>(<span class='kw'>lynx</span>,<span class='kw'>lambda</span>))
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>lynx.fit</span>,h=<span class='fl'>20</span>,lambda=<span class='kw'>lambda</span>))
+</div><div class='output co'>#&gt; <span class='error'>Error in NextMethod(.Generic): cannot assign 'tsp' to zero-length vector</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -195,7 +199,7 @@ transformations. <em>JRSS B</em> <b>26</b> 211--246.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

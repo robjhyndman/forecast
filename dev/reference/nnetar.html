@@ -128,18 +128,18 @@ for forecasting univariate time series.</p>
     </div>
 
     <pre class="usage"><span class='fu'>nnetar</span>(
-  <span class='no'>y</span>,
-  <span class='no'>p</span>,
-  <span class='kw'>P</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='no'>size</span>,
-  <span class='kw'>repeats</span> <span class='kw'>=</span> <span class='fl'>20</span>,
-  <span class='kw'>xreg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scale.inputs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>y</span>,
-  <span class='no'>...</span>
+  <span class='kw'>y</span>,
+  <span class='kw'>p</span>,
+  P = <span class='fl'>1</span>,
+  <span class='kw'>size</span>,
+  repeats = <span class='fl'>20</span>,
+  xreg = <span class='kw'>NULL</span>,
+  lambda = <span class='kw'>NULL</span>,
+  model = <span class='kw'>NULL</span>,
+  subset = <span class='kw'>NULL</span>,
+  scale.inputs = <span class='fl'>TRUE</span>,
+  x = <span class='kw'>y</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -244,19 +244,29 @@ where k is the number of hidden nodes. This is analogous to an AR(p) model
 but with nonlinear functions. For seasonal data, the fitted model is called
 an NNAR(p,P,k)[m] model, which is analogous to an ARIMA(p,0,0)(P,0,0)[m]
 model but with nonlinear functions.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rob J Hyndman and Gabriel Caceres</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>nnetar</span>(<span class='no'>lynx</span>)
-<span class='no'>fcast</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>fcast</span>)</div><div class='img'><img src='nnetar-1.png' alt='' width='700' height='433' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='kw'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>nnetar</span>(<span class='kw'>lynx</span>)
+<span class='kw'>fcast</span> <span class='op'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>fit</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>fcast</span>)
+</div><div class='img'><img src='nnetar-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>## Arguments can be passed to nnet()</span>
-<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>nnetar</span>(<span class='no'>lynx</span>, <span class='kw'>decay</span><span class='kw'>=</span><span class='fl'>0.5</span>, <span class='kw'>maxit</span><span class='kw'>=</span><span class='fl'>150</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>))</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='no'>lynx</span>)</div><div class='img'><img src='nnetar-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='kw'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>nnetar</span>(<span class='kw'>lynx</span>, decay=<span class='fl'>0.5</span>, maxit=<span class='fl'>150</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>fit</span>))
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='kw'>lynx</span>)
+</div><div class='img'><img src='nnetar-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>## Fit model to first 100 years of lynx data</span>
-<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>nnetar</span>(<span class='fu'><a href='https://rdrr.io/r/stats/window.html'>window</a></span>(<span class='no'>lynx</span>,<span class='kw'>end</span><span class='kw'>=</span><span class='fl'>1920</span>), <span class='kw'>decay</span><span class='kw'>=</span><span class='fl'>0.5</span>, <span class='kw'>maxit</span><span class='kw'>=</span><span class='fl'>150</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>fit</span>,<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>14</span>))</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='no'>lynx</span>)</div><div class='img'><img src='nnetar-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='kw'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>nnetar</span>(<span class='fu'><a href='https://rdrr.io/r/stats/window.html'>window</a></span>(<span class='kw'>lynx</span>,end=<span class='fl'>1920</span>), decay=<span class='fl'>0.5</span>, maxit=<span class='fl'>150</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>fit</span>,h=<span class='fl'>14</span>))
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='kw'>lynx</span>)
+</div><div class='img'><img src='nnetar-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>## Apply fitted model to later data, including all optional arguments</span>
-<span class='no'>fit2</span> <span class='kw'>&lt;-</span> <span class='fu'>nnetar</span>(<span class='fu'><a href='https://rdrr.io/r/stats/window.html'>window</a></span>(<span class='no'>lynx</span>,<span class='kw'>start</span><span class='kw'>=</span><span class='fl'>1921</span>), <span class='kw'>model</span><span class='kw'>=</span><span class='no'>fit</span>)</div></pre>
+<span class='kw'>fit2</span> <span class='op'>&lt;-</span> <span class='fu'>nnetar</span>(<span class='fu'><a href='https://rdrr.io/r/stats/window.html'>window</a></span>(<span class='kw'>lynx</span>,start=<span class='fl'>1921</span>), model=<span class='kw'>fit</span>)
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -272,7 +282,7 @@ model but with nonlinear functions.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

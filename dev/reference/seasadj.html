@@ -127,22 +127,22 @@ component." />
 component.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>seasadj</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>seasadj</span>(<span class='kw'>object</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for stl</span>
-<span class='fu'>seasadj</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+<span class='fu'>seasadj</span>(<span class='kw'>object</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for mstl</span>
-<span class='fu'>seasadj</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+<span class='fu'>seasadj</span>(<span class='kw'>object</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for decomposed.ts</span>
-<span class='fu'>seasadj</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+<span class='fu'>seasadj</span>(<span class='kw'>object</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for tbats</span>
-<span class='fu'>seasadj</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+<span class='fu'>seasadj</span>(<span class='kw'>object</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for seas</span>
-<span class='fu'>seasadj</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>seasadj</span>(<span class='kw'>object</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -165,9 +165,14 @@ component.</p>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/r/stats/stl.html'>stl</a></code>, <code><a href='https://rdrr.io/r/stats/decompose.html'>decompose</a></code>,
 <code><a href='tbats.html'>tbats</a></code>.</p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>AirPassengers</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='fu'>seasadj</span>(<span class='fu'><a href='https://rdrr.io/r/stats/decompose.html'>decompose</a></span>(<span class='no'>AirPassengers</span>,<span class='st'>"multiplicative"</span>)),<span class='kw'>col</span><span class='kw'>=</span><span class='fl'>4</span>)</div><div class='img'><img src='seasadj-1.png' alt='' width='700' height='433' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>AirPassengers</span>)
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='fu'>seasadj</span>(<span class='fu'><a href='https://rdrr.io/r/stats/decompose.html'>decompose</a></span>(<span class='kw'>AirPassengers</span>,<span class='st'>"multiplicative"</span>)),col=<span class='fl'>4</span>)
+</div><div class='img'><img src='seasadj-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -184,7 +189,7 @@ component.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>
