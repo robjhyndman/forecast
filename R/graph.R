@@ -127,7 +127,7 @@ tsdisplay <- function(x, plot.type=c("partial", "histogram", "scatter", "spectru
 #' @seealso \code{\link[stats]{monthplot}}
 #' @references Hyndman and Athanasopoulos (2018) \emph{Forecasting: principles
 #' and practice}, 2nd edition, OTexts: Melbourne, Australia.
-#' \url{https://OTexts.org/fpp2/}
+#' \url{https://otexts.com/fpp2/}
 #' @keywords ts
 #' @examples
 #' seasonplot(AirPassengers, col=rainbow(12), year.labels=TRUE)
