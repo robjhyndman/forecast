@@ -410,7 +410,7 @@ zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, seasonal="additive"
 #' @param x Deprecated. Included for backwards compatibility.
 #' @param ... Other arguments passed to \code{forecast.ets}.
 #' @inheritParams forecast
-#' 
+#'
 #' @return An object of class "\code{forecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the
@@ -440,7 +440,7 @@ zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, seasonal="additive"
 #'
 #' @references Hyndman and Athanasopoulos (2018) \emph{Forecasting: principles
 #' and practice}, 2nd edition, OTexts: Melbourne, Australia.
-#' \url{https://OTexts.org/fpp2/}
+#' \url{https://otexts.com/fpp2/}
 #' @keywords ts
 #' @examples
 #'

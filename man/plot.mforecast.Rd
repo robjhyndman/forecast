@@ -63,7 +63,7 @@ autoplot(fcast, xlab=rep("Year",2))
 \references{
 Hyndman and Athanasopoulos (2018) \emph{Forecasting: principles
 and practice}, 2nd edition, OTexts: Melbourne, Australia.
-\url{https://OTexts.org/fpp2/}
+\url{https://otexts.com/fpp2/}
 }
 \seealso{
 \code{\link[forecast]{plot.forecast}}, \code{\link[stats]{plot.ts}}

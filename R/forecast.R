@@ -67,7 +67,7 @@ NULL # Instead of "_PACKAGE" to remove inclusion of \alias{forecast}
 #' \code{model} is not \code{NULL}, the arguments are passed to the relevant
 #' modelling function.
 #' @inheritParams BoxCox
-#' 
+#'
 #' @return An object of class "\code{forecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the
@@ -356,7 +356,7 @@ plotlmforecast <- function(object, PI, shaded, shadecols, col, fcol, pi.col, pi.
 #' @seealso \code{\link[stats]{plot.ts}}
 #' @references Hyndman and Athanasopoulos (2018) \emph{Forecasting: principles
 #' and practice}, 2nd edition, OTexts: Melbourne, Australia.
-#' \url{https://OTexts.org/fpp2/}
+#' \url{https://otexts.com/fpp2/}
 #' @keywords ts
 #' @examples
 #' library(ggplot2)

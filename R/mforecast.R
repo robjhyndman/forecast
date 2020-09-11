@@ -59,7 +59,7 @@ mlmsplit <- function(x, index=NULL) {
 #' time series attributes of the original data will be ignored.
 #' @param ... Other arguments passed to \code{\link[forecast]{forecast.lm}()}.
 #' @inheritParams forecast
-#' 
+#'
 #' @return An object of class "\code{mforecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the
@@ -215,7 +215,7 @@ print.mforecast <- function(x, ...) {
 #' @seealso \code{\link[forecast]{plot.forecast}}, \code{\link[stats]{plot.ts}}
 #' @references Hyndman and Athanasopoulos (2018) \emph{Forecasting: principles
 #' and practice}, 2nd edition, OTexts: Melbourne, Australia.
-#' \url{https://OTexts.org/fpp2/}
+#' \url{https://otexts.com/fpp2/}
 #' @keywords ts
 #' @examples
 #' library(ggplot2)

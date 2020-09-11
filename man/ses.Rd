@@ -150,7 +150,7 @@ Springer-Verlag: New York. \url{http://www.exponentialsmoothing.net}.
 
 Hyndman and Athanasopoulos (2018) \emph{Forecasting: principles
 and practice}, 2nd edition, OTexts: Melbourne, Australia.
-\url{https://OTexts.org/fpp2/}
+\url{https://otexts.com/fpp2/}
 }
 \seealso{
 \code{\link{ets}}, \code{\link[stats]{HoltWinters}},
