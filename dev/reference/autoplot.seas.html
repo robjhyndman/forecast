@@ -127,7 +127,7 @@ class &amp;#8220;stl&amp;#8221; (created with stl), class
     <div class="ref-description">
     <p>Produces a ggplot object of seasonally decomposed time series for objects of
 class &#8220;<code>stl</code>&#8221; (created with <code><a href='https://rdrr.io/r/stats/stl.html'>stl</a></code>), class
-&#8220;<code>seas</code>&#8221; (created with <code>seas</code>), or class
+&#8220;<code>seas</code>&#8221; (created with <code><a href='https://rdrr.io/pkg/seasonal/man/seas.html'>seas</a></code>), or class
 &#8220;<code>decomposed.ts</code>&#8221; (created with <code><a href='https://rdrr.io/r/stats/decompose.html'>decompose</a></code>).</p>
     </div>
 
@@ -176,7 +176,7 @@ takes place.</p></td>
     <p>Returns an object of class <code>ggplot</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>seas</code>, <code><a href='https://rdrr.io/r/stats/stl.html'>stl</a></code>,
+    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/seasonal/man/seas.html'>seas</a></code>, <code><a href='https://rdrr.io/r/stats/stl.html'>stl</a></code>,
 <code><a href='https://rdrr.io/r/stats/decompose.html'>decompose</a></code>, <code><a href='https://rdrr.io/r/stats/StructTS.html'>StructTS</a></code>,
 <code><a href='https://rdrr.io/r/stats/stlmethods.html'>plot.stl</a></code>.</p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
@@ -190,8 +190,8 @@ takes place.</p></td>
 </div><div class='img'><img src='autoplot.seas-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='kw'>nottem</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/stats/stl.html'>stl</a></span>(s.window=<span class='st'>'periodic'</span>) <span class='op'>%&gt;%</span> <span class='kw'>autoplot</span>
 </div><div class='img'><img src='autoplot.seas-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'>seasonal</span>)
-<span class='fu'>seas</span>(<span class='kw'>USAccDeaths</span>) <span class='op'>%&gt;%</span> <span class='kw'>autoplot</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://www.seasonal.website'>seasonal</a></span>)
+<span class='fu'><a href='https://rdrr.io/pkg/seasonal/man/seas.html'>seas</a></span>(<span class='kw'>USAccDeaths</span>) <span class='op'>%&gt;%</span> <span class='kw'>autoplot</span>
 }
 
 </div></pre>
