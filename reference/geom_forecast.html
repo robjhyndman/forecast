@@ -17,23 +17,27 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -46,7 +50,6 @@
 <meta property="og:description" content="Generates forecasts from forecast.ts and adds them to the plot.
 Forecasts can be modified via sending forecast specific arguments above." />
 <meta property="og:image" content="/logo.png" />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -64,7 +67,7 @@ Forecasts can be modified via sending forecast specific arguments above." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -78,7 +81,7 @@ Forecasts can be modified via sending forecast specific arguments above." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.13</span>
       </span>
     </div>
 
@@ -124,22 +127,22 @@ Forecasts can be modified via sending forecast specific arguments above." />
 Forecasts can be modified via sending forecast specific arguments above.</p>
     </div>
 
-    <pre class="usage"><span class='no'>StatForecast</span>
+    <pre class="usage"><span class='kw'>StatForecast</span>
 
-<span class='no'>GeomForecast</span>
+<span class='kw'>GeomForecast</span>
 
 <span class='fu'>geom_forecast</span>(
-  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"forecast"</span>,
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>PI</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>showgap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>series</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
+  mapping = <span class='kw'>NULL</span>,
+  data = <span class='kw'>NULL</span>,
+  stat = <span class='st'>"forecast"</span>,
+  position = <span class='st'>"identity"</span>,
+  na.rm = <span class='fl'>FALSE</span>,
+  show.legend = <span class='fl'>NA</span>,
+  inherit.aes = <span class='fl'>TRUE</span>,
+  PI = <span class='fl'>TRUE</span>,
+  showgap = <span class='fl'>TRUE</span>,
+  series = <span class='kw'>NULL</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -147,8 +150,8 @@ Forecasts can be modified via sending forecast specific arguments above.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>mapping</th>
-      <td><p>Set of aesthetic mappings created by <code>aes</code> or
-<code>aes_</code>. If specified and <code>inherit.aes = TRUE</code> (the
+      <td><p>Set of aesthetic mappings created by <code><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></code> or
+<code><a href='https://ggplot2.tidyverse.org/reference/aes_.html'>aes_</a></code>. If specified and <code>inherit.aes = TRUE</code> (the
 default), it is combined with the default mapping at the top level of the
 plot. You must supply <code>mapping</code> if there is no plot mapping.</p></td>
     </tr>
@@ -156,9 +159,9 @@ plot. You must supply <code>mapping</code> if there is no plot mapping.</p></td>
       <th>data</th>
       <td><p>The data to be displayed in this layer. There are three options:</p>
 <p>If <code>NULL</code>, the default, the data is inherited from the plot data as
-specified in the call to <code>ggplot</code>.</p>
+specified in the call to <code><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></code>.</p>
 <p>A <code>data.frame</code>, or other object, will override the plot data. All
-objects will be fortified to produce a data frame. See <code>fortify</code>
+objects will be fortified to produce a data frame. See <code><a href='https://ggplot2.tidyverse.org/reference/fortify.html'>fortify</a></code>
 for which variables will be created.</p>
 <p>A <code>function</code> will be called with a single argument, the plot data. The
 return value must be a <code>data.frame</code>, and will be used as the layer
@@ -189,7 +192,7 @@ never includes, and <code>TRUE</code> always includes.</p></td>
       <td><p>If <code>FALSE</code>, overrides the default aesthetics, rather
 than combining with them. This is most useful for helper functions that
 define both data and aesthetics and shouldn't inherit behaviour from the
-default plot specification, e.g. <code>borders</code>.</p></td>
+default plot specification, e.g. <code><a href='https://ggplot2.tidyverse.org/reference/borders.html'>borders</a></code>.</p></td>
     </tr>
     <tr>
       <th>PI</th>
@@ -209,7 +212,7 @@ on the plot.</p></td>
     <tr>
       <th>...</th>
       <td><p>Additional arguments for <code><a href='forecast.html'>forecast.ts</a></code>, other
-arguments are passed on to <code>layer</code>. These are often aesthetics,
+arguments are passed on to <code><a href='https://ggplot2.tidyverse.org/reference/layer.html'>layer</a></code>. These are often aesthetics,
 used to set an aesthetic to a fixed value, like <code>color = "red"</code> or
 <code>alpha = .5</code>. They may also be parameters to the paired geom/stat.</p></td>
     </tr>
@@ -235,50 +238,46 @@ axis. Refer to the examples below. To automatically set up aesthetics, use
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='forecast.html'>forecast</a></code>, <code><a href='https://ggplot2.tidyverse.org/reference/ggproto.html'>ggproto</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Mitchell O'Hara-Wild</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>USAccDeaths</span>) + <span class='fu'>geom_forecast</span>()
+<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span>)
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='kw'>USAccDeaths</span>) <span class='op'>+</span> <span class='fu'>geom_forecast</span>()
 
-<span class='no'>lungDeaths</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='no'>mdeaths</span>, <span class='no'>fdeaths</span>)
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>lungDeaths</span>) + <span class='fu'>geom_forecast</span>()
+<span class='kw'>lungDeaths</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='kw'>mdeaths</span>, <span class='kw'>fdeaths</span>)
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='kw'>lungDeaths</span>) <span class='op'>+</span> <span class='fu'>geom_forecast</span>()
 
 <span class='co'># Using fortify.ts</span>
-<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span><span class='kw'>=</span><span class='no'>x</span>, <span class='kw'>y</span><span class='kw'>=</span><span class='no'>y</span>), <span class='kw'>data</span><span class='kw'>=</span><span class='no'>USAccDeaths</span>)
-<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='no'>p</span> + <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span>()
-<span class='no'>p</span> + <span class='fu'>geom_forecast</span>()
+<span class='kw'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(x=<span class='kw'>x</span>, y=<span class='kw'>y</span>), data=<span class='kw'>USAccDeaths</span>)
+<span class='kw'>p</span> <span class='op'>&lt;-</span> <span class='kw'>p</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span>()
+<span class='kw'>p</span> <span class='op'>+</span> <span class='fu'>geom_forecast</span>()
 
 <span class='co'># Without fortify.ts</span>
-<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>USAccDeaths</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='no'>USAccDeaths</span>), <span class='kw'>time</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/time.html'>time</a></span>(<span class='no'>USAccDeaths</span>)))
-<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span><span class='kw'>=</span><span class='no'>time</span>, <span class='kw'>y</span><span class='kw'>=</span><span class='no'>USAccDeaths</span>), <span class='kw'>data</span><span class='kw'>=</span><span class='no'>data</span>)
-<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='no'>p</span> + <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span>()
-<span class='no'>p</span> + <span class='fu'>geom_forecast</span>()
+<span class='kw'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(USAccDeaths=<span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='kw'>USAccDeaths</span>), time=<span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/time.html'>time</a></span>(<span class='kw'>USAccDeaths</span>)))
+<span class='kw'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(x=<span class='kw'>time</span>, y=<span class='kw'>USAccDeaths</span>), data=<span class='kw'>data</span>)
+<span class='kw'>p</span> <span class='op'>&lt;-</span> <span class='kw'>p</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span>()
+<span class='kw'>p</span> <span class='op'>+</span> <span class='fu'>geom_forecast</span>()
 
-<span class='no'>p</span> + <span class='fu'>geom_forecast</span>(<span class='kw'>h</span><span class='kw'>=</span><span class='fl'>60</span>)
-<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span><span class='kw'>=</span><span class='no'>time</span>, <span class='kw'>y</span><span class='kw'>=</span><span class='no'>USAccDeaths</span>), <span class='kw'>data</span><span class='kw'>=</span><span class='no'>data</span>)
-<span class='no'>p</span> + <span class='fu'>geom_forecast</span>(<span class='kw'>level</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>70</span>,<span class='fl'>98</span>))
-<span class='no'>p</span> + <span class='fu'>geom_forecast</span>(<span class='kw'>level</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>70</span>,<span class='fl'>98</span>),<span class='kw'>colour</span><span class='kw'>=</span><span class='st'>"lightblue"</span>)
+<span class='kw'>p</span> <span class='op'>+</span> <span class='fu'>geom_forecast</span>(h=<span class='fl'>60</span>)
+<span class='kw'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(x=<span class='kw'>time</span>, y=<span class='kw'>USAccDeaths</span>), data=<span class='kw'>data</span>)
+<span class='kw'>p</span> <span class='op'>+</span> <span class='fu'>geom_forecast</span>(level=<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>70</span>,<span class='fl'>98</span>))
+<span class='kw'>p</span> <span class='op'>+</span> <span class='fu'>geom_forecast</span>(level=<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>70</span>,<span class='fl'>98</span>),colour=<span class='st'>"lightblue"</span>)
 
 <span class='co'>#Add forecasts to multivariate series with colour groups</span>
-<span class='no'>lungDeaths</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='no'>mdeaths</span>, <span class='no'>fdeaths</span>)
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='no'>lungDeaths</span>) + <span class='fu'>geom_forecast</span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='no'>mdeaths</span>), <span class='kw'>series</span><span class='kw'>=</span><span class='st'>"mdeaths"</span>)
-}</div></pre>
-  </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#format">Format</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+<span class='kw'>lungDeaths</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='kw'>mdeaths</span>, <span class='kw'>fdeaths</span>)
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='kw'>lungDeaths</span>) <span class='op'>+</span> <span class='fu'>geom_forecast</span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>mdeaths</span>), series=<span class='st'>"mdeaths"</span>)
+}
 
-    <h2>Author</h2>
-    <p>Mitchell O'Hara-Wild</p>
+</div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -289,7 +288,7 @@ axis. Refer to the examples below. To automatically set up aesthetics, use
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

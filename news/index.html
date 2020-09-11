@@ -17,23 +17,27 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -44,7 +48,6 @@
 
 <meta property="og:title" content="Changelog" />
 <meta property="og:image" content="/logo.png" />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -62,7 +65,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -76,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.13</span>
       </span>
     </div>
 
@@ -112,27 +115,38 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Changelog <small></small></h1>
+      <h1 data-toc-skip>Changelog <small></small></h1>
       <small>Source: <a href='https://github.com/robjhyndman/forecast/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="forecast-811-21-march-2020" class="section level2">
+    <div id="forecast-development-version" class="section level1">
+<h1 class="page-header" data-toc-text="development version">
+<a href="#forecast-development-version" class="anchor"></a>forecast (development version)<small> Unreleased </small>
+</h1>
+<ul>
+<li>Fixed forecasts from Arima with drift with initial NAs.</li>
+<li>Fixed season colours in <code><a href="../reference/gglagplot.html">gglagplot()</a></code> to match y-axis (original data).</li>
+<li>Fixed facet order for classical decomposition <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot()</a></code>
+</li>
+<li>Fixed <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> erroring for <code><a href="../reference/tslm.html">tslm()</a></code> models containing NA values.</li>
+</ul>
+<div id="forecast-812-21-march-2020" class="section level2">
 <h2 class="hasAnchor">
-<a href="#forecast-811-21-march-2020" class="anchor"></a>forecast 8.11 (21 March 2020)</h2>
+<a href="#forecast-812-21-march-2020" class="anchor"></a>forecast 8.12 (21 March 2020)</h2>
 <ul>
 <li>Fixed bias adjusted forecast mean for ARIMA forecasts.</li>
 <li>Improved naming of <code><a href="../reference/accuracy.html">accuracy()</a></code> generic formals.</li>
 <li>Fix seasonal periods for <code>taylor</code> dataset.</li>
 </ul>
 </div>
-    <div id="forecast-811-9-february-2020" class="section level2">
+<div id="forecast-811-9-february-2020" class="section level2">
 <h2 class="hasAnchor">
 <a href="#forecast-811-9-february-2020" class="anchor"></a>forecast 8.11 (9 February 2020)</h2>
 <ul>
 <li>The axis for <code><a href="../reference/gglagplot.html">gglagplot()</a></code> have been reversed for consistency with <code><a href="https://rdrr.io/r/stats/lag.plot.html">stats::lag.plot()</a></code>.</li>
 </ul>
 </div>
-    <div id="forecast-810-4-december-2019" class="section level2">
+<div id="forecast-810-4-december-2019" class="section level2">
 <h2 class="hasAnchor">
 <a href="#forecast-810-4-december-2019" class="anchor"></a>forecast 8.10 (4 December 2019)</h2>
 <ul>
@@ -140,7 +154,7 @@
 <li>Bug fixes</li>
 </ul>
 </div>
-    <div id="forecast-89-22-august-2019" class="section level2">
+<div id="forecast-89-22-august-2019" class="section level2">
 <h2 class="hasAnchor">
 <a href="#forecast-89-22-august-2019" class="anchor"></a>forecast 8.9 (22 August 2019)</h2>
 <ul>
@@ -148,7 +162,7 @@
 <li>Bug fixes</li>
 </ul>
 </div>
-    <div id="forecast-88-22-july-2019" class="section level2">
+<div id="forecast-88-22-july-2019" class="section level2">
 <h2 class="hasAnchor">
 <a href="#forecast-88-22-july-2019" class="anchor"></a>forecast 8.8 (22 July 2019)</h2>
 <ul>
@@ -156,7 +170,7 @@
 <li>Bug fixes</li>
 </ul>
 </div>
-    <div id="forecast-87-26-apr-2019" class="section level2">
+<div id="forecast-87-26-apr-2019" class="section level2">
 <h2 class="hasAnchor">
 <a href="#forecast-87-26-apr-2019" class="anchor"></a>forecast 8.7 (26 Apr 2019)</h2>
 <ul>
@@ -164,7 +178,7 @@
 <li>Bug fixes</li>
 </ul>
 </div>
-    <div id="version-86-15-apr-2019" class="section level2">
+<div id="version-86-15-apr-2019" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-86-15-apr-2019" class="anchor"></a>Version 8.6 (15 Apr 2019)</h2>
 <ul>
@@ -174,7 +188,7 @@
 <li>Bug fixes</li>
 </ul>
 </div>
-    <div id="version-85-18-jan-2019" class="section level2">
+<div id="version-85-18-jan-2019" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-85-18-jan-2019" class="anchor"></a>Version 8.5 (18 Jan 2019)</h2>
 <ul>
@@ -186,7 +200,7 @@
 <li>Bug fixes</li>
 </ul>
 </div>
-    <div id="version-84-20-june-2018" class="section level2">
+<div id="version-84-20-june-2018" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-84-20-june-2018" class="anchor"></a>Version 8.4 (20 June 2018)</h2>
 <ul>
@@ -196,7 +210,7 @@
 <li>Bug fixes</li>
 </ul>
 </div>
-    <div id="version-83-5-april-2018" class="section level2">
+<div id="version-83-5-april-2018" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-83-5-april-2018" class="anchor"></a>Version 8.3 (5 April 2018)</h2>
 <ul>
@@ -214,7 +228,7 @@
 <li>Bug fixes</li>
 </ul>
 </div>
-    <div id="version-82-25-september-2017" class="section level2">
+<div id="version-82-25-september-2017" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-82-25-september-2017" class="anchor"></a>Version 8.2 (25 September 2017)</h2>
 <ul>
@@ -224,7 +238,7 @@
 <li>Bug fixes</li>
 </ul>
 </div>
-    <div id="version-81-17-june-2017" class="section level2">
+<div id="version-81-17-june-2017" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-81-17-june-2017" class="anchor"></a>Version 8.1 (17 June 2017)</h2>
 <ul>
@@ -241,7 +255,7 @@
 <li>Bug fixes</li>
 </ul>
 </div>
-    <div id="version-80-22-february-2017" class="section level2">
+<div id="version-80-22-february-2017" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-80-22-february-2017" class="anchor"></a>Version 8.0 (22 February 2017)</h2>
 <ul>
@@ -271,7 +285,7 @@
 <li>Removed fortify method for forecast objects</li>
 </ul>
 </div>
-    <div id="version-73-12-october-2016" class="section level2">
+<div id="version-73-12-october-2016" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-73-12-october-2016" class="anchor"></a>Version 7.3 (12 October 2016)</h2>
 <ul>
@@ -280,7 +294,7 @@
 <li>Bug fixes</li>
 </ul>
 </div>
-    <div id="version-72-8-september-2016" class="section level2">
+<div id="version-72-8-september-2016" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-72-8-september-2016" class="anchor"></a>Version 7.2 (8 September 2016)</h2>
 <ul>
@@ -299,7 +313,7 @@
 <li>Bug fixes and speed improvements</li>
 </ul>
 </div>
-    <div id="version-71-14-april-2016" class="section level2">
+<div id="version-71-14-april-2016" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-71-14-april-2016" class="anchor"></a>Version 7.1 (14 April 2016)</h2>
 <ul>
@@ -312,7 +326,7 @@
 <li>Removed fpp from Suggests list</li>
 </ul>
 </div>
-    <div id="version-70-3-april-2016" class="section level2">
+<div id="version-70-3-april-2016" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-70-3-april-2016" class="anchor"></a>Version 7.0 (3 April 2016)</h2>
 <ul>
@@ -329,7 +343,7 @@
 <li>Bug fixes</li>
 </ul>
 </div>
-    <div id="version-62-20-october-2015" class="section level2">
+<div id="version-62-20-october-2015" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-62-20-october-2015" class="anchor"></a>Version 6.2 (20 October 2015)</h2>
 <ul>
@@ -349,14 +363,14 @@
 <li>Other bug fixes</li>
 </ul>
 </div>
-    <div id="version-61-11-may-2015" class="section level2">
+<div id="version-61-11-may-2015" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-61-11-may-2015" class="anchor"></a>Version 6.1 (11 May 2015)</h2>
 <ul>
 <li>Made auto.arima more robust</li>
 </ul>
 </div>
-    <div id="version-60-9-may-2015" class="section level2">
+<div id="version-60-9-may-2015" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-60-9-may-2015" class="anchor"></a>Version 6.0 (9 May 2015)</h2>
 <ul>
@@ -380,7 +394,7 @@
 <li>Added functions for bootstrapping time series</li>
 </ul>
 </div>
-    <div id="version-59-26-february-2015" class="section level2">
+<div id="version-59-26-february-2015" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-59-26-february-2015" class="anchor"></a>Version 5.9 (26 February 2015)</h2>
 <ul>
@@ -392,7 +406,7 @@
 <li>Fixed error when CH test applied to short series</li>
 </ul>
 </div>
-    <div id="version-58-6-january-2015" class="section level2">
+<div id="version-58-6-january-2015" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-58-6-january-2015" class="anchor"></a>Version 5.8 (6 January 2015)</h2>
 <ul>
@@ -400,7 +414,7 @@
 <li>Made BoxCox.lambda() robust to missing values.</li>
 </ul>
 </div>
-    <div id="version-57-17-december-2014" class="section level2">
+<div id="version-57-17-december-2014" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-57-17-december-2014" class="anchor"></a>Version 5.7 (17 December 2014)</h2>
 <ul>
@@ -418,7 +432,7 @@
 <li>Added na.action argument to Acf() and fixed na.action argument in tsdisplay().</li>
 </ul>
 </div>
-    <div id="version-56-23-september-2014" class="section level2">
+<div id="version-56-23-september-2014" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-56-23-september-2014" class="anchor"></a>Version 5.6 (23 September 2014)</h2>
 <ul>
@@ -431,7 +445,7 @@
 <li>Removed undocumented option to use Rmalschains for optimization of ets().</li>
 </ul>
 </div>
-    <div id="version-55-12-august-2014" class="section level2">
+<div id="version-55-12-august-2014" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-55-12-august-2014" class="anchor"></a>Version 5.5 (12 August 2014)</h2>
 <ul>
@@ -452,7 +466,7 @@
 <li>Fixed bug in tbats.components() when there are no seasonal components.</li>
 </ul>
 </div>
-    <div id="version-54-8-may-2014" class="section level2">
+<div id="version-54-8-may-2014" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-54-8-may-2014" class="anchor"></a>Version 5.4 (8 May 2014)</h2>
 <ul>
@@ -463,7 +477,7 @@
 <li>Improved arima.errors() to find xreg more often, and to return an error if it can’t be found.</li>
 </ul>
 </div>
-    <div id="version-53-24-march-2014" class="section level2">
+<div id="version-53-24-march-2014" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-53-24-march-2014" class="anchor"></a>Version 5.3 (24 March 2014)</h2>
 <ul>
@@ -476,7 +490,7 @@
 <li>Modified warnings suppression by using suppressWarnings() throughout.</li>
 </ul>
 </div>
-    <div id="version-52-25-february-2014" class="section level2">
+<div id="version-52-25-february-2014" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-52-25-february-2014" class="anchor"></a>Version 5.2 (25 February 2014)</h2>
 <ul>
@@ -484,7 +498,7 @@
 <li>Removed remaining call to bats() from examples that are run.</li>
 </ul>
 </div>
-    <div id="version-51-8-february-2014" class="section level2">
+<div id="version-51-8-february-2014" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-51-8-february-2014" class="anchor"></a>Version 5.1 (8 February 2014)</h2>
 <ul>
@@ -496,7 +510,7 @@
 <li>Added timeDate dependency to avoid errors in easter() and link to Rcpp &gt;= 0.11.0.</li>
 </ul>
 </div>
-    <div id="version-50-17-january-2014" class="section level2">
+<div id="version-50-17-january-2014" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-50-17-january-2014" class="anchor"></a>Version 5.0 (17 January 2014)</h2>
 <ul>
@@ -516,14 +530,14 @@
 <li>Added bootstrap option to forecast.Arima()</li>
 </ul>
 </div>
-    <div id="version-48-30-september-2013" class="section level2">
+<div id="version-48-30-september-2013" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-48-30-september-2013" class="anchor"></a>Version 4.8 (30 September 2013)</h2>
 <ul>
 <li>Fixed bug in rwf() that was introduced in v4.7</li>
 </ul>
 </div>
-    <div id="version-47-26-september-2013" class="section level2">
+<div id="version-47-26-september-2013" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-47-26-september-2013" class="anchor"></a>Version 4.7 (26 September 2013)</h2>
 <ul>
@@ -542,14 +556,14 @@
 <li>Fixed a bug in simulate.fracdiff() when future=TRUE. Sometimes the future argument was being ignored.</li>
 </ul>
 </div>
-    <div id="version-406-30-june-2013" class="section level2">
+<div id="version-406-30-june-2013" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-406-30-june-2013" class="anchor"></a>Version 4.06 (30 June 2013)</h2>
 <ul>
 <li>accuracy() was returning a mape and mpe 100 times too large for in-sample errors.</li>
 </ul>
 </div>
-    <div id="version-405-19-june-2013" class="section level2">
+<div id="version-405-19-june-2013" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-405-19-june-2013" class="anchor"></a>Version 4.05 (19 June 2013)</h2>
 <ul>
@@ -563,7 +577,7 @@
 <li>Corrected training error measures for splinef() forecasts.</li>
 </ul>
 </div>
-    <div id="version-404-22-april-2013" class="section level2">
+<div id="version-404-22-april-2013" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-404-22-april-2013" class="anchor"></a>Version 4.04 (22 April 2013)</h2>
 <ul>
@@ -575,7 +589,7 @@
 <li>Fixed bug in holt() and hw() so that the printed model no longer contains missing values.</li>
 </ul>
 </div>
-    <div id="version-403-14-march-2013" class="section level2">
+<div id="version-403-14-march-2013" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-403-14-march-2013" class="anchor"></a>Version 4.03 (14 March 2013)</h2>
 <ul>
@@ -583,7 +597,7 @@
 <li>Removed error trap in forecast.lm when no xreg variables passed as it was catching legitimate calls.</li>
 </ul>
 </div>
-    <div id="version-402-6-march-2013" class="section level2">
+<div id="version-402-6-march-2013" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-402-6-march-2013" class="anchor"></a>Version 4.02 (6 March 2013)</h2>
 <ul>
@@ -597,7 +611,7 @@
 <li>Added undocumented functions for forecasting, printing and plotting output from vars::VAR.</li>
 </ul>
 </div>
-    <div id="version-401-22-january-2013" class="section level2">
+<div id="version-401-22-january-2013" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-401-22-january-2013" class="anchor"></a>Version 4.01 (22 January 2013)</h2>
 <ul>
@@ -614,7 +628,7 @@
 <li>Removed reliance on caret, and associated fitted and residuals functions.</li>
 </ul>
 </div>
-    <div id="version-400-27-november-2012" class="section level2">
+<div id="version-400-27-november-2012" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-400-27-november-2012" class="anchor"></a>Version 4.00 (27 November 2012)</h2>
 <ul>
@@ -631,7 +645,7 @@
 <li>Revised ses(), holt() and hw() so that they can optionally use traditional initialization.</li>
 </ul>
 </div>
-    <div id="version-325-11-september-2012" class="section level2">
+<div id="version-325-11-september-2012" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-325-11-september-2012" class="anchor"></a>Version 3.25 (11 September 2012)</h2>
 <ul>
@@ -641,14 +655,14 @@
 <li>Fixed bug in splinef() and added gcv method for estimating smoothing parameter.</li>
 </ul>
 </div>
-    <div id="version-324-23-july-2012" class="section level2">
+<div id="version-324-23-july-2012" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-324-23-july-2012" class="anchor"></a>Version 3.24 (23 July 2012</h2>
 <ul>
 <li>Fixed bug in auto.arima() introduced in v3.23 which meant a ARIMA(0,0,0) model was returned about half the time.</li>
 </ul>
 </div>
-    <div id="version-323-18-july-2012" class="section level2">
+<div id="version-323-18-july-2012" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-323-18-july-2012" class="anchor"></a>Version 3.23 (18 July 2012)</h2>
 <ul>
@@ -656,7 +670,7 @@
 <li>Extended auto.arima() so it returns something sensible when the data are constant.</li>
 </ul>
 </div>
-    <div id="version-322-07-june-2012" class="section level2">
+<div id="version-322-07-june-2012" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-322-07-june-2012" class="anchor"></a>Version 3.22 (07 June 2012)</h2>
 <ul>
@@ -666,7 +680,7 @@
 <li>Modified parallel implementation in auto.arima for Windows.</li>
 </ul>
 </div>
-    <div id="version-321-26-april-2012" class="section level2">
+<div id="version-321-26-april-2012" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-321-26-april-2012" class="anchor"></a>Version 3.21 (26 April 2012)</h2>
 <ul>
@@ -679,7 +693,7 @@
 <li>Modified bats and tbats so they now use seasonal.periods when ts and msts objects are being modelled.</li>
 </ul>
 </div>
-    <div id="version-320-2-april-2012" class="section level2">
+<div id="version-320-2-april-2012" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-320-2-april-2012" class="anchor"></a>Version 3.20 (2 April 2012)</h2>
 <ul>
@@ -688,7 +702,7 @@
 <li>Fixed bug in dm.test() that occurred when errors were very small.</li>
 </ul>
 </div>
-    <div id="version-319-22-february-2012" class="section level2">
+<div id="version-319-22-february-2012" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-319-22-february-2012" class="anchor"></a>Version 3.19 (22 February 2012)</h2>
 <ul>
@@ -699,7 +713,7 @@
 <li>Updated accuracy() to allow it to be used with cross-sectional data, lm forecasts and lm objects.</li>
 </ul>
 </div>
-    <div id="version-318-17-february-2012" class="section level2">
+<div id="version-318-17-february-2012" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-318-17-february-2012" class="anchor"></a>Version 3.18 (17 February 2012)</h2>
 <ul>
@@ -713,7 +727,7 @@
 <li>Improved speed of bats() and tbats().</li>
 </ul>
 </div>
-    <div id="version-317-2-february-2012" class="section level2">
+<div id="version-317-2-february-2012" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-317-2-february-2012" class="anchor"></a>Version 3.17 (2 February 2012)</h2>
 <ul>
@@ -723,7 +737,7 @@
 <li>max orders in auto.arima() now restricted to be less than 1/3 of length of data.</li>
 </ul>
 </div>
-    <div id="version-316-24-december-2011" class="section level2">
+<div id="version-316-24-december-2011" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-316-24-december-2011" class="anchor"></a>Version 3.16 (24 December 2011)</h2>
 <ul>
@@ -732,7 +746,7 @@
 <li>Changed dependency to &gt;= R 2.14.0 in order to ensure parallel package available.</li>
 </ul>
 </div>
-    <div id="version-315-22-december-2011" class="section level2">
+<div id="version-315-22-december-2011" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-315-22-december-2011" class="anchor"></a>Version 3.15 (22 December 2011)</h2>
 <ul>
@@ -742,7 +756,7 @@
 <li>decompose() removed as the function in the stats package has now been fixed.</li>
 </ul>
 </div>
-    <div id="version-314-9-december-2011" class="section level2">
+<div id="version-314-9-december-2011" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-314-9-december-2011" class="anchor"></a>Version 3.14 (9 December 2011)</h2>
 <ul>
@@ -758,7 +772,7 @@
 <li>Depending on Rcpp and RcppArmadillo to speed some code up.</li>
 </ul>
 </div>
-    <div id="version-313-19-november-2011" class="section level2">
+<div id="version-313-19-november-2011" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-313-19-november-2011" class="anchor"></a>Version 3.13 (19 November 2011)</h2>
 <ul>
@@ -767,7 +781,7 @@
 <li>forecast.stl() no longer allows a seasonal ETS model to be specified. Thanks to Stefano Birmani for the suggestion.</li>
 </ul>
 </div>
-    <div id="version-312-16-november-2011" class="section level2">
+<div id="version-312-16-november-2011" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-312-16-november-2011" class="anchor"></a>Version 3.12 (16 November 2011)</h2>
 <ul>
@@ -777,14 +791,14 @@
 <li>Fixed bug in forecast.ets which returned all zero forecasts for some models when seasonal period &gt; 24.</li>
 </ul>
 </div>
-    <div id="version-311-2-november-2011" class="section level2">
+<div id="version-311-2-november-2011" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-311-2-november-2011" class="anchor"></a>Version 3.11 (2 November 2011)</h2>
 <ul>
 <li>Fixed bug in dshw() when smallest period is odd</li>
 </ul>
 </div>
-    <div id="version-310-27-october-2011" class="section level2">
+<div id="version-310-27-october-2011" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-310-27-october-2011" class="anchor"></a>Version 3.10 (27 October 2011)</h2>
 <ul>
@@ -794,14 +808,14 @@
 <li>Modified number of lags displayed by default in tsdisplay().</li>
 </ul>
 </div>
-    <div id="version-309-18-october-2011" class="section level2">
+<div id="version-309-18-october-2011" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-309-18-october-2011" class="anchor"></a>Version 3.09 (18 October 2011)</h2>
 <ul>
 <li>Fixed bug causing occasional problems in simulate.Arima() when MA order greater than 2 and future=TRUE.</li>
 </ul>
 </div>
-    <div id="version-308-15-october-2011" class="section level2">
+<div id="version-308-15-october-2011" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-308-15-october-2011" class="anchor"></a>Version 3.08 (15 October 2011)</h2>
 <ul>
@@ -809,35 +823,35 @@
 <li>Added lambda argument to forecast.stl().</li>
 </ul>
 </div>
-    <div id="version-307-11-october-2011" class="section level2">
+<div id="version-307-11-october-2011" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-307-11-october-2011" class="anchor"></a>Version 3.07 (11 October 2011)</h2>
 <ul>
 <li>Bug fix in ets() concerning non-seasonal models and high-frequency data. It sometimes returned all forecasts equal to zero.</li>
 </ul>
 </div>
-    <div id="version-306-4-october-2011" class="section level2">
+<div id="version-306-4-october-2011" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-306-4-october-2011" class="anchor"></a>Version 3.06 (4 October 2011)</h2>
 <ul>
 <li>Switched to useDynLib in preparation for Rv2.14.0.</li>
 </ul>
 </div>
-    <div id="version-305-3-october-2011" class="section level2">
+<div id="version-305-3-october-2011" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-305-3-october-2011" class="anchor"></a>Version 3.05 (3 October 2011)</h2>
 <ul>
 <li>Fixed bug in ets() which prevent non-seasonal models being fitted to high frequency data.</li>
 </ul>
 </div>
-    <div id="version-304-23-september-2011" class="section level2">
+<div id="version-304-23-september-2011" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-304-23-september-2011" class="anchor"></a>Version 3.04 (23 September 2011)</h2>
 <ul>
 <li>Fixed bug when drift and xreg used together in auto.arima() or Arima().</li>
 </ul>
 </div>
-    <div id="version-303-2-september-2011" class="section level2">
+<div id="version-303-2-september-2011" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-303-2-september-2011" class="anchor"></a>Version 3.03 (2 September 2011)</h2>
 <ul>
@@ -847,14 +861,14 @@
 <li>Re-formatted some help files to prevent viewing problems with the pdf manual.</li>
 </ul>
 </div>
-    <div id="version-302-25-august-2011" class="section level2">
+<div id="version-302-25-august-2011" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-302-25-august-2011" class="anchor"></a>Version 3.02 (25 August 2011)</h2>
 <ul>
 <li>Bug fixes</li>
 </ul>
 </div>
-    <div id="version-300-24-august-2011" class="section level2">
+<div id="version-300-24-august-2011" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-300-24-august-2011" class="anchor"></a>Version 3.00 (24 August 2011)</h2>
 <ul>
@@ -877,7 +891,7 @@
 <li>Fixed further bugs in the decompose() function that caused the results to be incorrect with odd frequencies.</li>
 </ul>
 </div>
-    <div id="version-219-4-june-2011" class="section level2">
+<div id="version-219-4-june-2011" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-219-4-june-2011" class="anchor"></a>Version 2.19 (4 June 2011)</h2>
 <ul>
@@ -886,14 +900,14 @@
 <li>Fixed bugs in re-fitting ARIMA models to new data.</li>
 </ul>
 </div>
-    <div id="version-218-19-may-2011" class="section level2">
+<div id="version-218-19-may-2011" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-218-19-may-2011" class="anchor"></a>Version 2.18 (19 May 2011)</h2>
 <ul>
 <li>Fixed bug in seasonplot() where year labels were sometimes incorrect.</li>
 </ul>
 </div>
-    <div id="version-217-6-april-2011" class="section level2">
+<div id="version-217-6-april-2011" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-217-6-april-2011" class="anchor"></a>Version 2.17 (6 April 2011)</h2>
 <ul>
@@ -904,14 +918,14 @@
 <li>Fixed bug in seasadj() to handle multiplicative decomposition, and to avoid missing values at ends.</li>
 </ul>
 </div>
-    <div id="version-216-6-march-2011" class="section level2">
+<div id="version-216-6-march-2011" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-216-6-march-2011" class="anchor"></a>Version 2.16 (6 March 2011)</h2>
 <ul>
 <li>Changed the way missing values are handled in tslm()</li>
 </ul>
 </div>
-    <div id="version-215-5-march-2011" class="section level2">
+<div id="version-215-5-march-2011" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-215-5-march-2011" class="anchor"></a>Version 2.15 (5 March 2011)</h2>
 <ul>
@@ -919,7 +933,7 @@
 <li>Improved forecast.lm() to allow trend and seasonal terms.</li>
 </ul>
 </div>
-    <div id="version-214-4-march-2011" class="section level2">
+<div id="version-214-4-march-2011" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-214-4-march-2011" class="anchor"></a>Version 2.14 (4 March 2011)</h2>
 <ul>
@@ -928,7 +942,7 @@
 <li>Fixed visibility of stlf().</li>
 </ul>
 </div>
-    <div id="version-213-16-february-2011" class="section level2">
+<div id="version-213-16-february-2011" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-213-16-february-2011" class="anchor"></a>Version 2.13 (16 February 2011)</h2>
 <ul>
@@ -939,7 +953,7 @@
 <li>Fixed bug in simulate.Arima() when future=TRUE. There was a bias in the sample paths.</li>
 </ul>
 </div>
-    <div id="version-212-19-january-2011" class="section level2">
+<div id="version-212-19-january-2011" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-212-19-january-2011" class="anchor"></a>Version 2.12 (19 January 2011)</h2>
 <ul>
@@ -948,14 +962,14 @@
 <li>Added lambda argument to accuracy().</li>
 </ul>
 </div>
-    <div id="version-211-5-november-2010" class="section level2">
+<div id="version-211-5-november-2010" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-211-5-november-2010" class="anchor"></a>Version 2.11 (5 November 2010)</h2>
 <ul>
 <li>If MLE in arfima() fails (usually because the series is non-stationary), the LS estimate is now returned.</li>
 </ul>
 </div>
-    <div id="version-210-4-november-2010" class="section level2">
+<div id="version-210-4-november-2010" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-210-4-november-2010" class="anchor"></a>Version 2.10 (4 November 2010)</h2>
 <ul>
@@ -963,7 +977,7 @@
 <li>arfima() now allowed to have a sequence of missing values at the start of the series and end of the series (but not within the series)</li>
 </ul>
 </div>
-    <div id="version-209-15-october-2010" class="section level2">
+<div id="version-209-15-october-2010" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-209-15-october-2010" class="anchor"></a>Version 2.09 (15 October 2010)</h2>
 <ul>
@@ -972,7 +986,7 @@
 <li>Fixed bug in plot.forecast() to allow plotting when h=1.</li>
 </ul>
 </div>
-    <div id="version-208-22-september-2010" class="section level2">
+<div id="version-208-22-september-2010" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-208-22-september-2010" class="anchor"></a>Version 2.08 (22 September 2010)</h2>
 <ul>
@@ -980,7 +994,7 @@
 <li>Fixed bug in simulate.ets() which was causing problems when forecasting from some ETS models including ETS(M,M,N).</li>
 </ul>
 </div>
-    <div id="version-207-9-september-2010" class="section level2">
+<div id="version-207-9-september-2010" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-207-9-september-2010" class="anchor"></a>Version 2.07 (9 September 2010)</h2>
 <ul>
@@ -988,7 +1002,7 @@
 <li>Changed way color is implemented in plot.forecast() to avoid colour changes when the graphics window is refreshed.</li>
 </ul>
 </div>
-    <div id="version-206-29-july-2010" class="section level2">
+<div id="version-206-29-july-2010" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-206-29-july-2010" class="anchor"></a>Version 2.06 (29 July 2010)</h2>
 <ul>
@@ -996,7 +1010,7 @@
 <li>Added simulate.Arima(), simulate.ar() and simulate.fracdiff()</li>
 </ul>
 </div>
-    <div id="version-205-11-may-2010" class="section level2">
+<div id="version-205-11-may-2010" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-205-11-may-2010" class="anchor"></a>Version 2.05 (11 May 2010)</h2>
 <ul>
@@ -1004,28 +1018,28 @@
 <li>Added residuals and fitted methods for fracdiff objects.</li>
 </ul>
 </div>
-    <div id="version-204-16-april-2010" class="section level2">
+<div id="version-204-16-april-2010" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-204-16-april-2010" class="anchor"></a>Version 2.04 (16 April 2010)</h2>
 <ul>
 <li>Fixed bug in auto.arima() that occurred rarely.</li>
 </ul>
 </div>
-    <div id="version-203-23-december-2009" class="section level2">
+<div id="version-203-23-december-2009" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-203-23-december-2009" class="anchor"></a>Version 2.03 (23 December 2009)</h2>
 <ul>
 <li>Added an option to auto.arima() to allow drift terms to be excluded from the models considered.</li>
 </ul>
 </div>
-    <div id="version-202-23-december-2009" class="section level2">
+<div id="version-202-23-december-2009" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-202-23-december-2009" class="anchor"></a>Version 2.02 (23 December 2009)</h2>
 <ul>
 <li>Fixed bug in auto.arima() that occurred when there was an xreg but no drift, approximation=TRUE and stepwise=FALSE.</li>
 </ul>
 </div>
-    <div id="version-201-14-september-2009" class="section level2">
+<div id="version-201-14-september-2009" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-201-14-september-2009" class="anchor"></a>Version 2.01 (14 September 2009)</h2>
 <ul>
@@ -1033,21 +1047,21 @@
 <li>Added further explanation about models to croston() help file.</li>
 </ul>
 </div>
-    <div id="version-200-7-september-2009" class="section level2">
+<div id="version-200-7-september-2009" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-200-7-september-2009" class="anchor"></a>Version 2.00 (7 September 2009)</h2>
 <ul>
 <li>Package removed from forecasting bundle</li>
 </ul>
 </div>
-    <div id="version-126-29-august-2009" class="section level2">
+<div id="version-126-29-august-2009" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-126-29-august-2009" class="anchor"></a>Version 1.26 (29 August 2009)</h2>
 <ul>
 <li>Added as.data.frame.forecast(). This allows write.table() to work for forecast objects.</li>
 </ul>
 </div>
-    <div id="version-125-22-july-2009" class="section level2">
+<div id="version-125-22-july-2009" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-125-22-july-2009" class="anchor"></a>Version 1.25 (22 July 2009)</h2>
 <ul>
@@ -1056,7 +1070,7 @@
 <li>Modified forecast.ts() to give sensible results with a time series containing fewer than four observations.</li>
 </ul>
 </div>
-    <div id="version-124-9-april-2009" class="section level2">
+<div id="version-124-9-april-2009" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-124-9-april-2009" class="anchor"></a>Version 1.24 (9 April 2009)</h2>
 <ul>
@@ -1064,28 +1078,28 @@
 <li>More informative error messages when auto.arima() fails to find a suitable model.</li>
 </ul>
 </div>
-    <div id="version-123-22-february-2009" class="section level2">
+<div id="version-123-22-february-2009" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-123-22-february-2009" class="anchor"></a>Version 1.23 (22 February 2009)</h2>
 <ul>
 <li>Fixed bugs that meant xreg terms in auto.arima() sometimes caused errors when stepwise=FALSE.</li>
 </ul>
 </div>
-    <div id="version-122-30-january-2009" class="section level2">
+<div id="version-122-30-january-2009" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-122-30-january-2009" class="anchor"></a>Version 1.22 (30 January 2009)</h2>
 <ul>
 <li>Fixed bug that meant regressor variables could not be used with seasonal time series in auto.arima().</li>
 </ul>
 </div>
-    <div id="version-121-16-december-2008" class="section level2">
+<div id="version-121-16-december-2008" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-121-16-december-2008" class="anchor"></a>Version 1.21 (16 December 2008)</h2>
 <ul>
 <li>Fixed bugs introduced in v1.20.</li>
 </ul>
 </div>
-    <div id="version-120-14-december-2008" class="section level2">
+<div id="version-120-14-december-2008" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-120-14-december-2008" class="anchor"></a>Version 1.20 (14 December 2008)</h2>
 <ul>
@@ -1094,14 +1108,14 @@
 <li>In forecast.Arima(), argument h is now set to the length of the xreg argument if it is not null.</li>
 </ul>
 </div>
-    <div id="version-119-7-november-2008" class="section level2">
+<div id="version-119-7-november-2008" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-119-7-november-2008" class="anchor"></a>Version 1.19 (7 November 2008)</h2>
 <ul>
 <li>Updated Arima() to allow regression variables when refitting an existing model to new data.</li>
 </ul>
 </div>
-    <div id="version-118-6-november-2008" class="section level2">
+<div id="version-118-6-november-2008" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-118-6-november-2008" class="anchor"></a>Version 1.18 (6 November 2008)</h2>
 <ul>
@@ -1110,7 +1124,7 @@
 <li>Default lower and upper bounds on parameters , and in ets() changed to 0.0001 and 0.9999 (instead of 0.01 and 0.99).</li>
 </ul>
 </div>
-    <div id="version-117-10-october-2008" class="section level2">
+<div id="version-117-10-october-2008" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-117-10-october-2008" class="anchor"></a>Version 1.17 (10 October 2008)</h2>
 <ul>
@@ -1118,28 +1132,28 @@
 <li>tsdiag() now works with ets objects.</li>
 </ul>
 </div>
-    <div id="version-116-29-september-2008" class="section level2">
+<div id="version-116-29-september-2008" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-116-29-september-2008" class="anchor"></a>Version 1.16 (29 September 2008)</h2>
 <ul>
 <li>Another bug fix in auto.arima(). Occasionally the root checking would cause an error. The condition is now trapped.</li>
 </ul>
 </div>
-    <div id="version-115-16-september-2008" class="section level2">
+<div id="version-115-16-september-2008" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-115-16-september-2008" class="anchor"></a>Version 1.15 (16 September 2008)</h2>
 <ul>
 <li>Bug fix in auto.arima(). The series wasn’t always being stored as part of the return object when stepwise=FALSE.</li>
 </ul>
 </div>
-    <div id="version-114-1-august-2008" class="section level2">
+<div id="version-114-1-august-2008" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-114-1-august-2008" class="anchor"></a>Version 1.14 (1 August 2008)</h2>
 <ul>
 <li>The time series stored in M3 in the Mcomp package did not contain all the components listed in the help file. This problem has now been fixed.</li>
 </ul>
 </div>
-    <div id="version-113-16-june-2008" class="section level2">
+<div id="version-113-16-june-2008" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-113-16-june-2008" class="anchor"></a>Version 1.13 (16 June 2008)</h2>
 <ul>
@@ -1148,7 +1162,7 @@
 <li>Fixed problem in forecast.HoltWinters() where the lower and upper limits were interchanged.</li>
 </ul>
 </div>
-    <div id="version-112-22-april-2008" class="section level2">
+<div id="version-112-22-april-2008" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-112-22-april-2008" class="anchor"></a>Version 1.12 (22 April 2008)</h2>
 <ul>
@@ -1157,7 +1171,7 @@
 <li>Yet more bug-fixes for auto.arima().</li>
 </ul>
 </div>
-    <div id="version-111-8-february-2008" class="section level2">
+<div id="version-111-8-february-2008" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-111-8-february-2008" class="anchor"></a>Version 1.11 (8 February 2008)</h2>
 <ul>
@@ -1166,7 +1180,7 @@
 <li>Addition of the expsmooth package.</li>
 </ul>
 </div>
-    <div id="version-110-21-january-2008" class="section level2">
+<div id="version-110-21-january-2008" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-110-21-january-2008" class="anchor"></a>Version 1.10 (21 January 2008)</h2>
 <ul>
@@ -1175,7 +1189,7 @@
 <li>Bug fixes in auto.arima(). It was sometimes returning a non-optimal model, and occasionally no model at all. Also, additional stationarity and invertibility testing is now done.</li>
 </ul>
 </div>
-    <div id="version-109-11-december-2007" class="section level2">
+<div id="version-109-11-december-2007" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-109-11-december-2007" class="anchor"></a>Version 1.09 (11 December 2007)</h2>
 <ul>
@@ -1183,7 +1197,7 @@
 <li>A bug in the print.Arima() function was fixed.</li>
 </ul>
 </div>
-    <div id="version-108-21-november-2007" class="section level2">
+<div id="version-108-21-november-2007" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-108-21-november-2007" class="anchor"></a>Version 1.08 (21 November 2007)</h2>
 <ul>
@@ -1199,7 +1213,7 @@
 <li>The following methods for Arima objects were added: summary.</li>
 </ul>
 </div>
-    <div id="version-107-25-july-2007" class="section level2">
+<div id="version-107-25-july-2007" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-107-25-july-2007" class="anchor"></a>Version 1.07 (25 July 2007)</h2>
 <ul>
@@ -1208,7 +1222,7 @@
 <li>Improvements in documentation.</li>
 </ul>
 </div>
-    <div id="version-106-15-june-2007" class="section level2">
+<div id="version-106-15-june-2007" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-106-15-june-2007" class="anchor"></a>Version 1.06 (15 June 2007)</h2>
 <ul>
@@ -1216,7 +1230,7 @@
 <li>The tseries package is now installed automatically along with the forecasting bundle, whereas previously it was only suggested.</li>
 </ul>
 </div>
-    <div id="version-105-28-may-2007" class="section level2">
+<div id="version-105-28-may-2007" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-105-28-may-2007" class="anchor"></a>Version 1.05 (28 May 2007)</h2>
 <ul>
@@ -1227,7 +1241,7 @@
 <li>Fixed a bug in applying ets() to new data using a previously fitted model.</li>
 </ul>
 </div>
-    <div id="version-104-30-january-2007" class="section level2">
+<div id="version-104-30-january-2007" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-104-30-january-2007" class="anchor"></a>Version 1.04 (30 January 2007)</h2>
 <ul>
@@ -1235,14 +1249,14 @@
 <li>Fixed bug in seasonal forecasting with ets()</li>
 </ul>
 </div>
-    <div id="version-103-20-october-2006" class="section level2">
+<div id="version-103-20-october-2006" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-103-20-october-2006" class="anchor"></a>Version 1.03 (20 October 2006)</h2>
 <ul>
 <li>Fixed some DOS line feed problems that were bothering unix users.</li>
 </ul>
 </div>
-    <div id="version-102-12-october-2006" class="section level2">
+<div id="version-102-12-october-2006" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-102-12-october-2006" class="anchor"></a>Version 1.02 (12 October 2006)</h2>
 <ul>
@@ -1250,14 +1264,14 @@
 <li>Corrected bug in calculation of fitted values in ets models with multiplicative errors.</li>
 </ul>
 </div>
-    <div id="version-101-25-september-2006" class="section level2">
+<div id="version-101-25-september-2006" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-101-25-september-2006" class="anchor"></a>Version 1.01 (25 September 2006)</h2>
 <ul>
 <li>Modified ndiffs() so that the maximum number of differences allowed is 2.</li>
 </ul>
 </div>
-    <div id="version-10-31-august-2006" class="section level2">
+<div id="version-10-31-august-2006" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-10-31-august-2006" class="anchor"></a>Version 1.0 (31 August 2006)</h2>
 <ul>
@@ -1267,21 +1281,21 @@
 <li>This version is the first to be uploaded to CRAN.</li>
 </ul>
 </div>
-    <div id="version-099992-8-august-2006" class="section level2">
+<div id="version-099992-8-august-2006" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-099992-8-august-2006" class="anchor"></a>Version 0.99992 (8 August 2006)</h2>
 <ul>
 <li>Corrections to help files. No changes to functionality.</li>
 </ul>
 </div>
-    <div id="version-099991-2-august-2006" class="section level2">
+<div id="version-099991-2-august-2006" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-099991-2-august-2006" class="anchor"></a>Version 0.99991 (2 August 2006)</h2>
 <ul>
 <li>More bug fixes. ets now converges to a good model more often.</li>
 </ul>
 </div>
-    <div id="version-09999-1-august-2006" class="section level2">
+<div id="version-09999-1-august-2006" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-09999-1-august-2006" class="anchor"></a>Version 0.9999 (1 August 2006)</h2>
 <ul>
@@ -1292,7 +1306,7 @@
 <li>Multiplicative error models can no longer be applied to series containing zeros or negative values. However, the forecasts from these models are not constrained to be positive.</li>
 </ul>
 </div>
-    <div id="version-0999-27-july-2006" class="section level2">
+<div id="version-0999-27-july-2006" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-0999-27-july-2006" class="anchor"></a>Version 0.999 (27 July 2006)</h2>
 <ul>
@@ -1309,7 +1323,7 @@
 <li>mean.f changed to meanf, theta.f changed to thetaf, rw.f changed to rwf, seasonaldummy.f to seasonaldummyf, sindex.f to sindexf, and spline.f to splinef. These changes are to avoid potential problems if anyone introduces an ‘f’ class.</li>
 </ul>
 </div>
-    <div id="version-0994-4-october-2004" class="section level2">
+<div id="version-0994-4-october-2004" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-0994-4-october-2004" class="anchor"></a>Version 0.994 (4 October 2004)</h2>
 <ul>
@@ -1318,7 +1332,7 @@
 <li>New print.Arima function for more informative output.</li>
 </ul>
 </div>
-    <div id="version-0993-20-july-2004" class="section level2">
+<div id="version-0993-20-july-2004" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-0993-20-july-2004" class="anchor"></a>Version 0.993 (20 July 2004)</h2>
 <ul>
@@ -1329,7 +1343,7 @@
 <li>Added a namespace to the package making fewer functions visible to the user.</li>
 </ul>
 </div>
-    <div id="version-099-21-may-2004" class="section level2">
+<div id="version-099-21-may-2004" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-099-21-may-2004" class="anchor"></a>Version 0.99 (21 May 2004)</h2>
 <ul>
@@ -1341,7 +1355,7 @@
 <li>Note: This package will only work in R1.9 or later.</li>
 </ul>
 </div>
-    <div id="version-098-23-august-2003" class="section level2">
+<div id="version-098-23-august-2003" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-098-23-august-2003" class="anchor"></a>Version 0.98 (23 August 2003)</h2>
 <ul>
@@ -1350,21 +1364,21 @@
 <li>A few minor problems with pegels fixed and a bug in forecast.plot that meant it didn’t work when the series contained missing values.</li>
 </ul>
 </div>
-    <div id="version-0972-11-july-2003" class="section level2">
+<div id="version-0972-11-july-2003" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-0972-11-july-2003" class="anchor"></a>Version 0.972 (11 July 2003)</h2>
 <ul>
 <li>Small bug fix: pegels did not return correct model when model was partially specified.</li>
 </ul>
 </div>
-    <div id="version-0971-10-july-2003" class="section level2">
+<div id="version-0971-10-july-2003" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-0971-10-july-2003" class="anchor"></a>Version 0.971 (10 July 2003)</h2>
 <ul>
 <li>Minor fixes to make sure the package will work with R v1.6.x. No changes to functionality.</li>
 </ul>
 </div>
-    <div id="version-097-9-july-2003" class="section level2">
+<div id="version-097-9-july-2003" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-097-9-july-2003" class="anchor"></a>Version 0.97 (9 July 2003)</h2>
 <ul>
@@ -1372,7 +1386,7 @@
 <li>Local linear forecasting using cubic smoothing splines added. For technical details, see Hyndman, King, Pitrun and Billah (2002).</li>
 </ul>
 </div>
-    <div id="version-096-15-may-2003" class="section level2">
+<div id="version-096-15-may-2003" class="section level2">
 <h2 class="hasAnchor">
 <a href="#version-096-15-may-2003" class="anchor"></a>Version 0.96 (15 May 2003)</h2>
 <ul>
@@ -1386,137 +1400,13 @@
 <li>Fixed the motel data set (columns were swapped)</li>
 </ul>
 </div>
+</div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#forecast-811-21-march-2020">8.11</a></li>
-        <li><a href="#forecast-811-9-february-2020">8.11</a></li>
-        <li><a href="#forecast-810-4-december-2019">8.10</a></li>
-        <li><a href="#forecast-89-22-august-2019">8.9</a></li>
-        <li><a href="#forecast-88-22-july-2019">8.8</a></li>
-        <li><a href="#forecast-87-26-apr-2019">8.7</a></li>
-        <li><a href="#version-86-15-apr-2019">8.6</a></li>
-        <li><a href="#version-85-18-jan-2019">8.5</a></li>
-        <li><a href="#version-84-20-june-2018">8.4</a></li>
-        <li><a href="#version-83-5-april-2018">8.3</a></li>
-        <li><a href="#version-82-25-september-2017">8.2</a></li>
-        <li><a href="#version-81-17-june-2017">8.1</a></li>
-        <li><a href="#version-80-22-february-2017">8.0</a></li>
-        <li><a href="#version-73-12-october-2016">7.3</a></li>
-        <li><a href="#version-72-8-september-2016">7.2</a></li>
-        <li><a href="#version-71-14-april-2016">7.1</a></li>
-        <li><a href="#version-70-3-april-2016">7.0</a></li>
-        <li><a href="#version-62-20-october-2015">6.2</a></li>
-        <li><a href="#version-61-11-may-2015">6.1</a></li>
-        <li><a href="#version-60-9-may-2015">6.0</a></li>
-        <li><a href="#version-59-26-february-2015">5.9</a></li>
-        <li><a href="#version-58-6-january-2015">5.8</a></li>
-        <li><a href="#version-57-17-december-2014">5.7</a></li>
-        <li><a href="#version-56-23-september-2014">5.6</a></li>
-        <li><a href="#version-55-12-august-2014">5.5</a></li>
-        <li><a href="#version-54-8-may-2014">5.4</a></li>
-        <li><a href="#version-53-24-march-2014">5.3</a></li>
-        <li><a href="#version-52-25-february-2014">5.2</a></li>
-        <li><a href="#version-51-8-february-2014">5.1</a></li>
-        <li><a href="#version-50-17-january-2014">5.0</a></li>
-        <li><a href="#version-48-30-september-2013">4.8</a></li>
-        <li><a href="#version-47-26-september-2013">4.7</a></li>
-        <li><a href="#version-406-30-june-2013">4.06</a></li>
-        <li><a href="#version-405-19-june-2013">4.05</a></li>
-        <li><a href="#version-404-22-april-2013">4.04</a></li>
-        <li><a href="#version-403-14-march-2013">4.03</a></li>
-        <li><a href="#version-402-6-march-2013">4.02</a></li>
-        <li><a href="#version-401-22-january-2013">4.01</a></li>
-        <li><a href="#version-400-27-november-2012">4.00</a></li>
-        <li><a href="#version-325-11-september-2012">3.25</a></li>
-        <li><a href="#version-324-23-july-2012">3.24</a></li>
-        <li><a href="#version-323-18-july-2012">3.23</a></li>
-        <li><a href="#version-322-07-june-2012">3.22</a></li>
-        <li><a href="#version-321-26-april-2012">3.21</a></li>
-        <li><a href="#version-320-2-april-2012">3.20</a></li>
-        <li><a href="#version-319-22-february-2012">3.19</a></li>
-        <li><a href="#version-318-17-february-2012">3.18</a></li>
-        <li><a href="#version-317-2-february-2012">3.17</a></li>
-        <li><a href="#version-316-24-december-2011">3.16</a></li>
-        <li><a href="#version-315-22-december-2011">3.15</a></li>
-        <li><a href="#version-314-9-december-2011">3.14</a></li>
-        <li><a href="#version-313-19-november-2011">3.13</a></li>
-        <li><a href="#version-312-16-november-2011">3.12</a></li>
-        <li><a href="#version-311-2-november-2011">3.11</a></li>
-        <li><a href="#version-310-27-october-2011">3.10</a></li>
-        <li><a href="#version-309-18-october-2011">3.09</a></li>
-        <li><a href="#version-308-15-october-2011">3.08</a></li>
-        <li><a href="#version-307-11-october-2011">3.07</a></li>
-        <li><a href="#version-306-4-october-2011">3.06</a></li>
-        <li><a href="#version-305-3-october-2011">3.05</a></li>
-        <li><a href="#version-304-23-september-2011">3.04</a></li>
-        <li><a href="#version-303-2-september-2011">3.03</a></li>
-        <li><a href="#version-302-25-august-2011">3.02</a></li>
-        <li><a href="#version-300-24-august-2011">3.00</a></li>
-        <li><a href="#version-219-4-june-2011">2.19</a></li>
-        <li><a href="#version-218-19-may-2011">2.18</a></li>
-        <li><a href="#version-217-6-april-2011">2.17</a></li>
-        <li><a href="#version-216-6-march-2011">2.16</a></li>
-        <li><a href="#version-215-5-march-2011">2.15</a></li>
-        <li><a href="#version-214-4-march-2011">2.14</a></li>
-        <li><a href="#version-213-16-february-2011">2.13</a></li>
-        <li><a href="#version-212-19-january-2011">2.12</a></li>
-        <li><a href="#version-211-5-november-2010">2.11</a></li>
-        <li><a href="#version-210-4-november-2010">2.10</a></li>
-        <li><a href="#version-209-15-october-2010">2.09</a></li>
-        <li><a href="#version-208-22-september-2010">2.08</a></li>
-        <li><a href="#version-207-9-september-2010">2.07</a></li>
-        <li><a href="#version-206-29-july-2010">2.06</a></li>
-        <li><a href="#version-205-11-may-2010">2.05</a></li>
-        <li><a href="#version-204-16-april-2010">2.04</a></li>
-        <li><a href="#version-203-23-december-2009">2.03</a></li>
-        <li><a href="#version-202-23-december-2009">2.02</a></li>
-        <li><a href="#version-201-14-september-2009">2.01</a></li>
-        <li><a href="#version-200-7-september-2009">2.00</a></li>
-        <li><a href="#version-126-29-august-2009">1.26</a></li>
-        <li><a href="#version-125-22-july-2009">1.25</a></li>
-        <li><a href="#version-124-9-april-2009">1.24</a></li>
-        <li><a href="#version-123-22-february-2009">1.23</a></li>
-        <li><a href="#version-122-30-january-2009">1.22</a></li>
-        <li><a href="#version-121-16-december-2008">1.21</a></li>
-        <li><a href="#version-120-14-december-2008">1.20</a></li>
-        <li><a href="#version-119-7-november-2008">1.19</a></li>
-        <li><a href="#version-118-6-november-2008">1.18</a></li>
-        <li><a href="#version-117-10-october-2008">1.17</a></li>
-        <li><a href="#version-116-29-september-2008">1.16</a></li>
-        <li><a href="#version-115-16-september-2008">1.15</a></li>
-        <li><a href="#version-114-1-august-2008">1.14</a></li>
-        <li><a href="#version-113-16-june-2008">1.13</a></li>
-        <li><a href="#version-112-22-april-2008">1.12</a></li>
-        <li><a href="#version-111-8-february-2008">1.11</a></li>
-        <li><a href="#version-110-21-january-2008">1.10</a></li>
-        <li><a href="#version-109-11-december-2007">1.09</a></li>
-        <li><a href="#version-108-21-november-2007">1.08</a></li>
-        <li><a href="#version-107-25-july-2007">1.07</a></li>
-        <li><a href="#version-106-15-june-2007">1.06</a></li>
-        <li><a href="#version-105-28-may-2007">1.05</a></li>
-        <li><a href="#version-104-30-january-2007">1.04</a></li>
-        <li><a href="#version-103-20-october-2006">1.03</a></li>
-        <li><a href="#version-102-12-october-2006">1.02</a></li>
-        <li><a href="#version-101-25-september-2006">1.01</a></li>
-        <li><a href="#version-10-31-august-2006">1.0</a></li>
-        <li><a href="#version-099992-8-august-2006">0.99992</a></li>
-        <li><a href="#version-099991-2-august-2006">0.99991</a></li>
-        <li><a href="#version-09999-1-august-2006">0.9999</a></li>
-        <li><a href="#version-0999-27-july-2006">0.999</a></li>
-        <li><a href="#version-0994-4-october-2004">0.994</a></li>
-        <li><a href="#version-0993-20-july-2004">0.993</a></li>
-        <li><a href="#version-099-21-may-2004">0.99</a></li>
-        <li><a href="#version-098-23-august-2003">0.98</a></li>
-        <li><a href="#version-0972-11-july-2003">0.972</a></li>
-        <li><a href="#version-0971-10-july-2003">0.971</a></li>
-        <li><a href="#version-097-9-july-2003">0.97</a></li>
-        <li><a href="#version-096-15-may-2003">0.96</a></li>
-      </ul>
-    </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 
 </div>
@@ -1528,7 +1418,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

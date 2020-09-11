@@ -17,23 +17,27 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="bootstrap-toc.css">
+<script src="bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="pkgdown.css" rel="stylesheet">
@@ -44,7 +48,6 @@
 
 <meta property="og:title" content="Citation and Authors" />
 <meta property="og:image" content="/logo.png" />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -62,7 +65,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-citation-authors">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -76,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.13</span>
       </span>
     </div>
 
@@ -116,22 +119,15 @@
       <small class="dont-index">Source: <a href='https://github.com/robjhyndman/forecast/blob/master/inst/CITATION'><code>inst/CITATION</code></a></small>
     </div>
 
-    <p>Hyndman R, Athanasopoulos G, Bergmeir C, Caceres G, Chhay L, O'Hara-Wild M, Petropoulos F, Razbash S, Wang E, Yasmeen F (2020).
-<em>forecast: Forecasting functions for time series and linear models</em>.
-R package version 8.12, <a href="http://pkg.robjhyndman.com/forecast">http://pkg.robjhyndman.com/forecast</a>. 
-</p>
+    <p></p>
     <pre>@Manual{,
   title = {{forecast}: Forecasting functions for time series and linear models},
   author = {Rob Hyndman and George Athanasopoulos and Christoph Bergmeir and Gabriel Caceres and Leanne Chhay and Mitchell O'Hara-Wild and Fotios Petropoulos and Slava Razbash and Earo Wang and Farah Yasmeen},
   year = {2020},
-  note = {R package version 8.12},
-  url = {http://pkg.robjhyndman.com/forecast},
+  note = {R package version 8.13},
+  url = {https://pkg.robjhyndman.com/forecast/},
 }</pre>
-    <p>Hyndman RJ, Khandakar Y (2008).
-&ldquo;Automatic time series forecasting: the forecast package for R.&rdquo;
-<em>Journal of Statistical Software</em>, <b>26</b>(3), 1&ndash;22.
-<a href="http://www.jstatsoft.org/article/view/v027i03">http://www.jstatsoft.org/article/view/v027i03</a>. 
-</p>
+    <p></p>
     <pre>@Article{,
   title = {Automatic time series forecasting: the forecast package for {R}},
   author = {Rob J Hyndman and Yeasmin Khandakar},
@@ -140,7 +136,7 @@ R package version 8.12, <a href="http://pkg.robjhyndman.com/forecast">http://pkg
   number = {3},
   pages = {1--22},
   year = {2008},
-  url = {http://www.jstatsoft.org/article/view/v027i03},
+  url = {https://www.jstatsoft.org/article/view/v027i03},
 }</pre>
 
     <div class="page-header">
@@ -149,7 +145,7 @@ R package version 8.12, <a href="http://pkg.robjhyndman.com/forecast">http://pkg
 
     <ul class="list-unstyled">
       <li>
-        <p><strong><a href='http://robjhyndman.com'>Rob Hyndman</a></strong>. Author, maintainer, copyright holder. <a href='https://orcid.org/0000-0002-2140-5352' target='orcid.widget'><img src='https://members.orcid.org/sites/default/files/vector_iD_icon.svg' class='orcid' alt='ORCID'></a>
+        <p><strong><a href='http://robjhyndman.com'>Rob Hyndman</a></strong>. Author, maintainer, copyright holder. <a href='https://orcid.org/0000-0002-2140-5352' target='orcid.widget' aria-label='ORCID'><span class='fab fa-orcid orcid' aria-hidden='true'></span></a>
         </p>
       </li>
       <li>
@@ -157,7 +153,7 @@ R package version 8.12, <a href="http://pkg.robjhyndman.com/forecast">http://pkg
         </p>
       </li>
       <li>
-        <p><strong><a href='https://github.com/cbergmeir'>Christoph Bergmeir</a></strong>. Author. <a href='https://orcid.org/0000-0002-3665-9021' target='orcid.widget'><img src='https://members.orcid.org/sites/default/files/vector_iD_icon.svg' class='orcid' alt='ORCID'></a>
+        <p><strong><a href='https://github.com/cbergmeir'>Christoph Bergmeir</a></strong>. Author. <a href='https://orcid.org/0000-0002-3665-9021' target='orcid.widget' aria-label='ORCID'><span class='fab fa-orcid orcid' aria-hidden='true'></span></a>
         </p>
       </li>
       <li>
@@ -169,11 +165,11 @@ R package version 8.12, <a href="http://pkg.robjhyndman.com/forecast">http://pkg
         </p>
       </li>
       <li>
-        <p><strong><a href='https://github.com/mitchelloharawild'>Mitchell O'Hara-Wild</a></strong>. Author. <a href='https://orcid.org/0000-0001-6729-7695' target='orcid.widget'><img src='https://members.orcid.org/sites/default/files/vector_iD_icon.svg' class='orcid' alt='ORCID'></a>
+        <p><strong><a href='https://github.com/mitchelloharawild'>Mitchell O'Hara-Wild</a></strong>. Author. <a href='https://orcid.org/0000-0001-6729-7695' target='orcid.widget' aria-label='ORCID'><span class='fab fa-orcid orcid' aria-hidden='true'></span></a>
         </p>
       </li>
       <li>
-        <p><strong><a href='http://fpetropoulos.eu'>Fotios Petropoulos</a></strong>. Author. <a href='https://orcid.org/0000-0003-3039-4955' target='orcid.widget'><img src='https://members.orcid.org/sites/default/files/vector_iD_icon.svg' class='orcid' alt='ORCID'></a>
+        <p><strong><a href='http://fpetropoulos.eu'>Fotios Petropoulos</a></strong>. Author. <a href='https://orcid.org/0000-0003-3039-4955' target='orcid.widget' aria-label='ORCID'><span class='fab fa-orcid orcid' aria-hidden='true'></span></a>
         </p>
       </li>
       <li>
@@ -185,7 +181,7 @@ R package version 8.12, <a href="http://pkg.robjhyndman.com/forecast">http://pkg
         </p>
       </li>
       <li>
-        <p><strong>Farah Yasmeen</strong>. Author. <a href='https://orcid.org/0000-0002-1479-5401' target='orcid.widget'><img src='https://members.orcid.org/sites/default/files/vector_iD_icon.svg' class='orcid' alt='ORCID'></a>
+        <p><strong>Farah Yasmeen</strong>. Author. <a href='https://orcid.org/0000-0002-1479-5401' target='orcid.widget' aria-label='ORCID'><span class='fab fa-orcid orcid' aria-hidden='true'></span></a>
         </p>
       </li>
       <li>
@@ -205,7 +201,7 @@ R package version 8.12, <a href="http://pkg.robjhyndman.com/forecast">http://pkg
         </p>
       </li>
       <li>
-        <p><strong><a href='https://terrytangyuan.github.io/about/'>Yuan Tang</a></strong>. Contributor. <a href='https://orcid.org/0000-0001-5243-233X' target='orcid.widget'><img src='https://members.orcid.org/sites/default/files/vector_iD_icon.svg' class='orcid' alt='ORCID'></a>
+        <p><strong><a href='https://terrytangyuan.github.io/about/'>Yuan Tang</a></strong>. Contributor. <a href='https://orcid.org/0000-0001-5243-233X' target='orcid.widget' aria-label='ORCID'><span class='fab fa-orcid orcid' aria-hidden='true'></span></a>
         </p>
       </li>
       <li>
@@ -226,7 +222,7 @@ R package version 8.12, <a href="http://pkg.robjhyndman.com/forecast">http://pkg
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>
