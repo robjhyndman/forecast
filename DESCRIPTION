@@ -22,12 +22,14 @@ Imports:
   urca,
   zoo
 Suggests:
-  uroot,
+  forecTheta,
   knitr,
+  methods,
   rmarkdown,
   rticles,
+  seasonal,
   testthat,
-  methods
+  uroot
 LinkingTo:
   Rcpp (>= 0.11.0),
   RcppArmadillo (>= 0.2.35)
