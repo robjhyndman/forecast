@@ -14,3 +14,4 @@ cran_check.R
 ^pkgdown$
 vignettes/*_cache
 ^.github$
+^\.github$
