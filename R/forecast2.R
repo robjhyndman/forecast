@@ -217,7 +217,7 @@ InvBoxCox <- function(x, lambda, biasadj=FALSE, fvar=NULL) {
     if (NCOL(fvar) > 1) {
       fvar <- diag(fvar)
     }
-    out <- out * (1 + 0.5 * fvar * (1 - lambda) / (out) ^ (2 * lambda))
+    out <- out * (1 + 0.5 * as.numeric(fvar) * (1 - lambda) / (out) ^ (2 * lambda))
   }
   return(out)
 }
