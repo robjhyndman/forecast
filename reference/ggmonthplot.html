@@ -129,9 +129,9 @@ mini time series. The blue lines represent the mean of the observations
 within each season.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ggmonthplot</span>(<span class='kw'>x</span>, labels = <span class='kw'>NULL</span>, times = <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>time</a></span>(<span class='kw'>x</span>), phase = <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>cycle</a></span>(<span class='kw'>x</span>), <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>ggmonthplot</span><span class='op'>(</span><span class='va'>x</span>, labels <span class='op'>=</span> <span class='cn'>NULL</span>, times <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>time</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, phase <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>cycle</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>ggsubseriesplot</span>(<span class='kw'>x</span>, labels = <span class='kw'>NULL</span>, times = <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>time</a></span>(<span class='kw'>x</span>), phase = <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>cycle</a></span>(<span class='kw'>x</span>), <span class='kw'>...</span>)</pre>
+<span class='fu'>ggsubseriesplot</span><span class='op'>(</span><span class='va'>x</span>, labels <span class='op'>=</span> <span class='cn'>NULL</span>, times <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>time</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, phase <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>cycle</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -175,8 +175,8 @@ within each season.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'>ggsubseriesplot</span>(<span class='kw'>AirPassengers</span>)
-</div><div class='img'><img src='ggmonthplot-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>ggsubseriesplot</span>(<span class='kw'>woolyrnq</span>)
+<span class='fu'>ggsubseriesplot</span><span class='op'>(</span><span class='va'>AirPassengers</span><span class='op'>)</span>
+</div><div class='img'><img src='ggmonthplot-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>ggsubseriesplot</span><span class='op'>(</span><span class='va'>woolyrnq</span><span class='op'>)</span>
 </div><div class='img'><img src='ggmonthplot-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>

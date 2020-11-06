@@ -127,16 +127,16 @@ smoothing splines." />
 smoothing splines.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>splinef</span>(
-  <span class='kw'>y</span>,
-  h = <span class='fl'>10</span>,
-  level = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
-  fan = <span class='fl'>FALSE</span>,
-  lambda = <span class='kw'>NULL</span>,
-  biasadj = <span class='fl'>FALSE</span>,
-  method = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"gcv"</span>, <span class='st'>"mle"</span>),
-  x = <span class='kw'>y</span>
-)</pre>
+    <pre class="usage"><span class='fu'>splinef</span><span class='op'>(</span>
+  <span class='va'>y</span>,
+  h <span class='op'>=</span> <span class='fl'>10</span>,
+  level <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>80</span>, <span class='fl'>95</span><span class='op'>)</span>,
+  fan <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  lambda <span class='op'>=</span> <span class='cn'>NULL</span>,
+  biasadj <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"gcv"</span>, <span class='st'>"mle"</span><span class='op'>)</span>,
+  x <span class='op'>=</span> <span class='va'>y</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -229,9 +229,9 @@ Statistics</em>, <b>47</b>(1), 87-99.
     <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>fcast</span> <span class='op'>&lt;-</span> <span class='fu'>splinef</span>(<span class='kw'>uspop</span>,h=<span class='fl'>5</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>fcast</span>)
-</div><div class='img'><img src='splinef-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>fcast</span>)
+    <pre class="examples"><div class='input'><span class='va'>fcast</span> <span class='op'>&lt;-</span> <span class='fu'>splinef</span><span class='op'>(</span><span class='va'>uspop</span>,h<span class='op'>=</span><span class='fl'>5</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>fcast</span><span class='op'>)</span>
+</div><div class='img'><img src='splinef-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>fcast</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
 #&gt; Forecast method: Cubic Smoothing Spline
 #&gt; 

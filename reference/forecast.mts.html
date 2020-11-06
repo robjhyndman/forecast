@@ -130,18 +130,18 @@ particular <em>methods</em> which depend on the class of the first argument.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for mts</span>
-<span class='fu'><a href='forecast.html'>forecast</a></span>(
-  <span class='kw'>object</span>,
-  h = <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='kw'>object</span>) <span class='op'>&gt;</span> <span class='fl'>1</span>, <span class='fl'>2</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='kw'>object</span>), <span class='fl'>10</span>),
-  level = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
-  fan = <span class='fl'>FALSE</span>,
-  robust = <span class='fl'>FALSE</span>,
-  lambda = <span class='kw'>NULL</span>,
-  biasadj = <span class='fl'>FALSE</span>,
-  find.frequency = <span class='fl'>FALSE</span>,
-  allow.multiplicative.trend = <span class='fl'>FALSE</span>,
-  <span class='kw'>...</span>
-)</pre>
+<span class='fu'><a href='forecast.html'>forecast</a></span><span class='op'>(</span>
+  <span class='va'>object</span>,
+  h <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>1</span>, <span class='fl'>2</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span>, <span class='fl'>10</span><span class='op'>)</span>,
+  level <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>80</span>, <span class='fl'>95</span><span class='op'>)</span>,
+  fan <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  robust <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  lambda <span class='op'>=</span> <span class='cn'>NULL</span>,
+  biasadj <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  find.frequency <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  allow.multiplicative.trend <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

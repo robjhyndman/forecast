@@ -127,9 +127,9 @@ transformation. InvBoxCox() reverses the transformation." />
 transformation. InvBoxCox() reverses the transformation.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>BoxCox</span>(<span class='kw'>x</span>, <span class='kw'>lambda</span>)
+    <pre class="usage"><span class='fu'>BoxCox</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>lambda</span><span class='op'>)</span>
 
-<span class='fu'>InvBoxCox</span>(<span class='kw'>x</span>, <span class='kw'>lambda</span>, biasadj = <span class='fl'>FALSE</span>, fvar = <span class='kw'>NULL</span>)</pre>
+<span class='fu'>InvBoxCox</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>lambda</span>, biasadj <span class='op'>=</span> <span class='cn'>FALSE</span>, fvar <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -179,9 +179,9 @@ transformations. <em>JRSS B</em> <b>26</b> 211--246.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='kw'>lambda</span> <span class='op'>&lt;-</span> <span class='fu'><a href='BoxCox.lambda.html'>BoxCox.lambda</a></span>(<span class='kw'>lynx</span>)
-<span class='kw'>lynx.fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/ar.html'>ar</a></span>(<span class='fu'>BoxCox</span>(<span class='kw'>lynx</span>,<span class='kw'>lambda</span>))
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>lynx.fit</span>,h=<span class='fl'>20</span>,lambda=<span class='kw'>lambda</span>))
+<span class='va'>lambda</span> <span class='op'>&lt;-</span> <span class='fu'><a href='BoxCox.lambda.html'>BoxCox.lambda</a></span><span class='op'>(</span><span class='va'>lynx</span><span class='op'>)</span>
+<span class='va'>lynx.fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/ar.html'>ar</a></span><span class='op'>(</span><span class='fu'>BoxCox</span><span class='op'>(</span><span class='va'>lynx</span>,<span class='va'>lambda</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='forecast.html'>forecast</a></span><span class='op'>(</span><span class='va'>lynx.fit</span>,h<span class='op'>=</span><span class='fl'>20</span>,lambda<span class='op'>=</span><span class='va'>lambda</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='error'>Error in NextMethod(.Generic): cannot assign 'tsp' to zero-length vector</span></div><div class='input'>
 </div></pre>
   </div>

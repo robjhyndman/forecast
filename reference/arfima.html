@@ -129,16 +129,16 @@ Hyndman-Khandakar (2008) algorithm to select p and q and the Haslett and
 Raftery (1989) algorithm to estimate the parameters including d.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>arfima</span>(
-  <span class='kw'>y</span>,
-  drange = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0.5</span>),
-  estim = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"mle"</span>, <span class='st'>"ls"</span>),
-  model = <span class='kw'>NULL</span>,
-  lambda = <span class='kw'>NULL</span>,
-  biasadj = <span class='fl'>FALSE</span>,
-  x = <span class='kw'>y</span>,
-  <span class='kw'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>arfima</span><span class='op'>(</span>
+  <span class='va'>y</span>,
+  drange <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.5</span><span class='op'>)</span>,
+  estim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"mle"</span>, <span class='st'>"ls"</span><span class='op'>)</span>,
+  model <span class='op'>=</span> <span class='cn'>NULL</span>,
+  lambda <span class='op'>=</span> <span class='cn'>NULL</span>,
+  biasadj <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  x <span class='op'>=</span> <span class='va'>y</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -223,10 +223,10 @@ The forecast package for R", <em>Journal of Statistical Software</em>,
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/mmaechler/fracdiff'>fracdiff</a></span>)
-<span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/fracdiff/man/fracdiff.sim.html'>fracdiff.sim</a></span>( <span class='fl'>100</span>, ma=<span class='op'>-</span><span class='fl'>.4</span>, d=<span class='fl'>.3</span>)<span class='op'>$</span><span class='kw'>series</span>
-<span class='kw'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>arfima</span>(<span class='kw'>x</span>)
-<span class='fu'><a href='ggtsdisplay.html'>tsdisplay</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span>(<span class='kw'>fit</span>))
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/mmaechler/fracdiff'>fracdiff</a></span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/fracdiff/man/fracdiff.sim.html'>fracdiff.sim</a></span><span class='op'>(</span> <span class='fl'>100</span>, ma<span class='op'>=</span><span class='op'>-</span><span class='fl'>.4</span>, d<span class='op'>=</span><span class='fl'>.3</span><span class='op'>)</span><span class='op'>$</span><span class='va'>series</span>
+<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>arfima</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+<span class='fu'><a href='ggtsdisplay.html'>tsdisplay</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='img'><img src='arfima-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>

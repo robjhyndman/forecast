@@ -129,7 +129,7 @@ R^2 values for a linear model." />
 R^2 values for a linear model.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>CV</span>(<span class='kw'>obj</span>)</pre>
+    <pre class="usage"><span class='fu'>CV</span><span class='op'>(</span><span class='va'>obj</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -152,12 +152,12 @@ R^2 values for a linear model.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='kw'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/ts.html'>ts</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>120</span>,<span class='fl'>0</span>,<span class='fl'>3</span>) <span class='op'>+</span> <span class='fl'>20</span><span class='op'>*</span><span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>sin</a></span>(<span class='fl'>2</span><span class='op'>*</span><span class='kw'>pi</span><span class='op'>*</span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>120</span>)<span class='op'>/</span><span class='fl'>12</span>), frequency=<span class='fl'>12</span>)
-<span class='kw'>fit1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='tslm.html'>tslm</a></span>(<span class='kw'>y</span> <span class='op'>~</span> <span class='kw'>trend</span> <span class='op'>+</span> <span class='kw'>season</span>)
-<span class='kw'>fit2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='tslm.html'>tslm</a></span>(<span class='kw'>y</span> <span class='op'>~</span> <span class='kw'>season</span>)
-<span class='fu'>CV</span>(<span class='kw'>fit1</span>)
+<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/ts.html'>ts</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>120</span>,<span class='fl'>0</span>,<span class='fl'>3</span><span class='op'>)</span> <span class='op'>+</span> <span class='fl'>20</span><span class='op'>*</span><span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>sin</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>*</span><span class='va'>pi</span><span class='op'>*</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>120</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>12</span><span class='op'>)</span>, frequency<span class='op'>=</span><span class='fl'>12</span><span class='op'>)</span>
+<span class='va'>fit1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='tslm.html'>tslm</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>trend</span> <span class='op'>+</span> <span class='va'>season</span><span class='op'>)</span>
+<span class='va'>fit2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='tslm.html'>tslm</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>season</span><span class='op'>)</span>
+<span class='fu'>CV</span><span class='op'>(</span><span class='va'>fit1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;          CV         AIC        AICc         BIC       AdjR2 
-#&gt;  11.2586211 290.9296316 294.9296316 329.9545160   0.9504162 </div><div class='input'><span class='fu'>CV</span>(<span class='kw'>fit2</span>)
+#&gt;  11.2586211 290.9296316 294.9296316 329.9545160   0.9504162 </div><div class='input'><span class='fu'>CV</span><span class='op'>(</span><span class='va'>fit2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;          CV         AIC        AICc         BIC       AdjR2 
 #&gt;  11.1266227 289.8343573 293.2683196 326.0717500   0.9505035 </div><div class='input'>
 </div></pre>

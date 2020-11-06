@@ -131,21 +131,21 @@ is also possible to take an ARIMA model from a previous call to <code>Arima</cod
 and re-apply it to the data <code>y</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>Arima</span>(
-  <span class='kw'>y</span>,
-  order = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>),
-  seasonal = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>),
-  xreg = <span class='kw'>NULL</span>,
-  include.mean = <span class='fl'>TRUE</span>,
-  include.drift = <span class='fl'>FALSE</span>,
-  <span class='kw'>include.constant</span>,
-  lambda = <span class='kw'>model</span><span class='op'>$</span><span class='kw'>lambda</span>,
-  biasadj = <span class='fl'>FALSE</span>,
-  method = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"CSS-ML"</span>, <span class='st'>"ML"</span>, <span class='st'>"CSS"</span>),
-  model = <span class='kw'>NULL</span>,
-  x = <span class='kw'>y</span>,
-  <span class='kw'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>Arima</span><span class='op'>(</span>
+  <span class='va'>y</span>,
+  order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>,
+  seasonal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>,
+  xreg <span class='op'>=</span> <span class='cn'>NULL</span>,
+  include.mean <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  include.drift <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>include.constant</span>,
+  lambda <span class='op'>=</span> <span class='va'>model</span><span class='op'>$</span><span class='va'>lambda</span>,
+  biasadj <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"CSS-ML"</span>, <span class='st'>"ML"</span>, <span class='st'>"CSS"</span><span class='op'>)</span>,
+  model <span class='op'>=</span> <span class='cn'>NULL</span>,
+  x <span class='op'>=</span> <span class='va'>y</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -249,33 +249,33 @@ The additional objects returned are</p>
     <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span>)
-<span class='kw'>WWWusage</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>Arima</span>(order=<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>,<span class='fl'>1</span>,<span class='fl'>0</span>)) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='forecast.html'>forecast</a></span>(h=<span class='fl'>20</span>) <span class='op'>%&gt;%</span>
-  <span class='kw'>autoplot</span>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='va'>WWWusage</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>Arima</span><span class='op'>(</span>order<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>,<span class='fl'>1</span>,<span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='forecast.html'>forecast</a></span><span class='op'>(</span>h<span class='op'>=</span><span class='fl'>20</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='va'>autoplot</span>
 </div><div class='img'><img src='Arima-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Fit model to first few years of AirPassengers data</span>
-<span class='kw'>air.model</span> <span class='op'>&lt;-</span> <span class='fu'>Arima</span>(<span class='fu'><a href='https://rdrr.io/r/stats/window.html'>window</a></span>(<span class='kw'>AirPassengers</span>,end=<span class='fl'>1956</span><span class='op'>+</span><span class='fl'>11</span><span class='op'>/</span><span class='fl'>12</span>),order=<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>),
-                   seasonal=<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(order=<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>),period=<span class='fl'>12</span>),lambda=<span class='fl'>0</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>air.model</span>,h=<span class='fl'>48</span>))
-</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='kw'>AirPassengers</span>)
+<span class='va'>air.model</span> <span class='op'>&lt;-</span> <span class='fu'>Arima</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/window.html'>window</a></span><span class='op'>(</span><span class='va'>AirPassengers</span>,end<span class='op'>=</span><span class='fl'>1956</span><span class='op'>+</span><span class='fl'>11</span><span class='op'>/</span><span class='fl'>12</span><span class='op'>)</span>,order<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span>,
+                   seasonal<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>order<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span>,period<span class='op'>=</span><span class='fl'>12</span><span class='op'>)</span>,lambda<span class='op'>=</span><span class='fl'>0</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='forecast.html'>forecast</a></span><span class='op'>(</span><span class='va'>air.model</span>,h<span class='op'>=</span><span class='fl'>48</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span><span class='va'>AirPassengers</span><span class='op'>)</span>
 </div><div class='img'><img src='Arima-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Apply fitted model to later data</span>
-<span class='kw'>air.model2</span> <span class='op'>&lt;-</span> <span class='fu'>Arima</span>(<span class='fu'><a href='https://rdrr.io/r/stats/window.html'>window</a></span>(<span class='kw'>AirPassengers</span>,start=<span class='fl'>1957</span>),model=<span class='kw'>air.model</span>)
+<span class='va'>air.model2</span> <span class='op'>&lt;-</span> <span class='fu'>Arima</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/window.html'>window</a></span><span class='op'>(</span><span class='va'>AirPassengers</span>,start<span class='op'>=</span><span class='fl'>1957</span><span class='op'>)</span>,model<span class='op'>=</span><span class='va'>air.model</span><span class='op'>)</span>
 
 <span class='co'># Forecast accuracy measures on the log scale.</span>
 <span class='co'># in-sample one-step forecasts.</span>
-<span class='fu'><a href='accuracy.html'>accuracy</a></span>(<span class='kw'>air.model</span>)
+<span class='fu'><a href='accuracy.html'>accuracy</a></span><span class='op'>(</span><span class='va'>air.model</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;                     ME    RMSE      MAE       MPE     MAPE      MASE       ACF1
 #&gt; Training set 0.3576253 7.89734 5.788344 0.1458472 2.670181 0.1982148 0.05807465</div><div class='input'><span class='co'># out-of-sample one-step forecasts.</span>
-<span class='fu'><a href='accuracy.html'>accuracy</a></span>(<span class='kw'>air.model2</span>)
+<span class='fu'><a href='accuracy.html'>accuracy</a></span><span class='op'>(</span><span class='va'>air.model2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;                     ME     RMSE     MAE        MPE     MAPE      MASE
 #&gt; Training set 0.5159268 12.13132 8.14054 0.07949083 1.900931 0.2266508
 #&gt;                    ACF1
 #&gt; Training set -0.2166661</div><div class='input'><span class='co'># out-of-sample multi-step forecasts</span>
-<span class='fu'><a href='accuracy.html'>accuracy</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>air.model</span>,h=<span class='fl'>48</span>,lambda=<span class='kw'>NULL</span>),
-         <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/window.html'>window</a></span>(<span class='kw'>AirPassengers</span>,start=<span class='fl'>1957</span>)))
+<span class='fu'><a href='accuracy.html'>accuracy</a></span><span class='op'>(</span><span class='fu'><a href='forecast.html'>forecast</a></span><span class='op'>(</span><span class='va'>air.model</span>,h<span class='op'>=</span><span class='fl'>48</span>,lambda<span class='op'>=</span><span class='cn'>NULL</span><span class='op'>)</span>,
+         <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/window.html'>window</a></span><span class='op'>(</span><span class='va'>AirPassengers</span>,start<span class='op'>=</span><span class='fl'>1957</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;                       ME      RMSE        MAE        MPE     MAPE      MASE
 #&gt; Training set  0.35762533 7.8973404 5.78834425  0.1458472 2.670181 0.1982148
 #&gt; Test set     -0.08403416 0.1031891 0.08801596 -1.3982000 1.463555 0.0030140

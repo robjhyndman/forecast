@@ -127,22 +127,22 @@ component." />
 component.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>seasadj</span>(<span class='kw'>object</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>seasadj</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for stl</span>
-<span class='fu'>seasadj</span>(<span class='kw'>object</span>, <span class='kw'>...</span>)
+<span class='fu'>seasadj</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for mstl</span>
-<span class='fu'>seasadj</span>(<span class='kw'>object</span>, <span class='kw'>...</span>)
+<span class='fu'>seasadj</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for decomposed.ts</span>
-<span class='fu'>seasadj</span>(<span class='kw'>object</span>, <span class='kw'>...</span>)
+<span class='fu'>seasadj</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for tbats</span>
-<span class='fu'>seasadj</span>(<span class='kw'>object</span>, <span class='kw'>...</span>)
+<span class='fu'>seasadj</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for seas</span>
-<span class='fu'>seasadj</span>(<span class='kw'>object</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'>seasadj</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -170,8 +170,8 @@ component.</p>
     <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>AirPassengers</span>)
-</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='fu'>seasadj</span>(<span class='fu'><a href='https://rdrr.io/r/stats/decompose.html'>decompose</a></span>(<span class='kw'>AirPassengers</span>,<span class='st'>"multiplicative"</span>)),col=<span class='fl'>4</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>AirPassengers</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span><span class='fu'>seasadj</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/decompose.html'>decompose</a></span><span class='op'>(</span><span class='va'>AirPassengers</span>,<span class='st'>"multiplicative"</span><span class='op'>)</span><span class='op'>)</span>,col<span class='op'>=</span><span class='fl'>4</span><span class='op'>)</span>
 </div><div class='img'><img src='seasadj-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>

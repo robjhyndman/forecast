@@ -125,29 +125,29 @@
     <p>Returns ets model applied to <code>y</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ets</span>(
-  <span class='kw'>y</span>,
-  model = <span class='st'>"ZZZ"</span>,
-  damped = <span class='kw'>NULL</span>,
-  alpha = <span class='kw'>NULL</span>,
-  beta = <span class='kw'>NULL</span>,
-  gamma = <span class='kw'>NULL</span>,
-  phi = <span class='kw'>NULL</span>,
-  additive.only = <span class='fl'>FALSE</span>,
-  lambda = <span class='kw'>NULL</span>,
-  biasadj = <span class='fl'>FALSE</span>,
-  lower = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1e-04</span>, <span class='fl'>3</span>), <span class='fl'>0.8</span>),
-  upper = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0.9999</span>, <span class='fl'>3</span>), <span class='fl'>0.98</span>),
-  opt.crit = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lik"</span>, <span class='st'>"amse"</span>, <span class='st'>"mse"</span>, <span class='st'>"sigma"</span>, <span class='st'>"mae"</span>),
-  nmse = <span class='fl'>3</span>,
-  bounds = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"both"</span>, <span class='st'>"usual"</span>, <span class='st'>"admissible"</span>),
-  ic = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"aicc"</span>, <span class='st'>"aic"</span>, <span class='st'>"bic"</span>),
-  restrict = <span class='fl'>TRUE</span>,
-  allow.multiplicative.trend = <span class='fl'>FALSE</span>,
-  use.initial.values = <span class='fl'>FALSE</span>,
-  na.action = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"na.contiguous"</span>, <span class='st'>"na.interp"</span>, <span class='st'>"na.fail"</span>),
-  <span class='kw'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>ets</span><span class='op'>(</span>
+  <span class='va'>y</span>,
+  model <span class='op'>=</span> <span class='st'>"ZZZ"</span>,
+  damped <span class='op'>=</span> <span class='cn'>NULL</span>,
+  alpha <span class='op'>=</span> <span class='cn'>NULL</span>,
+  beta <span class='op'>=</span> <span class='cn'>NULL</span>,
+  gamma <span class='op'>=</span> <span class='cn'>NULL</span>,
+  phi <span class='op'>=</span> <span class='cn'>NULL</span>,
+  additive.only <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  lambda <span class='op'>=</span> <span class='cn'>NULL</span>,
+  biasadj <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  lower <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1e-04</span>, <span class='fl'>3</span><span class='op'>)</span>, <span class='fl'>0.8</span><span class='op'>)</span>,
+  upper <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0.9999</span>, <span class='fl'>3</span><span class='op'>)</span>, <span class='fl'>0.98</span><span class='op'>)</span>,
+  opt.crit <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"lik"</span>, <span class='st'>"amse"</span>, <span class='st'>"mse"</span>, <span class='st'>"sigma"</span>, <span class='st'>"mae"</span><span class='op'>)</span>,
+  nmse <span class='op'>=</span> <span class='fl'>3</span>,
+  bounds <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"both"</span>, <span class='st'>"usual"</span>, <span class='st'>"admissible"</span><span class='op'>)</span>,
+  ic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"aicc"</span>, <span class='st'>"aic"</span>, <span class='st'>"bic"</span><span class='op'>)</span>,
+  restrict <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  allow.multiplicative.trend <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  use.initial.values <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  na.action <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"na.contiguous"</span>, <span class='st'>"na.interp"</span>, <span class='st'>"na.fail"</span><span class='op'>)</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -308,8 +308,8 @@ Springer-Verlag. <a href='http://www.exponentialsmoothing.net'>http://www.expone
     <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>ets</span>(<span class='kw'>USAccDeaths</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>fit</span>))
+    <pre class="examples"><div class='input'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>ets</span><span class='op'>(</span><span class='va'>USAccDeaths</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='forecast.html'>forecast</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='img'><img src='ets-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>

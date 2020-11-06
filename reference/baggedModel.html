@@ -125,9 +125,9 @@
     <p>The bagged model forecasting method.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>baggedModel</span>(<span class='kw'>y</span>, bootstrapped_series = <span class='fu'><a href='bld.mbb.bootstrap.html'>bld.mbb.bootstrap</a></span>(<span class='kw'>y</span>, <span class='fl'>100</span>), fn = <span class='kw'>ets</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>baggedModel</span><span class='op'>(</span><span class='va'>y</span>, bootstrapped_series <span class='op'>=</span> <span class='fu'><a href='bld.mbb.bootstrap.html'>bld.mbb.bootstrap</a></span><span class='op'>(</span><span class='va'>y</span>, <span class='fl'>100</span><span class='op'>)</span>, fn <span class='op'>=</span> <span class='va'>ets</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>baggedETS</span>(<span class='kw'>y</span>, bootstrapped_series = <span class='fu'><a href='bld.mbb.bootstrap.html'>bld.mbb.bootstrap</a></span>(<span class='kw'>y</span>, <span class='fl'>100</span>), <span class='kw'>...</span>)</pre>
+<span class='fu'>baggedETS</span><span class='op'>(</span><span class='va'>y</span>, bootstrapped_series <span class='op'>=</span> <span class='fu'><a href='bld.mbb.bootstrap.html'>bld.mbb.bootstrap</a></span><span class='op'>(</span><span class='va'>y</span>, <span class='fl'>100</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -186,9 +186,9 @@ Transformation. International Journal of Forecasting 32, 303-312.</p>
     <p>Christoph Bergmeir, Fotios Petropoulos</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>baggedModel</span>(<span class='kw'>WWWusage</span>)
-<span class='kw'>fcast</span> <span class='op'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>fit</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>fcast</span>)
+    <pre class="examples"><div class='input'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>baggedModel</span><span class='op'>(</span><span class='va'>WWWusage</span><span class='op'>)</span>
+<span class='va'>fcast</span> <span class='op'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>fcast</span><span class='op'>)</span>
 </div><div class='img'><img src='baggedModel-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>

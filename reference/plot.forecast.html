@@ -126,47 +126,47 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for forecast</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(
-  <span class='kw'>x</span>,
-  <span class='kw'>include</span>,
-  PI = <span class='fl'>TRUE</span>,
-  showgap = <span class='fl'>TRUE</span>,
-  shaded = <span class='fl'>TRUE</span>,
-  shadebars = (<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='kw'>x</span><span class='op'>$</span><span class='kw'>mean</span>) <span class='op'>&lt;</span> <span class='fl'>5</span>),
-  shadecols = <span class='kw'>NULL</span>,
-  col = <span class='fl'>1</span>,
-  fcol = <span class='fl'>4</span>,
-  pi.col = <span class='fl'>1</span>,
-  pi.lty = <span class='fl'>2</span>,
-  ylim = <span class='kw'>NULL</span>,
-  main = <span class='kw'>NULL</span>,
-  xlab = <span class='st'>""</span>,
-  ylab = <span class='st'>""</span>,
-  type = <span class='st'>"l"</span>,
-  flty = <span class='fl'>1</span>,
-  flwd = <span class='fl'>2</span>,
-  <span class='kw'>...</span>
-)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>include</span>,
+  PI <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  showgap <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  shaded <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  shadebars <span class='op'>=</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='va'>mean</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='fl'>5</span><span class='op'>)</span>,
+  shadecols <span class='op'>=</span> <span class='cn'>NULL</span>,
+  col <span class='op'>=</span> <span class='fl'>1</span>,
+  fcol <span class='op'>=</span> <span class='fl'>4</span>,
+  pi.col <span class='op'>=</span> <span class='fl'>1</span>,
+  pi.lty <span class='op'>=</span> <span class='fl'>2</span>,
+  ylim <span class='op'>=</span> <span class='cn'>NULL</span>,
+  main <span class='op'>=</span> <span class='cn'>NULL</span>,
+  xlab <span class='op'>=</span> <span class='st'>""</span>,
+  ylab <span class='op'>=</span> <span class='st'>""</span>,
+  type <span class='op'>=</span> <span class='st'>"l"</span>,
+  flty <span class='op'>=</span> <span class='fl'>1</span>,
+  flwd <span class='op'>=</span> <span class='fl'>2</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for forecast</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(
-  <span class='kw'>object</span>,
-  <span class='kw'>include</span>,
-  PI = <span class='fl'>TRUE</span>,
-  shadecols = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"#596DD5"</span>, <span class='st'>"#D5DBFF"</span>),
-  fcol = <span class='st'>"#0000AA"</span>,
-  flwd = <span class='fl'>0.5</span>,
-  <span class='kw'>...</span>
-)
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span><span class='op'>(</span>
+  <span class='va'>object</span>,
+  <span class='va'>include</span>,
+  PI <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  shadecols <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#596DD5"</span>, <span class='st'>"#D5DBFF"</span><span class='op'>)</span>,
+  fcol <span class='op'>=</span> <span class='st'>"#0000AA"</span>,
+  flwd <span class='op'>=</span> <span class='fl'>0.5</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for splineforecast</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='kw'>object</span>, PI = <span class='fl'>TRUE</span>, <span class='kw'>...</span>)
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span><span class='op'>(</span><span class='va'>object</span>, PI <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for forecast</span>
-<span class='fu'><a href='autolayer.html'>autolayer</a></span>(<span class='kw'>object</span>, series = <span class='kw'>NULL</span>, PI = <span class='fl'>TRUE</span>, showgap = <span class='fl'>TRUE</span>, <span class='kw'>...</span>)
+<span class='fu'><a href='autolayer.html'>autolayer</a></span><span class='op'>(</span><span class='va'>object</span>, series <span class='op'>=</span> <span class='cn'>NULL</span>, PI <span class='op'>=</span> <span class='cn'>TRUE</span>, showgap <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for splineforecast</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>x</span>, fitcol = <span class='fl'>2</span>, type = <span class='st'>"o"</span>, pch = <span class='fl'>19</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, fitcol <span class='op'>=</span> <span class='fl'>2</span>, type <span class='op'>=</span> <span class='st'>"o"</span>, pch <span class='op'>=</span> <span class='fl'>19</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -297,19 +297,19 @@ and practice</em>, 2nd edition, OTexts: Melbourne, Australia.
     <p>Rob J Hyndman &amp; Mitchell O'Hara-Wild</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
 
-<span class='kw'>wine.fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ses.html'>hw</a></span>(<span class='kw'>wineind</span>,h=<span class='fl'>48</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>wine.fit</span>)
-</div><div class='img'><img src='plot.forecast-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='kw'>wine.fit</span>)
+<span class='va'>wine.fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ses.html'>hw</a></span><span class='op'>(</span><span class='va'>wineind</span>,h<span class='op'>=</span><span class='fl'>48</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>wine.fit</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.forecast-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span><span class='op'>(</span><span class='va'>wine.fit</span><span class='op'>)</span>
 </div><div class='img'><img src='plot.forecast-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='kw'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='tslm.html'>tslm</a></span>(<span class='kw'>wineind</span> <span class='op'>~</span> <span class='fu'><a href='fourier.html'>fourier</a></span>(<span class='kw'>wineind</span>,<span class='fl'>4</span>))
-<span class='kw'>fcast</span> <span class='op'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>fit</span>, newdata=<span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='fourier.html'>fourier</a></span>(<span class='kw'>wineind</span>,<span class='fl'>4</span>,<span class='fl'>20</span>)))
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='kw'>fcast</span>)
+<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='tslm.html'>tslm</a></span><span class='op'>(</span><span class='va'>wineind</span> <span class='op'>~</span> <span class='fu'><a href='fourier.html'>fourier</a></span><span class='op'>(</span><span class='va'>wineind</span>,<span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>fcast</span> <span class='op'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span><span class='op'>(</span><span class='va'>fit</span>, newdata<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='fourier.html'>fourier</a></span><span class='op'>(</span><span class='va'>wineind</span>,<span class='fl'>4</span>,<span class='fl'>20</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span><span class='op'>(</span><span class='va'>fcast</span><span class='op'>)</span>
 </div><div class='img'><img src='plot.forecast-3.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='kw'>fcast</span> <span class='op'>&lt;-</span> <span class='fu'><a href='splinef.html'>splinef</a></span>(<span class='kw'>airmiles</span>,h=<span class='fl'>5</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>fcast</span>)
-</div><div class='img'><img src='plot.forecast-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='kw'>fcast</span>)
+<span class='va'>fcast</span> <span class='op'>&lt;-</span> <span class='fu'><a href='splinef.html'>splinef</a></span><span class='op'>(</span><span class='va'>airmiles</span>,h<span class='op'>=</span><span class='fl'>5</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>fcast</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.forecast-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span><span class='op'>(</span><span class='va'>fcast</span><span class='op'>)</span>
 </div><div class='img'><img src='plot.forecast-5.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>

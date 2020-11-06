@@ -132,19 +132,19 @@ class &#8220;<code>stl</code>&#8221; (created with <code><a href='https://rdrr.i
     </div>
 
     <pre class="usage"><span class='co'># S3 method for decomposed.ts</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='kw'>object</span>, labels = <span class='kw'>NULL</span>, range.bars = <span class='kw'>NULL</span>, <span class='kw'>...</span>)
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span><span class='op'>(</span><span class='va'>object</span>, labels <span class='op'>=</span> <span class='cn'>NULL</span>, range.bars <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for stl</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='kw'>object</span>, labels = <span class='kw'>NULL</span>, range.bars = <span class='fl'>TRUE</span>, <span class='kw'>...</span>)
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span><span class='op'>(</span><span class='va'>object</span>, labels <span class='op'>=</span> <span class='cn'>NULL</span>, range.bars <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for StructTS</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='kw'>object</span>, labels = <span class='kw'>NULL</span>, range.bars = <span class='fl'>TRUE</span>, <span class='kw'>...</span>)
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span><span class='op'>(</span><span class='va'>object</span>, labels <span class='op'>=</span> <span class='cn'>NULL</span>, range.bars <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for seas</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='kw'>object</span>, labels = <span class='kw'>NULL</span>, range.bars = <span class='kw'>NULL</span>, <span class='kw'>...</span>)
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span><span class='op'>(</span><span class='va'>object</span>, labels <span class='op'>=</span> <span class='cn'>NULL</span>, range.bars <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for mstl</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='kw'>object</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -185,14 +185,14 @@ takes place.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span>)
-<span class='kw'>co2</span> <span class='op'>%&gt;%</span> <span class='kw'>decompose</span> <span class='op'>%&gt;%</span> <span class='kw'>autoplot</span>
-</div><div class='img'><img src='autoplot.seas-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='kw'>nottem</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/stats/stl.html'>stl</a></span>(s.window=<span class='st'>'periodic'</span>) <span class='op'>%&gt;%</span> <span class='kw'>autoplot</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='va'>co2</span> <span class='op'>%&gt;%</span> <span class='va'>decompose</span> <span class='op'>%&gt;%</span> <span class='va'>autoplot</span>
+</div><div class='img'><img src='autoplot.seas-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='va'>nottem</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/stats/stl.html'>stl</a></span><span class='op'>(</span>s.window<span class='op'>=</span><span class='st'>'periodic'</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='va'>autoplot</span>
 </div><div class='img'><img src='autoplot.seas-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://www.seasonal.website'>seasonal</a></span>)
-<span class='fu'><a href='https://rdrr.io/pkg/seasonal/man/seas.html'>seas</a></span>(<span class='kw'>USAccDeaths</span>) <span class='op'>%&gt;%</span> <span class='kw'>autoplot</span>
-}
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://www.seasonal.website'>seasonal</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/seasonal/man/seas.html'>seas</a></span><span class='op'>(</span><span class='va'>USAccDeaths</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='va'>autoplot</span>
+<span class='op'>}</span>
 
 </div></pre>
   </div>

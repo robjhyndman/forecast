@@ -128,19 +128,19 @@ models.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for modelAR</span>
-<span class='fu'><a href='forecast.html'>forecast</a></span>(
-  <span class='kw'>object</span>,
-  h = <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='kw'>object</span><span class='op'>$</span><span class='kw'>m</span> <span class='op'>&gt;</span> <span class='fl'>1</span>, <span class='fl'>2</span> <span class='op'>*</span> <span class='kw'>object</span><span class='op'>$</span><span class='kw'>m</span>, <span class='fl'>10</span>),
-  PI = <span class='fl'>FALSE</span>,
-  level = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
-  fan = <span class='fl'>FALSE</span>,
-  xreg = <span class='kw'>NULL</span>,
-  lambda = <span class='kw'>object</span><span class='op'>$</span><span class='kw'>lambda</span>,
-  bootstrap = <span class='fl'>FALSE</span>,
-  npaths = <span class='fl'>1000</span>,
-  innov = <span class='kw'>NULL</span>,
-  <span class='kw'>...</span>
-)</pre>
+<span class='fu'><a href='forecast.html'>forecast</a></span><span class='op'>(</span>
+  <span class='va'>object</span>,
+  h <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>object</span><span class='op'>$</span><span class='va'>m</span> <span class='op'>&gt;</span> <span class='fl'>1</span>, <span class='fl'>2</span> <span class='op'>*</span> <span class='va'>object</span><span class='op'>$</span><span class='va'>m</span>, <span class='fl'>10</span><span class='op'>)</span>,
+  PI <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  level <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>80</span>, <span class='fl'>95</span><span class='op'>)</span>,
+  fan <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  xreg <span class='op'>=</span> <span class='cn'>NULL</span>,
+  lambda <span class='op'>=</span> <span class='va'>object</span><span class='op'>$</span><span class='va'>lambda</span>,
+  bootstrap <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  npaths <span class='op'>=</span> <span class='fl'>1000</span>,
+  innov <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

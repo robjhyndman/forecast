@@ -126,13 +126,13 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for mforecast</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='kw'>object</span>, PI = <span class='fl'>TRUE</span>, facets = <span class='fl'>TRUE</span>, colour = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span><span class='op'>(</span><span class='va'>object</span>, PI <span class='op'>=</span> <span class='cn'>TRUE</span>, facets <span class='op'>=</span> <span class='cn'>TRUE</span>, colour <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for mforecast</span>
-<span class='fu'><a href='autolayer.html'>autolayer</a></span>(<span class='kw'>object</span>, series = <span class='kw'>NULL</span>, PI = <span class='fl'>TRUE</span>, <span class='kw'>...</span>)
+<span class='fu'><a href='autolayer.html'>autolayer</a></span><span class='op'>(</span><span class='va'>object</span>, series <span class='op'>=</span> <span class='cn'>NULL</span>, PI <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for mforecast</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>x</span>, main = <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='st'>"Forecasts from"</span>, <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='kw'>x</span><span class='op'>$</span><span class='kw'>method</span>)), xlab = <span class='st'>"time"</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, main <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"Forecasts from"</span>, <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='va'>method</span><span class='op'>)</span><span class='op'>)</span>, xlab <span class='op'>=</span> <span class='st'>"time"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -197,20 +197,20 @@ and practice</em>, 2nd edition, OTexts: Melbourne, Australia.
     <p>Mitchell O'Hara-Wild</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
 
-<span class='kw'>lungDeaths</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='kw'>mdeaths</span>, <span class='kw'>fdeaths</span>)
-<span class='kw'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='tslm.html'>tslm</a></span>(<span class='kw'>lungDeaths</span> <span class='op'>~</span> <span class='kw'>trend</span> <span class='op'>+</span> <span class='kw'>season</span>)
-<span class='kw'>fcast</span> <span class='op'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>fit</span>, h=<span class='fl'>10</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>fcast</span>)
-</div><div class='img'><img src='plot.mforecast-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='kw'>fcast</span>)
+<span class='va'>lungDeaths</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>mdeaths</span>, <span class='va'>fdeaths</span><span class='op'>)</span>
+<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='tslm.html'>tslm</a></span><span class='op'>(</span><span class='va'>lungDeaths</span> <span class='op'>~</span> <span class='va'>trend</span> <span class='op'>+</span> <span class='va'>season</span><span class='op'>)</span>
+<span class='va'>fcast</span> <span class='op'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span><span class='op'>(</span><span class='va'>fit</span>, h<span class='op'>=</span><span class='fl'>10</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>fcast</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.mforecast-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span><span class='op'>(</span><span class='va'>fcast</span><span class='op'>)</span>
 </div><div class='img'><img src='plot.mforecast-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='kw'>carPower</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='kw'>mtcars</span>[,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"qsec"</span>,<span class='st'>"hp"</span>)])
-<span class='kw'>carmpg</span> <span class='op'>&lt;-</span> <span class='kw'>mtcars</span>[,<span class='st'>"mpg"</span>]
-<span class='kw'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>carPower</span> <span class='op'>~</span> <span class='kw'>carmpg</span>)
-<span class='kw'>fcast</span> <span class='op'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>fit</span>, newdata=<span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(carmpg=<span class='fl'>30</span>))
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>fcast</span>, xlab=<span class='st'>"Year"</span>)
-</div><div class='img'><img src='plot.mforecast-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='kw'>fcast</span>, xlab=<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"Year"</span>,<span class='fl'>2</span>))
+<span class='va'>carPower</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>[</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"qsec"</span>,<span class='st'>"hp"</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span>
+<span class='va'>carmpg</span> <span class='op'>&lt;-</span> <span class='va'>mtcars</span><span class='op'>[</span>,<span class='st'>"mpg"</span><span class='op'>]</span>
+<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>carPower</span> <span class='op'>~</span> <span class='va'>carmpg</span><span class='op'>)</span>
+<span class='va'>fcast</span> <span class='op'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span><span class='op'>(</span><span class='va'>fit</span>, newdata<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>carmpg<span class='op'>=</span><span class='fl'>30</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>fcast</span>, xlab<span class='op'>=</span><span class='st'>"Year"</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.mforecast-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span><span class='op'>(</span><span class='va'>fcast</span>, xlab<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"Year"</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='img'><img src='plot.mforecast-4.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
