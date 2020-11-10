@@ -237,7 +237,11 @@ tsoutliers <- function(x, iterate=2, lambda=NULL) {
     {
       outliers <- sort(unique(c(outliers, tmp$index)))
       x[outliers] <- NA
-      x <- na.interp(x, lambda = lambda)
+      if(sum(!is.na(x)) == 1L) {
+        # Only one non-missing value
+        x[is.na(x)] <- x[!is.na(x)]
+      } else
+        x <- na.interp(x, lambda = lambda)
     }
   }
 
