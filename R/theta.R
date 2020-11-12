@@ -91,8 +91,8 @@ thetaf <- function(y, h = ifelse(frequency(y) > 1, 2 * frequency(y), 10),
   origx <- x
   if (seasonal) {
     decomp <- decompose(x, type = "multiplicative")
-    if (any(abs(seasonal(decomp)) < 1e-10)) {
-      warning("Seasonal indexes equal to zero. Using non-seasonal Theta method")
+    if (any(abs(seasonal(decomp)) < 1e-4)) {
+      warning("Seasonal indexes close to zero. Using non-seasonal Theta method")
     } else {
       x <- seasadj(decomp)
     }
