@@ -445,13 +445,13 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
       zeros <- object$arma[5] * object$arma[7]
       sim <- arima.sim(model, nsim, innov = e)
       sim <- diffinv(sim, lag = object$arma[5], differences = object$arma[7])[-(1:zeros)]
-      sim <- ts(tail(sim, nsim) + xm)
+      sim <- tail(sim, nsim) + xm
     }
     else {
-      sim <- ts(tail(arima.sim(model, nsim, innov = e), nsim) + xm)
+      sim <- tail(arima.sim(model, nsim, innov = e), nsim) + xm
     }
-    if(nsim==n)
-      tsp(sim) <- tsp(x)
+    sim <- ts(sim, start=tsp(x)[1], frequency=tsp(x)[3])
+
     # If model is non-stationary, then condition simulated data on first observation
     if (model$order[2] > 0 || flag.seasonal.diff) {
       sim <- sim - sim[1] + x[1]
