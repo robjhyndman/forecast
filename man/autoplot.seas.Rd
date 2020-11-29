@@ -43,12 +43,15 @@ class \dQuote{\code{stl}} (created with \code{\link[stats]{stl}}), class
 \examples{
 
 library(ggplot2)
-co2 \%>\% decompose \%>\% autoplot
-nottem \%>\% stl(s.window='periodic') \%>\% autoplot
-
+co2 \%>\%
+  decompose() \%>\%
+  autoplot()
+nottem \%>\%
+  stl(s.window = "periodic") \%>\%
+  autoplot()
 \dontrun{
 library(seasonal)
-seas(USAccDeaths) \%>\% autoplot
+seas(USAccDeaths) \%>\% autoplot()
 }
 
 }

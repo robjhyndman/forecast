@@ -495,7 +495,7 @@ summary.tslm <- function(object, ...) {
 
 #' Cross-validation statistic
 #'
-#' Computes the leave-one-out cross-validation statistic (also known as PRESS
+#' Computes the leave-one-out cross-validation statistic (the mean of PRESS
 #' -- prediction residual sum of squares), AIC, corrected AIC, BIC and adjusted
 #' R^2 values for a linear model.
 #'
