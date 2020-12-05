@@ -155,11 +155,12 @@ meanf <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALS
 #'
 #' @export
 BoxCox <- function(x, lambda) {
+  if (all(x < 0))
+    stop("x must be non-negative")
+  if (any(x < 0))
+    x[x < 0] <- NA
   if (lambda == "auto") {
     lambda <- BoxCox.lambda(x)
-  }
-  if (lambda < 0) {
-    x[x < 0] <- NA
   }
   if (lambda == 0) {
     out <- log(x)
@@ -176,8 +177,8 @@ BoxCox <- function(x, lambda) {
 #' @rdname BoxCox
 #' @export
 InvBoxCox <- function(x, lambda, biasadj=FALSE, fvar=NULL) {
-  if (lambda < 0) {
-    x[x > -1 / lambda] <- NA
+  if (lambda != 0 & any(lambda * x + 1 < 0)) {
+    x[lambda * x + 1 < 0] <- NA
   }
   if (lambda == 0) {
     out <- exp(x)
