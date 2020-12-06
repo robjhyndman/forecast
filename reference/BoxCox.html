@@ -163,13 +163,14 @@ corresponding <code>upper</code> and <code>lower</code> intervals.</p></td>
     <p>a numeric vector of the same length as x.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The Box-Cox transformation is given by $$f_\lambda(x) =\frac{x^\lambda -
-1}{\lambda}$$ if \(\lambda\ne0\). For \(\lambda=0\),
+    <p>The Box-Cox transformation (as given by Bickel &amp; Doksum 1981) is given by $$f_\lambda(x) =sign(x)(|x|^\lambda -
+1)/\lambda$$ if \(\lambda\ne0\). For \(\lambda=0\),
 $$f_0(x)=\log(x)$$.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Box, G. E. P. and Cox, D. R. (1964) An analysis of
-transformations. <em>JRSS B</em> <b>26</b> 211--246.</p>
+transformations. <em>JRSS B</em> <b>26</b> 211--246.
+Bickel, P. J. and Doksum K. A. (1981) An Analysis of Transformations Revisited. <em>JASA</em> <b>76</b> 296-311.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='BoxCox.lambda.html'>BoxCox.lambda</a></code></p></div>
