@@ -560,7 +560,7 @@ hfitted <- function(object, h=1, FUN=NULL, ...) {
   n <- length(fits)
   refitarg <- list(x = NULL, model = object)
   names(refitarg)[1] <- names(formals(FUN))[1]
-  fcarg <- list(h = h)
+  fcarg <- list(h = h, biasadj=TRUE)
   if (FUN == "ets") {
     refitarg$use.initial.values <- TRUE
   }
