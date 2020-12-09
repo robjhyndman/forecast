@@ -449,7 +449,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
   model$sigma2 <- sum(model$residuals^2, na.rm = TRUE) / (ny - np)
   model$x <- orig.y
   if (!is.null(lambda)) {
-    model$fitted <- InvBoxCox(model$fitted, lambda, biasadj, var(model$residuals))
+    model$fitted <- InvBoxCox(model$fitted, lambda, biasadj, model$sigma2)
     attr(lambda, "biasadj") <- biasadj
   }
 
