@@ -24,7 +24,9 @@
 #' @param y Univariate time series
 #' @param forecastfunction Function to return an object of class
 #' \code{forecast}. Its first argument must be a univariate time series, and it
-#' must have an argument \code{h} for the forecast horizon.
+#' must have an argument \code{h} for the forecast horizon. If exogenous predictors are used,
+#' then it must also have \code{xreg} and \code{newxreg} arguments corresponding to the
+#' training and test periods.
 #' @param h Forecast horizon
 #' @param window Length of the rolling window, if NULL, a rolling window will not be used.
 #' @param xreg Exogeneous predictor variables passed to the forecast function if required.
@@ -46,6 +48,15 @@
 #' #Fit the same model with a rolling window of length 30
 #' e <- tsCV(lynx, far2, h=1, window=30)
 #'
+#' #Example with exogenous predictors
+#' far2_xreg <- function(x, h, xreg, newxreg) {
+#'   forecast(Arima(x, order=c(2,0,0), xreg=xreg), xreg=newxreg)
+#' }
+#'
+#' y <- ts(rnorm(50))
+#' xreg <- matrix(rnorm(100),ncol=2)
+#' e <- tsCV(y, far2_xreg, h=3, xreg=xreg)
+#'
 #' @export
 tsCV <- function(y, forecastfunction, h=1, window=NULL, xreg=NULL, initial=0, ...) {
   y <- as.ts(y)
@@ -58,7 +69,10 @@ tsCV <- function(y, forecastfunction, h=1, window=NULL, xreg=NULL, initial=0, ..
     xreg <- ts(as.matrix(xreg))
     if(NROW(xreg) != length(y))
       stop("xreg must be of the same size as y")
-    tsp(xreg) <- tsp(y)
+    # Pad xreg with NAs
+    xreg <- ts(rbind(xreg, matrix(NA, nrow=h, ncol=NCOL(xreg))),
+               start = start(y),
+               frequency = frequency(y))
   }
   if (is.null(window))
     indx <- seq(1+initial, n - 1L)
@@ -68,23 +82,25 @@ tsCV <- function(y, forecastfunction, h=1, window=NULL, xreg=NULL, initial=0, ..
     y_subset <- subset(
       y,
       start = ifelse(is.null(window), 1L,
-              ifelse(i - window >= 0L, i - window + 1L, stop("small window"))
-      ),
-      end = i
-    )
+              ifelse(i - window >= 0L, i - window + 1L, stop("small window"))),
+      end = i)
     if (is.null(xreg)) {
       fc <- try(suppressWarnings(
         forecastfunction(y_subset, h = h, ...)
         ), silent = TRUE)
     }
     else {
-      xreg_subset <- as.matrix(subset(
+      xreg_subset <- subset(
         xreg,
         start = ifelse(is.null(window), 1L,
-                ifelse(i - window >= 0L, i - window + 1L, stop("small window")))
-      ))
+                ifelse(i - window >= 0L, i - window + 1L, stop("small window"))),
+        end = i)
+      xreg_future <- subset(
+        xreg,
+        start = i+1,
+        end = i+h)
       fc <- try(suppressWarnings(
-        forecastfunction(y_subset, h = h, xreg = xreg_subset, ...)
+        forecastfunction(y_subset, h = h, xreg = xreg_subset, newxreg=xreg_future)
         ), silent = TRUE)
     }
     if (!is.element("try-error", class(fc))) {

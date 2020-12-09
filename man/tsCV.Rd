@@ -11,7 +11,9 @@ tsCV(y, forecastfunction, h = 1, window = NULL, xreg = NULL, initial = 0, ...)
 
 \item{forecastfunction}{Function to return an object of class
 \code{forecast}. Its first argument must be a univariate time series, and it
-must have an argument \code{h} for the forecast horizon.}
+must have an argument \code{h} for the forecast horizon. If exogenous predictors are used,
+then it must also have \code{xreg} and \code{newxreg} arguments corresponding to the
+training and test periods.}
 
 \item{h}{Forecast horizon}
 
@@ -53,6 +55,15 @@ e <- tsCV(lynx, far2, h=1)
 
 #Fit the same model with a rolling window of length 30
 e <- tsCV(lynx, far2, h=1, window=30)
+
+#Example with exogenous predictors
+far2_xreg <- function(x, h, xreg, newxreg) {
+  forecast(Arima(x, order=c(2,0,0), xreg=xreg), xreg=newxreg)
+}
+
+y <- ts(rnorm(50))
+xreg <- matrix(rnorm(100),ncol=2)
+e <- tsCV(y, far2_xreg, h=3, xreg=xreg)
 
 }
 \seealso{
