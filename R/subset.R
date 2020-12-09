@@ -59,7 +59,7 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL,
       end <- NROW(x)
     }
     if ("mts" %in% class(x)) {
-      xsub <- x[start:end, ]
+      xsub <- x[start:end, , drop=FALSE]
     } else {
       xsub <- x[start:end]
     }
