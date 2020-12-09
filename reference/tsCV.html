@@ -142,7 +142,9 @@ rolling forecast origin.</p>
       <th>forecastfunction</th>
       <td><p>Function to return an object of class
 <code>forecast</code>. Its first argument must be a univariate time series, and it
-must have an argument <code>h</code> for the forecast horizon.</p></td>
+must have an argument <code>h</code> for the forecast horizon. If exogenous predictors are used,
+then it must also have <code>xreg</code> and <code>newxreg</code> arguments corresponding to the
+training and test periods.</p></td>
     </tr>
     <tr>
       <th>h</th>
@@ -198,6 +200,15 @@ series.</p>
 
 <span class='co'>#Fit the same model with a rolling window of length 30</span>
 <span class='va'>e</span> <span class='op'>&lt;-</span> <span class='fu'>tsCV</span><span class='op'>(</span><span class='va'>lynx</span>, <span class='va'>far2</span>, h<span class='op'>=</span><span class='fl'>1</span>, window<span class='op'>=</span><span class='fl'>30</span><span class='op'>)</span>
+
+<span class='co'>#Example with exogenous predictors</span>
+<span class='va'>far2_xreg</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>h</span>, <span class='va'>xreg</span>, <span class='va'>newxreg</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='forecast.html'>forecast</a></span><span class='op'>(</span><span class='fu'><a href='Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>x</span>, order<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>0</span>,<span class='fl'>0</span><span class='op'>)</span>, xreg<span class='op'>=</span><span class='va'>xreg</span><span class='op'>)</span>, xreg<span class='op'>=</span><span class='va'>newxreg</span><span class='op'>)</span>
+<span class='op'>}</span>
+
+<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/ts.html'>ts</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>50</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>xreg</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span>,ncol<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>e</span> <span class='op'>&lt;-</span> <span class='fu'>tsCV</span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>far2_xreg</span>, h<span class='op'>=</span><span class='fl'>3</span>, xreg<span class='op'>=</span><span class='va'>xreg</span><span class='op'>)</span>
 
 </div></pre>
   </div>
