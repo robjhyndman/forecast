@@ -133,7 +133,7 @@ meanf <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALS
 #'
 #' @param x a numeric vector or time series of class \code{ts}.
 #' @param lambda transformation parameter. If \code{lambda = "auto"}, then
-#' the transformation parameter lambda is chosen using BoxCox.lambda.
+#' the transformation parameter lambda is chosen using BoxCox.lambda (with a lower bound of -0.9)
 #' @param biasadj Use adjusted back-transformed mean for Box-Cox
 #' transformations. If transformed data is used to produce forecasts and fitted values,
 #' a regular back transformation will result in median forecasts. If biasadj is TRUE,
@@ -157,7 +157,7 @@ meanf <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALS
 #' @export
 BoxCox <- function(x, lambda) {
   if (lambda == "auto") {
-    lambda <- BoxCox.lambda(x)
+    lambda <- BoxCox.lambda(x, lower = -0.9)
   }
   if (lambda < 0) {
     x[x < 0] <- NA
