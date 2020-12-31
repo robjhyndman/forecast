@@ -66,8 +66,8 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     }
     cl <- makeCluster(num.cores)
     #exporting the objects needed in all nodes of the cluster
-    clusterExport(cl,c("max.p", "max.q", "max.P", "max.Q", "max.order"))
-    
+    clusterExport(cl, c("max.p", "max.q", "max.P", "max.Q", "max.order"), envir=environment())
+
     all.models <- parLapply(cl = cl, X = to.check, fun = par.all.arima)
     stopCluster(cl = cl)
 
