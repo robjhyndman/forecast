@@ -1,4 +1,11 @@
 # forecast (development version)
+  * Changed default `BoxCox(lambda = "auto")` lower bound to -0.9.
+  * Use better variance estimates for `ets()` bias adjustments.
+  * Improved robustness of `autoplot.seas()` for non-seasonal decomposition.
+  * Fixed scoping of parameters in `auto.arima(parallel = TRUE)` (#874).
+  * Fixed handling of `xreg` in `tsCV()`.
+
+# forecast 8.13 (11 September 2020)
   * Fixed forecasts from Arima with drift with initial NAs.
   * Fixed season colours in `gglagplot()` to match y-axis (original data).
   * Fixed facet order for classical decomposition `autoplot()`
