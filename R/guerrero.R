@@ -25,6 +25,7 @@ guer.cv <- function(lam, x, nonseasonal.length=2) {
 # Output: lambda that minimises the coefficient of variation
 
 guerrero <- function(x, lower=-1, upper=2, nonseasonal.length=2) {
+  if(any(x <= 0)) warning("Guerrero's method for selecting a Box-Cox parameter (lambda) is given for strictly positive data.")
   return(optimize(
     guer.cv, c(lower, upper), x = x,
     nonseasonal.length = nonseasonal.length
