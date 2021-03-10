@@ -1,9 +1,9 @@
 ## Test environments
-* ubuntu 20.04 (local): R 4.0.2
+* ubuntu 20.10 (local): R 4.0.4
 * macOS (on GitHub Actions): release
 * windows (on GitHub Actions): release, 3.6
-* ubuntu 16.04 (on GitHub Actions): devel, release, oldrel, 3.5
-* win-builder: R-devel, R-release, R-oldrelease
+* ubuntu 16.04 (on GitHub Actions): devel, release, oldrel
+* win-builder: devel, release, oldrelease
 
 ## R CMD check results
 
@@ -14,6 +14,3 @@
 All reverse dependencies have been checked and no issues found.
 
 ## Notes
-
-Sorry, forgot to bump the version number. Ignore the last submission.
-

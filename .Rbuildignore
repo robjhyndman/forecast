@@ -7,7 +7,7 @@
 ^docs$
 ^_pkgdown\.yml$
 Makefile
-cran_check.R
+build.R
 ^revdep$
 ^doc$
 ^Meta$
