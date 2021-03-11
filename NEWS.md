@@ -1,4 +1,4 @@
-# forecast 8.14 (16 February 2021)
+# forecast 8.14 (11 March 2021)
   * Changed default `BoxCox(lambda = "auto")` lower bound to -0.9.
   * Use better variance estimates for `ets()` bias adjustments.
   * Improved robustness of `autoplot.seas()` for non-seasonal decomposition.

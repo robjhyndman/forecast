@@ -20,7 +20,6 @@ BuildType: Package
 PackageUseDevtools: Yes
 PackageInstallArgs: --no-multiarch --with-keep.source
 PackageBuildArgs: --compact-vignettes=both
-PackageCheckArgs: --compact-vignettes=both
 PackageRoxygenize: rd,collate,namespace
 
 QuitChildProcessesOnExit: Yes
