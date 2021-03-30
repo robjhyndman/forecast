@@ -511,6 +511,9 @@ as.character.ets <- function(x, ...) {
 etsmodel <- function(y, errortype, trendtype, seasontype, damped,
                      alpha=NULL, beta=NULL, gamma=NULL, phi=NULL,
                      lower, upper, opt.crit, nmse, bounds, maxit=2000, control=NULL, seed=NULL, trace=FALSE) {
+  if (!is.null(seed)) {
+    set.seed(seed)
+  }
   tsp.y <- tsp(y)
   if (is.null(tsp.y)) {
     tsp.y <- c(1, length(y), 1)
