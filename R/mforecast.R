@@ -253,13 +253,13 @@ summary.mforecast <- function(object, ...) {
 }
 
 #' @export
-print.summary.mforecast <- function(object, ...) {
-  cat(paste("\nForecast method:", unique(object$method)))
+print.summary.mforecast <- function(x, ...) {
+  cat(paste("\nForecast method:", unique(x$method)))
   cat(paste("\n\nModel Information:\n"))
-  print(object$model)
+  print(x$model)
   cat("\nError measures:\n")
-  print(accuracy(object))
-  if (is.null(object$forecast)) {
+  print(accuracy(x))
+  if (is.null(x$forecast)) {
     cat("\n No forecasts\n")
   } else {
     cat("\nForecasts:\n")

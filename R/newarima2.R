@@ -876,10 +876,10 @@ summary.Arima <- function(object, ...) {
 }
 
 #' @export
-print.summary.Arima <- function(object, ...) {
+print.summary.Arima <- function(x, ...) {
   NextMethod()
   cat("\nTraining set error measures:\n")
-  print(accuracy(object))
+  print(accuracy(x))
 }
 
 # Check that Arima object has positive coefficient variances without returning warnings

@@ -246,14 +246,14 @@ summary.forecast <- function(object, ...) {
 }
 
 #' @export
-print.summary.forecast <- function(object, ...) {
-  cat(paste("\nForecast method:", object$method))
-  #    cat(paste("\n\nCall:\n",deparse(object$call)))
+print.summary.forecast <- function(x, ...) {
+  cat(paste("\nForecast method:", x$method))
+  #    cat(paste("\n\nCall:\n",deparse(x$call)))
   cat(paste("\n\nModel Information:\n"))
-  print(object$model)
+  print(x$model)
   cat("\nError measures:\n")
-  print(accuracy(object))
-  if (is.null(object$mean)) {
+  print(accuracy(x))
+  if (is.null(x$mean)) {
     cat("\n No forecasts\n")
   } else {
     cat("\nForecasts:\n")

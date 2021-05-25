@@ -1328,10 +1328,10 @@ summary.ets <- function(object, ...) {
 }
 
 #' @export
-print.summary.ets <- function(object, ...) {
+print.summary.ets <- function(x, ...) {
   NextMethod()
   cat("\nTraining set error measures:\n")
-  print(accuracy(object))
+  print(accuracy(x))
 }
 
 #' @export
