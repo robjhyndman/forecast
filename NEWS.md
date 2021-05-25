@@ -1,5 +1,6 @@
 # forecast 8.15
   * Changed `summary()` methods to defer console output until `print()`
+  * Changed default `s.window` values for `mstl()`, `stlf()` and `stlm()`. The new defaults are based on extensive empirical testing.
 
 # forecast 8.14 (11 March 2021)
   * Changed default `BoxCox(lambda = "auto")` lower bound to -0.9.
