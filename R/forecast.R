@@ -679,11 +679,14 @@ as.data.frame.forecast <- function(x, ...) {
   colnames(out) <- names
   tx <- time(x$mean)
   if (max(abs(tx - round(tx))) < 1e-11) {
-    nd <- 0
+    nd <- 0L
   } else {
-    nd <- max(round(log10(fr.x) + 1), 2)
+    nd <- max(round(log10(fr.x) + 1), 2L)
   }
-  rownames(out) <- format(tx, nsmall = nd, digits = nd)
+  if(nd == 0L)
+    rownames(out) <- round(tx)
+  else
+    rownames(out) <- format(tx, nsmall = nd, digits = nd)
   # Rest of function borrowed from print.ts(), but with header() omitted
   if (!ists) {
     return(as.data.frame(out))
