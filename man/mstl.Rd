@@ -4,7 +4,7 @@
 \alias{mstl}
 \title{Multiple seasonal decomposition}
 \usage{
-mstl(x, lambda = NULL, iterate = 2, s.window = 13, ...)
+mstl(x, lambda = NULL, iterate = 2, s.window = 7 + 4 * seq(6), ...)
 }
 \arguments{
 \item{x}{Univariate time series of class \code{msts} or \code{ts}.}
@@ -18,7 +18,7 @@ data transformed before model is estimated.}
 
 \item{s.window}{Seasonal windows to be used in the  decompositions. If scalar,
 the same value is used for all seasonal components. Otherwise, it should be a vector
-of the same length as the number of seasonal components.}
+of the same length as the number of seasonal components (or longer).}
 
 \item{...}{Other arguments are passed to \code{\link[stats]{stl}}.}
 }

@@ -25,7 +25,7 @@
 
 stlm(
   y,
-  s.window = 13,
+  s.window = 7 + 4 * seq(6),
   robust = FALSE,
   method = c("ets", "arima"),
   modelfunction = NULL,
@@ -54,7 +54,7 @@ stlm(
 stlf(
   y,
   h = frequency(x) * 2,
-  s.window = 13,
+  s.window = 7 + 4 * seq(6),
   t.window = NULL,
   robust = FALSE,
   lambda = NULL,
