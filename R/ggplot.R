@@ -1371,7 +1371,7 @@ ggseasonplot <- function(x, season.labels=NULL, year.labels=FALSE, year.labels.l
   if (year.labels || year.labels.left) {
     yrlab <- merge(yrlab, data)
     yrlab$time <- yrlab$time + yrlab$offset
-    p <- p + ggplot2::guides(colour = FALSE)
+    p <- p + ggplot2::guides(colour = "none")
     p <- p + ggplot2::geom_text(ggplot2::aes_(x = ~time, y = ~y, label = ~year), data = yrlab)
   }
 
