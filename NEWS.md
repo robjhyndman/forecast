@@ -1,3 +1,6 @@
+# forecast 8.15
+  * Changed `summary()` methods to defer console output until `print()`
+
 # forecast 8.14 (11 March 2021)
   * Changed default `BoxCox(lambda = "auto")` lower bound to -0.9.
   * Use better variance estimates for `ets()` bias adjustments.

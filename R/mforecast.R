@@ -248,6 +248,12 @@ plot.mforecast <- function(x, main=paste("Forecasts from", unique(x$method)), xl
 
 #' @export
 summary.mforecast <- function(object, ...) {
+  class(object) <- c("summary.mforecast", class(object))
+  object
+}
+
+#' @export
+print.summary.mforecast <- function(object, ...) {
   cat(paste("\nForecast method:", unique(object$method)))
   cat(paste("\n\nModel Information:\n"))
   print(object$model)

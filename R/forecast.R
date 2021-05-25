@@ -241,6 +241,12 @@ print.forecast <- function(x, ...) {
 
 #' @export
 summary.forecast <- function(object, ...) {
+  class(object) <- c("summary.forecast", class(object))
+  object
+}
+
+#' @export
+print.summary.forecast <- function(object, ...) {
   cat(paste("\nForecast method:", object$method))
   #    cat(paste("\n\nCall:\n",deparse(object$call)))
   cat(paste("\n\nModel Information:\n"))

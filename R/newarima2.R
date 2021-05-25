@@ -871,6 +871,12 @@ arima.string <- function(object, padding=FALSE) {
 
 #' @export
 summary.Arima <- function(object, ...) {
+  class(object) <- c("summary.Arima", class(object))
+  object
+}
+
+#' @export
+print.summary.Arima <- function(object, ...) {
   print(object)
   cat("\nTraining set error measures:\n")
   print(accuracy(object))
