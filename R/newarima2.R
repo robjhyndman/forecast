@@ -877,7 +877,7 @@ summary.Arima <- function(object, ...) {
 
 #' @export
 print.summary.Arima <- function(object, ...) {
-  print(object)
+  NextMethod()
   cat("\nTraining set error measures:\n")
   print(accuracy(object))
 }
