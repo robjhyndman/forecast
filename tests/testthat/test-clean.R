@@ -23,7 +23,7 @@ if (require(testthat)) {
     testseries[c(2, 4, 14)] <- NA
     expect_true(any(is.na(tsclean(testseries, replace.missing = FALSE))))
     # Test for outliers in a series
-    expect_true(sum(wineind != tsclean(wineind)) == 3L)
+    expect_equal(sum(abs(wineind - tsclean(wineind)) > 1e-6), 1)
     # Test for identical on series without NAs or outliers
     expect_true(identical(USAccDeaths, tsclean(USAccDeaths)))
     # Test length of output
