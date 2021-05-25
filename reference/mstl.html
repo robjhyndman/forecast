@@ -137,7 +137,7 @@ Optionally, the time series may be Box-Cox transformed before decomposition.
 Unlike <code><a href='https://rdrr.io/r/stats/stl.html'>stl</a></code>, <code>mstl</code> is completely automated.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mstl</span><span class='op'>(</span><span class='va'>x</span>, lambda <span class='op'>=</span> <span class='cn'>NULL</span>, iterate <span class='op'>=</span> <span class='fl'>2</span>, s.window <span class='op'>=</span> <span class='fl'>13</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>mstl</span><span class='op'>(</span><span class='va'>x</span>, lambda <span class='op'>=</span> <span class='cn'>NULL</span>, iterate <span class='op'>=</span> <span class='fl'>2</span>, s.window <span class='op'>=</span> <span class='fl'>7</span> <span class='op'>+</span> <span class='fl'>4</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>6</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -161,7 +161,7 @@ data transformed before model is estimated.</p></td>
       <th>s.window</th>
       <td><p>Seasonal windows to be used in the  decompositions. If scalar,
 the same value is used for all seasonal components. Otherwise, it should be a vector
-of the same length as the number of seasonal components.</p></td>
+of the same length as the number of seasonal components (or longer).</p></td>
     </tr>
     <tr>
       <th>...</th>
