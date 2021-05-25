@@ -13,7 +13,7 @@ if (require(testthat)) {
     xregmat <- matrix(runif(240), ncol = 2)
     expect_output(print(auto.arima(testseries2, xreg = xregmat)), regexp = "Series: testseries2")
 
-    expect_output(summary(auto.arima(testseries2, xreg = xregmat, approximation = TRUE, stepwise = FALSE)), regexp = "Series: testseries2")
+    expect_output(print(summary(auto.arima(testseries2, xreg = xregmat, approximation = TRUE, stepwise = FALSE))), regexp = "Series: testseries2")
     expect_output(print(auto.arima(ts(testseries2, frequency = 4), approximation = TRUE, trace = TRUE)), regexp = "ARIMA")
 
     fit1 <- auto.arima(testseries1, stepwise = FALSE, lambda = 2, biasadj = FALSE)

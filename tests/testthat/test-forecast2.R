@@ -66,12 +66,12 @@ if (require(testthat)) {
   })
 
   test_that("test hw()", {
-    expect_output(summary(holt(wineind)), regexp = "Forecast method: Holt's method")
-    expect_output(summary(holt(wineind, damped = TRUE)), regexp = "Forecast method: Damped Holt's method")
+    expect_output(print(summary(holt(wineind))), regexp = "Forecast method: Holt's method")
+    expect_output(print(summary(holt(wineind, damped = TRUE))), regexp = "Forecast method: Damped Holt's method")
   })
 
   test_that("test holt()", {
-    expect_output(summary(hw(wineind)), regexp = "Forecast method: Holt-Winters' additive method")
+    expect_output(print(summary(hw(wineind))), regexp = "Forecast method: Holt-Winters' additive method")
   })
 
   test_that("test naive() and snaive()", {

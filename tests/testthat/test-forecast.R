@@ -16,7 +16,7 @@ if (require(testthat)) {
 
   test_that("tests summary.forecast() and forecast.forecast()", {
     WWWusageforecast <- forecast(WWWusage)
-    expect_output(summary(WWWusageforecast), regexp = "Forecast method:")
+    expect_output(print(summary(WWWusageforecast)), regexp = "Forecast method:")
     expect_true(all(predict(WWWusageforecast)$mean == forecast(WWWusageforecast)$mean))
   })
 

@@ -21,6 +21,6 @@ if (require(testthat)) {
     expect_error(forecast(arfimabc, level = -10))
     expect_error(forecast(arfimabc, level = 110))
     expect_false(identical(forecast(arfimabc, biasadj = FALSE), forecast(arfimabc, biasadj = TRUE)))
-    expect_output(summary(forecast(arfimabc)), regexp = "Forecast method: ARFIMA")
+    expect_output(print(summary(forecast(arfimabc))), regexp = "Forecast method: ARFIMA")
   })
 }
