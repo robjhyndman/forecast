@@ -257,7 +257,7 @@ print.summary.forecast <- function(object, ...) {
     cat("\n No forecasts\n")
   } else {
     cat("\nForecasts:\n")
-    print(object)
+    NextMethod()
   }
 }
 
