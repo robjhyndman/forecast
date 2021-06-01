@@ -433,7 +433,7 @@
 
 ## Version 3.16 (24 December 2011)
   * Corrected problem with AIC computation in bats and tbats
-  * Fixed handlng of non-seasonal data in bats()
+  * Fixed handling of non-seasonal data in bats()
   * Changed dependency to >= R 2.14.0 in order to ensure parallel package available.
 
 ## Version 3.15 (22 December 2011)

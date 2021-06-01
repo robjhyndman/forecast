@@ -1473,7 +1473,7 @@ autoplot.stl <- function(object, labels = NULL, range.bars = TRUE, ...) {
     p <- ggplot2::ggplot(ggplot2::aes_(x = ~datetime, y = ~y), data = data)
 
     # Add data
-    # Timeseries lines
+    # Time series lines
     p <- p + ggplot2::geom_line(ggplot2::aes_(x = ~datetime, y = ~y), data = subset(data, data$parts != cn[4]), na.rm = TRUE)
     p <- p + ggplot2::geom_segment(
       ggplot2::aes_(x = ~datetime, xend = ~datetime, y = 0, yend = ~y),
@@ -1690,7 +1690,7 @@ autolayer.mts <- function(object, colour = TRUE, series = NULL, ...) {
     cl$object <- quote(object[, i])
     if (length(series) != NCOL(object)) {
       if (colour) {
-        message("For a multivariate timeseries, specify a seriesname for each timeseries. Defaulting to column names.")
+        message("For a multivariate time series, specify a seriesname for each time series. Defaulting to column names.")
       }
       series <- colnames(object)
     }
@@ -1791,7 +1791,7 @@ autolayer.mforecast <- function(object, series = NULL, PI = TRUE, ...) {
 #' (for usage with ggplot2).
 #'
 #' @param object Object of class \dQuote{\code{ts}} or \dQuote{\code{mts}}.
-#' @param series Identifies the timeseries with a colour, which integrates well
+#' @param series Identifies the time series with a colour, which integrates well
 #' with the functionality of \link{geom_forecast}.
 #' @param facets If TRUE, multiple time series will be faceted (and unless
 #' specified, colour is set to FALSE). If FALSE, each series will be assigned a

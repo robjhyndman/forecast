@@ -44,7 +44,7 @@
 
 \item{colour}{If TRUE, the time series will be assigned a colour aesthetic}
 
-\item{series}{Identifies the timeseries with a colour, which integrates well
+\item{series}{Identifies the time series with a colour, which integrates well
 with the functionality of \link{geom_forecast}.}
 
 \item{...}{Other plotting parameters to affect the plot.}

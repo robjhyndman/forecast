@@ -1213,7 +1213,7 @@ a default \code{predict()} method which is used when no existing
 \code{predict()} function exists, and calls the relevant
 \code{forecast()} function. Thus, \code{predict()} methods parallel
 \code{forecast()} methods, but the latter provide consistent output
-that is more useable.
+that is more usable.
 
 \subsection[The forecast class]{The \code{forecast} class}
 

@@ -139,7 +139,7 @@ an adjustment will be made to produce mean forecasts and fitted values.}
 
 \item{parallel}{If \code{TRUE} and \code{stepwise = FALSE}, then the
 specification search is done in parallel. This can give a significant
-speedup on mutlicore machines.}
+speedup on multicore machines.}
 
 \item{num.cores}{Allows the user to specify the amount of parallel processes
 to be used if \code{parallel = TRUE} and \code{stepwise = FALSE}. If

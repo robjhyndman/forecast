@@ -67,7 +67,7 @@
 #' @param allowmean If \code{TRUE}, models with a non-zero mean are considered.
 #' @param parallel If \code{TRUE} and \code{stepwise = FALSE}, then the
 #' specification search is done in parallel. This can give a significant
-#' speedup on mutlicore machines.
+#' speedup on multicore machines.
 #' @param num.cores Allows the user to specify the amount of parallel processes
 #' to be used if \code{parallel = TRUE} and \code{stepwise = FALSE}. If
 #' \code{NULL}, then the number of logical cores is automatically detected and
