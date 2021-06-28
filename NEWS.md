@@ -1,3 +1,5 @@
+# forecast (development version)
+
 # forecast 8.15 (1 June 2021)
   * Changed `summary()` methods to defer console output until `print()`
   * Changed default `s.window` values for `mstl()`, `stlf()` and `stlm()`. The new defaults are based on extensive empirical testing.
