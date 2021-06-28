@@ -146,8 +146,8 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...) {
     data <- data[subset, ] # model.frame(formula,as.data.frame(data[subsetTF,]))
   }
   if (!is.null(lambda)) {
-    data[, 1] <- BoxCox(data[, 1], lambda)
-    lambda <- attr(data[, 1], "lambda")
+    data[, attr(mt, "response") + 1] <- BoxCox(data[, attr(mt, "response") + 1], lambda)
+    lambda <- attr(data[, attr(mt, "response") + 1], "lambda")
   }
   if (tsdat[2] == 0 && tsvar[2] != 0) {
     data$season <- factor(data$season) # fix for lost factor information, may not be needed?

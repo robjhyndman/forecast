@@ -1,4 +1,6 @@
 # forecast (development version)
+  * Fixed `tslm()` incorrectly applying Box-Cox transformations when an `mts`
+is provided to the `data` argument (#886).
 
 # forecast 8.15 (1 June 2021)
   * Changed `summary()` methods to defer console output until `print()`
