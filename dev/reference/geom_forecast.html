@@ -81,7 +81,7 @@ Forecasts can be modified via sending forecast specific arguments above." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.12.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.15.0.9000</span>
       </span>
     </div>
 
@@ -127,23 +127,23 @@ Forecasts can be modified via sending forecast specific arguments above." />
 Forecasts can be modified via sending forecast specific arguments above.</p>
     </div>
 
-    <pre class="usage"><span class='kw'>StatForecast</span>
+    <pre class="usage"><span class='va'>StatForecast</span>
 
-<span class='kw'>GeomForecast</span>
+<span class='va'>GeomForecast</span>
 
-<span class='fu'>geom_forecast</span>(
-  mapping = <span class='kw'>NULL</span>,
-  data = <span class='kw'>NULL</span>,
-  stat = <span class='st'>"forecast"</span>,
-  position = <span class='st'>"identity"</span>,
-  na.rm = <span class='fl'>FALSE</span>,
-  show.legend = <span class='fl'>NA</span>,
-  inherit.aes = <span class='fl'>TRUE</span>,
-  PI = <span class='fl'>TRUE</span>,
-  showgap = <span class='fl'>TRUE</span>,
-  series = <span class='kw'>NULL</span>,
-  <span class='kw'>...</span>
-)</pre>
+<span class='fu'>geom_forecast</span><span class='op'>(</span>
+  mapping <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  stat <span class='op'>=</span> <span class='st'>"forecast"</span>,
+  position <span class='op'>=</span> <span class='st'>"identity"</span>,
+  na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  show.legend <span class='op'>=</span> <span class='cn'>NA</span>,
+  inherit.aes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  PI <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  showgap <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  series <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -244,33 +244,33 @@ axis. Refer to the examples below. To automatically set up aesthetics, use
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://ggplot2.tidyverse.org'>ggplot2</a></span>)
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='kw'>USAccDeaths</span>) <span class='op'>+</span> <span class='fu'>geom_forecast</span>()
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span><span class='op'>(</span><span class='va'>USAccDeaths</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>geom_forecast</span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='kw'>lungDeaths</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='kw'>mdeaths</span>, <span class='kw'>fdeaths</span>)
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='kw'>lungDeaths</span>) <span class='op'>+</span> <span class='fu'>geom_forecast</span>()
+<span class='va'>lungDeaths</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>mdeaths</span>, <span class='va'>fdeaths</span><span class='op'>)</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span><span class='op'>(</span><span class='va'>lungDeaths</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>geom_forecast</span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># Using fortify.ts</span>
-<span class='kw'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(x=<span class='kw'>x</span>, y=<span class='kw'>y</span>), data=<span class='kw'>USAccDeaths</span>)
-<span class='kw'>p</span> <span class='op'>&lt;-</span> <span class='kw'>p</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span>()
-<span class='kw'>p</span> <span class='op'>+</span> <span class='fu'>geom_forecast</span>()
+<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>x</span>, y<span class='op'>=</span><span class='va'>y</span><span class='op'>)</span>, data<span class='op'>=</span><span class='va'>USAccDeaths</span><span class='op'>)</span>
+<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='va'>p</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>p</span> <span class='op'>+</span> <span class='fu'>geom_forecast</span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># Without fortify.ts</span>
-<span class='kw'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(USAccDeaths=<span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='kw'>USAccDeaths</span>), time=<span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/time.html'>time</a></span>(<span class='kw'>USAccDeaths</span>)))
-<span class='kw'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(x=<span class='kw'>time</span>, y=<span class='kw'>USAccDeaths</span>), data=<span class='kw'>data</span>)
-<span class='kw'>p</span> <span class='op'>&lt;-</span> <span class='kw'>p</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span>()
-<span class='kw'>p</span> <span class='op'>+</span> <span class='fu'>geom_forecast</span>()
+<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>USAccDeaths<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>USAccDeaths</span><span class='op'>)</span>, time<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/time.html'>time</a></span><span class='op'>(</span><span class='va'>USAccDeaths</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>time</span>, y<span class='op'>=</span><span class='va'>USAccDeaths</span><span class='op'>)</span>, data<span class='op'>=</span><span class='va'>data</span><span class='op'>)</span>
+<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='va'>p</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>p</span> <span class='op'>+</span> <span class='fu'>geom_forecast</span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='kw'>p</span> <span class='op'>+</span> <span class='fu'>geom_forecast</span>(h=<span class='fl'>60</span>)
-<span class='kw'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(x=<span class='kw'>time</span>, y=<span class='kw'>USAccDeaths</span>), data=<span class='kw'>data</span>)
-<span class='kw'>p</span> <span class='op'>+</span> <span class='fu'>geom_forecast</span>(level=<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>70</span>,<span class='fl'>98</span>))
-<span class='kw'>p</span> <span class='op'>+</span> <span class='fu'>geom_forecast</span>(level=<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>70</span>,<span class='fl'>98</span>),colour=<span class='st'>"lightblue"</span>)
+<span class='va'>p</span> <span class='op'>+</span> <span class='fu'>geom_forecast</span><span class='op'>(</span>h<span class='op'>=</span><span class='fl'>60</span><span class='op'>)</span>
+<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>time</span>, y<span class='op'>=</span><span class='va'>USAccDeaths</span><span class='op'>)</span>, data<span class='op'>=</span><span class='va'>data</span><span class='op'>)</span>
+<span class='va'>p</span> <span class='op'>+</span> <span class='fu'>geom_forecast</span><span class='op'>(</span>level<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>70</span>,<span class='fl'>98</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>p</span> <span class='op'>+</span> <span class='fu'>geom_forecast</span><span class='op'>(</span>level<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>70</span>,<span class='fl'>98</span><span class='op'>)</span>,colour<span class='op'>=</span><span class='st'>"lightblue"</span><span class='op'>)</span>
 
 <span class='co'>#Add forecasts to multivariate series with colour groups</span>
-<span class='kw'>lungDeaths</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='kw'>mdeaths</span>, <span class='kw'>fdeaths</span>)
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span>(<span class='kw'>lungDeaths</span>) <span class='op'>+</span> <span class='fu'>geom_forecast</span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>mdeaths</span>), series=<span class='st'>"mdeaths"</span>)
-}
+<span class='va'>lungDeaths</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>mdeaths</span>, <span class='va'>fdeaths</span><span class='op'>)</span>
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span><span class='op'>(</span><span class='va'>lungDeaths</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>geom_forecast</span><span class='op'>(</span><span class='fu'><a href='forecast.html'>forecast</a></span><span class='op'>(</span><span class='va'>mdeaths</span><span class='op'>)</span>, series<span class='op'>=</span><span class='st'>"mdeaths"</span><span class='op'>)</span>
+<span class='op'>}</span>
 
 </div></pre>
   </div>
@@ -288,7 +288,7 @@ axis. Refer to the examples below. To automatically set up aesthetics, use
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

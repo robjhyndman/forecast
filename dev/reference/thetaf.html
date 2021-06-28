@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.12.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.15.0.9000</span>
       </span>
     </div>
 
@@ -125,13 +125,13 @@
     <p>Returns forecasts and prediction intervals for a theta method forecast.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>thetaf</span>(
-  <span class='kw'>y</span>,
-  h = <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='kw'>y</span>) <span class='op'>&gt;</span> <span class='fl'>1</span>, <span class='fl'>2</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='kw'>y</span>), <span class='fl'>10</span>),
-  level = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
-  fan = <span class='fl'>FALSE</span>,
-  x = <span class='kw'>y</span>
-)</pre>
+    <pre class="usage"><span class='fu'>thetaf</span><span class='op'>(</span>
+  <span class='va'>y</span>,
+  h <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>1</span>, <span class='fl'>2</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span>, <span class='fl'>10</span><span class='op'>)</span>,
+  level <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>80</span>, <span class='fl'>95</span><span class='op'>)</span>,
+  fan <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  x <span class='op'>=</span> <span class='va'>y</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -208,8 +208,8 @@ Forecasting</em> <b>16</b>, 521-530.</p>
     <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>nile.fcast</span> <span class='op'>&lt;-</span> <span class='fu'>thetaf</span>(<span class='kw'>Nile</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>nile.fcast</span>)
+    <pre class="examples"><div class='input'><span class='va'>nile.fcast</span> <span class='op'>&lt;-</span> <span class='fu'>thetaf</span><span class='op'>(</span><span class='va'>Nile</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>nile.fcast</span><span class='op'>)</span>
 </div><div class='img'><img src='thetaf-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -226,7 +226,7 @@ Forecasting</em> <b>16</b>, 521-530.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

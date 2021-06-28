@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.12.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.15.0.9000</span>
       </span>
     </div>
 
@@ -99,7 +99,7 @@
 <a href="#introduction" class="anchor"></a>Introduction</h1>
 <p>Automatic forecasts of large numbers of univariate time series are often needed in business. It is common to have over one thousand product lines that need forecasting at least monthly. Even when a smaller number of forecasts are required, there may be nobody suitably trained in the use of time series models to produce them. In these circumstances, an automatic forecasting algorithm is an essential tool. Automatic forecasting algorithms must determine an appropriate time series model, estimate the parameters and compute the forecasts. They must be robust to unusual time series patterns, and applicable to large numbers of series without user intervention. The most popular automatic forecasting algorithms are based on either exponential smoothing or ARIMA models.</p>
 <p>In this article, we discuss the implementation of two automatic univariate forecasting methods in the  package for . We also briefly describe some univariate forecasting methods that are part of the  package.</p>
-<p>The  package for the  system for statistical computing <span class="citation">( Development Core Team 2008)</span> is available from the Comprehensive  Archive Network at . Version 8.12.0.9000 of the package was used for this paper. The  package contains functions for univariate forecasting and a few examples of real time series data. For more extensive testing of forecasting methods, the  package contains the 90 data sets from <span class="citation">Makridakis, Wheelwright, and Hyndman (1998)</span>, the  package contains 24 data sets from <span class="citation">Hyndman, Koehler, et al. (2008)</span>, and the  package contains the 1001 time series from the M-competition <span class="citation">(Makridakis et al. 1982)</span> and the 3003 time series from the M3-competition <span class="citation">(Makridakis and Hibon 2000)</span>.</p>
+<p>The  package for the  system for statistical computing <span class="citation">( Development Core Team 2008)</span> is available from the Comprehensive  Archive Network at . Version 8.15.0.9000 of the package was used for this paper. The  package contains functions for univariate forecasting and a few examples of real time series data. For more extensive testing of forecasting methods, the  package contains the 90 data sets from <span class="citation">Makridakis, Wheelwright, and Hyndman (1998)</span>, the  package contains 24 data sets from <span class="citation">Hyndman, Koehler, et al. (2008)</span>, and the  package contains the 1001 time series from the M-competition <span class="citation">(Makridakis et al. 1982)</span> and the 3003 time series from the M3-competition <span class="citation">(Makridakis and Hibon 2000)</span>.</p>
 <p>The  package implements automatic forecasting using exponential smoothing, ARIMA models, the Theta method <span class="citation">(Assimakopoulos and Nikolopoulos 2000)</span>, cubic splines <span class="citation">(Hyndman, King, et al. 2005)</span>, as well as other common forecasting methods. In this article, we primarily discuss the exponential smoothing approach (in Section ) and the ARIMA modelling approach (in Section ) to automatic forecasting. In Section , we describe the implementation of these methods in the  package, along with other features of the package.</p>
 </div>
 <div id="sec:expsmooth" class="section level1">
@@ -266,13 +266,11 @@ The innovations state space modelling framework described in Section  is impleme
 
 <p>Although there is a lot of computation involved, it can be handled remarkably quickly on modern computers. Each of the forecasts shown in Figure  took no more than a few seconds on a standard PC. The US electricity generation series took the longest as there are no analytical prediction intervals available for the ETS(M,M,N) model. Consequently, the prediction intervals for this series were computed using simulation of 5000 future sample paths.</p>
 <p>To apply the algorithm to the US net electricity generation time series , we use the following command.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw">etsfit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ets.html">ets</a></span>(<span class="kw">usnetelec</span>)
-</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">etsfit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ets.html">ets</a></span><span class="op">(</span><span class="va">usnetelec</span><span class="op">)</span></code></pre></div>
 <p>The object  is of class ``’’ and contains all of the necessary information about the fitted model including model parameters, the value of the state vector <span class="math inline">\(\bm{x}_t\)</span> for all <span class="math inline">\(t\)</span>, residuals and so on. Printing the  object shows the main items of interest.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">etsfit</span>
-</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">etsfit</span></code></pre></div>
 <pre><code>## ETS(M,A,N) 
 ## 
 ## Call:
@@ -291,9 +289,8 @@ The innovations state space modelling framework described in Section  is impleme
 ##      AIC     AICc      BIC 
 ## 634.0437 635.2682 644.0803</code></pre>
 <p>Some goodness-of-fit measures <span class="citation">(defined in Hyndman and Koehler 2006)</span> are obtained using .</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="../reference/accuracy.html">accuracy</a></span>(<span class="kw">etsfit</span>)
-</pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/accuracy.html">accuracy</a></span><span class="op">(</span><span class="va">etsfit</span><span class="op">)</span></code></pre></div>
 <pre><code>##                    ME     RMSE      MAE       MPE     MAPE      MASE
 ## Training set 1.162583 52.00363 36.77721 0.2629582 1.942062 0.5211014
 ##                     ACF1
@@ -301,9 +298,8 @@ The innovations state space modelling framework described in Section  is impleme
 <p>There are also , , , ,  and  methods for objects of class ``’’. The  function shows time plots of the original time series along with the extracted components (level, growth and seasonal).</p>
 <p>The  function computes the required forecasts which are then plotted as in Figure (b).</p>
 <p>Printing the  object gives a table showing the prediction intervals.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="kw">fcast</span>
-</pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">fcast</span></code></pre></div>
 <pre><code>##      Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
 ## 2004       3900.329 3770.801 4029.857 3702.233 4098.425
 ## 2005       3952.650 3747.279 4158.022 3638.562 4266.738
@@ -316,15 +312,13 @@ The innovations state space modelling framework described in Section  is impleme
 ## 2012       4318.898 3528.985 5108.812 3110.830 5526.967
 ## 2013       4371.220 3482.552 5259.888 3012.119 5730.320</code></pre>
 <p>The  function also provides the useful feature of applying a fitted model to a new data set. For example, we could withhold 10 observations from the  data set when fitting, then compute the one-step forecast errors for the out-of-sample data.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="kw">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ets.html">ets</a></span>(<span class="kw">usnetelec</span>[<span class="fl">1</span><span class="op">:</span><span class="fl">45</span>])
-<span class="kw">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ets.html">ets</a></span>(<span class="kw">usnetelec</span>[<span class="fl">46</span><span class="op">:</span><span class="fl">55</span>], model = <span class="kw">fit</span>)
-<span class="fu"><a href="../reference/accuracy.html">accuracy</a></span>(<span class="kw">test</span>)
-</pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ets.html">ets</a></span><span class="op">(</span><span class="va">usnetelec</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">45</span><span class="op">]</span><span class="op">)</span>
+<span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ets.html">ets</a></span><span class="op">(</span><span class="va">usnetelec</span><span class="op">[</span><span class="fl">46</span><span class="op">:</span><span class="fl">55</span><span class="op">]</span>, model <span class="op">=</span> <span class="va">fit</span><span class="op">)</span>
+<span class="fu"><a href="../reference/accuracy.html">accuracy</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span></code></pre></div>
 <p>We can also look at the measures of forecast accuracy where the forecasts are based on only the fitting data.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="fu"><a href="../reference/accuracy.html">accuracy</a></span>(<span class="fu"><a href="../reference/forecast.html">forecast</a></span>(<span class="kw">fit</span>,<span class="fl">10</span>), <span class="kw">usnetelec</span>[<span class="fl">46</span><span class="op">:</span><span class="fl">55</span>])
-</pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/accuracy.html">accuracy</a></span><span class="op">(</span><span class="fu"><a href="../reference/forecast.html">forecast</a></span><span class="op">(</span><span class="va">fit</span>,<span class="fl">10</span><span class="op">)</span>, <span class="va">usnetelec</span><span class="op">[</span><span class="fl">46</span><span class="op">:</span><span class="fl">55</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="the-holtwinters-function" class="section level2">
 <h2 class="hasAnchor">
@@ -342,11 +336,10 @@ Four time series showing point forecasts and 80% &amp; 95% prediction intervals 
 </div>
 <p>The algorithm of Section  is applied to the same four time series. Unlike the exponential smoothing algorithm, the ARIMA class of models assumes homoscedasticity, which is not always appropriate. Consequently, transformations are sometimes necessary. For these four time series, we model the raw data for series (a)–(c), but the logged data for series (d). The prediction intervals are back-transformed with the point forecasts to preserve the probability coverage.</p>
 <p>To apply this algorithm to the US net electricity generation time series , we use the following commands.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="kw">arimafit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto.arima.html">auto.arima</a></span>(<span class="kw">usnetelec</span>)
-<span class="kw">fcast</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/forecast.html">forecast</a></span>(<span class="kw">arimafit</span>)
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">fcast</span>)
-</pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">arimafit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto.arima.html">auto.arima</a></span><span class="op">(</span><span class="va">usnetelec</span><span class="op">)</span>
+<span class="va">fcast</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/forecast.html">forecast</a></span><span class="op">(</span><span class="va">arimafit</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">fcast</span><span class="op">)</span></code></pre></div>
 The function  implements the algorithm of Section  and returns an object of class . The resulting forecasts are shown in Figure . The fitted models are as follows:
 
 <p>Note that the  parameterization has <span class="math inline">\(\theta(B) = (1 + \theta_1B + \dots + \theta_qB)\)</span> and <span class="math inline">\(\phi(B) = (1 - \phi_1B + \dots - \phi_qB)\)</span>, and similarly for the seasonal terms.</p>
@@ -431,7 +424,7 @@ Forecasts:
 <a href="#the-forecast-function" class="anchor"></a>The forecast() function</h2>
 <p>The  function is generic and has S3 methods for a wide range of time series models. It computes point forecasts and prediction intervals from the time series model. Methods exist for models fitted using , , , , ,  and .</p>
 <p>There is also a method for a  object. If a time series object is passed as the first argument to , the function will produce forecasts based on the exponential smoothing algorithm of Section .</p>
-<p>In most cases, there is an existing  function which is intended to do much the same thing. Unfortunately, the resulting objects from the  function contain different information in each case and so it is not possible to build generic functions (such as  and ) for the results. So, instead,  acts as a wrapper to , and packages the information obtained in a common format (the  class). We also define a default  method which is used when no existing  function exists, and calls the relevant  function. Thus,  methods parallel  methods, but the latter provide consistent output that is more useable.</p>
+<p>In most cases, there is an existing  function which is intended to do much the same thing. Unfortunately, the resulting objects from the  function contain different information in each case and so it is not possible to build generic functions (such as  and ) for the results. So, instead,  acts as a wrapper to , and packages the information obtained in a common format (the  class). We also define a default  method which is used when no existing  function exists, and calls the relevant  function. Thus,  methods parallel  methods, but the latter provide consistent output that is more usable.</p>
 
 The output from the  function is an object of class ``’’ and includes at least the following information:
 
@@ -615,7 +608,7 @@ The output from the  function is an object of class ``’’ and includes at lea
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -81,7 +81,7 @@ minimizes the coefficient of variation for subseries of x." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.12.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.15.0.9000</span>
       </span>
     </div>
 
@@ -127,7 +127,7 @@ minimizes the coefficient of variation for subseries of x." />
 minimizes the coefficient of variation for subseries of <code>x</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>BoxCox.lambda</span>(<span class='kw'>x</span>, method = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"guerrero"</span>, <span class='st'>"loglik"</span>), lower = <span class='op'>-</span><span class='fl'>1</span>, upper = <span class='fl'>2</span>)</pre>
+    <pre class="usage"><span class='fu'>BoxCox.lambda</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"guerrero"</span>, <span class='st'>"loglik"</span><span class='op'>)</span>, lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -174,10 +174,10 @@ transformations. <em>Journal of Forecasting</em>, <b>12</b>, 37--48.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='kw'>lambda</span> <span class='op'>&lt;-</span> <span class='fu'>BoxCox.lambda</span>(<span class='kw'>AirPassengers</span>,lower=<span class='fl'>0</span>)
-<span class='kw'>air.fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='Arima.html'>Arima</a></span>(<span class='kw'>AirPassengers</span>, order=<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>),
-                 seasonal=<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(order=<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>),period=<span class='fl'>12</span>), lambda=<span class='kw'>lambda</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>air.fit</span>))
+<span class='va'>lambda</span> <span class='op'>&lt;-</span> <span class='fu'>BoxCox.lambda</span><span class='op'>(</span><span class='va'>AirPassengers</span>,lower<span class='op'>=</span><span class='fl'>0</span><span class='op'>)</span>
+<span class='va'>air.fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>AirPassengers</span>, order<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span>,
+                 seasonal<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>order<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span>,period<span class='op'>=</span><span class='fl'>12</span><span class='op'>)</span>, lambda<span class='op'>=</span><span class='va'>lambda</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='forecast.html'>forecast</a></span><span class='op'>(</span><span class='va'>air.fit</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='img'><img src='BoxCox.lambda-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
@@ -195,7 +195,7 @@ transformations. <em>Journal of Forecasting</em>, <b>12</b>, 37--48.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

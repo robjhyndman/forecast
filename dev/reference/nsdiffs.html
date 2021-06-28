@@ -82,7 +82,7 @@ necessary." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.12.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.15.0.9000</span>
       </span>
     </div>
 
@@ -129,14 +129,14 @@ time series stationary. <code>nsdiffs</code> estimates the number of seasonal di
 necessary.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>nsdiffs</span>(
-  <span class='kw'>x</span>,
-  alpha = <span class='fl'>0.05</span>,
-  m = <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span>(<span class='kw'>x</span>),
-  test = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"seas"</span>, <span class='st'>"ocsb"</span>, <span class='st'>"hegy"</span>, <span class='st'>"ch"</span>),
-  max.D = <span class='fl'>1</span>,
-  <span class='kw'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>nsdiffs</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  alpha <span class='op'>=</span> <span class='fl'>0.05</span>,
+  m <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>frequency</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>,
+  test <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"seas"</span>, <span class='st'>"ocsb"</span>, <span class='st'>"hegy"</span>, <span class='st'>"ch"</span><span class='op'>)</span>,
+  max.D <span class='op'>=</span> <span class='fl'>1</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -201,13 +201,13 @@ Economic Statistics</em> <b>13</b>(3):237-252.</p>
 and cointegration.", <em>Journal of Econometrics</em> <b>44</b>(1), pp. 215-238.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='auto.arima.html'>auto.arima</a></code>, <code><a href='ndiffs.html'>ndiffs</a></code>, <code><a href='ocsb.test.html'>ocsb.test</a></code>, <code><a href='https://rdrr.io/pkg/uroot/man/hegy-test.html'>hegy.test</a></code>, and <code><a href='https://rdrr.io/pkg/uroot/man/ch-test.html'>ch.test</a></code></p></div>
+    <div class='dont-index'><p><code><a href='auto.arima.html'>auto.arima</a></code>, <code><a href='ndiffs.html'>ndiffs</a></code>, <code><a href='ocsb.test.html'>ocsb.test</a></code>, <code><a href='https://geobosh.github.io/uroot/reference/hegy-test.html'>hegy.test</a></code>, and <code><a href='https://geobosh.github.io/uroot/reference/ch-test.html'>ch.test</a></code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Rob J Hyndman, Slava Razbash and Mitchell O'Hara-Wild</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>nsdiffs</span>(<span class='kw'>AirPassengers</span>)
+    <pre class="examples"><div class='input'><span class='fu'>nsdiffs</span><span class='op'>(</span><span class='va'>AirPassengers</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -224,7 +224,7 @@ and cointegration.", <em>Journal of Econometrics</em> <b>44</b>(1), pp. 215-238.
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

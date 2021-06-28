@@ -84,7 +84,7 @@ class, should also work on a msts class." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.12.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.15.0.9000</span>
       </span>
     </div>
 
@@ -133,7 +133,7 @@ contains the vector of seasonal periods. All methods that work on a ts
 class, should also work on a msts class.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>msts</span>(<span class='kw'>data</span>, <span class='kw'>seasonal.periods</span>, ts.frequency = <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>floor</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='kw'>seasonal.periods</span>)), <span class='kw'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>msts</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>seasonal.periods</span>, ts.frequency <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>floor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>seasonal.periods</span><span class='op'>)</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -171,8 +171,8 @@ is of class <code>"ts"</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'>msts</span>(<span class='kw'>taylor</span>, seasonal.periods=<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span><span class='op'>*</span><span class='fl'>24</span>,<span class='fl'>2</span><span class='op'>*</span><span class='fl'>24</span><span class='op'>*</span><span class='fl'>7</span>,<span class='fl'>2</span><span class='op'>*</span><span class='fl'>24</span><span class='op'>*</span><span class='fl'>365</span>), start=<span class='fl'>2000</span><span class='op'>+</span><span class='fl'>22</span><span class='op'>/</span><span class='fl'>52</span>)
-<span class='kw'>y</span> <span class='op'>&lt;-</span> <span class='fu'>msts</span>(<span class='kw'>USAccDeaths</span>, seasonal.periods=<span class='fl'>12</span>, start=<span class='fl'>1949</span>)
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>msts</span><span class='op'>(</span><span class='va'>taylor</span>, seasonal.periods<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>*</span><span class='fl'>24</span>,<span class='fl'>2</span><span class='op'>*</span><span class='fl'>24</span><span class='op'>*</span><span class='fl'>7</span>,<span class='fl'>2</span><span class='op'>*</span><span class='fl'>24</span><span class='op'>*</span><span class='fl'>365</span><span class='op'>)</span>, start<span class='op'>=</span><span class='fl'>2000</span><span class='op'>+</span><span class='fl'>22</span><span class='op'>/</span><span class='fl'>52</span><span class='op'>)</span>
+<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'>msts</span><span class='op'>(</span><span class='va'>USAccDeaths</span>, seasonal.periods<span class='op'>=</span><span class='fl'>12</span>, start<span class='op'>=</span><span class='fl'>1949</span><span class='op'>)</span>
 
 </div></pre>
   </div>
@@ -190,7 +190,7 @@ is of class <code>"ts"</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

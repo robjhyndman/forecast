@@ -82,7 +82,7 @@ linear interpolation is used on the (possibly seasonally adjusted) series" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.12.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.15.0.9000</span>
       </span>
     </div>
 
@@ -129,7 +129,7 @@ seasonal series. To estimate missing values and outlier replacements,
 linear interpolation is used on the (possibly seasonally adjusted) series</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tsclean</span>(<span class='kw'>x</span>, replace.missing = <span class='fl'>TRUE</span>, lambda = <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>tsclean</span><span class='op'>(</span><span class='va'>x</span>, replace.missing <span class='op'>=</span> <span class='cn'>TRUE</span>, lambda <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -165,7 +165,7 @@ data transformed before model is estimated.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='kw'>cleangold</span> <span class='op'>&lt;-</span> <span class='fu'>tsclean</span>(<span class='kw'>gold</span>)
+<span class='va'>cleangold</span> <span class='op'>&lt;-</span> <span class='fu'>tsclean</span><span class='op'>(</span><span class='va'>gold</span><span class='op'>)</span>
 
 </div></pre>
   </div>
@@ -183,7 +183,7 @@ data transformed before model is estimated.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

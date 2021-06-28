@@ -81,7 +81,7 @@ methods." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.12.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.15.0.9000</span>
       </span>
     </div>
 
@@ -127,13 +127,13 @@ methods." />
 methods.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dm.test</span>(
-  <span class='kw'>e1</span>,
-  <span class='kw'>e2</span>,
-  alternative = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"two.sided"</span>, <span class='st'>"less"</span>, <span class='st'>"greater"</span>),
-  h = <span class='fl'>1</span>,
-  power = <span class='fl'>2</span>
-)</pre>
+    <pre class="usage"><span class='fu'>dm.test</span><span class='op'>(</span>
+  <span class='va'>e1</span>,
+  <span class='va'>e2</span>,
+  alternative <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"two.sided"</span>, <span class='st'>"less"</span>, <span class='st'>"greater"</span><span class='op'>)</span>,
+  h <span class='op'>=</span> <span class='fl'>1</span>,
+  power <span class='op'>=</span> <span class='fl'>2</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -198,15 +198,15 @@ prediction mean squared errors. <em>International Journal of forecasting</em>,
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'># Test on in-sample one-step forecasts</span>
-<span class='kw'>f1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ets.html'>ets</a></span>(<span class='kw'>WWWusage</span>)
-<span class='kw'>f2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='auto.arima.html'>auto.arima</a></span>(<span class='kw'>WWWusage</span>)
-<span class='fu'><a href='accuracy.html'>accuracy</a></span>(<span class='kw'>f1</span>)
+<span class='va'>f1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ets.html'>ets</a></span><span class='op'>(</span><span class='va'>WWWusage</span><span class='op'>)</span>
+<span class='va'>f2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='auto.arima.html'>auto.arima</a></span><span class='op'>(</span><span class='va'>WWWusage</span><span class='op'>)</span>
+<span class='fu'><a href='accuracy.html'>accuracy</a></span><span class='op'>(</span><span class='va'>f1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;                     ME    RMSE      MAE       MPE     MAPE      MASE      ACF1
-#&gt; Training set 0.2243266 3.40781 2.761668 0.2629465 2.162415 0.6102792 0.2308014</div><div class='input'><span class='fu'><a href='accuracy.html'>accuracy</a></span>(<span class='kw'>f2</span>)
+#&gt; Training set 0.2243266 3.40781 2.761668 0.2629465 2.162415 0.6102792 0.2308014</div><div class='input'><span class='fu'><a href='accuracy.html'>accuracy</a></span><span class='op'>(</span><span class='va'>f2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;                     ME     RMSE      MAE       MPE     MAPE      MASE
 #&gt; Training set 0.3035616 3.113754 2.405275 0.2805566 1.917463 0.5315228
 #&gt;                     ACF1
-#&gt; Training set -0.01715517</div><div class='input'><span class='fu'>dm.test</span>(<span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span>(<span class='kw'>f1</span>),<span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span>(<span class='kw'>f2</span>),h=<span class='fl'>1</span>)
+#&gt; Training set -0.01715517</div><div class='input'><span class='fu'>dm.test</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span><span class='op'>(</span><span class='va'>f1</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span><span class='op'>(</span><span class='va'>f2</span><span class='op'>)</span>,h<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
 #&gt; 	Diebold-Mariano Test
 #&gt; 
@@ -216,18 +216,18 @@ prediction mean squared errors. <em>International Journal of forecasting</em>,
 #&gt; alternative hypothesis: two.sided
 #&gt; </div><div class='input'>
 <span class='co'># Test on out-of-sample one-step forecasts</span>
-<span class='kw'>f1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ets.html'>ets</a></span>(<span class='kw'>WWWusage</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>80</span>])
-<span class='kw'>f2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='auto.arima.html'>auto.arima</a></span>(<span class='kw'>WWWusage</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>80</span>])
-<span class='kw'>f1.out</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ets.html'>ets</a></span>(<span class='kw'>WWWusage</span>[<span class='fl'>81</span><span class='op'>:</span><span class='fl'>100</span>],model=<span class='kw'>f1</span>)
+<span class='va'>f1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ets.html'>ets</a></span><span class='op'>(</span><span class='va'>WWWusage</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>80</span><span class='op'>]</span><span class='op'>)</span>
+<span class='va'>f2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='auto.arima.html'>auto.arima</a></span><span class='op'>(</span><span class='va'>WWWusage</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>80</span><span class='op'>]</span><span class='op'>)</span>
+<span class='va'>f1.out</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ets.html'>ets</a></span><span class='op'>(</span><span class='va'>WWWusage</span><span class='op'>[</span><span class='fl'>81</span><span class='op'>:</span><span class='fl'>100</span><span class='op'>]</span>,model<span class='op'>=</span><span class='va'>f1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Model is being refit with current smoothing parameters but initial states are being re-estimated.</span>
-#&gt; <span class='message'>Set 'use.initial.values=TRUE' if you want to re-use existing initial values.</span></div><div class='input'><span class='kw'>f2.out</span> <span class='op'>&lt;-</span> <span class='fu'><a href='Arima.html'>Arima</a></span>(<span class='kw'>WWWusage</span>[<span class='fl'>81</span><span class='op'>:</span><span class='fl'>100</span>],model=<span class='kw'>f2</span>)
-<span class='fu'><a href='accuracy.html'>accuracy</a></span>(<span class='kw'>f1.out</span>)
+#&gt; <span class='message'>Set 'use.initial.values=TRUE' if you want to re-use existing initial values.</span></div><div class='input'><span class='va'>f2.out</span> <span class='op'>&lt;-</span> <span class='fu'><a href='Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>WWWusage</span><span class='op'>[</span><span class='fl'>81</span><span class='op'>:</span><span class='fl'>100</span><span class='op'>]</span>,model<span class='op'>=</span><span class='va'>f2</span><span class='op'>)</span>
+<span class='fu'><a href='accuracy.html'>accuracy</a></span><span class='op'>(</span><span class='va'>f1.out</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;                     ME    RMSE      MAE       MPE     MAPE      MASE      ACF1
-#&gt; Training set 0.2100836 3.24835 2.570459 0.1203497 1.352355 0.4246845 0.2287215</div><div class='input'><span class='fu'><a href='accuracy.html'>accuracy</a></span>(<span class='kw'>f2.out</span>)
+#&gt; Training set 0.2100836 3.24835 2.570459 0.1203497 1.352355 0.4246845 0.2287215</div><div class='input'><span class='fu'><a href='accuracy.html'>accuracy</a></span><span class='op'>(</span><span class='va'>f2.out</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;                    ME     RMSE      MAE       MPE     MAPE      MASE
 #&gt; Training set 1.081679 3.329012 2.437119 0.6810673 1.375924 0.4026544
 #&gt;                      ACF1
-#&gt; Training set -0.004460367</div><div class='input'><span class='fu'>dm.test</span>(<span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span>(<span class='kw'>f1.out</span>),<span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span>(<span class='kw'>f2.out</span>),h=<span class='fl'>1</span>)
+#&gt; Training set -0.004460367</div><div class='input'><span class='fu'>dm.test</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span><span class='op'>(</span><span class='va'>f1.out</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span><span class='op'>(</span><span class='va'>f2.out</span><span class='op'>)</span>,h<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
 #&gt; 	Diebold-Mariano Test
 #&gt; 
@@ -252,7 +252,7 @@ prediction mean squared errors. <em>International Journal of forecasting</em>,
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.12.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.15.0.9000</span>
       </span>
     </div>
 
@@ -125,7 +125,7 @@
     <p>Returns number of days in each month or quarter of the observed time period.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>monthdays</span>(<span class='kw'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>monthdays</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -151,12 +151,12 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(mfrow=<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>1</span>))
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>ldeaths</span>,xlab=<span class='st'>"Year"</span>,ylab=<span class='st'>"pounds"</span>,
-    main=<span class='st'>"Monthly deaths from lung disease (UK)"</span>)
-<span class='kw'>ldeaths.adj</span> <span class='op'>&lt;-</span> <span class='kw'>ldeaths</span><span class='op'>/</span><span class='fu'>monthdays</span>(<span class='kw'>ldeaths</span>)<span class='op'>*</span><span class='fl'>365.25</span><span class='op'>/</span><span class='fl'>12</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>ldeaths.adj</span>,xlab=<span class='st'>"Year"</span>,ylab=<span class='st'>"pounds"</span>,
-    main=<span class='st'>"Adjusted monthly deaths from lung disease (UK)"</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>ldeaths</span>,xlab<span class='op'>=</span><span class='st'>"Year"</span>,ylab<span class='op'>=</span><span class='st'>"pounds"</span>,
+    main<span class='op'>=</span><span class='st'>"Monthly deaths from lung disease (UK)"</span><span class='op'>)</span>
+<span class='va'>ldeaths.adj</span> <span class='op'>&lt;-</span> <span class='va'>ldeaths</span><span class='op'>/</span><span class='fu'>monthdays</span><span class='op'>(</span><span class='va'>ldeaths</span><span class='op'>)</span><span class='op'>*</span><span class='fl'>365.25</span><span class='op'>/</span><span class='fl'>12</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>ldeaths.adj</span>,xlab<span class='op'>=</span><span class='st'>"Year"</span>,ylab<span class='op'>=</span><span class='st'>"pounds"</span>,
+    main<span class='op'>=</span><span class='st'>"Adjusted monthly deaths from lung disease (UK)"</span><span class='op'>)</span>
 </div><div class='img'><img src='monthdays-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
@@ -174,7 +174,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -82,7 +82,7 @@ data, it will return the average cycle length." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.12.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.15.0.9000</span>
       </span>
     </div>
 
@@ -129,7 +129,7 @@ series. For seasonal data, it will return the seasonal period. For cyclic
 data, it will return the average cycle length.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>findfrequency</span>(<span class='kw'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>findfrequency</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -158,9 +158,9 @@ can be found, the function will return 1.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'>findfrequency</span>(<span class='kw'>USAccDeaths</span>) <span class='co'># Monthly data</span>
-</div><div class='output co'>#&gt; [1] 12</div><div class='input'><span class='fu'>findfrequency</span>(<span class='kw'>taylor</span>) <span class='co'># Half-hourly data</span>
-</div><div class='output co'>#&gt; [1] 48</div><div class='input'><span class='fu'>findfrequency</span>(<span class='kw'>lynx</span>) <span class='co'># Annual data</span>
+<span class='fu'>findfrequency</span><span class='op'>(</span><span class='va'>USAccDeaths</span><span class='op'>)</span> <span class='co'># Monthly data</span>
+</div><div class='output co'>#&gt; [1] 12</div><div class='input'><span class='fu'>findfrequency</span><span class='op'>(</span><span class='va'>taylor</span><span class='op'>)</span> <span class='co'># Half-hourly data</span>
+</div><div class='output co'>#&gt; [1] 48</div><div class='input'><span class='fu'>findfrequency</span><span class='op'>(</span><span class='va'>lynx</span><span class='op'>)</span> <span class='co'># Annual data</span>
 </div><div class='output co'>#&gt; [1] 10</div><div class='input'>
 </div></pre>
   </div>
@@ -178,7 +178,7 @@ can be found, the function will return 1.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

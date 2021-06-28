@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.12.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.15.0.9000</span>
       </span>
     </div>
 
@@ -122,6 +122,36 @@
     <div id="forecast-development-version" class="section level1">
 <h1 class="page-header" data-toc-text="development version">
 <a href="#forecast-development-version" class="anchor"></a>forecast (development version)<small> Unreleased </small>
+</h1>
+<ul>
+<li>Fixed <code><a href="../reference/tslm.html">tslm()</a></code> incorrectly applying Box-Cox transformations when an <code>mts</code> is provided to the <code>data</code> argument (<a href='https://github.com/robjhyndman/forecast/issues/886'>#886</a>).</li>
+</ul>
+</div>
+    <div id="forecast-815-1-june-2021" class="section level1">
+<h1 class="page-header" data-toc-text="8.15">
+<a href="#forecast-815-1-june-2021" class="anchor"></a>forecast 8.15 (1 June 2021)<small> 2021-06-01 </small>
+</h1>
+<ul>
+<li>Changed <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> methods to defer console output until <code><a href="https://rdrr.io/r/base/print.html">print()</a></code>
+</li>
+<li>Changed default <code>s.window</code> values for <code><a href="../reference/mstl.html">mstl()</a></code>, <code><a href="../reference/forecast.stl.html">stlf()</a></code> and <code><a href="../reference/forecast.stl.html">stlm()</a></code>. The new defaults are based on extensive empirical testing.</li>
+</ul>
+</div>
+    <div id="forecast-814-11-march-2021" class="section level1">
+<h1 class="page-header" data-toc-text="8.14">
+<a href="#forecast-814-11-march-2021" class="anchor"></a>forecast 8.14 (11 March 2021)<small> 2021-03-11 </small>
+</h1>
+<ul>
+<li>Changed default <code><a href="../reference/BoxCox.html">BoxCox(lambda = "auto")</a></code> lower bound to -0.9.</li>
+<li>Use better variance estimates for <code><a href="../reference/ets.html">ets()</a></code> bias adjustments.</li>
+<li>Improved robustness of <code><a href="../reference/autoplot.decomposed.ts.html">autoplot.seas()</a></code> for non-seasonal decomposition.</li>
+<li>Fixed scoping of parameters in <code><a href="../reference/auto.arima.html">auto.arima(parallel = TRUE)</a></code> (<a href='https://github.com/robjhyndman/forecast/issues/874'>#874</a>).</li>
+<li>Fixed handling of <code>xreg</code> in <code><a href="../reference/tsCV.html">tsCV()</a></code>.</li>
+</ul>
+</div>
+    <div id="forecast-813-11-september-2020" class="section level1">
+<h1 class="page-header" data-toc-text="8.13">
+<a href="#forecast-813-11-september-2020" class="anchor"></a>forecast 8.13 (11 September 2020)<small> 2020-09-12 </small>
 </h1>
 <ul>
 <li>Fixed forecasts from Arima with drift with initial NAs.</li>
@@ -742,7 +772,7 @@
 <a href="#version-316-24-december-2011" class="anchor"></a>Version 3.16 (24 December 2011)</h2>
 <ul>
 <li>Corrected problem with AIC computation in bats and tbats</li>
-<li>Fixed handlng of non-seasonal data in bats()</li>
+<li>Fixed handling of non-seasonal data in bats()</li>
 <li>Changed dependency to &gt;= R 2.14.0 in order to ensure parallel package available.</li>
 </ul>
 </div>
@@ -1418,7 +1448,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

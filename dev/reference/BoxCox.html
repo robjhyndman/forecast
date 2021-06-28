@@ -81,7 +81,7 @@ transformation. InvBoxCox() reverses the transformation." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.12.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.15.0.9000</span>
       </span>
     </div>
 
@@ -127,9 +127,9 @@ transformation. InvBoxCox() reverses the transformation." />
 transformation. InvBoxCox() reverses the transformation.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>BoxCox</span>(<span class='kw'>x</span>, <span class='kw'>lambda</span>)
+    <pre class="usage"><span class='fu'>BoxCox</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>lambda</span><span class='op'>)</span>
 
-<span class='fu'>InvBoxCox</span>(<span class='kw'>x</span>, <span class='kw'>lambda</span>, biasadj = <span class='fl'>FALSE</span>, fvar = <span class='kw'>NULL</span>)</pre>
+<span class='fu'>InvBoxCox</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>lambda</span>, biasadj <span class='op'>=</span> <span class='cn'>FALSE</span>, fvar <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -141,7 +141,7 @@ transformation. InvBoxCox() reverses the transformation.</p>
     <tr>
       <th>lambda</th>
       <td><p>transformation parameter. If <code>lambda = "auto"</code>, then
-the transformation parameter lambda is chosen using BoxCox.lambda.</p></td>
+the transformation parameter lambda is chosen using BoxCox.lambda (with a lower bound of -0.9)</p></td>
     </tr>
     <tr>
       <th>biasadj</th>
@@ -163,13 +163,14 @@ corresponding <code>upper</code> and <code>lower</code> intervals.</p></td>
     <p>a numeric vector of the same length as x.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The Box-Cox transformation is given by $$f_\lambda(x) =\frac{x^\lambda -
-1}{\lambda}$$ if \(\lambda\ne0\). For \(\lambda=0\),
+    <p>The Box-Cox transformation (as given by Bickel &amp; Doksum 1981) is given by $$f_\lambda(x) =sign(x)(|x|^\lambda -
+1)/\lambda$$ if \(\lambda\ne0\). For \(\lambda=0\),
 $$f_0(x)=\log(x)$$.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Box, G. E. P. and Cox, D. R. (1964) An analysis of
-transformations. <em>JRSS B</em> <b>26</b> 211--246.</p>
+transformations. <em>JRSS B</em> <b>26</b> 211--246.
+Bickel, P. J. and Doksum K. A. (1981) An Analysis of Transformations Revisited. <em>JASA</em> <b>76</b> 296-311.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='BoxCox.lambda.html'>BoxCox.lambda</a></code></p></div>
@@ -179,9 +180,9 @@ transformations. <em>JRSS B</em> <b>26</b> 211--246.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='kw'>lambda</span> <span class='op'>&lt;-</span> <span class='fu'><a href='BoxCox.lambda.html'>BoxCox.lambda</a></span>(<span class='kw'>lynx</span>)
-<span class='kw'>lynx.fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/ar.html'>ar</a></span>(<span class='fu'>BoxCox</span>(<span class='kw'>lynx</span>,<span class='kw'>lambda</span>))
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'><a href='forecast.html'>forecast</a></span>(<span class='kw'>lynx.fit</span>,h=<span class='fl'>20</span>,lambda=<span class='kw'>lambda</span>))
+<span class='va'>lambda</span> <span class='op'>&lt;-</span> <span class='fu'><a href='BoxCox.lambda.html'>BoxCox.lambda</a></span><span class='op'>(</span><span class='va'>lynx</span><span class='op'>)</span>
+<span class='va'>lynx.fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/ar.html'>ar</a></span><span class='op'>(</span><span class='fu'>BoxCox</span><span class='op'>(</span><span class='va'>lynx</span>,<span class='va'>lambda</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='forecast.html'>forecast</a></span><span class='op'>(</span><span class='va'>lynx.fit</span>,h<span class='op'>=</span><span class='fl'>20</span>,lambda<span class='op'>=</span><span class='va'>lambda</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='error'>Error in NextMethod(.Generic): cannot assign 'tsp' to zero-length vector</span></div><div class='input'>
 </div></pre>
   </div>
@@ -199,7 +200,7 @@ transformations. <em>JRSS B</em> <b>26</b> 211--246.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

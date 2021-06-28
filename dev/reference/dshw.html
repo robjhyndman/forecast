@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.12.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.15.0.9000</span>
       </span>
     </div>
 
@@ -125,21 +125,21 @@
     <p>Returns forecasts using Taylor's (2003) Double-Seasonal Holt-Winters method.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dshw</span>(
-  <span class='kw'>y</span>,
-  period1 = <span class='kw'>NULL</span>,
-  period2 = <span class='kw'>NULL</span>,
-  h = <span class='fl'>2</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='kw'>period1</span>, <span class='kw'>period2</span>),
-  alpha = <span class='kw'>NULL</span>,
-  beta = <span class='kw'>NULL</span>,
-  gamma = <span class='kw'>NULL</span>,
-  omega = <span class='kw'>NULL</span>,
-  phi = <span class='kw'>NULL</span>,
-  lambda = <span class='kw'>NULL</span>,
-  biasadj = <span class='fl'>FALSE</span>,
-  armethod = <span class='fl'>TRUE</span>,
-  model = <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>dshw</span><span class='op'>(</span>
+  <span class='va'>y</span>,
+  period1 <span class='op'>=</span> <span class='cn'>NULL</span>,
+  period2 <span class='op'>=</span> <span class='cn'>NULL</span>,
+  h <span class='op'>=</span> <span class='fl'>2</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>period1</span>, <span class='va'>period2</span><span class='op'>)</span>,
+  alpha <span class='op'>=</span> <span class='cn'>NULL</span>,
+  beta <span class='op'>=</span> <span class='cn'>NULL</span>,
+  gamma <span class='op'>=</span> <span class='cn'>NULL</span>,
+  omega <span class='op'>=</span> <span class='cn'>NULL</span>,
+  phi <span class='op'>=</span> <span class='cn'>NULL</span>,
+  lambda <span class='op'>=</span> <span class='cn'>NULL</span>,
+  biasadj <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  armethod <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  model <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -257,15 +257,15 @@ Springer-Verlag. <a href='http://www.exponentialsmoothing.net'>http://www.expone
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='kw'>fcast</span> <span class='op'>&lt;-</span> <span class='fu'>dshw</span>(<span class='kw'>taylor</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>fcast</span>)
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>fcast</span> <span class='op'>&lt;-</span> <span class='fu'>dshw</span><span class='op'>(</span><span class='va'>taylor</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>fcast</span><span class='op'>)</span>
 
-<span class='kw'>t</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0</span>,<span class='fl'>5</span>,by=<span class='fl'>1</span><span class='op'>/</span><span class='fl'>20</span>)
-<span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/seasonal/man/exp.html'>exp</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>sin</a></span>(<span class='fl'>2</span><span class='op'>*</span><span class='kw'>pi</span><span class='op'>*</span><span class='kw'>t</span>) <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>cos</a></span>(<span class='fl'>2</span><span class='op'>*</span><span class='kw'>pi</span><span class='op'>*</span><span class='kw'>t</span><span class='op'>*</span><span class='fl'>4</span>) <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='kw'>t</span>),<span class='fl'>0</span>,<span class='fl'>.1</span>))
-<span class='kw'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>dshw</span>(<span class='kw'>x</span>,<span class='fl'>20</span>,<span class='fl'>5</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>fit</span>)
-}
+<span class='va'>t</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>5</span>,by<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='fl'>20</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/seasonal/man/exp.html'>exp</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>sin</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>*</span><span class='va'>pi</span><span class='op'>*</span><span class='va'>t</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>cos</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>*</span><span class='va'>pi</span><span class='op'>*</span><span class='va'>t</span><span class='op'>*</span><span class='fl'>4</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>t</span><span class='op'>)</span>,<span class='fl'>0</span>,<span class='fl'>.1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>dshw</span><span class='op'>(</span><span class='va'>x</span>,<span class='fl'>20</span>,<span class='fl'>5</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span>
+<span class='op'>}</span>
 
 </div></pre>
   </div>
@@ -283,7 +283,7 @@ Springer-Verlag. <a href='http://www.exponentialsmoothing.net'>http://www.expone
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
