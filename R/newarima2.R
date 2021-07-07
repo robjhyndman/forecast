@@ -230,9 +230,9 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   }
   if (m == 1) {
     D <- max.P <- max.Q <- 0
-  }
-  else if(is.na(D))
-  {
+  } else if(is.na(D) & length(xx) <= 2*m) {
+    D <- 0
+  } else if(is.na(D)) {
     D <- do.call("nsdiffs", c(list(xx, test=seasonal.test, max.D=max.D), seasonal.test.args))
     # Make sure xreg is not null after differencing
     if (D > 0 && !is.null(xregg)) {
