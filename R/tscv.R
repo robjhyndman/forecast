@@ -104,7 +104,7 @@ tsCV <- function(y, forecastfunction, h=1, window=NULL, xreg=NULL, initial=0, ..
         ), silent = TRUE)
     }
     if (!is.element("try-error", class(fc))) {
-      e[i, ] <- y[i + (1:h)] - fc$mean
+      e[i, ] <- y[i + seq(h)] - fc$mean[seq(h)]
     }
   }
   if (h == 1) {
