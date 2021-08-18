@@ -125,6 +125,7 @@ na.interp <- function(x, lambda=NULL,
 #' @param x time series
 #' @param replace.missing If TRUE, it not only replaces outliers, but also
 #' interpolates missing values
+#' @param iterate the number of iteration only for non-seasonal series
 #' @inheritParams forecast
 #' @return Time series
 #' @author Rob J Hyndman
@@ -136,8 +137,8 @@ na.interp <- function(x, lambda=NULL,
 #' cleangold <- tsclean(gold)
 #'
 #' @export
-tsclean <- function(x, replace.missing=TRUE, lambda = NULL) {
-  outliers <- tsoutliers(x, lambda = lambda)
+tsclean <- function(x, replace.missing=TRUE, iterate=2, lambda = NULL) {
+  outliers <- tsoutliers(x, iterate = iterate, lambda = lambda)
   x[outliers$index] <- outliers$replacements
   if (replace.missing) {
     x <- na.interp(x, lambda = lambda)
