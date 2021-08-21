@@ -129,7 +129,7 @@ seasonal series. To estimate missing values and outlier replacements,
 linear interpolation is used on the (possibly seasonally adjusted) series</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tsclean</span><span class='op'>(</span><span class='va'>x</span>, replace.missing <span class='op'>=</span> <span class='cn'>TRUE</span>, lambda <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>tsclean</span><span class='op'>(</span><span class='va'>x</span>, replace.missing <span class='op'>=</span> <span class='cn'>TRUE</span>, iterate <span class='op'>=</span> <span class='fl'>2</span>, lambda <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -142,6 +142,10 @@ linear interpolation is used on the (possibly seasonally adjusted) series</p>
       <th>replace.missing</th>
       <td><p>If TRUE, it not only replaces outliers, but also
 interpolates missing values</p></td>
+    </tr>
+    <tr>
+      <th>iterate</th>
+      <td><p>the number of iterations required</p></td>
     </tr>
     <tr>
       <th>lambda</th>
