@@ -4,13 +4,15 @@
 \alias{tsclean}
 \title{Identify and replace outliers and missing values in a time series}
 \usage{
-tsclean(x, replace.missing = TRUE, lambda = NULL)
+tsclean(x, replace.missing = TRUE, iterate = 2, lambda = NULL)
 }
 \arguments{
 \item{x}{time series}
 
 \item{replace.missing}{If TRUE, it not only replaces outliers, but also
 interpolates missing values}
+
+\item{iterate}{the number of iterations required}
 
 \item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.

@@ -9,7 +9,7 @@ tsoutliers(x, iterate = 2, lambda = NULL)
 \arguments{
 \item{x}{time series}
 
-\item{iterate}{the number of iteration only for non-seasonal series}
+\item{iterate}{the number of iterations required}
 
 \item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
