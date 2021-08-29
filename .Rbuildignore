@@ -8,6 +8,7 @@
 ^_pkgdown\.yml$
 Makefile
 build.R
+revdep_checks.R
 ^revdep$
 ^doc$
 ^Meta$
