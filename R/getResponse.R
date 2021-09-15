@@ -53,7 +53,7 @@ getResponse.Arima <- function(object, ...) {
   } else {
     series.name <- object$series
     if (is.null(series.name)) {
-      stop("missing original time series")
+      return(NULL)
     } else {
       x <- try(eval.parent(parse(text = series.name)), silent = TRUE)
       if (is.element("try-error", class(x))) { # Try one level further up the chain

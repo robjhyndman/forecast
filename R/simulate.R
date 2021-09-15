@@ -364,19 +364,21 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
     ### End non-seasonal ARIMA specific code
   }
 
-
   x <- object$x <- getResponse(object)
-
-  if (is.null(tsp(x))) {
-    x <- ts(x, frequency = 1, start = 1)
+  if(is.null(x)) {
+    future <- FALSE
+  }
+  else {
+    if (is.null(tsp(x))) {
+      x <- ts(x, frequency = 1, start = 1)
+    }
+    if (!is.null(lambda)) {
+      x <- BoxCox(x, lambda)
+      lambda <- attr(x, "lambda")
+    }
+    n <- length(x)
   }
 
-  if (!is.null(lambda)) {
-    x <- BoxCox(x, lambda)
-    lambda <- attr(x, "lambda")
-  }
-
-  n <- length(x)
   if (bootstrap) {
     res <- na.omit(c(model$residuals) - mean(model$residuals, na.rm = TRUE))
     e <- sample(res, nsim, replace = TRUE)
@@ -388,7 +390,6 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
   } else {
     stop("Length of innov must be equal to nsim")
   }
-
 
   use.drift <- is.element("drift", names(object$coef))
   usexreg <- (!is.null(xreg) | use.drift)
@@ -422,7 +423,8 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
   if (length(object$coef) > narma) {
     if (names(object$coef)[narma + 1L] == "intercept") {
       xreg <- cbind(intercept = rep(1, nsim), xreg)
-      object$xreg <- cbind(intercept = rep(1, n), object$xreg)
+      if(future)
+        object$xreg <- cbind(intercept = rep(1, n), object$xreg)
     }
     if (!is.null(xreg)) {
       xm <- if (narma == 0) {
@@ -430,10 +432,12 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
       } else {
         drop(as.matrix(xreg) %*% object$coef[-(1L:narma)])
       }
-      oldxm <- if (narma == 0) {
-        drop(as.matrix(object$xreg) %*% object$coef)
-      } else {
-        drop(as.matrix(object$xreg) %*% object$coef[-(1L:narma)])
+      if(future) {
+        oldxm <- if (narma == 0) {
+          drop(as.matrix(object$xreg) %*% object$coef)
+        } else {
+          drop(as.matrix(object$xreg) %*% object$coef[-(1L:narma)])
+        }
       }
     }
   }
@@ -450,10 +454,13 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
     else {
       sim <- tail(arima.sim(model, nsim, innov = e), nsim) + xm
     }
-    sim <- ts(sim, start=tsp(x)[1], frequency=tsp(x)[3])
+    if(!is.null(x))
+      sim <- ts(sim, start=tsp(x)[1], frequency=tsp(x)[3])
+    else
+      sim <- ts(sim, frequency = object$frequency)
 
     # If model is non-stationary, then condition simulated data on first observation
-    if (model$order[2] > 0 || flag.seasonal.diff) {
+    if (!is.null(x) & (model$order[2] > 0 || flag.seasonal.diff)) {
       sim <- sim - sim[1] + x[1]
     }
   }

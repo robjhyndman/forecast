@@ -883,30 +883,24 @@ print.forecast_ARIMA <- function(x, digits=max(3, getOption("digits") - 3), se=T
     print.default(coef, print.gap = 2)
   }
   cm <- x$call$method
+  cat("\nsigma^2 = ", format(x$sigma2, digits = digits), sep="")
+  if(!is.na(x$loglik))
+    cat(":  log likelihood = ", format(round(x$loglik, 2L)), sep = "")
+  cat("\n")
   if (is.null(cm) || cm != "CSS") {
-    cat(
-      "\nsigma^2 estimated as ", format(x$sigma2, digits = digits),
-      ":  log likelihood=", format(round(x$loglik, 2L)), "\n", sep = ""
-    )
-    # npar <- length(x$coef) + 1
-    npar <- length(x$coef[x$mask]) + 1
-    missing <- is.na(x$residuals)
-    firstnonmiss <- head(which(!missing),1)
-    lastnonmiss <- tail(which(!missing),1)
-    n <- lastnonmiss - firstnonmiss + 1
-    nstar <- n - x$arma[6] - x$arma[7] * x$arma[5]
-    bic <- x$aic + npar * (log(nstar) - 2)
-    aicc <- x$aic + 2 * npar * (nstar / (nstar - npar - 1) - 1)
-    cat("AIC=", format(round(x$aic, 2L)), sep = "")
-    cat("   AICc=", format(round(aicc, 2L)), sep = "")
-    cat("   BIC=", format(round(bic, 2L)), "\n", sep = "")
-  }
-  else {
-    cat(
-      "\nsigma^2 estimated as ", format(x$sigma2, digits = digits),
-      ":  part log likelihood=", format(round(x$loglik, 2)),
-      "\n", sep = ""
-    )
+    if(!is.na(x$aic)) {
+      npar <- length(x$coef[x$mask]) + 1
+      missing <- is.na(x$residuals)
+      firstnonmiss <- head(which(!missing),1)
+      lastnonmiss <- tail(which(!missing),1)
+      n <- lastnonmiss - firstnonmiss + 1
+      nstar <- n - x$arma[6] - x$arma[7] * x$arma[5]
+      bic <- x$aic + npar * (log(nstar) - 2)
+      aicc <- x$aic + 2 * npar * (nstar / (nstar - npar - 1) - 1)
+      cat("AIC=", format(round(x$aic, 2L)), sep = "")
+      cat("   AICc=", format(round(aicc, 2L)), sep = "")
+      cat("   BIC=", format(round(bic, 2L)), "\n", sep = "")
+    }
   }
   invisible(x)
 }
