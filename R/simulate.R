@@ -63,8 +63,11 @@ simulate.ets <- function(object, nsim=length(object$x), seed=NULL, future=TRUE, 
   else {
     nsim <- length(innov)
   }
-  if (is.null(tsp(object$x))) {
+  if (!is.null(object$x) & is.null(tsp(object$x))) {
     object$x <- ts(object$x, frequency = 1, start = 1)
+  } else {
+    object$x <- ts(10, frequency=object$m, start=1/object$m)
+    future <- FALSE
   }
 
   if (future) {
