@@ -69,10 +69,10 @@ simulate.ets <- function(object, nsim=length(object$x), seed=NULL, future=TRUE, 
       object$x <- ts(object$x, frequency = 1, start = 1)
     }
   } else {
-    object$x <- ts(10, frequency=object$m, start=1/object$m)
-    future <- FALSE
     if(nsim == 0L)
       nsim <- 100
+    object$x <- ts(10, frequency=object$m, start=1/object$m)
+    future <- FALSE
   }
 
   if (future) {
