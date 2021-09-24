@@ -18,7 +18,8 @@
 #' @param object An object of class "\code{ets}", "\code{Arima}", "\code{ar}"
 #' or "\code{nnetar}".
 #' @param nsim Number of periods for the simulated series. Ignored if either
-#' \code{xreg} or \code{innov} are not \code{NULL}.
+#' \code{xreg} or \code{innov} are not \code{NULL}. Otherwise the default is
+#' the length of series used to train model (or 100 if no data found).
 #' @param seed Either \code{NULL} or an integer that will be used in a call to
 #' \code{\link[base]{set.seed}} before simulating the time series. The default,
 #' \code{NULL}, will not change the random generator state.
@@ -70,6 +71,8 @@ simulate.ets <- function(object, nsim=length(object$x), seed=NULL, future=TRUE, 
   } else {
     object$x <- ts(10, frequency=object$m, start=1/object$m)
     future <- FALSE
+    if(nsim == 0L)
+      nsim <- 100
   }
 
   if (future) {
@@ -302,9 +305,24 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
   else {
     nsim <- length(innov)
   }
-
   ############# End Random seed code
 
+  # Check if data is included
+  x <- object$x <- getResponse(object)
+  if(is.null(x)) {
+    future <- FALSE
+    if(nsim == 0L)
+      nsim <- 100
+  } else {
+    if (is.null(tsp(x))) {
+      x <- ts(x, frequency = 1, start = 1)
+    }
+    if (!is.null(lambda)) {
+      x <- BoxCox(x, lambda)
+      lambda <- attr(x, "lambda")
+    }
+    n <- length(x)
+  }
 
   # Check for seasonal ARMA components and set flag accordingly. This will be used later in myarima.sim()
   flag.s.arma <- (sum(object$arma[c(3, 4)]) > 0)
@@ -367,21 +385,6 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
     }
     flag.seasonal.diff <- FALSE
     ### End non-seasonal ARIMA specific code
-  }
-
-  x <- object$x <- getResponse(object)
-  if(is.null(x)) {
-    future <- FALSE
-  }
-  else {
-    if (is.null(tsp(x))) {
-      x <- ts(x, frequency = 1, start = 1)
-    }
-    if (!is.null(lambda)) {
-      x <- BoxCox(x, lambda)
-      lambda <- attr(x, "lambda")
-    }
-    n <- length(x)
   }
 
   if (bootstrap) {
@@ -497,15 +500,22 @@ simulate.ar <- function(object, nsim=object$n.used, seed=NULL, future=TRUE, boot
     nsim <- length(innov)
   }
 
+  object$x <- getResponse(object)
+  if(is.null(object$x)) {
+    future <- FALSE
+    x.mean <- 0
+    if(is.null(nsim))
+      nsim <- 100
+  } else {
+    x.mean <- object$x.mean
+    object$x <- object$x - x.mean
+  }
   if (future) {
     model <- list(ar = object$ar, sd = sqrt(object$var.pred), residuals = object$resid, seasonal.difference = 0, seasonal.period = 1, flag.seasonal.arma = FALSE)
   }
   else {
     model <- list(ar = object$ar, sd = sqrt(object$var.pred), residuals = object$resid)
   }
-  x.mean <- object$x.mean
-  object$x <- getResponse(object)
-  object$x <- object$x - x.mean
   if (bootstrap) {
     res <- na.omit(c(model$residuals) - mean(model$residuals, na.rm = TRUE))
     e <- sample(res, nsim, replace = TRUE)
@@ -564,6 +574,12 @@ simulate.lagwalk <- function(object, nsim=length(object$x), seed=NULL,
 
   # Find starting position
   x <- object$x
+  if(is.null(x)) {
+    future <- FALSE
+    if(nsim == 0L)
+      nsim <- 100
+    x <- 1
+  }
   if(!is.null(lambda)){
     x <- BoxCox(x, lambda)
   }
@@ -604,6 +620,12 @@ simulate.lagwalk <- function(object, nsim=length(object$x), seed=NULL,
 #' @export
 simulate.fracdiff <- function(object, nsim=object$n, seed=NULL, future=TRUE, bootstrap=FALSE, innov=NULL, ...) {
   x <- getResponse(object)
+  if(is.null(x)) {
+    future <- FALSE
+    if(is.null(nsim))
+      nsim <- 100
+    x <- 0
+  }
 
   # Strip initial and final missing values
   xx <- na.ends(x)
@@ -648,6 +670,8 @@ simulate.nnetar <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL,
   else {
     nsim <- length(innov)
   }
+  if(is.null(object$x))
+    future <- FALSE
   ## only future currently implemented
   if (!future) {
     warning("simulate.nnetar() currently only supports future=TRUE")
@@ -760,6 +784,9 @@ simulate.modelAR <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL
   }
   else {
     nsim <- length(innov)
+  }
+  if(is.null(object$x)) {
+    future <- FALSE
   }
   ## only future currently implemented
   if (!future) {
