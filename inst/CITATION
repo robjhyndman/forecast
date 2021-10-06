@@ -30,4 +30,5 @@ bibentry(bibtype = "Article",
   number    =  3,
   pages     = "1--22",
   year      =  2008,
-  url       = "https://www.jstatsoft.org/article/view/v027i03")
+  doi       = "10.18637/jss.v027.i03"
+)
