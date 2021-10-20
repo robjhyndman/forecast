@@ -322,7 +322,7 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   }
   out$fitted <- ts(rep(NA_real_, length(out$x)))
   out$fitted[c(rep(TRUE, maxlag), j)] <- fits
-  tsp(out$fitted) <- tsp(out$x)
+  out$fitted <- copy_msts(out$x, out$fitted)
   out$residuals <- out$x - out$fitted
   out$lags <- lags
   out$series <- yname
@@ -551,17 +551,17 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI
       lower <- ts(matrix(lower, ncol = 1L))
       upper <- ts(matrix(upper, ncol = 1L))
     }
-    tsp(lower) <- tsp(upper) <- tsp(fcast)
+    out$lower <- future_msts(out$x, lower)
+    out$upper <- future_msts(out$x, upper)
   }
   else {
     level <- NULL
     lower <- NULL
     upper <- NULL
   }
-  out$mean <- fcast
+  out$mean <- future_msts(out$x, fcast)
   out$level <- level
-  out$lower <- lower
-  out$upper <- upper
+
   return(structure(out, class = "forecast"))
 }
 

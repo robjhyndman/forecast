@@ -94,13 +94,11 @@ meanf <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALS
   }
   colnames(lower) <- colnames(upper) <- paste(level, "%", sep = "")
   if (is.ts(x)) {
-    fits <- ts(fits)
-    res <- ts(res)
-    tsp(fits) <- tsp(res) <- tsp(x)
-    freq <- frequency(x)
-    f <- ts(f, start = tsp(x)[2] + 1 / freq, frequency = freq)
-    lower <- ts(lower, start = tsp(x)[2] + 1 / freq, frequency = freq)
-    upper <- ts(upper, start = tsp(x)[2] + 1 / freq, frequency = freq)
+    fits <- copy_msts(x, fits)
+    res <- copy_msts(x, res)
+    f <- future_msts(x, f)
+    lower <- future_msts(x, lower)
+    upper <- future_msts(x, upper)
   }
 
   if (!is.null(lambda)) {
@@ -342,6 +340,12 @@ forecast.StructTS <- function(object, h=ifelse(object$coef["epsilon"] > 1e-10, 2
     upper <- InvBoxCox(upper, lambda)
   }
 
+  mean <- future_msts(x, pred$pred)
+  lower <- future_msts(x, lower)
+  upper <- future_msts(x, upper)
+  fits <- copy_msts(x, fits)
+  res <- copy_msts(x, res)
+
   return(structure(
     list(
       method = method, model = object, level = level, mean = pred$pred,
@@ -448,7 +452,11 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x) > 1, 2 * f
   nf <- length(fitted)
   n <- length(x)
   fitted <- ts(c(rep(NA, n - nf), fitted))
-  tsp(fitted) <- tsp(object$x)
+  fitted <- copy_msts(object$x, fitted)
+
+  pmean <- future_msts(object$x, pmean)
+  lower <- future_msts(object$x, lower)
+  upper <- future_msts(object$x, upper)
 
   return(structure(
     list(
@@ -566,8 +574,8 @@ croston2 <- function(x, h=10, alpha=0.1, nofits=FALSE) {
       for (i in 1:(n - 1))
         fits[i + 1] <- croston2(x[1:i], h = 1, alpha = alpha, nofits = TRUE)
     }
-    fits <- ts(fits)
-    tsp(fits) <- tsp.x
+    ratio <- future_msts(x, ratio)
+    fits <- copy_msts(x, fits)
     return(list(mean = ratio, fitted = fits, model = list(demand = y.f, period = p.f)))
   }
 }

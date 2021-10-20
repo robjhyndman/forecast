@@ -134,43 +134,16 @@ forecast.bats <- function(object, h, level=c(80, 95), fan=FALSE, biasadj=NULL, .
     }
     upper.bounds <- InvBoxCox(upper.bounds, object$lambda)
   }
-
-  ## Calc a start time for the forecast
-  start.time <- start(object$y)
-  y <- ts(c(object$y, 0), start = start.time, frequency = ts.frequency)
-  fcast.start.time <- end(y)
-  # Make msts object for x and mean
-  x <- msts(object$y, seasonal.periods = (if (!is.null(object$seasonal.periods)) {
-    object$seasonal.periods
-  } else {
-    ts.frequency
-  }), ts.frequency = ts.frequency, start = start.time)
-  fitted.values <- msts(object$fitted.values, seasonal.periods = (if (!is.null(object$seasonal.periods)) {
-    object$seasonal.periods
-  } else {
-    ts.frequency
-  }), ts.frequency = ts.frequency, start = start.time)
-  y.forecast <- msts(y.forecast, seasonal.periods = (if (!is.null(object$seasonal.periods)) {
-    object$seasonal.periods
-  } else {
-    ts.frequency
-  }), ts.frequency = ts.frequency, start = fcast.start.time)
-  upper.bounds <- msts(upper.bounds, seasonal.periods = (if (!is.null(object$seasonal.periods)) {
-    object$seasonal.periods
-  } else {
-    ts.frequency
-  }), ts.frequency = ts.frequency, start = fcast.start.time)
-  lower.bounds <- msts(lower.bounds, seasonal.periods = (if (!is.null(object$seasonal.periods)) {
-    object$seasonal.periods
-  } else {
-    ts.frequency
-  }), ts.frequency = ts.frequency, start = fcast.start.time)
   colnames(upper.bounds) <- colnames(lower.bounds) <- paste0(level, "%")
 
   forecast.object <- list(
-    model = object, mean = y.forecast, level = level, x = x, series = object$series,
-    upper = upper.bounds, lower = lower.bounds, fitted = fitted.values,
-    method = as.character(object), residuals = object$errors
+    model = object, mean = future_msts(object$y, y.forecast),
+    level = level, x = object$y, series = object$series,
+    upper = future_msts(object$y, upper.bounds),
+    lower = future_msts(object$y, lower.bounds),
+    fitted = copy_msts(object$y, object$fitted.values),
+    method = as.character(object),
+    residuals = copy_msts(object$y, object$errors)
   )
   if (is.null(object$series)) {
     forecast.object$series <- deparse(object$call$y)

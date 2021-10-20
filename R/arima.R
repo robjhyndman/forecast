@@ -430,8 +430,9 @@ forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[
   return(structure(
     list(
       method = method, model = object, level = level,
-      mean = pred$pred, lower = lower, upper = upper, x = x, series = seriesname,
-      fitted = fits, residuals = residuals.Arima(object)
+      mean = future_msts(x, pred$pred), lower = future_msts(x, lower),
+      upper = future_msts(x, upper), x = x, series = seriesname,
+      fitted = copy_msts(x, fits), residuals = copy_msts(x, residuals.Arima(object))
     ),
     class = "forecast"
   ))
@@ -487,8 +488,11 @@ forecast.ar <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=NULL,
 
   return(structure(
     list(
-      method = method, model = object, level = level, mean = pred$pred,
-      lower = lower, upper = upper, x = x, series = deparse(object$call$x), fitted = fits, residuals = res
+      method = method, model = object, level = level,
+      mean = future_msts(x, pred$pred),
+      lower = future_msts(x, lower),
+      upper = future_msts(x, upper), x = x, series = deparse(object$call$x),
+      fitted = copy_msts(x, fits), residuals = copy_msts(x, res)
     )
     , class = "forecast"
   ))

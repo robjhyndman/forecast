@@ -25,6 +25,7 @@ lagwalk <- function(y, lag=1, drift=FALSE, lambda=NULL, biasadj=FALSE) {
   }
 
   fitted <- ts(c(rep(NA, lag), head(fits, -lag)), start = start(y), frequency = m)
+  fitted <- copy_msts(y, fitted)
   if(drift){
     fit <- summary(lm(y-fitted ~ 1, na.action=na.exclude))
     b <- fit$coefficients[1,1]
@@ -124,11 +125,10 @@ forecast.lagwalk <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=NU
     }
   }
 
-  # Set tsp
-  m <- frequency(object$x)
-  fc <- ts(fc,start=tsp(object$x)[2]+1/m,frequency=m)
-  lower <- ts(lower,start=tsp(object$x)[2]+1/m,frequency=m)
-  upper <- ts(upper,start=tsp(object$x)[2]+1/m,frequency=m)
+  # Set attributes
+  fc <- future_msts(object$x, fc)
+  lower <- future_msts(object$x, lower)
+  upper <- future_msts(object$x, upper)
   colnames(lower) <- colnames(upper) <- paste(level,"%",sep="")
 
   return(structure(

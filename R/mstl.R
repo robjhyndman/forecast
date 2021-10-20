@@ -324,15 +324,14 @@ forecast.stl <- function(object, method = c("ets", "arima", "naive", "rwdrift"),
   fcast <- forecastfunction(x.sa, h = h, level = level, ...)
 
   # Reseasonalize
-  fcast$mean <- fcast$mean + lastseas
-  fcast$upper <- fcast$upper + lastseas
-  fcast$lower <- fcast$lower + lastseas
+  fcast$mean <- future_msts(xdata, fcast$mean + lastseas)
+  fcast$upper <- future_msts(xdata, fcast$upper + lastseas)
+  fcast$lower <- future_msts(xdata, fcast$lower + lastseas)
   fcast$x <- xdata
   fcast$method <- paste("STL + ", fcast$method)
   fcast$series <- series
-  # fcast$seasonal <- ts(lastseas[1:m],frequency=m,start=tsp(object$time.series)[2]-1+1/m)
-  fcast$fitted <- fitted(fcast) + allseas
-  fcast$residuals <- fcast$x - fcast$fitted
+  fcast$fitted <- copy_msts(xdata, fitted(fcast) + allseas)
+  fcast$residuals <- copy_msts(xdata, fcast$x - fcast$fitted)
 
   if (!is.null(lambda)) {
     fcast$x <- InvBoxCox(fcast$x, lambda)

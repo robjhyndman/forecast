@@ -115,7 +115,11 @@ forecast.ets <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10),
   } else {
     start.f <- length(object$x) + 1
   }
-  out <- list(model = object, mean = ts(f$mu, frequency = object$m, start = start.f), level = level, x = object$x)
+  out <- list(
+    model = object,
+    mean = future_msts(object$x, f$mu),
+    level = level, x = object$x
+  )
   if (PI || biasadj) {
     if (!is.null(f$var)) {
       out$lower <- out$upper <- ts(matrix(NA, ncol = length(level), nrow = h))
@@ -126,12 +130,12 @@ forecast.ets <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10),
         out$lower[, i] <- out$mean - marg.error
         out$upper[, i] <- out$mean + marg.error
       }
-      tsp(out$lower) <- tsp(out$upper) <- tsp(out$mean)
+      out$lower <- copy_msts(out$mean, out$lower)
+      out$upper <- copy_msts(out$mean, out$upper)
     }
     else if (!is.null(f$lower)) {
-      out$lower <- ts(f$lower)
-      out$upper <- ts(f$upper)
-      tsp(out$lower) <- tsp(out$upper) <- tsp(out$mean)
+      out$lower <- copy_msts(out$mean, f$lower)
+      out$upper <- copy_msts(out$mean, f$upper)
     }
     else if (PI) {
       warning("No prediction intervals for this model")
@@ -140,7 +144,7 @@ forecast.ets <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10),
     }
   }
 
-  out$fitted <- fitted(object)
+  out$fitted <- copy_msts(object$x, fitted(object))
   out$method <- object$method
   if (!is.null(object$series)) {
     out$series <- object$series
@@ -148,7 +152,7 @@ forecast.ets <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10),
   else {
     out$series <- object$call$y
   }
-  out$residuals <- residuals(object)
+  out$residuals <- copy_msts(object$x, residuals(object))
 
   if (!is.null(lambda)) {
     # out$x <- InvBoxCox(object$x,lambda)
