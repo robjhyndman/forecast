@@ -220,7 +220,8 @@ or "<code>nnetar</code>".</p></td>
     <tr>
       <th>nsim</th>
       <td><p>Number of periods for the simulated series. Ignored if either
-<code>xreg</code> or <code>innov</code> are not <code>NULL</code>.</p></td>
+<code>xreg</code> or <code>innov</code> are not <code>NULL</code>. Otherwise the default is
+the length of series used to train model (or 100 if no data found).</p></td>
     </tr>
     <tr>
       <th>seed</th>
