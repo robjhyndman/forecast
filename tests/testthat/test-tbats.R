@@ -45,9 +45,9 @@ if (require(testthat)) {
     expect_true(all(forecast(tbatsfit1, fan = TRUE)$mean == forecast(tbatsfit1)$mean))
   })
 
-  test_that("Test tbats() with parallel", {
+  #test_that("Test tbats() with parallel", {
     # Tests will not run on Travis in parallel
     # expect_output(print(tbats(woolyrnq, num.cores = 1)), regexp = "TBATS")
     # expect_output(print(tbats(elecsales, num.cores = 1, use.trend = FALSE)), regexp = "BATS")
-  })
+  #})
 }

@@ -58,6 +58,6 @@ if (require(testthat)) {
   test_that("tests for plot.mforecast()", {
     fit <- lm(mv_y ~ v_x)
     fcast <- forecast(fit, newdata = data.frame(v_x = 30))
-    plot(fcast)
+    expect_silent(plot(fcast))
   })
 }

@@ -88,7 +88,7 @@ if (require(testthat)) {
     ## Test if h matches xreg
     expect_true(length(forecast(winennet, h = 5, xreg = matrix(2, 2, 3))$mean) == 2L)
     expect_warning(forecast(winennet2, xreg = matrix(2, 2, 3))$mean, "different column names") %>%
-      expect_identical(forecast(winennet, xreg = matrix(2, 2, 3))$mean)
+      expect_equal(forecast(winennet, xreg = matrix(2, 2, 3))$mean)
     ## Test that P is ignored if m=1
     expect_warning(wwwnnet <- modelAR(WWWusage, FUN = avnnet2, predict.FUN = predict.avnnet2, scale.inputs = TRUE, xreg = 1:length(WWWusage), p = 2, P = 4, size = 3, repeats = 10))
     ## Test passing arguments to nnet

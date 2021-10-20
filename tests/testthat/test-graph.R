@@ -12,9 +12,9 @@ if (require(testthat)) {
   })
 
   test_that("Tests for tsdisplay()", {
-    tsdisplay(airmiles, ci.type = "ma")
-    tsdisplay(1:20)
-    tsdisplay(airmiles, plot.type = "scatter")
-    tsdisplay(airmiles, plot.type = "spectrum")
+    expect_silent(tsdisplay(airmiles, ci.type = "ma"))
+    expect_silent(tsdisplay(1:20))
+    expect_silent(tsdisplay(airmiles, plot.type = "scatter"))
+    expect_silent(tsdisplay(airmiles, plot.type = "spectrum"))
   })
 }

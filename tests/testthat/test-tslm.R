@@ -81,7 +81,7 @@ if (require(testthat)) {
   })
 
   test_that("Unusual usage", {
-    fit1 <- tslm(v_y ~ trend + v_x + I(v_x ^ 2) + fourier(v_x, 3))
+    expect_silent(fit1 <- tslm(v_y ~ trend + v_x + I(v_x ^ 2) + fourier(v_x, 3)))
     # forecast(fit1, newdata=data.frame(v_x=ts(1:2,freq=12)))
     # tslm(v_y ~ trend + I(v_x) + I(v_x^2) + fourier(v_x, 3), data=data)
     # tslm(v_y ~ trend + season + I(v_x) + I(v_x^2) + fourier(ts(season, freq=12), 3))
@@ -89,7 +89,7 @@ if (require(testthat)) {
     # forecast(fit2, newdata=data.frame(v_x=ts(1:2,freq=12)))
     # tslm(v_y ~ trend + season + I(v_x)*fourier(v_x,3),data=data)
   })
-  
+
   test_that("Missing values", {
     USMissingDeaths <- USAccDeaths
     USMissingDeaths[c(1,44, 72)] <- NA

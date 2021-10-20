@@ -58,8 +58,8 @@ if (require(testthat)) {
   })
 
   test_that("tests for stlf", {
-    expect_true(all(forecast.stlm(stlm(wineind))$mean == stlf(wineind)$mean))
-    expect_true(all(forecast.stlm(stlm(wineind, lambda = .5))$mean == stlf(wineind, lambda = .5)$mean))
+    expect_true(all(forecast(stlm(wineind))$mean == stlf(wineind)$mean))
+    expect_true(all(forecast(stlm(wineind, lambda = .5))$mean == stlf(wineind, lambda = .5)$mean))
     fit1 <- stlf(wineind, lambda = .2, biasadj = FALSE)
     fit2 <- stlf(wineind, lambda = .2, biasadj = TRUE)
     expect_false(identical(fit1$mean, fit2$mean))
