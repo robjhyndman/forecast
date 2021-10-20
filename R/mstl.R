@@ -96,28 +96,23 @@ mstl <- function(x, lambda = NULL, iterate = 2, s.window = 7+4*seq(6), ...) {
   remainder <- deseas - trend
 
   # Package into matrix
-  output <- cbind(origx, trend)
+  output <- cbind(c(origx), c(trend))
   if (!is.null(msts)) {
     for (i in seq_along(msts)) {
-      output <- cbind(output, seas[[i]])
+      output <- cbind(output, c(seas[[i]]))
     }
   }
-  output <- cbind(output, remainder)
+  output <- cbind(output, c(remainder))
+  colnames(output) <- paste0("V",seq(NCOL(output)))
   colnames(output)[1L:2L] <- c("Data", "Trend")
   if (!is.null(msts)) {
     colnames(output)[2L + seq_along(msts)] <- paste0("Seasonal", round(msts, 2))
   }
   colnames(output)[NCOL(output)] <- "Remainder"
 
-  if (length(msts) > 1) {
-    attr(output, "seasonal.periods") <- msts
-    return(structure(output,
-      seasonal.periods = msts,
-      class = c("mstl", "mts", "msts", "ts")
-    ))
-  }
-
-  return(structure(output, class = c("mstl", "mts", "ts")))
+  output <- copy_msts(origx, output)
+  class(output) <- c("mstl", class(output))
+  return(output)
 }
 
 #' @rdname autoplot.seas
@@ -287,16 +282,14 @@ forecast.stl <- function(object, method = c("ets", "arima", "naive", "rwdrift"),
   }
 
   if ("mstl" %in% class(object)) {
-    seasonal.periods <- attr(object, "seasonal.periods")
-    if (is.null(seasonal.periods)) {
-      seasonal.periods <- frequency(object)
-    }
-    seascomp <- matrix(0, ncol = length(seasonal.periods), nrow = h)
-    for (i in seq_along(seasonal.periods))
-    {
-      mp <- round(seasonal.periods[i], 2)
-      n <- NROW(object)
-      colname <- paste0("Seasonal", mp)
+    seasoncolumns <- which(grepl("Season", colnames(object)))
+    nseasons <- length(seasoncolumns)
+    seascomp <- matrix(0, ncol = nseasons, nrow = h)
+    seasonal.periods <- as.numeric(sub("Seasonal","", colnames(object)[seasoncolumns]))
+    n <- NROW(object)
+    for (i in seq(nseasons)) {
+      mp <- seasonal.periods[i]
+      colname <- colnames(object)[seasoncolumns[i]]
       seascomp[, i] <- rep(object[n - rev(seq_len(mp)) + 1, colname], trunc(1 + (h - 1) / mp))[seq_len(h)]
     }
     lastseas <- rowSums(seascomp)
@@ -304,8 +297,7 @@ forecast.stl <- function(object, method = c("ets", "arima", "naive", "rwdrift"),
     seascols <- grep("Seasonal", colnames(object))
     allseas <- rowSumsTS(object[, seascols, drop = FALSE])
     series <- NULL
-  }
-  else if ("stl" %in% class(object)) {
+  } else if ("stl" %in% class(object)) {
     m <- frequency(object$time.series)
     n <- NROW(object$time.series)
     lastseas <- rep(seasonal(object)[n - (m:1) + 1], trunc(1 + (h - 1) / m))[1:h]
@@ -313,8 +305,7 @@ forecast.stl <- function(object, method = c("ets", "arima", "naive", "rwdrift"),
     tsp(xdata) <- tsp(object$time.series)
     allseas <- seasonal(object)
     series <- deparse(object$call$x)
-  }
-  else {
+  } else {
     stop("Unknown object class")
   }
 
