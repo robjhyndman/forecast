@@ -40,7 +40,7 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   } else if (parallel == TRUE) {
     to.check <- WhichModels(max.p, max.q, max.P, max.Q, maxK)
 
-    par.all.arima <- function(l) {
+    par.all.arima <- function(l, max.order) {
       .tmp <- UndoWhichModels(l)
       i <- .tmp[1]
       j <- .tmp[2]
@@ -64,12 +64,8 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     if (is.null(num.cores)) {
       num.cores <- detectCores()
     }
-    cl <- makeCluster(num.cores)
-    #exporting the objects needed in all nodes of the cluster
-    clusterExport(cl, c("max.order"), envir=environment())
 
-    all.models <- parLapply(cl = cl, X = to.check, fun = par.all.arima)
-    stopCluster(cl = cl)
+    all.models <- mclapply(X = to.check, FUN = par.all.arima, max.order=max.order)
 
     # Removing null elements
     all.models <- all.models[!sapply(all.models, is.null)]
