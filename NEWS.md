@@ -2,6 +2,7 @@
   * Fixed `tslm()` incorrectly applying Box-Cox transformations when an `mts`
 is provided to the `data` argument (#886).
   * Set D=0 when auto.arima applied to series with 2m observations or fewer.
+  * Improved performance of parallel search of ARIMA models (jonlachmann, #891).
 
 # forecast 8.15 (1 June 2021)
   * Changed `summary()` methods to defer console output until `print()`
