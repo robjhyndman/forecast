@@ -151,7 +151,7 @@ as ts().</p></td>
     <tr>
       <th>ts.frequency</th>
       <td><p>The seasonal period that should be used as frequency of
-the underlying ts object. The default value is <code><a href='https://rdrr.io/r/base/Extremes.html'>max(seasonal.periods)</a></code>.</p></td>
+the underlying ts object. The default value is <code>max(seasonal.periods)</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -162,7 +162,7 @@ example <code>start=c(1987,5)</code>.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class <code><a href='https://rdrr.io/r/base/c.html'>c("msts", "ts")</a></code>. If there is only one
+    <p>An object of class <code>c("msts", "ts")</code>. If there is only one
 seasonal period (i.e., <code>length(seasonal.periods)==1</code>), then the object
 is of class <code>"ts"</code>.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
@@ -170,11 +170,11 @@ is of class <code>"ts"</code>.</p>
     <p>Slava Razbash and Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>msts</span><span class='op'>(</span><span class='va'>taylor</span>, seasonal.periods<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>*</span><span class='fl'>24</span>,<span class='fl'>2</span><span class='op'>*</span><span class='fl'>24</span><span class='op'>*</span><span class='fl'>7</span>,<span class='fl'>2</span><span class='op'>*</span><span class='fl'>24</span><span class='op'>*</span><span class='fl'>365</span><span class='op'>)</span>, start<span class='op'>=</span><span class='fl'>2000</span><span class='op'>+</span><span class='fl'>22</span><span class='op'>/</span><span class='fl'>52</span><span class='op'>)</span>
-<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'>msts</span><span class='op'>(</span><span class='va'>USAccDeaths</span>, seasonal.periods<span class='op'>=</span><span class='fl'>12</span>, start<span class='op'>=</span><span class='fl'>1949</span><span class='op'>)</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>msts</span><span class='op'>(</span><span class='va'>taylor</span>, seasonal.periods<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>*</span><span class='fl'>24</span>,<span class='fl'>2</span><span class='op'>*</span><span class='fl'>24</span><span class='op'>*</span><span class='fl'>7</span>,<span class='fl'>2</span><span class='op'>*</span><span class='fl'>24</span><span class='op'>*</span><span class='fl'>365</span><span class='op'>)</span>, start<span class='op'>=</span><span class='fl'>2000</span><span class='op'>+</span><span class='fl'>22</span><span class='op'>/</span><span class='fl'>52</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'>msts</span><span class='op'>(</span><span class='va'>USAccDeaths</span>, seasonal.periods<span class='op'>=</span><span class='fl'>12</span>, start<span class='op'>=</span><span class='fl'>1949</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

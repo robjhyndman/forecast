@@ -179,12 +179,13 @@ Bickel, P. J. and Doksum K. A. (1981) An Analysis of Transformations Revisited. 
     <p>Rob J Hyndman &amp; Mitchell O'Hara-Wild</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='va'>lambda</span> <span class='op'>&lt;-</span> <span class='fu'><a href='BoxCox.lambda.html'>BoxCox.lambda</a></span><span class='op'>(</span><span class='va'>lynx</span><span class='op'>)</span>
-<span class='va'>lynx.fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/ar.html'>ar</a></span><span class='op'>(</span><span class='fu'>BoxCox</span><span class='op'>(</span><span class='va'>lynx</span>,<span class='va'>lambda</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='forecast.html'>forecast</a></span><span class='op'>(</span><span class='va'>lynx.fit</span>,h<span class='op'>=</span><span class='fl'>20</span>,lambda<span class='op'>=</span><span class='va'>lambda</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in NextMethod(.Generic): cannot assign 'tsp' to zero-length vector</span></div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='va'>lambda</span> <span class='op'>&lt;-</span> <span class='fu'><a href='BoxCox.lambda.html'>BoxCox.lambda</a></span><span class='op'>(</span><span class='va'>lynx</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>lynx.fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/ar.html'>ar</a></span><span class='op'>(</span><span class='fu'>BoxCox</span><span class='op'>(</span><span class='va'>lynx</span>,<span class='va'>lambda</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='forecast.html'>forecast</a></span><span class='op'>(</span><span class='va'>lynx.fit</span>,h<span class='op'>=</span><span class='fl'>20</span>,lambda<span class='op'>=</span><span class='va'>lambda</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in NextMethod(.Generic):</span> cannot assign 'tsp' to zero-length vector</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

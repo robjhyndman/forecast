@@ -152,7 +152,7 @@ largest seasonal period (for seasonal data) or ten (for non-seasonal data).</p><
     </tr>
     <tr>
       <th>fan</th>
-      <td><p>If TRUE, level is set to <code><a href='https://rdrr.io/r/base/seq.html'>seq(51,99,by=3)</a></code>. This is suitable
+      <td><p>If TRUE, level is set to <code>seq(51,99,by=3)</code>. This is suitable
 for fan plots.</p></td>
     </tr>
     <tr>
@@ -202,16 +202,16 @@ smoothing, <em>Journal of the American Statistical Association</em>,
     <p>Slava Razbash and Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bats.html'>bats</a></span><span class='op'>(</span><span class='va'>USAccDeaths</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='forecast.html'>forecast</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='va'>taylor.fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bats.html'>bats</a></span><span class='op'>(</span><span class='va'>taylor</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='forecast.html'>forecast</a></span><span class='op'>(</span><span class='va'>taylor.fit</span><span class='op'>)</span><span class='op'>)</span>
-<span class='op'>}</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bats.html'>bats</a></span><span class='op'>(</span><span class='va'>USAccDeaths</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='forecast.html'>forecast</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>taylor.fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bats.html'>bats</a></span><span class='op'>(</span><span class='va'>taylor</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='forecast.html'>forecast</a></span><span class='op'>(</span><span class='va'>taylor.fit</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

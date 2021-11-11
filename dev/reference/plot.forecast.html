@@ -297,21 +297,26 @@ and practice</em>, 2nd edition, OTexts: Melbourne, Australia.
     <p>Rob J Hyndman &amp; Mitchell O'Hara-Wild</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
-
-<span class='va'>wine.fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ses.html'>hw</a></span><span class='op'>(</span><span class='va'>wineind</span>,h<span class='op'>=</span><span class='fl'>48</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>wine.fit</span><span class='op'>)</span>
-</div><div class='img'><img src='plot.forecast-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span><span class='op'>(</span><span class='va'>wine.fit</span><span class='op'>)</span>
-</div><div class='img'><img src='plot.forecast-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='tslm.html'>tslm</a></span><span class='op'>(</span><span class='va'>wineind</span> <span class='op'>~</span> <span class='fu'><a href='fourier.html'>fourier</a></span><span class='op'>(</span><span class='va'>wineind</span>,<span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>fcast</span> <span class='op'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span><span class='op'>(</span><span class='va'>fit</span>, newdata<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='fourier.html'>fourier</a></span><span class='op'>(</span><span class='va'>wineind</span>,<span class='fl'>4</span>,<span class='fl'>20</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span><span class='op'>(</span><span class='va'>fcast</span><span class='op'>)</span>
-</div><div class='img'><img src='plot.forecast-3.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='va'>fcast</span> <span class='op'>&lt;-</span> <span class='fu'><a href='splinef.html'>splinef</a></span><span class='op'>(</span><span class='va'>airmiles</span>,h<span class='op'>=</span><span class='fl'>5</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>fcast</span><span class='op'>)</span>
-</div><div class='img'><img src='plot.forecast-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span><span class='op'>(</span><span class='va'>fcast</span><span class='op'>)</span>
-</div><div class='img'><img src='plot.forecast-5.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>wine.fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ses.html'>hw</a></span><span class='op'>(</span><span class='va'>wineind</span>,h<span class='op'>=</span><span class='fl'>48</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>wine.fit</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='plot.forecast-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span><span class='op'>(</span><span class='va'>wine.fit</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='plot.forecast-2.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='tslm.html'>tslm</a></span><span class='op'>(</span><span class='va'>wineind</span> <span class='op'>~</span> <span class='fu'><a href='fourier.html'>fourier</a></span><span class='op'>(</span><span class='va'>wineind</span>,<span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>fcast</span> <span class='op'>&lt;-</span> <span class='fu'><a href='forecast.html'>forecast</a></span><span class='op'>(</span><span class='va'>fit</span>, newdata<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='fourier.html'>fourier</a></span><span class='op'>(</span><span class='va'>wineind</span>,<span class='fl'>4</span>,<span class='fl'>20</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span><span class='op'>(</span><span class='va'>fcast</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='plot.forecast-3.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>fcast</span> <span class='op'>&lt;-</span> <span class='fu'><a href='splinef.html'>splinef</a></span><span class='op'>(</span><span class='va'>airmiles</span>,h<span class='op'>=</span><span class='fl'>5</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>fcast</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='plot.forecast-4.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/autoplot.html'>autoplot</a></span><span class='op'>(</span><span class='va'>fcast</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='plot.forecast-5.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -229,34 +229,36 @@ Statistics</em>, <b>47</b>(1), 87-99.
     <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>fcast</span> <span class='op'>&lt;-</span> <span class='fu'>splinef</span><span class='op'>(</span><span class='va'>uspop</span>,h<span class='op'>=</span><span class='fl'>5</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>fcast</span><span class='op'>)</span>
-</div><div class='img'><img src='splinef-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>fcast</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; Forecast method: Cubic Smoothing Spline
-#&gt; 
-#&gt; Model Information:
-#&gt; $beta
-#&gt; [1] 0.0006859
-#&gt; 
-#&gt; $call
-#&gt; splinef(y = uspop, h = 5)
-#&gt; 
-#&gt; 
-#&gt; Error measures:
-#&gt;                     ME     RMSE      MAE        MPE     MAPE       MASE
-#&gt; Training set 0.7704553 4.572546 3.165298 -0.6110405 8.174722 0.04536795
-#&gt;                    ACF1
-#&gt; Training set -0.4363661
-#&gt; 
-#&gt; Forecasts:
-#&gt;      Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
-#&gt; 1980       225.6937 219.8454 231.5419 216.7496 234.6378
-#&gt; 1990       248.1814 233.7246 262.6382 226.0717 270.2912
-#&gt; 2000       270.6692 245.5023 295.8361 232.1798 309.1586
-#&gt; 2010       293.1569 255.5241 330.7897 235.6025 350.7113
-#&gt; 2020       315.6447 264.0068 367.2826 236.6713 394.6181</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>fcast</span> <span class='op'>&lt;-</span> <span class='fu'>splinef</span><span class='op'>(</span><span class='va'>uspop</span>,h<span class='op'>=</span><span class='fl'>5</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>fcast</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='splinef-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>fcast</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Forecast method: Cubic Smoothing Spline</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Model Information:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $beta</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.0006859</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $call</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> splinef(y = uspop, h = 5)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Error measures:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                     ME     RMSE      MAE        MPE     MAPE       MASE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Training set 0.7704553 4.572546 3.165298 -0.6110405 8.174722 0.04536795</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                    ACF1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Training set -0.4363661</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Forecasts:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1980       225.6937 219.8454 231.5419 216.7496 234.6378</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1990       248.1814 233.7246 262.6382 226.0717 270.2912</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2000       270.6692 245.5023 295.8361 232.1798 309.1586</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2010       293.1569 255.5241 330.7897 235.6025 350.7113</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2020       315.6447 264.0068 367.2826 236.6713 394.6181</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

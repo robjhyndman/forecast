@@ -144,7 +144,7 @@ series (assumed to be residuals).</p></td>
     <tr>
       <th>lag</th>
       <td><p>Number of lags to use in the Ljung-Box or Breusch-Godfrey test.
-If missing, it is set to <code><a href='https://rdrr.io/r/base/Extremes.html'>min(10,n/5)</a></code> for non-seasonal data, and
+If missing, it is set to <code>min(10,n/5)</code> for non-seasonal data, and
 <code>min(2m, n/5)</code> for seasonal data, where <code>n</code> is the length of the series,
 and <code>m</code> is the seasonal period of the data. It is further constrained to be
 at least <code>df+3</code> where <code>df</code> is the degrees of freedom of the model. This
@@ -184,18 +184,20 @@ Setting <code>test=FALSE</code> will prevent the test results being printed.</p>
     <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ets.html'>ets</a></span><span class='op'>(</span><span class='va'>WWWusage</span><span class='op'>)</span>
-<span class='fu'>checkresiduals</span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span>
-</div><div class='img'><img src='checkresiduals-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
-#&gt; 	Ljung-Box test
-#&gt; 
-#&gt; data:  Residuals from ETS(A,Ad,N)
-#&gt; Q* = 28.995, df = 5, p-value = 2.324e-05
-#&gt; 
-#&gt; Model df: 5.   Total lags used: 10
-#&gt; </div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ets.html'>ets</a></span><span class='op'>(</span><span class='va'>WWWusage</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>checkresiduals</span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='checkresiduals-1.png' alt='' width='700' height='433' /></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	Ljung-Box test</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> data:  Residuals from ETS(A,Ad,N)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Q* = 28.995, df = 5, p-value = 2.324e-05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Model df: 5.   Total lags used: 10</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

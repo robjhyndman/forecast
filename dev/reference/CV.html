@@ -151,16 +151,18 @@ R^2 values for a linear model.</p>
     <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/ts.html'>ts</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>120</span>,<span class='fl'>0</span>,<span class='fl'>3</span><span class='op'>)</span> <span class='op'>+</span> <span class='fl'>20</span><span class='op'>*</span><span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>sin</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>*</span><span class='va'>pi</span><span class='op'>*</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>120</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>12</span><span class='op'>)</span>, frequency<span class='op'>=</span><span class='fl'>12</span><span class='op'>)</span>
-<span class='va'>fit1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='tslm.html'>tslm</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>trend</span> <span class='op'>+</span> <span class='va'>season</span><span class='op'>)</span>
-<span class='va'>fit2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='tslm.html'>tslm</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>season</span><span class='op'>)</span>
-<span class='fu'>CV</span><span class='op'>(</span><span class='va'>fit1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;          CV         AIC        AICc         BIC       AdjR2 
-#&gt;  11.2586211 290.9296316 294.9296316 329.9545160   0.9504162 </div><div class='input'><span class='fu'>CV</span><span class='op'>(</span><span class='va'>fit2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;          CV         AIC        AICc         BIC       AdjR2 
-#&gt;  11.1266227 289.8343573 293.2683196 326.0717500   0.9505035 </div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/ts.html'>ts</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>120</span>,<span class='fl'>0</span>,<span class='fl'>3</span><span class='op'>)</span> <span class='op'>+</span> <span class='fl'>20</span><span class='op'>*</span><span class='fu'><a href='https://rdrr.io/r/base/Trig.html'>sin</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>*</span><span class='va'>pi</span><span class='op'>*</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>120</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>12</span><span class='op'>)</span>, frequency<span class='op'>=</span><span class='fl'>12</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>fit1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='tslm.html'>tslm</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>trend</span> <span class='op'>+</span> <span class='va'>season</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>fit2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='tslm.html'>tslm</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>season</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>CV</span><span class='op'>(</span><span class='va'>fit1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          CV         AIC        AICc         BIC       AdjR2 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  11.2586211 290.9296316 294.9296316 329.9545160   0.9504162 </span>
+<span class='r-in'><span class='fu'>CV</span><span class='op'>(</span><span class='va'>fit2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          CV         AIC        AICc         BIC       AdjR2 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  11.1266227 289.8343573 293.2683196 326.0717500   0.9505035 </span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

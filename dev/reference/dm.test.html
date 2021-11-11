@@ -196,47 +196,54 @@ prediction mean squared errors. <em>International Journal of forecasting</em>,
     <p>George Athanasopoulos</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'># Test on in-sample one-step forecasts</span>
-<span class='va'>f1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ets.html'>ets</a></span><span class='op'>(</span><span class='va'>WWWusage</span><span class='op'>)</span>
-<span class='va'>f2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='auto.arima.html'>auto.arima</a></span><span class='op'>(</span><span class='va'>WWWusage</span><span class='op'>)</span>
-<span class='fu'><a href='accuracy.html'>accuracy</a></span><span class='op'>(</span><span class='va'>f1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                     ME    RMSE      MAE       MPE     MAPE      MASE      ACF1
-#&gt; Training set 0.2243266 3.40781 2.761668 0.2629465 2.162415 0.6102792 0.2308014</div><div class='input'><span class='fu'><a href='accuracy.html'>accuracy</a></span><span class='op'>(</span><span class='va'>f2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                     ME     RMSE      MAE       MPE     MAPE      MASE
-#&gt; Training set 0.3035616 3.113754 2.405275 0.2805566 1.917463 0.5315228
-#&gt;                     ACF1
-#&gt; Training set -0.01715517</div><div class='input'><span class='fu'>dm.test</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span><span class='op'>(</span><span class='va'>f1</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span><span class='op'>(</span><span class='va'>f2</span><span class='op'>)</span>,h<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; 	Diebold-Mariano Test
-#&gt; 
-#&gt; data:  residuals(f1)residuals(f2)
-#&gt; DM = 1.9078, Forecast horizon = 1, Loss function power = 2, p-value =
-#&gt; 0.05932
-#&gt; alternative hypothesis: two.sided
-#&gt; </div><div class='input'>
-<span class='co'># Test on out-of-sample one-step forecasts</span>
-<span class='va'>f1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ets.html'>ets</a></span><span class='op'>(</span><span class='va'>WWWusage</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>80</span><span class='op'>]</span><span class='op'>)</span>
-<span class='va'>f2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='auto.arima.html'>auto.arima</a></span><span class='op'>(</span><span class='va'>WWWusage</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>80</span><span class='op'>]</span><span class='op'>)</span>
-<span class='va'>f1.out</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ets.html'>ets</a></span><span class='op'>(</span><span class='va'>WWWusage</span><span class='op'>[</span><span class='fl'>81</span><span class='op'>:</span><span class='fl'>100</span><span class='op'>]</span>,model<span class='op'>=</span><span class='va'>f1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Model is being refit with current smoothing parameters but initial states are being re-estimated.</span>
-#&gt; <span class='message'>Set 'use.initial.values=TRUE' if you want to re-use existing initial values.</span></div><div class='input'><span class='va'>f2.out</span> <span class='op'>&lt;-</span> <span class='fu'><a href='Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>WWWusage</span><span class='op'>[</span><span class='fl'>81</span><span class='op'>:</span><span class='fl'>100</span><span class='op'>]</span>,model<span class='op'>=</span><span class='va'>f2</span><span class='op'>)</span>
-<span class='fu'><a href='accuracy.html'>accuracy</a></span><span class='op'>(</span><span class='va'>f1.out</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                     ME    RMSE      MAE       MPE     MAPE      MASE      ACF1
-#&gt; Training set 0.2100836 3.24835 2.570459 0.1203497 1.352355 0.4246845 0.2287215</div><div class='input'><span class='fu'><a href='accuracy.html'>accuracy</a></span><span class='op'>(</span><span class='va'>f2.out</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                    ME     RMSE      MAE       MPE     MAPE      MASE
-#&gt; Training set 1.081679 3.329012 2.437119 0.6810673 1.375924 0.4026544
-#&gt;                      ACF1
-#&gt; Training set -0.004460367</div><div class='input'><span class='fu'>dm.test</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span><span class='op'>(</span><span class='va'>f1.out</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span><span class='op'>(</span><span class='va'>f2.out</span><span class='op'>)</span>,h<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; 	Diebold-Mariano Test
-#&gt; 
-#&gt; data:  residuals(f1.out)residuals(f2.out)
-#&gt; DM = -0.14392, Forecast horizon = 1, Loss function power = 2, p-value =
-#&gt; 0.8871
-#&gt; alternative hypothesis: two.sided
-#&gt; </div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='co'># Test on in-sample one-step forecasts</span></span>
+<span class='r-in'><span class='va'>f1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ets.html'>ets</a></span><span class='op'>(</span><span class='va'>WWWusage</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>f2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='auto.arima.html'>auto.arima</a></span><span class='op'>(</span><span class='va'>WWWusage</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='accuracy.html'>accuracy</a></span><span class='op'>(</span><span class='va'>f1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                     ME    RMSE      MAE       MPE     MAPE      MASE      ACF1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Training set 0.2243266 3.40781 2.761668 0.2629465 2.162415 0.6102792 0.2308014</span>
+<span class='r-in'><span class='fu'><a href='accuracy.html'>accuracy</a></span><span class='op'>(</span><span class='va'>f2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                     ME     RMSE      MAE       MPE     MAPE      MASE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Training set 0.3035616 3.113754 2.405275 0.2805566 1.917463 0.5315228</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                     ACF1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Training set -0.01715517</span>
+<span class='r-in'><span class='fu'>dm.test</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span><span class='op'>(</span><span class='va'>f1</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span><span class='op'>(</span><span class='va'>f2</span><span class='op'>)</span>,h<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	Diebold-Mariano Test</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> data:  residuals(f1)residuals(f2)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> DM = 1.9078, Forecast horizon = 1, Loss function power = 2, p-value =</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 0.05932</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> alternative hypothesis: two.sided</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Test on out-of-sample one-step forecasts</span></span>
+<span class='r-in'><span class='va'>f1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ets.html'>ets</a></span><span class='op'>(</span><span class='va'>WWWusage</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>80</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>f2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='auto.arima.html'>auto.arima</a></span><span class='op'>(</span><span class='va'>WWWusage</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>80</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>f1.out</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ets.html'>ets</a></span><span class='op'>(</span><span class='va'>WWWusage</span><span class='op'>[</span><span class='fl'>81</span><span class='op'>:</span><span class='fl'>100</span><span class='op'>]</span>,model<span class='op'>=</span><span class='va'>f1</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Model is being refit with current smoothing parameters but initial states are being re-estimated.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Set 'use.initial.values=TRUE' if you want to re-use existing initial values.</span>
+<span class='r-in'><span class='va'>f2.out</span> <span class='op'>&lt;-</span> <span class='fu'><a href='Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>WWWusage</span><span class='op'>[</span><span class='fl'>81</span><span class='op'>:</span><span class='fl'>100</span><span class='op'>]</span>,model<span class='op'>=</span><span class='va'>f2</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='accuracy.html'>accuracy</a></span><span class='op'>(</span><span class='va'>f1.out</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                     ME    RMSE      MAE       MPE     MAPE      MASE      ACF1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Training set 0.2100836 3.24835 2.570459 0.1203497 1.352355 0.4246845 0.2287215</span>
+<span class='r-in'><span class='fu'><a href='accuracy.html'>accuracy</a></span><span class='op'>(</span><span class='va'>f2.out</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                    ME     RMSE      MAE       MPE     MAPE      MASE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Training set 1.081679 3.329012 2.437119 0.6810673 1.375924 0.4026544</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      ACF1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Training set -0.004460367</span>
+<span class='r-in'><span class='fu'>dm.test</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span><span class='op'>(</span><span class='va'>f1.out</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span><span class='op'>(</span><span class='va'>f2.out</span><span class='op'>)</span>,h<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	Diebold-Mariano Test</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> data:  residuals(f1.out)residuals(f2.out)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> DM = -0.14392, Forecast horizon = 1, Loss function power = 2, p-value =</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 0.8871</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> alternative hypothesis: two.sided</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

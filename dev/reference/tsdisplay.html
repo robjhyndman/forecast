@@ -241,13 +241,16 @@ and practice</em>, 2nd edition, OTexts: Melbourne, Australia.
     <p>Rob J Hyndman</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
-<span class='fu'>ggtsdisplay</span><span class='op'>(</span><span class='va'>USAccDeaths</span>, plot.type<span class='op'>=</span><span class='st'>"scatter"</span>, theme<span class='op'>=</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_bw</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='img'><img src='tsdisplay-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'>tsdisplay</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='va'>WWWusage</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='img'><img src='tsdisplay-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>ggtsdisplay</span><span class='op'>(</span><span class='va'>USAccDeaths</span>, plot.type<span class='op'>=</span><span class='st'>"scatter"</span><span class='op'>)</span>
-</div><div class='img'><img src='tsdisplay-3.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>ggtsdisplay</span><span class='op'>(</span><span class='va'>USAccDeaths</span>, plot.type<span class='op'>=</span><span class='st'>"scatter"</span>, theme<span class='op'>=</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_bw</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='tsdisplay-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>tsdisplay</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='va'>WWWusage</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='tsdisplay-2.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'>ggtsdisplay</span><span class='op'>(</span><span class='va'>USAccDeaths</span>, plot.type<span class='op'>=</span><span class='st'>"scatter"</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='tsdisplay-3.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
