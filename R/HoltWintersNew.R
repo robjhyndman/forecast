@@ -15,6 +15,7 @@ HoltWintersZZ <- function(x,
                           warnings = TRUE # return optimization warnings
                         ) {
   x <- as.ts(x)
+  origx <- x
   seasonal <- match.arg(seasonal)
   m <- frequency(x)
   lenx <- length(x)
@@ -243,14 +244,15 @@ HoltWintersZZ <- function(x,
       fitted = fitted,
       residuals = res,
       components = components,
-      x = x,
+      x = origx,
       par = c(param, initstate),
       initstate = initstate,
       states = states,
       SSE = final.fit$SSE,
       sigma2 = sigma2,
       call = match.call(),
-      m = m
+      m = m,
+      lambda = lambda
     ),
     class = "ets"
   )
