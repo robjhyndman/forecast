@@ -114,7 +114,7 @@ autoplot.acf <- function(object, ci=0.95, ...) {
     data <- as.data.frame.table(acf)[-1]
     data$lag <- as.numeric(lag)
 
-    if (object$type == "correlation") {
+    if (object$type == "correlation" & is.null(object$ccf)) {
       data <- data[data$lag != 0, ]
     }
 
