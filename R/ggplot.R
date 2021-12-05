@@ -191,14 +191,10 @@ autoplot.acf <- function(object, ci=0.95, ...) {
 ggAcf <- function(x, lag.max = NULL,
                   type = c("correlation", "covariance", "partial"),
                   plot = TRUE, na.action = na.contiguous, demean=TRUE, ...) {
-  cl <- match.call()
-  if (plot) {
-    cl$plot <- FALSE
-  }
-  cl[[1]] <- quote(Acf)
-  object <- eval.parent(cl)
+  object <- Acf(x, lag.max = lag.max, type = type, na.action = na.action, demean = demean, plot = FALSE)
   object$tsp <- tsp(x)
   object$periods <- attributes(x)$msts
+  object$series <- deparse(substitute(x))
   if (plot) {
     return(autoplot(object, ...))
   }
@@ -212,6 +208,8 @@ ggAcf <- function(x, lag.max = NULL,
 ggPacf <- function(x, lag.max = NULL,
                    plot = TRUE, na.action = na.contiguous, demean=TRUE, ...) {
   object <- Acf(x, lag.max = lag.max, type = "partial", na.action = na.action, demean = demean, plot = FALSE)
+  object$tsp <- tsp(x)
+  object$periods <- attributes(x)$msts
   object$series <- deparse(substitute(x))
   if (plot) {
     return(autoplot(object, ...))
@@ -224,12 +222,7 @@ ggPacf <- function(x, lag.max = NULL,
 #' @export
 ggCcf <- function(x, y, lag.max=NULL, type=c("correlation", "covariance"),
                   plot=TRUE, na.action=na.contiguous, ...) {
-  cl <- match.call()
-  if (plot) {
-    cl$plot <- FALSE
-  }
-  cl[[1]] <- quote(Ccf)
-  object <- eval.parent(cl)
+  object <- Ccf(x, y, lag.max = lag.max, type = type, na.action = na.action, plot = FALSE)
   object$snames <- paste(deparse(substitute(x)), "&", deparse(substitute(y)))
   object$ccf <- TRUE
   if (plot) {
