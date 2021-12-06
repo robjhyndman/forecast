@@ -1241,7 +1241,14 @@ ggsubseriesplot <- function(x, labels = NULL, times = time(x), phase = cycle(x),
 
     # Create x-axis labels
     xfreq <- frequency(x)
-    if (xfreq == 4) {
+    if (!is.null(labels)) {
+      if (xfreq != length(labels)) {
+        stop("The number of labels supplied is not the same as the number of seasons.")
+      } else {
+        xbreaks <- labels
+      }
+    }
+    else if (xfreq == 4) {
       xbreaks <- c("Q1", "Q2", "Q3", "Q4")
       xlab <- "Quarter"
     }
