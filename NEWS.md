@@ -23,37 +23,37 @@ is provided to the `data` argument (#886).
   * Fixed facet order for classical decomposition `autoplot()`
   * Fixed `summary()` erroring for `tslm()` models containing NA values.
 
-## forecast 8.12 (21 March 2020)
+# forecast 8.12 (21 March 2020)
   * Fixed bias adjusted forecast mean for ARIMA forecasts.
   * Improved naming of `accuracy()` generic formals.
   * Fix seasonal periods for `taylor` dataset.
 
-## forecast 8.11 (9 February 2020)
+# forecast 8.11 (9 February 2020)
   * The axis for `gglagplot()` have been reversed for consistency with `stats::lag.plot()`.
 
-## forecast 8.10 (4 December 2019)
+# forecast 8.10 (4 December 2019)
   * Updates to remove new CRAN errors
   * Bug fixes
 
-## forecast 8.9 (22 August 2019)
+# forecast 8.9 (22 August 2019)
   * Updates for CRAN policies on Suggests packages
   * Bug fixes
 
-## forecast 8.8 (22 July 2019)
+# forecast 8.8 (22 July 2019)
   * Updates for compatibility with fable
   * Bug fixes
 
-## forecast 8.7 (26 Apr 2019)
+# forecast 8.7 (26 Apr 2019)
   * Documentation improvements
   * Bug fixes
 
-## Version 8.6 (15 Apr 2019)
+# forecast 8.6 (15 Apr 2019)
   * Reduced conflicts with tidy forecasting packages
   * Forecast autoplots now use same colour shading as autolayer() and geom_forecast()
   * Documentation improvements
   * Bug fixes
 
-## Version 8.5 (18 Jan 2019)
+# forecast 8.5 (18 Jan 2019)
   * Updated tsCV() to handle exogenous regressors
   * Reimplemented lagwalk methods (naive, snaive, rwf) for speed improvements
   * Added support for passing arguments to auto.arima() unit root tests
@@ -61,13 +61,13 @@ is provided to the `data` argument (#886).
   * Documentation improvements
   * Bug fixes
 
-## Version 8.4 (20 June 2018)
+# forecast 8.4 (20 June 2018)
   * Added modelAR(), generalising nnetar() to support user-defined functions
   * Added na.action argument to ets
   * Documentation improvements
   * Bug fixes
 
-## Version 8.3 (5 April 2018)
+# forecast 8.3 (5 April 2018)
   * Added mstl() to handle multiple seasonal decomposition
   * stlf(), stlm(), tsoutliers() and tsclean() all now use mstl().
   * Updated tsCV() to handle multiple horizons
@@ -81,13 +81,13 @@ is provided to the `data` argument (#886).
   * Documentation improvements
   * Bug fixes
 
-## Version 8.2 (25 September 2017)
+# forecast 8.2 (25 September 2017)
   * Added pkgdown site
   * Added rolling window option to tsCV()
   * Improved robustness to short time series and missing values
   * Bug fixes
 
-## Version 8.1 (17 June 2017)
+# forecast 8.1 (17 June 2017)
   * Added as.character.ets, as.character.bats, as.character.tbats
   * Made gghistogram() and checkresiduals() robust to missing values
   * All documentation now generated using roxygen
@@ -100,7 +100,7 @@ is provided to the `data` argument (#886).
   * Made accuracy an S3 method
   * Bug fixes
 
-## Version 8.0 (22 February 2017)
+# forecast 8.0 (22 February 2017)
   * Added tips to start up message
   * Added pipe operator
   * Added tsCV() and CVar() functions
@@ -126,12 +126,12 @@ is provided to the `data` argument (#886).
   * Bug fixes
   * Removed fortify method for forecast objects
 
-## Version 7.3 (12 October 2016)
+# forecast 7.3 (12 October 2016)
   * Added prediction intervals and simulation for nnetar().
   * Documentation improvement
   * Bug fixes
 
-## Version 7.2 (8 September 2016)
+# forecast 7.2 (8 September 2016)
   * Faceting for autoplot.mts
   * Box-Cox support for ses, holt, hw
   * ets() now works for tiny time series
@@ -146,7 +146,7 @@ is provided to the `data` argument (#886).
   * Arima() and auto.arima() now allow any argument to be passed to stats::arima().
   * Bug fixes and speed improvements
 
-## Version 7.1 (14 April 2016)
+# forecast 7.1 (14 April 2016)
   * Fixed bug in auto.arima where the Box-Cox transformation was sometimes applied twice
   * Improved axes for ggseasonalplot()
   * Improved tslm() to avoid some problems finding data
@@ -155,7 +155,7 @@ is provided to the `data` argument (#886).
   * Improved unit tests to avoid deprecated functions and to avoid data from fpp
   * Removed fpp from Suggests list
 
-## Version 7.0 (3 April 2016)
+# forecast 7.0 (3 April 2016)
   * Added ggplot2 graphics
   * Bias adjustment option added for all functions that allow Box-Cox transformations
   * Added Ccf function, and rewrote Acf to handle multivariate series.
@@ -168,7 +168,7 @@ is provided to the `data` argument (#886).
   * Documentation improvements
   * Bug fixes
 
-## Version 6.2 (20 October 2015)
+# forecast 6.2 (20 October 2015)
   * Many unit tests added using testthat.
   * Fixed bug in ets when very short seasonal series were passed in a data frame.
   * Fixed bug in nnetar where the initial predictor vector was reversed.
@@ -184,10 +184,10 @@ is provided to the `data` argument (#886).
   * Fixed bug in tbats() when seasonal period 1 is a small multiple of seasonal period 2.
   * Other bug fixes
 
-## Version 6.1 (11 May 2015)
+# forecast 6.1 (11 May 2015)
   * Made auto.arima more robust
 
-## Version 6.0 (9 May 2015)
+# forecast 6.0 (9 May 2015)
   * Modified dm.test to give error when variance is zero
   * Corrected help file for splinef().
   * Fixed typo in accuracy help file regarding RMSE
@@ -207,7 +207,7 @@ is provided to the `data` argument (#886).
   * Added taperedacf and taperedpacf functions
   * Added functions for bootstrapping time series
 
-## Version 5.9 (26 February 2015)
+# forecast 5.9 (26 February 2015)
   * Improved documentation of accuracy() function.
   * Fixed occasional bug in accuracy() when test set is a single observation.
   * Improved Acf() to give better handling of horizontal axis for seasonal data or when ... is passed.
@@ -215,11 +215,11 @@ is provided to the `data` argument (#886).
   * method argument now passed when re-fitting an ARIMA model.
   * Fixed error when CH test applied to short series
 
-## Version 5.8 (6 January 2015)
+# forecast 5.8 (6 January 2015)
   * Fixed bug in versions of R before 3.10 when using fourier and fourierf.
   * Made BoxCox.lambda() robust to missing values.
 
-## Version 5.7 (17 December 2014)
+# forecast 5.7 (17 December 2014)
   * Fixed bug in tbats/bats where optional arguments were not being passed to auto.arima().
   * Revised fourier() and fourierf() to avoid large orders, and to avoid zero columns.
   * Improved accuracy of fourier() and fourierf(), while simplifying the code.
@@ -233,7 +233,7 @@ is provided to the `data` argument (#886).
   * Fixed misuse of abs() in two places in C code.
   * Added na.action argument to Acf() and fixed na.action argument in tsdisplay().
 
-## Version 5.6 (23 September 2014)
+# forecast 5.6 (23 September 2014)
   * Improved tbats and bats by ensuring ARMA coefficients are not close to the
     boundary of invertibility and stationarity.
   * Improved nsdiffs() handling of degenerate series (e.g., all zeros).
@@ -243,7 +243,7 @@ is provided to the `data` argument (#886).
   * Fixed problem in na.interp() with seasonal data having frequency <= 5.
   * Removed undocumented option to use Rmalschains for optimization of ets().
 
-## Version 5.5 (12 August 2014)
+# forecast 5.5 (12 August 2014)
   * Improved documentation for croston()
   * Added stlm() and forecast.stlm() functions, and added forecastfunction argument as a way of
     specifying a forecast method in stlf() and forecast.stl().
@@ -259,14 +259,14 @@ is provided to the `data` argument (#886).
   * Better handling of regression models with perfect fit in auto.arima().
   * Fixed bug in tbats.components() when there are no seasonal components.
 
-## Version 5.4 (8 May 2014)
+# forecast 5.4 (8 May 2014)
   * Fixed bug in forecast.tbats() and forecast.bats() when ts.frequency does not match seasonal.periods.
   * Fixed bug in getResponse.lm() when there's a logged dependent variable.
   * Modified ets() to avoid problems when data contains large numbers.
   * Modified ets() to produce forecasts when the data are constant.
   * Improved arima.errors() to find xreg more often, and to return an error if it can't be found.
 
-## Version 5.3 (24 March 2014)
+# forecast 5.3 (24 March 2014)
   * Unit tests added
   * Fixed bug in zzhw() which reversed the sign of the residuals.
   * Updated help file for CV() to specify it is only leave-one-out.
@@ -275,11 +275,11 @@ is provided to the `data` argument (#886).
   * Added arimaorder() function.
   * Modified warnings suppression by using suppressWarnings() throughout.
 
-## Version 5.2 (25 February 2014)
+# forecast 5.2 (25 February 2014)
   * Changed default number of cores to 2 for all functions that use parallel processing.
   * Removed remaining call to bats() from examples that are run.
 
-## Version 5.1 (8 February 2014)
+# forecast 5.1 (8 February 2014)
   * Fixed bug in tsoutliers() and tsclean() with very short seasonal series.
   * Fixed bug in Arima() when seasonal order is specified numerically instead of via a list.
   * Removed dimension attribution from output of arima.errors()
@@ -287,7 +287,7 @@ is provided to the `data` argument (#886).
   * Changed parallel processing to parLapply for auto.arima()
   * Added timeDate dependency to avoid errors in easter() and link to Rcpp >= 0.11.0.
 
-## Version 5.0 (17 January 2014)
+# forecast 5.0 (17 January 2014)
   * Added argument model to dshw().
   * Added bizdays() and easter() for calendar variables.
   * Added arguments max.D and max.d to auto.arima(), ndiffs() and nsdiffs().
@@ -303,10 +303,10 @@ is provided to the `data` argument (#886).
   * Removed drift term in Arima() when d+D>1.
   * Added bootstrap option to forecast.Arima()
 
-## Version 4.8 (30 September 2013)
+# forecast 4.8 (30 September 2013)
   * Fixed bug in rwf() that was introduced in v4.7
 
-## Version 4.7 (26 September 2013)
+# forecast 4.7 (26 September 2013)
   * Added forecast.forecast() to simply return the object that is passed.
   * Removed leading zero in package number. i.e., 4.7 instead of 4.07.
   * better handling of nearly constant time series, and nearly linear time series
@@ -321,10 +321,10 @@ is provided to the `data` argument (#886).
   * Added accuracy() calculation for VAR models
   * Fixed a bug in simulate.fracdiff() when future=TRUE. Sometimes the future argument was being ignored.
 
-## Version 4.06 (30 June 2013)
+# forecast 4.06 (30 June 2013)
   * accuracy() was returning a mape and mpe 100 times too large for in-sample errors.
 
-## Version 4.05 (19 June 2013)
+# forecast 4.05 (19 June 2013)
   * Fixed bug in hw() so it works when initial="simple"
   * Allowed bats() and tbats() to take non-positive values.
   * ets() now calls optim direct via c code making ets() run much faster.
@@ -334,7 +334,7 @@ is provided to the `data` argument (#886).
   * accuracy() updated so that it gives more information, and returns a matrix of both test and training measures.
   * Corrected training error measures for splinef() forecasts.
 
-## Version 4.04 (22 April 2013)
+# forecast 4.04 (22 April 2013)
   * Added ylim argument to Acf()
   * Avoided clash with the signal package when using auto.arima().
   * Fixed problem in plot.forecast() when all historical data are NA or when there is no available historical data.
@@ -342,11 +342,11 @@ is provided to the `data` argument (#886).
   * CV() now handles missing values in the residuals.
   * Fixed bug in holt() and hw() so that the printed model no longer contains missing values.
 
-## Version 4.03 (14 March 2013)
+# forecast 4.03 (14 March 2013)
   * forecast.lm now guesses the variable name if there is only one predictor variable.
   * Removed error trap in forecast.lm when no xreg variables passed as it was catching legitimate calls.
 
-## Version 4.02 (6 March 2013)
+# forecast 4.02 (6 March 2013)
   * Fixed error in the prediction intervals returned by forecast.ets() when simulation was used and a Box-Cox transformation was specified.
   * Fixed bug in accuracy() when a numerical f vector was passed.
   * Fixed man file for Diebold-Mariano test.
@@ -356,7 +356,7 @@ is provided to the `data` argument (#886).
   * Added tbats.components() and extended seasadj() to allow tbats objects.
   * Added undocumented functions for forecasting, printing and plotting output from vars::VAR.
 
-## Version 4.01 (22 January 2013)
+# forecast 4.01 (22 January 2013)
   * Error now trapped when newxreg variables not passed to forecast.lm()
   * Corrected help file for dshw() to remove references to prediction intervals.
   * Improved help file for dm.test() to give more information about the alternative hypotheses.
@@ -369,7 +369,7 @@ is provided to the `data` argument (#886).
   * Allowed xreg argument in forecast.stl() and stlf() when ARIMA model used.
   * Removed reliance on caret, and associated fitted and residuals functions.
 
-## Version 4.00 (27 November 2012)
+# forecast 4.00 (27 November 2012)
   * More robust handling of degenerate ARIMA models.
   * New defaults for shaded colors used for prediction intervals in plots.
   * auto.arima() now remembers the name of the series when a Box-Cox transformation is used.
@@ -382,27 +382,27 @@ is provided to the `data` argument (#886).
   * rwf() now handles missing values.
   * Revised ses(), holt() and hw() so that they can optionally use traditional initialization.
 
-## Version 3.25 (11 September 2012)
+# forecast 3.25 (11 September 2012)
   * Fixed bug in simulate.Arima.
   * Improved handling of short seasonal time series in auto.arima().
   * Added seasonal argument to auto.arima().
   * Fixed bug in splinef() and added gcv method for estimating smoothing parameter.
 
-## Version 3.24 (23 July 2012
+# forecast 3.24 (23 July 2012
   * Fixed bug in auto.arima() introduced in v3.23 which meant a ARIMA(0,0,0) model was
     returned about half the time.
 
-## Version 3.23 (18 July 2012)
+# forecast 3.23 (18 July 2012)
   * Fixed bug in arfima() which meant the drange argument was being ignored.
   * Extended auto.arima() so it returns something sensible when the data are constant.
 
-## Version 3.22 (07 June 2012)
+# forecast 3.22 (07 June 2012)
   * Increased maximum forecast horizon for ets models from 2000 to unlimited.
   * Corrected bug in Arima(). Previously include.constant=FALSE was ignored.
   * Some corrections to bats and tbats.
   * Modified parallel implementation in auto.arima for Windows.
 
-## Version 3.21 (26 April 2012)
+# forecast 3.21 (26 April 2012)
   * Fixed bug in auto.arima() when lambda is non-zero and stepwise is FALSE.
   * Fixed bug in auto.arima() in selecting d when D>0.
   * Fixed bug in ets() when seasonal period is less than 1.
@@ -411,19 +411,19 @@ is provided to the `data` argument (#886).
   * Changed default forecast horizons for bats and tbats objects.
   * Modified bats and tbats so they now use seasonal.periods when ts and msts objects are being modelled.
 
-## Version 3.20 (2 April 2012)
+# forecast 3.20 (2 April 2012)
   * Fixed bugs in forecast.lm().
   * Improved handling of newdata in forecast.lm() to provide more meaningful error messages.
   * Fixed bug in dm.test() that occurred when errors were very small.
 
-## Version 3.19 (22 February 2012)
+# forecast 3.19 (22 February 2012)
   * Improved plotting of forecast objects from lm models
   * Added MASE for lm forecasts using insample mean forecasts for scaling.
   * Modified definition of MASE for seasonal time series to use seasonal naive insample scaling.
   * Modified meanf() to allow it to be used with cross-sectional data.
   * Updated accuracy() to allow it to be used with cross-sectional data, lm forecasts and lm objects.
 
-## Version 3.18 (17 February 2012)
+# forecast 3.18 (17 February 2012)
   * Added method for plotting non-time-series forecasts to plot.forecast().
   * Removed partial arg matching.
   * Cleaned up some code, removing commented out sections, etc.
@@ -433,24 +433,24 @@ is provided to the `data` argument (#886).
   * Fixed some minor bugs in tbats() and bats()
   * Improved speed of bats() and tbats().
 
-## Version 3.17 (2 February 2012)
+# forecast 3.17 (2 February 2012)
   * Improved forecast.lm() so it is more likely to find the original data from an lm object.
   * Parallel processing now available in auto.arima() when stepwise=FALSE
   * Default model selection in auto.arima() changed to AICc rather than AIC. This may affect model selection for very short time series.
   * max orders in auto.arima() now restricted to be less than 1/3 of length of data.
 
-## Version 3.16 (24 December 2011)
+# forecast 3.16 (24 December 2011)
   * Corrected problem with AIC computation in bats and tbats
   * Fixed handling of non-seasonal data in bats()
   * Changed dependency to >= R 2.14.0 in order to ensure parallel package available.
 
-## Version 3.15 (22 December 2011)
+# forecast 3.15 (22 December 2011)
   * New functions tbats() and forecast.tbats() for multiple seasonal time series modelling.
   * bats() and tbats() use parallel processing when possible.
   * Minor improvements to bats() and forecast.bats().
   * decompose() removed as the function in the stats package has now been fixed.
 
-## Version 3.14 (9 December 2011)
+# forecast 3.14 (9 December 2011)
   * Improved documentation for forecast.ts()
   * Corrected bug in dshw() when applied to a non-ts object.
   * Added error message when dshw() applied to data containing zeros or negative values
@@ -462,57 +462,57 @@ is provided to the `data` argument (#886).
   * Byte compiling turned on
   * Depending on Rcpp and RcppArmadillo to speed some code up.
 
-## Version 3.13 (19 November 2011)
+# forecast 3.13 (19 November 2011)
   * Bug fix for forecast.StructTS() due to changes in the StructTS object. The default h was being set to 0.
     Thanks to Tarmo Leinonen for reporting this problem.
   * Bug fix for forecast.stl() where h longer than one seasonal period sometimes returned missing forecasts.
     Thanks to Kevin Burton for reporting this problem.
   * forecast.stl() no longer allows a seasonal ETS model to be specified. Thanks to Stefano Birmani for the suggestion.
 
-## Version 3.12 (16 November 2011)
+# forecast 3.12 (16 November 2011)
   * Added option to control ets model in stlf() and forecast.stl(). Thanks to Stefano Birmani for the suggestion.
   * Reordered arguments for forecast.lm() and stlf() to be consistent with other forecast functions.
   * Modified tslm() so that it is more likely to find the relevant data when it is not passed as an argument.
   * Fixed bug in forecast.ets which returned all zero forecasts for some models when seasonal period > 24.
 
-## Version 3.11 (2 November 2011)
+# forecast 3.11 (2 November 2011)
   * Fixed bug in dshw() when smallest period is odd
 
-## Version 3.10 (27 October 2011)
+# forecast 3.10 (27 October 2011)
   * Added lambda argument to naive() and snaive().
   * Fixed bug in ets() with high frequency data.
   * Fixed bug in rwf() where incorrect fitted values and residuals were sometimes returned.
   * Modified number of lags displayed by default in tsdisplay().
 
-## Version 3.09 (18 October 2011)
+# forecast 3.09 (18 October 2011)
   * Fixed bug causing occasional problems in simulate.Arima() when MA order greater than 2 and future=TRUE.
 
-## Version 3.08 (15 October 2011)
+# forecast 3.08 (15 October 2011)
   * Bug fix in forecast.stl() which occurred when forecast horizon is less than seasonal period.
   * Added lambda argument to forecast.stl().
 
-## Version 3.07 (11 October 2011)
+# forecast 3.07 (11 October 2011)
   * Bug fix in ets() concerning non-seasonal models and high-frequency data. It sometimes returned all forecasts equal to zero.
 
-## Version 3.06 (4 October 2011)
+# forecast 3.06 (4 October 2011)
   * Switched to useDynLib in preparation for Rv2.14.0.
 
-## Version 3.05 (3 October 2011)
+# forecast 3.05 (3 October 2011)
   * Fixed bug in ets() which prevent non-seasonal models being fitted to high frequency data.
 
-## Version 3.04 (23 September 2011)
+# forecast 3.04 (23 September 2011)
   * Fixed bug when drift and xreg used together in auto.arima() or Arima().
 
-## Version 3.03 (2 September 2011)
+# forecast 3.03 (2 September 2011)
   * Bug fix in dshw() which was using slightly incorrect seasonal estimates for the forecasts
   * Bug fix in forecast.StructTS due to change in structure of StructTS object.
   * Better error capture in tslm when seasonal dummies are specified for non-seasonal data.
   * Re-formatted some help files to prevent viewing problems with the pdf manual.
 
-## Version 3.02 (25 August 2011)
+# forecast 3.02 (25 August 2011)
   * Bug fixes
 
-## Version 3.00 (24 August 2011)
+# forecast 3.00 (24 August 2011)
   * Added Box-Cox parameter as argument to Arima(), ets(), arfima(), stlf(), rwf(), meanf(), splinef()
   * Added Box-Cox parameter as argument to forecast.Arima(), forecast.ets(), forecast.fracdiff(), forecast.ar(), forecast.StructTS, forecast.HoltWinters().
   * Removed lambda argument from plot.forecast() and accuracy().
@@ -531,161 +531,161 @@ is provided to the `data` argument (#886).
   * Added dshw() function for double-seasonal Holt-Winters method based on Taylor (2003).
   * Fixed further bugs in the decompose() function that caused the results to be incorrect with odd frequencies.
 
-## Version 2.19 (4 June 2011)
+# forecast 2.19 (4 June 2011)
   * Added xreg information to the object returned by auto.arima().
   * Added Acf(), Pacf(), ma() and CV() functions.
   * Fixed bugs in re-fitting ARIMA models to new data.
 
-## Version 2.18 (19 May 2011)
+# forecast 2.18 (19 May 2011)
   * Fixed bug in seasonplot() where year labels were sometimes incorrect.
 
-## Version 2.17 (6 April 2011)
+# forecast 2.17 (6 April 2011)
   * Modified simulate.Arima() to handle seasonal ARIMA models.
   * Modified ets() to handle missing values. The largest continuous section of data is now modelled.
   * Improved plot.forecast() to handle missing values at the end of the observed series.
   * Added replacement decompose() to avoid truncation of seasonal term and seasonally adjusted series.
   * Fixed bug in seasadj() to handle multiplicative decomposition, and to avoid missing values at ends.
 
-## Version 2.16 (6 March 2011)
+# forecast 2.16 (6 March 2011)
   * Changed the way missing values are handled in tslm()
 
-## Version 2.15 (5 March 2011)
+# forecast 2.15 (5 March 2011)
   * Added fourier(), fourierf(), tslm()
   * Improved forecast.lm() to allow trend and seasonal terms.
 
-## Version 2.14 (4 March 2011)
+# forecast 2.14 (4 March 2011)
   * Added forecast.lm()
   * Modified accuracy() and print.forecast() to allow non time series forecasts.
   * Fixed visibility of stlf().
 
-## Version 2.13 (16 February 2011)
+# forecast 2.13 (16 February 2011)
   * Fixed bug in accuracy() when only 1 forecast is specified.
   * Added forecast.stl() and stlf() functions
   * Modified forecast.ts() to use stlf() if frequency > 12.
   * Made BoxCox() and InvBoxCox() robust to negative values
   * Fixed bug in simulate.Arima() when future=TRUE. There was a bias in the sample paths.
 
-## Version 2.12 (19 January 2011)
+# forecast 2.12 (19 January 2011)
   * Added naive() and snaive() functions.
   * Improved handling of seasonal data with frequency < 1.
   * Added lambda argument to accuracy().
 
-## Version 2.11 (5 November 2010)
+# forecast 2.11 (5 November 2010)
   * If MLE in arfima() fails (usually because the series is non-stationary), the LS estimate is now returned.
 
-## Version 2.10 (4 November 2010)
+# forecast 2.10 (4 November 2010)
   * Fixed bug in arfima() where the MA parameters were of the wrong sign if estim="mle" chosen.
   * arfima() now allowed to have a sequence of missing values at the start of the series and end of the series (but not within the series)
 
-## Version 2.09 (15 October 2010)
+# forecast 2.09 (15 October 2010)
   * Fixed bug in forecast.fracdiff() which caused an error when h=1.
   * Added shadebars to plot.forecast().
   * Fixed bug in plot.forecast() to allow plotting when h=1.
 
-## Version 2.08 (22 September 2010)
+# forecast 2.08 (22 September 2010)
   * Added pp test option for auto.arima() and ndiffs().
   * Fixed bug in simulate.ets() which was causing problems when forecasting from some ETS models including ETS(M,M,N).
 
-## Version 2.07 (9 September 2010)
+# forecast 2.07 (9 September 2010)
   * Fixed bug in simulate.Arima(). Previous sample paths when d=2 and future=TRUE were incorrect.
   * Changed way color is implemented in plot.forecast() to avoid colour changes when the graphics window is refreshed.
 
-## Version 2.06 (29 July 2010)
+# forecast 2.06 (29 July 2010)
   * Added MLE option for arfima().
   * Added simulate.Arima(), simulate.ar() and simulate.fracdiff()
 
-## Version 2.05 (11 May 2010)
+# forecast 2.05 (11 May 2010)
   * Added arfima() and a forecast method to handle ARFIMA models from arfima() and fracdiff().
   * Added residuals and fitted methods for fracdiff objects.
 
-## Version 2.04 (16 April 2010)
+# forecast 2.04 (16 April 2010)
   * Fixed bug in auto.arima() that occurred rarely.
 
-## Version 2.03 (23 December 2009)
+# forecast 2.03 (23 December 2009)
   * Added an option to auto.arima() to allow drift terms to be excluded from the models considered.
 
-## Version 2.02 (23 December 2009)
+# forecast 2.02 (23 December 2009)
   * Fixed bug in auto.arima() that occurred when there was an xreg but no drift, approximation=TRUE and stepwise=FALSE.
 
-## Version 2.01 (14 September 2009)
+# forecast 2.01 (14 September 2009)
   * Fixed bug in time index of croston() output.
   * Added further explanation about models to croston() help file.
 
-## Version 2.00 (7 September 2009)
+# forecast 2.00 (7 September 2009)
   * Package removed from forecasting bundle
 
-## Version 1.26 (29 August 2009)
+# forecast 1.26 (29 August 2009)
   * Added as.data.frame.forecast(). This allows write.table() to work for forecast objects.
 
-## Version 1.25 (22 July 2009)
+# forecast 1.25 (22 July 2009)
   * Added argument to auto.arima() and ndiffs() to allow the ADF test to be used instead of the KPSS test in selecting the number of differences.
   * Added argument to plot.forecast() to allow different colors and line types when plotting prediction intervals.
   * Modified forecast.ts() to give sensible results with a time series containing fewer than four observations.
 
-## Version 1.24 (9 April 2009)
+# forecast 1.24 (9 April 2009)
   * Fixed bug in dm.test() to avoid errors when there are missing values in the residuals.
   * More informative error messages when auto.arima() fails to find a suitable model.
 
-## Version 1.23 (22 February 2009)
+# forecast 1.23 (22 February 2009)
   * Fixed bugs that meant xreg terms in auto.arima() sometimes caused errors when stepwise=FALSE.
 
-## Version 1.22 (30 January 2009)
+# forecast 1.22 (30 January 2009)
   * Fixed bug that meant regressor variables could not be used with seasonal time series in auto.arima().
 
-## Version 1.21 (16 December 2008)
+# forecast 1.21 (16 December 2008)
   * Fixed bugs introduced in v1.20.
 
-## Version 1.20 (14 December 2008)
+# forecast 1.20 (14 December 2008)
   * Updated auto.arima() to allow regression variables.
   * Fixed a bug in print.Arima() which caused problems when the data were inside a data.frame.
   * In forecast.Arima(), argument h is now set to the length of the xreg argument if it is not null.
 
-## Version 1.19 (7 November 2008)
+# forecast 1.19 (7 November 2008)
   * Updated Arima() to allow regression variables when refitting an existing model to new data.
 
-## Version 1.18 (6 November 2008)
+# forecast 1.18 (6 November 2008)
   * Bug fix in ets(): models with frequency less than 1 would cause R to hang.
   * Bug fix in ets(): models with frequency greater than 12 would not fit due to parameters being out of range.
   * Default lower and upper bounds on parameters ,  and  in ets() changed to 0.0001 and 0.9999 (instead of 0.01 and 0.99).
 
-## Version 1.17 (10 October 2008)
+# forecast 1.17 (10 October 2008)
   * Calculation of BIC did not account for reduction in length of series due to differencing. Now fixed in auto.arima() and in print.Arima().
   * tsdiag() now works with ets objects.
 
-## Version 1.16 (29 September 2008)
+# forecast 1.16 (29 September 2008)
   * Another bug fix in auto.arima(). Occasionally the root checking would cause an error. The condition is now trapped.
 
-## Version 1.15 (16 September 2008)
+# forecast 1.15 (16 September 2008)
   * Bug fix in auto.arima(). The series wasn't always being stored as part of the return object when stepwise=FALSE.
 
-## Version 1.14 (1 August 2008)
+# forecast 1.14 (1 August 2008)
   * The time series stored in M3 in the Mcomp package did not contain all the components listed in the help file. This problem has now been fixed.
 
-## Version 1.13 (16 June 2008)
+# forecast 1.13 (16 June 2008)
   * Bug in plot.ets() fixed so that plots of non-seasonal models for seasonal data now work.
   * Warning added to ets() if the time series contains very large numbers (which can cause numerical problems). Anything up to 1,000,000 should be ok, but any larger and it is best to scale the series first.
   * Fixed problem in forecast.HoltWinters() where the lower and upper limits were interchanged.
 
-## Version 1.12 (22 April 2008)
+# forecast 1.12 (22 April 2008)
   * Objects are now coerced to class ts in ets(). This allows it to work with zoo objects.
   * A new function dm.test() has been added. This implements the Diebold-Mariano test for predictive accuracy.
   * Yet more bug-fixes for auto.arima().
 
-## Version 1.11 (8 February 2008)
+# forecast 1.11 (8 February 2008)
   * Modifications to auto.arima() in the case where ML estimation does not work for the chosen model. Previously this would return no model. Now it returns the model estimated using CSS.
   * AIC values reported in auto.arima() when trace=TRUE and approximation=TRUE are now comparable to the final AIC values.
   * Addition of the expsmooth package.
 
-## Version 1.10 (21 January 2008)
+# forecast 1.10 (21 January 2008)
   * Fixed bug in seasadj() so it allows multiple seasonality
   * Fixed another bug in print.Arima()
   * Bug fixes in auto.arima(). It was sometimes returning a non-optimal model, and occasionally no model at all. Also, additional stationarity and invertibility testing is now done.
 
-## Version 1.09 (11 December 2007)
+# forecast 1.09 (11 December 2007)
   * A new argument 'restrict' has been added to ets() with default TRUE. If set to FALSE, then the unstable ETS models are also allowed.
   * A bug in the print.Arima() function was fixed.
 
-## Version 1.08 (21 November 2007)
+# forecast 1.08 (21 November 2007)
   * AICc and BIC corrected. Previously I had not taken account of the sigma^2 parameter when computing the number of parameters.
   * arima() function changed to Arima() to avoid the clash with the arima() function in the stats package.
   * auto.arima now uses an approximation to the likelihood when selecting a model if the series is more than 100 observations or the seasonal period is greater than 12. This behaviour can be over-ridden via the approximation argument.
@@ -697,56 +697,56 @@ is provided to the `data` argument (#886).
   * The following methods for ets objects were added: summary, coef and logLik.
   * The following methods for Arima objects were added: summary.
 
-## Version 1.07 (25 July 2007)
+# forecast 1.07 (25 July 2007)
   * Bug fix in summary of in-sample errors. For ets models with multiplicative errors, the reported in-sample values of MSE, MAPE, MASE, etc., in summary() and gof() were incorrect.
   * ARIMA models with frequency greater than 49 now allowed. But there is no unit-root testing if the frequency is 50 or more, so be careful!
   * Improvements in documentation.
 
-## Version 1.06 (15 June 2007)
+# forecast 1.06 (15 June 2007)
   * Bug fix in auto.arima(). It would not always respect the stated values of max.p, max.q, max.P and max.Q.
   * The tseries package is now installed automatically along with the forecasting bundle, whereas previously it was only suggested.
 
-## Version 1.05 (28 May 2007)
+# forecast 1.05 (28 May 2007)
   * Introduced auto.arima() to provide a stepwise approach to ARIMA modelling. This is much faster than the old best.arima().
   * The old grid-search method used by best.arima() is still available by using stepwise=FALSE when calling auto.arima().
   * Automated choice of seasonal differences introduced in auto.arima().
   * Some small changes to the starting values of ets() models.
   * Fixed a bug in applying ets() to new data using a previously fitted model.
 
-## Version 1.04 (30 January 2007)
+# forecast 1.04 (30 January 2007)
   * Added include.drift to arima()
   * Fixed bug in seasonal forecasting with ets()
 
-## Version 1.03 (20 October 2006)
+# forecast 1.03 (20 October 2006)
   * Fixed some DOS line feed problems that were bothering unix users.
 
-## Version 1.02 (12 October 2006)
+# forecast 1.02 (12 October 2006)
   * Added AICc option to ets() and best.arima().
   * Corrected bug in calculation of fitted values in ets models with multiplicative errors.
 
-## Version 1.01 (25 September 2006)
+# forecast 1.01 (25 September 2006)
   * Modified ndiffs() so that the maximum number of differences allowed is 2.
 
-## Version 1.0 (31 August 2006)
+# forecast 1.0 (31 August 2006)
   * Added MASE to gof().
   * croston() now returns fitted values and residuals.
   * arima() no longer allows linear trend + ARMA errors by default. Also, drift in non-stationary models can be turned off.
   * This version is the first to be uploaded to CRAN.
 
-## Version 0.99992 (8 August 2006)
+# forecast 0.99992 (8 August 2006)
   * Corrections to help files. No changes to functionality.
 
-## Version 0.99991 (2 August 2006)
+# forecast 0.99991 (2 August 2006)
   * More bug fixes. ets now converges to a good model more often.
 
-## Version 0.9999 (1 August 2006)
+# forecast 0.9999 (1 August 2006)
   * Mostly bug fixes.
   * A few data sets have been moved from fma to forecast as they are not used in my book.
   * ets is now considerably slower but gives better results. Full optimization is now the only option (which is what slows it down). I had too many problems with poor models when partial optimization was used. I'll work on speeding it up sometime, but this is not a high priority. It is fast enough for most use. If you really need to forecast 1000 series, run it overnight.
   * In ets, I've experimented with new starting conditions for optimization and it seems to be fairly robust now.
   * Multiplicative error models can no longer be applied to series containing zeros or negative values. However, the forecasts from these models are not constrained to be positive.
 
-## Version 0.999 (27 July 2006)
+# forecast 0.999 (27 July 2006)
   * The package has been turned into three packages forming a bundle. The functions and a few datasets are still in the forecast package. The data from Makridakis, Wheelwright and Hyndman (1998) is now in the fma package. The M-competition data is now in the Mcomp package. Both fma and Mcomp automatically load forecast.
   * This is the first version available on all operating systems (not just Windows).
   * pegels has been replaced by ets. ets only fits the model; it doesn't produce forecasts. To get forecasts, apply the forecast function to the ets object.
@@ -759,19 +759,19 @@ is provided to the `data` argument (#886).
   * ts.display renamed as tsdisplay
   * mean.f changed to meanf, theta.f changed to thetaf, rw.f changed to rwf, seasonaldummy.f to seasonaldummyf, sindex.f to sindexf, and spline.f to splinef. These changes are to avoid potential problems if anyone introduces an 'f' class.
 
-## Version 0.994 (4 October 2004)
+# forecast 0.994 (4 October 2004)
   * Fixed bug in arima which caused predict() to sometimes fail when there was no xreg term.
   * More bug fixes in handling regression terms in arima models.
   * New print.Arima function for more informative output.
 
-## Version 0.993 (20 July 2004)
+# forecast 0.993 (20 July 2004)
   * Added forecast function for structural time series models obtained using StructTS().
   * Changed default parameter space for pegels() to force admissibility.
   * Added option to pegels() to allow restriction to models with finite forecast variance. This restriction is imposed by default.
   * Fixed bug in arima.errors(). Changes made to arima() meant arima.errors() was often returning an error message.
   * Added a namespace to the package making fewer functions visible to the user.
 
-## Version 0.99 (21 May 2004)
+# forecast 0.99 (21 May 2004)
   * Added automatic selection of order of differencing for best.arima.
   * Added possibility of linear trend in arima models.
   * In pegels(), option added to allow parameters of an exponential smoothing model to be in the 'admissible' (or invertible) region rather than within the usual (0,1) region.
@@ -779,24 +779,24 @@ is provided to the `data` argument (#886).
   * Included all M1 and M3 data and some functions to subset and plot them.
   * Note: This package will only work in R1.9 or later.
 
-## Version 0.98 (23 August 2003)
+# forecast 0.98 (23 August 2003)
   * Added facilities in pegels.
       o It is now possible to specify particular values of the smoothing parameters rather than always use the optimized values. If none are specified, the optimal values are still estimated as before.
       o It is also possible to specify upper and lower bounds for each parameter separately.
   * New function: theta.f. This implements the Theta method which did very well in the M3 competition.
   * A few minor problems with pegels fixed and a bug in forecast.plot that meant it didn't work when the series contained missing values.
 
-## Version 0.972 (11 July 2003)
+# forecast 0.972 (11 July 2003)
   * Small bug fix: pegels did not return correct model when model was partially specified.
 
-## Version 0.971 (10 July 2003)
+# forecast 0.971 (10 July 2003)
   * Minor fixes to make sure the package will work with R v1.6.x. No changes to functionality.
 
-## Version 0.97 (9 July 2003)
+# forecast 0.97 (9 July 2003)
   * Fully automatic forecasting based on the state space approach to exponential smoothing has now been added. For technical details, see Hyndman, Koehler, Snyder and Grose (2002).
   * Local linear forecasting using cubic smoothing splines added. For technical details, see Hyndman, King, Pitrun and Billah (2002).
 
-## Version 0.96 (15 May 2003)
+# forecast 0.96 (15 May 2003)
   * Many functions rewritten to make use of methods and classes. Consequently several functions have had their names changed and many arguments have been altered. Please see the help files for details.
   * Added functions forecast.Arima and forecat.ar
   * Added functions gof and seasadj
