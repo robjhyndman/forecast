@@ -61,6 +61,7 @@ reference:
       - na.interp
       - ndiffs
       - nsdiffs
+      - ocsb.test
       - bld.mbb.bootstrap
       - is.constant
   - title: "Seasonal decomposition"
@@ -100,6 +101,7 @@ reference:
       - splinef
       - thetaf
       - croston
+      - modelAR
       - sindexf
       - forecast
       - forecast.Arima
@@ -111,10 +113,12 @@ reference:
       - forecast.HoltWinters
       - forecast.lm
       - forecast.mlm
+      - forecast.modelAR
       - forecast.mts
       - forecast.nnetar
       - forecast.stl
       - forecast.StructTS
+      - is.forecast
   - title: "Plotting"
     desc: "Functions for plotting time series and forecasts"
     contents:
@@ -131,10 +135,12 @@ reference:
       - ggAcf
       - tsdisplay
       - checkresiduals
+      - StatForecast
       - starts_with("plot")
       - starts_with("gg")
       - starts_with("autoplot")
       - starts_with("autolayer")
+      - is.acf
   - title: "Model analysis"
     desc: "Functions for analysing time series models"
     contents:
@@ -142,6 +148,7 @@ reference:
       - starts_with("residuals")
       - checkresiduals
       - arimaorder
+      - arima.errors
       - starts_with("simulate")
       - tbats.components
   - title: "Forecast evaluation"
