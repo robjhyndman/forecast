@@ -4,6 +4,7 @@ is provided to the `data` argument (#886).
   * Set D=0 when auto.arima applied to series with 2m observations or fewer.
   * Improved performance of parallel search of ARIMA models (jonlachmann, #891).
   * Fixed scoping of functions used in `ggAcf()` (#896).
+  * Fixed checks on xreg in `simulate.Arima()` (#818)
 
 # forecast 8.15 (1 June 2021)
   * Changed `summary()` methods to defer console output until `print()`
