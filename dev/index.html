@@ -29,6 +29,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -51,7 +53,7 @@
   <a href="reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="https://cran.r-project.org/web/packages/forecast/vignettes/JSS2008.pdf">JSS paper</a>
+  <a href="https://cran.r-project.org/web/packages/forecast/vignettes/JSS2008.pdf" class="external-link">JSS paper</a>
 </li>
 <li>
   <a href="news/index.html">Change Log</a>
@@ -59,7 +61,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/robjhyndman/forecast">
+  <a href="https://github.com/robjhyndman/forecast" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -76,25 +78,24 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="forecast-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#forecast-" class="anchor"></a>forecast <img src="reference/figures/logo.png" align="right">
+<div class="section level1">
+<div class="page-header"><h1 id="forecast-">forecast <img src="reference/figures/logo.png" align="right"><a class="anchor" aria-label="anchor" href="#forecast-"></a>
 </h1></div>
 
 <p>The R package <em>forecast</em> provides methods and tools for displaying and analysing univariate time series forecasts including exponential smoothing via state space models and automatic ARIMA modelling.</p>
-<p>This package is now retired in favour of the <a href="http://fable.tidyverts.org/">fable</a> package. The forecast package will remain in its current state, and maintained with bug fixes only. For the latest features and development, we recommend forecasting with the fable package.</p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install the <strong>stable</strong> version from <a href="https://cran.r-project.org/package=forecast">CRAN</a>.</p>
+<p>This package is now retired in favour of the <a href="http://fable.tidyverts.org/" class="external-link">fable</a> package. The forecast package will remain in its current state, and maintained with bug fixes only. For the latest features and development, we recommend forecasting with the fable package.</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>You can install the <strong>stable</strong> version from <a href="https://cran.r-project.org/package=forecast" class="external-link">CRAN</a>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><span id="cb1-1"><a href="#cb1-1"></a>install.packages(<span class="ch">'f</span>orecast<span class="ch">',</span> dependencies = TRUE)</span></code></pre></div>
-<p>You can install the <strong>development</strong> version from <a href="https://github.com/robjhyndman/forecast">Github</a></p>
+<p>You can install the <strong>development</strong> version from <a href="https://github.com/robjhyndman/forecast" class="external-link">Github</a></p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># install.packages("remotes")</span></span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="kw">remotes::</span>install_github(<span class="st">"robjhyndman/forecast"</span>)</span></code></pre></div>
 </div>
-<div id="usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
+<div class="section level2">
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h2>
 <div class="sourceCode" id="cb3"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><span id="cb3-1"><a href="#cb3-1"></a>library(forecast)</span>
 <span id="cb3-2"><a href="#cb3-2"></a>library(ggplot2)</span>
 <span id="cb3-3"><a href="#cb3-3"></a></span>
@@ -143,25 +144,25 @@
 <span id="cb3-46"><a href="#cb3-46"></a>  forecast() %&gt;%</span>
 <span id="cb3-47"><a href="#cb3-47"></a>  autoplot()</span></code></pre></div>
 </div>
-<div id="for-more-information" class="section level2">
-<h2 class="hasAnchor">
-<a href="#for-more-information" class="anchor"></a>For more information</h2>
+<div class="section level2">
+<h2 id="for-more-information">For more information<a class="anchor" aria-label="anchor" href="#for-more-information"></a>
+</h2>
 <ul>
-<li>Get started in forecasting with the online textbook at <a href="http://OTexts.org/fpp2/" class="uri">http://OTexts.org/fpp2/</a>
+<li>Get started in forecasting with the online textbook at <a href="http://OTexts.org/fpp2/" class="external-link uri">http://OTexts.org/fpp2/</a>
 </li>
-<li>Read the Hyndsight blog at <a href="https://robjhyndman.com/hyndsight/" class="uri">https://robjhyndman.com/hyndsight/</a>
+<li>Read the Hyndsight blog at <a href="https://robjhyndman.com/hyndsight/" class="external-link uri">https://robjhyndman.com/hyndsight/</a>
 </li>
-<li>Ask forecasting questions on <a href="http://stats.stackexchange.com/tags/forecasting" class="uri">http://stats.stackexchange.com/tags/forecasting</a>
+<li>Ask forecasting questions on <a href="http://stats.stackexchange.com/tags/forecasting" class="external-link uri">http://stats.stackexchange.com/tags/forecasting</a>
 </li>
-<li>Ask R questions on <a href="http://stackoverflow.com/tags/forecasting+r" class="uri">http://stackoverflow.com/tags/forecasting+r</a>
+<li>Ask R questions on <a href="http://stackoverflow.com/tags/forecasting+r" class="external-link uri">http://stackoverflow.com/tags/forecasting+r</a>
 </li>
-<li>Join the International Institute of Forecasters: <a href="http://forecasters.org/" class="uri">http://forecasters.org/</a>
+<li>Join the International Institute of Forecasters: <a href="http://forecasters.org/" class="external-link uri">http://forecasters.org/</a>
 </li>
 </ul>
 </div>
-<div id="license" class="section level2">
-<h2 class="hasAnchor">
-<a href="#license" class="anchor"></a>License</h2>
+<div class="section level2">
+<h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
+</h2>
 <p>This package is free and open source software, licensed under GPL-3.</p>
 </div>
 </div>
@@ -169,72 +170,76 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=forecast">https://​cloud.r-project.org/​package=forecast</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/robjhyndman/forecast/">https://​github.com/​robjhyndman/​forecast/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/robjhyndman/forecast/issues">https://​github.com/​robjhyndman/​forecast/​issues</a>
-</li>
-</ul>
-</div>
-<div class="license">
-<h2>License</h2>
-<ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
-</ul>
-</div>
-<div class="citation">
-<h2>Citation</h2>
-<ul class="list-unstyled">
-<li><a href="authors.html">Citing forecast</a></li>
-</ul>
-</div>
-<div class="developers">
-<h2>Developers</h2>
-<ul class="list-unstyled">
-<li>
-<a href="http://robjhyndman.com">Rob Hyndman</a> <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0002-2140-5352" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>George Athanasopoulos <br><small class="roles"> Author </small>  </li>
-<li>
-<a href="https://github.com/cbergmeir">Christoph Bergmeir</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-3665-9021" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>
-<a href="https://github.com/gabrielcaceres">Gabriel Caceres</a> <br><small class="roles"> Author </small>  </li>
-<li>Leanne Chhay <br><small class="roles"> Author </small>  </li>
-<li>
-<a href="https://github.com/mitchelloharawild">Mitchell O'Hara-Wild</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-6729-7695" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>
-<a href="http://fpetropoulos.eu">Fotios Petropoulos</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-3039-4955" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>
-<a href="https://github.com/slavarazbash">Slava Razbash</a> <br><small class="roles"> Author </small>  </li>
-<li>
-<a href="http://earo.me">Earo Wang</a> <br><small class="roles"> Author </small>  </li>
-<li>Farah Yasmeen <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-1479-5401" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="https://cloud.r-project.org/package=forecast" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/robjhyndman/forecast/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/robjhyndman/forecast/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="license">
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://cran.r-project.org/package=forecast"><img src="https://www.r-pkg.org/badges/version/forecast" alt="CRAN_Status_Badge"></a></li>
-<li><a href="https://cran.r-project.org/web/checks/check_results_forecast.html"><img src="https://cranchecks.info/badges/worst/forecast" alt="cran checks"></a></li>
-<li><a href="https://lifecycle.r-lib.org/articles/stages.html#retired"><img src="https://img.shields.io/badge/lifecycle-retired-orange.svg" alt="Lifecycle: retired"></a></li>
-<li><a href="https://cran.r-project.org/package=forecast"><img src="https://cranlogs.r-pkg.org/badges/forecast" alt="Downloads"></a></li>
-<li><a href="https://www.gnu.org/licenses/gpl-3.0.en.html"><img src="https://img.shields.io/badge/licence-GPL--3-blue.svg" alt="Licence"></a></li>
+<li><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing forecast</a></li>
+</ul>
 </div>
+
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
+<ul class="list-unstyled">
+<li>
+<a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a> <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0002-2140-5352" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>George Athanasopoulos <br><small class="roles"> Author </small>  </li>
+<li>
+<a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-3665-9021" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>
+<a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a> <br><small class="roles"> Author </small>  </li>
+<li>Leanne Chhay <br><small class="roles"> Author </small>  </li>
+<li>
+<a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O'Hara-Wild</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-6729-7695" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>
+<a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-3039-4955" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>
+<a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a> <br><small class="roles"> Author </small>  </li>
+<li>
+<a href="http://earo.me" class="external-link">Earo Wang</a> <br><small class="roles"> Author </small>  </li>
+<li>Farah Yasmeen <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-1479-5401" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html">More about authors...</a></li>
+</ul>
+</div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://cran.r-project.org/package=forecast" class="external-link"><img src="https://www.r-pkg.org/badges/version/forecast" alt="CRAN_Status_Badge"></a></li>
+<li><a href="https://cran.r-project.org/web/checks/check_results_forecast.html" class="external-link"><img src="https://cranchecks.info/badges/worst/forecast" alt="cran checks"></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#retired" class="external-link"><img src="https://img.shields.io/badge/lifecycle-retired-orange.svg" alt="Lifecycle: retired"></a></li>
+<li><a href="https://cran.r-project.org/package=forecast" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/forecast" alt="Downloads"></a></li>
+<li><a href="https://www.gnu.org/licenses/gpl-3.0.en.html" class="external-link"><img src="https://img.shields.io/badge/licence-GPL--3-blue.svg" alt="Licence"></a></li>
+</ul>
+</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="http://robjhyndman.com">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres">Gabriel Caceres</a>, Leanne Chhay, <a href="https://github.com/mitchelloharawild">Mitchell O'Hara-Wild</a>, <a href="http://fpetropoulos.eu">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash">Slava Razbash</a>, <a href="http://earo.me">Earo Wang</a>, Farah Yasmeen.</p>
+  <p></p>
+<p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
@@ -242,6 +247,8 @@
 
   
 
+
+  
 
   </body>
 </html>
