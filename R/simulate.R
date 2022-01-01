@@ -282,13 +282,55 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
   else if ((sum(object$arma[c(3, 4, 7)]) > 0) && (object$arma[5] < 2)) {
     stop("Invalid value for seasonal period")
   }
+  # Check if data is included
+  x <- object$x <- getResponse(object)
+  if (is.null(x)) {
+    n <- 0
+    future <- FALSE
+    if (nsim == 0L) {
+      nsim <- 100
+    }
+  } else {
+    if (is.null(tsp(x))) {
+      x <- ts(x, frequency = 1, start = 1)
+    }
+    if (!is.null(lambda)) {
+      x <- BoxCox(x, lambda)
+      lambda <- attr(x, "lambda")
+    }
+    n <- length(x)
+  }
+
+  # Check xreg
   if (!is.null(xreg)) {
     xreg <- as.matrix(xreg)
     nsim <- nrow(xreg)
   }
+  use.drift <- is.element("drift", names(object$coef))
+  usexreg <- (!is.null(xreg) | use.drift | !is.null(object$xreg))
+  xm <- oldxm <- 0
+  if (use.drift) {
+    # Remove existing drift column
+    if (NCOL(xreg) == 1 && all(diff(xreg) == 1)) {
+      xreg <- NULL
+    } else if (!is.null(colnames(xreg))) {
+      xreg <- xreg[, colnames(xreg) != "drift", drop = FALSE]
+    }
+    # Create new drift column
+    xreg <- cbind(drift = as.matrix(seq(nsim) + n * future), xreg)
+  }
+  # Check xreg has the correct dimensions
+  if (usexreg) {
+    if (is.null(xreg)) {
+      stop("xreg argument missing")
+    } else if (is.null(object$xreg)) {
+      stop("xreg not required")
+    } else if (NCOL(xreg) != NCOL(object$xreg)) {
+      stop("xreg has incorrect dimension.")
+    }
+  }
 
-  ####
-  # Random Seed Code
+  ######## Random Seed Code
   if (is.null(innov)) {
     if (!exists(".Random.seed", envir = .GlobalEnv)) {
       runif(1)
@@ -301,28 +343,10 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
       RNGstate <- structure(seed, kind = as.list(RNGkind()))
       on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
     }
-  }
-  else {
+  } else {
     nsim <- length(innov)
   }
-  ############# End Random seed code
-
-  # Check if data is included
-  x <- object$x <- getResponse(object)
-  if(is.null(x)) {
-    future <- FALSE
-    if(nsim == 0L)
-      nsim <- 100
-  } else {
-    if (is.null(tsp(x))) {
-      x <- ts(x, frequency = 1, start = 1)
-    }
-    if (!is.null(lambda)) {
-      x <- BoxCox(x, lambda)
-      lambda <- attr(x, "lambda")
-    }
-    n <- length(x)
-  }
+  ######## End Random seed code
 
   # Check for seasonal ARMA components and set flag accordingly. This will be used later in myarima.sim()
   flag.s.arma <- (sum(object$arma[c(3, 4)]) > 0)
@@ -399,34 +423,6 @@ simulate.Arima <- function(object, nsim=length(object$x), seed=NULL, xreg=NULL, 
     stop("Length of innov must be equal to nsim")
   }
 
-  use.drift <- is.element("drift", names(object$coef))
-  usexreg <- (!is.null(xreg) | use.drift)
-  xm <- oldxm <- 0
-
-  if (!is.null(xreg)) {
-    xreg <- as.matrix(xreg)
-    if (nrow(xreg) < nsim) {
-      stop("Not enough rows in xreg")
-    } else {
-      xreg <- xreg[1:nsim, ]
-    }
-  }
-  if (use.drift) {
-    # Remove existing drift column
-    if (NCOL(xreg) == 1 && all(diff(xreg)==1)) {
-      xreg <- NULL
-    } else if(!is.null(colnames(xreg))) {
-      xreg <- xreg[, colnames(xreg)!="drift", drop = FALSE]
-    }
-    # Create new drift column for historical simulation
-    dft <- as.matrix(1:nsim)
-    # Adapt if future simulation
-    if (future) {
-      dft <- dft + n
-    }
-    # Add to xreg
-    xreg <- cbind(drift = dft, xreg)
-  }
   narma <- sum(object$arma[1L:4L])
   if (length(object$coef) > narma) {
     if (names(object$coef)[narma + 1L] == "intercept") {
