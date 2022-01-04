@@ -1,8 +1,8 @@
 ## Test environments
-* ubuntu 21.04 (local): R 4.1.0
+* ubuntu 20.04 (local): R 4.1.2
 * macOS (on GitHub Actions): release
-* windows (on GitHub Actions): release, 3.6
-* ubuntu 16.04 (on GitHub Actions): devel, release, oldrel
+* windows (on GitHub Actions): release
+* ubuntu 20.04 (on GitHub Actions): devel, release, oldrel
 * win-builder: devel, release, oldrelease
 
 ## R CMD check results
