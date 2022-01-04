@@ -129,7 +129,7 @@ na.interp <- function(x, lambda=NULL,
 #' @inheritParams forecast
 #' @return Time series
 #' @author Rob J Hyndman
-#' @references Hyndman (2021) "Detecting time series outliers" \url{https://robjhyndman.com/hyndsight/tsoutliers}.
+#' @references Hyndman (2021) "Detecting time series outliers" \url{https://robjhyndman.com/hyndsight/tsoutliers/}.
 #' @seealso \code{\link[forecast]{na.interp}},
 #' \code{\link[forecast]{tsoutliers}}, \code{\link[stats]{supsmu}}
 #' @keywords ts
@@ -163,7 +163,7 @@ tsclean <- function(x, replace.missing=TRUE, iterate=2, lambda = NULL) {
 #' \item{replacement}{Suggested numeric values to replace identified outliers}
 #' @author Rob J Hyndman
 #' @seealso \code{\link[forecast]{na.interp}}, \code{\link[forecast]{tsclean}}
-#' @references Hyndman (2021) "Detecting time series outliers" \url{https://robjhyndman.com/hyndsight/tsoutliers}.
+#' @references Hyndman (2021) "Detecting time series outliers" \url{https://robjhyndman.com/hyndsight/tsoutliers/}.
 #' @keywords ts
 #' @examples
 #'
