@@ -12,7 +12,7 @@ check:
 	Rscript -e "rcmdcheck::rcmdcheck()"
 
 build:
-	Rscript -e "devtools::build()"
+	Rscript -e "devtools::build(args = c('--compact-vignettes=both'))"
 
 install:
 	R CMD INSTALL .
@@ -30,3 +30,6 @@ pkgdown:
 
 revdep:
 	Rscript -e "revdepcheck::revdep_check(num_workers=3)"
+
+release:
+	Rscript -e "devtools::release(args = c('--compact-vignettes=both'))"
