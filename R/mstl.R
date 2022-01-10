@@ -30,7 +30,7 @@ mstl <- function(x, lambda = NULL, iterate = 2, s.window = 7+4*seq(6), ...) {
     if (any(msts >= n / 2)) {
       warning("Dropping seasonal components with fewer than two full periods.")
       msts <- msts[msts < n / 2]
-      x <- forecast::msts(x, seasonal.periods = msts)
+      x <- msts(x, seasonal.periods = msts)
     }
     msts <- sort(msts, decreasing = FALSE)
   }
@@ -56,7 +56,7 @@ mstl <- function(x, lambda = NULL, iterate = 2, s.window = 7+4*seq(6), ...) {
 
   # Transform if necessary
   if (!is.null(lambda)) {
-    x <- forecast::BoxCox(x, lambda = lambda)
+    x <- BoxCox(x, lambda = lambda)
     lambda <- attr(x, "lambda")
   }
   tt <- seq_len(n)
