@@ -1,4 +1,4 @@
-# forecast 8.16 (5 January 2022)
+# forecast 8.16 (10 January 2022)
   * Fixed `tslm()` incorrectly applying Box-Cox transformations when an `mts`
 is provided to the `data` argument (#886).
   * Set D=0 when auto.arima applied to series with 2m observations or fewer.
