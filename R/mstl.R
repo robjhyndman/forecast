@@ -506,7 +506,7 @@ forecast.stlm <- function(object, h = 2 * object$m, level = c(80, 95), fan = FAL
   # In-case forecast method uses different horizon length (such as using xregs)
   h <- NROW(fcast$mean)
   # Forecast seasonal series with seasonal naive
-  seasonal.periods <- attributes(object$stl)$seasonal.periods
+  seasonal.periods <- attributes(object$stl)$msts
   if (is.null(seasonal.periods)) {
     seasonal.periods <- frequency(object$stl)
   }
