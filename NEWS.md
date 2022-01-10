@@ -1,3 +1,5 @@
+# forecast (development version)
+
 # forecast 8.16 (10 January 2022)
   * Fixed `tslm()` incorrectly applying Box-Cox transformations when an `mts`
 is provided to the `data` argument (#886).
