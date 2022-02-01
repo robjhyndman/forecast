@@ -18,7 +18,7 @@ methods."><meta property="og:image" content="/logo.png"><meta name="robots" cont
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.15.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.16.0.9000</span>
       </span>
     </div>
 
@@ -134,10 +134,10 @@ prediction mean squared errors. <em>International Journal of forecasting</em>,
 <span class="r-in"><span class="co"># Test on in-sample one-step forecasts</span></span>
 <span class="r-in"><span class="va">f1</span> <span class="op">&lt;-</span> <span class="fu"><a href="ets.html">ets</a></span><span class="op">(</span><span class="va">WWWusage</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">f2</span> <span class="op">&lt;-</span> <span class="fu"><a href="auto.arima.html">auto.arima</a></span><span class="op">(</span><span class="va">WWWusage</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="accuracy.html">accuracy</a></span><span class="op">(</span><span class="va">f1</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy</a></span><span class="op">(</span><span class="va">f1</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     ME    RMSE      MAE       MPE     MAPE      MASE      ACF1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Training set 0.2243266 3.40781 2.761668 0.2629465 2.162415 0.6102792 0.2308014</span>
-<span class="r-in"><span class="fu"><a href="accuracy.html">accuracy</a></span><span class="op">(</span><span class="va">f2</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy</a></span><span class="op">(</span><span class="va">f2</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     ME     RMSE      MAE       MPE     MAPE      MASE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Training set 0.3035616 3.113754 2.405275 0.2805566 1.917463 0.5315228</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     ACF1</span>
@@ -159,10 +159,10 @@ prediction mean squared errors. <em>International Journal of forecasting</em>,
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Model is being refit with current smoothing parameters but initial states are being re-estimated.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Set 'use.initial.values=TRUE' if you want to re-use existing initial values.</span>
 <span class="r-in"><span class="va">f2.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="Arima.html">Arima</a></span><span class="op">(</span><span class="va">WWWusage</span><span class="op">[</span><span class="fl">81</span><span class="op">:</span><span class="fl">100</span><span class="op">]</span>,model<span class="op">=</span><span class="va">f2</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="accuracy.html">accuracy</a></span><span class="op">(</span><span class="va">f1.out</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy</a></span><span class="op">(</span><span class="va">f1.out</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     ME    RMSE      MAE       MPE     MAPE      MASE      ACF1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Training set 0.2100836 3.24835 2.570459 0.1203497 1.352355 0.4246845 0.2287215</span>
-<span class="r-in"><span class="fu"><a href="accuracy.html">accuracy</a></span><span class="op">(</span><span class="va">f2.out</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy</a></span><span class="op">(</span><span class="va">f2.out</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    ME     RMSE      MAE       MPE     MAPE      MASE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Training set 1.081679 3.329012 2.437119 0.6810673 1.375924 0.4026544</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                      ACF1</span>
@@ -191,7 +191,7 @@ prediction mean squared errors. <em>International Journal of forecasting</em>,
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer></div>

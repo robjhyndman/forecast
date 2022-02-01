@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.15.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.16.0.9000</span>
       </span>
     </div>
 
@@ -52,11 +52,15 @@
 
     <div class="section level2">
 <h2 class="page-header" data-toc-text="development version" id="forecast-development-version">forecast (development version)<a class="anchor" aria-label="anchor" href="#forecast-development-version"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="8.16" id="forecast-816-10-january-2022">forecast 8.16 (10 January 2022)<small>2022-01-10</small><a class="anchor" aria-label="anchor" href="#forecast-816-10-january-2022"></a></h2>
 <ul><li>Fixed <code><a href="../reference/tslm.html">tslm()</a></code> incorrectly applying Box-Cox transformations when an <code>mts</code> is provided to the <code>data</code> argument (<a href="https://github.com/robjhyndman/forecast/issues/886" class="external-link">#886</a>).</li>
 <li>Set D=0 when auto.arima applied to series with 2m observations or fewer.</li>
 <li>Improved performance of parallel search of ARIMA models (jonlachmann, <a href="https://github.com/robjhyndman/forecast/issues/891" class="external-link">#891</a>).</li>
 <li>Fixed scoping of functions used in <code><a href="../reference/autoplot.acf.html">ggAcf()</a></code> (<a href="https://github.com/robjhyndman/forecast/issues/896" class="external-link">#896</a>).</li>
 <li>Fixed checks on xreg in <code><a href="../reference/simulate.ets.html">simulate.Arima()</a></code> (<a href="https://github.com/robjhyndman/forecast/issues/818" class="external-link">#818</a>)</li>
+<li>Improved docs and bug fixes.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="8.15" id="forecast-815-1-june-2021">forecast 8.15 (1 June 2021)<small>2021-06-01</small><a class="anchor" aria-label="anchor" href="#forecast-815-1-june-2021"></a></h2>
@@ -83,7 +87,7 @@
     <div class="section level2">
 <h2 class="page-header" data-toc-text="8.12" id="forecast-812-21-march-2020">forecast 8.12 (21 March 2020)<small>2020-03-31</small><a class="anchor" aria-label="anchor" href="#forecast-812-21-march-2020"></a></h2>
 <ul><li>Fixed bias adjusted forecast mean for ARIMA forecasts.</li>
-<li>Improved naming of <code><a href="../reference/accuracy.html">accuracy()</a></code> generic formals.</li>
+<li>Improved naming of <code><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy()</a></code> generic formals.</li>
 <li>Fix seasonal periods for <code>taylor</code> dataset.</li>
 </ul></div>
     <div class="section level2">
@@ -993,7 +997,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer></div>

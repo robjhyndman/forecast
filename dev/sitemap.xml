@@ -34,7 +34,7 @@
     <loc>/reference/CVar.html</loc>
   </url>
   <url>
-    <loc>/reference/accuracy.html</loc>
+    <loc>/reference/accuracy.default.html</loc>
   </url>
   <url>
     <loc>/reference/arfima.html</loc>
@@ -97,9 +97,6 @@
     <loc>/reference/fitted.Arima.html</loc>
   </url>
   <url>
-    <loc>/reference/forecast-package.html</loc>
-  </url>
-  <url>
     <loc>/reference/forecast.Arima.html</loc>
   </url>
   <url>
@@ -118,9 +115,6 @@
     <loc>/reference/forecast.ets.html</loc>
   </url>
   <url>
-    <loc>/reference/forecast.html</loc>
-  </url>
-  <url>
     <loc>/reference/forecast.lm.html</loc>
   </url>
   <url>
@@ -137,6 +131,9 @@
   </url>
   <url>
     <loc>/reference/forecast.stl.html</loc>
+  </url>
+  <url>
+    <loc>/reference/forecast.ts.html</loc>
   </url>
   <url>
     <loc>/reference/fourier.html</loc>

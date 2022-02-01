@@ -18,7 +18,7 @@ Forecasts can be modified via sending forecast specific arguments above."><meta 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.15.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.16.0.9000</span>
       </span>
     </div>
 
@@ -126,7 +126,7 @@ observations and the forecasts is removed.</p></dd>
 <dd><p>Matches an unidentified forecast layer with a coloured object
 on the plot.</p></dd>
 <dt>...</dt>
-<dd><p>Additional arguments for <code><a href="forecast.html">forecast.ts</a></code>, other
+<dd><p>Additional arguments for <code><a href="forecast.ts.html">forecast.ts</a></code>, other
 arguments are passed on to <code><a href="https://ggplot2.tidyverse.org/reference/layer.html" class="external-link">layer</a></code>. These are often aesthetics,
 used to set an aesthetic to a fixed value, like <code>color = "red"</code> or
 <code>alpha = .5</code>. They may also be parameters to the paired geom/stat.</p></dd>
@@ -148,7 +148,7 @@ axis. Refer to the examples below. To automatically set up aesthetics, use
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="forecast.html">forecast</a></code>, <code><a href="https://ggplot2.tidyverse.org/reference/ggproto.html" class="external-link">ggproto</a></code></p></div>
+    <div class="dont-index"><p><code><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></code>, <code><a href="https://ggplot2.tidyverse.org/reference/ggproto.html" class="external-link">ggproto</a></code></p></div>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -183,7 +183,7 @@ axis. Refer to the examples below. To automatically set up aesthetics, use
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#Add forecasts to multivariate series with colour groups</span></span>
 <span class="r-in"><span class="va">lungDeaths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">mdeaths</span>, <span class="va">fdeaths</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">lungDeaths</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_forecast</span><span class="op">(</span><span class="fu"><a href="forecast.html">forecast</a></span><span class="op">(</span><span class="va">mdeaths</span><span class="op">)</span>, series<span class="op">=</span><span class="st">"mdeaths"</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">lungDeaths</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_forecast</span><span class="op">(</span><span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="va">mdeaths</span><span class="op">)</span>, series<span class="op">=</span><span class="st">"mdeaths"</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>
 </code></pre></div>
@@ -200,7 +200,7 @@ axis. Refer to the examples below. To automatically set up aesthetics, use
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer></div>

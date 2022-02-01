@@ -18,7 +18,7 @@ minimizes the coefficient of variation for subseries of x."><meta property="og:i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.15.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.16.0.9000</span>
       </span>
     </div>
 
@@ -105,7 +105,7 @@ transformations. <em>Journal of Forecasting</em>, <b>12</b>, 37--48.</p>
 <span class="r-in"><span class="va">lambda</span> <span class="op">&lt;-</span> <span class="fu">BoxCox.lambda</span><span class="op">(</span><span class="va">AirPassengers</span>,lower<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">air.fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="Arima.html">Arima</a></span><span class="op">(</span><span class="va">AirPassengers</span>, order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,</span>
 <span class="r-in">                 seasonal<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,period<span class="op">=</span><span class="fl">12</span><span class="op">)</span>, lambda<span class="op">=</span><span class="va">lambda</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="forecast.html">forecast</a></span><span class="op">(</span><span class="va">air.fit</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="va">air.fit</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="BoxCox.lambda-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"></span>
 </code></pre></div>
@@ -122,7 +122,7 @@ transformations. <em>Journal of Forecasting</em>, <b>12</b>, 37--48.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer></div>
