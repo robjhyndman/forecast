@@ -18,7 +18,7 @@
 #' Otherwise, assume a normal distribution.
 #' @param npaths Number of bootstrapped sample paths to use if \code{bootstrap==TRUE}.
 #' @param x Deprecated. Included for backwards compatibility.
-#' @inheritParams forecast
+#' @inheritParams forecast.ts
 #'
 #' @return An object of class "\code{forecast}".
 #'
@@ -268,7 +268,7 @@ InvBoxCoxf <- function(x=NULL, fvar=NULL, lambda=NULL) {
 #' @param fan If TRUE, level is set to seq(51,99,by=3). This is suitable for
 #' fan plots.
 #' @param ... Other arguments.
-#' @inheritParams forecast
+#' @inheritParams forecast.ts
 #'
 #' @return An object of class "\code{forecast}".
 #'
@@ -373,7 +373,7 @@ forecast.StructTS <- function(object, h=ifelse(object$coef["epsilon"] > 1e-10, 2
 #' @param fan If TRUE, level is set to seq(51,99,by=3). This is suitable for
 #' fan plots.
 #' @param ... Other arguments.
-#' @inheritParams forecast
+#' @inheritParams forecast.ts
 #'
 #' @return An object of class "\code{forecast}".
 #'

@@ -65,7 +65,7 @@
 #' contains NA values. By default, the largest contiguous portion of the
 #' time-series will be used.
 #' @param ... Other undocumented arguments.
-#' @inheritParams forecast
+#' @inheritParams forecast.ts
 #'
 #' @return An object of class "\code{ets}".
 #'

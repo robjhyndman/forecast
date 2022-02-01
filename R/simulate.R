@@ -34,7 +34,7 @@
 #' of \code{nsim} is set to the number of rows of \code{xreg} if it is not
 #' \code{NULL}.
 #' @param ... Other arguments, not currently used.
-#' @inheritParams forecast
+#' @inheritParams forecast.ts
 #'
 #' @return An object of class "\code{ts}".
 #' @author Rob J Hyndman

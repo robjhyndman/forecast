@@ -13,7 +13,7 @@
 #' the same value is used for all seasonal components. Otherwise, it should be a vector
 #' of the same length as the number of seasonal components (or longer).
 #' @param ... Other arguments are passed to \code{\link[stats]{stl}}.
-#' @inheritParams forecast
+#' @inheritParams forecast.ts
 #'
 #' @seealso \code{\link[stats]{stl}}, \code{\link[stats]{supsmu}}
 #' @examples
@@ -210,7 +210,7 @@ autoplot.mstl <- function(object, ...) {
 #' @param x Deprecated. Included for backwards compatibility.
 #' @param ... Other arguments passed to \code{forecast.stl},
 #' \code{modelfunction} or \code{forecastfunction}.
-#' @inheritParams forecast
+#' @inheritParams forecast.ts
 #'
 #' @return \code{stlm} returns an object of class \code{stlm}. The other
 #' functions return objects of class \code{forecast}.

@@ -74,7 +74,7 @@
 #' all available cores are used.
 #' @param x Deprecated. Included for backwards compatibility.
 #' @param ... Additional arguments to be passed to \code{\link[stats]{arima}}.
-#' @inheritParams forecast
+#' @inheritParams forecast.ts
 #'
 #' @return Same as for \code{\link{Arima}}
 #' @author Rob J Hyndman

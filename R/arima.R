@@ -234,7 +234,7 @@ SD.test <- function(wts, s=frequency(wts)) {
 #' @param npaths Number of sample paths used in computing simulated prediction
 #' intervals when \code{bootstrap=TRUE}.
 #' @param ... Other arguments.
-#' @inheritParams forecast
+#' @inheritParams forecast.ts
 #'
 #' @return An object of class "\code{forecast}".
 #'
@@ -646,7 +646,7 @@ fitted.forecast_ARIMA <- fitted.Arima
 #' parameters.
 #' @param x Deprecated. Included for backwards compatibility.
 #' @param ... Additional arguments to be passed to \code{\link[stats]{arima}}.
-#' @inheritParams forecast
+#' @inheritParams forecast.ts
 #' @return See the \code{\link[stats]{arima}} function in the stats package.
 #' The additional objects returned are \item{x}{The time series data}
 #' \item{xreg}{The regressors used in fitting (when relevant).}

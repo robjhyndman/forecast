@@ -214,7 +214,7 @@ rwf <- function(y, h=10, drift=FALSE, level=c(80, 95), fan=FALSE, lambda=NULL, b
 #' @param fan If TRUE, level is set to seq(51,99,by=3). This is suitable for
 #' fan plots.
 #' @param x Deprecated. Included for backwards compatibility.
-#' @inheritParams forecast
+#' @inheritParams forecast.ts
 #'
 #' @return An object of class "\code{forecast}".
 #'

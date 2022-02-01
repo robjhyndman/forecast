@@ -20,7 +20,7 @@
 #' \code{fan}, \code{simulate}, \code{bootstrap} and \code{npaths} are all
 #' ignored.
 #' @param ... Other arguments.
-#' @inheritParams forecast
+#' @inheritParams forecast.ts
 #' @return An object of class "\code{forecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the
@@ -51,7 +51,6 @@
 #' plot(forecast(fit,h=48))
 #'
 #' @export
-#' @export forecast.ets
 forecast.ets <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10),
                          level=c(80, 95), fan=FALSE, simulate=FALSE, bootstrap=FALSE, npaths=5000, PI=TRUE,
                          lambda=object$lambda, biasadj=NULL, ...) {

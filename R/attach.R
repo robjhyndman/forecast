@@ -64,16 +64,16 @@ overwrite_s3_generic <- function(pkg, generic){
   register_s3_method("ggplot2", "autolayer", "forecast")
   register_s3_method("ggplot2", "autolayer", "mforecast")
 
-  methods <- strsplit(utils::.S3methods(forecast), ".", fixed = TRUE)
-  overwrite_s3_generic("fabletools", "forecast")
-  for(method in methods){
-    register_s3_method("fabletools", method[1], method[2])
-  }
+  # methods <- strsplit(utils::.S3methods(forecast), ".", fixed = TRUE)
+  # overwrite_s3_generic("fabletools", "forecast")
+  # for(method in methods){
+  #   register_s3_method("fabletools", method[1], method[2])
+  # }
 
-  methods <- strsplit(utils::.S3methods(accuracy), ".", fixed = TRUE)
-  overwrite_s3_generic("fabletools", "accuracy")
-  for(method in methods){
-    register_s3_method("fabletools", method[1], method[2])
-  }
+  # methods <- strsplit(utils::.S3methods(accuracy), ".", fixed = TRUE)
+  # overwrite_s3_generic("fabletools", "accuracy")
+  # for(method in methods){
+  #   register_s3_method("fabletools", method[1], method[2])
+  # }
   invisible()
 }

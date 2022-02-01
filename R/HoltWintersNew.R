@@ -411,7 +411,7 @@ zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, seasonal="additive"
 #' it will be estimated.
 #' @param x Deprecated. Included for backwards compatibility.
 #' @param ... Other arguments passed to \code{forecast.ets}.
-#' @inheritParams forecast
+#' @inheritParams forecast.ts
 #'
 #' @return An object of class "\code{forecast}".
 #'

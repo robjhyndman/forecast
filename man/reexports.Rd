@@ -4,6 +4,8 @@
 \name{reexports}
 \alias{reexports}
 \alias{\%>\%}
+\alias{forecast}
+\alias{accuracy}
 \alias{autoplot}
 \title{Objects exported from other packages}
 \keyword{internal}
@@ -12,6 +14,8 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
+  \item{generics}{\code{\link[generics]{accuracy}}, \code{\link[generics]{forecast}}}
+
   \item{ggplot2}{\code{\link[ggplot2]{autoplot}}}
 
   \item{magrittr}{\code{\link[magrittr:pipe]{\%>\%}}}

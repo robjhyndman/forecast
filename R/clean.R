@@ -19,7 +19,7 @@
 #'
 #' @param x time series
 #' @param linear Should a linear interpolation be used.
-#' @inheritParams forecast
+#' @inheritParams forecast.ts
 #' @return Time series
 #' @author Rob J Hyndman
 #' @seealso \code{\link[forecast]{tsoutliers}}
@@ -126,7 +126,7 @@ na.interp <- function(x, lambda=NULL,
 #' @param replace.missing If TRUE, it not only replaces outliers, but also
 #' interpolates missing values
 #' @param iterate the number of iterations required
-#' @inheritParams forecast
+#' @inheritParams forecast.ts
 #' @return Time series
 #' @author Rob J Hyndman
 #' @references Hyndman (2021) "Detecting time series outliers" \url{https://robjhyndman.com/hyndsight/tsoutliers/}.
@@ -158,7 +158,7 @@ tsclean <- function(x, replace.missing=TRUE, iterate=2, lambda = NULL) {
 #'
 #' @param x time series
 #' @param iterate the number of iterations required
-#' @inheritParams forecast
+#' @inheritParams forecast.ts
 #' @return \item{index}{Indicating the index of outlier(s)}
 #' \item{replacement}{Suggested numeric values to replace identified outliers}
 #' @author Rob J Hyndman

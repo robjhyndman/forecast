@@ -63,7 +63,7 @@ spline.loglik <- function(beta, y, cc=1e2) {
 #' \code{\link[stats]{smooth.spline}} is used. If \code{method="mle"}, the
 #' maximum likelihood method from Hyndman et al (2002) is used.
 #' @param x Deprecated. Included for backwards compatibility.
-#' @inheritParams forecast
+#' @inheritParams forecast.ts
 #' @return An object of class "\code{forecast}".
 #'
 #' The function \code{summary} is used to obtain and print a summary of the

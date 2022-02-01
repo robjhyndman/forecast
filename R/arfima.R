@@ -92,7 +92,7 @@ unfracdiff <- function(x, y, n, h, d) {
 #' @param x Deprecated. Included for backwards compatibility.
 #' @param \dots Other arguments passed to \code{\link{auto.arima}} when
 #' selecting p and q.
-#' @inheritParams forecast
+#' @inheritParams forecast.ts
 #'
 #' @return A list object of S3 class \code{"fracdiff"}, which is described in
 #' the \code{\link[fracdiff]{fracdiff}} documentation. A few additional objects

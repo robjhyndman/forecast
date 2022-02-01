@@ -37,8 +37,9 @@
 #' the errors.
 #' @param model If it's specified, an existing model is applied to a new data
 #' set.
-#' @inheritParams forecast
-#' 
+#' @inheritParams forecast.ts
+#' @inheritParams BoxCox
+#'
 #' @return An object of class "\code{forecast}" which is a list that includes the
 #' following elements:
 #'   \item{model}{A list containing information about the fitted model}
@@ -102,7 +103,7 @@ dshw <- function(y, period1=NULL, period2=NULL, h=2 * max(period1, period2),
   if (any(class(y) != "msts")) {
     y <- msts(y, c(period1, period2))
   }
-  
+
   if (length(y) < 2 * max(period2)) {
     stop("Insufficient data to estimate model")
   }
@@ -225,12 +226,12 @@ dshw <- function(y, period1=NULL, period2=NULL, h=2 * max(period1, period2),
     # Does this also need a biasadj backtransform?
     yhat <- InvBoxCox(yhat, lambda)
   }
-  
+
   return(structure(list(
-    mean = fcast, method = "DSHW", x = y, 
+    mean = fcast, method = "DSHW", x = y,
     residuals = e, fitted = yhat, series = seriesname,
     model = list(
-      mape = mape, mse = mse, 
+      mape = mape, mse = mse,
       alpha = alpha, beta = beta, gamma = gamma, omega = omega, phi = phi,
       lambda = lambda, l0 = s.start, b0 = t.start, s10 = wstart, s20 = I
     ), period1 = period1, period2 = period2
@@ -251,8 +252,8 @@ dshw.mse <- function(par, y, period1, period2, pars) {
   if (max(pars) > 0.99 | min(pars) < 0 | pars[5] > .9) {
     return(Inf)
   } else {
-    return(dshw(y, period1, period2, h = 1, 
-    	pars[1], pars[2], pars[3], pars[4], pars[5], 
+    return(dshw(y, period1, period2, h = 1,
+    	pars[1], pars[2], pars[3], pars[4], pars[5],
     	armethod = (abs(pars[5]) > 1e-7))$model$mse)
   }
 }

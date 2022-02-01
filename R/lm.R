@@ -18,7 +18,7 @@
 #' @param subset an optional subset containing rows of data to keep. For best
 #' results, pass a logical vector of rows to keep. Also supports
 #' \code{\link[base]{subset}()} functions.
-#' @inheritParams forecast
+#' @inheritParams forecast.ts
 #'
 #' @param ... Other arguments passed to \code{\link[stats]{lm}()}
 #' @return Returns an object of class "lm".
@@ -210,7 +210,7 @@ fitted.tslm <- function(object, ...){
 #' interpreted as related to the subsequent time periods. If \code{FALSE}, any
 #' time series attributes of the original data will be ignored.
 #' @param ... Other arguments passed to \code{\link[stats]{predict.lm}()}.
-#' @inheritParams forecast
+#' @inheritParams forecast.ts
 #'
 #' @return An object of class "\code{forecast}".
 #'
