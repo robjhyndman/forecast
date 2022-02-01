@@ -240,7 +240,6 @@ trainingaccuracy <- function(f, test, d, D) {
 #' accuracy(fit2, EuStockMarkets[201:300, 1])
 #' plot(fit1)
 #' lines(EuStockMarkets[1:300, 1])
-#' @method accuracy default
 #' @export
 accuracy.default <- function(object, x, test = NULL, d = NULL, D = NULL, f = NULL, ...) {
   if (!is.null(f)) {

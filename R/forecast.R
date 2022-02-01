@@ -79,7 +79,6 @@
 #' WWWusage %>% forecast %>% plot
 #' fit <- ets(window(WWWusage, end=60))
 #' fc <- forecast(WWWusage, model=fit)
-#' @method forecast ts
 #' @export
 forecast.ts <- function(object, h=ifelse(frequency(object) > 1, 2 * frequency(object), 10),
                         level=c(80, 95), fan=FALSE, robust=FALSE, lambda = NULL, biasadj = FALSE, find.frequency = FALSE,
