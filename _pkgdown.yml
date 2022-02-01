@@ -103,7 +103,6 @@ reference:
       - croston
       - modelAR
       - sindexf
-      - forecast
       - forecast.Arima
       - forecast.ets
       - forecast.baggedModel
@@ -118,6 +117,7 @@ reference:
       - forecast.nnetar
       - forecast.stl
       - forecast.StructTS
+      - forecast.ts
       - is.forecast
   - title: "Plotting"
     desc: "Functions for plotting time series and forecasts"
@@ -155,7 +155,7 @@ reference:
   - title: "Forecast evaluation"
     desc: "Functions used for evaluating forecasts"
     contents:
-      - accuracy
+      - accuracy.default
       - CVar
       - CV
       - tsCV
