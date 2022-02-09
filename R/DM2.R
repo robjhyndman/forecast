@@ -15,10 +15,10 @@
 #' \code{alternative="greater"}, the alternative hypothesis is that method 2 is
 #' more accurate than method 1. For \code{alternative="two.sided"}, the
 #' alternative hypothesis is that method 1 and method 2 have different levels
-#' of accuracy. The used long-run-variance-estimator can be chosen, either as
-#' auto-correlation-based \code{varestimator = "acf"} or as enhanced by bartlett-weights
-#' \code{varestimator="bartlett"} to ensure a positive estimation. Both long-run-variance-estimator
-#' are proposed in Diebold and Marian (1995).
+#' of accuracy. The long-run variance estimator can either the
+#' auto-correlation estimator \code{varestimator = "acf"}, or the estimator based
+#' on Bartlett weights \code{varestimator = "bartlett"} which ensures a positive estimate.
+#' Both long-run variance estimators are proposed in Diebold and Mariano (1995).
 #'
 #' @param e1 Forecast errors from method 1.
 #' @param e2 Forecast errors from method 2.
@@ -27,17 +27,18 @@
 #' \code{"less"}.  You can specify just the initial letter.
 #' @param h The forecast horizon used in calculating \code{e1} and \code{e2}.
 #' @param power The power used in the loss function. Usually 1 or 2.
-#' @param varestimator a charcater string specifiying the long-run-variance estimator,
-#' must be either \code{"acf"} (default) or \code{"bartlett"}. You can specify just the initial letter.
+#' @param varestimator a character string specifying the long-run variance estimator.
+#' Options are \code{"acf"} (default) or \code{"bartlett"}.
 #' @return A list with class \code{"htest"} containing the following
-#' components: \item{statistic}{the value of the DM-statistic.}
-#' \item{parameter}{the forecast horizon and loss function power used in the
-#' test.} \item{alternative}{a character string describing the alternative
-#' hypothesis.} \item{varestimator}{a character string describing the long-run-variance-estimator.}
-#' \item{p.value}{the p-value for the test.} \item{method}{a
-#' character string with the value "Diebold-Mariano Test".} \item{data.name}{a
-#' character vector giving the names of the two error series.}
-#' @author George Athanasopoulos
+#' components:
+#' \item{statistic}{the value of the DM-statistic.}
+#' \item{parameter}{the forecast horizon and loss function power used in the test.}
+#' \item{alternative}{a character string describing the alternative hypothesis.}
+#' \item{varestimator}{a character string describing the long-run variance estimator.}
+#' \item{p.value}{the p-value for the test.}
+#' \item{method}{a character string with the value "Diebold-Mariano Test".}
+#' \item{data.name}{a character vector giving the names of the two error series.}
+#' @author George Athanasopoulos and Kirill Kuroptev
 #' @references Diebold, F.X. and Mariano, R.S. (1995) Comparing predictive
 #' accuracy. \emph{Journal of Business and Economic Statistics}, \bold{13},
 #' 253-263.
@@ -53,7 +54,7 @@
 #' f2 <- auto.arima(WWWusage)
 #' accuracy(f1)
 #' accuracy(f2)
-#' dm.test(residuals(f1),residuals(f2),h=1)
+#' dm.test(residuals(f1), residuals(f2), h=1)
 #'
 #' # Test on out-of-sample one-step forecasts
 #' f1 <- ets(WWWusage[1:80])
@@ -64,7 +65,6 @@
 #' accuracy(f2.out)
 #' dm.test(residuals(f1.out), residuals(f2.out), h=1)
 #' @export
-
 
 dm.test <- function(e1, e2, alternative = c("two.sided", "less", "greater"), h = 1,
                     power = 2, varestimator = c("acf", "bartlett")) {
