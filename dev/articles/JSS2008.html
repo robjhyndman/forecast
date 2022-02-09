@@ -96,8 +96,6 @@
       <p>This vignette to the  package  is an updated version of <span class="citation">Hyndman and Khandakar (2008)</span>, published in the <em>Journal of Statistical Software</em>. Automatic forecasts of large numbers of univariate time series are often needed in business and other contexts. We describe two automatic forecasting algorithms that have been implemented in the  package for . The first is based on innovations state space models that underly exponential smoothing methods. The second is a step-wise algorithm for forecasting with ARIMA models. The algorithms are applicable to both seasonal and non-seasonal data, and are compared and illustrated using four real time series. We also briefly describe some of the other functionality available in the  package.}</p>
     </div>
     
-<pre><code><span class="co">## Warning in register(): Can't find generic `scale_type` in package ggplot2 to</span>
-<span class="co">## register S3 method.</span></code></pre>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -258,10 +256,10 @@ Four time series showing point forecasts and 80% &amp; 95% prediction intervals 
 The innovations state space modelling framework described in Section  is implemented via the  function in the  package. (The default settings of  do not allow models with multiplicative trend, but they can be included using .) The models chosen via the algorithm for the four data sets were:
 <p>Although there is a lot of computation involved, it can be handled remarkably quickly on modern computers. Each of the forecasts shown in Figure  took no more than a few seconds on a standard PC. The US electricity generation series took the longest as there are no analytical prediction intervals available for the ETS(M,M,N) model. Consequently, the prediction intervals for this series were computed using simulation of 5000 future sample paths.</p>
 <p>To apply the algorithm to the US net electricity generation time series , we use the following command.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">etsfit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ets.html">ets</a></span><span class="op">(</span><span class="va">usnetelec</span><span class="op">)</span></code></pre></div>
 <p>The object  is of class ``’’ and contains all of the necessary information about the fitted model including model parameters, the value of the state vector <span class="math inline">\(\bm{x}_t\)</span> for all <span class="math inline">\(t\)</span>, residuals and so on. Printing the  object shows the main items of interest.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">etsfit</span></code></pre></div>
 <pre><code><span class="co">## ETS(M,A,N) </span>
 <span class="co">## </span>
@@ -281,7 +279,7 @@ The innovations state space modelling framework described in Section  is impleme
 <span class="co">##      AIC     AICc      BIC </span>
 <span class="co">## 634.0437 635.2682 644.0803</span></code></pre>
 <p>Some goodness-of-fit measures <span class="citation">(defined in Hyndman and Koehler 2006)</span> are obtained using .</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy</a></span><span class="op">(</span><span class="va">etsfit</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##                    ME     RMSE      MAE       MPE     MAPE      MASE</span>
 <span class="co">## Training set 1.162583 52.00363 36.77721 0.2629582 1.942062 0.5211014</span>
@@ -290,7 +288,7 @@ The innovations state space modelling framework described in Section  is impleme
 <p>There are also , , , ,  and  methods for objects of class ``’’. The  function shows time plots of the original time series along with the extracted components (level, growth and seasonal).</p>
 <p>The  function computes the required forecasts which are then plotted as in Figure (b).</p>
 <p>Printing the  object gives a table showing the prediction intervals.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fcast</span></code></pre></div>
 <pre><code><span class="co">##      Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95</span>
 <span class="co">## 2004       3900.329 3770.801 4029.857 3702.233 4098.425</span>
@@ -304,12 +302,12 @@ The innovations state space modelling framework described in Section  is impleme
 <span class="co">## 2012       4318.898 3528.985 5108.812 3110.830 5526.967</span>
 <span class="co">## 2013       4371.220 3482.552 5259.888 3012.119 5730.320</span></code></pre>
 <p>The  function also provides the useful feature of applying a fitted model to a new data set. For example, we could withhold 10 observations from the  data set when fitting, then compute the one-step forecast errors for the out-of-sample data.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ets.html">ets</a></span><span class="op">(</span><span class="va">usnetelec</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">45</span><span class="op">]</span><span class="op">)</span>
 <span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ets.html">ets</a></span><span class="op">(</span><span class="va">usnetelec</span><span class="op">[</span><span class="fl">46</span><span class="op">:</span><span class="fl">55</span><span class="op">]</span>, model <span class="op">=</span> <span class="va">fit</span><span class="op">)</span>
 <span class="fu"><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span></code></pre></div>
 <p>We can also look at the measures of forecast accuracy where the forecasts are based on only the fitting data.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy</a></span><span class="op">(</span><span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="va">fit</span>,<span class="fl">10</span><span class="op">)</span>, <span class="va">usnetelec</span><span class="op">[</span><span class="fl">46</span><span class="op">:</span><span class="fl">55</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level3">
@@ -328,7 +326,7 @@ Four time series showing point forecasts and 80% &amp; 95% prediction intervals 
 </div>
 <p>The algorithm of Section  is applied to the same four time series. Unlike the exponential smoothing algorithm, the ARIMA class of models assumes homoscedasticity, which is not always appropriate. Consequently, transformations are sometimes necessary. For these four time series, we model the raw data for series (a)–(c), but the logged data for series (d). The prediction intervals are back-transformed with the point forecasts to preserve the probability coverage.</p>
 <p>To apply this algorithm to the US net electricity generation time series , we use the following commands.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">arimafit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto.arima.html">auto.arima</a></span><span class="op">(</span><span class="va">usnetelec</span><span class="op">)</span>
 <span class="va">fcast</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="va">arimafit</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fcast</span><span class="op">)</span></code></pre></div>
