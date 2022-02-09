@@ -62,67 +62,28 @@
 #' f2.out <- Arima(WWWusage[81:100],model=f2)
 #' accuracy(f1.out)
 #' accuracy(f2.out)
-#' dm.test(residuals(f1.out),residuals(f2.out),h=1)
-#'
-#' Test on in-sample one-step forecasts
-#' f1 <- arima(WWWusage,c(1,0,0))
-#' f2 <- auto.arima(WWWusage)
-#' accuracy(f1)
-#' accuracy(f2)
-#' dm.test(residuals(f1),residuals(f2),h=1)
-#' dm_test_forpush(residuals(f1),residuals(f2),h=1, varestimator = "a")
-#' dm_test_forpush(residuals(f1),residuals(f2),h=1, varestimator = "b")
-#' # Test on out-of-sample one-step forecasts
-#' f1 <- arima(WWWusage[1:80],c(1,0,0))
-#' f2 <- auto.arima(WWWusage[1:80])
-#' f1.out <- Arima(WWWusage[81:100],model=f1)
-#' f2.out <- Arima(WWWusage[81:100],model=f2)
-#' accuracy(f1.out)
-#' accuracy(f2.out)
-#' dm.test(residuals(f1.out),residuals(f2.out),h=1)
-#' dm_test_forpush(residuals(f1.out),residuals(f2.out),h=1, varestimator = "a")
-#' dm_test_forpush(residuals(f1.out),residuals(f2.out),h=1, varestimator = "b")
-#' # Test on out-of-sample three-step forecasts
-#' f1 <- arima(WWWusage[1:80],c(1,0,0))
-#' f2 <- auto.arima(WWWusage[1:80])
-#' f1.out <- forecast(WWWusage[81:83],model=f1,h=3)
-#' f2.out <- forecast(WWWusage[81:83],model=f2,h=3)
-#' dm.test(residuals(f1.out),residuals(f2.out),h=3)
-#' dm_test_forpush(residuals(f1.out),residuals(f2.out),h=3, varestimator = "a")
-#' dm_test_forpush(residuals(f1.out),residuals(f2.out),h=3, varestimator = "b")
-#' # Test on out-of-sample ten-step forecasts
-#' f1 <- arima(WWWusage[1:80],c(1,0,0))
-#' f2 <- auto.arima(WWWusage[1:80])
-#' f1.out <- forecast(f1,h=10)
-#' f2.out <- forecast(f2,h=10)
-#' f1.out.resids <- WWWusage[81:90]-f1.out$mean
-#' f2.out.resids <- WWWusage[81:90]-f2.out$mean
-#' dm.test(f1.out.resids,f2.out.resids,h=10)
-#' dm_test_forpush(f1.out.resids,f2.out.resids,h=10, varestimator = "a")
-#' dm_test_forpush(f1.out.resids,f2.out.resids,h=10, varestimator = "b")
+#' dm.test(residuals(f1.out), residuals(f2.out), h=1)
 #' @export
 
 
-dm.test <- function(e1, e2, alternative = c("two.sided", "less", "greater"), h = 1, power = 2, varestimator=c("acf", "bartlett")){
+dm.test <- function(e1, e2, alternative = c("two.sided", "less", "greater"), h = 1,
+                    power = 2, varestimator = c("acf", "bartlett")) {
 
   alternative <- match.arg(alternative)
   varestimator <- match.arg(varestimator)
 
-  d <- c(abs(e1)) ^ power - c(abs(e2)) ^ power
+  d <- c(abs(e1))^power - c(abs(e2))^power
   d.cov <- acf(d, na.action = na.omit, lag.max = h - 1, type = "covariance", plot = FALSE)$acf[, , 1]
 
-  if (varestimator =="acf") {
-    # Original estimator in the function
+  if (varestimator == "acf") {
+    # Original estimator
     d.var <- sum(c(d.cov[1], 2 * d.cov[-1])) / length(d)
-  }else if(varestimator =="bartlett"){
-    # Using bartlett weights to ensure a positiviley estimated long-run-variance
+  } else { # varestimator == "bartlett"
+    # Using Bartlett weights to ensure a positive estimate of long-run-variance
     m <- h-1
-    b <- seq.int(from=1,to=m)
+    b <- seq.int(from = 1,to = m)
     d.var <- sum(c(d.cov[1], 2*(1-b/(m+1))*d.cov[-1])) / length(d)
-  }else{
-    stop("Please specifiy a valid long-run-Variance-Estimator!")
   }
-
   dv <- d.var
 
   if (dv > 0) {
@@ -130,8 +91,7 @@ dm.test <- function(e1, e2, alternative = c("two.sided", "less", "greater"), h =
   } else if (h == 1) {
     stop("Variance of DM statistic is zero")
   } else {
-    stop("Variance is negative, use horizon h=1 or try bartlett based long-run-variance estimator.
-          Test with horizon h=1 following.")
+    warning("Variance is negative. Try varestimator = bartlett. Proceeding with horizon h=1.")
     return(dm.test(e1, e2, alternative, h = 1, power, varestimator))
   }
 
