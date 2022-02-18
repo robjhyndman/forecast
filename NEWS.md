@@ -1,4 +1,5 @@
 # forecast (development version)
+  * Added `simulate.tbats()` for simulating from TBATS models.
 
 # forecast 8.16 (10 January 2022)
   * Fixed `tslm()` incorrectly applying Box-Cox transformations when an `mts`
