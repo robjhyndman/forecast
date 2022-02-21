@@ -42,7 +42,12 @@ simulate.tbats <- function(object, nsim=length(object$y),
   }
   fitplus <- object
   for(i in seq_along(y)) {
-    y[i] <- forecast(fitplus, h=1)$mean + e[i]
+    fc <- forecast(fitplus, h=1, biasadj=FALSE)$mean
+    if(is.null(object$lambda)) {
+      y[i] <- fc + e[i]
+    } else {
+      y[i] <- InvBoxCox(BoxCox(fc, object$lambda) + e[i], object$lambda)
+    }
     dataplusy <- ts(c(dataplusy, y[i]),
                     start=start(dataplusy), frequency=frequency(dataplusy))
     fitplus <- tbats(dataplusy, model=fitplus)
