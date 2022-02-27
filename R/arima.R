@@ -65,7 +65,7 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
       num.cores <- detectCores()
     }
 
-    all.models <- mclapply(X = to.check, FUN = par.all.arima, max.order=max.order)
+    all.models <- mclapply(X = to.check, FUN = par.all.arima, max.order=max.order, mc.cores = num.cores)
 
     # Removing null elements
     all.models <- all.models[!sapply(all.models, is.null)]
