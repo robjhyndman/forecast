@@ -17,3 +17,5 @@ vignettes/*_cache
 ^.github$
 ^\.github$
 ^CRAN-SUBMISSION$
+^.vscode$
+^\.vscode$
