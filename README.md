@@ -1,7 +1,6 @@
 forecast <img src="man/figures/logo.png" align="right" />
 ======================
 
-[![pkgcheck](https://github.com/robjhyndman/forecast/workflows/pkgcheck/badge.svg)](https://github.com/robjhyndman/forecast/actions?query=workflow%3Apkgcheck)
 ![R build status](https://github.com/robjhyndman/forecast/workflows/R-CMD-check/badge.svg)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/forecast)](https://cran.r-project.org/package=forecast)
 [![cran checks](https://cranchecks.info/badges/worst/forecast)](https://cran.r-project.org/web/checks/check_results_forecast.html)
