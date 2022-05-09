@@ -93,7 +93,8 @@ HoltWintersZZ <- function(x,
   ## initialise smoothing parameter
   optim.start <- initparam(
     alpha = alpha, beta = beta, gamma = gamma, phi = 1,
-    trendtype = trendtype, seasontype = seasontype, damped = FALSE, lower = lower, upper = upper, m = m
+    trendtype = trendtype, seasontype = seasontype, damped = FALSE, lower = lower, upper = upper, m = m,
+    bounds = "usual"
   )
 
   # if(!is.na(optim.start["alpha"]))
