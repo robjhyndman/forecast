@@ -847,8 +847,8 @@ etsTargetFunctionInit <- function(par, y, nstate, errortype, trendtype, seasonty
 
 initparam <- function(alpha, beta, gamma, phi, trendtype, seasontype, damped, lower, upper, m, bounds) {
   if(bounds == "admissible") {
-    lower <- lower*0
-    upper <- upper*0 + 1e-3
+    lower[1L:3L] <- lower[1L:3L]*0
+    upper[1L:3L] <- upper[1L:3L]*0 + 1e-3
   } else if (any(lower > upper)) {
     stop("Inconsistent parameter boundaries")
   }
