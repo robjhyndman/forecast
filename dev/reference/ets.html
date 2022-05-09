@@ -126,9 +126,9 @@ transformations. If transformed data is used to produce forecasts and fitted val
 a regular back transformation will result in median forecasts. If biasadj is TRUE,
 an adjustment will be made to produce mean forecasts and fitted values.</p></dd>
 <dt>lower</dt>
-<dd><p>Lower bounds for the parameters (alpha, beta, gamma, phi)</p></dd>
+<dd><p>Lower bounds for the parameters (alpha, beta, gamma, phi). Ignored if <code>bounds=="admissible"</code>.</p></dd>
 <dt>upper</dt>
-<dd><p>Upper bounds for the parameters (alpha, beta, gamma, phi)</p></dd>
+<dd><p>Upper bounds for the parameters (alpha, beta, gamma, phi). Ignored if <code>bounds=="admissible"</code>.</p></dd>
 <dt>opt.crit</dt>
 <dd><p>Optimization criterion. One of "mse" (Mean Square Error),
 "amse" (Average MSE over first <code>nmse</code> forecast horizons), "sigma"
