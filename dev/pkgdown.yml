@@ -1,7 +1,7 @@
 pandoc: 2.14.2
-pkgdown: 2.0.2
+pkgdown: 2.0.3
 pkgdown_sha: ~
 articles:
   JSS2008: JSS2008.html
-last_built: 2022-03-30T23:16Z
+last_built: 2022-05-09T07:05Z
 
