@@ -81,9 +81,9 @@ bats <- function(y, use.box.cox = NULL, use.trend = NULL, use.damped.trend = NUL
 
   # Get seasonal periods
   if (is.null(seasonal.periods)) {
-    if (any(class(y) == "msts")) {
+    if ("msts" %in% class(y)) {
       seasonal.periods <- attr(y, "msts")
-    } else if (class(y) == "ts") {
+    } else if ("ts" %in% class(y)) {
       seasonal.periods <- frequency(y)
     } else {
       y <- as.ts(y)
@@ -95,7 +95,7 @@ bats <- function(y, use.box.cox = NULL, use.trend = NULL, use.damped.trend = NUL
   }
   else {
     # Add ts attributes
-    if (!any(class(y) == "ts")) {
+    if (!("ts" %in% class(y))) {
       y <- msts(y, seasonal.periods)
     }
   }

@@ -148,7 +148,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
   }
 
   # If model is an ets object, re-fit model to new data
-  if (class(model) == "ets") {
+  if ("ets" %in% class(model)) {
     # Prevent alpha being zero (to avoid divide by zero in the C code)
     alpha <- max(model$par["alpha"], 1e-10)
     beta <- model$par["beta"]
