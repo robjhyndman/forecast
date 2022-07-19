@@ -9,9 +9,9 @@ if (require(testthat)) {
     expect_equal(sum(abs(b1 - b2)), 109L)
     expect_equal(sum(abs(b1 - b3)), 144L)
     expect_equal(sum(abs(b2 - b3)), 117L)
-    b1 <- bizdays(gas, FinCenter = "NERC")
-    b2 <- bizdays(gas, FinCenter = "Tokyo")
-    expect_equal(sum(abs(b1 - b2)), 244L)
+    #b1 <- bizdays(gas, FinCenter = "NERC")
+    #b2 <- bizdays(gas, FinCenter = "Tokyo")
+    #expect_equal(sum(abs(b1 - b2)), 244L)
   })
 
   test_that("Tests for easter()", {
