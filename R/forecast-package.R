@@ -1,5 +1,5 @@
 #' @keywords package
-NULL # Instead of "_PACKAGE" to remove inclusion of \alias{forecast}
+"_PACKAGE"
 
 #' @import parallel
 #' @import Rcpp
