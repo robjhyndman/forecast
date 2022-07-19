@@ -61,96 +61,123 @@ taperedpacf functions.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for acf</span>
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">object</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">ggAcf</span><span class="op">(</span>
-  <span class="va">x</span>,
-  lag.max <span class="op">=</span> <span class="cn">NULL</span>,
-  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"correlation"</span>, <span class="st">"covariance"</span>, <span class="st">"partial"</span><span class="op">)</span>,
-  plot <span class="op">=</span> <span class="cn">TRUE</span>,
-  na.action <span class="op">=</span> <span class="va">na.contiguous</span>,
-  demean <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">ggPacf</span><span class="op">(</span>
-  <span class="va">x</span>,
-  lag.max <span class="op">=</span> <span class="cn">NULL</span>,
-  plot <span class="op">=</span> <span class="cn">TRUE</span>,
-  na.action <span class="op">=</span> <span class="va">na.contiguous</span>,
-  demean <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">ggCcf</span><span class="op">(</span>
-  <span class="va">x</span>,
-  <span class="va">y</span>,
-  lag.max <span class="op">=</span> <span class="cn">NULL</span>,
-  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"correlation"</span>, <span class="st">"covariance"</span><span class="op">)</span>,
-  plot <span class="op">=</span> <span class="cn">TRUE</span>,
-  na.action <span class="op">=</span> <span class="va">na.contiguous</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for mpacf</span>
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">ggtaperedacf</span><span class="op">(</span>
-  <span class="va">x</span>,
-  lag.max <span class="op">=</span> <span class="cn">NULL</span>,
-  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"correlation"</span>, <span class="st">"partial"</span><span class="op">)</span>,
-  plot <span class="op">=</span> <span class="cn">TRUE</span>,
-  calc.ci <span class="op">=</span> <span class="cn">TRUE</span>,
-  level <span class="op">=</span> <span class="fl">95</span>,
-  nsim <span class="op">=</span> <span class="fl">100</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">ggtaperedpacf</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for acf</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">object</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ggAcf</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  lag.max <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"correlation"</span>, <span class="st">"covariance"</span>, <span class="st">"partial"</span><span class="op">)</span>,</span>
+<span>  plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  na.action <span class="op">=</span> <span class="va">na.contiguous</span>,</span>
+<span>  demean <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ggPacf</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  lag.max <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  na.action <span class="op">=</span> <span class="va">na.contiguous</span>,</span>
+<span>  demean <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ggCcf</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">y</span>,</span>
+<span>  lag.max <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"correlation"</span>, <span class="st">"covariance"</span><span class="op">)</span>,</span>
+<span>  plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  na.action <span class="op">=</span> <span class="va">na.contiguous</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for mpacf</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ggtaperedacf</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  lag.max <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"correlation"</span>, <span class="st">"partial"</span><span class="op">)</span>,</span>
+<span>  plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  calc.ci <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  level <span class="op">=</span> <span class="fl">95</span>,</span>
+<span>  nsim <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ggtaperedpacf</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>object</dt>
 <dd><p>Object of class “<code>acf</code>”.</p></dd>
+
+
 <dt>ci</dt>
 <dd><p>coverage probability for confidence interval. Plotting of the
 confidence interval is suppressed if ci is zero or negative.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Other plotting parameters to affect the plot.</p></dd>
+
+
 <dt>x</dt>
 <dd><p>a univariate or multivariate (not Ccf) numeric time series object
 or a numeric vector or matrix.</p></dd>
+
+
 <dt>lag.max</dt>
 <dd><p>maximum lag at which to calculate the acf.</p></dd>
+
+
 <dt>type</dt>
 <dd><p>character string giving the type of acf to be computed. Allowed
 values are "<code>correlation</code>" (the default), “<code>covariance</code>” or
 “<code>partial</code>”.</p></dd>
+
+
 <dt>plot</dt>
 <dd><p>logical. If <code>TRUE</code> (the default) the resulting ACF, PACF or
 CCF is plotted.</p></dd>
+
+
 <dt>na.action</dt>
 <dd><p>function to handle missing values. Default is
 <code><a href="https://rdrr.io/r/stats/na.contiguous.html" class="external-link">na.contiguous</a></code>.  Useful alternatives are
 <code><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.pass</a></code> and <code><a href="na.interp.html">na.interp</a></code>.</p></dd>
+
+
 <dt>demean</dt>
 <dd><p>Should covariances be about the sample means?</p></dd>
+
+
 <dt>y</dt>
 <dd><p>a univariate numeric time series object or a numeric vector.</p></dd>
+
+
 <dt>calc.ci</dt>
 <dd><p>If <code>TRUE</code>, confidence intervals for the ACF/PACF
 estimates are calculated.</p></dd>
+
+
 <dt>level</dt>
 <dd><p>Percentage level used for the confidence intervals.</p></dd>
+
+
 <dt>nsim</dt>
 <dd><p>The number of bootstrap samples used in estimating the
 confidence intervals.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A ggplot object.</p>
+    
+
+<p>A ggplot object.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -170,19 +197,19 @@ appropriate ggplot object will be created.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">ggAcf</span><span class="op">(</span><span class="va">wineind</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">ggAcf</span><span class="op">(</span><span class="va">wineind</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="autoplot.acf-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="va">wineind</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="Acf.html">Acf</a></span><span class="op">(</span>plot<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">autoplot</span></span>
+<span class="r-in"><span><span class="va">wineind</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="Acf.html">Acf</a></span><span class="op">(</span>plot<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">autoplot</span></span></span>
 <span class="r-plt img"><img src="autoplot.acf-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="va">wineind</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="Acf.html">taperedacf</a></span><span class="op">(</span>plot<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">autoplot</span></span>
-<span class="r-in"><span class="fu">ggtaperedacf</span><span class="op">(</span><span class="va">wineind</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">ggtaperedpacf</span><span class="op">(</span><span class="va">wineind</span><span class="op">)</span><span class="op">}</span></span>
-<span class="r-in"><span class="fu">ggCcf</span><span class="op">(</span><span class="va">mdeaths</span>, <span class="va">fdeaths</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="va">wineind</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="Acf.html">taperedacf</a></span><span class="op">(</span>plot<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">autoplot</span></span></span>
+<span class="r-in"><span><span class="fu">ggtaperedacf</span><span class="op">(</span><span class="va">wineind</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">ggtaperedpacf</span><span class="op">(</span><span class="va">wineind</span><span class="op">)</span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="fu">ggCcf</span><span class="op">(</span><span class="va">mdeaths</span>, <span class="va">fdeaths</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="autoplot.acf-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -197,7 +224,7 @@ appropriate ggplot object will be created.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

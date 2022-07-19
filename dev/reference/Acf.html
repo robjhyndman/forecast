@@ -66,47 +66,47 @@ univariate series.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">Acf</span><span class="op">(</span>
-  <span class="va">x</span>,
-  lag.max <span class="op">=</span> <span class="cn">NULL</span>,
-  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"correlation"</span>, <span class="st">"covariance"</span>, <span class="st">"partial"</span><span class="op">)</span>,
-  plot <span class="op">=</span> <span class="cn">TRUE</span>,
-  na.action <span class="op">=</span> <span class="va">na.contiguous</span>,
-  demean <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">Pacf</span><span class="op">(</span>
-  <span class="va">x</span>,
-  lag.max <span class="op">=</span> <span class="cn">NULL</span>,
-  plot <span class="op">=</span> <span class="cn">TRUE</span>,
-  na.action <span class="op">=</span> <span class="va">na.contiguous</span>,
-  demean <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">Ccf</span><span class="op">(</span>
-  <span class="va">x</span>,
-  <span class="va">y</span>,
-  lag.max <span class="op">=</span> <span class="cn">NULL</span>,
-  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"correlation"</span>, <span class="st">"covariance"</span><span class="op">)</span>,
-  plot <span class="op">=</span> <span class="cn">TRUE</span>,
-  na.action <span class="op">=</span> <span class="va">na.contiguous</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">taperedacf</span><span class="op">(</span>
-  <span class="va">x</span>,
-  lag.max <span class="op">=</span> <span class="cn">NULL</span>,
-  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"correlation"</span>, <span class="st">"partial"</span><span class="op">)</span>,
-  plot <span class="op">=</span> <span class="cn">TRUE</span>,
-  calc.ci <span class="op">=</span> <span class="cn">TRUE</span>,
-  level <span class="op">=</span> <span class="fl">95</span>,
-  nsim <span class="op">=</span> <span class="fl">100</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">taperedpacf</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">Acf</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  lag.max <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"correlation"</span>, <span class="st">"covariance"</span>, <span class="st">"partial"</span><span class="op">)</span>,</span>
+<span>  plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  na.action <span class="op">=</span> <span class="va">na.contiguous</span>,</span>
+<span>  demean <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">Pacf</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  lag.max <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  na.action <span class="op">=</span> <span class="va">na.contiguous</span>,</span>
+<span>  demean <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">Ccf</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">y</span>,</span>
+<span>  lag.max <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"correlation"</span>, <span class="st">"covariance"</span><span class="op">)</span>,</span>
+<span>  plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  na.action <span class="op">=</span> <span class="va">na.contiguous</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">taperedacf</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  lag.max <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"correlation"</span>, <span class="st">"partial"</span><span class="op">)</span>,</span>
+<span>  plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  calc.ci <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  level <span class="op">=</span> <span class="fl">95</span>,</span>
+<span>  nsim <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">taperedpacf</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -114,40 +114,63 @@ univariate series.</p>
     <dl><dt>x</dt>
 <dd><p>a univariate or multivariate (not Ccf) numeric time series object
 or a numeric vector or matrix.</p></dd>
+
+
 <dt>lag.max</dt>
 <dd><p>maximum lag at which to calculate the acf. Default is
 $10*log10(N/m)$ where $N$ is the number of observations and $m$ the number
 of series. Will be automatically limited to one less than the number of
 observations in the series.</p></dd>
+
+
 <dt>type</dt>
 <dd><p>character string giving the type of acf to be computed. Allowed
 values are “<code>correlation</code>” (the default),
 “<code>covariance</code>” or “<code>partial</code>”.</p></dd>
+
+
 <dt>plot</dt>
 <dd><p>logical. If <code>TRUE</code> (the default) the resulting acf, pacf or
 ccf is plotted.</p></dd>
+
+
 <dt>na.action</dt>
 <dd><p>function to handle missing values. Default is
 <code><a href="https://rdrr.io/r/stats/na.contiguous.html" class="external-link">na.contiguous</a></code>.  Useful alternatives are
 <code><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.pass</a></code> and <code><a href="na.interp.html">na.interp</a></code>.</p></dd>
+
+
 <dt>demean</dt>
 <dd><p>Should covariances be about the sample means?</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional arguments passed to the plotting function.</p></dd>
+
+
 <dt>y</dt>
 <dd><p>a univariate numeric time series object or a numeric vector.</p></dd>
+
+
 <dt>calc.ci</dt>
 <dd><p>If <code>TRUE</code>, confidence intervals for the ACF/PACF
 estimates are calculated.</p></dd>
+
+
 <dt>level</dt>
 <dd><p>Percentage level used for the confidence intervals.</p></dd>
+
+
 <dt>nsim</dt>
 <dd><p>The number of bootstrap samples used in estimating the
 confidence intervals.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>The <code>Acf</code>, <code>Pacf</code> and <code>Ccf</code> functions return objects
+    
+
+<p>The <code>Acf</code>, <code>Pacf</code> and <code>Ccf</code> functions return objects
 of class "acf" as described in <code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">acf</a></code> from the stats
 package. The <code>taperedacf</code> and <code>taperedpacf</code> functions return
 objects of class "mpacf".</p>
@@ -184,16 +207,16 @@ Time Series Analysis</em>, 31(6), 471-482.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="fu">Acf</span><span class="op">(</span><span class="va">wineind</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">Acf</span><span class="op">(</span><span class="va">wineind</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="Acf-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu">Pacf</span><span class="op">(</span><span class="va">wineind</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">Pacf</span><span class="op">(</span><span class="va">wineind</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="Acf-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="fu">taperedacf</span><span class="op">(</span><span class="va">wineind</span>, nsim<span class="op">=</span><span class="fl">50</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">taperedpacf</span><span class="op">(</span><span class="va">wineind</span>, nsim<span class="op">=</span><span class="fl">50</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="fu">taperedacf</span><span class="op">(</span><span class="va">wineind</span>, nsim<span class="op">=</span><span class="fl">50</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">taperedpacf</span><span class="op">(</span><span class="va">wineind</span>, nsim<span class="op">=</span><span class="fl">50</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -208,7 +231,7 @@ Time Series Analysis</em>, 31(6), 471-482.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -62,48 +62,60 @@ and re-apply it to the data <code>y</code>.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">Arima</span><span class="op">(</span>
-  <span class="va">y</span>,
-  order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,
-  seasonal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,
-  xreg <span class="op">=</span> <span class="cn">NULL</span>,
-  include.mean <span class="op">=</span> <span class="cn">TRUE</span>,
-  include.drift <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">include.constant</span>,
-  lambda <span class="op">=</span> <span class="va">model</span><span class="op">$</span><span class="va">lambda</span>,
-  biasadj <span class="op">=</span> <span class="cn">FALSE</span>,
-  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CSS-ML"</span>, <span class="st">"ML"</span>, <span class="st">"CSS"</span><span class="op">)</span>,
-  model <span class="op">=</span> <span class="cn">NULL</span>,
-  x <span class="op">=</span> <span class="va">y</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">Arima</span><span class="op">(</span></span>
+<span>  <span class="va">y</span>,</span>
+<span>  order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>  seasonal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>  xreg <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  include.mean <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  include.drift <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">include.constant</span>,</span>
+<span>  lambda <span class="op">=</span> <span class="va">model</span><span class="op">$</span><span class="va">lambda</span>,</span>
+<span>  biasadj <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CSS-ML"</span>, <span class="st">"ML"</span>, <span class="st">"CSS"</span><span class="op">)</span>,</span>
+<span>  model <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  x <span class="op">=</span> <span class="va">y</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>y</dt>
 <dd><p>a univariate time series of class <code>ts</code>.</p></dd>
+
+
 <dt>order</dt>
 <dd><p>A specification of the non-seasonal part of the ARIMA model:
 the three components (p, d, q) are the AR order, the degree of differencing,
 and the MA order.</p></dd>
+
+
 <dt>seasonal</dt>
 <dd><p>A specification of the seasonal part of the ARIMA model,
 plus the period (which defaults to frequency(y)). This should be a list with
 components order and period, but a specification of just a numeric vector of
 length 3 will be turned into a suitable list with the specification as the
 order.</p></dd>
+
+
 <dt>xreg</dt>
 <dd><p>Optionally, a numerical vector or matrix of external regressors, which
 must have the same number of rows as y. It should not be a data frame.</p></dd>
+
+
 <dt>include.mean</dt>
 <dd><p>Should the ARIMA model include a mean term? The default
 is <code>TRUE</code> for undifferenced series, <code>FALSE</code> for differenced ones
 (where a mean would not affect the fit nor predictions).</p></dd>
+
+
 <dt>include.drift</dt>
 <dd><p>Should the ARIMA model include a linear drift term?
 (i.e., a linear regression with ARIMA errors is fitted.)  The default is
 <code>FALSE</code>.</p></dd>
+
+
 <dt>include.constant</dt>
 <dd><p>If <code>TRUE</code>, then <code>include.mean</code> is set to
 be <code>TRUE</code> for undifferenced series and <code>include.drift</code> is set to
@@ -111,39 +123,57 @@ be <code>TRUE</code> for differenced series. Note that if there is more than one
 difference taken, no constant is included regardless of the value of this
 argument. This is deliberate as otherwise quadratic and higher order
 polynomial trends would be induced.</p></dd>
+
+
 <dt>lambda</dt>
 <dd><p>Box-Cox transformation parameter. If <code>lambda="auto"</code>,
 then a transformation is automatically selected using <code>BoxCox.lambda</code>.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.</p></dd>
+
+
 <dt>biasadj</dt>
 <dd><p>Use adjusted back-transformed mean for Box-Cox
 transformations. If transformed data is used to produce forecasts and fitted values,
 a regular back transformation will result in median forecasts. If biasadj is TRUE,
 an adjustment will be made to produce mean forecasts and fitted values.</p></dd>
+
+
 <dt>method</dt>
 <dd><p>Fitting method: maximum likelihood or minimize conditional
 sum-of-squares. The default (unless there are missing values) is to use
 conditional-sum-of-squares to find starting values, then maximum likelihood.</p></dd>
+
+
 <dt>model</dt>
 <dd><p>Output from a previous call to <code>Arima</code>. If model is
 passed, this same model is fitted to <code>y</code> without re-estimating any
 parameters.</p></dd>
+
+
 <dt>x</dt>
 <dd><p>Deprecated. Included for backwards compatibility.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional arguments to be passed to <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">arima</a></code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>See the <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">arima</a></code> function in the stats package.
+    
+
+<p>See the <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">arima</a></code> function in the stats package.
 The additional objects returned are</p>
 <dl><dt>x</dt>
 <dd><p>The time series data</p></dd>
+
 <dt>xreg</dt>
 <dd><p>The regressors used in fitting (when relevant).</p></dd>
+
 <dt>sigma2</dt>
 <dd><p>The bias adjusted MLE of the innovations variance.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -160,44 +190,44 @@ The additional objects returned are</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="va">WWWusage</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">Arima</span><span class="op">(</span>order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">20</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="va">autoplot</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">WWWusage</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">Arima</span><span class="op">(</span>order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">forecast</span><span class="op">(</span>h<span class="op">=</span><span class="fl">20</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="va">autoplot</span></span></span>
 <span class="r-plt img"><img src="Arima-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Fit model to first few years of AirPassengers data</span></span>
-<span class="r-in"><span class="va">air.model</span> <span class="op">&lt;-</span> <span class="fu">Arima</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/window.html" class="external-link">window</a></span><span class="op">(</span><span class="va">AirPassengers</span>,end<span class="op">=</span><span class="fl">1956</span><span class="op">+</span><span class="fl">11</span><span class="op">/</span><span class="fl">12</span><span class="op">)</span>,order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,</span>
-<span class="r-in">                   seasonal<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,period<span class="op">=</span><span class="fl">12</span><span class="op">)</span>,lambda<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="va">air.model</span>,h<span class="op">=</span><span class="fl">48</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">AirPassengers</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Fit model to first few years of AirPassengers data</span></span></span>
+<span class="r-in"><span><span class="va">air.model</span> <span class="op">&lt;-</span> <span class="fu">Arima</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/window.html" class="external-link">window</a></span><span class="op">(</span><span class="va">AirPassengers</span>,end<span class="op">=</span><span class="fl">1956</span><span class="op">+</span><span class="fl">11</span><span class="op">/</span><span class="fl">12</span><span class="op">)</span>,order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                   seasonal<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,period<span class="op">=</span><span class="fl">12</span><span class="op">)</span>,lambda<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">forecast</span><span class="op">(</span><span class="va">air.model</span>,h<span class="op">=</span><span class="fl">48</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">AirPassengers</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="Arima-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Apply fitted model to later data</span></span>
-<span class="r-in"><span class="va">air.model2</span> <span class="op">&lt;-</span> <span class="fu">Arima</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/window.html" class="external-link">window</a></span><span class="op">(</span><span class="va">AirPassengers</span>,start<span class="op">=</span><span class="fl">1957</span><span class="op">)</span>,model<span class="op">=</span><span class="va">air.model</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Forecast accuracy measures on the log scale.</span></span>
-<span class="r-in"><span class="co"># in-sample one-step forecasts.</span></span>
-<span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy</a></span><span class="op">(</span><span class="va">air.model</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Apply fitted model to later data</span></span></span>
+<span class="r-in"><span><span class="va">air.model2</span> <span class="op">&lt;-</span> <span class="fu">Arima</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/window.html" class="external-link">window</a></span><span class="op">(</span><span class="va">AirPassengers</span>,start<span class="op">=</span><span class="fl">1957</span><span class="op">)</span>,model<span class="op">=</span><span class="va">air.model</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Forecast accuracy measures on the log scale.</span></span></span>
+<span class="r-in"><span><span class="co"># in-sample one-step forecasts.</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy</a></span><span class="op">(</span><span class="va">air.model</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     ME    RMSE      MAE       MPE     MAPE      MASE       ACF1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Training set 0.3576253 7.89734 5.788344 0.1458472 2.670181 0.1982148 0.05807465</span>
-<span class="r-in"><span class="co"># out-of-sample one-step forecasts.</span></span>
-<span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy</a></span><span class="op">(</span><span class="va">air.model2</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># out-of-sample one-step forecasts.</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy</a></span><span class="op">(</span><span class="va">air.model2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     ME     RMSE     MAE        MPE     MAPE      MASE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Training set 0.5159268 12.13132 8.14054 0.07949083 1.900931 0.2266508</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    ACF1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Training set -0.2166661</span>
-<span class="r-in"><span class="co"># out-of-sample multi-step forecasts</span></span>
-<span class="r-in"><span class="fu"><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy</a></span><span class="op">(</span><span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="va">air.model</span>,h<span class="op">=</span><span class="fl">48</span>,lambda<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span>,</span>
-<span class="r-in">         <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/window.html" class="external-link">window</a></span><span class="op">(</span><span class="va">AirPassengers</span>,start<span class="op">=</span><span class="fl">1957</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># out-of-sample multi-step forecasts</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy</a></span><span class="op">(</span><span class="fu">forecast</span><span class="op">(</span><span class="va">air.model</span>,h<span class="op">=</span><span class="fl">48</span>,lambda<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>         <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/window.html" class="external-link">window</a></span><span class="op">(</span><span class="va">AirPassengers</span>,start<span class="op">=</span><span class="fl">1957</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       ME      RMSE        MAE        MPE     MAPE      MASE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Training set  0.35762533 7.8973404 5.78834425  0.1458472 2.670181 0.1982148</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test set     -0.08403416 0.1031891 0.08801596 -1.3982000 1.463555 0.0030140</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    ACF1 Theil's U</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Training set 0.05807465        NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test set     0.75730561 0.9290965</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -212,7 +242,7 @@ The additional objects returned are</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

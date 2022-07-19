@@ -63,21 +63,21 @@ computations.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">tbats</span><span class="op">(</span>
-  <span class="va">y</span>,
-  use.box.cox <span class="op">=</span> <span class="cn">NULL</span>,
-  use.trend <span class="op">=</span> <span class="cn">NULL</span>,
-  use.damped.trend <span class="op">=</span> <span class="cn">NULL</span>,
-  seasonal.periods <span class="op">=</span> <span class="cn">NULL</span>,
-  use.arma.errors <span class="op">=</span> <span class="cn">TRUE</span>,
-  use.parallel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1000</span>,
-  num.cores <span class="op">=</span> <span class="fl">2</span>,
-  bc.lower <span class="op">=</span> <span class="fl">0</span>,
-  bc.upper <span class="op">=</span> <span class="fl">1</span>,
-  biasadj <span class="op">=</span> <span class="cn">FALSE</span>,
-  model <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">tbats</span><span class="op">(</span></span>
+<span>  <span class="va">y</span>,</span>
+<span>  use.box.cox <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  use.trend <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  use.damped.trend <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  seasonal.periods <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  use.arma.errors <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  use.parallel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1000</span>,</span>
+<span>  num.cores <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  bc.lower <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  bc.upper <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  biasadj <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  model <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -85,53 +85,80 @@ computations.</p>
     <dl><dt>y</dt>
 <dd><p>The time series to be forecast. Can be <code>numeric</code>, <code>msts</code>
 or <code>ts</code>. Only univariate time series are supported.</p></dd>
+
+
 <dt>use.box.cox</dt>
 <dd><p><code>TRUE/FALSE</code> indicates whether to use the Box-Cox
 transformation or not. If <code>NULL</code> then both are tried and the best fit
 is selected by AIC.</p></dd>
+
+
 <dt>use.trend</dt>
 <dd><p><code>TRUE/FALSE</code> indicates whether to include a trend or
 not. If <code>NULL</code> then both are tried and the best fit is selected by AIC.</p></dd>
+
+
 <dt>use.damped.trend</dt>
 <dd><p><code>TRUE/FALSE</code> indicates whether to include a
 damping parameter in the trend or not. If <code>NULL</code> then both are tried
 and the best fit is selected by AIC.</p></dd>
+
+
 <dt>seasonal.periods</dt>
 <dd><p>If <code>y</code> is <code>numeric</code> then seasonal periods
 can be specified with this parameter.</p></dd>
+
+
 <dt>use.arma.errors</dt>
 <dd><p><code>TRUE/FALSE</code> indicates whether to include ARMA
 errors or not. If <code>TRUE</code> the best fit is selected by AIC. If
 <code>FALSE</code> then the selection algorithm does not consider ARMA errors.</p></dd>
+
+
 <dt>use.parallel</dt>
 <dd><p><code>TRUE/FALSE</code> indicates whether or not to use
 parallel processing.</p></dd>
+
+
 <dt>num.cores</dt>
 <dd><p>The number of parallel processes to be used if using
 parallel processing. If <code>NULL</code> then the number of logical cores is
 detected and all available cores are used.</p></dd>
+
+
 <dt>bc.lower</dt>
 <dd><p>The lower limit (inclusive) for the Box-Cox transformation.</p></dd>
+
+
 <dt>bc.upper</dt>
 <dd><p>The upper limit (inclusive) for the Box-Cox transformation.</p></dd>
+
+
 <dt>biasadj</dt>
 <dd><p>Use adjusted back-transformed mean for Box-Cox
 transformations. If TRUE, point forecasts and fitted values are mean
 forecast. Otherwise, these points can be considered the median of the
 forecast densities.</p></dd>
+
+
 <dt>model</dt>
 <dd><p>Output from a previous call to <code>tbats</code>. If model is
 passed, this same model is fitted to <code>y</code> without re-estimating any
 parameters.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional arguments to be passed to <code>auto.arima</code> when
 choose an ARMA(p, q) model for the errors. (Note that xreg will be ignored,
 as will any arguments concerning seasonality and differencing, but arguments
 controlling the values of p and q will be used.)</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object with class <code>c("tbats", "bats")</code>. The generic accessor
+    
+
+<p>An object with class <code>c("tbats", "bats")</code>. The generic accessor
 functions <code>fitted.values</code> and <code>residuals</code> extract useful features
 of the value returned by <code>bats</code> and associated functions. The fitted
 model is designated TBATS(omega, p,q, phi, &lt;m1,k1&gt;,...,&lt;mJ,kJ&gt;) where omega
@@ -158,14 +185,14 @@ smoothing, <em>Journal of the American Statistical Association</em>,
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">tbats</span><span class="op">(</span><span class="va">USAccDeaths</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">taylor.fit</span> <span class="op">&lt;-</span> <span class="fu">tbats</span><span class="op">(</span><span class="va">taylor</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="va">taylor.fit</span><span class="op">)</span><span class="op">)</span><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">tbats</span><span class="op">(</span><span class="va">USAccDeaths</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">forecast</span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">taylor.fit</span> <span class="op">&lt;-</span> <span class="fu">tbats</span><span class="op">(</span><span class="va">taylor</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">forecast</span><span class="op">(</span><span class="va">taylor.fit</span><span class="op">)</span><span class="op">)</span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -180,7 +207,7 @@ smoothing, <em>Journal of the American Statistical Association</em>,
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

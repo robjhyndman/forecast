@@ -60,17 +60,20 @@ data, it will return the average cycle length.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">findfrequency</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">findfrequency</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>a numeric vector or time series of class <code>ts</code></p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>an integer value</p>
+    
+
+<p>an integer value</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -89,14 +92,14 @@ can be found, the function will return 1.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="fu">findfrequency</span><span class="op">(</span><span class="va">USAccDeaths</span><span class="op">)</span> <span class="co"># Monthly data</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">findfrequency</span><span class="op">(</span><span class="va">USAccDeaths</span><span class="op">)</span> <span class="co"># Monthly data</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 12</span>
-<span class="r-in"><span class="fu">findfrequency</span><span class="op">(</span><span class="va">taylor</span><span class="op">)</span> <span class="co"># Half-hourly data</span></span>
+<span class="r-in"><span><span class="fu">findfrequency</span><span class="op">(</span><span class="va">taylor</span><span class="op">)</span> <span class="co"># Half-hourly data</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 48</span>
-<span class="r-in"><span class="fu">findfrequency</span><span class="op">(</span><span class="va">lynx</span><span class="op">)</span> <span class="co"># Annual data</span></span>
+<span class="r-in"><span><span class="fu">findfrequency</span><span class="op">(</span><span class="va">lynx</span><span class="op">)</span> <span class="co"># Annual data</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 10</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -111,7 +114,7 @@ can be found, the function will return 1.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

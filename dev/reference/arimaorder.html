@@ -56,7 +56,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">arimaorder</span><span class="op">(</span><span class="va">object</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">arimaorder</span><span class="op">(</span><span class="va">object</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -67,10 +67,13 @@
 <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">arima</a></code>, <code><a href="Arima.html">Arima</a></code>, <code><a href="auto.arima.html">auto.arima</a></code>,
 <code><a href="https://rdrr.io/r/stats/ar.html" class="external-link">ar</a></code>, <code><a href="arfima.html">arfima</a></code> or
 <code><a href="https://rdrr.io/pkg/fracdiff/man/fracdiff.html" class="external-link">fracdiff</a></code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A numerical vector giving the values \(p\), \(d\) and \(q\) of
+    
+
+<p>A numerical vector giving the values \(p\), \(d\) and \(q\) of
 the ARIMA or ARFIMA model. For a seasonal ARIMA model, the returned vector
 contains the values \(p\), \(d\), \(q\), \(P\), \(D\), \(Q\) and
 \(m\), where \(m\) is the period of seasonality.</p>
@@ -87,10 +90,10 @@ contains the values \(p\), \(d\), \(q\), \(P\), \(D\), \(Q\) and
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">WWWusage</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">auto.arima</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">arimaorder</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">WWWusage</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">auto.arima</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">arimaorder</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> p d q </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 1 1 </span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -105,7 +108,7 @@ contains the values \(p\), \(d\), \(q\), \(P\), \(D\), \(Q\) and
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
