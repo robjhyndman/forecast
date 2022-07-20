@@ -250,7 +250,7 @@ accuracy.default <- function(object, x, test = NULL, d = NULL, D = NULL, f = NUL
     "ARFIMA", "mforecast", "forecast", "ts", "integer", "numeric",
     "Arima", "ets", "lm", "bats", "tbats", "nnetar", "stlm", "baggedModel"
   )))) {
-    stop("First argument should be a forecast object or a time series.")
+    stop(paste("No accuracy method found for an object of class",class(object)))
   }
   if (is.element("mforecast", class(object))) {
     return(accuracy.mforecast(object, x, test, d, D))
