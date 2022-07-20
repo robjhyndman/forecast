@@ -49,7 +49,7 @@ checkresiduals <- function(object, lag, df=NULL, test, plot=TRUE, ...) {
   else {
     showtest <- FALSE
   }
-  
+
   # Extract residuals
   if (is.element("ts", class(object)) | is.element("numeric", class(object))) {
     residuals <- object
@@ -62,7 +62,7 @@ checkresiduals <- function(object, lag, df=NULL, test, plot=TRUE, ...) {
   if (length(residuals) == 0L) {
     stop("No residuals found")
   }
-  
+
   if ("ar" %in% class(object)) {
     method <- paste("AR(", object$order, ")", sep = "")
   } else if (!is.null(object$method)) {
@@ -106,7 +106,7 @@ checkresiduals <- function(object, lag, df=NULL, test, plot=TRUE, ...) {
     warning("The fitted degrees of freedom is based on the model used for the seasonally adjusted data.")
   }
   df <- modeldf(object)
-  
+
   if (missing(lag)) {
     lag <- ifelse(freq > 1, 2 * freq, 10)
     lag <- min(lag, round(length(residuals)/5))
@@ -148,11 +148,11 @@ modeldf.ets <- function(object, ...){
 }
 
 modeldf.Arima <- function(object, ...){
-  length(object$coef)
+  sum(arimaorder(object)[c("p","q","P","Q")], na.rm = TRUE)
 }
 
 modeldf.bats <- function(object, ...){
-  length(object$parameters$vect) + NROW(object$seed.states)
+  length(object$parameters$vect)
 }
 
 modeldf.lm <- function(object, ...){
