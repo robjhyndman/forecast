@@ -2,8 +2,8 @@
 % Please edit documentation in R/forecast-package.R
 \docType{package}
 \name{forecast-package}
-\alias{forecast}
 \alias{forecast-package}
+\alias{_PACKAGE}
 \title{forecast: Forecasting Functions for Time Series and Linear Models}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
