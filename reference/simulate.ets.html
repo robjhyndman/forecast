@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.17.0</span>
       </span>
     </div>
 
@@ -47,7 +47,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Simulation from a time series model</h1>
-    <small class="dont-index">Source: <a href="https://github.com/robjhyndman/forecast/blob/HEAD/R/simulate.R" class="external-link"><code>R/simulate.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/robjhyndman/forecast/blob/HEAD/R/simulate.R" class="external-link"><code>R/simulate.R</code></a>, <a href="https://github.com/robjhyndman/forecast/blob/HEAD/R/simulate_tbats.R" class="external-link"><code>R/simulate_tbats.R</code></a></small>
     <div class="hidden name"><code>simulate.ets.Rd</code></div>
     </div>
 
@@ -56,89 +56,100 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for ets</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span>
-  <span class="va">object</span>,
-  nsim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">x</span><span class="op">)</span>,
-  seed <span class="op">=</span> <span class="cn">NULL</span>,
-  future <span class="op">=</span> <span class="cn">TRUE</span>,
-  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
-  innov <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for Arima</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span>
-  <span class="va">object</span>,
-  nsim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">x</span><span class="op">)</span>,
-  seed <span class="op">=</span> <span class="cn">NULL</span>,
-  xreg <span class="op">=</span> <span class="cn">NULL</span>,
-  future <span class="op">=</span> <span class="cn">TRUE</span>,
-  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
-  innov <span class="op">=</span> <span class="cn">NULL</span>,
-  lambda <span class="op">=</span> <span class="va">object</span><span class="op">$</span><span class="va">lambda</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for ar</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span>
-  <span class="va">object</span>,
-  nsim <span class="op">=</span> <span class="va">object</span><span class="op">$</span><span class="va">n.used</span>,
-  seed <span class="op">=</span> <span class="cn">NULL</span>,
-  future <span class="op">=</span> <span class="cn">TRUE</span>,
-  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
-  innov <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for lagwalk</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span>
-  <span class="va">object</span>,
-  nsim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">x</span><span class="op">)</span>,
-  seed <span class="op">=</span> <span class="cn">NULL</span>,
-  future <span class="op">=</span> <span class="cn">TRUE</span>,
-  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
-  innov <span class="op">=</span> <span class="cn">NULL</span>,
-  lambda <span class="op">=</span> <span class="va">object</span><span class="op">$</span><span class="va">lambda</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for fracdiff</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span>
-  <span class="va">object</span>,
-  nsim <span class="op">=</span> <span class="va">object</span><span class="op">$</span><span class="va">n</span>,
-  seed <span class="op">=</span> <span class="cn">NULL</span>,
-  future <span class="op">=</span> <span class="cn">TRUE</span>,
-  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
-  innov <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for nnetar</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span>
-  <span class="va">object</span>,
-  nsim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">x</span><span class="op">)</span>,
-  seed <span class="op">=</span> <span class="cn">NULL</span>,
-  xreg <span class="op">=</span> <span class="cn">NULL</span>,
-  future <span class="op">=</span> <span class="cn">TRUE</span>,
-  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
-  innov <span class="op">=</span> <span class="cn">NULL</span>,
-  lambda <span class="op">=</span> <span class="va">object</span><span class="op">$</span><span class="va">lambda</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for modelAR</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span>
-  <span class="va">object</span>,
-  nsim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">x</span><span class="op">)</span>,
-  seed <span class="op">=</span> <span class="cn">NULL</span>,
-  xreg <span class="op">=</span> <span class="cn">NULL</span>,
-  future <span class="op">=</span> <span class="cn">TRUE</span>,
-  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
-  innov <span class="op">=</span> <span class="cn">NULL</span>,
-  lambda <span class="op">=</span> <span class="va">object</span><span class="op">$</span><span class="va">lambda</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for ets</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  nsim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">x</span><span class="op">)</span>,</span>
+<span>  seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  future <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  innov <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for Arima</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  nsim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">x</span><span class="op">)</span>,</span>
+<span>  seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  xreg <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  future <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  innov <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lambda <span class="op">=</span> <span class="va">object</span><span class="op">$</span><span class="va">lambda</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for ar</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  nsim <span class="op">=</span> <span class="va">object</span><span class="op">$</span><span class="va">n.used</span>,</span>
+<span>  seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  future <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  innov <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for lagwalk</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  nsim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">x</span><span class="op">)</span>,</span>
+<span>  seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  future <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  innov <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lambda <span class="op">=</span> <span class="va">object</span><span class="op">$</span><span class="va">lambda</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for fracdiff</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  nsim <span class="op">=</span> <span class="va">object</span><span class="op">$</span><span class="va">n</span>,</span>
+<span>  seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  future <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  innov <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for nnetar</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  nsim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">x</span><span class="op">)</span>,</span>
+<span>  seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  xreg <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  future <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  innov <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lambda <span class="op">=</span> <span class="va">object</span><span class="op">$</span><span class="va">lambda</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for modelAR</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  nsim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">x</span><span class="op">)</span>,</span>
+<span>  seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  xreg <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  future <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  innov <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lambda <span class="op">=</span> <span class="va">object</span><span class="op">$</span><span class="va">lambda</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for tbats</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  nsim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">y</span><span class="op">)</span>,</span>
+<span>  seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  future <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  innov <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -146,39 +157,58 @@
     <dl><dt>object</dt>
 <dd><p>An object of class "<code>ets</code>", "<code>Arima</code>", "<code>ar</code>"
 or "<code>nnetar</code>".</p></dd>
+
+
 <dt>nsim</dt>
 <dd><p>Number of periods for the simulated series. Ignored if either
 <code>xreg</code> or <code>innov</code> are not <code>NULL</code>. Otherwise the default is
 the length of series used to train model (or 100 if no data found).</p></dd>
+
+
 <dt>seed</dt>
 <dd><p>Either <code>NULL</code> or an integer that will be used in a call to
 <code><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></code> before simulating the time series. The default,
 <code>NULL</code>, will not change the random generator state.</p></dd>
+
+
 <dt>future</dt>
 <dd><p>Produce sample paths that are future to and conditional on the
 data in <code>object</code>. Otherwise simulate unconditionally.</p></dd>
+
+
 <dt>bootstrap</dt>
 <dd><p>Do simulation using resampled errors rather than normally
 distributed errors or errors provided as <code>innov</code>.</p></dd>
+
+
 <dt>innov</dt>
 <dd><p>A vector of innovations to use as the error series. Ignored if
 <code>bootstrap==TRUE</code>. If not <code>NULL</code>, the value of <code>nsim</code> is set
 to length of <code>innov</code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Other arguments, not currently used.</p></dd>
+
+
 <dt>xreg</dt>
 <dd><p>New values of <code>xreg</code> to be used for forecasting. The value
 of <code>nsim</code> is set to the number of rows of <code>xreg</code> if it is not
 <code>NULL</code>.</p></dd>
+
+
 <dt>lambda</dt>
 <dd><p>Box-Cox transformation parameter. If <code>lambda="auto"</code>,
 then a transformation is automatically selected using <code>BoxCox.lambda</code>.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class "<code>ts</code>".</p>
+    
+
+<p>An object of class "<code>ts</code>".</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -206,9 +236,9 @@ start at the value of the first observation.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="ets.html">ets</a></span><span class="op">(</span><span class="va">USAccDeaths</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">USAccDeaths</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1973</span>, <span class="fl">1982</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit</span>, <span class="fl">36</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="ets.html">ets</a></span><span class="op">(</span><span class="va">USAccDeaths</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">USAccDeaths</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1973</span>, <span class="fl">1982</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit</span>, <span class="fl">36</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="simulate.ets-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
@@ -220,11 +250,11 @@ start at the value of the first observation.</p>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
+  <p></p><p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, Kirill Kuroptev, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

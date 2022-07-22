@@ -19,7 +19,7 @@ provided."><meta property="og:image" content="/logo.png"><!-- mathjax --><script
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.17.0</span>
       </span>
     </div>
 
@@ -60,158 +60,233 @@ provided.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">auto.arima</span><span class="op">(</span>
-  <span class="va">y</span>,
-  d <span class="op">=</span> <span class="cn">NA</span>,
-  D <span class="op">=</span> <span class="cn">NA</span>,
-  max.p <span class="op">=</span> <span class="fl">5</span>,
-  max.q <span class="op">=</span> <span class="fl">5</span>,
-  max.P <span class="op">=</span> <span class="fl">2</span>,
-  max.Q <span class="op">=</span> <span class="fl">2</span>,
-  max.order <span class="op">=</span> <span class="fl">5</span>,
-  max.d <span class="op">=</span> <span class="fl">2</span>,
-  max.D <span class="op">=</span> <span class="fl">1</span>,
-  start.p <span class="op">=</span> <span class="fl">2</span>,
-  start.q <span class="op">=</span> <span class="fl">2</span>,
-  start.P <span class="op">=</span> <span class="fl">1</span>,
-  start.Q <span class="op">=</span> <span class="fl">1</span>,
-  stationary <span class="op">=</span> <span class="cn">FALSE</span>,
-  seasonal <span class="op">=</span> <span class="cn">TRUE</span>,
-  ic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"aicc"</span>, <span class="st">"aic"</span>, <span class="st">"bic"</span><span class="op">)</span>,
-  stepwise <span class="op">=</span> <span class="cn">TRUE</span>,
-  nmodels <span class="op">=</span> <span class="fl">94</span>,
-  trace <span class="op">=</span> <span class="cn">FALSE</span>,
-  approximation <span class="op">=</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">150</span> <span class="op">|</span> <span class="fu"><a href="https://rdrr.io/r/stats/time.html" class="external-link">frequency</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">12</span><span class="op">)</span>,
-  method <span class="op">=</span> <span class="cn">NULL</span>,
-  truncate <span class="op">=</span> <span class="cn">NULL</span>,
-  xreg <span class="op">=</span> <span class="cn">NULL</span>,
-  test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"kpss"</span>, <span class="st">"adf"</span>, <span class="st">"pp"</span><span class="op">)</span>,
-  test.args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  seasonal.test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"seas"</span>, <span class="st">"ocsb"</span>, <span class="st">"hegy"</span>, <span class="st">"ch"</span><span class="op">)</span>,
-  seasonal.test.args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  allowdrift <span class="op">=</span> <span class="cn">TRUE</span>,
-  allowmean <span class="op">=</span> <span class="cn">TRUE</span>,
-  lambda <span class="op">=</span> <span class="cn">NULL</span>,
-  biasadj <span class="op">=</span> <span class="cn">FALSE</span>,
-  parallel <span class="op">=</span> <span class="cn">FALSE</span>,
-  num.cores <span class="op">=</span> <span class="fl">2</span>,
-  x <span class="op">=</span> <span class="va">y</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">auto.arima</span><span class="op">(</span></span>
+<span>  <span class="va">y</span>,</span>
+<span>  d <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  D <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  max.p <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  max.q <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  max.P <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  max.Q <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  max.order <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  max.d <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  max.D <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  start.p <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  start.q <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  start.P <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  start.Q <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  stationary <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  seasonal <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  ic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"aicc"</span>, <span class="st">"aic"</span>, <span class="st">"bic"</span><span class="op">)</span>,</span>
+<span>  stepwise <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  nmodels <span class="op">=</span> <span class="fl">94</span>,</span>
+<span>  trace <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  approximation <span class="op">=</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">150</span> <span class="op">|</span> <span class="fu"><a href="https://rdrr.io/r/stats/time.html" class="external-link">frequency</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">12</span><span class="op">)</span>,</span>
+<span>  method <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  truncate <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  xreg <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"kpss"</span>, <span class="st">"adf"</span>, <span class="st">"pp"</span><span class="op">)</span>,</span>
+<span>  test.args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  seasonal.test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"seas"</span>, <span class="st">"ocsb"</span>, <span class="st">"hegy"</span>, <span class="st">"ch"</span><span class="op">)</span>,</span>
+<span>  seasonal.test.args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  allowdrift <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  allowmean <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  lambda <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  biasadj <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  parallel <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  num.cores <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  x <span class="op">=</span> <span class="va">y</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>y</dt>
 <dd><p>a univariate time series</p></dd>
+
+
 <dt>d</dt>
 <dd><p>Order of first-differencing. If missing, will choose a value based
 on <code>test</code>.</p></dd>
+
+
 <dt>D</dt>
 <dd><p>Order of seasonal-differencing. If missing, will choose a value
 based on <code>season.test</code>.</p></dd>
+
+
 <dt>max.p</dt>
 <dd><p>Maximum value of p</p></dd>
+
+
 <dt>max.q</dt>
 <dd><p>Maximum value of q</p></dd>
+
+
 <dt>max.P</dt>
 <dd><p>Maximum value of P</p></dd>
+
+
 <dt>max.Q</dt>
 <dd><p>Maximum value of Q</p></dd>
+
+
 <dt>max.order</dt>
 <dd><p>Maximum value of p+q+P+Q if model selection is not
 stepwise.</p></dd>
+
+
 <dt>max.d</dt>
 <dd><p>Maximum number of non-seasonal differences</p></dd>
+
+
 <dt>max.D</dt>
 <dd><p>Maximum number of seasonal differences</p></dd>
+
+
 <dt>start.p</dt>
 <dd><p>Starting value of p in stepwise procedure.</p></dd>
+
+
 <dt>start.q</dt>
 <dd><p>Starting value of q in stepwise procedure.</p></dd>
+
+
 <dt>start.P</dt>
 <dd><p>Starting value of P in stepwise procedure.</p></dd>
+
+
 <dt>start.Q</dt>
 <dd><p>Starting value of Q in stepwise procedure.</p></dd>
+
+
 <dt>stationary</dt>
 <dd><p>If <code>TRUE</code>, restricts search to stationary models.</p></dd>
+
+
 <dt>seasonal</dt>
 <dd><p>If <code>FALSE</code>, restricts search to non-seasonal models.</p></dd>
+
+
 <dt>ic</dt>
 <dd><p>Information criterion to be used in model selection.</p></dd>
+
+
 <dt>stepwise</dt>
 <dd><p>If <code>TRUE</code>, will do stepwise selection (faster).
 Otherwise, it searches over all models. Non-stepwise selection can be very
 slow, especially for seasonal models.</p></dd>
+
+
 <dt>nmodels</dt>
 <dd><p>Maximum number of models considered in the stepwise search.</p></dd>
+
+
 <dt>trace</dt>
 <dd><p>If <code>TRUE</code>, the list of ARIMA models considered will be
 reported.</p></dd>
+
+
 <dt>approximation</dt>
 <dd><p>If <code>TRUE</code>, estimation is via conditional sums of
 squares and the information criteria used for model selection are
 approximated. The final model is still computed using maximum likelihood
 estimation. Approximation should be used for long time series or a high
 seasonal period to avoid excessive computation times.</p></dd>
+
+
 <dt>method</dt>
 <dd><p>fitting method: maximum likelihood or minimize
     conditional sum-of-squares.  The default (unless there are missing
     values) is to use conditional-sum-of-squares to find starting
     values, then maximum likelihood.  Can be abbreviated.</p></dd>
+
+
 <dt>truncate</dt>
 <dd><p>An integer value indicating how many observations to use in
 model selection. The last <code>truncate</code> values of the series are used to
 select a model when <code>truncate</code> is not <code>NULL</code> and
 <code>approximation=TRUE</code>. All observations are used if either
 <code>truncate=NULL</code> or <code>approximation=FALSE</code>.</p></dd>
+
+
 <dt>xreg</dt>
 <dd><p>Optionally, a numerical vector or matrix of external regressors, which
 must have the same number of rows as <code>y</code>. (It should not be a data frame.)</p></dd>
+
+
 <dt>test</dt>
 <dd><p>Type of unit root test to use. See <code><a href="ndiffs.html">ndiffs</a></code> for
 details.</p></dd>
+
+
 <dt>test.args</dt>
 <dd><p>Additional arguments to be passed to the unit root test.</p></dd>
+
+
 <dt>seasonal.test</dt>
 <dd><p>This determines which method is used to select the number of seasonal differences.
 The default method is to use a measure of seasonal strength computed from an STL decomposition.
 Other possibilities involve seasonal unit root tests.</p></dd>
+
+
 <dt>seasonal.test.args</dt>
 <dd><p>Additional arguments to be passed to the seasonal
 unit root test.
 See <code><a href="nsdiffs.html">nsdiffs</a></code> for details.</p></dd>
+
+
 <dt>allowdrift</dt>
 <dd><p>If <code>TRUE</code>, models with drift terms are considered.</p></dd>
+
+
 <dt>allowmean</dt>
 <dd><p>If <code>TRUE</code>, models with a non-zero mean are considered.</p></dd>
+
+
 <dt>lambda</dt>
 <dd><p>Box-Cox transformation parameter. If <code>lambda="auto"</code>,
 then a transformation is automatically selected using <code>BoxCox.lambda</code>.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.</p></dd>
+
+
 <dt>biasadj</dt>
 <dd><p>Use adjusted back-transformed mean for Box-Cox
 transformations. If transformed data is used to produce forecasts and fitted values,
 a regular back transformation will result in median forecasts. If biasadj is TRUE,
 an adjustment will be made to produce mean forecasts and fitted values.</p></dd>
+
+
 <dt>parallel</dt>
 <dd><p>If <code>TRUE</code> and <code>stepwise = FALSE</code>, then the
 specification search is done in parallel. This can give a significant
 speedup on multicore machines.</p></dd>
+
+
 <dt>num.cores</dt>
 <dd><p>Allows the user to specify the amount of parallel processes
 to be used if <code>parallel = TRUE</code> and <code>stepwise = FALSE</code>. If
 <code>NULL</code>, then the number of logical cores is automatically detected and
 all available cores are used.</p></dd>
+
+
 <dt>x</dt>
 <dd><p>Deprecated. Included for backwards compatibility.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional arguments to be passed to <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">arima</a></code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Same as for <code><a href="Arima.html">Arima</a></code></p>
+    
+
+<p>Same as for <code><a href="Arima.html">Arima</a></code></p>
+
+
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -245,10 +320,10 @@ for time series data", <em>Data Mining and Knowledge Discovery</em>,
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">auto.arima</span><span class="op">(</span><span class="va">WWWusage</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="forecast.html">forecast</a></span><span class="op">(</span><span class="va">fit</span>,h<span class="op">=</span><span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">auto.arima</span><span class="op">(</span><span class="va">WWWusage</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="va">fit</span>,h<span class="op">=</span><span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="auto.arima-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -259,11 +334,11 @@ for time series data", <em>Data Mining and Knowledge Discovery</em>,
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
+  <p></p><p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, Kirill Kuroptev, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

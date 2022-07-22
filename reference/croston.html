@@ -18,7 +18,7 @@ y."><meta property="og:image" content="/logo.png"><!-- mathjax --><script src="h
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.17.0</span>
       </span>
     </div>
 
@@ -58,46 +58,63 @@ y.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">croston</span><span class="op">(</span><span class="va">y</span>, h <span class="op">=</span> <span class="fl">10</span>, alpha <span class="op">=</span> <span class="fl">0.1</span>, x <span class="op">=</span> <span class="va">y</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">croston</span><span class="op">(</span><span class="va">y</span>, h <span class="op">=</span> <span class="fl">10</span>, alpha <span class="op">=</span> <span class="fl">0.1</span>, x <span class="op">=</span> <span class="va">y</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>y</dt>
 <dd><p>a numeric vector or time series of class <code>ts</code></p></dd>
+
+
 <dt>h</dt>
 <dd><p>Number of periods for forecasting.</p></dd>
+
+
 <dt>alpha</dt>
 <dd><p>Value of alpha. Default value is 0.1.</p></dd>
+
+
 <dt>x</dt>
 <dd><p>Deprecated. Included for backwards compatibility.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>"forecast"</code> is a list containing at least
+    
+
+<p>An object of class <code>"forecast"</code> is a list containing at least
 the following elements:</p>
 <dl><dt>model</dt>
 <dd><p>A list containing information about the
 fitted model. The first element gives the model used for non-zero demands.
 The second element gives the model used for times between non-zero demands.
 Both elements are of class <code>forecast</code>.</p></dd>
-<dt>method</dt>
+ <dt>method</dt>
 <dd><p>The name of the
 forecasting method as a character string</p></dd>
-<dt>mean</dt>
+ <dt>mean</dt>
 <dd><p>Point forecasts as a
 time series</p></dd>
-<dt>x</dt>
+ <dt>x</dt>
 <dd><p>The original time series (either <code>object</code> itself
 or the time series used to create the model stored as <code>object</code>).</p></dd>
+
 <dt>residuals</dt>
 <dd><p>Residuals from the fitted model. That is y minus fitted
 values.</p></dd>
-<dt>fitted</dt>
+ <dt>fitted</dt>
 <dd><p>Fitted values (one-step forecasts)</p></dd>
+
+
 </dl><p>The function <code>summary</code> is used to obtain and print a summary of the
-results, while the function <code>plot</code> produces a plot of the forecasts.
-The generic accessor functions <code>fitted.values</code> and <code>residuals</code>extract useful features of the value returned by <code>croston</code> and
+results, while the function <code>plot</code> produces a plot of the forecasts.</p>
+
+
+<p>The generic accessor functions <code>fitted.values</code> and <code>residuals</code></p>
+
+
+<p>extract useful features of the value returned by <code>croston</code> and
 associated functions.</p>
     </div>
     <div id="details">
@@ -131,11 +148,11 @@ Forecasting</em>, <b>24</b>, 389-402.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">rpois</a></span><span class="op">(</span><span class="fl">20</span>,lambda<span class="op">=</span><span class="fl">.3</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fcast</span> <span class="op">&lt;-</span> <span class="fu">croston</span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fcast</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">rpois</a></span><span class="op">(</span><span class="fl">20</span>,lambda<span class="op">=</span><span class="fl">.3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fcast</span> <span class="op">&lt;-</span> <span class="fu">croston</span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fcast</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="croston-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -146,11 +163,11 @@ Forecasting</em>, <b>24</b>, 389-402.</p>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
+  <p></p><p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, Kirill Kuroptev, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

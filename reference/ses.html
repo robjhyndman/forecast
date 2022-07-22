@@ -18,7 +18,7 @@ applied to y."><meta property="og:image" content="/logo.png"><!-- mathjax --><sc
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.17.0</span>
       </span>
     </div>
 
@@ -58,143 +58,187 @@ applied to <code>y</code>.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ses</span><span class="op">(</span>
-  <span class="va">y</span>,
-  h <span class="op">=</span> <span class="fl">10</span>,
-  level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">95</span><span class="op">)</span>,
-  fan <span class="op">=</span> <span class="cn">FALSE</span>,
-  initial <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"optimal"</span>, <span class="st">"simple"</span><span class="op">)</span>,
-  alpha <span class="op">=</span> <span class="cn">NULL</span>,
-  lambda <span class="op">=</span> <span class="cn">NULL</span>,
-  biasadj <span class="op">=</span> <span class="cn">FALSE</span>,
-  x <span class="op">=</span> <span class="va">y</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">holt</span><span class="op">(</span>
-  <span class="va">y</span>,
-  h <span class="op">=</span> <span class="fl">10</span>,
-  damped <span class="op">=</span> <span class="cn">FALSE</span>,
-  level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">95</span><span class="op">)</span>,
-  fan <span class="op">=</span> <span class="cn">FALSE</span>,
-  initial <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"optimal"</span>, <span class="st">"simple"</span><span class="op">)</span>,
-  exponential <span class="op">=</span> <span class="cn">FALSE</span>,
-  alpha <span class="op">=</span> <span class="cn">NULL</span>,
-  beta <span class="op">=</span> <span class="cn">NULL</span>,
-  phi <span class="op">=</span> <span class="cn">NULL</span>,
-  lambda <span class="op">=</span> <span class="cn">NULL</span>,
-  biasadj <span class="op">=</span> <span class="cn">FALSE</span>,
-  x <span class="op">=</span> <span class="va">y</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">hw</span><span class="op">(</span>
-  <span class="va">y</span>,
-  h <span class="op">=</span> <span class="fl">2</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/time.html" class="external-link">frequency</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,
-  seasonal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"additive"</span>, <span class="st">"multiplicative"</span><span class="op">)</span>,
-  damped <span class="op">=</span> <span class="cn">FALSE</span>,
-  level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">95</span><span class="op">)</span>,
-  fan <span class="op">=</span> <span class="cn">FALSE</span>,
-  initial <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"optimal"</span>, <span class="st">"simple"</span><span class="op">)</span>,
-  exponential <span class="op">=</span> <span class="cn">FALSE</span>,
-  alpha <span class="op">=</span> <span class="cn">NULL</span>,
-  beta <span class="op">=</span> <span class="cn">NULL</span>,
-  gamma <span class="op">=</span> <span class="cn">NULL</span>,
-  phi <span class="op">=</span> <span class="cn">NULL</span>,
-  lambda <span class="op">=</span> <span class="cn">NULL</span>,
-  biasadj <span class="op">=</span> <span class="cn">FALSE</span>,
-  x <span class="op">=</span> <span class="va">y</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ses</span><span class="op">(</span></span>
+<span>  <span class="va">y</span>,</span>
+<span>  h <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">95</span><span class="op">)</span>,</span>
+<span>  fan <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  initial <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"optimal"</span>, <span class="st">"simple"</span><span class="op">)</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lambda <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  biasadj <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  x <span class="op">=</span> <span class="va">y</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">holt</span><span class="op">(</span></span>
+<span>  <span class="va">y</span>,</span>
+<span>  h <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  damped <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">95</span><span class="op">)</span>,</span>
+<span>  fan <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  initial <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"optimal"</span>, <span class="st">"simple"</span><span class="op">)</span>,</span>
+<span>  exponential <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  beta <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  phi <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lambda <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  biasadj <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  x <span class="op">=</span> <span class="va">y</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">hw</span><span class="op">(</span></span>
+<span>  <span class="va">y</span>,</span>
+<span>  h <span class="op">=</span> <span class="fl">2</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/time.html" class="external-link">frequency</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
+<span>  seasonal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"additive"</span>, <span class="st">"multiplicative"</span><span class="op">)</span>,</span>
+<span>  damped <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">95</span><span class="op">)</span>,</span>
+<span>  fan <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  initial <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"optimal"</span>, <span class="st">"simple"</span><span class="op">)</span>,</span>
+<span>  exponential <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  beta <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  gamma <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  phi <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lambda <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  biasadj <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  x <span class="op">=</span> <span class="va">y</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>y</dt>
 <dd><p>a numeric vector or time series of class <code>ts</code></p></dd>
+
+
 <dt>h</dt>
 <dd><p>Number of periods for forecasting.</p></dd>
+
+
 <dt>level</dt>
 <dd><p>Confidence level for prediction intervals.</p></dd>
+
+
 <dt>fan</dt>
 <dd><p>If TRUE, level is set to seq(51,99,by=3). This is suitable for
 fan plots.</p></dd>
+
+
 <dt>initial</dt>
 <dd><p>Method used for selecting initial state values. If
 <code>optimal</code>, the initial values are optimized along with the smoothing
 parameters using <code><a href="ets.html">ets</a></code>. If <code>simple</code>, the initial values are
 set to values obtained using simple calculations on the first few
 observations. See Hyndman &amp; Athanasopoulos (2014) for details.</p></dd>
+
+
 <dt>alpha</dt>
 <dd><p>Value of smoothing parameter for the level. If <code>NULL</code>, it
 will be estimated.</p></dd>
+
+
 <dt>lambda</dt>
 <dd><p>Box-Cox transformation parameter. If <code>lambda="auto"</code>,
 then a transformation is automatically selected using <code>BoxCox.lambda</code>.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.</p></dd>
+
+
 <dt>biasadj</dt>
 <dd><p>Use adjusted back-transformed mean for Box-Cox
 transformations. If transformed data is used to produce forecasts and fitted values,
 a regular back transformation will result in median forecasts. If biasadj is TRUE,
 an adjustment will be made to produce mean forecasts and fitted values.</p></dd>
+
+
 <dt>x</dt>
 <dd><p>Deprecated. Included for backwards compatibility.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Other arguments passed to <code>forecast.ets</code>.</p></dd>
+
+
 <dt>damped</dt>
 <dd><p>If TRUE, use a damped trend.</p></dd>
+
+
 <dt>exponential</dt>
 <dd><p>If TRUE, an exponential trend is fitted. Otherwise, the
 trend is (locally) linear.</p></dd>
+
+
 <dt>beta</dt>
 <dd><p>Value of smoothing parameter for the trend. If <code>NULL</code>, it
 will be estimated.</p></dd>
+
+
 <dt>phi</dt>
 <dd><p>Value of damping parameter if <code>damped=TRUE</code>. If <code>NULL</code>,
 it will be estimated.</p></dd>
+
+
 <dt>seasonal</dt>
 <dd><p>Type of seasonality in <code>hw</code> model. "additive" or
 "multiplicative"</p></dd>
+
+
 <dt>gamma</dt>
 <dd><p>Value of smoothing parameter for the seasonal component. If
 <code>NULL</code>, it will be estimated.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class "<code>forecast</code>".
-The function <code>summary</code> is used to obtain and print a summary of the
+    
+
+<p>An object of class "<code>forecast</code>".</p>
+
+
+<p>The function <code>summary</code> is used to obtain and print a summary of the
 results, while the function <code>plot</code> produces a plot of the forecasts and
-prediction intervals.
-The generic accessor functions <code>fitted.values</code> and <code>residuals</code>extract useful features of the value returned by <code>ets</code> and associated
-functions.
-An object of class <code>"forecast"</code> is a list containing at least the
+prediction intervals.</p>
+
+
+<p>The generic accessor functions <code>fitted.values</code> and <code>residuals</code></p>
+
+
+<p>extract useful features of the value returned by <code>ets</code> and associated
+functions.</p>
+
+
+<p>An object of class <code>"forecast"</code> is a list containing at least the
 following elements:</p>
 <dl><dt>model</dt>
 <dd><p>A list containing information about the
 fitted model</p></dd>
-<dt>method</dt>
+ <dt>method</dt>
 <dd><p>The name of the forecasting method as a
 character string</p></dd>
-<dt>mean</dt>
+ <dt>mean</dt>
 <dd><p>Point forecasts as a time series</p></dd>
+
 <dt>lower</dt>
 <dd><p>Lower limits for prediction intervals</p></dd>
-<dt>upper</dt>
+ <dt>upper</dt>
 <dd><p>Upper
 limits for prediction intervals</p></dd>
-<dt>level</dt>
+ <dt>level</dt>
 <dd><p>The confidence values
 associated with the prediction intervals</p></dd>
-<dt>x</dt>
+ <dt>x</dt>
 <dd><p>The original time series
 (either <code>object</code> itself or the time series used to create the model
 stored as <code>object</code>).</p></dd>
-<dt>residuals</dt>
+ <dt>residuals</dt>
 <dd><p>Residuals from the fitted
 model.</p></dd>
-<dt>fitted</dt>
+ <dt>fitted</dt>
 <dd><p>Fitted values (one-step forecasts)</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -222,14 +266,14 @@ and practice</em>, 2nd edition, OTexts: Melbourne, Australia.
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="va">fcast</span> <span class="op">&lt;-</span> <span class="fu">holt</span><span class="op">(</span><span class="va">airmiles</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fcast</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">fcast</span> <span class="op">&lt;-</span> <span class="fu">holt</span><span class="op">(</span><span class="va">airmiles</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fcast</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="ses-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="va">deaths.fcast</span> <span class="op">&lt;-</span> <span class="fu">hw</span><span class="op">(</span><span class="va">USAccDeaths</span>,h<span class="op">=</span><span class="fl">48</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">deaths.fcast</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">deaths.fcast</span> <span class="op">&lt;-</span> <span class="fu">hw</span><span class="op">(</span><span class="va">USAccDeaths</span>,h<span class="op">=</span><span class="fl">48</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">deaths.fcast</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="ses-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -240,11 +284,11 @@ and practice</em>, 2nd edition, OTexts: Melbourne, Australia.
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
+  <p></p><p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, Kirill Kuroptev, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

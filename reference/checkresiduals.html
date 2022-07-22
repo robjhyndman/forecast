@@ -20,7 +20,7 @@ either a Ljung-Box test or Breusch-Godfrey test is printed."><meta property="og:
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.17.0</span>
       </span>
     </div>
 
@@ -62,7 +62,7 @@ either a Ljung-Box test or Breusch-Godfrey test is printed.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">checkresiduals</span><span class="op">(</span><span class="va">object</span>, <span class="va">lag</span>, df <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">test</span>, plot <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">checkresiduals</span><span class="op">(</span><span class="va">object</span>, <span class="va">lag</span>, df <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">test</span>, plot <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -70,6 +70,8 @@ either a Ljung-Box test or Breusch-Godfrey test is printed.</p>
     <dl><dt>object</dt>
 <dd><p>Either a time series model, a forecast object, or a time
 series (assumed to be residuals).</p></dd>
+
+
 <dt>lag</dt>
 <dd><p>Number of lags to use in the Ljung-Box or Breusch-Godfrey test.
 If missing, it is set to <code>min(10,n/5)</code> for non-seasonal data, and
@@ -77,22 +79,33 @@ If missing, it is set to <code>min(10,n/5)</code> for non-seasonal data, and
 and <code>m</code> is the seasonal period of the data. It is further constrained to be
 at least <code>df+3</code> where <code>df</code> is the degrees of freedom of the model. This
 ensures there are at least 3 degrees of freedom used in the chi-squared test.</p></dd>
+
+
 <dt>df</dt>
 <dd><p>Number of degrees of freedom for fitted model, required for the
 Ljung-Box or Breusch-Godfrey test. Ignored if the degrees of freedom can be
 extracted from <code>object</code>.</p></dd>
+
+
 <dt>test</dt>
 <dd><p>Test to use for serial correlation. By default, if <code>object</code>
 is of class <code>lm</code>, then <code>test="BG"</code>. Otherwise, <code>test="LB"</code>.
 Setting <code>test=FALSE</code> will prevent the test results being printed.</p></dd>
+
+
 <dt>plot</dt>
 <dd><p>Logical. If <code>TRUE</code>, will produce the plot.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Other arguments are passed to <code><a href="tsdisplay.html">ggtsdisplay</a></code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>None</p>
+    
+
+<p>None</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -106,9 +119,9 @@ Setting <code>test=FALSE</code> will prevent the test results being printed.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="ets.html">ets</a></span><span class="op">(</span><span class="va">WWWusage</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">checkresiduals</span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="ets.html">ets</a></span><span class="op">(</span><span class="va">WWWusage</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">checkresiduals</span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="checkresiduals-1.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	Ljung-Box test</span>
@@ -118,7 +131,7 @@ Setting <code>test=FALSE</code> will prevent the test results being printed.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model df: 5.   Total lags used: 10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -129,11 +142,11 @@ Setting <code>test=FALSE</code> will prevent the test results being printed.</p>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
+  <p></p><p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, Kirill Kuroptev, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

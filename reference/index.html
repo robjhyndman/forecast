@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.17.0</span>
       </span>
     </div>
 
@@ -54,9 +54,9 @@
           <p class="section-desc"></p><p>Forecast package</p>
         </th>
       </tr></tbody><tbody><tr><td>
-          <p><code><a href="forecast-package.html">forecast-package</a></code> </p>
+          <p><code><a href="forecast-package.html">forecast-package</a></code> <code><a href="forecast-package.html">_PACKAGE</a></code> </p>
         </td>
-        <td><p>Forecasting Functions for Time Series and Linear Models</p></td>
+        <td><p>forecast: Forecasting Functions for Time Series and Linear Models</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="time-series-analysis">Time series analysis <a href="#time-series-analysis" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p><p>Functions for working with time series</p>
@@ -244,10 +244,6 @@ transformation, ARMA errors, Trend and Seasonal components)</p></td>
         </td>
         <td><p>Forecast seasonal index</p></td>
       </tr><tr><td>
-          <p><code><a href="forecast.html">forecast()</a></code> </p>
-        </td>
-        <td><p>Forecasting time series</p></td>
-      </tr><tr><td>
           <p><code><a href="forecast.Arima.html">forecast(<i>&lt;fracdiff&gt;</i>)</a></code> <code><a href="forecast.Arima.html">forecast(<i>&lt;Arima&gt;</i>)</a></code> <code><a href="forecast.Arima.html">forecast(<i>&lt;ar&gt;</i>)</a></code> </p>
         </td>
         <td><p>Forecasting using ARIMA or ARFIMA models</p></td>
@@ -291,6 +287,10 @@ transformation, ARMA errors, Trend and Seasonal components)</p></td>
           <p><code><a href="forecast.StructTS.html">forecast(<i>&lt;StructTS&gt;</i>)</a></code> </p>
         </td>
         <td><p>Forecasting using Structural Time Series models</p></td>
+      </tr><tr><td>
+          <p><code><a href="forecast.ts.html">forecast(<i>&lt;ts&gt;</i>)</a></code> <code><a href="forecast.ts.html">forecast(<i>&lt;default&gt;</i>)</a></code> <code><a href="forecast.ts.html">print(<i>&lt;forecast&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Forecasting time series</p></td>
       </tr><tr><td>
           <p><code><a href="is.forecast.html">is.forecast()</a></code> <code><a href="is.forecast.html">is.mforecast()</a></code> <code><a href="is.forecast.html">is.splineforecast()</a></code> </p>
         </td>
@@ -397,7 +397,7 @@ and Plotting</p></td>
         </td>
         <td><p>Errors from a regression model with ARIMA errors</p></td>
       </tr><tr><td>
-          <p><code><a href="simulate.ets.html">simulate(<i>&lt;ets&gt;</i>)</a></code> <code><a href="simulate.ets.html">simulate(<i>&lt;Arima&gt;</i>)</a></code> <code><a href="simulate.ets.html">simulate(<i>&lt;ar&gt;</i>)</a></code> <code><a href="simulate.ets.html">simulate(<i>&lt;lagwalk&gt;</i>)</a></code> <code><a href="simulate.ets.html">simulate(<i>&lt;fracdiff&gt;</i>)</a></code> <code><a href="simulate.ets.html">simulate(<i>&lt;nnetar&gt;</i>)</a></code> <code><a href="simulate.ets.html">simulate(<i>&lt;modelAR&gt;</i>)</a></code> </p>
+          <p><code><a href="simulate.ets.html">simulate(<i>&lt;ets&gt;</i>)</a></code> <code><a href="simulate.ets.html">simulate(<i>&lt;Arima&gt;</i>)</a></code> <code><a href="simulate.ets.html">simulate(<i>&lt;ar&gt;</i>)</a></code> <code><a href="simulate.ets.html">simulate(<i>&lt;lagwalk&gt;</i>)</a></code> <code><a href="simulate.ets.html">simulate(<i>&lt;fracdiff&gt;</i>)</a></code> <code><a href="simulate.ets.html">simulate(<i>&lt;nnetar&gt;</i>)</a></code> <code><a href="simulate.ets.html">simulate(<i>&lt;modelAR&gt;</i>)</a></code> <code><a href="simulate.ets.html">simulate(<i>&lt;tbats&gt;</i>)</a></code> </p>
         </td>
         <td><p>Simulation from a time series model</p></td>
       </tr><tr><td>
@@ -413,7 +413,7 @@ and Plotting</p></td>
           <p class="section-desc"></p><p>Functions used for evaluating forecasts</p>
         </th>
       </tr></tbody><tbody><tr><td>
-          <p><code><a href="accuracy.html">accuracy()</a></code> </p>
+          <p><code><a href="accuracy.default.html">accuracy(<i>&lt;default&gt;</i>)</a></code> </p>
         </td>
         <td><p>Accuracy measures for a forecast model</p></td>
       </tr><tr><td>
@@ -465,11 +465,11 @@ and Plotting</p></td>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
+  <p></p><p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, Kirill Kuroptev, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

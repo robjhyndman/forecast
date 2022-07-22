@@ -18,7 +18,7 @@ models."><meta property="og:image" content="/logo.png"><!-- mathjax --><script s
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.17.0</span>
       </span>
     </div>
 
@@ -58,20 +58,20 @@ models.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for modelAR</span>
-<span class="fu"><a href="forecast.html">forecast</a></span><span class="op">(</span>
-  <span class="va">object</span>,
-  h <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">m</span> <span class="op">&gt;</span> <span class="fl">1</span>, <span class="fl">2</span> <span class="op">*</span> <span class="va">object</span><span class="op">$</span><span class="va">m</span>, <span class="fl">10</span><span class="op">)</span>,
-  PI <span class="op">=</span> <span class="cn">FALSE</span>,
-  level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">95</span><span class="op">)</span>,
-  fan <span class="op">=</span> <span class="cn">FALSE</span>,
-  xreg <span class="op">=</span> <span class="cn">NULL</span>,
-  lambda <span class="op">=</span> <span class="va">object</span><span class="op">$</span><span class="va">lambda</span>,
-  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
-  npaths <span class="op">=</span> <span class="fl">1000</span>,
-  innov <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for modelAR</span></span>
+<span><span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  h <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">m</span> <span class="op">&gt;</span> <span class="fl">1</span>, <span class="fl">2</span> <span class="op">*</span> <span class="va">object</span><span class="op">$</span><span class="va">m</span>, <span class="fl">10</span><span class="op">)</span>,</span>
+<span>  PI <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">95</span><span class="op">)</span>,</span>
+<span>  fan <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  xreg <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lambda <span class="op">=</span> <span class="va">object</span><span class="op">$</span><span class="va">lambda</span>,</span>
+<span>  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  npaths <span class="op">=</span> <span class="fl">1000</span>,</span>
+<span>  innov <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -79,72 +79,115 @@ models.</p>
     <dl><dt>object</dt>
 <dd><p>An object of class "<code>modelAR</code>" resulting from a call to
 <code><a href="modelAR.html">modelAR</a></code>.</p></dd>
+
+
 <dt>h</dt>
 <dd><p>Number of periods for forecasting. If <code>xreg</code> is used, <code>h</code>
 is ignored and the number of forecast periods is set to the number of rows
 of <code>xreg</code>.</p></dd>
+
+
 <dt>PI</dt>
 <dd><p>If TRUE, prediction intervals are produced, otherwise only point
 forecasts are calculated. If <code>PI</code> is FALSE, then <code>level</code>,
 <code>fan</code>, <code>bootstrap</code> and <code>npaths</code> are all ignored.</p></dd>
+
+
 <dt>level</dt>
 <dd><p>Confidence level for prediction intervals.</p></dd>
+
+
 <dt>fan</dt>
 <dd><p>If <code>TRUE</code>, level is set to <code>seq(51,99,by=3)</code>. This is
 suitable for fan plots.</p></dd>
+
+
 <dt>xreg</dt>
 <dd><p>Future values of external regressor variables.</p></dd>
+
+
 <dt>lambda</dt>
 <dd><p>Box-Cox transformation parameter. If <code>lambda="auto"</code>,
 then a transformation is automatically selected using <code>BoxCox.lambda</code>.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.</p></dd>
+
+
 <dt>bootstrap</dt>
 <dd><p>If <code>TRUE</code>, then prediction intervals computed using
 simulations with resampled residuals rather than normally distributed
 errors. Ignored if <code>innov</code> is not <code>NULL</code>.</p></dd>
+
+
 <dt>npaths</dt>
 <dd><p>Number of sample paths used in computing simulated prediction
 intervals.</p></dd>
+
+
 <dt>innov</dt>
 <dd><p>Values to use as innovations for prediction intervals. Must be
 a matrix with <code>h</code> rows and <code>npaths</code> columns (vectors are coerced
 into a matrix). If present, <code>bootstrap</code> is ignored.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional arguments passed to <code><a href="simulate.ets.html">simulate.nnetar</a></code></p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class "<code>forecast</code>".
-The function <code>summary</code> is used to obtain and print a summary of the
+    
+
+<p>An object of class "<code>forecast</code>".</p>
+
+
+<p>The function <code>summary</code> is used to obtain and print a summary of the
 results, while the function <code>plot</code> produces a plot of the forecasts and
-prediction intervals.
-The generic accessor functions <code>fitted.values</code> and <code>residuals</code>extract useful features of the value returned by <code>forecast.nnetar</code>.
-An object of class "<code>forecast</code>" is a list containing at least the
+prediction intervals.</p>
+
+
+<p>The generic accessor functions <code>fitted.values</code> and <code>residuals</code></p>
+
+
+<p>extract useful features of the value returned by <code>forecast.nnetar</code>.</p>
+
+
+<p>An object of class "<code>forecast</code>" is a list containing at least the
 following elements:</p>
 <dl><dt>model</dt>
 <dd><p>A list containing information about the fitted model</p></dd>
-<dt>method</dt>
+
+  <dt>method</dt>
 <dd><p>The name of the forecasting method as a character string</p></dd>
-<dt>mean</dt>
+
+  <dt>mean</dt>
 <dd><p>Point forecasts as a time series</p></dd>
-<dt>lower</dt>
+
+  <dt>lower</dt>
 <dd><p>Lower limits for prediction intervals</p></dd>
-<dt>upper</dt>
+
+  <dt>upper</dt>
 <dd><p>Upper limits for prediction intervals</p></dd>
-<dt>level</dt>
+
+  <dt>level</dt>
 <dd><p>The confidence values associated with the prediction intervals</p></dd>
-<dt>x</dt>
+
+  <dt>x</dt>
 <dd><p>The original time series (either <code>object</code> itself or the time series
            used to create the model stored as <code>object</code>).</p></dd>
-<dt>xreg</dt>
+
+  <dt>xreg</dt>
 <dd><p>The external regressors used in fitting (if given).</p></dd>
-<dt>residuals</dt>
+
+  <dt>residuals</dt>
 <dd><p>Residuals from the fitted model. That is x minus fitted values.</p></dd>
-<dt>fitted</dt>
+
+  <dt>fitted</dt>
 <dd><p>Fitted values (one-step forecasts)</p></dd>
-<dt>...</dt>
+
+  <dt>...</dt>
 <dd><p>Other arguments</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -170,11 +213,11 @@ could lead to misleadingly small values.</p>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
+  <p></p><p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, Kirill Kuroptev, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

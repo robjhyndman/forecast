@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.17.0</span>
       </span>
     </div>
 
@@ -56,35 +56,37 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ets</span><span class="op">(</span>
-  <span class="va">y</span>,
-  model <span class="op">=</span> <span class="st">"ZZZ"</span>,
-  damped <span class="op">=</span> <span class="cn">NULL</span>,
-  alpha <span class="op">=</span> <span class="cn">NULL</span>,
-  beta <span class="op">=</span> <span class="cn">NULL</span>,
-  gamma <span class="op">=</span> <span class="cn">NULL</span>,
-  phi <span class="op">=</span> <span class="cn">NULL</span>,
-  additive.only <span class="op">=</span> <span class="cn">FALSE</span>,
-  lambda <span class="op">=</span> <span class="cn">NULL</span>,
-  biasadj <span class="op">=</span> <span class="cn">FALSE</span>,
-  lower <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1e-04</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fl">0.8</span><span class="op">)</span>,
-  upper <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0.9999</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fl">0.98</span><span class="op">)</span>,
-  opt.crit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lik"</span>, <span class="st">"amse"</span>, <span class="st">"mse"</span>, <span class="st">"sigma"</span>, <span class="st">"mae"</span><span class="op">)</span>,
-  nmse <span class="op">=</span> <span class="fl">3</span>,
-  bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"both"</span>, <span class="st">"usual"</span>, <span class="st">"admissible"</span><span class="op">)</span>,
-  ic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"aicc"</span>, <span class="st">"aic"</span>, <span class="st">"bic"</span><span class="op">)</span>,
-  restrict <span class="op">=</span> <span class="cn">TRUE</span>,
-  allow.multiplicative.trend <span class="op">=</span> <span class="cn">FALSE</span>,
-  use.initial.values <span class="op">=</span> <span class="cn">FALSE</span>,
-  na.action <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"na.contiguous"</span>, <span class="st">"na.interp"</span>, <span class="st">"na.fail"</span><span class="op">)</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ets</span><span class="op">(</span></span>
+<span>  <span class="va">y</span>,</span>
+<span>  model <span class="op">=</span> <span class="st">"ZZZ"</span>,</span>
+<span>  damped <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  beta <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  gamma <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  phi <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  additive.only <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  lambda <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  biasadj <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  lower <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1e-04</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fl">0.8</span><span class="op">)</span>,</span>
+<span>  upper <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0.9999</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fl">0.98</span><span class="op">)</span>,</span>
+<span>  opt.crit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lik"</span>, <span class="st">"amse"</span>, <span class="st">"mse"</span>, <span class="st">"sigma"</span>, <span class="st">"mae"</span><span class="op">)</span>,</span>
+<span>  nmse <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"both"</span>, <span class="st">"usual"</span>, <span class="st">"admissible"</span><span class="op">)</span>,</span>
+<span>  ic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"aicc"</span>, <span class="st">"aic"</span>, <span class="st">"bic"</span><span class="op">)</span>,</span>
+<span>  restrict <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  allow.multiplicative.trend <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  use.initial.values <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  na.action <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"na.contiguous"</span>, <span class="st">"na.interp"</span>, <span class="st">"na.fail"</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>y</dt>
 <dd><p>a numeric vector or time series of class <code>ts</code></p></dd>
+
+
 <dt>model</dt>
 <dd><p>Usually a three-character string identifying method using the
 framework terminology of Hyndman et al. (2002) and Hyndman et al. (2008).
@@ -98,74 +100,120 @@ Holt-Winters' method with multiplicative errors, and so on.</p>
 the output from a previous call to <code>ets</code>. In this case, the same model
 is fitted to <code>y</code> without re-estimating any smoothing parameters. See
 also the <code>use.initial.values</code> argument.</p></dd>
+
+
 <dt>damped</dt>
 <dd><p>If TRUE, use a damped trend (either additive or
 multiplicative). If NULL, both damped and non-damped trends will be tried
 and the best model (according to the information criterion <code>ic</code>)
 returned.</p></dd>
+
+
 <dt>alpha</dt>
 <dd><p>Value of alpha. If NULL, it is estimated.</p></dd>
+
+
 <dt>beta</dt>
 <dd><p>Value of beta. If NULL, it is estimated.</p></dd>
+
+
 <dt>gamma</dt>
 <dd><p>Value of gamma. If NULL, it is estimated.</p></dd>
+
+
 <dt>phi</dt>
 <dd><p>Value of phi. If NULL, it is estimated.</p></dd>
+
+
 <dt>additive.only</dt>
 <dd><p>If TRUE, will only consider additive models. Default is
 FALSE.</p></dd>
+
+
 <dt>lambda</dt>
 <dd><p>Box-Cox transformation parameter. If <code>lambda="auto"</code>,
 then a transformation is automatically selected using <code>BoxCox.lambda</code>.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated. When <code>lambda</code> is specified,
 <code>additive.only</code> is set to <code>TRUE</code>.</p></dd>
+
+
 <dt>biasadj</dt>
 <dd><p>Use adjusted back-transformed mean for Box-Cox
 transformations. If transformed data is used to produce forecasts and fitted values,
 a regular back transformation will result in median forecasts. If biasadj is TRUE,
 an adjustment will be made to produce mean forecasts and fitted values.</p></dd>
+
+
 <dt>lower</dt>
-<dd><p>Lower bounds for the parameters (alpha, beta, gamma, phi)</p></dd>
+<dd><p>Lower bounds for the parameters (alpha, beta, gamma, phi). Ignored if <code>bounds=="admissible"</code>.</p></dd>
+
+
 <dt>upper</dt>
-<dd><p>Upper bounds for the parameters (alpha, beta, gamma, phi)</p></dd>
+<dd><p>Upper bounds for the parameters (alpha, beta, gamma, phi). Ignored if <code>bounds=="admissible"</code>.</p></dd>
+
+
 <dt>opt.crit</dt>
 <dd><p>Optimization criterion. One of "mse" (Mean Square Error),
 "amse" (Average MSE over first <code>nmse</code> forecast horizons), "sigma"
 (Standard deviation of residuals), "mae" (Mean of absolute residuals), or
 "lik" (Log-likelihood, the default).</p></dd>
+
+
 <dt>nmse</dt>
 <dd><p>Number of steps for average multistep MSE (1&lt;=<code>nmse</code>&lt;=30).</p></dd>
+
+
 <dt>bounds</dt>
 <dd><p>Type of parameter space to impose: <code>"usual" </code> indicates
 all parameters must lie between specified lower and upper bounds;
 <code>"admissible"</code> indicates parameters must lie in the admissible space;
 <code>"both"</code> (default) takes the intersection of these regions.</p></dd>
+
+
 <dt>ic</dt>
 <dd><p>Information criterion to be used in model selection.</p></dd>
+
+
 <dt>restrict</dt>
 <dd><p>If <code>TRUE</code> (default), the models with infinite variance
 will not be allowed.</p></dd>
+
+
 <dt>allow.multiplicative.trend</dt>
 <dd><p>If <code>TRUE</code>, models with multiplicative
 trend are allowed when searching for a model. Otherwise, the model space
 excludes them. This argument is ignored if a multiplicative trend model is
 explicitly requested (e.g., using <code>model="MMN"</code>).</p></dd>
+
+
 <dt>use.initial.values</dt>
 <dd><p>If <code>TRUE</code> and <code>model</code> is of class
 <code>"ets"</code>, then the initial values in the model are also not
 re-estimated.</p></dd>
+
+
 <dt>na.action</dt>
 <dd><p>A function which indicates what should happen when the data
 contains NA values. By default, the largest contiguous portion of the
 time-series will be used.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Other undocumented arguments.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class "<code>ets</code>".
-The generic accessor functions <code>fitted.values</code> and <code>residuals</code>extract useful features of the value returned by <code>ets</code> and associated
+    
+
+<p>An object of class "<code>ets</code>".</p>
+
+
+<p>The generic accessor functions <code>fitted.values</code> and <code>residuals</code></p>
+
+
+<p>extract useful features of the value returned by <code>ets</code> and associated
 functions.</p>
     </div>
     <div id="details">
@@ -201,10 +249,10 @@ Springer-Verlag. <a href="http://www.exponentialsmoothing.net" class="external-l
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">ets</span><span class="op">(</span><span class="va">USAccDeaths</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="forecast.html">forecast</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">ets</span><span class="op">(</span><span class="va">USAccDeaths</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="ets-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -215,11 +263,11 @@ Springer-Verlag. <a href="http://www.exponentialsmoothing.net" class="external-l
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
+  <p></p><p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, Kirill Kuroptev, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -19,7 +19,7 @@ R^2 values for a linear model."><meta property="og:image" content="/logo.png"><!
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.17.0</span>
       </span>
     </div>
 
@@ -60,17 +60,20 @@ R^2 values for a linear model.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">CV</span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">CV</span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>obj</dt>
 <dd><p>output from <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></code> or <code><a href="tslm.html">tslm</a></code></p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Numerical vector containing CV, AIC, AICc, BIC and AdjR2 values.</p>
+    
+
+<p>Numerical vector containing CV, AIC, AICc, BIC and AdjR2 values.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -83,17 +86,17 @@ R^2 values for a linear model.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ts.html" class="external-link">ts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">120</span>,<span class="fl">0</span>,<span class="fl">3</span><span class="op">)</span> <span class="op">+</span> <span class="fl">20</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">sin</a></span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">*</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">120</span><span class="op">)</span><span class="op">/</span><span class="fl">12</span><span class="op">)</span>, frequency<span class="op">=</span><span class="fl">12</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="tslm.html">tslm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">trend</span> <span class="op">+</span> <span class="va">season</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="tslm.html">tslm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">season</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">CV</span><span class="op">(</span><span class="va">fit1</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ts.html" class="external-link">ts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">120</span>,<span class="fl">0</span>,<span class="fl">3</span><span class="op">)</span> <span class="op">+</span> <span class="fl">20</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">sin</a></span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">*</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">120</span><span class="op">)</span><span class="op">/</span><span class="fl">12</span><span class="op">)</span>, frequency<span class="op">=</span><span class="fl">12</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="tslm.html">tslm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">trend</span> <span class="op">+</span> <span class="va">season</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="tslm.html">tslm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">season</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">CV</span><span class="op">(</span><span class="va">fit1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          CV         AIC        AICc         BIC       AdjR2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  10.5492158 283.2353709 287.2353709 322.2602553   0.9585755 </span>
-<span class="r-in"><span class="fu">CV</span><span class="op">(</span><span class="va">fit2</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  10.0354239 277.5221626 281.5221626 316.5470470   0.9576754 </span>
+<span class="r-in"><span><span class="fu">CV</span><span class="op">(</span><span class="va">fit2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          CV         AIC        AICc         BIC       AdjR2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  10.3602511 281.2706529 284.7046152 317.5080456   0.9589469 </span>
-<span class="r-in"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   9.9073303 275.9064660 279.3404282 312.1438586   0.9579328 </span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -104,11 +107,11 @@ R^2 values for a linear model.</p>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
+  <p></p><p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, Kirill Kuroptev, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

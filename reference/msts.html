@@ -21,7 +21,7 @@ class, should also work on a msts class.'><meta property="og:image" content="/lo
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.17.0</span>
       </span>
     </div>
 
@@ -64,7 +64,7 @@ class, should also work on a msts class.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">msts</span><span class="op">(</span><span class="va">data</span>, <span class="va">seasonal.periods</span>, ts.frequency <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">floor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">seasonal.periods</span><span class="op">)</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">msts</span><span class="op">(</span><span class="va">data</span>, <span class="va">seasonal.periods</span>, ts.frequency <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">floor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">seasonal.periods</span><span class="op">)</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -73,18 +73,27 @@ class, should also work on a msts class.</p>
 <dd><p>A numeric vector, ts object, matrix or data frame. It is
 intended that the time series data is univariate, otherwise treated the same
 as ts().</p></dd>
+
+
 <dt>seasonal.periods</dt>
 <dd><p>A vector of the seasonal periods of the msts.</p></dd>
+
+
 <dt>ts.frequency</dt>
 <dd><p>The seasonal period that should be used as frequency of
 the underlying ts object. The default value is <code>max(seasonal.periods)</code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Arguments to be passed to the underlying call to <code><a href="https://rdrr.io/r/stats/ts.html" class="external-link">ts()</a></code>. For
 example <code>start=c(1987,5)</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>c("msts", "ts")</code>. If there is only one
+    
+
+<p>An object of class <code>c("msts", "ts")</code>. If there is only one
 seasonal period (i.e., <code>length(seasonal.periods)==1</code>), then the object
 is of class <code>"ts"</code>.</p>
     </div>
@@ -95,10 +104,10 @@ is of class <code>"ts"</code>.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">msts</span><span class="op">(</span><span class="va">taylor</span>, seasonal.periods<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="fl">24</span>,<span class="fl">2</span><span class="op">*</span><span class="fl">24</span><span class="op">*</span><span class="fl">7</span>,<span class="fl">2</span><span class="op">*</span><span class="fl">24</span><span class="op">*</span><span class="fl">365</span><span class="op">)</span>, start<span class="op">=</span><span class="fl">2000</span><span class="op">+</span><span class="fl">22</span><span class="op">/</span><span class="fl">52</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">msts</span><span class="op">(</span><span class="va">USAccDeaths</span>, seasonal.periods<span class="op">=</span><span class="fl">12</span>, start<span class="op">=</span><span class="fl">1949</span><span class="op">)</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">msts</span><span class="op">(</span><span class="va">taylor</span>, seasonal.periods<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="fl">24</span>,<span class="fl">2</span><span class="op">*</span><span class="fl">24</span><span class="op">*</span><span class="fl">7</span>,<span class="fl">2</span><span class="op">*</span><span class="fl">24</span><span class="op">*</span><span class="fl">365</span><span class="op">)</span>, start<span class="op">=</span><span class="fl">2000</span><span class="op">+</span><span class="fl">22</span><span class="op">/</span><span class="fl">52</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">msts</span><span class="op">(</span><span class="va">USAccDeaths</span>, seasonal.periods<span class="op">=</span><span class="fl">12</span>, start<span class="op">=</span><span class="fl">1949</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -109,11 +118,11 @@ is of class <code>"ts"</code>.</p>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
+  <p></p><p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, Kirill Kuroptev, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

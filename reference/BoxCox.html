@@ -18,7 +18,7 @@ transformation. InvBoxCox() reverses the transformation."><meta property="og:ima
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.17.0</span>
       </span>
     </div>
 
@@ -58,31 +58,40 @@ transformation. InvBoxCox() reverses the transformation.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">BoxCox</span><span class="op">(</span><span class="va">x</span>, <span class="va">lambda</span><span class="op">)</span>
-
-<span class="fu">InvBoxCox</span><span class="op">(</span><span class="va">x</span>, <span class="va">lambda</span>, biasadj <span class="op">=</span> <span class="cn">FALSE</span>, fvar <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">BoxCox</span><span class="op">(</span><span class="va">x</span>, <span class="va">lambda</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">InvBoxCox</span><span class="op">(</span><span class="va">x</span>, <span class="va">lambda</span>, biasadj <span class="op">=</span> <span class="cn">FALSE</span>, fvar <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>a numeric vector or time series of class <code>ts</code>.</p></dd>
+
+
 <dt>lambda</dt>
 <dd><p>transformation parameter. If <code>lambda = "auto"</code>, then
 the transformation parameter lambda is chosen using BoxCox.lambda (with a lower bound of -0.9)</p></dd>
+
+
 <dt>biasadj</dt>
 <dd><p>Use adjusted back-transformed mean for Box-Cox
 transformations. If transformed data is used to produce forecasts and fitted values,
 a regular back transformation will result in median forecasts. If biasadj is TRUE,
 an adjustment will be made to produce mean forecasts and fitted values.</p></dd>
+
+
 <dt>fvar</dt>
 <dd><p>Optional parameter required if biasadj=TRUE. Can either be the
 forecast variance, or a list containing the interval <code>level</code>, and the
 corresponding <code>upper</code> and <code>lower</code> intervals.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a numeric vector of the same length as x.</p>
+    
+
+<p>a numeric vector of the same length as x.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -107,12 +116,12 @@ Bickel, P. J. and Doksum K. A. (1981) An Analysis of Transformations Revisited. 
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="va">lambda</span> <span class="op">&lt;-</span> <span class="fu"><a href="BoxCox.lambda.html">BoxCox.lambda</a></span><span class="op">(</span><span class="va">lynx</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">lynx.fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ar.html" class="external-link">ar</a></span><span class="op">(</span><span class="fu">BoxCox</span><span class="op">(</span><span class="va">lynx</span>,<span class="va">lambda</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="forecast.html">forecast</a></span><span class="op">(</span><span class="va">lynx.fit</span>,h<span class="op">=</span><span class="fl">20</span>,lambda<span class="op">=</span><span class="va">lambda</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">lambda</span> <span class="op">&lt;-</span> <span class="fu"><a href="BoxCox.lambda.html">BoxCox.lambda</a></span><span class="op">(</span><span class="va">lynx</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">lynx.fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ar.html" class="external-link">ar</a></span><span class="op">(</span><span class="fu">BoxCox</span><span class="op">(</span><span class="va">lynx</span>,<span class="va">lambda</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="va">lynx.fit</span>,h<span class="op">=</span><span class="fl">20</span>,lambda<span class="op">=</span><span class="va">lambda</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in NextMethod(.Generic):</span> cannot assign 'tsp' to zero-length vector</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -123,11 +132,11 @@ Bickel, P. J. and Doksum K. A. (1981) An Analysis of Transformations Revisited. 
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
+  <p></p><p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, Kirill Kuroptev, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

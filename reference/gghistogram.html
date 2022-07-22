@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.17.0</span>
       </span>
     </div>
 
@@ -56,35 +56,48 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">gghistogram</span><span class="op">(</span>
-  <span class="va">x</span>,
-  add.normal <span class="op">=</span> <span class="cn">FALSE</span>,
-  add.kde <span class="op">=</span> <span class="cn">FALSE</span>,
-  add.rug <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">bins</span>,
-  boundary <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">gghistogram</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  add.normal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  add.kde <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  add.rug <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">bins</span>,</span>
+<span>  boundary <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>a numerical vector.</p></dd>
+
+
 <dt>add.normal</dt>
 <dd><p>Add a normal density function for comparison</p></dd>
+
+
 <dt>add.kde</dt>
 <dd><p>Add a kernel density estimate for comparison</p></dd>
+
+
 <dt>add.rug</dt>
 <dd><p>Add a rug plot on the horizontal axis</p></dd>
+
+
 <dt>bins</dt>
 <dd><p>The number of bins to use for the histogram. Selected by default
 using the Friedman-Diaconis rule given by <code><a href="https://rdrr.io/r/grDevices/nclass.html" class="external-link">nclass.FD</a></code></p></dd>
+
+
 <dt>boundary</dt>
 <dd><p>A boundary between two bins.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>None.</p>
+    
+
+<p>None.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -97,10 +110,10 @@ using the Friedman-Diaconis rule given by <code><a href="https://rdrr.io/r/grDev
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="fu">gghistogram</span><span class="op">(</span><span class="va">lynx</span>, add.kde<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">gghistogram</span><span class="op">(</span><span class="va">lynx</span>, add.kde<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="gghistogram-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -111,11 +124,11 @@ using the Friedman-Diaconis rule given by <code><a href="https://rdrr.io/r/grDev
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
+  <p></p><p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, Kirill Kuroptev, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -18,7 +18,7 @@ for forecasting univariate time series."><meta property="og:image" content="/log
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">8.17.0</span>
       </span>
     </div>
 
@@ -58,86 +58,125 @@ for forecasting univariate time series.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">nnetar</span><span class="op">(</span>
-  <span class="va">y</span>,
-  <span class="va">p</span>,
-  P <span class="op">=</span> <span class="fl">1</span>,
-  <span class="va">size</span>,
-  repeats <span class="op">=</span> <span class="fl">20</span>,
-  xreg <span class="op">=</span> <span class="cn">NULL</span>,
-  lambda <span class="op">=</span> <span class="cn">NULL</span>,
-  model <span class="op">=</span> <span class="cn">NULL</span>,
-  subset <span class="op">=</span> <span class="cn">NULL</span>,
-  scale.inputs <span class="op">=</span> <span class="cn">TRUE</span>,
-  x <span class="op">=</span> <span class="va">y</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">nnetar</span><span class="op">(</span></span>
+<span>  <span class="va">y</span>,</span>
+<span>  <span class="va">p</span>,</span>
+<span>  P <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  <span class="va">size</span>,</span>
+<span>  repeats <span class="op">=</span> <span class="fl">20</span>,</span>
+<span>  xreg <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lambda <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  model <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  subset <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  scale.inputs <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  x <span class="op">=</span> <span class="va">y</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>y</dt>
 <dd><p>A numeric vector or time series of class <code>ts</code>.</p></dd>
+
+
 <dt>p</dt>
 <dd><p>Embedding dimension for non-seasonal time series. Number of
 non-seasonal lags used as inputs. For non-seasonal time series, the default
 is the optimal number of lags (according to the AIC) for a linear AR(p)
 model. For seasonal time series, the same method is used but applied to
 seasonally adjusted data (from an stl decomposition).</p></dd>
+
+
 <dt>P</dt>
 <dd><p>Number of seasonal lags used as inputs.</p></dd>
+
+
 <dt>size</dt>
 <dd><p>Number of nodes in the hidden layer. Default is half of the
 number of input nodes (including external regressors, if given) plus 1.</p></dd>
+
+
 <dt>repeats</dt>
 <dd><p>Number of networks to fit with different random starting
 weights. These are then averaged when producing forecasts.</p></dd>
+
+
 <dt>xreg</dt>
 <dd><p>Optionally, a vector or matrix of external regressors, which
 must have the same number of rows as <code>y</code>. Must be numeric.</p></dd>
+
+
 <dt>lambda</dt>
 <dd><p>Box-Cox transformation parameter. If <code>lambda="auto"</code>,
 then a transformation is automatically selected using <code>BoxCox.lambda</code>.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.</p></dd>
+
+
 <dt>model</dt>
 <dd><p>Output from a previous call to <code>nnetar</code>. If model is
 passed, this same model is fitted to <code>y</code> without re-estimating any
 parameters.</p></dd>
+
+
 <dt>subset</dt>
 <dd><p>Optional vector specifying a subset of observations to be used
 in the fit. Can be an integer index vector or a logical vector the same
 length as <code>y</code>. All observations are used by default.</p></dd>
+
+
 <dt>scale.inputs</dt>
 <dd><p>If TRUE, inputs are scaled by subtracting the column
 means and dividing by their respective standard deviations. If <code>lambda</code>
 is not <code>NULL</code>, scaling is applied after Box-Cox transformation.</p></dd>
+
+
 <dt>x</dt>
 <dd><p>Deprecated. Included for backwards compatibility.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Other arguments passed to <code><a href="https://rdrr.io/pkg/nnet/man/nnet.html" class="external-link">nnet</a></code> for
 <code>nnetar</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns an object of class "<code>nnetar</code>".
-The function <code>summary</code> is used to obtain and print a summary of the
-results.
-The generic accessor functions <code>fitted.values</code> and <code>residuals</code>extract useful features of the value returned by <code>nnetar</code>.</p>
+    
+
+<p>Returns an object of class "<code>nnetar</code>".</p>
+
+
+<p>The function <code>summary</code> is used to obtain and print a summary of the
+results.</p>
+
+
+<p>The generic accessor functions <code>fitted.values</code> and <code>residuals</code></p>
+
+
+<p>extract useful features of the value returned by <code>nnetar</code>.</p>
 <dl><dt>model</dt>
 <dd><p>A list containing information about the fitted model</p></dd>
+
 <dt>method</dt>
 <dd><p>The name of the forecasting method as a character string</p></dd>
+
 <dt>x</dt>
 <dd><p>The original time series.</p></dd>
+
 <dt>xreg</dt>
 <dd><p>The external regressors used in fitting (if given).</p></dd>
+
 <dt>residuals</dt>
 <dd><p>Residuals from the fitted model. That is x minus fitted values.</p></dd>
+
 <dt>fitted</dt>
 <dd><p>Fitted values (one-step forecasts)</p></dd>
+
 <dt>...</dt>
 <dd><p>Other arguments</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -164,26 +203,26 @@ model but with nonlinear functions.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">nnetar</span><span class="op">(</span><span class="va">lynx</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fcast</span> <span class="op">&lt;-</span> <span class="fu"><a href="forecast.html">forecast</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fcast</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">nnetar</span><span class="op">(</span><span class="va">lynx</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fcast</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fcast</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="nnetar-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Arguments can be passed to nnet()</span></span>
-<span class="r-in"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">nnetar</span><span class="op">(</span><span class="va">lynx</span>, decay<span class="op">=</span><span class="fl">0.5</span>, maxit<span class="op">=</span><span class="fl">150</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="forecast.html">forecast</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">lynx</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Arguments can be passed to nnet()</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">nnetar</span><span class="op">(</span><span class="va">lynx</span>, decay<span class="op">=</span><span class="fl">0.5</span>, maxit<span class="op">=</span><span class="fl">150</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">lynx</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="nnetar-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Fit model to first 100 years of lynx data</span></span>
-<span class="r-in"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">nnetar</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/window.html" class="external-link">window</a></span><span class="op">(</span><span class="va">lynx</span>,end<span class="op">=</span><span class="fl">1920</span><span class="op">)</span>, decay<span class="op">=</span><span class="fl">0.5</span>, maxit<span class="op">=</span><span class="fl">150</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="forecast.html">forecast</a></span><span class="op">(</span><span class="va">fit</span>,h<span class="op">=</span><span class="fl">14</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">lynx</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Fit model to first 100 years of lynx data</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">nnetar</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/window.html" class="external-link">window</a></span><span class="op">(</span><span class="va">lynx</span>,end<span class="op">=</span><span class="fl">1920</span><span class="op">)</span>, decay<span class="op">=</span><span class="fl">0.5</span>, maxit<span class="op">=</span><span class="fl">150</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="va">fit</span>,h<span class="op">=</span><span class="fl">14</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">lynx</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="nnetar-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Apply fitted model to later data, including all optional arguments</span></span>
-<span class="r-in"><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu">nnetar</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/window.html" class="external-link">window</a></span><span class="op">(</span><span class="va">lynx</span>,start<span class="op">=</span><span class="fl">1921</span><span class="op">)</span>, model<span class="op">=</span><span class="va">fit</span><span class="op">)</span></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Apply fitted model to later data, including all optional arguments</span></span></span>
+<span class="r-in"><span><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu">nnetar</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/window.html" class="external-link">window</a></span><span class="op">(</span><span class="va">lynx</span>,start<span class="op">=</span><span class="fl">1921</span><span class="op">)</span>, model<span class="op">=</span><span class="va">fit</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -194,11 +233,11 @@ model but with nonlinear functions.</p>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
+  <p></p><p>Developed by <a href="http://robjhyndman.com" class="external-link">Rob Hyndman</a>, George Athanasopoulos, <a href="https://github.com/cbergmeir" class="external-link">Christoph Bergmeir</a>, <a href="https://github.com/gabrielcaceres" class="external-link">Gabriel Caceres</a>, Leanne Chhay, Kirill Kuroptev, <a href="https://github.com/mitchelloharawild" class="external-link">Mitchell O’Hara-Wild</a>, <a href="http://fpetropoulos.eu" class="external-link">Fotios Petropoulos</a>, <a href="https://github.com/slavarazbash" class="external-link">Slava Razbash</a>, <a href="http://earo.me" class="external-link">Earo Wang</a>, Farah Yasmeen.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
