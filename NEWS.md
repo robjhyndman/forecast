@@ -1,5 +1,8 @@
-# forecast (development version)
+# forecast 8.17 (23 July 2022)
+  * Updated dm.test() to add alternative variance estimators. (#898)
   * Added `simulate.tbats()` for simulating from TBATS models.
+  * Added dependency on generics for accuracy() and forecast() (#902)
+  * Bux fixes
 
 # forecast 8.16 (10 January 2022)
   * Fixed `tslm()` incorrectly applying Box-Cox transformations when an `mts`
