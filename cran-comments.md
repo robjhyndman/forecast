@@ -11,4 +11,4 @@
 
 ## revdep checks
 
-All reverse dependencies have been checked and no new errors with current CRAN versions.
+All reverse dependencies have been checked. Only one has a new error compared to current CRAN versions, and that is OBL. I have informed the maintainer of the issue and suggested a change to resolve the problem.
