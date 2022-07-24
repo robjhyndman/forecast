@@ -1,4 +1,4 @@
-# forecast 8.17 (23 July 2022)
+# forecast 8.17 (25 July 2022)
   * Updated dm.test() to add alternative variance estimators. (#898)
   * Added `simulate.tbats()` for simulating from TBATS models.
   * Added dependency on generics for accuracy() and forecast() (#902)
