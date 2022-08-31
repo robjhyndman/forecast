@@ -241,6 +241,9 @@ fitted.tslm <- function(object, ...){
 #'
 #' @export
 forecast.lm <- function(object, newdata, h=10, level=c(80, 95), fan=FALSE, lambda=object$lambda, biasadj=NULL, ts=TRUE, ...) {
+  if(h < 1) {
+    stop("The forecast horizon must be at least 1.")
+  }
   if (fan) {
     level <- seq(51, 99, by = 3)
   } else {
@@ -388,7 +391,7 @@ forecast.lm <- function(object, newdata, h=10, level=c(80, 95), fan=FALSE, lambd
   }
   if (!is.null(tspx)) {
     # Always generate trend series
-    trend <- ifelse(is.null(origdata$trend), NCOL(origdata), max(origdata$trend)) + (1:h)
+    trend <- ifelse(is.null(origdata$trend), NCOL(origdata), max(origdata$trend)) + seq_len(h)
     if (!missing(newdata)) {
       newdata <- cbind(newdata, trend)
     }
@@ -396,7 +399,7 @@ forecast.lm <- function(object, newdata, h=10, level=c(80, 95), fan=FALSE, lambd
       newdata <- datamat(trend)
     }
     # Always generate season series
-    x <- ts(1:h, start = tspx[2] + 1 / tspx[3], frequency = tspx[3])
+    x <- ts(seq_len(h), start = tspx[2] + 1 / tspx[3], frequency = tspx[3])
     season <- as.factor(cycle(x))
     newdata <- cbind(newdata, season)
   }
