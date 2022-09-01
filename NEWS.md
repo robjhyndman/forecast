@@ -1,4 +1,5 @@
 # forecast (development version)
+  * Updated RW forecasts to use an unbiased estimate of sigma2
 
 # forecast 8.17 (25 July 2022)
   * Updated dm.test() to add alternative variance estimators. (#898)
