@@ -1,4 +1,5 @@
 ## Test environments
+
 * ubuntu 20.04 (local): R 4.2.1
 * macOS (on GitHub Actions): release
 * windows (on GitHub Actions): release
@@ -11,4 +12,4 @@
 
 ## revdep checks
 
-All reverse dependencies have been checked with no new errors detected.
+seer now passing checks. All reverse dependencies have been checked with no new errors detected.
