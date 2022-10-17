@@ -225,7 +225,6 @@ plotlmforecast <- function(object, PI, shaded, shadecols, col, fcol, pi.col, pi.
 }
 
 
-
 #' Forecast plot
 #'
 #' Plots historical data with forecasts and prediction intervals.
@@ -535,7 +534,6 @@ subset.forecast <- function(x, ...) {
   x$upper <- subset(ts(x$upper, start = tspx[1], frequency = tspx[3]), ...)
   return(x)
 }
-
 
 
 #' Is an object a particular forecast type?

@@ -32,7 +32,6 @@ SEXP updateTBATSGammaBold(SEXP gammaBold_s, SEXP kVector_s, SEXP gammaOne_s, SEX
 SEXP updateTBATSGMatrix(SEXP g_s, SEXP gammaBold_s, SEXP alpha_s, SEXP beta_s) {
 	BEGIN_RCPP
 
-
 	int adjBeta = 0;
 
 	double *gammaVector;
@@ -59,5 +58,3 @@ SEXP updateTBATSGMatrix(SEXP g_s, SEXP gammaBold_s, SEXP alpha_s, SEXP beta_s) {
 
 	END_RCPP
 }
-
-

@@ -496,7 +496,6 @@ summary.tslm <- function(object, ...) {
 
 # Compute cross-validation and information criteria from a linear model
 
-
 #' Cross-validation statistic
 #'
 #' Computes the leave-one-out cross-validation statistic (the mean of PRESS

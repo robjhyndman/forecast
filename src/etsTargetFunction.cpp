@@ -165,7 +165,6 @@ void EtsTargetFunction::eval(const double* p_par, int p_par_length) {
 	etscalc(&this->y[0], &this->n, &this->state[0], &this->m, &this->errortype, &this->trendtype, &this->seasontype,
 			&this->alpha, &this->beta, &this->gamma, &this->phi, &this->e[0], &this->lik, &this->amse[0], &this->nmse);
 
-
 	// Avoid perfect fits
 	if (this->lik < -1e10) this->lik = -1e10;
 
@@ -212,7 +211,6 @@ void EtsTargetFunction::eval(const double* p_par, int p_par_length) {
 }
 
 
-
 bool EtsTargetFunction::check_params() {
 
 	if(bounds != "admissible")
@@ -246,7 +244,6 @@ bool EtsTargetFunction::check_params() {
 
 }
 
-
 bool EtsTargetFunction::admissible() {
 
 	if(phi < 0 || phi > 1+1e-8) return(false);
@@ -265,7 +262,6 @@ bool EtsTargetFunction::admissible() {
 	{
 
 		if(!optBeta && !givenBeta) beta = 0;
-
 
 		//max(1-1/phi-alpha,0)
 		double d = 1-1/phi-alpha;
@@ -316,4 +312,3 @@ bool EtsTargetFunction::admissible() {
 	//Passed all tests
 	return(true);
 }
-

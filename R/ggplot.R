@@ -50,7 +50,6 @@ ggtsbreaks <- function(x) {
 }
 
 
-
 #' ggplot (Partial) Autocorrelation and Cross-Correlation Function Estimation
 #' and Plotting
 #'
@@ -731,7 +730,6 @@ Interval shading is now done automatically based on the level and `fcol`.",
       #   # Negative group is a work around for missing z-index
       # }
 
-
       # # Forecasted points
       # p <- p + ggplot2::geom_line(ggplot2::aes_(x = ~datetime, y = ~ypred), data = predicted, color = fcol, size = flwd)
     }
@@ -937,7 +935,6 @@ ggtsdisplay <- function(x, plot.type=c("partial", "histogram", "scatter", "spect
     )
   }
 }
-
 
 
 #' Time series lag ggplots
@@ -1161,7 +1158,6 @@ gglagchull <- function(x,
     return(p)
   }
 }
-
 
 
 #' Create a seasonal subseries ggplot
@@ -1568,7 +1564,6 @@ autoplot.StructTS <- function(object, labels = NULL, range.bars = TRUE, ...) {
 }
 
 
-
 #' Plot time series decomposition components using ggplot
 #'
 #' Produces a ggplot object of seasonally decomposed time series for objects of
@@ -1779,7 +1774,6 @@ autolayer.mforecast <- function(object, series = NULL, PI = TRUE, ...) {
   }
   return(out)
 }
-
 
 
 #' Automatically create a ggplot for time series objects
@@ -2125,7 +2119,6 @@ GeomForecastPoint <- ggplot2::ggproto(
   }
 )
 
-
 blendHex <- function(mixcol, seqcol, alpha=1) {
   requireNamespace("methods")
   if (is.na(seqcol)) {
@@ -2195,7 +2188,6 @@ GeomForecastInterval <- ggplot2::ggproto(
     ggplot2:::ggname("geom_forecast_interval", do.call(grid::grobTree, rev(intervalGrobList))) # TODO: Find reliable method to stacking them correctly
   }
 )
-
 
 
 
@@ -2324,7 +2316,6 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
 
 # Produce nice histogram with appropriately chosen bin widths
 # Designed to work with time series data without issuing warnings.
-
 
 
 #' Histogram with optional normal and kernel density functions

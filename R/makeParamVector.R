@@ -135,7 +135,6 @@ makeParscaleBATS <- function(control) {
   return(parscale)
 }
 
-
 parameterise <- function(alpha, beta.v=NULL, small.phi=1, gamma.v=NULL, lambda=NULL, ar.coefs=NULL, ma.coefs=NULL) {
   # print("urg")
   # print(lambda)

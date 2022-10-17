@@ -1,7 +1,6 @@
 ## Generic seasadj functions
 
 
-
 #' Seasonal adjustment
 #'
 #' Returns seasonally adjusted data constructed by removing the seasonal

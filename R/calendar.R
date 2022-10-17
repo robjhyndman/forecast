@@ -3,7 +3,6 @@
 as.Date.timeDate <- timeDate::as.Date.timeDate
 
 
-
 #' Number of trading days in each season
 #'
 #' Returns number of trading days in each month or quarter of the observed time
@@ -83,7 +82,6 @@ bizdays <- function(x, FinCenter = c(
   out <- ts(num.days, start = tsp(x)[1L], frequency = freq)
   return(out)
 }
-
 
 
 #' Easter holidays in each season

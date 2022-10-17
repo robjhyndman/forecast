@@ -101,7 +101,6 @@ testaccuracy <- function(f, x, test, d, D) {
   return(out)
 }
 
-
 trainingaccuracy <- function(f, test, d, D) {
   # Make sure x is an element of f when f is a fitted model rather than a forecast
   # if(!is.list(f))
@@ -173,7 +172,6 @@ trainingaccuracy <- function(f, test, d, D) {
 
   return(out)
 }
-
 
 
 #' Accuracy measures for a forecast model

@@ -204,7 +204,6 @@ SD.test <- function(wts, s=frequency(wts)) {
 }
 
 
-
 #' Forecasting using ARIMA or ARFIMA models
 #'
 #' Returns forecasts and other information for univariate ARIMA models.
@@ -546,7 +545,6 @@ arima.errors <- function(object) {
 
 # Return one-step fits
 
-
 #' h-step in-sample forecasts for time series models.
 #'
 #' Returns h-step forecasts for the data used in fitting the model.
@@ -602,7 +600,6 @@ fitted.forecast_ARIMA <- fitted.Arima
 # Calls arima from stats package and adds data to the returned object
 # Also allows refitting to new data
 # and drift terms to be included.
-
 
 #' Fit ARIMA model to univariate time series
 #'
@@ -904,7 +901,6 @@ print.forecast_ARIMA <- function(x, digits=max(3, getOption("digits") - 3), se=T
   }
   invisible(x)
 }
-
 
 
 

@@ -15,7 +15,6 @@ WhichModels <- function(max.p, max.q, max.P, max.Q, maxK) {
   return(x)
 }
 
-
 UndoWhichModels <- function(n) {
   as.numeric(unlist(strsplit(n, split = "f")))
 }

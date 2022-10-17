@@ -35,7 +35,6 @@ lpb <- function(x, nsim=100) {
 }
 
 
-
 # Bootstrapping time series (based on Bergmeir et al., 2016, IJF paper)
 # Author: Fotios Petropoulos
 
@@ -48,7 +47,6 @@ MBB <- function(x, window_size) {
   start_from <- sample(0:(window_size - 1), 1) + 1
   bx[start_from:(start_from + length(x) - 1)]
 }
-
 
 
 

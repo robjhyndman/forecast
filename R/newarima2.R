@@ -288,7 +288,6 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     dx <- diff(dx, differences = d, lag = 1)
   }
 
-
   if(length(dx) == 0L)
     stop("Not enough data to proceed")
   else if (is.constant(dx)) {
@@ -784,13 +783,13 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
     if (minroot < 1 + 1e-2 | checkarima(fit)) {
       fit$ic <- Inf
     }
-    
+
     fit$xreg <- xreg
-    
+
     if (trace) {
       cat("\n", arima.string(fit, padding = TRUE), ":", fit$ic)
     }
-    
+
     return(structure(fit, class = c("forecast_ARIMA", "ARIMA", "Arima")))
   }
   else {

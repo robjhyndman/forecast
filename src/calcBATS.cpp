@@ -4,7 +4,7 @@ using namespace Rcpp ;
 
 SEXP calcBATS(SEXP ys, SEXP yHats, SEXP wTransposes, SEXP Fs, SEXP xs, SEXP gs, SEXP es ){
 	BEGIN_RCPP
-	
+
 
 	NumericMatrix yr(ys);
 	NumericMatrix yHatr(yHats);
@@ -24,7 +24,6 @@ SEXP calcBATS(SEXP ys, SEXP yHats, SEXP wTransposes, SEXP Fs, SEXP xs, SEXP gs, 
 	arma::mat g(gr.begin(), gr.nrow(), gr.ncol(), false);
 	arma::mat e(er.begin(), er.nrow(), er.ncol(), false);
 
-
 	for(t = 1; t < yr.ncol(); t++) {
 		yHat.col(t) = wTranspose * x.col((t-1));
 		e(0,t) = y(0, t) - yHat(0, t);
@@ -42,7 +41,6 @@ SEXP calcBATS(SEXP ys, SEXP yHats, SEXP wTransposes, SEXP Fs, SEXP xs, SEXP gs, 
 
 SEXP calcBATSFaster(SEXP ys, SEXP yHats, SEXP wTransposes, SEXP Fs, SEXP xs, SEXP gs, SEXP es, SEXP xNought_s, SEXP sPeriods_s, SEXP betaV, SEXP tau_s, SEXP p_s, SEXP q_s ) {
 	BEGIN_RCPP
-
 
 	NumericMatrix yr(ys);
 	NumericMatrix yHatr(yHats);
@@ -80,7 +78,6 @@ SEXP calcBATSFaster(SEXP ys, SEXP yHats, SEXP wTransposes, SEXP Fs, SEXP xs, SEX
 	arma::mat g(gr.begin(), gr.nrow(), gr.ncol(), false);
 	arma::mat e(er.begin(), er.nrow(), er.ncol(), false);
 	arma::mat xNought(xNought_r.begin(), xNought_r.nrow(), xNought_r.ncol(), false);
-
 
 
 	if(!Rf_isNull(sPeriods_s)) {
@@ -239,7 +236,6 @@ SEXP calcBATSFaster(SEXP ys, SEXP yHats, SEXP wTransposes, SEXP Fs, SEXP xs, SEX
 			}
 			/////////////////////////////////
 
-
 		}
 
 	} else {
@@ -278,5 +274,3 @@ SEXP calcWTilda(SEXP wTildaTransposes, SEXP Ds) {
 
 	END_RCPP
 }
-
-

@@ -53,7 +53,6 @@ makeTBATSFMatrix <- function(alpha, beta=NULL, small.phi=NULL, seasonal.periods=
       seasonal.row <- cbind(seasonal.row, seasonal.row)
     }
 
-
     # Make the A matrix
     A <- matrix(0, tau, tau)
     last.pos <- 0
@@ -141,7 +140,6 @@ makeTBATSFMatrix <- function(alpha, beta=NULL, small.phi=NULL, seasonal.periods=
   return(F)
 }
 
-
 # makeWMatrix <- function(small.phi=NULL, seasonal.periods=NULL, ar.coefs=NULL, ma.coefs=NULL) {
 #
 # 	the.list <- .Call("makeBATSWMatrix", smallPhi_s = small.phi, sPeriods_s = as.integer(seasonal.periods), arCoefs_s = ar.coefs, maCoefs_s = ma.coefs, PACKAGE = "forecast")
@@ -156,7 +154,6 @@ makeTBATSFMatrix <- function(alpha, beta=NULL, small.phi=NULL, seasonal.periods=
 #
 # 	return(li)
 # }
-
 
 makeFMatrix <- function(alpha, beta=NULL, small.phi=NULL, seasonal.periods=NULL, gamma.bold.matrix=NULL, ar.coefs=NULL, ma.coefs=NULL) {
 
@@ -206,7 +203,6 @@ makeFMatrix <- function(alpha, beta=NULL, small.phi=NULL, seasonal.periods=NULL,
     if (!is.null(beta)) {
       seasonal.row <- cbind(seasonal.row, seasonal.row)
     }
-
 
     # Make the A matrix
     for (i in seasonal.periods) {
@@ -287,7 +283,6 @@ makeFMatrix <- function(alpha, beta=NULL, small.phi=NULL, seasonal.periods=NULL,
   }
   return(F)
 }
-
 
 makeXMatrix <- function(l, b=NULL, s.vector=NULL, d.vector=NULL, epsilon.vector=NULL) {
   x.transpose <- matrix(l, nrow = 1, ncol = 1)

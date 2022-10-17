@@ -40,7 +40,6 @@ spline.loglik <- function(beta, y, cc=1e2) {
 
 # Spline forecasts
 
-
 #' Cubic Spline Forecast
 #'
 #' Returns local linear forecasts and prediction intervals using cubic

@@ -32,7 +32,6 @@ mlmsplit <- function(x, index=NULL) {
 }
 
 
-
 #' Forecast a multiple linear model with possible time series components
 #'
 #' \code{forecast.mlm} is used to predict multiple linear models, especially
@@ -187,7 +186,6 @@ print.mforecast <- function(x, ...) {
   })
   return(invisible())
 }
-
 
 
 #' Multivariate forecast plot

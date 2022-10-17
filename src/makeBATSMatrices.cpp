@@ -36,14 +36,11 @@ SEXP makeBATSWMatrix(SEXP smallPhi_s, SEXP sPeriods_s, SEXP arCoefs_s, SEXP maCo
 			numCols = numCols + q;
 	}
 
-
 	NumericMatrix wTranspose_r(1, numCols);
 	arma::mat wTranspose(wTranspose_r.begin(), wTranspose_r.nrow(), wTranspose_r.ncol(), false);
 
-
 	if(!Rf_isNull(sPeriods_s)) {
 			wTranspose.zeros();
-
 
 			int position = adjustPhi;
 
@@ -52,9 +49,7 @@ SEXP makeBATSWMatrix(SEXP smallPhi_s, SEXP sPeriods_s, SEXP arCoefs_s, SEXP maCo
 				wTranspose(0,position) = 1;
 			}
 
-
 	}
-
 
 
 	wTranspose(0,0) = 1;
@@ -62,7 +57,6 @@ SEXP makeBATSWMatrix(SEXP smallPhi_s, SEXP sPeriods_s, SEXP arCoefs_s, SEXP maCo
 	if(adjustPhi == 1) {
 		wTranspose(0,1) = *smallPhi;
 	}
-
 
 
 	if(!Rf_isNull(arCoefs_s)) {
@@ -88,10 +82,8 @@ SEXP makeBATSWMatrix(SEXP smallPhi_s, SEXP sPeriods_s, SEXP arCoefs_s, SEXP maCo
 			Named("w.transpose") = wTranspose
 			);
 
-
 	END_RCPP
 }
-
 
 
 SEXP makeBATSGMatrix(SEXP alpha_s, SEXP beta_s, SEXP gammaVector_s, SEXP seasonalPeriods_s, SEXP p_s, SEXP q_s) {
@@ -135,7 +127,6 @@ SEXP makeBATSGMatrix(SEXP alpha_s, SEXP beta_s, SEXP gammaVector_s, SEXP seasona
 
 
 
-
 	//Copy the gamma/seasonal bits
 	if((!Rf_isNull(gammaVector_s))&&(!Rf_isNull(seasonalPeriods_s))) {
 		int position = adjustBeta + 1;
@@ -161,7 +152,6 @@ SEXP makeBATSGMatrix(SEXP alpha_s, SEXP beta_s, SEXP gammaVector_s, SEXP seasona
 	p = 0;
 	q = 0;
 	gammaVector = 0;
-
 
 	if((!Rf_isNull(gammaVector_s))&&(!Rf_isNull(seasonalPeriods_s))) {
 		arma::mat gammaBold = gTranspose.cols((1+adjustBeta), (adjustBeta+gammaLength));
@@ -224,7 +214,6 @@ SEXP makeFMatrix(SEXP alpha_s, SEXP beta_s, SEXP smallPhi_s, SEXP seasonalPeriod
 		bool indMaCoefs = false;
 	}
 	arma::mat
-
 
 	END_RCPP
 }

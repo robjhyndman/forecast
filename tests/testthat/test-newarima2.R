@@ -26,7 +26,6 @@ if (require(testthat)) {
     expect_equal(auto.arima(WWWusage, parallel = FALSE, stepwise = FALSE)$arma, c(3L, 0L, 0L, 0L, 1L, 1L, 0L))
   })
 
-
   test_that("tests for ndiffs()", {
     expect_true(ndiffs(AirPassengers, test = "kpss") == 1)
     expect_true(ndiffs(AirPassengers, test = "adf") == 1)

@@ -350,7 +350,6 @@ forecast.mstl <- function(object, method = c("ets", "arima", "naive", "rwdrift")
   )
 }
 
-
 # rowSums for mts objects
 #
 # Applies rowSums and returns ts with same tsp attributes as input. This

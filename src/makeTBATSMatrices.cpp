@@ -8,7 +8,7 @@ SEXP makeTBATSWMatrix(SEXP smallPhi_s, SEXP kVector_s, SEXP arCoefs_s, SEXP maCo
 	int *kVector, *tau;
 	int adjustPhi = 0;
 	R_len_t numSeasonal = 0, numCols = 1, p = 0, q = 0;
-	
+
 	if(!Rf_isNull(smallPhi_s)) {
 		smallPhi = REAL(smallPhi_s);
 		adjustPhi = 1;
@@ -48,16 +48,13 @@ SEXP makeTBATSWMatrix(SEXP smallPhi_s, SEXP kVector_s, SEXP arCoefs_s, SEXP maCo
 
 			}
 
-
 	}
-
 
 	wTranspose(0,0) = 1;
 
 	if(adjustPhi == 1) {
 		wTranspose(0,1) = *smallPhi;
 	}
-
 
 	if(!Rf_isNull(arCoefs_s)) {
 		for(R_len_t i = 1; i <= p; i++) {
@@ -80,7 +77,6 @@ SEXP makeTBATSWMatrix(SEXP smallPhi_s, SEXP kVector_s, SEXP arCoefs_s, SEXP maCo
 			Named("w") = w,
 			Named("w.transpose") = wTranspose
 			);
-
 
 	END_RCPP
 }
@@ -123,7 +119,6 @@ SEXP makeSIMatrix(SEXP k_s, SEXP m_s) {
 	END_RCPP
 }
 
-
 SEXP makeAIMatrix(SEXP C_s, SEXP S_s, SEXP k_s) {
 	int *k;
 	k = &INTEGER(k_s)[0];
@@ -142,4 +137,3 @@ SEXP makeAIMatrix(SEXP C_s, SEXP S_s, SEXP k_s) {
 	return wrap(A);
 
 }
-

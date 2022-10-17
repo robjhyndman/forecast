@@ -32,7 +32,6 @@ guerrero <- function(x, lower=-1, upper=2, nonseasonal.length=2) {
   )$minimum)
 }
 
-
 # Modified version of boxcox from MASS package
 bcloglik <- function(x, lower=-1, upper=2) {
   n <- length(x)
@@ -64,7 +63,6 @@ bcloglik <- function(x, lower=-1, upper=2) {
   }
   return(xl[which.max(loglik)])
 }
-
 
 
 #' Automatic selection of Box Cox transformation parameter

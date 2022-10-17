@@ -1,6 +1,5 @@
 # Mean forecast
 
-
 #' Mean Forecast
 #'
 #' Returns forecasts and prediction intervals for an iid model applied to y.
@@ -117,7 +116,6 @@ meanf <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALS
 
   return(structure(out, class = "forecast"))
 }
-
 
 #' Box Cox Transformation
 #'
@@ -250,7 +248,6 @@ InvBoxCoxf <- function(x=NULL, fvar=NULL, lambda=NULL) {
 
   return(x$mean * (1 + 0.5 * fvar * (1 - lambda) / (x$mean) ^ (2 * lambda)))
 }
-
 
 
 #' Forecasting using Structural Time Series models
@@ -436,7 +433,6 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x) > 1, 2 * f
   }
   colnames(lower) <- colnames(upper) <- paste(level, "%", sep = "")
 
-
   if (!is.null(lambda)) {
     fitted <- InvBoxCox(object$fitted[, 1], lambda)
     x <- InvBoxCox(x, lambda)
@@ -467,7 +463,6 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x) > 1, 2 * f
     class = "forecast"
   ))
 }
-
 
 ## CROSTON
 

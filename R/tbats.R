@@ -2,7 +2,6 @@
 ###############################################################################
 
 
-
 #' TBATS model (Exponential smoothing state space model with Box-Cox
 #' transformation, ARMA errors, Trend and Seasonal components)
 #'
@@ -144,7 +143,6 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
     use.parallel = use.parallel, num.cores = num.cores,
     bc.lower = bc.lower, bc.upper = bc.upper, biasadj = biasadj, ...
   )
-
 
   # If non-seasonal data, return the non-seasonal model
   if (is.null(seasonal.periods)) {
@@ -576,7 +574,6 @@ filterTBATSSpecifics <- function(y, box.cox, trend, damping, seasonal.periods, k
   }
 }
 
-
 makeSingleFourier <- function(j, m, T) {
   frier <- matrix(0, nrow = T, ncol = 2)
   for (t in 1:T) {
@@ -662,7 +659,6 @@ plot.tbats <- function(x, main="Decomposition by TBATS model", ...) {
   out <- tbats.components(x)
   plot.ts(out, main = main, nc = 1, ...)
 }
-
 
 
 

@@ -2,7 +2,6 @@
 # Then adapted by M. Yousaf Khan for better performance on small samples
 
 
-
 #' Diebold-Mariano test for predictive accuracy
 #'
 #' The Diebold-Mariano test compares the forecast accuracy of two forecast
@@ -117,7 +116,6 @@ dm.test <- function(e1, e2, alternative = c("two.sided", "less", "greater"), h =
     class = "htest"
   )
 }
-
 
 is.htest <- function(x) {
   inherits(x, "htest")

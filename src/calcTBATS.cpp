@@ -5,7 +5,6 @@ using namespace Rcpp ;
 SEXP calcTBATSFaster(SEXP ys, SEXP yHats, SEXP wTransposes, SEXP Fs, SEXP xs, SEXP gs, SEXP es, SEXP xNought_s) {
 	BEGIN_RCPP
 
-
 	NumericMatrix yr(ys);
 	NumericMatrix yHatr(yHats);
 	NumericMatrix wTransposer(wTransposes);
@@ -15,7 +14,6 @@ SEXP calcTBATSFaster(SEXP ys, SEXP yHats, SEXP wTransposes, SEXP Fs, SEXP xs, SE
 	NumericMatrix er(es);
 	NumericMatrix xNought_r(xNought_s);
 
-
 	arma::mat y(yr.begin(), yr.nrow(), yr.ncol(), false);
 	arma::mat yHat(yHatr.begin(), yHatr.nrow(), yHatr.ncol(), false);
 	arma::mat wTranspose(wTransposer.begin(), wTransposer.nrow(), wTransposer.ncol(), false);
@@ -24,8 +22,6 @@ SEXP calcTBATSFaster(SEXP ys, SEXP yHats, SEXP wTransposes, SEXP Fs, SEXP xs, SE
 	arma::mat g(gr.begin(), gr.nrow(), gr.ncol(), false);
 	arma::mat e(er.begin(), er.nrow(), er.ncol(), false);
 	arma::mat xNought(xNought_r.begin(), xNought_r.nrow(), xNought_r.ncol(), false);
-
-
 
 
 
@@ -39,10 +35,7 @@ SEXP calcTBATSFaster(SEXP ys, SEXP yHats, SEXP wTransposes, SEXP Fs, SEXP xs, SE
 		x.col(t) = F * x.col((t-1)) + g * e(0,t);
 	}
 
-
 	return R_NilValue;
 
 	END_RCPP
 }
-
-

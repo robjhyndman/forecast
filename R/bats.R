@@ -2,7 +2,6 @@
 ###############################################################################
 
 
-
 #' BATS model (Exponential smoothing state space model with Box-Cox
 #' transformation, ARMA errors, Trend and Seasonal components)
 #'
@@ -103,7 +102,6 @@ bats <- function(y, use.box.cox = NULL, use.trend = NULL, use.damped.trend = NUL
   if (all(seasonal.periods == 1)) {
     seasonal.periods <- NULL
   }
-
 
   ny <- length(y)
   y <- na.contiguous(y)
@@ -256,7 +254,6 @@ filterSpecifics <- function(y, box.cox, trend, damping, seasonal.periods, use.ar
     return(list(AIC = Inf))
   }
 
-
   first.model <- fitSpecificBATS(y, use.box.cox = box.cox, use.beta = trend, use.damping = damping, seasonal.periods = seasonal.periods, init.box.cox = init.box.cox, bc.lower = bc.lower, bc.upper = bc.upper, biasadj = biasadj)
   if (!is.null(seasonal.periods) && !force.seasonality) {
     non.seasonal.model <- fitSpecificBATS(y, use.box.cox = box.cox, use.beta = trend, use.damping = damping, seasonal.periods = NULL, init.box.cox = init.box.cox, bc.lower = bc.lower, bc.upper = bc.upper, biasadj = biasadj)
@@ -301,11 +298,9 @@ parFilterSpecifics <- function(control.number, control.array, y, seasonal.period
   trend <- control.array[control.number, 2]
   damping <- control.array[control.number, 3]
 
-
   if (!trend && damping) {
     return(list(AIC = Inf))
   }
-
 
   first.model <- fitSpecificBATS(y, use.box.cox = box.cox, use.beta = trend, use.damping = damping, seasonal.periods = seasonal.periods, init.box.cox = init.box.cox, bc.lower = bc.lower, bc.upper = bc.upper, biasadj = biasadj)
   if (!is.null(seasonal.periods) && !force.seasonality) {
@@ -399,7 +394,6 @@ print.bats <- function(x, ...) {
   cat(x$AIC)
   cat("\n")
 }
-
 
 
 #' Plot components from BATS model

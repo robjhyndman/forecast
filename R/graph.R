@@ -1,7 +1,6 @@
 ### Time series graphics and transformations
 
 
-
 #' Time series display
 #'
 #' Plots a time series along with its acf and either its pacf, lagged
@@ -97,7 +96,6 @@ tsdisplay <- function(x, plot.type=c("partial", "histogram", "scatter", "spectru
   layout(1)
   invisible()
 }
-
 
 
 

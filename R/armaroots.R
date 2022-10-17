@@ -68,7 +68,6 @@ plot.armaroots <- function(x, xlab, ylab, main, ...) {
 }
 
 
-
 #' Plot characteristic roots from ARIMA model
 #'
 #' Produces a plot of the inverse AR and MA roots of an ARIMA model. Inverse

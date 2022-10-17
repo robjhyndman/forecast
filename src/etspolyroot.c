@@ -117,7 +117,7 @@ void cpolyroot(double *opr, double *opi, int *degree,
     pr = tmp; pi = tmp + nn; hr = tmp + 2*nn; hi = tmp + 3*nn;
     qpr = tmp + 4*nn; qpi = tmp + 5*nn; qhr = tmp + 6*nn; qhi = tmp + 7*nn;
     shr = tmp + 8*nn; shi = tmp + 9*nn;
-    
+
     /* make a copy of the coefficients and shr[] = | p[] | */
     for (i = 0; i < nn; i++) {
 	pr[i] = opr[i];
@@ -200,7 +200,6 @@ void cpolyroot(double *opr, double *opi, int *degree,
     return;
 }
 
-
 /*  Computes the derivative polynomial as the initial
  *  polynomial and computes l1 no-shift h polynomials.	*/
 
@@ -245,7 +244,6 @@ static void noshft(int l1)
 	}
     }
 }
-
 
 /*  Computes l2 fixed-shift h polynomials and tests for convergence.
  *  initiates a variable-shift iteration and returns with the
@@ -342,7 +340,6 @@ static Rboolean fxshft(int l2, double *zr, double *zi)
 
     return(vrshft(10, zr, zi));
 }
-
 
 /* carries out the third stage iteration.
  */
@@ -538,7 +535,6 @@ double errev(int n, double *qr, double *qi,
     return e * (a_re + m_re) - mp * m_re;
 }
 
-
 static
 double cpoly_cauchy(int n, double *pot, double *q)
 {
@@ -638,7 +634,6 @@ double cpoly_scale(int n, double *pot,
     }
     else return 1.0;
 }
-
 
 static
 void cdivid(double ar, double ai, double br, double bi,

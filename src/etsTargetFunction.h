@@ -26,7 +26,6 @@ public:
 
 	double getObjVal() { return(objval); };
 
-
 private:
 
 	bool check_params();

@@ -5,7 +5,6 @@
  *      Author: srazbash
  */
 
-
 #include "calcBATS.h"
 
 using namespace Rcpp ;
@@ -150,13 +149,11 @@ SEXP updateWtransposeMatrix(SEXP wTranspose_s, SEXP smallPhi_s, SEXP tau_s, SEXP
 SEXP updateGMatrix(SEXP g_s, SEXP gammaBold_s, SEXP alpha_s, SEXP beta_s, SEXP gammaVector_s, SEXP seasonalPeriods_s) {
 	BEGIN_RCPP
 
-
 	int adjBeta = 0, *seasonalPeriods;
 
 	double *gammaVector;
 
 	NumericMatrix g(g_s);
-
 
 	g(0,0) = REAL(alpha_s)[0];
 	if(!Rf_isNull(beta_s)) {
@@ -178,7 +175,6 @@ SEXP updateGMatrix(SEXP g_s, SEXP gammaBold_s, SEXP alpha_s, SEXP beta_s, SEXP g
 				bPos = bPos + seasonalPeriods[s];
 				g(position, 0) = gammaVector[(s+1)];
 			}
-
 
 		}
 	}

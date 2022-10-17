@@ -7,7 +7,6 @@
 # Argument lambda allows for Box-Cox transformation
 
 
-
 #' Interpolate missing values in a time series
 #'
 #' By default, uses linear interpolation for non-seasonal series. For seasonal series, a
@@ -115,7 +114,6 @@ na.interp <- function(x, lambda=NULL,
 # Missing values replaced as well if replace.missing=TRUE
 
 
-
 #' Identify and replace outliers and missing values in a time series
 #'
 #' Uses supsmu for non-seasonal series and a robust STL decomposition for
@@ -148,7 +146,6 @@ tsclean <- function(x, replace.missing=TRUE, iterate=2, lambda = NULL) {
 }
 
 # Function to identify time series outlieres
-
 
 #' Identify and replace outliers in a time series
 #'

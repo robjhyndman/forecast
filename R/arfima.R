@@ -64,7 +64,6 @@ unfracdiff <- function(x, y, n, h, d) {
 ## Automatic ARFIMA modelling
 ## Will return Arima object if d < 0.01 to prevent estimation problems
 
-
 #' Fit a fractionally differenced ARFIMA model
 #'
 #' An ARFIMA(p,d,q) model is selected and estimated automatically using the

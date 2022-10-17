@@ -152,7 +152,6 @@ forecast.bats <- function(object, h, level=c(80, 95), fan=FALSE, biasadj=NULL, .
   return(forecast.object)
 }
 
-
 #' @export
 as.character.bats <- function(x, ...) {
   name <- "BATS("

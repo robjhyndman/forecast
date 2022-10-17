@@ -23,7 +23,6 @@
 // typedef unsigned int      uintptr_t;
 // #endif
 
-
 // #include <inttypes.h>
 // #include <stdint.h>
 // #include <cstdint>

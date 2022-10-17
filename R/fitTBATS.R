@@ -81,7 +81,6 @@ fitPreviousTBATSModel <- function(y, model, biasadj=FALSE) {
   return(model.for.output)
 }
 
-
 fitSpecificTBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.periods=NULL, k.vector=NULL, starting.params=NULL, x.nought=NULL, ar.coefs=NULL, ma.coefs=NULL, init.box.cox=NULL, bc.lower=0, bc.upper=1, biasadj=FALSE) {
   if (!is.null(seasonal.periods)) {
     seasonal.periods <- sort(seasonal.periods)
@@ -293,7 +292,6 @@ fitSpecificTBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.per
     x.nought <- BoxCox(opt.env$x.nought.untransformed, lambda = lambda)
     lambda <- attr(x.nought, "lambda")
 
-
     ## Calculate the variance:
     # 1. Re-set up the matrices
     w <- .Call("makeTBATSWMatrix", smallPhi_s = small.phi, kVector_s = k.vector, arCoefs_s = ar.coefs, maCoefs_s = ma.coefs, tau_s = tau, PACKAGE = "forecast")
@@ -363,7 +361,6 @@ fitSpecificTBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.per
   # Calculate the AIC
   aic <- likelihood + 2 * (length(param.vector$vect) + nrow(x.nought))
 
-
   # Make a list object
   fits <- ts(c(fitted.values))
   e <- ts(c(e))
@@ -375,7 +372,6 @@ fitSpecificTBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.per
   class(model.for.output) <- c("tbats", "bats")
   return(model.for.output)
 }
-
 
 
 calcLikelihoodTBATS <- function(param.vector, opt.env, use.beta, use.small.phi, seasonal.periods, param.control, p=0, q=0, tau=0, bc.lower=0, bc.upper=1) {
@@ -407,7 +403,6 @@ calcLikelihoodTBATS <- function(param.vector, opt.env, use.beta, use.small.phi, 
   x.nought <- BoxCox(opt.env$x.nought.untransformed, lambda = box.cox.parameter)
   lambda <- attr(x.nought, "lambda")
 
-
   .Call("updateWtransposeMatrix", wTranspose_s = opt.env$w.transpose, smallPhi_s = small.phi, tau_s = as.integer(tau), arCoefs_s = ar.coefs, maCoefs_s = ma.coefs, p_s = as.integer(p), q_s = as.integer(q), PACKAGE = "forecast")
 
   if (!is.null(opt.env$gamma.bold)) {
@@ -421,19 +416,16 @@ calcLikelihoodTBATS <- function(param.vector, opt.env, use.beta, use.small.phi, 
   lambda <- attr(mat.transformed.y, "lambda")
   n <- ncol(opt.env$y)
 
-
   .Call("calcTBATSFaster", ys = mat.transformed.y, yHats = opt.env$y.hat, wTransposes = opt.env$w.transpose, Fs = opt.env$F, xs = opt.env$x, gs = opt.env$g, es = opt.env$e, xNought_s = x.nought, PACKAGE = "forecast")
 
   ##
   ####
   ####################################################################
 
-
   log.likelihood <- n * log(sum(opt.env$e ^ 2)) - 2 * (box.cox.parameter - 1) * sum(log(opt.env$y))
   if (is.na(log.likelihood)) { # Not sure why this would occur
     return(Inf)
   }
-
 
   assign("D", (opt.env$F - opt.env$g %*% opt.env$w.transpose), envir = opt.env)
   if (checkAdmissibility(opt.env, box.cox = box.cox.parameter, small.phi = small.phi, ar.coefs = ar.coefs, ma.coefs = ma.coefs, tau = sum(seasonal.periods), bc.lower = bc.lower, bc.upper = bc.upper)) {
@@ -479,7 +471,6 @@ calcLikelihoodNOTransformedTBATS <- function(param.vector, opt.env, x.nought, us
 
   .Call("updateTBATSGMatrix", g_s = opt.env$g, gammaBold_s = opt.env$gamma.bold, alpha_s = alpha, beta_s = beta.v, PACKAGE = "forecast")
 
-
   .Call("updateFMatrix", opt.env$F, small.phi, alpha, beta.v, opt.env$gamma.bold, ar.coefs, ma.coefs, tau, PACKAGE = "forecast")
 
   n <- ncol(opt.env$y)
@@ -489,14 +480,12 @@ calcLikelihoodNOTransformedTBATS <- function(param.vector, opt.env, x.nought, us
   ####
   ####################################################################
 
-
   log.likelihood <- n * log(sum(opt.env$e * opt.env$e))
   if (is.na(log.likelihood)) { # Not sure why this would occur
     return(Inf)
   }
 
   assign("D", (opt.env$F - opt.env$g %*% opt.env$w.transpose), envir = opt.env)
-
 
   if (checkAdmissibility(opt.env = opt.env, box.cox = NULL, small.phi = small.phi, ar.coefs = ar.coefs, ma.coefs = ma.coefs, tau = tau)) {
     return(log.likelihood)

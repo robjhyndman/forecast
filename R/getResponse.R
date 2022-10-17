@@ -4,7 +4,6 @@
 
 
 
-
 #' Get response variable from time series model.
 #'
 #' \code{getResponse} is a generic function for extracting the historical data

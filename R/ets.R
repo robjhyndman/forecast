@@ -507,7 +507,6 @@ as.character.ets <- function(x, ...) {
 #   list(lower=myLower, upper=myUpper)
 # }
 
-
 etsmodel <- function(y, errortype, trendtype, seasontype, damped,
                      alpha=NULL, beta=NULL, gamma=NULL, phi=NULL,
                      lower, upper, opt.crit, nmse, bounds, maxit=2000, control=NULL, seed=NULL, trace=FALSE) {
@@ -520,7 +519,6 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
   } else {
     m <- 1
   }
-
 
   # Modify limits if alpha, beta or gamma have been specified.
   if (!is.null(alpha)) {
@@ -735,7 +733,6 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
   ))
 }
 
-
 etsTargetFunctionInit <- function(par, y, nstate, errortype, trendtype, seasontype, damped, par.noopt, lowerb, upperb,
                                   opt.crit, nmse, bounds, m, pnames, pnames2) {
   names(par) <- pnames
@@ -809,7 +806,6 @@ etsTargetFunctionInit <- function(par, y, nstate, errortype, trendtype, seasonty
     }
   }
 
-
   if (!damped) {
     phi <- 1
   }
@@ -844,7 +840,6 @@ etsTargetFunctionInit <- function(par, y, nstate, errortype, trendtype, seasonty
   res
 }
 
-
 initparam <- function(alpha, beta, gamma, phi, trendtype, seasontype, damped, lower, upper, m, bounds) {
   if(bounds == "admissible") {
     lower[1L:3L] <- lower[1L:3L]*0
@@ -852,7 +847,6 @@ initparam <- function(alpha, beta, gamma, phi, trendtype, seasontype, damped, lo
   } else if (any(lower > upper)) {
     stop("Inconsistent parameter boundaries")
   }
-
 
   # Select alpha
   if (is.null(alpha)) {
@@ -1017,7 +1011,6 @@ initstate <- function(y, trendtype, seasontype) {
   return(c(l0, b0, init.seas))
 }
 
-
 lik <- function(par, y, nstate, errortype, trendtype, seasontype, damped, par.noopt, lowerb, upperb,
                 opt.crit, nmse, bounds, m, pnames, pnames2) {
 
@@ -1163,7 +1156,6 @@ print.ets <- function(x, ...) {
   #    cat(round(x$bic,4))
 }
 
-
 pegelsresid.C <- function(y, m, init.state, errortype, trendtype, seasontype, damped, alpha, beta, gamma, phi, nmse) {
   n <- length(y)
   p <- length(init.state)
@@ -1261,7 +1253,6 @@ admissible <- function(alpha, beta, gamma, phi, m) {
 }
 
 ### PLOT COMPONENTS
-
 
 #' Plot components from ETS model
 #'
@@ -1364,7 +1355,6 @@ logLik.ets <- function(object, ...) {
 nobs.ets <- function(object, ...) {
   length(object$x)
 }
-
 
 
 #' Is an object a particular model type?

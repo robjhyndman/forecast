@@ -1,6 +1,5 @@
 # Replacement for the acf() function.
 
-
 #' (Partial) Autocorrelation and Cross-Correlation Function Estimation
 #'
 #' The function \code{Acf} computes (and by default plots) an estimate of the
@@ -89,7 +88,7 @@ Acf <- function(x, lag.max = NULL,
   acf.out$tsp <- tsp(x)
   acf.out$periods <- attributes(x)$msts
   acf.out$series <- deparse(substitute(x))
-  
+
   # Make lags in integer units
   nlags <- dim(acf.out$lag)[1]
   if (type == "partial") {
@@ -103,7 +102,7 @@ Acf <- function(x, lag.max = NULL,
     plot.out <- acf.out
     # Hide 0 lag if autocorrelations
     if (type == "correlation") {
-      for (i in 1:NCOL(x))
+      for (i in seq_along(x))
       {
         plot.out$lag[1, i, i] <- 1
         plot.out$acf[1, i, i] <- 0
@@ -388,7 +387,6 @@ wpacf <- function(x, lag.max=length(x) - 1) {
   return(out)
 }
 
-
 # Function to produce new style plot of ACF or PACF with CI
 # x = time series
 
@@ -442,7 +440,6 @@ taperedacf <- function(x, lag.max=NULL, type=c("correlation", "partial"),
 taperedpacf <- function(x, ...) {
   taperedacf(x, type = "partial", ...)
 }
-
 
 plot.mpacf <- function(object, xlim=NULL, ylim=NULL,
                        xlab="Lag", ylab="", ...) {

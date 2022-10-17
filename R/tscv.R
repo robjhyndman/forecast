@@ -119,7 +119,6 @@ tsCV <- function(y, forecastfunction, h=1, window=NULL, xreg=NULL, initial=0, ..
 # By Gabriel Caceres
 ## Note arguments to pass must be named
 
-
 #' k-fold Cross-Validation applied to an autoregressive model
 #'
 #' \code{CVar} computes the errors obtained by applying an autoregressive

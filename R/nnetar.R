@@ -6,7 +6,6 @@
 # if xreg is included then size = (p+P+ncol(xreg)+1)/2
 
 
-
 #' Neural Network Time Series Forecasts
 #'
 #' Feed-forward neural networks with a single hidden layer and lagged inputs
@@ -368,7 +367,6 @@ print.nnetarmodels <- function(x, ...) {
   cat(paste("\nAverage of", length(x), "networks, each of which is\n"))
   print(x[[1]])
 }
-
 
 
 

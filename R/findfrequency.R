@@ -1,7 +1,6 @@
 ## A function determining the appropriate period, if the data is of unknown period
 ## Written by Rob Hyndman
 
-
 #' Find dominant frequency of a time series
 #'
 #' \code{findfrequency} returns the period of the dominant frequency of a time
@@ -60,4 +59,3 @@ findfrequency <- function(x) {
 
   return(as.integer(period))
 }
-

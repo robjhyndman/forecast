@@ -1,7 +1,6 @@
 ##
 
 
-
 #' Forecasting using a bagged model
 #'
 #' The bagged model forecasting method.
@@ -80,7 +79,6 @@ baggedModel <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), fn=ets
   return(structure(out, class = c("baggedModel")))
 }
 
-
 #' @rdname baggedModel
 #' @export
 baggedETS <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), ...) {
@@ -88,7 +86,6 @@ baggedETS <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), ...) {
   class(out) <- c("baggedETS", class(out))
   out
 }
-
 
 #' Forecasting using a bagged model
 #'
@@ -183,7 +180,6 @@ forecast.baggedModel <- function(object, h=ifelse(frequency(object$y) > 1, 2 * f
   class(out) <- "forecast"
   out
 }
-
 
 # fitted.baggedModel <- function(object, h=1, accum_func=mean, ...){
 #

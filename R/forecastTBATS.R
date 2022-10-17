@@ -131,7 +131,6 @@ forecast.tbats <- function(object, h, level = c(80, 95), fan = FALSE, biasadj = 
   return(forecast.object)
 }
 
-
 #' @export
 as.character.tbats <- function(x, ...) {
   name <- "TBATS("

@@ -61,7 +61,6 @@ RcppExport SEXP etsTargetFunctionInit(SEXP p_y, SEXP p_nstate, SEXP p_errortype,
 	double gamma = Rcpp::as<double>(p_gamma);
 	double phi = Rcpp::as<double>(p_phi);
 
-
 	sp->init(y, nstate, errortype, trendtype, seasontype, damped, lower, upper, opt_crit,
 			nmse, bounds, m, optAlpha, optBeta, optGamma, optPhi,
 			givenAlpha, givenBeta, givenGamma, givenPhi,
@@ -130,7 +129,6 @@ RcppExport SEXP etsGetTargetFunctionRdonlp2Ptr() {
 }
 */
 
-
 double targetFunctionEtsNelderMead(int n, double *par, void *ex)
 {
 	EtsTargetFunction* sp = (EtsTargetFunction*) ex;
@@ -139,7 +137,6 @@ double targetFunctionEtsNelderMead(int n, double *par, void *ex)
 	return sp->getObjVal();
 
 }
-
 
 RcppExport SEXP etsNelderMead(SEXP p_var, SEXP p_env, SEXP p_abstol,
 		SEXP p_intol, SEXP p_alpha, SEXP p_beta, SEXP p_gamma,
@@ -175,6 +172,3 @@ RcppExport SEXP etsNelderMead(SEXP p_var, SEXP p_env, SEXP p_abstol,
 			Rcpp::Named("fncount") = fncount);
 
 }
-
-
-

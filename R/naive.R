@@ -154,7 +154,6 @@ fitted.lagwalk <- function(object, ...){
   object$fitted
 }
 
-
 # Random walk
 #' @rdname naive
 #'

@@ -96,7 +96,6 @@ cutW <- function(use.beta, w.tilda.transpose, seasonal.periods, p=0, q=0) {
   return(list(matrix = w.tilda.transpose, mask.vector = mask.vector))
 }
 
-
 calcSeasonalSeeds <- function(use.beta, coefs, seasonal.periods, mask.vector, p=0, q=0) {
   x.pos.counter <- 1
   sum.k <- 0

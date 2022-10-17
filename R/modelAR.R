@@ -3,7 +3,6 @@
 # For seasonal data, p chosen using AIC from linear AR(p) model after
 #    seasonally adjusting with STL decomposition, and P=1
 
-
 #' Time Series Forecasts with a user-defined model
 #'
 #' Experimental function to forecast univariate time series with a
@@ -308,7 +307,6 @@ modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=N
   out$call <- match.call()
   return(structure(out, class = c("modelAR")))
 }
-
 
 #' Forecasting using user-defined model
 #'
