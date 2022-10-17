@@ -1,11 +1,11 @@
 Package: forecast
-Version: 8.17.0.9000
+Version: 8.18.0.9000
 Title: Forecasting Functions for Time Series and Linear Models
 Description: Methods and tools for displaying and analysing
              univariate time series forecasts including exponential smoothing
              via state space models and automatic ARIMA modelling.
 Depends:
-  R (>= 3.0.2),
+  R (>= 3.5.0),
 Imports:
   colorspace,
   fracdiff,
