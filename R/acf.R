@@ -92,9 +92,9 @@ Acf <- function(x, lag.max = NULL,
   # Make lags in integer units
   nlags <- dim(acf.out$lag)[1]
   if (type == "partial") {
-    acf.out$lag[, , ] <- 1:(nlags)
+    acf.out$lag[, , ] <- seq(nlags)
   } else {
-    acf.out$lag[, , ] <- 0:(nlags - 1)
+    acf.out$lag[, , ] <- seq(nlags)-1
   }
 
   # Plot if required
@@ -102,7 +102,7 @@ Acf <- function(x, lag.max = NULL,
     plot.out <- acf.out
     # Hide 0 lag if autocorrelations
     if (type == "correlation") {
-      for (i in seq_along(x))
+      for (i in seq(NCOL(x)))
       {
         plot.out$lag[1, i, i] <- 1
         plot.out$acf[1, i, i] <- 0
