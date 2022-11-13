@@ -209,9 +209,9 @@ Time Series Analysis</em>, 31(6), 471-482.</p>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">Acf</span><span class="op">(</span><span class="va">wineind</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in `[&lt;-`(`*tmp*`, 1, i, i, value = 1):</span> subscript out of bounds</span>
-<span class="r-in"><span><span class="fu">Pacf</span><span class="op">(</span><span class="va">wineind</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="Acf-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu">Pacf</span><span class="op">(</span><span class="va">wineind</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="Acf-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="fu">taperedacf</span><span class="op">(</span><span class="va">wineind</span>, nsim<span class="op">=</span><span class="fl">50</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">taperedpacf</span><span class="op">(</span><span class="va">wineind</span>, nsim<span class="op">=</span><span class="fl">50</span><span class="op">)</span></span></span>
