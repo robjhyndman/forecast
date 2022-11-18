@@ -483,9 +483,15 @@ hfitted <- function(object, h=1, FUN=NULL, ...) {
   for (i in 1:(n - h))
   {
     refitarg[[1]] <- ts(x[1:i], start = tspx[1], frequency = tspx[3])
-    if (!is.null(object$xreg)) {
-      refitarg$xreg <- ts(object$xreg[1:i, ], start = tspx[1], frequency = tspx[3])
-      fcarg$xreg <- ts(object$xreg[(i + 1):(i + h), ], start = tspx[1] + i / tspx[3], frequency = tspx[3])
+    if(!is.null(object$xreg) & any(colnames(object$xreg)!="drift")){
+      if(any(colnames(object$xreg)=="drift")){
+        idx <- which(colnames(object$xreg)=="drift")
+        refitarg$xreg <- ts(object$xreg[1:i, -idx], start = tspx[1], frequency = tspx[3])
+        fcarg$xreg <- ts(object$xreg[(i + 1):(i + h), -idx], start = tspx[1] + i / tspx[3], frequency = tspx[3])
+      }else{
+        refitarg$xreg <- ts(object$xreg[1:i, ], start = tspx[1], frequency = tspx[3])
+        fcarg$xreg <- ts(object$xreg[(i + 1):(i + h), ], start = tspx[1] + i / tspx[3], frequency = tspx[3])
+      }
     }
     fcarg$object <- try(suppressWarnings(do.call(FUN, refitarg)), silent = TRUE)
     if (!is.element("try-error", class(fcarg$object))) {
