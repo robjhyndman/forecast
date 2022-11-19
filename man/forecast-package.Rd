@@ -38,13 +38,14 @@ Authors:
 
 Other contributors:
 \itemize{
+  \item Federico Garza [contributor]
+  \item Daniele Girolimetto [contributor]
+  \item Ross Ihaka [contributor, copyright holder]
+  \item R Core Team [contributor, copyright holder]
   \item Daniel Reid [contributor]
   \item David Shaub [contributor]
-  \item Federico Garza [contributor]
-  \item R Core Team [contributor, copyright holder]
-  \item Ross Ihaka [contributor, copyright holder]
-  \item Xiaoqian Wang [contributor]
   \item Yuan Tang (\href{https://orcid.org/0000-0001-5243-233X}{ORCID}) [contributor]
+  \item Xiaoqian Wang [contributor]
   \item Zhenyu Zhou [contributor]
 }
 
