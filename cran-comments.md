@@ -1,6 +1,8 @@
+Corrected problem on ATLAS
+
 ## Test environments
 
-* ubuntu 20.04 (local): R 4.2.1
+* ubuntu 22.04 (local): R 4.2.2
 * macOS (on GitHub Actions): release
 * windows (on GitHub Actions): release
 * ubuntu 20.04.5 (on GitHub Actions): devel, release, oldrel
@@ -12,4 +14,4 @@
 
 ## revdep checks
 
-seer now passing checks. All reverse dependencies have been checked with no new errors detected.
+All reverse dependencies have been checked with no new errors detected.
