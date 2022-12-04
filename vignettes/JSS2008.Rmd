@@ -194,7 +194,7 @@ forecast of $y_{t+h}$ based on all of the data up to time $t$ is
 denoted by $\hat{y}_{t+h|t}$.
 To illustrate the method, we give the point forecasts and updating
 equations for method (A,A), the Holt-Winters' additive method:
-\begin{subequations}\label{eq:AMmethod}\vspace{-15pt}
+\begin{subequations}\label{eq:AMmethod}
 \begin{align}
 \mbox{Level:}\quad &\ell_t  =  \alpha (y_t - s_{t-m}) + (1-\alpha)(\ell_{t-1} + b_{t-1})\hspace*{1cm} \label{eq:3-44a}\\
 \mbox{Growth:}\quad &b_t  =  \beta^*(\ell_t - \ell_{t-1}) + (1-\beta^*)b_{t-1} \label{eq:3-45a}\\
@@ -385,7 +385,7 @@ Let $\mu_t = \hat{y}_t = \ell_{t-1}+b_{t-1}$ denote the one-step
 forecast of $y_{t}$ assuming that we know the values of all
 parameters. Also, let $\varepsilon_t = y_t - \mu_t$ denote the
 one-step forecast error at time $t$. From the equations in
-Table \ref{table:pegels}, we find that\vspace*{-15pt}
+Table \ref{table:pegels}, we find that
 \begin{align}
 \label{ss1}
 y_t    &= \ell_{t-1} + \phi b_{t-1} + \varepsilon_t\\
@@ -395,7 +395,7 @@ b_t    &= \phi b_{t-1} + \beta^*(\ell_t - \ell_{t-1}- \phi b_{t-1})
     = \phi b_{t-1} + \alpha\beta^*\varepsilon_t. \label{ss3}
 \end{align}
 We simplify the last expression by setting $\beta=\alpha\beta^*$. The three equations above constitute a state space model underlying the damped Holt's method. Note that it is an \emph{innovations} state space model [@AM79;@Aoki87] because the same error term appears in each equation. We  an write it in standard state space notation by defining the state vector as $\bm{x}_t = (\ell_t,b_t)'$ and expressing \eqref{ss1}--\eqref{ss3} as
-\begin{subequations}\vspace*{-15pt}
+\begin{subequations}
 \begin{align}
 y_t &= \left[ 1    \phi \right] \bm{x}_{t-1} +
 \varepsilon_t\label{obseq}\\
@@ -420,13 +420,13 @@ $\varepsilon_t \sim\mbox{NID}(0, \sigma^2)$.
 A model with multiplicative error can be derived similarly, by first
 setting $\varepsilon_t = (y_t-\mu_t)/\mu_t$, so that $\varepsilon_t$
 is the relative error. Then, following a similar approach to that
-for additive errors, we find\vspace*{-15pt}
+for additive errors, we find
 \begin{align*}
 y_t &= (\ell_{t-1} + \phi b_{t-1})(1 + \varepsilon_t)\\
 \ell_t &= (\ell_{t-1} + \phi b_{t-1})(1 + \alpha \varepsilon_t)\\
 b_t &= \phi b_{t-1} + \beta(\ell_{t-1}+\phi b_{t-1})\varepsilon_t,
 \end{align*}
-or\vspace*{-15pt}
+or
 \begin{align*}
 y_t &= \left[ 1    \phi \right] \bm{x}_{t-1}(1 + \varepsilon_t)\\
 \bm{x}_t &= \left[\begin{array}{ll}
@@ -455,7 +455,7 @@ There are similar state space models for all 30 exponential
 smoothing variations. The general model involves a state vector
 $\bm{x}_t = (\ell_t, b_t$, $s_t, s_{t-1}, \dots, s_{t-m+1})'$ and
 state space equations of the form
-\begin{subequations}\label{eq:ss}\vspace*{-15pt}
+\begin{subequations}\label{eq:ss}
 \begin{align}
 y_t &= w(\bm{x}_{t-1}) + r(\bm{x}_{t-1})\varepsilon_t
 \label{eq:ss1}\\
@@ -526,7 +526,7 @@ In order to use these models for forecasting, we need to know the
 values of $\bm{x}_0$ and the parameters $\alpha$, $\beta$, $\gamma$
 and $\phi$. It is easy to compute the likelihood of the innovations
 state space model \eqref{eq:ss}, and so obtain maximum likelihood
-estimates. @OKS97 show that\vspace*{-15pt}
+estimates. @OKS97 show that
 \begin{equation}\label{likelihood}
 L^*(\bm\theta,\bm{x}_0) = n\log\Big(\sum_{t=1}^n
 \varepsilon^2_t\Big) + 2\sum_{t=1}^n \log|r(\bm{x}_{t-1})|
