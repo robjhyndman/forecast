@@ -9,8 +9,6 @@ if (require(testthat)) {
         expect_equal(sum(abs(b1 - b2)), 145L)
         expect_equal(sum(abs(b1 - b3)), 176L)
     }
-    expect_equal(sum(abs(b1 - b2)), 109L)
-    expect_equal(sum(abs(b1 - b3)), 144L)
     expect_equal(sum(abs(b2 - b3)), 117L)
     b1 <- bizdays(gas, FinCenter = "NERC")
     b2 <- bizdays(gas, FinCenter = "Toronto")
