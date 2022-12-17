@@ -1,6 +1,5 @@
 # A unit test for bats function
 if (require(testthat)) {
-  context("Tests on input and output")
   test_that("tests for a non-ts object", {
     set.seed(123)
     abc <- rnorm(50, 5, 1)

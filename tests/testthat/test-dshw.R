@@ -1,6 +1,5 @@
 # A unit test for dshw function
 if (require(testthat)) {
-  context("Tests on dshw()")
   test_that("Test dshw()", {
     # Test negative values and period1 and period2 not specified
     set.seed(345)

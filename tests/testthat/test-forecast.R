@@ -1,6 +1,5 @@
 # A unit test for forecast.R
 if (require(testthat)) {
-  context("Test forecast.R")
   test_that("tests for findfrequency()", {
     expect_true(frequency(airmiles) == findfrequency(as.numeric(airmiles)))
     expect_false(frequency(wineind) == findfrequency(as.numeric(wineind)))

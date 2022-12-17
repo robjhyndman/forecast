@@ -1,7 +1,5 @@
 # A unit test for h-step fits
 if (require(testthat)) {
-  context("Tests for h-step fits with hfitted")
-
   test_that("variance test on h-step fits", {
     mod1 <- ets(WWWusage, model = "AAN", damped = TRUE)
     h1 <- fitted(mod1, h = 1)

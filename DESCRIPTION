@@ -29,7 +29,7 @@ Suggests:
   rmarkdown,
   rticles,
   seasonal,
-  testthat,
+  testthat (>= 3.0.0),
   uroot
 LinkingTo:
   Rcpp (>= 0.11.0),
@@ -64,3 +64,4 @@ URL: https://pkg.robjhyndman.com/forecast/, https://github.com/robjhyndman/forec
 VignetteBuilder: knitr
 Encoding: UTF-8
 RoxygenNote: 7.2.3
+Config/testthat/edition: 3

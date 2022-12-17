@@ -1,6 +1,5 @@
 # A unit test for tbats function
 if (require(testthat)) {
-  context("Tests on tbats() functions")
   test_that("Test simple cases for tbats", {
     expect_error(tbats(data.frame(x1 = 1, x2 = 2), use.parallel = FALSE))
     expect_warning(tbats(c(1:5, NA, 7:9), use.parallel = FALSE))

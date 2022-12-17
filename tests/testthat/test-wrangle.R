@@ -1,7 +1,5 @@
 # A unit test for wrangling functions
 if (require(testthat)) {
-  context("Tests joining data.frames")
-
   mv_y <- ts(cbind(rnorm(120, 0, 3) + 1:120 + 20 * sin(2 * pi * (1:120) / 12), rnorm(120, 3, 7) + 1:120 + 16 * sin(2 * pi * (1:120 + 6) / 12)), frequency = 12)
   mv_x <- ts(cbind(rnorm(120, 0, 8) + (1:120) / 2 + 42 * sin(2 * pi * (1:120) / 12), rnorm(120, 3, 7) + (1:120) * -1 + 20 * sin(2 * pi * (1:120 + 6) / 12)), frequency = 12)
   v_y <- ts(rnorm(120, 0, 8) + (1:120) / 2 + 12 * sin(2 * pi * (1:120) / 12), frequency = 12)

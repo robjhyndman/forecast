@@ -1,7 +1,5 @@
 # A unit test for tslm function
 if (require(testthat)) {
-  context("Tests on building model in tslm")
-
   mv_y <- ts(cbind(rnorm(120, 0, 3) + 1:120 + 20 * sin(2 * pi * (1:120) / 12), rnorm(120, 3, 7) + 1:120 + 16 * sin(2 * pi * (1:120 + 6) / 12)), frequency = 12)
   mv_x <- ts(cbind(rnorm(120, 0, 8) + (1:120) / 2 + 42 * sin(2 * pi * (1:120) / 12), rnorm(120, 3, 7) + (1:120) * -1 + 20 * sin(2 * pi * (1:120 + 6) / 12)), frequency = 12)
   v_y <- ts(rnorm(120, 0, 8) + (1:120) / 2 + 12 * sin(2 * pi * (1:120) / 12), frequency = 12)
@@ -17,14 +15,14 @@ if (require(testthat)) {
     fit2 <- tslm(v_y ~ trend + season, data = data.frame(trend = rnorm(120)))
     expect_false(identical(fit1$model, fit2$model))
     fit2 <- tslm(v_y ~ trend + season)
-    expect_that(names(fit1), equals(names(fit2)))
-    expect_that(fit1$model, equals(fit2$model))
-    expect_that(fit1$coefficients, equals(fit2$coefficients))
+    expect_named(fit1, names(fit2))
+    expect_identical(fit1$model, fit2$model, ignore_attr = "terms")
+    expect_identical(fit1$coefficients, fit2$coefficients)
     fit1 <- tslm(USAccDeaths ~ trend + season, data = USAccDeaths)
     fit2 <- tslm(USAccDeaths ~ trend + season)
-    expect_that(names(fit1), equals(names(fit2)))
-    expect_that(fit1$model, equals(fit2$model))
-    expect_that(fit1$coefficients, equals(fit2$coefficients))
+    expect_named(fit1, names(fit2))
+    expect_identical(fit1$model, fit2$model, ignore_attr = "terms")
+    expect_identical(fit1$coefficients, fit2$coefficients)
     expect_warning(fit3 <- tslm(
       USAccDeaths ~ trend + season, data = USAccDeaths,
       subset = time(USAccDeaths) %% 1 < 0.1
@@ -37,7 +35,7 @@ if (require(testthat)) {
     fit1 <- tslm(v_y ~ v_x + fourier(v_y, 3), data = data.frame(v_y = v_y))
     fit2 <- lm(v_y ~ v_x + fourier(v_y, 3), data = data.frame(v_y = v_y))
     expect_equal(fit1$coefficients, fit1$coefficients)
-    expect_equal(fit1$model, fit2$model)
+    expect_equal(fit1$model, fit2$model, ignore_attr = "terms")
   })
 
   test_that("tests on subsetting data", {
@@ -54,14 +52,14 @@ if (require(testthat)) {
     fit3 <- tslm(mv_y ~ trend + season, lambda = 0.5, biasadj = TRUE)
     expect_false(identical(fit2$fitted.values, fit3$fitted.values))
     fit2 <- tslm(mv_y ~ trend + season, data = data)
-    expect_that(names(fit1), equals(names(fit2)))
-    expect_that(fit1$model, equals(fit2$model))
-    expect_that(fit1$coefficients, equals(fit2$coefficients))
+    expect_named(fit1,names(fit2))
+    expect_identical(fit1$model, fit2$model, ignore_attr = "terms")
+    expect_identical(fit1$coefficients, fit2$coefficients)
     expect_warning(fit3 <- tslm(mv_y ~ trend + season, subset = mv_y[, 1] < 1), "Subset has been assumed contiguous")
     expect_warning(fit4 <- tslm(mv_y ~ trend + season, data = data, subset = mv_y[, 1] < 1), "Subset has been assumed contiguous")
-    expect_that(names(fit3), equals(names(fit4)))
-    expect_that(fit3$model, equals(fit4$model))
-    expect_that(fit3$coefficients, equals(fit4$coefficients))
+    expect_named(fit3,names(fit4))
+    expect_identical(fit3$model, fit4$model, ignore_attr = "terms")
+    expect_identical(fit3$coefficients, fit4$coefficients)
   })
 
   test_that("tests with bad input", {

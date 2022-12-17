@@ -1,6 +1,5 @@
 # A unit test for nnetar.R
 if (require(testthat)) {
-  context("Testing nnetar")
   test_that("Tests for nnetar", {
     oilnnet <- nnetar(airmiles, lambda = 0.15)
     woolyrnqnnet <- nnetar(woolyrnq, repeats = 10)
@@ -53,11 +52,17 @@ if (require(testthat)) {
       wineind,
       xreg = cbind(bizdays(wineind), fourier(wineind, 1))
     )
-    expect_warning(forecast(creditnnet, h = 2, xreg = matrix(2, 2, 3))$mean, "different column names") %>% 
-      expect_length(2L)
+    expect_warning(
+      expect_length(forecast(creditnnet, h = 2, xreg = matrix(2, 2, 3))$mean, 2L),
+      "different column names",
+      fixed = TRUE
+    )
     # Test if h doesn't match xreg
-    expect_warning(forecast(creditnnet, h = 5, xreg = matrix(2, 2, 3))$mean, "different column names") %>% 
-      expect_length(2L)
+    expect_warning(
+      expect_length(forecast(creditnnet, h = 5, xreg = matrix(2, 2, 3))$mean, 2L),
+      "different column names",
+      fixed = TRUE
+    )
     # Test that P is ignored if m=1
     expect_warning(creditnnet <- nnetar(WWWusage, p = 2, P = 4, xreg = 1:length(WWWusage)))
     expect_output(
