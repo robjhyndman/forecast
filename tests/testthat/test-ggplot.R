@@ -1,7 +1,5 @@
 # A unit test for ggplot support
 if (require(testthat)) {
-  context("forecast ggplot tests")
-
   test_that("tests for autoplot/gg functions", {
     library(ggplot2)
     lungDeaths <- cbind(mdeaths, fdeaths)

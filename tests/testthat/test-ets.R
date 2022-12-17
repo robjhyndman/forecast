@@ -1,15 +1,14 @@
 # A unit test for ets function
 if (require(testthat)) {
-  context("Tests on input")
   test_that("tests for some arguments in ets", {
     fit <- ets(wineind, model = "ZZM")
     comp <- paste0(fit$components[1:3], collapse = "")
-    expect_that(comp, equals("MAM"))
+    expect_identical(comp, "MAM")
   })
 
   test_that("tests for some arguments in ets", {
     fit <- ets(wineind, model = "MAM", alpha = 0.1611)
-    expect_that(as.numeric(fit$par["alpha"]), equals(0.1611))
+    expect_identical(as.numeric(fit$par["alpha"]), 0.1611)
   })
 
   test_that("refit ets model to new data", {

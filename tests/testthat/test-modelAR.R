@@ -1,6 +1,5 @@
 # A unit test for modelAR.R
 if (require(testthat)) {
-  context("Testing modelAR")
   test_that("Tests for modelAR", {
     ## Set up functions to match 'nnetar' behavior
     avnnet2 <- function(x, y, repeats = repeats, linout = TRUE, trace = FALSE, ...) {
@@ -87,8 +86,14 @@ if (require(testthat)) {
     expect_true(length(forecast(winennet, h = 2, xreg = matrix(2, 2, 3))$mean) == 2L)
     ## Test if h matches xreg
     expect_true(length(forecast(winennet, h = 5, xreg = matrix(2, 2, 3))$mean) == 2L)
-    expect_warning(forecast(winennet2, xreg = matrix(2, 2, 3))$mean, "different column names") %>%
-      expect_equal(forecast(winennet, xreg = matrix(2, 2, 3))$mean)
+    expect_warning(
+      expect_equal(
+        forecast(winennet2, xreg = matrix(2, 2, 3))$mean,
+        forecast(winennet, xreg = matrix(2, 2, 3))$mean
+      ),
+      "different column names",
+      fixed = TRUE
+    )
     ## Test that P is ignored if m=1
     expect_warning(wwwnnet <- modelAR(WWWusage, FUN = avnnet2, predict.FUN = predict.avnnet2, scale.inputs = TRUE, xreg = 1:length(WWWusage), p = 2, P = 4, size = 3, repeats = 10))
     ## Test passing arguments to nnet

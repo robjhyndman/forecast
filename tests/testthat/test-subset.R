@@ -1,12 +1,10 @@
 # A unit test for subset function
 if (require(testthat)) {
-  context("Tests on input")
-
   mtsobj <- ts(matrix(rnorm(200), ncol = 2), frequency = 4)
   test_that("tests specifying correct argument", {
     sub <- subset(wineind, month = "September")
-    expect_that(length(sub), equals(tsp(sub)[2] - tsp(sub)[1] + 1))
-    expect_that(round(sum(sub)), equals(338985))
+    expect_length(sub, tsp(sub)[2] - tsp(sub)[1] + 1)
+    expect_identical(round(sum(sub)), 338985)
     sub2 <- subset(wineind, month = "SEPT")
     expect_identical(sub, sub2)
     sub2 <- subset(wineind, month = 9)
@@ -14,19 +12,19 @@ if (require(testthat)) {
     sub2 <- subset(wineind, season = 9)
     expect_identical(sub, sub2)
     sub <- subset(woolyrnq, quarter = 1)
-    expect_that(length(sub), equals(tsp(sub)[2] - tsp(sub)[1] + 1))
-    expect_that(sum(sub), equals(153142))
+    expect_length(sub,tsp(sub)[2] - tsp(sub)[1] + 1)
+    expect_identical(sum(sub), 153142)
     sub2 <- subset(woolyrnq, season = 1)
     expect_identical(sub, sub2)
     sub <- subset(wineind, subset = wineind < 25000)
-    expect_that(round(sum(sub)), equals(1948985))
-    expect_that(length(sub), equals(91))
+    expect_identical(round(sum(sub)), 1948985)
+    expect_length(sub,91)
     sub <- subset(mtsobj, c(1, 1, rep(0, 98)) == 1)
-    expect_that(ncol(sub), equals(2))
-    expect_that(nrow(sub), equals(2))
+    expect_identical(ncol(sub), 2L)
+    expect_identical(nrow(sub), 2L)
     sub <- subset(mtsobj, quarter = 1)
-    expect_that(ncol(sub), equals(2))
-    expect_that(nrow(sub), equals(25))
+    expect_identical(ncol(sub), 2L)
+    expect_identical(nrow(sub), 25L)
   })
 
   test_that("tests specifying wrong argument", {

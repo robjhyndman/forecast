@@ -1,23 +1,21 @@
 # A unit test for accuracy() function
 if (require(testthat)) {
-  context("Tests on input")
-  test_that("tests for a non-forecast object", {
-    expect_that(accuracy(USAccDeaths), throws_error())
+  test_that("tests for a non-forecast object (input)", {
+    expect_error(accuracy(USAccDeaths))
   })
 
-  context("Tests on output")
-  test_that("tests for dimension", {
+  test_that("tests for dimension (output)", {
     train <- window(USAccDeaths, start = c(1973, 1), end = c(1976, 12))
     test <- window(USAccDeaths, start = c(1977, 1))
     fcasts <- forecast(train, h = 6)
-    expect_that(dim(accuracy(fcasts)), equals(c(1, 7)))
-    expect_that(dim(accuracy(fcasts, test)), equals(c(2, 8)))
+    expect_identical(dim(accuracy(fcasts)), c(1L, 7L))
+    expect_identical(dim(accuracy(fcasts, test)), c(2L, 8L))
     expect_false(
       all(dim(accuracy(fcasts, test, test = 1:2)) == dim(accuracy(fcasts, test)))
     )
-    expect_that(accuracy(fcasts, test = 1:length(train)), equals(accuracy(fcasts)))
+    expect_identical(accuracy(fcasts, test = 1:length(train)), accuracy(fcasts))
   })
-  test_that("tests for accuracy", {
+  test_that("tests for accuracy (output)", {
     # Test arima
     fitarima <- Arima(USAccDeaths, order = c(0, 1, 1), seasonal = c(0, 1, 1))
     accuracyarima <- accuracy(fitarima)[1, "RMSE"]

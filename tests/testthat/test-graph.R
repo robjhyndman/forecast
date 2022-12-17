@@ -1,6 +1,5 @@
 # A unit test for graph.R
 if (require(testthat)) {
-  context("Testing graph")
   test_that("Tests for seasonplot()", {
     expect_error(seasonplot(airmiles))
     seasonplot(ts(gold, frequency = 7))

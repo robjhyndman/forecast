@@ -1,6 +1,5 @@
 # A unit test for forecast2.R
 if (require(testthat)) {
-  context("Test forecast2.R")
   test_that("test meanf()", {
     meanfc <- mean(wineind)
     expect_true(all(meanf(wineind)$mean == meanfc))

@@ -1,7 +1,5 @@
 # A unit test for boxcox transformations
 if (require(testthat)) {
-  context("Tests for BoxCox")
-
   test_that("tests for biasadj automatically set based on model fit", {
     # lm
     fit <- tslm(USAccDeaths ~ trend, lambda = 0.5, biasadj = TRUE)
@@ -41,14 +39,14 @@ if (require(testthat)) {
 
     # lm
     fit <- tslm(USAccDeaths ~ trend, lambda = "auto", biasadj = TRUE)
-    expect_equal(as.numeric(fit$lambda), lambda_auto, tolerance=1e-5)
+    expect_equal(as.numeric(fit$lambda), lambda_auto, tolerance=1e-3)
 
     # ets
     fit <- ets(USAccDeaths, model = "ANA", lambda = "auto", biasadj = TRUE)
-    expect_equal(as.numeric(fit$lambda), lambda_auto, tolerance=1e-5)
+    expect_equal(as.numeric(fit$lambda), lambda_auto, tolerance=1e-3)
 
     # arima
     fit <- Arima(USAccDeaths, order = c(0,1,1), seasonal = c(0,1,1), lambda = "auto", biasadj = TRUE)
-    expect_equal(as.numeric(fit$lambda), lambda_auto, tolerance=1e-5)
+    expect_equal(as.numeric(fit$lambda), lambda_auto, tolerance=1e-3)
   })
 }

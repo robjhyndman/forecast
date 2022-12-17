@@ -1,6 +1,5 @@
 # A unit test for spline.R
 if (require(testthat)) {
-  context("Testing splinef()")
   test_that("Tests for splinef()", {
     plot.splineforecast(splinef(airmiles))
     fit1 <- splinef(woolyrnq, lambda = 0.2, biasadj = FALSE)

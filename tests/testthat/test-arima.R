@@ -1,21 +1,20 @@
 # A unit test for Arima() function
 if (require(testthat)) {
-  context("Tests on input")
   test_that("tests for a non-ts object", {
     set.seed(123)
     abc <- rnorm(50, 5, 1)
     fit <- Arima(abc, order = c(2, 0, 1))
-    expect_that(fit$arma, equals(c(2, 1, 0, 0, 1, 0, 0)))
+    expect_identical(fit$arma, c(2L, 1L, 0L, 0L, 1L, 0L, 0L))
   })
 
   test_that("tests for a ts with the seasonal component", {
     fit <- Arima(wineind, order = c(1, 1, 1), seasonal = c(0, 1, 1))
-    expect_that(fit$arma, equals(c(1, 1, 0, 1, 12, 1, 1)))
+    expect_identical(fit$arma, c(1L, 1L, 0L, 1L, 12L, 1L, 1L))
   })
 
   test_that("tests for ARIMA errors", {
     fit <- Arima(wineind, order = c(1, 1, 1), seasonal = c(0, 1, 1))
-    expect_that(residuals(fit, type = "regression"), equals(wineind))
+    expect_identical(residuals(fit, type = "regression"), wineind)
   })
 
   test_that("tests for arimaorder", {
@@ -82,8 +81,7 @@ if (require(testthat)) {
     expect_error(forecast.Arima(fit4))
     expect_error(forecast.Arima(fit4, xreg = matrix(rnorm(40), ncol = 2)))
     forecast.Arima(fit4, xreg = rnorm(20))$mean %>% 
-      length %>% 
-      expect_equal(20)
+      expect_length(20)
 
     fit5 <- Arima(wineind[1:150], order = c(1, 1, 2), seasonal = c(0, 1, 1), method = "ML")
     expect_true(accuracy(fit5)[1, "MAPE"] < accuracy(Arima(wineind, model = fit5))[1, "MAPE"])

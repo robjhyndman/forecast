@@ -1,6 +1,5 @@
 # A unit test for calendar.R
 if (require(testthat)) {
-  context("Testing calendar functions")
   test_that("Tests for bizdays()", {
     expect_error(bizdays(1:20))
     b1 <- bizdays(woolyrnq, FinCenter = "New York")
