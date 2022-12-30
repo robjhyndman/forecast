@@ -259,7 +259,7 @@ static Rboolean fxshft(int l2, double *zr, double *zi)
  * Uses global (sr,si), nn, pr[], pi[], .. (all args of polyev() !)
 */
 
-    Rboolean pasd, bool, test;
+    Rboolean pasd, boool, test;
     static double svsi, svsr;
     static int i, j, n;
     static double oti, otr;
@@ -275,7 +275,7 @@ static Rboolean fxshft(int l2, double *zr, double *zi)
 
     /* calculate first t = -p(s)/h(s). */
 
-    calct(&bool);
+    calct(&boool);
 
     /* main loop for one second stage step. */
 
@@ -286,15 +286,15 @@ static Rboolean fxshft(int l2, double *zr, double *zi)
 
 	/* compute next h polynomial and new t. */
 
-	nexth(bool);
-	calct(&bool);
+	nexth(boool);
+	calct(&boool);
 	*zr = sr + tr;
 	*zi = si + ti;
 
 	/* test for convergence unless stage 3 has */
 	/* failed once or this is the last h polynomial. */
 
-	if (!bool && test && j != l2) {
+	if (!boool && test && j != l2) {
 	    if (hypot(tr - otr, ti - oti) >= hypot(*zr, *zi) * 0.5) {
 		pasd = FALSE;
 	    }
@@ -330,7 +330,7 @@ static Rboolean fxshft(int l2, double *zr, double *zi)
 		sr = svsr;
 		si = svsi;
 		polyev(nn, sr, si, pr, pi, qpr, qpi, &pvr, &pvi);
-		calct(&bool);
+		calct(&boool);
 	    }
 	}
     }
@@ -353,7 +353,7 @@ static Rboolean vrshft(int l3, double *zr, double *zi)
  *
  * Assign and uses  GLOBAL sr, si
 */
-    Rboolean bool, b;
+    Rboolean boool, b;
     static int i, j;
     static double r1, r2, mp, ms, tp, relstp;
     static double omp;
@@ -398,8 +398,8 @@ static Rboolean vrshft(int l3, double *zr, double *zi)
 		sr = r2;
 		polyev(nn, sr, si, pr, pi, qpr, qpi, &pvr, &pvi);
 		for (j = 1; j <= 5; ++j) {
-		    calct(&bool);
-		    nexth(bool);
+		    calct(&boool);
+		    nexth(boool);
 		}
 		omp = infin;
 		goto L10;
@@ -418,10 +418,10 @@ static Rboolean vrshft(int l3, double *zr, double *zi)
 	/* calculate next iterate. */
 
     L10:
-	calct(&bool);
-	nexth(bool);
-	calct(&bool);
-	if (!bool) {
+	calct(&boool);
+	nexth(boool);
+	calct(&boool);
+	if (!boool) {
 	    relstp = hypot(tr, ti) / hypot(sr, si);
 	    sr += tr;
 	    si += ti;
@@ -435,10 +435,10 @@ L_conv:
     return TRUE;
 }
 
-static void calct(Rboolean *bool)
+static void calct(Rboolean *boool)
 {
     /* computes	 t = -p(s)/h(s).
-     * bool   - logical, set true if h(s) is essentially zero.	*/
+     * boool   - logical, set true if h(s) is essentially zero.	*/
 
     int n = nn - 1;
     double hvi, hvr;
@@ -447,8 +447,8 @@ static void calct(Rboolean *bool)
     polyev(n, sr, si, hr, hi,
 	   qhr, qhi, &hvr, &hvi);
 
-    *bool = hypot(hvr, hvi) <= are * 10. * hypot(hr[n-1], hi[n-1]);
-    if (!*bool) {
+    *boool = hypot(hvr, hvi) <= are * 10. * hypot(hr[n-1], hi[n-1]);
+    if (!*boool) {
 	cdivid(-pvr, -pvi, hvr, hvi, &tr, &ti);
     }
     else {
@@ -457,15 +457,15 @@ static void calct(Rboolean *bool)
     }
 }
 
-static void nexth(Rboolean bool)
+static void nexth(Rboolean boool)
 {
     /* calculates the next shifted h polynomial.
-     * bool :	if TRUE  h(s) is essentially zero
+     * boool :	if TRUE  h(s) is essentially zero
      */
     int j, n = nn - 1;
     double t1, t2;
 
-    if (!bool) {
+    if (!boool) {
 	for (j=1; j < n; j++) {
 	    t1 = qhr[j - 1];
 	    t2 = qhi[j - 1];
