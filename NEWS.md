@@ -1,4 +1,6 @@
-# forecast (development version)
+# forecast 8.20 (1 January 2023)
+  * Improvements to unit tests, and migrate to testthat 3e
+  * Prevent failure in C23 mode
 
 # forecast 8.19 (20 November 2022)
   * Bug fixes
