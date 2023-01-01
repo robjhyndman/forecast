@@ -5,7 +5,7 @@
 
 PKG_NAME=$(shell grep -i ^package DESCRIPTION | cut -d : -d \  -f 2)
 
-all: install
+default: build
 
 check:
 	Rscript -e "rcmdcheck::rcmdcheck()"
