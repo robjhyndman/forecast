@@ -19,3 +19,5 @@ vignettes/*_cache
 ^CRAN-SUBMISSION$
 ^.vscode$
 ^\.vscode$
+^rstudio$
+rstudio

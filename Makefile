@@ -11,7 +11,8 @@ check:
 	Rscript -e "rcmdcheck::rcmdcheck()"
 
 build:
-	Rscript -e "devtools::build(args = c('--compact-vignettes=both'))"
+	-rm -f rstudio
+	-Rscript -e "devtools::build(args = c('--compact-vignettes=both'))"
 
 install:
 	R CMD INSTALL .
