@@ -4,7 +4,7 @@
 \alias{checkresiduals}
 \title{Check that residuals from a time series model look like white noise}
 \usage{
-checkresiduals(object, lag, df = NULL, test, plot = TRUE, ...)
+checkresiduals(object, lag, test, plot = TRUE, ...)
 }
 \arguments{
 \item{object}{Either a time series model, a forecast object, or a time
@@ -16,10 +16,6 @@ If missing, it is set to \code{min(10,n/5)} for non-seasonal data, and
 and \code{m} is the seasonal period of the data. It is further constrained to be
 at least \code{df+3} where \code{df} is the degrees of freedom of the model. This
 ensures there are at least 3 degrees of freedom used in the chi-squared test.}
-
-\item{df}{Number of degrees of freedom for fitted model, required for the
-Ljung-Box or Breusch-Godfrey test. Ignored if the degrees of freedom can be
-extracted from \code{object}.}
 
 \item{test}{Test to use for serial correlation. By default, if \code{object}
 is of class \code{lm}, then \code{test="BG"}. Otherwise, \code{test="LB"}.
@@ -34,9 +30,8 @@ None
 }
 \description{
 If \code{plot=TRUE}, produces a time plot of the residuals, the
-corresponding ACF, and a histogram. If the degrees of freedom for the model
-can be determined and \code{test} is not \code{FALSE}, the output from
-either a Ljung-Box test or Breusch-Godfrey test is printed.
+corresponding ACF, and a histogram. If \code{test} is not \code{FALSE},
+the output from either a Ljung-Box test or Breusch-Godfrey test is printed.
 }
 \examples{
 

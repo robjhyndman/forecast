@@ -1,3 +1,6 @@
+# forecast 8.20.0009 (dev version)
+  * Fixed df calculation for Ljung-Box tests in checkresiduals()
+
 # forecast 8.20 (2 January 2023)
   * Improvements to unit tests, and migrate to testthat 3e
   * Prevent failure in C23 mode
