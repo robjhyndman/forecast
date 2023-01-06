@@ -1,4 +1,4 @@
-# forecast 8.20 (1 January 2023)
+# forecast 8.20 (2 January 2023)
   * Improvements to unit tests, and migrate to testthat 3e
   * Prevent failure in C23 mode
 

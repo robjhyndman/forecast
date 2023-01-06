@@ -32,4 +32,5 @@ revdep:
 	Rscript -e "revdepcheck::revdep_check(num_workers=3)"
 
 release:
-	Rscript -e "devtools::release(args = c('--compact-vignettes=both'))"
+	-rm -f rstudio
+	-Rscript -e "devtools::submit_cran(args = c('--compact-vignettes=both'))"
