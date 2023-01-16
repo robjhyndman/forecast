@@ -272,7 +272,7 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   for (i in 1:nlag)
     lags.X[, i] <- xx[(maxlag - lags[i] + 1):(n - lags[i])]
   # Add xreg into lagged matrix
-  lags.X <- cbind(lags.X, xxreg[-(1:maxlag), ])
+  lags.X <- cbind(lags.X, xxreg[-(1:maxlag), , drop = FALSE])
   if (missing(size)) {
     size <- round((NCOL(lags.X) + 1) / 2)
   }
