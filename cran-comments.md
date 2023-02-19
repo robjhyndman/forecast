@@ -1,4 +1,4 @@
-Corrected failure in C23 mode
+Corrected errors reported at <https://cran.r-project.org/web/checks/check_results_forecast.html>.
 
 ## Test environments
 
