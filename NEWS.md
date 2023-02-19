@@ -1,5 +1,6 @@
-# forecast 8.20.0009
+# forecast 8.21
   * Fixed df calculation for Ljung-Box tests in checkresiduals
+  * Fixed some broken tests
 
 # forecast 8.20
   * Improvements to unit tests, and migrate to testthat 3e
