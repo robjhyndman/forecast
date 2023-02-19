@@ -25,9 +25,6 @@ clean:
 docs:
 	Rscript -e "roxygen2::roxygenize()"
 
-pkgdown:
-	Rscript -e "pkgdown::build_site()"
-
 revdep:
 	Rscript -e "revdepcheck::revdep_check(num_workers=3)"
 
