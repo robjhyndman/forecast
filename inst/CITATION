@@ -24,7 +24,7 @@ bibentry(bibtype = "Manual",
 
 bibentry(bibtype = "Article",
   title     = "Automatic time series forecasting: the forecast package for {R}",
-  author    = personList(as.person("Rob J Hyndman"),as.person("Yeasmin Khandakar")),
+  author    = c(as.person("Rob J Hyndman"),as.person("Yeasmin Khandakar")),
   journal   = "Journal of Statistical Software",
   volume    =  26,
   number    =  3,

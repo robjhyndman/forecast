@@ -15,10 +15,10 @@ if (require(testthat)) {
     fit <- ets(wineind, model = "MAM", alpha = 0.1611)
     parnames <- c("alpha", "beta", "gamma")
     par <- fit$par[parnames]
-    expect_identical(ets(wineind, model = fit, alpha = 0.1611)$par[parnames], par)
-    expect_identical(ets(wineind, model = fit, alpha = 0.1611, beta = NA)$par[parnames], par)
-    expect_identical(ets(wineind, model = fit, alpha = 0.1611, gamma = NA)$par[parnames], par)
-    expect_identical(ets(wineind, model = fit, alpha = 0.1611, phi = NA)$par[parnames], par)
+    expect_identical(ets(wineind, model = fit, alpha = 0.1611, use.initial.values = FALSE)$par[parnames], par)
+    expect_identical(ets(wineind, model = fit, alpha = 0.1611, beta = NA, use.initial.values = FALSE)$par[parnames], par)
+    expect_identical(ets(wineind, model = fit, alpha = 0.1611, gamma = NA, use.initial.values = FALSE)$par[parnames], par)
+    expect_identical(ets(wineind, model = fit, alpha = 0.1611, phi = NA, use.initial.values = FALSE)$par[parnames], par)
     expect_identical(ets(wineind, model = fit, alpha = 0.1611, use.initial.values = TRUE)$par, fit$par)
   })
 
