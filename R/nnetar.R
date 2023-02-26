@@ -35,7 +35,9 @@
 #' non-seasonal lags used as inputs. For non-seasonal time series, the default
 #' is the optimal number of lags (according to the AIC) for a linear AR(p)
 #' model. For seasonal time series, the same method is used but applied to
-#' seasonally adjusted data (from an stl decomposition).
+#' seasonally adjusted data (from an stl decomposition). If set to zero to
+#' indicate that no non-seasonal lags should be included, then P must be at
+#' least 1 and a model with only seasonal lags will be fit.
 #' @param P Number of seasonal lags used as inputs.
 #' @param size Number of nodes in the hidden layer. Default is half of the
 #' number of input nodes (including external regressors, if given) plus 1.
@@ -129,10 +131,13 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
     size <- model$size
     p <- model$p
     P <- model$P
+    if (p == 0 && P == 0){
+      stop("Both p = 0 and P = 0 in supplied 'model' object")
+    }
     if (P > 0) {
-      lags <- sort(unique(c(1:p, m * (1:P))))
+      lags <- sort(unique(c(seq_len(p), m * (seq_len(P)))))
     } else {
-      lags <- 1:p
+      lags <- seq_len(p)
     }
     if (is.null(model$scalex)) {
       scale.inputs <- FALSE
@@ -232,11 +237,17 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
       if (missing(p)) {
         p <- max(length(ar(na.interp(xx))$ar), 1)
       }
+      # For non-seasonal data also use default calculation for p if that
+      # argument is 0, but issue a warning
+      if (p == 0){
+        warning("Cannot set p = 0 for non-seasonal data; using default calculation for p")
+        p <- max(length(ar(na.interp(xx))$ar), 1)
+      }
       if (p >= n) {
         warning("Reducing number of lagged inputs due to short series")
         p <- n - 1
       }
-      lags <- 1:p
+      lags <- seq_len(p)
       if (P > 1) {
         warning("Non-seasonal data, ignoring seasonal lags")
       }
@@ -250,14 +261,17 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
         }
         p <- max(length(ar(x.sa)$ar), 1)
       }
+      if (p == 0 && P == 0){
+        stop("'p' and 'P' cannot both be zero")
+      }
       if (p >= n) {
         warning("Reducing number of lagged inputs due to short series")
         p <- n - 1
       }
       if (P > 0 && n >= m * P + 2) {
-        lags <- sort(unique(c(1:p, m * (1:P))))
+        lags <- sort(unique(c(seq_len(p), m * (seq_len(P)))))
       } else {
-        lags <- 1:p
+        lags <- seq_len(p)
         if (P > 0) {
           warning("Series too short for seasonal lags")
           P <- 0
