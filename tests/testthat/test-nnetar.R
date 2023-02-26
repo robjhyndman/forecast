@@ -32,6 +32,27 @@ if (require(testthat)) {
       fixed = TRUE
     )
     expect_true(uscnnet$size == 3)
+    # Test default size for models with only seasonal lags, with and without xreg
+    seasonal_only_lags_nnet <- nnetar(woolyrnq,p = 0,P = 3)
+    expect_output(
+      print(seasonal_only_lags_nnet),regexp = "NNAR(0,3,2)",
+      fixed = TRUE
+    )
+    expect_output(
+      print(seasonal_only_lags_nnet),regexp = "3-2-1 network",
+      fixed = TRUE
+    )
+
+    seasonal_only_lags_xreg_nnet <- nnetar(woolyrnq,p = 0,P = 3,xreg = cbind(1:119,119:1))
+    expect_output(
+      print(seasonal_only_lags_xreg_nnet),regexp = "NNAR(0,3,3)",
+      fixed = TRUE
+    )
+    expect_output(
+      print(seasonal_only_lags_xreg_nnet),regexp = "5-3-1 network",
+      fixed = TRUE
+    )
+
     # Test P=0 when m>1
     uscnnet <- nnetar(woolyrnq, p = 4, P = 0)
     expect_true(uscnnet$size == 2)
@@ -46,6 +67,10 @@ if (require(testthat)) {
     expect_output(
       print(uscnnet), regexp = "5-3-1 network",
       fixed = TRUE
+    )
+    # Test that p = 0 & P = 0 is not permitted
+    expect_error(
+      nnetar(woolyrnq,p = 0,P = 0)
     )
     # Test with multiple-column xreg
     creditnnet <- nnetar(
