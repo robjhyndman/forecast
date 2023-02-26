@@ -28,7 +28,9 @@ nnetar(
 non-seasonal lags used as inputs. For non-seasonal time series, the default
 is the optimal number of lags (according to the AIC) for a linear AR(p)
 model. For seasonal time series, the same method is used but applied to
-seasonally adjusted data (from an stl decomposition).}
+seasonally adjusted data (from an stl decomposition). If set to zero to
+indicate that no non-seasonal lags should be included, then P must be at
+least 1 and a model with only seasonal lags will be fit.}
 
 \item{P}{Number of seasonal lags used as inputs.}
 
