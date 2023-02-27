@@ -18,7 +18,7 @@ for forecasting univariate time series."><meta property="og:image" content="/log
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">forecast</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.19.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">8.21.0.9000</span>
       </span>
     </div>
 
@@ -85,7 +85,9 @@ for forecasting univariate time series.</p>
 non-seasonal lags used as inputs. For non-seasonal time series, the default
 is the optimal number of lags (according to the AIC) for a linear AR(p)
 model. For seasonal time series, the same method is used but applied to
-seasonally adjusted data (from an stl decomposition).</p></dd>
+seasonally adjusted data (from an stl decomposition). If set to zero to
+indicate that no non-seasonal lags should be included, then P must be at
+least 1 and a model with only seasonal lags will be fit.</p></dd>
 
 
 <dt>P</dt>
