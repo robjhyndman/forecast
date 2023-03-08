@@ -34,8 +34,6 @@ SEXP updateTBATSGMatrix(SEXP g_s, SEXP gammaBold_s, SEXP alpha_s, SEXP beta_s) {
 
 	int adjBeta = 0;
 
-	double *gammaVector;
-
 	NumericMatrix g_r(g_s);
 
 	//Rprintf("one\n");
