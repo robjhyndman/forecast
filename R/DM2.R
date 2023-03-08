@@ -53,21 +53,20 @@
 #' f2 <- auto.arima(WWWusage)
 #' accuracy(f1)
 #' accuracy(f2)
-#' dm.test(residuals(f1), residuals(f2), h=1)
+#' dm.test(residuals(f1), residuals(f2), h = 1)
 #'
 #' # Test on out-of-sample one-step forecasts
 #' f1 <- ets(WWWusage[1:80])
 #' f2 <- auto.arima(WWWusage[1:80])
-#' f1.out <- ets(WWWusage[81:100],model=f1)
-#' f2.out <- Arima(WWWusage[81:100],model=f2)
+#' f1.out <- ets(WWWusage[81:100], model = f1)
+#' f2.out <- Arima(WWWusage[81:100], model = f2)
 #' accuracy(f1.out)
 #' accuracy(f2.out)
-#' dm.test(residuals(f1.out), residuals(f2.out), h=1)
+#' dm.test(residuals(f1.out), residuals(f2.out), h = 1)
 #' @export
 
 dm.test <- function(e1, e2, alternative = c("two.sided", "less", "greater"), h = 1,
                     power = 2, varestimator = c("acf", "bartlett")) {
-
   alternative <- match.arg(alternative)
   varestimator <- match.arg(varestimator)
 
@@ -77,11 +76,11 @@ dm.test <- function(e1, e2, alternative = c("two.sided", "less", "greater"), h =
   if (varestimator == "acf") {
     # Original estimator
     d.var <- sum(c(d.cov[1], 2 * d.cov[-1])) / length(d)
-  } else { # varestimator == "bartlett"
+  } else if(h > 1) { # varestimator == "bartlett"
     # Using Bartlett weights to ensure a positive estimate of long-run-variance
-    m <- h-1
-    b <- seq.int(from = 1,to = m)
-    d.var <- sum(c(d.cov[1], 2*(1-b/(m+1))*d.cov[-1])) / length(d)
+    d.var <- sum(c(d.cov[1], 2 * (1 - seq_len(h-1)/h) * d.cov[-1])) / length(d)
+  } else {
+    stop("Bartlett estimator needs h >= 2")
   }
   dv <- d.var
 
@@ -110,7 +109,7 @@ dm.test <- function(e1, e2, alternative = c("two.sided", "less", "greater"), h =
   structure(
     list(
       statistic = STATISTIC, parameter = PARAMETER,
-      alternative = alternative,varestimator=varestimator, p.value = PVAL, method = "Diebold-Mariano Test",
+      alternative = alternative, varestimator = varestimator, p.value = PVAL, method = "Diebold-Mariano Test",
       data.name = c(deparse(substitute(e1)), deparse(substitute(e2)))
     ),
     class = "htest"
