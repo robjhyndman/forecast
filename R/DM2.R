@@ -70,17 +70,23 @@ dm.test <- function(e1, e2, alternative = c("two.sided", "less", "greater"), h =
   alternative <- match.arg(alternative)
   varestimator <- match.arg(varestimator)
 
+  h <- as.integer(h)
+  if(h < 1L) {
+    stop("h must be at least 1")
+  }
+  if(h > length(e1)) {
+    stop("h cannot be longer than the number of forecast errors")
+  }
   d <- c(abs(e1))^power - c(abs(e2))^power
-  d.cov <- acf(d, na.action = na.omit, lag.max = h - 1, type = "covariance", plot = FALSE)$acf[, , 1]
+  d.cov <- acf(d, na.action = na.omit, lag.max = h-1, type = "covariance", plot = FALSE)$acf[, , 1]
+  n <- length(d)
 
-  if (varestimator == "acf") {
+  if (varestimator == "acf" | h == 1L) {
     # Original estimator
-    d.var <- sum(c(d.cov[1], 2 * d.cov[-1])) / length(d)
-  } else if(h > 1) { # varestimator == "bartlett"
+    d.var <- sum(c(d.cov[1], 2 * d.cov[-1])) / n
+  } else { # varestimator == "bartlett"
     # Using Bartlett weights to ensure a positive estimate of long-run-variance
-    d.var <- sum(c(d.cov[1], 2 * (1 - seq_len(h-1)/h) * d.cov[-1])) / length(d)
-  } else {
-    stop("Bartlett estimator needs h >= 2")
+    d.var <- sum(c(d.cov[1], 2 * (1 - seq_len(h-1)/h) * d.cov[-1])) / n
   }
   dv <- d.var
 
@@ -93,7 +99,6 @@ dm.test <- function(e1, e2, alternative = c("two.sided", "less", "greater"), h =
     return(dm.test(e1, e2, alternative, h = 1, power, varestimator))
   }
 
-  n <- length(d)
   k <- ((n + 1 - 2 * h + (h / n) * (h - 1)) / n) ^ (1 / 2)
   STATISTIC <- STATISTIC * k
   names(STATISTIC) <- "DM"
