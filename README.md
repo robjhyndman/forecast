@@ -3,13 +3,12 @@ forecast <img src="man/figures/logo.png" align="right" />
 
 ![R build status](https://github.com/robjhyndman/forecast/workflows/R-CMD-check/badge.svg)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/forecast)](https://cran.r-project.org/package=forecast)
-[![Lifecycle: retired](https://img.shields.io/badge/lifecycle-retired-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#retired)
 [![Downloads](https://cranlogs.r-pkg.org/badges/forecast)](https://cran.r-project.org/package=forecast)
 [![Licence](https://img.shields.io/badge/licence-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
 The R package *forecast* provides methods and tools for displaying and analysing univariate time series forecasts including exponential smoothing via state space models and automatic ARIMA modelling.
 
-This package is now retired in favour of the [fable](http://fable.tidyverts.org/) package. The forecast package will remain in its current state, and maintained with bug fixes only. For the latest features and development, we recommend forecasting with the fable package.
+A complementary forecasting package is the [fable](http://fable.tidyverts.org/) package, which implements many of the same models but in a tidyverse framework.
 
 ## Installation
 You can install the **stable** version from
