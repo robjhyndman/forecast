@@ -32,9 +32,7 @@ navbar:
       href: https://cran.r-project.org/web/packages/forecast/vignettes/JSS2008.pdf
     - text: "Change Log"
       href: news/index.html
-  right:
-    - icon: fa-github fa-lg
-      href: https://github.com/robjhyndman/forecast
+  right: [search, github]
 
 reference:
   - title: "Package"
