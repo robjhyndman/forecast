@@ -1,7 +1,7 @@
 forecast <img src="man/figures/logo.png" align="right" />
 ======================
 
-![R build status](https://github.com/robjhyndman/forecast/workflows/R-CMD-check/badge.svg)
+[![R-CMD-check](https://github.com/robjhyndman/forecast/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/robjhyndman/forecast/actions/workflows/R-CMD-check.yaml)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/forecast)](https://cran.r-project.org/package=forecast)
 [![Downloads](https://cranlogs.r-pkg.org/badges/forecast)](https://cran.r-project.org/package=forecast)
 [![Licence](https://img.shields.io/badge/licence-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
