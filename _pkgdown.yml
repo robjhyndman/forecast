@@ -1,6 +1,6 @@
 template:
-  bootstrap: 5
-  bootswatch: flatly
+  params:
+    bootswatch: flatly
 
 development:
   mode: auto
@@ -32,7 +32,9 @@ navbar:
       href: https://cran.r-project.org/web/packages/forecast/vignettes/JSS2008.pdf
     - text: "Change Log"
       href: news/index.html
-  right: [search, github]
+  right:
+    - icon: fa-github fa-lg
+      href: https://github.com/robjhyndman/forecast
 
 reference:
   - title: "Package"
