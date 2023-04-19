@@ -1,9 +1,18 @@
 template:
-  params:
-    bootswatch: flatly
+  bootstrap: 5
+  bootswatch: flatly
 
-development:
-  mode: auto
+navbar:
+  structure:
+    left: [reference, jsspaper, changelog]
+    right: [search, github]
+  components:
+    jsspaper:
+      text: "JSS paper"
+      href: https://cran.r-project.org/web/packages/forecast/vignettes/JSS2008.pdf
+    changelog:
+      text: "Change Log"
+      href: news/index.html
 
 authors:
   Rob Hyndman:
@@ -22,19 +31,6 @@ authors:
     href: http://earo.me
   Yuan Tang:
     href: https://terrytangyuan.github.io/about/
-
-navbar:
-  type: default
-  left:
-    - text: "Reference"
-      href: reference/index.html
-    - text: "JSS paper"
-      href: https://cran.r-project.org/web/packages/forecast/vignettes/JSS2008.pdf
-    - text: "Change Log"
-      href: news/index.html
-  right:
-    - icon: fa-github fa-lg
-      href: https://github.com/robjhyndman/forecast
 
 reference:
   - title: "Package"
