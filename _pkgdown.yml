@@ -1,3 +1,4 @@
+url: https://pkg.robjhyndman.com/forecast/
 template:
   bootstrap: 5
   bootswatch: flatly
