@@ -7,6 +7,11 @@ lagwalk <- function(y, lag=1, drift=FALSE, lambda=NULL, biasadj=FALSE) {
   if(!is.ts(y)){
     y <- as.ts(y)
   }
+  dimy <- dim(y)
+  if(!is.null(dimy)) {
+    if(dimy[2] > 1)
+      stop("Multivariate time series detected. This function is designed for univariate time series only.")
+  }
   origy <- y
   if (!is.null(lambda)) {
     y <- BoxCox(y, lambda)
