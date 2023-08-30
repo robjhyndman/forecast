@@ -48,7 +48,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 documentclass: jss
-output: if (rmarkdown::pandoc_version() >= 2) rticles::jss_article else rmarkdown::html_vignette
+output: if (rmarkdown::pandoc_version() >= "2") rticles::jss_article else rmarkdown::html_vignette
 fig_width: 7
 fig_height: 6
 fig_caption: true
