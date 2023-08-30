@@ -1,4 +1,6 @@
 # forecast (development version)
+  * nnetar now allows p or P to be 0
+  * Bug fixes and improved docs
 
 # forecast 8.21
   * Fixed df calculation for Ljung-Box tests in checkresiduals
