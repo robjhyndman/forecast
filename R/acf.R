@@ -441,8 +441,10 @@ taperedpacf <- function(x, ...) {
   taperedacf(x, type = "partial", ...)
 }
 
-plot.mpacf <- function(object, xlim=NULL, ylim=NULL,
+#' @export
+plot.mpacf <- function(x, xlim=NULL, ylim=NULL,
                        xlab="Lag", ylab="", ...) {
+  object <- x
   lagx <- 1:object$lag
 
   if (is.null(xlim)) {
