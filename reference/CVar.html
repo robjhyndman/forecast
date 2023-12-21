@@ -6,7 +6,7 @@ applies a Ljung-Box test to the residuals. If this test is significant
 (see returned pvalue), there is serial correlation in the residuals and the
 model can be considered to be underfitting the data. In this case, the
 cross-validated errors can underestimate the generalization error and should
-not be used."><title>k-fold Cross-Validation applied to an autoregressive model — CVar • forecast</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/Fira_Sans-0.4.7/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet"><meta property="og:title" content="k-fold Cross-Validation applied to an autoregressive model — CVar"><meta property="og:description" content="CVar computes the errors obtained by applying an autoregressive
+not be used."><title>k-fold Cross-Validation applied to an autoregressive model — CVar • forecast</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Fira_Sans-0.4.8/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet"><meta property="og:title" content="k-fold Cross-Validation applied to an autoregressive model — CVar"><meta property="og:description" content="CVar computes the errors obtained by applying an autoregressive
 modelling function to subsets of the time series y using k-fold
 cross-validation as described in Bergmeir, Hyndman and Koo (2015). It also
 applies a Ljung-Box test to the residuals. If this test is significant
@@ -149,16 +149,16 @@ validity of cross-validation for evaluating time series prediction.
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:   CVar(y = lynx, k = 5, lambda = 0.15)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5-fold cross-validation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                    Mean          SD</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ME        -190.23776963 370.9587738</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE       950.69730780 247.6053180</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MAE        621.03150716 143.6935801</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MPE        -28.31794168  17.7201368</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MAPE        61.02875995   8.1675874</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ACF1        -0.01324667   0.2906915</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Theil's U    1.02870392   0.2437526</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    Mean           SD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ME        -3.506533e+01 316.12224260</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE       1.029605e+03 269.86084273</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MAE        6.386801e+02  98.48144124</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MPE       -1.560880e+01  15.72541569</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MAPE       5.142552e+01  10.06534404</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ACF1       3.044331e-03   0.34751728</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Theil's U  8.002252e-01   0.08429718</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> p-value of Ljung-Box test of residuals is  0.5050217 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p-value of Ljung-Box test of residuals is  0.01522927 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> if this value is significant (&lt;0.05),</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> the result of the cross-validation should not be used</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> as the model is underfitting the data.</span>
@@ -172,11 +172,11 @@ validity of cross-validation for evaluating time series prediction.
 <span class="r-out co"><span class="r-pr">#&gt;</span> a 11-6-1 network with 79 weights</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> options were - linear output units </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sigma^2 estimated as 0.0748</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sigma^2 estimated as 0.07821</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $accuracy</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 ME    RMSE      MAE       MPE     MAPE      ACF1 Theil's U</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Test set -438.6076 1025.06 690.4543 -39.17297 60.81328 0.1311462 0.9211926</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                ME     RMSE     MAE       MPE     MAPE       ACF1 Theil's U</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test set -280.266 985.4255 659.929 -22.66073 51.24304 -0.1164662  0.918538</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $testfit</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Time Series:</span>
@@ -184,28 +184,28 @@ validity of cross-validation for evaluating time series prediction.
 <span class="r-out co"><span class="r-pr">#&gt;</span> End = 1934 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Frequency = 1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1]         NA         NA         NA         NA         NA         NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [7]         NA         NA         NA         NA         NA  102.16998</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [13]  166.51095  277.72319  434.49653 2189.59816 2800.09103 3366.23259</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [19] 1884.77180  431.63705  148.54902   50.23275   75.30885  394.32414</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [25]  523.49064 1058.64188 2165.24073 2560.22499  966.33947  357.96054</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [31]  348.59268  241.23074  368.97477  749.16665 1464.93198 2734.81377</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [37] 4292.72825 1229.13121  690.91334  275.34033  239.40775  219.26589</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [43]  553.51711 1603.21842 2762.18631 6858.93486 4182.18824  736.30398</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [49]  183.20683  423.43940  368.29951  794.64148 1603.33012 1661.89576</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [55] 2268.37116 1415.13681  720.76687  290.25208  203.08104  240.03720</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [61]  443.62712 1049.21422 2011.36217 2895.82112 3583.96162 2556.41297</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [67]  386.05054   78.81555   43.40640   48.91715  407.83643  187.03664</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [73]  369.00914  738.89069 3953.84896 3483.20176  611.94084  107.12767</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [79]  153.93001  376.04364  762.83971 1292.69385 1697.20643 6782.14451</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [85] 6292.55404 3499.67708 1825.15069  374.98359  357.60800  494.84038</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [91] 1386.53493 2697.55354 3794.77070 3056.15490 1049.92769 1057.37068</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [97]  699.44518   83.33935   81.45259  113.20382  230.86475  412.42012</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103]  943.88795 2403.83279 3454.91144 2998.16359 1512.11429  513.03512</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [109]  454.66803  529.64920 1017.48205 1586.99940 2632.67198 3413.05378</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [7]         NA         NA         NA         NA         NA  109.47544</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [13]  167.72400  281.55204  432.98756 2175.54020 2773.38619 3494.24144</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [19] 2982.18811  414.55456  153.50931   47.61016   65.68434  209.85369</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [25]  546.78048 1046.20595 2112.70850 2573.01203  971.51174  342.59348</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [31]  142.62963  236.38189  353.54347  737.54844 1607.51598 2858.18100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [37] 2875.68275 2088.23077  737.19671  310.75204  255.62030  228.76048</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [43]  557.68419 1575.21676 3133.09018 6438.31141 4284.32057  740.83011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [49]  259.44551  429.96972  536.69048  644.77407 1662.03921 1697.70232</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [55] 3576.87868 1446.71455  753.01728  300.38300  190.33345  237.41829</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [61]  471.05701  730.94125 1055.91014 2900.70499 2939.61424 2501.07391</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [67]  517.43145  180.25227   39.72888   50.31620   65.76591  187.74083</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [73]  385.81692 1247.85768 2197.08467 3426.61355  594.97626  108.40521</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [79]  156.83571  375.85567  733.39191 1136.60739 3408.07145 6788.53140</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [85] 6358.64888 3521.43913 1808.09921  638.19849  383.03428  793.01427</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [91] 1369.65765 2581.75732 3729.29855 3142.62194 2927.62284 1246.94473</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [97]  691.50422   82.57153   79.44624  104.02533  225.26809  412.50185</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 1139.12015 2722.60384 2171.82589 2985.48893 1502.76323  591.93980</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [109]  457.28982  691.80884  992.92892 1598.49657 2725.98227 3364.98663</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $testset</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]   2   3   4   6  11  24  35  37  38  43  45  49  58  62  65  71  74  83  90</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [20]  95  96 103 110</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]   3   8   9  11  19  31  39  51  52  55  60  63  65  67  68  75  82  88  92</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [20]  96 104 105 108</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></span>
