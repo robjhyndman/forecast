@@ -1347,7 +1347,7 @@ fitted.ets <- function(object, h=1, ...) {
 }
 
 #' @export
-hfitted.ets <- function(object, h=1, all_fits = FALSE, ...) {
+hfitted.ets <- function(object, h=1, ...) {
   n <- length(object$x)
   out <- rep(NA_real_, n)
   for(i in seq_len(n-h+1)) {
