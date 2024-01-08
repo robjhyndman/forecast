@@ -149,16 +149,16 @@ validity of cross-validation for evaluating time series prediction.
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:   CVar(y = lynx, k = 5, lambda = 0.15)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5-fold cross-validation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                    Mean          SD</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ME         -73.17555406 239.9490932</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE      1001.57197430 227.4388880</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MAE        647.41615299 151.1422865</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MPE        -22.16810024  19.5305847</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MAPE        59.35659943  16.2885687</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ACF1        -0.01348073   0.2687188</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Theil's U    0.94009183   0.3185128</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   Mean          SD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ME        -96.87766094 171.9349638</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMSE      883.96487155 318.4376409</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MAE       552.87027171 170.9808362</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MPE       -22.62795946  20.9185992</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MAPE       56.26265322  20.5500639</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ACF1        0.09012916   0.0866202</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Theil's U   0.87481622   0.1899455</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> p-value of Ljung-Box test of residuals is  0.4646334 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> p-value of Ljung-Box test of residuals is  0.6350032 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> if this value is significant (&lt;0.05),</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> the result of the cross-validation should not be used</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> as the model is underfitting the data.</span>
@@ -172,11 +172,11 @@ validity of cross-validation for evaluating time series prediction.
 <span class="r-out co"><span class="r-pr">#&gt;</span> a 11-6-1 network with 79 weights</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> options were - linear output units </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sigma^2 estimated as 0.07954</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sigma^2 estimated as 0.08011</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $accuracy</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 ME     RMSE      MAE       MPE     MAPE      ACF1 Theil's U</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Test set -88.31521 1272.145 785.4886 -21.93423 58.12657 0.3388621  1.050221</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                ME     RMSE      MAE       MPE     MAPE      ACF1 Theil's U</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test set 101.6928 493.5704 323.3933 -5.627797 38.83669 0.2007699 0.5707643</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $testfit</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Time Series:</span>
@@ -184,28 +184,28 @@ validity of cross-validation for evaluating time series prediction.
 <span class="r-out co"><span class="r-pr">#&gt;</span> End = 1934 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Frequency = 1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1]         NA         NA         NA         NA         NA         NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [7]         NA         NA         NA         NA         NA  111.46587</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [13]  164.99798  708.18640  415.50909  553.30632 2666.22990 3476.69599</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [19] 2422.85194  407.73977  151.70290   48.75993   68.70259  123.61603</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [25]  479.47522 1040.03034 2212.88157 2215.98816  965.12802  355.21503</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [31]  357.42292  236.95760  296.68272  728.28118 1651.03925 2751.99643</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [37] 3022.26027 2129.88452  684.68556  314.06604  269.66516  255.53693</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [43]  524.59610 1576.08061 3211.53029 6440.33205 6290.09845  687.37408</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [49]  238.13848  422.88253  732.09109  765.97548 1584.02300 1732.44609</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [55] 2258.90105 1453.63685  490.26760  300.06132  197.34795  225.43458</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [61]  460.73203  755.22611 1925.42723 3105.71615 4387.34691 2490.16099</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [67]  404.38561   75.87958   41.48493   65.95552   64.90167  130.95942</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [73]  391.01203 1300.66413 1869.08428 3443.96123  604.38263  108.35774</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [79]  154.15898  393.30502  740.83804 1350.33053 3285.71853 3322.09559</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [85] 6215.03529 3684.54832 1095.56405  375.65175  349.95620  827.62106</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [91] 2676.98392 2725.97520 3676.71254 3150.72153 3040.28573 3747.04033</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [97] 3040.47623   80.73449   70.02036  223.25885  231.51019  409.47471</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 1087.73677 2409.88092 3450.12429 2974.65075 1497.73917  487.32726</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [109]  453.15397  631.95698  994.73031 1629.07891 2726.73125 3383.42089</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [7]         NA         NA         NA         NA         NA   98.83272</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [13]   51.81935  285.10333  632.53497 2154.47753 2749.25349 3396.75420</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [19] 1805.10039  640.85512  166.37137   49.28711   68.02140  177.91656</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [25]  411.39414 1036.58965 2037.10477 2724.29707  996.50305  358.58454</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [31]  368.81827  506.72704  362.21532  721.67110 1591.98579 2799.21047</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [37] 3010.30593 2076.64910  879.65069  290.07181  250.72369  248.33671</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [43]  561.20642 1315.31948 3395.51871 6026.42686 4208.30526  711.48951</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [49]  255.52577  415.48290  371.93809  976.40594 1593.54627 1716.31082</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [55] 2220.30377 1467.74473  744.32078  301.96209  190.60086  226.99275</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [61]  448.13162  750.64164 1971.89411 2920.38401 4250.55610 3501.27522</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [67]  403.32991   75.11988   39.63585   49.06043   60.78954  190.10022</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [73]  382.88891 1291.84535 3760.30159 3495.13946 1246.22038  108.45360</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [79]  154.52193  397.06366  771.85564 1771.72993 3409.98479 6807.59619</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [85] 6299.19509 3803.05570 1784.65232  454.05904  349.67187  810.09081</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [91] 1339.03781 2719.00015 2319.12465 3202.77245 3081.79652 3667.00663</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [97]  696.19124   84.52377   64.99354   88.32226  227.72071  402.76532</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [103] 1152.76104 2420.27361 3581.33664 2927.16759 1472.28256  558.79943</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [109]  510.10113  630.55125  977.02266 1591.97618 2751.53951 4188.49248</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $testset</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  10  11  14  16  19  24  25  27  28  33  42  47  51  57  70  72  75  84  87</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [20]  91  97  99 100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]   4   7   9  13  15  20  21  24  25  27  32  39  44  52  66  77  82  88  93</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [20]  99 100 113 114</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></span>
