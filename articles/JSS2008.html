@@ -178,8 +178,8 @@ number of months or quarters in a year), <span class="math inline">\(\ell_t\)</s
 series, <span class="math inline">\(b_t\)</span> denotes the growth,
 <span class="math inline">\(s_t\)</span> is the seasonal component,
 <span class="math inline">\(\hat{y}_{t+h|t}\)</span> is the forecast for
-<span class="math inline">\(h\)</span> periods ahead, and <span class="math inline">\(h_m^+ = \big[(h-1) \mbox{ mod } m\big] +
-1\)</span>. To use method <span class="math inline">\(\eqref{eq:AMmethod}\)</span>, we need values for
+<span class="math inline">\(h\)</span> periods ahead, and <span class="math inline">\(h_m^+
+= \big[(h-1) \mbox{ mod } m\big] + 1\)</span>. To use method <span class="math inline">\(\eqref{eq:AMmethod}\)</span>, we need values for
 the initial states <span class="math inline">\(\ell_0\)</span>, <span class="math inline">\(b_0\)</span> and <span class="math inline">\(s_{1-m},\dots,s_0\)</span>, and for the smoothing
 parameters <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta^*\)</span> and <span class="math inline">\(\gamma\)</span>. All of these will be estimated
 from the observed data.</p>
@@ -307,11 +307,13 @@ is required for the additive error model.</p>
 variations. The general model involves a state vector <span class="math inline">\(\bm{x}_t = (\ell_t, b_t\)</span>, <span class="math inline">\(s_t, s_{t-1}, \dots, s_{t-m+1})'\)</span> and
 state space equations of the form where <span class="math inline">\(\{\varepsilon_t\}\)</span> is a Gaussian white
 noise process with mean zero and variance <span class="math inline">\(\sigma^2\)</span>, and <span class="math inline">\(\mu_t = w(\bm{x}_{t-1})\)</span>. The model with
-additive errors has <span class="math inline">\(r(\bm{x}_{t-1})=1\)</span>, so that <span class="math inline">\(y_t = \mu_{t} + \varepsilon_t\)</span>. The model
-with multiplicative errors has <span class="math inline">\(r(\bm{x}_{t-1})=\mu_t\)</span>, so that <span class="math inline">\(y_t = \mu_{t}(1 + \varepsilon_t)\)</span>. Thus,
-<span class="math inline">\(\varepsilon_t = (y_t - \mu_t)/\mu_t\)</span>
-is the relative error for the multiplicative model. The models are not
-unique. Clearly, any value of <span class="math inline">\(r(\bm{x}_{t-1})\)</span> will lead to identical
+additive errors has <span class="math inline">\(r(\bm{x}_{t-1})=1\)</span>, so that <span class="math inline">\(y_t
+= \mu_{t} + \varepsilon_t\)</span>. The model with multiplicative errors
+has <span class="math inline">\(r(\bm{x}_{t-1})=\mu_t\)</span>, so that
+<span class="math inline">\(y_t = \mu_{t}(1 + \varepsilon_t)\)</span>.
+Thus, <span class="math inline">\(\varepsilon_t = (y_t -
+\mu_t)/\mu_t\)</span> is the relative error for the multiplicative
+model. The models are not unique. Clearly, any value of <span class="math inline">\(r(\bm{x}_{t-1})\)</span> will lead to identical
 point forecasts for <span class="math inline">\(y_t\)</span>.</p>
 <p>All of the methods in Table <span class="math inline">\(\ref{table:pegels}\)</span> can be written in the
 form <span class="math inline">\(\eqref{eq:ss1}\)</span> and <span class="math inline">\(\eqref{eq:ss2}\)</span>. The specific form for
@@ -337,11 +339,10 @@ the point forecasts can be shown to be equal to <span class="math inline">\(\mu_
 the conditional expectation of the corresponding state space model.</p>
 <p>The models also provide a means of obtaining prediction intervals. In
 the case of the linear models, where the forecast distributions are
-normal, we can derive the conditional variance <span class="math inline">\(v_{t+h|t} = \VAR (y_{t+h} \mid \bm{x}_t)\)</span>
-and obtain prediction intervals accordingly. This approach also works
-for many of the nonlinear models. Detailed derivations of the results
-for many models are given in <span class="citation">Hyndman, Koehler, et
-al. (2005)</span>.</p>
+normal, we can derive the conditional variance <span class="math inline">\(v_{t+h|t} =
+\VAR (y_{t+h} \mid \bm{x}_t)\)</span> and obtain prediction intervals
+accordingly. This approach also works for many of the nonlinear models.
+Detailed derivations of the results for many models are given in <span class="citation">Hyndman, Koehler, et al. (2005)</span>.</p>
 <p>A more direct approach that works for all of the models is to simply
 simulate many future sample paths conditional on the last estimate of
 the state vector, <span class="math inline">\(\bm{x}_t\)</span>. Then
@@ -527,9 +528,9 @@ Canova-Hansen test <span class="citation">(Canova and Hansen
 1995)</span>. Canova and Hansen only provide critical values for <span class="math inline">\(2&lt;m&lt;13\)</span>. In our implementation of
 their test, we allow any value of <span class="math inline">\(m&gt;1\)</span>. Let <span class="math inline">\(C_m\)</span> be the critical value for seasonal
 period <span class="math inline">\(m\)</span>. We plotted <span class="math inline">\(C_m\)</span> against <span class="math inline">\(m\)</span> for values of <span class="math inline">\(m\)</span> up to 365 and noted that they fit the
-line <span class="math inline">\(C_m = 0.269 m^{0.928}\)</span> almost
-exactly. So for <span class="math inline">\(m&gt;12\)</span>, we use
-this simple expression to obtain the critical value.</p>
+line <span class="math inline">\(C_m = 0.269
+m^{0.928}\)</span> almost exactly. So for <span class="math inline">\(m&gt;12\)</span>, we use this simple expression to
+obtain the critical value.</p>
 <p>We note in passing that the null hypothesis for the Canova-Hansen
 test is not an ARIMA model as it includes seasonal dummy terms. It is a
 test for whether the seasonal pattern changes sufficiently over time to
@@ -753,9 +754,9 @@ series , we use the following commands.</p>
 The function implements the algorithm of Section <span class="math inline">\(\ref{sec:arima}\)</span> and returns an object of
 class . The resulting forecasts are shown in Figure <span class="math inline">\(\ref{fig:arimaexamples}\)</span>. The fitted
 models are as follows:
-<p>Note that the  parameterization has <span class="math inline">\(\theta(B) = (1 + \theta_1B + \dots +
-\theta_qB)\)</span> and <span class="math inline">\(\phi(B) = (1 -
-\phi_1B + \dots - \phi_qB)\)</span>, and similarly for the seasonal
+<p>Note that the  parameterization has <span class="math inline">\(\theta(B) = (1 + \theta_1B +
+\dots + \theta_qB)\)</span> and <span class="math inline">\(\phi(B) = (1
+- \phi_1B + \dots - \phi_qB)\)</span>, and similarly for the seasonal
 terms.</p>
 <p>A summary of the forecasts is available, part of which is shown
 below.</p>
@@ -912,7 +913,7 @@ series.</p>
 <div class="section level2">
 <h2 class="unnumbered" id="bibliography">Bibliography<a class="anchor" aria-label="anchor" href="#bibliography"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-AM79" class="csl-entry">
 Anderson, B. D. O., and J. B. Moore. 1979. <em>Optimal Filtering</em>.
 Englewood Cliffs: Prentice-Hall.
