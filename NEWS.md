@@ -1,4 +1,6 @@
 # forecast (development version)
+  * hfitted now much faster for ARIMA models (danigiro, #949)
+
 
 # forecast 8.21.1
   * nnetar now allows p or P to be 0

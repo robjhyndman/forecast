@@ -451,6 +451,11 @@ predict.default <- function(object, ...) {
 }
 
 hfitted <- function(object, h=1, FUN=NULL, ...) {
+  UseMethod("hfitted")
+}
+
+#' @export
+hfitted.default <- function(object, h=1, FUN=NULL, ...) {
   if (h == 1) {
     return(fitted(object))
   }
