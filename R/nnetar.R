@@ -616,6 +616,7 @@ is.nnetarmodels <- function(x) {
 }
 
 # Scale a univariate time series
+#' @export
 scale.ts <- function(x, center=TRUE, scale=TRUE) {
   tspx <- tsp(x)
   x <- as.ts(scale.default(x, center = center, scale = scale))

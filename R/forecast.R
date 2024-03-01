@@ -538,6 +538,7 @@ forecast.forecast <- function(object, ...) {
   return(object)
 }
 
+#' @export
 subset.forecast <- function(x, ...) {
   tspx <- tsp(x$mean)
   x$mean <- subset(x$mean, ...)

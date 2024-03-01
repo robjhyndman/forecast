@@ -40,6 +40,7 @@ maroots <- function(object) {
   return(structure(list(roots = numeric(0), type = "MA"), class = "armaroots"))
 }
 
+#' @export
 plot.armaroots <- function(x, xlab, ylab, main, ...) {
   if (missing(main)) {
     main <- paste("Inverse", x$type, "roots")

@@ -63,5 +63,5 @@ License: GPL-3
 URL: https://pkg.robjhyndman.com/forecast/, https://github.com/robjhyndman/forecast
 VignetteBuilder: knitr
 Encoding: UTF-8
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Config/testthat/edition: 3

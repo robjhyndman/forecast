@@ -965,6 +965,7 @@ fitted.ar <- function(object, ...) {
   getResponse(object) - residuals(object)
 }
 
+#' @export
 hfitted.Arima <- function(object, h, ...) {
   # As implemented in Fable
   if(h == 1){
@@ -979,7 +980,7 @@ hfitted.Arima <- function(object, h, ...) {
   # Calculate regression component
   xm <- y - yx
   fits <- rep_len(NA_real_, length(y))
-  
+
   start <- length(mod$Delta) + 1
   end <- length(yx) - h
   idx <- if(start > end) integer(0L) else start:end

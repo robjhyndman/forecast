@@ -127,35 +127,47 @@ checkresiduals <- function(object, lag, test, plot = TRUE, ...) {
   }
 }
 
+#' Compute model degrees of freedom
+#'
+#' @param object A time series model
+#' @param ... Other arguments currently ignored
+#' @export
 modeldf <- function(object, ...) {
   UseMethod("modeldf")
 }
 
+#' @export
 modeldf.default <- function(object, ...) {
   warning("Could not find appropriate degrees of freedom for this model.")
   NULL
 }
 
+#' @export
 modeldf.ets <- function(object, ...) {
   length(object$par)
 }
 
+#' @export
 modeldf.Arima <- function(object, ...) {
   sum(arimaorder(object)[c("p", "q", "P", "Q")], na.rm = TRUE)
 }
 
+#' @export
 modeldf.bats <- function(object, ...) {
   length(object$parameters$vect)
 }
 
+#' @export
 modeldf.lm <- function(object, ...) {
   length(object$coefficients)
 }
 
+#' @export
 modeldf.lagwalk <- function(object, ...) {
   as.numeric(object$par$includedrift)
 }
 
+#' @export
 modeldf.meanf <- function(object, ...) {
   1
 }
