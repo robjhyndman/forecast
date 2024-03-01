@@ -1,6 +1,7 @@
 # forecast (development version)
   * hfitted now much faster for ARIMA models (danigiro, #949)
-
+  * hfitted now much faster for ETS models, and produces fitted values from 
+    initial states (#950)
 
 # forecast 8.21.1
   * nnetar now allows p or P to be 0

@@ -1347,6 +1347,26 @@ fitted.ets <- function(object, h=1, ...) {
 }
 
 #' @export
+hfitted.ets <- function(object, h=1, ...) {
+  n <- length(object$x)
+  out <- rep(NA_real_, n)
+  for(i in seq_len(n-h+1)) {
+    out[i+h-1] <- .C(
+      "etsforecast",
+      as.double(object$states[i, ]),
+      as.integer(object$m),
+      as.integer(switch(object$components[2], "N" = 0, "A" = 1, "M" = 2)),
+      as.integer(switch(object$components[3], "N" = 0, "A" = 1, "M" = 2)),
+      as.double(ifelse(object$components[4] == "FALSE", 1, object$par["phi"])),
+      as.integer(h),
+      as.double(numeric(h)),
+      PACKAGE = "forecast"
+    )[[7]][h]
+  }
+  out
+}
+
+#' @export
 logLik.ets <- function(object, ...) {
   structure(object$loglik, df = length(object$par) + 1, class = "logLik")
 }
