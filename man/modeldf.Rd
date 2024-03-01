@@ -8,6 +8,8 @@ modeldf(object, ...)
 }
 \arguments{
 \item{object}{A time series model}
+
+\item{...}{Other arguments currently ignored}
 }
 \description{
 Compute model degrees of freedom
