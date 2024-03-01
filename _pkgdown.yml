@@ -159,6 +159,7 @@ reference:
       - starts_with("simulate")
       - tbats.components
       - getResponse
+      - modeldf
   - title: "Forecast evaluation"
     desc: "Functions used for evaluating forecasts"
     contents:
