@@ -1,4 +1,4 @@
-# forecast (development version)
+# forecast 8.22.0
   * hfitted now much faster for ARIMA models (danigiro, #949)
   * hfitted now much faster for ETS models, and produces fitted values from 
     initial states (#950)
