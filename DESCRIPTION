@@ -21,6 +21,7 @@ Imports:
   timeDate,
   tseries,
   urca,
+  withr,
   zoo
 Suggests:
   forecTheta,

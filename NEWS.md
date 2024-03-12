@@ -1,4 +1,5 @@
 # forecast (development version)
+  * Prevented RNG state changing when the package is attached (#954, #955).
 
 # forecast 8.22.0
   * hfitted now much faster for ARIMA models (danigiro, #949)
