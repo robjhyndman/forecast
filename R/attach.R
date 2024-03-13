@@ -1,5 +1,5 @@
 .onAttach <- function(...) {
-  if (!interactive() || stats::runif(1) > 0.2) return()
+  if (!interactive() || withr::with_preserve_seed(stats::runif(1)) > 0.2) return()
 
   tips <- c(
     "Use suppressPackageStartupMessages() to eliminate package startup messages.",
@@ -9,7 +9,7 @@
     "Want to stay up-to-date? Read the Hyndsight blog:\n  https://robjhyndman.com/hyndsight/",
     "Want to meet other forecasters? Join the International Institute of Forecasters:\n  http://forecasters.org/"
   )
-  tip <- sample(tips, 1)
+  tip <- withr::with_preserve_seed(sample(tips, 1))
   msg <- paste("This is forecast", packageVersion("forecast"), "\n ", tip)
   packageStartupMessage(msg)
 }
