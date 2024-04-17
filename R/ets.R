@@ -1101,7 +1101,7 @@ lik <- function(par, y, nstate, errortype, trendtype, seasontype, damped, par.no
 print.ets <- function(x, ...) {
   cat(paste(x$method, "\n\n"))
   if(!is.null(x$call)) {
-    cat(paste("Call:\n", deparse(x$call), "\n\n"))
+    cat("Call:", deparse(x$call), "", sep = "\n")
   }
   ncoef <- length(x$initstate)
   if (!is.null(x$lambda)) {
