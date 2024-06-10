@@ -29,6 +29,7 @@ Suggests:
   methods,
   rmarkdown,
   rticles,
+  scales,
   seasonal,
   testthat (>= 3.0.0),
   uroot
