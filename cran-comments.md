@@ -1,4 +1,5 @@
 Made head.ts and tail.ts function definitions conditional on R < 4.5.0.
+Fixed missing package anchors in link targets
 
 ## Test environments
 
