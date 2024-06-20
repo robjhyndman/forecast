@@ -1807,7 +1807,7 @@ autolayer.mforecast <- function(object, series = NULL, PI = TRUE, ...) {
 #' @param colour If TRUE, the time series will be assigned a colour aesthetic
 #' @param model Object of class \dQuote{\code{ts}} to be converted to
 #' \dQuote{\code{data.frame}}.
-#' @param data Not used (required for \link{fortify} method)
+#' @param data Not used (required for \code{\link[ggplot2]{fortify}} method)
 #' @param ... Other plotting parameters to affect the plot.
 #' @inheritParams plot.forecast
 #' @return None. Function produces a ggplot graph.
@@ -2225,10 +2225,10 @@ GeomForecastInterval <- ggplot2::ggproto(
 #' @param data The data to be displayed in this layer. There are three options:
 #'
 #' If \code{NULL}, the default, the data is inherited from the plot data as
-#' specified in the call to \code{\link{ggplot}}.
+#' specified in the call to \code{\link[ggplot2]{ggplot}}.
 #'
 #' A \code{data.frame}, or other object, will override the plot data. All
-#' objects will be fortified to produce a data frame. See \code{\link{fortify}}
+#' objects will be fortified to produce a data frame. See \code{\link[ggplot2]{fortify}}
 #' for which variables will be created.
 #'
 #' A \code{function} will be called with a single argument, the plot data. The
@@ -2245,7 +2245,7 @@ GeomForecastInterval <- ggplot2::ggproto(
 #' @param inherit.aes If \code{FALSE}, overrides the default aesthetics, rather
 #' than combining with them. This is most useful for helper functions that
 #' define both data and aesthetics and shouldn't inherit behaviour from the
-#' default plot specification, e.g. \code{\link{borders}}.
+#' default plot specification, e.g. \code{\link[ggplot2]{borders}}.
 #' @param PI If \code{FALSE}, confidence intervals will not be plotted, giving
 #' only the forecast line.
 #' @param showgap If \code{showgap=FALSE}, the gap between the historical
@@ -2253,12 +2253,12 @@ GeomForecastInterval <- ggplot2::ggproto(
 #' @param series Matches an unidentified forecast layer with a coloured object
 #' on the plot.
 #' @param ... Additional arguments for \code{\link{forecast.ts}}, other
-#' arguments are passed on to \code{\link{layer}}. These are often aesthetics,
+#' arguments are passed on to \code{\link[ggplot2]{layer}}. These are often aesthetics,
 #' used to set an aesthetic to a fixed value, like \code{color = "red"} or
 #' \code{alpha = .5}. They may also be parameters to the paired geom/stat.
 #' @return A layer for a ggplot graph.
 #' @author Mitchell O'Hara-Wild
-#' @seealso \code{\link{forecast}}, \code{\link[ggplot2]{ggproto}}
+#' @seealso \code{\link[generics]{forecast}}, \code{\link[ggplot2]{ggproto}}
 #' @examples
 #'
 #' \dontrun{

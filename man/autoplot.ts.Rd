@@ -62,7 +62,7 @@ colour.}
 \item{model}{Object of class \dQuote{\code{ts}} to be converted to
 \dQuote{\code{data.frame}}.}
 
-\item{data}{Not used (required for \link{fortify} method)}
+\item{data}{Not used (required for \code{\link[ggplot2]{fortify}} method)}
 }
 \value{
 None. Function produces a ggplot graph.
