@@ -20,3 +20,6 @@ h3, .h3 {
 .text-muted {
     color: #ffb81c !important;
 }
+.algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
+  color: #234660;
+}
