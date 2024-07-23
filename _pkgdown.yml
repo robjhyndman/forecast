@@ -1,7 +1,7 @@
 url: https://pkg.robjhyndman.com/forecast/
+
 template:
   bootstrap: 5
-  theme: tango
   bootswatch: flatly
   bslib:
     base_font: {google: "Fira Sans"}
@@ -9,6 +9,8 @@ template:
     code_font: "Hack, mono"
     primary: "#234460"
     link-color: "#234460"
+  math-rendering: katex
+  theme: tango
   includes:
     in_header: <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack-subset.css">
 
