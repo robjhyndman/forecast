@@ -24,10 +24,11 @@ smoothed values.
 The moving average smoother averages the nearest \code{order} periods of
 each observation. As neighbouring observations of a time series are likely
 to be similar in value, averaging eliminates some of the randomness in the
-data, leaving a smooth trend-cycle component. \deqn{\hat{T}_{t} =
-\frac{1}{m} \sum_{j=-k}^k
-y_{t+j}}{T[t]=1/m(y[t-k]+y[t-k+1]+\ldots+y[t]+\ldots+y[t+k-1]+y[t+k])} where
-\eqn{k=\frac{m-1}{2}}{k=(m-1)/2}
+data, leaving a smooth trend-cycle component.
+
+\deqn{\hat{T}_{t} = \frac{1}{m} \sum_{j=-k}^k y_{t+j}}{T[t]=1/m(y[t-k]+y[t-k+1]+\ldots+y[t]+\ldots+y[t+k-1]+y[t+k])}
+
+where \eqn{k=\frac{m-1}{2}}{k=(m-1)/2}.
 
 When an even \code{order} is specified, the observations averaged will
 include one more observation from the future than the past (k is rounded

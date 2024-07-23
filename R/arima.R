@@ -609,7 +609,9 @@ fitted.forecast_ARIMA <- fitted.Arima
 #' and re-apply it to the data \code{y}.
 #'
 #' The fitted model is a regression with ARIMA(p,d,q) errors
+#'
 #' \deqn{y_t = c + \beta' x_t + z_t}
+#'
 #' where \eqn{x_t} is a vector of regressors at time \eqn{t} and \eqn{z_t} is an
 #' ARMA(p,d,q) error process. If there are no regressors, and \eqn{d=0}, then c
 #' is an estimate of the mean of \eqn{y_t}. For more information, see Hyndman &

@@ -32,9 +32,12 @@ BoxCox() returns a transformation of the input variable using a Box-Cox
 transformation. InvBoxCox() reverses the transformation.
 }
 \details{
-The Box-Cox transformation (as given by Bickel & Doksum 1981) is given by \deqn{f_\lambda(x) =(sign(x)|x|^\lambda -
-1)/\lambda}{f(x;lambda)=(sign(x)|x|^lambda - 1)/lambda} if \eqn{\lambda\ne0}{lambda
-is not equal to 0}. For \eqn{\lambda=0}{lambda=0},
+The Box-Cox transformation (as given by Bickel & Doksum 1981) is given by
+
+\deqn{f_\lambda(x) =(sign(x)|x|^\lambda - 1)/\lambda}{f(x;lambda)=(sign(x)|x|^lambda - 1)/lambda}
+
+if \eqn{\lambda\ne0}{lambda is not equal to 0}. For \eqn{\lambda=0}{lambda=0},
+
 \deqn{f_0(x)=\log(x)}{f(x;0)=log(x)}.
 }
 \examples{

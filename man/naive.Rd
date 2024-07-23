@@ -103,14 +103,24 @@ prediction intervals from an ARIMA(0,0,0)(0,1,0)m model where m is the
 seasonal period.
 }
 \details{
-The random walk with drift model is \deqn{Y_t=c + Y_{t-1} + Z_t}{Y[t]=c +
-Y[t-1] + Z[t]} where \eqn{Z_t}{Z[t]} is a normal iid error. Forecasts are
-given by \deqn{Y_n(h)=ch+Y_n}{Y[n+h]=ch+Y[n]}. If there is no drift (as in
+The random walk with drift model is
+
+\deqn{Y_t=c + Y_{t-1} + Z_t}{Y[t]=c + Y[t-1] + Z[t]}
+
+where \eqn{Z_t}{Z[t]} is a normal iid error. Forecasts are
+given by
+
+\deqn{Y_n(h)=ch+Y_n}{Y[n+h]=ch+Y[n]}
+
+If there is no drift (as in
 \code{naive}), the drift parameter c=0. Forecast standard errors allow for
 uncertainty in estimating the drift parameter (unlike the corresponding
 forecasts obtained by fitting an ARIMA model directly).
 
-The seasonal naive model is \deqn{Y_t= Y_{t-m} + Z_t}{Y[t]=Y[t-m] + Z[t]}
+The seasonal naive model is
+
+\deqn{Y_t= Y_{t-m} + Z_t}{Y[t]=Y[t-m] + Z[t]}
+
 where \eqn{Z_t}{Z[t]} is a normal iid error.
 }
 \examples{

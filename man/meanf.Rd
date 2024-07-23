@@ -69,8 +69,14 @@ forecasts)}
 Returns forecasts and prediction intervals for an iid model applied to y.
 }
 \details{
-The iid model is \deqn{Y_t=\mu + Z_t}{Y[t]=mu + Z[t]} where \eqn{Z_t}{Z[t]}
-is a normal iid error. Forecasts are given by \deqn{Y_n(h)=\mu}{Y[n+h]=mu}
+The iid model is
+
+\deqn{Y_t=\mu + Z_t}{Y[t]=mu + Z[t]}
+
+where \eqn{Z_t}{Z[t]} is a normal iid error. Forecasts are given by
+
+\deqn{Y_n(h)=\mu}{Y[n+h]=mu}
+
 where \eqn{\mu}{mu} is estimated by the sample mean.
 }
 \examples{

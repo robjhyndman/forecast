@@ -4,8 +4,14 @@
 #'
 #' Returns forecasts and prediction intervals for an iid model applied to y.
 #'
-#' The iid model is \deqn{Y_t=\mu + Z_t}{Y[t]=mu + Z[t]} where \eqn{Z_t}{Z[t]}
-#' is a normal iid error. Forecasts are given by \deqn{Y_n(h)=\mu}{Y[n+h]=mu}
+#' The iid model is
+#'
+#' \deqn{Y_t=\mu + Z_t}{Y[t]=mu + Z[t]}
+#'
+#' where \eqn{Z_t}{Z[t]} is a normal iid error. Forecasts are given by
+#'
+#' \deqn{Y_n(h)=\mu}{Y[n+h]=mu}
+#'
 #' where \eqn{\mu}{mu} is estimated by the sample mean.
 #'
 #' @param y a numeric vector or time series of class \code{ts}
@@ -122,9 +128,12 @@ meanf <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALS
 #' BoxCox() returns a transformation of the input variable using a Box-Cox
 #' transformation. InvBoxCox() reverses the transformation.
 #'
-#' The Box-Cox transformation (as given by Bickel & Doksum 1981) is given by \deqn{f_\lambda(x) =(sign(x)|x|^\lambda -
-#' 1)/\lambda}{f(x;lambda)=(sign(x)|x|^lambda - 1)/lambda} if \eqn{\lambda\ne0}{lambda
-#' is not equal to 0}. For \eqn{\lambda=0}{lambda=0},
+#' The Box-Cox transformation (as given by Bickel & Doksum 1981) is given by
+#'
+#' \deqn{f_\lambda(x) =(sign(x)|x|^\lambda - 1)/\lambda}{f(x;lambda)=(sign(x)|x|^lambda - 1)/lambda}
+#'
+#' if \eqn{\lambda\ne0}{lambda is not equal to 0}. For \eqn{\lambda=0}{lambda=0},
+#'
 #' \deqn{f_0(x)=\log(x)}{f(x;0)=log(x)}.
 #'
 #' @param x a numeric vector or time series of class \code{ts}.
