@@ -272,6 +272,13 @@ zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, seasonal="additive"
     phi <- 1
   }
 
+  if(abs(m - round(m)) > 1e-4) {
+    # Ignore seasonality
+    m <- 1
+  } else {
+    m <- round(m)
+  }
+
   # initialise array of l, b, s
   level <- trend <- season <- xfit <- residuals <- numeric(lenx)
   SSE <- 0

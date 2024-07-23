@@ -142,6 +142,11 @@ ets <- function(y, model="ZZZ", damped=NULL,
     stop("nmse out of range")
   }
   m <- frequency(y)
+  if(abs(m - round(m)) > 1e-4) {
+    warning("Non-integer seasonal period. Only non-seasonal models will be considered.")
+  } else {
+    m <- round(m)
+  }
 
   if (any(upper < lower)) {
     stop("Lower limits must be less than upper limits")
