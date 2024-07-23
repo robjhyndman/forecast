@@ -608,7 +608,13 @@ fitted.forecast_ARIMA <- fitted.Arima
 #' is also possible to take an ARIMA model from a previous call to \code{Arima}
 #' and re-apply it to the data \code{y}.
 #'
-#' See the \code{\link[stats]{arima}} function in the stats package.
+#' The fitted model is a regression with ARIMA(p,d,q) errors
+#' \deqn{y_t = c + \beta' x_t + z_t}
+#' where \eqn{x_t} is a vector of regressors at time \eqn{t} and \eqn{z_t} is an
+#' ARMA(p,d,q) error process. If there are no regressors, and \eqn{d=0}, then c
+#' is an estimate of the mean of \eqn{y_t}. For more information, see Hyndman &
+#' Athanasopoulos (2018). For details of the estimation algorithm, see the
+#' \code{\link[stats]{arima}} function in the stats package.
 #'
 #' @aliases print.ARIMA summary.Arima as.character.Arima
 #'
@@ -621,8 +627,8 @@ fitted.forecast_ARIMA <- fitted.Arima
 #' components order and period, but a specification of just a numeric vector of
 #' length 3 will be turned into a suitable list with the specification as the
 #' order.
-#' @param xreg Optionally, a numerical vector or matrix of external regressors, which
-#' must have the same number of rows as y. It should not be a data frame.
+#' @param xreg Optionally, a numerical vector or matrix of external regressors,
+#' which must have the same number of rows as y. It should not be a data frame.
 #' @param include.mean Should the ARIMA model include a mean term? The default
 #' is \code{TRUE} for undifferenced series, \code{FALSE} for differenced ones
 #' (where a mean would not affect the fit nor predictions).
@@ -650,7 +656,9 @@ fitted.forecast_ARIMA <- fitted.Arima
 #' \item{sigma2}{The bias adjusted MLE of the innovations variance.}
 #'
 #' @export
-#'
+#' @references Hyndman, R.J. and Athanasopoulos, G. (2018)
+#' "Forecasting: principles and practice", 2nd ed., OTexts, Melbourne, Australia.
+#' \url{https://OTexts.com/fpp2/}.
 #' @author Rob J Hyndman
 #' @seealso \code{\link{auto.arima}}, \code{\link{forecast.Arima}}.
 #' @keywords ts

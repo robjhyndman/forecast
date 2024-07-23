@@ -36,8 +36,8 @@ components order and period, but a specification of just a numeric vector of
 length 3 will be turned into a suitable list with the specification as the
 order.}
 
-\item{xreg}{Optionally, a numerical vector or matrix of external regressors, which
-must have the same number of rows as y. It should not be a data frame.}
+\item{xreg}{Optionally, a numerical vector or matrix of external regressors,
+which must have the same number of rows as y. It should not be a data frame.}
 
 \item{include.mean}{Should the ARIMA model include a mean term? The default
 is \code{TRUE} for undifferenced series, \code{FALSE} for differenced ones
@@ -89,7 +89,13 @@ is also possible to take an ARIMA model from a previous call to \code{Arima}
 and re-apply it to the data \code{y}.
 }
 \details{
-See the \code{\link[stats]{arima}} function in the stats package.
+The fitted model is a regression with ARIMA(p,d,q) errors
+\deqn{y_t = c + \beta' x_t + z_t}
+where \eqn{x_t} is a vector of regressors at time \eqn{t} and \eqn{z_t} is an
+ARMA(p,d,q) error process. If there are no regressors, and \eqn{d=0}, then c
+is an estimate of the mean of \eqn{y_t}. For more information, see Hyndman &
+Athanasopoulos (2018). For details of the estimation algorithm, see the
+\code{\link[stats]{arima}} function in the stats package.
 }
 \examples{
 library(ggplot2)
@@ -116,6 +122,11 @@ accuracy(air.model2)
 accuracy(forecast(air.model,h=48,lambda=NULL),
          log(window(AirPassengers,start=1957)))
 
+}
+\references{
+Hyndman, R.J. and Athanasopoulos, G. (2018)
+"Forecasting: principles and practice", 2nd ed., OTexts, Melbourne, Australia.
+\url{https://OTexts.com/fpp2/}.
 }
 \seealso{
 \code{\link{auto.arima}}, \code{\link{forecast.Arima}}.

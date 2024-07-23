@@ -223,7 +223,9 @@ trainingaccuracy <- function(f, test, d, D) {
 #' @author Rob J Hyndman
 #' @references Hyndman, R.J. and Koehler, A.B. (2006) "Another look at measures
 #' of forecast accuracy". \emph{International Journal of Forecasting},
-#' \bold{22}(4), 679-688. Hyndman, R.J. and Athanasopoulos, G. (2018)
+#' \bold{22}(4), 679-688.
+#'
+#' Hyndman, R.J. and Athanasopoulos, G. (2018)
 #' "Forecasting: principles and practice", 2nd ed., OTexts, Melbourne, Australia.
 #' Section 3.4 "Evaluating forecast accuracy".
 #' \url{https://otexts.com/fpp2/accuracy.html}.
