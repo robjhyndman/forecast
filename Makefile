@@ -22,16 +22,11 @@ clean:
 	rm -f *.Rproj
 	rm -rf .Rproj.user
 
-coverage: ## get test coverage
+coverage:
 	Rscript -e "devtools::test_coverage('.')"
 
-create:
-	Rscript -e "pak::pak(c('devtools', 'usethis', 'pkgdown', 'rmarkdown', 'rcmdcheck', 'roxygen2', 'testthat'))"
-	Rscript -e "pak::pkg_install('r-lib/revdepcheck')"
-	Rscript -e "usethis::create_package(path = getwd(), rstudio = FALSE)"
-
 docs:
-	Rscript -e "roxygen2::roxygenize()"
+	Rscript -e "devtools::document()"
 
 install:
 	R CMD INSTALL .
