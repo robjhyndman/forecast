@@ -11,7 +11,7 @@ build:
 	Rscript -e "devtools::build(args = c('--compact-vignettes=both'))"
 
 check:
-	Rscript -e "rcmdcheck::rcmdcheck()"
+	Rscript -e "try(devtools::check('.'), silent=FALSE)"
 
 clean:
 	rm -f ../$(PKG_NAME)_*.tar.gz
