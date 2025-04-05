@@ -2142,13 +2142,13 @@ blendHex <- function(mixcol, seqcol, alpha=1) {
   # transform to hue/lightness/saturation colorspace
   seqcol <- grDevices::col2rgb(seqcol, alpha = TRUE)
   mixcol <- grDevices::col2rgb(mixcol, alpha = TRUE)
-  seqcolHLS <- suppressWarnings(methods::coerce(colorspace::RGB(R = seqcol[1, ] / 255, G = seqcol[2, ] / 255, B = seqcol[3, ] / 255), structure(NULL, class = "HLS")))
-  mixcolHLS <- suppressWarnings(methods::coerce(colorspace::RGB(R = mixcol[1, ] / 255, G = mixcol[2, ] / 255, B = mixcol[3, ] / 255), structure(NULL, class = "HLS")))
+  seqcolHLS <- methods::as(colorspace::RGB(R = seqcol[1, ] / 255, G = seqcol[2, ] / 255, B = seqcol[3, ] / 255), "HLS")
+  mixcolHLS <- methods::as(colorspace::RGB(R = mixcol[1, ] / 255, G = mixcol[2, ] / 255, B = mixcol[3, ] / 255), "HLS")
 
   # copy luminence
   mixcolHLS@coords[, "L"] <- seqcolHLS@coords[, "L"]
   mixcolHLS@coords[, "S"] <- alpha * mixcolHLS@coords[, "S"] + (1 - alpha) * seqcolHLS@coords[, "S"]
-  mixcolHex <- suppressWarnings(methods::coerce(mixcolHLS, structure(NULL, class = "RGB")))
+  mixcolHex <- methods::as(mixcolHLS, "RGB")
   mixcolHex <- colorspace::hex(mixcolHex)
   mixcolHex <- ggplot2::alpha(mixcolHex, mixcol[4, ] / 255)
   return(mixcolHex)
