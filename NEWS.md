@@ -1,4 +1,6 @@
 # forecast (development version)
+  * Documentation improvements
+  * Bug fixes
 
 # forecast 8.23.0
   * Prevented RNG state changing when the package is attached (#954, #955).
