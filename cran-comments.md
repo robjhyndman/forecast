@@ -1,12 +1,11 @@
-Made head.ts and tail.ts function definitions conditional on R < 4.5.0.
-Fixed missing package anchors in link targets
+Fixed error shown on <https://cran.r-project.org/web/checks/check_results_forecast.html>
 
 ## Test environments
 
-* KDE neon 6.0 based on ubuntu 22.04 (local): R 4.4.0
+* KDE neon 6.3 based on ubuntu 24.04 (local): R 4.4.3
 * macOS (on GitHub Actions): release
 * windows (on GitHub Actions): release
-* ubuntu 22.04.4 (on GitHub Actions): devel, release, oldrel
+* ubuntu 24.04.2 (on GitHub Actions): devel, release, oldrel
 * win-builder: devel, release, oldrelease
 
 ## R CMD check results
