@@ -3,7 +3,7 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   JSS2008: JSS2008.html
-last_built: 2025-04-08T05:47Z
+last_built: 2025-04-08T06:57Z
 urls:
   reference: https://pkg.robjhyndman.com/forecast/reference
   article: https://pkg.robjhyndman.com/forecast/articles
