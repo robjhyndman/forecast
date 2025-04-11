@@ -88,15 +88,15 @@ forecast.lagwalk <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=NU
     level <- seq(51,99,by=3)
   else
   {
-    if(min(level) > 0 & max(level) < 1)
+    if(min(level) > 0 && max(level) < 1)
       level <- 100*level
-    else if(min(level) < 0 | max(level) > 99.99)
+    else if(min(level) < 0 || max(level) > 99.99)
       stop("Confidence limit out of range")
   }
 
   nconf <- length(level)
 
-  if (simulate | bootstrap) # Compute prediction intervals using simulations
+  if (simulate || bootstrap) # Compute prediction intervals using simulations
   {
     sim <- matrix(NA, nrow = npaths, ncol = h)
     for (i in 1:npaths)

@@ -460,7 +460,7 @@ simulate.Arima <- function(object, nsim = length(object$x), seed = NULL, xreg = 
     }
 
     # If model is non-stationary, then condition simulated data on first observation
-    if (!is.null(x) & (model$order[2] > 0 || flag.seasonal.diff)) {
+    if (!is.null(x) && (model$order[2] > 0 || flag.seasonal.diff)) {
       sim <- sim - sim[1] + x[1]
     }
   }

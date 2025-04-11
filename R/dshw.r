@@ -249,7 +249,7 @@ par_dshw <- function(y, period1, period2, pars) {
 
 dshw.mse <- function(par, y, period1, period2, pars) {
   pars[is.na(pars)] <- par
-  if (max(pars) > 0.99 | min(pars) < 0 | pars[5] > .9) {
+  if (max(pars) > 0.99 || min(pars) < 0 || pars[5] > .9) {
     return(Inf)
   } else {
     return(dshw(y, period1, period2, h = 1,

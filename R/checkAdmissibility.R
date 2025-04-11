@@ -4,13 +4,13 @@
 checkAdmissibility <- function(opt.env, box.cox=NULL, small.phi=NULL, ar.coefs=NULL, ma.coefs=NULL, tau=0, bc.lower=0, bc.upper=1) {
   # Check the range of the Box-Cox parameter
   if (!is.null(box.cox)) {
-    if ((box.cox <= bc.lower) | (box.cox >= bc.upper)) {
+    if ((box.cox <= bc.lower) || (box.cox >= bc.upper)) {
       return(FALSE)
     }
   }
   # Check the range of small.phi
   if (!is.null(small.phi)) {
-    if (((small.phi < .8) | (small.phi > 1))) {
+    if (((small.phi < .8) || (small.phi > 1))) {
       return(FALSE)
     }
   }

@@ -312,9 +312,9 @@ forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[
   if (fan) {
     level <- seq(51, 99, by = 3)
   } else {
-    if (min(level) > 0 & max(level) < 1) {
+    if (min(level) > 0 && max(level) < 1) {
       level <- 100 * level
-    } else if (min(level) < 0 | max(level) > 99.99) {
+    } else if (min(level) < 0 || max(level) > 99.99) {
       stop("Confidence limit out of range")
     }
   }
@@ -362,7 +362,7 @@ forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[
   if (!is.null(x)) {
     tspx <- tsp(x)
     nx <- max(which(!is.na(x)))
-    if (nx != length(x) | is.null(tsp(pred$pred)) | is.null(tsp(pred$se))) {
+    if (nx != length(x) || is.null(tsp(pred$pred)) || is.null(tsp(pred$se))) {
       tspx[2] <- time(x)[nx]
       start.f <- tspx[2] + 1 / tspx[3]
       pred$pred <- ts(pred$pred, frequency = tspx[3], start = start.f)
@@ -415,7 +415,7 @@ forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[
     object$call$y
   }
   fits <- fitted.Arima(object)
-  if (!is.null(lambda) & is.null(object$constant)) { # Back-transform point forecasts and prediction intervals
+  if (!is.null(lambda) && is.null(object$constant)) { # Back-transform point forecasts and prediction intervals
     pred$pred <- InvBoxCox(pred$pred, lambda, biasadj, pred$se^2)
     if (!bootstrap) { # Bootstrapped intervals already back-transformed
       lower <- InvBoxCox(lower, lambda)
@@ -452,9 +452,9 @@ forecast.ar <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=NULL,
   if (fan) {
     level <- seq(51, 99, by = 3)
   } else {
-    if (min(level) > 0 & max(level) < 1) {
+    if (min(level) > 0 && max(level) < 1) {
       level <- 100 * level
-    } else if (min(level) < 0 | max(level) > 99.99) {
+    } else if (min(level) < 0 || max(level) > 99.99) {
       stop("Confidence limit out of range")
     }
   }
@@ -742,7 +742,7 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
       include.mean <- include.drift <- FALSE
     }
   }
-  if ((order[2] + seasonal$order[2]) > 1 & include.drift) {
+  if ((order[2] + seasonal$order[2]) > 1 && include.drift) {
     warning("No drift term fitted as the order of difference is 2 or more.")
     include.drift <- FALSE
   }
@@ -818,7 +818,7 @@ arima2 <- function(x, model, xreg, method) {
     }
   }
 
-  if (model$arma[5] > 1 & sum(abs(model$arma[c(3, 4, 7)])) > 0) # Seasonal model
+  if (model$arma[5] > 1 && sum(abs(model$arma[c(3, 4, 7)])) > 0) # Seasonal model
   {
     if (use.xreg) {
       refit <- Arima(
@@ -884,7 +884,7 @@ print.forecast_ARIMA <- function(x, digits=max(3, getOption("digits") - 3), se=T
     }
     # Change intercept to mean if no regression variables
     j <- match("intercept", colnames(coef))
-    if (is.null(x$xreg) & !is.na(j)) {
+    if (is.null(x$xreg) && !is.na(j)) {
       colnames(coef)[j] <- "mean"
     }
     print.default(coef, print.gap = 2)

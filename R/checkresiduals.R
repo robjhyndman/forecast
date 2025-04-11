@@ -44,7 +44,7 @@ checkresiduals <- function(object, lag, test, plot = TRUE, ...) {
   }
 
   # Extract residuals
-  if (is.element("ts", class(object)) | is.element("numeric", class(object))) {
+  if (is.element("ts", class(object)) || is.element("numeric", class(object))) {
     residuals <- object
     object <- list(method = "Missing")
   } else {
@@ -67,7 +67,7 @@ checkresiduals <- function(object, lag, test, plot = TRUE, ...) {
     method <- try(as.character(object), silent = TRUE)
     if ("try-error" %in% class(method)) {
       method <- "Missing"
-    } else if (length(method) > 1 | base::nchar(method[1]) > 50) {
+    } else if (length(method) > 1 || base::nchar(method[1]) > 50) {
       method <- "Missing"
     }
   }
@@ -86,7 +86,7 @@ checkresiduals <- function(object, lag, test, plot = TRUE, ...) {
     object <- object$model
   }
 
-  if (is.null(object) | !showtest) {
+  if (is.null(object) || !showtest) {
     return(invisible())
   }
 
@@ -97,7 +97,7 @@ checkresiduals <- function(object, lag, test, plot = TRUE, ...) {
   #if (grepl("STL \\+ ", method)) {
   #  warning("The fitted degrees of freedom is based on the model used for the seasonally adjusted data.")
   #}
-  if (inherits(object, "Arima") | test == "BG") {
+  if (inherits(object, "Arima") || test == "BG") {
     df <- modeldf(object)
   } else {
     df <- 0

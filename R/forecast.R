@@ -488,7 +488,7 @@ hfitted.default <- function(object, h=1, FUN=NULL, ...) {
   for (i in 1:(n - h))
   {
     refitarg[[1]] <- ts(x[1:i], start = tspx[1], frequency = tspx[3])
-    if(!is.null(object$xreg) & any(colnames(object$xreg)!="drift")){
+    if(!is.null(object$xreg) && any(colnames(object$xreg)!="drift")){
       if(any(colnames(object$xreg)=="drift")){
         idx <- which(colnames(object$xreg)=="drift")
         refitarg$xreg <- ts(object$xreg[1:i, -idx], start = tspx[1], frequency = tspx[3])
