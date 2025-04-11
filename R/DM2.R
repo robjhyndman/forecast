@@ -81,7 +81,7 @@ dm.test <- function(e1, e2, alternative = c("two.sided", "less", "greater"), h =
   d.cov <- acf(d, na.action = na.omit, lag.max = h-1, type = "covariance", plot = FALSE)$acf[, , 1]
   n <- length(d)
 
-  if (varestimator == "acf" | h == 1L) {
+  if (varestimator == "acf" || h == 1L) {
     # Original estimator
     d.var <- sum(c(d.cov[1], 2 * d.cov[-1])) / n
   } else { # varestimator == "bartlett"

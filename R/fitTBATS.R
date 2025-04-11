@@ -240,7 +240,7 @@ fitSpecificTBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.per
   w.tilda.transpose[1, ] <- w$w.transpose
   w.tilda.transpose <- .Call("calcWTilda", wTildaTransposes = w.tilda.transpose, Ds = D, PACKAGE = "forecast")
   # Remove the AR() and MA() bits if they exist
-  if ((p != 0) | (q != 0)) {
+  if ((p != 0) || (q != 0)) {
     end.cut <- ncol(w.tilda.transpose)
     start.cut <- end.cut - (p + q) + 1
     w.tilda.transpose <- w.tilda.transpose[, -c(start.cut:end.cut)]
@@ -248,7 +248,7 @@ fitSpecificTBATS <- function(y, use.box.cox, use.beta, use.damping, seasonal.per
   x.nought <- lm(t(y.tilda) ~ w.tilda.transpose - 1)$coefficients
   x.nought <- matrix(x.nought, nrow = length(x.nought), ncol = 1)
   ## Replace the AR() and MA() bits if they exist
-  if ((p != 0) | (q != 0)) {
+  if ((p != 0) || (q != 0)) {
     arma.seed.states <- numeric((p + q))
     arma.seed.states <- matrix(arma.seed.states, nrow = length(arma.seed.states), ncol = 1)
     x.nought <- rbind(x.nought, arma.seed.states)

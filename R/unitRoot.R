@@ -273,7 +273,7 @@ From %s(): %s
     if (is.constant(x)) {
       return(D)
     }
-    if (length(x) >= 2 * frequency(x) & D < max.D) {
+    if (length(x) >= 2 * frequency(x) && D < max.D) {
       dodiff <- runTests(x, test, alpha)
     } else {
       dodiff <- FALSE

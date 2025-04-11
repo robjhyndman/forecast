@@ -260,7 +260,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
 
   # Check inputs
   if (restrict) {
-    if ((errortype == "A" && (trendtype == "M" || seasontype == "M")) |
+    if ((errortype == "A" && (trendtype == "M" || seasontype == "M")) ||
       (errortype == "M" && trendtype == "M" && seasontype == "A") ||
       (additive.only && (errortype == "M" || trendtype == "M" || seasontype == "M"))) {
       stop("Forbidden model combination")
