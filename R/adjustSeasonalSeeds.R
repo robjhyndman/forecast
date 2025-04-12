@@ -33,7 +33,7 @@ cutWTBATS <- function(use.beta, w.tilda.transpose, seasonal.periods, p=0, q=0) {
     }
     w.pos.counter <- w.pos.counter + 1
   }
-  if ((p != 0) | (q != 0)) {
+  if ((p != 0) || (q != 0)) {
     end.cut <- ncol(w.tilda.transpose)
     start.cut <- end.cut - (p + q) + 1
     w.tilda.transpose <- w.tilda.transpose[, -c(start.cut:end.cut)]
@@ -87,7 +87,7 @@ cutW <- function(use.beta, w.tilda.transpose, seasonal.periods, p=0, q=0) {
     }
     w.pos.counter <- w.pos.counter + 1
   }
-  if ((p != 0) | (q != 0)) {
+  if ((p != 0) || (q != 0)) {
     end.cut <- ncol(w.tilda.transpose)
     start.cut <- end.cut - (p + q) + 1
     w.tilda.transpose <- w.tilda.transpose[, -c(start.cut:end.cut)]
@@ -144,7 +144,7 @@ calcSeasonalSeeds <- function(use.beta, coefs, seasonal.periods, mask.vector, p=
   }
   # print(new.x.nought)
   # Lastly, get the arma error seed states, if they exist.
-  if ((p != 0) | (q != 0)) {
+  if ((p != 0) || (q != 0)) {
     arma.seed.states <- numeric((p + q))
     arma.seed.states <- matrix(arma.seed.states, nrow = length(arma.seed.states), ncol = 1)
     # Final value of x.nought

@@ -104,7 +104,7 @@ na.interp <- function(x, lambda=NULL,
   tsp(x) <- tspx
 
   # Check stability and use linear interpolation if there is a problem
-  if(!linear & (max(x) > rangex[2L]+0.5*drangex | min(x) < rangex[1L]-0.5*drangex))
+  if(!linear && (max(x) > rangex[2L]+0.5*drangex || min(x) < rangex[1L]-0.5*drangex))
     return(na.interp(origx, lambda=lambda, linear=TRUE))
   else
     return(x)

@@ -51,7 +51,7 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL,
       return(subset.default(x, subset))
     }
   }
-  else if (!is.null(start) | !is.null(end)) {
+  else if (!is.null(start) || !is.null(end)) {
     if (is.null(start)) {
       start <- 1
     }
@@ -82,7 +82,7 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL,
     if (length(season) == 0L) {
       stop("No recognizable months")
     }
-    if (min(season) < 1L | max(season) > 12L) {
+    if (min(season) < 1L || max(season) > 12L) {
       stop("Months must be between 1 and 12")
     }
   }
@@ -99,14 +99,14 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL,
     if (length(season) == 0L) {
       stop("No recognizable quarters")
     }
-    if (min(season) < 1L | max(season) > 4L) {
+    if (min(season) < 1L || max(season) > 4L) {
       stop("Quarters must be between 1 and 4")
     }
   }
   else if (is.null(season)) {
     stop("No subset specified")
   } else
-  if (min(season) < 1L | max(season) > frequency(x)) {
+  if (min(season) < 1L || max(season) > frequency(x)) {
     stop(paste("Seasons must be between 1 and", frequency(x)))
   }
 
