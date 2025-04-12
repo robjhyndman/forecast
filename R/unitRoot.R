@@ -70,7 +70,7 @@ ndiffs <- function(x, alpha = 0.05, test = c("kpss", "adf", "pp"),
 
   urca_pval <- function(urca_test) {
     approx(urca_test@cval[1, ],
-           as.numeric(sub("pct", "", colnames(urca_test@cval))) / 100,
+           as.numeric(sub("pct", "", colnames(urca_test@cval), fixed = TRUE)) / 100,
            xout = urca_test@teststat[1], rule = 2)$y
   }
 
@@ -299,7 +299,7 @@ seas.heuristic <- function(x) {
   season <- NA
   stlfit <- mstl(x)
   remainder <- stlfit[, "Remainder"]
-  seasonal <- stlfit[, grep("Season", colnames(stlfit)), drop = FALSE]
+  seasonal <- stlfit[, grep("Season", colnames(stlfit), fixed = TRUE), drop = FALSE]
   vare <- var(remainder, na.rm = TRUE)
   nseas <- NCOL(seasonal)
   if (nseas > 0) {

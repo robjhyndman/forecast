@@ -32,7 +32,7 @@
 #' @export
 seasonal <- function(object) {
   if ("mstl" %in% class(object)) {
-    cols <- grep("Season", colnames(object))
+    cols <- grep("Season", colnames(object), fixed = TRUE)
     return(object[, cols])
   }
   else if ("stl" %in% class(object)) {
@@ -41,7 +41,7 @@ seasonal <- function(object) {
     return(object$seasonal)
   } else if ("tbats" %in% class(object)) {
     comp <- tbats.components(object)
-    scols <- grep("season", colnames(comp))
+    scols <- grep("season", colnames(comp), fixed = TRUE)
     season <- ts(rowSums(comp[, scols, drop = FALSE]))
     if (!is.null(object$lambda)) {
       season <- InvBoxCox(season, object$lambda)
