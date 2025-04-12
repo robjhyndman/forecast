@@ -1949,15 +1949,15 @@ forecast2plotdf <- function(model, data=as.data.frame(model), PI=TRUE, showgap=T
   else {
     stop("Could not find forecast x axis")
   }
-  Hiloc <- grep("Hi ", names(data))
-  Loloc <- grep("Lo ", names(data))
+  Hiloc <- grep("Hi ", names(data), fixed = TRUE)
+  Loloc <- grep("Lo ", names(data), fixed = TRUE)
   if (PI && !is.null(model$level)) { # PI
     if (length(Hiloc) == length(Loloc)) {
       if (length(Hiloc) > 0) {
         out <- data.frame(
           x = rep(xVals, length(Hiloc) + 1),
           y = c(rep(NA, NROW(data) * (length(Hiloc))), data[, 1]),
-          level = c(as.numeric(rep(gsub("Hi ", "", names(data)[Hiloc]), each = NROW(data))), rep(NA, NROW(data))),
+          level = c(as.numeric(rep(gsub("Hi ", "", names(data)[Hiloc], fixed = TRUE), each = NROW(data))), rep(NA, NROW(data))),
           ymax = c(unlist(data[, Hiloc]), rep(NA, NROW(data))), ymin = c(unlist(data[, Loloc]), rep(NA, NROW(data)))
         )
         numInterval <- length(model$level)

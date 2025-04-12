@@ -282,10 +282,10 @@ forecast.stl <- function(object, method = c("ets", "arima", "naive", "rwdrift"),
   }
 
   if ("mstl" %in% class(object)) {
-    seasoncolumns <- which(grepl("Season", colnames(object)))
+    seasoncolumns <- which(grepl("Season", colnames(object), fixed = TRUE))
     nseasons <- length(seasoncolumns)
     seascomp <- matrix(0, ncol = nseasons, nrow = h)
-    seasonal.periods <- as.numeric(sub("Seasonal","", colnames(object)[seasoncolumns]))
+    seasonal.periods <- as.numeric(sub("Seasonal", "", colnames(object)[seasoncolumns], fixed = TRUE))
     n <- NROW(object)
     for (i in seq(nseasons)) {
       mp <- seasonal.periods[i]
@@ -294,7 +294,7 @@ forecast.stl <- function(object, method = c("ets", "arima", "naive", "rwdrift"),
     }
     lastseas <- rowSums(seascomp)
     xdata <- object[, "Data"]
-    seascols <- grep("Seasonal", colnames(object))
+    seascols <- grep("Seasonal", colnames(object), fixed = TRUE)
     allseas <- rowSumsTS(object[, seascols, drop = FALSE])
     series <- NULL
   } else if ("stl" %in% class(object)) {
@@ -460,7 +460,7 @@ stlm <- function(y, s.window = 7+4*seq(6), robust = FALSE, method = c("ets", "ar
   fit$x <- x.sa
 
   # Fitted values and residuals
-  seascols <- grep("Seasonal", colnames(stld))
+  seascols <- grep("Seasonal", colnames(stld), fixed = TRUE)
   allseas <- rowSumsTS(stld[, seascols, drop = FALSE])
 
   fits <- fitted(fit) + allseas
@@ -519,7 +519,7 @@ forecast.stlm <- function(object, h = 2 * object$m, level = c(80, 95), fan = FAL
   }
   lastseas <- rowSums(seascomp)
   xdata <- object$stl[, "Data"]
-  seascols <- grep("Seasonal", colnames(object$stl))
+  seascols <- grep("Seasonal", colnames(object$stl), fixed = TRUE)
   allseas <- rowSumsTS(object$stl[, seascols, drop = FALSE])
   series <- NULL
 

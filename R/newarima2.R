@@ -794,7 +794,7 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
   }
   else {
     # Catch errors due to unused arguments
-    if (length(grep("unused argument", fit)) > 0L) {
+    if (length(grep("unused argument", fit, fixed = TRUE)) > 0L) {
       stop(fit[1])
     }
 
