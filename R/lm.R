@@ -39,7 +39,7 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...) {
   }
   if (missing(data)) {
     mt <- try(terms(formula))
-    if (is.element("try-error", class(mt))) {
+    if (inherits(mt, "try-error")) {
       stop("Cannot extract terms from formula, please provide data argument.")
     }
   }
@@ -262,7 +262,7 @@ forecast.lm <- function(object, newdata, h=10, level=c(80, 95), fan=FALSE, lambd
   }
   else if (!is.null(object$call$data)) {
     origdata <- try(object$data <- eval(object$call$data), silent = TRUE)
-    if (is.element("try-error", class(origdata))) {
+    if (inherits(origdata, "try-error")) {
       stop("Could not find data. Try training your model using tslm() or attach data directly to the object via object$data<-modeldata for some object<-lm(formula,modeldata).")
     }
   }
@@ -277,15 +277,15 @@ forecast.lm <- function(object, newdata, h=10, level=c(80, 95), fan=FALSE, lambd
   }
 
   # Check if the forecasts will be time series
-  if (ts && is.element("ts", class(origdata))) {
+  if (ts && is.ts(origdata)) {
     tspx <- tsp(origdata)
     timesx <- time(origdata)
   }
-  else if (ts && is.element("ts", class(origdata[, 1]))) {
+  else if (ts && is.ts(origdata[, 1])) {
     tspx <- tsp(origdata[, 1])
     timesx <- time(origdata[, 1])
   }
-  else if (ts && is.element("ts", class(fitted(object)))) {
+  else if (ts && is.ts(fitted(object))) {
     tspx <- tsp(fitted(object))
     timesx <- time(fitted(object))
   }

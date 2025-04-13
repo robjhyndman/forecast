@@ -163,10 +163,10 @@ arfima <- function(y, drange = c(0, 0.5), estim = c("mle", "ls"), model = NULL, 
       p <- length(fit$ar)
       q <- length(fit$ma)
       fit2 <- try(Arima(y, order = c(p, 0, q), include.mean = FALSE))
-      if (is.element("try-error", class(fit2))) {
+      if (inherits(fit2, "try-error")) {
         fit2 <- try(Arima(y, order = c(p, 0, q), include.mean = FALSE, method = "ML"))
       }
-      if (!is.element("try-error", class(fit2))) {
+      if (!inherits(fit2, "try-error")) {
         if (p > 0) {
           fit$ar <- fit2$coef[1:p]
         }

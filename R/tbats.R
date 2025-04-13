@@ -195,7 +195,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
     k.vector = k.vector, init.box.cox = init.box.cox,
     bc.lower = bc.lower, bc.upper = bc.upper, biasadj = biasadj
   ), silent = TRUE)
-  if (is.element("try-error", class(best.model))) {
+  if (inherits(best.model, "try-error")) {
     best.model <- list(AIC = Inf)
   }
 
@@ -240,7 +240,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
           ),
           silent = TRUE
         )
-        if (is.element("try-error", class(new.model))) {
+        if (inherits(new.model, "try-error")) {
           new.model <- list(AIC = Inf)
         }
 
@@ -288,7 +288,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
           ),
           silent = TRUE
         )
-        if (is.element("try-error", class(up.model))) {
+        if (inherits(up.model, "try-error")) {
           up.model <- list(AIC = Inf)
         }
         level.model <- try(
@@ -299,7 +299,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
           ),
           silent = TRUE
         )
-        if (is.element("try-error", class(level.model))) {
+        if (inherits(level.model, "try-error")) {
           level.model <- list(AIC = Inf)
         }
         down.model <- try(
@@ -310,7 +310,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
           ),
           silent = TRUE
         )
-        if (is.element("try-error", class(down.model))) {
+        if (inherits(down.model, "try-error")) {
           down.model <- list(AIC = Inf)
         }
       }
@@ -330,7 +330,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
             ),
             silent = TRUE
           )
-          if (is.element("try-error", class(down.model))) {
+          if (inherits(down.model, "try-error")) {
             down.model <- list(AIC = Inf)
           }
           if (down.model$AIC > best.model$AIC) {
@@ -358,7 +358,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
             fitSpecificTBATS(y, model.params[1], model.params[2], model.params[3], seasonal.periods, k.vector, init.box.cox = init.box.cox, bc.lower = bc.lower, bc.upper = bc.upper, biasadj = biasadj),
             silent = TRUE
           )
-          if (is.element("try-error", class(up.model))) {
+          if (inherits(up.model, "try-error")) {
             up.model <- list(AIC = Inf)
           }
           if (up.model$AIC > best.model$AIC) {
@@ -460,13 +460,13 @@ parFilterTBATSSpecifics <- function(control.number, y, control.array, model.para
     first.model <- aux.model
   }
 
-  if (is.element("try-error", class(first.model))) {
+  if (inherits(first.model, "try-error")) {
     first.model <- list(AIC = Inf)
   }
 
   if (use.arma.errors) {
     suppressWarnings(arma <- try(auto.arima(as.numeric(first.model$errors), d = 0, ...), silent = TRUE))
-    if (!is.element("try-error", class(arma))) {
+    if (!inherits(arma, "try-error")) {
       p <- arma$arma[1]
       q <- arma$arma[2]
       if ((p != 0) || (q != 0)) { # Did auto.arima() find any AR() or MA() coefficients?
@@ -486,7 +486,7 @@ parFilterTBATSSpecifics <- function(control.number, y, control.array, model.para
           fitSpecificTBATS(y, use.box.cox = box.cox, use.beta = trend, use.damping = damping, seasonal.periods = seasonal.periods, k.vector = k.vector, ar.coefs = ar.coefs, ma.coefs = ma.coefs, init.box.cox = init.box.cox, bc.lower = bc.lower, bc.upper = bc.upper, biasadj = biasadj),
           silent = TRUE
         )
-        if (is.element("try-error", class(second.model))) {
+        if (inherits(second.model, "try-error")) {
           second.model <- list(AIC = Inf)
         }
         if (second.model$AIC < first.model$AIC) {
@@ -513,7 +513,7 @@ parFitSpecificTBATS <- function(control.number, y, box.cox, trend, damping, seas
     fitSpecificTBATS(y, use.box.cox = box.cox, use.beta = trend, use.damping = damping, seasonal.periods = seasonal.periods, k.vector = k.vector, init.box.cox = init.box.cox, bc.lower = bc.lower, bc.upper = bc.upper, biasadj = biasadj),
     silent = TRUE
   )
-  if (is.element("try-error", class(model))) {
+  if (inherits(model, "try-error")) {
     model <- list(AIC = Inf)
   }
   return(model)
@@ -528,13 +528,13 @@ filterTBATSSpecifics <- function(y, box.cox, trend, damping, seasonal.periods, k
   } else {
     first.model <- aux.model
   }
-  if (is.element("try-error", class(first.model))) {
+  if (inherits(first.model, "try-error")) {
     first.model <- list(AIC = Inf)
   }
 
   if (use.arma.errors) {
     suppressWarnings(arma <- try(auto.arima(as.numeric(first.model$errors), d = 0, ...), silent = TRUE))
-    if (!is.element("try-error", class(arma))) {
+    if (!inherits(arma, "try-error")) {
       p <- arma$arma[1]
       q <- arma$arma[2]
       if ((p != 0) || (q != 0)) { # Did auto.arima() find any AR() or MA() coefficients?
@@ -554,7 +554,7 @@ filterTBATSSpecifics <- function(y, box.cox, trend, damping, seasonal.periods, k
           fitSpecificTBATS(y, use.box.cox = box.cox, use.beta = trend, use.damping = damping, seasonal.periods = seasonal.periods, k.vector = k.vector, ar.coefs = ar.coefs, ma.coefs = ma.coefs, init.box.cox = init.box.cox, bc.lower = bc.lower, bc.upper = bc.upper, biasadj = biasadj),
           silent = TRUE
         )
-        if (is.element("try-error", class(second.model))) {
+        if (inherits(second.model, "try-error")) {
           second.model <- list(AIC = Inf)
         }
 
