@@ -80,9 +80,9 @@ bats <- function(y, use.box.cox = NULL, use.trend = NULL, use.damped.trend = NUL
 
   # Get seasonal periods
   if (is.null(seasonal.periods)) {
-    if ("msts" %in% class(y)) {
+    if (inherits(y, "msts")) {
       seasonal.periods <- attr(y, "msts")
-    } else if ("ts" %in% class(y)) {
+    } else if (is.ts(y)) {
       seasonal.periods <- frequency(y)
     } else {
       y <- as.ts(y)
@@ -94,7 +94,7 @@ bats <- function(y, use.box.cox = NULL, use.trend = NULL, use.damped.trend = NUL
   }
   else {
     # Add ts attributes
-    if (!("ts" %in% class(y))) {
+    if (!is.ts(y)) {
       y <- msts(y, seasonal.periods)
     }
   }
@@ -224,7 +224,7 @@ bats <- function(y, use.box.cox = NULL, use.trend = NULL, use.damped.trend = NUL
             ),
             silent=TRUE
           )
-          if(!("try-error" %in% class(current.model))) {
+          if(!inherits(current.model, "try-error")) {
             if (current.model$AIC < best.aic) {
                 best.aic <- current.model$AIC
                 best.model <- current.model

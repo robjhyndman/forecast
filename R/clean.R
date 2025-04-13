@@ -73,7 +73,7 @@ na.interp <- function(x, lambda=NULL,
     # Then add to linear interpolation of seasonally adjusted series
     # Fit Fourier series for seasonality and a polynomial for the trend,
     # just to get something reasonable to start with
-    if ("msts" %in% class(x)) {
+    if (inherits(x, "msts")) {
       K <- pmin(trunc(attributes(x)$msts / 2), 20L)
     } else {
       K <- min(trunc(freq / 2), 5)

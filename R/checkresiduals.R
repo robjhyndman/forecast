@@ -55,17 +55,17 @@ checkresiduals <- function(object, lag, test, plot = TRUE, ...) {
     stop("No residuals found")
   }
 
-  if ("ar" %in% class(object)) {
+  if (inherits(object, "ar")) {
     method <- paste("AR(", object$order, ")", sep = "")
   } else if (!is.null(object$method)) {
     method <- object$method
-  } else if ("HoltWinters" %in% class(object)) {
+  } else if (inherits(object, "HoltWinters")) {
     method <- "HoltWinters"
-  } else if ("StructTS" %in% class(object)) {
+  } else if (inherits(object, "StructTS")) {
     method <- "StructTS"
   } else {
     method <- try(as.character(object), silent = TRUE)
-    if ("try-error" %in% class(method)) {
+    if (inherits(method, "try-error")) {
       method <- "Missing"
     } else if (length(method) > 1 || base::nchar(method[1]) > 50) {
       method <- "Missing"

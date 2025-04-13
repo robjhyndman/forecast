@@ -44,7 +44,7 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL,
     if (NCOL(subset) != 1) {
       stop("subset must be a vector of rows to keep")
     }
-    if ("mts" %in% class(x)) {
+    if (is.mts(x)) {
       return(subset.matrix(x, subset))
     }
     else {
@@ -58,7 +58,7 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL,
     if (is.null(end)) {
       end <- NROW(x)
     }
-    if ("mts" %in% class(x)) {
+    if (is.mts(x)) {
       xsub <- x[start:end, , drop=FALSE]
     } else {
       xsub <- x[start:end]
@@ -111,7 +111,7 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL,
   }
 
   start <- utils::head(time(x)[is.element(cycle(x), season)], 1)
-  if ("mts" %in% class(x)) {
+  if (is.mts(x)) {
     x <- subset.matrix(x, is.element(cycle(x), season))
   }
   else {

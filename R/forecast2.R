@@ -251,7 +251,7 @@ InvBoxCoxf <- function(x=NULL, fvar=NULL, lambda=NULL) {
   else {
     x <- list(mean = x)
   }
-  if ("matrix" %in% class(fvar)) {
+  if (is.matrix(fvar)) {
     fvar <- diag(fvar)
   }
 

@@ -31,7 +31,7 @@ msts <- function(data, seasonal.periods, ts.frequency=floor(max(seasonal.periods
   # if(!is.element(ts.frequency, round(seasonal.periods-0.5+1e-12)))
   #  stop("ts.frequency should be one of the seasonal periods")
 
-  if (inherits(data, "ts") && frequency(data) == ts.frequency && length(list(...)) == 0) {
+  if (is.ts(data) && frequency(data) == ts.frequency && length(list(...)) == 0) {
     object <- data
   } else {
     object <- ts(data = data, frequency = ts.frequency, ...)
@@ -73,7 +73,7 @@ window.msts <- function(x, ...) {
 #' @export
 `[.msts` <- function(x, i, j, drop = TRUE) {
   y <- NextMethod("[")
-  if(!inherits(y, "ts")) return(y)
+  if(!is.ts(y)) return(y)
   class(y) <- c("msts", class(y))
   attr(y, "msts") <- attr(x, "msts")
   y
@@ -96,7 +96,7 @@ copy_msts <- function(x, y) {
   } else {
     class(y) <- "ts"
   }
-  if("msts" %in% class(x))
+  if(inherits(x, "msts"))
     class(y) <- c("msts", class(y))
   attr <- attributes(x)
   attributes(y)$tsp <- attr$tsp
@@ -111,7 +111,7 @@ future_msts <- function(x, y) {
   } else {
     class(y) <- "ts"
   }
-  if("msts" %in% class(x))
+  if(inherits(x, "msts"))
     class(y) <- c("msts", class(y))
   attr <- attributes(x)
   attr$tsp[1:2] <- attr$tsp[2] + c(1,NROW(y))/attr$tsp[3]

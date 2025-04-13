@@ -71,13 +71,13 @@ monthdays <- function(x) {
 #'
 #' @export
 sindexf <- function(object, h) {
-  if ("stl" %in% class(object)) {
+  if (inherits(object, "stl")) {
     ss <- object$time.series[, 1]
     m <- frequency(ss)
     ss <- ss[length(ss) - (m:1) + 1]
     tsp.x <- tsp(object$time.series)
   }
-  else if ("decomposed.ts" %in% class(object)) {
+  else if (inherits(object, "decomposed.ts")) {
     ss <- object$figure
     m <- frequency(object$seasonal)
     n <- length(object$trend)
@@ -244,7 +244,7 @@ fourierf <- function(x, K, h) {
 
 # Function to do the work.
 ...fourier <- function(x, K, times) {
-  if (any(class(x) == "msts")) {
+  if (inherits(x, "msts")) {
     period <- attr(x, "msts")
   } else {
     period <- frequency(x)
