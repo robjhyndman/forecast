@@ -344,7 +344,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
         xreg = xreg, ...
       ), silent = TRUE)
     }
-    if (!is.element("try-error", class(fit))) {
+    if (!inherits(fit, "try-error")) {
       offset <- -2 * fit$loglik - serieslength * log(fit$sigma2)
     } else # Not sure this should ever happen
     {
@@ -720,7 +720,7 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
   } else {
     nxreg <- ncol(as.matrix(xreg))
   }
-  if (!is.element("try-error", class(fit))) {
+  if (!inherits(fit, "try-error")) {
     nstar <- n - order[2] - seasonal[2] * m
     if (diffs == 1 && constant) {
       # fitnames <- names(fit$coef)
@@ -756,7 +756,7 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
       if (last.nonzero > 0) {
         testvec <- testvec[1:last.nonzero]
         proots <- try(polyroot(c(1,-testvec)))
-        if (!is.element("try-error", class(proots))) {
+        if (!inherits(proots, "try-error")) {
           minroot <- min(minroot, abs(proots))
         }
         else fit$ic <- Inf
@@ -773,7 +773,7 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
       if (last.nonzero > 0) {
         testvec <- testvec[1:last.nonzero]
         proots <- try(polyroot(c(1,testvec)))
-        if (!is.element("try-error", class(proots))) {
+        if (!inherits(proots, "try-error")) {
           minroot <- min(minroot, abs(proots))
         }
         else fit$ic <- Inf

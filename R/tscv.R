@@ -103,7 +103,7 @@ tsCV <- function(y, forecastfunction, h=1, window=NULL, xreg=NULL, initial=0, ..
         forecastfunction(y_subset, h = h, xreg = xreg_subset, newxreg=xreg_future, ...)
         ), silent = TRUE)
     }
-    if (!is.element("try-error", class(fc))) {
+    if (!inherits(fc, "try-error")) {
       e[i, ] <- y[i + seq(h)] - fc$mean[seq(h)]
     }
   }

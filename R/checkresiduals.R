@@ -44,7 +44,7 @@ checkresiduals <- function(object, lag, test, plot = TRUE, ...) {
   }
 
   # Extract residuals
-  if (is.element("ts", class(object)) || is.element("numeric", class(object))) {
+  if (is.ts(object) || is.numeric(object)) {
     residuals <- object
     object <- list(method = "Missing")
   } else {

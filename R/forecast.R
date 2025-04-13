@@ -312,7 +312,7 @@ plot.forecast <- function(x, include, PI=TRUE, showgap = TRUE, shaded=TRUE, shad
     x$lower <- as.matrix(x$lower)
   }
 
-  if (is.element("lm", class(x$model)) && !is.element("ts", class(x$mean))) # Non time series linear model
+  if (inherits(x$model, "lm") && !is.ts(x$mean)) # Non time series linear model
   {
     plotlmforecast(
       x, PI = PI, shaded = shaded, shadecols = shadecols, col = col, fcol = fcol, pi.col = pi.col, pi.lty = pi.lty,
@@ -499,7 +499,7 @@ hfitted.default <- function(object, h=1, FUN=NULL, ...) {
       }
     }
     fcarg$object <- try(suppressWarnings(do.call(FUN, refitarg)), silent = TRUE)
-    if (!is.element("try-error", class(fcarg$object))) {
+    if (!inherits(fcarg$object, "try-error")) {
       # Keep original variance estimate (for consistent bias adjustment)
       if(!is.null(object$sigma2))
         fcarg$object$sigma2 <- object$sigma2

@@ -422,7 +422,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
             y, errortype[i], trendtype[j], seasontype[k], damped[l], alpha, beta, gamma, phi,
             lower = lower, upper = upper, opt.crit = opt.crit, nmse = nmse, bounds = bounds, ...
           ), silent=TRUE)
-          if(is.element("try-error", class(fit)))
+          if(inherits(fit, "try-error"))
             fit.ic <- Inf
           else
             fit.ic <- switch(ic, aic = fit$aic, bic = fit$bic, aicc = fit$aicc)

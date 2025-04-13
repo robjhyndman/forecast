@@ -648,7 +648,7 @@ autoplot.forecast <- function(object, include, PI=TRUE, shadecols=c("#596DD5", "
     p <- ggplot2::ggplot()
 
     # Cross sectional forecasts
-    if (!is.element("ts", class(object$mean))) {
+    if (!is.ts(object$mean)) {
       if (length(xvar) > 1) {
         stop("Forecast plot for regression models only available for a single predictor")
       }
@@ -1936,7 +1936,7 @@ fortify.ts <- function(model, data, ...) {
 
 forecast2plotdf <- function(model, data=as.data.frame(model), PI=TRUE, showgap=TRUE, ...) {
   # Time series forecasts
-  if (is.element("ts", class(model$mean))) {
+  if (is.ts(model$mean)) {
     xVals <- as.numeric(time(model$mean)) # x axis is time
   }
   # Cross-sectional forecasts
