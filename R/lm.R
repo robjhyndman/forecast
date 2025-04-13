@@ -34,7 +34,7 @@
 #' @export
 tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...) {
   cl <- match.call()
-  if (!("formula" %in% class(formula))) {
+  if (!inherits(formula, "formula")) {
     formula <- stats::as.formula(formula)
   }
   if (missing(data)) {

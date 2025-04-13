@@ -284,11 +284,11 @@ From %s(): %s
 
 # Adjusted from robjhyndman/tsfeatures
 seas.heuristic <- function(x) {
-  if ("msts" %in% class(x)) {
+  if (inherits(x, "msts")) {
     msts <- attributes(x)$msts
     nperiods <- length(msts)
   }
-  else if ("ts" %in% class(x)) {
+  else if (is.ts(x)) {
     msts <- frequency(x)
     nperiods <- msts > 1
     season <- 0

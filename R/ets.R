@@ -110,7 +110,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
 
   seriesname <- deparse(substitute(y))
 
-  if (any(class(y) %in% c("data.frame", "list", "matrix", "mts"))) {
+  if (inherits(y, c("data.frame", "list", "matrix", "mts"))) {
     stop("y should be a univariate time series")
   }
   y <- as.ts(y)
@@ -153,7 +153,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
   }
 
   # If model is an ets object, re-fit model to new data
-  if ("ets" %in% class(model)) {
+  if (is.ets(model)) {
     # Prevent alpha being zero (to avoid divide by zero in the C code)
     alpha <- max(model$par["alpha"], 1e-10)
     beta <- model$par["beta"]
@@ -307,7 +307,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
         seasonal = ifelse(seasontype != "A", "multiplicative", "additive"),
         lambda = lambda, biasadj = biasadj, warnings = FALSE
       ), silent = TRUE)
-      if (!("try-error" %in% class(fit))) {
+      if (!inherits(fit, "try-error")) {
         fit$call <- match.call()
         fit$method <- as.character(fit)
         fit$series <- deparse(substitute(y))
@@ -324,7 +324,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
         exponential = (trendtype == "M"),
         lambda = lambda, biasadj = biasadj, warnings = FALSE
       ), silent = TRUE)
-      if (!("try-error" %in% class(fit))) {
+      if (!inherits(fit, "try-error")) {
         fit$call <- match.call()
         fit$method <- as.character(fit)
         fit$series <- deparse(substitute(y))
@@ -340,7 +340,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
         alpha = alpha, beta = FALSE, gamma = FALSE,
         lambda = lambda, biasadj = biasadj, warnings = FALSE
       ), silent = TRUE)
-      if (!("try-error" %in% class(fit))) {
+      if (!inherits(fit, "try-error")) {
         fit$call <- match.call()
         fit$method <- as.character(fit)
         fit$series <- deparse(substitute(y))
@@ -360,14 +360,14 @@ ets <- function(y, model="ZZZ", damped=NULL,
       exponential = (trendtype == "M"),
       lambda = lambda, biasadj = biasadj, warnings = FALSE
     ), silent = TRUE)
-    if ("try-error" %in% class(fit1)) {
+    if (inherits(fit1, "try-error")) {
       fit <- fit2
     } else if (fit1$sigma2 < fit2$sigma2) {
       fit <- fit1
     } else {
       fit <- fit2
     }
-    if("try-error" %in% class(fit))
+    if(inherits(fit, "try-error"))
       stop("Unable to estimate a model.")
     fit$call <- match.call()
     fit$method <- as.character(fit)

@@ -25,7 +25,7 @@ mstl <- function(x, lambda = NULL, iterate = 2, s.window = 7+4*seq(6), ...) {
   # What is x?
   origx <- x
   n <- length(x)
-  if ("msts" %in% class(x)) {
+  if (inherits(x, "msts")) {
     msts <- attributes(x)$msts
     if (any(msts >= n / 2)) {
       warning("Dropping seasonal components with fewer than two full periods.")
@@ -34,7 +34,7 @@ mstl <- function(x, lambda = NULL, iterate = 2, s.window = 7+4*seq(6), ...) {
     }
     msts <- sort(msts, decreasing = FALSE)
   }
-  else if ("ts" %in% class(x)) {
+  else if (is.ts(x)) {
     msts <- frequency(x)
     iterate <- 1L
   }
@@ -281,7 +281,7 @@ forecast.stl <- function(object, method = c("ets", "arima", "naive", "rwdrift"),
     level <- seq(51, 99, by = 3)
   }
 
-  if ("mstl" %in% class(object)) {
+  if (inherits(object, "mstl")) {
     seasoncolumns <- which(grepl("Season", colnames(object), fixed = TRUE))
     nseasons <- length(seasoncolumns)
     seascomp <- matrix(0, ncol = nseasons, nrow = h)
@@ -297,7 +297,7 @@ forecast.stl <- function(object, method = c("ets", "arima", "naive", "rwdrift"),
     seascols <- grep("Seasonal", colnames(object), fixed = TRUE)
     allseas <- rowSumsTS(object[, seascols, drop = FALSE])
     series <- NULL
-  } else if ("stl" %in% class(object)) {
+  } else if (inherits(object, "stl")) {
     m <- frequency(object$time.series)
     n <- NROW(object$time.series)
     lastseas <- rep(seasonal(object)[n - (m:1) + 1], trunc(1 + (h - 1) / m))[1:h]

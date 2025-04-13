@@ -31,15 +31,15 @@
 #'
 #' @export
 seasonal <- function(object) {
-  if ("mstl" %in% class(object)) {
+  if (inherits(object, "mstl")) {
     cols <- grep("Season", colnames(object), fixed = TRUE)
     return(object[, cols])
   }
-  else if ("stl" %in% class(object)) {
+  else if (inherits(object, "stl")) {
     return(object$time.series[, "seasonal"])
-  } else if ("decomposed.ts" %in% class(object)) {
+  } else if (inherits(object,"decomposed.ts")) {
     return(object$seasonal)
-  } else if ("tbats" %in% class(object)) {
+  } else if (inherits(object, "tbats")) {
     comp <- tbats.components(object)
     scols <- grep("season", colnames(comp), fixed = TRUE)
     season <- ts(rowSums(comp[, scols, drop = FALSE]))
@@ -49,7 +49,7 @@ seasonal <- function(object) {
     tsp(season) <- tsp(comp)
     return(season)
   }
-  else if ("seas" %in% class(object)) {
+  else if (inherits(object, "seas")) {
     return(object$data[, "seasonal"])
   } else {
     stop("Unknown object type")
@@ -59,11 +59,11 @@ seasonal <- function(object) {
 #' @rdname seasonal
 #' @export
 trendcycle <- function(object) {
-  if ("mstl" %in% class(object)) {
+  if (inherits(object, "mstl")) {
     return(object[, "Trend"])
-  } else if ("stl" %in% class(object)) {
+  } else if (inherits(object, "stl")) {
     return(object$time.series[, "trend"])
-  } else if ("decomposed.ts" %in% class(object)) {
+  } else if (inherits(object, "decomposed.ts")) {
     return(object$trend)
   } # 	else if("tbats" %in% class(object))
   # 	{
@@ -72,7 +72,7 @@ trendcycle <- function(object) {
   #       trnd <- InvBoxCox(trnd, object$lambda)
   #     return(trnd)
   #   }
-  else if ("seas" %in% class(object)) {
+  else if (inherits(object, "seas")) {
     return(seasextract_w_na_action(object, "trend"))
   } else {
     stop("Unknown object type")
@@ -82,11 +82,11 @@ trendcycle <- function(object) {
 #' @rdname seasonal
 #' @export
 remainder <- function(object) {
-  if ("mstl" %in% class(object)) {
+  if (inherits(object, "mstl")) {
     return(object[, "Remainder"])
-  } else if ("stl" %in% class(object)) {
+  } else if (inherits(object, "stl")) {
     return(object$time.series[, "remainder"])
-  } else if ("decomposed.ts" %in% class(object)) {
+  } else if (inherits(object, "decomposed.ts")) {
     return(object$random)
   } # 	else if("tbats" %in% class(object))
   # 	{
@@ -98,7 +98,7 @@ remainder <- function(object) {
   #     tsp(irreg) <- tsp(comp)
   #     return(irreg)
   #   }
-  else if ("seas" %in% class(object)) {
+  else if (inherits(object, "seas")) {
     return(seasextract_w_na_action(object, "irregular"))
   } else {
     stop("Unknown object type")

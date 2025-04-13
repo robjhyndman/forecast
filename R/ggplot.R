@@ -1209,7 +1209,7 @@ ggsubseriesplot <- function(x, labels = NULL, times = time(x), phase = cycle(x),
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
   else {
-    if (!inherits(x, "ts")) {
+    if (!is.ts(x)) {
       stop("ggsubseriesplot requires a ts object, use x=object")
     }
 
@@ -1302,7 +1302,7 @@ ggseasonplot <- function(x, season.labels=NULL, year.labels=FALSE, year.labels.l
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
   }
-  if (!inherits(x, "ts")) {
+  if (!is.ts(x)) {
     stop("autoplot.seasonplot requires a ts object, use x=object")
   }
   if (!is.null(type)) {

@@ -83,9 +83,9 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
 
   # Get seasonal periods
   if (is.null(seasonal.periods)) {
-    if ("msts" %in% class(y)) {
+    if (inherits(y, "msts")) {
       seasonal.periods <- sort(attr(y, "msts"))
-    } else if ("ts" %in% class(y)) {
+    } else if (is.ts(y)) {
       seasonal.periods <- frequency(y)
     } else {
       y <- as.ts(y)
@@ -94,7 +94,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
   }
   else {
     # Add ts attributes
-    if (!("ts" %in% class(y))) {
+    if (!is.ts(y)) {
       y <- msts(y, seasonal.periods)
     }
   }

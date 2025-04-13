@@ -54,7 +54,7 @@
 #' @export
 forecast.bats <- function(object, h, level=c(80, 95), fan=FALSE, biasadj=NULL, ...) {
   # Set up the variables
-  if (any(class(object$y) == "ts")) {
+  if (is.ts(object$y)) {
     ts.frequency <- frequency(object$y)
   } else {
     ts.frequency <- ifelse(!is.null(object$seasonal.periods), max(object$seasonal.periods), 1)
