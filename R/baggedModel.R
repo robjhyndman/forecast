@@ -68,7 +68,7 @@ baggedModel <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), fn=ets
 
   fitted_boot <- lapply(out$models, fitted)
   fitted_boot <- as.matrix(as.data.frame(fitted_boot))
-  out$fitted <- ts(apply(fitted_boot, 1, mean))
+  out$fitted <- ts(rowMeans(fitted_boot))
   tsp(out$fitted) <- tsp(out$y)
   out$residuals <- out$y - out$fitted
 
@@ -169,7 +169,7 @@ forecast.baggedModel <- function(object, h=ifelse(frequency(object$y) > 1, 2 * f
   #  browser()
   #  out$model$models
 
-  out$mean <- ts(apply(forecasts_boot, 1, mean), frequency = frequency(out$x), start = start.f)
+  out$mean <- ts(rowMeans(forecasts_boot), frequency = frequency(out$x), start = start.f)
   out$median <- ts(apply(forecasts_boot, 1, median))
   out$lower <- ts(apply(forecasts_boot, 1, min))
   out$upper <- ts(apply(forecasts_boot, 1, max))

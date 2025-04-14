@@ -453,7 +453,7 @@ autoplot.decomposed.ts <- function(object, labels=NULL, range.bars = NULL, ...) 
     if (range.bars) {
       yranges <- vapply(split(data$y, data$parts), function(x) range(x, na.rm = TRUE), numeric(2))
       xranges <- range(data$datetime)
-      barmid <- apply(yranges, 2, mean)
+      barmid <- colMeans(yranges)
       barlength <- min(apply(yranges, 2, diff))
       barwidth <- (1 / 64) * diff(xranges)
       barpos <- data.frame(
@@ -516,7 +516,7 @@ autoplot.ets <- function(object, range.bars = NULL, ...) {
     if (range.bars) {
       yranges <- vapply(split(data$y, data$parts), function(x) range(x, na.rm = TRUE), numeric(2))
       xranges <- range(data$datetime)
-      barmid <- apply(yranges, 2, mean)
+      barmid <- colMeans(yranges)
       barlength <- min(apply(yranges, 2, diff))
       barwidth <- (1 / 64) * diff(xranges)
       barpos <- data.frame(
@@ -567,7 +567,7 @@ autoplot.bats <- function(object, range.bars = FALSE, ...) {
   if (range.bars) {
     yranges <- vapply(split(data$y, data$parts), function(x) range(x, na.rm = TRUE), numeric(2))
     xranges <- range(data$datetime)
-    barmid <- apply(yranges, 2, mean)
+    barmid <- colMeans(yranges)
     barlength <- min(apply(yranges, 2, diff))
     barwidth <- (1 / 64) * diff(xranges)
     barpos <- data.frame(
@@ -1494,7 +1494,7 @@ autoplot.stl <- function(object, labels = NULL, range.bars = TRUE, ...) {
     if (range.bars) {
       yranges <- vapply(split(data$y, data$parts), function(x) range(x, na.rm = TRUE), numeric(2))
       xranges <- range(data$datetime)
-      barmid <- apply(yranges, 2, mean)
+      barmid <- colMeans(yranges)
       barlength <- min(apply(yranges, 2, diff))
       barwidth <- (1 / 64) * diff(xranges)
       barpos <- data.frame(
@@ -1555,7 +1555,7 @@ autoplot.StructTS <- function(object, labels = NULL, range.bars = TRUE, ...) {
     if (range.bars) {
       yranges <- vapply(split(data$y, data$parts), function(x) range(x, na.rm = TRUE), numeric(2))
       xranges <- range(data$datetime)
-      barmid <- apply(yranges, 2, mean)
+      barmid <- colMeans(yranges)
       barlength <- min(apply(yranges, 2, diff))
       barwidth <- (1 / 64) * diff(xranges)
       barpos <- data.frame(
@@ -1666,7 +1666,7 @@ autoplot.seas <- function(object, labels = NULL, range.bars = NULL, ...) {
   if (range.bars) {
     yranges <- vapply(split(data$y, data$parts), function(x) range(x, na.rm = TRUE), numeric(2))
     xranges <- range(data$datetime)
-    barmid <- apply(yranges, 2, mean)
+    barmid <- colMeans(yranges)
     barlength <- min(apply(yranges, 2, diff))
     barwidth <- (1 / 64) * diff(xranges)
     barpos <- data.frame(

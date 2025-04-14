@@ -14,7 +14,7 @@ guer.cv <- function(lam, x, nonseasonal.length=2) {
   nyr <- floor(nobsf / period)
   nobst <- floor(nyr * period)
   x.mat <- matrix(x[(nobsf - nobst + 1):nobsf], period, nyr)
-  x.mean <- apply(x.mat, 2, mean, na.rm = TRUE)
+  x.mean <- colMeans(x.mat, na.rm = TRUE)
   x.sd <- apply(x.mat, 2, sd, na.rm = TRUE)
   x.rat <- x.sd / x.mean ^ (1 - lam)
   return(sd(x.rat, na.rm = TRUE) / mean(x.rat, na.rm = TRUE))
