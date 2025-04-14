@@ -560,7 +560,7 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
   #    if(errortype=="M" | trendtype=="M" | seasontype=="M")
   #        bounds="usual"
   if (!check.param(alpha, beta, gamma, phi, lower, upper, bounds, m)) {
-    print(paste("Model: ETS(", errortype, ",", trendtype, ifelse(damped, "d", ""), ",", seasontype, ")", sep = ""))
+    cat("Model: ETS(", errortype, ",", trendtype, ifelse(damped, "d", ""), ",", seasontype, ")", sep = "")
     stop("Parameters out of range")
   }
 
