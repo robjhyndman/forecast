@@ -224,7 +224,7 @@ myarima.sim <- function(model, n, x, e, ...) {
       # AR filtering for all other cases where AR is used.
       x <- stats::filter(x, model$ar, method = "recursive")
     }
-  if ((d == 0) && (D == 0) && (flag.noadjust == FALSE)) # Adjust to ensure end matches approximately
+  if ((d == 0) && (D == 0) && !flag.noadjust) # Adjust to ensure end matches approximately
     {
       # Last 20 diffs
       if (n.start >= 20) {
@@ -240,7 +240,7 @@ myarima.sim <- function(model, n, x, e, ...) {
       }
       x <- x + xdiff
     }
-  if ((n.start > 0) && (flag.noadjust == FALSE)) {
+  if ((n.start > 0) && !flag.noadjust) {
     x <- x[-(1:n.start)]
   }
 

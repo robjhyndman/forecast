@@ -166,7 +166,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
   }
   if (is.null(use.trend)) {
     use.trend <- c(FALSE, TRUE)
-  } else if (use.trend == FALSE) {
+  } else if (!use.trend) {
     use.damped.trend <- FALSE
   }
   if (is.null(use.damped.trend)) {

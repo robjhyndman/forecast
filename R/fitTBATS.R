@@ -1,6 +1,6 @@
 fitPreviousTBATSModel <- function(y, model, biasadj=FALSE) {
   seasonal.periods <- model$seasonal.periods
-  if (is.null(seasonal.periods) == FALSE) {
+  if (!is.null(seasonal.periods)) {
     seasonal.periods <- sort(seasonal.periods)
   }
   # Get the parameters out of the param.vector
@@ -48,7 +48,7 @@ fitPreviousTBATSModel <- function(y, model, biasadj=FALSE) {
   }
 
   y.touse <- y
-  if (is.null(lambda) == FALSE) {
+  if (!is.null(lambda)) {
     y.touse <- BoxCox(y, lambda = lambda)
     lambda <- attr(y.touse, "lambda")
   }

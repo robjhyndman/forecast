@@ -5,7 +5,7 @@
 
 fitPreviousBATSModel <- function(y, model, biasadj=FALSE) {
   seasonal.periods <- model$seasonal.periods
-  if (is.null(seasonal.periods) == FALSE) {
+  if (!is.null(seasonal.periods)) {
     seasonal.periods <- as.integer(sort(seasonal.periods))
   }
   paramz <- unParameterise(model$parameters$vect, model$parameters$control)

@@ -13,7 +13,7 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
 
   # Choose model orders
   # Serial - technically could be combined with the code below
-  if (parallel == FALSE) {
+  if (!parallel) {
     best.ic <- Inf
     for (i in 0:max.p) {
       for (j in 0:max.q) {
@@ -37,7 +37,7 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
         }
       }
     }
-  } else if (parallel == TRUE) {
+  } else if (parallel) {
     to.check <- WhichModels(max.p, max.q, max.P, max.Q, maxK)
 
     par.all.arima <- function(l, max.order) {
