@@ -282,7 +282,7 @@ forecast.stl <- function(object, method = c("ets", "arima", "naive", "rwdrift"),
   }
 
   if (inherits(object, "mstl")) {
-    seasoncolumns <- which(grepl("Season", colnames(object), fixed = TRUE))
+    seasoncolumns <- grep("Season", colnames(object), fixed = TRUE)
     nseasons <- length(seasoncolumns)
     seascomp <- matrix(0, ncol = nseasons, nrow = h)
     seasonal.periods <- as.numeric(sub("Seasonal", "", colnames(object)[seasoncolumns], fixed = TRUE))
