@@ -53,13 +53,13 @@ Authors@R: c(
   person("Federico", "Garza", role = "ctb"),
   person("Daniele", "Girolimetto", role = "ctb"),
   person("Ross", "Ihaka", role = c("ctb", "cph")),
+  person("Maximilian", "Mücke", role = "ctb", comment = c(ORCID = "0009-0000-9432-9795")),
   person("R Core Team", role = c("ctb", "cph")),
   person("Daniel", "Reid", role = "ctb"),
   person("David", "Shaub", role = "ctb"),
   person("Yuan", "Tang", role = "ctb", comment = c(ORCID = "0000-0001-5243-233X")),
   person("Xiaoqian", "Wang", role = "ctb"),
-  person("Zhenyu", "Zhou", role = "ctb"),
-  person("Maximilian", "Mücke", role = "ctb", comment = c(ORCID = "0009-0000-9432-9795"))
+  person("Zhenyu", "Zhou", role = "ctb")
   )
 BugReports: https://github.com/robjhyndman/forecast/issues
 License: GPL-3
