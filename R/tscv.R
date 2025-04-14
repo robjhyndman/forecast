@@ -212,7 +212,7 @@ CVar <- function(y, k=10, FUN=nnetar, cvtrace=FALSE, blocked=FALSE, LBlags=24, .
 
   out$k <- k
   # calculate mean accuracy accross all folds
-  CVmean <- matrix(apply(cvacc, 2, FUN = mean, na.rm = TRUE),
+  CVmean <- matrix(colMeans(cvacc, na.rm = TRUE),
     dimnames = list(colnames(acc), "Mean"))
   # calculate accuracy sd accross all folds --- include?
   CVsd <- matrix(apply(cvacc, 2, FUN = sd, na.rm = TRUE),
