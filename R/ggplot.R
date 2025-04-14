@@ -466,7 +466,7 @@ autoplot.decomposed.ts <- function(object, labels=NULL, range.bars = NULL, ...) 
         ggplot2::aes(
           xmin = .data[["left"]], xmax = .data[["right"]],
           ymax = .data[["top"]], ymin = .data[["bottom"]]
-        ), data = barpos, fill = "gray75", colour = "black", size = 1 / 3)
+        ), data = barpos, fill = "gray75", colour = "black", linewidth = 1 / 3)
     }
 
     # Add axis labels
@@ -529,7 +529,7 @@ autoplot.ets <- function(object, range.bars = NULL, ...) {
         ggplot2::aes(
           xmin = .data[["left"]], xmax = .data[["right"]],
           ymax = .data[["top"]], ymin = .data[["bottom"]]
-        ), data = barpos, fill = "gray75", colour = "black", size = 1 / 3)
+        ), data = barpos, fill = "gray75", colour = "black", linewidth = 1 / 3)
     }
 
     p <- p + ggAddExtras(xlab = NULL, ylab = "", main = paste("Components of", object$method, "method"))
@@ -580,7 +580,7 @@ autoplot.bats <- function(object, range.bars = FALSE, ...) {
       ggplot2::aes(
         xmin = .data[["left"]], xmax = .data[["right"]],
         ymax = .data[["top"]], ymin = .data[["bottom"]]
-      ), data = barpos, fill = "gray75", colour = "black", size = 1 / 3)
+      ), data = barpos, fill = "gray75", colour = "black", linewidth = 1 / 3)
   }
 
   p <- p + ggAddExtras(xlab = NULL, ylab = "", main = paste("Components of", object$method, "method"))
@@ -1503,7 +1503,7 @@ autoplot.stl <- function(object, labels = NULL, range.bars = TRUE, ...) {
         parts = factor(colnames(yranges), levels = cn),
         datetime = xranges[2], y = barmid
       )
-      p <- p + ggplot2::geom_rect(ggplot2::aes(xmin = .data[["left"]], xmax = .data[["right"]], ymax = .data[["top"]], ymin = .data[["bottom"]]), data = barpos, fill = "gray75", colour = "black", size = 1 / 3)
+      p <- p + ggplot2::geom_rect(ggplot2::aes(xmin = .data[["left"]], xmax = .data[["right"]], ymax = .data[["top"]], ymin = .data[["bottom"]]), data = barpos, fill = "gray75", colour = "black", linewidth = 1 / 3)
     }
 
     # Remainder
@@ -1564,7 +1564,7 @@ autoplot.StructTS <- function(object, labels = NULL, range.bars = TRUE, ...) {
         parts = factor(colnames(yranges), levels = cn),
         datetime = xranges[2], y = barmid
       )
-      p <- p + ggplot2::geom_rect(ggplot2::aes(xmin = .data[["left"]], xmax = .data[["right"]], ymax = .data[["top"]], ymin = .data[["bottom"]]), data = barpos, fill = "gray75", colour = "black", size = 1 / 3)
+      p <- p + ggplot2::geom_rect(ggplot2::aes(xmin = .data[["left"]], xmax = .data[["right"]], ymax = .data[["top"]], ymin = .data[["bottom"]]), data = barpos, fill = "gray75", colour = "black", linewidth = 1 / 3)
     }
 
     # Add axis labels
@@ -1675,7 +1675,7 @@ autoplot.seas <- function(object, labels = NULL, range.bars = NULL, ...) {
       parts = factor(colnames(yranges), levels = cn),
       datetime = xranges[2], y = barmid
     )
-    p <- p + ggplot2::geom_rect(ggplot2::aes(xmin = .data[["left"]], xmax = .data[["right"]], ymax = .data[["top"]], ymin = .data[["bottom"]]), data = barpos, fill = "gray75", colour = "black", size = 1 / 3)
+    p <- p + ggplot2::geom_rect(ggplot2::aes(xmin = .data[["left"]], xmax = .data[["right"]], ymax = .data[["top"]], ymin = .data[["bottom"]]), data = barpos, fill = "gray75", colour = "black", linewidth = 1 / 3)
   }
 
   # Add axis labels
