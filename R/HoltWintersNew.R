@@ -264,7 +264,7 @@ HoltWintersZZ <- function(x,
 zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, seasonal="additive", m,
                  dotrend=FALSE, doseasonal=FALSE, l.start=NULL, exponential = NULL, phi=NULL,
                  b.start=NULL, s.start=NULL) {
-  if (exponential != TRUE || is.null(exponential)) {
+  if (!exponential || is.null(exponential)) {
     exponential <- FALSE
   }
 

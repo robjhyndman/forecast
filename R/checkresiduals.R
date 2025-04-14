@@ -36,7 +36,7 @@ checkresiduals <- function(object, lag, test, plot = TRUE, ...) {
       test <- "LB"
     }
     showtest <- TRUE
-  } else if (test != FALSE) {
+  } else if (test) {
     test <- match.arg(test, c("LB", "BG"))
     showtest <- TRUE
   } else {
