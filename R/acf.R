@@ -122,7 +122,7 @@ Acf <- function(x, lag.max = NULL,
         plot(plot.out, ylim = ylim, xaxt = "n", ...)
       }
       # Make nice horizontal axis
-      if (is.element("msts", class(x))) {
+      if (inherits(x, "msts")) {
         seasonalaxis(attributes(x)$msts, nlags, type = "acf")
       } else {
         seasonalaxis(frequency(x), nlags, type = "acf")
@@ -242,7 +242,7 @@ Pacf <- function(x, lag.max=NULL,
       plot(plot.out, ylim = ylim, xaxt = "n", ...)
     }
     # Make nice horizontal axis
-    if (is.element("msts", class(x))) {
+    if (inherits(x, "msts")) {
       seasonalaxis(attributes(x)$msts, nlags, type = "acf")
     } else {
       seasonalaxis(frequency(x), nlags, type = "acf")

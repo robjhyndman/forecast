@@ -269,9 +269,9 @@ forecast.lm <- function(object, newdata, h=10, level=c(80, 95), fan=FALSE, lambd
   else {
     origdata <- as.data.frame(fitted(object) + residuals(object))
   }
-  if (!is.element("data.frame", class(origdata))) {
+  if (!is.data.frame(origdata)) {
     origdata <- as.data.frame(origdata)
-    if (!is.element("data.frame", class(origdata))) {
+    if (!is.data.frame(origdata)) {
       stop("Could not find data.  Try training your model using tslm() or attach data directly to the object via object$data<-modeldata for some object<-lm(formula,modeldata).")
     }
   }
@@ -518,7 +518,7 @@ summary.tslm <- function(object, ...) {
 #'
 #' @export
 CV <- function(obj) {
-  if (!is.element("lm", class(obj))) {
+  if (!inherits(obj, "lm")) {
     stop("This function is for objects of class lm")
   }
   n <- length(obj$residuals)

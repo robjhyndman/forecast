@@ -30,7 +30,7 @@
 checkresiduals <- function(object, lag, test, plot = TRUE, ...) {
   showtest <- TRUE
   if (missing(test)) {
-    if (is.element("lm", class(object))) {
+    if (inherits(object, "lm")) {
       test <- "BG"
     } else {
       test <- "LB"
@@ -82,7 +82,7 @@ checkresiduals <- function(object, lag, test, plot = TRUE, ...) {
   }
 
   # Check if we have the model
-  if (is.element("forecast", class(object))) {
+  if (is.forecast(object)) {
     object <- object$model
   }
 

@@ -106,7 +106,7 @@ trainingaccuracy <- function(f, test, d, D) {
   # if(!is.list(f))
   #  stop("f must be a forecast object or a time series model object.")
   dx <- getResponse(f)
-  if (is.element("splineforecast", class(f))) {
+  if (is.splineforecast(f)) {
     fits <- f$onestepf
   } else {
     fits <- fitted(f)
@@ -246,13 +246,13 @@ accuracy.default <- function(object, x, test = NULL, d = NULL, D = NULL, f = NUL
     warning("Using `f` as the argument for `accuracy()` is deprecated. Please use `object` instead.")
     object <- f
   }
-  if (!any(is.element(class(object), c(
+  if (!inherits(object, c(
     "ARFIMA", "mforecast", "forecast", "ts", "integer", "numeric",
     "Arima", "ets", "lm", "bats", "tbats", "nnetar", "stlm", "baggedModel"
-  )))) {
+  ))) {
     stop(paste("No accuracy method found for an object of class",class(object)))
   }
-  if (is.element("mforecast", class(object))) {
+  if (is.mforecast(object)) {
     return(accuracy.mforecast(object, x, test, d, D))
   }
 
