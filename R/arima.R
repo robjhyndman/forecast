@@ -937,7 +937,7 @@ print.forecast_ARIMA <- function(x, digits=max(3, getOption("digits") - 3), se=T
 #'
 #' @export
 arimaorder <- function(object) {
-  if (is.element("Arima", class(object))) {
+  if (is.Arima(object)) {
     order <- object$arma[c(1, 6, 2, 3, 7, 4, 5)]
     names(order) <- c("p", "d", "q", "P", "D", "Q", "Frequency")
     seasonal <- (order[7] > 1 & sum(order[4:6]) > 0)
@@ -947,10 +947,10 @@ arimaorder <- function(object) {
       return(order[1:3])
     }
   }
-  else if (is.element("ar", class(object))) {
+  else if (inherits(object, "ar")) {
     return(c("p" = object$order, "d" = 0, "q" = 0))
   }
-  else if (is.element("fracdiff", class(object))) {
+  else if (inherits(object, "fracdiff")) {
     return(c("p" = length(object$ar), "d" = object$d, "q" = length(object$ma)))
   }
   else {

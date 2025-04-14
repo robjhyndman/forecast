@@ -114,9 +114,9 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
 
   # Refit model if available
   if (!is.null(model)) {
-    if (is.element("tbats", class(model))) {
+    if (inherits(model, "tbats")) {
       refitModel <- try(fitPreviousTBATSModel(y, model = model), silent = TRUE)
-    } else if (is.element("bats", class(model))) {
+    } else if (is.bats(model)) {
       refitModel <- bats(origy, model = model)
     }
     return(refitModel)

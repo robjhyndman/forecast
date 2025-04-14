@@ -268,7 +268,7 @@ autoplot.mpacf <- function(object, ...) {
 
     # Change ticks to be seasonal
     freq <- frequency(object$x)
-    msts <- is.element("msts", class(object$x))
+    msts <- inherits(object$x, "msts")
 
     # Add seasonal x-axis
     if (msts) {

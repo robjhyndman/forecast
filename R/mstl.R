@@ -490,9 +490,9 @@ forecast.stlm <- function(object, h = 2 * object$m, level = c(80, 95), fan = FAL
   }
 
   # Forecast seasonally adjusted series
-  if (is.element("Arima", class(object$model)) && !is.null(newxreg)) {
+  if (is.Arima(object$model) && !is.null(newxreg)) {
     fcast <- forecast(object$model, h = h, level = level, xreg = newxreg, ...)
-  } else if (is.element("ets", class(object$model))) {
+  } else if (is.ets(object$model)) {
     fcast <- forecast(
       object$model,
       h = h, level = level,

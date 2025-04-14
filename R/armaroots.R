@@ -2,10 +2,10 @@
 
 # Compute AR roots
 arroots <- function(object) {
-  if (!any(is.element(class(object), c("Arima", "ar")))) {
+  if (!inherits(object, c("Arima", "ar"))) {
     stop("object must be of class Arima or ar")
   }
-  if (is.element("Arima", class(object))) {
+  if (is.Arima(object)) {
     parvec <- object$model$phi
   } else {
     parvec <- object$ar
@@ -24,7 +24,7 @@ arroots <- function(object) {
 
 # Compute MA roots
 maroots <- function(object) {
-  if (!is.element("Arima", class(object))) {
+  if (!is.Arima(object)) {
     stop("object must be of class Arima")
   }
   parvec <- object$model$theta
@@ -107,7 +107,7 @@ plot.armaroots <- function(x, xlab, ylab, main, ...) {
 plot.Arima <- function(x, type = c("both", "ar", "ma"), main,
                        xlab = "Real", ylab = "Imaginary", ...) {
   type <- match.arg(type)
-  if (!is.element("Arima", class(x))) {
+  if (!is.Arima(x)) {
     stop("This function is for objects of class 'Arima'.")
   }
 
@@ -158,7 +158,7 @@ plot.Arima <- function(x, type = c("both", "ar", "ma"), main,
 #' @rdname plot.Arima
 #' @export
 plot.ar <- function(x, main, xlab = "Real", ylab = "Imaginary", ...) {
-  if (!is.element("ar", class(x))) {
+  if (!inherits(x, "ar")) {
     stop("This function is for objects of class 'ar'.")
   }
   plot(arroots(x), main = main, xlab = xlab, ylab = ylab, ...)
