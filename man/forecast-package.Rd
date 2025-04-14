@@ -46,6 +46,7 @@ Other contributors:
   \item Yuan Tang (\href{https://orcid.org/0000-0001-5243-233X}{ORCID}) [contributor]
   \item Xiaoqian Wang [contributor]
   \item Zhenyu Zhou [contributor]
+  \item Maximilian Mücke (\href{https://orcid.org/0009-0000-9432-9795}{ORCID}) [contributor]
 }
 
 }
