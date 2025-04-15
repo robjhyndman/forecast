@@ -7,7 +7,7 @@ if (require(testthat)) {
     expect_error(thetaf(WWWusage, level = 110))
     # Constant series should not error
     series <- ts(rep(950, 20), frequency = 4)
-    constantForecast <- expect_error(thetaf(series), NA)
+    constantForecast <- expect_no_error(thetaf(series))
     expect_true(is.constant(round(constantForecast$mean, 12)))
   })
 }

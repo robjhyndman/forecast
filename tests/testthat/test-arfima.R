@@ -12,7 +12,7 @@ if (require(testthat)) {
     expect_true(length(fitarfima) == length(residarfima))
     expect_true(all(getResponse(arfima1) == WWWusage))
     expect_false(identical(arfimabc$fitted, arfimabc2$fitted))
-    expect_error(accuracy(arfima1), NA)
+    expect_no_error(accuracy(arfima1))
     expect_equal(mean(residuals(arfima1)), accuracy(arfima1)[, "ME"])
   })
 

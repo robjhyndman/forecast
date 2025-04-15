@@ -175,8 +175,8 @@ if (require(testthat)) {
     ## Check short and constant data
     expect_warning(nnetfit <- modelAR(rep(1, 10), FUN = avnnet2, predict.FUN = predict.avnnet2, p = 2, P = 0, size = 1, repeats = 1, lambda = 0.1), "Constant data")
     expect_true(nnetfit$p == 1)
-    expect_true(is.null(nnetfit$lambda))
-    expect_true(is.null(nnetfit$scalex))
+    expect_null(nnetfit$lambda)
+    expect_null(nnetfit$scalex)
     expect_error(nnetfit <- modelAR(rnorm(2), FUN = avnnet2, predict.FUN = predict.avnnet2, p = 1, P = 0, size = 1, repeats = 1), "Not enough data")
     expect_silent(nnetfit <- modelAR(rnorm(3), FUN = avnnet2, predict.FUN = predict.avnnet2, p = 1, P = 0, size = 1, repeats = 1))
     expect_true(nnetfit$p == 1)
@@ -187,8 +187,8 @@ if (require(testthat)) {
     expect_warning(nnetfit <- modelAR(rnorm(3), FUN = avnnet2, predict.FUN = predict.avnnet2, p = 4, P = 0, size = 1, repeats = 1), "short series")
     expect_true(nnetfit$p == 2)
     expect_warning(nnetfit <- modelAR(rnorm(10), FUN = avnnet2, predict.FUN = predict.avnnet2, xreg = rep(1, 10), p = 2, P = 0, size = 1, repeats = 1, lambda = 0.1), "Constant xreg")
-    expect_true(is.null(nnetfit$scalexreg))
+    expect_null(nnetfit$scalexreg)
     expect_warning(nnetfit <- modelAR(rnorm(3), FUN = avnnet2, predict.FUN = predict.avnnet2, xreg = matrix(c(1, 2, 3, 1, 1, 1), ncol = 2), p = 1, P = 0, size = 1, repeats = 1, lambda = 0.1), "Constant xreg")
-    expect_true(is.null(nnetfit$scalexreg))
+    expect_null(nnetfit$scalexreg)
   })
 }
