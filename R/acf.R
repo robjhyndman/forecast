@@ -402,9 +402,9 @@ taperedacf <- function(x, lag.max=NULL, type=c("correlation", "partial"),
   lag <- min(lag.max, length(x) - 1)
 
   if (type == "correlation") {
-    z <- wacf(x, )$acf[2:(lag + 1), , 1]
+    z <- wacf(x)$acf[2:(lag + 1), , 1]
   } else {
-    z <- wpacf(x, )$acf[1:lag, , 1]
+    z <- wpacf(x)$acf[1:lag, , 1]
   }
   out <- list(z = z, lag = lag, type = type, x = x)
 
