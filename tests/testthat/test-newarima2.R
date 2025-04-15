@@ -22,7 +22,7 @@ if (require(testthat)) {
   })
 
   test_that("test parallel = FALSE and stepwise = FALSE for auto.arima()", {
-    skip_if(identical(Sys.getenv("GITHUB_ACTIONS"), "true"))
+    skip_on_ci()
     expect_equal(auto.arima(WWWusage, parallel = FALSE, stepwise = FALSE)$arma, c(3L, 0L, 0L, 0L, 1L, 1L, 0L))
   })
 

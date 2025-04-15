@@ -65,7 +65,7 @@ if (require(testthat)) {
     expect_false(identical(fit1$mean, fit2$mean))
     # Constant series should not error
     series <- ts(rep(950, 20), frequency = 4)
-    constantForecast <- expect_error(stlf(series), NA)
+    constantForecast <- expect_no_error(stlf(series))
     # Small eps
     expect_true(all(abs(constantForecast$mean - mean(series)) < 10^-8))
 
