@@ -8,7 +8,7 @@ if (require(testthat)) {
     expect_lt(var(diff(h1[j])), var(diff(h2[j])))
     # hfitted automatic function selection
     h2_1 <- hfitted(mod1, h = 2)
-    expect_true(identical(h2, h2_1))
+    expect_identical(h2, h2_1)
 
     mod2 <- Arima(WWWusage, order = c(1, 1, 1))
     h1 <- fitted(mod2, h = 1)

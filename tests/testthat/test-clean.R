@@ -25,7 +25,7 @@ if (require(testthat)) {
     # Test for outliers in a series
     expect_equal(sum(abs(wineind - tsclean(wineind)) > 1e-6), 1)
     # Test for identical on series without NAs or outliers
-    expect_true(identical(USAccDeaths, tsclean(USAccDeaths)))
+    expect_identical(USAccDeaths, tsclean(USAccDeaths))
     # Test length of output
     expect_true(length(tsclean(testseries)) == length(testseries))
   })

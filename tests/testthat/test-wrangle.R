@@ -8,7 +8,7 @@ if (require(testthat)) {
   test_that("tests on retaining matrix attributes", {
     data <- datamat(mv_y, mv_x, v_y, v_x)
     expect_true(is.ts(data[, 1]))
-    expect_true(identical(tsp(data[, 1]), tsp(data[, 2])))
+    expect_identical(tsp(data[, 1]), tsp(data[, 2]))
     expect_true(NCOL(data) == 8)
     expect_true(NCOL(data[, 1]) == 2)
     expect_true("matrix" %in% class(data[, 1]))

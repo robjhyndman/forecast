@@ -123,23 +123,23 @@ if (require(testthat)) {
     )
     fit2 <- nnetar(WWWusage, xreg = 1:length(WWWusage), model = fit1)
     # Check some model parameters
-    expect_true(identical(fit1$p, fit2$p))
-    expect_true(identical(fit1$lambda, fit2$lambda))
-    expect_true(identical(fit1$nnetargs, fit2$nnetargs))
+    expect_identical(fit1$p, fit2$p)
+    expect_identical(fit1$lambda, fit2$lambda)
+    expect_identical(fit1$nnetargs, fit2$nnetargs)
     # Check fitted values are all the same
-    expect_true(identical(fitted(fit1), fitted(fit2)))
+    expect_identical(fitted(fit1), fitted(fit2))
     # Check residuals all the same
-    expect_true(identical(residuals(fit1), residuals(fit2)))
+    expect_identical(residuals(fit1), residuals(fit2))
     # Check number of neural nets
-    expect_true(identical(length(fit1$model), length(fit2$model)))
+    expect_identical(length(fit1$model), length(fit2$model))
     # Check neural network weights all the same
-    expect_true(identical(fit1$model[[1]]$wts, fit2$model[[1]]$wts))
-    expect_true(identical(fit1$model[[7]]$wts, fit2$model[[7]]$wts))
+    expect_identical(fit1$model[[1]]$wts, fit2$model[[1]]$wts)
+    expect_identical(fit1$model[[7]]$wts, fit2$model[[7]]$wts)
     # Check subset argument
     oilnnet <- nnetar(airmiles, subset = 11:20)
-    expect_true(identical(which(!is.na(fitted(oilnnet))), 11:20))
+    expect_identical(which(!is.na(fitted(oilnnet))), 11:20)
     oilnnet <- nnetar(airmiles, subset = c(rep(F, 10), rep(T, 10), rep(F, length(airmiles) - 20)))
-    expect_true(identical(which(!is.na(fitted(oilnnet))), 11:20))
+    expect_identical(which(!is.na(fitted(oilnnet))), 11:20)
     ## Check short and constant data
     expect_warning(nnetfit <- nnetar(rep(1, 10), p=2, P=0, size=1, repeats=1, lambda = 0.1), "Constant data")
     expect_true(nnetfit$p == 1)
