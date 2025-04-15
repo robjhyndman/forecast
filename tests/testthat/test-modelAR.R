@@ -34,7 +34,7 @@ if (require(testthat)) {
       res1 <- residuals(nnetar_model)
       res2 <- residuals(modelAR_model)
     })
-    expect_true(identical(res1, res2))
+    expect_identical(res1, res2)
     ## check re-fitting old model and compare to 'nnetar'
     expect_silent({
       nnetar_model2 <- nnetar(lynx[101:114], model = nnetar_model)
@@ -42,13 +42,13 @@ if (require(testthat)) {
       res1 <- residuals(nnetar_model2)
       res2 <- residuals(modelAR_model2)
     })
-    expect_true(identical(res1, res2))
+    expect_identical(res1, res2)
     ## compare forecasts with 'nnetar'
     expect_silent({
       f1 <- forecast(nnetar_model)$mean
       f2 <- forecast(modelAR_model)$mean
     })
-    expect_true(identical(f1, f2))
+    expect_identical(f1, f2)
     ## test lambda and compare to 'nnetar'
     expect_silent({
       set.seed(123)
@@ -56,7 +56,7 @@ if (require(testthat)) {
       set.seed(123)
       oilnnet_modelAR <- modelAR(airmiles, FUN = avnnet2, predict.FUN = predict.avnnet2, scale.inputs = TRUE, lambda = 0.15, size = 1, repeats = 20)
     })
-    expect_true(identical(residuals(oilnnet_nnetar, type = "response"), residuals(oilnnet_modelAR, type = "response")))
+    expect_identical(residuals(oilnnet_nnetar, type = "response"), residuals(oilnnet_modelAR, type = "response"))
     expect_true(length(forecast(oilnnet_modelAR)$mean) == 10)
     ## check print input name
     expect_silent(woolyrnqnnet <- modelAR(woolyrnq, FUN = avnnet2, predict.FUN = predict.avnnet2, scale.inputs = TRUE, p = 1, P = 0, size = 8, repeats = 10))
@@ -73,7 +73,7 @@ if (require(testthat)) {
     })
     expect_true(all(dim(woolyrnqnnet$xreg) == c(119, 1)))
     expect_true(length(forecast(woolyrnqnnet, xreg = 120:130)$mean) == 11)
-    expect_true(identical(forecast(woolyrnqnnet, xreg = 120:130)$mean, forecast(woolyrnqnnet2, xreg = 120:130)$mean))
+    expect_identical(forecast(woolyrnqnnet, xreg = 120:130)$mean, forecast(woolyrnqnnet2, xreg = 120:130)$mean)
     ## Test with multiple-column xreg
     set.seed(123)
     winennet <- modelAR(wineind, FUN = avnnet2, predict.FUN = predict.avnnet2, scale.inputs = TRUE, xreg = cbind(bizdays(wineind), fourier(wineind, 1)), p = 2, P = 1, size = 4, repeats = 10)
@@ -103,10 +103,10 @@ if (require(testthat)) {
       set.seed(123)
       wwwnnet2 <- nnetar(WWWusage, size = 3, p = 2, P = 0, xreg = 1:length(WWWusage), decay = 0.1, repeats = 10)
     })
-    expect_true(identical(
+    expect_identical(
       forecast(wwwnnet, h = 2, xreg = (length(WWWusage) + 1):(length(WWWusage) + 5))$mean,
       forecast(wwwnnet2, h = 2, xreg = (length(WWWusage) + 1):(length(WWWusage) + 5))$mean
-    ))
+    )
     ## Test output format correct when NAs present
     airna <- airmiles
     airna[12] <- NA
@@ -126,23 +126,23 @@ if (require(testthat)) {
       fit3 <- nnetar(WWWusage, xreg = 1:length(WWWusage), p = 3, size = 2, lambda = 2, decay = 0.5, maxit = 25, repeats = 7)
     })
     # Check some model parameters
-    expect_true(identical(fit1$p, fit2$p))
-    expect_true(identical(fit1$lambda, fit2$lambda))
-    expect_true(identical(fit1$modelargs, fit2$modelargs))
+    expect_identical(fit1$p, fit2$p)
+    expect_identical(fit1$lambda, fit2$lambda)
+    expect_identical(fit1$modelargs, fit2$modelargs)
     # Check fitted values are all the same
-    expect_true(identical(fitted(fit1), fitted(fit2)))
-    expect_true(identical(fitted(fit1, h = 2), fitted(fit2, h = 2)))
+    expect_identical(fitted(fit1), fitted(fit2))
+    expect_identical(fitted(fit1, h = 2), fitted(fit2, h = 2))
     # Check residuals all the same
-    expect_true(identical(residuals(fit1), residuals(fit2)))
+    expect_identical(residuals(fit1), residuals(fit2))
     # Check number of neural nets
-    expect_true(identical(length(fit1$model), length(fit2$model)))
+    expect_identical(length(fit1$model), length(fit2$model))
     # Check neural network weights all the same
-    expect_true(identical(fit1$model[[1]]$wts, fit2$model[[1]]$wts))
-    expect_true(identical(fit1$model[[7]]$wts, fit2$model[[7]]$wts))
+    expect_identical(fit1$model[[1]]$wts, fit2$model[[1]]$wts)
+    expect_identical(fit1$model[[7]]$wts, fit2$model[[7]]$wts)
     ## compare results with 'nnetar'
-    expect_true(identical(fitted(fit1), fitted(fit3)))
-    expect_true(identical(fitted(fit1, h = 3), fitted(fit3, h = 3)))
-    expect_true(identical(residuals(fit1, type = "response"), residuals(fit3, type = "response")))
+    expect_identical(fitted(fit1), fitted(fit3))
+    expect_identical(fitted(fit1, h = 3), fitted(fit3, h = 3))
+    expect_identical(residuals(fit1, type = "response"), residuals(fit3, type = "response"))
     ## Check subset argument using indices
     expect_silent({
       set.seed(123)
@@ -150,9 +150,9 @@ if (require(testthat)) {
       set.seed(123)
       airnnet2 <- nnetar(airmiles, , subset = 11:20, p = 1, size = 1, repeats = 10)
     })
-    expect_true(identical(which(!is.na(fitted(airnnet))), 11:20))
-    expect_true(identical(fitted(airnnet), fitted(airnnet2)))
-    expect_true(identical(forecast(airnnet, h = 5)$mean, forecast(airnnet2, h = 5)$mean))
+    expect_identical(which(!is.na(fitted(airnnet))), 11:20)
+    expect_identical(fitted(airnnet), fitted(airnnet2))
+    expect_identical(forecast(airnnet, h = 5)$mean, forecast(airnnet2, h = 5)$mean)
     ## Check subset argument using logical vector
     expect_silent({
       set.seed(123)
@@ -160,9 +160,9 @@ if (require(testthat)) {
       set.seed(123)
       airnnet2 <- nnetar(airmiles, , subset = c(rep(F, 10), rep(T, 10), rep(F, length(airmiles) - 20)), p = 1, size = 1, repeats = 10)
     })
-    expect_true(identical(which(!is.na(fitted(airnnet))), 11:20))
-    expect_true(identical(fitted(airnnet), fitted(airnnet2)))
-    expect_true(identical(forecast(airnnet, h = 5)$mean, forecast(airnnet2, h = 5)$mean))
+    expect_identical(which(!is.na(fitted(airnnet))), 11:20)
+    expect_identical(fitted(airnnet), fitted(airnnet2))
+    expect_identical(forecast(airnnet, h = 5)$mean, forecast(airnnet2, h = 5)$mean)
     ## compare prediction intervals with 'nnetar'
     expect_silent({
       set.seed(456)
