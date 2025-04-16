@@ -9,7 +9,7 @@ test_that("tests for na.interp", {
   testseries[c(1, 3, 11, 17)] <- NA
   expect_true(sum(abs(na.interp(testseries) - rep(1:7, 5))) < 1e-12)
   # Test length of output
-  expect_true(length(testseries) == length(na.interp(testseries)))
+  expect_length(testseries, length(na.interp(testseries)))
 })
 test_that("tests for tsclean", {
   # Test for no NAs
@@ -26,5 +26,5 @@ test_that("tests for tsclean", {
   # Test for identical on series without NAs or outliers
   expect_identical(USAccDeaths, tsclean(USAccDeaths))
   # Test length of output
-  expect_true(length(tsclean(testseries)) == length(testseries))
+  expect_length(tsclean(testseries), length(testseries))
 })

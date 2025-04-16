@@ -18,7 +18,7 @@ test_that("test rwf()", {
   expect_true(all(rwfc == naive(airmiles)$mean))
   expect_true(all(rwfc < rwf(airmiles, drift = TRUE)$mean))
   expect_true(all(rwf(airmiles, fan = TRUE)$mean == rwfc))
-  expect_true(length(rwf(airmiles, lambda = 0.15)$mean) == 10)
+  expect_length(rwf(airmiles, lambda = 0.15)$mean, 10)
   expect_false(identical(rwf(airmiles, lambda = 0.15, biasadj = FALSE)$mean, rwf(airmiles, lambda = 0.15, biasadj = TRUE)$mean))
   # Constant series should not error
   series <- ts(rep(950, 20), frequency = 4)

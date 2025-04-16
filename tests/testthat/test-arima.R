@@ -70,7 +70,7 @@ test_that("tests for forecast.Arima", {
   fit2 <- Arima(wineind, order = c(1, 0, 1), seasonal = c(0, 0, 0), include.drift = TRUE)
   expect_warning(Arima(wineind, order = c(1, 2, 1), include.drift = TRUE))
   expect_true("drift" %in% names(coef(fit2)))
-  expect_true(length(forecast.Arima(fit2)$mean) == 2 * frequency(wineind))
+  expect_length(forecast.Arima(fit2)$mean, 2 * frequency(wineind))
 
   fit3 <- Arima(wineind, order = c(1, 1, 2), seasonal = c(0, 1, 1), include.mean = FALSE)
   expect_false("intercept" %in% names(coef(fit3)))

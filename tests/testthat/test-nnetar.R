@@ -3,13 +3,13 @@ test_that("Tests for nnetar", {
   oilnnet <- nnetar(airmiles, lambda = 0.15)
   woolyrnqnnet <- nnetar(woolyrnq, repeats = 10)
   expect_output(print(woolyrnqnnet), regexp = "Series: woolyrnq")
-  expect_true(length(forecast(oilnnet)$mean) == 10)
-  expect_true(length(forecast(woolyrnqnnet)$mean) == 2 * frequency(woolyrnq))
+  expect_length(forecast(oilnnet)$mean, 10)
+  expect_length(forecast(woolyrnqnnet)$mean, 2 * frequency(woolyrnq))
   #
   # Test with single-column xreg (which might be a vector)
   uscnnet <- nnetar(woolyrnq, xreg = 1:length(woolyrnq))
   expect_true(all(dim(uscnnet$xreg) == c(119, 1)))
-  expect_true(length(forecast(uscnnet, xreg = 120:130)$mean) == 11)
+  expect_length(forecast(uscnnet, xreg = 120:130)$mean, 11)
   # Test default size with and without xreg
   uscnnet <- nnetar(woolyrnq, p = 2, P = 2)
   expect_output(
@@ -130,7 +130,7 @@ test_that("Tests for nnetar", {
   # Check residuals all the same
   expect_identical(residuals(fit1), residuals(fit2))
   # Check number of neural nets
-  expect_identical(length(fit1$model), length(fit2$model))
+  expect_length(fit1$model, length(fit2$model))
   # Check neural network weights all the same
   expect_identical(fit1$model[[1]]$wts, fit2$model[[1]]$wts)
   expect_identical(fit1$model[[7]]$wts, fit2$model[[7]]$wts)

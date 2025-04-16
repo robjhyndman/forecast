@@ -5,7 +5,7 @@ test_that("tests for a non-ts object", {
   fit <- bats(abc, use.box.cox = TRUE, use.parallel = FALSE)
   expect_false(fit$lambda == 0)
   expect_output(print(fit), "Seed States")
-  expect_equal(length(residuals(fit)), 50L)
+  expect_length(residuals(fit), 50L)
   plot(fit)
   expect_equal(bats(1, use.box.cox = TRUE, use.parallel = FALSE)$AIC, -Inf)
   expect_equal(bats(-1, use.box.cox = TRUE, use.parallel = FALSE)$AIC, -Inf)
