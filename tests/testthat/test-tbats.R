@@ -27,15 +27,15 @@ test_that("Test tbats() and forecasts", {
   expect_output(print(summary(tbatsfit3)), regexp = "Length")
   expect_output(print(summary(tbatsfit4)), regexp = "Length")
   # Test fitted length
-  expect_true(length(fitted(tbatsfit1)) == 50)
-  expect_true(length(fitted(tbatsfit2)) == length(WWWusage))
-  expect_true(length(fitted(tbatsfit3)) == length(woolyrnq))
-  expect_true(length(fitted(tbatsfit4)) == length(airmiles))
+  expect_length(fitted(tbatsfit1), 50)
+  expect_length(fitted(tbatsfit2), length(WWWusage))
+  expect_length(fitted(tbatsfit3), length(woolyrnq))
+  expect_length(fitted(tbatsfit4), length(airmiles))
   # Test length of forecast
-  expect_true(length(forecast(tbatsfit1)$mean) == 2 * frequency(wineind))
-  expect_true(length(forecast(tbatsfit2)$mean) == 10)
+  expect_length(forecast(tbatsfit1)$mean, 2 * frequency(wineind))
+  expect_length(forecast(tbatsfit2)$mean, 10)
   # expect_true(length(forecast(tbatsfit3)$mean) == 2 * frequency(woolyrnq))
-  expect_true(length(forecast(tbatsfit4)$mean) == 10)
+  expect_length(forecast(tbatsfit4)$mean, 10)
   # Test inappropriate levels
   expect_error(forecast(tbatsfit1, level = -10))
   expect_error(forecast(tbatsfit1, level = 110))

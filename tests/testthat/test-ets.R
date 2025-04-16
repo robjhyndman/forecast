@@ -24,7 +24,7 @@ test_that("refit ets model to new data", {
 test_that("class methods for ets work", {
   fit <- ets(wineind, model = "MAM", alpha = 0.1611)
   expect_output(print(summary(fit)), "Smoothing parameters")
-  expect_equal(length(coef(fit)), 16L)
+  expect_length(coef(fit), 16L)
   expect_lt(abs(logLik(fit) + 1802.9586023), 1e-5)
   plot(fit)
 })

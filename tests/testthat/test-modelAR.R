@@ -56,12 +56,12 @@ test_that("Tests for modelAR", {
     oilnnet_modelAR <- modelAR(airmiles, FUN = avnnet2, predict.FUN = predict.avnnet2, scale.inputs = TRUE, lambda = 0.15, size = 1, repeats = 20)
   })
   expect_identical(residuals(oilnnet_nnetar, type = "response"), residuals(oilnnet_modelAR, type = "response"))
-  expect_true(length(forecast(oilnnet_modelAR)$mean) == 10)
+  expect_length(forecast(oilnnet_modelAR)$mean, 10)
   ## check print input name
   expect_silent(woolyrnqnnet <- modelAR(woolyrnq, FUN = avnnet2, predict.FUN = predict.avnnet2, scale.inputs = TRUE, p = 1, P = 0, size = 8, repeats = 10))
   expect_output(print(woolyrnqnnet), regexp = "Series: woolyrnq")
   ## check default forecast length
-  expect_true(length(forecast(woolyrnqnnet)$mean) == 2 * frequency(woolyrnq))
+  expect_length(forecast(woolyrnqnnet)$mean, 2 * frequency(woolyrnq))
   #
   # Test with single-column xreg (which might be a vector)
   expect_silent({
@@ -71,7 +71,7 @@ test_that("Tests for modelAR", {
     woolyrnqnnet2 <- nnetar(woolyrnq, xreg = 1:length(woolyrnq), p = 2, P = 2, size = 4, repeats = 10)
   })
   expect_true(all(dim(woolyrnqnnet$xreg) == c(119, 1)))
-  expect_true(length(forecast(woolyrnqnnet, xreg = 120:130)$mean) == 11)
+  expect_length(forecast(woolyrnqnnet, xreg = 120:130)$mean, 11)
   expect_identical(forecast(woolyrnqnnet, xreg = 120:130)$mean, forecast(woolyrnqnnet2, xreg = 120:130)$mean)
   ## Test with multiple-column xreg
   set.seed(123)
@@ -82,9 +82,9 @@ test_that("Tests for modelAR", {
     xreg = cbind(bizdays(wineind), fourier(wineind, 1)),
     p = 2, P = 1, size = 4, repeats = 10
   )
-  expect_true(length(forecast(winennet, h = 2, xreg = matrix(2, 2, 3))$mean) == 2L)
+  expect_length(forecast(winennet, h = 2, xreg = matrix(2, 2, 3))$mean, 2L)
   ## Test if h matches xreg
-  expect_true(length(forecast(winennet, h = 5, xreg = matrix(2, 2, 3))$mean) == 2L)
+  expect_length(forecast(winennet, h = 5, xreg = matrix(2, 2, 3))$mean, 2L)
   expect_warning(
     expect_equal(
       forecast(winennet2, xreg = matrix(2, 2, 3))$mean,
@@ -134,7 +134,7 @@ test_that("Tests for modelAR", {
   # Check residuals all the same
   expect_identical(residuals(fit1), residuals(fit2))
   # Check number of neural nets
-  expect_identical(length(fit1$model), length(fit2$model))
+  expect_length(fit1$model, length(fit2$model))
   # Check neural network weights all the same
   expect_identical(fit1$model[[1]]$wts, fit2$model[[1]]$wts)
   expect_identical(fit1$model[[7]]$wts, fit2$model[[7]]$wts)

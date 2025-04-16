@@ -8,7 +8,7 @@ test_that("test accuracy(), fitted(), and residuals().", {
   expect_true(all(arimaorder(arfima1) == arimaorder(arfima2)))
   fitarfima <- fitted(arfima1)
   residarfima <- residuals(arfima2)
-  expect_true(length(fitarfima) == length(residarfima))
+  expect_length(fitarfima, length(residarfima))
   expect_true(all(getResponse(arfima1) == WWWusage))
   expect_false(identical(arfimabc$fitted, arfimabc2$fitted))
   expect_no_error(accuracy(arfima1))

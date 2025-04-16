@@ -17,6 +17,6 @@ test_that("Tests for bizdays()", {
 })
 
 test_that("Tests for easter()", {
-  expect_true(length(easter(woolyrnq)) == length(woolyrnq))
-  expect_true(length(easter(wineind)) == length(wineind))
+  expect_length(easter(woolyrnq), length(woolyrnq))
+  expect_length(easter(wineind), length(wineind))
 })
