@@ -525,9 +525,10 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI
   {
     newdata <- c(flag[lags], xxreg[i, ])
     if (any(is.na(newdata))) {
-      stop("I can't forecast when there are missing values near the end of the series.")
+      fcast[i] <- NA_real_
+    } else {
+      fcast[i] <- mean(sapply(object$model, predict, newdata = newdata))
     }
-    fcast[i] <- mean(sapply(object$model, predict, newdata = newdata))
     flag <- c(fcast[i], flag[-maxlag])
   }
   # Re-scale point forecasts
