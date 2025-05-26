@@ -12,5 +12,3 @@
 <script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script>
 <script src="deps/search-1.0.0/fuse.min.js"></script>
 <script src="deps/search-1.0.0/mark.min.js"></script>
-<link href="deps/KaTex-0.16.10/katex.min.css" rel="stylesheet" />
-<script src="deps/KaTex-0.16.10/katex.min.js"></script>
