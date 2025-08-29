@@ -3,17 +3,26 @@
 # lag=1 corresponds to standard random walk (i.e., naive forecast)
 # lag=m corresponds to seasonal naive method
 
-lagwalk <- function(y, lag = 1, drift = FALSE, lambda = NULL, biasadj = FALSE) {
+#' @rdname naive
+#' @export
+#' @examples
+#' model <- rw_model(gold)
+#' forecast(model, h = 50)
+rw_model <- function(
+  y,
+  lag = 1,
+  drift = FALSE,
+  lambda = NULL,
+  biasadj = FALSE
+) {
   if (!is.ts(y)) {
     y <- as.ts(y)
   }
   dimy <- dim(y)
-  if (!is.null(dimy)) {
-    if (dimy[2] > 1) {
-      stop(
-        "Multivariate time series detected. This function is designed for univariate time series only."
-      )
-    }
+  if (!is.null(dimy) && dimy[2] > 1) {
+    stop(
+      "Multivariate time series detected. This function is designed for univariate time series only."
+    )
   }
   origy <- y
   if (!is.null(lambda)) {
@@ -215,7 +224,7 @@ rwf <- function(
   ...,
   x = y
 ) {
-  fit <- lagwalk(
+  fit <- rw_model(
     x,
     lag = 1,
     drift = drift,
@@ -280,6 +289,9 @@ rwf <- function(
 #' @param level Confidence levels for prediction intervals.
 #' @param fan If `TRUE`, level is set to `seq(51, 99, by = 3)`. This
 #' is suitable for fan plots.
+#' @param lag Lag parameter for lagged walks. `lag = 1` corresponds to standard
+#' random walk (i.e., naive forecast), while `lag = m` corresponds to seasonal
+#' naive method where m is the seasonal period.
 #' @param x Deprecated. Included for backwards compatibility.
 #' @inheritParams forecast.ts
 #'
@@ -355,7 +367,7 @@ snaive <- function(
   ...,
   x = y
 ) {
-  fit <- lagwalk(
+  fit <- rw_model(
     x,
     lag = frequency(x),
     drift = FALSE,
