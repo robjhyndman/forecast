@@ -3,7 +3,12 @@
 # lag=1 corresponds to standard random walk (i.e., naive forecast)
 # lag=m corresponds to seasonal naive method
 
-lagwalk <- function(y, lag=1, drift=FALSE, lambda=NULL, biasadj=FALSE) {
+#' @rdname naive
+#' @export
+#' @examples
+#' model <- rw_model(gold)
+#' forecast(model, h = 50)
+rw_model <- function(y, lag=1, drift=FALSE, lambda=NULL, biasadj=FALSE) {
   if(!is.ts(y)){
     y <- as.ts(y)
   }
@@ -52,7 +57,7 @@ lagwalk <- function(y, lag=1, drift=FALSE, lambda=NULL, biasadj=FALSE) {
     attr(lambda, "biasadj") <- biasadj
   }
 
-  model <- structure(
+  structure(
     list(
       x = origy,
       fitted = fitted,
@@ -170,7 +175,7 @@ fitted.lagwalk <- function(object, ...){
 #' @export
 rwf <- function(y, h=10, drift=FALSE, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALSE,
                 ..., x=y) {
-  fit <- lagwalk(
+  fit <- rw_model(
     x, lag = 1, drift = drift,
     lambda = lambda, biasadj = biasadj
   )
@@ -280,7 +285,7 @@ naive <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALS
 #' @export
 snaive <- function(y, h=2 * frequency(x), level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALSE,
                    ..., x=y) {
-  fit <- lagwalk(
+  fit <- rw_model(
     x, lag = frequency(x), drift = FALSE,
     lambda = lambda, biasadj = biasadj
   )
