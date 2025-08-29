@@ -9,8 +9,8 @@ easter(x, easter.mon = FALSE)
 \arguments{
 \item{x}{Monthly or quarterly time series}
 
-\item{easter.mon}{If TRUE, the length of Easter holidays includes Easter
-Monday.}
+\item{easter.mon}{If \code{TRUE}, the length of Easter holidays includes
+Easter Monday.}
 }
 \value{
 Time series

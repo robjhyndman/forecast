@@ -22,18 +22,18 @@
 #' required
 #' @param h Number of periods for forecasting
 #' @param level Confidence level for prediction intervals.
-#' @param fan If TRUE, \code{level} is set to \code{seq(51,99,by=3)}. This is
-#' suitable for fan plots.
-#' @param robust If TRUE, the function is robust to missing values and outliers
+#' @param fan If \code{TRUE}, \code{level} is set to \code{seq(51, 99, by = 3)}.
+#' This is suitable for fan plots.
+#' @param robust If \code{TRUE}, the function is robust to missing values and outliers
 #' in \code{object}. This argument is only valid when \code{object} is of class
 #' \code{ts}.
 #' @param lambda Box-Cox transformation parameter. If \code{lambda="auto"},
 #' then a transformation is automatically selected using \code{BoxCox.lambda}.
 #' The transformation is ignored if NULL. Otherwise,
 #' data transformed before model is estimated.
-#' @param find.frequency If TRUE, the function determines the appropriate
+#' @param find.frequency If \code{TRUE}, the function determines the appropriate
 #' period, if the data is of unknown period.
-#' @param allow.multiplicative.trend If TRUE, then ETS models with
+#' @param allow.multiplicative.trend If \code{TRUE}, then ETS models with
 #' multiplicative trends are allowed. Otherwise, only additive or no trend ETS
 #' models are permitted.
 #' @param model An object describing a time series model; e.g., one of of class

@@ -42,7 +42,7 @@
 \arguments{
 \item{object}{Object of class \dQuote{\code{ts}} or \dQuote{\code{mts}}.}
 
-\item{colour}{If TRUE, the time series will be assigned a colour aesthetic}
+\item{colour}{If \code{TRUE}, the time series will be assigned a colour aesthetic}
 
 \item{series}{Identifies the time series with a colour, which integrates well
 with the functionality of \link{geom_forecast}.}
@@ -55,9 +55,9 @@ with the functionality of \link{geom_forecast}.}
 
 \item{main}{Main title.}
 
-\item{facets}{If TRUE, multiple time series will be faceted (and unless
-specified, colour is set to FALSE). If FALSE, each series will be assigned a
-colour.}
+\item{facets}{If \code{TRUE}, multiple time series will be faceted (and
+unless specified, colour is set to \code{FALSE}). If \code{FALSE}, each
+series will be assigned a colour.}
 
 \item{model}{Object of class \dQuote{\code{ts}} to be converted to
 \dQuote{\code{data.frame}}.}

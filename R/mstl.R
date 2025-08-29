@@ -196,15 +196,15 @@ autoplot.mstl <- function(object, ...) {
 #' \code{\link[forecast]{forecast.Arima}()}.
 #' @param h Number of periods for forecasting.
 #' @param level Confidence level for prediction intervals.
-#' @param fan If \code{TRUE}, level is set to seq(51,99,by=3). This is suitable
-#' for fan plots.
-#' @param s.window Either the character string ``periodic'' or the span (in
+#' @param fan If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
+#' is suitable for fan plots.
+#' @param s.window Either the character string \code{"periodic"} or the span (in
 #' lags) of the loess window for seasonal extraction.
 #' @param t.window A number to control the smoothness of the trend. See
 #' \code{\link[stats]{stl}} for details.
 #' @param robust If \code{TRUE}, robust fitting will used in the loess
 #' procedure within \code{\link[stats]{stl}}.
-#' @param allow.multiplicative.trend If TRUE, then ETS models with
+#' @param allow.multiplicative.trend If \code{TRUE}, then ETS models with
 #' multiplicative trends are allowed. Otherwise, only additive or no trend ETS
 #' models are permitted.
 #' @param x Deprecated. Included for backwards compatibility.

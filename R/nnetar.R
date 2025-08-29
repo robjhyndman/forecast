@@ -51,7 +51,7 @@
 #' @param subset Optional vector specifying a subset of observations to be used
 #' in the fit. Can be an integer index vector or a logical vector the same
 #' length as \code{y}. All observations are used by default.
-#' @param scale.inputs If TRUE, inputs are scaled by subtracting the column
+#' @param scale.inputs If \code{TRUE}, inputs are scaled by subtracting the column
 #' means and dividing by their respective standard deviations. If \code{lambda}
 #' is not \code{NULL}, scaling is applied after Box-Cox transformation.
 #' @param x Deprecated. Included for backwards compatibility.
@@ -400,12 +400,12 @@ print.nnetarmodels <- function(x, ...) {
 #' @param h Number of periods for forecasting. If \code{xreg} is used, \code{h}
 #' is ignored and the number of forecast periods is set to the number of rows
 #' of \code{xreg}.
-#' @param PI If TRUE, prediction intervals are produced, otherwise only point
-#' forecasts are calculated. If \code{PI} is FALSE, then \code{level},
+#' @param PI If \code{TRUE}, prediction intervals are produced, otherwise only point
+#' forecasts are calculated. If \code{PI} is \code{FALSE}, then \code{level},
 #' \code{fan}, \code{bootstrap} and \code{npaths} are all ignored.
 #' @param level Confidence level for prediction intervals.
-#' @param fan If \code{TRUE}, level is set to \code{seq(51,99,by=3)}. This is
-#' suitable for fan plots.
+#' @param fan If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
+#' is suitable for fan plots.
 #' @param xreg Future values of external regressor variables.
 #' @param bootstrap If \code{TRUE}, then prediction intervals computed using
 #' simulations with resampled residuals rather than normally distributed

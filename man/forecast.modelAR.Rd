@@ -26,14 +26,14 @@
 is ignored and the number of forecast periods is set to the number of rows
 of \code{xreg}.}
 
-\item{PI}{If TRUE, prediction intervals are produced, otherwise only point
-forecasts are calculated. If \code{PI} is FALSE, then \code{level},
+\item{PI}{If \code{TRUE}, prediction intervals are produced, otherwise only point
+forecasts are calculated. If \code{PI} is \code{FALSE}, then \code{level},
 \code{fan}, \code{bootstrap} and \code{npaths} are all ignored.}
 
 \item{level}{Confidence level for prediction intervals.}
 
-\item{fan}{If \code{TRUE}, level is set to \code{seq(51,99,by=3)}. This is
-suitable for fan plots.}
+\item{fan}{If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
+is suitable for fan plots.}
 
 \item{xreg}{Future values of external regressor variables.}
 

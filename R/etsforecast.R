@@ -7,16 +7,16 @@
 #' to \code{\link{ets}}.
 #' @param h Number of periods for forecasting
 #' @param level Confidence level for prediction intervals.
-#' @param fan If TRUE, level is set to seq(51,99,by=3). This is suitable for
-#' fan plots.
-#' @param simulate If TRUE, prediction intervals are produced by simulation rather
+#' @param fan If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
+#' is suitable for fan plots.
+#' @param simulate If \code{TRUE}, prediction intervals are produced by simulation rather
 #' than using analytic formulae. Errors are assumed to be normally distributed.
-#' @param bootstrap If TRUE, then prediction intervals are produced by simulation using
-#' resampled errors (rather than normally distributed errors).
+#' @param bootstrap If \code{TRUE}, then prediction intervals are produced by
+#' simulation using resampled errors (rather than normally distributed errors).
 #' @param npaths Number of sample paths used in computing simulated prediction
 #' intervals.
-#' @param PI If TRUE, prediction intervals are produced, otherwise only point
-#' forecasts are calculated. If \code{PI} is FALSE, then \code{level},
+#' @param PI If \code{TRUE}, prediction intervals are produced, otherwise only point
+#' forecasts are calculated. If \code{PI} is \code{FALSE}, then \code{level},
 #' \code{fan}, \code{simulate}, \code{bootstrap} and \code{npaths} are all
 #' ignored.
 #' @param ... Other arguments.

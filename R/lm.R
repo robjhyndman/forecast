@@ -201,8 +201,8 @@ fitted.tslm <- function(object, ...){
 #' which to predict. If omitted, it is assumed that the only variables are
 #' trend and season, and \code{h} forecasts are produced.
 #' @param level Confidence level for prediction intervals.
-#' @param fan If \code{TRUE}, level is set to seq(51,99,by=3). This is suitable
-#' for fan plots.
+#' @param fan If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
+#' is suitable for fan plots.
 #' @param h Number of periods for forecasting. Ignored if \code{newdata}
 #' present.
 #' @param ts If \code{TRUE}, the forecasts will be treated as time series

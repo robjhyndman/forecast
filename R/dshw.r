@@ -33,8 +33,8 @@
 #' \code{NULL}, the parameter is estimated using least squares.
 #' @param phi Autoregressive parameter. If \code{NULL}, the parameter is
 #' estimated using least squares.
-#' @param armethod If TRUE, the forecasts are adjusted using an AR(1) model for
-#' the errors.
+#' @param armethod If \code{TRUE}, the forecasts are adjusted using an AR(1)
+#' model for the errors.
 #' @param model If it's specified, an existing model is applied to a new data
 #' set.
 #' @inheritParams forecast.ts

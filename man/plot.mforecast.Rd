@@ -19,10 +19,10 @@ for ggplot graphics (S3 method consistency).}
 \item{PI}{If \code{FALSE}, confidence intervals will not be plotted, giving
 only the forecast line.}
 
-\item{facets}{If TRUE, multiple time series will be faceted. If FALSE, each
-series will be assigned a colour.}
+\item{facets}{If \code{TRUE}, multiple time series will be faceted. If
+\code{FALSE}, each series will be assigned a colour.}
 
-\item{colour}{If TRUE, the time series will be assigned a colour aesthetic}
+\item{colour}{If \code{TRUE}, the time series will be assigned a colour aesthetic}
 
 \item{\dots}{additional arguments to each individual \code{plot}.}
 

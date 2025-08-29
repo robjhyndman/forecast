@@ -55,8 +55,8 @@ spline.loglik <- function(beta, y, cc=1e2) {
 #' @param y a numeric vector or time series of class \code{ts}
 #' @param h Number of periods for forecasting
 #' @param level Confidence level for prediction intervals.
-#' @param fan If TRUE, level is set to seq(51,99,by=3). This is suitable for
-#' fan plots.
+#' @param fan If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
+#' is suitable for fan plots.
 #' @param method Method for selecting the smoothing parameter. If
 #' \code{method="gcv"}, the generalized cross-validation method from
 #' \code{\link[stats]{smooth.spline}} is used. If \code{method="mle"}, the

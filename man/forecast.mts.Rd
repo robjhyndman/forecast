@@ -29,10 +29,10 @@ for which forecasts are required}
 
 \item{level}{Confidence level for prediction intervals.}
 
-\item{fan}{If TRUE, \code{level} is set to \code{seq(51,99,by=3)}. This is
-suitable for fan plots.}
+\item{fan}{If \code{TRUE}, \code{level} is set to \code{seq(51, 99, by = 3)}.
+This is suitable for fan plots.}
 
-\item{robust}{If TRUE, the function is robust to missing values and outliers
+\item{robust}{If \code{TRUE}, the function is robust to missing values and outliers
 in \code{object}. This argument is only valid when \code{object} is of class
 \code{mts}.}
 
@@ -42,14 +42,15 @@ The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.}
 
 \item{biasadj}{Use adjusted back-transformed mean for Box-Cox
-transformations. If transformed data is used to produce forecasts and fitted values,
-a regular back transformation will result in median forecasts. If biasadj is TRUE,
-an adjustment will be made to produce mean forecasts and fitted values.}
+transformations. If transformed data is used to produce forecasts and fitted
+values, a regular back transformation will result in median forecasts. If
+biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
+and fitted values.}
 
-\item{find.frequency}{If TRUE, the function determines the appropriate
+\item{find.frequency}{If \code{TRUE}, the function determines the appropriate
 period, if the data is of unknown period.}
 
-\item{allow.multiplicative.trend}{If TRUE, then ETS models with
+\item{allow.multiplicative.trend}{If \code{TRUE}, then ETS models with
 multiplicative trends are allowed. Otherwise, only additive or no trend ETS
 models are permitted.}
 
