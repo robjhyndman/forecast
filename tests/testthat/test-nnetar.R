@@ -7,7 +7,7 @@ test_that("Tests for nnetar", {
   expect_length(forecast(woolyrnqnnet)$mean, 2 * frequency(woolyrnq))
   #
   # Test with single-column xreg (which might be a vector)
-  uscnnet <- nnetar(woolyrnq, xreg = 1:length(woolyrnq))
+  uscnnet <- nnetar(woolyrnq, xreg = seq_along(woolyrnq))
   expect_true(all(dim(uscnnet$xreg) == c(119, 1)))
   expect_length(forecast(uscnnet, xreg = 120:130)$mean, 11)
   # Test default size with and without xreg
@@ -88,19 +88,19 @@ test_that("Tests for nnetar", {
     fixed = TRUE
   )
   # Test that P is ignored if m=1
-  expect_warning(creditnnet <- nnetar(WWWusage, p = 2, P = 4, xreg = 1:length(WWWusage)))
+  expect_warning(creditnnet <- nnetar(WWWusage, p = 2, P = 4, xreg = seq_along(WWWusage)))
   expect_output(
     print(creditnnet), regexp = "NNAR(2,2)",
     fixed = TRUE
   )
   # Test fixed size
-  creditnnet <- nnetar(WWWusage, p = 1, P = 1, xreg = 1:length(WWWusage), size = 12)
+  creditnnet <- nnetar(WWWusage, p = 1, P = 1, xreg = seq_along(WWWusage), size = 12)
   expect_true(uscnnet$size == 3)
   expect_output(print(creditnnet), regexp = "NNAR(1,12)", fixed = TRUE)
   # Test passing arguments to nnet
   expect_warning(creditnnet <- nnetar(
     WWWusage, p = 2, P = 4,
-    xreg = 1:length(WWWusage), decay = 0.1
+    xreg = seq_along(WWWusage), decay = 0.1
   ))
   expect_output(
     print(creditnnet), regexp = "decay=0.1",
@@ -117,10 +117,10 @@ test_that("Tests for nnetar", {
   ## Test model argument
   fit1 <- nnetar(
     WWWusage,
-    xreg = 1:length(WWWusage),
+    xreg = seq_along(WWWusage),
     lambda = 2, decay = 0.5, maxit = 25, repeats = 7
   )
-  fit2 <- nnetar(WWWusage, xreg = 1:length(WWWusage), model = fit1)
+  fit2 <- nnetar(WWWusage, xreg = seq_along(WWWusage), model = fit1)
   # Check some model parameters
   expect_identical(fit1$p, fit2$p)
   expect_identical(fit1$lambda, fit2$lambda)

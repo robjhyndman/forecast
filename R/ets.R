@@ -393,13 +393,13 @@ ets <- function(y, model="ZZZ", damped=NULL,
     damped <- c(TRUE, FALSE)
   }
   best.ic <- Inf
-  for (i in 1:length(errortype))
+  for (i in seq_along(errortype))
   {
-    for (j in 1:length(trendtype))
+    for (j in seq_along(trendtype))
     {
-      for (k in 1:length(seasontype))
+      for (k in seq_along(seasontype))
       {
-        for (l in 1:length(damped))
+        for (l in seq_along(damped))
         {
           if (trendtype[j] == "N" && damped[l]) {
             next

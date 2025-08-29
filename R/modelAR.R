@@ -277,7 +277,7 @@ modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=N
   out$scalexreg <- scalexreg
   out$xreg <- xreg
   out$lambda <- lambda
-  out$subset <- (1:length(x))[xsub]
+  out$subset <- seq_along(x)[xsub]
   out$model <- fit
   out$modelargs <- list(...)
   if (useoldmodel) {

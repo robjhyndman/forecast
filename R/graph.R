@@ -214,7 +214,7 @@ seasonplot <- function(x, s, season.labels=NULL, year.labels=FALSE, year.labels.
   if (year.labels) {
     idx <- which(Season[!is.na(xnew)] == s)
     year <- round(time(tsx)[idx], nchar(s))
-    text(x = rep(s + labelgap, length(year)), y = tsx[idx], labels = paste(c(trunc(year))), adj = 0, ..., col = col[1:length(idx)])
+    text(x = rep(s + labelgap, length(year)), y = tsx[idx], labels = paste(c(trunc(year))), adj = 0, ..., col = col[seq_along(idx)])
   }
   if (year.labels.left) {
     idx <- which(Season[!is.na(xnew)] == 1)
@@ -222,7 +222,7 @@ seasonplot <- function(x, s, season.labels=NULL, year.labels=FALSE, year.labels.
     if (min(idx) > 1) { # First year starts after season 1n
       col <- col[-1]
     }
-    text(x = rep(1 - labelgap, length(year)), y = tsx[idx], labels = paste(c(trunc(year))), adj = 1, ..., col = col[1:length(idx)])
+    text(x = rep(1 - labelgap, length(year)), y = tsx[idx], labels = paste(c(trunc(year))), adj = 1, ..., col = col[seq_along(idx)])
   }
   if (is.null(labs)) {
     axis(1, ...)

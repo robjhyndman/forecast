@@ -42,7 +42,7 @@ monthdays <- function(x) {
   } else {
     dummy[leap.years, 1] <- 91
   }
-  xx <- c(t(dummy))[start(x)[2] - 1 + (1:length(x))]
+  xx <- c(t(dummy))[start(x)[2] - 1 + seq_along(x)]
   return(ts(xx, start = start(x), frequency = f))
 }
 
@@ -145,7 +145,7 @@ seasonaldummy <- function(x, h=NULL) {
     }
     dummy <- as.factor(cycle(x))
     dummy.mat <- matrix(0, ncol = frequency(x) - 1, nrow = length(x))
-    nrow <- 1:length(x)
+    nrow <- seq_along(x)
     for (i in 1:(frequency(x) - 1))
       dummy.mat[dummy == paste(i), i] <- 1
     colnames(dummy.mat) <- if (fr.x == 12) {

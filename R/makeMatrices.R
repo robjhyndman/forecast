@@ -56,7 +56,7 @@ makeTBATSFMatrix <- function(alpha, beta=NULL, small.phi=NULL, seasonal.periods=
     # Make the A matrix
     A <- matrix(0, tau, tau)
     last.pos <- 0
-    for (i in 1:length(k.vector)) {
+    for (i in seq_along(k.vector)) {
       if (seasonal.periods[i] != 2) {
         C <- .Call("makeCIMatrix", k_s = as.integer(k.vector[i]), m_s = as.double(seasonal.periods[i]), PACKAGE = "forecast")
       } else {

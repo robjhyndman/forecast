@@ -120,7 +120,7 @@ forecast.bats <- function(object, h, level=c(80, 95), fan=FALSE, biasadj=NULL, .
   variance <- object$variance * variance.multiplier
   # print(variance)
   st.dev <- sqrt(variance)
-  for (i in 1:length(level)) {
+  for (i in seq_along(level)) {
     marg.error <- st.dev * abs(qnorm((100 - level[i]) / 200))
     lower.bounds[, i] <- y.forecast - marg.error
     upper.bounds[, i] <- y.forecast + marg.error

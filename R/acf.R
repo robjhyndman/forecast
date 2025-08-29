@@ -310,7 +310,7 @@ wacf <- function(x, lag.max = length(x) - 1) {
   acfest$series <- deparse(substitute(x))
 
   # Taper estimates
-  s <- 1:length(acfest$acf[, , 1])
+  s <- seq_along(acfest$acf[, , 1])
   upper <- 2 * sqrt(log(n, 10) / n)
   ac <- abs(acfest$acf[, , 1])
   # Find l: ac < upper for 5 consecutive lags

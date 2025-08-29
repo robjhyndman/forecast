@@ -1782,7 +1782,7 @@ autolayer.mforecast <- function(object, series = NULL, PI = TRUE, ...) {
     }
   }
   out <- list()
-  for (i in 1:length(object$forecast)) {
+  for (i in seq_along(object$forecast)) {
     cl$series <- series[i]
     out[[i]] <- eval(cl)
   }

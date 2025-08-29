@@ -289,7 +289,7 @@ zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, seasonal="additive"
   }
   if (!doseasonal) {
     gamma <- 0
-    s.start[1:length(s.start)] <- ifelse(seasonal == "additive", 0, 1)
+    s.start[seq_along(s.start)] <- ifelse(seasonal == "additive", 0, 1)
   }
   lastlevel <- level0 <- l.start
   lasttrend <- trend0 <- b.start
