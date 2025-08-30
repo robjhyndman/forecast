@@ -56,7 +56,7 @@ checkresiduals <- function(object, lag, test, plot = TRUE, ...) {
   }
 
   if (inherits(object, "ar")) {
-    method <- paste("AR(", object$order, ")", sep = "")
+    method <- paste0("AR(", object$order, ")")
   } else if (!is.null(object$method)) {
     method <- object$method
   } else if (inherits(object, "HoltWinters")) {
@@ -122,7 +122,7 @@ checkresiduals <- function(object, lag, test, plot = TRUE, ...) {
     LBtest$data.name <- main
     names(LBtest$statistic) <- "Q*"
     print(LBtest)
-    cat(paste("Model df: ", df, ".   Total lags used: ", lag, "\n\n", sep = ""))
+    cat(paste0("Model df: ", df, ".   Total lags used: ", lag, "\n\n"))
     return(invisible(LBtest))
   }
 }

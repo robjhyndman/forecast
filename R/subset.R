@@ -91,7 +91,7 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL,
       stop("Data is not quarterly")
     }
     if (is.character(quarter)) {
-      season <- pmatch(tolower(quarter), paste("q", 1:4, sep = ""), duplicates.ok = TRUE)
+      season <- pmatch(tolower(quarter), paste0("q", 1:4), duplicates.ok = TRUE)
     } else {
       season <- quarter
     }

@@ -164,7 +164,7 @@ seasonplot <- function(x, s, season.labels=NULL, year.labels=FALSE, year.labels.
     xLab <- "Month"
   }
   else if (s == 4) {
-    labs <- paste("Q", 1:4, sep = "")
+    labs <- paste0("Q", 1:4)
     xLab <- "Quarter"
   }
   else if (s == 7) {

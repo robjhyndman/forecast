@@ -305,7 +305,7 @@ plot.forecast <- function(x, include, PI=TRUE, showgap = TRUE, shaded=TRUE, shad
     shadebars <- FALSE
   }
   if (is.null(main)) {
-    main <- paste("Forecasts from ", x$method, sep = "")
+    main <- paste0("Forecasts from ", x$method)
   }
   if (PI) {
     x$upper <- as.matrix(x$upper)
@@ -640,7 +640,7 @@ as.data.frame.forecast <- function(x, ...) {
         } else if (fr.x == 4) {
           c("Qtr1", "Qtr2", "Qtr3", "Qtr4")
         } else {
-          paste("p", 1L:fr.x, sep = "")
+          paste0("p", 1L:fr.x)
         }
         if (NROW(x) <= fr.x && start(x)[1L] == end(x)[1L]) {
           dn1 <- start(x)[1L]
@@ -676,7 +676,7 @@ as.data.frame.forecast <- function(x, ...) {
       p1 <- format(floor(tm + 1e-8))
       rownames(x) <-
         if (fr.x == 12) {
-          paste(month.abb[t2], p1, sep = " ")
+          paste(month.abb[t2], p1)
         } else {
           paste(
             p1,
@@ -684,8 +684,7 @@ as.data.frame.forecast <- function(x, ...) {
               c("Q1", "Q2", "Q3", "Q4")[t2]
             } else {
               format(t2)
-            },
-            sep = " "
+            }
           )
         }
     }

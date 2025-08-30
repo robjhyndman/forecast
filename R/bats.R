@@ -437,7 +437,7 @@ plot.bats <- function(x, main = "Decomposition by BATS model", ...) {
       out <- cbind(out, season = seas.states[j[i], ])
     }
     if (nseas > 1) {
-      colnames(out)[nonseas + 1:nseas] <- paste("season", 1:nseas, sep = "")
+      colnames(out)[nonseas + 1:nseas] <- paste0("season", 1:nseas)
     }
   }
 

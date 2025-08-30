@@ -301,9 +301,9 @@ modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=N
   out$series <- yname
   out$method <- deparse(substitute(FUN))
   out$method <- paste0(out$method, "-AR(", p)
-  if (P > 0) out$method <- paste(out$method, ",", P, sep = "")
+  if (P > 0) out$method <- paste0(out$method, ",", P)
   out$method <- paste0(out$method, ")")
-  if (P > 0) out$method <- paste(out$method, "[", m, "]", sep = "")
+  if (P > 0) out$method <- paste0(out$method, "[", m, "]")
   out$call <- match.call()
   return(structure(out, class = c("modelAR")))
 }

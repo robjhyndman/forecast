@@ -339,13 +339,13 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   out$residuals <- out$x - out$fitted
   out$lags <- lags
   out$series <- yname
-  out$method <- paste("NNAR(", p, sep = "")
+  out$method <- paste0("NNAR(", p)
   if (P > 0) {
-    out$method <- paste(out$method, ",", P, sep = "")
+    out$method <- paste0(out$method, ",", P)
   }
-  out$method <- paste(out$method, ",", size, ")", sep = "")
+  out$method <- paste0(out$method, ",", size, ")")
   if (P > 0) {
-    out$method <- paste(out$method, "[", m, "]", sep = "")
+    out$method <- paste0(out$method, "[", m, "]")
   }
   out$call <- match.call()
   return(structure(out, class = c("nnetar")))

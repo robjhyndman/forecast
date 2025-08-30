@@ -134,7 +134,7 @@ forecast.lagwalk <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=NU
   fc <- future_msts(object$x, fc)
   lower <- future_msts(object$x, lower)
   upper <- future_msts(object$x, upper)
-  colnames(lower) <- colnames(upper) <- paste(level,"%",sep="")
+  colnames(lower) <- colnames(upper) <- paste0(level, "%")
 
   return(structure(
     list(
@@ -149,7 +149,7 @@ forecast.lagwalk <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=NU
 print.lagwalk <- function(x, ...) {
   cat(paste("Call:", deparse(x$call), "\n\n"))
   if (x$par$includedrift) {
-    cat(paste("Drift: ", round(x$par$drift, 4), "  (se ", round(x$par$drift.se, 4), ")\n", sep = ""))
+    cat(paste0("Drift: ", round(x$par$drift, 4), "  (se ", round(x$par$drift.se, 4), ")\n"))
   }
   cat(paste("Residual sd:", round(sqrt(x$sigma2), 4), "\n"))
 }

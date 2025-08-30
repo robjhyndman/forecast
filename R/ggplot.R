@@ -748,7 +748,7 @@ Interval shading is now done automatically based on the level and `fcol`.",
       # p <- p + ggplot2::geom_line(ggplot2::aes_(x = ~datetime, y = ~ypred), data = predicted, color = fcol, size = flwd)
     }
 
-    p <- p + ggAddExtras(main = paste("Forecasts from ", object$method, sep = ""))
+    p <- p + ggAddExtras(main = paste0("Forecasts from ", object$method))
     return(p)
   }
 }
@@ -1391,7 +1391,7 @@ ggseasonplot <- function(x, season.labels=NULL, year.labels=FALSE, year.labels.l
     xLab <- "Month"
   }
   else if (s == 4) {
-    labs <- paste("Q", 1:4, sep = "")
+    labs <- paste0("Q", 1:4)
     xLab <- "Quarter"
   }
   else if (s == 7) {

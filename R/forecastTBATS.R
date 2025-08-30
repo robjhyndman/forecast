@@ -135,42 +135,42 @@ forecast.tbats <- function(object, h, level = c(80, 95), fan = FALSE, biasadj = 
 as.character.tbats <- function(x, ...) {
   name <- "TBATS("
   if (!is.null(x$lambda)) {
-    name <- paste(name, round(x$lambda, digits = 3), sep = "")
+    name <- paste0(name, round(x$lambda, digits = 3))
   } else {
-    name <- paste(name, "1", sep = "")
+    name <- paste0(name, "1")
   }
-  name <- paste(name, ", {", sep = "")
+  name <- paste0(name, ", {")
   if (!is.null(x$ar.coefficients)) {
-    name <- paste(name, length(x$ar.coefficients), sep = "")
+    name <- paste0(name, length(x$ar.coefficients))
   } else {
-    name <- paste(name, "0", sep = "")
+    name <- paste0(name, "0")
   }
-  name <- paste(name, ",", sep = "")
+  name <- paste0(name, ",")
   if (!is.null(x$ma.coefficients)) {
-    name <- paste(name, length(x$ma.coefficients), sep = "")
+    name <- paste0(name, length(x$ma.coefficients))
   } else {
-    name <- paste(name, "0", sep = "")
+    name <- paste0(name, "0")
   }
-  name <- paste(name, "}, ", sep = "")
+  name <- paste0(name, "}, ")
   if (!is.null(x$damping.parameter)) {
-    name <- paste(name, round(x$damping.parameter, digits = 3), ",", sep = "")
+    name <- paste0(name, round(x$damping.parameter, digits = 3), ",")
   } else {
-    name <- paste(name, "-,", sep = "")
+    name <- paste0(name, "-,")
   }
 
   if (!is.null(x$seasonal.periods)) {
-    name <- paste(name, " {", sep = "")
+    name <- paste0(name, " {")
     M <- length(x$seasonal.periods)
     for (i in 1:M) {
-      name <- paste(name, "<", round(x$seasonal.periods[i], 2), ",", x$k.vector[i], ">", sep = "")
+      name <- paste0(name, "<", round(x$seasonal.periods[i], 2), ",", x$k.vector[i], ">")
       if (i < M) {
-        name <- paste(name, ", ", sep = "")
+        name <- paste0(name, ", ")
       } else {
-        name <- paste(name, "})", sep = "")
+        name <- paste0(name, "})")
       }
     }
   } else {
-    name <- paste(name, "{-})", sep = "")
+    name <- paste0(name, "{-})")
   }
   return(name)
 }

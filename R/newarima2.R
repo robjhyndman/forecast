@@ -191,7 +191,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   # Check xreg and do regression if necessary
   if (!is.null(xreg)) {
     if (is.null(colnames(xreg))) {
-      colnames(xreg) <- if (ncol(xreg) == 1) "xreg" else paste("xreg", 1:ncol(xreg), sep = "")
+      colnames(xreg) <- if (ncol(xreg) == 1) "xreg" else paste0("xreg", 1:ncol(xreg))
     }
     xregg <- xreg
 
@@ -833,18 +833,18 @@ newmodel <- function(p, d, q, P, D, Q, constant, results) {
 arima.string <- function(object, padding=FALSE) {
   order <- object$arma[c(1, 6, 2, 3, 7, 4, 5)]
   m <- order[7]
-  result <- paste("ARIMA(", order[1], ",", order[2], ",", order[3], ")", sep = "")
+  result <- paste0("ARIMA(", order[1], ",", order[2], ",", order[3], ")")
   if (m > 1 && sum(order[4:6]) > 0) {
-    result <- paste(result, "(", order[4], ",", order[5], ",", order[6], ")[", m, "]", sep = "")
+    result <- paste0(result, "(", order[4], ",", order[5], ",", order[6], ")[", m, "]")
   }
   if (padding && m > 1 && sum(order[4:6]) == 0) {
-    result <- paste(result, "         ", sep = "")
+    result <- paste0(result, "         ")
     if (m <= 9) {
-      result <- paste(result, " ", sep = "")
+      result <- paste0(result, " ")
     } else if (m <= 99) {
-      result <- paste(result, "  ", sep = "")
+      result <- paste0(result, "  ")
     } else {
-      result <- paste(result, "   ", sep = "")
+      result <- paste0(result, "   ")
     }
   }
   if (!is.null(object$xreg)) {

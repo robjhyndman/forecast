@@ -295,7 +295,7 @@ forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[
       stop("xreg should be a numeric matrix or a numeric vector")
     xreg <- as.matrix(xreg)
     if (is.null(colnames(xreg))) {
-      colnames(xreg) <- if (ncol(xreg) == 1) "xreg" else paste("xreg", 1:ncol(xreg), sep = "")
+      colnames(xreg) <- if (ncol(xreg) == 1) "xreg" else paste0("xreg", 1:ncol(xreg))
     }
 
     origxreg <- xreg <- as.matrix(xreg)
@@ -400,7 +400,7 @@ forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[
       warning("Upper prediction intervals are not finite.")
     }
   }
-  colnames(lower) <- colnames(upper) <- paste(level, "%", sep = "")
+  colnames(lower) <- colnames(upper) <- paste0(level, "%")
   lower <- ts(lower)
   upper <- ts(upper)
   tsp(lower) <- tsp(upper) <- tsp(pred$pred)
@@ -466,8 +466,8 @@ forecast.ar <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=NULL,
     lower[, i] <- pred$pred - qq * pred$se
     upper[, i] <- pred$pred + qq * pred$se
   }
-  colnames(lower) <- colnames(upper) <- paste(level, "%", sep = "")
-  method <- paste("AR(", object$order, ")", sep = "")
+  colnames(lower) <- colnames(upper) <- paste0(level, "%")
+  method <- paste0("AR(", object$order, ")")
   f <- frequency(x)
   res <- residuals.ar(object)
   fits <- fitted.ar(object)
@@ -715,7 +715,7 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
       stop("xreg should be a numeric matrix or a numeric vector")
     xreg <- as.matrix(xreg)
     if (is.null(colnames(xreg))) {
-      colnames(xreg) <- if (ncol(xreg) == 1) "xreg" else paste("xreg", 1:ncol(xreg), sep = "")
+      colnames(xreg) <- if (ncol(xreg) == 1) "xreg" else paste0("xreg", 1:ncol(xreg))
     }
   }
 
