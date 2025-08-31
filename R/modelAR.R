@@ -138,7 +138,7 @@ modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=N
   }
 
   # Check for NAs in x
-  if (any(is.na(x))) {
+  if (anyNA(x)) {
     warning("Missing values in x, omitting rows")
   }
 
@@ -182,7 +182,7 @@ modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=N
       stop("Number of rows in xreg does not match series length")
     }
     # Check for NAs in xreg
-    if (any(is.na(xreg))) {
+    if (anyNA(xreg)) {
       warning("Missing values in xreg, omitting rows")
     }
     # Scale xreg
@@ -423,7 +423,7 @@ forecast.modelAR <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), P
   for (i in 1:h)
   {
     newdata <- c(flag[lags], xxreg[i, ])
-    if (any(is.na(newdata))) {
+    if (anyNA(newdata)) {
       stop("I can't forecast when there are missing values near the end of the series.")
     }
     fcast[i] <- object$predict.FUN(object$model, newdata)

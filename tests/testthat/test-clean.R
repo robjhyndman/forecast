@@ -13,14 +13,14 @@ test_that("tests for na.interp", {
 })
 test_that("tests for tsclean", {
   # Test for no NAs
-  expect_false(any(is.na(tsclean(gold))))
+  expect_false(anyNA(tsclean(gold)))
   # Test for removing outliers in seasonal series
   testseries <- ts(rep(1:7, 5), frequency = 7)
   testseries[c(2, 4, 14)] <- 0
   expect_true(sum(abs(tsclean(testseries) - rep(1:7, 5))) < 1e-12)
   # Test for NAs left with replace.missing = FALSE argument
   testseries[c(2, 4, 14)] <- NA
-  expect_true(any(is.na(tsclean(testseries, replace.missing = FALSE))))
+  expect_true(anyNA(tsclean(testseries, replace.missing = FALSE)))
   # Test for outliers in a series
   expect_equal(sum(abs(wineind - tsclean(wineind)) > 1e-6), 1)
   # Test for identical on series without NAs or outliers
