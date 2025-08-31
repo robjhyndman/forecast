@@ -72,7 +72,7 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
 
     # Choosing best model
     best.ic <- Inf
-    for (i in 1:length(all.models)) {
+    for (i in seq_along(all.models)) {
       if (!is.null(all.models[[i]][, 1]$ic) && all.models[[i]][, 1]$ic < best.ic) {
         bestfit <- all.models[[i]][, 1]
         best.ic <- bestfit$ic
@@ -176,7 +176,7 @@ SD.test <- function(wts, s=frequency(wts)) {
   Omfhat <- (crossprod(Fhataux) + Omnw + t(Omnw)) / Ne
   sq <- seq(1, s - 1, 2)
   frecob <- rep(0, s - 1)
-  for (i in 1:length(frec)) {
+  for (i in seq_along(frec)) {
     if (frec[i] == 1 && i == as.integer(s / 2)) {
       frecob[sq[i]] <- 1
     }
@@ -755,7 +755,7 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
   }
   else {
     if (include.drift) {
-      xreg <- `colnames<-`(cbind(drift = 1:length(x), xreg),
+      xreg <- `colnames<-`(cbind(drift = seq_along(x), xreg),
                            make.unique(c("drift", if(is.null(colnames(xreg)) && !is.null(xreg)) rep("", NCOL(xreg)) else colnames(xreg))))
     }
     if (is.null(xreg)) {

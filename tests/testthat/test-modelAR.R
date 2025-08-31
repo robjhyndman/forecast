@@ -66,9 +66,9 @@ test_that("Tests for modelAR", {
   # Test with single-column xreg (which might be a vector)
   expect_silent({
     set.seed(123)
-    woolyrnqnnet <- modelAR(woolyrnq, FUN = avnnet2, predict.FUN = predict.avnnet2, scale.inputs = TRUE, xreg = 1:length(woolyrnq), p = 2, P = 2, size = 4, repeats = 10)
+    woolyrnqnnet <- modelAR(woolyrnq, FUN = avnnet2, predict.FUN = predict.avnnet2, scale.inputs = TRUE, xreg = seq_along(woolyrnq), p = 2, P = 2, size = 4, repeats = 10)
     set.seed(123)
-    woolyrnqnnet2 <- nnetar(woolyrnq, xreg = 1:length(woolyrnq), p = 2, P = 2, size = 4, repeats = 10)
+    woolyrnqnnet2 <- nnetar(woolyrnq, xreg = seq_along(woolyrnq), p = 2, P = 2, size = 4, repeats = 10)
   })
   expect_true(all(dim(woolyrnqnnet$xreg) == c(119, 1)))
   expect_length(forecast(woolyrnqnnet, xreg = 120:130)$mean, 11)
@@ -94,13 +94,13 @@ test_that("Tests for modelAR", {
     fixed = TRUE
   )
   ## Test that P is ignored if m=1
-  expect_warning(wwwnnet <- modelAR(WWWusage, FUN = avnnet2, predict.FUN = predict.avnnet2, scale.inputs = TRUE, xreg = 1:length(WWWusage), p = 2, P = 4, size = 3, repeats = 10))
+  expect_warning(wwwnnet <- modelAR(WWWusage, FUN = avnnet2, predict.FUN = predict.avnnet2, scale.inputs = TRUE, xreg = seq_along(WWWusage), p = 2, P = 4, size = 3, repeats = 10))
   ## Test passing arguments to nnet
   expect_silent({
     set.seed(123)
-    wwwnnet <- modelAR(WWWusage, FUN = avnnet2, predict.FUN = predict.avnnet2, scale.inputs = TRUE, xreg = 1:length(WWWusage), p = 2, P = 0, size = 3, decay = 0.1, repeats = 10)
+    wwwnnet <- modelAR(WWWusage, FUN = avnnet2, predict.FUN = predict.avnnet2, scale.inputs = TRUE, xreg = seq_along(WWWusage), p = 2, P = 0, size = 3, decay = 0.1, repeats = 10)
     set.seed(123)
-    wwwnnet2 <- nnetar(WWWusage, size = 3, p = 2, P = 0, xreg = 1:length(WWWusage), decay = 0.1, repeats = 10)
+    wwwnnet2 <- nnetar(WWWusage, size = 3, p = 2, P = 0, xreg = seq_along(WWWusage), decay = 0.1, repeats = 10)
   })
   expect_identical(
     forecast(wwwnnet, h = 2, xreg = (length(WWWusage) + 1):(length(WWWusage) + 5))$mean,
@@ -117,12 +117,12 @@ test_that("Tests for modelAR", {
     fit1 <- modelAR(
       WWWusage,
       FUN = avnnet2, predict.FUN = predict.avnnet2, scale.inputs = TRUE,
-      xreg = 1:length(WWWusage),
+      xreg = seq_along(WWWusage),
       p = 3, size = 2, lambda = 2, decay = 0.5, maxit = 25, repeats = 7
     )
-    fit2 <- modelAR(WWWusage, xreg = 1:length(WWWusage), model = fit1)
+    fit2 <- modelAR(WWWusage, xreg = seq_along(WWWusage), model = fit1)
     set.seed(123)
-    fit3 <- nnetar(WWWusage, xreg = 1:length(WWWusage), p = 3, size = 2, lambda = 2, decay = 0.5, maxit = 25, repeats = 7)
+    fit3 <- nnetar(WWWusage, xreg = seq_along(WWWusage), p = 3, size = 2, lambda = 2, decay = 0.5, maxit = 25, repeats = 7)
   })
   # Check some model parameters
   expect_identical(fit1$p, fit2$p)

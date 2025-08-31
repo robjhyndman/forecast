@@ -107,7 +107,7 @@ bld.mbb.bootstrap <- function(x, num, block_size=NULL) {
       remainder <- x.stl[, 3]
     } else {
       # Loess
-      trend <- 1:length(x)
+      trend <- seq_along(x)
       suppressWarnings(
         x.loess <- loess(ts(x.bc, frequency = 1) ~ trend, span = 6 / length(x), degree = 1)
       )

@@ -199,7 +199,7 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
     best.model <- list(AIC = Inf)
   }
 
-  for (i in 1:length(seasonal.periods)) {
+  for (i in seq_along(seasonal.periods)) {
     if (seasonal.periods[i] == 2) {
       next
     }

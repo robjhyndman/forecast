@@ -315,7 +315,7 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   out$size <- size
   out$xreg <- xreg
   out$lambda <- lambda
-  out$subset <- (1:length(x))[xsub]
+  out$subset <- seq_along(x)[xsub]
   out$model <- fit
   out$nnetargs <- list(...)
   if (useoldmodel) {

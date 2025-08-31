@@ -10,14 +10,14 @@ test_that("tests on retaining matrix attributes", {
   expect_identical(tsp(data[, 1]), tsp(data[, 2]))
   expect_true(NCOL(data) == 8)
   expect_true(NCOL(data[, 1]) == 2)
-  expect_true("matrix" %in% class(data[, 1]))
-  expect_true(class(data) == "data.frame")
+  expect_true(is.matrix(data[, 1]))
+  expect_true(is.data.frame(data))
 })
 
 test_that("flatten data.frames", {
   mvdata <- datamat(mv_y, mv_x)
   vdata <- datamat(v_y, v_x)
   data <- datamat(mvdata, vdata, flatten = TRUE)
-  expect_true(class(data) == "data.frame")
-  expect_true(!"data.frame" %in% class(data[, 1]))
+  expect_true(is.data.frame(data))
+  expect_false(is.data.frame(data[, 1]))
 })

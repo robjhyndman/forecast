@@ -557,7 +557,7 @@ croston2 <- function(x, h=10, alpha=0.1, nofits=FALSE) {
       return(list(mean = fc, fitted = ts(x * 0, start = tsp.x[1], frequency = freq.x)))
     }
   }
-  tt <- diff(c(0, (1:length(x))[x > 0])) # Times between non-zero observations
+  tt <- diff(c(0, seq_along(x)[x > 0])) # Times between non-zero observations
   if (length(y) == 1 && length(tt) == 1) # Only one non-zero observation
   {
     y.f <- list(mean = ts(rep(y, h), start = start.f, frequency = freq.x))

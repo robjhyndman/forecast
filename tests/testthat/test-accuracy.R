@@ -12,7 +12,7 @@ test_that("tests for dimension (output)", {
   expect_false(
     all(dim(accuracy(fcasts, test, test = 1:2)) == dim(accuracy(fcasts, test)))
   )
-  expect_identical(accuracy(fcasts, test = 1:length(train)), accuracy(fcasts))
+  expect_identical(accuracy(fcasts, test = seq_along(train)), accuracy(fcasts))
 })
 
 test_that("tests for accuracy (output)", {

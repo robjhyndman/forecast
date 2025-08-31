@@ -342,7 +342,7 @@ forecast.lm <- function(object, newdata, h=10, level=c(80, 95), fan=FALSE, lambd
       for (i in reqvars) {
         found <- FALSE
         subvars <- NULL
-        for (j in 1:length(object$coefficients)) {
+        for (j in seq_along(object$coefficients)) {
           subvars[j] <- pmatch(i, names(object$coefficients)[j])
         }
         subvars <- !is.na(subvars)
