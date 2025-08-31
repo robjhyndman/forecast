@@ -67,7 +67,7 @@ checkresiduals <- function(object, lag, test, plot = TRUE, ...) {
     method <- try(as.character(object), silent = TRUE)
     if (inherits(method, "try-error")) {
       method <- "Missing"
-    } else if (length(method) > 1 || base::nchar(method[1]) > 50) {
+    } else if (length(method) > 1 || nchar(method[1]) > 50) {
       method <- "Missing"
     }
   }
