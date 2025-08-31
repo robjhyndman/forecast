@@ -166,7 +166,7 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
   }
 
   # Check for NAs in x
-  if (any(is.na(x))) {
+  if (anyNA(x)) {
     warning("Missing values in x, omitting rows")
   }
 
@@ -210,7 +210,7 @@ nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NU
       stop("Number of rows in xreg does not match series length")
     }
     # Check for NAs in xreg
-    if (any(is.na(xreg))) {
+    if (anyNA(xreg)) {
       warning("Missing values in xreg, omitting rows")
     }
     # Scale xreg
@@ -524,7 +524,7 @@ forecast.nnetar <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI
   for (i in 1:h)
   {
     newdata <- c(flag[lags], xxreg[i, ])
-    if (any(is.na(newdata))) {
+    if (anyNA(newdata)) {
       fcast[i] <- NA_real_
     } else {
       fcast[i] <- mean(sapply(object$model, predict, newdata = newdata))

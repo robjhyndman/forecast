@@ -732,7 +732,7 @@ simulate.nnetar <- function(object, nsim = length(object$x), seed = NULL, xreg =
   path <- numeric(nsim)
   for (i in 1:nsim) {
     newdata <- c(flag[lags], xreg[i, ])
-    if (any(is.na(newdata))) {
+    if (anyNA(newdata)) {
       stop("I can't simulate when there are missing values near the end of the series.")
     }
     path[i] <- mean(sapply(object$model, predict, newdata = newdata)) + e[i]
@@ -843,7 +843,7 @@ simulate.modelAR <- function(object, nsim = length(object$x), seed = NULL, xreg 
   path <- numeric(nsim)
   for (i in 1:nsim) {
     newdata <- c(flag[lags], xreg[i, ])
-    if (any(is.na(newdata))) {
+    if (anyNA(newdata)) {
       stop("I can't simulate when there are missing values near the end of the series.")
     }
     path[i] <- object$predict.FUN(object$model, newdata) + e[i]
