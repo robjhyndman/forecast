@@ -85,12 +85,12 @@ required</p></dd>
 
 
 <dt id="arg-fan">fan<a class="anchor" aria-label="anchor" href="#arg-fan"></a></dt>
-<dd><p>If TRUE, <code>level</code> is set to <code>seq(51,99,by=3)</code>. This is
-suitable for fan plots.</p></dd>
+<dd><p>If <code>TRUE</code>, <code>level</code> is set to <code>seq(51, 99, by = 3)</code>.
+This is suitable for fan plots.</p></dd>
 
 
 <dt id="arg-robust">robust<a class="anchor" aria-label="anchor" href="#arg-robust"></a></dt>
-<dd><p>If TRUE, the function is robust to missing values and outliers
+<dd><p>If <code>TRUE</code>, the function is robust to missing values and outliers
 in <code>object</code>. This argument is only valid when <code>object</code> is of class
 <code>ts</code>.</p></dd>
 
@@ -104,18 +104,19 @@ data transformed before model is estimated.</p></dd>
 
 <dt id="arg-biasadj">biasadj<a class="anchor" aria-label="anchor" href="#arg-biasadj"></a></dt>
 <dd><p>Use adjusted back-transformed mean for Box-Cox
-transformations. If transformed data is used to produce forecasts and fitted values,
-a regular back transformation will result in median forecasts. If biasadj is TRUE,
-an adjustment will be made to produce mean forecasts and fitted values.</p></dd>
+transformations. If transformed data is used to produce forecasts and fitted
+values, a regular back transformation will result in median forecasts. If
+biasadj is <code>TRUE</code>, an adjustment will be made to produce mean forecasts
+and fitted values.</p></dd>
 
 
 <dt id="arg-find-frequency">find.frequency<a class="anchor" aria-label="anchor" href="#arg-find-frequency"></a></dt>
-<dd><p>If TRUE, the function determines the appropriate
+<dd><p>If <code>TRUE</code>, the function determines the appropriate
 period, if the data is of unknown period.</p></dd>
 
 
 <dt id="arg-allow-multiplicative-trend">allow.multiplicative.trend<a class="anchor" aria-label="anchor" href="#arg-allow-multiplicative-trend"></a></dt>
-<dd><p>If TRUE, then ETS models with
+<dd><p>If <code>TRUE</code>, then ETS models with
 multiplicative trends are allowed. Otherwise, only additive or no trend ETS
 models are permitted.</p></dd>
 

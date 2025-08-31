@@ -88,31 +88,31 @@ also the <code>use.initial.values</code> argument.</p></dd>
 
 
 <dt id="arg-damped">damped<a class="anchor" aria-label="anchor" href="#arg-damped"></a></dt>
-<dd><p>If TRUE, use a damped trend (either additive or
-multiplicative). If NULL, both damped and non-damped trends will be tried
-and the best model (according to the information criterion <code>ic</code>)
+<dd><p>If <code>TRUE</code>, use a damped trend (either additive or
+multiplicative). If <code>NULL</code>, both damped and non-damped trends will be
+tried and the best model (according to the information criterion <code>ic</code>)
 returned.</p></dd>
 
 
 <dt id="arg-alpha">alpha<a class="anchor" aria-label="anchor" href="#arg-alpha"></a></dt>
-<dd><p>Value of alpha. If NULL, it is estimated.</p></dd>
+<dd><p>Value of alpha. If <code>NULL</code>, it is estimated.</p></dd>
 
 
 <dt id="arg-beta">beta<a class="anchor" aria-label="anchor" href="#arg-beta"></a></dt>
-<dd><p>Value of beta. If NULL, it is estimated.</p></dd>
+<dd><p>Value of beta. If <code>NULL</code>, it is estimated.</p></dd>
 
 
 <dt id="arg-gamma">gamma<a class="anchor" aria-label="anchor" href="#arg-gamma"></a></dt>
-<dd><p>Value of gamma. If NULL, it is estimated.</p></dd>
+<dd><p>Value of gamma. If <code>NULL</code>, it is estimated.</p></dd>
 
 
 <dt id="arg-phi">phi<a class="anchor" aria-label="anchor" href="#arg-phi"></a></dt>
-<dd><p>Value of phi. If NULL, it is estimated.</p></dd>
+<dd><p>Value of phi. If <code>NULL</code>, it is estimated.</p></dd>
 
 
 <dt id="arg-additive-only">additive.only<a class="anchor" aria-label="anchor" href="#arg-additive-only"></a></dt>
-<dd><p>If TRUE, will only consider additive models. Default is
-FALSE.</p></dd>
+<dd><p>If <code>TRUE</code>, will only consider additive models. Default is
+<code>FALSE</code>.</p></dd>
 
 
 <dt id="arg-lambda">lambda<a class="anchor" aria-label="anchor" href="#arg-lambda"></a></dt>
@@ -125,9 +125,10 @@ data transformed before model is estimated. When <code>lambda</code> is specifie
 
 <dt id="arg-biasadj">biasadj<a class="anchor" aria-label="anchor" href="#arg-biasadj"></a></dt>
 <dd><p>Use adjusted back-transformed mean for Box-Cox
-transformations. If transformed data is used to produce forecasts and fitted values,
-a regular back transformation will result in median forecasts. If biasadj is TRUE,
-an adjustment will be made to produce mean forecasts and fitted values.</p></dd>
+transformations. If transformed data is used to produce forecasts and fitted
+values, a regular back transformation will result in median forecasts. If
+biasadj is <code>TRUE</code>, an adjustment will be made to produce mean forecasts
+and fitted values.</p></dd>
 
 
 <dt id="arg-lower">lower<a class="anchor" aria-label="anchor" href="#arg-lower"></a></dt>

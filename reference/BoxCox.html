@@ -62,15 +62,16 @@ the transformation parameter lambda is chosen using BoxCox.lambda (with a lower 
 
 <dt id="arg-biasadj">biasadj<a class="anchor" aria-label="anchor" href="#arg-biasadj"></a></dt>
 <dd><p>Use adjusted back-transformed mean for Box-Cox
-transformations. If transformed data is used to produce forecasts and fitted values,
-a regular back transformation will result in median forecasts. If biasadj is TRUE,
-an adjustment will be made to produce mean forecasts and fitted values.</p></dd>
+transformations. If transformed data is used to produce forecasts and fitted
+values, a regular back transformation will result in median forecasts. If
+biasadj is <code>TRUE</code>, an adjustment will be made to produce mean forecasts
+and fitted values.</p></dd>
 
 
 <dt id="arg-fvar">fvar<a class="anchor" aria-label="anchor" href="#arg-fvar"></a></dt>
-<dd><p>Optional parameter required if biasadj=TRUE. Can either be the
-forecast variance, or a list containing the interval <code>level</code>, and the
-corresponding <code>upper</code> and <code>lower</code> intervals.</p></dd>
+<dd><p>Optional parameter required if <code>biasadj = TRUE</code>. Can either
+be the forecast variance, or a list containing the interval <code>level</code>,
+and the corresponding <code>upper</code> and <code>lower</code> intervals.</p></dd>
 
 </dl></div>
     <div class="section level2">
