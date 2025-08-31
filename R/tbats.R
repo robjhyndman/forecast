@@ -716,7 +716,7 @@ tbats.components <- function(x) {
     for (i in 1:nseas)
       out <- cbind(out, season = c(w[, j[i]:(j[i + 1] - 1), drop = FALSE] %*% seas.states[j[i]:(j[i + 1] - 1), ]))
     if (nseas > 1) {
-      colnames(out)[nonseas + 1:nseas] <- paste("season", 1:nseas, sep = "")
+      colnames(out)[nonseas + 1:nseas] <- paste0("season", 1:nseas)
     }
   }
 

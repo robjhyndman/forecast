@@ -7,7 +7,7 @@ WhichModels <- function(max.p, max.q, max.P, max.Q, maxK) {
       for (x3 in 0:max.P) for (x4 in 0:max.Q) {
           for (K in 0:maxK)
           {
-            x[i] <- paste(x1, "f", x2, "f", x3, "f", x4, "f", K, sep = "")
+            x[i] <- paste0(x1, "f", x2, "f", x3, "f", x4, "f", K)
             i <- i + 1
           }
         }

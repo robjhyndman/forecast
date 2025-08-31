@@ -153,7 +153,7 @@ seasonaldummy <- function(x, h=NULL) {
     } else if (fr.x == 4) {
       c("Q1", "Q2", "Q3")
     } else {
-      paste("S", 1:(fr.x - 1), sep = "")
+      paste0("S", 1:(fr.x - 1))
     }
 
     return(dummy.mat)

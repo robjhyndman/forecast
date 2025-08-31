@@ -110,7 +110,7 @@ tsCV <- function(y, forecastfunction, h=1, window=NULL, xreg=NULL, initial=0, ..
   if (h == 1) {
     return(e[, 1L])
   } else {
-    colnames(e) <- paste("h=", 1:h, sep = "")
+    colnames(e) <- paste0("h=", 1:h)
     return(e)
   }
 }

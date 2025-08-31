@@ -168,7 +168,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
     if (is.na(phi)) {
       phi <- NULL
     }
-    modelcomponents <- paste(model$components[1], model$components[2], model$components[3], sep = "")
+    modelcomponents <- paste0(model$components[1], model$components[2], model$components[3])
     damped <- (model$components[4] == "TRUE")
     if (use.initial.values) {
       errortype <- substr(modelcomponents, 1, 1)
@@ -195,7 +195,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
         colnames(model$states)[2] <- "b"
       }
       if (seasontype != "N") {
-        colnames(model$states)[(2 + (trendtype != "N")):ncol(model$states)] <- paste("s", 1:m, sep = "")
+        colnames(model$states)[(2 + (trendtype != "N")):ncol(model$states)] <- paste0("s", 1:m)
       }
       if (errortype == "A") {
         model$fitted <- ts(y - e$e, frequency = tsp.y[3], start = tsp.y[1])
@@ -445,7 +445,7 @@ ets <- function(y, model="ZZZ", damped=NULL,
   }
 
   model$m <- m
-  model$method <- paste("ETS(", best.e, ",", best.t, ifelse(best.d, "d", ""), ",", best.s, ")", sep = "")
+  model$method <- paste0("ETS(", best.e, ",", best.t, ifelse(best.d, "d", ""), ",", best.s, ")")
   model$series <- seriesname
   model$components <- c(best.e, best.t, best.s, best.d)
   model$call <- match.call()
@@ -466,13 +466,12 @@ ets <- function(y, model="ZZZ", damped=NULL,
 
 #' @export
 as.character.ets <- function(x, ...) {
-  paste(
+  paste0(
     "ETS(",
     x$components[1], ",",
     x$components[2],
     ifelse(x$components[4], "d", ""), ",",
-    x$components[3], ")",
-    sep = ""
+    x$components[3], ")"
   )
 }
 
@@ -720,7 +719,7 @@ etsmodel <- function(y, errortype, trendtype, seasontype, damped,
     colnames(states)[2] <- "b"
   }
   if (seasontype != "N") {
-    colnames(states)[(2 + (trendtype != "N")):ncol(states)] <- paste("s", 1:m, sep = "")
+    colnames(states)[(2 + (trendtype != "N")):ncol(states)] <- paste0("s", 1:m)
   }
 
   tmp <- c("alpha", rep("beta", trendtype != "N"), rep("gamma", seasontype != "N"), rep("phi", damped))
@@ -952,7 +951,7 @@ initstate <- function(y, trendtype, seasontype) {
     }
 
     init.seas <- rev(y.d$seasonal[2:m]) # initial seasonal component
-    names(init.seas) <- paste("s", 0:(m - 2), sep = "")
+    names(init.seas) <- paste0("s", 0:(m - 2))
     # Seasonally adjusted data
     if (seasontype == "A") {
       y.sa <- y - y.d$seasonal

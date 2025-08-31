@@ -123,7 +123,7 @@ forecast.ets <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10),
   if (PI || biasadj) {
     if (!is.null(f$var)) {
       out$lower <- out$upper <- ts(matrix(NA, ncol = length(level), nrow = h))
-      colnames(out$lower) <- colnames(out$upper) <- paste(level, "%", sep = "")
+      colnames(out$lower) <- colnames(out$upper) <- paste0(level, "%")
       for (i in 1:length(level))
       {
         marg.error <- sqrt(f$var) * abs(qnorm((100 - level[i]) / 200))

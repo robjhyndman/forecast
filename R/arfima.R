@@ -294,7 +294,7 @@ forecast.fracdiff <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=o
     lower[, i] <- fcast.x - qq * fse
     upper[, i] <- fcast.x + qq * fse
   }
-  colnames(lower) <- colnames(upper) <- paste(level, "%", sep = "")
+  colnames(lower) <- colnames(upper) <- paste0(level, "%")
 
   res <- undo.na.ends(x, residuals(fit))
   fits <- x - res
@@ -305,7 +305,7 @@ forecast.fracdiff <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=o
   mean.fcast <- ts(fcast.x + meanx, frequency = data.tsp[3], start = data.tsp[2] + 1 / data.tsp[3])
   lower <- ts(lower + meanx, frequency = data.tsp[3], start = data.tsp[2] + 1 / data.tsp[3])
   upper <- ts(upper + meanx, frequency = data.tsp[3], start = data.tsp[2] + 1 / data.tsp[3])
-  method <- paste("ARFIMA(", p, ",", round(object$d, 2), ",", q, ")", sep = "")
+  method <- paste0("ARFIMA(", p, ",", round(object$d, 2), ",", q, ")")
 
   if (!is.null(lambda)) {
     x <- InvBoxCox(x, lambda)

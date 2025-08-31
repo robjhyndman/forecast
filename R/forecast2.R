@@ -97,7 +97,7 @@ meanf <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALS
       upper[, i] <- f + w
     }
   }
-  colnames(lower) <- colnames(upper) <- paste(level, "%", sep = "")
+  colnames(lower) <- colnames(upper) <- paste0(level, "%")
   if (is.ts(x)) {
     fits <- copy_msts(x, fits)
     res <- copy_msts(x, res)
@@ -324,7 +324,7 @@ forecast.StructTS <- function(object, h=ifelse(object$coef["epsilon"] > 1e-10, 2
     lower[, i] <- pred$pred - qq * pred$se
     upper[, i] <- pred$pred + qq * pred$se
   }
-  colnames(lower) <- colnames(upper) <- paste(level, "%", sep = "")
+  colnames(lower) <- colnames(upper) <- paste0(level, "%")
   if (is.element("seas", names(object$coef))) {
     method <- "Basic structural model"
   } else if (is.element("slope", names(object$coef))) {
@@ -440,7 +440,7 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x) > 1, 2 * f
     lower[, i] <- pmean - qq * se
     upper[, i] <- pmean + qq * se
   }
-  colnames(lower) <- colnames(upper) <- paste(level, "%", sep = "")
+  colnames(lower) <- colnames(upper) <- paste0(level, "%")
 
   if (!is.null(lambda)) {
     fitted <- InvBoxCox(object$fitted[, 1], lambda)
