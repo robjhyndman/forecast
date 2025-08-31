@@ -69,61 +69,64 @@
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>You can install the <strong>stable</strong> version from <a href="https://cran.r-project.org/package=forecast" class="external-link">CRAN</a>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>install.packages<span class="op">(</span><span class="st">"forecast"</span><span class="op">,</span> dependencies <span class="op">=</span> TRUE<span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"forecast"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>You can install the <strong>development</strong> version from <a href="https://github.com/robjhyndman/forecast" class="external-link">Github</a></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># install.packages("remotes")</span></span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">remotes::</span>install_github<span class="op">(</span><span class="st">"robjhyndman/forecast"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"robjhyndman/forecast"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>library<span class="op">(</span>forecast<span class="op">)</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>library<span class="op">(</span>ggplot2<span class="op">)</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co"># ETS forecasts</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>USAccDeaths <span class="op">|&gt;</span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  ets<span class="op">()</span> <span class="op">|&gt;</span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  forecast<span class="op">()</span> <span class="op">|&gt;</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  autoplot<span class="op">()</span></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co"># Automatic ARIMA forecasts</span></span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>WWWusage <span class="op">|&gt;</span></span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>  auto.arima<span class="op">()</span> <span class="op">|&gt;</span></span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>  forecast<span class="op">(</span>h<span class="op">=</span><span class="dv">20</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>  autoplot<span class="op">()</span></span>
-<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co"># ARFIMA forecasts</span></span>
-<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a>library<span class="op">(</span>fracdiff<span class="op">)</span></span>
-<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a>x <span class="op">&lt;-</span> fracdiff.sim<span class="op">(</span> <span class="dv">100</span><span class="op">,</span> ma<span class="op">=-</span>.4<span class="op">,</span> d<span class="op">=</span>.3<span class="op">)</span>$series</span>
-<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a>arfima<span class="op">(</span>x<span class="op">)</span> <span class="op">|&gt;</span></span>
-<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a>  forecast<span class="op">(</span>h<span class="op">=</span><span class="dv">30</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a>  autoplot<span class="op">()</span></span>
-<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a></span>
-<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="co"># Forecasting with STL</span></span>
-<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a>USAccDeaths <span class="op">|&gt;</span></span>
-<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a>  stlm<span class="op">(</span>modelfunction<span class="op">=</span>ar<span class="op">)</span> <span class="op">|&gt;</span></span>
-<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a>  forecast<span class="op">(</span>h<span class="op">=</span><span class="dv">36</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a>  autoplot<span class="op">()</span></span>
-<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a></span>
-<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a>AirPassengers <span class="op">|&gt;</span></span>
-<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a>  stlf<span class="op">(</span>lambda<span class="op">=</span><span class="dv">0</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a>  autoplot<span class="op">()</span></span>
-<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a></span>
-<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a>USAccDeaths <span class="op">|&gt;</span></span>
-<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a>  stl<span class="op">(</span>s.window<span class="op">=</span><span class="ch">'p</span>eriodic<span class="ch">')</span> <span class="op">|&gt;</span></span>
-<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a>  forecast<span class="op">()</span> <span class="op">|&gt;</span></span>
-<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a>  autoplot<span class="op">()</span></span>
-<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a></span>
-<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a><span class="co"># TBATS forecasts</span></span>
-<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a>USAccDeaths <span class="op">|&gt;</span></span>
-<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a>  tbats<span class="op">()</span> <span class="op">|&gt;</span></span>
-<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a>  forecast<span class="op">()</span> <span class="op">|&gt;</span></span>
-<span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a>  autoplot<span class="op">()</span></span>
-<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a></span>
-<span id="cb3-44"><a href="#cb3-44" tabindex="-1"></a>taylor <span class="op">|&gt;</span></span>
-<span id="cb3-45"><a href="#cb3-45" tabindex="-1"></a>  tbats<span class="op">()</span> <span class="op">|&gt;</span></span>
-<span id="cb3-46"><a href="#cb3-46" tabindex="-1"></a>  forecast<span class="op">()</span> <span class="op">|&gt;</span></span>
-<span id="cb3-47"><a href="#cb3-47" tabindex="-1"></a>  autoplot<span class="op">()</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pkg.robjhyndman.com/forecast/">forecast</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ETS forecasts</span></span>
+<span><span class="va">USAccDeaths</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/ets.html">ets</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Automatic ARIMA forecasts</span></span>
+<span><span class="va">WWWusage</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/auto.arima.html">auto.arima</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">20</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ARFIMA forecasts</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mmaechler/fracdiff" class="external-link">fracdiff</a></span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/fracdiff/man/fracdiff.sim.html" class="external-link">fracdiff.sim</a></span><span class="op">(</span><span class="fl">100</span>, ma<span class="op">=</span><span class="op">-</span><span class="fl">.4</span>, d<span class="op">=</span><span class="fl">.3</span><span class="op">)</span><span class="op">$</span><span class="va">series</span></span>
+<span><span class="fu"><a href="reference/arfima.html">arfima</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">30</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Forecasting with STL</span></span>
+<span><span class="va">USAccDeaths</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/forecast.stl.html">stlm</a></span><span class="op">(</span>modelfunction<span class="op">=</span><span class="va">ar</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">36</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">AirPassengers</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/forecast.stl.html">stlf</a></span><span class="op">(</span>lambda<span class="op">=</span><span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">USAccDeaths</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/stl.html" class="external-link">stl</a></span><span class="op">(</span>s.window<span class="op">=</span><span class="st">"periodic"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># TBATS forecasts</span></span>
+<span><span class="va">USAccDeaths</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/tbats.html">tbats</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">taylor</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/tbats.html">tbats</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="for-more-information">For more information<a class="anchor" aria-label="anchor" href="#for-more-information"></a>
