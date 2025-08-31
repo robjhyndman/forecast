@@ -24,8 +24,8 @@
 #' @param y a numeric vector or time series of class \code{ts}
 #' @param h Number of periods for forecasting
 #' @param level Confidence levels for prediction intervals.
-#' @param fan If TRUE, level is set to seq(51,99,by=3). This is suitable for
-#' fan plots.
+#' @param fan If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
+#' is suitable for fan plots.
 #' @param x Deprecated. Included for backwards compatibility.
 #' @return An object of class "\code{forecast}".
 #'

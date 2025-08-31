@@ -224,8 +224,8 @@ SD.test <- function(wts, s=frequency(wts)) {
 #' is ignored and the number of forecast periods is set to the number of rows
 #' of \code{xreg}.
 #' @param level Confidence level for prediction intervals.
-#' @param fan If \code{TRUE}, level is set to \code{seq(51,99,by=3)}. This is
-#' suitable for fan plots.
+#' @param fan If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
+#' is suitable for fan plots.
 #' @param xreg Future values of an regression variables (for class \code{Arima}
 #' objects only). A numerical vector or matrix of external regressors; it should not be a data frame.
 #' @param bootstrap If \code{TRUE}, then prediction intervals computed using

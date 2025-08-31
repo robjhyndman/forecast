@@ -25,8 +25,8 @@
 \item{object}{Object of class \dQuote{bats/tbats}.}
 
 \item{range.bars}{Logical indicating if each plot should have a bar at its
-right side representing relative size. If NULL, automatic selection takes
-place.}
+right side representing relative size. If \code{NULL}, automatic selection
+takes place.}
 }
 \value{
 None. Function produces a plot

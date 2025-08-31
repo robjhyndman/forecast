@@ -121,8 +121,8 @@ na.interp <- function(x, lambda=NULL,
 #' linear interpolation is used on the (possibly seasonally adjusted) series
 #'
 #' @param x time series
-#' @param replace.missing If TRUE, it not only replaces outliers, but also
-#' interpolates missing values
+#' @param replace.missing If \code{TRUE}, it not only replaces outliers, but
+#' also interpolates missing values
 #' @param iterate the number of iterations required
 #' @inheritParams forecast.ts
 #' @return Time series

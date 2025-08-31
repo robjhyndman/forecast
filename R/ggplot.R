@@ -1801,10 +1801,10 @@ autolayer.mforecast <- function(object, series = NULL, PI = TRUE, ...) {
 #' @param object Object of class \dQuote{\code{ts}} or \dQuote{\code{mts}}.
 #' @param series Identifies the time series with a colour, which integrates well
 #' with the functionality of \link{geom_forecast}.
-#' @param facets If TRUE, multiple time series will be faceted (and unless
-#' specified, colour is set to FALSE). If FALSE, each series will be assigned a
-#' colour.
-#' @param colour If TRUE, the time series will be assigned a colour aesthetic
+#' @param facets If \code{TRUE}, multiple time series will be faceted (and
+#' unless specified, colour is set to \code{FALSE}). If \code{FALSE}, each
+#' series will be assigned a colour.
+#' @param colour If \code{TRUE}, the time series will be assigned a colour aesthetic
 #' @param model Object of class \dQuote{\code{ts}} to be converted to
 #' \dQuote{\code{data.frame}}.
 #' @param data Not used (required for \code{\link[ggplot2]{fortify}} method)

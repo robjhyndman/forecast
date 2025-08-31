@@ -34,7 +34,7 @@
 #' @param bc.lower The lower limit (inclusive) for the Box-Cox transformation.
 #' @param bc.upper The upper limit (inclusive) for the Box-Cox transformation.
 #' @param biasadj Use adjusted back-transformed mean for Box-Cox
-#' transformations. If TRUE, point forecasts and fitted values are mean
+#' transformations. If \code{TRUE}, point forecasts and fitted values are mean
 #' forecast. Otherwise, these points can be considered the median of the
 #' forecast densities.
 #' @param model Output from a previous call to \code{tbats}. If model is

@@ -19,8 +19,8 @@ thetaf(
 
 \item{level}{Confidence levels for prediction intervals.}
 
-\item{fan}{If TRUE, level is set to seq(51,99,by=3). This is suitable for
-fan plots.}
+\item{fan}{If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
+is suitable for fan plots.}
 
 \item{x}{Deprecated. Included for backwards compatibility.}
 }

@@ -223,10 +223,10 @@ rwf <- function(y, h=10, drift=FALSE, level=c(80, 95), fan=FALSE, lambda=NULL, b
 #'
 #' @param y a numeric vector or time series of class \code{ts}
 #' @param h Number of periods for forecasting
-#' @param drift Logical flag. If TRUE, fits a random walk with drift model.
+#' @param drift Logical flag. If \code{TRUE}, fits a random walk with drift model.
 #' @param level Confidence levels for prediction intervals.
-#' @param fan If TRUE, level is set to seq(51,99,by=3). This is suitable for
-#' fan plots.
+#' @param fan If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
+#' is suitable for fan plots.
 #' @param x Deprecated. Included for backwards compatibility.
 #' @inheritParams forecast.ts
 #'

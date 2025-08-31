@@ -57,7 +57,7 @@ detected and all available cores are used.}
 \item{bc.upper}{The upper limit (inclusive) for the Box-Cox transformation.}
 
 \item{biasadj}{Use adjusted back-transformed mean for Box-Cox
-transformations. If TRUE, point forecasts and fitted values are mean
+transformations. If \code{TRUE}, point forecasts and fitted values are mean
 forecast. Otherwise, these points can be considered the median of the
 forecast densities.}
 

@@ -16,13 +16,14 @@ InvBoxCox(x, lambda, biasadj = FALSE, fvar = NULL)
 the transformation parameter lambda is chosen using BoxCox.lambda (with a lower bound of -0.9)}
 
 \item{biasadj}{Use adjusted back-transformed mean for Box-Cox
-transformations. If transformed data is used to produce forecasts and fitted values,
-a regular back transformation will result in median forecasts. If biasadj is TRUE,
-an adjustment will be made to produce mean forecasts and fitted values.}
+transformations. If transformed data is used to produce forecasts and fitted
+values, a regular back transformation will result in median forecasts. If
+biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
+and fitted values.}
 
-\item{fvar}{Optional parameter required if biasadj=TRUE. Can either be the
-forecast variance, or a list containing the interval \code{level}, and the
-corresponding \code{upper} and \code{lower} intervals.}
+\item{fvar}{Optional parameter required if \code{biasadj = TRUE}. Can either
+be the forecast variance, or a list containing the interval \code{level},
+and the corresponding \code{upper} and \code{lower} intervals.}
 }
 \value{
 a numeric vector of the same length as x.

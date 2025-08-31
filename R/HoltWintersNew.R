@@ -396,19 +396,19 @@ zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, seasonal="additive"
 #'
 #' @param y a numeric vector or time series of class \code{ts}
 #' @param h Number of periods for forecasting.
-#' @param damped If TRUE, use a damped trend.
-#' @param seasonal Type of seasonality in \code{hw} model. "additive" or
-#' "multiplicative"
+#' @param damped If \code{TRUE}, use a damped trend.
+#' @param seasonal Type of seasonality in \code{hw} model. \code{"additive"} or
+#' \code{"multiplicative"}
 #' @param level Confidence level for prediction intervals.
-#' @param fan If TRUE, level is set to seq(51,99,by=3). This is suitable for
-#' fan plots.
+#' @param fan If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
+#' is suitable for fan plots.
 #' @param initial Method used for selecting initial state values. If
 #' \code{optimal}, the initial values are optimized along with the smoothing
 #' parameters using \code{\link{ets}}. If \code{simple}, the initial values are
 #' set to values obtained using simple calculations on the first few
 #' observations. See Hyndman & Athanasopoulos (2014) for details.
-#' @param exponential If TRUE, an exponential trend is fitted. Otherwise, the
-#' trend is (locally) linear.
+#' @param exponential If \code{TRUE}, an exponential trend is fitted.
+#' Otherwise, the trend is (locally) linear.
 #' @param alpha Value of smoothing parameter for the level. If \code{NULL}, it
 #' will be estimated.
 #' @param beta Value of smoothing parameter for the trend. If \code{NULL}, it

@@ -18,11 +18,11 @@ largest seasonal period (for seasonal data) or ten (for non-seasonal data).}
 
 \item{level}{Confidence level for prediction intervals.}
 
-\item{fan}{If TRUE, level is set to \code{seq(51,99,by=3)}. This is suitable
-for fan plots.}
+\item{fan}{If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
+is suitable for fan plots.}
 
 \item{biasadj}{Use adjusted back-transformed mean for Box-Cox
-transformations. If TRUE, point forecasts and fitted values are mean
+transformations. If \code{TRUE}, point forecasts and fitted values are mean
 forecast. Otherwise, these points can be considered the median of the
 forecast densities.}
 

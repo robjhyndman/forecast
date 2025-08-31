@@ -9,8 +9,8 @@ tsclean(x, replace.missing = TRUE, iterate = 2, lambda = NULL)
 \arguments{
 \item{x}{time series}
 
-\item{replace.missing}{If TRUE, it not only replaces outliers, but also
-interpolates missing values}
+\item{replace.missing}{If \code{TRUE}, it not only replaces outliers, but
+also interpolates missing values}
 
 \item{iterate}{the number of iterations required}
 

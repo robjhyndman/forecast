@@ -56,7 +56,7 @@ parameters.}
 in the fit. Can be an integer index vector or a logical vector the same
 length as \code{y}. All observations are used by default.}
 
-\item{scale.inputs}{If TRUE, inputs are scaled by subtracting the column
+\item{scale.inputs}{If \code{TRUE}, inputs are scaled by subtracting the column
 means and dividing by their respective standard deviations. If \code{lambda}
 is not \code{NULL}, scaling is applied after Box-Cox transformation.}
 

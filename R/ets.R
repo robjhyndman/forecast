@@ -25,16 +25,16 @@
 #' the output from a previous call to \code{ets}. In this case, the same model
 #' is fitted to \code{y} without re-estimating any smoothing parameters. See
 #' also the \code{use.initial.values} argument.
-#' @param damped If TRUE, use a damped trend (either additive or
-#' multiplicative). If NULL, both damped and non-damped trends will be tried
-#' and the best model (according to the information criterion \code{ic})
+#' @param damped If \code{TRUE}, use a damped trend (either additive or
+#' multiplicative). If \code{NULL}, both damped and non-damped trends will be
+#' tried and the best model (according to the information criterion \code{ic})
 #' returned.
-#' @param alpha Value of alpha. If NULL, it is estimated.
-#' @param beta Value of beta. If NULL, it is estimated.
-#' @param gamma Value of gamma. If NULL, it is estimated.
-#' @param phi Value of phi. If NULL, it is estimated.
-#' @param additive.only If TRUE, will only consider additive models. Default is
-#' FALSE.
+#' @param alpha Value of alpha. If \code{NULL}, it is estimated.
+#' @param beta Value of beta. If \code{NULL}, it is estimated.
+#' @param gamma Value of gamma. If \code{NULL}, it is estimated.
+#' @param phi Value of phi. If \code{NULL}, it is estimated.
+#' @param additive.only If \code{TRUE}, will only consider additive models. Default is
+#' \code{FALSE}.
 #' @param lambda Box-Cox transformation parameter. If \code{lambda="auto"},
 #' then a transformation is automatically selected using \code{BoxCox.lambda}.
 #' The transformation is ignored if NULL. Otherwise,
@@ -1269,8 +1269,8 @@ admissible <- function(alpha, beta, gamma, phi, m) {
 #' @param object Object of class \dQuote{ets}. Used for ggplot graphics (S3
 #' method consistency).
 #' @param range.bars Logical indicating if each plot should have a bar at its
-#' right side representing relative size. If NULL, automatic selection takes
-#' place.
+#' right side representing relative size. If \code{NULL}, automatic selection
+#' takes place.
 #' @param ... Other plotting parameters to affect the plot.
 #' @return None. Function produces a plot
 #' @author Rob J Hyndman & Mitchell O'Hara-Wild

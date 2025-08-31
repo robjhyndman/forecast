@@ -60,9 +60,10 @@ The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.}
 
 \item{biasadj}{Use adjusted back-transformed mean for Box-Cox
-transformations. If transformed data is used to produce forecasts and fitted values,
-a regular back transformation will result in median forecasts. If biasadj is TRUE,
-an adjustment will be made to produce mean forecasts and fitted values.}
+transformations. If transformed data is used to produce forecasts and fitted
+values, a regular back transformation will result in median forecasts. If
+biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
+and fitted values.}
 
 \item{method}{Fitting method: maximum likelihood or minimize conditional
 sum-of-squares. The default (unless there are missing values) is to use

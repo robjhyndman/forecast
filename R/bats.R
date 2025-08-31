@@ -34,7 +34,7 @@
 #' @param bc.lower The lower limit (inclusive) for the Box-Cox transformation.
 #' @param bc.upper The upper limit (inclusive) for the Box-Cox transformation.
 #' @param biasadj Use adjusted back-transformed mean for Box-Cox
-#' transformations. If TRUE, point forecasts and fitted values are mean
+#' transformations. If \code{TRUE}, point forecasts and fitted values are mean
 #' forecast. Otherwise, these points can be considered the median of the
 #' forecast densities.
 #' @param model Output from a previous call to \code{bats}. If model is passed,
@@ -405,8 +405,8 @@ print.bats <- function(x, ...) {
 #' @param object Object of class \dQuote{bats/tbats}.
 #' @param main Main title for plot.
 #' @param range.bars Logical indicating if each plot should have a bar at its
-#' right side representing relative size. If NULL, automatic selection takes
-#' place.
+#' right side representing relative size. If \code{NULL}, automatic selection
+#' takes place.
 #' @param ... Other plotting parameters passed to \code{\link[graphics]{par}}.
 #' @return None. Function produces a plot
 #' @author Rob J Hyndman

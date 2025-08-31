@@ -50,21 +50,21 @@ the output from a previous call to \code{ets}. In this case, the same model
 is fitted to \code{y} without re-estimating any smoothing parameters. See
 also the \code{use.initial.values} argument.}
 
-\item{damped}{If TRUE, use a damped trend (either additive or
-multiplicative). If NULL, both damped and non-damped trends will be tried
-and the best model (according to the information criterion \code{ic})
+\item{damped}{If \code{TRUE}, use a damped trend (either additive or
+multiplicative). If \code{NULL}, both damped and non-damped trends will be
+tried and the best model (according to the information criterion \code{ic})
 returned.}
 
-\item{alpha}{Value of alpha. If NULL, it is estimated.}
+\item{alpha}{Value of alpha. If \code{NULL}, it is estimated.}
 
-\item{beta}{Value of beta. If NULL, it is estimated.}
+\item{beta}{Value of beta. If \code{NULL}, it is estimated.}
 
-\item{gamma}{Value of gamma. If NULL, it is estimated.}
+\item{gamma}{Value of gamma. If \code{NULL}, it is estimated.}
 
-\item{phi}{Value of phi. If NULL, it is estimated.}
+\item{phi}{Value of phi. If \code{NULL}, it is estimated.}
 
-\item{additive.only}{If TRUE, will only consider additive models. Default is
-FALSE.}
+\item{additive.only}{If \code{TRUE}, will only consider additive models. Default is
+\code{FALSE}.}
 
 \item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
@@ -73,9 +73,10 @@ data transformed before model is estimated. When \code{lambda} is specified,
 \code{additive.only} is set to \code{TRUE}.}
 
 \item{biasadj}{Use adjusted back-transformed mean for Box-Cox
-transformations. If transformed data is used to produce forecasts and fitted values,
-a regular back transformation will result in median forecasts. If biasadj is TRUE,
-an adjustment will be made to produce mean forecasts and fitted values.}
+transformations. If transformed data is used to produce forecasts and fitted
+values, a regular back transformation will result in median forecasts. If
+biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
+and fitted values.}
 
 \item{lower}{Lower bounds for the parameters (alpha, beta, gamma, phi). Ignored if \code{bounds=="admissible"}.}
 

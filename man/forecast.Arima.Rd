@@ -55,8 +55,8 @@ of \code{xreg}.}
 
 \item{level}{Confidence level for prediction intervals.}
 
-\item{fan}{If \code{TRUE}, level is set to \code{seq(51,99,by=3)}. This is
-suitable for fan plots.}
+\item{fan}{If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
+is suitable for fan plots.}
 
 \item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
@@ -64,9 +64,10 @@ The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.}
 
 \item{biasadj}{Use adjusted back-transformed mean for Box-Cox
-transformations. If transformed data is used to produce forecasts and fitted values,
-a regular back transformation will result in median forecasts. If biasadj is TRUE,
-an adjustment will be made to produce mean forecasts and fitted values.}
+transformations. If transformed data is used to produce forecasts and fitted
+values, a regular back transformation will result in median forecasts. If
+biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
+and fitted values.}
 
 \item{...}{Other arguments.}
 

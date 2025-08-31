@@ -26,20 +26,20 @@ to \code{\link{ets}}.}
 
 \item{level}{Confidence level for prediction intervals.}
 
-\item{fan}{If TRUE, level is set to seq(51,99,by=3). This is suitable for
-fan plots.}
+\item{fan}{If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
+is suitable for fan plots.}
 
-\item{simulate}{If TRUE, prediction intervals are produced by simulation rather
+\item{simulate}{If \code{TRUE}, prediction intervals are produced by simulation rather
 than using analytic formulae. Errors are assumed to be normally distributed.}
 
-\item{bootstrap}{If TRUE, then prediction intervals are produced by simulation using
-resampled errors (rather than normally distributed errors).}
+\item{bootstrap}{If \code{TRUE}, then prediction intervals are produced by
+simulation using resampled errors (rather than normally distributed errors).}
 
 \item{npaths}{Number of sample paths used in computing simulated prediction
 intervals.}
 
-\item{PI}{If TRUE, prediction intervals are produced, otherwise only point
-forecasts are calculated. If \code{PI} is FALSE, then \code{level},
+\item{PI}{If \code{TRUE}, prediction intervals are produced, otherwise only point
+forecasts are calculated. If \code{PI} is \code{FALSE}, then \code{level},
 \code{fan}, \code{simulate}, \code{bootstrap} and \code{npaths} are all
 ignored.}
 
@@ -49,9 +49,10 @@ The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.}
 
 \item{biasadj}{Use adjusted back-transformed mean for Box-Cox
-transformations. If transformed data is used to produce forecasts and fitted values,
-a regular back transformation will result in median forecasts. If biasadj is TRUE,
-an adjustment will be made to produce mean forecasts and fitted values.}
+transformations. If transformed data is used to produce forecasts and fitted
+values, a regular back transformation will result in median forecasts. If
+biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
+and fitted values.}
 
 \item{...}{Other arguments.}
 }
