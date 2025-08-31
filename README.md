@@ -11,24 +11,25 @@ The R package *forecast* provides methods and tools for displaying and analysing
 A complementary forecasting package is the [fable](http://fable.tidyverts.org/) package, which implements many of the same models but in a tidyverse framework.
 
 ## Installation
+
 You can install the **stable** version from
 [CRAN](https://cran.r-project.org/package=forecast).
 
-```s
+```r
 install.packages("forecast", dependencies = TRUE)
 ```
 
 You can install the **development** version from
 [Github](https://github.com/robjhyndman/forecast)
 
-```s
+```r
 # install.packages("remotes")
 remotes::install_github("robjhyndman/forecast")
 ```
 
 ## Usage
 
-```s
+```r
 library(forecast)
 library(ggplot2)
 
@@ -46,7 +47,7 @@ WWWusage |>
 
 # ARFIMA forecasts
 library(fracdiff)
-x <- fracdiff.sim( 100, ma=-.4, d=.3)$series
+x <- fracdiff.sim(100, ma=-.4, d=.3)$series
 arfima(x) |>
   forecast(h=30) |>
   autoplot()
@@ -62,7 +63,7 @@ AirPassengers |>
   autoplot()
 
 USAccDeaths |>
-  stl(s.window='periodic') |>
+  stl(s.window="periodic") |>
   forecast() |>
   autoplot()
 
