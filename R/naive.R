@@ -169,7 +169,7 @@ fitted.lagwalk <- function(object, ...){
 #'
 #' @examples
 #'
-#' gold.fcast <- rwf(gold[1:60], h=50)
+#' gold.fcast <- rwf(gold[1:60], h = 50)
 #' plot(gold.fcast)
 #'
 #' @export
@@ -232,6 +232,9 @@ rwf <- function(y, h=10, drift=FALSE, level=c(80, 95), fan=FALSE, lambda=NULL, b
 #' @param level Confidence levels for prediction intervals.
 #' @param fan If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
 #' is suitable for fan plots.
+#' @param lag Lag parameter for lagged walks. \code{lag = 1} corresponds to
+#' standard random walk (i.e., naive forecast), while \code{lag = m}
+#' corresponds to seasonal naive method where m is the seasonal period.
 #' @param x Deprecated. Included for backwards compatibility.
 #' @inheritParams forecast.ts
 #'
@@ -261,7 +264,7 @@ rwf <- function(y, h=10, drift=FALSE, level=c(80, 95), fan=FALSE, lambda=NULL, b
 #' @keywords ts
 #' @examples
 #'
-#' plot(naive(gold, h=50), include=200)
+#' plot(naive(gold, h = 50), include = 200)
 #'
 #' @export
 naive <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALSE,

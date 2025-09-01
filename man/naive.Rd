@@ -47,14 +47,11 @@ snaive(
 \arguments{
 \item{y}{A numeric vector or time series of class \code{ts}.}
 
-\item{h}{Number of periods for forecasting.}
+\item{lag}{Lag parameter for lagged walks. \code{lag = 1} corresponds to
+standard random walk (i.e., naive forecast), while \code{lag = m}
+corresponds to seasonal naive method where m is the seasonal period.}
 
 \item{drift}{Logical flag. If \code{TRUE}, fits a random walk with drift model.}
-
-\item{level}{Confidence levels for prediction intervals.}
-
-\item{fan}{If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
-is suitable for fan plots.}
 
 \item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
@@ -67,12 +64,12 @@ values, a regular back transformation will result in median forecasts. If
 biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
 and fitted values.}
 
-\item{h}{Number of periods for forecasting}
+\item{h}{Number of periods for forecasting.}
 
 \item{level}{Confidence levels for prediction intervals.}
 
-\item{fan}{If \code{TRUE}, level is set to \code{seq(51, 99, by=3)}. This is suitable for
-fan plots.}
+\item{fan}{If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
+is suitable for fan plots.}
 
 \item{...}{Additional arguments affecting the forecasts produced. If
 \code{model=NULL}, \code{forecast.ts} passes these to \code{\link{ets}} or
@@ -138,11 +135,11 @@ where \eqn{Z_t}{Z[t]} is a normal iid error.
 model <- rw_model(gold)
 forecast(model, h = 50)
 
-gold.fcast <- rwf(gold[1:60], h=50)
+gold.fcast <- rwf(gold[1:60], h = 50)
 plot(gold.fcast)
 
 
-plot(naive(gold, h=50), include=200)
+plot(naive(gold, h = 50), include = 200)
 
 
 plot(snaive(wineind))
