@@ -11,6 +11,7 @@ arfima(
   model = NULL,
   lambda = NULL,
   biasadj = FALSE,
+  xreg = NULL,
   x = y,
   ...
 )
@@ -39,6 +40,9 @@ transformations. If transformed data is used to produce forecasts and fitted
 values, a regular back transformation will result in median forecasts. If
 biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
 and fitted values.}
+
+\item{xreg}{Optionally, a numerical vector or matrix of external regressors,
+which must have the same number of rows as y. It should not be a data frame.}
 
 \item{x}{Deprecated. Included for backwards compatibility.}
 

@@ -92,6 +92,7 @@ unfracdiff <- function(x, y, n, h, d) {
 #' @param \dots Other arguments passed to \code{\link{auto.arima}} when
 #' selecting p and q.
 #' @inheritParams forecast.ts
+#' @inheritParams Arima
 #'
 #' @return A list object of S3 class \code{"fracdiff"}, which is described in
 #' the \code{\link[fracdiff]{fracdiff}} documentation. A few additional objects
@@ -118,9 +119,9 @@ unfracdiff <- function(x, y, n, h, d) {
 #' fit <- arfima(x)
 #' tsdisplay(residuals(fit))
 #'
-arfima <- function(y, drange = c(0, 0.5), estim = c("mle", "ls"), model = NULL, lambda = NULL, biasadj = FALSE, x=y, ...) {
+arfima <- function(y, drange = c(0, 0.5), estim = c("mle", "ls"), model = NULL,
+                   lambda = NULL, biasadj = FALSE, xreg = NULL, x = y, ...) {
   estim <- match.arg(estim)
-  # 	require(fracdiff)
   seriesname <- deparse(substitute(y))
 
   orig.x <- x
@@ -152,7 +153,7 @@ arfima <- function(y, drange = c(0, 0.5), estim = c("mle", "ls"), model = NULL, 
     # Choose p and q
     d <- fit$d
     y <- fracdiff::diffseries(xx, d = d)
-    fit <- auto.arima(y, max.P = 0, max.Q = 0, stationary = TRUE, ...)
+    fit <- auto.arima(y, max.P = 0, max.Q = 0, stationary = TRUE, xreg = xreg, ...)
 
     # Refit model using fracdiff
     suppressWarnings(fit <- fracdiff::fracdiff(xx, nar = fit$arma[1], nma = fit$arma[2], drange = drange))
@@ -162,9 +163,9 @@ arfima <- function(y, drange = c(0, 0.5), estim = c("mle", "ls"), model = NULL, 
       y <- fracdiff::diffseries(xx, d = fit$d)
       p <- length(fit$ar)
       q <- length(fit$ma)
-      fit2 <- try(Arima(y, order = c(p, 0, q), include.mean = FALSE))
+      fit2 <- try(Arima(y, order = c(p, 0, q), include.mean = FALSE, xreg = xreg))
       if (inherits(fit2, "try-error")) {
-        fit2 <- try(Arima(y, order = c(p, 0, q), include.mean = FALSE, method = "ML"))
+        fit2 <- try(Arima(y, order = c(p, 0, q), include.mean = FALSE, method = "ML", xreg = xreg))
       }
       if (!inherits(fit2, "try-error")) {
         if (p > 0) {
