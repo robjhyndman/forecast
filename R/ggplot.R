@@ -914,7 +914,7 @@ ggtsdisplay <- function(x, plot.type=c("partial", "histogram", "scatter", "spect
       lastplot <- gghistogram(x, add.normal = TRUE, add.rug = TRUE) + ggplot2::xlab(main)
     }
     else if (plot.type == "scatter") {
-      scatterData <- data.frame(y = x[2:NROW(x)], x = x[1:NROW(x) - 1])
+      scatterData <- data.frame(y = x[2:NROW(x)], x = x[seq_len(NROW(x)) - 1])
       lastplot <- ggplot2::ggplot(ggplot2::aes(y = .data[["y"]], x = .data[["x"]]), data = scatterData) +
         ggplot2::geom_point() + ggplot2::labs(x = expression(Y[t - 1]), y = expression(Y[t]))
     }
@@ -1018,7 +1018,7 @@ gglagplot <- function(x, lags=ifelse(frequency(x) > 9, 16, 9),
     # Prepare data for plotting
     n <- NROW(x)
     data <- data.frame()
-    for (i in 1:NCOL(x)) {
+    for (i in seq_len(NCOL(x))) {
       for (lagi in set.lags) {
         sname <- colnames(x)[i]
         if (is.null(sname)) {
@@ -1143,7 +1143,7 @@ gglagchull <- function(x,
     # Prepare data for plotting
     n <- NROW(x)
     data <- data.frame()
-    for (i in 1:NCOL(x)) {
+    for (i in seq_len(NCOL(x))) {
       for (lag in set.lags) {
         sname <- colnames(x)[i]
         if (is.null(sname)) {
@@ -1704,7 +1704,7 @@ autolayer.mts <- function(object, colour = TRUE, series = NULL, ...) {
       series <- colnames(object)
     }
     out <- list()
-    for (i in 1:NCOL(object)) {
+    for (i in seq_len(NCOL(object))) {
       cl$series <- series[i]
       out[[i]] <- eval(cl)
     }

@@ -295,7 +295,7 @@ forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[
       stop("xreg should be a numeric matrix or a numeric vector")
     xreg <- as.matrix(xreg)
     if (is.null(colnames(xreg))) {
-      colnames(xreg) <- if (ncol(xreg) == 1) "xreg" else paste0("xreg", 1:ncol(xreg))
+      colnames(xreg) <- if (ncol(xreg) == 1) "xreg" else paste0("xreg", seq_len(ncol(xreg)))
     }
 
     origxreg <- xreg <- as.matrix(xreg)
@@ -715,7 +715,7 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
       stop("xreg should be a numeric matrix or a numeric vector")
     xreg <- as.matrix(xreg)
     if (is.null(colnames(xreg))) {
-      colnames(xreg) <- if (ncol(xreg) == 1) "xreg" else paste0("xreg", 1:ncol(xreg))
+      colnames(xreg) <- if (ncol(xreg) == 1) "xreg" else paste0("xreg", seq_len(ncol(xreg)))
     }
   }
 

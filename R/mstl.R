@@ -103,7 +103,7 @@ mstl <- function(x, lambda = NULL, iterate = 2, s.window = 7+4*seq(6), ...) {
     }
   }
   output <- cbind(output, c(remainder))
-  colnames(output) <- paste0("V",seq(NCOL(output)))
+  colnames(output) <- paste0("V", seq_len(NCOL(output)))
   colnames(output)[1L:2L] <- c("Data", "Trend")
   if (!is.null(msts)) {
     colnames(output)[2L + seq_along(msts)] <- paste0("Seasonal", round(msts, 2))

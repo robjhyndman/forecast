@@ -114,7 +114,7 @@ tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...) {
 
   ## Create trend and season if missing from the data
   if (tsdat[1] == 0) { # &tsvar[1]!=0){#If "trend" is not in data, but is in formula
-    trend <- 1:NROW(data)
+    trend <- seq_len(NROW(data))
     cn <- c(cn, "trend")
     data <- cbind(data, trend)
   }
@@ -327,7 +327,7 @@ forecast.lm <- function(object, newdata, h=10, level=c(80, 95), fan=FALSE, lambd
     }
     else {
       # Prefill the datamat
-      tmpdata <- datamat(1:NROW(newdata))
+      tmpdata <- datamat(seq_len(NROW(newdata)))
       rm1 <- TRUE
     }
     # Remove trend and seasonality from required variables

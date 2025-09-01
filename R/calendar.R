@@ -155,7 +155,7 @@ easter <- function(x, easter.mon = FALSE) {
   if (length(index) != 0L) {
     values <- denominator - dif[index]
     new.index <- index[1L]
-    for (i in 1L:length(index)) {
+    for (i in seq_along(index)) {
       dif <- append(dif, values = values[i], new.index)
       new.index <- index[i + 1L] + i
     }
