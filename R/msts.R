@@ -31,7 +31,7 @@ msts <- function(data, seasonal.periods, ts.frequency=floor(max(seasonal.periods
   # if(!is.element(ts.frequency, round(seasonal.periods-0.5+1e-12)))
   #  stop("ts.frequency should be one of the seasonal periods")
 
-  if (is.ts(data) && frequency(data) == ts.frequency && length(list(...)) == 0) {
+  if (is.ts(data) && frequency(data) == ts.frequency && ...length() == 0) {
     object <- data
   } else {
     object <- ts(data = data, frequency = ts.frequency, ...)
@@ -63,7 +63,7 @@ print.msts <- function(x, ...) {
 #' @export
 window.msts <- function(x, ...) {
   seasonal.periods <- attr(x, "msts")
-  class(x) <- c("ts")
+  class(x) <- "ts"
   x <- window(x, ...)
   class(x) <- c("msts", "ts")
   attr(x, "msts") <- seasonal.periods
