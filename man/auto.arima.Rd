@@ -25,7 +25,7 @@ auto.arima(
   stepwise = TRUE,
   nmodels = 94,
   trace = FALSE,
-  approximation = (length(x) > 150 | frequency(x) > 12),
+  approximation = (length(x) > 150 || frequency(x) > 12),
   method = NULL,
   truncate = NULL,
   xreg = NULL,
