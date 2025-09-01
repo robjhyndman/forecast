@@ -211,7 +211,7 @@ myarima.sim <- function(model, n, x, e, ...) {
     for (i in (length(diff.data) + 1):length(x.with.data))
     {
       lagged.x.values <- x.with.data[(i - len.ar):(i - 1)]
-      ar.coefficients <- model$ar[length(model$ar):1]
+      ar.coefficients <- model$ar[rev(seq_along(model$ar))]
       sum.multiplied.x <- sum((lagged.x.values * ar.coefficients)[abs(ar.coefficients) > .Machine$double.eps])
       x.with.data[i] <- x.with.data[i] + sum.multiplied.x
     }

@@ -408,12 +408,12 @@ tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
         }
       }
     }
-    models.list <- clusterApplyLB(clus, c(1:nrow(control.array)), parFilterTBATSSpecifics, y = y, control.array = control.array, model.params = model.params, seasonal.periods = seasonal.periods, k.vector = k.vector, use.arma.errors = use.arma.errors, aux.model = aux.model, init.box.cox = init.box.cox, bc.lower = bc.lower, bc.upper = bc.upper, biasadj = biasadj, ...)
+    models.list <- clusterApplyLB(clus, seq_len(nrow(control.array)), parFilterTBATSSpecifics, y = y, control.array = control.array, model.params = model.params, seasonal.periods = seasonal.periods, k.vector = k.vector, use.arma.errors = use.arma.errors, aux.model = aux.model, init.box.cox = init.box.cox, bc.lower = bc.lower, bc.upper = bc.upper, biasadj = biasadj, ...)
     stopCluster(clus)
     ## Choose the best model
     #### Get the AICs
     aics <- numeric(nrow(control.array))
-    for (i in 1:nrow(control.array)) {
+    for (i in seq_len(nrow(control.array))) {
       aics[i] <- models.list[[i]]$AIC
     }
     best.number <- which.min(aics)

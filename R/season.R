@@ -228,7 +228,7 @@ seasonaldummyf <- function(x, h) {
 #' @export
 fourier <- function(x, K, h=NULL) {
   if (is.null(h)) {
-    return(...fourier(x, K, 1:NROW(x)))
+    return(...fourier(x, K, seq_len(NROW(x))))
   }
   else {
     return(...fourier(x, K, NROW(x) + (1:h)))

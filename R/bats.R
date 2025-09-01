@@ -200,12 +200,12 @@ bats <- function(y, use.box.cox = NULL, use.trend = NULL, use.damped.trend = NUL
       num.cores <- detectCores(all.tests = FALSE, logical = TRUE)
     }
     clus <- makeCluster(num.cores)
-    models.list <- clusterApplyLB(clus, c(1:nrow(control.array)), parFilterSpecifics, y = y, control.array = control.array, seasonal.periods = seasonal.periods, use.arma.errors = use.arma.errors, init.box.cox = init.box.cox, bc.lower = bc.lower, bc.upper = bc.upper, biasadj = biasadj, ...)
+    models.list <- clusterApplyLB(clus, seq_len(nrow(control.array)), parFilterSpecifics, y = y, control.array = control.array, seasonal.periods = seasonal.periods, use.arma.errors = use.arma.errors, init.box.cox = init.box.cox, bc.lower = bc.lower, bc.upper = bc.upper, biasadj = biasadj, ...)
     stopCluster(clus)
     ## Choose the best model
     #### Get the AICs
     aics <- numeric(nrow(control.array))
-    for (i in 1:nrow(control.array)) {
+    for (i in seq_len(nrow(control.array))) {
       aics[i] <- models.list[[i]]$AIC
     }
     best.number <- which.min(aics)

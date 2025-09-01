@@ -102,8 +102,7 @@ Acf <- function(x, lag.max = NULL,
     plot.out <- acf.out
     # Hide 0 lag if autocorrelations
     if (type == "correlation") {
-      for (i in seq(NCOL(x)))
-      {
+      for (i in seq_len(NCOL(x))) {
         plot.out$lag[1, i, i] <- 1
         plot.out$acf[1, i, i] <- 0
       }

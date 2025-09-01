@@ -191,7 +191,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   # Check xreg and do regression if necessary
   if (!is.null(xreg)) {
     if (is.null(colnames(xreg))) {
-      colnames(xreg) <- if (ncol(xreg) == 1) "xreg" else paste0("xreg", 1:ncol(xreg))
+      colnames(xreg) <- if (ncol(xreg) == 1) "xreg" else paste0("xreg", seq_len(ncol(xreg)))
     }
     xregg <- xreg
 

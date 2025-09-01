@@ -168,7 +168,7 @@ forecast.mts <- function(object, h=ifelse(frequency(object) > 1, 2 * frequency(o
   cl <- match.call()
   cl[[1]] <- quote(forecast.ts)
   cl$object <- quote(object[, i])
-  for (i in 1:NCOL(object)) {
+  for (i in seq_len(NCOL(object))) {
     out$forecast[[i]] <- eval(cl)
     out$forecast[[i]]$series <- colnames(object)[i]
   }

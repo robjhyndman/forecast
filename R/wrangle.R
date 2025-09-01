@@ -25,7 +25,7 @@ datamat <- function(..., flatten=TRUE, functions=TRUE) {
         vars[[i]] <- NULL # Remove data.frame
       }
       else if (is.matrix(vars[[i]])) {
-        for (j in 1:NCOL(vars[[i]])) {
+        for (j in seq_len(NCOL(vars[[i]]))) {
           vars[[length(vars) + 1]] <- vars[[i]][, j]
           names(vars)[length(vars)] <- make.names(colnames(vars[[i]])[j])
         }
