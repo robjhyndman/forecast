@@ -69,11 +69,11 @@ to extract all values for the month of May from a time series.</p>
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>a univariate time series to be subsetted</p></dd>
+<dd><p>A univariate time series to be subsetted.</p></dd>
 
 
 <dt id="arg-subset">subset<a class="anchor" aria-label="anchor" href="#arg-subset"></a></dt>
-<dd><p>optional logical expression indicating elements to keep;
+<dd><p>Optional logical expression indicating elements to keep;
 missing values are taken as false. <code>subset</code> must be the same length as
 <code>x</code>.</p></dd>
 
@@ -129,9 +129,9 @@ values for quarters are <code>"Q1"</code>, <code>"Q2"</code>, <code>"Q3"</code>,
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">gas</span>,month<span class="op">=</span><span class="st">"November"</span><span class="op">)</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">gas</span>, month<span class="op">=</span><span class="st">"November"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="subset.ts-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">woolyrnq</span>,quarter<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">woolyrnq</span>, quarter<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Time Series:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Start = 1965.5 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> End = 1994.5 </span>

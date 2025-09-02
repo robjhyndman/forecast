@@ -63,7 +63,7 @@ Raftery (1989) algorithm to estimate the parameters including d.</p>
 
 
 <dl><dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
-<dd><p>a univariate time series (numeric vector).</p></dd>
+<dd><p>A univariate time series (numeric vector).</p></dd>
 
 
 <dt id="arg-drange">drange<a class="anchor" aria-label="anchor" href="#arg-drange"></a></dt>
@@ -72,8 +72,8 @@ Raftery (1989) algorithm to estimate the parameters including d.</p>
 
 
 <dt id="arg-estim">estim<a class="anchor" aria-label="anchor" href="#arg-estim"></a></dt>
-<dd><p>If <code>estim=="ls"</code>, then the ARMA parameters are calculated
-using the Haslett-Raftery algorithm. If <code>estim=="mle"</code>, then the ARMA
+<dd><p>If <code>estim = "ls"</code>, then the ARMA parameters are calculated
+using the Haslett-Raftery algorithm. If <code>estim = "mle"</code>, then the ARMA
 parameters are calculated using full MLE via the <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">arima</a></code>
 function.</p></dd>
 
@@ -153,7 +153,7 @@ The forecast package for R", <em>Journal of Statistical Software</em>,
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mmaechler/fracdiff" class="external-link">fracdiff</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/fracdiff/man/fracdiff.sim.html" class="external-link">fracdiff.sim</a></span><span class="op">(</span> <span class="fl">100</span>, ma<span class="op">=</span><span class="op">-</span><span class="fl">.4</span>, d<span class="op">=</span><span class="fl">.3</span><span class="op">)</span><span class="op">$</span><span class="va">series</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/fracdiff/man/fracdiff.sim.html" class="external-link">fracdiff.sim</a></span><span class="op">(</span><span class="fl">100</span>, ma<span class="op">=</span><span class="op">-</span><span class="fl">.4</span>, d<span class="op">=</span><span class="fl">.3</span><span class="op">)</span><span class="op">$</span><span class="va">series</span></span></span>
 <span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">arfima</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="tsdisplay.html">tsdisplay</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="arfima-1.png" alt="" width="700" height="433"></span>

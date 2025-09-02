@@ -102,19 +102,19 @@ univariate series.</p>
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>a univariate or multivariate (not Ccf) numeric time series object
+<dd><p>A univariate or multivariate (not Ccf) numeric time series object
 or a numeric vector or matrix.</p></dd>
 
 
 <dt id="arg-lag-max">lag.max<a class="anchor" aria-label="anchor" href="#arg-lag-max"></a></dt>
-<dd><p>maximum lag at which to calculate the acf. Default is
+<dd><p>Maximum lag at which to calculate the acf. Default is
 $10*log10(N/m)$ where $N$ is the number of observations and $m$ the number
 of series. Will be automatically limited to one less than the number of
 observations in the series.</p></dd>
 
 
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
-<dd><p>character string giving the type of acf to be computed. Allowed
+<dd><p>Character string giving the type of acf to be computed. Allowed
 values are “<code>correlation</code>” (the default),
 “<code>covariance</code>” or “<code>partial</code>”.</p></dd>
 
@@ -125,8 +125,8 @@ ccf is plotted.</p></dd>
 
 
 <dt id="arg-na-action">na.action<a class="anchor" aria-label="anchor" href="#arg-na-action"></a></dt>
-<dd><p>function to handle missing values. Default is
-<code><a href="https://rdrr.io/r/stats/na.contiguous.html" class="external-link">na.contiguous</a></code>.  Useful alternatives are
+<dd><p>Function to handle missing values. Default is
+<code><a href="https://rdrr.io/r/stats/na.contiguous.html" class="external-link">na.contiguous</a></code>. Useful alternatives are
 <code><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.pass</a></code> and <code><a href="na.interp.html">na.interp</a></code>.</p></dd>
 
 
@@ -139,7 +139,7 @@ ccf is plotted.</p></dd>
 
 
 <dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
-<dd><p>a univariate numeric time series object or a numeric vector.</p></dd>
+<dd><p>A univariate numeric time series object or a numeric vector.</p></dd>
 
 
 <dt id="arg-calc-ci">calc.ci<a class="anchor" aria-label="anchor" href="#arg-calc-ci"></a></dt>
@@ -168,7 +168,7 @@ objects of class "mpacf".</p>
     <p>The functions improve the <code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">acf</a></code>,
 <code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">pacf</a></code> and <code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">ccf</a></code> functions. The main
 differences are that <code>Acf</code> does not plot a spike at lag 0 when
-<code>type=="correlation"</code> (which is redundant) and the horizontal axes show
+<code>type="correlation"</code> (which is redundant) and the horizontal axes show
 lags in time units rather than seasonal units.</p>
 <p>The tapered versions implement the ACF and PACF estimates and plots
 described in Hyndman (2015), based on the banded and tapered estimates of

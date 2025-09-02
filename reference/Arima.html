@@ -70,7 +70,7 @@ and re-apply it to the data <code>y</code>.</p>
 
 
 <dl><dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
-<dd><p>a univariate time series of class <code>ts</code>.</p></dd>
+<dd><p>A univariate time series of class <code>ts</code>.</p></dd>
 
 
 <dt id="arg-order">order<a class="anchor" aria-label="anchor" href="#arg-order"></a></dt>
@@ -81,10 +81,10 @@ and the MA order.</p></dd>
 
 <dt id="arg-seasonal">seasonal<a class="anchor" aria-label="anchor" href="#arg-seasonal"></a></dt>
 <dd><p>A specification of the seasonal part of the ARIMA model,
-plus the period (which defaults to frequency(y)). This should be a list with
-components order and period, but a specification of just a numeric vector of
-length 3 will be turned into a suitable list with the specification as the
-order.</p></dd>
+plus the period (which defaults to <code>frequency(y)</code>). This should be a
+list with components order and period, but a specification of just a numeric
+vector of length 3 will be turned into a suitable list with the
+specification as the order.</p></dd>
 
 
 <dt id="arg-xreg">xreg<a class="anchor" aria-label="anchor" href="#arg-xreg"></a></dt>
@@ -100,7 +100,7 @@ is <code>TRUE</code> for undifferenced series, <code>FALSE</code> for difference
 
 <dt id="arg-include-drift">include.drift<a class="anchor" aria-label="anchor" href="#arg-include-drift"></a></dt>
 <dd><p>Should the ARIMA model include a linear drift term?
-(i.e., a linear regression with ARIMA errors is fitted.)  The default is
+(i.e., a linear regression with ARIMA errors is fitted.) The default is
 <code>FALSE</code>.</p></dd>
 
 
