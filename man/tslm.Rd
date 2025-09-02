@@ -7,15 +7,15 @@
 tslm(formula, data, subset, lambda = NULL, biasadj = FALSE, ...)
 }
 \arguments{
-\item{formula}{an object of class "formula" (or one that can be coerced to
+\item{formula}{An object of class "formula" (or one that can be coerced to
 that class): a symbolic description of the model to be fitted.}
 
-\item{data}{an optional data frame, list or environment (or object coercible
+\item{data}{An optional data frame, list or environment (or object coercible
 by as.data.frame to a data frame) containing the variables in the model. If
 not found in data, the variables are taken from environment(formula),
 typically the environment from which lm is called.}
 
-\item{subset}{an optional subset containing rows of data to keep. For best
+\item{subset}{An optional subset containing rows of data to keep. For best
 results, pass a logical vector of rows to keep. Also supports
 \code{\link[base]{subset}()} functions.}
 
@@ -30,7 +30,7 @@ values, a regular back transformation will result in median forecasts. If
 biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
 and fitted values.}
 
-\item{...}{Other arguments passed to \code{\link[stats]{lm}()}}
+\item{...}{Other arguments passed to \code{\link[stats]{lm}()}.}
 }
 \value{
 Returns an object of class "lm".

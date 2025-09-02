@@ -415,7 +415,7 @@ print.nnetarmodels <- function(x, ...) {
 #' @param innov Values to use as innovations for prediction intervals. Must be
 #' a matrix with \code{h} rows and \code{npaths} columns (vectors are coerced
 #' into a matrix). If present, \code{bootstrap} is ignored.
-#' @param ... Additional arguments passed to \code{\link{simulate.nnetar}}
+#' @param ... Additional arguments passed to \code{\link{simulate.nnetar}}.
 #' @inheritParams forecast.ts
 #'
 #' @return An object of class "\code{forecast}".

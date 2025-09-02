@@ -45,7 +45,7 @@ if \eqn{\lambda\ne0}{lambda is not equal to 0}. For \eqn{\lambda=0}{lambda=0},
 
 lambda <- BoxCox.lambda(lynx)
 lynx.fit <- ar(BoxCox(lynx,lambda))
-plot(forecast(lynx.fit,h=20,lambda=lambda))
+plot(forecast(lynx.fit, h=20, lambda=lambda))
 
 }
 \references{

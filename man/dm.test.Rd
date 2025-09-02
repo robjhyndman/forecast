@@ -18,15 +18,15 @@ dm.test(
 
 \item{e2}{Forecast errors from method 2.}
 
-\item{alternative}{a character string specifying the alternative hypothesis,
+\item{alternative}{A character string specifying the alternative hypothesis,
 must be one of \code{"two.sided"} (default), \code{"greater"} or
-\code{"less"}.  You can specify just the initial letter.}
+\code{"less"}. You can specify just the initial letter.}
 
 \item{h}{The forecast horizon used in calculating \code{e1} and \code{e2}.}
 
 \item{power}{The power used in the loss function. Usually 1 or 2.}
 
-\item{varestimator}{a character string specifying the long-run variance estimator.
+\item{varestimator}{A character string specifying the long-run variance estimator.
 Options are \code{"acf"} (default) or \code{"bartlett"}.}
 }
 \value{

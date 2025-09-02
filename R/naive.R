@@ -221,8 +221,8 @@ rwf <- function(y, h=10, drift=FALSE, level=c(80, 95), fan=FALSE, lambda=NULL, b
 #'
 #' @aliases print.naive
 #'
-#' @param y a numeric vector or time series of class \code{ts}
-#' @param h Number of periods for forecasting
+#' @param y A numeric vector or time series of class \code{ts}.
+#' @param h Number of periods for forecasting.
 #' @param drift Logical flag. If \code{TRUE}, fits a random walk with drift model.
 #' @param level Confidence levels for prediction intervals.
 #' @param fan If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
@@ -256,7 +256,7 @@ rwf <- function(y, h=10, drift=FALSE, level=c(80, 95), fan=FALSE, lambda=NULL, b
 #' @keywords ts
 #' @examples
 #'
-#' plot(naive(gold,h=50),include=200)
+#' plot(naive(gold, h=50), include=200)
 #'
 #' @export
 naive <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALSE,

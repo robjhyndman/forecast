@@ -109,7 +109,7 @@ models are permitted.}
 \item{...}{Other arguments passed to \code{forecast.stl},
 \code{modelfunction} or \code{forecastfunction}.}
 
-\item{y}{A univariate numeric time series of class \code{ts}}
+\item{y}{A univariate numeric time series of class \code{ts}.}
 
 \item{s.window}{Either the character string \code{"periodic"} or the span (in
 lags) of the loess window for seasonal extraction.}

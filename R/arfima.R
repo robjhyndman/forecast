@@ -79,11 +79,11 @@ unfracdiff <- function(x, y, n, h, d) {
 #' re-estimated using \code{\link[fracdiff]{fracdiff}}. If \code{estim=="mle"},
 #' the ARMA coefficients are refined using \code{\link[stats]{arima}}.
 #'
-#' @param y a univariate time series (numeric vector).
+#' @param y A univariate time series (numeric vector).
 #' @param drange Allowable values of d to be considered. Default of
 #' \code{c(0,0.5)} ensures a stationary model is returned.
-#' @param estim If \code{estim=="ls"}, then the ARMA parameters are calculated
-#' using the Haslett-Raftery algorithm. If \code{estim=="mle"}, then the ARMA
+#' @param estim If \code{estim = "ls"}, then the ARMA parameters are calculated
+#' using the Haslett-Raftery algorithm. If \code{estim = "mle"}, then the ARMA
 #' parameters are calculated using full MLE via the \code{\link[stats]{arima}}
 #' function.
 #' @param model Output from a previous call to \code{arfima}. If model is
@@ -115,7 +115,7 @@ unfracdiff <- function(x, y, n, h, d) {
 #' @examples
 #'
 #' library(fracdiff)
-#' x <- fracdiff.sim( 100, ma=-.4, d=.3)$series
+#' x <- fracdiff.sim(100, ma=-.4, d=.3)$series
 #' fit <- arfima(x)
 #' tsdisplay(residuals(fit))
 #'

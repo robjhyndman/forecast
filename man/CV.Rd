@@ -7,7 +7,7 @@
 CV(obj)
 }
 \arguments{
-\item{obj}{output from \code{\link[stats]{lm}} or \code{\link{tslm}}}
+\item{obj}{Output from \code{\link[stats]{lm}} or \code{\link{tslm}}.}
 }
 \value{
 Numerical vector containing CV, AIC, AICc, BIC and AdjR2 values.

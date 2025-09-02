@@ -28,7 +28,7 @@
 #' @param bootstrap Do simulation using resampled errors rather than normally
 #' distributed errors or errors provided as \code{innov}.
 #' @param innov A vector of innovations to use as the error series. Ignored if
-#' \code{bootstrap==TRUE}. If not \code{NULL}, the value of \code{nsim} is set
+#' \code{bootstrap=TRUE}. If not \code{NULL}, the value of \code{nsim} is set
 #' to length of \code{innov}.
 #' @param xreg New values of \code{xreg} to be used for forecasting. The value
 #' of \code{nsim} is set to the number of rows of \code{xreg} if it is not

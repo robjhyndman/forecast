@@ -12,27 +12,27 @@
 #' The functions improve the \code{\link[stats]{acf}},
 #' \code{\link[stats]{pacf}} and \code{\link[stats]{ccf}} functions. The main
 #' differences are that \code{Acf} does not plot a spike at lag 0 when
-#' \code{type=="correlation"} (which is redundant) and the horizontal axes show
+#' \code{type="correlation"} (which is redundant) and the horizontal axes show
 #' lags in time units rather than seasonal units.
 #'
 #' The tapered versions implement the ACF and PACF estimates and plots
 #' described in Hyndman (2015), based on the banded and tapered estimates of
 #' autocovariance proposed by McMurry and Politis (2010).
 #'
-#' @param x a univariate or multivariate (not Ccf) numeric time series object
+#' @param x A univariate or multivariate (not Ccf) numeric time series object
 #' or a numeric vector or matrix.
-#' @param y a univariate numeric time series object or a numeric vector.
-#' @param lag.max maximum lag at which to calculate the acf. Default is
+#' @param y A univariate numeric time series object or a numeric vector.
+#' @param lag.max Maximum lag at which to calculate the acf. Default is
 #' $10*log10(N/m)$ where $N$ is the number of observations and $m$ the number
 #' of series. Will be automatically limited to one less than the number of
 #' observations in the series.
-#' @param type character string giving the type of acf to be computed. Allowed
+#' @param type Character string giving the type of acf to be computed. Allowed
 #' values are \dQuote{\code{correlation}} (the default),
 #' \dQuote{\code{covariance}} or \dQuote{\code{partial}}.
 #' @param plot logical. If \code{TRUE} (the default) the resulting acf, pacf or
 #' ccf is plotted.
-#' @param na.action function to handle missing values. Default is
-#' \code{\link[stats]{na.contiguous}}.  Useful alternatives are
+#' @param na.action Function to handle missing values. Default is
+#' \code{\link[stats]{na.contiguous}}. Useful alternatives are
 #' \code{\link[stats]{na.pass}} and \code{\link{na.interp}}.
 #' @param demean Should covariances be about the sample means?
 #' @param calc.ci If \code{TRUE}, confidence intervals for the ACF/PACF

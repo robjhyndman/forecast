@@ -7,7 +7,7 @@
 BoxCox.lambda(x, method = c("guerrero", "loglik"), lower = -1, upper = 2)
 }
 \arguments{
-\item{x}{a numeric vector or time series of class \code{ts}}
+\item{x}{A numeric vector or time series of class \code{ts}.}
 
 \item{method}{Choose method to be used in calculating lambda.}
 
@@ -19,11 +19,11 @@ BoxCox.lambda(x, method = c("guerrero", "loglik"), lower = -1, upper = 2)
 a number indicating the Box-Cox transformation parameter.
 }
 \description{
-If \code{method=="guerrero"}, Guerrero's (1993) method is used, where lambda
+If \code{method="guerrero"}, Guerrero's (1993) method is used, where lambda
 minimizes the coefficient of variation for subseries of \code{x}.
 }
 \details{
-If \code{method=="loglik"}, the value of lambda is chosen to maximize the
+If \code{method="loglik"}, the value of lambda is chosen to maximize the
 profile log likelihood of a linear model fitted to \code{x}. For
 non-seasonal data, a linear time trend is fitted while for seasonal data, a
 linear time trend with seasonal dummy variables is used.

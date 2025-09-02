@@ -9,18 +9,18 @@
 #' simple time trend and "season" is a factor indicating the season (e.g., the
 #' month or the quarter depending on the frequency of the data).
 #'
-#' @param formula an object of class "formula" (or one that can be coerced to
+#' @param formula An object of class "formula" (or one that can be coerced to
 #' that class): a symbolic description of the model to be fitted.
-#' @param data an optional data frame, list or environment (or object coercible
+#' @param data An optional data frame, list or environment (or object coercible
 #' by as.data.frame to a data frame) containing the variables in the model. If
 #' not found in data, the variables are taken from environment(formula),
 #' typically the environment from which lm is called.
-#' @param subset an optional subset containing rows of data to keep. For best
+#' @param subset An optional subset containing rows of data to keep. For best
 #' results, pass a logical vector of rows to keep. Also supports
 #' \code{\link[base]{subset}()} functions.
 #' @inheritParams forecast.ts
 #'
-#' @param ... Other arguments passed to \code{\link[stats]{lm}()}
+#' @param ... Other arguments passed to \code{\link[stats]{lm}()}.
 #' @return Returns an object of class "lm".
 #' @author Mitchell O'Hara-Wild and Rob J Hyndman
 #' @seealso \code{\link{forecast.lm}}, \code{\link[stats]{lm}}.
@@ -503,7 +503,7 @@ summary.tslm <- function(object, ...) {
 #' R^2 values for a linear model.
 #'
 #'
-#' @param obj output from \code{\link[stats]{lm}} or \code{\link{tslm}}
+#' @param obj Output from \code{\link[stats]{lm}} or \code{\link{tslm}}.
 #' @return Numerical vector containing CV, AIC, AICc, BIC and AdjR2 values.
 #' @author Rob J Hyndman
 #' @seealso \code{\link[stats]{AIC}}

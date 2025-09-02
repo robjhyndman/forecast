@@ -158,7 +158,7 @@ meanf <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALS
 #'
 #' lambda <- BoxCox.lambda(lynx)
 #' lynx.fit <- ar(BoxCox(lynx,lambda))
-#' plot(forecast(lynx.fit,h=20,lambda=lambda))
+#' plot(forecast(lynx.fit, h=20, lambda=lambda))
 #'
 #' @export
 BoxCox <- function(x, lambda) {

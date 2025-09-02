@@ -129,8 +129,8 @@ checkresiduals <- function(object, lag, test, plot = TRUE, ...) {
 
 #' Compute model degrees of freedom
 #'
-#' @param object A time series model
-#' @param ... Other arguments currently ignored
+#' @param object A time series model.
+#' @param ... Other arguments currently ignored.
 #' @export
 modeldf <- function(object, ...) {
   UseMethod("modeldf")

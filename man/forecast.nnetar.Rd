@@ -53,7 +53,7 @@ intervals.}
 a matrix with \code{h} rows and \code{npaths} columns (vectors are coerced
 into a matrix). If present, \code{bootstrap} is ignored.}
 
-\item{...}{Additional arguments passed to \code{\link{simulate.nnetar}}}
+\item{...}{Additional arguments passed to \code{\link{simulate.nnetar}}.}
 }
 \value{
 An object of class "\code{forecast}".

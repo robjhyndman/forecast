@@ -42,9 +42,9 @@ snaive(
 )
 }
 \arguments{
-\item{y}{a numeric vector or time series of class \code{ts}}
+\item{y}{A numeric vector or time series of class \code{ts}.}
 
-\item{h}{Number of periods for forecasting}
+\item{h}{Number of periods for forecasting.}
 
 \item{drift}{Logical flag. If \code{TRUE}, fits a random walk with drift model.}
 
@@ -130,7 +130,7 @@ gold.fcast <- rwf(gold[1:60], h=50)
 plot(gold.fcast)
 
 
-plot(naive(gold,h=50),include=200)
+plot(naive(gold, h=50), include=200)
 
 
 plot(snaive(wineind))

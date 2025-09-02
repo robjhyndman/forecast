@@ -67,16 +67,16 @@ bcloglik <- function(x, lower=-1, upper=2) {
 
 #' Automatic selection of Box Cox transformation parameter
 #'
-#' If \code{method=="guerrero"}, Guerrero's (1993) method is used, where lambda
+#' If \code{method="guerrero"}, Guerrero's (1993) method is used, where lambda
 #' minimizes the coefficient of variation for subseries of \code{x}.
 #'
-#' If \code{method=="loglik"}, the value of lambda is chosen to maximize the
+#' If \code{method="loglik"}, the value of lambda is chosen to maximize the
 #' profile log likelihood of a linear model fitted to \code{x}. For
 #' non-seasonal data, a linear time trend is fitted while for seasonal data, a
 #' linear time trend with seasonal dummy variables is used.
 #'
 #'
-#' @param x a numeric vector or time series of class \code{ts}
+#' @param x A numeric vector or time series of class \code{ts}.
 #' @param method Choose method to be used in calculating lambda.
 #' @param lower Lower limit for possible lambda values.
 #' @param upper Upper limit for possible lambda values.

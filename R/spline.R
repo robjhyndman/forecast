@@ -215,7 +215,7 @@ splinef <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FA
 #' @rdname plot.forecast
 #'
 #' @examples
-#' fcast <- splinef(airmiles,h=5)
+#' fcast <- splinef(airmiles, h=5)
 #' plot(fcast)
 #' autoplot(fcast)
 #'

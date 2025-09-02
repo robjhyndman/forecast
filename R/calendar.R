@@ -11,7 +11,7 @@ as.Date.timeDate <- timeDate::as.Date.timeDate
 #' Useful for trading days length adjustments. More on how to define "business
 #' days", please refer to \code{\link[timeDate]{isBizday}}.
 #'
-#' @param x Monthly or quarterly time series
+#' @param x Monthly or quarterly time series.
 #' @param FinCenter Major financial center.
 #' @return Time series
 #' @author Earo Wang
@@ -93,8 +93,8 @@ bizdays <- function(x, FinCenter = c(
 #'
 #' Useful for adjusting calendar effects.
 #'
-#' @param x Monthly or quarterly time series
-#' @param easter.mon If \code{TRUE}, the length of Easter holidays includes
+#' @param x Monthly or quarterly time series.
+#' @param easter.mon If \code{TRUE}, the length of Easter holidays includes.
 #' Easter Monday.
 #' @return Time series
 #' @author Earo Wang

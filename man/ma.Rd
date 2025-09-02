@@ -39,8 +39,8 @@ average.
 \examples{
 
 plot(wineind)
-sm <- ma(wineind,order=12)
-lines(sm,col="red")
+sm <- ma(wineind, order=12)
+lines(sm, col="red")
 
 }
 \seealso{

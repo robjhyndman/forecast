@@ -19,9 +19,9 @@
 \method{subset}{msts}(x, subset = NULL, start = NULL, end = NULL, ...)
 }
 \arguments{
-\item{x}{a univariate time series to be subsetted}
+\item{x}{A univariate time series to be subsetted.}
 
-\item{subset}{optional logical expression indicating elements to keep;
+\item{subset}{Optional logical expression indicating elements to keep;
 missing values are taken as false. \code{subset} must be the same length as
 \code{x}.}
 
@@ -58,8 +58,8 @@ values for quarters are \code{"Q1"}, \code{"Q2"}, \code{"Q3"}, and
 \code{"Q4"}.
 }
 \examples{
-plot(subset(gas,month="November"))
-subset(woolyrnq,quarter=3)
+plot(subset(gas, month="November"))
+subset(woolyrnq, quarter=3)
 subset(USAccDeaths, start=49)
 
 }

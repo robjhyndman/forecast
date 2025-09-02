@@ -24,17 +24,17 @@ Arima(
 )
 }
 \arguments{
-\item{y}{a univariate time series of class \code{ts}.}
+\item{y}{A univariate time series of class \code{ts}.}
 
 \item{order}{A specification of the non-seasonal part of the ARIMA model:
 the three components (p, d, q) are the AR order, the degree of differencing,
 and the MA order.}
 
 \item{seasonal}{A specification of the seasonal part of the ARIMA model,
-plus the period (which defaults to frequency(y)). This should be a list with
-components order and period, but a specification of just a numeric vector of
-length 3 will be turned into a suitable list with the specification as the
-order.}
+plus the period (which defaults to \code{frequency(y)}). This should be a
+list with components order and period, but a specification of just a numeric
+vector of length 3 will be turned into a suitable list with the
+specification as the order.}
 
 \item{xreg}{Optionally, a numerical vector or matrix of external regressors,
 which must have the same number of rows as y. It should not be a data frame.}
@@ -44,7 +44,7 @@ is \code{TRUE} for undifferenced series, \code{FALSE} for differenced ones
 (where a mean would not affect the fit nor predictions).}
 
 \item{include.drift}{Should the ARIMA model include a linear drift term?
-(i.e., a linear regression with ARIMA errors is fitted.)  The default is
+(i.e., a linear regression with ARIMA errors is fitted.) The default is
 \code{FALSE}.}
 
 \item{include.constant}{If \code{TRUE}, then \code{include.mean} is set to
