@@ -11,7 +11,7 @@ na.interp(
 )
 }
 \arguments{
-\item{x}{time series}
+\item{x}{Time series.}
 
 \item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.

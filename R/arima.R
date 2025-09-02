@@ -266,13 +266,13 @@ SD.test <- function(wts, s=frequency(wts)) {
 #' @keywords ts
 #' @aliases forecast.forecast_ARIMA
 #' @examples
-#' fit <- Arima(WWWusage,c(3,1,0))
+#' fit <- Arima(WWWusage, c(3,1,0))
 #' plot(forecast(fit))
 #'
 #' library(fracdiff)
-#' x <- fracdiff.sim( 100, ma=-.4, d=.3)$series
+#' x <- fracdiff.sim(100, ma=-.4, d=.3)$series
 #' fit <- arfima(x)
-#' plot(forecast(fit,h=30))
+#' plot(forecast(fit, h=30))
 #'
 #' @export
 forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[5], 10),
@@ -565,9 +565,9 @@ arima.errors <- function(object) {
 #' @examples
 #' fit <- ets(WWWusage)
 #' plot(WWWusage)
-#' lines(fitted(fit), col='red')
-#' lines(fitted(fit, h=2), col='green')
-#' lines(fitted(fit, h=3), col='blue')
+#' lines(fitted(fit), col="red")
+#' lines(fitted(fit, h=2), col="green")
+#' lines(fitted(fit, h=3), col="blue")
 #' legend("topleft", legend=paste("h =",1:3), col=2:4, lty=1)
 #'
 #' @export
@@ -620,22 +620,22 @@ fitted.forecast_ARIMA <- fitted.Arima
 #'
 #' @aliases print.ARIMA summary.Arima as.character.Arima
 #'
-#' @param y a univariate time series of class \code{ts}.
+#' @param y A univariate time series of class \code{ts}.
 #' @param order A specification of the non-seasonal part of the ARIMA model:
 #' the three components (p, d, q) are the AR order, the degree of differencing,
 #' and the MA order.
 #' @param seasonal A specification of the seasonal part of the ARIMA model,
-#' plus the period (which defaults to frequency(y)). This should be a list with
-#' components order and period, but a specification of just a numeric vector of
-#' length 3 will be turned into a suitable list with the specification as the
-#' order.
+#' plus the period (which defaults to \code{frequency(y)}). This should be a
+#' list with components order and period, but a specification of just a numeric
+#' vector of length 3 will be turned into a suitable list with the
+#' specification as the order.
 #' @param xreg Optionally, a numerical vector or matrix of external regressors,
 #' which must have the same number of rows as y. It should not be a data frame.
 #' @param include.mean Should the ARIMA model include a mean term? The default
 #' is \code{TRUE} for undifferenced series, \code{FALSE} for differenced ones
 #' (where a mean would not affect the fit nor predictions).
 #' @param include.drift Should the ARIMA model include a linear drift term?
-#' (i.e., a linear regression with ARIMA errors is fitted.)  The default is
+#' (i.e., a linear regression with ARIMA errors is fitted.) The default is
 #' \code{FALSE}.
 #' @param include.constant If \code{TRUE}, then \code{include.mean} is set to
 #' be \code{TRUE} for undifferenced series and \code{include.drift} is set to

@@ -7,12 +7,12 @@
 tsclean(x, replace.missing = TRUE, iterate = 2, lambda = NULL)
 }
 \arguments{
-\item{x}{time series}
+\item{x}{Time series.}
 
 \item{replace.missing}{If \code{TRUE}, it not only replaces outliers, but
-also interpolates missing values}
+also interpolates missing values.}
 
-\item{iterate}{the number of iterations required}
+\item{iterate}{The number of iterations required.}
 
 \item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.

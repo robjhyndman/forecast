@@ -51,30 +51,30 @@ taperedacf(
 taperedpacf(x, ...)
 }
 \arguments{
-\item{x}{a univariate or multivariate (not Ccf) numeric time series object
+\item{x}{A univariate or multivariate (not Ccf) numeric time series object
 or a numeric vector or matrix.}
 
-\item{lag.max}{maximum lag at which to calculate the acf. Default is
+\item{lag.max}{Maximum lag at which to calculate the acf. Default is
 $10*log10(N/m)$ where $N$ is the number of observations and $m$ the number
 of series. Will be automatically limited to one less than the number of
 observations in the series.}
 
-\item{type}{character string giving the type of acf to be computed. Allowed
+\item{type}{Character string giving the type of acf to be computed. Allowed
 values are \dQuote{\code{correlation}} (the default),
 \dQuote{\code{covariance}} or \dQuote{\code{partial}}.}
 
 \item{plot}{logical. If \code{TRUE} (the default) the resulting acf, pacf or
 ccf is plotted.}
 
-\item{na.action}{function to handle missing values. Default is
-\code{\link[stats]{na.contiguous}}.  Useful alternatives are
+\item{na.action}{Function to handle missing values. Default is
+\code{\link[stats]{na.contiguous}}. Useful alternatives are
 \code{\link[stats]{na.pass}} and \code{\link{na.interp}}.}
 
 \item{demean}{Should covariances be about the sample means?}
 
 \item{...}{Additional arguments passed to the plotting function.}
 
-\item{y}{a univariate numeric time series object or a numeric vector.}
+\item{y}{A univariate numeric time series object or a numeric vector.}
 
 \item{calc.ci}{If \code{TRUE}, confidence intervals for the ACF/PACF
 estimates are calculated.}
@@ -102,7 +102,7 @@ univariate series.
 The functions improve the \code{\link[stats]{acf}},
 \code{\link[stats]{pacf}} and \code{\link[stats]{ccf}} functions. The main
 differences are that \code{Acf} does not plot a spike at lag 0 when
-\code{type=="correlation"} (which is redundant) and the horizontal axes show
+\code{type="correlation"} (which is redundant) and the horizontal axes show
 lags in time units rather than seasonal units.
 
 The tapered versions implement the ACF and PACF estimates and plots

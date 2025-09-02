@@ -23,7 +23,7 @@
 #' \code{object$residuals} if it exists, otherwise it returns the differences between
 #' the observations and their fitted values.
 #' @param type Type of residual.
-#' @param h If \code{type='response'}, then the fitted values are computed for
+#' @param h If \code{type="response"}, then the fitted values are computed for
 #' \code{h}-step forecasts.
 #' @param ... Other arguments not used.
 #' @return A \code{ts} object.
@@ -53,10 +53,10 @@ residuals.ar <- function(object, type=c("innovation", "response"), ...) {
 #'
 #' @aliases residuals.forecast_ARIMA
 #' @examples
-#' fit <- Arima(lynx,order=c(4,0,0), lambda=0.5)
+#' fit <- Arima(lynx, order=c(4,0,0), lambda=0.5)
 #'
 #' plot(residuals(fit))
-#' plot(residuals(fit, type='response'))
+#' plot(residuals(fit, type="response"))
 #' @export
 residuals.Arima <- function(object, type=c("innovation", "response", "regression"), h=1, ...) {
   type <- match.arg(type)

@@ -56,7 +56,7 @@ hw(
 )
 }
 \arguments{
-\item{y}{a numeric vector or time series of class \code{ts}}
+\item{y}{A numeric vector or time series of class \code{ts}.}
 
 \item{h}{Number of periods for forecasting.}
 
@@ -101,7 +101,7 @@ will be estimated.}
 it will be estimated.}
 
 \item{seasonal}{Type of seasonality in \code{hw} model. \code{"additive"} or
-\code{"multiplicative"}}
+\code{"multiplicative"}.}
 
 \item{gamma}{Value of smoothing parameter for the seasonal component. If
 \code{NULL}, it will be estimated.}

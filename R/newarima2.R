@@ -16,19 +16,19 @@
 #' Hyndman and Khandakar (2008).
 #'
 #' @inheritParams stats::arima
-#' @param y a univariate time series
+#' @param y A univariate time series.
 #' @param d Order of first-differencing. If missing, will choose a value based
 #' on \code{test}.
 #' @param D Order of seasonal-differencing. If missing, will choose a value
 #' based on \code{season.test}.
-#' @param max.p Maximum value of p
-#' @param max.q Maximum value of q
-#' @param max.P Maximum value of P
-#' @param max.Q Maximum value of Q
+#' @param max.p Maximum value of p.
+#' @param max.q Maximum value of q.
+#' @param max.P Maximum value of P.
+#' @param max.Q Maximum value of Q.
 #' @param max.order Maximum value of p+q+P+Q if model selection is not
 #' stepwise.
-#' @param max.d Maximum number of non-seasonal differences
-#' @param max.D Maximum number of seasonal differences
+#' @param max.d Maximum number of non-seasonal differences.
+#' @param max.D Maximum number of seasonal differences.
 #' @param start.p Starting value of p in stepwise procedure.
 #' @param start.q Starting value of q in stepwise procedure.
 #' @param start.P Starting value of P in stepwise procedure.
@@ -894,7 +894,7 @@ checkarima <- function(object) {
 #' Returns true if the object's numerical values do not vary.
 #'
 #'
-#' @param x object to be tested
+#' @param x Object to be tested.
 #' @export
 is.constant <- function(x) {
   x <- as.numeric(x)

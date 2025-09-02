@@ -27,7 +27,7 @@ decomposition.
 \examples{
 plot(USAccDeaths)
 fit <- stl(USAccDeaths, s.window="periodic")
-lines(trendcycle(fit),col="red")
+lines(trendcycle(fit), col="red")
 
 library(ggplot2)
 autoplot(cbind(

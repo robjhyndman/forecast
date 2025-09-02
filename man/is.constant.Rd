@@ -7,7 +7,7 @@
 is.constant(x)
 }
 \arguments{
-\item{x}{object to be tested}
+\item{x}{Object to be tested.}
 }
 \description{
 Returns true if the object's numerical values do not vary.

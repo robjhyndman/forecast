@@ -7,7 +7,7 @@
 bizdays(x, FinCenter = c("New York", "London", "NERC", "Toronto", "Zurich"))
 }
 \arguments{
-\item{x}{Monthly or quarterly time series}
+\item{x}{Monthly or quarterly time series.}
 
 \item{FinCenter}{Major financial center.}
 }

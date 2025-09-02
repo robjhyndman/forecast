@@ -13,12 +13,12 @@
 #' @keywords ts
 #' @examples
 #'
-#' par(mfrow=c(2,1))
-#' plot(ldeaths,xlab="Year",ylab="pounds",
-#'     main="Monthly deaths from lung disease (UK)")
+#' par(mfrow=c(2, 1))
+#' plot(ldeaths, xlab="Year", ylab="pounds",
+#'      main="Monthly deaths from lung disease (UK)")
 #' ldeaths.adj <- ldeaths/monthdays(ldeaths)*365.25/12
-#' plot(ldeaths.adj,xlab="Year",ylab="pounds",
-#'     main="Adjusted monthly deaths from lung disease (UK)")
+#' plot(ldeaths.adj, xlab="Year", ylab="pounds",
+#'      main="Adjusted monthly deaths from lung disease (UK)")
 #'
 #' @export
 monthdays <- function(x) {
@@ -335,8 +335,8 @@ fourierf <- function(x, K, h) {
 #' @examples
 #'
 #' plot(wineind)
-#' sm <- ma(wineind,order=12)
-#' lines(sm,col="red")
+#' sm <- ma(wineind, order=12)
+#' lines(sm, col="red")
 #'
 #' @export
 ma <- function(x, order, centre=TRUE) {

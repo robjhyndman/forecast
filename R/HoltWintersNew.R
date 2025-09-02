@@ -394,11 +394,11 @@ zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, seasonal="additive"
 #' ses, holt and hw are simply convenient wrapper functions for
 #' \code{forecast(ets(...))}.
 #'
-#' @param y a numeric vector or time series of class \code{ts}
+#' @param y A numeric vector or time series of class \code{ts}.
 #' @param h Number of periods for forecasting.
 #' @param damped If \code{TRUE}, use a damped trend.
 #' @param seasonal Type of seasonality in \code{hw} model. \code{"additive"} or
-#' \code{"multiplicative"}
+#' \code{"multiplicative"}.
 #' @param level Confidence level for prediction intervals.
 #' @param fan If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
 #' is suitable for fan plots.

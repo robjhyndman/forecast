@@ -44,7 +44,7 @@ auto.arima(
 )
 }
 \arguments{
-\item{y}{a univariate time series}
+\item{y}{A univariate time series.}
 
 \item{d}{Order of first-differencing. If missing, will choose a value based
 on \code{test}.}
@@ -52,20 +52,20 @@ on \code{test}.}
 \item{D}{Order of seasonal-differencing. If missing, will choose a value
 based on \code{season.test}.}
 
-\item{max.p}{Maximum value of p}
+\item{max.p}{Maximum value of p.}
 
-\item{max.q}{Maximum value of q}
+\item{max.q}{Maximum value of q.}
 
-\item{max.P}{Maximum value of P}
+\item{max.P}{Maximum value of P.}
 
-\item{max.Q}{Maximum value of Q}
+\item{max.Q}{Maximum value of Q.}
 
 \item{max.order}{Maximum value of p+q+P+Q if model selection is not
 stepwise.}
 
-\item{max.d}{Maximum number of non-seasonal differences}
+\item{max.d}{Maximum number of non-seasonal differences.}
 
-\item{max.D}{Maximum number of seasonal differences}
+\item{max.D}{Maximum number of seasonal differences.}
 
 \item{start.p}{Starting value of p in stepwise procedure.}
 

@@ -16,7 +16,7 @@
 #' A more general and flexible approach is available using \code{na.approx} in
 #' the \code{zoo} package.
 #'
-#' @param x time series
+#' @param x Time series.
 #' @param linear Should a linear interpolation be used.
 #' @inheritParams forecast.ts
 #' @return Time series
@@ -120,10 +120,10 @@ na.interp <- function(x, lambda=NULL,
 #' seasonal series. To estimate missing values and outlier replacements,
 #' linear interpolation is used on the (possibly seasonally adjusted) series
 #'
-#' @param x time series
+#' @param x Time series.
 #' @param replace.missing If \code{TRUE}, it not only replaces outliers, but
-#' also interpolates missing values
-#' @param iterate the number of iterations required
+#' also interpolates missing values.
+#' @param iterate The number of iterations required.
 #' @inheritParams forecast.ts
 #' @return Time series
 #' @author Rob J Hyndman
@@ -153,8 +153,8 @@ tsclean <- function(x, replace.missing=TRUE, iterate=2, lambda = NULL) {
 #' seasonal series to identify outliers and estimate their replacements.
 #'
 #'
-#' @param x time series
-#' @param iterate the number of iterations required
+#' @param x Time series.
+#' @param iterate The number of iterations required.
 #' @inheritParams forecast.ts
 #' @return \item{index}{Indicating the index of outlier(s)}
 #' \item{replacement}{Suggested numeric values to replace identified outliers}

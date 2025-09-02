@@ -10,8 +10,8 @@
 #' values for quarters are \code{"Q1"}, \code{"Q2"}, \code{"Q3"}, and
 #' \code{"Q4"}.
 #'
-#' @param x a univariate time series to be subsetted
-#' @param subset optional logical expression indicating elements to keep;
+#' @param x A univariate time series to be subsetted.
+#' @param subset Optional logical expression indicating elements to keep;
 #' missing values are taken as false. \code{subset} must be the same length as
 #' \code{x}.
 #' @param month Numeric or character vector of months to retain. Partial
@@ -30,8 +30,8 @@
 #' @seealso \code{\link[base]{subset}}, \code{\link[stats]{window}}
 #' @keywords ts
 #' @examples
-#' plot(subset(gas,month="November"))
-#' subset(woolyrnq,quarter=3)
+#' plot(subset(gas, month="November"))
+#' subset(woolyrnq, quarter=3)
 #' subset(USAccDeaths, start=49)
 #'
 #' @export

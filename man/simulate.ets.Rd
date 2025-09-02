@@ -117,7 +117,7 @@ data in \code{object}. Otherwise simulate unconditionally.}
 distributed errors or errors provided as \code{innov}.}
 
 \item{innov}{A vector of innovations to use as the error series. Ignored if
-\code{bootstrap==TRUE}. If not \code{NULL}, the value of \code{nsim} is set
+\code{bootstrap=TRUE}. If not \code{NULL}, the value of \code{nsim} is set
 to length of \code{innov}.}
 
 \item{...}{Other arguments, not currently used.}

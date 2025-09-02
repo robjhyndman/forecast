@@ -21,12 +21,12 @@
 #'
 #' @param e1 Forecast errors from method 1.
 #' @param e2 Forecast errors from method 2.
-#' @param alternative a character string specifying the alternative hypothesis,
+#' @param alternative A character string specifying the alternative hypothesis,
 #' must be one of \code{"two.sided"} (default), \code{"greater"} or
-#' \code{"less"}.  You can specify just the initial letter.
+#' \code{"less"}. You can specify just the initial letter.
 #' @param h The forecast horizon used in calculating \code{e1} and \code{e2}.
 #' @param power The power used in the loss function. Usually 1 or 2.
-#' @param varestimator a character string specifying the long-run variance estimator.
+#' @param varestimator A character string specifying the long-run variance estimator.
 #' Options are \code{"acf"} (default) or \code{"bartlett"}.
 #' @return A list with class \code{"htest"} containing the following
 #' components:

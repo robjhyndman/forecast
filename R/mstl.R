@@ -172,7 +172,7 @@ autoplot.mstl <- function(object, ...) {
 #' \code{forecastfunction=thetaf} uses the \code{\link{thetaf}} function for
 #' forecasting the seasonally adjusted series.
 #'
-#' @param y A univariate numeric time series of class \code{ts}
+#' @param y A univariate numeric time series of class \code{ts}.
 #' @param object An object of class \code{stl} or \code{stlm}. Usually the
 #' result of a call to \code{\link[stats]{stl}} or \code{stlm}.
 #' @param method Method to use for forecasting the seasonally adjusted series.

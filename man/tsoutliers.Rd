@@ -7,9 +7,9 @@
 tsoutliers(x, iterate = 2, lambda = NULL)
 }
 \arguments{
-\item{x}{time series}
+\item{x}{Time series.}
 
-\item{iterate}{the number of iterations required}
+\item{iterate}{The number of iterations required.}
 
 \item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
