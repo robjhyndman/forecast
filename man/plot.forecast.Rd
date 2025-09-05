@@ -103,7 +103,7 @@ on the plot.}
 
 \item{fitcol}{Line colour for fitted values.}
 
-\item{pch}{Plotting character (if \code{type=="p"} or \code{type=="o"}).}
+\item{pch}{Plotting character (if \code{type="p"} or \code{type="o"}).}
 }
 \value{
 None.

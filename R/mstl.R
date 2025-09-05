@@ -191,7 +191,7 @@ autoplot.mstl <- function(object, ...) {
 #' \code{\link[forecast]{ets}}. By default it allows any non-seasonal model. If
 #' \code{method!="ets"}, this argument is ignored.
 #' @param xreg Historical regressors to be used in
-#' \code{\link[forecast]{auto.arima}()} when \code{method=="arima"}.
+#' \code{\link[forecast]{auto.arima}()} when \code{method="arima"}.
 #' @param newxreg Future regressors to be used in
 #' \code{\link[forecast]{forecast.Arima}()}.
 #' @param h Number of periods for forecasting.
