@@ -265,7 +265,7 @@ plotlmforecast <- function(object, PI, shaded, shadecols, col, fcol, pi.col, pi.
 #' @param fitcol Line colour for fitted values.
 #' @param type 1-character string giving the type of plot desired. As for
 #' \code{\link[graphics]{plot.default}}.
-#' @param pch Plotting character (if \code{type=="p"} or \code{type=="o"}).
+#' @param pch Plotting character (if \code{type="p"} or \code{type="o"}).
 #' @param ... Other plotting parameters to affect the plot.
 #' @return None.
 #' @author Rob J Hyndman & Mitchell O'Hara-Wild

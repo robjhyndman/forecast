@@ -40,8 +40,8 @@
 #' The transformation is ignored if NULL. Otherwise,
 #' data transformed before model is estimated. When \code{lambda} is specified,
 #' \code{additive.only} is set to \code{TRUE}.
-#' @param lower Lower bounds for the parameters (alpha, beta, gamma, phi). Ignored if \code{bounds=="admissible"}.
-#' @param upper Upper bounds for the parameters (alpha, beta, gamma, phi). Ignored if \code{bounds=="admissible"}.
+#' @param lower Lower bounds for the parameters (alpha, beta, gamma, phi). Ignored if \code{bounds="admissible"}.
+#' @param upper Upper bounds for the parameters (alpha, beta, gamma, phi). Ignored if \code{bounds="admissible"}.
 #' @param opt.crit Optimization criterion. One of "mse" (Mean Square Error),
 #' "amse" (Average MSE over first \code{nmse} forecast horizons), "sigma"
 #' (Standard deviation of residuals), "mae" (Mean of absolute residuals), or

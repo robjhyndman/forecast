@@ -67,7 +67,7 @@ model.  The fractional differencing parameter is chosen first assuming an
 ARFIMA(2,d,0) model. Then the data are fractionally differenced using the
 estimated d and an ARMA model is selected for the resulting time series
 using \code{\link{auto.arima}}. Finally, the full ARFIMA(p,d,q) model is
-re-estimated using \code{\link[fracdiff]{fracdiff}}. If \code{estim=="mle"},
+re-estimated using \code{\link[fracdiff]{fracdiff}}. If \code{estim="mle"},
 the ARMA coefficients are refined using \code{\link[stats]{arima}}.
 }
 \examples{

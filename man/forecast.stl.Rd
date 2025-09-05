@@ -97,7 +97,7 @@ biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
 and fitted values.}
 
 \item{xreg}{Historical regressors to be used in
-\code{\link[forecast]{auto.arima}()} when \code{method=="arima"}.}
+\code{\link[forecast]{auto.arima}()} when \code{method="arima"}.}
 
 \item{newxreg}{Future regressors to be used in
 \code{\link[forecast]{forecast.Arima}()}.}
