@@ -14,7 +14,7 @@ Arima(
   xreg = NULL,
   include.mean = TRUE,
   include.drift = FALSE,
-  include.constant,
+  include.constant = NULL,
   lambda = model$lambda,
   biasadj = FALSE,
   method = c("CSS-ML", "ML", "CSS"),

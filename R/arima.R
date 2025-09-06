@@ -690,7 +690,7 @@ fitted.forecast_ARIMA <- fitted.Arima
 #'          log(window(AirPassengers,start=1957)))
 #'
 Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.mean=TRUE,
-                  include.drift=FALSE, include.constant, lambda=model$lambda, biasadj=FALSE,
+                  include.drift=FALSE, include.constant=NULL, lambda=model$lambda, biasadj=FALSE,
                   method=c("CSS-ML", "ML", "CSS"), model=NULL, x=y, ...) {
   # Remove outliers near ends
   # j <- time(x)
@@ -731,8 +731,8 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
     }
   }
 
-  if (!missing(include.constant)) {
-    if (include.constant) {
+  if (!is.null(include.constant)) {
+    if (isTRUE(include.constant)) {
       include.mean <- TRUE
       if ((order[2] + seasonal$order[2]) == 1) {
         include.drift <- TRUE
