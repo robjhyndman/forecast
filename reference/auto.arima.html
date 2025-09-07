@@ -249,8 +249,9 @@ and fitted values.</p></dd>
 
 <dt id="arg-parallel">parallel<a class="anchor" aria-label="anchor" href="#arg-parallel"></a></dt>
 <dd><p>If <code>TRUE</code> and <code>stepwise = FALSE</code>, then the
-specification search is done in parallel. This can give a significant
-speedup on multicore machines.</p></dd>
+specification search is done in parallel via <code><a href="https://rdrr.io/r/parallel/mclapply.html" class="external-link">parallel::mclapply</a></code>. This
+can give a significant speedup on multicore machines. On Windows, this
+option always fails because forking is not supported.</p></dd>
 
 
 <dt id="arg-num-cores">num.cores<a class="anchor" aria-label="anchor" href="#arg-num-cores"></a></dt>
