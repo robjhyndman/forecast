@@ -66,8 +66,9 @@
 #' @param allowdrift If \code{TRUE}, models with drift terms are considered.
 #' @param allowmean If \code{TRUE}, models with a non-zero mean are considered.
 #' @param parallel If \code{TRUE} and \code{stepwise = FALSE}, then the
-#' specification search is done in parallel. This can give a significant
-#' speedup on multicore machines.
+#' specification search is done in parallel via \code{parallel::mclapply}. This
+#' can give a significant speedup on multicore machines. On Windows, this
+#' option always fails because forking is not supported.
 #' @param num.cores Allows the user to specify the amount of parallel processes
 #' to be used if \code{parallel = TRUE} and \code{stepwise = FALSE}. If
 #' \code{NULL}, then the number of logical cores is automatically detected and
