@@ -324,7 +324,15 @@ accuracy.default <- function(object, x, test = NULL, d = NULL, D = NULL, f = NUL
 
 # Compute accuracy for an mforecast object
 #' @export
-accuracy.mforecast <- function(object, x, test = NULL, d, D, f = NULL, ...) {
+accuracy.mforecast <- function(
+  object,
+  x,
+  test = NULL,
+  d = NULL,
+  D = NULL,
+  f = NULL,
+  ...
+) {
   if (!is.null(f)) {
     warning("Using `f` as the argument for `accuracy()` is deprecated. Please use `object` instead.")
     object <- f
