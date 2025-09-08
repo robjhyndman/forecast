@@ -78,9 +78,9 @@ values, a regular back transformation will result in median forecasts. If
 biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
 and fitted values.}
 
-\item{lower}{Lower bounds for the parameters (alpha, beta, gamma, phi). Ignored if \code{bounds=="admissible"}.}
+\item{lower}{Lower bounds for the parameters (alpha, beta, gamma, phi). Ignored if \code{bounds="admissible"}.}
 
-\item{upper}{Upper bounds for the parameters (alpha, beta, gamma, phi). Ignored if \code{bounds=="admissible"}.}
+\item{upper}{Upper bounds for the parameters (alpha, beta, gamma, phi). Ignored if \code{bounds="admissible"}.}
 
 \item{opt.crit}{Optimization criterion. One of "mse" (Mean Square Error),
 "amse" (Average MSE over first \code{nmse} forecast horizons), "sigma"
