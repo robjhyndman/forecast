@@ -37,7 +37,7 @@ datamat <- function(..., flatten=TRUE, functions=TRUE) {
     }
   }
   class(vars) <- "data.frame"
-  row.names(vars) <- 1:max(sapply(vars, NROW))
+  row.names(vars) <- 1:max(vapply(vars, NROW, integer(1)))
   #   if(is.ts(vars[,1])){
   #     if(NCOL(vars)>1){
   #       class(vars) <- c(class(vars),"mts")

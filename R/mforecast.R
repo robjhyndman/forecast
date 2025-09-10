@@ -24,7 +24,7 @@ mlmsplit <- function(x, index=NULL) {
     tspx <- tsp(x$data[, 1]) # Consolidate ts attributes for forecast.lm
     x$data <- lapply(x$model, function(x) ts(x, start = tspx[1], end = tspx[2], frequency = tspx[3]))
     class(x$data) <- "data.frame"
-    row.names(x$data) <- 1:max(sapply(x$data, NROW))
+    row.names(x$data) <- 1:max(vapply(x$data, NROW, integer(1)))
   }
 
   x$terms <- terms(x$model)
