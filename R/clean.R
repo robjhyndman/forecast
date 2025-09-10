@@ -30,7 +30,7 @@
 #'
 #' @export
 na.interp <- function(x, lambda=NULL,
-                      linear=(frequency(x) <= 1 | sum(!is.na(x)) <= 2 * frequency(x))) {
+                      linear=(frequency(x) <= 1 || sum(!is.na(x)) <= 2 * frequency(x))) {
   missng <- is.na(x)
   # Do nothing if no missing values
   if (sum(missng) == 0L) {
@@ -104,7 +104,7 @@ na.interp <- function(x, lambda=NULL,
   tsp(x) <- tspx
 
   # Check stability and use linear interpolation if there is a problem
-  if(!linear && (max(x) > rangex[2L]+0.5*drangex || min(x) < rangex[1L]-0.5*drangex))
+  if (!linear && (max(x) > rangex[2L]+0.5*drangex || min(x) < rangex[1L]-0.5*drangex))
     return(na.interp(origx, lambda=lambda, linear=TRUE))
   else
     return(x)
@@ -233,15 +233,15 @@ tsoutliers <- function(x, iterate=2, lambda=NULL) {
   # Do no more than 2 iterations regardless of the value of iterate
   if (iterate > 1) {
     tmp <- tsoutliers(x, iterate = 1, lambda = lambda)
-    if (length(tmp$index) > 0) # Found some more
-    {
+    if (length(tmp$index) > 0) { # Found some more
       outliers <- sort(unique(c(outliers, tmp$index)))
       x[outliers] <- NA
-      if(sum(!is.na(x)) == 1L) {
+      if (sum(!is.na(x)) == 1L) {
         # Only one non-missing value
         x[is.na(x)] <- x[!is.na(x)]
-      } else
+      } else {
         x <- na.interp(x, lambda = lambda)
+      }
     }
   }
 
