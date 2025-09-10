@@ -59,15 +59,15 @@ monthdays <- function(x) {
 #' @author Rob J Hyndman
 #' @keywords ts
 #' @examples
-#' uk.stl <- stl(UKDriverDeaths,"periodic")
+#' uk.stl <- stl(UKDriverDeaths, "periodic")
 #' uk.sa <- seasadj(uk.stl)
-#' uk.fcast <- holt(uk.sa,36)
-#' seasf <- sindexf(uk.stl,36)
+#' uk.fcast <- holt(uk.sa, 36)
+#' seasf <- sindexf(uk.stl, 36)
 #' uk.fcast$mean <- uk.fcast$mean + seasf
-#' uk.fcast$lower <- uk.fcast$lower + cbind(seasf,seasf)
-#' uk.fcast$upper <- uk.fcast$upper + cbind(seasf,seasf)
+#' uk.fcast$lower <- uk.fcast$lower + cbind(seasf, seasf)
+#' uk.fcast$upper <- uk.fcast$upper + cbind(seasf, seasf)
 #' uk.fcast$x <- UKDriverDeaths
-#' plot(uk.fcast,main="Forecasts from Holt's method with seasonal adjustment")
+#' plot(uk.fcast, main="Forecasts from Holt's method with seasonal adjustment")
 #'
 #' @export
 sindexf <- function(object, h) {
@@ -124,7 +124,7 @@ sindexf <- function(object, h) {
 #' deaths.lm  <- tslm(ldeaths ~ month)
 #' tsdisplay(residuals(deaths.lm))
 #' ldeaths.fcast <- forecast(deaths.lm,
-#'     data.frame(month=I(seasonaldummy(ldeaths,36))))
+#'     data.frame(month=I(seasonaldummy(ldeaths, 36))))
 #' plot(ldeaths.fcast)
 #'
 #' # A simpler approach to seasonal dummy variables
@@ -215,7 +215,7 @@ seasonaldummyf <- function(x, h) {
 #'
 #' # Using Fourier series for a "ts" object
 #' # K is chosen to minimize the AICc
-#' deaths.model  <- auto.arima(USAccDeaths, xreg=fourier(USAccDeaths,K=5), seasonal=FALSE)
+#' deaths.model  <- auto.arima(USAccDeaths, xreg=fourier(USAccDeaths, K=5), seasonal=FALSE)
 #' deaths.fcast <- forecast(deaths.model, xreg=fourier(USAccDeaths, K=5, h=36))
 #' autoplot(deaths.fcast) + xlab("Year")
 #'

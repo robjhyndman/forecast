@@ -92,7 +92,8 @@ fit <- tbats(USAccDeaths)
 plot(forecast(fit))
 
 taylor.fit <- tbats(taylor)
-plot(forecast(taylor.fit))}
+plot(forecast(taylor.fit))
+}
 
 }
 \references{

@@ -40,7 +40,8 @@ TBATS model. The plotted components are Box-Cox transformed using the estimated 
 \dontrun{
 fit <- tbats(USAccDeaths)
 plot(fit)
-autoplot(fit, range.bars = TRUE)}
+autoplot(fit, range.bars = TRUE)
+}
 
 }
 \seealso{

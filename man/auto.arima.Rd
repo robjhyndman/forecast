@@ -174,7 +174,7 @@ Hyndman and Khandakar (2008).
 }
 \examples{
 fit <- auto.arima(WWWusage)
-plot(forecast(fit,h=20))
+plot(forecast(fit, h=20))
 
 }
 \references{

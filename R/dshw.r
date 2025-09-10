@@ -71,9 +71,9 @@
 #' fcast <- dshw(taylor)
 #' plot(fcast)
 #'
-#' t <- seq(0,5,by=1/20)
-#' x <- exp(sin(2*pi*t) + cos(2*pi*t*4) + rnorm(length(t),0,.1))
-#' fit <- dshw(x,20,5)
+#' t <- seq(0, 5, by=1/20)
+#' x <- exp(sin(2*pi*t) + cos(2*pi*t*4) + rnorm(length(t), 0, .1))
+#' fit <- dshw(x, 20, 5)
 #' plot(fit)
 #' }
 #'

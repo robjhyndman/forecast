@@ -121,8 +121,8 @@ p + geom_forecast()
 
 p + geom_forecast(h=60)
 p <- ggplot(aes(x=time, y=USAccDeaths), data=data)
-p + geom_forecast(level=c(70,98))
-p + geom_forecast(level=c(70,98),colour="lightblue")
+p + geom_forecast(level=c(70, 98))
+p + geom_forecast(level=c(70, 98), colour="lightblue")
 
 #Add forecasts to multivariate series with colour groups
 lungDeaths <- cbind(mdeaths, fdeaths)

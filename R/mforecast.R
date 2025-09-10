@@ -87,8 +87,8 @@ mlmsplit <- function(x, index=NULL) {
 #' fit <- tslm(lungDeaths ~ trend + season)
 #' fcast <- forecast(fit, h=10)
 #'
-#' carPower <- as.matrix(mtcars[,c("qsec","hp")])
-#' carmpg <- mtcars[,"mpg"]
+#' carPower <- as.matrix(mtcars[, c("qsec","hp")])
+#' carmpg <- mtcars[, "mpg"]
 #' fit <- lm(carPower ~ carmpg)
 #' fcast <- forecast(fit, newdata=data.frame(carmpg=30))
 #'
@@ -224,12 +224,12 @@ print.mforecast <- function(x, ...) {
 #' plot(fcast)
 #' autoplot(fcast)
 #'
-#' carPower <- as.matrix(mtcars[,c("qsec","hp")])
-#' carmpg <- mtcars[,"mpg"]
+#' carPower <- as.matrix(mtcars[, c("qsec","hp")])
+#' carmpg <- mtcars[, "mpg"]
 #' fit <- lm(carPower ~ carmpg)
 #' fcast <- forecast(fit, newdata=data.frame(carmpg=30))
 #' plot(fcast, xlab="Year")
-#' autoplot(fcast, xlab=rep("Year",2))
+#' autoplot(fcast, xlab=rep("Year", 2))
 #'
 #' @export
 plot.mforecast <- function(x, main=paste("Forecasts from", unique(x$method)), xlab="time", ...) {

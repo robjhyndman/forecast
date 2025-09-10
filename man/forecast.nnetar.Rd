@@ -103,7 +103,7 @@ fcast2 <- forecast(fit, h=20, PI=TRUE, npaths=100)
 plot(fcast2)
 
 ## Set up out-of-sample innovations using cross-validation
-fit_cv <- CVar(USAccDeaths,  size=2)
+fit_cv <- CVar(USAccDeaths, size=2)
 res_sd <- sd(fit_cv$residuals, na.rm=TRUE)
 myinnovs <- rnorm(20*100, mean=0, sd=res_sd)
 ## Forecast using new innovations

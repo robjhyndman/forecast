@@ -69,7 +69,7 @@ This function calls \code{predict.StructTS} and constructs an object of
 class "\code{forecast}" from the results.
 }
 \examples{
-fit <- StructTS(WWWusage,"level")
+fit <- StructTS(WWWusage, "level")
 plot(forecast(fit))
 
 }

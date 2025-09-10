@@ -266,13 +266,13 @@ SD.test <- function(wts, s=frequency(wts)) {
 #' @keywords ts
 #' @aliases forecast.forecast_ARIMA
 #' @examples
-#' fit <- Arima(WWWusage, c(3,1,0))
+#' fit <- Arima(WWWusage, c(3, 1, 0))
 #' plot(forecast(fit))
 #'
 #' library(fracdiff)
-#' x <- fracdiff.sim(100, ma=-.4, d=.3)$series
+#' x <- fracdiff.sim(100, ma = -0.4, d = 0.3)$series
 #' fit <- arfima(x)
-#' plot(forecast(fit, h=30))
+#' plot(forecast(fit, h = 30))
 #'
 #' @export
 forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[5], 10),
@@ -565,10 +565,10 @@ arima.errors <- function(object) {
 #' @examples
 #' fit <- ets(WWWusage)
 #' plot(WWWusage)
-#' lines(fitted(fit), col="red")
-#' lines(fitted(fit, h=2), col="green")
-#' lines(fitted(fit, h=3), col="blue")
-#' legend("topleft", legend=paste("h =",1:3), col=2:4, lty=1)
+#' lines(fitted(fit), col = "red")
+#' lines(fitted(fit, h = 2), col = "green")
+#' lines(fitted(fit, h = 3), col = "blue")
+#' legend("topleft", legend = paste("h =", 1:3), col = 2:4, lty = 1)
 #'
 #' @export
 fitted.Arima <- function(object, h = 1, ...) {
@@ -667,18 +667,18 @@ fitted.forecast_ARIMA <- fitted.Arima
 #' @examples
 #' library(ggplot2)
 #' WWWusage %>%
-#'   Arima(order=c(3,1,0)) %>%
+#'   Arima(order=c(3, 1, 0)) %>%
 #'   forecast(h=20) %>%
 #'   autoplot
 #'
 #' # Fit model to first few years of AirPassengers data
-#' air.model <- Arima(window(AirPassengers,end=1956+11/12),order=c(0,1,1),
-#'                    seasonal=list(order=c(0,1,1),period=12),lambda=0)
-#' plot(forecast(air.model,h=48))
+#' air.model <- Arima(window(AirPassengers, end=1956+11/12), order=c(0, 1, 1),
+#'                    seasonal=list(order=c(0, 1, 1),period=12), lambda=0)
+#' plot(forecast(air.model, h=48))
 #' lines(AirPassengers)
 #'
 #' # Apply fitted model to later data
-#' air.model2 <- Arima(window(AirPassengers,start=1957),model=air.model)
+#' air.model2 <- Arima(window(AirPassengers, start=1957), model=air.model)
 #'
 #' # Forecast accuracy measures on the log scale.
 #' # in-sample one-step forecasts.
@@ -686,8 +686,8 @@ fitted.forecast_ARIMA <- fitted.Arima
 #' # out-of-sample one-step forecasts.
 #' accuracy(air.model2)
 #' # out-of-sample multi-step forecasts
-#' accuracy(forecast(air.model,h=48,lambda=NULL),
-#'          log(window(AirPassengers,start=1957)))
+#' accuracy(forecast(air.model, h=48, lambda=NULL),
+#'          log(window(AirPassengers, start=1957)))
 #'
 Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.mean=TRUE,
                   include.drift=FALSE, include.constant=NULL, lambda=model$lambda, biasadj=FALSE,

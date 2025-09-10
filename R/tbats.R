@@ -66,7 +66,8 @@
 #' plot(forecast(fit))
 #'
 #' taylor.fit <- tbats(taylor)
-#' plot(forecast(taylor.fit))}
+#' plot(forecast(taylor.fit))
+#' }
 #'
 #' @export
 tbats <- function(y, use.box.cox=NULL, use.trend=NULL, use.damped.trend=NULL,
@@ -652,7 +653,8 @@ print.tbats <- function(x, ...) {
 #' \dontrun{
 #' fit <- tbats(USAccDeaths)
 #' plot(fit)
-#' autoplot(fit, range.bars = TRUE)}
+#' autoplot(fit, range.bars = TRUE)
+#' }
 #'
 #' @export
 plot.tbats <- function(x, main="Decomposition by TBATS model", ...) {
@@ -681,7 +683,8 @@ plot.tbats <- function(x, main="Decomposition by TBATS model", ...) {
 #' \dontrun{
 #' fit <- tbats(USAccDeaths, use.parallel=FALSE)
 #' components <- tbats.components(fit)
-#' plot(components)}
+#' plot(components)
+#' }
 #'
 #' @export
 tbats.components <- function(x) {

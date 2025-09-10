@@ -114,13 +114,13 @@ constructs an object of class "\code{forecast}" from the results. For
 Perera (1988).
 }
 \examples{
-fit <- Arima(WWWusage, c(3,1,0))
+fit <- Arima(WWWusage, c(3, 1, 0))
 plot(forecast(fit))
 
 library(fracdiff)
-x <- fracdiff.sim(100, ma=-.4, d=.3)$series
+x <- fracdiff.sim(100, ma = -0.4, d = 0.3)$series
 fit <- arfima(x)
-plot(forecast(fit, h=30))
+plot(forecast(fit, h = 30))
 
 }
 \references{

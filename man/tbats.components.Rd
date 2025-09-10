@@ -20,7 +20,8 @@ Extract the level, slope and seasonal components of a TBATS model. The extracted
 \dontrun{
 fit <- tbats(USAccDeaths, use.parallel=FALSE)
 components <- tbats.components(fit)
-plot(components)}
+plot(components)
+}
 
 }
 \references{

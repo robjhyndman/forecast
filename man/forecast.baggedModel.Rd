@@ -58,7 +58,8 @@ plot(fcast)
 fit2 <- baggedModel(WWWusage, fn="auto.arima")
 fcast2 <- forecast(fit2)
 plot(fcast2)
-accuracy(fcast2)}
+accuracy(fcast2)
+}
 
 }
 \references{

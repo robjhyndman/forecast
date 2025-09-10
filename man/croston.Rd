@@ -50,7 +50,7 @@ Note that prediction intervals are not computed as Croston's method has no
 underlying stochastic model.
 }
 \examples{
-y <- rpois(20,lambda=.3)
+y <- rpois(20, lambda=.3)
 fcast <- croston(y)
 plot(fcast)
 
