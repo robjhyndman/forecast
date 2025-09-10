@@ -50,4 +50,4 @@ Other contributors:
 }
 
 }
-\keyword{package}
+\keyword{internal}

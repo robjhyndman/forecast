@@ -1,5 +1,4 @@
-#' @keywords package
-#' @aliases forecast-package
+#' @keywords internal
 "_PACKAGE"
 
 #' @import parallel
