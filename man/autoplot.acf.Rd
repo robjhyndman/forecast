@@ -114,7 +114,8 @@ wineind \%>\% Acf(plot=FALSE) \%>\% autoplot
 \dontrun{
 wineind \%>\% taperedacf(plot=FALSE) \%>\% autoplot
 ggtaperedacf(wineind)
-ggtaperedpacf(wineind)}
+ggtaperedpacf(wineind)
+}
 ggCcf(mdeaths, fdeaths)
 
 }

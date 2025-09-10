@@ -1280,7 +1280,7 @@ admissible <- function(alpha, beta, gamma, phi, m) {
 #'
 #' fit <- ets(USAccDeaths)
 #' plot(fit)
-#' plot(fit,plot.type="single",ylab="",col=1:3)
+#' plot(fit, plot.type="single", ylab="", col=1:3)
 #'
 #' library(ggplot2)
 #' autoplot(fit)

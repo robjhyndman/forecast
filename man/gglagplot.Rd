@@ -71,7 +71,7 @@ plot. This helps visualise the change in 'auto-dependence' as lags increase.
 \examples{
 
 gglagplot(woolyrnq)
-gglagplot(woolyrnq,seasonal=FALSE)
+gglagplot(woolyrnq, seasonal=FALSE)
 
 lungDeaths <- cbind(mdeaths, fdeaths)
 gglagplot(lungDeaths, lags=2)

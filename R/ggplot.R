@@ -96,7 +96,8 @@ ggtsbreaks <- function(x) {
 #' \dontrun{
 #' wineind %>% taperedacf(plot=FALSE) %>% autoplot
 #' ggtaperedacf(wineind)
-#' ggtaperedpacf(wineind)}
+#' ggtaperedpacf(wineind)
+#' }
 #' ggCcf(mdeaths, fdeaths)
 #'
 #' @export
@@ -982,7 +983,7 @@ ggtsdisplay <- function(x, plot.type=c("partial", "histogram", "scatter", "spect
 #' @examples
 #'
 #' gglagplot(woolyrnq)
-#' gglagplot(woolyrnq,seasonal=FALSE)
+#' gglagplot(woolyrnq, seasonal=FALSE)
 #'
 #' lungDeaths <- cbind(mdeaths, fdeaths)
 #' gglagplot(lungDeaths, lags=2)
@@ -2281,8 +2282,8 @@ GeomForecastInterval <- ggplot2::ggproto(
 #'
 #' p + geom_forecast(h=60)
 #' p <- ggplot(aes(x=time, y=USAccDeaths), data=data)
-#' p + geom_forecast(level=c(70,98))
-#' p + geom_forecast(level=c(70,98),colour="lightblue")
+#' p + geom_forecast(level=c(70, 98))
+#' p + geom_forecast(level=c(70, 98), colour="lightblue")
 #'
 #' #Add forecasts to multivariate series with colour groups
 #' lungDeaths <- cbind(mdeaths, fdeaths)

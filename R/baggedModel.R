@@ -135,7 +135,8 @@ baggedETS <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), ...) {
 #' fit2 <- baggedModel(WWWusage, fn="auto.arima")
 #' fcast2 <- forecast(fit2)
 #' plot(fcast2)
-#' accuracy(fcast2)}
+#' accuracy(fcast2)
+#' }
 #'
 #' @export
 forecast.baggedModel <- function(object, h=ifelse(frequency(object$y) > 1, 2 * frequency(object$y), 10), ...) {

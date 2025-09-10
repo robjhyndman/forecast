@@ -72,7 +72,7 @@ It is included for completeness, but the \code{\link{ets}} is recommended
 for use instead of \code{\link[stats]{HoltWinters}}.
 }
 \examples{
-fit <- HoltWinters(WWWusage,gamma=FALSE)
+fit <- HoltWinters(WWWusage, gamma=FALSE)
 plot(forecast(fit))
 
 }

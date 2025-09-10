@@ -157,7 +157,7 @@ meanf <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALS
 #' @examples
 #'
 #' lambda <- BoxCox.lambda(lynx)
-#' lynx.fit <- ar(BoxCox(lynx,lambda))
+#' lynx.fit <- ar(BoxCox(lynx, lambda))
 #' plot(forecast(lynx.fit, h=20, lambda=lambda))
 #'
 #' @export
@@ -301,7 +301,7 @@ InvBoxCoxf <- function(x=NULL, fvar=NULL, lambda=NULL) {
 #' @seealso \code{\link[stats]{StructTS}}.
 #' @keywords ts
 #' @examples
-#' fit <- StructTS(WWWusage,"level")
+#' fit <- StructTS(WWWusage, "level")
 #' plot(forecast(fit))
 #'
 #' @export
@@ -407,7 +407,7 @@ forecast.StructTS <- function(object, h=ifelse(object$coef["epsilon"] > 1e-10, 2
 #' \code{\link[stats]{HoltWinters}}.
 #' @keywords ts
 #' @examples
-#' fit <- HoltWinters(WWWusage,gamma=FALSE)
+#' fit <- HoltWinters(WWWusage, gamma=FALSE)
 #' plot(forecast(fit))
 #'
 #' @export
@@ -523,7 +523,7 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x) > 1, 2 * f
 #' Forecasting}, \bold{24}, 389-402.
 #' @keywords ts
 #' @examples
-#' y <- rpois(20,lambda=.3)
+#' y <- rpois(20, lambda=.3)
 #' fcast <- croston(y)
 #' plot(fcast)
 #'

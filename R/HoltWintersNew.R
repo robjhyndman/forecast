@@ -456,7 +456,7 @@ zzhw <- function(x, lenx, alpha=NULL, beta=NULL, gamma=NULL, seasonal="additive"
 #'
 #' fcast <- holt(airmiles)
 #' plot(fcast)
-#' deaths.fcast <- hw(USAccDeaths,h=48)
+#' deaths.fcast <- hw(USAccDeaths, h=48)
 #' plot(deaths.fcast)
 #'
 #' @export
