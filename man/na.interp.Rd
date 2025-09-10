@@ -7,7 +7,7 @@
 na.interp(
   x,
   lambda = NULL,
-  linear = (frequency(x) <= 1 | sum(!is.na(x)) <= 2 * frequency(x))
+  linear = (frequency(x) <= 1 || sum(!is.na(x)) <= 2 * frequency(x))
 )
 }
 \arguments{
