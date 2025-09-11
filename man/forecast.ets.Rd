@@ -84,7 +84,7 @@ Returns forecasts and other information for univariate ETS models.
 }
 \examples{
 fit <- ets(USAccDeaths)
-plot(forecast(fit, h=48))
+plot(forecast(fit, h = 48))
 
 }
 \seealso{

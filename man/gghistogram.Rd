@@ -35,7 +35,7 @@ Plots a histogram and density estimates using ggplot.
 }
 \examples{
 
-gghistogram(lynx, add.kde=TRUE)
+gghistogram(lynx, add.kde = TRUE)
 
 }
 \seealso{

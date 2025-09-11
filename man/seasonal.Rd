@@ -26,17 +26,18 @@ decomposition.
 }
 \examples{
 plot(USAccDeaths)
-fit <- stl(USAccDeaths, s.window="periodic")
-lines(trendcycle(fit), col="red")
+fit <- stl(USAccDeaths, s.window = "periodic")
+lines(trendcycle(fit), col = "red")
 
 library(ggplot2)
 autoplot(cbind(
-	    Data=USAccDeaths,
-	    Seasonal=seasonal(fit),
-  	  Trend=trendcycle(fit),
-	    Remainder=remainder(fit)),
-    facets=TRUE) +
-  ylab("") + xlab("Year")
+    Data = USAccDeaths,
+    Seasonal = seasonal(fit),
+    Trend = trendcycle(fit),
+    Remainder = remainder(fit)
+  ),
+  facets = TRUE) +
+ ylab("") + xlab("Year")
 
 }
 \seealso{

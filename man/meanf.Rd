@@ -81,7 +81,7 @@ where \eqn{Z_t}{Z[t]} is a normal iid error. Forecasts are given by
 where \eqn{\mu}{mu} is estimated by the sample mean.
 }
 \examples{
-nile.fcast <- meanf(Nile, h=10)
+nile.fcast <- meanf(Nile, h = 10)
 plot(nile.fcast)
 
 }

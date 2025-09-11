@@ -58,9 +58,9 @@ values for quarters are \code{"Q1"}, \code{"Q2"}, \code{"Q3"}, and
 \code{"Q4"}.
 }
 \examples{
-plot(subset(gas, month="November"))
-subset(woolyrnq, quarter=3)
-subset(USAccDeaths, start=49)
+plot(subset(gas, month = "November"))
+subset(woolyrnq, quarter = 3)
+subset(USAccDeaths, start = 49)
 
 }
 \seealso{

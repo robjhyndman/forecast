@@ -115,8 +115,8 @@ accordingly.
 \examples{
 
 WWWusage \%>\% forecast \%>\% plot
-fit <- ets(window(WWWusage, end=60))
-fc <- forecast(WWWusage, model=fit)
+fit <- ets(window(WWWusage, end = 60))
+fc <- forecast(WWWusage, model = fit)
 }
 \seealso{
 Other functions which return objects of class \code{"forecast"} are

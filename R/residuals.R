@@ -53,10 +53,10 @@ residuals.ar <- function(object, type=c("innovation", "response"), ...) {
 #'
 #' @aliases residuals.forecast_ARIMA
 #' @examples
-#' fit <- Arima(lynx, order=c(4, 0, 0), lambda=0.5)
+#' fit <- Arima(lynx, order = c(4, 0, 0), lambda = 0.5)
 #'
 #' plot(residuals(fit))
-#' plot(residuals(fit, type="response"))
+#' plot(residuals(fit, type = "response"))
 #' @export
 residuals.Arima <- function(object, type=c("innovation", "response", "regression"), h=1, ...) {
   type <- match.arg(type)

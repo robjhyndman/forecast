@@ -110,9 +110,9 @@ ggtaperedpacf
 
 library(ggplot2)
 ggAcf(wineind)
-wineind \%>\% Acf(plot=FALSE) \%>\% autoplot
+wineind \%>\% Acf(plot = FALSE) \%>\% autoplot
 \dontrun{
-wineind \%>\% taperedacf(plot=FALSE) \%>\% autoplot
+wineind \%>\% taperedacf(plot = FALSE) \%>\% autoplot
 ggtaperedacf(wineind)
 ggtaperedpacf(wineind)
 }

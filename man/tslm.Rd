@@ -48,9 +48,9 @@ month or the quarter depending on the frequency of the data).
 }
 \examples{
 
-y <- ts(rnorm(120, 0, 3) + 1:120 + 20*sin(2*pi*(1:120)/12), frequency=12)
+y <- ts(rnorm(120, 0, 3) + 1:120 + 20 * sin(2 * pi * (1:120) / 12), frequency = 12)
 fit <- tslm(y ~ trend + season)
-plot(forecast(fit, h=20))
+plot(forecast(fit, h = 20))
 
 }
 \seealso{

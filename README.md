@@ -42,28 +42,28 @@ USAccDeaths |>
 # Automatic ARIMA forecasts
 WWWusage |>
   auto.arima() |>
-  forecast(h=20) |>
+  forecast(h = 20) |>
   autoplot()
 
 # ARFIMA forecasts
 library(fracdiff)
-x <- fracdiff.sim(100, ma=-.4, d=.3)$series
+x <- fracdiff.sim(100, ma = -0.4, d = 0.3)$series
 arfima(x) |>
-  forecast(h=30) |>
+  forecast(h = 30) |>
   autoplot()
 
 # Forecasting with STL
 USAccDeaths |>
-  stlm(modelfunction=ar) |>
-  forecast(h=36) |>
+  stlm(modelfunction = ar) |>
+  forecast(h = 36) |>
   autoplot()
 
 AirPassengers |>
-  stlf(lambda=0) |>
+  stlf(lambda = 0) |>
   autoplot()
 
 USAccDeaths |>
-  stl(s.window="periodic") |>
+  stl(s.window = "periodic") |>
   forecast() |>
   autoplot()
 

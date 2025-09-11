@@ -85,12 +85,12 @@ mlmsplit <- function(x, index=NULL) {
 #'
 #' lungDeaths <- cbind(mdeaths, fdeaths)
 #' fit <- tslm(lungDeaths ~ trend + season)
-#' fcast <- forecast(fit, h=10)
+#' fcast <- forecast(fit, h = 10)
 #'
-#' carPower <- as.matrix(mtcars[, c("qsec","hp")])
+#' carPower <- as.matrix(mtcars[, c("qsec", "hp")])
 #' carmpg <- mtcars[, "mpg"]
 #' fit <- lm(carPower ~ carmpg)
-#' fcast <- forecast(fit, newdata=data.frame(carmpg=30))
+#' fcast <- forecast(fit, newdata = data.frame(carmpg = 30))
 #'
 #' @export
 forecast.mlm <- function(object, newdata, h=10, level=c(80, 95), fan=FALSE, lambda=object$lambda, biasadj=NULL, ts=TRUE, ...) {
@@ -220,16 +220,16 @@ print.mforecast <- function(x, ...) {
 #'
 #' lungDeaths <- cbind(mdeaths, fdeaths)
 #' fit <- tslm(lungDeaths ~ trend + season)
-#' fcast <- forecast(fit, h=10)
+#' fcast <- forecast(fit, h = 10)
 #' plot(fcast)
 #' autoplot(fcast)
 #'
-#' carPower <- as.matrix(mtcars[, c("qsec","hp")])
+#' carPower <- as.matrix(mtcars[, c("qsec", "hp")])
 #' carmpg <- mtcars[, "mpg"]
 #' fit <- lm(carPower ~ carmpg)
-#' fcast <- forecast(fit, newdata=data.frame(carmpg=30))
-#' plot(fcast, xlab="Year")
-#' autoplot(fcast, xlab=rep("Year", 2))
+#' fcast <- forecast(fit, newdata = data.frame(carmpg = 30))
+#' plot(fcast, xlab = "Year")
+#' autoplot(fcast, xlab = rep("Year", 2))
 #'
 #' @export
 plot.mforecast <- function(x, main=paste("Forecasts from", unique(x$method)), xlab="time", ...) {

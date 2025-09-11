@@ -681,7 +681,7 @@ plot.tbats <- function(x, main="Decomposition by TBATS model", ...) {
 #' @examples
 #'
 #' \dontrun{
-#' fit <- tbats(USAccDeaths, use.parallel=FALSE)
+#' fit <- tbats(USAccDeaths, use.parallel = FALSE)
 #' components <- tbats.components(fit)
 #' plot(components)
 #' }

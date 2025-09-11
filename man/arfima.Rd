@@ -73,7 +73,7 @@ the ARMA coefficients are refined using \code{\link[stats]{arima}}.
 \examples{
 
 library(fracdiff)
-x <- fracdiff.sim(100, ma=-.4, d=.3)$series
+x <- fracdiff.sim(100, ma = -0.4, d = 0.3)$series
 fit <- arfima(x)
 tsdisplay(residuals(fit))
 

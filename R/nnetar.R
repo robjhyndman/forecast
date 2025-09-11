@@ -83,17 +83,17 @@
 #' plot(fcast)
 #'
 #' ## Arguments can be passed to nnet()
-#' fit <- nnetar(lynx, decay=0.5, maxit=150)
+#' fit <- nnetar(lynx, decay = 0.5, maxit = 150)
 #' plot(forecast(fit))
 #' lines(lynx)
 #'
 #' ## Fit model to first 100 years of lynx data
-#' fit <- nnetar(window(lynx, end=1920), decay=0.5, maxit=150)
-#' plot(forecast(fit, h=14))
+#' fit <- nnetar(window(lynx, end = 1920), decay = 0.5, maxit = 150)
+#' plot(forecast(fit, h = 14))
 #' lines(lynx)
 #'
 #' ## Apply fitted model to later data, including all optional arguments
-#' fit2 <- nnetar(window(lynx, start=1921), model=fit)
+#' fit2 <- nnetar(window(lynx, start = 1921), model = fit)
 #'
 #' @export
 nnetar <- function(y, p, P=1, size, repeats=20, xreg=NULL, lambda=NULL, model=NULL, subset=NULL, scale.inputs=TRUE, x=y, ...) {
@@ -447,21 +447,21 @@ print.nnetarmodels <- function(x, ...) {
 #' @keywords ts
 #' @examples
 #' ## Fit & forecast model
-#' fit <- nnetar(USAccDeaths, size=2)
-#' fcast <- forecast(fit, h=20)
+#' fit <- nnetar(USAccDeaths, size = 2)
+#' fcast <- forecast(fit, h = 20)
 #' plot(fcast)
 #'
 #' \dontrun{
 #' ## Include prediction intervals in forecast
-#' fcast2 <- forecast(fit, h=20, PI=TRUE, npaths=100)
+#' fcast2 <- forecast(fit, h = 20, PI = TRUE, npaths = 100)
 #' plot(fcast2)
 #'
 #' ## Set up out-of-sample innovations using cross-validation
-#' fit_cv <- CVar(USAccDeaths, size=2)
-#' res_sd <- sd(fit_cv$residuals, na.rm=TRUE)
-#' myinnovs <- rnorm(20*100, mean=0, sd=res_sd)
+#' fit_cv <- CVar(USAccDeaths, size = 2)
+#' res_sd <- sd(fit_cv$residuals, na.rm = TRUE)
+#' myinnovs <- rnorm(20 * 100, mean = 0, sd = res_sd)
 #' ## Forecast using new innovations
-#' fcast3 <- forecast(fit, h=20, PI=TRUE, npaths=100, innov=myinnovs)
+#' fcast3 <- forecast(fit, h = 20, PI = TRUE, npaths = 100, innov = myinnovs)
 #' plot(fcast3)
 #' }
 

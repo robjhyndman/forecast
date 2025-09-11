@@ -39,7 +39,7 @@
 #' @keywords ts
 #' @examples
 #' tsdisplay(diff(WWWusage))
-#' ggtsdisplay(USAccDeaths, plot.type="scatter")
+#' ggtsdisplay(USAccDeaths, plot.type = "scatter")
 #'
 #' @export
 tsdisplay <- function(x, plot.type=c("partial", "histogram", "scatter", "spectrum"), points=TRUE, ci.type=c("white", "ma"),
@@ -128,7 +128,7 @@ tsdisplay <- function(x, plot.type=c("partial", "histogram", "scatter", "spectru
 #' \url{https://otexts.com/fpp2/}
 #' @keywords ts
 #' @examples
-#' seasonplot(AirPassengers, col=rainbow(12), year.labels=TRUE)
+#' seasonplot(AirPassengers, col = rainbow(12), year.labels = TRUE)
 #'
 #' @export
 seasonplot <- function(x, s, season.labels=NULL, year.labels=FALSE, year.labels.left=FALSE,

@@ -79,10 +79,10 @@ scatterplot or spectrum.
 }
 \examples{
 library(ggplot2)
-ggtsdisplay(USAccDeaths, plot.type="scatter", theme=theme_bw())
+ggtsdisplay(USAccDeaths, plot.type = "scatter", theme = theme_bw())
 
 tsdisplay(diff(WWWusage))
-ggtsdisplay(USAccDeaths, plot.type="scatter")
+ggtsdisplay(USAccDeaths, plot.type = "scatter")
 
 }
 \references{

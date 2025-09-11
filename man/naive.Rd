@@ -126,11 +126,11 @@ where \eqn{Z_t}{Z[t]} is a normal iid error.
 }
 \examples{
 
-gold.fcast <- rwf(gold[1:60], h=50)
+gold.fcast <- rwf(gold[1:60], h = 50)
 plot(gold.fcast)
 
 
-plot(naive(gold, h=50), include=200)
+plot(naive(gold, h = 50), include = 200)
 
 
 plot(snaive(wineind))
