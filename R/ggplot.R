@@ -92,9 +92,9 @@ ggtsbreaks <- function(x) {
 #'
 #' library(ggplot2)
 #' ggAcf(wineind)
-#' wineind %>% Acf(plot=FALSE) %>% autoplot
+#' wineind %>% Acf(plot = FALSE) %>% autoplot
 #' \dontrun{
-#' wineind %>% taperedacf(plot=FALSE) %>% autoplot
+#' wineind %>% taperedacf(plot = FALSE) %>% autoplot
 #' ggtaperedacf(wineind)
 #' ggtaperedpacf(wineind)
 #' }
@@ -832,7 +832,7 @@ autoplot.mforecast <- function(object, PI = TRUE, facets = TRUE, colour = FALSE,
 #'
 #' @examples
 #' library(ggplot2)
-#' ggtsdisplay(USAccDeaths, plot.type="scatter", theme=theme_bw())
+#' ggtsdisplay(USAccDeaths, plot.type = "scatter", theme = theme_bw())
 #'
 #' @export
 ggtsdisplay <- function(x, plot.type=c("partial", "histogram", "scatter", "spectrum"),
@@ -983,11 +983,11 @@ ggtsdisplay <- function(x, plot.type=c("partial", "histogram", "scatter", "spect
 #' @examples
 #'
 #' gglagplot(woolyrnq)
-#' gglagplot(woolyrnq, seasonal=FALSE)
+#' gglagplot(woolyrnq, seasonal = FALSE)
 #'
 #' lungDeaths <- cbind(mdeaths, fdeaths)
-#' gglagplot(lungDeaths, lags=2)
-#' gglagchull(lungDeaths, lags=6)
+#' gglagplot(lungDeaths, lags = 2)
+#' gglagchull(lungDeaths, lags = 6)
 #'
 #' @export
 gglagplot <- function(x, lags=ifelse(frequency(x) > 9, 16, 9),
@@ -1295,8 +1295,8 @@ ggsubseriesplot <- function(x, labels = NULL, times = time(x), phase = cycle(x),
 #' @param polar Plot the graph on seasonal coordinates
 #'
 #' @examples
-#' ggseasonplot(AirPassengers, col=rainbow(12), year.labels=TRUE)
-#' ggseasonplot(AirPassengers, year.labels=TRUE, continuous=TRUE)
+#' ggseasonplot(AirPassengers, col = rainbow(12), year.labels = TRUE)
+#' ggseasonplot(AirPassengers, year.labels = TRUE, continuous = TRUE)
 #'
 #' @export
 ggseasonplot <- function(x, season.labels=NULL, year.labels=FALSE, year.labels.left=FALSE, type=NULL, col=NULL, continuous=FALSE, polar=FALSE, labelgap=0.04, ...) {
@@ -1821,7 +1821,7 @@ autolayer.mforecast <- function(object, series = NULL, PI = TRUE, ...) {
 #'
 #' lungDeaths <- cbind(mdeaths, fdeaths)
 #' autoplot(lungDeaths)
-#' autoplot(lungDeaths, facets=TRUE)
+#' autoplot(lungDeaths, facets = TRUE)
 #'
 #' @export
 autoplot.ts <- function(object, series=NULL, xlab = "Time", ylab = deparse(substitute(object)),
@@ -2270,24 +2270,25 @@ GeomForecastInterval <- ggplot2::ggproto(
 #' autoplot(lungDeaths) + geom_forecast()
 #'
 #' # Using fortify.ts
-#' p <- ggplot(aes(x=x, y=y), data=USAccDeaths)
+#' p <- ggplot(aes(x = x, y = y), data = USAccDeaths)
 #' p <- p + geom_line()
 #' p + geom_forecast()
 #'
 #' # Without fortify.ts
-#' data <- data.frame(USAccDeaths=as.numeric(USAccDeaths), time=as.numeric(time(USAccDeaths)))
-#' p <- ggplot(aes(x=time, y=USAccDeaths), data=data)
+#' data <- data.frame(USAccDeaths = as.numeric(USAccDeaths),
+#'                    time = as.numeric(time(USAccDeaths)))
+#' p <- ggplot(aes(x = time, y = USAccDeaths), data = data)
 #' p <- p + geom_line()
 #' p + geom_forecast()
 #'
-#' p + geom_forecast(h=60)
-#' p <- ggplot(aes(x=time, y=USAccDeaths), data=data)
-#' p + geom_forecast(level=c(70, 98))
-#' p + geom_forecast(level=c(70, 98), colour="lightblue")
+#' p + geom_forecast(h = 60)
+#' p <- ggplot(aes(x = time, y = USAccDeaths), data = data)
+#' p + geom_forecast(level = c(70, 98))
+#' p + geom_forecast(level = c(70, 98), colour = "lightblue")
 #'
 #' #Add forecasts to multivariate series with colour groups
 #' lungDeaths <- cbind(mdeaths, fdeaths)
-#' autoplot(lungDeaths) + geom_forecast(forecast(mdeaths), series="mdeaths")
+#' autoplot(lungDeaths) + geom_forecast(forecast(mdeaths), series = "mdeaths")
 #' }
 #'
 #' @export
@@ -2347,7 +2348,7 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
 #' @seealso \code{\link[graphics]{hist}}, \code{\link[ggplot2]{geom_histogram}}
 #' @examples
 #'
-#' gghistogram(lynx, add.kde=TRUE)
+#' gghistogram(lynx, add.kde = TRUE)
 #'
 #' @export
 gghistogram <- function(x, add.normal=FALSE, add.kde=FALSE, add.rug=TRUE, bins, boundary=0) {

@@ -79,7 +79,7 @@ that the forecast performance of the method is hardly affected by the
 restricted parameter space.
 }
 \examples{
-fcast <- splinef(uspop, h=5)
+fcast <- splinef(uspop, h = 5)
 plot(fcast)
 summary(fcast)
 

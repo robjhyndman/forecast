@@ -114,8 +114,8 @@ autocovariance proposed by McMurry and Politis (2010).
 Acf(wineind)
 Pacf(wineind)
 \dontrun{
-taperedacf(wineind, nsim=50)
-taperedpacf(wineind, nsim=50)
+taperedacf(wineind, nsim = 50)
+taperedpacf(wineind, nsim = 50)
 }
 
 }

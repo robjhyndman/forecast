@@ -82,7 +82,7 @@ autoplot(USAccDeaths)
 
 lungDeaths <- cbind(mdeaths, fdeaths)
 autoplot(lungDeaths)
-autoplot(lungDeaths, facets=TRUE)
+autoplot(lungDeaths, facets = TRUE)
 
 }
 \seealso{

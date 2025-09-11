@@ -85,12 +85,12 @@ generated on multiple series. Also, the output is reformatted into a
 
 lungDeaths <- cbind(mdeaths, fdeaths)
 fit <- tslm(lungDeaths ~ trend + season)
-fcast <- forecast(fit, h=10)
+fcast <- forecast(fit, h = 10)
 
-carPower <- as.matrix(mtcars[, c("qsec","hp")])
+carPower <- as.matrix(mtcars[, c("qsec", "hp")])
 carmpg <- mtcars[, "mpg"]
 fit <- lm(carPower ~ carmpg)
-fcast <- forecast(fit, newdata=data.frame(carmpg=30))
+fcast <- forecast(fit, newdata = data.frame(carmpg = 30))
 
 }
 \seealso{

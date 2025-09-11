@@ -71,10 +71,10 @@ For \code{nnetar} objects, when \code{type="innovations"} and \code{lambda} is u
 matrix of time-series consisting of the residuals from each of the fitted neural networks is returned.
 }
 \examples{
-fit <- Arima(lynx, order=c(4, 0, 0), lambda=0.5)
+fit <- Arima(lynx, order = c(4, 0, 0), lambda = 0.5)
 
 plot(residuals(fit))
-plot(residuals(fit, type="response"))
+plot(residuals(fit, type = "response"))
 }
 \seealso{
 \code{\link{fitted.Arima}}, \code{\link{checkresiduals}}.

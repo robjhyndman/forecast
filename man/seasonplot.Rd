@@ -75,10 +75,10 @@ chapter 2). This is like a time plot except that the data are plotted
 against the seasons in separate years.
 }
 \examples{
-ggseasonplot(AirPassengers, col=rainbow(12), year.labels=TRUE)
-ggseasonplot(AirPassengers, year.labels=TRUE, continuous=TRUE)
+ggseasonplot(AirPassengers, col = rainbow(12), year.labels = TRUE)
+ggseasonplot(AirPassengers, year.labels = TRUE, continuous = TRUE)
 
-seasonplot(AirPassengers, col=rainbow(12), year.labels=TRUE)
+seasonplot(AirPassengers, col = rainbow(12), year.labels = TRUE)
 
 }
 \references{

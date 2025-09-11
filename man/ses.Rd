@@ -140,7 +140,7 @@ ses, holt and hw are simply convenient wrapper functions for
 
 fcast <- holt(airmiles)
 plot(fcast)
-deaths.fcast <- hw(USAccDeaths, h=48)
+deaths.fcast <- hw(USAccDeaths, h = 48)
 plot(deaths.fcast)
 
 }

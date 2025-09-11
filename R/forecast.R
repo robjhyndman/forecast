@@ -77,8 +77,8 @@
 #' @examples
 #'
 #' WWWusage %>% forecast %>% plot
-#' fit <- ets(window(WWWusage, end=60))
-#' fc <- forecast(WWWusage, model=fit)
+#' fit <- ets(window(WWWusage, end = 60))
+#' fc <- forecast(WWWusage, model = fit)
 #' @export
 forecast.ts <- function(object, h=ifelse(frequency(object) > 1, 2 * frequency(object), 10),
                         level=c(80, 95), fan=FALSE, robust=FALSE, lambda = NULL, biasadj = FALSE, find.frequency = FALSE,
@@ -277,12 +277,12 @@ plotlmforecast <- function(object, PI, shaded, shadecols, col, fcol, pi.col, pi.
 #' @examples
 #' library(ggplot2)
 #'
-#' wine.fit <- hw(wineind, h=48)
+#' wine.fit <- hw(wineind, h = 48)
 #' plot(wine.fit)
 #' autoplot(wine.fit)
 #'
 #' fit <- tslm(wineind ~ fourier(wineind, 4))
-#' fcast <- forecast(fit, newdata=data.frame(fourier(wineind, 4, 20)))
+#' fcast <- forecast(fit, newdata = data.frame(fourier(wineind, 4, 20)))
 #' autoplot(fcast)
 #'
 #' @export

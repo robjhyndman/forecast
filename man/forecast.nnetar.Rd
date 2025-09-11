@@ -93,21 +93,21 @@ residuals to ameliorate this, see examples.
 }
 \examples{
 ## Fit & forecast model
-fit <- nnetar(USAccDeaths, size=2)
-fcast <- forecast(fit, h=20)
+fit <- nnetar(USAccDeaths, size = 2)
+fcast <- forecast(fit, h = 20)
 plot(fcast)
 
 \dontrun{
 ## Include prediction intervals in forecast
-fcast2 <- forecast(fit, h=20, PI=TRUE, npaths=100)
+fcast2 <- forecast(fit, h = 20, PI = TRUE, npaths = 100)
 plot(fcast2)
 
 ## Set up out-of-sample innovations using cross-validation
-fit_cv <- CVar(USAccDeaths, size=2)
-res_sd <- sd(fit_cv$residuals, na.rm=TRUE)
-myinnovs <- rnorm(20*100, mean=0, sd=res_sd)
+fit_cv <- CVar(USAccDeaths, size = 2)
+res_sd <- sd(fit_cv$residuals, na.rm = TRUE)
+myinnovs <- rnorm(20 * 100, mean = 0, sd = res_sd)
 ## Forecast using new innovations
-fcast3 <- forecast(fit, h=20, PI=TRUE, npaths=100, innov=myinnovs)
+fcast3 <- forecast(fit, h = 20, PI = TRUE, npaths = 100, innov = myinnovs)
 plot(fcast3)
 }
 

@@ -90,7 +90,7 @@
 #' @keywords ts
 #' @examples
 #' fit <- auto.arima(WWWusage)
-#' plot(forecast(fit, h=20))
+#' plot(forecast(fit, h = 20))
 #'
 #' @export
 auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,

@@ -13,12 +13,12 @@
 #' @keywords ts
 #' @examples
 #'
-#' par(mfrow=c(2, 1))
-#' plot(ldeaths, xlab="Year", ylab="pounds",
-#'      main="Monthly deaths from lung disease (UK)")
-#' ldeaths.adj <- ldeaths/monthdays(ldeaths)*365.25/12
-#' plot(ldeaths.adj, xlab="Year", ylab="pounds",
-#'      main="Adjusted monthly deaths from lung disease (UK)")
+#' par(mfrow = c(2, 1))
+#' plot(ldeaths, xlab = "Year", ylab = "pounds",
+#'      main = "Monthly deaths from lung disease (UK)")
+#' ldeaths.adj <- ldeaths / monthdays(ldeaths) * 365.25 / 12
+#' plot(ldeaths.adj, xlab = "Year", ylab = "pounds",
+#'      main = "Adjusted monthly deaths from lung disease (UK)")
 #'
 #' @export
 monthdays <- function(x) {
@@ -67,7 +67,7 @@ monthdays <- function(x) {
 #' uk.fcast$lower <- uk.fcast$lower + cbind(seasf, seasf)
 #' uk.fcast$upper <- uk.fcast$upper + cbind(seasf, seasf)
 #' uk.fcast$x <- UKDriverDeaths
-#' plot(uk.fcast, main="Forecasts from Holt's method with seasonal adjustment")
+#' plot(uk.fcast, main = "Forecasts from Holt's method with seasonal adjustment")
 #'
 #' @export
 sindexf <- function(object, h) {
@@ -121,15 +121,15 @@ sindexf <- function(object, h) {
 #'
 #' # Using seasonal dummy variables
 #' month <- seasonaldummy(ldeaths)
-#' deaths.lm  <- tslm(ldeaths ~ month)
+#' deaths.lm <- tslm(ldeaths ~ month)
 #' tsdisplay(residuals(deaths.lm))
 #' ldeaths.fcast <- forecast(deaths.lm,
-#'     data.frame(month=I(seasonaldummy(ldeaths, 36))))
+#'                           data.frame(month = I(seasonaldummy(ldeaths, 36))))
 #' plot(ldeaths.fcast)
 #'
 #' # A simpler approach to seasonal dummy variables
-#' deaths.lm  <- tslm(ldeaths ~ season)
-#' ldeaths.fcast <- forecast(deaths.lm, h=36)
+#' deaths.lm <- tslm(ldeaths ~ season)
+#' ldeaths.fcast <- forecast(deaths.lm, h = 36)
 #' plot(ldeaths.fcast)
 #'
 #' @export
@@ -215,14 +215,17 @@ seasonaldummyf <- function(x, h) {
 #'
 #' # Using Fourier series for a "ts" object
 #' # K is chosen to minimize the AICc
-#' deaths.model  <- auto.arima(USAccDeaths, xreg=fourier(USAccDeaths, K=5), seasonal=FALSE)
-#' deaths.fcast <- forecast(deaths.model, xreg=fourier(USAccDeaths, K=5, h=36))
+#' deaths.model <- auto.arima(USAccDeaths,
+#'                            xreg = fourier(USAccDeaths, K = 5),
+#'                            seasonal = FALSE)
+#' deaths.fcast <- forecast(deaths.model,
+#'                          xreg = fourier(USAccDeaths, K = 5, h = 36))
 #' autoplot(deaths.fcast) + xlab("Year")
 #'
 #' # Using Fourier series for a "msts" object
 #' taylor.lm <- tslm(taylor ~ fourier(taylor, K = c(3, 3)))
 #' taylor.fcast <- forecast(taylor.lm,
-#'     data.frame(fourier(taylor, K = c(3, 3), h = 270)))
+#'                          data.frame(fourier(taylor, K = c(3, 3), h = 270)))
 #' autoplot(taylor.fcast)
 #'
 #' @export
@@ -335,8 +338,8 @@ fourierf <- function(x, K, h) {
 #' @examples
 #'
 #' plot(wineind)
-#' sm <- ma(wineind, order=12)
-#' lines(sm, col="red")
+#' sm <- ma(wineind, order = 12)
+#' lines(sm, col = "red")
 #'
 #' @export
 ma <- function(x, order, centre=TRUE) {

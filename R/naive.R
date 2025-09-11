@@ -164,7 +164,7 @@ fitted.lagwalk <- function(object, ...){
 #'
 #' @examples
 #'
-#' gold.fcast <- rwf(gold[1:60], h=50)
+#' gold.fcast <- rwf(gold[1:60], h = 50)
 #' plot(gold.fcast)
 #'
 #' @export
@@ -256,7 +256,7 @@ rwf <- function(y, h=10, drift=FALSE, level=c(80, 95), fan=FALSE, lambda=NULL, b
 #' @keywords ts
 #' @examples
 #'
-#' plot(naive(gold, h=50), include=200)
+#' plot(naive(gold, h = 50), include = 200)
 #'
 #' @export
 naive <- function(y, h=10, level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=FALSE,

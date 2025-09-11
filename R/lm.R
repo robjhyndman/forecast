@@ -27,9 +27,9 @@
 #' @keywords stats
 #' @examples
 #'
-#' y <- ts(rnorm(120, 0, 3) + 1:120 + 20*sin(2*pi*(1:120)/12), frequency=12)
+#' y <- ts(rnorm(120, 0, 3) + 1:120 + 20 * sin(2 * pi * (1:120) / 12), frequency = 12)
 #' fit <- tslm(y ~ trend + season)
-#' plot(forecast(fit, h=20))
+#' plot(forecast(fit, h = 20))
 #'
 #' @export
 tslm <- function(formula, data, subset, lambda=NULL, biasadj=FALSE, ...) {
@@ -235,9 +235,9 @@ fitted.tslm <- function(object, ...){
 #' @keywords stats
 #' @examples
 #'
-#' y <- ts(rnorm(120,0,3) + 1:120 + 20*sin(2*pi*(1:120)/12), frequency=12)
+#' y <- ts(rnorm(120, 0, 3) + 1:120 + 20 * sin(2 * pi * (1:120) / 12), frequency = 12)
 #' fit <- tslm(y ~ trend + season)
-#' plot(forecast(fit, h=20))
+#' plot(forecast(fit, h = 20))
 #'
 #' @export
 forecast.lm <- function(object, newdata, h=10, level=c(80, 95), fan=FALSE, lambda=object$lambda, biasadj=NULL, ts=TRUE, ...) {
@@ -510,7 +510,7 @@ summary.tslm <- function(object, ...) {
 #' @keywords models
 #' @examples
 #'
-#' y <- ts(rnorm(120,0,3) + 20*sin(2*pi*(1:120)/12), frequency=12)
+#' y <- ts(rnorm(120, 0, 3) + 20 * sin(2 * pi * (1:120) / 12), frequency = 12)
 #' fit1 <- tslm(y ~ trend + season)
 #' fit2 <- tslm(y ~ season)
 #' CV(fit1)
