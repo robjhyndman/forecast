@@ -92,28 +92,28 @@
 <span><span class="co"># Automatic ARIMA forecasts</span></span>
 <span><span class="va">WWWusage</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/auto.arima.html">auto.arima</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">20</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span>h <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># ARFIMA forecasts</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mmaechler/fracdiff" class="external-link">fracdiff</a></span><span class="op">)</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/fracdiff/man/fracdiff.sim.html" class="external-link">fracdiff.sim</a></span><span class="op">(</span><span class="fl">100</span>, ma<span class="op">=</span><span class="op">-</span><span class="fl">.4</span>, d<span class="op">=</span><span class="fl">.3</span><span class="op">)</span><span class="op">$</span><span class="va">series</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/fracdiff/man/fracdiff.sim.html" class="external-link">fracdiff.sim</a></span><span class="op">(</span><span class="fl">100</span>, ma <span class="op">=</span> <span class="op">-</span><span class="fl">0.4</span>, d <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span><span class="op">$</span><span class="va">series</span></span>
 <span><span class="fu"><a href="reference/arfima.html">arfima</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">30</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span>h <span class="op">=</span> <span class="fl">30</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Forecasting with STL</span></span>
 <span><span class="va">USAccDeaths</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/forecast.stl.html">stlm</a></span><span class="op">(</span>modelfunction<span class="op">=</span><span class="va">ar</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">36</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/forecast.stl.html">stlm</a></span><span class="op">(</span>modelfunction <span class="op">=</span> <span class="va">ar</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span>h <span class="op">=</span> <span class="fl">36</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">AirPassengers</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/forecast.stl.html">stlf</a></span><span class="op">(</span>lambda<span class="op">=</span><span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/forecast.stl.html">stlf</a></span><span class="op">(</span>lambda <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">USAccDeaths</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/stl.html" class="external-link">stl</a></span><span class="op">(</span>s.window<span class="op">=</span><span class="st">"periodic"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/stl.html" class="external-link">stl</a></span><span class="op">(</span>s.window <span class="op">=</span> <span class="st">"periodic"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
