@@ -6,10 +6,10 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
   ic <- match.arg(ic)
   m <- frequency(x)
 
-  allowdrift <- allowdrift & (d + D) == 1
-  allowmean <- allowmean & (d + D) == 0
+  allowdrift <- allowdrift && (d + D) == 1
+  allowmean <- allowmean && (d + D) == 0
 
-  maxK <- (allowdrift | allowmean)
+  maxK <- (allowdrift || allowmean)
 
   # Choose model orders
   # Serial - technically could be combined with the code below
@@ -288,7 +288,7 @@ forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[
 
   use.drift <- is.element("drift", names(object$coef))
   x <- object$x <- getResponse(object)
-  usexreg <- (use.drift | is.element("xreg", names(object))) # | use.constant)
+  usexreg <- (use.drift || is.element("xreg", names(object))) # | use.constant)
 
   if (!is.null(xreg) && usexreg) {
     if(!is.numeric(xreg))
@@ -942,7 +942,7 @@ arimaorder <- function(object) {
   if (is.Arima(object)) {
     order <- object$arma[c(1, 6, 2, 3, 7, 4, 5)]
     names(order) <- c("p", "d", "q", "P", "D", "Q", "Frequency")
-    seasonal <- (order[7] > 1 & sum(order[4:6]) > 0)
+    seasonal <- (order[7] > 1 && sum(order[4:6]) > 0)
     if (seasonal) {
       return(order)
     } else {

@@ -357,10 +357,10 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     offset <- 0
   }
 
-  allowdrift <- allowdrift & (d + D) == 1
-  allowmean <- allowmean & (d + D) == 0
+  allowdrift <- allowdrift && (d + D) == 1
+  allowmean <- allowmean && (d + D) == 0
 
-  constant <- allowdrift | allowmean
+  constant <- allowdrift || allowmean
 
   if (approximation && trace) {
     cat("\n Fitting models using approximations to speed things up...\n")
@@ -411,24 +411,24 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   k <- 2
   # Basic AR model
   if (max.p > 0 || max.P > 0) {
-    fit <- myarima(x, order = c(max.p > 0, d, 0), seasonal = c((m > 1) & (max.P > 0), D, 0), constant = constant, ic, trace, approximation, method = method, offset = offset, xreg = xreg, ...)
-    results[k+1, ] <- c(max.p > 0, d, 0, (m > 1) & (max.P > 0), D, 0, constant, fit$ic)
+    fit <- myarima(x, order = c(max.p > 0, d, 0), seasonal = c((m > 1) && (max.P > 0), D, 0), constant = constant, ic, trace, approximation, method = method, offset = offset, xreg = xreg, ...)
+    results[k+1, ] <- c(max.p > 0, d, 0, (m > 1) && (max.P > 0), D, 0, constant, fit$ic)
     if (fit$ic < bestfit$ic) {
       bestfit <- fit
       p <- (max.p > 0)
-      P <- (m > 1) & (max.P > 0)
+      P <- (m > 1) && (max.P > 0)
       q <- Q <- 0
     }
     k <- k + 1
   }
   # Basic MA model
   if (max.q > 0 || max.Q > 0) {
-    fit <- myarima(x, order = c(0, d, max.q > 0), seasonal = c(0, D, (m > 1) & (max.Q > 0)), constant = constant, ic, trace, approximation, method = method, offset = offset, xreg = xreg, ...)
-    results[k+1, ] <- c(0, d, max.q > 0, 0, D, (m > 1) & (max.Q > 0), constant, fit$ic)
+    fit <- myarima(x, order = c(0, d, max.q > 0), seasonal = c(0, D, (m > 1) && (max.Q > 0)), constant = constant, ic, trace, approximation, method = method, offset = offset, xreg = xreg, ...)
+    results[k+1, ] <- c(0, d, max.q > 0, 0, D, (m > 1) && (max.Q > 0), constant, fit$ic)
     if (fit$ic < bestfit$ic) {
       bestfit <- fit
       p <- P <- 0
-      Q <- (m > 1) & (max.Q > 0)
+      Q <- (m > 1) && (max.Q > 0)
       q <- (max.q > 0)
     }
     k <- k + 1
@@ -691,7 +691,7 @@ myarima <- function(x, order = c(0, 0, 0), seasonal = c(0, 0, 0), constant=TRUE,
   lastnonmiss <- tail(which(!missing),1)
   n <- sum(!missing[firstnonmiss:lastnonmiss])
   m <- frequency(x)
-  use.season <- (sum(seasonal) > 0) & m > 0
+  use.season <- (sum(seasonal) > 0) && m > 0
   diffs <- order[2] + seasonal[2]
   if(is.null(method)){
     if (approximation) {
