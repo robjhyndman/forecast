@@ -506,7 +506,7 @@ autoplot.ets <- function(object, range.bars = NULL, ...) {
     )
 
     # Initialise ggplot object
-    p <- ggplot2::ggplot(ggplot2::aes(x = .data[["datetime"]], y = .data[["y"]]), data = data, ylab = "")
+    p <- ggplot2::ggplot(ggplot2::aes(x = .data[["datetime"]], y = .data[["y"]]), data = data)
 
     # Add data
     p <- p + ggplot2::geom_line(na.rm = TRUE)
@@ -1238,7 +1238,7 @@ ggsubseriesplot <- function(x, labels = NULL, times = time(x), phase = cycle(x),
     # p <- ggplot2::ggplot(ggplot2::aes_(x=~interaction(year, season), y=~y, group=~season), data=data, na.rm=TRUE)
     p <- ggplot2::ggplot(
       ggplot2::aes(x = .data[["time"]], y = .data[["y"]], group = .data[["season"]]),
-      data = data, na.rm = TRUE
+      data = data
     )
 
     # Remove vertical break lines
@@ -1344,7 +1344,7 @@ ggseasonplot <- function(x, season.labels=NULL, year.labels=FALSE, year.labels.l
     data <- rbind(data, startValues)
   }
   # Initialise ggplot object
-  p <- ggplot2::ggplot(ggplot2::aes(x = .data[["time"]], y = .data[["y"]], group = .data[["year"]], colour = .data[["year"]]), data = data, na.rm = TRUE)
+  p <- ggplot2::ggplot(ggplot2::aes(x = .data[["time"]], y = .data[["y"]], group = .data[["year"]], colour = .data[["year"]]), data = data)
   # p <- p + ggplot2::scale_x_continuous()
 
   # Add data
