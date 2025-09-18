@@ -41,11 +41,11 @@ bcloglik <- function(x, lower=-1, upper=2) {
   logx <- log(na.omit(c(x)))
   xdot <- exp(mean(logx))
   if (!is.ts(x)) {
-    fit <- lm(x ~ 1, data = data.frame(x = x), na.action = na.exclude)
+    fit <- lm(x ~ 1, data = data.frame(x = x, check.names = FALSE), na.action = na.exclude)
   } else if (frequency(x) > 1) {
-    fit <- tslm(x ~ trend + season, data = data.frame(x = x))
+    fit <- tslm(x ~ trend + season, data = data.frame(x = x, check.names = FALSE))
   } else {
-    fit <- tslm(x ~ trend, data = data.frame(x = x))
+    fit <- tslm(x ~ trend, data = data.frame(x = x, check.names = FALSE))
   }
   xqr <- fit$qr
   lambda <- seq(lower, upper, by = .05)
