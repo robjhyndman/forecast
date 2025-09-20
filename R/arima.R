@@ -806,7 +806,7 @@ arima2 <- function(x, model, xreg, method) {
       xreg <- cbind(newxreg, xreg)
       colnames(xreg) <- c("drift", origColNames)
     } else {
-      xreg <- as.matrix(data.frame(drift = newxreg))
+      xreg <- as.matrix(data.frame(drift = newxreg, check.names = FALSE))
     }
     use.xreg <- TRUE
   }

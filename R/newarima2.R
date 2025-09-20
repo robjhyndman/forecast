@@ -149,7 +149,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     fit$x <- orig.x
     fit$series <- series
     fit$call <- match.call()
-    fit$call$x <- data.frame(x = x)
+    fit$call$x <- data.frame(x = x, check.names = FALSE)
     fit$constant <- TRUE
     return(fit)
   }
@@ -316,7 +316,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
     fit$x <- orig.x
     fit$series <- series
     fit$call <- match.call()
-    fit$call$x <- data.frame(x = x)
+    fit$call$x <- data.frame(x = x, check.names = FALSE)
     return(fit)
   }
 
@@ -374,7 +374,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
       parallel = parallel, num.cores = num.cores, ...
     )
     bestfit$call <- match.call()
-    bestfit$call$x <- data.frame(x = x)
+    bestfit$call$x <- data.frame(x = x, check.names = FALSE)
     bestfit$lambda <- lambda
     bestfit$x <- orig.x
     bestfit$series <- series
@@ -670,7 +670,7 @@ auto.arima <- function(y, d=NA, D=NA, max.p=5, max.q=5,
   bestfit$series <- series
   bestfit$ic <- NULL
   bestfit$call <- match.call()
-  bestfit$call$x <- data.frame(x = x)
+  bestfit$call$x <- data.frame(x = x, check.names = FALSE)
   bestfit$lambda <- lambda
   bestfit$fitted <- fitted.Arima(bestfit)
 
