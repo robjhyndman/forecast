@@ -21,3 +21,4 @@ vignettes/*_cache
 ^\.vscode$
 ^rstudio$
 rstudio
+.history
