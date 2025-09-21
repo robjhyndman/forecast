@@ -61,6 +61,8 @@ intervals when \code{bootstrap=TRUE}.}
 \item{...}{Other arguments.}
 
 \item{y}{A univariate time series of class \code{ts}.}
+
+\item{x}{Deprecated. Included for backwards compatibility.}
 }
 \value{
 An object of class \code{forecast} which is a list containing at least the
