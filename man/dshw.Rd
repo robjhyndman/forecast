@@ -67,12 +67,12 @@ set.}
 \value{
 An object of class "\code{forecast}" which is a list that includes the
 following elements:
-  \item{model}{A list containing information about the fitted model}
-  \item{method}{The name of the forecasting method as a character string}
-  \item{mean}{Point forecasts as a time series}
-  \item{x}{The original time series.}
-  \item{residuals}{Residuals from the fitted model. That is x minus fitted values.}
-  \item{fitted}{Fitted values (one-step forecasts)}
+\item{model}{A list containing information about the fitted model}
+\item{method}{The name of the forecasting method as a character string}
+\item{mean}{Point forecasts as a time series}
+\item{x}{The original time series.}
+\item{residuals}{Residuals from the fitted model. That is x minus fitted values.}
+\item{fitted}{Fitted values (one-step forecasts)}
 
 The function \code{summary} is used to obtain and print a summary of the
 results, while the function \code{plot} produces a plot of the forecasts.

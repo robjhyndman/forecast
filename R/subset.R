@@ -23,7 +23,7 @@
 #' @param ... Other arguments, unused.
 #' @return If \code{subset} is used, a numeric vector is returned with no ts
 #' attributes. If \code{start} and/or \code{end} are used, a ts object is
-#' returned consisting of x[start:end], with the appropriate time series
+#' returned consisting of x\[start:end\], with the appropriate time series
 #' attributes retained. Otherwise, a ts object is returned with frequency equal
 #' to the length of \code{month}, \code{quarter} or \code{season}.
 #' @author Rob J Hyndman

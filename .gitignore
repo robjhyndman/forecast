@@ -16,3 +16,4 @@ doc/*.Rmd
 Meta
 docs/*
 .vscode/*
+.history

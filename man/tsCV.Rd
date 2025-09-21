@@ -43,7 +43,7 @@ Let \code{y} contain the time series \eqn{y_1,\dots,y_T}{y[1:T]}. Then
 y_{t+h}-\hat{y}_{t+h|t}}{e[t+h] = y[t+h]-f[t+h]}. If h=1, these are returned as a
 vector, \eqn{e_1,\dots,e_T}{e[1:T]}. For h>1, they are returned as a matrix with
 the hth column containing errors for forecast horizon h.
- The first few errors may be missing as
+The first few errors may be missing as
 it may not be possible to apply \code{forecastfunction} to very short time
 series.
 }

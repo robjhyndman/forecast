@@ -25,7 +25,7 @@
 #' For non-seasonal data, the fitted model is denoted as an NNAR(p,k) model,
 #' where k is the number of hidden nodes. This is analogous to an AR(p) model
 #' but with nonlinear functions. For seasonal data, the fitted model is called
-#' an NNAR(p,P,k)[m] model, which is analogous to an ARIMA(p,0,0)(P,0,0)[m]
+#' an NNAR(p,P,k)\[m\] model, which is analogous to an ARIMA(p,0,0)(P,0,0)\[m\]
 #' model but with nonlinear functions.
 #'
 #' @aliases print.nnetar print.nnetarmodels

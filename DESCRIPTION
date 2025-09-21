@@ -65,6 +65,7 @@ BugReports: https://github.com/robjhyndman/forecast/issues
 License: GPL-3
 URL: https://pkg.robjhyndman.com/forecast/, https://github.com/robjhyndman/forecast
 VignetteBuilder: knitr
-Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
+Encoding: UTF-8
 Config/testthat/edition: 3

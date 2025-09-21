@@ -27,7 +27,7 @@ series and 0 for seasonal series.}
 for the denominator in MASE calculation. Default value is 0 for non-seasonal
 series and 1 for seasonal series.}
 
-\item{f}{Deprecated. Please use `object` instead.}
+\item{f}{Deprecated. Please use \code{object} instead.}
 
 \item{...}{Additional arguments depending on the specific method.}
 }
@@ -45,13 +45,13 @@ and Koehler (2006).
 \details{
 The measures calculated are:
 \itemize{
-  \item ME: Mean Error
-  \item RMSE: Root Mean Squared Error
-  \item MAE: Mean Absolute Error
-  \item MPE: Mean Percentage Error
-  \item MAPE: Mean Absolute Percentage Error
-  \item MASE: Mean Absolute Scaled Error
-  \item ACF1: Autocorrelation of errors at lag 1.
+\item ME: Mean Error
+\item RMSE: Root Mean Squared Error
+\item MAE: Mean Absolute Error
+\item MPE: Mean Percentage Error
+\item MAPE: Mean Absolute Percentage Error
+\item MASE: Mean Absolute Scaled Error
+\item ACF1: Autocorrelation of errors at lag 1.
 }
 By default, the MASE calculation is scaled using MAE of training set naive
 forecasts for non-seasonal time series, training set seasonal naive forecasts

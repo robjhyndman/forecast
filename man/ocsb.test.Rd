@@ -16,11 +16,13 @@ ocsb.test(x, lag.method = c("fixed", "AIC", "BIC", "AICc"), maxlag = 0)
 }
 \value{
 ocsb.test returns a list of class "OCSBtest" with the following components:
-* statistics the value of the test statistics.
-* pvalues the p-values for each test statistics.
-* method a character string describing the type of test.
-* data.name a character string giving the name of the data.
-* fitted.model	the fitted regression model.
+\itemize{
+\item statistics the value of the test statistics.
+\item pvalues the p-values for each test statistics.
+\item method a character string describing the type of test.
+\item data.name a character string giving the name of the data.
+\item fitted.model	the fitted regression model.
+}
 }
 \description{
 An implementation of the Osborn, Chui, Smith, and Birchenhall (OCSB) test.
