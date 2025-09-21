@@ -188,7 +188,8 @@ forecast.mean_model <- function(
     x = object$y,
     residuals = object$residuals,
     fitted = object$fitted,
-    lambda = lambda
+    lambda = lambda,
+    series = object$series
   )
   out$model$call <- match.call()
 
