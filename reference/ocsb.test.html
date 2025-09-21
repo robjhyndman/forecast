@@ -60,13 +60,12 @@
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>ocsb.test returns a list of class "OCSBtest" with the following components:
-* statistics the value of the test statistics.
-* pvalues the p-values for each test statistics.
-* method a character string describing the type of test.
-* data.name a character string giving the name of the data.
-* fitted.model	the fitted regression model.</p>
-    </div>
+    <p>ocsb.test returns a list of class "OCSBtest" with the following components:</p><ul><li><p>statistics the value of the test statistics.</p></li>
+<li><p>pvalues the p-values for each test statistics.</p></li>
+<li><p>method a character string describing the type of test.</p></li>
+<li><p>data.name a character string giving the name of the data.</p></li>
+<li><p>fitted.model	the fitted regression model.</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The regression equation may include lags of the dependent variable. When lag.method = "fixed", the lag order is fixed to maxlag; otherwise, maxlag is the maximum number of lags considered in a lag selection procedure that minimises the lag.method criterion, which can be AIC or BIC or corrected AIC, AICc, obtained as AIC + (2k(k+1))/(n-k-1), where k is the number of parameters and n is the number of available observations in the model.</p>

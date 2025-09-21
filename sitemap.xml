@@ -40,6 +40,7 @@
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.bats.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.ets.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.lm.html</loc></url>
+<url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.mean_model.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.mlm.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.modelAR.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.mts.html</loc></url>
@@ -59,7 +60,7 @@
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/is.ets.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/is.forecast.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/ma.html</loc></url>
-<url><loc>https://pkg.robjhyndman.com/forecast/reference/meanf.html</loc></url>
+<url><loc>https://pkg.robjhyndman.com/forecast/reference/mean_model.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/modelAR.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/modeldf.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/monthdays.html</loc></url>

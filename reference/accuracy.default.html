@@ -93,7 +93,7 @@ series and 1 for seasonal series.</p></dd>
 
 
 <dt id="arg-f">f<a class="anchor" aria-label="anchor" href="#arg-f"></a></dt>
-<dd><p>Deprecated. Please use `object` instead.</p></dd>
+<dd><p>Deprecated. Please use <code>object</code> instead.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -140,13 +140,15 @@ Section 3.4 "Evaluating forecast accuracy".
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="naive.html">rwf</a></span><span class="op">(</span><span class="va">EuStockMarkets</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">200</span>, <span class="fl">1</span><span class="op">]</span>, h <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="meanf.html">meanf</a></span><span class="op">(</span><span class="va">EuStockMarkets</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">200</span>, <span class="fl">1</span><span class="op">]</span>, h <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="forecast.mean_model.html">meanf</a></span><span class="op">(</span><span class="va">EuStockMarkets</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">200</span>, <span class="fl">1</span><span class="op">]</span>, h <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy</a></span><span class="op">(</span><span class="va">fit1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     ME    RMSE      MAE        MPE      MAPE MASE         ACF1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Training set 0.4393467 15.8461 8.959648 0.02128535 0.5533582    1 -0.007760885</span>
 <span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy</a></span><span class="op">(</span><span class="va">fit2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       ME     RMSE      MAE        MPE     MAPE MASE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Training set 6.24991e-14 57.83723 46.98108 -0.1240662 2.865357    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       ME     RMSE      MAE        MPE     MAPE    MASE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Training set 6.24991e-14 57.83723 46.98108 -0.1240662 2.865357 5.24363</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   ACF1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Training set 0.9574449</span>
 <span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy</a></span><span class="op">(</span><span class="va">fit1</span>, <span class="va">EuStockMarkets</span><span class="op">[</span><span class="fl">201</span><span class="op">:</span><span class="fl">300</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     ME    RMSE       MAE         MPE      MAPE    MASE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Training set 0.4393467 15.8461  8.959648  0.02128535 0.5533582 1.00000</span>
@@ -156,8 +158,11 @@ Section 3.4 "Evaluating forecast accuracy".
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test set               NA</span>
 <span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy</a></span><span class="op">(</span><span class="va">fit2</span>, <span class="va">EuStockMarkets</span><span class="op">[</span><span class="fl">201</span><span class="op">:</span><span class="fl">300</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                        ME      RMSE       MAE        MPE     MAPE     MASE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Training set 6.249910e-14  57.83723  46.98108 -0.1240662 2.865357 1.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Test set     8.429485e+01 114.96571 105.65361  4.7004265 6.075968 2.248855</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Training set 6.249910e-14  57.83723  46.98108 -0.1240662 2.865357  5.24363</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test set     8.429485e+01 114.96571 105.65361  4.7004265 6.075968 11.79216</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   ACF1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Training set 0.9574449</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test set            NA</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fit1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">EuStockMarkets</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">300</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="accuracy.default-1.png" alt="" width="700" height="433"></span>
