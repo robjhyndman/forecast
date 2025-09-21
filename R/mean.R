@@ -95,7 +95,7 @@ print.mean_model <- function(x, digits = max(3, getOption("digits") - 3), ...) {
 #' @inheritParams forecast.Arima
 #' @param object An object of class `mean_model` as returned by [mean_model()].
 #' @param y A univariate time series of class `ts`.
-#'
+#' @param x Deprecated. Included for backwards compatibility.
 #' @return An object of class `forecast` which is a list containing at least the
 #' following elements:
 #' \describe{
