@@ -1,4 +1,7 @@
 # forecast (development version)
+  * Added mean_model() and forecast.mean_model()
+  * Bug fixes
+  * Documentation improvements
 
 # forecast 8.24.0
   * Documentation improvements
