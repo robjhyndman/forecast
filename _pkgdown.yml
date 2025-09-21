@@ -92,6 +92,7 @@ reference:
       - baggedModel
       - bats
       - tbats
+      - mean_model
       - nnetar
       - stlm
       - tslm
@@ -120,6 +121,7 @@ reference:
       - forecast.fracdiff
       - forecast.HoltWinters
       - forecast.lm
+      - forecast.mean_model
       - forecast.mlm
       - forecast.modelAR
       - forecast.mts
