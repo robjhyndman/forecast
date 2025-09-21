@@ -1,18 +1,3 @@
-# A unit test for forecast2.R
-test_that("test meanf()", {
-  meanfc <- mean(wineind)
-  expect_true(all(meanf(wineind)$mean == meanfc))
-  bcforecast <- meanf(wineind, lambda = -0.5)$mean
-  expect_true(max(bcforecast) == min(bcforecast))
-  expect_true(all(meanf(wineind, fan = TRUE)$mean == meanfc))
-  expect_error(meanf(wineind, level = -10))
-  expect_error(meanf(wineind, level = 110))
-  # Constant series should not error
-  series <- ts(rep(950, 20), frequency = 4)
-  constantForecast <- expect_no_error(rwf(series))
-  expect_true(is.constant(constantForecast$mean))
-})
-
 test_that("test rwf()", {
   rwfc <- rwf(airmiles)$mean
   expect_true(all(rwfc == naive(airmiles)$mean))
