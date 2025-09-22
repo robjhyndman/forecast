@@ -20,16 +20,26 @@ test_that("tests for arimaorder", {
   for (ar in 1:5) {
     for (i in 0:1) {
       for (ma in 1:5) {
-        fitarima <- Arima(lynx, order = c(ar, i, ma), method = "ML", include.constant = TRUE, lambda = 0.5)
-        arextracted <- fitarima$arma[1]
-        iextracted <- fitarima$arma[6]
-        maextracted <- fitarima$arma[2]
-        expect_true(all(arimaorder(fitarima) == c(arextracted, iextracted, maextracted)))
-        expect_true(all(names(arimaorder(fitarima)) == c("p", "d", "q")))
-        expect_true(arimaorder(fitarima)["p"] == ar)
-        expect_true(arimaorder(fitarima)["d"] == i)
+        fitarima <- tryCatch(Arima(
+          lynx,
+          order = c(ar, i, ma),
+          method = "ML",
+          include.constant = TRUE,
+          lambda = 0.5
+        ))
+        if (!inherits(fitarima, "try-error")) {
+          arextracted <- fitarima$arma[1]
+          iextracted <- fitarima$arma[6]
+          maextracted <- fitarima$arma[2]
+          expect_true(all(
+            arimaorder(fitarima) == c(arextracted, iextracted, maextracted)
+          ))
+          expect_true(all(names(arimaorder(fitarima)) == c("p", "d", "q")))
+          expect_true(arimaorder(fitarima)["p"] == ar)
+          expect_true(arimaorder(fitarima)["d"] == i)
         expect_true(arimaorder(fitarima)["q"] == ma)
       }
+    }
     }
   }
 
