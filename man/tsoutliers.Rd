@@ -34,7 +34,7 @@ tsoutliers(gold)
 Hyndman (2021) "Detecting time series outliers" \url{https://robjhyndman.com/hyndsight/tsoutliers/}.
 }
 \seealso{
-\code{\link[forecast]{na.interp}}, \code{\link[forecast]{tsclean}}
+\code{\link[=na.interp]{na.interp()}}, \code{\link[=tsclean]{tsclean()}}
 }
 \author{
 Rob J Hyndman

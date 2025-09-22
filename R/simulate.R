@@ -1,45 +1,41 @@
 #' Simulation from a time series model
 #'
-#' Returns a time series based on the model object \code{object}.
+#' Returns a time series based on the model object `object`.
 #'
-#' With \code{simulate.Arima()}, the \code{object} should be produced by
-#' \code{\link{Arima}} or \code{\link{auto.arima}}, rather than
-#' \code{\link[stats]{arima}}. By default, the error series is assumed normally
-#' distributed and generated using \code{\link[stats]{rnorm}}. If \code{innov}
-#' is present, it is used instead. If \code{bootstrap=TRUE} and
-#' \code{innov=NULL}, the residuals are resampled instead.
+#' With `simulate.Arima()`, the `object` should be produced by [Arima()] or
+#' [auto.arima()], rather than [stats::arima()]. By default, the error series
+#' is assumed normally distributed and generated using [stats::rnorm()]. If
+#' `innov` is present, it is used instead. If `bootstrap = TRUE` and
+#' `innov = NULL`, the residuals are resampled instead.
 #'
-#' When \code{future=TRUE}, the sample paths are conditional on the data. When
-#' \code{future=FALSE} and the model is stationary, the sample paths do not
-#' depend on the data at all. When \code{future=FALSE} and the model is
+#' When `future = TRUE`, the sample paths are conditional on the data. When
+#' `future = FALSE` and the model is stationary, the sample paths do not
+#' depend on the data at all. When `future = FALSE` and the model is
 #' non-stationary, the location of the sample paths is arbitrary, so they all
 #' start at the value of the first observation.
 #'
-#' @param object An object of class "\code{ets}", "\code{Arima}", "\code{ar}"
-#' or "\code{nnetar}".
+#' @param object An object of class `"ets"`, `"Arima"`, `"ar"` or `"nnetar"`.
 #' @param nsim Number of periods for the simulated series. Ignored if either
-#' \code{xreg} or \code{innov} are not \code{NULL}. Otherwise the default is
+#' `xreg` or `innov` are not `NULL`. Otherwise the default is
 #' the length of series used to train model (or 100 if no data found).
-#' @param seed Either \code{NULL} or an integer that will be used in a call to
-#' \code{\link[base]{set.seed}} before simulating the time series. The default,
-#' \code{NULL}, will not change the random generator state.
+#' @param seed Either `NULL` or an integer that will be used in a call to
+#' [set.seed()] before simulating the time series. The default,
+#' `NULL`, will not change the random generator state.
 #' @param future Produce sample paths that are future to and conditional on the
-#' data in \code{object}. Otherwise simulate unconditionally.
+#' data in `object`. Otherwise simulate unconditionally.
 #' @param bootstrap Do simulation using resampled errors rather than normally
-#' distributed errors or errors provided as \code{innov}.
+#' distributed errors or errors provided as `innov`.
 #' @param innov A vector of innovations to use as the error series. Ignored if
-#' \code{bootstrap=TRUE}. If not \code{NULL}, the value of \code{nsim} is set
-#' to length of \code{innov}.
-#' @param xreg New values of \code{xreg} to be used for forecasting. The value
-#' of \code{nsim} is set to the number of rows of \code{xreg} if it is not
-#' \code{NULL}.
+#' `bootstrap = TRUE`. If not `NULL`, the value of `nsim` is set
+#' to length of `innov`.
+#' @param xreg New values of `xreg` to be used for forecasting. The value
+#' of `nsim` is set to the number of rows of `xreg` if it is not `NULL`.
 #' @param ... Other arguments, not currently used.
 #' @inheritParams forecast.ts
 #'
-#' @return An object of class "\code{ts}".
+#' @return An object of class `"ts"`.
 #' @author Rob J Hyndman
-#' @seealso \code{\link{ets}}, \code{\link{Arima}}, \code{\link{auto.arima}},
-#' \code{\link{ar}}, \code{\link{arfima}}, \code{\link{nnetar}}.
+#' @seealso [ets()], [Arima()], [auto.arima()], [ar()], [arfima()], [nnetar()].
 #' @keywords ts
 #' @examples
 #' fit <- ets(USAccDeaths)

@@ -99,15 +99,14 @@
 )
 }
 \arguments{
-\item{object}{An object of class "\code{ets}", "\code{Arima}", "\code{ar}"
-or "\code{nnetar}".}
+\item{object}{An object of class \code{"ets"}, \code{"Arima"}, \code{"ar"} or \code{"nnetar"}.}
 
 \item{nsim}{Number of periods for the simulated series. Ignored if either
 \code{xreg} or \code{innov} are not \code{NULL}. Otherwise the default is
 the length of series used to train model (or 100 if no data found).}
 
 \item{seed}{Either \code{NULL} or an integer that will be used in a call to
-\code{\link[base]{set.seed}} before simulating the time series. The default,
+\code{\link[=set.seed]{set.seed()}} before simulating the time series. The default,
 \code{NULL}, will not change the random generator state.}
 
 \item{future}{Produce sample paths that are future to and conditional on the
@@ -117,14 +116,13 @@ data in \code{object}. Otherwise simulate unconditionally.}
 distributed errors or errors provided as \code{innov}.}
 
 \item{innov}{A vector of innovations to use as the error series. Ignored if
-\code{bootstrap=TRUE}. If not \code{NULL}, the value of \code{nsim} is set
+\code{bootstrap = TRUE}. If not \code{NULL}, the value of \code{nsim} is set
 to length of \code{innov}.}
 
 \item{...}{Other arguments, not currently used.}
 
 \item{xreg}{New values of \code{xreg} to be used for forecasting. The value
-of \code{nsim} is set to the number of rows of \code{xreg} if it is not
-\code{NULL}.}
+of \code{nsim} is set to the number of rows of \code{xreg} if it is not \code{NULL}.}
 
 \item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
@@ -132,22 +130,21 @@ The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.}
 }
 \value{
-An object of class "\code{ts}".
+An object of class \code{"ts"}.
 }
 \description{
 Returns a time series based on the model object \code{object}.
 }
 \details{
-With \code{simulate.Arima()}, the \code{object} should be produced by
-\code{\link{Arima}} or \code{\link{auto.arima}}, rather than
-\code{\link[stats]{arima}}. By default, the error series is assumed normally
-distributed and generated using \code{\link[stats]{rnorm}}. If \code{innov}
-is present, it is used instead. If \code{bootstrap=TRUE} and
-\code{innov=NULL}, the residuals are resampled instead.
+With \code{simulate.Arima()}, the \code{object} should be produced by \code{\link[=Arima]{Arima()}} or
+\code{\link[=auto.arima]{auto.arima()}}, rather than \code{\link[stats:arima]{stats::arima()}}. By default, the error series
+is assumed normally distributed and generated using \code{\link[stats:Normal]{stats::rnorm()}}. If
+\code{innov} is present, it is used instead. If \code{bootstrap = TRUE} and
+\code{innov = NULL}, the residuals are resampled instead.
 
-When \code{future=TRUE}, the sample paths are conditional on the data. When
-\code{future=FALSE} and the model is stationary, the sample paths do not
-depend on the data at all. When \code{future=FALSE} and the model is
+When \code{future = TRUE}, the sample paths are conditional on the data. When
+\code{future = FALSE} and the model is stationary, the sample paths do not
+depend on the data at all. When \code{future = FALSE} and the model is
 non-stationary, the location of the sample paths is arbitrary, so they all
 start at the value of the first observation.
 }
@@ -157,8 +154,7 @@ plot(USAccDeaths, xlim = c(1973, 1982))
 lines(simulate(fit, 36), col = "red")
 }
 \seealso{
-\code{\link{ets}}, \code{\link{Arima}}, \code{\link{auto.arima}},
-\code{\link{ar}}, \code{\link{arfima}}, \code{\link{nnetar}}.
+\code{\link[=ets]{ets()}}, \code{\link[=Arima]{Arima()}}, \code{\link[=auto.arima]{auto.arima()}}, \code{\link[=ar]{ar()}}, \code{\link[=arfima]{arfima()}}, \code{\link[=nnetar]{nnetar()}}.
 }
 \author{
 Rob J Hyndman

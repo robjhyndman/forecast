@@ -75,16 +75,16 @@ parameters.}
 
 \item{x}{Deprecated. Included for backwards compatibility.}
 
-\item{...}{Additional arguments to be passed to \code{\link[stats]{arima}}.}
+\item{...}{Additional arguments to be passed to \code{\link[stats:arima]{stats::arima()}}.}
 }
 \value{
-See the \code{\link[stats]{arima}} function in the stats package.
+See the \code{\link[stats:arima]{stats::arima()}} function in the stats package.
 The additional objects returned are \item{x}{The time series data}
 \item{xreg}{The regressors used in fitting (when relevant).}
 \item{sigma2}{The bias adjusted MLE of the innovations variance.}
 }
 \description{
-Largely a wrapper for the \code{\link[stats]{arima}} function in the stats
+Largely a wrapper for the \code{\link[stats:arima]{stats::arima()}} function in the stats
 package. The main difference is that this function allows a drift term. It
 is also possible to take an ARIMA model from a previous call to \code{Arima}
 and re-apply it to the data \code{y}.
@@ -98,7 +98,7 @@ where \eqn{x_t} is a vector of regressors at time \eqn{t} and \eqn{z_t} is an
 ARMA(p,d,q) error process. If there are no regressors, and \eqn{d=0}, then c
 is an estimate of the mean of \eqn{y_t}. For more information, see Hyndman &
 Athanasopoulos (2018). For details of the estimation algorithm, see the
-\code{\link[stats]{arima}} function in the stats package.
+\code{\link[stats:arima]{stats::arima()}} function in the stats package.
 }
 \examples{
 library(ggplot2)
@@ -134,7 +134,7 @@ Hyndman, R.J. and Athanasopoulos, G. (2018)
 \url{https://OTexts.com/fpp2/}.
 }
 \seealso{
-\code{\link{auto.arima}}, \code{\link{forecast.Arima}}.
+\code{\link[=auto.arima]{auto.arima()}}, \code{\link[=forecast.Arima]{forecast.Arima()}}.
 }
 \author{
 Rob J Hyndman

@@ -7,10 +7,9 @@
 sindexf(object, h)
 }
 \arguments{
-\item{object}{Output from \code{\link[stats]{decompose}} or
-\link[stats]{stl}.}
+\item{object}{Output from \code{\link[stats:decompose]{stats::decompose()}} or \code{\link[stats:stl]{stats::stl()}}.}
 
-\item{h}{Number of periods ahead to forecast}
+\item{h}{Number of periods ahead to forecast.}
 }
 \value{
 Time series

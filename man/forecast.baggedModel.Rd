@@ -11,21 +11,21 @@
 )
 }
 \arguments{
-\item{object}{An object of class "\code{baggedModel}" resulting from a call to
-\code{\link{baggedModel}}.}
+\item{object}{An object of class \code{"baggedModel"} resulting from a call to
+\code{\link[=baggedModel]{baggedModel()}}.}
 
 \item{h}{Number of periods for forecasting.}
 
-\item{...}{Other arguments, passed on to the \code{\link{forecast}} function of the original method}
+\item{...}{Other arguments, passed on to the \code{\link[=forecast]{forecast()}} function of the original method}
 }
 \value{
-An object of class "\code{forecast}".
+An object of class \code{"forecast"}.
 
 The function \code{summary} is used to obtain and print a summary of the
 results, while the function \code{plot} produces a plot of the forecasts and
 prediction intervals.
 
-An object of class "\code{forecast}" is a list containing at least the
+An object of class \code{"forecast"} is a list containing at least the
 following elements:
 \item{model}{A list containing information about the fitted model}
 \item{method}{The name of the forecasting method as a character string}
@@ -68,7 +68,7 @@ Exponential Smoothing Methods using STL Decomposition and Box-Cox
 Transformation. International Journal of Forecasting 32, 303-312.
 }
 \seealso{
-\code{\link{baggedModel}}.
+\code{\link[=baggedModel]{baggedModel()}}.
 }
 \author{
 Christoph Bergmeir, Fotios Petropoulos

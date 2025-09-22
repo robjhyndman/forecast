@@ -275,58 +275,52 @@ SD.test <- function(wts, s = frequency(wts)) {
 #'
 #' Returns forecasts and other information for univariate ARIMA models.
 #'
-#' For \code{Arima} or \code{ar} objects, the function calls
-#' \code{\link[stats]{predict.Arima}} or \code{\link[stats]{predict.ar}} and
-#' constructs an object of class "\code{forecast}" from the results. For
-#' \code{fracdiff} objects, the calculations are all done within
-#' \code{\link{forecast.fracdiff}} using the equations given by Peiris and
-#' Perera (1988).
+#' For `Arima` or `ar` objects, the function calls [stats::predict.Arima()] or
+#' [stats::predict.ar] and constructs an object of class `"forecast"` from the
+#' results. For `fracdiff` objects, the calculations are all done within
+#' [fracdiff::fracdiff()] using the equations given by Peiris and Perera (1988).
 #'
-#' @param object An object of class "\code{Arima}", "\code{ar}" or
-#' "\code{fracdiff}". Usually the result of a call to
-#' \code{\link[stats]{arima}}, \code{\link{auto.arima}},
-#' \code{\link[stats]{ar}}, \code{\link{arfima}} or
-#' \code{\link[fracdiff]{fracdiff}}.
-#' @param h Number of periods for forecasting. If \code{xreg} is used, \code{h}
+#' @param object An object of class `"Arima"`, `"ar"" or `"fracdiff"`. Usually
+#' the result of a call to [stats::arima()], [auto.arima()], [stats::ar()],
+#' [arfima()] or [fracdiff::fracdiff()].
+#' @param h Number of periods for forecasting. If `xreg` is used, `h`
 #' is ignored and the number of forecast periods is set to the number of rows
-#' of \code{xreg}.
+#' of `xreg`.
 #' @param level Confidence level for prediction intervals.
-#' @param fan If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
+#' @param fan If `TRUE`, level is set to `seq(51, 99, by = 3)`. This
 #' is suitable for fan plots.
-#' @param xreg Future values of an regression variables (for class \code{Arima}
+#' @param xreg Future values of an regression variables (for class `Arima`
 #' objects only). A numerical vector or matrix of external regressors; it should not be a data frame.
-#' @param bootstrap If \code{TRUE}, then prediction intervals computed using
+#' @param bootstrap If `TRUE`, then prediction intervals computed using
 #' simulation with resampled errors.
 #' @param npaths Number of sample paths used in computing simulated prediction
-#' intervals when \code{bootstrap=TRUE}.
+#' intervals when `bootstrap = TRUE`.
 #' @param ... Other arguments.
 #' @inheritParams forecast.ts
 #'
-#' @return An object of class "\code{forecast}".
+#' @return An object of class `"forecast"`.
 #'
-#' The function \code{summary} is used to obtain and print a summary of the
-#' results, while the function \code{plot} produces a plot of the forecasts and
+#' The function `summary` is used to obtain and print a summary of the
+#' results, while the function `plot` produces a plot of the forecasts and
 #' prediction intervals.
 #'
-#' The generic accessor functions \code{fitted.values} and \code{residuals}
-#' extract useful features of the value returned by \code{forecast.Arima}.
+#' The generic accessor functions `fitted.values` and `residuals`
+#' extract useful features of the value returned by `forecast.Arima`.
 #'
-#' An object of class "\code{forecast}" is a list containing at least the
+#' An object of class `"forecast"` is a list containing at least the
 #' following elements: \item{model}{A list containing information about the
 #' fitted model} \item{method}{The name of the forecasting method as a
 #' character string} \item{mean}{Point forecasts as a time series}
 #' \item{lower}{Lower limits for prediction intervals} \item{upper}{Upper
 #' limits for prediction intervals} \item{level}{The confidence values
 #' associated with the prediction intervals} \item{x}{The original time series
-#' (either \code{object} itself or the time series used to create the model
-#' stored as \code{object}).} \item{residuals}{Residuals from the fitted model.
+#' (either `object` itself or the time series used to create the model
+#' stored as `object`).} \item{residuals}{Residuals from the fitted model.
 #' That is x minus fitted values.} \item{fitted}{Fitted values (one-step
 #' forecasts)}
 #' @author Rob J Hyndman
-#' @seealso \code{\link[stats]{predict.Arima}},
-#' \code{\link[stats]{predict.ar}}, \code{\link{auto.arima}},
-#' \code{\link{Arima}}, \code{\link[stats]{arima}}, \code{\link[stats]{ar}},
-#' \code{\link{arfima}}.
+#' @seealso [stats::predict.Arima()], [stats::predict.ar()], [auto.arima()],
+#' [Arima()], [stats::arima()], [stats::ar()], [arfima()].
 #' @references Peiris, M. & Perera, B. (1988), On prediction with fractionally
 #' differenced ARIMA models, \emph{Journal of Time Series Analysis},
 #' \bold{9}(3), 215-220.
@@ -652,16 +646,16 @@ getxreg <- function(z) {
 #' Returns time series of the regression residuals from a fitted ARIMA model.
 #'
 #' This is a deprecated function
-#' which is identical to \code{\link{residuals.Arima}(object, type="regression")}
+#' which is identical to [`residuals.Arima(object, type="regression")`][residuals.Arima]
 #' Regression residuals are equal to the original data
 #' minus the effect of any regression variables. If there are no regression
 #' variables, the errors will be identical to the original series (possibly
 #' adjusted to have zero mean).
 #'
-#' @param object An object containing a time series model of class \code{Arima}.
-#' @return A \code{ts} object
+#' @param object An object containing a time series model of class `Arima`.
+#' @return A `ts` object
 #' @author Rob J Hyndman
-#' @seealso \code{\link{residuals.Arima}}.
+#' @seealso [residuals.Arima()].
 #' @keywords ts
 #'
 #' @export
@@ -676,17 +670,16 @@ arima.errors <- function(object) {
 #'
 #' Returns h-step forecasts for the data used in fitting the model.
 #'
-#' @param object An object of class "\code{Arima}", "\code{bats}",
-#' "\code{tbats}", "\code{ets}" or "\code{nnetar}".
+#' @param object An object of class `"Arima"`, `"bats"`, `"tbats"`, `"ets"` or
+#' `"nnetar"`.
 #' @param h The number of steps to forecast ahead.
 #' @param ... Other arguments.
 #' @return A time series of the h-step forecasts.
 #' @author Rob J Hyndman & Mitchell O'Hara-Wild
-#' @seealso \code{\link{forecast.Arima}}, \code{\link{forecast.bats}},
-#' \code{\link{forecast.tbats}}, \code{\link{forecast.ets}},
-#' \code{\link{forecast.nnetar}}, \code{\link{residuals.Arima}},
-#' \code{\link{residuals.bats}}, \code{\link{residuals.tbats}},
-#' \code{\link{residuals.ets}}, \code{\link{residuals.nnetar}}.
+#' @seealso [forecast.Arima()], [forecast.bats()], [forecast.tbats()],
+#' [forecast.ets()], [forecast.nnetar()], [residuals.Arima()],
+#' [residuals.bats()] [residuals.tbats()], [residuals.ets()],
+#' [residuals.nnetar()].
 #' @keywords ts
 #' @aliases fitted.forecast_ARIMA
 #' @examples
@@ -731,10 +724,10 @@ fitted.forecast_ARIMA <- fitted.Arima
 
 #' Fit ARIMA model to univariate time series
 #'
-#' Largely a wrapper for the \code{\link[stats]{arima}} function in the stats
+#' Largely a wrapper for the [stats::arima()] function in the stats
 #' package. The main difference is that this function allows a drift term. It
-#' is also possible to take an ARIMA model from a previous call to \code{Arima}
-#' and re-apply it to the data \code{y}.
+#' is also possible to take an ARIMA model from a previous call to `Arima`
+#' and re-apply it to the data `y`.
 #'
 #' The fitted model is a regression with ARIMA(p,d,q) errors
 #'
@@ -744,43 +737,43 @@ fitted.forecast_ARIMA <- fitted.Arima
 #' ARMA(p,d,q) error process. If there are no regressors, and \eqn{d=0}, then c
 #' is an estimate of the mean of \eqn{y_t}. For more information, see Hyndman &
 #' Athanasopoulos (2018). For details of the estimation algorithm, see the
-#' \code{\link[stats]{arima}} function in the stats package.
+#' [stats::arima()] function in the stats package.
 #'
 #' @aliases print.ARIMA summary.Arima as.character.Arima
 #'
-#' @param y A univariate time series of class \code{ts}.
+#' @param y A univariate time series of class `ts`.
 #' @param order A specification of the non-seasonal part of the ARIMA model:
 #' the three components (p, d, q) are the AR order, the degree of differencing,
 #' and the MA order.
 #' @param seasonal A specification of the seasonal part of the ARIMA model,
-#' plus the period (which defaults to \code{frequency(y)}). This should be a
+#' plus the period (which defaults to `frequency(y)`). This should be a
 #' list with components order and period, but a specification of just a numeric
 #' vector of length 3 will be turned into a suitable list with the
 #' specification as the order.
 #' @param xreg Optionally, a numerical vector or matrix of external regressors,
 #' which must have the same number of rows as y. It should not be a data frame.
 #' @param include.mean Should the ARIMA model include a mean term? The default
-#' is \code{TRUE} for undifferenced series, \code{FALSE} for differenced ones
+#' is `TRUE` for undifferenced series, `FALSE` for differenced ones
 #' (where a mean would not affect the fit nor predictions).
 #' @param include.drift Should the ARIMA model include a linear drift term?
 #' (i.e., a linear regression with ARIMA errors is fitted.) The default is
-#' \code{FALSE}.
-#' @param include.constant If \code{TRUE}, then \code{include.mean} is set to
-#' be \code{TRUE} for undifferenced series and \code{include.drift} is set to
-#' be \code{TRUE} for differenced series. Note that if there is more than one
+#' `FALSE`.
+#' @param include.constant If `TRUE`, then `include.mean` is set to
+#' be `TRUE` for undifferenced series and `include.drift` is set to
+#' be `TRUE` for differenced series. Note that if there is more than one
 #' difference taken, no constant is included regardless of the value of this
 #' argument. This is deliberate as otherwise quadratic and higher order
 #' polynomial trends would be induced.
 #' @param method Fitting method: maximum likelihood or minimize conditional
 #' sum-of-squares. The default (unless there are missing values) is to use
 #' conditional-sum-of-squares to find starting values, then maximum likelihood.
-#' @param model Output from a previous call to \code{Arima}. If model is
-#' passed, this same model is fitted to \code{y} without re-estimating any
+#' @param model Output from a previous call to `Arima`. If model is
+#' passed, this same model is fitted to `y` without re-estimating any
 #' parameters.
 #' @param x Deprecated. Included for backwards compatibility.
-#' @param ... Additional arguments to be passed to \code{\link[stats]{arima}}.
+#' @param ... Additional arguments to be passed to [stats::arima()].
 #' @inheritParams forecast.ts
-#' @return See the \code{\link[stats]{arima}} function in the stats package.
+#' @return See the [stats::arima()] function in the stats package.
 #' The additional objects returned are \item{x}{The time series data}
 #' \item{xreg}{The regressors used in fitting (when relevant).}
 #' \item{sigma2}{The bias adjusted MLE of the innovations variance.}
@@ -790,7 +783,7 @@ fitted.forecast_ARIMA <- fitted.Arima
 #' "Forecasting: principles and practice", 2nd ed., OTexts, Melbourne, Australia.
 #' \url{https://OTexts.com/fpp2/}.
 #' @author Rob J Hyndman
-#' @seealso \code{\link{auto.arima}}, \code{\link{forecast.Arima}}.
+#' @seealso [auto.arima()], [forecast.Arima()].
 #' @keywords ts
 #' @examples
 #' library(ggplot2)
@@ -1127,18 +1120,15 @@ print.forecast_ARIMA <- function(
 #' Returns the order of a univariate ARIMA or ARFIMA model.
 #'
 #'
-#' @param object An object of class \dQuote{\code{Arima}}, dQuote\code{ar} or
-#' \dQuote{\code{fracdiff}}. Usually the result of a call to
-#' \code{\link[stats]{arima}}, \code{\link{Arima}}, \code{\link{auto.arima}},
-#' \code{\link[stats]{ar}}, \code{\link{arfima}} or
-#' \code{\link[fracdiff]{fracdiff}}.
+#' @param object An object of class `"Arima"`, `"ar"` or
+#' `"fracdiff"`. Usually the result of a call to [stats::arima()],
+#' [Arima()], [auto.arima()], [stats::ar()], [arfima()] or [fracdiff::fracdiff()].
 #' @return A numerical vector giving the values \eqn{p}, \eqn{d} and \eqn{q} of
 #' the ARIMA or ARFIMA model. For a seasonal ARIMA model, the returned vector
 #' contains the values \eqn{p}, \eqn{d}, \eqn{q}, \eqn{P}, \eqn{D}, \eqn{Q} and
 #' \eqn{m}, where \eqn{m} is the period of seasonality.
 #' @author Rob J Hyndman
-#' @seealso \code{\link[stats]{ar}}, \code{\link{auto.arima}},
-#' \code{\link{Arima}}, \code{\link[stats]{arima}}, \code{\link{arfima}}.
+#' @seealso [stats::ar()], [auto.arima], [Arima()], [stats::arima()], [arfima()].
 #' @keywords ts
 #' @examples
 #' WWWusage |> auto.arima() |> arimaorder()

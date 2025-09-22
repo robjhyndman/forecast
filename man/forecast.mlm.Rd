@@ -18,7 +18,7 @@
 }
 \arguments{
 \item{object}{Object of class "mlm", usually the result of a call to
-\code{\link[stats]{lm}} or \code{\link{tslm}}.}
+\code{\link[stats:lm]{stats::lm()}} or \code{\link[=tslm]{tslm()}}.}
 
 \item{newdata}{An optional data frame in which to look for variables with
 which to predict. If omitted, it is assumed that the only variables are
@@ -48,10 +48,10 @@ provided the original data is a time series; the \code{newdata} will be
 interpreted as related to the subsequent time periods. If \code{FALSE}, any
 time series attributes of the original data will be ignored.}
 
-\item{...}{Other arguments passed to \code{\link[forecast]{forecast.lm}()}.}
+\item{...}{Other arguments passed to \code{\link[=forecast.lm]{forecast.lm()}}.}
 }
 \value{
-An object of class "\code{mforecast}".
+An object of class \code{"mforecast"}.
 
 The function \code{summary} is used to obtain and print a summary of the
 results, while the function \code{plot} produces a plot of the forecasts and
@@ -76,10 +76,9 @@ values.} \item{fitted}{Fitted values}
 those involving trend and seasonality components.
 }
 \details{
-\code{forecast.mlm} is largely a wrapper for
-\code{\link[forecast]{forecast.lm}()} except that it allows forecasts to be
-generated on multiple series. Also, the output is reformatted into a
-\code{mforecast} object.
+\code{forecast.mlm} is largely a wrapper for \code{\link[=forecast.lm]{forecast.lm()}} except that it
+allows forecasts to be generated on multiple series. Also, the output is
+reformatted into a \code{mforecast} object.
 }
 \examples{
 

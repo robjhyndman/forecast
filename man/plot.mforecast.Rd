@@ -24,7 +24,7 @@ only the forecast line.}
 
 \item{colour}{If \code{TRUE}, the time series will be assigned a colour aesthetic}
 
-\item{\dots}{additional arguments to each individual \code{plot}.}
+\item{...}{additional arguments to each individual \code{plot}.}
 
 \item{series}{Matches an unidentified forecast layer with a coloured object
 on the plot.}

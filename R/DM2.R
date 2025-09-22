@@ -8,26 +8,26 @@
 #'
 #' This function implements the modified test proposed by Harvey, Leybourne and
 #' Newbold (1997). The null hypothesis is that the two methods have the same
-#' forecast accuracy. For \code{alternative="less"}, the alternative hypothesis
+#' forecast accuracy. For `alternative = "less"`, the alternative hypothesis
 #' is that method 2 is less accurate than method 1. For
-#' \code{alternative="greater"}, the alternative hypothesis is that method 2 is
-#' more accurate than method 1. For \code{alternative="two.sided"}, the
+#' `alternative = "greater"`, the alternative hypothesis is that method 2 is
+#' more accurate than method 1. For `alternative = "two.sided"`, the
 #' alternative hypothesis is that method 1 and method 2 have different levels
 #' of accuracy. The long-run variance estimator can either the
-#' auto-correlation estimator \code{varestimator = "acf"}, or the estimator based
-#' on Bartlett weights \code{varestimator = "bartlett"} which ensures a positive estimate.
+#' auto-correlation estimator `varestimator = "acf"`, or the estimator based
+#' on Bartlett weights `varestimator = "bartlett"` which ensures a positive estimate.
 #' Both long-run variance estimators are proposed in Diebold and Mariano (1995).
 #'
 #' @param e1 Forecast errors from method 1.
 #' @param e2 Forecast errors from method 2.
 #' @param alternative A character string specifying the alternative hypothesis,
-#' must be one of \code{"two.sided"} (default), \code{"greater"} or
-#' \code{"less"}. You can specify just the initial letter.
-#' @param h The forecast horizon used in calculating \code{e1} and \code{e2}.
+#' must be one of `"two.sided"` (default), `"greater"` or
+#' `"less"`. You can specify just the initial letter.
+#' @param h The forecast horizon used in calculating `e1` and `e2`.
 #' @param power The power used in the loss function. Usually 1 or 2.
 #' @param varestimator A character string specifying the long-run variance estimator.
-#' Options are \code{"acf"} (default) or \code{"bartlett"}.
-#' @return A list with class \code{"htest"} containing the following
+#' Options are `"acf"` (default) or `"bartlett"`.
+#' @return A list with class `"htest"` containing the following
 #' components:
 #' \item{statistic}{the value of the DM-statistic.}
 #' \item{parameter}{the forecast horizon and loss function power used in the test.}

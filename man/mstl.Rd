@@ -37,5 +37,5 @@ mstl(taylor) |> autoplot()
 mstl(AirPassengers, lambda = "auto") |> autoplot()
 }
 \seealso{
-\code{\link[stats]{stl}}, \code{\link[stats]{supsmu}}
+\code{\link[stats:stl]{stats::stl()}}, \code{\link[stats:supsmu]{stats::supsmu()}}
 }

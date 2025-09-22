@@ -10,8 +10,8 @@
 \method{forecast}{tbats}(object, h, level = c(80, 95), fan = FALSE, biasadj = NULL, ...)
 }
 \arguments{
-\item{object}{An object of class "\code{bats}". Usually the result of a call
-to \code{\link{bats}}.}
+\item{object}{An object of class \code{"bats"}. Usually the result of a call to
+\code{\link[=bats]{bats()}}.}
 
 \item{h}{Number of periods for forecasting. Default value is twice the
 largest seasonal period (for seasonal data) or ten (for non-seasonal data).}
@@ -29,7 +29,7 @@ forecast densities.}
 \item{...}{Other arguments, currently ignored.}
 }
 \value{
-An object of class "\code{forecast}".
+An object of class \code{"forecast"}.
 
 The function \code{summary} is used to obtain and print a summary of the
 results, while the function \code{plot} produces a plot of the forecasts and
@@ -71,7 +71,7 @@ smoothing, \emph{Journal of the American Statistical Association},
 \bold{106}(496), 1513-1527.
 }
 \seealso{
-\code{\link{bats}}, \code{\link{tbats}},\code{\link{forecast.ets}}.
+\code{\link[=bats]{bats()}}, \code{\link[=tbats]{tbats()}}, \code{\link[=forecast.ets]{forecast.ets()}}.
 }
 \author{
 Slava Razbash and Rob J Hyndman

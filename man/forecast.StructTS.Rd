@@ -15,8 +15,8 @@
 )
 }
 \arguments{
-\item{object}{An object of class "\code{StructTS}". Usually the result of a
-call to \code{\link[stats]{StructTS}}.}
+\item{object}{An object of class \code{"StructTS"}. Usually the result of a
+call to \code{\link[stats:StructTS]{stats::StructTS()}}.}
 
 \item{h}{Number of periods for forecasting}
 
@@ -39,7 +39,7 @@ and fitted values.}
 \item{...}{Other arguments.}
 }
 \value{
-An object of class "\code{forecast}".
+An object of class \code{"forecast"}.
 
 The function \code{summary} is used to obtain and print a summary of the
 results, while the function \code{plot} produces a plot of the forecasts and
@@ -66,7 +66,7 @@ series models.
 }
 \details{
 This function calls \code{predict.StructTS} and constructs an object of
-class "\code{forecast}" from the results.
+class \code{"forecast"} from the results.
 }
 \examples{
 fit <- StructTS(WWWusage, "level")
@@ -74,7 +74,7 @@ plot(forecast(fit))
 
 }
 \seealso{
-\code{\link[stats]{StructTS}}.
+\code{\link[stats:StructTS]{stats::StructTS()}}.
 }
 \author{
 Rob J Hyndman

@@ -20,13 +20,11 @@ fourierf(x, K, h)
 Numerical matrix.
 }
 \description{
-\code{fourier} returns a matrix containing terms from a Fourier series, up
-to order \code{K}, suitable for use in \code{\link{Arima}},
-\code{\link{auto.arima}}, or \code{\link{tslm}}.
+\code{fourier} returns a matrix containing terms from a Fourier series, up to
+order \code{K}, suitable for use in \code{\link[=Arima]{Arima()}}, \code{\link[=auto.arima]{auto.arima()}}, or \code{\link[=tslm]{tslm()}}.
 }
 \details{
-\code{fourierf} is deprecated, instead use the \code{h} argument in
-\code{fourier}.
+\code{fourierf} is deprecated, instead use the \code{h} argument in \code{fourier}.
 
 The period of the Fourier terms is determined from the time series
 characteristics of \code{x}. When \code{h} is missing, the length of
@@ -68,7 +66,7 @@ autoplot(taylor.fcast)
 
 }
 \seealso{
-\code{\link{seasonaldummy}}
+\code{\link[=seasonaldummy]{seasonaldummy()}}
 }
 \author{
 Rob J Hyndman

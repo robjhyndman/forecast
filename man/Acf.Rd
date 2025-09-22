@@ -60,15 +60,14 @@ of series. Will be automatically limited to one less than the number of
 observations in the series.}
 
 \item{type}{Character string giving the type of acf to be computed. Allowed
-values are \dQuote{\code{correlation}} (the default),
-\dQuote{\code{covariance}} or \dQuote{\code{partial}}.}
+values are \code{"correlation"} (the default), \code{"covariance"} or \code{"partial"}.}
 
 \item{plot}{logical. If \code{TRUE} (the default) the resulting acf, pacf or
 ccf is plotted.}
 
 \item{na.action}{Function to handle missing values. Default is
-\code{\link[stats]{na.contiguous}}. Useful alternatives are
-\code{\link[stats]{na.pass}} and \code{\link{na.interp}}.}
+\code{\link[stats:na.contiguous]{stats::na.contiguous()}}. Useful alternatives are \code{\link[stats:na.fail]{stats::na.pass()}} and
+\code{\link[=na.interp]{na.interp()}}.}
 
 \item{demean}{Should covariances be about the sample means?}
 
@@ -86,7 +85,7 @@ confidence intervals.}
 }
 \value{
 The \code{Acf}, \code{Pacf} and \code{Ccf} functions return objects
-of class "acf" as described in \code{\link[stats]{acf}} from the stats
+of class "acf" as described in \code{\link[stats:acf]{stats::acf()}} from the stats
 package. The \code{taperedacf} and \code{taperedpacf} functions return
 objects of class "mpacf".
 }
@@ -99,11 +98,10 @@ autocorrelation function of a (possibly multivariate) time series. Function
 univariate series.
 }
 \details{
-The functions improve the \code{\link[stats]{acf}},
-\code{\link[stats]{pacf}} and \code{\link[stats]{ccf}} functions. The main
-differences are that \code{Acf} does not plot a spike at lag 0 when
-\code{type="correlation"} (which is redundant) and the horizontal axes show
-lags in time units rather than seasonal units.
+The functions improve the \code{\link[stats:acf]{stats::acf()}}, \code{\link[stats:acf]{stats::pacf()}} and \code{\link[stats:acf]{stats::ccf()}}
+functions. The main differences are that \code{Acf} does not plot a spike at lag
+0 when \code{type = "correlation"} (which is redundant) and the horizontal axes
+show lags in time units rather than seasonal units.
 
 The tapered versions implement the ACF and PACF estimates and plots
 described in Hyndman (2015), based on the banded and tapered estimates of
@@ -129,8 +127,7 @@ autocovariance matrices and the linear process bootstrap. \emph{Journal of
 Time Series Analysis}, 31(6), 471-482.
 }
 \seealso{
-\code{\link[stats]{acf}}, \code{\link[stats]{pacf}},
-\code{\link[stats]{ccf}}, \code{\link{tsdisplay}}
+\code{\link[stats:acf]{stats::acf()}}, \code{\link[stats:acf]{stats::pacf()}}, \code{\link[stats:acf]{stats::ccf()}}, \code{\link[=tsdisplay]{tsdisplay()}}
 }
 \author{
 Rob J Hyndman

@@ -11,25 +11,25 @@ checkresiduals(object, lag, test, plot = TRUE, ...)
 series (assumed to be residuals).}
 
 \item{lag}{Number of lags to use in the Ljung-Box or Breusch-Godfrey test.
-If missing, it is set to \code{min(10,n/5)} for non-seasonal data, and
-\code{min(2m, n/5)} for seasonal data, where \code{n} is the length of the series,
+If missing, it is set to \code{min(10, n/5)} for non-seasonal data, and
+\verb{min(2m, n/5)} for seasonal data, where \code{n} is the length of the series,
 and \code{m} is the seasonal period of the data. It is further constrained to be
 at least \code{df+3} where \code{df} is the degrees of freedom of the model. This
 ensures there are at least 3 degrees of freedom used in the chi-squared test.}
 
 \item{test}{Test to use for serial correlation. By default, if \code{object}
-is of class \code{lm}, then \code{test="BG"}. Otherwise, \code{test="LB"}.
-Setting \code{test=FALSE} will prevent the test results being printed.}
+is of class \code{lm}, then \code{test = "BG"}. Otherwise, \code{test="LB"}.
+Setting \code{test = FALSE} will prevent the test results being printed.}
 
 \item{plot}{Logical. If \code{TRUE}, will produce the plot.}
 
-\item{...}{Other arguments are passed to \code{\link{ggtsdisplay}}.}
+\item{...}{Other arguments are passed to \code{\link[=ggtsdisplay]{ggtsdisplay()}}.}
 }
 \value{
 None
 }
 \description{
-If \code{plot=TRUE}, produces a time plot of the residuals, the
+If \code{plot = TRUE}, produces a time plot of the residuals, the
 corresponding ACF, and a histogram. If \code{test} is not \code{FALSE},
 the output from either a Ljung-Box test or Breusch-Godfrey test is printed.
 }
@@ -40,8 +40,7 @@ checkresiduals(fit)
 
 }
 \seealso{
-\code{\link{ggtsdisplay}}, \code{\link[stats]{Box.test}},
-\code{\link[lmtest]{bgtest}}
+\code{\link[=ggtsdisplay]{ggtsdisplay()}}, \code{\link[stats:box.test]{stats::Box.test()}}, [lmtest::bgtest()
 }
 \author{
 Rob J Hyndman

@@ -29,7 +29,7 @@ plot(ldeaths.adj, xlab = "Year", ylab = "pounds",
 
 }
 \seealso{
-\code{\link[forecast]{bizdays}}
+\code{\link[=bizdays]{bizdays()}}
 }
 \author{
 Rob J Hyndman

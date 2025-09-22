@@ -43,16 +43,15 @@ mlmsplit <- function(x, index = NULL) {
 
 #' Forecast a multiple linear model with possible time series components
 #'
-#' \code{forecast.mlm} is used to predict multiple linear models, especially
+#' `forecast.mlm` is used to predict multiple linear models, especially
 #' those involving trend and seasonality components.
 #'
-#' \code{forecast.mlm} is largely a wrapper for
-#' \code{\link[forecast]{forecast.lm}()} except that it allows forecasts to be
-#' generated on multiple series. Also, the output is reformatted into a
-#' \code{mforecast} object.
+#' `forecast.mlm` is largely a wrapper for [forecast.lm()] except that it
+#' allows forecasts to be generated on multiple series. Also, the output is
+#' reformatted into a `mforecast` object.
 #'
 #' @param object Object of class "mlm", usually the result of a call to
-#' \code{\link[stats]{lm}} or \code{\link{tslm}}.
+#' [stats::lm()] or [tslm()].
 #' @param newdata An optional data frame in which to look for variables with
 #' which to predict. If omitted, it is assumed that the only variables are
 #' trend and season, and \code{h} forecasts are produced.
@@ -65,13 +64,13 @@ mlmsplit <- function(x, index = NULL) {
 #' provided the original data is a time series; the \code{newdata} will be
 #' interpreted as related to the subsequent time periods. If \code{FALSE}, any
 #' time series attributes of the original data will be ignored.
-#' @param ... Other arguments passed to \code{\link[forecast]{forecast.lm}()}.
+#' @param ... Other arguments passed to [forecast.lm()].
 #' @inheritParams forecast.ts
 #'
-#' @return An object of class "\code{mforecast}".
+#' @return An object of class `"mforecast"`.
 #'
-#' The function \code{summary} is used to obtain and print a summary of the
-#' results, while the function \code{plot} produces a plot of the forecasts and
+#' The function `summary` is used to obtain and print a summary of the
+#' results, while the function `plot` produces a plot of the forecasts and
 #' prediction intervals.
 #'
 #' The generic accessor functions \code{fitted.values} and \code{residuals}
@@ -239,7 +238,7 @@ print.mforecast <- function(x, ...) {
 #' @param colour If \code{TRUE}, the time series will be assigned a colour aesthetic
 #' @param series Matches an unidentified forecast layer with a coloured object
 #' on the plot.
-#' @param \dots additional arguments to each individual \code{plot}.
+#' @param ... additional arguments to each individual \code{plot}.
 #' @author Mitchell O'Hara-Wild
 #' @seealso \code{\link[forecast]{plot.forecast}}, \code{\link[stats]{plot.ts}}
 #' @references Hyndman and Athanasopoulos (2018) \emph{Forecasting: principles

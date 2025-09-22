@@ -89,7 +89,7 @@ plot(forecast(fit, h = 20))
 
 }
 \seealso{
-\code{\link{tslm}}, \code{\link[stats]{lm}}.
+\code{\link[=tslm]{tslm()}}, \code{\link[stats:lm]{stats::lm()}}.
 }
 \author{
 Rob J Hyndman

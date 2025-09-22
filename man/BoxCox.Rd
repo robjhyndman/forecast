@@ -54,7 +54,7 @@ transformations. \emph{JRSS B} \bold{26} 211--246.
 Bickel, P. J. and Doksum K. A. (1981) An Analysis of Transformations Revisited. \emph{JASA} \bold{76} 296-311.
 }
 \seealso{
-\code{\link{BoxCox.lambda}}
+\code{\link[=BoxCox.lambda]{BoxCox.lambda()}}
 }
 \author{
 Rob J Hyndman & Mitchell O'Hara-Wild

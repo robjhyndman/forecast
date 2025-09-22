@@ -93,7 +93,7 @@ plot.armaroots <- function(x, xlab, ylab, main, ...) {
 #' Produces a plot of the inverse AR and MA roots of an ARIMA model. Inverse
 #' roots outside the unit circle are shown in red.
 #'
-#' \code{autoplot} will produce an equivalent plot as a ggplot object.
+#' `autoplot` will produce an equivalent plot as a ggplot object.
 #'
 #' @param x Object of class \dQuote{Arima} or \dQuote{ar}.
 #' @param object Object of class \dQuote{Arima} or \dQuote{ar}. Used for ggplot
@@ -103,10 +103,10 @@ plot.armaroots <- function(x, xlab, ylab, main, ...) {
 #' @param main Main title. Default is "Inverse AR roots" or "Inverse MA roots".
 #' @param xlab X-axis label.
 #' @param ylab Y-axis label.
-#' @param ... Other plotting parameters passed to \code{\link[graphics]{par}}.
+#' @param ... Other plotting parameters passed to [graphics::par()].
 #' @return None. Function produces a plot
 #' @author Rob J Hyndman & Mitchell O'Hara-Wild
-#' @seealso \code{\link{Arima}}, \code{\link[stats]{ar}}
+#' @seealso [Arima()], [stats::ar()]
 #' @keywords hplot
 #' @examples
 #'

@@ -1,9 +1,9 @@
 #' Fit a linear model with time series components
 #'
-#' \code{tslm} is used to fit linear models to time series including trend and
+#' `tslm` is used to fit linear models to time series including trend and
 #' seasonality components.
 #'
-#' \code{tslm} is largely a wrapper for \code{\link[stats]{lm}()} except that
+#' `tslm` is largely a wrapper for [stats::lm()] except that
 #' it allows variables "trend" and "season" which are created on the fly from
 #' the time series characteristics of the data. The variable "trend" is a
 #' simple time trend and "season" is a factor indicating the season (e.g., the
@@ -16,14 +16,14 @@
 #' not found in data, the variables are taken from environment(formula),
 #' typically the environment from which lm is called.
 #' @param subset An optional subset containing rows of data to keep. For best
-#' results, pass a logical vector of rows to keep. Also supports
-#' \code{\link[base]{subset}()} functions.
+#' results, pass a logical vector of rows to keep. Also supports [subset()]
+#' functions.
 #' @inheritParams forecast.ts
 #'
 #' @param ... Other arguments passed to \code{\link[stats]{lm}()}.
 #' @return Returns an object of class "lm".
 #' @author Mitchell O'Hara-Wild and Rob J Hyndman
-#' @seealso \code{\link{forecast.lm}}, \code{\link[stats]{lm}}.
+#' @seealso [forecast.lm()], [stats::lm()].
 #' @keywords stats
 #' @examples
 #'
@@ -245,7 +245,7 @@ fitted.tslm <- function(object, ...) {
 #' the response variable.} \item{residuals}{Residuals from the fitted model.
 #' That is x minus fitted values.} \item{fitted}{Fitted values}
 #' @author Rob J Hyndman
-#' @seealso \code{\link{tslm}}, \code{\link[stats]{lm}}.
+#' @seealso [tslm()], [stats::lm()].
 #' @keywords stats
 #' @examples
 #'
@@ -588,7 +588,7 @@ summary.tslm <- function(object, ...) {
 #' @param obj Output from \code{\link[stats]{lm}} or \code{\link{tslm}}.
 #' @return Numerical vector containing CV, AIC, AICc, BIC and AdjR2 values.
 #' @author Rob J Hyndman
-#' @seealso \code{\link[stats]{AIC}}
+#' @seealso [stats::AIC()]
 #' @keywords models
 #' @examples
 #'

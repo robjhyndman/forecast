@@ -68,7 +68,7 @@ ggtsbreaks <- function(x) {
 #' appropriate ggplot object will be created.
 #'
 #' ggtaperedpacf
-#' @param object Object of class \dQuote{\code{acf}}.
+#' @param object Object of class `"acf"`.
 #' @param x a univariate or multivariate (not Ccf) numeric time series object
 #' or a numeric vector or matrix.
 #' @param y a univariate numeric time series object or a numeric vector.
@@ -76,8 +76,7 @@ ggtsbreaks <- function(x) {
 #' confidence interval is suppressed if ci is zero or negative.
 #' @param lag.max maximum lag at which to calculate the acf.
 #' @param type character string giving the type of acf to be computed. Allowed
-#' values are "\code{correlation}" (the default), \dQuote{\code{covariance}} or
-#' \dQuote{\code{partial}}.
+#' values are `"correlation"` (the default), `"covariance"` or `"partial"`.
 #' @param plot logical. If \code{TRUE} (the default) the resulting ACF, PACF or
 #' CCF is plotted.
 #' @param na.action function to handle missing values. Default is
@@ -92,8 +91,7 @@ ggtsbreaks <- function(x) {
 #' @param ... Other plotting parameters to affect the plot.
 #' @return A ggplot object.
 #' @author Mitchell O'Hara-Wild
-#' @seealso \code{\link[stats]{plot.acf}}, \code{\link{Acf}},
-#' \code{\link[stats]{acf}}, \code{\link{taperedacf}}
+#' @seealso [stats::plot.acf()] [Acf()], [stats::acf(), [taperedacf()]
 #' @examples
 #'
 #' library(ggplot2)
@@ -1296,11 +1294,11 @@ ggtsdisplay <- function(
 #'
 #' Plots a lag plot using ggplot.
 #'
-#' \dQuote{gglagplot} will plot time series against lagged versions of
+#' "gglagplot" will plot time series against lagged versions of
 #' themselves. Helps visualising 'auto-dependence' even when auto-correlations
 #' vanish.
 #'
-#' \dQuote{gglagchull} will layer convex hulls of the lags, layered on a single
+#' "gglagchull" will layer convex hulls of the lags, layered on a single
 #' plot. This helps visualise the change in 'auto-dependence' as lags increase.
 #'
 #' @param x a time series object (type \code{ts}).
@@ -1316,10 +1314,10 @@ ggtsdisplay <- function(
 #' @param labels logical indicating if labels should be used.
 #' @param seasonal Should the line colour be based on seasonal characteristics
 #' (TRUE), or sequential (FALSE).
-#' @param \dots Not used (for consistency with lag.plot)
+#' @param ... Not used (for consistency with lag.plot)
 #' @return None.
 #' @author Mitchell O'Hara-Wild
-#' @seealso \code{\link[stats]{lag.plot}}
+#' @seealso [stats::lag.plot()]
 #' @examples
 #'
 #' gglagplot(woolyrnq)
@@ -1582,10 +1580,10 @@ gglagchull <- function(
 #' @param labels A vector of labels to use for each 'season'
 #' @param times A vector of times for each observation
 #' @param phase A vector of seasonal components
-#' @param \dots Not used (for consistency with monthplot)
+#' @param ... Not used (for consistency with monthplot)
 #' @return Returns an object of class \code{ggplot}.
 #' @author Mitchell O'Hara-Wild
-#' @seealso \code{\link[stats]{monthplot}}
+#' @seealso [stats::monthplot()]
 #' @examples
 #'
 #' ggsubseriesplot(AirPassengers)
@@ -2136,23 +2134,20 @@ autoplot.StructTS <- function(object, labels = NULL, range.bars = TRUE, ...) {
 #' Plot time series decomposition components using ggplot
 #'
 #' Produces a ggplot object of seasonally decomposed time series for objects of
-#' class \dQuote{\code{stl}} (created with \code{\link[stats]{stl}}), class
-#' \dQuote{\code{seas}} (created with \code{\link[seasonal]{seas}}), or class
-#' \dQuote{\code{decomposed.ts}} (created with \code{\link[stats]{decompose}}).
+#' class `"stl"` (created with [stats::stl()], class `"seas"` (created with
+#' [seasonal::seas()]), or class `"decomposed.ts"` (created with
+#' [stats::decompose()]).
 #'
-#' @param object Object of class \dQuote{\code{seas}}, \dQuote{\code{stl}}, or
-#' \dQuote{\code{decomposed.ts}}.
-#' @param labels Labels to replace \dQuote{seasonal}, \dQuote{trend}, and
-#' \dQuote{remainder}.
+#' @param object Object of class `"seas"`, `"stl"`, or `"decomposed.ts"`.
+#' @param labels Labels to replace "seasonal", "trend", and "remainder".
 #' @param range.bars Logical indicating if each plot should have a bar at its
 #' right side representing relative size. If \code{NULL}, automatic selection
 #' takes place.
 #' @param ... Other plotting parameters to affect the plot.
 #' @return Returns an object of class \code{ggplot}.
 #' @author Mitchell O'Hara-Wild
-#' @seealso \code{\link[seasonal]{seas}}, \code{\link[stats]{stl}},
-#' \code{\link[stats]{decompose}}, \code{\link[stats]{StructTS}},
-#' \code{\link[stats]{plot.stl}}.
+#' @seealso [seasonal::seas()], [stats::stl()], [stats::decompose()],
+#' [stats::StructTS()], [stats::plot.stl()].
 #' @examples
 #'
 #' library(ggplot2)
@@ -2433,21 +2428,20 @@ autolayer.mforecast <- function(object, series = NULL, PI = TRUE, ...) {
 #' \code{fortify.ts} takes a \code{ts} object and converts it into a data frame
 #' (for usage with ggplot2).
 #'
-#' @param object Object of class \dQuote{\code{ts}} or \dQuote{\code{mts}}.
+#' @param object Object of class `"ts"` or `"mts"`.
 #' @param series Identifies the time series with a colour, which integrates well
 #' with the functionality of \link{geom_forecast}.
 #' @param facets If \code{TRUE}, multiple time series will be faceted (and
 #' unless specified, colour is set to \code{FALSE}). If \code{FALSE}, each
 #' series will be assigned a colour.
 #' @param colour If \code{TRUE}, the time series will be assigned a colour aesthetic
-#' @param model Object of class \dQuote{\code{ts}} to be converted to
-#' \dQuote{\code{data.frame}}.
+#' @param model Object of class `"ts"` to be converted to `"data.frame"`.
 #' @param data Not used (required for \code{\link[ggplot2]{fortify}} method)
 #' @param ... Other plotting parameters to affect the plot.
 #' @inheritParams plot.forecast
 #' @return None. Function produces a ggplot graph.
 #' @author Mitchell O'Hara-Wild
-#' @seealso \code{\link[stats]{plot.ts}}, \code{\link[ggplot2]{fortify}}
+#' @seealso [stats::plot.ts()], [ggplot2::fortify()]
 #' @examples
 #'
 #' library(ggplot2)
@@ -3027,7 +3021,7 @@ GeomForecastInterval <- ggplot2::ggproto(
 #' \code{alpha = .5}. They may also be parameters to the paired geom/stat.
 #' @return A layer for a ggplot graph.
 #' @author Mitchell O'Hara-Wild
-#' @seealso \code{\link[generics]{forecast}}, \code{\link[ggplot2]{ggproto}}
+#' @seealso [generics::forecast()], [ggplot2::ggproto()]
 #' @examples
 #'
 #' \dontrun{
@@ -3137,7 +3131,7 @@ geom_forecast <- function(
 #' @param boundary A boundary between two bins.
 #' @return None.
 #' @author Rob J Hyndman
-#' @seealso \code{\link[graphics]{hist}}, \code{\link[ggplot2]{geom_histogram}}
+#' @seealso [graphics::hist()], [ggplot2::geom_histogram()]
 #' @examples
 #'
 #' gghistogram(lynx, add.kde = TRUE)

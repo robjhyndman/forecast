@@ -15,7 +15,7 @@
 #' @param ... Other arguments are passed to \code{\link[stats]{stl}}.
 #' @inheritParams forecast.ts
 #'
-#' @seealso \code{\link[stats]{stl}}, \code{\link[stats]{supsmu}}
+#' @seealso [stats::stl()], [stats::supsmu()]
 #' @examples
 #' library(ggplot2)
 #' mstl(taylor) |> autoplot()
@@ -222,8 +222,7 @@ autoplot.mstl <- function(object, ...) {
 #' generic accessor functions \code{fitted.values} and \code{residuals} extract
 #' useful features.
 #' @author Rob J Hyndman
-#' @seealso \code{\link[stats]{stl}}, \code{\link{forecast.ets}},
-#' \code{\link{forecast.Arima}}.
+#' @seealso [stats::stl()], [forecast.ets()], [forecast.Arima()].
 #' @keywords ts
 #' @examples
 #'

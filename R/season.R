@@ -9,7 +9,7 @@
 #' @param x time series
 #' @return Time series
 #' @author Rob J Hyndman
-#' @seealso \code{\link[forecast]{bizdays}}
+#' @seealso [bizdays()]
 #' @keywords ts
 #' @examples
 #'
@@ -50,13 +50,12 @@ monthdays <- function(x) {
 
 #' Forecast seasonal index
 #'
-#' Returns vector containing the seasonal index for \code{h} future periods. If
+#' Returns vector containing the seasonal index for `h` future periods. If
 #' the seasonal index is non-periodic, it uses the last values of the index.
 #'
 #'
-#' @param object Output from \code{\link[stats]{decompose}} or
-#' \link[stats]{stl}.
-#' @param h Number of periods ahead to forecast
+#' @param object Output from [stats::decompose()] or [stats::stl()].
+#' @param h Number of periods ahead to forecast.
 #' @return Time series
 #' @author Rob J Hyndman
 #' @keywords ts
@@ -95,25 +94,25 @@ sindexf <- function(object, h) {
 
 #' Seasonal dummy variables
 #'
-#' \code{seasonaldummy} returns a matrix of dummy variables suitable for use in
-#' \code{\link{Arima}}, \code{\link{auto.arima}} or \code{\link{tslm}}. The
-#' last season is omitted and used as the control.
+#' `seasonaldummy` returns a matrix of dummy variables suitable for use in
+#' [Arima()], [auto.arima()] or [tslm()]. The last season is omitted and used
+#' as the control.
 #'
-#' \code{seasonaldummyf} is deprecated, instead use the \code{h} argument in
-#' \code{seasonaldummy}.
+#' `seasonaldummyf` is deprecated, instead use the `h` argument in
+#' `seasonaldummy`.
 #'
 #' The number of dummy variables is determined from the time series
-#' characteristics of \code{x}. When \code{h} is missing, the length of
-#' \code{x} also determines the number of rows for the matrix returned by
-#' \code{seasonaldummy}. the value of \code{h} determines the number of rows
-#' for the matrix returned by \code{seasonaldummy}, typically used for
-#' forecasting. The values within \code{x} are not used.
+#' characteristics of `x`. When `h` is missing, the length of
+#' `x` also determines the number of rows for the matrix returned by
+#' `seasonaldummy`. the value of `h` determines the number of rows
+#' for the matrix returned by `seasonaldummy`, typically used for
+#' forecasting. The values within `x` are not used.
 #'
-#' @param x Seasonal time series: a \code{ts} or a \code{msts} object
+#' @param x Seasonal time series: a `ts` or a `msts` object
 #' @param h Number of periods ahead to forecast (optional)
 #' @return Numerical matrix.
 #' @author Rob J Hyndman
-#' @seealso \code{\link{fourier}}
+#' @seealso [fourier()]
 #' @keywords ts
 #' @examples
 #'
@@ -180,38 +179,36 @@ seasonaldummyf <- function(x, h) {
 
 #' Fourier terms for modelling seasonality
 #'
-#' \code{fourier} returns a matrix containing terms from a Fourier series, up
-#' to order \code{K}, suitable for use in \code{\link{Arima}},
-#' \code{\link{auto.arima}}, or \code{\link{tslm}}.
+#' `fourier` returns a matrix containing terms from a Fourier series, up to
+#' order `K`, suitable for use in [Arima()], [auto.arima()], or [tslm()].
 #'
-#' \code{fourierf} is deprecated, instead use the \code{h} argument in
-#' \code{fourier}.
+#' `fourierf` is deprecated, instead use the `h` argument in `fourier`.
 #'
 #' The period of the Fourier terms is determined from the time series
-#' characteristics of \code{x}. When \code{h} is missing, the length of
-#' \code{x} also determines the number of rows for the matrix returned by
-#' \code{fourier}. Otherwise, the value of \code{h} determines the number of
-#' rows for the matrix returned by \code{fourier}, typically used for
-#' forecasting. The values within \code{x} are not used.
+#' characteristics of `x`. When `h` is missing, the length of
+#' `x` also determines the number of rows for the matrix returned by
+#' `fourier`. Otherwise, the value of `h` determines the number of
+#' rows for the matrix returned by `fourier`, typically used for
+#' forecasting. The values within `x` are not used.
 #'
-#' Typical use would omit \code{h} when generating Fourier terms for training a model
-#' and include \code{h} when generating Fourier terms for forecasting.
+#' Typical use would omit `h` when generating Fourier terms for training a model
+#' and include `h` when generating Fourier terms for forecasting.
 #'
-#' When \code{x} is a \code{ts} object, the value of \code{K} should be an
+#' When `x` is a `ts` object, the value of `K` should be an
 #' integer and specifies the number of sine and cosine terms to return. Thus,
-#' the matrix returned has \code{2*K} columns.
+#' the matrix returned has `2*K` columns.
 #'
-#' When \code{x} is a \code{msts} object, then \code{K} should be a vector of
+#' When `x` is a `msts` object, then `K` should be a vector of
 #' integers specifying the number of sine and cosine terms for each of the
-#' seasonal periods. Then the matrix returned will have \code{2*sum(K)}
+#' seasonal periods. Then the matrix returned will have `2*sum(K)`
 #' columns.
 #'
-#' @param x Seasonal time series: a \code{ts} or a \code{msts} object
+#' @param x Seasonal time series: a `ts` or a `msts` object
 #' @param K Maximum order(s) of Fourier terms
 #' @param h Number of periods ahead to forecast (optional)
 #' @return Numerical matrix.
 #' @author Rob J Hyndman
-#' @seealso \code{\link{seasonaldummy}}
+#' @seealso [seasonaldummy()]
 #' @keywords ts
 #' @examples
 #'
@@ -315,9 +312,9 @@ fourierf <- function(x, K, h) {
 
 #' Moving-average smoothing
 #'
-#' \code{ma} computes a simple moving average smoother of a given time series.
+#' `ma` computes a simple moving average smoother of a given time series.
 #'
-#' The moving average smoother averages the nearest \code{order} periods of
+#' The moving average smoother averages the nearest `order` periods of
 #' each observation. As neighbouring observations of a time series are likely
 #' to be similar in value, averaging eliminates some of the randomness in the
 #' data, leaving a smooth trend-cycle component.
@@ -326,19 +323,19 @@ fourierf <- function(x, K, h) {
 #'
 #' where \eqn{k=\frac{m-1}{2}}{k=(m-1)/2}.
 #'
-#' When an even \code{order} is specified, the observations averaged will
+#' When an even `order` is specified, the observations averaged will
 #' include one more observation from the future than the past (k is rounded
-#' up). If centre is \code{TRUE}, the value from two moving averages (where k is
+#' up). If centre is `TRUE`, the value from two moving averages (where k is
 #' rounded up and down respectively) are averaged, centering the moving
 #' average.
 #'
 #' @param x Univariate time series
 #' @param order Order of moving average smoother
-#' @param centre If \code{TRUE}, then the moving average is centred for even orders.
+#' @param centre If `TRUE`, then the moving average is centred for even orders.
 #' @return Numerical time series object containing the simple moving average
 #' smoothed values.
 #' @author Rob J Hyndman
-#' @seealso \code{\link[stats]{decompose}}
+#' @seealso [stats::decompose()]
 #' @keywords ts
 #' @examples
 #'

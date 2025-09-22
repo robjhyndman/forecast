@@ -39,7 +39,7 @@ gghistogram(lynx, add.kde = TRUE)
 
 }
 \seealso{
-\code{\link[graphics]{hist}}, \code{\link[ggplot2]{geom_histogram}}
+\code{\link[graphics:hist]{graphics::hist()}}, \code{\link[ggplot2:geom_histogram]{ggplot2::geom_histogram()}}
 }
 \author{
 Rob J Hyndman

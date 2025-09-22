@@ -44,7 +44,7 @@ lines(sm, col = "red")
 
 }
 \seealso{
-\code{\link[stats]{decompose}}
+\code{\link[stats:decompose]{stats::decompose()}}
 }
 \author{
 Rob J Hyndman

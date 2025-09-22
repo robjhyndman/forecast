@@ -56,7 +56,7 @@ and fitted values.}
 simulation with resampled errors.}
 
 \item{npaths}{Number of sample paths used in computing simulated prediction
-intervals when \code{bootstrap=TRUE}.}
+intervals when \code{bootstrap = TRUE}.}
 
 \item{...}{Other arguments.}
 

@@ -40,7 +40,7 @@
 \method{fortify}{ts}(model, data, ...)
 }
 \arguments{
-\item{object}{Object of class \dQuote{\code{ts}} or \dQuote{\code{mts}}.}
+\item{object}{Object of class \code{"ts"} or \code{"mts"}.}
 
 \item{colour}{If \code{TRUE}, the time series will be assigned a colour aesthetic}
 
@@ -59,8 +59,7 @@ with the functionality of \link{geom_forecast}.}
 unless specified, colour is set to \code{FALSE}). If \code{FALSE}, each
 series will be assigned a colour.}
 
-\item{model}{Object of class \dQuote{\code{ts}} to be converted to
-\dQuote{\code{data.frame}}.}
+\item{model}{Object of class \code{"ts"} to be converted to \code{"data.frame"}.}
 
 \item{data}{Not used (required for \code{\link[ggplot2]{fortify}} method)}
 }
@@ -86,7 +85,7 @@ autoplot(lungDeaths, facets = TRUE)
 
 }
 \seealso{
-\code{\link[stats]{plot.ts}}, \code{\link[ggplot2]{fortify}}
+\code{\link[stats:plot.ts]{stats::plot.ts()}}, \code{\link[ggplot2:fortify]{ggplot2::fortify()}}
 }
 \author{
 Mitchell O'Hara-Wild

@@ -13,12 +13,12 @@
 #' as ts().
 #' @param seasonal.periods A vector of the seasonal periods of the msts.
 #' @param ts.frequency The seasonal period that should be used as frequency of
-#' the underlying ts object. The default value is \code{max(seasonal.periods)}.
-#' @param ... Arguments to be passed to the underlying call to \code{ts()}. For
-#' example \code{start=c(1987,5)}.
-#' @return An object of class \code{c("msts", "ts")}. If there is only one
-#' seasonal period (i.e., \code{length(seasonal.periods)==1}), then the object
-#' is of class \code{"ts"}.
+#' the underlying ts object. The default value is `max(seasonal.periods)`.
+#' @param ... Arguments to be passed to the underlying call to `ts()`. For
+#' example `start=c(1987, 5)`.
+#' @return An object of class `c("msts", "ts")`. If there is only one
+#' seasonal period (i.e., `length(seasonal.periods) == 1`), then the object
+#' is of class `"ts"`.
 #' @author Slava Razbash and Rob J Hyndman
 #' @keywords ts
 #' @examples

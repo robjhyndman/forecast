@@ -37,8 +37,8 @@ Forecasts are given by
 
 where \eqn{\mu}{mu} is estimated by the sample mean.
 
-The function \code{\link[base:summary]{base::summary()}} is used to obtain and print a summary of the
-results, while the function \code{\link[base:plot]{base::plot()}} produces a plot of the forecasts and
+The function \code{\link[=summary]{summary()}} is used to obtain and print a summary of the
+results, while the function \code{\link[=plot]{plot()}} produces a plot of the forecasts and
 prediction intervals.
 The generic accessor functions \code{\link[stats:fitted.values]{stats::fitted()}} and \code{\link[stats:residuals]{stats::residuals()}}
 extract useful features of the object returned by \code{\link[=mean_model]{mean_model()}}.

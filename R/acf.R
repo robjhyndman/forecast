@@ -2,18 +2,17 @@
 
 #' (Partial) Autocorrelation and Cross-Correlation Function Estimation
 #'
-#' The function \code{Acf} computes (and by default plots) an estimate of the
+#' The function `Acf` computes (and by default plots) an estimate of the
 #' autocorrelation function of a (possibly multivariate) time series. Function
-#' \code{Pacf} computes (and by default plots) an estimate of the partial
+#' `Pacf` computes (and by default plots) an estimate of the partial
 #' autocorrelation function of a (possibly multivariate) time series. Function
-#' \code{Ccf} computes the cross-correlation or cross-covariance of two
+#' `Ccf` computes the cross-correlation or cross-covariance of two
 #' univariate series.
 #'
-#' The functions improve the \code{\link[stats]{acf}},
-#' \code{\link[stats]{pacf}} and \code{\link[stats]{ccf}} functions. The main
-#' differences are that \code{Acf} does not plot a spike at lag 0 when
-#' \code{type="correlation"} (which is redundant) and the horizontal axes show
-#' lags in time units rather than seasonal units.
+#' The functions improve the [stats::acf()], [stats::pacf()] and [stats::ccf()]
+#' functions. The main differences are that `Acf` does not plot a spike at lag
+#' 0 when `type = "correlation"` (which is redundant) and the horizontal axes
+#' show lags in time units rather than seasonal units.
 #'
 #' The tapered versions implement the ACF and PACF estimates and plots
 #' described in Hyndman (2015), based on the banded and tapered estimates of
@@ -27,27 +26,25 @@
 #' of series. Will be automatically limited to one less than the number of
 #' observations in the series.
 #' @param type Character string giving the type of acf to be computed. Allowed
-#' values are \dQuote{\code{correlation}} (the default),
-#' \dQuote{\code{covariance}} or \dQuote{\code{partial}}.
-#' @param plot logical. If \code{TRUE} (the default) the resulting acf, pacf or
+#' values are `"correlation"` (the default), `"covariance"` or `"partial"`.
+#' @param plot logical. If `TRUE` (the default) the resulting acf, pacf or
 #' ccf is plotted.
 #' @param na.action Function to handle missing values. Default is
-#' \code{\link[stats]{na.contiguous}}. Useful alternatives are
-#' \code{\link[stats]{na.pass}} and \code{\link{na.interp}}.
+#' [stats::na.contiguous()]. Useful alternatives are [stats::na.pass()] and
+#' [na.interp()].
 #' @param demean Should covariances be about the sample means?
-#' @param calc.ci If \code{TRUE}, confidence intervals for the ACF/PACF
+#' @param calc.ci If `TRUE`, confidence intervals for the ACF/PACF
 #' estimates are calculated.
 #' @param level Percentage level used for the confidence intervals.
 #' @param nsim The number of bootstrap samples used in estimating the
 #' confidence intervals.
 #' @param ... Additional arguments passed to the plotting function.
-#' @return The \code{Acf}, \code{Pacf} and \code{Ccf} functions return objects
-#' of class "acf" as described in \code{\link[stats]{acf}} from the stats
-#' package. The \code{taperedacf} and \code{taperedpacf} functions return
+#' @return The `Acf`, `Pacf` and `Ccf` functions return objects
+#' of class "acf" as described in [stats::acf()] from the stats
+#' package. The `taperedacf` and `taperedpacf` functions return
 #' objects of class "mpacf".
 #' @author Rob J Hyndman
-#' @seealso \code{\link[stats]{acf}}, \code{\link[stats]{pacf}},
-#' \code{\link[stats]{ccf}}, \code{\link{tsdisplay}}
+#' @seealso [stats::acf()], [stats::pacf()], [stats::ccf()], [tsdisplay()]
 #' @references Hyndman, R.J. (2015). Discussion of ``High-dimensional
 #' autocovariance matrices and optimal linear prediction''. \emph{Electronic
 #' Journal of Statistics}, 9, 792-796.

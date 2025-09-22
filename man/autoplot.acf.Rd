@@ -58,7 +58,7 @@ ggtaperedacf(
 ggtaperedpacf(x, ...)
 }
 \arguments{
-\item{object}{Object of class \dQuote{\code{acf}}.}
+\item{object}{Object of class \code{"acf"}.}
 
 \item{ci}{coverage probability for confidence interval. Plotting of the
 confidence interval is suppressed if ci is zero or negative.}
@@ -71,8 +71,7 @@ or a numeric vector or matrix.}
 \item{lag.max}{maximum lag at which to calculate the acf.}
 
 \item{type}{character string giving the type of acf to be computed. Allowed
-values are "\code{correlation}" (the default), \dQuote{\code{covariance}} or
-\dQuote{\code{partial}}.}
+values are \code{"correlation"} (the default), \code{"covariance"} or \code{"partial"}.}
 
 \item{plot}{logical. If \code{TRUE} (the default) the resulting ACF, PACF or
 CCF is plotted.}
@@ -120,8 +119,7 @@ ggCcf(mdeaths, fdeaths)
 
 }
 \seealso{
-\code{\link[stats]{plot.acf}}, \code{\link{Acf}},
-\code{\link[stats]{acf}}, \code{\link{taperedacf}}
+\code{\link[stats:plot.acf]{stats::plot.acf()}} \code{\link[=Acf]{Acf()}}, [stats::acf(), \code{\link[=taperedacf]{taperedacf()}}
 }
 \author{
 Mitchell O'Hara-Wild
