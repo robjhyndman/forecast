@@ -666,10 +666,10 @@ fitted.forecast_ARIMA <- fitted.Arima
 #' @keywords ts
 #' @examples
 #' library(ggplot2)
-#' WWWusage %>%
-#'   Arima(order = c(3, 1, 0)) %>%
-#'   forecast(h = 20) %>%
-#'   autoplot
+#' WWWusage |>
+#'   Arima(order = c(3, 1, 0)) |>
+#'   forecast(h = 20) |>
+#'   autoplot()
 #'
 #' # Fit model to first few years of AirPassengers data
 #' air.model <- Arima(window(AirPassengers, end = 1956 + 11 / 12),
@@ -935,7 +935,7 @@ print.forecast_ARIMA <- function(x, digits=max(3, getOption("digits") - 3), se=T
 #' \code{\link{Arima}}, \code{\link[stats]{arima}}, \code{\link{arfima}}.
 #' @keywords ts
 #' @examples
-#' WWWusage %>% auto.arima %>% arimaorder
+#' WWWusage |> auto.arima() |> arimaorder()
 #'
 #' @export
 arimaorder <- function(object) {

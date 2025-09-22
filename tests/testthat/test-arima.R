@@ -79,7 +79,7 @@ test_that("tests for forecast.Arima", {
   fit4 <- Arima(wineind, order = c(1, 1, 2), seasonal = c(0, 1, 1), xreg = rnorm(length(wineind)))
   expect_error(forecast.Arima(fit4))
   expect_error(forecast.Arima(fit4, xreg = matrix(rnorm(40), ncol = 2)))
-  forecast.Arima(fit4, xreg = rnorm(20))$mean %>% 
+  forecast.Arima(fit4, xreg = rnorm(20))$mean |>
     expect_length(20)
 
   fit5 <- Arima(wineind[1:150], order = c(1, 1, 2), seasonal = c(0, 1, 1), method = "ML")

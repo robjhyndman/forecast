@@ -23,7 +23,7 @@ contains the values \eqn{p}, \eqn{d}, \eqn{q}, \eqn{P}, \eqn{D}, \eqn{Q} and
 Returns the order of a univariate ARIMA or ARFIMA model.
 }
 \examples{
-WWWusage \%>\% auto.arima \%>\% arimaorder
+WWWusage |> auto.arima() |> arimaorder()
 
 }
 \seealso{
