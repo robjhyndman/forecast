@@ -76,7 +76,7 @@
 #' @keywords ts
 #' @examples
 #'
-#' WWWusage %>% forecast %>% plot
+#' WWWusage |> forecast() |> plot()
 #' fit <- ets(window(WWWusage, end = 60))
 #' fc <- forecast(WWWusage, model = fit)
 #' @export

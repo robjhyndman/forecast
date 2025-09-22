@@ -102,10 +102,10 @@ Athanasopoulos (2018). For details of the estimation algorithm, see the
 }
 \examples{
 library(ggplot2)
-WWWusage \%>\%
-  Arima(order = c(3, 1, 0)) \%>\%
-  forecast(h = 20) \%>\%
-  autoplot
+WWWusage |>
+  Arima(order = c(3, 1, 0)) |>
+  forecast(h = 20) |>
+  autoplot()
 
 # Fit model to first few years of AirPassengers data
 air.model <- Arima(window(AirPassengers, end = 1956 + 11 / 12),

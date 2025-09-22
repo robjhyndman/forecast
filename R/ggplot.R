@@ -92,9 +92,9 @@ ggtsbreaks <- function(x) {
 #'
 #' library(ggplot2)
 #' ggAcf(wineind)
-#' wineind %>% Acf(plot = FALSE) %>% autoplot
+#' wineind |> Acf(plot = FALSE) |> autoplot()
 #' \dontrun{
-#' wineind %>% taperedacf(plot = FALSE) %>% autoplot
+#' wineind |> taperedacf(plot = FALSE) |> autoplot()
 #' ggtaperedacf(wineind)
 #' ggtaperedpacf(wineind)
 #' }
@@ -1600,15 +1600,15 @@ autoplot.StructTS <- function(object, labels = NULL, range.bars = TRUE, ...) {
 #' @examples
 #'
 #' library(ggplot2)
-#' co2 %>%
-#'   decompose() %>%
+#' co2 |>
+#'   decompose() |>
 #'   autoplot()
-#' nottem %>%
-#'   stl(s.window = "periodic") %>%
+#' nottem |>
+#'   stl(s.window = "periodic") |>
 #'   autoplot()
 #' \dontrun{
 #' library(seasonal)
-#' seas(USAccDeaths) %>% autoplot()
+#' seas(USAccDeaths) |> autoplot()
 #' }
 #'
 #' @export
