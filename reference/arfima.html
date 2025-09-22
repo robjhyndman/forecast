@@ -68,14 +68,13 @@ Raftery (1989) algorithm to estimate the parameters including d.</p>
 
 <dt id="arg-drange">drange<a class="anchor" aria-label="anchor" href="#arg-drange"></a></dt>
 <dd><p>Allowable values of d to be considered. Default of
-<code>c(0,0.5)</code> ensures a stationary model is returned.</p></dd>
+<code>c(0, 0.5)</code> ensures a stationary model is returned.</p></dd>
 
 
 <dt id="arg-estim">estim<a class="anchor" aria-label="anchor" href="#arg-estim"></a></dt>
 <dd><p>If <code>estim = "ls"</code>, then the ARMA parameters are calculated
 using the Haslett-Raftery algorithm. If <code>estim = "mle"</code>, then the ARMA
-parameters are calculated using full MLE via the <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">arima</a></code>
-function.</p></dd>
+parameters are calculated using full MLE via the <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">stats::arima()</a></code> function.</p></dd>
 
 
 <dt id="arg-model">model<a class="anchor" aria-label="anchor" href="#arg-model"></a></dt>
@@ -108,27 +107,26 @@ which must have the same number of rows as y. It should not be a data frame.</p>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Other arguments passed to <code><a href="auto.arima.html">auto.arima</a></code> when
-selecting p and q.</p></dd>
+<dd><p>Other arguments passed to <code><a href="auto.arima.html">auto.arima()</a></code> when selecting p and q.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A list object of S3 class <code>"fracdiff"</code>, which is described in
-the <code><a href="https://rdrr.io/pkg/fracdiff/man/fracdiff.html" class="external-link">fracdiff</a></code> documentation. A few additional objects
+the <code><a href="https://rdrr.io/pkg/fracdiff/man/fracdiff.html" class="external-link">fracdiff::fracdiff()</a></code> documentation. A few additional objects
 are added to the list including <code>x</code> (the original time series), and the
 <code>residuals</code> and <code>fitted</code> values.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This function combines <code><a href="https://rdrr.io/pkg/fracdiff/man/fracdiff.html" class="external-link">fracdiff</a></code> and
-<code><a href="auto.arima.html">auto.arima</a></code> to automatically select and estimate an ARFIMA
+    <p>This function combines <code><a href="https://rdrr.io/pkg/fracdiff/man/fracdiff.html" class="external-link">fracdiff::fracdiff()</a></code> and
+<code><a href="auto.arima.html">auto.arima()</a></code> to automatically select and estimate an ARFIMA
 model.  The fractional differencing parameter is chosen first assuming an
 ARFIMA(2,d,0) model. Then the data are fractionally differenced using the
 estimated d and an ARMA model is selected for the resulting time series
-using <code><a href="auto.arima.html">auto.arima</a></code>. Finally, the full ARFIMA(p,d,q) model is
-re-estimated using <code><a href="https://rdrr.io/pkg/fracdiff/man/fracdiff.html" class="external-link">fracdiff</a></code>. If <code>estim="mle"</code>,
-the ARMA coefficients are refined using <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">arima</a></code>.</p>
+using <code><a href="auto.arima.html">auto.arima()</a></code>. Finally, the full ARFIMA(p,d,q) model is
+re-estimated using <code><a href="https://rdrr.io/pkg/fracdiff/man/fracdiff.html" class="external-link">fracdiff::fracdiff()</a></code>. If <code>estim = "mle"</code>,
+the ARMA coefficients are refined using <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">stats::arima()</a></code>.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -141,8 +139,7 @@ The forecast package for R", <em>Journal of Statistical Software</em>,
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="https://rdrr.io/pkg/fracdiff/man/fracdiff.html" class="external-link">fracdiff</a></code>, <code><a href="auto.arima.html">auto.arima</a></code>,
-<code><a href="forecast.Arima.html">forecast.fracdiff</a></code>.</p></div>
+    <div class="dont-index"><p><code><a href="https://rdrr.io/pkg/fracdiff/man/fracdiff.html" class="external-link">fracdiff::fracdiff()</a></code>, <code><a href="auto.arima.html">auto.arima()</a></code>, <code><a href="forecast.Arima.html">forecast.fracdiff()</a></code>.</p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>

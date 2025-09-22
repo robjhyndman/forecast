@@ -115,8 +115,7 @@ observations in the series.</p></dd>
 
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
 <dd><p>Character string giving the type of acf to be computed. Allowed
-values are “<code>correlation</code>” (the default),
-“<code>covariance</code>” or “<code>partial</code>”.</p></dd>
+values are <code>"correlation"</code> (the default), <code>"covariance"</code> or <code>"partial"</code>.</p></dd>
 
 
 <dt id="arg-plot">plot<a class="anchor" aria-label="anchor" href="#arg-plot"></a></dt>
@@ -126,8 +125,8 @@ ccf is plotted.</p></dd>
 
 <dt id="arg-na-action">na.action<a class="anchor" aria-label="anchor" href="#arg-na-action"></a></dt>
 <dd><p>Function to handle missing values. Default is
-<code><a href="https://rdrr.io/r/stats/na.contiguous.html" class="external-link">na.contiguous</a></code>. Useful alternatives are
-<code><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.pass</a></code> and <code><a href="na.interp.html">na.interp</a></code>.</p></dd>
+<code><a href="https://rdrr.io/r/stats/na.contiguous.html" class="external-link">stats::na.contiguous()</a></code>. Useful alternatives are <code><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">stats::na.pass()</a></code> and
+<code><a href="na.interp.html">na.interp()</a></code>.</p></dd>
 
 
 <dt id="arg-demean">demean<a class="anchor" aria-label="anchor" href="#arg-demean"></a></dt>
@@ -159,17 +158,16 @@ confidence intervals.</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>The <code>Acf</code>, <code>Pacf</code> and <code>Ccf</code> functions return objects
-of class "acf" as described in <code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">acf</a></code> from the stats
+of class "acf" as described in <code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">stats::acf()</a></code> from the stats
 package. The <code>taperedacf</code> and <code>taperedpacf</code> functions return
 objects of class "mpacf".</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The functions improve the <code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">acf</a></code>,
-<code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">pacf</a></code> and <code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">ccf</a></code> functions. The main
-differences are that <code>Acf</code> does not plot a spike at lag 0 when
-<code>type="correlation"</code> (which is redundant) and the horizontal axes show
-lags in time units rather than seasonal units.</p>
+    <p>The functions improve the <code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">stats::acf()</a></code>, <code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">stats::pacf()</a></code> and <code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">stats::ccf()</a></code>
+functions. The main differences are that <code>Acf</code> does not plot a spike at lag
+0 when <code>type = "correlation"</code> (which is redundant) and the horizontal axes
+show lags in time units rather than seasonal units.</p>
 <p>The tapered versions implement the ACF and PACF estimates and plots
 described in Hyndman (2015), based on the banded and tapered estimates of
 autocovariance proposed by McMurry and Politis (2010).</p>
@@ -185,8 +183,7 @@ Time Series Analysis</em>, 31(6), 471-482.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">acf</a></code>, <code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">pacf</a></code>,
-<code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">ccf</a></code>, <code><a href="tsdisplay.html">tsdisplay</a></code></p></div>
+    <div class="dont-index"><p><code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">stats::acf()</a></code>, <code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">stats::pacf()</a></code>, <code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">stats::ccf()</a></code>, <code><a href="tsdisplay.html">tsdisplay()</a></code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>

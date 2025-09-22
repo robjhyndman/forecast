@@ -98,8 +98,8 @@ value is selected by default if the argument is missing.</p></dd>
 
 <dt id="arg-na-action">na.action<a class="anchor" aria-label="anchor" href="#arg-na-action"></a></dt>
 <dd><p>function to handle missing values in acf, pacf and spectrum
-calculations. The default is <code><a href="https://rdrr.io/r/stats/na.contiguous.html" class="external-link">na.contiguous</a></code>. Useful
-alternatives are <code><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.pass</a></code> and <code><a href="na.interp.html">na.interp</a></code>.</p></dd>
+calculations. The default is <code><a href="https://rdrr.io/r/stats/na.contiguous.html" class="external-link">stats::na.contiguous()</a></code>. Useful
+alternatives are <code><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">stats::na.pass()</a></code> and <code><a href="na.interp.html">na.interp()</a></code>.</p></dd>
 
 
 <dt id="arg-theme">theme<a class="anchor" aria-label="anchor" href="#arg-theme"></a></dt>
@@ -107,12 +107,12 @@ alternatives are <code><a href="https://rdrr.io/r/stats/na.fail.html" class="ext
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>additional arguments to <code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">acf</a></code>.</p></dd>
+<dd><p>additional arguments to <code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">stats::acf()</a></code>.</p></dd>
 
 
 <dt id="arg-ci-type">ci.type<a class="anchor" aria-label="anchor" href="#arg-ci-type"></a></dt>
 <dd><p>type of confidence limits for ACF that is passed to
-<code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">acf</a></code>. Should the confidence limits assume a white noise
+<code><a href="https://rdrr.io/r/stats/acf.html" class="external-link">stats::acf()</a></code>. Should the confidence limits assume a white noise
 input or for lag \(k\) an MA(\(k-1\)) input?</p></dd>
 
 
@@ -152,8 +152,7 @@ and practice</em>, 2nd edition, OTexts: Melbourne, Australia.
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="https://rdrr.io/r/stats/plot.ts.html" class="external-link">plot.ts</a></code>, <code><a href="Acf.html">Acf</a></code>,
-<code><a href="https://rdrr.io/r/stats/spec.ar.html" class="external-link">spec.ar</a></code></p></div>
+    <div class="dont-index"><p><code><a href="https://rdrr.io/r/stats/plot.ts.html" class="external-link">stats::plot.ts()</a></code>, <code><a href="Acf.html">Acf()</a></code>, <code><a href="https://rdrr.io/r/stats/spec.ar.html" class="external-link">stats::spec.ar()</a></code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>

@@ -140,8 +140,7 @@
 
 
 <dl><dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
-<dd><p>An object of class "<code>ets</code>", "<code>Arima</code>", "<code>ar</code>"
-or "<code>nnetar</code>".</p></dd>
+<dd><p>An object of class <code>"ets"</code>, <code>"Arima"</code>, <code>"ar"</code> or <code>"nnetar"</code>.</p></dd>
 
 
 <dt id="arg-nsim">nsim<a class="anchor" aria-label="anchor" href="#arg-nsim"></a></dt>
@@ -152,7 +151,7 @@ the length of series used to train model (or 100 if no data found).</p></dd>
 
 <dt id="arg-seed">seed<a class="anchor" aria-label="anchor" href="#arg-seed"></a></dt>
 <dd><p>Either <code>NULL</code> or an integer that will be used in a call to
-<code><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></code> before simulating the time series. The default,
+<code><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed()</a></code> before simulating the time series. The default,
 <code>NULL</code>, will not change the random generator state.</p></dd>
 
 
@@ -168,7 +167,7 @@ distributed errors or errors provided as <code>innov</code>.</p></dd>
 
 <dt id="arg-innov">innov<a class="anchor" aria-label="anchor" href="#arg-innov"></a></dt>
 <dd><p>A vector of innovations to use as the error series. Ignored if
-<code>bootstrap=TRUE</code>. If not <code>NULL</code>, the value of <code>nsim</code> is set
+<code>bootstrap = TRUE</code>. If not <code>NULL</code>, the value of <code>nsim</code> is set
 to length of <code>innov</code>.</p></dd>
 
 
@@ -178,8 +177,7 @@ to length of <code>innov</code>.</p></dd>
 
 <dt id="arg-xreg">xreg<a class="anchor" aria-label="anchor" href="#arg-xreg"></a></dt>
 <dd><p>New values of <code>xreg</code> to be used for forecasting. The value
-of <code>nsim</code> is set to the number of rows of <code>xreg</code> if it is not
-<code>NULL</code>.</p></dd>
+of <code>nsim</code> is set to the number of rows of <code>xreg</code> if it is not <code>NULL</code>.</p></dd>
 
 
 <dt id="arg-lambda">lambda<a class="anchor" aria-label="anchor" href="#arg-lambda"></a></dt>
@@ -191,26 +189,24 @@ data transformed before model is estimated.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object of class "<code>ts</code>".</p>
+    <p>An object of class <code>"ts"</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>With <code>simulate.Arima()</code>, the <code>object</code> should be produced by
-<code><a href="Arima.html">Arima</a></code> or <code><a href="auto.arima.html">auto.arima</a></code>, rather than
-<code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">arima</a></code>. By default, the error series is assumed normally
-distributed and generated using <code><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></code>. If <code>innov</code>
-is present, it is used instead. If <code>bootstrap=TRUE</code> and
-<code>innov=NULL</code>, the residuals are resampled instead.</p>
-<p>When <code>future=TRUE</code>, the sample paths are conditional on the data. When
-<code>future=FALSE</code> and the model is stationary, the sample paths do not
-depend on the data at all. When <code>future=FALSE</code> and the model is
+    <p>With <code>simulate.Arima()</code>, the <code>object</code> should be produced by <code><a href="Arima.html">Arima()</a></code> or
+<code><a href="auto.arima.html">auto.arima()</a></code>, rather than <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">stats::arima()</a></code>. By default, the error series
+is assumed normally distributed and generated using <code><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">stats::rnorm()</a></code>. If
+<code>innov</code> is present, it is used instead. If <code>bootstrap = TRUE</code> and
+<code>innov = NULL</code>, the residuals are resampled instead.</p>
+<p>When <code>future = TRUE</code>, the sample paths are conditional on the data. When
+<code>future = FALSE</code> and the model is stationary, the sample paths do not
+depend on the data at all. When <code>future = FALSE</code> and the model is
 non-stationary, the location of the sample paths is arbitrary, so they all
 start at the value of the first observation.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="ets.html">ets</a></code>, <code><a href="Arima.html">Arima</a></code>, <code><a href="auto.arima.html">auto.arima</a></code>,
-<code><a href="https://rdrr.io/r/stats/ar.html" class="external-link">ar</a></code>, <code><a href="arfima.html">arfima</a></code>, <code><a href="nnetar.html">nnetar</a></code>.</p></div>
+    <div class="dont-index"><p><code><a href="ets.html">ets()</a></code>, <code><a href="Arima.html">Arima()</a></code>, <code><a href="auto.arima.html">auto.arima()</a></code>, <code><a href="https://rdrr.io/r/stats/ar.html" class="external-link">ar()</a></code>, <code><a href="arfima.html">arfima()</a></code>, <code><a href="nnetar.html">nnetar()</a></code>.</p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>

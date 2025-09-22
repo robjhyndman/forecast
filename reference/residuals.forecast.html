@@ -76,8 +76,7 @@
 
 <dl><dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
 <dd><p>An object containing a time series model of class <code>ar</code>,
-<code>Arima</code>, <code>bats</code>, <code>ets</code>, <code>arfima</code>, <code>nnetar</code> or
-<code>stlm</code>.
+<code>Arima</code>, <code>bats</code>, <code>ets</code>, <code>arfima</code>, <code>nnetar</code> or <code>stlm</code>.
 If <code>object</code> is of class <code>forecast</code>, then the function will return
 <code>object$residuals</code> if it exists, otherwise it returns the differences between
 the observations and their fitted values.</p></dd>
@@ -92,7 +91,7 @@ the observations and their fitted values.</p></dd>
 
 
 <dt id="arg-h">h<a class="anchor" aria-label="anchor" href="#arg-h"></a></dt>
-<dd><p>If <code>type="response"</code>, then the fitted values are computed for
+<dd><p>If <code>type = "response"</code>, then the fitted values are computed for
 <code>h</code>-step forecasts.</p></dd>
 
 </dl></div>
@@ -105,20 +104,20 @@ the observations and their fitted values.</p></dd>
     <p>Innovation residuals correspond to the white noise process that drives the
 evolution of the time series model. Response residuals are the difference
 between the observations and the fitted values (equivalent to <code>h</code>-step
-forecasts). For functions with no <code>h</code> argument, <code>h=1</code>. For
+forecasts). For functions with no <code>h</code> argument, <code>h = 1</code>. For
 homoscedastic models, the innovation residuals and the response residuals
-for <code>h=1</code> are identical. Regression residuals are available for
+for <code>h = 1</code> are identical. Regression residuals are available for
 regression models with ARIMA errors, and are equal to the original data
 minus the effect of the regression variables. If there are no regression
 variables, the errors will be identical to the original series (possibly
-adjusted to have zero mean).  <code>arima.errors</code> is a deprecated function
+adjusted to have zero mean). <code>arima.errors</code> is a deprecated function
 which is identical to <code>residuals.Arima(object, type="regression")</code>.
-For <code>nnetar</code> objects, when <code>type="innovations"</code> and <code>lambda</code> is used, a
+For <code>nnetar</code> objects, when <code>type = "innovations"</code> and <code>lambda</code> is used, a
 matrix of time-series consisting of the residuals from each of the fitted neural networks is returned.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="fitted.Arima.html">fitted.Arima</a></code>, <code><a href="checkresiduals.html">checkresiduals</a></code>.</p></div>
+    <div class="dont-index"><p><code><a href="fitted.Arima.html">fitted.Arima()</a></code>, <code><a href="checkresiduals.html">checkresiduals()</a></code>.</p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>

@@ -79,9 +79,9 @@ seasonally adjusted data (from an stl decomposition).</p></dd>
 
 
 <dt id="arg-fun">FUN<a class="anchor" aria-label="anchor" href="#arg-fun"></a></dt>
-<dd><p>Function used for model fitting. Must accept argument <code>x</code>
-and <code>y</code> for the predictors and response, respectively (<code>formula</code>
-object not currently supported).</p></dd>
+<dd><p>Function used for model fitting. Must accept argument <code>x</code> and <code>y</code>
+for the predictors and response, respectively (<code>formula</code> object not
+currently supported).</p></dd>
 
 
 <dt id="arg-predict-fun">predict.FUN<a class="anchor" aria-label="anchor" href="#arg-predict-fun"></a></dt>
@@ -126,13 +126,12 @@ is not <code>NULL</code>, scaling is applied after Box-Cox transformation.</p></
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Other arguments passed to <code>FUN</code> for
-<code>modelAR</code>.</p></dd>
+<dd><p>Other arguments passed to <code>FUN</code> for <code>modelAR</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Returns an object of class "<code>modelAR</code>".</p>
+    <p>Returns an object of class <code>"modelAR"</code>.</p>
 <p>The function <code>summary</code> is used to obtain and print a summary of the
 results.</p>
 <p>The generic accessor functions <code>fitted.values</code> and <code>residuals</code>
@@ -162,14 +161,9 @@ extract useful features of the value returned by <code>nnetar</code>.</p>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This is an experimental function and only recommended for advanced users.
-The selected model is fitted with lagged values of <code>y</code> as
-inputs. The inputs are for
-lags 1 to <code>p</code>, and lags <code>m</code> to <code>mP</code> where
-<code>m=frequency(y)</code>. If <code>xreg</code> is provided, its columns are also
-used as inputs. If there are missing values in <code>y</code> or
-<code>xreg</code>, the corresponding rows (and any others which depend on them as
-lags) are omitted from the fit. The model is trained for one-step
-forecasting. Multi-step forecasts are computed recursively.</p>
+The selected model is fitted with lagged values of <code>y as inputs. The inputs are for lags 1 to </code>p<code>, and lags </code>m<code>to</code>mP<code>where</code>m=frequency(y)<code>. If </code>xreg<code>is provided, its columns are also used as inputs. If there are missing values in</code>y<code>or</code>xreg`, the corresponding rows (and any others
+which depend on them as lags) are omitted from the fit. The model is trained
+for one-step forecasting. Multi-step forecasts are computed recursively.</p>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>

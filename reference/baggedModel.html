@@ -57,7 +57,7 @@
 
 
 <dt id="arg-fn">fn<a class="anchor" aria-label="anchor" href="#arg-fn"></a></dt>
-<dd><p>the forecast function to use. Default is <code><a href="ets.html">ets</a></code>.</p></dd>
+<dd><p>the forecast function to use. Default is <code><a href="ets.html">ets()</a></code>.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -66,7 +66,7 @@
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Returns an object of class "<code>baggedModel</code>".</p>
+    <p>Returns an object of class <code>"baggedModel"</code>.</p>
 <p>The function <code>print</code> is used to obtain and print a summary of the
 results.</p>
 <dl><dt>models</dt>
@@ -95,12 +95,12 @@ mean of the fitted values is calculated over the ensemble.</p></dd>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This function implements the bagged model forecasting method described in
-Bergmeir et al. By default, the <code><a href="ets.html">ets</a></code> function is applied to all
-bootstrapped series. Base models other than <code><a href="ets.html">ets</a></code> can be given by the
+Bergmeir et al. By default, the <code><a href="ets.html">ets()</a></code> function is applied to all
+bootstrapped series. Base models other than <code><a href="ets.html">ets()</a></code> can be given by the
 parameter <code>fn</code>. Using the default parameters, the function
-<code><a href="bld.mbb.bootstrap.html">bld.mbb.bootstrap</a></code> is used to calculate the bootstrapped series
+<code><a href="bld.mbb.bootstrap.html">bld.mbb.bootstrap()</a></code> is used to calculate the bootstrapped series
 with the Box-Cox and Loess-based decomposition (BLD) bootstrap. The function
-<code><a href="forecast.baggedModel.html">forecast.baggedModel</a></code> can then be used to calculate forecasts.</p>
+<code><a href="forecast.baggedModel.html">forecast.baggedModel()</a></code> can then be used to calculate forecasts.</p>
 <p><code>baggedETS</code> is a wrapper for <code>baggedModel</code>, setting <code>fn</code> to "ets".
 This function is included for backwards compatibility only, and may be
 deprecated in the future.</p>

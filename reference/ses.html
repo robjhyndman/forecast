@@ -116,7 +116,7 @@ is suitable for fan plots.</p></dd>
 <dt id="arg-initial">initial<a class="anchor" aria-label="anchor" href="#arg-initial"></a></dt>
 <dd><p>Method used for selecting initial state values. If
 <code>optimal</code>, the initial values are optimized along with the smoothing
-parameters using <code><a href="ets.html">ets</a></code>. If <code>simple</code>, the initial values are
+parameters using <code><a href="ets.html">ets()</a></code>. If <code>simple</code>, the initial values are
 set to values obtained using simple calculations on the first few
 observations. See Hyndman &amp; Athanasopoulos (2014) for details.</p></dd>
 
@@ -164,7 +164,7 @@ will be estimated.</p></dd>
 
 
 <dt id="arg-phi">phi<a class="anchor" aria-label="anchor" href="#arg-phi"></a></dt>
-<dd><p>Value of damping parameter if <code>damped=TRUE</code>. If <code>NULL</code>,
+<dd><p>Value of damping parameter if <code>damped = TRUE</code>. If <code>NULL</code>,
 it will be estimated.</p></dd>
 
 
@@ -180,7 +180,7 @@ it will be estimated.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object of class "<code>forecast</code>".</p>
+    <p>An object of class <code>"forecast"</code>.</p>
 <p>The function <code>summary</code> is used to obtain and print a summary of the
 results, while the function <code>plot</code> produces a plot of the forecasts and
 prediction intervals.</p>
@@ -233,8 +233,7 @@ and practice</em>, 2nd edition, OTexts: Melbourne, Australia.
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="ets.html">ets</a></code>, <code><a href="https://rdrr.io/r/stats/HoltWinters.html" class="external-link">HoltWinters</a></code>,
-<code><a href="naive.html">rwf</a></code>, <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">arima</a></code>.</p></div>
+    <div class="dont-index"><p><code><a href="ets.html">ets()</a></code>, <code><a href="https://rdrr.io/r/stats/HoltWinters.html" class="external-link">stats::HoltWinters()</a></code>, <code><a href="naive.html">rwf()</a></code>, <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">stats::arima()</a></code>.</p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>

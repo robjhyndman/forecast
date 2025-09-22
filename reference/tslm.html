@@ -63,8 +63,8 @@ typically the environment from which lm is called.</p></dd>
 
 <dt id="arg-subset">subset<a class="anchor" aria-label="anchor" href="#arg-subset"></a></dt>
 <dd><p>An optional subset containing rows of data to keep. For best
-results, pass a logical vector of rows to keep. Also supports
-<code><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a>()</code> functions.</p></dd>
+results, pass a logical vector of rows to keep. Also supports <code><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset()</a></code>
+functions.</p></dd>
 
 
 <dt id="arg-lambda">lambda<a class="anchor" aria-label="anchor" href="#arg-lambda"></a></dt>
@@ -92,7 +92,7 @@ and fitted values.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p><code>tslm</code> is largely a wrapper for <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a>()</code> except that
+    <p><code>tslm</code> is largely a wrapper for <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">stats::lm()</a></code> except that
 it allows variables "trend" and "season" which are created on the fly from
 the time series characteristics of the data. The variable "trend" is a
 simple time trend and "season" is a factor indicating the season (e.g., the
@@ -100,7 +100,7 @@ month or the quarter depending on the frequency of the data).</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="forecast.lm.html">forecast.lm</a></code>, <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></code>.</p></div>
+    <div class="dont-index"><p><code><a href="forecast.lm.html">forecast.lm()</a></code>, <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">stats::lm()</a></code>.</p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
