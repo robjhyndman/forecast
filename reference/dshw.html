@@ -61,18 +61,18 @@
 
 
 <dl><dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
-<dd><p>Either an <code><a href="msts.html">msts</a></code> object with two seasonal periods or a
+<dd><p>Either an <code><a href="msts.html">msts()</a></code> object with two seasonal periods or a
 numeric vector.</p></dd>
 
 
 <dt id="arg-period-">period1<a class="anchor" aria-label="anchor" href="#arg-period-"></a></dt>
 <dd><p>Period of the shorter seasonal period. Only used if <code>y</code>
-is not an <code><a href="msts.html">msts</a></code> object.</p></dd>
+is not an <code><a href="msts.html">msts()</a></code> object.</p></dd>
 
 
 <dt id="arg-period-">period2<a class="anchor" aria-label="anchor" href="#arg-period-"></a></dt>
 <dd><p>Period of the longer seasonal period.  Only used if <code>y</code>
-is not an <code><a href="msts.html">msts</a></code> object.</p></dd>
+is not an <code><a href="msts.html">msts()</a></code> object.</p></dd>
 
 
 <dt id="arg-h">h<a class="anchor" aria-label="anchor" href="#arg-h"></a></dt>
@@ -131,7 +131,7 @@ set.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object of class "<code>forecast</code>" which is a list that includes the
+    <p>An object of class <code>"forecast"</code> which is a list that includes the
 following elements:</p>
 <dl><dt>model</dt>
 <dd><p>A list containing information about the fitted model</p></dd>
@@ -162,10 +162,10 @@ extract useful features of the value returned by <code>dshw</code>.</p>
     <p>Taylor's (2003) double-seasonal Holt-Winters method uses additive trend and
 multiplicative seasonality, where there are two seasonal components which
 are multiplied together. For example, with a series of half-hourly data, one
-would set <code>period1=48</code> for the daily period and <code>period2=336</code> for
+would set <code>period1 = 48</code> for the daily period and <code>period2 = 336</code> for
 the weekly period. The smoothing parameter notation used here is different
 from that in Taylor (2003); instead it matches that used in Hyndman et al
-(2008) and that used for the <code><a href="ets.html">ets</a></code> function.</p>
+(2008) and that used for the <code><a href="ets.html">ets()</a></code> function.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -178,7 +178,7 @@ Springer-Verlag. <a href="http://www.exponentialsmoothing.net" class="external-l
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="https://rdrr.io/r/stats/HoltWinters.html" class="external-link">HoltWinters</a></code>, <code><a href="ets.html">ets</a></code>.</p></div>
+    <div class="dont-index"><p><code><a href="https://rdrr.io/r/stats/HoltWinters.html" class="external-link">stats::HoltWinters()</a></code>, <code><a href="ets.html">ets()</a></code>.</p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>

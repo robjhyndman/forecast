@@ -116,7 +116,7 @@ returned.</p></dd>
 
 
 <dt id="arg-lambda">lambda<a class="anchor" aria-label="anchor" href="#arg-lambda"></a></dt>
-<dd><p>Box-Cox transformation parameter. If <code>lambda="auto"</code>,
+<dd><p>Box-Cox transformation parameter. If <code>lambda = "auto"</code>,
 then a transformation is automatically selected using <code>BoxCox.lambda</code>.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated. When <code>lambda</code> is specified,
@@ -132,11 +132,11 @@ and fitted values.</p></dd>
 
 
 <dt id="arg-lower">lower<a class="anchor" aria-label="anchor" href="#arg-lower"></a></dt>
-<dd><p>Lower bounds for the parameters (alpha, beta, gamma, phi). Ignored if <code>bounds="admissible"</code>.</p></dd>
+<dd><p>Lower bounds for the parameters (alpha, beta, gamma, phi). Ignored if <code>bounds = "admissible"</code>.</p></dd>
 
 
 <dt id="arg-upper">upper<a class="anchor" aria-label="anchor" href="#arg-upper"></a></dt>
-<dd><p>Upper bounds for the parameters (alpha, beta, gamma, phi). Ignored if <code>bounds="admissible"</code>.</p></dd>
+<dd><p>Upper bounds for the parameters (alpha, beta, gamma, phi). Ignored if <code>bounds = "admissible"</code>.</p></dd>
 
 
 <dt id="arg-opt-crit">opt.crit<a class="anchor" aria-label="anchor" href="#arg-opt-crit"></a></dt>
@@ -151,7 +151,7 @@ and fitted values.</p></dd>
 
 
 <dt id="arg-bounds">bounds<a class="anchor" aria-label="anchor" href="#arg-bounds"></a></dt>
-<dd><p>Type of parameter space to impose: <code>"usual" </code> indicates
+<dd><p>Type of parameter space to impose: <code>"usual"</code> indicates
 all parameters must lie between specified lower and upper bounds;
 <code>"admissible"</code> indicates parameters must lie in the admissible space;
 <code>"both"</code> (default) takes the intersection of these regions.</p></dd>
@@ -170,7 +170,7 @@ will not be allowed.</p></dd>
 <dd><p>If <code>TRUE</code>, models with multiplicative
 trend are allowed when searching for a model. Otherwise, the model space
 excludes them. This argument is ignored if a multiplicative trend model is
-explicitly requested (e.g., using <code>model="MMN"</code>).</p></dd>
+explicitly requested (e.g., using <code>model = "MMN"</code>).</p></dd>
 
 
 <dt id="arg-use-initial-values">use.initial.values<a class="anchor" aria-label="anchor" href="#arg-use-initial-values"></a></dt>
@@ -191,7 +191,7 @@ time-series will be used.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object of class "<code>ets</code>".</p>
+    <p>An object of class <code>"ets"</code>.</p>
 <p>The generic accessor functions <code>fitted.values</code> and <code>residuals</code>
 extract useful features of the value returned by <code>ets</code> and associated
 functions.</p>
@@ -219,8 +219,7 @@ Springer-Verlag. <a href="http://www.exponentialsmoothing.net" class="external-l
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="https://rdrr.io/r/stats/HoltWinters.html" class="external-link">HoltWinters</a></code>, <code><a href="naive.html">rwf</a></code>,
-<code><a href="Arima.html">Arima</a></code>.</p></div>
+    <div class="dont-index"><p><code><a href="https://rdrr.io/r/stats/HoltWinters.html" class="external-link">stats::HoltWinters()</a></code>, <code><a href="naive.html">rwf()</a></code>, <code><a href="Arima.html">Arima()</a></code>.</p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>

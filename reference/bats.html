@@ -72,18 +72,18 @@ or <code>ts</code>. Only univariate time series are supported.</p></dd>
 
 
 <dt id="arg-use-box-cox">use.box.cox<a class="anchor" aria-label="anchor" href="#arg-use-box-cox"></a></dt>
-<dd><p><code>TRUE/FALSE</code> indicates whether to use the Box-Cox
+<dd><p><code>TRUE</code>/<code>FALSE</code> indicates whether to use the Box-Cox
 transformation or not. If <code>NULL</code> then both are tried and the best fit
 is selected by AIC.</p></dd>
 
 
 <dt id="arg-use-trend">use.trend<a class="anchor" aria-label="anchor" href="#arg-use-trend"></a></dt>
-<dd><p><code>TRUE/FALSE</code> indicates whether to include a trend or
+<dd><p><code>TRUE</code>/<code>FALSE</code> indicates whether to include a trend or
 not. If <code>NULL</code> then both are tried and the best fit is selected by AIC.</p></dd>
 
 
 <dt id="arg-use-damped-trend">use.damped.trend<a class="anchor" aria-label="anchor" href="#arg-use-damped-trend"></a></dt>
-<dd><p><code>TRUE/FALSE</code> indicates whether to include a
+<dd><p><code>TRUE</code>/<code>FALSE</code> indicates whether to include a
 damping parameter in the trend or not. If <code>NULL</code> then both are tried
 and the best fit is selected by AIC.</p></dd>
 
@@ -94,13 +94,13 @@ be specified with this parameter.</p></dd>
 
 
 <dt id="arg-use-arma-errors">use.arma.errors<a class="anchor" aria-label="anchor" href="#arg-use-arma-errors"></a></dt>
-<dd><p><code>TRUE/FALSE</code> indicates whether to include ARMA
+<dd><p><code>TRUE</code>/<code>FALSE</code> indicates whether to include ARMA
 errors or not. If <code>TRUE</code> the best fit is selected by AIC. If
 <code>FALSE</code> then the selection algorithm does not consider ARMA errors.</p></dd>
 
 
 <dt id="arg-use-parallel">use.parallel<a class="anchor" aria-label="anchor" href="#arg-use-parallel"></a></dt>
-<dd><p><code>TRUE/FALSE</code> indicates whether or not to use
+<dd><p><code>TRUE</code>/<code>FALSE</code> indicates whether or not to use
 parallel processing.</p></dd>
 
 
@@ -139,7 +139,7 @@ controlling the values of p and q will be used.)</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object of class "<code>bats</code>". The generic accessor functions
+    <p>An object of class <code>"bats"</code>. The generic accessor functions
 <code>fitted.values</code> and <code>residuals</code> extract useful features of the
 value returned by <code>bats</code> and associated functions. The fitted model is
 designated BATS(omega, p,q, phi, m1,...mJ) where omega is the Box-Cox
