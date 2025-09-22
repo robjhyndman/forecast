@@ -22,3 +22,4 @@ vignettes/*_cache
 ^rstudio$
 rstudio
 .history
+^[.]?air[.]toml$
