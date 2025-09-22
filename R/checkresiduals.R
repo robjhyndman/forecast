@@ -13,7 +13,7 @@
 #' at least `df+3` where `df` is the degrees of freedom of the model. This
 #' ensures there are at least 3 degrees of freedom used in the chi-squared test.
 #' @param test Test to use for serial correlation. By default, if `object`
-#' is of class `lm`, then `test = "BG"`. Otherwise, `test="LB"`.
+#' is of class `lm`, then `test = "BG"`. Otherwise, `test = "LB"`.
 #' Setting `test = FALSE` will prevent the test results being printed.
 #' @param plot Logical. If `TRUE`, will produce the plot.
 #' @param ... Other arguments are passed to [ggtsdisplay()].

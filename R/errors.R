@@ -190,11 +190,11 @@ trainingaccuracy <- function(f, test, d, D) {
 
 #' Accuracy measures for a forecast model
 #'
-#' Returns range of summary measures of the forecast accuracy. If \code{x} is
+#' Returns range of summary measures of the forecast accuracy. If `x` is
 #' provided, the function measures test set forecast accuracy
-#' based on \code{x-f}. If \code{x} is not provided, the function only produces
+#' based on `x - f`. If `x` is not provided, the function only produces
 #' training set accuracy measures of the forecasts based on
-#' \code{f["x"]-fitted(f)}. All measures are defined and discussed in Hyndman
+#' `f["x"] - fitted(f)`. All measures are defined and discussed in Hyndman
 #' and Koehler (2006).
 #'
 #' The measures calculated are:
@@ -210,20 +210,20 @@ trainingaccuracy <- function(f, test, d, D) {
 #' By default, the MASE calculation is scaled using MAE of training set naive
 #' forecasts for non-seasonal time series, training set seasonal naive forecasts
 #' for seasonal time series and training set mean forecasts for non-time series data.
-#' If \code{f} is a numerical vector rather than a \code{forecast} object, the MASE
+#' If `f` is a numerical vector rather than a `forecast` object, the MASE
 #' will not be returned as the training data will not be available.
 #'
 #' See Hyndman and Koehler (2006) and Hyndman and Athanasopoulos (2014, Section
 #' 2.5) for further details.
 #'
-#' @param object An object of class \dQuote{\code{forecast}}, or a numerical vector
-#' containing forecasts. It will also work with \code{Arima}, \code{ets} and
-#' \code{lm} objects if \code{x} is omitted -- in which case training set accuracy
+#' @param object An object of class `"forecast"`, or a numerical vector
+#' containing forecasts. It will also work with `Arima`, `ets` and
+#' `lm` objects if `x` is omitted -- in which case training set accuracy
 #' measures are returned.
 #' @param x An optional numerical vector containing actual values of the same
-#' length as object, or a time series overlapping with the times of \code{f}.
-#' @param test Indicator of which elements of \code{x} and \code{f} to test. If
-#' \code{test} is \code{NULL}, all elements are used. Otherwise test is a
+#' length as object, or a time series overlapping with the times of `f`.
+#' @param test Indicator of which elements of `x` and `f` to test. If
+#' `test` is `NULL`, all elements are used. Otherwise test is a
 #' numeric vector containing the indices of the elements to use in the test.
 #' @param d An integer indicating the number of lag-1 differences to be used
 #' for the denominator in MASE calculation. Default value is 1 for non-seasonal

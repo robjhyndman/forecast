@@ -20,7 +20,7 @@ period in a major financial center.
 }
 \details{
 Useful for trading days length adjustments. More on how to define "business
-days", please refer to \code{\link[timeDate]{isBizday}}.
+days", please refer to \code{\link[timeDate:calendar-isBizday]{timeDate::isBizday()}}.
 }
 \examples{
 
@@ -28,7 +28,7 @@ x <- ts(rnorm(30), start = c(2013, 2), frequency = 12)
 bizdays(x, FinCenter = "New York")
 }
 \seealso{
-\code{\link[forecast]{monthdays}}
+\code{\link[=monthdays]{monthdays()}}
 }
 \author{
 Earo Wang

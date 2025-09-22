@@ -19,8 +19,8 @@
 )
 }
 \arguments{
-\item{object}{An object of class "\code{ets}". Usually the result of a call
-to \code{\link{ets}}.}
+\item{object}{An object of class \code{"ets"}. Usually the result of a call
+to \code{\link[=ets]{ets()}}.}
 
 \item{h}{Number of periods for forecasting}
 
@@ -57,7 +57,7 @@ and fitted values.}
 \item{...}{Other arguments.}
 }
 \value{
-An object of class "\code{forecast}".
+An object of class \code{"forecast"}.
 
 The function \code{summary} is used to obtain and print a summary of the
 results, while the function \code{plot} produces a plot of the forecasts and
@@ -88,8 +88,7 @@ plot(forecast(fit, h = 48))
 
 }
 \seealso{
-\code{\link{ets}}, \code{\link{ses}}, \code{\link{holt}},
-\code{\link{hw}}.
+\code{\link[=ets]{ets()}}, \code{\link[=ses]{ses()}}, \code{\link[=holt]{holt()}}, \code{\link[=hw]{hw()}}.
 }
 \author{
 Rob J Hyndman

@@ -66,7 +66,7 @@ returned.}
 \item{additive.only}{If \code{TRUE}, will only consider additive models. Default is
 \code{FALSE}.}
 
-\item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
+\item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated. When \code{lambda} is specified,
@@ -78,9 +78,9 @@ values, a regular back transformation will result in median forecasts. If
 biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
 and fitted values.}
 
-\item{lower}{Lower bounds for the parameters (alpha, beta, gamma, phi). Ignored if \code{bounds="admissible"}.}
+\item{lower}{Lower bounds for the parameters (alpha, beta, gamma, phi). Ignored if \code{bounds = "admissible"}.}
 
-\item{upper}{Upper bounds for the parameters (alpha, beta, gamma, phi). Ignored if \code{bounds="admissible"}.}
+\item{upper}{Upper bounds for the parameters (alpha, beta, gamma, phi). Ignored if \code{bounds = "admissible"}.}
 
 \item{opt.crit}{Optimization criterion. One of "mse" (Mean Square Error),
 "amse" (Average MSE over first \code{nmse} forecast horizons), "sigma"
@@ -89,7 +89,7 @@ and fitted values.}
 
 \item{nmse}{Number of steps for average multistep MSE (1<=\code{nmse}<=30).}
 
-\item{bounds}{Type of parameter space to impose: \code{"usual" } indicates
+\item{bounds}{Type of parameter space to impose: \code{"usual"} indicates
 all parameters must lie between specified lower and upper bounds;
 \code{"admissible"} indicates parameters must lie in the admissible space;
 \code{"both"} (default) takes the intersection of these regions.}
@@ -102,7 +102,7 @@ will not be allowed.}
 \item{allow.multiplicative.trend}{If \code{TRUE}, models with multiplicative
 trend are allowed when searching for a model. Otherwise, the model space
 excludes them. This argument is ignored if a multiplicative trend model is
-explicitly requested (e.g., using \code{model="MMN"}).}
+explicitly requested (e.g., using \code{model = "MMN"}).}
 
 \item{use.initial.values}{If \code{TRUE} and \code{model} is of class
 \code{"ets"}, then the initial values in the model are also not
@@ -115,7 +115,7 @@ time-series will be used.}
 \item{...}{Other undocumented arguments.}
 }
 \value{
-An object of class "\code{ets}".
+An object of class \code{"ets"}.
 
 The generic accessor functions \code{fitted.values} and \code{residuals}
 extract useful features of the value returned by \code{ets} and associated
@@ -152,8 +152,7 @@ Hyndman, R.J., Koehler, A.B., Ord, J.K., and Snyder, R.D. (2008)
 Springer-Verlag. \url{http://www.exponentialsmoothing.net}.
 }
 \seealso{
-\code{\link[stats]{HoltWinters}}, \code{\link{rwf}},
-\code{\link{Arima}}.
+\code{\link[stats:HoltWinters]{stats::HoltWinters()}}, \code{\link[=rwf]{rwf()}}, \code{\link[=Arima]{Arima()}}.
 }
 \author{
 Rob J Hyndman

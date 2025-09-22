@@ -11,36 +11,36 @@
 #' Taylor's (2003) double-seasonal Holt-Winters method uses additive trend and
 #' multiplicative seasonality, where there are two seasonal components which
 #' are multiplied together. For example, with a series of half-hourly data, one
-#' would set \code{period1=48} for the daily period and \code{period2=336} for
+#' would set `period1 = 48` for the daily period and `period2 = 336` for
 #' the weekly period. The smoothing parameter notation used here is different
 #' from that in Taylor (2003); instead it matches that used in Hyndman et al
-#' (2008) and that used for the \code{\link{ets}} function.
+#' (2008) and that used for the [ets()] function.
 #'
-#' @param y Either an \code{\link{msts}} object with two seasonal periods or a
+#' @param y Either an [msts()] object with two seasonal periods or a
 #' numeric vector.
-#' @param period1 Period of the shorter seasonal period. Only used if \code{y}
-#' is not an \code{\link{msts}} object.
-#' @param period2 Period of the longer seasonal period.  Only used if \code{y}
-#' is not an \code{\link{msts}} object.
+#' @param period1 Period of the shorter seasonal period. Only used if `y`
+#' is not an [msts()] object.
+#' @param period2 Period of the longer seasonal period.  Only used if `y`
+#' is not an [msts()] object.
 #' @param h Number of periods for forecasting.
-#' @param alpha Smoothing parameter for the level. If \code{NULL}, the
+#' @param alpha Smoothing parameter for the level. If `NULL`, the
 #' parameter is estimated using least squares.
-#' @param beta Smoothing parameter for the slope. If \code{NULL}, the parameter
+#' @param beta Smoothing parameter for the slope. If `NULL`, the parameter
 #' is estimated using least squares.
 #' @param gamma Smoothing parameter for the first seasonal period. If
-#' \code{NULL}, the parameter is estimated using least squares.
+#' `NULL`, the parameter is estimated using least squares.
 #' @param omega Smoothing parameter for the second seasonal period. If
-#' \code{NULL}, the parameter is estimated using least squares.
-#' @param phi Autoregressive parameter. If \code{NULL}, the parameter is
+#' `NULL`, the parameter is estimated using least squares.
+#' @param phi Autoregressive parameter. If `NULL`, the parameter is
 #' estimated using least squares.
-#' @param armethod If \code{TRUE}, the forecasts are adjusted using an AR(1)
+#' @param armethod If `TRUE`, the forecasts are adjusted using an AR(1)
 #' model for the errors.
 #' @param model If it's specified, an existing model is applied to a new data
 #' set.
 #' @inheritParams forecast.ts
 #' @inheritParams BoxCox
 #'
-#' @return An object of class "\code{forecast}" which is a list that includes the
+#' @return An object of class `"forecast"` which is a list that includes the
 #' following elements:
 #'   \item{model}{A list containing information about the fitted model}
 #'   \item{method}{The name of the forecasting method as a character string}
@@ -49,14 +49,14 @@
 #'   \item{residuals}{Residuals from the fitted model. That is x minus fitted values.}
 #'   \item{fitted}{Fitted values (one-step forecasts)}
 #'
-#' The function \code{summary} is used to obtain and print a summary of the
-#' results, while the function \code{plot} produces a plot of the forecasts.
+#' The function `summary` is used to obtain and print a summary of the
+#' results, while the function `plot` produces a plot of the forecasts.
 #'
-#' The generic accessor functions \code{fitted.values} and \code{residuals}
-#' extract useful features of the value returned by \code{dshw}.
+#' The generic accessor functions `fitted.values` and `residuals`
+#' extract useful features of the value returned by `dshw`.
 #'
 #' @author Rob J Hyndman
-#' @seealso \code{\link[stats]{HoltWinters}}, \code{\link{ets}}.
+#' @seealso [stats::HoltWinters()], [ets()].
 #' @references Taylor, J.W. (2003) Short-term electricity demand forecasting
 #' using double seasonal exponential smoothing. \emph{Journal of the
 #' Operational Research Society}, \bold{54}, 799-805.

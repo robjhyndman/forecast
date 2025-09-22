@@ -20,7 +20,7 @@
 
 \item{main}{Main title for plot.}
 
-\item{...}{Other plotting parameters passed to \code{\link[graphics]{par}}.}
+\item{...}{Other plotting parameters passed to \code{\link[graphics:par]{graphics::par()}}.}
 
 \item{object}{Object of class \dQuote{bats/tbats}.}
 
@@ -45,7 +45,7 @@ autoplot(fit, range.bars = TRUE)
 
 }
 \seealso{
-\code{\link{bats}},\code{\link{tbats}}
+\code{\link[=bats]{bats()}}], \code{\link[=tbats]{tbats()}}
 }
 \author{
 Rob J Hyndman

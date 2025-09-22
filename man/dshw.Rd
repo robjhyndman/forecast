@@ -21,14 +21,14 @@ dshw(
 )
 }
 \arguments{
-\item{y}{Either an \code{\link{msts}} object with two seasonal periods or a
+\item{y}{Either an \code{\link[=msts]{msts()}} object with two seasonal periods or a
 numeric vector.}
 
 \item{period1}{Period of the shorter seasonal period. Only used if \code{y}
-is not an \code{\link{msts}} object.}
+is not an \code{\link[=msts]{msts()}} object.}
 
 \item{period2}{Period of the longer seasonal period.  Only used if \code{y}
-is not an \code{\link{msts}} object.}
+is not an \code{\link[=msts]{msts()}} object.}
 
 \item{h}{Number of periods for forecasting.}
 
@@ -65,7 +65,7 @@ model for the errors.}
 set.}
 }
 \value{
-An object of class "\code{forecast}" which is a list that includes the
+An object of class \code{"forecast"} which is a list that includes the
 following elements:
 \item{model}{A list containing information about the fitted model}
 \item{method}{The name of the forecasting method as a character string}
@@ -87,10 +87,10 @@ Returns forecasts using Taylor's (2003) Double-Seasonal Holt-Winters method.
 Taylor's (2003) double-seasonal Holt-Winters method uses additive trend and
 multiplicative seasonality, where there are two seasonal components which
 are multiplied together. For example, with a series of half-hourly data, one
-would set \code{period1=48} for the daily period and \code{period2=336} for
+would set \code{period1 = 48} for the daily period and \code{period2 = 336} for
 the weekly period. The smoothing parameter notation used here is different
 from that in Taylor (2003); instead it matches that used in Hyndman et al
-(2008) and that used for the \code{\link{ets}} function.
+(2008) and that used for the \code{\link[=ets]{ets()}} function.
 }
 \examples{
 
@@ -115,7 +115,7 @@ Hyndman, R.J., Koehler, A.B., Ord, J.K., and Snyder, R.D. (2008)
 Springer-Verlag. \url{http://www.exponentialsmoothing.net}.
 }
 \seealso{
-\code{\link[stats]{HoltWinters}}, \code{\link{ets}}.
+\code{\link[stats:HoltWinters]{stats::HoltWinters()}}, \code{\link[=ets]{ets()}}.
 }
 \author{
 Rob J Hyndman
