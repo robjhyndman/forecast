@@ -42,7 +42,7 @@ autoplot(fit)
 
 }
 \seealso{
-\code{\link{ets}}
+\code{\link[=ets]{ets()}}
 }
 \author{
 Rob J Hyndman & Mitchell O'Hara-Wild

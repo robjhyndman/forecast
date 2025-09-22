@@ -7,7 +7,7 @@
 \method{accuracy}{default}(object, x, test = NULL, d = NULL, D = NULL, f = NULL, ...)
 }
 \arguments{
-\item{object}{An object of class \dQuote{\code{forecast}}, or a numerical vector
+\item{object}{An object of class \code{"forecast"}, or a numerical vector
 containing forecasts. It will also work with \code{Arima}, \code{ets} and
 \code{lm} objects if \code{x} is omitted -- in which case training set accuracy
 measures are returned.}
@@ -37,9 +37,9 @@ Matrix giving forecast accuracy measures.
 \description{
 Returns range of summary measures of the forecast accuracy. If \code{x} is
 provided, the function measures test set forecast accuracy
-based on \code{x-f}. If \code{x} is not provided, the function only produces
+based on \code{x - f}. If \code{x} is not provided, the function only produces
 training set accuracy measures of the forecasts based on
-\code{f["x"]-fitted(f)}. All measures are defined and discussed in Hyndman
+\code{f["x"] - fitted(f)}. All measures are defined and discussed in Hyndman
 and Koehler (2006).
 }
 \details{

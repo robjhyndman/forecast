@@ -13,8 +13,8 @@ trendcycle(object)
 remainder(object)
 }
 \arguments{
-\item{object}{Object created by \code{\link[stats]{decompose}},
-\code{\link[stats]{stl}} or \code{\link{tbats}}.}
+\item{object}{Object created by \code{\link[stats:decompose]{stats::decompose()}},
+\code{\link[stats:stl]{stats::stl()}} or \code{\link[=tbats]{tbats()}}.}
 }
 \value{
 Univariate time series.
@@ -41,8 +41,7 @@ autoplot(cbind(
 
 }
 \seealso{
-\code{\link[stats]{stl}}, \code{\link[stats]{decompose}},
-\code{\link{tbats}}, \code{\link{seasadj}}.
+\code{\link[stats:stl]{stats::stl()}}, \code{\link[stats:decompose]{stats::decompose()}}, \code{\link[=tbats]{tbats()}}, \code{\link[=seasadj]{seasadj()}}.
 }
 \author{
 Rob J Hyndman

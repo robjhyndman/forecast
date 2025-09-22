@@ -9,13 +9,13 @@ as.Date.timeDate <- timeDate::as.Date.timeDate
 #' period in a major financial center.
 #'
 #' Useful for trading days length adjustments. More on how to define "business
-#' days", please refer to \code{\link[timeDate]{isBizday}}.
+#' days", please refer to [timeDate::isBizday()].
 #'
 #' @param x Monthly or quarterly time series.
 #' @param FinCenter Major financial center.
 #' @return Time series
 #' @author Earo Wang
-#' @seealso \code{\link[forecast]{monthdays}}
+#' @seealso [monthdays()]
 #' @keywords ts
 #' @examples
 #'
@@ -97,12 +97,12 @@ bizdays <- function(
 #' Returns a vector of 0's and 1's or fractional results if Easter spans March
 #' and April in the observed time period. Easter is defined as the days from
 #' Good Friday to Easter Sunday inclusively, plus optionally Easter Monday if
-#' \code{easter.mon=TRUE}.
+#' `easter.mon = TRUE`.
 #'
 #' Useful for adjusting calendar effects.
 #'
 #' @param x Monthly or quarterly time series.
-#' @param easter.mon If \code{TRUE}, the length of Easter holidays includes.
+#' @param easter.mon If `TRUE`, the length of Easter holidays includes.
 #' Easter Monday.
 #' @return Time series
 #' @author Earo Wang

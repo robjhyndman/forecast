@@ -36,7 +36,7 @@ Exponential Smoothing Methods using STL Decomposition and Box-Cox
 Transformation. International Journal of Forecasting 32, 303-312.
 }
 \seealso{
-\code{\link{baggedETS}}.
+\code{\link[=baggedETS]{baggedETS()}}.
 }
 \author{
 Christoph Bergmeir, Fotios Petropoulos

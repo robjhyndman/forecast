@@ -8,12 +8,11 @@
 #' trend-cycle component or remainder component from a time series
 #' decomposition.
 #'
-#' @param object Object created by \code{\link[stats]{decompose}},
-#' \code{\link[stats]{stl}} or \code{\link{tbats}}.
+#' @param object Object created by [stats::decompose()],
+#' [stats::stl()] or [tbats()].
 #' @return Univariate time series.
 #' @author Rob J Hyndman
-#' @seealso \code{\link[stats]{stl}}, \code{\link[stats]{decompose}},
-#' \code{\link{tbats}}, \code{\link{seasadj}}.
+#' @seealso [stats::stl()], [stats::decompose()], [tbats()], [seasadj()].
 #' @keywords ts
 #' @examples
 #' plot(USAccDeaths)

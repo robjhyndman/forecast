@@ -1,6 +1,6 @@
 #' Exponential smoothing state space model
 #'
-#' Returns ets model applied to \code{y}.
+#' Returns ets model applied to `y`.
 #'
 #' Based on the classification of methods as described in Hyndman et al (2008).
 #'
@@ -11,7 +11,7 @@
 #'
 #' @aliases print.ets summary.ets as.character.ets coef.ets tsdiag.ets
 #'
-#' @param y a numeric vector or time series of class \code{ts}
+#' @param y a numeric vector or time series of class `ts`
 #' @param model Usually a three-character string identifying method using the
 #' framework terminology of Hyndman et al. (2002) and Hyndman et al. (2008).
 #' The first letter denotes the error type ("A", "M" or "Z"); the second letter
@@ -21,45 +21,45 @@
 #' simple exponential smoothing with additive errors, "MAM" is multiplicative
 #' Holt-Winters' method with multiplicative errors, and so on.
 #'
-#' It is also possible for the model to be of class \code{"ets"}, and equal to
-#' the output from a previous call to \code{ets}. In this case, the same model
-#' is fitted to \code{y} without re-estimating any smoothing parameters. See
-#' also the \code{use.initial.values} argument.
-#' @param damped If \code{TRUE}, use a damped trend (either additive or
-#' multiplicative). If \code{NULL}, both damped and non-damped trends will be
-#' tried and the best model (according to the information criterion \code{ic})
+#' It is also possible for the model to be of class `"ets"`, and equal to
+#' the output from a previous call to `ets`. In this case, the same model
+#' is fitted to `y` without re-estimating any smoothing parameters. See
+#' also the `use.initial.values` argument.
+#' @param damped If `TRUE`, use a damped trend (either additive or
+#' multiplicative). If `NULL`, both damped and non-damped trends will be
+#' tried and the best model (according to the information criterion `ic`)
 #' returned.
-#' @param alpha Value of alpha. If \code{NULL}, it is estimated.
-#' @param beta Value of beta. If \code{NULL}, it is estimated.
-#' @param gamma Value of gamma. If \code{NULL}, it is estimated.
-#' @param phi Value of phi. If \code{NULL}, it is estimated.
-#' @param additive.only If \code{TRUE}, will only consider additive models. Default is
-#' \code{FALSE}.
-#' @param lambda Box-Cox transformation parameter. If \code{lambda="auto"},
-#' then a transformation is automatically selected using \code{BoxCox.lambda}.
+#' @param alpha Value of alpha. If `NULL`, it is estimated.
+#' @param beta Value of beta. If `NULL`, it is estimated.
+#' @param gamma Value of gamma. If `NULL`, it is estimated.
+#' @param phi Value of phi. If `NULL`, it is estimated.
+#' @param additive.only If `TRUE`, will only consider additive models. Default is
+#' `FALSE`.
+#' @param lambda Box-Cox transformation parameter. If `lambda = "auto"`,
+#' then a transformation is automatically selected using `BoxCox.lambda`.
 #' The transformation is ignored if NULL. Otherwise,
-#' data transformed before model is estimated. When \code{lambda} is specified,
-#' \code{additive.only} is set to \code{TRUE}.
-#' @param lower Lower bounds for the parameters (alpha, beta, gamma, phi). Ignored if \code{bounds="admissible"}.
-#' @param upper Upper bounds for the parameters (alpha, beta, gamma, phi). Ignored if \code{bounds="admissible"}.
+#' data transformed before model is estimated. When `lambda` is specified,
+#' `additive.only` is set to `TRUE`.
+#' @param lower Lower bounds for the parameters (alpha, beta, gamma, phi). Ignored if `bounds = "admissible"`.
+#' @param upper Upper bounds for the parameters (alpha, beta, gamma, phi). Ignored if `bounds = "admissible"`.
 #' @param opt.crit Optimization criterion. One of "mse" (Mean Square Error),
-#' "amse" (Average MSE over first \code{nmse} forecast horizons), "sigma"
+#' "amse" (Average MSE over first `nmse` forecast horizons), "sigma"
 #' (Standard deviation of residuals), "mae" (Mean of absolute residuals), or
 #' "lik" (Log-likelihood, the default).
-#' @param nmse Number of steps for average multistep MSE (1<=\code{nmse}<=30).
-#' @param bounds Type of parameter space to impose: \code{"usual" } indicates
+#' @param nmse Number of steps for average multistep MSE (1<=`nmse`<=30).
+#' @param bounds Type of parameter space to impose: `"usual"` indicates
 #' all parameters must lie between specified lower and upper bounds;
-#' \code{"admissible"} indicates parameters must lie in the admissible space;
-#' \code{"both"} (default) takes the intersection of these regions.
+#' `"admissible"` indicates parameters must lie in the admissible space;
+#' `"both"` (default) takes the intersection of these regions.
 #' @param ic Information criterion to be used in model selection.
-#' @param restrict If \code{TRUE} (default), the models with infinite variance
+#' @param restrict If `TRUE` (default), the models with infinite variance
 #' will not be allowed.
-#' @param allow.multiplicative.trend If \code{TRUE}, models with multiplicative
+#' @param allow.multiplicative.trend If `TRUE`, models with multiplicative
 #' trend are allowed when searching for a model. Otherwise, the model space
 #' excludes them. This argument is ignored if a multiplicative trend model is
-#' explicitly requested (e.g., using \code{model="MMN"}).
-#' @param use.initial.values If \code{TRUE} and \code{model} is of class
-#' \code{"ets"}, then the initial values in the model are also not
+#' explicitly requested (e.g., using `model = "MMN"`).
+#' @param use.initial.values If `TRUE` and `model` is of class
+#' `"ets"`, then the initial values in the model are also not
 #' re-estimated.
 #' @param na.action A function which indicates what should happen when the data
 #' contains NA values. By default, the largest contiguous portion of the
@@ -67,14 +67,13 @@
 #' @param ... Other undocumented arguments.
 #' @inheritParams forecast.ts
 #'
-#' @return An object of class "\code{ets}".
+#' @return An object of class `"ets"`.
 #'
-#' The generic accessor functions \code{fitted.values} and \code{residuals}
-#' extract useful features of the value returned by \code{ets} and associated
+#' The generic accessor functions `fitted.values` and `residuals`
+#' extract useful features of the value returned by `ets` and associated
 #' functions.
 #' @author Rob J Hyndman
-#' @seealso \code{\link[stats]{HoltWinters}}, \code{\link{rwf}},
-#' \code{\link{Arima}}.
+#' @seealso [stats::HoltWinters()], [rwf()], [Arima()].
 #' @references Hyndman, R.J., Koehler, A.B., Snyder, R.D., and Grose, S. (2002)
 #' "A state space framework for automatic forecasting using exponential
 #' smoothing methods", \emph{International J. Forecasting}, \bold{18}(3),
@@ -1598,18 +1597,18 @@ admissible <- function(alpha, beta, gamma, phi, m) {
 #' Produces a plot of the level, slope and seasonal components from an ETS
 #' model.
 #'
-#' \code{autoplot} will produce an equivalent plot as a ggplot object.
+#' `autoplot` will produce an equivalent plot as a ggplot object.
 #'
 #' @param x Object of class \dQuote{ets}.
 #' @param object Object of class \dQuote{ets}. Used for ggplot graphics (S3
 #' method consistency).
 #' @param range.bars Logical indicating if each plot should have a bar at its
-#' right side representing relative size. If \code{NULL}, automatic selection
+#' right side representing relative size. If `NULL`, automatic selection
 #' takes place.
 #' @param ... Other plotting parameters to affect the plot.
 #' @return None. Function produces a plot
 #' @author Rob J Hyndman & Mitchell O'Hara-Wild
-#' @seealso \code{\link{ets}}
+#' @seealso [ets()]
 #' @keywords hplot
 #' @examples
 #'

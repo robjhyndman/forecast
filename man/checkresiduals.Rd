@@ -18,7 +18,7 @@ at least \code{df+3} where \code{df} is the degrees of freedom of the model. Thi
 ensures there are at least 3 degrees of freedom used in the chi-squared test.}
 
 \item{test}{Test to use for serial correlation. By default, if \code{object}
-is of class \code{lm}, then \code{test = "BG"}. Otherwise, \code{test="LB"}.
+is of class \code{lm}, then \code{test = "BG"}. Otherwise, \code{test = "LB"}.
 Setting \code{test = FALSE} will prevent the test results being printed.}
 
 \item{plot}{Logical. If \code{TRUE}, will produce the plot.}

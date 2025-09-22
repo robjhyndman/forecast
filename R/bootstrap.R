@@ -71,7 +71,7 @@ MBB <- function(x, window_size) {
 #' @return A list with bootstrapped versions of the series. The first series in
 #' the list is the original series.
 #' @author Christoph Bergmeir, Fotios Petropoulos
-#' @seealso \code{\link{baggedETS}}.
+#' @seealso [baggedETS()].
 #' @references Bergmeir, C., R. J. Hyndman, and J. M. Benitez (2016). Bagging
 #' Exponential Smoothing Methods using STL Decomposition and Box-Cox
 #' Transformation. International Journal of Forecasting 32, 303-312.
