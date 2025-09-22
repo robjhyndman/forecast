@@ -22,5 +22,4 @@ test_that("test mean_model", {
   expect_identical(f1$mean, f2$mean)
   expect_identical(f1$lower, f2$lower)
   expect_identical(f1$upper, f2$upper)
-}
-)
+})

@@ -13,42 +13,55 @@ test_that("Tests for nnetar", {
   # Test default size with and without xreg
   uscnnet <- nnetar(woolyrnq, p = 2, P = 2)
   expect_output(
-    print(uscnnet), regexp = "NNAR(2,2,2)",
+    print(uscnnet),
+    regexp = "NNAR(2,2,2)",
     fixed = TRUE
   )
   expect_output(
-    print(uscnnet), regexp = "4-2-1 network",
+    print(uscnnet),
+    regexp = "4-2-1 network",
     fixed = TRUE
   )
   expect_true(uscnnet$size == 2)
   uscnnet <- nnetar(woolyrnq, p = 2, P = 2, xreg = 1:119, repeats = 10)
   expect_output(
-    print(uscnnet), regexp = "NNAR(2,2,3)",
+    print(uscnnet),
+    regexp = "NNAR(2,2,3)",
     fixed = TRUE
   )
   expect_output(
-    print(uscnnet), regexp = "5-3-1 network",
+    print(uscnnet),
+    regexp = "5-3-1 network",
     fixed = TRUE
   )
   expect_true(uscnnet$size == 3)
   # Test default size for models with only seasonal lags, with and without xreg
-  seasonal_only_lags_nnet <- nnetar(woolyrnq,p = 0,P = 3)
+  seasonal_only_lags_nnet <- nnetar(woolyrnq, p = 0, P = 3)
   expect_output(
-    print(seasonal_only_lags_nnet),regexp = "NNAR(0,3,2)",
+    print(seasonal_only_lags_nnet),
+    regexp = "NNAR(0,3,2)",
     fixed = TRUE
   )
   expect_output(
-    print(seasonal_only_lags_nnet),regexp = "3-2-1 network",
+    print(seasonal_only_lags_nnet),
+    regexp = "3-2-1 network",
     fixed = TRUE
   )
 
-  seasonal_only_lags_xreg_nnet <- nnetar(woolyrnq,p = 0,P = 3,xreg = cbind(1:119,119:1))
+  seasonal_only_lags_xreg_nnet <- nnetar(
+    woolyrnq,
+    p = 0,
+    P = 3,
+    xreg = cbind(1:119, 119:1)
+  )
   expect_output(
-    print(seasonal_only_lags_xreg_nnet),regexp = "NNAR(0,3,3)",
+    print(seasonal_only_lags_xreg_nnet),
+    regexp = "NNAR(0,3,3)",
     fixed = TRUE
   )
   expect_output(
-    print(seasonal_only_lags_xreg_nnet),regexp = "5-3-1 network",
+    print(seasonal_only_lags_xreg_nnet),
+    regexp = "5-3-1 network",
     fixed = TRUE
   )
 
@@ -60,16 +73,18 @@ test_that("Tests for nnetar", {
   uscnnet <- nnetar(woolyrnq, p = 4, P = 2)
   expect_true(uscnnet$size == 3)
   expect_output(
-    print(uscnnet), regexp = "NNAR(4,2,3)",
+    print(uscnnet),
+    regexp = "NNAR(4,2,3)",
     fixed = TRUE
   )
   expect_output(
-    print(uscnnet), regexp = "5-3-1 network",
+    print(uscnnet),
+    regexp = "5-3-1 network",
     fixed = TRUE
   )
   # Test that p = 0 & P = 0 is not permitted
   expect_error(
-    nnetar(woolyrnq,p = 0,P = 0)
+    nnetar(woolyrnq, p = 0, P = 0)
   )
   # Test with multiple-column xreg
   creditnnet <- nnetar(
@@ -88,37 +103,75 @@ test_that("Tests for nnetar", {
     fixed = TRUE
   )
   # Test that P is ignored if m=1
-  expect_warning(creditnnet <- nnetar(WWWusage, p = 2, P = 4, xreg = seq_along(WWWusage)))
+  expect_warning(
+    creditnnet <- nnetar(WWWusage, p = 2, P = 4, xreg = seq_along(WWWusage))
+  )
   expect_output(
-    print(creditnnet), regexp = "NNAR(2,2)",
+    print(creditnnet),
+    regexp = "NNAR(2,2)",
     fixed = TRUE
   )
   # Test fixed size
-  creditnnet <- nnetar(WWWusage, p = 1, P = 1, xreg = seq_along(WWWusage), size = 12)
+  creditnnet <- nnetar(
+    WWWusage,
+    p = 1,
+    P = 1,
+    xreg = seq_along(WWWusage),
+    size = 12
+  )
   expect_true(uscnnet$size == 3)
   expect_output(print(creditnnet), regexp = "NNAR(1,12)", fixed = TRUE)
   # Test passing arguments to nnet
-  expect_warning(creditnnet <- nnetar(
-    WWWusage, p = 2, P = 4,
-    xreg = seq_along(WWWusage), decay = 0.1
-  ))
+  expect_warning(
+    creditnnet <- nnetar(
+      WWWusage,
+      p = 2,
+      P = 4,
+      xreg = seq_along(WWWusage),
+      decay = 0.1
+    )
+  )
   expect_output(
-    print(creditnnet), regexp = "decay=0.1",
+    print(creditnnet),
+    regexp = "decay=0.1",
     fixed = TRUE
   )
   ## Test output format correct
-  oilnnet <- nnetar(airmiles, p = 1, size = 0, skip = TRUE, Wts = c(0, 1), maxit = 0, repeats = 10)
+  oilnnet <- nnetar(
+    airmiles,
+    p = 1,
+    size = 0,
+    skip = TRUE,
+    Wts = c(0, 1),
+    maxit = 0,
+    repeats = 10
+  )
   expect_true(all.equal(oilnnet$fitted[-1], airmiles[-length(airmiles)]))
   ## Test output format correct when NAs present
   oilna <- airmiles
   oilna[12] <- NA
-  suppressWarnings(oilnnet <- nnetar(oilna, p = 1, size = 0, skip = TRUE, Wts = c(0, 1), maxit = 0))
-  expect_true(all.equal(oilnnet$fitted[-c(1, 12, 13)], oilna[-c(11, 12, length(oilna))]))
+  suppressWarnings(
+    oilnnet <- nnetar(
+      oilna,
+      p = 1,
+      size = 0,
+      skip = TRUE,
+      Wts = c(0, 1),
+      maxit = 0
+    )
+  )
+  expect_true(all.equal(
+    oilnnet$fitted[-c(1, 12, 13)],
+    oilna[-c(11, 12, length(oilna))]
+  ))
   ## Test model argument
   fit1 <- nnetar(
     WWWusage,
     xreg = seq_along(WWWusage),
-    lambda = 2, decay = 0.5, maxit = 25, repeats = 7
+    lambda = 2,
+    decay = 0.5,
+    maxit = 25,
+    repeats = 7
   )
   fit2 <- nnetar(WWWusage, xreg = seq_along(WWWusage), model = fit1)
   # Check some model parameters
@@ -137,24 +190,72 @@ test_that("Tests for nnetar", {
   # Check subset argument
   oilnnet <- nnetar(airmiles, subset = 11:20)
   expect_identical(which(!is.na(fitted(oilnnet))), 11:20)
-  oilnnet <- nnetar(airmiles, subset = c(rep(F, 10), rep(T, 10), rep(F, length(airmiles) - 20)))
+  oilnnet <- nnetar(
+    airmiles,
+    subset = c(rep(F, 10), rep(T, 10), rep(F, length(airmiles) - 20))
+  )
   expect_identical(which(!is.na(fitted(oilnnet))), 11:20)
   ## Check short and constant data
-  expect_warning(nnetfit <- nnetar(rep(1, 10), p=2, P=0, size=1, repeats=1, lambda = 0.1), "Constant data")
+  expect_warning(
+    nnetfit <- nnetar(
+      rep(1, 10),
+      p = 2,
+      P = 0,
+      size = 1,
+      repeats = 1,
+      lambda = 0.1
+    ),
+    "Constant data"
+  )
   expect_true(nnetfit$p == 1)
   expect_null(nnetfit$lambda)
   expect_null(nnetfit$scalex)
-  expect_error(nnetfit <- nnetar(rnorm(2), p=1, P=0, size=1, repeats=1), "Not enough data")
-  expect_silent(nnetfit <- nnetar(rnorm(3), p=1, P=0, size=1, repeats=1))
+  expect_error(
+    nnetfit <- nnetar(rnorm(2), p = 1, P = 0, size = 1, repeats = 1),
+    "Not enough data"
+  )
+  expect_silent(
+    nnetfit <- nnetar(rnorm(3), p = 1, P = 0, size = 1, repeats = 1)
+  )
   expect_true(nnetfit$p == 1)
-  expect_silent(nnetfit <- nnetar(rnorm(3), p=2, P=0, size=1, repeats=1))
+  expect_silent(
+    nnetfit <- nnetar(rnorm(3), p = 2, P = 0, size = 1, repeats = 1)
+  )
   expect_true(nnetfit$p == 2)
-  expect_warning(nnetfit <- nnetar(rnorm(3), p=3, P=0, size=1, repeats=1), "short series")
+  expect_warning(
+    nnetfit <- nnetar(rnorm(3), p = 3, P = 0, size = 1, repeats = 1),
+    "short series"
+  )
   expect_true(nnetfit$p == 2)
-  expect_warning(nnetfit <- nnetar(rnorm(3), p=4, P=0, size=1, repeats=1), "short series")
+  expect_warning(
+    nnetfit <- nnetar(rnorm(3), p = 4, P = 0, size = 1, repeats = 1),
+    "short series"
+  )
   expect_true(nnetfit$p == 2)
-  expect_warning(nnetfit <- nnetar(rnorm(10), xreg=rep(1, 10), p=2, P=0, size=1, repeats=1, lambda = 0.1), "Constant xreg")
+  expect_warning(
+    nnetfit <- nnetar(
+      rnorm(10),
+      xreg = rep(1, 10),
+      p = 2,
+      P = 0,
+      size = 1,
+      repeats = 1,
+      lambda = 0.1
+    ),
+    "Constant xreg"
+  )
   expect_null(nnetfit$scalexreg)
-  expect_warning(nnetfit <- nnetar(rnorm(3), xreg=matrix(c(1, 2, 3, 1, 1, 1), ncol=2), p=1, P=0, size=1, repeats=1, lambda = 0.1), "Constant xreg")
+  expect_warning(
+    nnetfit <- nnetar(
+      rnorm(3),
+      xreg = matrix(c(1, 2, 3, 1, 1, 1), ncol = 2),
+      p = 1,
+      P = 0,
+      size = 1,
+      repeats = 1,
+      lambda = 0.1
+    ),
+    "Constant xreg"
+  )
   expect_null(nnetfit$scalexreg)
 })

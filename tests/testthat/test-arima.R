@@ -37,9 +37,9 @@ test_that("tests for arimaorder", {
           expect_true(all(names(arimaorder(fitarima)) == c("p", "d", "q")))
           expect_true(arimaorder(fitarima)["p"] == ar)
           expect_true(arimaorder(fitarima)["d"] == i)
-        expect_true(arimaorder(fitarima)["q"] == ma)
+          expect_true(arimaorder(fitarima)["q"] == ma)
+        }
       }
-    }
     }
   }
 
@@ -51,8 +51,10 @@ test_that("tests for arimaorder", {
   expect_true(all(names(arimaorder(arMod)) == c("p", "d", "q")))
 
   # Test SARIMA
-  sarimaMod <- Arima(wineind, order = c(1, 1, 2), seasonal=c(0, 1,1))
-  expect_true(all(names(arimaorder(sarimaMod)) == c("p", "d", "q", "P", "D", "Q", "Frequency")))
+  sarimaMod <- Arima(wineind, order = c(1, 1, 2), seasonal = c(0, 1, 1))
+  expect_true(all(
+    names(arimaorder(sarimaMod)) == c("p", "d", "q", "P", "D", "Q", "Frequency")
+  ))
   expect_true(arimaorder(sarimaMod)["p"] == 1)
   expect_true(arimaorder(sarimaMod)["d"] == 1)
   expect_true(arimaorder(sarimaMod)["q"] == 2)
@@ -72,43 +74,87 @@ test_that("tests for arimaorder", {
 })
 
 test_that("tests for forecast.Arima", {
-  fit1 <- Arima(wineind, order = c(1, 1, 2), seasonal = c(0, 1, 1), method = "CSS")
+  fit1 <- Arima(
+    wineind,
+    order = c(1, 1, 2),
+    seasonal = c(0, 1, 1),
+    method = "CSS"
+  )
   expect_warning(forecast.Arima(fit1, xreg = 1:10), "xreg not required")
   expect_warning(forecast.Arima(fit1, include.drift = TRUE))
-  expect_true(all.equal(forecast.Arima(fit1, bootstrap = TRUE, npaths = 100)$ mean, forecast.Arima(fit1)$mean))
+  expect_true(all.equal(
+    forecast.Arima(fit1, bootstrap = TRUE, npaths = 100)$mean,
+    forecast.Arima(fit1)$mean
+  ))
 
-  fit2 <- Arima(wineind, order = c(1, 0, 1), seasonal = c(0, 0, 0), include.drift = TRUE)
+  fit2 <- Arima(
+    wineind,
+    order = c(1, 0, 1),
+    seasonal = c(0, 0, 0),
+    include.drift = TRUE
+  )
   expect_warning(Arima(wineind, order = c(1, 2, 1), include.drift = TRUE))
   expect_true("drift" %in% names(coef(fit2)))
   expect_length(forecast.Arima(fit2)$mean, 2 * frequency(wineind))
 
-  fit3 <- Arima(wineind, order = c(1, 1, 2), seasonal = c(0, 1, 1), include.mean = FALSE)
+  fit3 <- Arima(
+    wineind,
+    order = c(1, 1, 2),
+    seasonal = c(0, 1, 1),
+    include.mean = FALSE
+  )
   expect_false("intercept" %in% names(coef(fit3)))
   expect_true(frequency(forecast.Arima(fit3)$mean) == frequency(wineind))
 
-  fit4 <- Arima(wineind, order = c(1, 1, 2), seasonal = c(0, 1, 1), xreg = rnorm(length(wineind)))
+  fit4 <- Arima(
+    wineind,
+    order = c(1, 1, 2),
+    seasonal = c(0, 1, 1),
+    xreg = rnorm(length(wineind))
+  )
   expect_error(forecast.Arima(fit4))
   expect_error(forecast.Arima(fit4, xreg = matrix(rnorm(40), ncol = 2)))
   forecast.Arima(fit4, xreg = rnorm(20))$mean |>
     expect_length(20)
 
-  fit5 <- Arima(wineind[1:150], order = c(1, 1, 2), seasonal = c(0, 1, 1), method = "ML")
-  expect_true(accuracy(fit5)[1, "MAPE"] < accuracy(Arima(wineind, model = fit5))[1, "MAPE"])
+  fit5 <- Arima(
+    wineind[1:150],
+    order = c(1, 1, 2),
+    seasonal = c(0, 1, 1),
+    method = "ML"
+  )
+  expect_true(
+    accuracy(fit5)[1, "MAPE"] <
+      accuracy(Arima(wineind, model = fit5))[1, "MAPE"]
+  )
 
-  fit6 <- Arima(wineind, order = c(1, 1, 2), seasonal = c(0, 1, 1), method = "CSS", lambda = 5)
+  fit6 <- Arima(
+    wineind,
+    order = c(1, 1, 2),
+    seasonal = c(0, 1, 1),
+    method = "CSS",
+    lambda = 5
+  )
   expect_false(identical(fit1$coef, fit6$coef))
 })
 
 test_that("tests for search.arima", {
   set.seed(444)
-  arimasim <- arima.sim(n = 300, model = list(ar = runif(8, -.1, 0.1), ma = runif(8, -0.1, 0.1), sd = 0.1))
-  expect_true(AIC(auto.arima(arimasim)) >= AIC(auto.arima(arimasim, stepwise = FALSE)))
+  arimasim <- arima.sim(
+    n = 300,
+    model = list(ar = runif(8, -.1, 0.1), ma = runif(8, -0.1, 0.1), sd = 0.1)
+  )
+  expect_true(
+    AIC(auto.arima(arimasim)) >= AIC(auto.arima(arimasim, stepwise = FALSE))
+  )
 })
 
 test_that("tests for forecast.ar()", {
   fitar <- ar(taylor)
   arfc <- forecast.ar(fitar)$mean
-  expect_true(all(arfc == forecast.ar(fitar, bootstrap = TRUE, npaths = 100)$mean))
+  expect_true(all(
+    arfc == forecast.ar(fitar, bootstrap = TRUE, npaths = 100)$mean
+  ))
   expect_true(all(arfc == forecast.ar(fitar, fan = TRUE)$mean))
   expect_error(forecast.ar(fitar, level = -10))
   expect_error(forecast.ar(fitar, level = 110))

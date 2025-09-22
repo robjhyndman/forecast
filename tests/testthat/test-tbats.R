@@ -9,7 +9,11 @@ test_that("Test tbats() and forecasts", {
   # Fit tbats models
   tbatsfit1 <- tbats(subset(wineind, end = 50), use.parallel = FALSE)
   tbatsfit2 <- tbats(WWWusage, use.parallel = FALSE)
-  tbatsfit3 <- tbats(as.numeric(woolyrnq), seasonal.periods = frequency(woolyrnq), use.parallel = FALSE)
+  tbatsfit3 <- tbats(
+    as.numeric(woolyrnq),
+    seasonal.periods = frequency(woolyrnq),
+    use.parallel = FALSE
+  )
   tbatsfit4 <- tbats(airmiles, use.box.cox = FALSE, use.parallel = FALSE)
   # Test tbats.components
   tbats.components(tbatsfit1)
@@ -40,11 +44,13 @@ test_that("Test tbats() and forecasts", {
   expect_error(forecast(tbatsfit1, level = -10))
   expect_error(forecast(tbatsfit1, level = 110))
   # Test forecasts with fan = TRUE
-  expect_true(all(forecast(tbatsfit1, fan = TRUE)$mean == forecast(tbatsfit1)$mean))
+  expect_true(all(
+    forecast(tbatsfit1, fan = TRUE)$mean == forecast(tbatsfit1)$mean
+  ))
 })
 
 #test_that("Test tbats() with parallel", {
-  # Tests will not run on Travis in parallel
-  # expect_output(print(tbats(woolyrnq, num.cores = 1)), regexp = "TBATS")
-  # expect_output(print(tbats(elecsales, num.cores = 1, use.trend = FALSE)), regexp = "BATS")
+# Tests will not run on Travis in parallel
+# expect_output(print(tbats(woolyrnq, num.cores = 1)), regexp = "TBATS")
+# expect_output(print(tbats(elecsales, num.cores = 1, use.trend = FALSE)), regexp = "BATS")
 #})

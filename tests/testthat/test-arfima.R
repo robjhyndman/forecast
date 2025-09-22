@@ -16,9 +16,17 @@ test_that("test accuracy(), fitted(), and residuals().", {
 })
 
 test_that("test forecast.fracdiff()", {
-  expect_true(all(forecast(arfima1, fan = TRUE)$mean == forecast(arfima1, fan = FALSE)$mean))
+  expect_true(all(
+    forecast(arfima1, fan = TRUE)$mean == forecast(arfima1, fan = FALSE)$mean
+  ))
   expect_error(forecast(arfimabc, level = -10))
   expect_error(forecast(arfimabc, level = 110))
-  expect_false(identical(forecast(arfimabc, biasadj = FALSE), forecast(arfimabc, biasadj = TRUE)))
-  expect_output(print(summary(forecast(arfimabc))), regexp = "Forecast method: ARFIMA")
+  expect_false(identical(
+    forecast(arfimabc, biasadj = FALSE),
+    forecast(arfimabc, biasadj = TRUE)
+  ))
+  expect_output(
+    print(summary(forecast(arfimabc))),
+    regexp = "Forecast method: ARFIMA"
+  )
 })

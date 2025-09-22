@@ -15,7 +15,9 @@ test_that("tests forecast.ts()", {
 test_that("tests summary.forecast() and forecast.forecast()", {
   WWWusageforecast <- forecast(WWWusage)
   expect_output(print(summary(WWWusageforecast)), regexp = "Forecast method:")
-  expect_true(all(predict(WWWusageforecast)$mean == forecast(WWWusageforecast)$mean))
+  expect_true(all(
+    predict(WWWusageforecast)$mean == forecast(WWWusageforecast)$mean
+  ))
 })
 
 # test_that("tests plot.forecast()", {

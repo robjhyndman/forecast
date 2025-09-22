@@ -10,10 +10,28 @@ test_that("test auto.arima() and associated methods", {
 
   testseries2 <- ts(rep(100, 120), frequency = 12)
   xregmat <- matrix(runif(240), ncol = 2)
-  expect_output(print(auto.arima(testseries2, xreg = xregmat)), regexp = "Series: testseries2")
+  expect_output(
+    print(auto.arima(testseries2, xreg = xregmat)),
+    regexp = "Series: testseries2"
+  )
 
-  expect_output(print(summary(auto.arima(testseries2, xreg = xregmat, approximation = TRUE, stepwise = FALSE))), regexp = "Series: testseries2")
-  expect_output(print(auto.arima(ts(testseries2, frequency = 4), approximation = TRUE, trace = TRUE)), regexp = "ARIMA")
+  expect_output(
+    print(summary(auto.arima(
+      testseries2,
+      xreg = xregmat,
+      approximation = TRUE,
+      stepwise = FALSE
+    ))),
+    regexp = "Series: testseries2"
+  )
+  expect_output(
+    print(auto.arima(
+      ts(testseries2, frequency = 4),
+      approximation = TRUE,
+      trace = TRUE
+    )),
+    regexp = "ARIMA"
+  )
 
   fit1 <- auto.arima(testseries1, stepwise = FALSE, lambda = 2, biasadj = FALSE)
   fit2 <- auto.arima(testseries1, stepwise = FALSE, lambda = 2, biasadj = TRUE)
@@ -22,7 +40,10 @@ test_that("test auto.arima() and associated methods", {
 
 test_that("test parallel = FALSE and stepwise = FALSE for auto.arima()", {
   skip_on_ci()
-  expect_equal(auto.arima(WWWusage, parallel = FALSE, stepwise = FALSE)$arma, c(3L, 0L, 0L, 0L, 1L, 1L, 0L))
+  expect_equal(
+    auto.arima(WWWusage, parallel = FALSE, stepwise = FALSE)$arma,
+    c(3L, 0L, 0L, 0L, 1L, 1L, 0L)
+  )
 })
 
 test_that("tests for ndiffs()", {

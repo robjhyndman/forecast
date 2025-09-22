@@ -11,13 +11,13 @@ test_that("tests specifying correct argument", {
   sub2 <- subset(wineind, season = 9)
   expect_identical(sub, sub2)
   sub <- subset(woolyrnq, quarter = 1)
-  expect_length(sub,tsp(sub)[2] - tsp(sub)[1] + 1)
+  expect_length(sub, tsp(sub)[2] - tsp(sub)[1] + 1)
   expect_identical(sum(sub), 153142)
   sub2 <- subset(woolyrnq, season = 1)
   expect_identical(sub, sub2)
   sub <- subset(wineind, subset = wineind < 25000)
   expect_identical(round(sum(sub)), 1948985)
-  expect_length(sub,91)
+  expect_length(sub, 91)
   sub <- subset(mtsobj, c(1, 1, rep(0, 98)) == 1)
   expect_identical(ncol(sub), 2L)
   expect_identical(nrow(sub), 2L)
@@ -33,11 +33,23 @@ test_that("tests specifying wrong argument", {
 
 test_that("test for bad input", {
   expect_error(subset.ts(mtcars, quarter = 1), "Data must be seasonal")
-  expect_error(subset(wineind, subset = c(1, 2)), "subset must be the same length as x")
-  expect_error(subset(mtsobj, mtsobj < .5), "subset must be a vector of rows to keep")
+  expect_error(
+    subset(wineind, subset = c(1, 2)),
+    "subset must be the same length as x"
+  )
+  expect_error(
+    subset(mtsobj, mtsobj < .5),
+    "subset must be a vector of rows to keep"
+  )
   expect_error(subset(wineind, month = "Jaan"), "No recognizable months")
-  expect_error(subset(wineind, season = 1:14), "Seasons must be between 1 and 12")
+  expect_error(
+    subset(wineind, season = 1:14),
+    "Seasons must be between 1 and 12"
+  )
   expect_error(subset(wineind, month = 1:14), "Months must be between 1 and 12")
   expect_error(subset(woolyrnq, quarter = "qq1"), "No recognizable quarters")
-  expect_error(subset(woolyrnq, quarter = 1:6), "Quarters must be between 1 and 4")
+  expect_error(
+    subset(woolyrnq, quarter = 1:6),
+    "Quarters must be between 1 and 4"
+  )
 })

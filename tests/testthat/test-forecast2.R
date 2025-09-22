@@ -4,7 +4,10 @@ test_that("test rwf()", {
   expect_true(all(rwfc < rwf(airmiles, drift = TRUE)$mean))
   expect_true(all(rwf(airmiles, fan = TRUE)$mean == rwfc))
   expect_length(rwf(airmiles, lambda = 0.15)$mean, 10)
-  expect_false(identical(rwf(airmiles, lambda = 0.15, biasadj = FALSE)$mean, rwf(airmiles, lambda = 0.15, biasadj = TRUE)$mean))
+  expect_false(identical(
+    rwf(airmiles, lambda = 0.15, biasadj = FALSE)$mean,
+    rwf(airmiles, lambda = 0.15, biasadj = TRUE)$mean
+  ))
   # Constant series should not error
   series <- ts(rep(950, 20), frequency = 4)
   constantForecast <- expect_no_error(rwf(series))
@@ -36,7 +39,11 @@ test_that("test for forecast.StructTS()", {
   # forecasts when lambda is passed as an argument
   bcseries <- BoxCox(woolyrnq, lambda = 0.19)
   fc2 <- InvBoxCox(forecast(stats::StructTS(bcseries))$mean, lambda = 0.19)
-  fc3 <- forecast(stats::StructTS(bcseries), lambda = 0.19, biasadj = FALSE)$mean
+  fc3 <- forecast(
+    stats::StructTS(bcseries),
+    lambda = 0.19,
+    biasadj = FALSE
+  )$mean
   fc4 <- forecast(stats::StructTS(bcseries), lambda = 0.19, biasadj = TRUE)$mean
   expect_true(all(fc2 == fc3))
   expect_false(identical(fc3, fc4))
@@ -49,12 +56,21 @@ test_that("test croston()", {
 })
 
 test_that("test hw()", {
-  expect_output(print(summary(holt(wineind))), regexp = "Forecast method: Holt's method")
-  expect_output(print(summary(holt(wineind, damped = TRUE))), regexp = "Forecast method: Damped Holt's method")
+  expect_output(
+    print(summary(holt(wineind))),
+    regexp = "Forecast method: Holt's method"
+  )
+  expect_output(
+    print(summary(holt(wineind, damped = TRUE))),
+    regexp = "Forecast method: Damped Holt's method"
+  )
 })
 
 test_that("test holt()", {
-  expect_output(print(summary(hw(wineind))), regexp = "Forecast method: Holt-Winters' additive method")
+  expect_output(
+    print(summary(hw(wineind))),
+    regexp = "Forecast method: Holt-Winters' additive method"
+  )
 })
 
 test_that("test naive() and snaive()", {

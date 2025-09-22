@@ -2,7 +2,10 @@
 test_that("tests for monthdays", {
   expect_error(monthdays(rnorm(10)))
   expect_error(monthdays(rnorm(10)))
-  expect_true(all(monthdays(ts(rep(100, 12), frequency = 12)) == c(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)))
+  expect_true(all(
+    monthdays(ts(rep(100, 12), frequency = 12)) ==
+      c(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+  ))
   expect_true(all(monthdays(ts(rep(1, 4), frequency = 4)) == c(90, 91, 92, 92)))
   # Test leapyears
   expect_true(monthdays(ts(rep(1, 48), frequency = 12))[38] == 29)
@@ -45,20 +48,33 @@ test_that("tests for stlm", {
 })
 
 test_that("tests for forecast.stlm", {
-  expect_error(forecast.stlm(stlm(wineind), newxreg = matrix(rep(1, 24), ncol = 2)))
+  expect_error(forecast.stlm(
+    stlm(wineind),
+    newxreg = matrix(rep(1, 24), ncol = 2)
+  ))
   stlmfit1 <- stlm(woolyrnq, method = "ets")
   stlmfit2 <- stlm(woolyrnq, method = "arima", approximation = FALSE)
   fcfit1 <- forecast(stlmfit1)
   fcfit2 <- forecast(stlmfit1, fan = TRUE)
   expect_true(all(fcfit2$level == seq(from = 51, to = 99, by = 3)))
   fcstlmfit3 <- forecast(stlmfit2)
-  expect_true(all(round(forecast(stlm(ts(rep(100, 120), frequency = 12)))$mean, 10) == 100))
-  expect_true(all(round(forecast(stlm(ts(rep(100, 120), frequency = 12), lambda = 1))$mean, 10) == 100))
+  expect_true(all(
+    round(forecast(stlm(ts(rep(100, 120), frequency = 12)))$mean, 10) == 100
+  ))
+  expect_true(all(
+    round(
+      forecast(stlm(ts(rep(100, 120), frequency = 12), lambda = 1))$mean,
+      10
+    ) ==
+      100
+  ))
 })
 
 test_that("tests for stlf", {
   expect_true(all(forecast(stlm(wineind))$mean == stlf(wineind)$mean))
-  expect_true(all(forecast(stlm(wineind, lambda = .5))$mean == stlf(wineind, lambda = .5)$mean))
+  expect_true(all(
+    forecast(stlm(wineind, lambda = .5))$mean == stlf(wineind, lambda = .5)$mean
+  ))
   fit1 <- stlf(wineind, lambda = .2, biasadj = FALSE)
   fit2 <- stlf(wineind, lambda = .2, biasadj = TRUE)
   expect_false(identical(fit1$mean, fit2$mean))

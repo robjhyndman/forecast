@@ -1,7 +1,13 @@
 # A unit test for re-fitting models
 test_that("tests for re-fitting models", {
   # arima
-  fit <- Arima(mdeaths, c(1, 0, 0), c(2, 0, 0), include.mean = FALSE, include.drift = TRUE)
+  fit <- Arima(
+    mdeaths,
+    c(1, 0, 0),
+    c(2, 0, 0),
+    include.mean = FALSE,
+    include.drift = TRUE
+  )
 
   refit <- Arima(fdeaths, model = fit)
   expect_identical(fit$coef, refit$coef)

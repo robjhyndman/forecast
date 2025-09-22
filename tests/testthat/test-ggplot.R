@@ -5,13 +5,22 @@ test_that("tests for autoplot/gg functions", {
 
   ggAcf(wineind)
   autoplot(Acf(wineind))
-  expect_identical(ggAcf(wineind, plot = FALSE)$acf, acf(wineind, plot = FALSE, lag.max = 24)$acf)
+  expect_identical(
+    ggAcf(wineind, plot = FALSE)$acf,
+    acf(wineind, plot = FALSE, lag.max = 24)$acf
+  )
   ggPacf(wineind)
   autoplot(Pacf(wineind))
-  expect_identical(ggPacf(wineind, plot = FALSE)$acf, acf(wineind, plot = FALSE, type = "partial", lag.max = 24)$acf)
+  expect_identical(
+    ggPacf(wineind, plot = FALSE)$acf,
+    acf(wineind, plot = FALSE, type = "partial", lag.max = 24)$acf
+  )
   ggCcf(mdeaths, fdeaths)
   autoplot(Ccf(mdeaths, fdeaths))
-  expect_identical(ggCcf(mdeaths, fdeaths, plot = FALSE)$acf, ccf(mdeaths, fdeaths, plot = FALSE, type = "correlation", lag.max = 24)$acf)
+  expect_identical(
+    ggCcf(mdeaths, fdeaths, plot = FALSE)$acf,
+    ccf(mdeaths, fdeaths, plot = FALSE, type = "correlation", lag.max = 24)$acf
+  )
 
   arimafit <- Arima(USAccDeaths, order = c(1, 1, 1), seasonal = c(1, 1, 1))
   autoplot(arimafit)
