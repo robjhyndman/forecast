@@ -6,33 +6,32 @@
 #' Plots a time series along with its acf and either its pacf, lagged
 #' scatterplot or spectrum.
 #'
-#' \code{ggtsdisplay} will produce the equivalent plot using ggplot graphics.
+#' `ggtsdisplay` will produce the equivalent plot using ggplot graphics.
 #'
-#' @param x a numeric vector or time series of class \code{ts}.
+#' @param x a numeric vector or time series of class `ts`.
 #' @param plot.type type of plot to include in lower right corner.
 #' @param points logical flag indicating whether to show the individual points
 #' or not in the time plot.
 #' @param smooth logical flag indicating whether to show a smooth loess curve
 #' superimposed on the time plot.
 #' @param ci.type type of confidence limits for ACF that is passed to
-#' \code{\link[stats]{acf}}. Should the confidence limits assume a white noise
+#' [stats::acf()]. Should the confidence limits assume a white noise
 #' input or for lag \eqn{k} an MA(\eqn{k-1}) input?
 #' @param lag.max the maximum lag to plot for the acf and pacf. A suitable
 #' value is selected by default if the argument is missing.
 #' @param na.action function to handle missing values in acf, pacf and spectrum
-#' calculations. The default is \code{\link[stats]{na.contiguous}}. Useful
-#' alternatives are \code{\link[stats]{na.pass}} and \code{\link{na.interp}}.
+#' calculations. The default is [stats::na.contiguous()]. Useful
+#' alternatives are [stats::na.pass()] and [na.interp()].
 #' @param theme Adds a ggplot element to each plot, typically a theme.
 #' @param main Main title.
 #' @param xlab X-axis label.
 #' @param ylab Y-axis label.
 #' @param pch Plotting character.
 #' @param cex Character size.
-#' @param \dots additional arguments to \code{\link[stats]{acf}}.
+#' @param ... additional arguments to [stats::acf()].
 #' @return None.
 #' @author Rob J Hyndman
-#' @seealso \code{\link[stats]{plot.ts}}, \code{\link{Acf}},
-#' \code{\link[stats]{spec.ar}}
+#' @seealso [stats::plot.ts()], [Acf()], [stats::spec.ar()]
 #' @references Hyndman and Athanasopoulos (2018) \emph{Forecasting: principles
 #' and practice}, 2nd edition, OTexts: Melbourne, Australia.
 #' \url{https://otexts.com/fpp2/}
@@ -105,24 +104,24 @@ tsdisplay <- function(x, plot.type=c("partial", "histogram", "scatter", "spectru
 #' chapter 2). This is like a time plot except that the data are plotted
 #' against the seasons in separate years.
 #'
-#' @param x a numeric vector or time series of class \code{ts}.
-#' @param s seasonal frequency of x
-#' @param season.labels Labels for each season in the "year"
+#' @param x a numeric vector or time series of class `ts`.
+#' @param s seasonal frequency of x.
+#' @param season.labels Labels for each season in the "year".
 #' @param year.labels Logical flag indicating whether labels for each year of
 #' data should be plotted on the right.
 #' @param year.labels.left Logical flag indicating whether labels for each year
 #' of data should be plotted on the left.
-#' @param type plot type (as for \code{\link[graphics]{plot}}). Not yet
+#' @param type plot type (as for [graphics::plot()]). Not yet
 #' supported for ggseasonplot.
 #' @param main Main title.
 #' @param xlab X-axis label.
 #' @param ylab Y-axis label.
 #' @param col Colour
 #' @param labelgap Distance between year labels and plotted lines
-#' @param \dots additional arguments to \code{\link[graphics]{plot}}.
+#' @param ... additional arguments to [graphics::plot()].
 #' @return None.
 #' @author Rob J Hyndman & Mitchell O'Hara-Wild
-#' @seealso \code{\link[stats]{monthplot}}
+#' @seealso [stats::monthplot()]
 #' @references Hyndman and Athanasopoulos (2018) \emph{Forecasting: principles
 #' and practice}, 2nd edition, OTexts: Melbourne, Australia.
 #' \url{https://otexts.com/fpp2/}

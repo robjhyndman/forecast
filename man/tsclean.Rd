@@ -36,8 +36,7 @@ cleangold <- tsclean(gold)
 Hyndman (2021) "Detecting time series outliers" \url{https://robjhyndman.com/hyndsight/tsoutliers/}.
 }
 \seealso{
-\code{\link[forecast]{na.interp}},
-\code{\link[forecast]{tsoutliers}}, \code{\link[stats]{supsmu}}
+\code{\link[=na.interp]{na.interp()}}, \code{\link[=tsoutliers]{tsoutliers()}}, \code{\link[stats:supsmu]{stats::supsmu()}}
 }
 \author{
 Rob J Hyndman

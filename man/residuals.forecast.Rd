@@ -36,8 +36,7 @@
 }
 \arguments{
 \item{object}{An object containing a time series model of class \code{ar},
-\code{Arima}, \code{bats}, \code{ets}, \code{arfima}, \code{nnetar} or
-\code{stlm}.
+\code{Arima}, \code{bats}, \code{ets}, \code{arfima}, \code{nnetar} or \code{stlm}.
 If \code{object} is of class \code{forecast}, then the function will return
 \code{object$residuals} if it exists, otherwise it returns the differences between
 the observations and their fitted values.}
@@ -46,7 +45,7 @@ the observations and their fitted values.}
 
 \item{...}{Other arguments not used.}
 
-\item{h}{If \code{type="response"}, then the fitted values are computed for
+\item{h}{If \code{type = "response"}, then the fitted values are computed for
 \code{h}-step forecasts.}
 }
 \value{
@@ -59,15 +58,15 @@ Returns time series of residuals from a fitted model.
 Innovation residuals correspond to the white noise process that drives the
 evolution of the time series model. Response residuals are the difference
 between the observations and the fitted values (equivalent to \code{h}-step
-forecasts). For functions with no \code{h} argument, \code{h=1}. For
+forecasts). For functions with no \code{h} argument, \code{h = 1}. For
 homoscedastic models, the innovation residuals and the response residuals
-for \code{h=1} are identical. Regression residuals are available for
+for \code{h = 1} are identical. Regression residuals are available for
 regression models with ARIMA errors, and are equal to the original data
 minus the effect of the regression variables. If there are no regression
 variables, the errors will be identical to the original series (possibly
-adjusted to have zero mean).  \code{arima.errors} is a deprecated function
+adjusted to have zero mean). \code{arima.errors} is a deprecated function
 which is identical to \code{residuals.Arima(object, type="regression")}.
-For \code{nnetar} objects, when \code{type="innovations"} and \code{lambda} is used, a
+For \code{nnetar} objects, when \code{type = "innovations"} and \code{lambda} is used, a
 matrix of time-series consisting of the residuals from each of the fitted neural networks is returned.
 }
 \examples{
@@ -77,7 +76,7 @@ plot(residuals(fit))
 plot(residuals(fit, type = "response"))
 }
 \seealso{
-\code{\link{fitted.Arima}}, \code{\link{checkresiduals}}.
+\code{\link[=fitted.Arima]{fitted.Arima()}}, \code{\link[=checkresiduals]{checkresiduals()}}.
 }
 \author{
 Rob J Hyndman

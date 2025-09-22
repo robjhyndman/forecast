@@ -13,15 +13,15 @@
 #' robust STL decomposition is first computed. Then a linear interpolation is applied to the
 #' seasonally adjusted data, and the seasonal component is added back.
 #'
-#' A more general and flexible approach is available using \code{na.approx} in
-#' the \code{zoo} package.
+#' A more general and flexible approach is available using `na.approx` in
+#' the \CRANpkg{zoo} package.
 #'
 #' @param x Time series.
 #' @param linear Should a linear interpolation be used.
 #' @inheritParams forecast.ts
 #' @return Time series
 #' @author Rob J Hyndman
-#' @seealso \code{\link[forecast]{tsoutliers}}
+#' @seealso [tsoutliers()]
 #' @keywords ts
 #' @examples
 #'
@@ -121,15 +121,14 @@ na.interp <- function(x, lambda=NULL,
 #' linear interpolation is used on the (possibly seasonally adjusted) series
 #'
 #' @param x Time series.
-#' @param replace.missing If \code{TRUE}, it not only replaces outliers, but
+#' @param replace.missing If `TRUE`, it not only replaces outliers, but
 #' also interpolates missing values.
 #' @param iterate The number of iterations required.
 #' @inheritParams forecast.ts
 #' @return Time series
 #' @author Rob J Hyndman
 #' @references Hyndman (2021) "Detecting time series outliers" \url{https://robjhyndman.com/hyndsight/tsoutliers/}.
-#' @seealso \code{\link[forecast]{na.interp}},
-#' \code{\link[forecast]{tsoutliers}}, \code{\link[stats]{supsmu}}
+#' @seealso [na.interp()], [tsoutliers()], [stats::supsmu()]
 #' @keywords ts
 #' @examples
 #'
@@ -159,7 +158,7 @@ tsclean <- function(x, replace.missing=TRUE, iterate=2, lambda = NULL) {
 #' @return \item{index}{Indicating the index of outlier(s)}
 #' \item{replacement}{Suggested numeric values to replace identified outliers}
 #' @author Rob J Hyndman
-#' @seealso \code{\link[forecast]{na.interp}}, \code{\link[forecast]{tsclean}}
+#' @seealso [na.interp()], [tsclean()]
 #' @references Hyndman (2021) "Detecting time series outliers" \url{https://robjhyndman.com/hyndsight/tsoutliers/}.
 #' @keywords ts
 #' @examples

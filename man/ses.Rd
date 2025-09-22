@@ -67,7 +67,7 @@ is suitable for fan plots.}
 
 \item{initial}{Method used for selecting initial state values. If
 \code{optimal}, the initial values are optimized along with the smoothing
-parameters using \code{\link{ets}}. If \code{simple}, the initial values are
+parameters using \code{\link[=ets]{ets()}}. If \code{simple}, the initial values are
 set to values obtained using simple calculations on the first few
 observations. See Hyndman & Athanasopoulos (2014) for details.}
 
@@ -97,7 +97,7 @@ Otherwise, the trend is (locally) linear.}
 \item{beta}{Value of smoothing parameter for the trend. If \code{NULL}, it
 will be estimated.}
 
-\item{phi}{Value of damping parameter if \code{damped=TRUE}. If \code{NULL},
+\item{phi}{Value of damping parameter if \code{damped = TRUE}. If \code{NULL},
 it will be estimated.}
 
 \item{seasonal}{Type of seasonality in \code{hw} model. \code{"additive"} or
@@ -107,7 +107,7 @@ it will be estimated.}
 \code{NULL}, it will be estimated.}
 }
 \value{
-An object of class "\code{forecast}".
+An object of class \code{"forecast"}.
 
 The function \code{summary} is used to obtain and print a summary of the
 results, while the function \code{plot} produces a plot of the forecasts and
@@ -154,8 +154,7 @@ and practice}, 2nd edition, OTexts: Melbourne, Australia.
 \url{https://otexts.com/fpp2/}
 }
 \seealso{
-\code{\link{ets}}, \code{\link[stats]{HoltWinters}},
-\code{\link{rwf}}, \code{\link[stats]{arima}}.
+\code{\link[=ets]{ets()}}, \code{\link[stats:HoltWinters]{stats::HoltWinters()}}, \code{\link[=rwf]{rwf()}}, \code{\link[stats:arima]{stats::arima()}}.
 }
 \author{
 Rob J Hyndman

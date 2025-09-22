@@ -6,33 +6,33 @@
 #' The bagged model forecasting method.
 #'
 #' This function implements the bagged model forecasting method described in
-#' Bergmeir et al. By default, the \code{\link{ets}} function is applied to all
-#' bootstrapped series. Base models other than \code{\link{ets}} can be given by the
-#' parameter \code{fn}. Using the default parameters, the function
-#' \code{\link{bld.mbb.bootstrap}} is used to calculate the bootstrapped series
+#' Bergmeir et al. By default, the [ets()] function is applied to all
+#' bootstrapped series. Base models other than [ets()] can be given by the
+#' parameter `fn`. Using the default parameters, the function
+#' [bld.mbb.bootstrap()] is used to calculate the bootstrapped series
 #' with the Box-Cox and Loess-based decomposition (BLD) bootstrap. The function
-#' \code{\link{forecast.baggedModel}} can then be used to calculate forecasts.
+#' [forecast.baggedModel()] can then be used to calculate forecasts.
 #'
-#' \code{baggedETS} is a wrapper for \code{baggedModel}, setting \code{fn} to "ets".
+#' `baggedETS` is a wrapper for `baggedModel`, setting `fn` to "ets".
 #' This function is included for backwards compatibility only, and may be
 #' deprecated in the future.
 #'
 #' @aliases print.baggedModel
 #'
-#' @param y A numeric vector or time series of class \code{ts}.
+#' @param y A numeric vector or time series of class `ts`.
 #' @param bootstrapped_series bootstrapped versions of y.
-#' @param fn the forecast function to use. Default is \code{\link{ets}}.
-#' @param \dots Other arguments passed to the forecast function.
-#' @return Returns an object of class "\code{baggedModel}".
+#' @param fn the forecast function to use. Default is [ets()].
+#' @param ... Other arguments passed to the forecast function.
+#' @return Returns an object of class `"baggedModel"`.
 #'
-#' The function \code{print} is used to obtain and print a summary of the
+#' The function `print` is used to obtain and print a summary of the
 #' results.
 #'
 #' \item{models}{A list containing the fitted ensemble models.}
 #' \item{method}{The function for producing a forecastable model.}
 #' \item{y}{The original time series.}
 #' \item{bootstrapped_series}{The bootstrapped series.}
-#' \item{modelargs}{The arguments passed through to \code{fn}.}
+#' \item{modelargs}{The arguments passed through to `fn`.}
 #' \item{fitted}{Fitted values (one-step forecasts). The
 #' mean of the fitted values is calculated over the ensemble.}
 #' \item{residuals}{Original values minus fitted values.}
@@ -96,17 +96,17 @@ baggedETS <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), ...) {
 #' intervals, but give an indication of how different the forecasts within the
 #' ensemble are.
 #'
-#' @param object An object of class "\code{baggedModel}" resulting from a call to
-#' \code{\link{baggedModel}}.
+#' @param object An object of class `"baggedModel"` resulting from a call to
+#' [baggedModel()].
 #' @param h Number of periods for forecasting.
-#' @param ... Other arguments, passed on to the \code{\link{forecast}} function of the original method
-#' @return An object of class "\code{forecast}".
+#' @param ... Other arguments, passed on to the [forecast()] function of the original method
+#' @return An object of class `"forecast"`.
 #'
-#' The function \code{summary} is used to obtain and print a summary of the
-#' results, while the function \code{plot} produces a plot of the forecasts and
+#' The function `summary` is used to obtain and print a summary of the
+#' results, while the function `plot` produces a plot of the forecasts and
 #' prediction intervals.
 #'
-#' An object of class "\code{forecast}" is a list containing at least the
+#' An object of class `"forecast"` is a list containing at least the
 #' following elements:
 #' \item{model}{A list containing information about the fitted model}
 #' \item{method}{The name of the forecasting method as a character string}
@@ -114,14 +114,14 @@ baggedETS <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), ...) {
 #' \item{lower}{Lower limits for prediction intervals}
 #' \item{upper}{Upper limits for prediction intervals}
 #' \item{level}{The confidence values associated with the prediction intervals}
-#' \item{x}{The original time series (either \code{object} itself or the
-#' time series used to create the model stored as \code{object}).}
+#' \item{x}{The original time series (either `object` itself or the
+#' time series used to create the model stored as `object`).}
 #' \item{xreg}{The external regressors used in fitting (if given).}
 #' \item{residuals}{Residuals from the fitted model. That
 #' is x minus fitted values.}
 #' \item{fitted}{Fitted values (one-step forecasts)}
 #' @author Christoph Bergmeir, Fotios Petropoulos
-#' @seealso \code{\link{baggedModel}}.
+#' @seealso [baggedModel()].
 #' @references Bergmeir, C., R. J. Hyndman, and J. M. Benitez (2016). Bagging
 #' Exponential Smoothing Methods using STL Decomposition and Box-Cox
 #' Transformation. International Journal of Forecasting 32, 303-312.

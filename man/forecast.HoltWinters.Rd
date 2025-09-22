@@ -15,8 +15,8 @@
 )
 }
 \arguments{
-\item{object}{An object of class "\code{HoltWinters}". Usually the result of
-a call to \code{\link[stats]{HoltWinters}}.}
+\item{object}{An object of class \code{"HoltWinters"}. Usually the result of
+a call to \code{\link[stats:HoltWinters]{stats::HoltWinters()}}.}
 
 \item{h}{Number of periods for forecasting}
 
@@ -39,7 +39,7 @@ and fitted values.}
 \item{...}{Other arguments.}
 }
 \value{
-An object of class "\code{forecast}".
+An object of class \code{"forecast"}.
 
 The function \code{summary} is used to obtain and print a summary of the
 results, while the function \code{plot} produces a plot of the forecasts and
@@ -65,11 +65,11 @@ Returns forecasts and other information for univariate Holt-Winters time
 series models.
 }
 \details{
-This function calls \code{\link[stats]{predict.HoltWinters}} and constructs
-an object of class "\code{forecast}" from the results.
+This function calls \code{\link[stats:predict.HoltWinters]{stats::predict.HoltWinters()}} and constructs
+an object of class \code{"forecast"} from the results.
 
-It is included for completeness, but the \code{\link{ets}} is recommended
-for use instead of \code{\link[stats]{HoltWinters}}.
+It is included for completeness, but the \code{\link[=ets]{ets()}} is recommended
+for use instead of \link[stats:HoltWinters]{stats::HoltWinters}.
 }
 \examples{
 fit <- HoltWinters(WWWusage, gamma = FALSE)
@@ -77,8 +77,7 @@ plot(forecast(fit))
 
 }
 \seealso{
-\code{\link[stats]{predict.HoltWinters}},
-\code{\link[stats]{HoltWinters}}.
+\link[stats:predict.HoltWinters]{stats::predict.HoltWinters}, \code{\link[stats:HoltWinters]{stats::HoltWinters()}}.
 }
 \author{
 Rob J Hyndman

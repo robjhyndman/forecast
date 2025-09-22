@@ -43,11 +43,9 @@
 )
 }
 \arguments{
-\item{object}{An object of class "\code{Arima}", "\code{ar}" or
-"\code{fracdiff}". Usually the result of a call to
-\code{\link[stats]{arima}}, \code{\link{auto.arima}},
-\code{\link[stats]{ar}}, \code{\link{arfima}} or
-\code{\link[fracdiff]{fracdiff}}.}
+\item{object}{An object of class \code{"Arima"}, \verb{"ar"" or }"fracdiff"`. Usually
+the result of a call to \code{\link[stats:arima]{stats::arima()}}, \code{\link[=auto.arima]{auto.arima()}}, \code{\link[stats:ar]{stats::ar()}},
+\code{\link[=arfima]{arfima()}} or \code{\link[fracdiff:fracdiff]{fracdiff::fracdiff()}}.}
 
 \item{h}{Number of periods for forecasting. If \code{xreg} is used, \code{h}
 is ignored and the number of forecast periods is set to the number of rows
@@ -78,10 +76,10 @@ objects only). A numerical vector or matrix of external regressors; it should no
 simulation with resampled errors.}
 
 \item{npaths}{Number of sample paths used in computing simulated prediction
-intervals when \code{bootstrap=TRUE}.}
+intervals when \code{bootstrap = TRUE}.}
 }
 \value{
-An object of class "\code{forecast}".
+An object of class \code{"forecast"}.
 
 The function \code{summary} is used to obtain and print a summary of the
 results, while the function \code{plot} produces a plot of the forecasts and
@@ -90,7 +88,7 @@ prediction intervals.
 The generic accessor functions \code{fitted.values} and \code{residuals}
 extract useful features of the value returned by \code{forecast.Arima}.
 
-An object of class "\code{forecast}" is a list containing at least the
+An object of class \code{"forecast"} is a list containing at least the
 following elements: \item{model}{A list containing information about the
 fitted model} \item{method}{The name of the forecasting method as a
 character string} \item{mean}{Point forecasts as a time series}
@@ -106,12 +104,10 @@ forecasts)}
 Returns forecasts and other information for univariate ARIMA models.
 }
 \details{
-For \code{Arima} or \code{ar} objects, the function calls
-\code{\link[stats]{predict.Arima}} or \code{\link[stats]{predict.ar}} and
-constructs an object of class "\code{forecast}" from the results. For
-\code{fracdiff} objects, the calculations are all done within
-\code{\link{forecast.fracdiff}} using the equations given by Peiris and
-Perera (1988).
+For \code{Arima} or \code{ar} objects, the function calls \code{\link[stats:predict.arima]{stats::predict.Arima()}} or
+\link[stats:ar]{stats::predict.ar} and constructs an object of class \code{"forecast"} from the
+results. For \code{fracdiff} objects, the calculations are all done within
+\code{\link[fracdiff:fracdiff]{fracdiff::fracdiff()}} using the equations given by Peiris and Perera (1988).
 }
 \examples{
 fit <- Arima(WWWusage, c(3, 1, 0))
@@ -129,10 +125,8 @@ differenced ARIMA models, \emph{Journal of Time Series Analysis},
 \bold{9}(3), 215-220.
 }
 \seealso{
-\code{\link[stats]{predict.Arima}},
-\code{\link[stats]{predict.ar}}, \code{\link{auto.arima}},
-\code{\link{Arima}}, \code{\link[stats]{arima}}, \code{\link[stats]{ar}},
-\code{\link{arfima}}.
+\code{\link[stats:predict.arima]{stats::predict.Arima()}}, \code{\link[stats:ar]{stats::predict.ar()}}, \code{\link[=auto.arima]{auto.arima()}},
+\code{\link[=Arima]{Arima()}}, \code{\link[stats:arima]{stats::arima()}}, \code{\link[stats:ar]{stats::ar()}}, \code{\link[=arfima]{arfima()}}.
 }
 \author{
 Rob J Hyndman

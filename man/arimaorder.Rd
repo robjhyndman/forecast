@@ -7,11 +7,9 @@
 arimaorder(object)
 }
 \arguments{
-\item{object}{An object of class \dQuote{\code{Arima}}, dQuote\code{ar} or
-\dQuote{\code{fracdiff}}. Usually the result of a call to
-\code{\link[stats]{arima}}, \code{\link{Arima}}, \code{\link{auto.arima}},
-\code{\link[stats]{ar}}, \code{\link{arfima}} or
-\code{\link[fracdiff]{fracdiff}}.}
+\item{object}{An object of class \code{"Arima"}, \code{"ar"} or
+\code{"fracdiff"}. Usually the result of a call to \code{\link[stats:arima]{stats::arima()}},
+\code{\link[=Arima]{Arima()}}, \code{\link[=auto.arima]{auto.arima()}}, \code{\link[stats:ar]{stats::ar()}}, \code{\link[=arfima]{arfima()}} or \code{\link[fracdiff:fracdiff]{fracdiff::fracdiff()}}.}
 }
 \value{
 A numerical vector giving the values \eqn{p}, \eqn{d} and \eqn{q} of
@@ -27,8 +25,7 @@ WWWusage |> auto.arima() |> arimaorder()
 
 }
 \seealso{
-\code{\link[stats]{ar}}, \code{\link{auto.arima}},
-\code{\link{Arima}}, \code{\link[stats]{arima}}, \code{\link{arfima}}.
+\code{\link[stats:ar]{stats::ar()}}, \link{auto.arima}, \code{\link[=Arima]{Arima()}}, \code{\link[stats:arima]{stats::arima()}}, \code{\link[=arfima]{arfima()}}.
 }
 \author{
 Rob J Hyndman

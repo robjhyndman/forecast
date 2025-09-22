@@ -47,10 +47,10 @@ methods.
 \details{
 This function implements the modified test proposed by Harvey, Leybourne and
 Newbold (1997). The null hypothesis is that the two methods have the same
-forecast accuracy. For \code{alternative="less"}, the alternative hypothesis
+forecast accuracy. For \code{alternative = "less"}, the alternative hypothesis
 is that method 2 is less accurate than method 1. For
-\code{alternative="greater"}, the alternative hypothesis is that method 2 is
-more accurate than method 1. For \code{alternative="two.sided"}, the
+\code{alternative = "greater"}, the alternative hypothesis is that method 2 is
+more accurate than method 1. For \code{alternative = "two.sided"}, the
 alternative hypothesis is that method 1 and method 2 have different levels
 of accuracy. The long-run variance estimator can either the
 auto-correlation estimator \code{varestimator = "acf"}, or the estimator based

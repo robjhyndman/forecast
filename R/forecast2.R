@@ -12,20 +12,20 @@
 #'
 #' \deqn{f_0(x)=\log(x)}{f(x;0)=log(x)}.
 #'
-#' @param x a numeric vector or time series of class \code{ts}.
-#' @param lambda transformation parameter. If \code{lambda = "auto"}, then
+#' @param x a numeric vector or time series of class `ts`.
+#' @param lambda transformation parameter. If `lambda = "auto"`, then
 #' the transformation parameter lambda is chosen using BoxCox.lambda (with a lower bound of -0.9)
 #' @param biasadj Use adjusted back-transformed mean for Box-Cox
 #' transformations. If transformed data is used to produce forecasts and fitted
 #' values, a regular back transformation will result in median forecasts. If
-#' biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
+#' biasadj is `TRUE`, an adjustment will be made to produce mean forecasts
 #' and fitted values.
-#' @param fvar Optional parameter required if \code{biasadj = TRUE}. Can either
-#' be the forecast variance, or a list containing the interval \code{level},
-#' and the corresponding \code{upper} and \code{lower} intervals.
+#' @param fvar Optional parameter required if `biasadj = TRUE`. Can either
+#' be the forecast variance, or a list containing the interval `level`,
+#' and the corresponding `upper` and `lower` intervals.
 #' @return a numeric vector of the same length as x.
 #' @author Rob J Hyndman & Mitchell O'Hara-Wild
-#' @seealso \code{\link{BoxCox.lambda}}
+#' @seealso [BoxCox.lambda()]
 #' @references Box, G. E. P. and Cox, D. R. (1964) An analysis of
 #' transformations. \emph{JRSS B} \bold{26} 211--246.
 #' Bickel, P. J. and Doksum K. A. (1981) An Analysis of Transformations Revisited. \emph{JASA} \bold{76} 296-311.
@@ -141,40 +141,40 @@ InvBoxCoxf <- function(x=NULL, fvar=NULL, lambda=NULL) {
 #' Returns forecasts and other information for univariate structural time
 #' series models.
 #'
-#' This function calls \code{predict.StructTS} and constructs an object of
-#' class "\code{forecast}" from the results.
+#' This function calls `predict.StructTS` and constructs an object of
+#' class `"forecast"` from the results.
 #'
-#' @param object An object of class "\code{StructTS}". Usually the result of a
-#' call to \code{\link[stats]{StructTS}}.
+#' @param object An object of class `"StructTS"`. Usually the result of a
+#' call to [stats::StructTS()].
 #' @param h Number of periods for forecasting
 #' @param level Confidence level for prediction intervals.
-#' @param fan If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This is
+#' @param fan If `TRUE`, level is set to `seq(51, 99, by = 3)`. This is
 #' suitable for fan plots.
 #' @param ... Other arguments.
 #' @inheritParams forecast.ts
 #'
-#' @return An object of class "\code{forecast}".
+#' @return An object of class `"forecast"`.
 #'
-#' The function \code{summary} is used to obtain and print a summary of the
-#' results, while the function \code{plot} produces a plot of the forecasts and
+#' The function `summary` is used to obtain and print a summary of the
+#' results, while the function `plot` produces a plot of the forecasts and
 #' prediction intervals.
 #'
-#' The generic accessor functions \code{fitted.values} and \code{residuals}
-#' extract useful features of the value returned by \code{forecast.StructTS}.
+#' The generic accessor functions `fitted.values` and `residuals`
+#' extract useful features of the value returned by `forecast.StructTS`.
 #'
-#' An object of class \code{"forecast"} is a list containing at least the
+#' An object of class `"forecast"` is a list containing at least the
 #' following elements: \item{model}{A list containing information about the
 #' fitted model} \item{method}{The name of the forecasting method as a
 #' character string} \item{mean}{Point forecasts as a time series}
 #' \item{lower}{Lower limits for prediction intervals} \item{upper}{Upper
 #' limits for prediction intervals} \item{level}{The confidence values
 #' associated with the prediction intervals} \item{x}{The original time series
-#' (either \code{object} itself or the time series used to create the model
-#' stored as \code{object}).} \item{residuals}{Residuals from the fitted model.
+#' (either `object` itself or the time series used to create the model
+#' stored as `object`).} \item{residuals}{Residuals from the fitted model.
 #' That is x minus fitted values.} \item{fitted}{Fitted values (one-step
 #' forecasts)}
 #' @author Rob J Hyndman
-#' @seealso \code{\link[stats]{StructTS}}.
+#' @seealso [stats::StructTS()].
 #' @keywords ts
 #' @examples
 #' fit <- StructTS(WWWusage, "level")
@@ -243,44 +243,43 @@ forecast.StructTS <- function(object, h=ifelse(object$coef["epsilon"] > 1e-10, 2
 #' Returns forecasts and other information for univariate Holt-Winters time
 #' series models.
 #'
-#' This function calls \code{\link[stats]{predict.HoltWinters}} and constructs
-#' an object of class "\code{forecast}" from the results.
+#' This function calls [stats::predict.HoltWinters()] and constructs
+#' an object of class `"forecast"` from the results.
 #'
-#' It is included for completeness, but the \code{\link{ets}} is recommended
-#' for use instead of \code{\link[stats]{HoltWinters}}.
+#' It is included for completeness, but the [ets()] is recommended
+#' for use instead of [stats::HoltWinters].
 #'
-#' @param object An object of class "\code{HoltWinters}". Usually the result of
-#' a call to \code{\link[stats]{HoltWinters}}.
+#' @param object An object of class `"HoltWinters"`. Usually the result of
+#' a call to [stats::HoltWinters()].
 #' @param h Number of periods for forecasting
 #' @param level Confidence level for prediction intervals.
-#' @param fan If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
+#' @param fan If `TRUE`, level is set to `seq(51, 99, by = 3)`. This
 #' is suitable for fan plots.
 #' @param ... Other arguments.
 #' @inheritParams forecast.ts
 #'
-#' @return An object of class "\code{forecast}".
+#' @return An object of class `"forecast"`.
 #'
-#' The function \code{summary} is used to obtain and print a summary of the
-#' results, while the function \code{plot} produces a plot of the forecasts and
+#' The function `summary` is used to obtain and print a summary of the
+#' results, while the function `plot` produces a plot of the forecasts and
 #' prediction intervals.
 #'
-#' The generic accessor functions \code{fitted.values} and \code{residuals}
+#' The generic accessor functions `fitted.values` and `residuals`
 #' extract useful features of the value returned by
-#' \code{forecast.HoltWinters}.
+#' `forecast.HoltWinters`.
 #'
-#' An object of class \code{"forecast"} is a list containing at least the
+#' An object of class `"forecast"` is a list containing at least the
 #' following elements: \item{model}{A list containing information about the
 #' fitted model} \item{method}{The name of the forecasting method as a
 #' character string} \item{mean}{Point forecasts as a time series}
 #' \item{lower}{Lower limits for prediction intervals} \item{upper}{Upper
 #' limits for prediction intervals} \item{level}{The confidence values
 #' associated with the prediction intervals} \item{x}{The original time series
-#' (either \code{object} itself or the time series used to create the model
-#' stored as \code{object}).} \item{residuals}{Residuals from the fitted
+#' (either `object` itself or the time series used to create the model
+#' stored as `object`).} \item{residuals}{Residuals from the fitted
 #' model.} \item{fitted}{Fitted values (one-step forecasts)}
 #' @author Rob J Hyndman
-#' @seealso \code{\link[stats]{predict.HoltWinters}},
-#' \code{\link[stats]{HoltWinters}}.
+#' @seealso [stats::predict.HoltWinters], [stats::HoltWinters()].
 #' @keywords ts
 #' @examples
 #' fit <- HoltWinters(WWWusage, gamma = FALSE)
@@ -362,34 +361,34 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x) > 1, 2 * f
 #' simple exponential smoothing (SES) on the non-zero elements of the time
 #' series and a separate application of SES to the times between non-zero
 #' elements of the time series. The smoothing parameters of the two
-#' applications of SES are assumed to be equal and are denoted by \code{alpha}.
+#' applications of SES are assumed to be equal and are denoted by `alpha`.
 #'
 #' Note that prediction intervals are not computed as Croston's method has no
 #' underlying stochastic model.
 #'
-#' @param y a numeric vector or time series of class \code{ts}
+#' @param y a numeric vector or time series of class `ts`
 #' @param h Number of periods for forecasting.
 #' @param alpha Value of alpha. Default value is 0.1.
 #' @param x Deprecated. Included for backwards compatibility.
-#' @return An object of class \code{"forecast"} is a list containing at least
+#' @return An object of class `"forecast"` is a list containing at least
 #' the following elements: \item{model}{A list containing information about the
 #' fitted model. The first element gives the model used for non-zero demands.
 #' The second element gives the model used for times between non-zero demands.
-#' Both elements are of class \code{forecast}.} \item{method}{The name of the
+#' Both elements are of class `forecast`.} \item{method}{The name of the
 #' forecasting method as a character string} \item{mean}{Point forecasts as a
-#' time series} \item{x}{The original time series (either \code{object} itself
-#' or the time series used to create the model stored as \code{object}).}
+#' time series} \item{x}{The original time series (either `object` itself
+#' or the time series used to create the model stored as `object`).}
 #' \item{residuals}{Residuals from the fitted model. That is y minus fitted
 #' values.} \item{fitted}{Fitted values (one-step forecasts)}
 #'
-#' The function \code{summary} is used to obtain and print a summary of the
-#' results, while the function \code{plot} produces a plot of the forecasts.
+#' The function `summary` is used to obtain and print a summary of the
+#' results, while the function `plot` produces a plot of the forecasts.
 #'
-#' The generic accessor functions \code{fitted.values} and \code{residuals}
-#' extract useful features of the value returned by \code{croston} and
+#' The generic accessor functions `fitted.values` and `residuals`
+#' extract useful features of the value returned by `croston` and
 #' associated functions.
 #' @author Rob J Hyndman
-#' @seealso \code{\link{ses}}.
+#' @seealso [ses()].
 #' @references Croston, J. (1972) "Forecasting and stock control for
 #' intermittent demands", \emph{Operational Research Quarterly}, \bold{23}(3),
 #' 289-303.

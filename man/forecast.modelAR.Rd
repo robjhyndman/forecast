@@ -19,8 +19,8 @@
 )
 }
 \arguments{
-\item{object}{An object of class "\code{modelAR}" resulting from a call to
-\code{\link{modelAR}}.}
+\item{object}{An object of class \code{"modelAR"} resulting from a call to
+\code{\link[=modelAR]{modelAR()}}.}
 
 \item{h}{Number of periods for forecasting. If \code{xreg} is used, \code{h}
 is ignored and the number of forecast periods is set to the number of rows
@@ -53,10 +53,10 @@ intervals.}
 a matrix with \code{h} rows and \code{npaths} columns (vectors are coerced
 into a matrix). If present, \code{bootstrap} is ignored.}
 
-\item{...}{Additional arguments passed to \code{\link{simulate.nnetar}}}
+\item{...}{Additional arguments passed to \code{\link[=simulate.nnetar]{simulate.nnetar()}}}
 }
 \value{
-An object of class "\code{forecast}".
+An object of class \code{"forecast"}.
 
 The function \code{summary} is used to obtain and print a summary of the
 results, while the function \code{plot} produces a plot of the forecasts and
@@ -65,7 +65,7 @@ prediction intervals.
 The generic accessor functions \code{fitted.values} and \code{residuals}
 extract useful features of the value returned by \code{forecast.nnetar}.
 
-An object of class "\code{forecast}" is a list containing at least the
+An object of class \code{"forecast"} is a list containing at least the
 following elements:
 \item{model}{A list containing information about the fitted model}
 \item{method}{The name of the forecasting method as a character string}
@@ -91,7 +91,7 @@ can be arbitrarily small; if used for prediction interval calculations, they
 could lead to misleadingly small values.
 }
 \seealso{
-\code{\link{nnetar}}.
+\code{\link[=nnetar]{nnetar()}}.
 }
 \author{
 Rob J Hyndman and Gabriel Caceres

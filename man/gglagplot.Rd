@@ -52,7 +52,7 @@ discrete?}
 \item{seasonal}{Should the line colour be based on seasonal characteristics
 (TRUE), or sequential (FALSE).}
 
-\item{\dots}{Not used (for consistency with lag.plot)}
+\item{...}{Not used (for consistency with lag.plot)}
 }
 \value{
 None.
@@ -61,11 +61,11 @@ None.
 Plots a lag plot using ggplot.
 }
 \details{
-\dQuote{gglagplot} will plot time series against lagged versions of
+"gglagplot" will plot time series against lagged versions of
 themselves. Helps visualising 'auto-dependence' even when auto-correlations
 vanish.
 
-\dQuote{gglagchull} will layer convex hulls of the lags, layered on a single
+"gglagchull" will layer convex hulls of the lags, layered on a single
 plot. This helps visualise the change in 'auto-dependence' as lags increase.
 }
 \examples{
@@ -81,7 +81,7 @@ gglagchull(woolyrnq)
 
 }
 \seealso{
-\code{\link[stats]{lag.plot}}
+\code{\link[stats:lag.plot]{stats::lag.plot()}}
 }
 \author{
 Mitchell O'Hara-Wild

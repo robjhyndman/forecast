@@ -9,54 +9,51 @@
 #' user-defined model
 #'
 #' This is an experimental function and only recommended for advanced users.
-#' The selected model is fitted with lagged values of \code{y} as
-#' inputs. The inputs are for
-#' lags 1 to \code{p}, and lags \code{m} to \code{mP} where
-#' \code{m=frequency(y)}. If \code{xreg} is provided, its columns are also
-#' used as inputs. If there are missing values in \code{y} or
-#' \code{xreg}, the corresponding rows (and any others which depend on them as
-#' lags) are omitted from the fit. The model is trained for one-step
-#' forecasting. Multi-step forecasts are computed recursively.
+#' The selected model is fitted with lagged values of `y as inputs. The inputs
+#' are for lags 1 to `p`, and lags `m` to `mP` where `m=frequency(y)`. If
+#' `xreg` is provided, its columns are also used as inputs. If there are
+#' missing values in `y` or `xreg`, the corresponding rows (and any others
+#' which depend on them as lags) are omitted from the fit. The model is trained
+#' for one-step forecasting. Multi-step forecasts are computed recursively.
 #'
 #' @aliases print.modelAR
 #'
-#' @param y A numeric vector or time series of class \code{ts}.
+#' @param y A numeric vector or time series of class `ts`.
 #' @param p Embedding dimension for non-seasonal time series. Number of
 #' non-seasonal lags used as inputs. For non-seasonal time series, the default
 #' is the optimal number of lags (according to the AIC) for a linear AR(p)
 #' model. For seasonal time series, the same method is used but applied to
 #' seasonally adjusted data (from an stl decomposition).
 #' @param P Number of seasonal lags used as inputs.
-#' @param FUN Function used for model fitting. Must accept argument \code{x}
-#' and \code{y} for the predictors and response, respectively (\code{formula}
-#' object not currently supported).
-#' @param predict.FUN Prediction function used to apply \code{FUN} to new data.
-#' Must accept an object of class \code{FUN} as its first argument, and a
+#' @param FUN Function used for model fitting. Must accept argument `x` and `y`
+#' for the predictors and response, respectively (`formula` object not
+#' currently supported).
+#' @param predict.FUN Prediction function used to apply `FUN` to new data.
+#' Must accept an object of class `FUN` as its first argument, and a
 #' data frame or matrix of new data for its second argument. Additionally,
 #' it should return fitted values when new data is omitted.
 #' @param xreg Optionally, a vector or matrix of external regressors, which
-#' must have the same number of rows as \code{y}. Must be numeric.
-#' @param model Output from a previous call to \code{nnetar}. If model is
-#' passed, this same model is fitted to \code{y} without re-estimating any
+#' must have the same number of rows as `y`. Must be numeric.
+#' @param model Output from a previous call to `nnetar`. If model is
+#' passed, this same model is fitted to `y` without re-estimating any
 #' parameters.
 #' @param subset Optional vector specifying a subset of observations to be used
 #' in the fit. Can be an integer index vector or a logical vector the same
-#' length as \code{y}. All observations are used by default.
-#' @param scale.inputs If \code{TRUE}, inputs are scaled by subtracting the column
-#' means and dividing by their respective standard deviations. If \code{lambda}
-#' is not \code{NULL}, scaling is applied after Box-Cox transformation.
+#' length as `y`. All observations are used by default.
+#' @param scale.inputs If `TRUE`, inputs are scaled by subtracting the column
+#' means and dividing by their respective standard deviations. If `lambda`
+#' is not `NULL`, scaling is applied after Box-Cox transformation.
 #' @param x Deprecated. Included for backwards compatibility.
-#' @param \dots Other arguments passed to \code{FUN} for
-#' \code{modelAR}.
+#' @param ... Other arguments passed to `FUN` for `modelAR`.
 #' @inheritParams forecast.ts
 #'
-#' @return Returns an object of class "\code{modelAR}".
+#' @return Returns an object of class `"modelAR"`.
 #'
-#' The function \code{summary} is used to obtain and print a summary of the
+#' The function `summary` is used to obtain and print a summary of the
 #' results.
 #'
-#' The generic accessor functions \code{fitted.values} and \code{residuals}
-#' extract useful features of the value returned by \code{nnetar}.
+#' The generic accessor functions `fitted.values` and `residuals`
+#' extract useful features of the value returned by `nnetar`.
 #'
 #' \item{model}{A list containing information about the fitted model}
 #' \item{method}{The name of the forecasting method as a character string}
@@ -318,39 +315,39 @@ modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=N
 #' can be arbitrarily small; if used for prediction interval calculations, they
 #' could lead to misleadingly small values.
 #'
-#' @param object An object of class "\code{modelAR}" resulting from a call to
-#' \code{\link{modelAR}}.
-#' @param h Number of periods for forecasting. If \code{xreg} is used, \code{h}
+#' @param object An object of class `"modelAR"` resulting from a call to
+#' [modelAR()].
+#' @param h Number of periods for forecasting. If `xreg` is used, `h`
 #' is ignored and the number of forecast periods is set to the number of rows
-#' of \code{xreg}.
-#' @param PI If \code{TRUE}, prediction intervals are produced, otherwise only point
-#' forecasts are calculated. If \code{PI} is \code{FALSE}, then \code{level},
-#' \code{fan}, \code{bootstrap} and \code{npaths} are all ignored.
+#' of `xreg`.
+#' @param PI If `TRUE`, prediction intervals are produced, otherwise only point
+#' forecasts are calculated. If `PI` is `FALSE`, then `level`,
+#' `fan`, `bootstrap` and `npaths` are all ignored.
 #' @param level Confidence level for prediction intervals.
-#' @param fan If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
+#' @param fan If `TRUE`, level is set to `seq(51, 99, by = 3)`. This
 #' is suitable for fan plots.
 #' @param xreg Future values of external regressor variables.
-#' @param bootstrap If \code{TRUE}, then prediction intervals computed using
+#' @param bootstrap If `TRUE`, then prediction intervals computed using
 #' simulations with resampled residuals rather than normally distributed
-#' errors. Ignored if \code{innov} is not \code{NULL}.
+#' errors. Ignored if `innov` is not `NULL`.
 #' @param npaths Number of sample paths used in computing simulated prediction
 #' intervals.
 #' @param innov Values to use as innovations for prediction intervals. Must be
-#' a matrix with \code{h} rows and \code{npaths} columns (vectors are coerced
-#' into a matrix). If present, \code{bootstrap} is ignored.
-#' @param ... Additional arguments passed to \code{\link{simulate.nnetar}}
+#' a matrix with `h` rows and `npaths` columns (vectors are coerced
+#' into a matrix). If present, `bootstrap` is ignored.
+#' @param ... Additional arguments passed to [simulate.nnetar()]
 #' @inheritParams forecast.ts
 #'
-#' @return An object of class "\code{forecast}".
+#' @return An object of class `"forecast"`.
 #'
-#' The function \code{summary} is used to obtain and print a summary of the
-#' results, while the function \code{plot} produces a plot of the forecasts and
+#' The function `summary` is used to obtain and print a summary of the
+#' results, while the function `plot` produces a plot of the forecasts and
 #' prediction intervals.
 #'
-#' The generic accessor functions \code{fitted.values} and \code{residuals}
-#' extract useful features of the value returned by \code{forecast.nnetar}.
+#' The generic accessor functions `fitted.values` and `residuals`
+#' extract useful features of the value returned by `forecast.nnetar`.
 #'
-#' An object of class "\code{forecast}" is a list containing at least the
+#' An object of class `"forecast"` is a list containing at least the
 #' following elements:
 #'   \item{model}{A list containing information about the fitted model}
 #'   \item{method}{The name of the forecasting method as a character string}
@@ -358,15 +355,15 @@ modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=N
 #'   \item{lower}{Lower limits for prediction intervals}
 #'   \item{upper}{Upper limits for prediction intervals}
 #'   \item{level}{The confidence values associated with the prediction intervals}
-#'   \item{x}{The original time series (either \code{object} itself or the time series
-#'            used to create the model stored as \code{object}).}
+#'   \item{x}{The original time series (either `object` itself or the time series
+#'            used to create the model stored as `object`).}
 #'   \item{xreg}{The external regressors used in fitting (if given).}
 #'   \item{residuals}{Residuals from the fitted model. That is x minus fitted values.}
 #'   \item{fitted}{Fitted values (one-step forecasts)}
 #'   \item{...}{Other arguments}
 #'
 #' @author Rob J Hyndman and Gabriel Caceres
-#' @seealso \code{\link{nnetar}}.
+#' @seealso [nnetar()].
 #' @keywords ts
 #'
 #' @export

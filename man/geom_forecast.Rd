@@ -132,7 +132,7 @@ autoplot(lungDeaths) + geom_forecast(forecast(mdeaths), series = "mdeaths")
 
 }
 \seealso{
-\code{\link[generics]{forecast}}, \code{\link[ggplot2]{ggproto}}
+\code{\link[generics:forecast]{generics::forecast()}}, \code{\link[ggplot2:ggproto]{ggplot2::ggproto()}}
 }
 \author{
 Mitchell O'Hara-Wild

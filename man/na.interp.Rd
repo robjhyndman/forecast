@@ -30,7 +30,7 @@ seasonally adjusted data, and the seasonal component is added back.
 }
 \details{
 A more general and flexible approach is available using \code{na.approx} in
-the \code{zoo} package.
+the \CRANpkg{zoo} package.
 }
 \examples{
 
@@ -39,7 +39,7 @@ plot(na.interp(gold))
 
 }
 \seealso{
-\code{\link[forecast]{tsoutliers}}
+\code{\link[=tsoutliers]{tsoutliers()}}
 }
 \author{
 Rob J Hyndman

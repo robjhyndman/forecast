@@ -55,8 +55,7 @@
 #' means and dividing by their respective standard deviations. If \code{lambda}
 #' is not \code{NULL}, scaling is applied after Box-Cox transformation.
 #' @param x Deprecated. Included for backwards compatibility.
-#' @param \dots Other arguments passed to \code{\link[nnet]{nnet}} for
-#' \code{nnetar}.
+#' @param ... Other arguments passed to [nnet::nnet()] for `nnetar`.
 #' @inheritParams forecast.ts
 #'
 #' @return Returns an object of class "\code{nnetar}".

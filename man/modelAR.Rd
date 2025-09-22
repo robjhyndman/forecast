@@ -31,9 +31,9 @@ seasonally adjusted data (from an stl decomposition).}
 
 \item{P}{Number of seasonal lags used as inputs.}
 
-\item{FUN}{Function used for model fitting. Must accept argument \code{x}
-and \code{y} for the predictors and response, respectively (\code{formula}
-object not currently supported).}
+\item{FUN}{Function used for model fitting. Must accept argument \code{x} and \code{y}
+for the predictors and response, respectively (\code{formula} object not
+currently supported).}
 
 \item{predict.FUN}{Prediction function used to apply \code{FUN} to new data.
 Must accept an object of class \code{FUN} as its first argument, and a
@@ -62,11 +62,10 @@ is not \code{NULL}, scaling is applied after Box-Cox transformation.}
 
 \item{x}{Deprecated. Included for backwards compatibility.}
 
-\item{\dots}{Other arguments passed to \code{FUN} for
-\code{modelAR}.}
+\item{...}{Other arguments passed to \code{FUN} for \code{modelAR}.}
 }
 \value{
-Returns an object of class "\code{modelAR}".
+Returns an object of class \code{"modelAR"}.
 
 The function \code{summary} is used to obtain and print a summary of the
 results.
@@ -88,14 +87,9 @@ user-defined model
 }
 \details{
 This is an experimental function and only recommended for advanced users.
-The selected model is fitted with lagged values of \code{y} as
-inputs. The inputs are for
-lags 1 to \code{p}, and lags \code{m} to \code{mP} where
-\code{m=frequency(y)}. If \code{xreg} is provided, its columns are also
-used as inputs. If there are missing values in \code{y} or
-\code{xreg}, the corresponding rows (and any others which depend on them as
-lags) are omitted from the fit. The model is trained for one-step
-forecasting. Multi-step forecasts are computed recursively.
+The selected model is fitted with lagged values of \verb{y as inputs. The inputs are for lags 1 to }p\verb{, and lags }m\code{to}mP\code{where}m=frequency(y)\verb{. If }xreg\verb{is provided, its columns are also used as inputs. If there are missing values in}y\code{or}xreg`, the corresponding rows (and any others
+which depend on them as lags) are omitted from the fit. The model is trained
+for one-step forecasting. Multi-step forecasts are computed recursively.
 }
 \author{
 Rob J Hyndman and Gabriel Caceres

@@ -65,7 +65,7 @@ Croston's method for intermittent demand forecasting". \emph{Journal of
 Forecasting}, \bold{24}, 389-402.
 }
 \seealso{
-\code{\link{ses}}.
+\code{\link[=ses]{ses()}}.
 }
 \author{
 Rob J Hyndman

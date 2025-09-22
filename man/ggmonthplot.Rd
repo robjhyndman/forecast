@@ -18,7 +18,7 @@ ggsubseriesplot(x, labels = NULL, times = time(x), phase = cycle(x), ...)
 
 \item{phase}{A vector of seasonal components}
 
-\item{\dots}{Not used (for consistency with monthplot)}
+\item{...}{Not used (for consistency with monthplot)}
 }
 \value{
 Returns an object of class \code{ggplot}.
@@ -40,7 +40,7 @@ ggsubseriesplot(woolyrnq)
 
 }
 \seealso{
-\code{\link[stats]{monthplot}}
+\code{\link[stats:monthplot]{stats::monthplot()}}
 }
 \author{
 Mitchell O'Hara-Wild

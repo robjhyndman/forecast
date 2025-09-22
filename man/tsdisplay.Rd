@@ -46,15 +46,15 @@ superimposed on the time plot.}
 value is selected by default if the argument is missing.}
 
 \item{na.action}{function to handle missing values in acf, pacf and spectrum
-calculations. The default is \code{\link[stats]{na.contiguous}}. Useful
-alternatives are \code{\link[stats]{na.pass}} and \code{\link{na.interp}}.}
+calculations. The default is \code{\link[stats:na.contiguous]{stats::na.contiguous()}}. Useful
+alternatives are \code{\link[stats:na.fail]{stats::na.pass()}} and \code{\link[=na.interp]{na.interp()}}.}
 
 \item{theme}{Adds a ggplot element to each plot, typically a theme.}
 
-\item{\dots}{additional arguments to \code{\link[stats]{acf}}.}
+\item{...}{additional arguments to \code{\link[stats:acf]{stats::acf()}}.}
 
 \item{ci.type}{type of confidence limits for ACF that is passed to
-\code{\link[stats]{acf}}. Should the confidence limits assume a white noise
+\code{\link[stats:acf]{stats::acf()}}. Should the confidence limits assume a white noise
 input or for lag \eqn{k} an MA(\eqn{k-1}) input?}
 
 \item{main}{Main title.}
@@ -91,8 +91,7 @@ and practice}, 2nd edition, OTexts: Melbourne, Australia.
 \url{https://otexts.com/fpp2/}
 }
 \seealso{
-\code{\link[stats]{plot.ts}}, \code{\link{Acf}},
-\code{\link[stats]{spec.ar}}
+\code{\link[stats:plot.ts]{stats::plot.ts()}}, \code{\link[=Acf]{Acf()}}, \code{\link[stats:spec.ar]{stats::spec.ar()}}
 }
 \author{
 Rob J Hyndman

@@ -192,12 +192,11 @@ rwf <- function(y, h=10, drift=FALSE, level=c(80, 95), fan=FALSE, lambda=NULL, b
 
 #' Naive and Random Walk Forecasts
 #'
-#' \code{rwf()} returns forecasts and prediction intervals for a random walk
-#' with drift model applied to \code{y}. This is equivalent to an ARIMA(0,1,0)
-#' model with an optional drift coefficient. \code{naive()} is simply a wrapper
-#' to \code{rwf()} for simplicity. \code{snaive()} returns forecasts and
-#' prediction intervals from an ARIMA(0,0,0)(0,1,0)m model where m is the
-#' seasonal period.
+#' `rwf()` returns forecasts and prediction intervals for a random walk with
+#' drift model applied to `y`. This is equivalent to an ARIMA(0,1,0) model with
+#' an optional drift coefficient. `naive()` is simply a wrapper to `rwf()` for
+#' simplicity. `snaive()` returns forecasts and prediction intervals from an
+#' ARIMA(0,0,0)(0,1,0)m model where m is the seasonal period.
 #'
 #' The random walk with drift model is
 #'
@@ -208,10 +207,10 @@ rwf <- function(y, h=10, drift=FALSE, level=c(80, 95), fan=FALSE, lambda=NULL, b
 #'
 #' \deqn{Y_n(h)=ch+Y_n}{Y[n+h]=ch+Y[n]}
 #'
-#' If there is no drift (as in
-#' \code{naive}), the drift parameter c=0. Forecast standard errors allow for
-#' uncertainty in estimating the drift parameter (unlike the corresponding
-#' forecasts obtained by fitting an ARIMA model directly).
+#' If there is no drift (as in `naive`), the drift parameter c=0. Forecast
+#' standard errors allow for uncertainty in estimating the drift parameter
+#' (unlike the corresponding forecasts obtained by fitting an ARIMA model
+#' directly).
 #'
 #' The seasonal naive model is
 #'
@@ -221,38 +220,37 @@ rwf <- function(y, h=10, drift=FALSE, level=c(80, 95), fan=FALSE, lambda=NULL, b
 #'
 #' @aliases print.naive
 #'
-#' @param y A numeric vector or time series of class \code{ts}.
+#' @param y A numeric vector or time series of class `ts`.
 #' @param h Number of periods for forecasting.
-#' @param drift Logical flag. If \code{TRUE}, fits a random walk with drift model.
+#' @param drift Logical flag. If `TRUE`, fits a random walk with drift model.
 #' @param level Confidence levels for prediction intervals.
-#' @param fan If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
+#' @param fan If `TRUE`, level is set to `seq(51, 99, by = 3)`. This
 #' is suitable for fan plots.
 #' @param x Deprecated. Included for backwards compatibility.
 #' @inheritParams forecast.ts
 #'
-#' @return An object of class "\code{forecast}".
+#' @return An object of class `"forecast"`.
 #'
-#' The function \code{summary} is used to obtain and print a summary of the
-#' results, while the function \code{plot} produces a plot of the forecasts and
-#' prediction intervals.
+#' The function `summary` is used to obtain and print a summary of the results,
+#' while the function `plot` produces a plot of the forecasts and prediction
+#' intervals.
 #'
-#' The generic accessor functions \code{fitted.values} and \code{residuals}
-#' extract useful features of the value returned by \code{naive} or
-#' \code{snaive}.
+#' The generic accessor functions `fitted.values` and `residuals` extract
+#' useful features of the value returned by `naive` or `snaive`.
 #'
-#' An object of class \code{"forecast"} is a list containing at least the
+#' An object of class `"forecast"` is a list containing at least the
 #' following elements: \item{model}{A list containing information about the
 #' fitted model} \item{method}{The name of the forecasting method as a
 #' character string} \item{mean}{Point forecasts as a time series}
 #' \item{lower}{Lower limits for prediction intervals} \item{upper}{Upper
 #' limits for prediction intervals} \item{level}{The confidence values
 #' associated with the prediction intervals} \item{x}{The original time series
-#' (either \code{object} itself or the time series used to create the model
-#' stored as \code{object}).} \item{residuals}{Residuals from the fitted model.
+#' (either `object` itself or the time series used to create the model
+#' stored as `object`).} \item{residuals}{Residuals from the fitted model.
 #' That is x minus fitted values.} \item{fitted}{Fitted values (one-step
 #' forecasts)}
 #' @author Rob J Hyndman
-#' @seealso \code{\link{Arima}}
+#' @seealso [Arima()]
 #' @keywords ts
 #' @examples
 #'

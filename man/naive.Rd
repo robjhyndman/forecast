@@ -73,15 +73,14 @@ modelling function.}
 \item{x}{Deprecated. Included for backwards compatibility.}
 }
 \value{
-An object of class "\code{forecast}".
+An object of class \code{"forecast"}.
 
-The function \code{summary} is used to obtain and print a summary of the
-results, while the function \code{plot} produces a plot of the forecasts and
-prediction intervals.
+The function \code{summary} is used to obtain and print a summary of the results,
+while the function \code{plot} produces a plot of the forecasts and prediction
+intervals.
 
-The generic accessor functions \code{fitted.values} and \code{residuals}
-extract useful features of the value returned by \code{naive} or
-\code{snaive}.
+The generic accessor functions \code{fitted.values} and \code{residuals} extract
+useful features of the value returned by \code{naive} or \code{snaive}.
 
 An object of class \code{"forecast"} is a list containing at least the
 following elements: \item{model}{A list containing information about the
@@ -96,12 +95,11 @@ That is x minus fitted values.} \item{fitted}{Fitted values (one-step
 forecasts)}
 }
 \description{
-\code{rwf()} returns forecasts and prediction intervals for a random walk
-with drift model applied to \code{y}. This is equivalent to an ARIMA(0,1,0)
-model with an optional drift coefficient. \code{naive()} is simply a wrapper
-to \code{rwf()} for simplicity. \code{snaive()} returns forecasts and
-prediction intervals from an ARIMA(0,0,0)(0,1,0)m model where m is the
-seasonal period.
+\code{rwf()} returns forecasts and prediction intervals for a random walk with
+drift model applied to \code{y}. This is equivalent to an ARIMA(0,1,0) model with
+an optional drift coefficient. \code{naive()} is simply a wrapper to \code{rwf()} for
+simplicity. \code{snaive()} returns forecasts and prediction intervals from an
+ARIMA(0,0,0)(0,1,0)m model where m is the seasonal period.
 }
 \details{
 The random walk with drift model is
@@ -113,10 +111,10 @@ given by
 
 \deqn{Y_n(h)=ch+Y_n}{Y[n+h]=ch+Y[n]}
 
-If there is no drift (as in
-\code{naive}), the drift parameter c=0. Forecast standard errors allow for
-uncertainty in estimating the drift parameter (unlike the corresponding
-forecasts obtained by fitting an ARIMA model directly).
+If there is no drift (as in \code{naive}), the drift parameter c=0. Forecast
+standard errors allow for uncertainty in estimating the drift parameter
+(unlike the corresponding forecasts obtained by fitting an ARIMA model
+directly).
 
 The seasonal naive model is
 
@@ -137,7 +135,7 @@ plot(snaive(wineind))
 
 }
 \seealso{
-\code{\link{Arima}}
+\code{\link[=Arima]{Arima()}}
 }
 \author{
 Rob J Hyndman

@@ -20,11 +20,11 @@ as ts().}
 the underlying ts object. The default value is \code{max(seasonal.periods)}.}
 
 \item{...}{Arguments to be passed to the underlying call to \code{ts()}. For
-example \code{start=c(1987,5)}.}
+example \code{start=c(1987, 5)}.}
 }
 \value{
 An object of class \code{c("msts", "ts")}. If there is only one
-seasonal period (i.e., \code{length(seasonal.periods)==1}), then the object
+seasonal period (i.e., \code{length(seasonal.periods) == 1}), then the object
 is of class \code{"ts"}.
 }
 \description{

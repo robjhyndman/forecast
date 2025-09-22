@@ -19,11 +19,9 @@
 \method{autoplot}{mstl}(object, ...)
 }
 \arguments{
-\item{object}{Object of class \dQuote{\code{seas}}, \dQuote{\code{stl}}, or
-\dQuote{\code{decomposed.ts}}.}
+\item{object}{Object of class \code{"seas"}, \code{"stl"}, or \code{"decomposed.ts"}.}
 
-\item{labels}{Labels to replace \dQuote{seasonal}, \dQuote{trend}, and
-\dQuote{remainder}.}
+\item{labels}{Labels to replace "seasonal", "trend", and "remainder".}
 
 \item{range.bars}{Logical indicating if each plot should have a bar at its
 right side representing relative size. If \code{NULL}, automatic selection
@@ -36,9 +34,9 @@ Returns an object of class \code{ggplot}.
 }
 \description{
 Produces a ggplot object of seasonally decomposed time series for objects of
-class \dQuote{\code{stl}} (created with \code{\link[stats]{stl}}), class
-\dQuote{\code{seas}} (created with \code{\link[seasonal]{seas}}), or class
-\dQuote{\code{decomposed.ts}} (created with \code{\link[stats]{decompose}}).
+class \code{"stl"} (created with \code{\link[stats:stl]{stats::stl()}}, class \code{"seas"} (created with
+\code{\link[seasonal:seas]{seasonal::seas()}}), or class \code{"decomposed.ts"} (created with
+\code{\link[stats:decompose]{stats::decompose()}}).
 }
 \examples{
 
@@ -56,9 +54,8 @@ seas(USAccDeaths) |> autoplot()
 
 }
 \seealso{
-\code{\link[seasonal]{seas}}, \code{\link[stats]{stl}},
-\code{\link[stats]{decompose}}, \code{\link[stats]{StructTS}},
-\code{\link[stats]{plot.stl}}.
+\code{\link[seasonal:seas]{seasonal::seas()}}, \code{\link[stats:stl]{stats::stl()}}, \code{\link[stats:decompose]{stats::decompose()}},
+\code{\link[stats:StructTS]{stats::StructTS()}}, \code{\link[stats:stlmethods]{stats::plot.stl()}}.
 }
 \author{
 Mitchell O'Hara-Wild

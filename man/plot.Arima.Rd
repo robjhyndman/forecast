@@ -34,7 +34,7 @@ set is plotted.}
 
 \item{ylab}{Y-axis label.}
 
-\item{...}{Other plotting parameters passed to \code{\link[graphics]{par}}.}
+\item{...}{Other plotting parameters passed to \code{\link[graphics:par]{graphics::par()}}.}
 
 \item{object}{Object of class \dQuote{Arima} or \dQuote{ar}. Used for ggplot
 graphics (S3 method consistency).}
@@ -65,7 +65,7 @@ plot(ar.ols(gold[1:61]))
 autoplot(ar.ols(gold[1:61]))
 }
 \seealso{
-\code{\link{Arima}}, \code{\link[stats]{ar}}
+\code{\link[=Arima]{Arima()}}, \code{\link[stats:ar]{stats::ar()}}
 }
 \author{
 Rob J Hyndman & Mitchell O'Hara-Wild

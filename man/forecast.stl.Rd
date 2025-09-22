@@ -203,8 +203,7 @@ plot(forecast(decomp))
 plot(stlf(AirPassengers, lambda = 0))
 }
 \seealso{
-\code{\link[stats]{stl}}, \code{\link{forecast.ets}},
-\code{\link{forecast.Arima}}.
+\code{\link[stats:stl]{stats::stl()}}, \code{\link[=forecast.ets]{forecast.ets()}}, \code{\link[=forecast.Arima]{forecast.Arima()}}.
 }
 \author{
 Rob J Hyndman

@@ -27,7 +27,7 @@ CV(fit2)
 
 }
 \seealso{
-\code{\link[stats]{AIC}}
+\code{\link[stats:AIC]{stats::AIC()}}
 }
 \author{
 Rob J Hyndman

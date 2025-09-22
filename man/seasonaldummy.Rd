@@ -19,8 +19,8 @@ Numerical matrix.
 }
 \description{
 \code{seasonaldummy} returns a matrix of dummy variables suitable for use in
-\code{\link{Arima}}, \code{\link{auto.arima}} or \code{\link{tslm}}. The
-last season is omitted and used as the control.
+\code{\link[=Arima]{Arima()}}, \code{\link[=auto.arima]{auto.arima()}} or \code{\link[=tslm]{tslm()}}. The last season is omitted and used
+as the control.
 }
 \details{
 \code{seasonaldummyf} is deprecated, instead use the \code{h} argument in
@@ -52,7 +52,7 @@ plot(ldeaths.fcast)
 
 }
 \seealso{
-\code{\link{fourier}}
+\code{\link[=fourier]{fourier()}}
 }
 \author{
 Rob J Hyndman

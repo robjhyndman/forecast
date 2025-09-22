@@ -62,8 +62,7 @@ is not \code{NULL}, scaling is applied after Box-Cox transformation.}
 
 \item{x}{Deprecated. Included for backwards compatibility.}
 
-\item{\dots}{Other arguments passed to \code{\link[nnet]{nnet}} for
-\code{nnetar}.}
+\item{...}{Other arguments passed to \code{\link[nnet:nnet]{nnet::nnet()}} for \code{nnetar}.}
 }
 \value{
 Returns an object of class "\code{nnetar}".

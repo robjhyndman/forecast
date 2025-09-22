@@ -16,8 +16,8 @@ not found in data, the variables are taken from environment(formula),
 typically the environment from which lm is called.}
 
 \item{subset}{An optional subset containing rows of data to keep. For best
-results, pass a logical vector of rows to keep. Also supports
-\code{\link[base]{subset}()} functions.}
+results, pass a logical vector of rows to keep. Also supports \code{\link[=subset]{subset()}}
+functions.}
 
 \item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
@@ -40,7 +40,7 @@ Returns an object of class "lm".
 seasonality components.
 }
 \details{
-\code{tslm} is largely a wrapper for \code{\link[stats]{lm}()} except that
+\code{tslm} is largely a wrapper for \code{\link[stats:lm]{stats::lm()}} except that
 it allows variables "trend" and "season" which are created on the fly from
 the time series characteristics of the data. The variable "trend" is a
 simple time trend and "season" is a factor indicating the season (e.g., the
@@ -54,7 +54,7 @@ plot(forecast(fit, h = 20))
 
 }
 \seealso{
-\code{\link{forecast.lm}}, \code{\link[stats]{lm}}.
+\code{\link[=forecast.lm]{forecast.lm()}}, \code{\link[stats:lm]{stats::lm()}}.
 }
 \author{
 Mitchell O'Hara-Wild and Rob J Hyndman

@@ -15,12 +15,12 @@ baggedETS(y, bootstrapped_series = bld.mbb.bootstrap(y, 100), ...)
 
 \item{bootstrapped_series}{bootstrapped versions of y.}
 
-\item{fn}{the forecast function to use. Default is \code{\link{ets}}.}
+\item{fn}{the forecast function to use. Default is \code{\link[=ets]{ets()}}.}
 
-\item{\dots}{Other arguments passed to the forecast function.}
+\item{...}{Other arguments passed to the forecast function.}
 }
 \value{
-Returns an object of class "\code{baggedModel}".
+Returns an object of class \code{"baggedModel"}.
 
 The function \code{print} is used to obtain and print a summary of the
 results.
@@ -39,12 +39,12 @@ The bagged model forecasting method.
 }
 \details{
 This function implements the bagged model forecasting method described in
-Bergmeir et al. By default, the \code{\link{ets}} function is applied to all
-bootstrapped series. Base models other than \code{\link{ets}} can be given by the
+Bergmeir et al. By default, the \code{\link[=ets]{ets()}} function is applied to all
+bootstrapped series. Base models other than \code{\link[=ets]{ets()}} can be given by the
 parameter \code{fn}. Using the default parameters, the function
-\code{\link{bld.mbb.bootstrap}} is used to calculate the bootstrapped series
+\code{\link[=bld.mbb.bootstrap]{bld.mbb.bootstrap()}} is used to calculate the bootstrapped series
 with the Box-Cox and Loess-based decomposition (BLD) bootstrap. The function
-\code{\link{forecast.baggedModel}} can then be used to calculate forecasts.
+\code{\link[=forecast.baggedModel]{forecast.baggedModel()}} can then be used to calculate forecasts.
 
 \code{baggedETS} is a wrapper for \code{baggedModel}, setting \code{fn} to "ets".
 This function is included for backwards compatibility only, and may be
