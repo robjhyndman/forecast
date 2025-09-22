@@ -35,7 +35,9 @@ monthdays <- function(x) {
   }
   nyears <- round(length(x) / f + 1) + 1
   years <- (1:nyears) + (start(x)[1] - 1)
-  leap.years <- ((years %% 4 == 0) & !(years %% 100 == 0 & years %% 400 != 0))[1:nyears]
+  leap.years <- ((years %% 4 == 0) & !(years %% 100 == 0 & years %% 400 != 0))[
+    1:nyears
+  ]
   dummy <- t(matrix(rep(days, nyears), nrow = f))
   if (f == 12) {
     dummy[leap.years, 2] <- 29
@@ -76,16 +78,14 @@ sindexf <- function(object, h) {
     m <- frequency(ss)
     ss <- ss[length(ss) - (m:1) + 1]
     tsp.x <- tsp(object$time.series)
-  }
-  else if (inherits(object, "decomposed.ts")) {
+  } else if (inherits(object, "decomposed.ts")) {
     ss <- object$figure
     m <- frequency(object$seasonal)
     n <- length(object$trend)
     ss <- rep(ss, n / m + 1)[1:n]
     ss <- ss[n - (m:1) + 1]
     tsp.x <- tsp(object$seasonal)
-  }
-  else {
+  } else {
     stop("Object of unknown class")
   }
   out <- ts(rep(ss, h / m + 1)[1:h], frequency = m, start = tsp.x[2] + 1 / m)
@@ -133,7 +133,7 @@ sindexf <- function(object, h) {
 #' plot(ldeaths.fcast)
 #'
 #' @export
-seasonaldummy <- function(x, h=NULL) {
+seasonaldummy <- function(x, h = NULL) {
   if (!is.ts(x)) {
     stop("Not a time series")
   } else {
@@ -146,8 +146,9 @@ seasonaldummy <- function(x, h=NULL) {
     dummy <- as.factor(cycle(x))
     dummy.mat <- matrix(0, ncol = frequency(x) - 1, nrow = length(x))
     nrow <- seq_along(x)
-    for (i in 1:(frequency(x) - 1))
+    for (i in 1:(frequency(x) - 1)) {
       dummy.mat[dummy == paste(i), i] <- 1
+    }
     colnames(dummy.mat) <- if (fr.x == 12) {
       month.abb[1:11]
     } else if (fr.x == 4) {
@@ -157,9 +158,12 @@ seasonaldummy <- function(x, h=NULL) {
     }
 
     return(dummy.mat)
-  }
-  else {
-    return(seasonaldummy(ts(rep(0, h), start = tsp(x)[2] + 1 / fr.x, frequency = fr.x)))
+  } else {
+    return(seasonaldummy(ts(
+      rep(0, h),
+      start = tsp(x)[2] + 1 / fr.x,
+      frequency = fr.x
+    )))
   }
 }
 
@@ -229,11 +233,10 @@ seasonaldummyf <- function(x, h) {
 #' autoplot(taylor.fcast)
 #'
 #' @export
-fourier <- function(x, K, h=NULL) {
+fourier <- function(x, K, h = NULL) {
   if (is.null(h)) {
     return(...fourier(x, K, seq_len(NROW(x))))
-  }
-  else {
+  } else {
     return(...fourier(x, K, NROW(x) + (1:h)))
   }
 }
@@ -273,14 +276,17 @@ fourierf <- function(x, K, h) {
   # Compute periods of all Fourier terms
   p <- numeric(0)
   labels <- character(0)
-  for (j in seq_along(period))
-  {
+  for (j in seq_along(period)) {
     if (K[j] > 0) {
       p <- c(p, (1:K[j]) / period[j])
-      labels <- c(labels, paste(
-        paste0(c("S", "C"), rep(1:K[j], rep(2, K[j]))),
-        round(period[j]), sep = "-"
-      ))
+      labels <- c(
+        labels,
+        paste(
+          paste0(c("S", "C"), rep(1:K[j], rep(2, K[j]))),
+          round(period[j]),
+          sep = "-"
+        )
+      )
     }
   }
   # Remove equivalent seasonal periods due to multiple seasonality
@@ -293,8 +299,7 @@ fourierf <- function(x, K, h) {
 
   # Compute matrix of Fourier terms
   X <- matrix(NA_real_, nrow = length(times), ncol = 2L * length(p))
-  for (j in seq_along(p))
-  {
+  for (j in seq_along(p)) {
     if (k[j]) {
       X[, 2L * j - 1L] <- sinpi(2 * p[j] * times)
     }
@@ -342,14 +347,16 @@ fourierf <- function(x, K, h) {
 #' lines(sm, col = "red")
 #'
 #' @export
-ma <- function(x, order, centre=TRUE) {
+ma <- function(x, order, centre = TRUE) {
   if (abs(order - round(order)) > 1e-8) {
     stop("order must be an integer")
   }
 
-  if (order %% 2 == 0 && centre) { # centred and even
+  if (order %% 2 == 0 && centre) {
+    # centred and even
     w <- c(0.5, rep(1, order - 1), 0.5) / order
-  } else { # odd or not centred
+  } else {
+    # odd or not centred
     w <- rep(1, order) / order
   }
 

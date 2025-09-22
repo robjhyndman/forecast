@@ -1,4 +1,3 @@
-
 #' Box Cox Transformation
 #'
 #' BoxCox() returns a transformation of the input variable using a Box-Cox
@@ -47,7 +46,7 @@ BoxCox <- function(x, lambda) {
   if (lambda == 0) {
     out <- log(x)
   } else {
-    out <- (sign(x) * abs(x) ^ lambda - 1) / lambda
+    out <- (sign(x) * abs(x)^lambda - 1) / lambda
   }
   if (!is.null(colnames(x))) {
     colnames(out) <- colnames(x)
@@ -58,7 +57,7 @@ BoxCox <- function(x, lambda) {
 
 #' @rdname BoxCox
 #' @export
-InvBoxCox <- function(x, lambda, biasadj=FALSE, fvar=NULL) {
+InvBoxCox <- function(x, lambda, biasadj = FALSE, fvar = NULL) {
   if (lambda < 0) {
     x[x > -1 / lambda] <- NA
   }
@@ -66,7 +65,7 @@ InvBoxCox <- function(x, lambda, biasadj=FALSE, fvar=NULL) {
     out <- exp(x)
   } else {
     xx <- x * lambda + 1
-    out <- sign(xx) * abs(xx) ^ (1 / lambda)
+    out <- sign(xx) * abs(xx)^(1 / lambda)
   }
   if (!is.null(colnames(x))) {
     colnames(out) <- colnames(x)
@@ -83,7 +82,8 @@ InvBoxCox <- function(x, lambda, biasadj=FALSE, fvar=NULL) {
     if (is.null(fvar)) {
       stop("fvar must be provided when biasadj=TRUE")
     }
-    if (is.list(fvar)) { # Create fvar from forecast interval
+    if (is.list(fvar)) {
+      # Create fvar from forecast interval
       level <- max(fvar$level)
       if (NCOL(fvar$upper) > 1 && NCOL(fvar$lower)) {
         i <- match(level, fvar$level)
@@ -95,18 +95,19 @@ InvBoxCox <- function(x, lambda, biasadj=FALSE, fvar=NULL) {
       }
       level <- mean(c(level, 1))
       # Note: Use BoxCox transformed upper and lower values
-      fvar <- as.numeric((fvar$upper - fvar$lower) / stats::qnorm(level) / 2) ^ 2
+      fvar <- as.numeric((fvar$upper - fvar$lower) / stats::qnorm(level) / 2)^2
     }
     if (NCOL(fvar) > 1) {
       fvar <- diag(fvar)
     }
-    out <- out * (1 + 0.5 * as.numeric(fvar) * (1 - lambda) / (out) ^ (2 * lambda))
+    out <- out *
+      (1 + 0.5 * as.numeric(fvar) * (1 - lambda) / (out)^(2 * lambda))
   }
   return(out)
 }
 
 # Deprecated
-InvBoxCoxf <- function(x=NULL, fvar=NULL, lambda=NULL) {
+InvBoxCoxf <- function(x = NULL, fvar = NULL, lambda = NULL) {
   message("Deprecated, use InvBoxCox instead")
   if (is.null(lambda)) {
     stop("Must specify lambda using lambda=numeric(1)")
@@ -123,16 +124,15 @@ InvBoxCoxf <- function(x=NULL, fvar=NULL, lambda=NULL) {
     }
     level <- mean(c(level, 1))
     # Note: Use BoxCox transformed upper and lower values
-    fvar <- ((x$upper - x$lower) / stats::qnorm(level) / 2) ^ 2
-  }
-  else {
+    fvar <- ((x$upper - x$lower) / stats::qnorm(level) / 2)^2
+  } else {
     x <- list(mean = x)
   }
   if (is.matrix(fvar)) {
     fvar <- diag(fvar)
   }
 
-  return(x$mean * (1 + 0.5 * fvar * (1 - lambda) / (x$mean) ^ (2 * lambda)))
+  return(x$mean * (1 + 0.5 * fvar * (1 - lambda) / (x$mean)^(2 * lambda)))
 }
 
 
@@ -181,7 +181,15 @@ InvBoxCoxf <- function(x=NULL, fvar=NULL, lambda=NULL) {
 #' plot(forecast(fit))
 #'
 #' @export
-forecast.StructTS <- function(object, h=ifelse(object$coef["epsilon"] > 1e-10, 2 * object$xtsp[3], 10), level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=NULL, ...) {
+forecast.StructTS <- function(
+  object,
+  h = ifelse(object$coef["epsilon"] > 1e-10, 2 * object$xtsp[3], 10),
+  level = c(80, 95),
+  fan = FALSE,
+  lambda = NULL,
+  biasadj = NULL,
+  ...
+) {
   x <- object$data
   pred <- predict(object, n.ahead = h)
   if (fan) {
@@ -195,8 +203,7 @@ forecast.StructTS <- function(object, h=ifelse(object$coef["epsilon"] > 1e-10, 2
   }
   nint <- length(level)
   upper <- lower <- matrix(NA, ncol = nint, nrow = length(pred$pred))
-  for (i in 1:nint)
-  {
+  for (i in 1:nint) {
     qq <- qnorm(0.5 * (1 + level[i] / 100))
     lower[, i] <- pred$pred - qq * pred$se
     upper[, i] <- pred$pred + qq * pred$se
@@ -211,14 +218,19 @@ forecast.StructTS <- function(object, h=ifelse(object$coef["epsilon"] > 1e-10, 2
   }
 
   # Compute fitted values and residuals
-  sigma2 <- c(predict(object, n.ahead=1)$se)
+  sigma2 <- c(predict(object, n.ahead = 1)$se)
   res <- residuals(object) * sigma2
   fits <- x - res
 
   if (!is.null(lambda)) {
     fits <- InvBoxCox(fits, lambda)
     x <- InvBoxCox(x, lambda)
-    pred$pred <- InvBoxCox(pred$pred, lambda, biasadj, list(level = level, upper = upper, lower = lower))
+    pred$pred <- InvBoxCox(
+      pred$pred,
+      lambda,
+      biasadj,
+      list(level = level, upper = upper, lower = lower)
+    )
     lower <- InvBoxCox(lower, lambda)
     upper <- InvBoxCox(upper, lambda)
   }
@@ -231,8 +243,16 @@ forecast.StructTS <- function(object, h=ifelse(object$coef["epsilon"] > 1e-10, 2
 
   return(structure(
     list(
-      method = method, model = object, level = level, mean = pred$pred,
-      lower = lower, upper = upper, x = x, series = object$series, fitted = fits, residuals = res
+      method = method,
+      model = object,
+      level = level,
+      mean = pred$pred,
+      lower = lower,
+      upper = upper,
+      x = x,
+      series = object$series,
+      fitted = fits,
+      residuals = res
     ),
     class = "forecast"
   ))
@@ -287,8 +307,15 @@ forecast.StructTS <- function(object, h=ifelse(object$coef["epsilon"] > 1e-10, 2
 #' plot(forecast(fit))
 #'
 #' @export
-forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x) > 1, 2 * frequency(object$x), 10),
-                                 level=c(80, 95), fan=FALSE, lambda=NULL, biasadj=NULL, ...) {
+forecast.HoltWinters <- function(
+  object,
+  h = ifelse(frequency(object$x) > 1, 2 * frequency(object$x), 10),
+  level = c(80, 95),
+  fan = FALSE,
+  lambda = NULL,
+  biasadj = NULL,
+  ...
+) {
   x <- object$x
   if (!is.null(object$exponential)) {
     if (object$exponential) {
@@ -307,12 +334,16 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x) > 1, 2 * f
   }
   nint <- length(level)
 
-  pred <- predict(object, n.ahead = h, prediction.interval = TRUE, level = level[1] / 100)
+  pred <- predict(
+    object,
+    n.ahead = h,
+    prediction.interval = TRUE,
+    level = level[1] / 100
+  )
   pmean <- pred[, 1]
   upper <- lower <- matrix(NA, ncol = nint, nrow = length(pred[, 1]))
   se <- (pred[, 2] - pred[, 3]) / (2 * qnorm(0.5 * (1 + level[1] / 100)))
-  for (i in 1:nint)
-  {
+  for (i in 1:nint) {
     qq <- qnorm(0.5 * (1 + level[i] / 100))
     lower[, i] <- pmean - qq * se
     upper[, i] <- pmean + qq * se
@@ -322,11 +353,15 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x) > 1, 2 * f
   if (!is.null(lambda)) {
     fitted <- InvBoxCox(object$fitted[, 1], lambda)
     x <- InvBoxCox(x, lambda)
-    pmean <- InvBoxCox(pmean, lambda, biasadj, list(level = level, upper = upper, lower = lower))
+    pmean <- InvBoxCox(
+      pmean,
+      lambda,
+      biasadj,
+      list(level = level, upper = upper, lower = lower)
+    )
     lower <- InvBoxCox(lower, lambda)
     upper <- InvBoxCox(upper, lambda)
-  }
-  else {
+  } else {
     fitted <- object$fitted[, 1]
   }
 
@@ -342,9 +377,16 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x) > 1, 2 * f
 
   return(structure(
     list(
-      method = "HoltWinters", model = object, level = level,
-      mean = pmean, lower = lower, upper = upper, x = x, series = deparse(object$call$x),
-      fitted = fitted, residuals = x - fitted
+      method = "HoltWinters",
+      model = object,
+      level = level,
+      mean = pmean,
+      lower = lower,
+      upper = upper,
+      x = x,
+      series = deparse(object$call$x),
+      fitted = fitted,
+      residuals = x - fitted
     ),
     class = "forecast"
   ))
@@ -404,7 +446,7 @@ forecast.HoltWinters <- function(object, h=ifelse(frequency(object$x) > 1, 2 * f
 #' plot(fcast)
 #'
 #' @export
-croston <- function(y, h=10, alpha=0.1, x=y) {
+croston <- function(y, h = 10, alpha = 0.1, x = y) {
   if (sum(x < 0) > 0) {
     stop("Series should not contain negative values")
   }
@@ -418,28 +460,31 @@ croston <- function(y, h=10, alpha=0.1, x=y) {
   return(structure(out, class = "forecast"))
 }
 
-croston2 <- function(x, h=10, alpha=0.1, nofits=FALSE) {
+croston2 <- function(x, h = 10, alpha = 0.1, nofits = FALSE) {
   x <- as.ts(x)
   y <- x[x > 0]
   tsp.x <- tsp(x)
   freq.x <- tsp.x[3]
   start.f <- tsp.x[2] + 1 / freq.x
-  if (length(y) == 0) # All historical values are equal to zero
-  {
+  if (length(y) == 0) {
+    # All historical values are equal to zero
     fc <- ts(rep(0, h), start = start.f, frequency = freq.x)
     if (nofits) {
       return(fc)
     } else {
-      return(list(mean = fc, fitted = ts(x * 0, start = tsp.x[1], frequency = freq.x)))
+      return(list(
+        mean = fc,
+        fitted = ts(x * 0, start = tsp.x[1], frequency = freq.x)
+      ))
     }
   }
   tt <- diff(c(0, seq_along(x)[x > 0])) # Times between non-zero observations
-  if (length(y) == 1 && length(tt) == 1) # Only one non-zero observation
-  {
+  if (length(y) == 1 && length(tt) == 1) {
+    # Only one non-zero observation
     y.f <- list(mean = ts(rep(y, h), start = start.f, frequency = freq.x))
     p.f <- list(mean = ts(rep(tt, h), start = start.f, frequency = freq.x))
-  }
-  else if (length(y) <= 1 || length(tt) <= 1) { # length(tt)==0 but length(y)>0. How does that happen?
+  } else if (length(y) <= 1 || length(tt) <= 1) {
+    # length(tt)==0 but length(y)>0. How does that happen?
     return(list(mean = ts(rep(NA, h), start = start.f, frequency = freq.x)))
   } else {
     y.f <- ses(y, alpha = alpha, initial = "simple", h = h, PI = FALSE)
@@ -452,11 +497,16 @@ croston2 <- function(x, h=10, alpha=0.1, nofits=FALSE) {
     n <- length(x)
     fits <- x * NA
     if (n > 1) {
-      for (i in 1:(n - 1))
+      for (i in 1:(n - 1)) {
         fits[i + 1] <- croston2(x[1:i], h = 1, alpha = alpha, nofits = TRUE)
+      }
     }
     ratio <- future_msts(x, ratio)
     fits <- copy_msts(x, fits)
-    return(list(mean = ratio, fitted = fits, model = list(demand = y.f, period = p.f)))
+    return(list(
+      mean = ratio,
+      fitted = fits,
+      model = list(demand = y.f, period = p.f)
+    ))
   }
 }

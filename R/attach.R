@@ -1,5 +1,7 @@
 .onAttach <- function(...) {
-  if (!interactive() || withr::with_preserve_seed(stats::runif(1)) > 0.2) return()
+  if (!interactive() || withr::with_preserve_seed(stats::runif(1)) > 0.2) {
+    return()
+  }
 
   tips <- c(
     "Use suppressPackageStartupMessages() to eliminate package startup messages.",
@@ -38,9 +40,13 @@ register_s3_method <- function(pkg, generic, class, fun = NULL) {
   )
 }
 
-overwrite_s3_generic <- function(pkg, generic){
+overwrite_s3_generic <- function(pkg, generic) {
   if (pkg %in% loadedNamespaces()) {
-    assign(generic, get(generic, asNamespace(pkg)), envir = asNamespace("forecast"))
+    assign(
+      generic,
+      get(generic, asNamespace(pkg)),
+      envir = asNamespace("forecast")
+    )
   }
 
   # Always register hook in case package is later unloaded & reloaded

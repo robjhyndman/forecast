@@ -2,7 +2,7 @@ globalVariables(".data")
 
 #' @inherit ggplot2::autolayer
 #' @export
-autolayer <- function(object, ...){
+autolayer <- function(object, ...) {
   UseMethod("autolayer")
 }
 
@@ -10,31 +10,37 @@ autolayer <- function(object, ...){
 #' @export
 ggplot2::autoplot
 
-ggAddExtras <- function(xlab=NA, ylab=NA, main=NA) {
+ggAddExtras <- function(xlab = NA, ylab = NA, main = NA) {
   dots <- eval.parent(quote(list(...)))
   extras <- list()
   if ("xlab" %in% names(dots) || is.null(xlab) || any(!is.na(xlab))) {
     if ("xlab" %in% names(dots)) {
       extras[[length(extras) + 1]] <- ggplot2::xlab(dots$xlab)
-    }
-    else {
-      extras[[length(extras) + 1]] <- ggplot2::xlab(paste0(xlab[!is.na(xlab)], collapse = " "))
+    } else {
+      extras[[length(extras) + 1]] <- ggplot2::xlab(paste0(
+        xlab[!is.na(xlab)],
+        collapse = " "
+      ))
     }
   }
   if ("ylab" %in% names(dots) || is.null(ylab) || any(!is.na(ylab))) {
     if ("ylab" %in% names(dots)) {
       extras[[length(extras) + 1]] <- ggplot2::ylab(dots$ylab)
-    }
-    else {
-      extras[[length(extras) + 1]] <- ggplot2::ylab(paste0(ylab[!is.na(ylab)], collapse = " "))
+    } else {
+      extras[[length(extras) + 1]] <- ggplot2::ylab(paste0(
+        ylab[!is.na(ylab)],
+        collapse = " "
+      ))
     }
   }
   if ("main" %in% names(dots) || is.null(main) || any(!is.na(main))) {
     if ("main" %in% names(dots)) {
       extras[[length(extras) + 1]] <- ggplot2::ggtitle(dots$main)
-    }
-    else {
-      extras[[length(extras) + 1]] <- ggplot2::ggtitle(paste0(main[!is.na(main)], collapse = " "))
+    } else {
+      extras[[length(extras) + 1]] <- ggplot2::ggtitle(paste0(
+        main[!is.na(main)],
+        collapse = " "
+      ))
     }
   }
   if ("xlim" %in% names(dots)) {
@@ -101,9 +107,12 @@ ggtsbreaks <- function(x) {
 #' ggCcf(mdeaths, fdeaths)
 #'
 #' @export
-autoplot.acf <- function(object, ci=0.95, ...) {
+autoplot.acf <- function(object, ci = 0.95, ...) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+    stop(
+      "ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")",
+      call. = FALSE
+    )
   }
 
   if (!inherits(object, "acf")) {
@@ -122,7 +131,12 @@ autoplot.acf <- function(object, ci=0.95, ...) {
 
   # Initialise ggplot object
   p <- ggplot2::ggplot(
-    ggplot2::aes(x = .data[["lag"]], xend = .data[["lag"]], y = 0, yend = .data[["Freq"]]),
+    ggplot2::aes(
+      x = .data[["lag"]],
+      xend = .data[["lag"]],
+      y = 0,
+      yend = .data[["Freq"]]
+    ),
     data = data
   )
   p <- p + ggplot2::geom_hline(yintercept = 0)
@@ -132,13 +146,19 @@ autoplot.acf <- function(object, ci=0.95, ...) {
 
   # Add ci lines (assuming white noise input)
   ci <- qnorm((1 + ci) / 2) / sqrt(object$n.used)
-  p <- p + ggplot2::geom_hline(yintercept = c(-ci, ci), colour = "blue", linetype = "dashed")
+  p <- p +
+    ggplot2::geom_hline(
+      yintercept = c(-ci, ci),
+      colour = "blue",
+      linetype = "dashed"
+    )
 
   # Add facets if needed
-  if(any(dim(object$acf)[2:3] != c(1,1))){
-    p <- p + ggplot2::facet_grid(
-      as.formula(paste0(colnames(data)[1:2], collapse = "~"))
-    )
+  if (any(dim(object$acf)[2:3] != c(1, 1))) {
+    p <- p +
+      ggplot2::facet_grid(
+        as.formula(paste0(colnames(data)[1:2], collapse = "~"))
+      )
   }
 
   # Prepare graph labels
@@ -147,20 +167,17 @@ autoplot.acf <- function(object, ci=0.95, ...) {
     ticktype <- "ccf"
     main <- paste("Series:", object$snames)
     nlags <- round(dim(object$lag)[1] / 2)
-  }
-  else if (object$type == "partial") {
+  } else if (object$type == "partial") {
     ylab <- "PACF"
     ticktype <- "acf"
     main <- paste("Series:", object$series)
     nlags <- dim(object$lag)[1]
-  }
-  else if (object$type == "correlation") {
+  } else if (object$type == "correlation") {
     ylab <- "ACF"
     ticktype <- "acf"
     main <- paste("Series:", object$series)
     nlags <- dim(object$lag)[1]
-  }
-  else {
+  } else {
     ylab <- NULL
   }
 
@@ -175,40 +192,42 @@ autoplot.acf <- function(object, ci=0.95, ...) {
     periods <- object$periods
     periods <- periods[periods != freq]
     minorbreaks <- periods * seq(-20:20)
-  }
-  else {
+  } else {
     minorbreaks <- NULL
   }
-  p <- p + ggplot2::scale_x_continuous(breaks = seasonalaxis(
-    freq,
-    nlags, type = ticktype, plot = FALSE
-  ), minor_breaks = minorbreaks)
+  p <- p +
+    ggplot2::scale_x_continuous(
+      breaks = seasonalaxis(
+        freq,
+        nlags,
+        type = ticktype,
+        plot = FALSE
+      ),
+      minor_breaks = minorbreaks
+    )
   p <- p + ggAddExtras(ylab = ylab, xlab = "Lag", main = main)
   return(p)
 }
 
 #' @rdname autoplot.acf
 #' @export
-ggAcf <- function(x, lag.max = NULL,
-                  type = c("correlation", "covariance", "partial"),
-                  plot = TRUE, na.action = na.contiguous, demean=TRUE, ...) {
-  object <- Acf(x, lag.max = lag.max, type = type, na.action = na.action, demean = demean, plot = FALSE)
-  object$tsp <- tsp(x)
-  object$periods <- attributes(x)$msts
-  object$series <- deparse(substitute(x))
-  if (plot) {
-    return(autoplot(object, ...))
-  }
-  else {
-    return(object)
-  }
-}
-
-#' @rdname autoplot.acf
-#' @export
-ggPacf <- function(x, lag.max = NULL,
-                   plot = TRUE, na.action = na.contiguous, demean=TRUE, ...) {
-  object <- Acf(x, lag.max = lag.max, type = "partial", na.action = na.action, demean = demean, plot = FALSE)
+ggAcf <- function(
+  x,
+  lag.max = NULL,
+  type = c("correlation", "covariance", "partial"),
+  plot = TRUE,
+  na.action = na.contiguous,
+  demean = TRUE,
+  ...
+) {
+  object <- Acf(
+    x,
+    lag.max = lag.max,
+    type = type,
+    na.action = na.action,
+    demean = demean,
+    plot = FALSE
+  )
   object$tsp <- tsp(x)
   object$periods <- attributes(x)$msts
   object$series <- deparse(substitute(x))
@@ -221,15 +240,56 @@ ggPacf <- function(x, lag.max = NULL,
 
 #' @rdname autoplot.acf
 #' @export
-ggCcf <- function(x, y, lag.max=NULL, type=c("correlation", "covariance"),
-                  plot=TRUE, na.action=na.contiguous, ...) {
-  object <- Ccf(x, y, lag.max = lag.max, type = type, na.action = na.action, plot = FALSE)
+ggPacf <- function(
+  x,
+  lag.max = NULL,
+  plot = TRUE,
+  na.action = na.contiguous,
+  demean = TRUE,
+  ...
+) {
+  object <- Acf(
+    x,
+    lag.max = lag.max,
+    type = "partial",
+    na.action = na.action,
+    demean = demean,
+    plot = FALSE
+  )
+  object$tsp <- tsp(x)
+  object$periods <- attributes(x)$msts
+  object$series <- deparse(substitute(x))
+  if (plot) {
+    return(autoplot(object, ...))
+  } else {
+    return(object)
+  }
+}
+
+#' @rdname autoplot.acf
+#' @export
+ggCcf <- function(
+  x,
+  y,
+  lag.max = NULL,
+  type = c("correlation", "covariance"),
+  plot = TRUE,
+  na.action = na.contiguous,
+  ...
+) {
+  object <- Ccf(
+    x,
+    y,
+    lag.max = lag.max,
+    type = type,
+    na.action = na.action,
+    plot = FALSE
+  )
   object$snames <- paste(deparse(substitute(x)), "&", deparse(substitute(y)))
   object$ccf <- TRUE
   if (plot) {
     return(autoplot(object, ...))
-  }
-  else {
+  } else {
     return(object)
   }
 }
@@ -238,18 +298,31 @@ ggCcf <- function(x, y, lag.max=NULL, type=c("correlation", "covariance"),
 #' @export
 autoplot.mpacf <- function(object, ...) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+    stop(
+      "ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")",
+      call. = FALSE
+    )
   }
 
   if (!inherits(object, "mpacf")) {
     stop("autoplot.mpacf requires a mpacf object, use object=object")
   }
   if (!is.null(object$lower)) {
-    data <- data.frame(Lag = 1:object$lag, z = object$z, sig = (object$lower < 0 & object$upper > 0), check.names = FALSE)
-    cidata <- data.frame(Lag = rep(1:object$lag, each = 2) + c(-0.5, 0.5), z = rep(object$z, each = 2), upper = rep(object$upper, each = 2), lower = rep(object$lower, each = 2), check.names = FALSE)
+    data <- data.frame(
+      Lag = 1:object$lag,
+      z = object$z,
+      sig = (object$lower < 0 & object$upper > 0),
+      check.names = FALSE
+    )
+    cidata <- data.frame(
+      Lag = rep(1:object$lag, each = 2) + c(-0.5, 0.5),
+      z = rep(object$z, each = 2),
+      upper = rep(object$upper, each = 2),
+      lower = rep(object$lower, each = 2),
+      check.names = FALSE
+    )
     plotpi <- TRUE
-  }
-  else {
+  } else {
     data <- data.frame(Lag = 1:object$lag, z = object$z, check.names = FALSE)
     plotpi <- FALSE
   }
@@ -259,11 +332,32 @@ autoplot.mpacf <- function(object, ...) {
 
   # Add data
   if (plotpi) {
-    p <- p + ggplot2::geom_ribbon(ggplot2::aes(x = .data[["Lag"]], ymin = .data[["lower"]], ymax = .data[["upper"]]), data = cidata, fill = "grey50")
+    p <- p +
+      ggplot2::geom_ribbon(
+        ggplot2::aes(
+          x = .data[["Lag"]],
+          ymin = .data[["lower"]],
+          ymax = .data[["upper"]]
+        ),
+        data = cidata,
+        fill = "grey50"
+      )
   }
-  p <- p + ggplot2::geom_line(ggplot2::aes(x = .data[["Lag"]], y = .data[["z"]]), data = data)
+  p <- p +
+    ggplot2::geom_line(
+      ggplot2::aes(x = .data[["Lag"]], y = .data[["z"]]),
+      data = data
+    )
   if (plotpi) {
-    p <- p + ggplot2::geom_point(ggplot2::aes(x = .data[["Lag"]], y = .data[["z"]], colour = .data[["sig"]]), data = data)
+    p <- p +
+      ggplot2::geom_point(
+        ggplot2::aes(
+          x = .data[["Lag"]],
+          y = .data[["z"]],
+          colour = .data[["sig"]]
+        ),
+        data = data
+      )
   }
 
   # Change ticks to be seasonal
@@ -275,20 +369,24 @@ autoplot.mpacf <- function(object, ...) {
     periods <- attributes(object$x)$msts
     periods <- periods[periods != freq]
     minorbreaks <- periods * seq(-20:20)
-  }
-  else {
+  } else {
     minorbreaks <- NULL
   }
 
-  p <- p + ggplot2::scale_x_continuous(
-    breaks = seasonalaxis(frequency(object$x), length(data$Lag), type = "acf", plot = FALSE),
-    minor_breaks = minorbreaks
-  )
+  p <- p +
+    ggplot2::scale_x_continuous(
+      breaks = seasonalaxis(
+        frequency(object$x),
+        length(data$Lag),
+        type = "acf",
+        plot = FALSE
+      ),
+      minor_breaks = minorbreaks
+    )
 
   if (object$type == "partial") {
     ylab <- "PACF"
-  }
-  else if (object$type == "correlation") {
+  } else if (object$type == "correlation") {
     ylab <- "ACF"
   }
 
@@ -299,8 +397,16 @@ autoplot.mpacf <- function(object, ...) {
 
 #' @rdname autoplot.acf
 #' @export
-ggtaperedacf <- function(x, lag.max=NULL, type=c("correlation", "partial"),
-                         plot=TRUE, calc.ci=TRUE, level=95, nsim=100, ...) {
+ggtaperedacf <- function(
+  x,
+  lag.max = NULL,
+  type = c("correlation", "partial"),
+  plot = TRUE,
+  calc.ci = TRUE,
+  level = 95,
+  nsim = 100,
+  ...
+) {
   cl <- match.call()
   if (plot) {
     cl$plot <- FALSE
@@ -309,8 +415,7 @@ ggtaperedacf <- function(x, lag.max=NULL, type=c("correlation", "partial"),
   object <- eval.parent(cl)
   if (plot) {
     return(autoplot(object, ...))
-  }
-  else {
+  } else {
     return(object)
   }
 }
@@ -325,7 +430,10 @@ ggtaperedpacf <- function(x, ...) {
 #' @export
 autoplot.Arima <- function(object, type = c("both", "ar", "ma"), ...) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+    stop(
+      "ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")",
+      call. = FALSE
+    )
   }
 
   if (is.Arima(object)) {
@@ -348,13 +456,11 @@ autoplot.Arima <- function(object, type = c("both", "ar", "ma"), ...) {
     if (type == "both") {
       type <- c("ar", "ma")
     }
-  }
-  else if (inherits(object, "ar")) {
+  } else if (inherits(object, "ar")) {
     type <- "ar"
     p <- length(arroots(object)$roots)
     q <- 0
-  }
-  else {
+  } else {
     stop("autoplot.Arima requires an Arima object")
   }
 
@@ -363,26 +469,49 @@ autoplot.Arima <- function(object, type = c("both", "ar", "ma"), ...) {
 
   # Prepare data
   arData <- maData <- NULL
-  allRoots <- data.frame(roots = numeric(0), type = character(0), check.names = FALSE)
+  allRoots <- data.frame(
+    roots = numeric(0),
+    type = character(0),
+    check.names = FALSE
+  )
   if ("ar" %in% type && p > 0) {
     arData <- arroots(object)
-    allRoots <- rbind(allRoots, data.frame(roots = arData$roots, type = arData$type, check.names = FALSE))
+    allRoots <- rbind(
+      allRoots,
+      data.frame(roots = arData$roots, type = arData$type, check.names = FALSE)
+    )
   }
   if ("ma" %in% type && q > 0) {
     maData <- maroots(object)
-    allRoots <- rbind(allRoots, data.frame(roots = maData$roots, type = maData$type, check.names = FALSE))
+    allRoots <- rbind(
+      allRoots,
+      data.frame(roots = maData$roots, type = maData$type, check.names = FALSE)
+    )
   }
   allRoots$Real <- Re(1 / allRoots$roots)
   allRoots$Imaginary <- Im(1 / allRoots$roots)
-  allRoots$UnitCircle <- factor(ifelse((abs(allRoots$roots) > 1), "Within", "Outside"))
+  allRoots$UnitCircle <- factor(ifelse(
+    (abs(allRoots$roots) > 1),
+    "Within",
+    "Outside"
+  ))
 
   # Initialise general ggplot object
-  p <- ggplot2::ggplot(ggplot2::aes(x = .data[["Real"]], y = .data[["Imaginary"]], colour = .data[["UnitCircle"]]), data = allRoots)
-  p <- p + ggplot2::coord_fixed(ratio = 1)
-  p <- p + ggplot2::annotate(
-    "path", x = cos(seq(0, 2 * pi, length.out = 100)),
-    y = sin(seq(0, 2 * pi, length.out = 100))
+  p <- ggplot2::ggplot(
+    ggplot2::aes(
+      x = .data[["Real"]],
+      y = .data[["Imaginary"]],
+      colour = .data[["UnitCircle"]]
+    ),
+    data = allRoots
   )
+  p <- p + ggplot2::coord_fixed(ratio = 1)
+  p <- p +
+    ggplot2::annotate(
+      "path",
+      x = cos(seq(0, 2 * pi, length.out = 100)),
+      y = sin(seq(0, 2 * pi, length.out = 100))
+    )
   p <- p + ggplot2::geom_vline(xintercept = 0)
   p <- p + ggplot2::geom_hline(yintercept = 0)
   p <- p + ggAddExtras(xlab = "Real", ylab = "Imaginary")
@@ -395,9 +524,11 @@ autoplot.Arima <- function(object, type = c("both", "ar", "ma"), ...) {
 
   if (length(type) == 1) {
     p <- p + ggAddExtras(main = paste("Inverse", toupper(type), "roots"))
-  }
-  else {
-    p <- p + ggplot2::facet_wrap(~ type, labeller = function(labels) lapply(labels, function(x) paste("Inverse", as.character(x), "roots")))
+  } else {
+    p <- p +
+      ggplot2::facet_wrap(~type, labeller = function(labels) {
+        lapply(labels, function(x) paste("Inverse", as.character(x), "roots"))
+      })
   }
   return(p)
 }
@@ -410,9 +541,17 @@ autoplot.ar <- function(object, ...) {
 
 #' @rdname autoplot.seas
 #' @export
-autoplot.decomposed.ts <- function(object, labels=NULL, range.bars = NULL, ...) {
+autoplot.decomposed.ts <- function(
+  object,
+  labels = NULL,
+  range.bars = NULL,
+  ...
+) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+    stop(
+      "ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")",
+      call. = FALSE
+    )
   }
 
   if (!inherits(object, "decomposed.ts")) {
@@ -433,50 +572,91 @@ autoplot.decomposed.ts <- function(object, labels=NULL, range.bars = NULL, ...) 
   )
 
   # Initialise ggplot object
-  p <- ggplot2::ggplot(ggplot2::aes(x = .data[["datetime"]], y = .data[["y"]]), data = data)
+  p <- ggplot2::ggplot(
+    ggplot2::aes(x = .data[["datetime"]], y = .data[["y"]]),
+    data = data
+  )
 
   # Add data
   int <- as.numeric(object$type == "multiplicative")
-  p <- p + ggplot2::geom_line(ggplot2::aes(x = .data[["datetime"]], y = .data[["y"]]), data = subset(data, data$parts != cn[4]), na.rm = TRUE)
-  p <- p + ggplot2::geom_segment(
-    ggplot2::aes(x = .data[["datetime"]], xend = .data[["datetime"]], y = int, yend = .data[["y"]]),
-    data = subset(data, data$parts == cn[4]), lineend = "butt", na.rm = TRUE
-  )
+  p <- p +
+    ggplot2::geom_line(
+      ggplot2::aes(x = .data[["datetime"]], y = .data[["y"]]),
+      data = subset(data, data$parts != cn[4]),
+      na.rm = TRUE
+    )
+  p <- p +
+    ggplot2::geom_segment(
+      ggplot2::aes(
+        x = .data[["datetime"]],
+        xend = .data[["datetime"]],
+        y = int,
+        yend = .data[["y"]]
+      ),
+      data = subset(data, data$parts == cn[4]),
+      lineend = "butt",
+      na.rm = TRUE
+    )
   p <- p + ggplot2::facet_grid("parts ~ .", scales = "free_y", switch = "y")
-  p <- p + ggplot2::geom_hline(ggplot2::aes(yintercept = .data[["y"]]),
-                               data = data.frame(y = int, parts = factor(cn[4], levels = cn), check.names = FALSE))
+  p <- p +
+    ggplot2::geom_hline(
+      ggplot2::aes(yintercept = .data[["y"]]),
+      data = data.frame(
+        y = int,
+        parts = factor(cn[4], levels = cn),
+        check.names = FALSE
+      )
+    )
 
   if (is.null(range.bars)) {
     range.bars <- object$type == "additive"
   }
   if (range.bars) {
-    yranges <- vapply(split(data$y, data$parts), function(x) range(x, na.rm = TRUE), numeric(2))
+    yranges <- vapply(
+      split(data$y, data$parts),
+      function(x) range(x, na.rm = TRUE),
+      numeric(2)
+    )
     xranges <- range(data$datetime)
     barmid <- colMeans(yranges)
     barlength <- min(apply(yranges, 2, diff))
     barwidth <- (1 / 64) * diff(xranges)
     barpos <- data.frame(
-      left = xranges[2] + barwidth, right = xranges[2] + barwidth * 2,
-      top = barmid + barlength / 2, bottom = barmid - barlength / 2,
+      left = xranges[2] + barwidth,
+      right = xranges[2] + barwidth * 2,
+      top = barmid + barlength / 2,
+      bottom = barmid - barlength / 2,
       parts = factor(colnames(yranges), levels = cn),
-      datetime = xranges[2], y = barmid,
+      datetime = xranges[2],
+      y = barmid,
       check.names = FALSE
     )
-    p <- p + ggplot2::geom_rect(
-      ggplot2::aes(
-        xmin = .data[["left"]], xmax = .data[["right"]],
-        ymax = .data[["top"]], ymin = .data[["bottom"]]
-      ), data = barpos, fill = "gray75", colour = "black", linewidth = 1 / 3)
+    p <- p +
+      ggplot2::geom_rect(
+        ggplot2::aes(
+          xmin = .data[["left"]],
+          xmax = .data[["right"]],
+          ymax = .data[["top"]],
+          ymin = .data[["bottom"]]
+        ),
+        data = barpos,
+        fill = "gray75",
+        colour = "black",
+        linewidth = 1 / 3
+      )
   }
 
   # Add axis labels
-  p <- p + ggAddExtras(
-    main = paste("Decomposition of", object$type, "time series"), xlab = "Time",
-    ylab = ""
-  )
+  p <- p +
+    ggAddExtras(
+      main = paste("Decomposition of", object$type, "time series"),
+      xlab = "Time",
+      ylab = ""
+    )
 
   # Make x axis contain only whole numbers (e.g., years)
-  p <- p + ggplot2::scale_x_continuous(breaks = unique(round(pretty(data$datetime))))
+  p <- p +
+    ggplot2::scale_x_continuous(breaks = unique(round(pretty(data$datetime))))
 
   return(p)
 }
@@ -485,7 +665,10 @@ autoplot.decomposed.ts <- function(object, labels=NULL, range.bars = NULL, ...) 
 #' @export
 autoplot.ets <- function(object, range.bars = NULL, ...) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+    stop(
+      "ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")",
+      call. = FALSE
+    )
   }
 
   if (!is.ets(object)) {
@@ -493,19 +676,26 @@ autoplot.ets <- function(object, range.bars = NULL, ...) {
   }
 
   names <- c(y = "observed", l = "level", b = "slope", s1 = "season")
-  data <- cbind(object$x, object$states[, colnames(object$states) %in% names(names)])
+  data <- cbind(
+    object$x,
+    object$states[, colnames(object$states) %in% names(names)]
+  )
   cn <- c("y", c(colnames(object$states)))
   colnames(data) <- cn <- names[stats::na.exclude(match(cn, names(names)))]
 
   # Convert to longform
   data <- data.frame(
-    datetime = rep(time(data), NCOL(data)), y = c(data),
+    datetime = rep(time(data), NCOL(data)),
+    y = c(data),
     parts = factor(rep(cn, each = NROW(data)), levels = cn),
     check.names = FALSE
   )
 
   # Initialise ggplot object
-  p <- ggplot2::ggplot(ggplot2::aes(x = .data[["datetime"]], y = .data[["y"]]), data = data)
+  p <- ggplot2::ggplot(
+    ggplot2::aes(x = .data[["datetime"]], y = .data[["y"]]),
+    data = data
+  )
 
   # Add data
   p <- p + ggplot2::geom_line(na.rm = TRUE)
@@ -514,26 +704,46 @@ autoplot.ets <- function(object, range.bars = NULL, ...) {
     range.bars <- is.null(object$lambda)
   }
   if (range.bars) {
-    yranges <- vapply(split(data$y, data$parts), function(x) range(x, na.rm = TRUE), numeric(2))
+    yranges <- vapply(
+      split(data$y, data$parts),
+      function(x) range(x, na.rm = TRUE),
+      numeric(2)
+    )
     xranges <- range(data$datetime)
     barmid <- colMeans(yranges)
     barlength <- min(apply(yranges, 2, diff))
     barwidth <- (1 / 64) * diff(xranges)
     barpos <- data.frame(
-      left = xranges[2] + barwidth, right = xranges[2] + barwidth * 2,
-      top = barmid + barlength / 2, bottom = barmid - barlength / 2,
+      left = xranges[2] + barwidth,
+      right = xranges[2] + barwidth * 2,
+      top = barmid + barlength / 2,
+      bottom = barmid - barlength / 2,
       parts = factor(colnames(yranges), levels = cn),
-      datetime = xranges[2], y = barmid,
+      datetime = xranges[2],
+      y = barmid,
       check.names = FALSE
     )
-    p <- p + ggplot2::geom_rect(
-      ggplot2::aes(
-        xmin = .data[["left"]], xmax = .data[["right"]],
-        ymax = .data[["top"]], ymin = .data[["bottom"]]
-      ), data = barpos, fill = "gray75", colour = "black", linewidth = 1 / 3)
+    p <- p +
+      ggplot2::geom_rect(
+        ggplot2::aes(
+          xmin = .data[["left"]],
+          xmax = .data[["right"]],
+          ymax = .data[["top"]],
+          ymin = .data[["bottom"]]
+        ),
+        data = barpos,
+        fill = "gray75",
+        colour = "black",
+        linewidth = 1 / 3
+      )
   }
 
-  p <- p + ggAddExtras(xlab = NULL, ylab = "", main = paste("Components of", object$method, "method"))
+  p <- p +
+    ggAddExtras(
+      xlab = NULL,
+      ylab = "",
+      main = paste("Components of", object$method, "method")
+    )
   return(p)
 }
 
@@ -553,47 +763,83 @@ autoplot.bats <- function(object, range.bars = FALSE, ...) {
   cn <- colnames(data)
   # Convert to longform
   data <- data.frame(
-    datetime = rep(time(data), NCOL(data)), y = c(data),
+    datetime = rep(time(data), NCOL(data)),
+    y = c(data),
     parts = factor(rep(cn, each = NROW(data)), levels = cn),
     check.names = FALSE
   )
 
   # Initialise ggplot object
-  p <- ggplot2::ggplot(ggplot2::aes(x = .data[["datetime"]], y = .data[["y"]]), data = data, ylab = "")
+  p <- ggplot2::ggplot(
+    ggplot2::aes(x = .data[["datetime"]], y = .data[["y"]]),
+    data = data,
+    ylab = ""
+  )
 
   # Add data
   p <- p + ggplot2::geom_line(na.rm = TRUE)
   p <- p + ggplot2::facet_grid(parts ~ ., scales = "free_y", switch = "y")
 
   if (range.bars) {
-    yranges <- vapply(split(data$y, data$parts), function(x) range(x, na.rm = TRUE), numeric(2))
+    yranges <- vapply(
+      split(data$y, data$parts),
+      function(x) range(x, na.rm = TRUE),
+      numeric(2)
+    )
     xranges <- range(data$datetime)
     barmid <- colMeans(yranges)
     barlength <- min(apply(yranges, 2, diff))
     barwidth <- (1 / 64) * diff(xranges)
     barpos <- data.frame(
-      left = xranges[2] + barwidth, right = xranges[2] + barwidth * 2,
-      top = barmid + barlength / 2, bottom = barmid - barlength / 2,
+      left = xranges[2] + barwidth,
+      right = xranges[2] + barwidth * 2,
+      top = barmid + barlength / 2,
+      bottom = barmid - barlength / 2,
       parts = factor(colnames(yranges), levels = cn),
-      datetime = xranges[2], y = barmid,
+      datetime = xranges[2],
+      y = barmid,
       check.names = FALSE
     )
-    p <- p + ggplot2::geom_rect(
-      ggplot2::aes(
-        xmin = .data[["left"]], xmax = .data[["right"]],
-        ymax = .data[["top"]], ymin = .data[["bottom"]]
-      ), data = barpos, fill = "gray75", colour = "black", linewidth = 1 / 3)
+    p <- p +
+      ggplot2::geom_rect(
+        ggplot2::aes(
+          xmin = .data[["left"]],
+          xmax = .data[["right"]],
+          ymax = .data[["top"]],
+          ymin = .data[["bottom"]]
+        ),
+        data = barpos,
+        fill = "gray75",
+        colour = "black",
+        linewidth = 1 / 3
+      )
   }
 
-  p <- p + ggAddExtras(xlab = NULL, ylab = "", main = paste("Components of", object$method, "method"))
+  p <- p +
+    ggAddExtras(
+      xlab = NULL,
+      ylab = "",
+      main = paste("Components of", object$method, "method")
+    )
   return(p)
 }
 
 #' @rdname plot.forecast
 #' @export
-autoplot.forecast <- function(object, include, PI=TRUE, shadecols=c("#596DD5", "#D5DBFF"), fcol="#0000AA", flwd=0.5, ...) {
+autoplot.forecast <- function(
+  object,
+  include,
+  PI = TRUE,
+  shadecols = c("#596DD5", "#D5DBFF"),
+  fcol = "#0000AA",
+  flwd = 0.5,
+  ...
+) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+    stop(
+      "ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")",
+      call. = FALSE
+    )
   }
 
   if (!is.forecast(object)) {
@@ -601,8 +847,7 @@ autoplot.forecast <- function(object, include, PI=TRUE, shadecols=c("#596DD5", "
   }
   if (is.null(object$lower) || is.null(object$upper) || is.null(object$level)) {
     PI <- FALSE
-  }
-  else if (!is.finite(max(object$upper))) {
+  } else if (!is.finite(max(object$upper))) {
     PI <- FALSE
   }
 
@@ -621,27 +866,25 @@ autoplot.forecast <- function(object, include, PI=TRUE, shadecols=c("#596DD5", "
     if (!is.null(object$model$lambda)) {
       data$yvar <- InvBoxCox(data$yvar, object$model$lambda)
     }
-  }
-  else {
+  } else {
     if (!is.null(object$x)) {
       data <- data.frame(yvar = c(object$x), check.names = FALSE)
-    }
-    else if (!is.null(object$residuals) && !is.null(object$fitted)) {
-      data <- data.frame(yvar = c(object$residuals + object$fitted), check.names = FALSE)
-    }
-    else {
+    } else if (!is.null(object$residuals) && !is.null(object$fitted)) {
+      data <- data.frame(
+        yvar = c(object$residuals + object$fitted),
+        check.names = FALSE
+      )
+    } else {
       stop("Could not find data")
     }
     if (!is.null(object$series)) {
       vars <- c(yvar = object$series)
-    }
-    else if (!is.null(object$model$call)) {
+    } else if (!is.null(object$model$call)) {
       vars <- c(yvar = deparse(object$model$call$y))
       if (vars == "object") {
         vars <- c(yvar = "y")
       }
-    }
-    else {
+    } else {
       vars <- c(yvar = "y")
     }
   }
@@ -652,35 +895,72 @@ autoplot.forecast <- function(object, include, PI=TRUE, shadecols=c("#596DD5", "
   # Cross sectional forecasts
   if (!is.ts(object$mean)) {
     if (length(xvar) > 1) {
-      stop("Forecast plot for regression models only available for a single predictor")
+      stop(
+        "Forecast plot for regression models only available for a single predictor"
+      )
     }
-    if (NCOL(object$newdata) == 1) { # Make sure column has correct name
+    if (NCOL(object$newdata) == 1) {
+      # Make sure column has correct name
       colnames(object$newdata) <- xvar
     }
     flwd <- 2 * flwd # Scale for points
 
     # Data points
-    p <- p + ggplot2::geom_point(ggplot2::aes(x = .data[["xvar"]], y = .data[["yvar"]]), data = data)
+    p <- p +
+      ggplot2::geom_point(
+        ggplot2::aes(x = .data[["xvar"]], y = .data[["yvar"]]),
+        data = data
+      )
     p <- p + ggplot2::labs(y = vars["yvar"], x = vars["xvar"])
 
     # Forecasted intervals
     if (PI) {
       levels <- NROW(object$level)
-      interval <- data.frame(xpred = rep(object$newdata[[1]], levels), lower = c(object$lower), upper = c(object$upper), level = rep(object$level, each = NROW(object$newdata[[1]])), check.names = FALSE)
+      interval <- data.frame(
+        xpred = rep(object$newdata[[1]], levels),
+        lower = c(object$lower),
+        upper = c(object$upper),
+        level = rep(object$level, each = NROW(object$newdata[[1]])),
+        check.names = FALSE
+      )
       interval <- interval[order(interval$level, decreasing = TRUE), ] # Must be ordered for gg z-index
-      p <- p + ggplot2::geom_linerange(ggplot2::aes(x = .data[["xpred"]], ymin = .data[["lower"]], ymax = .data[["upper"]], colour = .data[["level"]]), data = interval, linewidth = flwd)
+      p <- p +
+        ggplot2::geom_linerange(
+          ggplot2::aes(
+            x = .data[["xpred"]],
+            ymin = .data[["lower"]],
+            ymax = .data[["upper"]],
+            colour = .data[["level"]]
+          ),
+          data = interval,
+          linewidth = flwd
+        )
       if (length(object$level) <= 5) {
-        p <- p + ggplot2::scale_colour_gradientn(breaks = object$level, colours = shadecols, guide = "legend")
-      }
-      else {
-        p <- p + ggplot2::scale_colour_gradientn(colours = shadecols, guide = "colourbar")
+        p <- p +
+          ggplot2::scale_colour_gradientn(
+            breaks = object$level,
+            colours = shadecols,
+            guide = "legend"
+          )
+      } else {
+        p <- p +
+          ggplot2::scale_colour_gradientn(
+            colours = shadecols,
+            guide = "colourbar"
+          )
       }
     }
 
     # Forecasted points
     predicted <- data.frame(object$newdata, object$mean, check.names = FALSE)
     colnames(predicted) <- c("xpred", "ypred")
-    p <- p + ggplot2::geom_point(ggplot2::aes(x = .data[["xpred"]], y = .data[["ypred"]]), data = predicted, color = fcol, size = flwd)
+    p <- p +
+      ggplot2::geom_point(
+        ggplot2::aes(x = .data[["xpred"]], y = .data[["ypred"]]),
+        data = predicted,
+        color = fcol,
+        size = flwd
+      )
 
     # Line of best fit
     coef <- data.frame(int = 0, m = 0, check.names = FALSE)
@@ -690,35 +970,41 @@ autoplot.forecast <- function(object, include, PI=TRUE, shadecols=c("#596DD5", "
       if (NROW(object$model$coefficients) == 2) {
         coef$m <- object$model$coefficients[-i]
       }
-    }
-    else {
+    } else {
       if (NROW(object$model$coefficients) == 1) {
         coef$m <- object$model$coefficients
       }
     }
     p <- p + ggplot2::geom_abline(intercept = coef$int, slope = coef$m)
-  }
-  else {
+  } else {
     # Time series objects (assumed)
-    if(!missing(shadecols)){
+    if (!missing(shadecols)) {
       warning(
-"The `schadecols` argument is deprecated for time series forecasts.
+        "The `schadecols` argument is deprecated for time series forecasts.
 Interval shading is now done automatically based on the level and `fcol`.",
-        call. = FALSE)
+        call. = FALSE
+      )
     }
     # Data points
     if (!is.null(time(object$x))) {
       timex <- time(object$x)
-    }
-    else if (!is.null(time(object$model$residuals))) {
+    } else if (!is.null(time(object$model$residuals))) {
       timex <- time(object$model$residuals)
     }
-    data <- data.frame(yvar = as.numeric(data$yvar), datetime = as.numeric(timex), check.names = FALSE)
+    data <- data.frame(
+      yvar = as.numeric(data$yvar),
+      datetime = as.numeric(timex),
+      check.names = FALSE
+    )
     if (!missing(include)) {
       data <- tail(data, include)
     }
     p <- p + ggplot2::scale_x_continuous()
-    p <- p + ggplot2::geom_line(ggplot2::aes(x = .data[["datetime"]], y = .data[["yvar"]]), data = data) +
+    p <- p +
+      ggplot2::geom_line(
+        ggplot2::aes(x = .data[["datetime"]], y = .data[["yvar"]]),
+        data = data
+      ) +
       ggplot2::labs(y = vars["yvar"], x = "Time")
 
     # Forecasted intervals
@@ -756,9 +1042,18 @@ Interval shading is now done automatically based on the level and `fcol`.",
 
 #' @rdname plot.mforecast
 #' @export
-autoplot.mforecast <- function(object, PI = TRUE, facets = TRUE, colour = FALSE, ...) {
+autoplot.mforecast <- function(
+  object,
+  PI = TRUE,
+  facets = TRUE,
+  colour = FALSE,
+  ...
+) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+    stop(
+      "ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")",
+      call. = FALSE
+    )
   }
 
   if (!is.mforecast(object)) {
@@ -766,29 +1061,34 @@ autoplot.mforecast <- function(object, PI = TRUE, facets = TRUE, colour = FALSE,
   }
   if (is.ts(object$forecast[[1]]$mean)) {
     # ts forecasts
-    p <- autoplot(getResponse(object), facets = facets, colour = colour) + autolayer(object, ...)
+    p <- autoplot(getResponse(object), facets = facets, colour = colour) +
+      autolayer(object, ...)
     if (facets) {
-      p <- p + ggplot2::facet_wrap(
-        ~ series,
-        labeller = function(labels) {
-          if (!is.null(object$method)) {
-            lapply(labels, function(x) paste0(as.character(x), "\n", object$method[as.character(x)]))
-          }
-          else {
-            lapply(labels, function(x) paste0(as.character(x)))
-          }
-        },
-        ncol = 1,
-        scales = "free_y"
-      )
+      p <- p +
+        ggplot2::facet_wrap(
+          ~series,
+          labeller = function(labels) {
+            if (!is.null(object$method)) {
+              lapply(labels, function(x) {
+                paste0(as.character(x), "\n", object$method[as.character(x)])
+              })
+            } else {
+              lapply(labels, function(x) paste0(as.character(x)))
+            }
+          },
+          ncol = 1,
+          scales = "free_y"
+        )
     }
     p <- p + ggAddExtras(ylab = NULL)
     return(p)
-  }
-  else {
+  } else {
     # lm forecasts
     if (!requireNamespace("grid")) {
-      stop("grid is needed for this function to work. Install it via install.packages(\"grid\")", call. = FALSE)
+      stop(
+        "grid is needed for this function to work. Install it via install.packages(\"grid\")",
+        call. = FALSE
+      )
     }
 
     K <- length(object$forecast)
@@ -807,7 +1107,9 @@ autoplot.mforecast <- function(object, PI = TRUE, facets = TRUE, colour = FALSE,
     gridlayout <- matrix(seq(1, K), ncol = 1, nrow = K)
 
     grid::grid.newpage()
-    grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow(gridlayout), ncol(gridlayout))))
+    grid::pushViewport(grid::viewport(
+      layout = grid::grid.layout(nrow(gridlayout), ncol(gridlayout))
+    ))
 
     for (i in 1:K) {
       partialfcast <- object$forecast[[i]]
@@ -816,8 +1118,10 @@ autoplot.mforecast <- function(object, PI = TRUE, facets = TRUE, colour = FALSE,
       print(
         autoplot(
           structure(partialfcast, class = "forecast"),
-          PI = PI[i], ...
-        ) + ggAddExtras(ylab = names(object$forecast)[i]),
+          PI = PI[i],
+          ...
+        ) +
+          ggAddExtras(ylab = names(object$forecast)[i]),
         vp = grid::viewport(
           layout.pos.row = matchidx$row,
           layout.pos.col = matchidx$col
@@ -834,14 +1138,27 @@ autoplot.mforecast <- function(object, PI = TRUE, facets = TRUE, colour = FALSE,
 #' ggtsdisplay(USAccDeaths, plot.type = "scatter", theme = theme_bw())
 #'
 #' @export
-ggtsdisplay <- function(x, plot.type=c("partial", "histogram", "scatter", "spectrum"),
-                        points=TRUE, smooth=FALSE,
-                        lag.max, na.action=na.contiguous, theme=NULL, ...) {
+ggtsdisplay <- function(
+  x,
+  plot.type = c("partial", "histogram", "scatter", "spectrum"),
+  points = TRUE,
+  smooth = FALSE,
+  lag.max,
+  na.action = na.contiguous,
+  theme = NULL,
+  ...
+) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+    stop(
+      "ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")",
+      call. = FALSE
+    )
   }
   if (!requireNamespace("grid", quietly = TRUE)) {
-    stop("grid is needed for this function to work. Install it via install.packages(\"grid\")", call. = FALSE)
+    stop(
+      "grid is needed for this function to work. Install it via install.packages(\"grid\")",
+      call. = FALSE
+    )
   }
 
   if (NCOL(x) > 1) {
@@ -854,7 +1171,10 @@ ggtsdisplay <- function(x, plot.type=c("partial", "histogram", "scatter", "spect
     x <- ts(x)
   }
   if (missing(lag.max)) {
-    lag.max <- round(min(max(10 * log10(length(x)), 3 * frequency(x)), length(x) / 3))
+    lag.max <- round(min(
+      max(10 * log10(length(x)), 3 * frequency(x)),
+      length(x) / 3
+    ))
   }
 
   dots <- list(...)
@@ -869,7 +1189,9 @@ ggtsdisplay <- function(x, plot.type=c("partial", "histogram", "scatter", "spect
   # Set up grid for plots
   gridlayout <- matrix(c(1, 2, 1, 3), nrow = 2)
   grid::grid.newpage()
-  grid::pushViewport(grid::viewport(layout = grid::grid.layout(nrow(gridlayout), ncol(gridlayout))))
+  grid::pushViewport(grid::viewport(
+    layout = grid::grid.layout(nrow(gridlayout), ncol(gridlayout))
+  ))
 
   # Add ts plot with points
   matchidx <- as.data.frame(which(gridlayout == 1, arr.ind = TRUE))
@@ -880,7 +1202,8 @@ ggtsdisplay <- function(x, plot.type=c("partial", "histogram", "scatter", "spect
   if (smooth) {
     tsplot <- tsplot + ggplot2::geom_smooth(method = "loess", se = FALSE)
   }
-  if (is.null(tsplot$labels$title)) { # Add title if missing
+  if (is.null(tsplot$labels$title)) {
+    # Add title if missing
     tsplot <- tsplot + ggplot2::ggtitle(main)
   }
   if (!is.null(theme)) {
@@ -895,34 +1218,53 @@ ggtsdisplay <- function(x, plot.type=c("partial", "histogram", "scatter", "spect
   )
 
   # Prepare Acf plot
-  acfplot <- do.call(ggAcf, c(x = quote(x), lag.max = lag.max, na.action = na.action, dots[-labs])) + ggplot2::ggtitle(NULL)
+  acfplot <- do.call(
+    ggAcf,
+    c(x = quote(x), lag.max = lag.max, na.action = na.action, dots[-labs])
+  ) +
+    ggplot2::ggtitle(NULL)
   if (!is.null(theme)) {
     acfplot <- acfplot + theme
   }
 
   # Prepare last plot (variable)
   if (plot.type == "partial") {
-    lastplot <- ggPacf(x, lag.max = lag.max, na.action = na.action) + ggplot2::ggtitle(NULL)
+    lastplot <- ggPacf(x, lag.max = lag.max, na.action = na.action) +
+      ggplot2::ggtitle(NULL)
     # Match y-axis
     acfplotrange <- ggplot2::layer_scales(acfplot)$y$range$range
     pacfplotrange <- ggplot2::layer_scales(lastplot)$y$range$range
     yrange <- range(c(acfplotrange, pacfplotrange))
     acfplot <- acfplot + ggplot2::ylim(yrange)
     lastplot <- lastplot + ggplot2::ylim(yrange)
-  }
-  else if (plot.type == "histogram") {
-    lastplot <- gghistogram(x, add.normal = TRUE, add.rug = TRUE) + ggplot2::xlab(main)
-  }
-  else if (plot.type == "scatter") {
-    scatterData <- data.frame(y = x[2:NROW(x)], x = x[seq_len(NROW(x)) - 1], check.names = FALSE)
-    lastplot <- ggplot2::ggplot(ggplot2::aes(y = .data[["y"]], x = .data[["x"]]), data = scatterData) +
-      ggplot2::geom_point() + ggplot2::labs(x = expression(Y[t - 1]), y = expression(Y[t]))
-  }
-  else if (plot.type == "spectrum") {
+  } else if (plot.type == "histogram") {
+    lastplot <- gghistogram(x, add.normal = TRUE, add.rug = TRUE) +
+      ggplot2::xlab(main)
+  } else if (plot.type == "scatter") {
+    scatterData <- data.frame(
+      y = x[2:NROW(x)],
+      x = x[seq_len(NROW(x)) - 1],
+      check.names = FALSE
+    )
+    lastplot <- ggplot2::ggplot(
+      ggplot2::aes(y = .data[["y"]], x = .data[["x"]]),
+      data = scatterData
+    ) +
+      ggplot2::geom_point() +
+      ggplot2::labs(x = expression(Y[t - 1]), y = expression(Y[t]))
+  } else if (plot.type == "spectrum") {
     specData <- spec.ar(x, plot = FALSE)
-    specData <- data.frame(spectrum = specData$spec, frequency = specData$freq, check.names = FALSE)
-    lastplot <- ggplot2::ggplot(ggplot2::aes(y = .data[["spectrum"]], x = .data[["frequency"]]), data = specData) +
-      ggplot2::geom_line() + ggplot2::scale_y_log10()
+    specData <- data.frame(
+      spectrum = specData$spec,
+      frequency = specData$freq,
+      check.names = FALSE
+    )
+    lastplot <- ggplot2::ggplot(
+      ggplot2::aes(y = .data[["spectrum"]], x = .data[["frequency"]]),
+      data = specData
+    ) +
+      ggplot2::geom_line() +
+      ggplot2::scale_y_log10()
   }
   if (!is.null(theme)) {
     lastplot <- lastplot + theme
@@ -988,11 +1330,24 @@ ggtsdisplay <- function(x, plot.type=c("partial", "histogram", "scatter", "spect
 #' gglagchull(lungDeaths, lags = 6)
 #'
 #' @export
-gglagplot <- function(x, lags=ifelse(frequency(x) > 9, 16, 9),
-                      set.lags = 1:lags, diag=TRUE, diag.col="gray", do.lines = TRUE, colour = TRUE,
-                      continuous = frequency(x) > 12, labels = FALSE, seasonal = TRUE, ...) {
+gglagplot <- function(
+  x,
+  lags = ifelse(frequency(x) > 9, 16, 9),
+  set.lags = 1:lags,
+  diag = TRUE,
+  diag.col = "gray",
+  do.lines = TRUE,
+  colour = TRUE,
+  continuous = frequency(x) > 12,
+  labels = FALSE,
+  seasonal = TRUE,
+  ...
+) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+    stop(
+      "ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")",
+      call. = FALSE
+    )
   }
 
   freq <- frequency(x)
@@ -1001,8 +1356,7 @@ gglagplot <- function(x, lags=ifelse(frequency(x) > 9, 16, 9),
     if (freq > 24) {
       continuous <- TRUE
     }
-  }
-  else {
+  } else {
     seasonal <- FALSE
     continuous <- TRUE
   }
@@ -1027,7 +1381,7 @@ gglagplot <- function(x, lags=ifelse(frequency(x) > 9, 16, 9),
         data,
         data.frame(
           lagnum = 1:(n - lagi),
-          freqcur = if(seasonal) linecol[(lagi + 1):n] else (lagi + 1):n,
+          freqcur = if (seasonal) linecol[(lagi + 1):n] else (lagi + 1):n,
           orig = x[(lagi + 1):n, i],
           lagged = x[1:(n - lagi), i],
           lagVal = rep(lagi, n - lagi),
@@ -1042,27 +1396,27 @@ gglagplot <- function(x, lags=ifelse(frequency(x) > 9, 16, 9),
   }
 
   # Initialise ggplot object
-  p <- ggplot2::ggplot(ggplot2::aes(x = .data[["lagged"]], y = .data[["orig"]]), data = data)
+  p <- ggplot2::ggplot(
+    ggplot2::aes(x = .data[["lagged"]], y = .data[["orig"]]),
+    data = data
+  )
 
   if (diag) {
     p <- p + ggplot2::geom_abline(colour = diag.col, linetype = "dashed")
   }
   if (labels) {
     linesize <- 0.25 * (2 - do.lines)
-  }
-  else {
+  } else {
     linesize <- 0.5 * (2 - do.lines)
   }
   plottype <- if (do.lines) {
     function(...) ggplot2::geom_path(..., linewidth = linesize)
-  }
-  else {
+  } else {
     function(...) ggplot2::geom_point(..., size = linesize)
   }
   if (colour) {
     p <- p + plottype(ggplot2::aes(colour = .data[["freqcur"]]))
-  }
-  else {
+  } else {
     p <- p + plottype()
   }
 
@@ -1071,9 +1425,21 @@ gglagplot <- function(x, lags=ifelse(frequency(x) > 9, 16, 9),
   }
   # Ensure all facets are of size size (if extreme values are excluded in lag specification)
   if (max(set.lags) > NROW(x) / 2) {
-    axissize <- rbind(aggregate(orig ~ series, data = data, min), aggregate(orig~ series, data = data, max))
-    axissize <- data.frame(series = rep(axissize$series, length(set.lags)), orig = rep(axissize$orig, length(set.lags)), lagVal = rep(set.lags, each = NCOL(x)), check.names = FALSE)
-    p <- p + ggplot2::geom_blank(ggplot2::aes(x = .data[["orig"]], y = .data[["orig"]]), data = axissize)
+    axissize <- rbind(
+      aggregate(orig ~ series, data = data, min),
+      aggregate(orig ~ series, data = data, max)
+    )
+    axissize <- data.frame(
+      series = rep(axissize$series, length(set.lags)),
+      orig = rep(axissize$orig, length(set.lags)),
+      lagVal = rep(set.lags, each = NCOL(x)),
+      check.names = FALSE
+    )
+    p <- p +
+      ggplot2::geom_blank(
+        ggplot2::aes(x = .data[["orig"]], y = .data[["orig"]]),
+        data = axissize
+      )
   }
 
   # Facet
@@ -1086,9 +1452,13 @@ gglagplot <- function(x, lags=ifelse(frequency(x) > 9, 16, 9),
     return(labels)
   }
   if (NCOL(x) > 1) {
-    p <- p + ggplot2::facet_wrap(~series + lagVal, scales = "free", labeller = labellerFn)
-  }
-  else {
+    p <- p +
+      ggplot2::facet_wrap(
+        ~ series + lagVal,
+        scales = "free",
+        labeller = labellerFn
+      )
+  } else {
     p <- p + ggplot2::facet_wrap(~lagVal, labeller = labellerFn)
   }
   p <- p + ggplot2::theme(aspect.ratio = 1)
@@ -1105,14 +1475,12 @@ gglagplot <- function(x, lags=ifelse(frequency(x) > 9, 16, 9),
       } else {
         title <- "Season"
       }
-    }
-    else {
+    } else {
       title <- "Time"
     }
     if (continuous) {
       p <- p + ggplot2::guides(colour = ggplot2::guide_colourbar(title = title))
-    }
-    else {
+    } else {
       p <- p + ggplot2::guides(colour = ggplot2::guide_legend(title = title))
     }
   }
@@ -1128,11 +1496,19 @@ gglagplot <- function(x, lags=ifelse(frequency(x) > 9, 16, 9),
 #' gglagchull(woolyrnq)
 #'
 #' @export
-gglagchull <- function(x,
-                       lags=ifelse(frequency(x) > 1, min(12, frequency(x)), 4),
-                       set.lags = 1:lags, diag=TRUE, diag.col="gray", ...) {
+gglagchull <- function(
+  x,
+  lags = ifelse(frequency(x) > 1, min(12, frequency(x)), 4),
+  set.lags = 1:lags,
+  diag = TRUE,
+  diag.col = "gray",
+  ...
+) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+    stop(
+      "ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")",
+      call. = FALSE
+    )
   }
 
   # Make sure lags is evaluated
@@ -1148,16 +1524,36 @@ gglagchull <- function(x,
       if (is.null(sname)) {
         sname <- deparse(substitute(x))
       }
-      data <- rbind(data, data.frame(orig = x[(lag + 1):n, i], lagged = x[1:(n - lag), i], lag = rep(lag, n - lag), series = rep(sname, n - lag), check.names = FALSE)[grDevices::chull(x[(lag + 1):n, i], x[1:(n - lag), i]), ])
+      data <- rbind(
+        data,
+        data.frame(
+          orig = x[(lag + 1):n, i],
+          lagged = x[1:(n - lag), i],
+          lag = rep(lag, n - lag),
+          series = rep(sname, n - lag),
+          check.names = FALSE
+        )[grDevices::chull(x[(lag + 1):n, i], x[1:(n - lag), i]), ]
+      )
     }
   }
 
   # Initialise ggplot object
-  p <- ggplot2::ggplot(ggplot2::aes(x = .data[["orig"]], y = .data[["lagged"]]), data = data)
+  p <- ggplot2::ggplot(
+    ggplot2::aes(x = .data[["orig"]], y = .data[["lagged"]]),
+    data = data
+  )
   if (diag) {
     p <- p + ggplot2::geom_abline(colour = diag.col, linetype = "dashed")
   }
-  p <- p + ggplot2::geom_polygon(ggplot2::aes(group = .data[["lag"]], colour = .data[["lag"]], fill = .data[["lag"]]), alpha = 1 / length(set.lags))
+  p <- p +
+    ggplot2::geom_polygon(
+      ggplot2::aes(
+        group = .data[["lag"]],
+        colour = .data[["lag"]],
+        fill = .data[["lag"]]
+      ),
+      alpha = 1 / length(set.lags)
+    )
   p <- p + ggplot2::guides(colour = ggplot2::guide_colourbar(title = "lag"))
   p <- p + ggplot2::theme(aspect.ratio = 1)
 
@@ -1196,15 +1592,30 @@ gglagchull <- function(x,
 #' ggsubseriesplot(woolyrnq)
 #'
 #' @export
-ggmonthplot <- function(x, labels = NULL, times = time(x), phase = cycle(x), ...) {
+ggmonthplot <- function(
+  x,
+  labels = NULL,
+  times = time(x),
+  phase = cycle(x),
+  ...
+) {
   ggsubseriesplot(x, labels, times, phase, ...)
 }
 
 #' @rdname ggmonthplot
 #' @export
-ggsubseriesplot <- function(x, labels = NULL, times = time(x), phase = cycle(x), ...) {
+ggsubseriesplot <- function(
+  x,
+  labels = NULL,
+  times = time(x),
+  phase = cycle(x),
+  ...
+) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+    stop(
+      "ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")",
+      call. = FALSE
+    )
   }
 
   if (!is.ts(x)) {
@@ -1215,16 +1626,23 @@ ggsubseriesplot <- function(x, labels = NULL, times = time(x), phase = cycle(x),
     stop("Data are not seasonal")
   }
 
-  if("1" %in% dimnames(table(table(phase)))[[1]]){
-    stop(paste("Each season requires at least 2 observations.",
-                ifelse(frequency(x)%%1 == 0,
-                      "Your series length may be too short for this graphic.",
-                      "This may be caused from specifying a time-series with non-integer frequency.")
-    )
-    )
+  if ("1" %in% dimnames(table(table(phase)))[[1]]) {
+    stop(paste(
+      "Each season requires at least 2 observations.",
+      ifelse(
+        frequency(x) %% 1 == 0,
+        "Your series length may be too short for this graphic.",
+        "This may be caused from specifying a time-series with non-integer frequency."
+      )
+    ))
   }
 
-  data <- data.frame(y = as.numeric(x), year = trunc(time(x)), season = as.numeric(phase), check.names = FALSE)
+  data <- data.frame(
+    y = as.numeric(x),
+    year = trunc(time(x)),
+    season = as.numeric(phase),
+    check.names = FALSE
+  )
   seasonwidth <- (max(data$year) - min(data$year)) * 1.05
   data$time <- data$season + 0.025 + (data$year - min(data$year)) / seasonwidth
   avgLines <- stats::aggregate(data$y, by = list(data$season), FUN = mean)
@@ -1234,7 +1652,11 @@ ggsubseriesplot <- function(x, labels = NULL, times = time(x), phase = cycle(x),
   # Initialise ggplot object
   # p <- ggplot2::ggplot(ggplot2::aes_(x=~interaction(year, season), y=~y, group=~season), data=data, na.rm=TRUE)
   p <- ggplot2::ggplot(
-    ggplot2::aes(x = .data[["time"]], y = .data[["y"]], group = .data[["season"]]),
+    ggplot2::aes(
+      x = .data[["time"]],
+      y = .data[["y"]],
+      group = .data[["season"]]
+    ),
     data = data
   )
 
@@ -1252,32 +1674,37 @@ ggsubseriesplot <- function(x, labels = NULL, times = time(x), phase = cycle(x),
   if (xfreq == 4) {
     xbreaks <- c("Q1", "Q2", "Q3", "Q4")
     xlab <- "Quarter"
-  }
-  else if (xfreq == 7) {
+  } else if (xfreq == 7) {
     xbreaks <- c(
-      "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
-      "Friday", "Saturday"
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
     )
     xlab <- "Day"
-  }
-  else if (xfreq == 12) {
+  } else if (xfreq == 12) {
     xbreaks <- month.abb
     xlab <- "Month"
-  }
-  else {
+  } else {
     xbreaks <- 1:frequency(x)
     xlab <- "Season"
   }
   if (!is.null(labels)) {
     if (xfreq != length(labels)) {
-      stop("The number of labels supplied is not the same as the number of seasons.")
+      stop(
+        "The number of labels supplied is not the same as the number of seasons."
+      )
     } else {
       xbreaks <- labels
     }
   }
 
   # X-axis
-  p <- p + ggplot2::scale_x_continuous(breaks = 0.5 + (1:xfreq), labels = xbreaks)
+  p <- p +
+    ggplot2::scale_x_continuous(breaks = 0.5 + (1:xfreq), labels = xbreaks)
 
   # Graph labels
   p <- p + ggAddExtras(ylab = deparse(substitute(x)), xlab = xlab)
@@ -1295,9 +1722,23 @@ ggsubseriesplot <- function(x, labels = NULL, times = time(x), phase = cycle(x),
 #' ggseasonplot(AirPassengers, year.labels = TRUE, continuous = TRUE)
 #'
 #' @export
-ggseasonplot <- function(x, season.labels=NULL, year.labels=FALSE, year.labels.left=FALSE, type=NULL, col=NULL, continuous=FALSE, polar=FALSE, labelgap=0.04, ...) {
+ggseasonplot <- function(
+  x,
+  season.labels = NULL,
+  year.labels = FALSE,
+  year.labels.left = FALSE,
+  type = NULL,
+  col = NULL,
+  continuous = FALSE,
+  polar = FALSE,
+  labelgap = 0.04,
+  ...
+) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+    stop(
+      "ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")",
+      call. = FALSE
+    )
   }
   if (!is.ts(x)) {
     stop("autoplot.seasonplot requires a ts object, use x=object")
@@ -1327,8 +1768,7 @@ ggseasonplot <- function(x, season.labels=NULL, year.labels=FALSE, year.labels.l
   )
   data$year <- if (continuous) {
     as.numeric(data$year)
-  }
-  else {
+  } else {
     as.factor(data$year)
   }
   if (polar) {
@@ -1341,26 +1781,36 @@ ggseasonplot <- function(x, season.labels=NULL, year.labels=FALSE, year.labels.l
     data <- rbind(data, startValues)
   }
   # Initialise ggplot object
-  p <- ggplot2::ggplot(ggplot2::aes(x = .data[["time"]], y = .data[["y"]], group = .data[["year"]], colour = .data[["year"]]), data = data)
+  p <- ggplot2::ggplot(
+    ggplot2::aes(
+      x = .data[["time"]],
+      y = .data[["y"]],
+      group = .data[["year"]],
+      colour = .data[["year"]]
+    ),
+    data = data
+  )
   # p <- p + ggplot2::scale_x_continuous()
 
   # Add data
   p <- p + ggplot2::geom_line()
 
   if (!is.null(col)) {
-    if(is.numeric(col)){
-      col <- palette()[(col-1)%%(length(palette())) + 1]
+    if (is.numeric(col)) {
+      col <- palette()[(col - 1) %% (length(palette())) + 1]
     }
     if (continuous) {
       p <- p + ggplot2::scale_color_gradientn(colours = col)
-    }
-    else {
+    } else {
       ncol <- length(unique(data$year))
       if (length(col) == 1) {
-        p <- p + ggplot2::scale_color_manual(guide = "none", values = rep(col, ncol))
-      }
-      else {
-        p <- p + ggplot2::scale_color_manual(values = rep(col, ceiling(ncol / length(col)))[1:ncol])
+        p <- p +
+          ggplot2::scale_color_manual(guide = "none", values = rep(col, ncol))
+      } else {
+        p <- p +
+          ggplot2::scale_color_manual(
+            values = rep(col, ceiling(ncol / length(col)))[1:ncol]
+          )
       }
     }
   }
@@ -1380,44 +1830,51 @@ ggseasonplot <- function(x, season.labels=NULL, year.labels=FALSE, year.labels.l
     yrlab <- merge(yrlab, data)
     yrlab$time <- yrlab$time + yrlab$offset
     p <- p + ggplot2::guides(colour = "none")
-    p <- p + ggplot2::geom_text(ggplot2::aes(x = .data[["time"]], y = .data[["y"]], label = .data[["year"]]), data = yrlab)
+    p <- p +
+      ggplot2::geom_text(
+        ggplot2::aes(
+          x = .data[["time"]],
+          y = .data[["y"]],
+          label = .data[["year"]]
+        ),
+        data = yrlab
+      )
   }
 
   # Add seasonal labels
   if (s == 12) {
     labs <- month.abb
     xLab <- "Month"
-  }
-  else if (s == 4) {
+  } else if (s == 4) {
     labs <- paste0("Q", 1:4)
     xLab <- "Quarter"
-  }
-  else if (s == 7) {
+  } else if (s == 7) {
     labs <- c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
     xLab <- "Day"
-  }
-  else if (s == 52) {
+  } else if (s == 52) {
     labs <- 1:s
     xLab <- "Week"
-  }
-  else if (s == 24) {
+  } else if (s == 24) {
     labs <- 0:(s - 1)
     xLab <- "Hour"
-  }
-  else if (s == 48) {
+  } else if (s == 48) {
     labs <- seq(0, 23.5, by = 0.5)
     xLab <- "Half-hour"
-  }
-  else {
+  } else {
     labs <- 1:s
     xLab <- "Season"
   }
 
   if (!is.null(season.labels)) {
     if (length(season.labels) != length(labs)) {
-      warning(paste0("Provided season.labels have length ", length(season.labels), ", but ", length(labs), " are required. Ignoring season.labels."))
-    }
-    else {
+      warning(paste0(
+        "Provided season.labels have length ",
+        length(season.labels),
+        ", but ",
+        length(labs),
+        " are required. Ignoring season.labels."
+      ))
+    } else {
       labs <- season.labels
     }
   }
@@ -1428,24 +1885,42 @@ ggseasonplot <- function(x, season.labels=NULL, year.labels=FALSE, year.labels.l
     p <- p + ggplot2::coord_polar()
   }
 
-  p <- p + ggplot2::scale_x_continuous(breaks = breaks, minor_breaks = NULL, labels = labs)
+  p <- p +
+    ggplot2::scale_x_continuous(
+      breaks = breaks,
+      minor_breaks = NULL,
+      labels = labs
+    )
 
   # Graph title and axes
-  p <- p + ggAddExtras(main = paste("Seasonal plot:", xname), xlab = xLab, ylab = NULL)
+  p <- p +
+    ggAddExtras(main = paste("Seasonal plot:", xname), xlab = xLab, ylab = NULL)
   return(p)
 }
 
 #' @rdname plot.forecast
 #' @export
-autoplot.splineforecast <- function(object, PI=TRUE, ...) {
+autoplot.splineforecast <- function(object, PI = TRUE, ...) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+    stop(
+      "ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")",
+      call. = FALSE
+    )
   }
 
   p <- autoplot(object$x) + autolayer(object)
   p <- p + ggplot2::geom_point(size = 2)
-  fit <- data.frame(datetime = as.numeric(time(object$fitted)), y = as.numeric(object$fitted), check.names = FALSE)
-  p <- p + ggplot2::geom_line(ggplot2::aes(x = .data[["datetime"]], y = .data[["y"]]), colour = "red", data = fit)
+  fit <- data.frame(
+    datetime = as.numeric(time(object$fitted)),
+    y = as.numeric(object$fitted),
+    check.names = FALSE
+  )
+  p <- p +
+    ggplot2::geom_line(
+      ggplot2::aes(x = .data[["datetime"]], y = .data[["y"]]),
+      colour = "red",
+      data = fit
+    )
   p <- p + ggAddExtras(ylab = deparse(object$model$call$x))
   if (!is.null(object$series)) {
     p <- p + ggplot2::ylab(object$series)
@@ -1457,14 +1932,21 @@ autoplot.splineforecast <- function(object, PI=TRUE, ...) {
 #' @export
 autoplot.stl <- function(object, labels = NULL, range.bars = TRUE, ...) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+    stop(
+      "ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")",
+      call. = FALSE
+    )
   }
 
   if (!inherits(object, "stl")) {
     stop("autoplot.stl requires a stl object, use x=object")
   }
   # Re-order series as trend, seasonal, remainder
-  object$time.series <- object$time.series[, c("trend", "seasonal", "remainder")]
+  object$time.series <- object$time.series[, c(
+    "trend",
+    "seasonal",
+    "remainder"
+  )]
   if (is.null(labels)) {
     labels <- colnames(object$time.series)
   }
@@ -1472,49 +1954,92 @@ autoplot.stl <- function(object, labels = NULL, range.bars = TRUE, ...) {
   data <- object$time.series
   cn <- c("data", labels)
   data <- data.frame(
-    datetime = rep(time(data), NCOL(data) + 1), y = c(rowSums(data), data),
+    datetime = rep(time(data), NCOL(data) + 1),
+    y = c(rowSums(data), data),
     parts = factor(rep(cn, each = NROW(data)), levels = cn),
     check.names = FALSE
   )
 
   # Initialise ggplot object
-  p <- ggplot2::ggplot(ggplot2::aes(x = .data[["datetime"]], y = .data[["y"]]), data = data)
+  p <- ggplot2::ggplot(
+    ggplot2::aes(x = .data[["datetime"]], y = .data[["y"]]),
+    data = data
+  )
 
   # Add data
   # Time series lines
-  p <- p + ggplot2::geom_line(ggplot2::aes(x = .data[["datetime"]], y = .data[["y"]]), data = subset(data, data$parts != cn[4]), na.rm = TRUE)
-  p <- p + ggplot2::geom_segment(
-    ggplot2::aes(x = .data[["datetime"]], xend = .data[["datetime"]], y = 0, yend = .data[["y"]]),
-    data = subset(data, data$parts == cn[4]), lineend = "butt"
-  )
+  p <- p +
+    ggplot2::geom_line(
+      ggplot2::aes(x = .data[["datetime"]], y = .data[["y"]]),
+      data = subset(data, data$parts != cn[4]),
+      na.rm = TRUE
+    )
+  p <- p +
+    ggplot2::geom_segment(
+      ggplot2::aes(
+        x = .data[["datetime"]],
+        xend = .data[["datetime"]],
+        y = 0,
+        yend = .data[["y"]]
+      ),
+      data = subset(data, data$parts == cn[4]),
+      lineend = "butt"
+    )
 
   # Rangebars
   if (range.bars) {
-    yranges <- vapply(split(data$y, data$parts), function(x) range(x, na.rm = TRUE), numeric(2))
+    yranges <- vapply(
+      split(data$y, data$parts),
+      function(x) range(x, na.rm = TRUE),
+      numeric(2)
+    )
     xranges <- range(data$datetime)
     barmid <- colMeans(yranges)
     barlength <- min(apply(yranges, 2, diff))
     barwidth <- (1 / 64) * diff(xranges)
     barpos <- data.frame(
-      left = xranges[2] + barwidth, right = xranges[2] + barwidth * 2,
-      top = barmid + barlength / 2, bottom = barmid - barlength / 2,
+      left = xranges[2] + barwidth,
+      right = xranges[2] + barwidth * 2,
+      top = barmid + barlength / 2,
+      bottom = barmid - barlength / 2,
       parts = factor(colnames(yranges), levels = cn),
-      datetime = xranges[2], y = barmid,
+      datetime = xranges[2],
+      y = barmid,
       check.names = FALSE
     )
-    p <- p + ggplot2::geom_rect(ggplot2::aes(xmin = .data[["left"]], xmax = .data[["right"]], ymax = .data[["top"]], ymin = .data[["bottom"]]), data = barpos, fill = "gray75", colour = "black", linewidth = 1 / 3)
+    p <- p +
+      ggplot2::geom_rect(
+        ggplot2::aes(
+          xmin = .data[["left"]],
+          xmax = .data[["right"]],
+          ymax = .data[["top"]],
+          ymin = .data[["bottom"]]
+        ),
+        data = barpos,
+        fill = "gray75",
+        colour = "black",
+        linewidth = 1 / 3
+      )
   }
 
   # Remainder
   p <- p + ggplot2::facet_grid("parts ~ .", scales = "free_y", switch = "y")
-  p <- p + ggplot2::geom_hline(ggplot2::aes(yintercept = .data[["y"]]),
-                               data = data.frame(y = 0, parts = factor(cn[4], levels = cn), check.names = FALSE))
+  p <- p +
+    ggplot2::geom_hline(
+      ggplot2::aes(yintercept = .data[["y"]]),
+      data = data.frame(
+        y = 0,
+        parts = factor(cn[4], levels = cn),
+        check.names = FALSE
+      )
+    )
 
   # Add axis labels
   p <- p + ggAddExtras(xlab = "Time", ylab = "")
 
   # Make x axis contain only whole numbers (e.g., years)
-  p <- p + ggplot2::scale_x_continuous(breaks = unique(round(pretty(data$datetime))))
+  p <- p +
+    ggplot2::scale_x_continuous(breaks = unique(round(pretty(data$datetime))))
   # ^^ Remove rightmost x axis gap with `expand=c(0.05, 0, 0, 0)` argument when assymetric `expand` feature is supported
   # issue: tidyverse/ggplot2#1669
 
@@ -1525,7 +2050,10 @@ autoplot.stl <- function(object, labels = NULL, range.bars = TRUE, ...) {
 #' @export
 autoplot.StructTS <- function(object, labels = NULL, range.bars = TRUE, ...) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+    stop(
+      "ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")",
+      call. = FALSE
+    )
   }
 
   if (!inherits(object, "StructTS")) {
@@ -1539,39 +2067,67 @@ autoplot.StructTS <- function(object, labels = NULL, range.bars = TRUE, ...) {
   data <- object$fitted
   cn <- c("data", labels)
   data <- data.frame(
-    datetime = rep(time(data), NCOL(data) + 1), y = c(object$data, data),
+    datetime = rep(time(data), NCOL(data) + 1),
+    y = c(object$data, data),
     parts = factor(rep(cn, each = NROW(data)), levels = cn),
     check.names = FALSE
   )
 
   # Initialise ggplot object
-  p <- ggplot2::ggplot(ggplot2::aes(x = .data[["datetime"]], y = .data[["y"]]), data = data)
+  p <- ggplot2::ggplot(
+    ggplot2::aes(x = .data[["datetime"]], y = .data[["y"]]),
+    data = data
+  )
 
   # Add data
-  p <- p + ggplot2::geom_line(ggplot2::aes(x = .data[["datetime"]], y = .data[["y"]]), na.rm = TRUE)
+  p <- p +
+    ggplot2::geom_line(
+      ggplot2::aes(x = .data[["datetime"]], y = .data[["y"]]),
+      na.rm = TRUE
+    )
   p <- p + ggplot2::facet_grid("parts ~ .", scales = "free_y", switch = "y")
 
   if (range.bars) {
-    yranges <- vapply(split(data$y, data$parts), function(x) range(x, na.rm = TRUE), numeric(2))
+    yranges <- vapply(
+      split(data$y, data$parts),
+      function(x) range(x, na.rm = TRUE),
+      numeric(2)
+    )
     xranges <- range(data$datetime)
     barmid <- colMeans(yranges)
     barlength <- min(apply(yranges, 2, diff))
     barwidth <- (1 / 64) * diff(xranges)
     barpos <- data.frame(
-      left = xranges[2] + barwidth, right = xranges[2] + barwidth * 2,
-      top = barmid + barlength / 2, bottom = barmid - barlength / 2,
+      left = xranges[2] + barwidth,
+      right = xranges[2] + barwidth * 2,
+      top = barmid + barlength / 2,
+      bottom = barmid - barlength / 2,
       parts = factor(colnames(yranges), levels = cn),
-      datetime = xranges[2], y = barmid,
+      datetime = xranges[2],
+      y = barmid,
       check.names = FALSE
     )
-    p <- p + ggplot2::geom_rect(ggplot2::aes(xmin = .data[["left"]], xmax = .data[["right"]], ymax = .data[["top"]], ymin = .data[["bottom"]]), data = barpos, fill = "gray75", colour = "black", linewidth = 1 / 3)
+    p <- p +
+      ggplot2::geom_rect(
+        ggplot2::aes(
+          xmin = .data[["left"]],
+          xmax = .data[["right"]],
+          ymax = .data[["top"]],
+          ymin = .data[["bottom"]]
+        ),
+        data = barpos,
+        fill = "gray75",
+        colour = "black",
+        linewidth = 1 / 3
+      )
   }
 
   # Add axis labels
   p <- p + ggAddExtras(xlab = "Time", ylab = "")
 
   # Make x axis contain only whole numbers (e.g., years)
-  p <- p + ggplot2::scale_x_continuous(breaks = unique(round(pretty(data$datetime))))
+  p <- p +
+    ggplot2::scale_x_continuous(breaks = unique(round(pretty(data$datetime))))
 
   return(p)
 }
@@ -1614,7 +2170,10 @@ autoplot.StructTS <- function(object, labels = NULL, range.bars = TRUE, ...) {
 #' @export
 autoplot.seas <- function(object, labels = NULL, range.bars = NULL, ...) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+    stop(
+      "ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")",
+      call. = FALSE
+    )
   }
   if (!inherits(object, "seas")) {
     stop("autoplot.seas requires a seas object")
@@ -1630,60 +2189,100 @@ autoplot.seas <- function(object, labels = NULL, range.bars = NULL, ...) {
   colnames(data) <- cn <- c("data", labels)
 
   data <- data.frame(
-    datetime = rep(time(data), NCOL(data)), y = c(data),
+    datetime = rep(time(data), NCOL(data)),
+    y = c(data),
     parts = factor(rep(cn, each = NROW(data)), levels = cn),
     check.names = FALSE
   )
 
   # Is it additive or multiplicative?
   freq <- frequency(object$data)
-  sum_first_year <- try(sum(seasonal(object)[seq(freq)]), silent=TRUE)
-  if(!inherits(sum_first_year, "try-error")) {
+  sum_first_year <- try(sum(seasonal(object)[seq(freq)]), silent = TRUE)
+  if (!inherits(sum_first_year, "try-error")) {
     int <- as.integer(sum_first_year > 0.5) # Closer to 1 than 0.
   } else {
     int <- 0
   }
 
   # Initialise ggplot object
-  p <- ggplot2::ggplot(ggplot2::aes(x = .data[["datetime"]], y = .data[["y"]]), data = data)
+  p <- ggplot2::ggplot(
+    ggplot2::aes(x = .data[["datetime"]], y = .data[["y"]]),
+    data = data
+  )
   # Add data
-  p <- p + ggplot2::geom_line(ggplot2::aes(x = .data[["datetime"]], y = .data[["y"]]),
-                              data = subset(data, data$parts != tail(cn,1)),
-                              na.rm = TRUE)
-  p <- p + ggplot2::geom_segment(
-    ggplot2::aes(x = .data[["datetime"]], xend = .data[["datetime"]], y = int, yend = .data[["y"]]),
-    data = subset(data, data$parts == tail(cn,1)), lineend = "butt"
-  )
+  p <- p +
+    ggplot2::geom_line(
+      ggplot2::aes(x = .data[["datetime"]], y = .data[["y"]]),
+      data = subset(data, data$parts != tail(cn, 1)),
+      na.rm = TRUE
+    )
+  p <- p +
+    ggplot2::geom_segment(
+      ggplot2::aes(
+        x = .data[["datetime"]],
+        xend = .data[["datetime"]],
+        y = int,
+        yend = .data[["y"]]
+      ),
+      data = subset(data, data$parts == tail(cn, 1)),
+      lineend = "butt"
+    )
   p <- p + ggplot2::facet_grid("parts ~ .", scales = "free_y", switch = "y")
-  p <- p + ggplot2::geom_hline(ggplot2::aes(yintercept = .data[["y"]]),
-    data = data.frame(y = int, parts = factor(tail(cn,1), levels = cn), check.names = FALSE)
-  )
+  p <- p +
+    ggplot2::geom_hline(
+      ggplot2::aes(yintercept = .data[["y"]]),
+      data = data.frame(
+        y = int,
+        parts = factor(tail(cn, 1), levels = cn),
+        check.names = FALSE
+      )
+    )
 
   # Rangebars
   if (is.null(range.bars)) {
     range.bars <- object$spc$transform$`function` == "none"
   }
   if (range.bars) {
-    yranges <- vapply(split(data$y, data$parts), function(x) range(x, na.rm = TRUE), numeric(2))
+    yranges <- vapply(
+      split(data$y, data$parts),
+      function(x) range(x, na.rm = TRUE),
+      numeric(2)
+    )
     xranges <- range(data$datetime)
     barmid <- colMeans(yranges)
     barlength <- min(apply(yranges, 2, diff))
     barwidth <- (1 / 64) * diff(xranges)
     barpos <- data.frame(
-      left = xranges[2] + barwidth, right = xranges[2] + barwidth * 2,
-      top = barmid + barlength / 2, bottom = barmid - barlength / 2,
+      left = xranges[2] + barwidth,
+      right = xranges[2] + barwidth * 2,
+      top = barmid + barlength / 2,
+      bottom = barmid - barlength / 2,
       parts = factor(colnames(yranges), levels = cn),
-      datetime = xranges[2], y = barmid,
+      datetime = xranges[2],
+      y = barmid,
       check.names = FALSE
     )
-    p <- p + ggplot2::geom_rect(ggplot2::aes(xmin = .data[["left"]], xmax = .data[["right"]], ymax = .data[["top"]], ymin = .data[["bottom"]]), data = barpos, fill = "gray75", colour = "black", linewidth = 1 / 3)
+    p <- p +
+      ggplot2::geom_rect(
+        ggplot2::aes(
+          xmin = .data[["left"]],
+          xmax = .data[["right"]],
+          ymax = .data[["top"]],
+          ymin = .data[["bottom"]]
+        ),
+        data = barpos,
+        fill = "gray75",
+        colour = "black",
+        linewidth = 1 / 3
+      )
   }
 
   # Add axis labels
   p <- p + ggAddExtras(xlab = "Time", ylab = "")
 
   # Make x axis contain only whole numbers (e.g., years)
-  p <- p + ggplot2::scale_x_continuous(breaks = unique(round(pretty(data$datetime))))
+  p <- p +
+    ggplot2::scale_x_continuous(breaks = unique(round(pretty(data$datetime))))
 
   return(p)
 }
@@ -1692,14 +2291,19 @@ autoplot.seas <- function(object, labels = NULL, range.bars = NULL, ...) {
 #' @export
 autolayer.mts <- function(object, colour = TRUE, series = NULL, ...) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+    stop(
+      "ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")",
+      call. = FALSE
+    )
   }
   cl <- match.call()
   cl[[1]] <- quote(autolayer)
   cl$object <- quote(object[, i])
   if (length(series) != NCOL(object)) {
     if (colour) {
-      message("For a multivariate time series, specify a seriesname for each time series. Defaulting to column names.")
+      message(
+        "For a multivariate time series, specify a seriesname for each time series. Defaulting to column names."
+      )
     }
     series <- colnames(object)
   }
@@ -1716,8 +2320,7 @@ autolayer.mts <- function(object, colour = TRUE, series = NULL, ...) {
 autolayer.msts <- function(object, series = NULL, ...) {
   if (NCOL(object) > 1) {
     class(object) <- c("mts", "ts", "matrix")
-  }
-  else {
+  } else {
     if (is.null(series)) {
       series <- deparse(substitute(series))
     }
@@ -1729,9 +2332,12 @@ autolayer.msts <- function(object, series = NULL, ...) {
 
 #' @rdname autoplot.ts
 #' @export
-autolayer.ts <- function(object, colour=TRUE, series=NULL, ...) {
+autolayer.ts <- function(object, colour = TRUE, series = NULL, ...) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+    stop(
+      "ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")",
+      call. = FALSE
+    )
   }
 
   tsdata <- data.frame(
@@ -1741,16 +2347,40 @@ autolayer.ts <- function(object, colour=TRUE, series=NULL, ...) {
     check.names = FALSE
   )
   if (colour) {
-    ggplot2::geom_line(ggplot2::aes(x = .data[["timeVal"]], y = .data[["seriesVal"]], group = .data[["series"]], colour = .data[["series"]]), data = tsdata, ..., inherit.aes = FALSE)
-  }
-  else {
-    ggplot2::geom_line(ggplot2::aes(x = .data[["timeVal"]], y = .data[["seriesVal"]], group = .data[["series"]]), data = tsdata, ..., inherit.aes = FALSE)
+    ggplot2::geom_line(
+      ggplot2::aes(
+        x = .data[["timeVal"]],
+        y = .data[["seriesVal"]],
+        group = .data[["series"]],
+        colour = .data[["series"]]
+      ),
+      data = tsdata,
+      ...,
+      inherit.aes = FALSE
+    )
+  } else {
+    ggplot2::geom_line(
+      ggplot2::aes(
+        x = .data[["timeVal"]],
+        y = .data[["seriesVal"]],
+        group = .data[["series"]]
+      ),
+      data = tsdata,
+      ...,
+      inherit.aes = FALSE
+    )
   }
 }
 
 #' @rdname plot.forecast
 #' @export
-autolayer.forecast <- function(object, series = NULL, PI = TRUE, showgap = TRUE, ...) {
+autolayer.forecast <- function(
+  object,
+  series = NULL,
+  PI = TRUE,
+  showgap = TRUE,
+  ...
+) {
   PI <- PI & !is.null(object$level)
   data <- forecast2plotdf(object, PI = PI, showgap = showgap)
   mapping <- ggplot2::aes(x = .data[["x"]], y = .data[["y"]])
@@ -1766,7 +2396,13 @@ autolayer.forecast <- function(object, series = NULL, PI = TRUE, showgap = TRUE,
     mapping$ymin <- quote(ymin)
     mapping$ymax <- quote(ymax)
   }
-  geom_forecast(mapping = mapping, data = data, stat = "identity", ..., inherit.aes = FALSE)
+  geom_forecast(
+    mapping = mapping,
+    data = data,
+    stat = "identity",
+    ...,
+    inherit.aes = FALSE
+  )
 }
 
 #' @rdname plot.mforecast
@@ -1822,10 +2458,19 @@ autolayer.mforecast <- function(object, series = NULL, PI = TRUE, ...) {
 #' autoplot(lungDeaths, facets = TRUE)
 #'
 #' @export
-autoplot.ts <- function(object, series=NULL, xlab = "Time", ylab = deparse(substitute(object)),
-                        main = NULL,  ...) {
+autoplot.ts <- function(
+  object,
+  series = NULL,
+  xlab = "Time",
+  ylab = deparse(substitute(object)),
+  main = NULL,
+  ...
+) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+    stop(
+      "ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")",
+      call. = FALSE
+    )
   }
 
   if (!is.ts(object)) {
@@ -1834,19 +2479,30 @@ autoplot.ts <- function(object, series=NULL, xlab = "Time", ylab = deparse(subst
 
   # Create data frame with time as a column labelled x
   # and time series as a column labelled y.
-  data <- data.frame(y = as.numeric(object), x = as.numeric(time(object)), check.names = FALSE)
+  data <- data.frame(
+    y = as.numeric(object),
+    x = as.numeric(time(object)),
+    check.names = FALSE
+  )
   if (!is.null(series)) {
     data <- transform(data, series = series)
   }
 
   # Initialise ggplot object
-  p <- ggplot2::ggplot(ggplot2::aes(y = .data[["y"]], x = .data[["x"]]), data = data)
+  p <- ggplot2::ggplot(
+    ggplot2::aes(y = .data[["y"]], x = .data[["x"]]),
+    data = data
+  )
 
   # Add data
   if (!is.null(series)) {
-    p <- p + ggplot2::geom_line(ggplot2::aes(group = .data[["series"]], colour = .data[["series"]]), na.rm = TRUE, ...)
-  }
-  else {
+    p <- p +
+      ggplot2::geom_line(
+        ggplot2::aes(group = .data[["series"]], colour = .data[["series"]]),
+        na.rm = TRUE,
+        ...
+      )
+  } else {
     p <- p + ggplot2::geom_line(na.rm = TRUE, ...)
   }
 
@@ -1860,10 +2516,20 @@ autoplot.ts <- function(object, series=NULL, xlab = "Time", ylab = deparse(subst
 
 #' @rdname autoplot.ts
 #' @export
-autoplot.mts <- function(object, colour=TRUE, facets=FALSE, xlab = "Time", ylab = deparse(substitute(object)),
-                         main = NULL, ...) {
+autoplot.mts <- function(
+  object,
+  colour = TRUE,
+  facets = FALSE,
+  xlab = "Time",
+  ylab = deparse(substitute(object)),
+  main = NULL,
+  ...
+) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+    stop(
+      "ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")",
+      call. = FALSE
+    )
   }
 
   if (!stats::is.mts(object)) {
@@ -1879,20 +2545,25 @@ autoplot.mts <- function(object, colour=TRUE, facets=FALSE, xlab = "Time", ylab 
   }
 
   data <- data.frame(
-    y = as.numeric(c(object)), x = rep(as.numeric(time(object)), NCOL(object)),
+    y = as.numeric(c(object)),
+    x = rep(as.numeric(time(object)), NCOL(object)),
     series = factor(rep(cn, each = NROW(object)), levels = cn),
     check.names = FALSE
   )
 
   # Initialise ggplot object
-  mapping <- ggplot2::aes(y = .data[["y"]], x = .data[["x"]], group = .data[["series"]])
+  mapping <- ggplot2::aes(
+    y = .data[["y"]],
+    x = .data[["x"]],
+    group = .data[["series"]]
+  )
   if (colour && (!facets || !missing(colour))) {
     mapping$colour <- quote(series)
   }
   p <- ggplot2::ggplot(mapping, data = data)
   p <- p + ggplot2::geom_line(na.rm = TRUE, ...)
   if (facets) {
-    p <- p + ggplot2::facet_grid(series~., scales = "free_y")
+    p <- p + ggplot2::facet_grid(series ~ ., scales = "free_y")
   }
   p <- p + ggAddExtras(xlab = xlab, ylab = ylab, main = main)
   return(p)
@@ -1904,8 +2575,7 @@ autoplot.msts <- function(object, ...) {
   sname <- deparse(substitute(object))
   if (NCOL(object) > 1) {
     class(object) <- c("mts", "ts", "matrix")
-  }
-  else {
+  } else {
     class(object) <- c("ts")
   }
   attr(object, "msts") <- NULL
@@ -1923,59 +2593,82 @@ fortify.ts <- function(model, data, ...) {
     if (any(tsp[3] == c(4, 12))) {
       dtindex <- zoo::as.Date.yearmon(dtindex)
     }
-    model <- data.frame(Index = dtindex, Data = as.numeric(model), check.names = FALSE)
+    model <- data.frame(
+      Index = dtindex,
+      Data = as.numeric(model),
+      check.names = FALSE
+    )
     return(ggplot2::fortify(model))
-  }
-  else {
+  } else {
     model <- cbind(x = as.numeric(time(model)), y = as.numeric(model))
     as.data.frame(model)
   }
 }
 
-forecast2plotdf <- function(model, data=as.data.frame(model), PI=TRUE, showgap=TRUE, ...) {
+forecast2plotdf <- function(
+  model,
+  data = as.data.frame(model),
+  PI = TRUE,
+  showgap = TRUE,
+  ...
+) {
   # Time series forecasts
   if (is.ts(model$mean)) {
     xVals <- as.numeric(time(model$mean)) # x axis is time
-  }
-  # Cross-sectional forecasts
-  else if (!is.null(model[["newdata"]])) {
+  } else if (!is.null(model[["newdata"]])) {
+    # Cross-sectional forecasts
     xVals <- as.numeric(model[["newdata"]][, 1]) # Only display the first column of newdata, should be generalised.
     if (NCOL(model[["newdata"]]) > 1) {
       message("Note: only extracting first column of data")
     }
-  }
-  else {
+  } else {
     stop("Could not find forecast x axis")
   }
   Hiloc <- grep("Hi ", names(data), fixed = TRUE)
   Loloc <- grep("Lo ", names(data), fixed = TRUE)
-  if (PI && !is.null(model$level)) { # PI
+  if (PI && !is.null(model$level)) {
+    # PI
     if (length(Hiloc) == length(Loloc)) {
       if (length(Hiloc) > 0) {
         out <- data.frame(
           x = rep(xVals, length(Hiloc) + 1),
           y = c(rep(NA, NROW(data) * (length(Hiloc))), data[, 1]),
-          level = c(as.numeric(rep(gsub("Hi ", "", names(data)[Hiloc], fixed = TRUE), each = NROW(data))), rep(NA, NROW(data))),
-          ymax = c(unlist(data[, Hiloc]), rep(NA, NROW(data))), ymin = c(unlist(data[, Loloc]), rep(NA, NROW(data))),
+          level = c(
+            as.numeric(rep(
+              gsub("Hi ", "", names(data)[Hiloc], fixed = TRUE),
+              each = NROW(data)
+            )),
+            rep(NA, NROW(data))
+          ),
+          ymax = c(unlist(data[, Hiloc]), rep(NA, NROW(data))),
+          ymin = c(unlist(data[, Loloc]), rep(NA, NROW(data))),
           check.names = FALSE
         )
         numInterval <- length(model$level)
       }
-    }
-    else {
+    } else {
       warning("missing intervals detected, plotting point predictions only")
       PI <- FALSE
     }
   }
-  if (!PI) { # No PI
-    out <- data.frame(x = xVals, y = as.numeric(model$mean), level = rep(NA, NROW(model$mean)), ymax = rep(NA, NROW(model$mean)), ymin = rep(NA, NROW(model$mean)), check.names = FALSE)
+  if (!PI) {
+    # No PI
+    out <- data.frame(
+      x = xVals,
+      y = as.numeric(model$mean),
+      level = rep(NA, NROW(model$mean)),
+      ymax = rep(NA, NROW(model$mean)),
+      ymin = rep(NA, NROW(model$mean)),
+      check.names = FALSE
+    )
     numInterval <- 0
   }
   if (!showgap) {
     if (is.null(model$x)) {
-      warning("Removing the gap requires historical data, provide this via model$x. Defaulting showgap to TRUE.")
-    }
-    else {
+      warning(
+        "Removing the gap requires historical data, provide this via model$x. Defaulting showgap to TRUE."
+      )
+    } else {
       intervalGap <- data.frame(
         x = rep(time(model$x)[length(model$x)], numInterval + 1),
         y = c(model$x[length(model$x)], rep(NA, numInterval)),
@@ -1993,12 +2686,26 @@ forecast2plotdf <- function(model, data=as.data.frame(model), PI=TRUE, showgap=T
 #' @rdname geom_forecast
 #' @export
 StatForecast <- ggplot2::ggproto(
-  "StatForecast", ggplot2::Stat,
+  "StatForecast",
+  ggplot2::Stat,
   required_aes = c("x", "y"),
 
-  compute_group = function(data, scales, params, PI=TRUE, showgap=TRUE, series=NULL,
-                           h=NULL, level=c(80, 95), fan=FALSE, robust=FALSE, lambda=NULL,
-                           find.frequency=FALSE, allow.multiplicative.trend=FALSE, ...) {
+  compute_group = function(
+    data,
+    scales,
+    params,
+    PI = TRUE,
+    showgap = TRUE,
+    series = NULL,
+    h = NULL,
+    level = c(80, 95),
+    fan = FALSE,
+    robust = FALSE,
+    lambda = NULL,
+    find.frequency = FALSE,
+    allow.multiplicative.trend = FALSE,
+    ...
+  ) {
     ## TODO: Rewrite
     tspx <- recoverTSP(data$x)
     if (is.null(h)) {
@@ -2006,8 +2713,13 @@ StatForecast <- ggplot2::ggproto(
     }
     tsdat <- ts(data = data$y, start = tspx[1], frequency = tspx[3])
     fcast <- forecast(
-      tsdat, h = h, level = level, fan = fan, robust = robust,
-      lambda = lambda, find.frequency = find.frequency,
+      tsdat,
+      h = h,
+      level = level,
+      fan = fan,
+      robust = robust,
+      lambda = lambda,
+      find.frequency = find.frequency,
       allow.multiplicative.trend = allow.multiplicative.trend
     )
 
@@ -2018,9 +2730,13 @@ StatForecast <- ggplot2::ggproto(
     extraInfo$`_data` <- quote(fcast)
     if (!is.null(series)) {
       if (data$group[1] > length(series)) {
-        message("Recycling series argument, please provide a series name for each time series")
+        message(
+          "Recycling series argument, please provide a series name for each time series"
+        )
       }
-      extraInfo[["series"]] <- series[(abs(data$group[1]) - 1) %% length(series) + 1]
+      extraInfo[["series"]] <- series[
+        (abs(data$group[1]) - 1) %% length(series) + 1
+      ]
     }
     do.call("transform", extraInfo)
   }
@@ -2029,12 +2745,18 @@ StatForecast <- ggplot2::ggproto(
 #' @rdname geom_forecast
 #' @export
 GeomForecast <- ggplot2::ggproto(
-  "GeomForecast", ggplot2::Geom, # Produces both point forecasts and intervals on graph
+  "GeomForecast",
+  ggplot2::Geom, # Produces both point forecasts and intervals on graph
   required_aes = c("x", "y"),
   optional_aes = c("ymin", "ymax", "level"),
   default_aes = ggplot2::aes(
-    colour = "blue", fill = "grey60", size = .5,
-    linetype = 1, weight = 1, alpha = 1, level = NA
+    colour = "blue",
+    fill = "grey60",
+    size = .5,
+    linetype = 1,
+    weight = 1,
+    alpha = 1,
+    level = NA
   ),
   draw_key = function(data, params, size) {
     lwd <- min(data$size, min(size) / 4)
@@ -2069,7 +2791,8 @@ GeomForecast <- ggplot2::ggproto(
     )
   },
 
-  handle_na = function(self, data, params) { ## TODO: Consider removing/changing
+  handle_na = function(self, data, params) {
+    ## TODO: Consider removing/changing
     data
   },
 
@@ -2081,13 +2804,14 @@ GeomForecast <- ggplot2::ggproto(
     }
 
     # Draw forecasted points and intervals
-    if (length(data) == 1) { # PI=FALSE
+    if (length(data) == 1) {
+      # PI=FALSE
       ggplot2:::ggname(
         "geom_forecast",
         GeomForecastPoint$draw_panel(data[[1]], panel_scales, coord)
       )
-    }
-    else { # PI=TRUE
+    } else {
+      # PI=TRUE
       ggplot2:::ggname(
         "geom_forecast",
         grid::addGrob(
@@ -2100,7 +2824,8 @@ GeomForecast <- ggplot2::ggproto(
 )
 
 GeomForecastPoint <- ggplot2::ggproto(
-  "GeomForecastPoint", GeomForecast, ## Produces only point forecasts
+  "GeomForecastPoint",
+  GeomForecast, ## Produces only point forecasts
   required_aes = c("x", "y"),
 
   setup_data = function(data, params) {
@@ -2110,19 +2835,35 @@ GeomForecastPoint <- ggplot2::ggproto(
   draw_group = function(data, panel_scales, coord) {
     linecol <- blendHex(data$colour[1], "gray30", 1)
     # Compute alpha transparency
-    data$alpha <- grDevices::col2rgb(linecol, alpha = TRUE)[4, ] / 255 * data$alpha
+    data$alpha <- grDevices::col2rgb(linecol, alpha = TRUE)[4, ] /
+      255 *
+      data$alpha
 
     # Select appropriate Geom and set defaults
-    if (NROW(data) == 0) { # Blank
+    if (NROW(data) == 0) {
+      # Blank
       ggplot2::GeomBlank$draw_panel
-    }
-    else if (NROW(data) == 1) { # Point
+    } else if (NROW(data) == 1) {
+      # Point
       GeomForecastPointGeom <- ggplot2::GeomPoint$draw_panel
-      pointpred <- transform(data, fill = NA, colour = linecol, size = 1, shape = 19, stroke = 0.5)
-    }
-    else { # Line
+      pointpred <- transform(
+        data,
+        fill = NA,
+        colour = linecol,
+        size = 1,
+        shape = 19,
+        stroke = 0.5
+      )
+    } else {
+      # Line
       GeomForecastPointGeom <- ggplot2::GeomLine$draw_panel
-      pointpred <- transform(data, fill = NA, colour = linecol, linewidth = size, size = NULL)
+      pointpred <- transform(
+        data,
+        fill = NA,
+        colour = linecol,
+        linewidth = size,
+        size = NULL
+      )
     }
 
     # Draw forecast points
@@ -2133,7 +2874,7 @@ GeomForecastPoint <- ggplot2::ggproto(
   }
 )
 
-blendHex <- function(mixcol, seqcol, alpha=1) {
+blendHex <- function(mixcol, seqcol, alpha = 1) {
   requireNamespace("methods")
   if (is.na(seqcol)) {
     return(mixcol)
@@ -2142,12 +2883,28 @@ blendHex <- function(mixcol, seqcol, alpha=1) {
   # transform to hue/lightness/saturation colorspace
   seqcol <- grDevices::col2rgb(seqcol, alpha = TRUE)
   mixcol <- grDevices::col2rgb(mixcol, alpha = TRUE)
-  seqcolHLS <- methods::as(colorspace::RGB(R = seqcol[1, ] / 255, G = seqcol[2, ] / 255, B = seqcol[3, ] / 255), "HLS")
-  mixcolHLS <- methods::as(colorspace::RGB(R = mixcol[1, ] / 255, G = mixcol[2, ] / 255, B = mixcol[3, ] / 255), "HLS")
+  seqcolHLS <- methods::as(
+    colorspace::RGB(
+      R = seqcol[1, ] / 255,
+      G = seqcol[2, ] / 255,
+      B = seqcol[3, ] / 255
+    ),
+    "HLS"
+  )
+  mixcolHLS <- methods::as(
+    colorspace::RGB(
+      R = mixcol[1, ] / 255,
+      G = mixcol[2, ] / 255,
+      B = mixcol[3, ] / 255
+    ),
+    "HLS"
+  )
 
   # copy luminence
   mixcolHLS@coords[, "L"] <- seqcolHLS@coords[, "L"]
-  mixcolHLS@coords[, "S"] <- alpha * mixcolHLS@coords[, "S"] + (1 - alpha) * seqcolHLS@coords[, "S"]
+  mixcolHLS@coords[, "S"] <- alpha *
+    mixcolHLS@coords[, "S"] +
+    (1 - alpha) * seqcolHLS@coords[, "S"]
   mixcolHex <- methods::as(mixcolHLS, "RGB")
   mixcolHex <- colorspace::hex(mixcolHex)
   mixcolHex <- ggplot2::alpha(mixcolHex, mixcol[4, ] / 255)
@@ -2155,7 +2912,8 @@ blendHex <- function(mixcol, seqcol, alpha=1) {
 }
 
 GeomForecastInterval <- ggplot2::ggproto(
-  "GeomForecastInterval", GeomForecast, ## Produces only forecasts intervals on graph
+  "GeomForecastInterval",
+  GeomForecast, ## Produces only forecasts intervals on graph
   required_aes = c("x", "ymin", "ymax"),
 
   setup_data = function(data, params) {
@@ -2164,7 +2922,7 @@ GeomForecastInterval <- ggplot2::ggproto(
 
   draw_group = function(data, panel_scales, coord) {
     # If level scale from fabletools is not loaded, convert to colour
-    if(is.numeric(data$level)){
+    if (is.numeric(data$level)) {
       leveldiff <- diff(range(data$level))
       if (leveldiff == 0) {
         leveldiff <- 1
@@ -2179,19 +2937,28 @@ GeomForecastInterval <- ggplot2::ggproto(
         # Calculate colour
         fillcol <- blendHex(x$colour[1], x$level[1], 0.7)
         # Compute alpha transparency
-        x$alpha <- grDevices::col2rgb(fillcol, alpha = TRUE)[4, ] / 255 * x$alpha
+        x$alpha <- grDevices::col2rgb(fillcol, alpha = TRUE)[4, ] /
+          255 *
+          x$alpha
 
         # Select appropriate Geom and set defaults
-        if (NROW(x) == 0) { # Blank
+        if (NROW(x) == 0) {
+          # Blank
           ggplot2::GeomBlank$draw_panel
-        }
-        else if (NROW(x) == 1) { # Linerange
+        } else if (NROW(x) == 1) {
+          # Linerange
           GeomForecastIntervalGeom <- ggplot2::GeomLinerange$draw_panel
           x <- transform(x, colour = fillcol, fill = NA, linewidth = 1)
-        }
-        else { # Ribbon
+        } else {
+          # Ribbon
           GeomForecastIntervalGeom <- ggplot2::GeomRibbon$draw_group
-          x <- transform(x, colour = NA, fill = fillcol, linewidth = size, size = NULL)
+          x <- transform(
+            x,
+            colour = NA,
+            fill = fillcol,
+            linewidth = size,
+            size = NULL
+          )
         }
         # Create grob
         return(GeomForecastIntervalGeom(x, panel_scales, coord)) ## Create list pair with average ymin/ymax to order layers
@@ -2199,10 +2966,12 @@ GeomForecastInterval <- ggplot2::ggproto(
     )
 
     # Draw forecast intervals
-    ggplot2:::ggname("geom_forecast_interval", do.call(grid::grobTree, rev(intervalGrobList))) # TODO: Find reliable method to stacking them correctly
+    ggplot2:::ggname(
+      "geom_forecast_interval",
+      do.call(grid::grobTree, rev(intervalGrobList))
+    ) # TODO: Find reliable method to stacking them correctly
   }
 )
-
 
 
 #' Forecast plot
@@ -2291,44 +3060,68 @@ GeomForecastInterval <- ggplot2::ggproto(
 #' }
 #'
 #' @export
-geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
-                          position = "identity", na.rm = FALSE, show.legend = NA,
-                          inherit.aes = TRUE, PI=TRUE, showgap=TRUE, series=NULL, ...) {
+geom_forecast <- function(
+  mapping = NULL,
+  data = NULL,
+  stat = "forecast",
+  position = "identity",
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE,
+  PI = TRUE,
+  showgap = TRUE,
+  series = NULL,
+  ...
+) {
   if (is.forecast(mapping) || is.mforecast(mapping)) {
-    warning("Use autolayer instead of geom_forecast to add a forecast layer to your ggplot object.")
+    warning(
+      "Use autolayer instead of geom_forecast to add a forecast layer to your ggplot object."
+    )
     cl <- match.call()
     cl[[1]] <- quote(autolayer)
     names(cl)[names(cl) == "mapping"] <- "object"
     return(eval.parent(cl))
   }
   if (is.ts(mapping)) {
-    data <- data.frame(y = as.numeric(mapping), x = as.numeric(time(mapping)), check.names = FALSE)
+    data <- data.frame(
+      y = as.numeric(mapping),
+      x = as.numeric(time(mapping)),
+      check.names = FALSE
+    )
     mapping <- ggplot2::aes(y = .data[["y"]], x = .data[["x"]])
   }
   if (stat == "forecast") {
-    paramlist <- list(na.rm = na.rm, PI = PI, showgap = showgap, series = series, ...)
+    paramlist <- list(
+      na.rm = na.rm,
+      PI = PI,
+      showgap = showgap,
+      series = series,
+      ...
+    )
     if (!is.null(series)) {
       if (inherits(mapping, "uneval")) {
         mapping$colour <- quote(ggplot2::after_stat(series))
-      }
-      else {
+      } else {
         mapping <- ggplot2::aes(colour = ggplot2::after_stat(series))
       }
     }
-  }
-  else {
+  } else {
     paramlist <- list(na.rm = na.rm, ...)
   }
   ggplot2::layer(
-    geom = GeomForecast, mapping = mapping, data = data, stat = stat,
-    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+    geom = GeomForecast,
+    mapping = mapping,
+    data = data,
+    stat = stat,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
     params = paramlist
   )
 }
 
 # Produce nice histogram with appropriately chosen bin widths
 # Designed to work with time series data without issuing warnings.
-
 
 #' Histogram with optional normal and kernel density functions
 #'
@@ -2350,9 +3143,19 @@ geom_forecast <- function(mapping = NULL, data = NULL, stat = "forecast",
 #' gghistogram(lynx, add.kde = TRUE)
 #'
 #' @export
-gghistogram <- function(x, add.normal=FALSE, add.kde=FALSE, add.rug=TRUE, bins, boundary=0) {
+gghistogram <- function(
+  x,
+  add.normal = FALSE,
+  add.kde = FALSE,
+  add.rug = TRUE,
+  bins,
+  boundary = 0
+) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")", call. = FALSE)
+    stop(
+      "ggplot2 is needed for this function to work. Install it via install.packages(\"ggplot2\")",
+      call. = FALSE
+    )
   }
 
   if (missing(bins)) {
@@ -2362,7 +3165,12 @@ gghistogram <- function(x, add.normal=FALSE, add.kde=FALSE, add.rug=TRUE, bins, 
   # Initialise ggplot object and plot histogram
   binwidth <- (max(x, na.rm = TRUE) - min(x, na.rm = TRUE)) / bins
   p <- ggplot2::ggplot() +
-    ggplot2::geom_histogram(ggplot2::aes(x), data = data, binwidth = binwidth, boundary = boundary) +
+    ggplot2::geom_histogram(
+      ggplot2::aes(x),
+      data = data,
+      binwidth = binwidth,
+      boundary = boundary
+    ) +
     ggplot2::xlab(deparse(substitute(x)))
   # Add normal density estimate
   if (add.normal || add.kde) {
@@ -2381,12 +3189,26 @@ gghistogram <- function(x, add.normal=FALSE, add.kde=FALSE, add.rug=TRUE, bins, 
     }
     xgrid <- seq(xmin, xmax, length.out = 512)
     if (add.normal) {
-      df <- data.frame(x = xgrid, y = length(x) * binwidth * stats::dnorm(xgrid, xmean, xsd), check.names = FALSE)
+      df <- data.frame(
+        x = xgrid,
+        y = length(x) * binwidth * stats::dnorm(xgrid, xmean, xsd),
+        check.names = FALSE
+      )
       p <- p + ggplot2::geom_line(ggplot2::aes(df$x, df$y), col = "#ff8a62")
     }
     if (add.kde) {
-      kde <- stats::density(x, bw = h, from = xgrid[1], to = xgrid[512], n = 512)
-      p <- p + ggplot2::geom_line(ggplot2::aes(x = kde$x, y = length(x) * binwidth * kde$y), col = "#67a9ff")
+      kde <- stats::density(
+        x,
+        bw = h,
+        from = xgrid[1],
+        to = xgrid[512],
+        n = 512
+      )
+      p <- p +
+        ggplot2::geom_line(
+          ggplot2::aes(x = kde$x, y = length(x) * binwidth * kde$y),
+          col = "#67a9ff"
+        )
     }
   }
   if (add.rug) {

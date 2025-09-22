@@ -1,4 +1,3 @@
-
 #' Australian monthly gas production
 #'
 #' Australian monthly gas production: 1956--1995.

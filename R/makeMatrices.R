@@ -4,8 +4,16 @@
 # Author: srazbash
 ###############################################################################
 
-makeTBATSFMatrix <- function(alpha, beta=NULL, small.phi=NULL, seasonal.periods=NULL, k.vector=NULL, gamma.bold.matrix=NULL, ar.coefs=NULL, ma.coefs=NULL) {
-
+makeTBATSFMatrix <- function(
+  alpha,
+  beta = NULL,
+  small.phi = NULL,
+  seasonal.periods = NULL,
+  k.vector = NULL,
+  gamma.bold.matrix = NULL,
+  ar.coefs = NULL,
+  ma.coefs = NULL
+) {
   # 1. Alpha Row
   F <- matrix(1, nrow = 1, ncol = 1)
   if (!is.null(beta)) {
@@ -58,11 +66,21 @@ makeTBATSFMatrix <- function(alpha, beta=NULL, small.phi=NULL, seasonal.periods=
     last.pos <- 0
     for (i in seq_along(k.vector)) {
       if (seasonal.periods[i] != 2) {
-        C <- .Call("makeCIMatrix", k_s = as.integer(k.vector[i]), m_s = as.double(seasonal.periods[i]), PACKAGE = "forecast")
+        C <- .Call(
+          "makeCIMatrix",
+          k_s = as.integer(k.vector[i]),
+          m_s = as.double(seasonal.periods[i]),
+          PACKAGE = "forecast"
+        )
       } else {
         C <- matrix(0, 1, 1)
       }
-      S <- .Call("makeSIMatrix", k_s = as.integer(k.vector[i]), m_s = as.double(seasonal.periods[i]), PACKAGE = "forecast")
+      S <- .Call(
+        "makeSIMatrix",
+        k_s = as.integer(k.vector[i]),
+        m_s = as.double(seasonal.periods[i]),
+        PACKAGE = "forecast"
+      )
 
       # C <- matrix(0,k.vector[i],k.vector[i])
       # for(j in 1:k.vector[i]) {
@@ -75,8 +93,17 @@ makeTBATSFMatrix <- function(alpha, beta=NULL, small.phi=NULL, seasonal.periods=
       # }
       # print(C)
       # print(S)
-      Ai <- .Call("makeAIMatrix", C_s = C, S_s = S, k_s = as.integer(k.vector[i]), PACKAGE = "forecast")
-      A[(last.pos + 1):(last.pos + (2 * k.vector[i])), (last.pos + 1):(last.pos + (2 * k.vector[i]))] <- Ai
+      Ai <- .Call(
+        "makeAIMatrix",
+        C_s = C,
+        S_s = S,
+        k_s = as.integer(k.vector[i]),
+        PACKAGE = "forecast"
+      )
+      A[
+        (last.pos + 1):(last.pos + (2 * k.vector[i])),
+        (last.pos + 1):(last.pos + (2 * k.vector[i]))
+      ] <- Ai
       last.pos <- last.pos + (2 * k.vector[i])
     }
     seasonal.row <- cbind(seasonal.row, A)
@@ -155,8 +182,15 @@ makeTBATSFMatrix <- function(alpha, beta=NULL, small.phi=NULL, seasonal.periods=
 # 	return(li)
 # }
 
-makeFMatrix <- function(alpha, beta=NULL, small.phi=NULL, seasonal.periods=NULL, gamma.bold.matrix=NULL, ar.coefs=NULL, ma.coefs=NULL) {
-
+makeFMatrix <- function(
+  alpha,
+  beta = NULL,
+  small.phi = NULL,
+  seasonal.periods = NULL,
+  gamma.bold.matrix = NULL,
+  ar.coefs = NULL,
+  ma.coefs = NULL
+) {
   # 1. Alpha Row
   F <- matrix(1, nrow = 1, ncol = 1)
   if (!is.null(beta)) {
@@ -220,7 +254,10 @@ makeFMatrix <- function(alpha, beta=NULL, small.phi=NULL, seasonal.periods=NULL,
         Ai <- rbind(a.row.one, a.row.two)
         A <- rbind(A, matrix(0, nrow = dim(Ai)[1], ncol = old.A.columns))
         A <- cbind(A, matrix(0, nrow = dim(A)[1], ncol = dim(Ai)[2]))
-        A[((old.A.rows + 1):(old.A.rows + dim(Ai)[1])), ((old.A.columns + 1):(old.A.columns + dim(Ai)[2]))] <- Ai
+        A[
+          ((old.A.rows + 1):(old.A.rows + dim(Ai)[1])),
+          ((old.A.columns + 1):(old.A.columns + dim(Ai)[2]))
+        ] <- Ai
       }
     }
     seasonal.row <- cbind(seasonal.row, A)
@@ -284,21 +321,36 @@ makeFMatrix <- function(alpha, beta=NULL, small.phi=NULL, seasonal.periods=NULL,
   return(F)
 }
 
-makeXMatrix <- function(l, b=NULL, s.vector=NULL, d.vector=NULL, epsilon.vector=NULL) {
+makeXMatrix <- function(
+  l,
+  b = NULL,
+  s.vector = NULL,
+  d.vector = NULL,
+  epsilon.vector = NULL
+) {
   x.transpose <- matrix(l, nrow = 1, ncol = 1)
   if (!is.null(b)) {
     x.transpose <- cbind(x.transpose, matrix(b, nrow = 1, ncol = 1))
   }
   if (!is.null(s.vector)) {
-    x.transpose <- cbind(x.transpose, matrix(s.vector, nrow = 1, ncol = length(s.vector)))
+    x.transpose <- cbind(
+      x.transpose,
+      matrix(s.vector, nrow = 1, ncol = length(s.vector))
+    )
   }
 
   if (!is.null(d.vector)) {
-    x.transpose <- cbind(x.transpose, matrix(d.vector, nrow = 1, ncol = length(d.vector)))
+    x.transpose <- cbind(
+      x.transpose,
+      matrix(d.vector, nrow = 1, ncol = length(d.vector))
+    )
   }
 
   if (!is.null(epsilon.vector)) {
-    x.transpose <- cbind(x.transpose, matrix(epsilon.vector, nrow = 1, ncol = length(epsilon.vector)))
+    x.transpose <- cbind(
+      x.transpose,
+      matrix(epsilon.vector, nrow = 1, ncol = length(epsilon.vector))
+    )
   }
 
   x <- t(x.transpose)

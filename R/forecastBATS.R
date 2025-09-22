@@ -52,12 +52,23 @@
 #' }
 #'
 #' @export
-forecast.bats <- function(object, h, level=c(80, 95), fan=FALSE, biasadj=NULL, ...) {
+forecast.bats <- function(
+  object,
+  h,
+  level = c(80, 95),
+  fan = FALSE,
+  biasadj = NULL,
+  ...
+) {
   # Set up the variables
   if (is.ts(object$y)) {
     ts.frequency <- frequency(object$y)
   } else {
-    ts.frequency <- ifelse(!is.null(object$seasonal.periods), max(object$seasonal.periods), 1)
+    ts.frequency <- ifelse(
+      !is.null(object$seasonal.periods),
+      max(object$seasonal.periods),
+      1
+    )
   }
 
   if (missing(h)) {
@@ -66,8 +77,7 @@ forecast.bats <- function(object, h, level=c(80, 95), fan=FALSE, biasadj=NULL, .
     } else {
       h <- 2 * max(object$seasonal.periods)
     }
-  }
-  else if (h <= 0) {
+  } else if (h <= 0) {
     stop("Forecast horizon out of bounds")
   }
 
@@ -85,11 +95,35 @@ forecast.bats <- function(object, h, level=c(80, 95), fan=FALSE, biasadj=NULL, .
   x <- matrix(0, nrow = nrow(object$x), ncol = h)
   y.forecast <- numeric(h)
   # w <- makeWMatrix(small.phi=object$damping.parameter, seasonal.periods=object$seasonal.periods, ar.coefs=object$ar.coefficients, ma.coefs=object$ma.coefficients)
-  w <- .Call("makeBATSWMatrix", smallPhi_s = object$damping.parameter, sPeriods_s = object$seasonal.periods, arCoefs_s = object$ar.coefficients, maCoefs_s = object$ma.coefficients, PACKAGE = "forecast")
+  w <- .Call(
+    "makeBATSWMatrix",
+    smallPhi_s = object$damping.parameter,
+    sPeriods_s = object$seasonal.periods,
+    arCoefs_s = object$ar.coefficients,
+    maCoefs_s = object$ma.coefficients,
+    PACKAGE = "forecast"
+  )
   # g <- makeGMatrix(alpha=object$alpha, beta=object$beta, gamma.vector=object$gamma.values, seasonal.periods=object$seasonal.periods, p=length(object$ar.coefficients), q=length(object$ma.coefficients))
-  g <- .Call("makeBATSGMatrix", object$alpha, object$beta, object$gamma.values, object$seasonal.periods, length(object$ar.coefficients), length(object$ma.coefficients), PACKAGE = "forecast")
+  g <- .Call(
+    "makeBATSGMatrix",
+    object$alpha,
+    object$beta,
+    object$gamma.values,
+    object$seasonal.periods,
+    length(object$ar.coefficients),
+    length(object$ma.coefficients),
+    PACKAGE = "forecast"
+  )
 
-  F <- makeFMatrix(alpha = object$alpha, beta = object$beta, small.phi = object$damping.parameter, seasonal.periods = object$seasonal.periods, gamma.bold.matrix = g$gamma.bold.matrix, ar.coefs = object$ar.coefficients, ma.coefs = object$ma.coefficients)
+  F <- makeFMatrix(
+    alpha = object$alpha,
+    beta = object$beta,
+    small.phi = object$damping.parameter,
+    seasonal.periods = object$seasonal.periods,
+    gamma.bold.matrix = g$gamma.bold.matrix,
+    ar.coefs = object$ar.coefficients,
+    ma.coefs = object$ma.coefficients
+  )
 
   # Do the forecast
   y.forecast[1] <- w$w.transpose %*% object$x[, ncol(object$x)]
@@ -113,7 +147,7 @@ forecast.bats <- function(object, h, level=c(80, 95), fan=FALSE, biasadj=NULL, .
         f.running <- f.running %*% F
       }
       c.j <- w$w.transpose %*% f.running %*% g$g
-      variance.multiplier[(j + 1)] <- variance.multiplier[j] + c.j ^ 2
+      variance.multiplier[(j + 1)] <- variance.multiplier[j] + c.j^2
     }
   }
 
@@ -127,7 +161,12 @@ forecast.bats <- function(object, h, level=c(80, 95), fan=FALSE, biasadj=NULL, .
   }
   # Inv Box Cox transform if required
   if (!is.null(object$lambda)) {
-    y.forecast <- InvBoxCox(y.forecast, object$lambda, biasadj, list(level = level, upper = upper.bounds, lower = lower.bounds))
+    y.forecast <- InvBoxCox(
+      y.forecast,
+      object$lambda,
+      biasadj,
+      list(level = level, upper = upper.bounds, lower = lower.bounds)
+    )
     lower.bounds <- InvBoxCox(lower.bounds, object$lambda)
     if (object$lambda < 1) {
       lower.bounds <- pmax(lower.bounds, 0)
@@ -137,8 +176,11 @@ forecast.bats <- function(object, h, level=c(80, 95), fan=FALSE, biasadj=NULL, .
   colnames(upper.bounds) <- colnames(lower.bounds) <- paste0(level, "%")
 
   forecast.object <- list(
-    model = object, mean = future_msts(object$y, y.forecast),
-    level = level, x = object$y, series = object$series,
+    model = object,
+    mean = future_msts(object$y, y.forecast),
+    level = level,
+    x = object$y,
+    series = object$series,
     upper = future_msts(object$y, upper.bounds),
     lower = future_msts(object$y, lower.bounds),
     fitted = copy_msts(object$y, object$fitted.values),

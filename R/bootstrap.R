@@ -17,19 +17,24 @@ tl <- function(x, ...) {
 
 # Function to return some bootstrap samples of x
 # based on LPB
-lpb <- function(x, nsim=100) {
+lpb <- function(x, nsim = 100) {
   n <- length(x)
   meanx <- mean(x)
   y <- x - meanx
-  gamma <- wacf(y, lag.max = n)$acf[, , 1]
+  gamma <- wacf(y, lag.max = n)$acf[,, 1]
   s <- length(gamma)
   Gamma <- matrix(1, s, s)
   d <- row(Gamma) - col(Gamma)
-  for (i in 1:(s - 1))
+  for (i in 1:(s - 1)) {
     Gamma[d == i | d == (-i)] <- gamma[i + 1]
+  }
   L <- t(chol(Gamma))
   W <- solve(L) %*% matrix(y, ncol = 1)
-  out <- ts(L %*% matrix(sample(W, n * nsim, replace = TRUE), nrow = n, ncol = nsim) + meanx)
+  out <- ts(
+    L %*%
+      matrix(sample(W, n * nsim, replace = TRUE), nrow = n, ncol = nsim) +
+      meanx
+  )
   tsp(out) <- tsp(x)
   return(out)
 }
@@ -42,12 +47,13 @@ MBB <- function(x, window_size) {
   bx <- array(0, (floor(length(x) / window_size) + 2) * window_size)
   for (i in 1:(floor(length(x) / window_size) + 2)) {
     c <- sample(1:(length(x) - window_size + 1), 1)
-    bx[((i - 1) * window_size + 1):(i * window_size)] <- x[c:(c + window_size - 1)]
+    bx[((i - 1) * window_size + 1):(i * window_size)] <- x[
+      c:(c + window_size - 1)
+    ]
   }
   start_from <- sample(0:(window_size - 1), 1) + 1
   bx[start_from:(start_from + length(x) - 1)]
 }
-
 
 
 #' Box-Cox and Loess-based decomposition bootstrap.
@@ -74,14 +80,15 @@ MBB <- function(x, window_size) {
 #' bootstrapped_series <- bld.mbb.bootstrap(WWWusage, 100)
 #'
 #' @export
-bld.mbb.bootstrap <- function(x, num, block_size=NULL) {
-
-  if(length(x) <= 1L)
+bld.mbb.bootstrap <- function(x, num, block_size = NULL) {
+  if (length(x) <= 1L) {
     return(rep(list(x), num))
+  }
 
   freq <- frequency(x)
-  if(length(x) <= 2*freq)
+  if (length(x) <= 2 * freq) {
     freq <- 1L
+  }
 
   if (is.null(block_size)) {
     block_size <- ifelse(freq > 1, 2 * freq, min(8, floor(length(x) / 2)))
@@ -109,7 +116,11 @@ bld.mbb.bootstrap <- function(x, num, block_size=NULL) {
       # Loess
       trend <- seq_along(x)
       suppressWarnings(
-        x.loess <- loess(ts(x.bc, frequency = 1) ~ trend, span = 6 / length(x), degree = 1)
+        x.loess <- loess(
+          ts(x.bc, frequency = 1) ~ trend,
+          span = 6 / length(x),
+          degree = 1
+        )
       )
       seasonal <- rep(0, length(x))
       trend <- x.loess$fitted
@@ -119,7 +130,10 @@ bld.mbb.bootstrap <- function(x, num, block_size=NULL) {
 
   # Bootstrap some series, using MBB
   for (i in 2:num) {
-    xs[[i]] <- ts(InvBoxCox(trend + seasonal + MBB(remainder, block_size), lambda))
+    xs[[i]] <- ts(InvBoxCox(
+      trend + seasonal + MBB(remainder, block_size),
+      lambda
+    ))
     tsp(xs[[i]]) <- tsp(x)
   }
 

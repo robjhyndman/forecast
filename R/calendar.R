@@ -22,10 +22,16 @@ as.Date.timeDate <- timeDate::as.Date.timeDate
 #' x <- ts(rnorm(30), start = c(2013, 2), frequency = 12)
 #' bizdays(x, FinCenter = "New York")
 #' @export
-bizdays <- function(x, FinCenter = c(
-                      "New York", "London", "NERC", "Toronto",
-                      "Zurich"
-                    )) {
+bizdays <- function(
+  x,
+  FinCenter = c(
+    "New York",
+    "London",
+    "NERC",
+    "Toronto",
+    "Zurich"
+  )
+) {
   # Return the number of trading days corresponding to the input ts
   #
   # Args:
@@ -53,7 +59,8 @@ bizdays <- function(x, FinCenter = c(
   } else if (FinCenter == "Zurich") {
     holidays <- timeDate::holidayZURICH(years)
   }
-  if (freq == 12L) { # monthly data
+  if (freq == 12L) {
+    # monthly data
     date <- zoo::as.Date(time(x))
     start <- date[1L]
     end <- seq(date[length(date)], length.out = 2L, by = "month")[2L] - 1L
@@ -61,7 +68,8 @@ bizdays <- function(x, FinCenter = c(
     # Grab business days
     biz <- days.len[timeDate::isBizday(days.len, holidays = holidays)]
     bizdays <- format(biz, format = "%Y-%m")
-  } else if (freq == 4L) { # Quarterly data
+  } else if (freq == 4L) {
+    # Quarterly data
     date <- zoo::as.Date(time(x))
     start <- date[1L]
     end <- seq(date[length(date)], length.out = 2L, by = "3 month")[2L] - 1L

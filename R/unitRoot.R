@@ -48,19 +48,28 @@
 #' ndiffs(diff(log(AirPassengers), 12))
 #' @importFrom urca ur.kpss ur.df ur.pp
 #' @export
-ndiffs <- function(x, alpha = 0.05, test = c("kpss", "adf", "pp"),
-                   type = c("level", "trend"), max.d = 2, ...) {
+ndiffs <- function(
+  x,
+  alpha = 0.05,
+  test = c("kpss", "adf", "pp"),
+  type = c("level", "trend"),
+  max.d = 2,
+  ...
+) {
   test <- match.arg(test)
   type <- match(match.arg(type), c("level", "trend"))
   x <- c(na.omit(c(x)))
   d <- 0
 
   if (alpha < 0.01) {
-    warning("Specified alpha value is less than the minimum, setting alpha=0.01")
+    warning(
+      "Specified alpha value is less than the minimum, setting alpha=0.01"
+    )
     alpha <- 0.01
-  }
-  else if (alpha > 0.1) {
-    warning("Specified alpha value is larger than the maximum, setting alpha=0.1")
+  } else if (alpha > 0.1) {
+    warning(
+      "Specified alpha value is larger than the maximum, setting alpha=0.1"
+    )
     alpha <- 0.1
   }
 
@@ -69,9 +78,12 @@ ndiffs <- function(x, alpha = 0.05, test = c("kpss", "adf", "pp"),
   }
 
   urca_pval <- function(urca_test) {
-    approx(urca_test@cval[1, ],
-           as.numeric(sub("pct", "", colnames(urca_test@cval), fixed = TRUE)) / 100,
-           xout = urca_test@teststat[1], rule = 2)$y
+    approx(
+      urca_test@cval[1, ],
+      as.numeric(sub("pct", "", colnames(urca_test@cval), fixed = TRUE)) / 100,
+      xout = urca_test@teststat[1],
+      rule = 2
+    )$y
   }
 
   kpss_wrap <- function(..., use.lag = trunc(3 * sqrt(length(x)) / 13)) {
@@ -82,10 +94,19 @@ ndiffs <- function(x, alpha = 0.05, test = c("kpss", "adf", "pp"),
     tryCatch(
       {
         suppressWarnings(
-          diff <- switch(test,
-            kpss = urca_pval(kpss_wrap(x, type = c("mu", "tau")[type], ...)) < alpha,
-            adf = urca_pval(ur.df(x, type = c("drift", "trend")[type], ...)) > alpha,
-            pp = urca_pval(ur.pp(x, type = "Z-tau", model = c("constant", "trend")[type], ...)) > alpha,
+          diff <- switch(
+            test,
+            kpss = urca_pval(kpss_wrap(x, type = c("mu", "tau")[type], ...)) <
+              alpha,
+            adf = urca_pval(ur.df(x, type = c("drift", "trend")[type], ...)) >
+              alpha,
+            pp = urca_pval(ur.pp(
+              x,
+              type = "Z-tau",
+              model = c("constant", "trend")[type],
+              ...
+            )) >
+              alpha,
             stop("This shouldn't happen")
           )
         )
@@ -98,8 +119,16 @@ ndiffs <- function(x, alpha = 0.05, test = c("kpss", "adf", "pp"),
             "The chosen unit root test encountered an error when testing for the %s difference.
 From %s(): %s
 %i differences will be used. Consider using a different unit root test.",
-            switch(as.character(d), `0` = "first", `1` = "second", `2` = "third", paste0(d + 1, "th")),
-            deparse(e$call[[1]]), e$message, d
+            switch(
+              as.character(d),
+              `0` = "first",
+              `1` = "second",
+              `2` = "third",
+              paste0(d + 1, "th")
+            ),
+            deparse(e$call[[1]]),
+            e$message,
+            d
           )
         )
         FALSE
@@ -182,26 +211,41 @@ From %s(): %s
 #' @examples
 #' nsdiffs(AirPassengers)
 #' @export
-nsdiffs <- function(x, alpha = 0.05, m = frequency(x),
-                    test = c("seas", "ocsb", "hegy", "ch"), max.D = 1, ...) {
+nsdiffs <- function(
+  x,
+  alpha = 0.05,
+  m = frequency(x),
+  test = c("seas", "ocsb", "hegy", "ch"),
+  max.D = 1,
+  ...
+) {
   test <- match.arg(test)
   D <- 0
 
   if (alpha < 0.01) {
-    warning("Specified alpha value is less than the minimum, setting alpha=0.01")
+    warning(
+      "Specified alpha value is less than the minimum, setting alpha=0.01"
+    )
     alpha <- 0.01
-  }
-  else if (alpha > 0.1) {
-    warning("Specified alpha value is larger than the maximum, setting alpha=0.1")
+  } else if (alpha > 0.1) {
+    warning(
+      "Specified alpha value is larger than the maximum, setting alpha=0.1"
+    )
     alpha <- 0.1
   }
   if (test == "ocsb" && alpha != 0.05) {
-    warning("Significance levels other than 5% are not currently supported by test='ocsb', defaulting to alpha = 0.05.")
+    warning(
+      "Significance levels other than 5% are not currently supported by test='ocsb', defaulting to alpha = 0.05."
+    )
     alpha <- 0.05
   }
   if (test %in% c("hegy", "ch")) {
     if (!requireNamespace("uroot", quietly = TRUE)) {
-      stop(paste0("Using a ", test, ' test requires the uroot package. Please install it using `install.packages("uroot")`'))
+      stop(paste0(
+        "Using a ",
+        test,
+        ' test requires the uroot package. Please install it using `install.packages("uroot")`'
+      ))
     }
   }
 
@@ -210,7 +254,8 @@ nsdiffs <- function(x, alpha = 0.05, m = frequency(x),
   }
 
   if (!missing(m)) {
-    warning("argument m is deprecated; please set the frequency in the ts object.",
+    warning(
+      "argument m is deprecated; please set the frequency in the ts object.",
       call. = FALSE
     )
     x <- ts(x, frequency = m)
@@ -219,7 +264,9 @@ nsdiffs <- function(x, alpha = 0.05, m = frequency(x),
   if (frequency(x) == 1) {
     stop("Non seasonal data")
   } else if (frequency(x) < 1) {
-    warning("I can't handle data with frequency less than 1. Seasonality will be ignored.")
+    warning(
+      "I can't handle data with frequency less than 1. Seasonality will be ignored."
+    )
     return(0)
   }
 
@@ -231,12 +278,24 @@ nsdiffs <- function(x, alpha = 0.05, m = frequency(x),
     tryCatch(
       {
         suppressWarnings(
-          diff <- switch(test,
+          diff <- switch(
+            test,
             seas = seas.heuristic(x, ...) > 0.64, # Threshold chosen based on seasonal M3 auto.arima accuracy.
-            ocsb = with(ocsb.test(x, maxlag = 3, lag.method = "AIC", ...),
-                  statistics > critical),
-            hegy = tail(uroot::hegy.test(x, deterministic = c(1, 1, 0),
-                  maxlag = 3, lag.method = "AIC", ...)$pvalues, 2)[-2] > alpha,
+            ocsb = with(
+              ocsb.test(x, maxlag = 3, lag.method = "AIC", ...),
+              statistics > critical
+            ),
+            hegy = tail(
+              uroot::hegy.test(
+                x,
+                deterministic = c(1, 1, 0),
+                maxlag = 3,
+                lag.method = "AIC",
+                ...
+              )$pvalues,
+              2
+            )[-2] >
+              alpha,
             ch = uroot::ch.test(x, type = "trig", ...)$pvalues["joint"] < alpha
           )
         )
@@ -250,9 +309,16 @@ nsdiffs <- function(x, alpha = 0.05, m = frequency(x),
             "The chosen seasonal unit root test encountered an error when testing for the %s difference.
 From %s(): %s
 %i seasonal differences will be used. Consider using a different unit root test.",
-            switch(as.character(D), `0` = "first", `1` = "second", `2` = "third",
-                   paste0(D + 1, "th")),
-            deparse(e$call[[1]]), e$message, D
+            switch(
+              as.character(D),
+              `0` = "first",
+              `1` = "second",
+              `2` = "third",
+              paste0(D + 1, "th")
+            ),
+            deparse(e$call[[1]]),
+            e$message,
+            D
           )
         )
         0
@@ -263,7 +329,10 @@ From %s(): %s
   dodiff <- runTests(x, test, alpha)
 
   if (dodiff && frequency(x) %% 1 != 0) {
-    warning("The time series frequency has been rounded to support seasonal differencing.", call. = FALSE)
+    warning(
+      "The time series frequency has been rounded to support seasonal differencing.",
+      call. = FALSE
+    )
     x <- ts(x, frequency = round(frequency(x)))
   }
 
@@ -287,25 +356,29 @@ seas.heuristic <- function(x) {
   if (inherits(x, "msts")) {
     msts <- attributes(x)$msts
     nperiods <- length(msts)
-  }
-  else if (is.ts(x)) {
+  } else if (is.ts(x)) {
     msts <- frequency(x)
     nperiods <- msts > 1
     season <- 0
-  }
-  else {
+  } else {
     stop("The object provided must be a time-series object (`msts` or `ts`)")
   }
   season <- NA
   stlfit <- mstl(x)
   remainder <- stlfit[, "Remainder"]
-  seasonal <- stlfit[, grep("Season", colnames(stlfit), fixed = TRUE), drop = FALSE]
+  seasonal <- stlfit[,
+    grep("Season", colnames(stlfit), fixed = TRUE),
+    drop = FALSE
+  ]
   vare <- var(remainder, na.rm = TRUE)
   nseas <- NCOL(seasonal)
   if (nseas > 0) {
     season <- numeric(nseas)
     for (i in seq(nseas)) {
-      season[i] <- max(0, min(1, 1-vare/var(remainder+seasonal[, i], na.rm = TRUE)))
+      season[i] <- max(
+        0,
+        min(1, 1 - vare / var(remainder + seasonal[, i], na.rm = TRUE))
+      )
     }
   }
   return(season)
@@ -347,7 +420,11 @@ seas.heuristic <- function(x) {
 #' @importFrom stats AIC BIC
 #'
 #' @export
-ocsb.test <- function(x, lag.method = c("fixed", "AIC", "BIC", "AICc"), maxlag = 0) {
+ocsb.test <- function(
+  x,
+  lag.method = c("fixed", "AIC", "BIC", "AICc"),
+  maxlag = 0
+) {
   lag.method <- match.arg(lag.method)
   sname <- deparse(substitute(x))
   period <- round(frequency(x)) # Avoid non-integer seasonal period
@@ -360,7 +437,10 @@ ocsb.test <- function(x, lag.method = c("fixed", "AIC", "BIC", "AICc"), maxlag =
     if (maxlag == 0) {
       return(ts(numeric(NROW(y)), start = start(y), frequency = frequency(y)))
     }
-    out <- do.call(cbind, lapply(seq_len(maxlag), function(k) stats::lag(y, -k)))
+    out <- do.call(
+      cbind,
+      lapply(seq_len(maxlag), function(k) stats::lag(y, -k))
+    )
     if (NCOL(out) > 1) {
       colnames(out) <- paste0("lag_", seq_len(maxlag))
     }
@@ -383,7 +463,10 @@ ocsb.test <- function(x, lag.method = c("fixed", "AIC", "BIC", "AICc"), maxlag =
     ar.fit <- lm(y ~ 0 + ., data = mf)
 
     # Compute lambda(B)(1-B^m)y_{t-1}
-    Z4_frame <- na.omit(cbind(y = diff(x, period), x = genLags(diff(x, period), lag)))
+    Z4_frame <- na.omit(cbind(
+      y = diff(x, period),
+      x = genLags(diff(x, period), lag)
+    ))
     Z4 <- Z4_frame[, "y"] - suppressWarnings(predict(ar.fit, Z4_frame))
 
     # Compute lambda(B)(1-B)y_{t-m}
@@ -391,7 +474,11 @@ ocsb.test <- function(x, lag.method = c("fixed", "AIC", "BIC", "AICc"), maxlag =
     Z5 <- Z5_frame[, "y"] - suppressWarnings(predict(ar.fit, Z5_frame))
 
     # Combine regressors
-    data <- na.omit(cbind(mf, Z4 = stats::lag(Z4, -1), Z5 = stats::lag(Z5, -period)))
+    data <- na.omit(cbind(
+      mf,
+      Z4 = stats::lag(Z4, -1),
+      Z5 = stats::lag(Z5, -period)
+    ))
     y <- data[, 1]
     xreg <- data[, -1]
 
@@ -403,14 +490,18 @@ ocsb.test <- function(x, lag.method = c("fixed", "AIC", "BIC", "AICc"), maxlag =
     if (lag.method != "fixed") {
       tmp <- vector("list", maxlag + 1)
       fits <- lapply(seq_len(maxlag), function(lag) fitOCSB(x, lag, maxlag))
-      icvals <- unlist(switch(lag.method,
+      icvals <- unlist(switch(
+        lag.method,
         AIC = lapply(fits, AIC),
         BIC = lapply(fits, BIC),
         AICc = lapply(
           fits,
           function(x) {
             k <- x$rank + 1
-            -2 * logLik(x) + 2 * k + (2 * k * (k + 1)) / (length(residuals(x)) - k - 1)
+            -2 *
+              logLik(x) +
+              2 * k +
+              (2 * k * (k + 1)) / (length(residuals(x)) - k - 1)
           }
         )
       ))
@@ -426,19 +517,22 @@ ocsb.test <- function(x, lag.method = c("fixed", "AIC", "BIC", "AICc"), maxlag =
   stat <- summary(regression)$coefficients[c("xregZ4", "xregZ5"), "t value"]
 
   if (anyNA(stat)) {
-    stop("Model did not reach a solution. Consider using a longer series or a different test.")
+    stop(
+      "Model did not reach a solution. Consider using a longer series or a different test."
+    )
   }
 
-  structure(list(
-    statistics = stat[2],
-    critical = calcOCSBCritVal(period),
-    method = "OCSB test",
-    lag.method = lag.method,
-    lag.order = maxlag,
-    fitted.model = regression,
-    data.name = sname
-  ),
-  class = "OCSBtest"
+  structure(
+    list(
+      statistics = stat[2],
+      critical = calcOCSBCritVal(period),
+      method = "OCSB test",
+      lag.method = lag.method,
+      lag.order = maxlag,
+      fitted.model = regression,
+      data.name = sname
+    ),
+    class = "OCSBtest"
   )
 }
 
@@ -446,8 +540,16 @@ ocsb.test <- function(x, lag.method = c("fixed", "AIC", "BIC", "AICc"), maxlag =
 # Approximation based on extensive simulations.
 calcOCSBCritVal <- function(seasonal.period) {
   log.m <- log(seasonal.period)
-  return(-0.2937411 * exp(-0.2850853 * (log.m - 0.7656451) + (-0.05983644) *
-                            ((log.m - 0.7656451)^2)) - 1.652202)
+  return(
+    -0.2937411 *
+      exp(
+        -0.2850853 *
+          (log.m - 0.7656451) +
+          (-0.05983644) *
+            ((log.m - 0.7656451)^2)
+      ) -
+      1.652202
+  )
 }
 
 #' @export
@@ -456,8 +558,12 @@ print.OCSBtest <- function(x, ...) {
   cat(strwrap(x$method, prefix = "\t"), sep = "\n")
   cat("\n")
   cat("data:  ", x$data.name, "\n\n", sep = "")
-  cat(paste0("Test statistic: ", round(x$statistics, 4),
-             ", 5% critical value: ", round(x$critical, 4)))
+  cat(paste0(
+    "Test statistic: ",
+    round(x$statistics, 4),
+    ", 5% critical value: ",
+    round(x$critical, 4)
+  ))
   cat("\n")
   cat("alternative hypothesis: stationary")
   cat("\n\n")

@@ -6,7 +6,6 @@
 # Adds seasonality based on a periodic stl decomposition with seasonal series
 # Argument lambda allows for Box-Cox transformation
 
-
 #' Interpolate missing values in a time series
 #'
 #' By default, uses linear interpolation for non-seasonal series. For seasonal series, a
@@ -29,8 +28,11 @@
 #' plot(na.interp(gold))
 #'
 #' @export
-na.interp <- function(x, lambda=NULL,
-                      linear=(frequency(x) <= 1 || sum(!is.na(x)) <= 2 * frequency(x))) {
+na.interp <- function(
+  x,
+  lambda = NULL,
+  linear = (frequency(x) <= 1 || sum(!is.na(x)) <= 2 * frequency(x))
+) {
   missng <- is.na(x)
   # Do nothing if no missing values
   if (sum(missng) == 0L) {
@@ -38,7 +40,7 @@ na.interp <- function(x, lambda=NULL,
   }
 
   origx <- x
-  rangex <- range(x, na.rm=TRUE)
+  rangex <- range(x, na.rm = TRUE)
   drangex <- rangex[2L] - rangex[1L]
 
   # Convert to ts
@@ -68,7 +70,7 @@ na.interp <- function(x, lambda=NULL,
   if (linear) {
     # Use linear interpolation
     x <- ts(approx(idx, x[idx], tt, rule = 2)$y)
-  }  else {
+  } else {
     # Otherwise estimate seasonal component robustly
     # Then add to linear interpolation of seasonally adjusted series
     # Fit Fourier series for seasonality and a polynomial for the trend,
@@ -78,7 +80,10 @@ na.interp <- function(x, lambda=NULL,
     } else {
       K <- min(trunc(freq / 2), 5)
     }
-    X <- cbind(fourier(x, K), poly(tt, degree = pmin(pmax(trunc(n / 10), 1), 6L)))
+    X <- cbind(
+      fourier(x, K),
+      poly(tt, degree = pmin(pmax(trunc(n / 10), 1), 6L))
+    )
     fit <- lm(x ~ X, na.action = na.exclude)
     pred <- predict(fit, newdata = data.frame(X))
     x[missng] <- pred[missng]
@@ -104,15 +109,19 @@ na.interp <- function(x, lambda=NULL,
   tsp(x) <- tspx
 
   # Check stability and use linear interpolation if there is a problem
-  if (!linear && (max(x) > rangex[2L]+0.5*drangex || min(x) < rangex[1L]-0.5*drangex))
-    return(na.interp(origx, lambda=lambda, linear=TRUE))
-  else
+  if (
+    !linear &&
+      (max(x) > rangex[2L] + 0.5 * drangex ||
+        min(x) < rangex[1L] - 0.5 * drangex)
+  ) {
+    return(na.interp(origx, lambda = lambda, linear = TRUE))
+  } else {
     return(x)
+  }
 }
 
 # Function to identify outliers and replace them with better values
 # Missing values replaced as well if replace.missing=TRUE
-
 
 #' Identify and replace outliers and missing values in a time series
 #'
@@ -136,7 +145,7 @@ na.interp <- function(x, lambda=NULL,
 #' cleangold <- tsclean(gold)
 #'
 #' @export
-tsclean <- function(x, replace.missing=TRUE, iterate=2, lambda = NULL) {
+tsclean <- function(x, replace.missing = TRUE, iterate = 2, lambda = NULL) {
   outliers <- tsoutliers(x, iterate = iterate, lambda = lambda)
   x[outliers$index] <- outliers$replacements
   if (replace.missing) {
@@ -168,7 +177,7 @@ tsclean <- function(x, replace.missing=TRUE, iterate=2, lambda = NULL) {
 #' tsoutliers(gold)
 #'
 #' @export
-tsoutliers <- function(x, iterate=2, lambda=NULL) {
+tsoutliers <- function(x, iterate = 2, lambda = NULL) {
   n <- length(x)
   freq <- frequency(x)
 
@@ -194,7 +203,7 @@ tsoutliers <- function(x, iterate=2, lambda=NULL) {
 
   # Seasonally adjust data if necessary
   if (freq > 1 && n > 2 * freq) {
-    fit <- mstl(xx, robust=TRUE)
+    fit <- mstl(xx, robust = TRUE)
     # Check if seasonality is sufficient to warrant adjustment
     rem <- remainder(fit)
     detrend <- xx - trendcycle(fit)
@@ -233,7 +242,8 @@ tsoutliers <- function(x, iterate=2, lambda=NULL) {
   # Do no more than 2 iterations regardless of the value of iterate
   if (iterate > 1) {
     tmp <- tsoutliers(x, iterate = 1, lambda = lambda)
-    if (length(tmp$index) > 0) { # Found some more
+    if (length(tmp$index) > 0) {
+      # Found some more
       outliers <- sort(unique(c(outliers, tmp$index)))
       x[outliers] <- NA
       if (sum(!is.na(x)) == 1L) {

@@ -1,6 +1,5 @@
 ##
 
-
 #' Forecasting using a bagged model
 #'
 #' The bagged model forecasting method.
@@ -47,11 +46,23 @@
 #' plot(fcast)
 #'
 #' @export
-baggedModel <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), fn=ets, ...) {
+baggedModel <- function(
+  y,
+  bootstrapped_series = bld.mbb.bootstrap(y, 100),
+  fn = ets,
+  ...
+) {
   # Add package info in case forecast not loaded
-  if(!is.function(fn)){
-    warning(paste0("Using character specification for `fn` is deprecated. Please use `fn = ", match.arg(fn,c("ets", "auto.arima")), "`."))
-    fn <- utils::getFromNamespace(match.arg(fn,c("ets", "auto.arima")), "forecast")
+  if (!is.function(fn)) {
+    warning(paste0(
+      "Using character specification for `fn` is deprecated. Please use `fn = ",
+      match.arg(fn, c("ets", "auto.arima")),
+      "`."
+    ))
+    fn <- utils::getFromNamespace(
+      match.arg(fn, c("ets", "auto.arima")),
+      "forecast"
+    )
   }
 
   mod_boot <- lapply(bootstrapped_series, function(x) {
@@ -81,7 +92,7 @@ baggedModel <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), fn=ets
 
 #' @rdname baggedModel
 #' @export
-baggedETS <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), ...) {
+baggedETS <- function(y, bootstrapped_series = bld.mbb.bootstrap(y, 100), ...) {
   out <- baggedModel(y, bootstrapped_series, fn = ets, ...)
   class(out) <- c("baggedETS", class(out))
   out
@@ -139,9 +150,17 @@ baggedETS <- function(y, bootstrapped_series=bld.mbb.bootstrap(y, 100), ...) {
 #' }
 #'
 #' @export
-forecast.baggedModel <- function(object, h=ifelse(frequency(object$y) > 1, 2 * frequency(object$y), 10), ...) {
+forecast.baggedModel <- function(
+  object,
+  h = ifelse(frequency(object$y) > 1, 2 * frequency(object$y), 10),
+  ...
+) {
   out <- list(
-    model = object, series = object$series, x = object$y, method = object$method, fitted = object$fitted,
+    model = object,
+    series = object$series,
+    x = object$y,
+    method = object$method,
+    fitted = object$fitted,
     residuals = object$residuals
   )
   # out <- object
@@ -170,7 +189,11 @@ forecast.baggedModel <- function(object, h=ifelse(frequency(object$y) > 1, 2 * f
   #  browser()
   #  out$model$models
 
-  out$mean <- ts(rowMeans(forecasts_boot), frequency = frequency(out$x), start = start.f)
+  out$mean <- ts(
+    rowMeans(forecasts_boot),
+    frequency = frequency(out$x),
+    start = start.f
+  )
   out$median <- ts(apply(forecasts_boot, 1, median))
   out$lower <- ts(apply(forecasts_boot, 1, min))
   out$upper <- ts(apply(forecasts_boot, 1, max))
@@ -201,7 +224,11 @@ forecast.baggedModel <- function(object, h=ifelse(frequency(object$y) > 1, 2 * f
 # }
 
 #' @export
-print.baggedModel <- function(x, digits = max(3, getOption("digits") - 3), ...) {
+print.baggedModel <- function(
+  x,
+  digits = max(3, getOption("digits") - 3),
+  ...
+) {
   cat("Series:", x$series, "\n")
   cat("Model: ", x$method, "\n")
   cat("Call:   ")

@@ -8,7 +8,7 @@
 # 	x = original time series as a time series object
 # Output: coefficient of variation
 
-guer.cv <- function(lam, x, nonseasonal.length=2) {
+guer.cv <- function(lam, x, nonseasonal.length = 2) {
   period <- round(max(nonseasonal.length, frequency(x)))
   nobsf <- length(x)
   nyr <- floor(nobsf / period)
@@ -16,7 +16,7 @@ guer.cv <- function(lam, x, nonseasonal.length=2) {
   x.mat <- matrix(x[(nobsf - nobst + 1):nobsf], period, nyr)
   x.mean <- colMeans(x.mat, na.rm = TRUE)
   x.sd <- apply(x.mat, 2, sd, na.rm = TRUE)
-  x.rat <- x.sd / x.mean ^ (1 - lam)
+  x.rat <- x.sd / x.mean^(1 - lam)
   return(sd(x.rat, na.rm = TRUE) / mean(x.rat, na.rm = TRUE))
 }
 
@@ -24,16 +24,24 @@ guer.cv <- function(lam, x, nonseasonal.length=2) {
 # Input: x = original time series as a time series object
 # Output: lambda that minimises the coefficient of variation
 
-guerrero <- function(x, lower=-1, upper=2, nonseasonal.length=2) {
-  if(any(x <= 0, na.rm = TRUE)) warning("Guerrero's method for selecting a Box-Cox parameter (lambda) is given for strictly positive data.")
-  return(optimize(
-    guer.cv, c(lower, upper), x = x,
-    nonseasonal.length = nonseasonal.length
-  )$minimum)
+guerrero <- function(x, lower = -1, upper = 2, nonseasonal.length = 2) {
+  if (any(x <= 0, na.rm = TRUE)) {
+    warning(
+      "Guerrero's method for selecting a Box-Cox parameter (lambda) is given for strictly positive data."
+    )
+  }
+  return(
+    optimize(
+      guer.cv,
+      c(lower, upper),
+      x = x,
+      nonseasonal.length = nonseasonal.length
+    )$minimum
+  )
 }
 
 # Modified version of boxcox from MASS package
-bcloglik <- function(x, lower=-1, upper=2) {
+bcloglik <- function(x, lower = -1, upper = 2) {
   n <- length(x)
   if (any(x <= 0, na.rm = TRUE)) {
     stop("x must be positive")
@@ -41,9 +49,16 @@ bcloglik <- function(x, lower=-1, upper=2) {
   logx <- log(na.omit(c(x)))
   xdot <- exp(mean(logx))
   if (!is.ts(x)) {
-    fit <- lm(x ~ 1, data = data.frame(x = x, check.names = FALSE), na.action = na.exclude)
+    fit <- lm(
+      x ~ 1,
+      data = data.frame(x = x, check.names = FALSE),
+      na.action = na.exclude
+    )
   } else if (frequency(x) > 1) {
-    fit <- tslm(x ~ trend + season, data = data.frame(x = x, check.names = FALSE))
+    fit <- tslm(
+      x ~ trend + season,
+      data = data.frame(x = x, check.names = FALSE)
+    )
   } else {
     fit <- tslm(x ~ trend, data = data.frame(x = x, check.names = FALSE))
   }
@@ -52,14 +67,14 @@ bcloglik <- function(x, lower=-1, upper=2) {
   xl <- loglik <- as.vector(lambda)
   m <- length(xl)
   x <- na.omit(c(x))
-  for (i in 1L:m)
-  {
+  for (i in 1L:m) {
     if (abs(la <- xl[i]) > 0.02) {
-      xt <- (x ^ la - 1) / la
+      xt <- (x^la - 1) / la
     } else {
-      xt <- logx * (1 + (la * logx) / 2 * (1 + (la * logx) / 3 * (1 + (la * logx) / 4)))
+      xt <- logx *
+        (1 + (la * logx) / 2 * (1 + (la * logx) / 3 * (1 + (la * logx) / 4)))
     }
-    loglik[i] <- -n / 2 * log(sum(qr.resid(xqr, xt / xdot ^ (la - 1)) ^ 2))
+    loglik[i] <- -n / 2 * log(sum(qr.resid(xqr, xt / xdot^(la - 1))^2))
   }
   return(xl[which.max(loglik)])
 }
@@ -99,7 +114,12 @@ bcloglik <- function(x, lower=-1, upper=2) {
 #' plot(forecast(air.fit))
 #'
 #' @export
-BoxCox.lambda <- function(x, method=c("guerrero", "loglik"), lower=-1, upper=2) {
+BoxCox.lambda <- function(
+  x,
+  method = c("guerrero", "loglik"),
+  lower = -1,
+  upper = 2
+) {
   if (any(x <= 0, na.rm = TRUE)) {
     lower <- max(lower, 0)
   }

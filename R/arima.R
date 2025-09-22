@@ -1,7 +1,24 @@
-search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
-                         max.P=2, max.Q=2, max.order=5, stationary=FALSE, ic=c("aic", "aicc", "bic"),
-                         trace=FALSE, approximation=FALSE, xreg=NULL, offset=offset, allowdrift=TRUE,
-                         allowmean=TRUE, parallel=FALSE, num.cores=2, ...) {
+search.arima <- function(
+  x,
+  d = NA,
+  D = NA,
+  max.p = 5,
+  max.q = 5,
+  max.P = 2,
+  max.Q = 2,
+  max.order = 5,
+  stationary = FALSE,
+  ic = c("aic", "aicc", "bic"),
+  trace = FALSE,
+  approximation = FALSE,
+  xreg = NULL,
+  offset = offset,
+  allowdrift = TRUE,
+  allowmean = TRUE,
+  parallel = FALSE,
+  num.cores = 2,
+  ...
+) {
   # dataname <- substitute(x)
   ic <- match.arg(ic)
   m <- frequency(x)
@@ -22,9 +39,16 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
             if (i + j + I + J <= max.order) {
               for (K in 0:maxK) {
                 fit <- myarima(
-                  x, order = c(i, d, j), seasonal = c(I, D, J),
-                  constant = (K == 1), trace = trace, ic = ic, approximation = approximation,
-                  offset = offset, xreg = xreg, ...
+                  x,
+                  order = c(i, d, j),
+                  seasonal = c(I, D, J),
+                  constant = (K == 1),
+                  trace = trace,
+                  ic = ic,
+                  approximation = approximation,
+                  offset = offset,
+                  xreg = xreg,
+                  ...
                 )
                 if (fit$ic < best.ic) {
                   best.ic <- fit$ic
@@ -49,8 +73,15 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
       K <- .tmp[5] == 1
       if (i + j + I + J <= max.order) {
         fit <- myarima(
-          x, order = c(i, d, j), seasonal = c(I, D, J), constant = (K == 1),
-          trace = trace, ic = ic, approximation = approximation, offset = offset, xreg = xreg,
+          x,
+          order = c(i, d, j),
+          seasonal = c(I, D, J),
+          constant = (K == 1),
+          trace = trace,
+          ic = ic,
+          approximation = approximation,
+          offset = offset,
+          xreg = xreg,
           ...
         )
       }
@@ -65,7 +96,12 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
       num.cores <- detectCores()
     }
 
-    all.models <- mclapply(X = to.check, FUN = par.all.arima, max.order = max.order, mc.cores = num.cores)
+    all.models <- mclapply(
+      X = to.check,
+      FUN = par.all.arima,
+      max.order = max.order,
+      mc.cores = num.cores
+    )
 
     # Removing null elements
     all.models <- all.models[lengths(all.models) > 0]
@@ -73,7 +109,9 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
     # Choosing best model
     best.ic <- Inf
     for (i in seq_along(all.models)) {
-      if (!is.null(all.models[[i]][, 1]$ic) && all.models[[i]][, 1]$ic < best.ic) {
+      if (
+        !is.null(all.models[[i]][, 1]$ic) && all.models[[i]][, 1]$ic < best.ic
+      ) {
         bestfit <- all.models[[i]][, 1]
         best.ic <- bestfit$ic
         constant <- unlist(all.models[[i]][1, 2])
@@ -90,28 +128,51 @@ search.arima <- function(x, d=NA, D=NA, max.p=5, max.q=5,
       }
       # constant <- length(bestfit$coef) - ncol(xreg) > sum(bestfit$arma[1:4])
       newbestfit <- myarima(
-        x, order = bestfit$arma[c(1, 6, 2)],
-        seasonal = bestfit$arma[c(3, 7, 4)], constant = constant, ic,
-        trace = FALSE, approximation = FALSE, xreg = xreg, ...
+        x,
+        order = bestfit$arma[c(1, 6, 2)],
+        seasonal = bestfit$arma[c(3, 7, 4)],
+        constant = constant,
+        ic,
+        trace = FALSE,
+        approximation = FALSE,
+        xreg = xreg,
+        ...
       )
       if (newbestfit$ic == Inf) {
         # Final model is lousy. Better try again without approximation
         # warning("Unable to fit final model using maximum likelihood. AIC value approximated")
         bestfit <- search.arima(
-          x, d = d, D = D, max.p = max.p, max.q = max.q,
-          max.P = max.P, max.Q = max.Q, max.order = max.order, stationary = stationary,
-          ic = ic, trace = trace, approximation = FALSE, xreg = xreg, offset = offset,
-          allowdrift = allowdrift, allowmean = allowmean,
-          parallel = parallel, num.cores = num.cores, ...
+          x,
+          d = d,
+          D = D,
+          max.p = max.p,
+          max.q = max.q,
+          max.P = max.P,
+          max.Q = max.Q,
+          max.order = max.order,
+          stationary = stationary,
+          ic = ic,
+          trace = trace,
+          approximation = FALSE,
+          xreg = xreg,
+          offset = offset,
+          allowdrift = allowdrift,
+          allowmean = allowmean,
+          parallel = parallel,
+          num.cores = num.cores,
+          ...
         )
-        bestfit$ic <- switch(ic, bic = bestfit$bic, aic = bestfit$aic, aicc = bestfit$aicc)
-      }
-      else {
+        bestfit$ic <- switch(
+          ic,
+          bic = bestfit$bic,
+          aic = bestfit$aic,
+          aicc = bestfit$aicc
+        )
+      } else {
         bestfit <- newbestfit
       }
     }
-  }
-  else {
+  } else {
     stop("No ARIMA model able to be estimated")
   }
 
@@ -145,9 +206,11 @@ SeasDummy <- function(x) {
 
 # CANOVA-HANSEN TEST
 # Largely based on uroot package code for CH.test()
-SD.test <- function(wts, s=frequency(wts)) {
+SD.test <- function(wts, s = frequency(wts)) {
   if (anyNA(wts)) {
-    stop("Series contains missing values. Please choose order of seasonal differencing manually.")
+    stop(
+      "Series contains missing values. Please choose order of seasonal differencing manually."
+    )
   }
   if (s == 1) {
     stop("Not seasonal data")
@@ -158,21 +221,24 @@ SD.test <- function(wts, s=frequency(wts)) {
     stop("Insufficient data")
   }
   frec <- rep(1, as.integer((s + 1) / 2))
-  ltrunc <- round(s * (N / 100) ^ 0.25)
+  ltrunc <- round(s * (N / 100)^0.25)
   R1 <- as.matrix(SeasDummy(wts))
   lmch <- lm(wts ~ R1, na.action = na.exclude) # run the regression : y(i)=mu+f(i)'gamma(i)+e(i)
   Fhat <- Fhataux <- matrix(nrow = N, ncol = s - 1)
-  for (i in 1:(s - 1))
+  for (i in 1:(s - 1)) {
     Fhataux[, i] <- R1[, i] * residuals(lmch)
+  }
   for (i in 1:N) {
-    for (n in 1:(s - 1))
+    for (n in 1:(s - 1)) {
       Fhat[i, n] <- sum(Fhataux[1:i, n])
+    }
   }
   wnw <- 1 - seq(1, ltrunc, 1) / (ltrunc + 1)
   Ne <- nrow(Fhataux)
   Omnw <- 0
-  for (k in 1:ltrunc)
+  for (k in 1:ltrunc) {
     Omnw <- Omnw + (t(Fhataux)[, (k + 1):Ne] %*% Fhataux[1:(Ne - k), ]) * wnw[k]
+  }
   Omfhat <- (crossprod(Fhataux) + Omnw + t(Omnw)) / Ne
   sq <- seq(1, s - 1, 2)
   frecob <- rep(0, s - 1)
@@ -198,7 +264,8 @@ SD.test <- function(wts, s=frequency(wts)) {
   if (problems) {
     stL <- 0
   } else {
-    stL <- (1 / N ^ 2) * sum(diag(solve(tmp, tol = 1e-25) %*% t(A) %*% t(Fhat) %*% Fhat %*% A))
+    stL <- (1 / N^2) *
+      sum(diag(solve(tmp, tol = 1e-25) %*% t(A) %*% t(Fhat) %*% Fhat %*% A))
   }
   return(stL)
 }
@@ -275,15 +342,28 @@ SD.test <- function(wts, s=frequency(wts)) {
 #' plot(forecast(fit, h = 30))
 #'
 #' @export
-forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[5], 10),
-                           level=c(80, 95), fan=FALSE, xreg=NULL, lambda=object$lambda, bootstrap=FALSE, npaths=5000, biasadj=NULL, ...) {
+forecast.Arima <- function(
+  object,
+  h = ifelse(object$arma[5] > 1, 2 * object$arma[5], 10),
+  level = c(80, 95),
+  fan = FALSE,
+  xreg = NULL,
+  lambda = object$lambda,
+  bootstrap = FALSE,
+  npaths = 5000,
+  biasadj = NULL,
+  ...
+) {
   # Check whether there are non-existent arguments
   all.args <- names(formals())
   user.args <- names(match.call())[-1L] # including arguments passed to 3 dots
   check <- user.args %in% all.args
   if (!all(check)) {
     error.args <- user.args[!check]
-    warning(sprintf("The non-existent %s arguments will be ignored.", error.args))
+    warning(sprintf(
+      "The non-existent %s arguments will be ignored.",
+      error.args
+    ))
   }
 
   use.drift <- is.element("drift", names(object$coef))
@@ -291,19 +371,25 @@ forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[
   usexreg <- (use.drift || is.element("xreg", names(object))) # | use.constant)
 
   if (!is.null(xreg) && usexreg) {
-    if(!is.numeric(xreg))
+    if (!is.numeric(xreg)) {
       stop("xreg should be a numeric matrix or a numeric vector")
+    }
     xreg <- as.matrix(xreg)
     if (is.null(colnames(xreg))) {
-      colnames(xreg) <- if (ncol(xreg) == 1) "xreg" else paste0("xreg", seq_len(ncol(xreg)))
+      colnames(xreg) <- if (ncol(xreg) == 1) {
+        "xreg"
+      } else {
+        paste0("xreg", seq_len(ncol(xreg)))
+      }
     }
 
     origxreg <- xreg <- as.matrix(xreg)
     h <- nrow(xreg)
-  }
-  else {
-    if(!is.null(xreg)){
-      warning("xreg not required by this model, ignoring the provided regressors")
+  } else {
+    if (!is.null(xreg)) {
+      warning(
+        "xreg not required by this model, ignoring the provided regressors"
+      )
       xreg <- NULL
     }
     origxreg <- NULL
@@ -326,8 +412,17 @@ forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[
     #firstnonmiss <- head(which(!missing),1)
     #n <- length(x) - firstnonmiss + 1
     if (!is.null(xreg)) {
-      xreg <- `colnames<-`(cbind(drift = (1:h) + n, xreg),
-        make.unique(c("drift", if(is.null(colnames(xreg)) && !is.null(xreg)) rep("", NCOL(xreg)) else colnames(xreg))))
+      xreg <- `colnames<-`(
+        cbind(drift = (1:h) + n, xreg),
+        make.unique(c(
+          "drift",
+          if (is.null(colnames(xreg)) && !is.null(xreg)) {
+            rep("", NCOL(xreg))
+          } else {
+            colnames(xreg)
+          }
+        ))
+      )
     } else {
       xreg <- `colnames<-`(as.matrix((1:h) + n), "drift")
     }
@@ -340,8 +435,7 @@ forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[
     } else {
       stop("Strange value of object$constant")
     }
-  }
-  else if (usexreg) {
+  } else if (usexreg) {
     if (is.null(xreg)) {
       stop("No regressors provided")
     }
@@ -349,12 +443,13 @@ forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[
     if (NCOL(xreg) != NCOL(object$call$xreg)) {
       stop("Number of regressors does not match fitted model")
     }
-    if(!identical(colnames(xreg), colnames(object$call$xreg))){
-      warning("xreg contains different column names from the xreg used in training. Please check that the regressors are in the same order.")
+    if (!identical(colnames(xreg), colnames(object$call$xreg))) {
+      warning(
+        "xreg contains different column names from the xreg used in training. Please check that the regressors are in the same order."
+      )
     }
     pred <- predict(object, n.ahead = h, newxreg = xreg)
-  }
-  else {
+  } else {
     pred <- predict(object, n.ahead = h)
   }
 
@@ -372,23 +467,29 @@ forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[
 
   # Compute prediction intervals
   nint <- length(level)
-  if (bootstrap) # Compute prediction intervals using simulations
-  {
+  if (bootstrap) {
+    # Compute prediction intervals using simulations
     sim <- matrix(NA, nrow = npaths, ncol = h)
-    for (i in 1:npaths)
-      sim[i, ] <- simulate(object, nsim = h, bootstrap = TRUE, xreg = origxreg, lambda = lambda)
+    for (i in 1:npaths) {
+      sim[i, ] <- simulate(
+        object,
+        nsim = h,
+        bootstrap = TRUE,
+        xreg = origxreg,
+        lambda = lambda
+      )
+    }
     lower <- apply(sim, 2, quantile, 0.5 - level / 200, type = 8)
     upper <- apply(sim, 2, quantile, 0.5 + level / 200, type = 8)
     if (nint > 1L) {
       lower <- t(lower)
       upper <- t(upper)
-    }
-    else {
+    } else {
       lower <- matrix(lower, ncol = 1)
       upper <- matrix(upper, ncol = 1)
     }
-  }
-  else { # Compute prediction intervals via the normal distribution
+  } else {
+    # Compute prediction intervals via the normal distribution
     lower <- matrix(NA, ncol = nint, nrow = length(pred$pred))
     upper <- lower
     for (i in 1:nint) {
@@ -407,27 +508,33 @@ forecast.Arima <- function(object, h=ifelse(object$arma[5] > 1, 2 * object$arma[
   method <- arima.string(object, padding = FALSE)
   seriesname <- if (!is.null(object$series)) {
     object$series
-  }
-  else if (!is.null(object$call$x)) {
+  } else if (!is.null(object$call$x)) {
     object$call$x
-  }
-  else {
+  } else {
     object$call$y
   }
   fits <- fitted.Arima(object)
-  if (!is.null(lambda) && is.null(object$constant)) { # Back-transform point forecasts and prediction intervals
+  if (!is.null(lambda) && is.null(object$constant)) {
+    # Back-transform point forecasts and prediction intervals
     pred$pred <- InvBoxCox(pred$pred, lambda, biasadj, pred$se^2)
-    if (!bootstrap) { # Bootstrapped intervals already back-transformed
+    if (!bootstrap) {
+      # Bootstrapped intervals already back-transformed
       lower <- InvBoxCox(lower, lambda)
       upper <- InvBoxCox(upper, lambda)
     }
   }
   return(structure(
     list(
-      method = method, model = object, level = level,
-      mean = future_msts(x, pred$pred), lower = future_msts(x, lower),
-      upper = future_msts(x, upper), x = x, series = seriesname,
-      fitted = copy_msts(x, fits), residuals = copy_msts(x, residuals.Arima(object))
+      method = method,
+      model = object,
+      level = level,
+      mean = future_msts(x, pred$pred),
+      lower = future_msts(x, lower),
+      upper = future_msts(x, upper),
+      x = x,
+      series = seriesname,
+      fitted = copy_msts(x, fits),
+      residuals = copy_msts(x, residuals.Arima(object))
     ),
     class = "forecast"
   ))
@@ -438,15 +545,25 @@ forecast.forecast_ARIMA <- forecast.Arima
 
 #' @rdname forecast.Arima
 #' @export
-forecast.ar <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=NULL,
-                        bootstrap=FALSE, npaths=5000, biasadj=FALSE, ...) {
+forecast.ar <- function(
+  object,
+  h = 10,
+  level = c(80, 95),
+  fan = FALSE,
+  lambda = NULL,
+  bootstrap = FALSE,
+  npaths = 5000,
+  biasadj = FALSE,
+  ...
+) {
   x <- getResponse(object)
   pred <- predict(object, newdata = x, n.ahead = h)
-  if (bootstrap) # Recompute se using simulations
-  {
+  if (bootstrap) {
+    # Recompute se using simulations
     sim <- matrix(NA, nrow = npaths, ncol = h)
-    for (i in 1:npaths)
+    for (i in 1:npaths) {
       sim[i, ] <- simulate(object, nsim = h, bootstrap = TRUE)
+    }
     pred$se <- apply(sim, 2, sd)
   }
   if (fan) {
@@ -473,7 +590,12 @@ forecast.ar <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=NULL,
   fits <- fitted.ar(object)
 
   if (!is.null(lambda)) {
-    pred$pred <- InvBoxCox(pred$pred, lambda, biasadj, list(level = level, upper = upper, lower = lower))
+    pred$pred <- InvBoxCox(
+      pred$pred,
+      lambda,
+      biasadj,
+      list(level = level, upper = upper, lower = lower)
+    )
 
     lower <- InvBoxCox(lower, lambda)
     upper <- InvBoxCox(upper, lambda)
@@ -483,13 +605,18 @@ forecast.ar <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=NULL,
 
   return(structure(
     list(
-      method = method, model = object, level = level,
+      method = method,
+      model = object,
+      level = level,
       mean = future_msts(x, pred$pred),
       lower = future_msts(x, lower),
-      upper = future_msts(x, upper), x = x, series = deparse(object$call$x),
-      fitted = copy_msts(x, fits), residuals = copy_msts(x, res)
-    )
-    , class = "forecast"
+      upper = future_msts(x, upper),
+      x = x,
+      series = deparse(object$call$x),
+      fitted = copy_msts(x, fits),
+      residuals = copy_msts(x, res)
+    ),
+    class = "forecast"
   ))
 }
 
@@ -499,22 +626,22 @@ getxreg <- function(z) {
   # Look in the obvious place first
   if (is.element("xreg", names(z))) {
     return(z$xreg)
-  }
-  # Next most obvious place
-  else if (is.element("xreg", names(z$coef))) {
+  } else if (is.element("xreg", names(z$coef))) {
+    # Next most obvious place
     return(eval.parent(z$coef$xreg))
-  }
-  # Now check under call
-  else if (is.element("xreg", names(z$call))) {
+  } else if (is.element("xreg", names(z$call))) {
+    # Now check under call
     return(eval.parent(z$call$xreg))
-  }
-  # Otherwise check if it exists
-  else {
+  } else {
+    # Otherwise check if it exists
     armapar <- sum(z$arma[1:4]) + is.element("intercept", names(z$coef))
     npar <- length(z$coef)
     if (npar > armapar) {
-      stop("It looks like you have an xreg component but I don't know what it is.\n  Please use Arima() or auto.arima() rather than arima().")
-    } else { # No xreg used
+      stop(
+        "It looks like you have an xreg component but I don't know what it is.\n  Please use Arima() or auto.arima() rather than arima()."
+      )
+    } else {
+      # No xreg used
       return(NULL)
     }
   }
@@ -576,20 +703,21 @@ fitted.Arima <- function(object, h = 1, ...) {
     x <- getResponse(object)
     if (!is.null(object$fitted)) {
       return(object$fitted)
-    }
-    else if (is.null(x)) {
+    } else if (is.null(x)) {
       # warning("Fitted values are unavailable due to missing historical data")
       return(NULL)
-    }
-    else if (is.null(object$lambda)) {
+    } else if (is.null(object$lambda)) {
       return(x - object$residuals)
-    }
-    else {
-      fits <- InvBoxCox(BoxCox(x, object$lambda) - object$residuals, object$lambda, NULL, object$sigma2)
+    } else {
+      fits <- InvBoxCox(
+        BoxCox(x, object$lambda) - object$residuals,
+        object$lambda,
+        NULL,
+        object$sigma2
+      )
       return(fits)
     }
-  }
-  else {
+  } else {
     return(hfitted(object = object, h = h, FUN = "Arima", ...))
   }
 }
@@ -691,9 +819,21 @@ fitted.forecast_ARIMA <- fitted.Arima
 #' accuracy(forecast(air.model, h = 48, lambda = NULL),
 #'          log(window(AirPassengers, start = 1957)))
 #'
-Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.mean=TRUE,
-                  include.drift=FALSE, include.constant=NULL, lambda=model$lambda, biasadj=FALSE,
-                  method=c("CSS-ML", "ML", "CSS"), model=NULL, x=y, ...) {
+Arima <- function(
+  y,
+  order = c(0, 0, 0),
+  seasonal = c(0, 0, 0),
+  xreg = NULL,
+  include.mean = TRUE,
+  include.drift = FALSE,
+  include.constant = NULL,
+  lambda = model$lambda,
+  biasadj = FALSE,
+  method = c("CSS-ML", "ML", "CSS"),
+  model = NULL,
+  x = y,
+  ...
+) {
   # Remove outliers near ends
   # j <- time(x)
   # x <- na.contiguous(x)
@@ -713,23 +853,30 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
   }
 
   if (!is.null(xreg)) {
-    if(!is.numeric(xreg))
+    if (!is.numeric(xreg)) {
       stop("xreg should be a numeric matrix or a numeric vector")
+    }
     xreg <- as.matrix(xreg)
     if (is.null(colnames(xreg))) {
-      colnames(xreg) <- if (ncol(xreg) == 1) "xreg" else paste0("xreg", seq_len(ncol(xreg)))
+      colnames(xreg) <- if (ncol(xreg) == 1) {
+        "xreg"
+      } else {
+        paste0("xreg", seq_len(ncol(xreg)))
+      }
     }
   }
 
   if (!is.list(seasonal)) {
     if (frequency(x) <= 1) {
       seasonal <- list(order = c(0, 0, 0), period = NA)
-      if(length(x) <= order[2L])
+      if (length(x) <= order[2L]) {
         stop("Not enough data to fit the model")
+      }
     } else {
       seasonal <- list(order = seasonal, period = frequency(x))
-      if(length(x) <= order[2L] + seasonal$order[2L] * seasonal$period)
+      if (length(x) <= order[2L] + seasonal$order[2L] * seasonal$period) {
         stop("Not enough data to fit the model")
+      }
     }
   }
 
@@ -739,8 +886,7 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
       if ((order[2] + seasonal$order[2]) == 1) {
         include.drift <- TRUE
       }
-    }
-    else {
+    } else {
       include.mean <- include.drift <- FALSE
     }
   }
@@ -754,24 +900,51 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
     xreg <- tmp$xreg
     tmp$fitted <- NULL
     tmp$lambda <- model$lambda
-  }
-  else {
+  } else {
     if (include.drift) {
-      xreg <- `colnames<-`(cbind(drift = seq_along(x), xreg),
-                           make.unique(c("drift", if(is.null(colnames(xreg)) && !is.null(xreg)) rep("", NCOL(xreg)) else colnames(xreg))))
+      xreg <- `colnames<-`(
+        cbind(drift = seq_along(x), xreg),
+        make.unique(c(
+          "drift",
+          if (is.null(colnames(xreg)) && !is.null(xreg)) {
+            rep("", NCOL(xreg))
+          } else {
+            colnames(xreg)
+          }
+        ))
+      )
     }
     if (is.null(xreg)) {
-      suppressWarnings(tmp <- stats::arima(x = x, order = order, seasonal = seasonal, include.mean = include.mean, method = method, ...))
+      suppressWarnings(
+        tmp <- stats::arima(
+          x = x,
+          order = order,
+          seasonal = seasonal,
+          include.mean = include.mean,
+          method = method,
+          ...
+        )
+      )
     } else {
-      suppressWarnings(tmp <- stats::arima(x = x, order = order, seasonal = seasonal, xreg = xreg, include.mean = include.mean, method = method, ...))
+      suppressWarnings(
+        tmp <- stats::arima(
+          x = x,
+          order = order,
+          seasonal = seasonal,
+          xreg = xreg,
+          include.mean = include.mean,
+          method = method,
+          ...
+        )
+      )
     }
   }
 
   # Calculate aicc & bic based on tmp$aic
   npar <- length(tmp$coef[tmp$mask]) + 1
   missing <- is.na(tmp$residuals)
-  firstnonmiss <- head(which(!missing),1)
-  lastnonmiss <- tail(which(!missing),1)
+  firstnonmiss <- head(which(!missing), 1)
+  lastnonmiss <- tail(which(!missing), 1)
   n <- sum(!missing[firstnonmiss:lastnonmiss])
   nstar <- n - tmp$arma[6] - tmp$arma[7] * tmp$arma[5]
   tmp$aicc <- tmp$aic + 2 * npar * (nstar / (nstar - npar - 1) - 1)
@@ -784,7 +957,7 @@ Arima <- function(y, order=c(0, 0, 0), seasonal=c(0, 0, 0), xreg=NULL, include.m
 
   # Adjust residual variance to be unbiased
   if (is.null(model)) {
-    tmp$sigma2 <- sum(tmp$residuals ^ 2, na.rm = TRUE) / (nstar - npar + 1)
+    tmp$sigma2 <- sum(tmp$residuals^2, na.rm = TRUE) / (nstar - npar + 1)
   }
   out <- structure(tmp, class = c("forecast_ARIMA", "ARIMA", "Arima"))
   out$fitted <- fitted.Arima(out)
@@ -800,7 +973,8 @@ arima2 <- function(x, model, xreg, method) {
   sigma2 <- model$sigma2
   if (use.drift) {
     driftmod <- lm(model$xreg[, "drift"] ~ I(time(as.ts(model$x))))
-    newxreg <- driftmod$coefficients[1] + driftmod$coefficients[2] * time(as.ts(x))
+    newxreg <- driftmod$coefficients[1] +
+      driftmod$coefficients[2] * time(as.ts(x))
     if (!is.null(xreg)) {
       origColNames <- colnames(xreg)
       xreg <- cbind(newxreg, xreg)
@@ -820,34 +994,61 @@ arima2 <- function(x, model, xreg, method) {
     }
   }
 
-  if (model$arma[5] > 1 && sum(abs(model$arma[c(3, 4, 7)])) > 0) # Seasonal model
-  {
+  if (model$arma[5] > 1 && sum(abs(model$arma[c(3, 4, 7)])) > 0) {
+    # Seasonal model
     if (use.xreg) {
       refit <- Arima(
-        x, order = model$arma[c(1, 6, 2)], seasonal = list(order = model$arma[c(3, 7, 4)], period = model$arma[5]),
-        include.mean = use.intercept, xreg = xreg, method = method, fixed = model$coef
+        x,
+        order = model$arma[c(1, 6, 2)],
+        seasonal = list(order = model$arma[c(3, 7, 4)], period = model$arma[5]),
+        include.mean = use.intercept,
+        xreg = xreg,
+        method = method,
+        fixed = model$coef
       )
     } else {
       refit <- Arima(
-        x, order = model$arma[c(1, 6, 2)], seasonal = list(order = model$arma[c(3, 7, 4)], period = model$arma[5]),
-        include.mean = use.intercept, method = method, fixed = model$coef
+        x,
+        order = model$arma[c(1, 6, 2)],
+        seasonal = list(order = model$arma[c(3, 7, 4)], period = model$arma[5]),
+        include.mean = use.intercept,
+        method = method,
+        fixed = model$coef
       )
     }
-  }
-  else if (length(model$coef) > 0) # Nonseasonal model with some parameters
-  {
+  } else if (length(model$coef) > 0) {
+    # Nonseasonal model with some parameters
     if (use.xreg) {
-      refit <- Arima(x, order = model$arma[c(1, 6, 2)], xreg = xreg, include.mean = use.intercept, method = method, fixed = model$coef)
+      refit <- Arima(
+        x,
+        order = model$arma[c(1, 6, 2)],
+        xreg = xreg,
+        include.mean = use.intercept,
+        method = method,
+        fixed = model$coef
+      )
     } else {
-      refit <- Arima(x, order = model$arma[c(1, 6, 2)], include.mean = use.intercept, method = method, fixed = model$coef)
+      refit <- Arima(
+        x,
+        order = model$arma[c(1, 6, 2)],
+        include.mean = use.intercept,
+        method = method,
+        fixed = model$coef
+      )
     }
-  }
-  else { # No parameters
-    refit <- Arima(x, order = model$arma[c(1, 6, 2)], include.mean = FALSE, method = method)
+  } else {
+    # No parameters
+    refit <- Arima(
+      x,
+      order = model$arma[c(1, 6, 2)],
+      include.mean = FALSE,
+      method = method
+    )
   }
 
   refit$var.coef <- matrix(0, length(refit$coef), length(refit$coef))
-  if (use.xreg) { # Why is this needed?
+  if (use.xreg) {
+    # Why is this needed?
     refit$xreg <- xreg
   }
   refit$sigma2 <- sigma2
@@ -857,7 +1058,12 @@ arima2 <- function(x, model, xreg, method) {
 
 # Modified version of function print.Arima from stats package
 #' @export
-print.forecast_ARIMA <- function(x, digits=max(3, getOption("digits") - 3), se=TRUE, ...) {
+print.forecast_ARIMA <- function(
+  x,
+  digits = max(3, getOption("digits") - 3),
+  se = TRUE,
+  ...
+) {
   cat("Series:", x$series, "\n")
   cat(arima.string(x, padding = FALSE), "\n")
   if (!is.null(x$lambda)) {
@@ -892,16 +1098,17 @@ print.forecast_ARIMA <- function(x, digits=max(3, getOption("digits") - 3), se=T
     print.default(coef, print.gap = 2)
   }
   cm <- x$call$method
-  cat("\nsigma^2 = ", format(x$sigma2, digits = digits), sep="")
-  if(!is.na(x$loglik))
+  cat("\nsigma^2 = ", format(x$sigma2, digits = digits), sep = "")
+  if (!is.na(x$loglik)) {
     cat(":  log likelihood = ", format(round(x$loglik, 2L)), sep = "")
+  }
   cat("\n")
   if (is.null(cm) || cm != "CSS") {
-    if(!is.na(x$aic)) {
+    if (!is.na(x$aic)) {
       npar <- length(x$coef[x$mask]) + 1
       missing <- is.na(x$residuals)
-      firstnonmiss <- head(which(!missing),1)
-      lastnonmiss <- tail(which(!missing),1)
+      firstnonmiss <- head(which(!missing), 1)
+      lastnonmiss <- tail(which(!missing), 1)
       n <- lastnonmiss - firstnonmiss + 1
       nstar <- n - x$arma[6] - x$arma[7] * x$arma[5]
       bic <- x$aic + npar * (log(nstar) - 2)
@@ -913,7 +1120,6 @@ print.forecast_ARIMA <- function(x, digits=max(3, getOption("digits") - 3), se=T
   }
   invisible(x)
 }
-
 
 
 #' Return the order of an ARIMA or ARFIMA model
@@ -948,14 +1154,11 @@ arimaorder <- function(object) {
     } else {
       return(order[1:3])
     }
-  }
-  else if (inherits(object, "ar")) {
+  } else if (inherits(object, "ar")) {
     return(c("p" = object$order, "d" = 0, "q" = 0))
-  }
-  else if (inherits(object, "fracdiff")) {
+  } else if (inherits(object, "fracdiff")) {
     return(c("p" = length(object$ar), "d" = object$d, "q" = length(object$ma)))
-  }
-  else {
+  } else {
     stop("object not of class Arima, ar or fracdiff")
   }
 }
@@ -980,25 +1183,25 @@ fitted.ar <- function(object, ...) {
 #' @export
 hfitted.Arima <- function(object, h, ...) {
   # As implemented in Fable
-  if(h == 1){
+  if (h == 1) {
     return(object$fitted)
   }
-  y <- object$fitted+residuals(object, "innovation")
+  y <- object$fitted + residuals(object, "innovation")
   yx <- residuals(object, "regression")
   # Get fitted model
   mod <- object$model
   # Reset model to initial state
-  mod <-  stats::makeARIMA(mod$phi, mod$theta, mod$Delta)
+  mod <- stats::makeARIMA(mod$phi, mod$theta, mod$Delta)
   # Calculate regression component
   xm <- y - yx
   fits <- rep_len(NA_real_, length(y))
 
   start <- length(mod$Delta) + 1
   end <- length(yx) - h
-  idx <- if(start > end) integer(0L) else start:end
-  for(i in idx) {
+  idx <- if (start > end) integer(0L) else start:end
+  for (i in idx) {
     fc_mod <- attr(stats::KalmanRun(yx[seq_len(i)], mod, update = TRUE), "mod")
-    fits[i + h] <- stats::KalmanForecast(h, fc_mod)$pred[h] + xm[i+h]
+    fits[i + h] <- stats::KalmanForecast(h, fc_mod)$pred[h] + xm[i + h]
   }
   fits <- ts(fits)
   tsp(fits) <- tsp(object$x)

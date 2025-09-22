@@ -1,6 +1,5 @@
 ### Time series graphics and transformations
 
-
 #' Time series display
 #'
 #' Plots a time series along with its acf and either its pacf, lagged
@@ -42,9 +41,20 @@
 #' ggtsdisplay(USAccDeaths, plot.type = "scatter")
 #'
 #' @export
-tsdisplay <- function(x, plot.type=c("partial", "histogram", "scatter", "spectrum"), points=TRUE, ci.type=c("white", "ma"),
-                      lag.max, na.action=na.contiguous, main=NULL, xlab="", ylab="",
-                      pch=1, cex=0.5, ...) {
+tsdisplay <- function(
+  x,
+  plot.type = c("partial", "histogram", "scatter", "spectrum"),
+  points = TRUE,
+  ci.type = c("white", "ma"),
+  lag.max,
+  na.action = na.contiguous,
+  main = NULL,
+  xlab = "",
+  ylab = "",
+  pch = 1,
+  cex = 0.5,
+  ...
+) {
   plot.type <- match.arg(plot.type)
   ci.type <- match.arg(ci.type)
 
@@ -58,45 +68,86 @@ tsdisplay <- function(x, plot.type=c("partial", "histogram", "scatter", "spectru
     x <- ts(x)
   }
   if (missing(lag.max)) {
-    lag.max <- round(min(max(10 * log10(length(x)), 3 * frequency(x)), length(x) / 3))
+    lag.max <- round(min(
+      max(10 * log10(length(x)), 3 * frequency(x)),
+      length(x) / 3
+    ))
   }
 
-  plot.ts(x, main = main, ylab = ylab, xlab = xlab, ylim = range(x, na.rm = TRUE), ...)
+  plot.ts(
+    x,
+    main = main,
+    ylab = ylab,
+    xlab = xlab,
+    ylim = range(x, na.rm = TRUE),
+    ...
+  )
   if (points) {
     points(x, pch = pch, cex = cex, ...)
   }
   ylim <- c(-1, 1) * 3 / sqrt(length(x))
 
-  junk1 <- stats::acf(c(x), lag.max = lag.max, plot = FALSE, na.action = na.action)
+  junk1 <- stats::acf(
+    c(x),
+    lag.max = lag.max,
+    plot = FALSE,
+    na.action = na.action
+  )
   junk1$acf[1, 1, 1] <- 0
   if (ci.type == "ma") {
-    ylim <- range(ylim, 0.66 * ylim * max(sqrt(cumsum(c(1, 2 * junk1$acf[-1, 1, 1] ^ 2)))))
+    ylim <- range(
+      ylim,
+      0.66 * ylim * max(sqrt(cumsum(c(1, 2 * junk1$acf[-1, 1, 1]^2))))
+    )
   }
   ylim <- range(ylim, junk1$acf)
   if (plot.type == "partial") {
-    junk2 <- stats::pacf(c(x), lag.max = lag.max, plot = FALSE, na.action = na.action)
+    junk2 <- stats::pacf(
+      c(x),
+      lag.max = lag.max,
+      plot = FALSE,
+      na.action = na.action
+    )
     ylim <- range(ylim, junk2$acf)
   }
 
   oldpar <- par(mar = c(5, 4.1, 1.5, 2))
-  plot(junk1, ylim = ylim, xlim = c(1, lag.max), ylab = "ACF", main = "", ci.type = ci.type, ...)
+  plot(
+    junk1,
+    ylim = ylim,
+    xlim = c(1, lag.max),
+    ylab = "ACF",
+    main = "",
+    ci.type = ci.type,
+    ...
+  )
   if (plot.type == "scatter") {
     n <- length(x)
-    plot(x[1:(n - 1)], x[2:n], xlab = expression(Y[t - 1]), ylab = expression(Y[t]), ...)
-  }
-  else if (plot.type == "spectrum") {
+    plot(
+      x[1:(n - 1)],
+      x[2:n],
+      xlab = expression(Y[t - 1]),
+      ylab = expression(Y[t]),
+      ...
+    )
+  } else if (plot.type == "spectrum") {
     spec.ar(x, main = "", na.action = na.action)
   } else if (plot.type == "histogram") {
     graphics::hist(x, breaks = "FD", main = "", xlab = main)
-  }
-  else {
-    plot(junk2, ylim = ylim, xlim = c(1, lag.max), ylab = "PACF", main = "", ...)
+  } else {
+    plot(
+      junk2,
+      ylim = ylim,
+      xlim = c(1, lag.max),
+      ylab = "PACF",
+      main = "",
+      ...
+    )
   }
   par(def.par)
   layout(1)
   invisible()
 }
-
 
 
 #' Seasonal plot
@@ -131,8 +182,20 @@ tsdisplay <- function(x, plot.type=c("partial", "histogram", "scatter", "spectru
 #' seasonplot(AirPassengers, col = rainbow(12), year.labels = TRUE)
 #'
 #' @export
-seasonplot <- function(x, s, season.labels=NULL, year.labels=FALSE, year.labels.left=FALSE,
-                       type="o", main, xlab=NULL, ylab="", col=1, labelgap=0.1, ...) {
+seasonplot <- function(
+  x,
+  s,
+  season.labels = NULL,
+  year.labels = FALSE,
+  year.labels.left = FALSE,
+  type = "o",
+  main,
+  xlab = NULL,
+  ylab = "",
+  col = 1,
+  labelgap = 0.1,
+  ...
+) {
   if (missing(main)) {
     main <- paste("Seasonal plot:", deparse(substitute(x)))
   }
@@ -162,28 +225,22 @@ seasonplot <- function(x, s, season.labels=NULL, year.labels=FALSE, year.labels.
   if (s == 12) {
     labs <- month.abb
     xLab <- "Month"
-  }
-  else if (s == 4) {
+  } else if (s == 4) {
     labs <- paste0("Q", 1:4)
     xLab <- "Quarter"
-  }
-  else if (s == 7) {
+  } else if (s == 7) {
     labs <- c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
     xLab <- "Day"
-  }
-  else if (s == 52) {
+  } else if (s == 52) {
     labs <- 1:s
     xLab <- "Week"
-  }
-  else if (s == 24) {
+  } else if (s == 24) {
     labs <- 0:(s - 1)
     xLab <- "Hour"
-  }
-  else if (s == 48) {
+  } else if (s == 48) {
     labs <- seq(0, 23.5, by = 0.5)
     xLab <- "Half-hour"
-  }
-  else {
+  } else {
     if (s < 20) {
       labs <- 1:s
     } else {
@@ -206,23 +263,56 @@ seasonplot <- function(x, s, season.labels=NULL, year.labels=FALSE, year.labels.
   if (year.labels.left) {
     xlim[1] <- 0.4 - labelgap
   }
-  plot(Season, xnew, xaxt = "n", xlab = xlab, type = type, ylab = ylab, main = main, xlim = xlim, col = 0, ...)
+  plot(
+    Season,
+    xnew,
+    xaxt = "n",
+    xlab = xlab,
+    type = type,
+    ylab = ylab,
+    main = main,
+    xlim = xlim,
+    col = 0,
+    ...
+  )
   nn <- length(Season) / s
   col <- rep(col, nn)[1:nn]
-  for (i in 0:(nn - 1))
-    lines(Season[(i * (s + 1) + 1):((s + 1) * (i + 1))], xnew[(i * (s + 1) + 1):((s + 1) * (i + 1))], type = type, col = col[i + 1], ...)
+  for (i in 0:(nn - 1)) {
+    lines(
+      Season[(i * (s + 1) + 1):((s + 1) * (i + 1))],
+      xnew[(i * (s + 1) + 1):((s + 1) * (i + 1))],
+      type = type,
+      col = col[i + 1],
+      ...
+    )
+  }
   if (year.labels) {
     idx <- which(Season[!is.na(xnew)] == s)
     year <- round(time(tsx)[idx], nchar(s))
-    text(x = rep(s + labelgap, length(year)), y = tsx[idx], labels = paste(c(trunc(year))), adj = 0, ..., col = col[seq_along(idx)])
+    text(
+      x = rep(s + labelgap, length(year)),
+      y = tsx[idx],
+      labels = paste(c(trunc(year))),
+      adj = 0,
+      ...,
+      col = col[seq_along(idx)]
+    )
   }
   if (year.labels.left) {
     idx <- which(Season[!is.na(xnew)] == 1)
     year <- round(time(tsx)[idx], nchar(s))
-    if (min(idx) > 1) { # First year starts after season 1n
+    if (min(idx) > 1) {
+      # First year starts after season 1n
       col <- col[-1]
     }
-    text(x = rep(1 - labelgap, length(year)), y = tsx[idx], labels = paste(c(trunc(year))), adj = 1, ..., col = col[seq_along(idx)])
+    text(
+      x = rep(1 - labelgap, length(year)),
+      y = tsx[idx],
+      labels = paste(c(trunc(year))),
+      adj = 1,
+      ...,
+      col = col[seq_along(idx)]
+    )
   }
   if (is.null(labs)) {
     axis(1, ...)

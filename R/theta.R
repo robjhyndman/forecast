@@ -61,8 +61,13 @@
 #' nile.fcast <- thetaf(Nile)
 #' plot(nile.fcast)
 #' @export
-thetaf <- function(y, h = ifelse(frequency(y) > 1, 2 * frequency(y), 10),
-                   level = c(80, 95), fan = FALSE, x = y) {
+thetaf <- function(
+  y,
+  h = ifelse(frequency(y) > 1, 2 * frequency(y), 10),
+  level = c(80, 95),
+  fan = FALSE,
+  x = y
+) {
   # Check inputs
   if (fan) {
     level <- seq(51, 99, by = 3)
@@ -82,8 +87,7 @@ thetaf <- function(y, h = ifelse(frequency(y) > 1, 2 * frequency(y), 10),
     r <- as.numeric(acf(x, lag.max = m, plot = FALSE)$acf)[-1]
     stat <- sqrt((1 + 2 * sum(r[-m]^2)) / n)
     seasonal <- (abs(r[m]) / stat > qnorm(0.95))
-  }
-  else {
+  } else {
     seasonal <- FALSE
   }
 
@@ -106,7 +110,8 @@ thetaf <- function(y, h = ifelse(frequency(y) > 1, 2 * frequency(y), 10),
 
   # Reseasonalize
   if (seasonal) {
-    fcast$mean <- fcast$mean * rep(tail(decomp$seasonal, m), trunc(1 + h / m))[1:h]
+    fcast$mean <- fcast$mean *
+      rep(tail(decomp$seasonal, m), trunc(1 + h / m))[1:h]
     fcast$fitted <- fcast$fitted * decomp$seasonal
   }
   fcast$residuals <- origx - fcast$fitted
@@ -116,8 +121,7 @@ thetaf <- function(y, h = ifelse(frequency(y) > 1, 2 * frequency(y), 10),
   nconf <- length(level)
   fcast$lower <- fcast$upper <- ts(matrix(NA, nrow = h, ncol = nconf))
   tsp(fcast$lower) <- tsp(fcast$upper) <- tsp(fcast$mean)
-  for (i in 1:nconf)
-  {
+  for (i in 1:nconf) {
     zt <- -qnorm(0.5 - level[i] / 200)
     fcast$lower[, i] <- fcast$mean - zt * fcast.se
     fcast$upper[, i] <- fcast$mean + zt * fcast.se

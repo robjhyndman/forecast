@@ -70,7 +70,20 @@
 #' @keywords ts
 #'
 #' @export
-modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=NULL, subset=NULL, scale.inputs=FALSE, x=y, ...) {
+modelAR <- function(
+  y,
+  p,
+  P = 1,
+  FUN,
+  predict.FUN,
+  xreg = NULL,
+  lambda = NULL,
+  model = NULL,
+  subset = NULL,
+  scale.inputs = FALSE,
+  x = y,
+  ...
+) {
   useoldmodel <- FALSE
   yname <- deparse(substitute(y))
   if (!is.null(model)) {
@@ -85,10 +98,17 @@ modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=N
     m <- max(round(frequency(model$x)), 1L)
     minlength <- max(c(model$p, model$P * m)) + 1
     if (length(x) < minlength) {
-      stop(paste("Series must be at least of length", minlength, "to use fitted model"))
+      stop(paste(
+        "Series must be at least of length",
+        minlength,
+        "to use fitted model"
+      ))
     }
     if (tsp(as.ts(x))[3] != m) {
-      warning(paste("Data frequency doesn't match fitted model, coercing to frequency =", m))
+      warning(paste(
+        "Data frequency doesn't match fitted model, coercing to frequency =",
+        m
+      ))
       x <- ts(x, frequency = m)
     }
     # Check xreg
@@ -114,23 +134,28 @@ modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=N
     if (!is.null(model$scalex)) {
       scale.inputs <- TRUE
     }
-  } else {                 # when not using an old model
+  } else {
+    # when not using an old model
     if (length(y) < 3) {
       stop("Not enough data to fit a model")
     }
     # Check for constant data in time series
     constant_data <- is.constant(na.interp(x))
-    if (constant_data){
-      warning("Constant data, setting p=1, P=0, lambda=NULL, scale.inputs=FALSE")
+    if (constant_data) {
+      warning(
+        "Constant data, setting p=1, P=0, lambda=NULL, scale.inputs=FALSE"
+      )
       scale.inputs <- FALSE
       lambda <- NULL
       p <- 1
       P <- 0
     }
     ## Check for constant data in xreg
-    if (!is.null(xreg)){
-      constant_xreg <- any(apply(as.matrix(xreg), 2, function(x) is.constant(na.interp(x))))
-      if (constant_xreg){
+    if (!is.null(xreg)) {
+      constant_xreg <- any(apply(as.matrix(xreg), 2, function(x) {
+        is.constant(na.interp(x))
+      }))
+      if (constant_xreg) {
         warning("Constant xreg column, setting scale.inputs=FALSE")
         scale.inputs <- FALSE
       }
@@ -162,8 +187,7 @@ modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=N
   if (scale.inputs) {
     if (useoldmodel) {
       scalex <- model$scalex
-    }
-    else {
+    } else {
       tmpx <- scale(xx[xsub], center = TRUE, scale = TRUE)
       scalex <- list(
         center = attr(tmpx, "scaled:center"),
@@ -189,8 +213,7 @@ modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=N
     if (scale.inputs) {
       if (useoldmodel) {
         scalexreg <- model$scalexreg
-      }
-      else {
+      } else {
         tmpx <- scale(xxreg[xsub, ], center = TRUE, scale = TRUE)
         scalexreg <- list(
           center = attr(tmpx, "scaled:center"),
@@ -246,7 +269,7 @@ modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=N
   nlag <- length(lags)
   y <- xx[-(1:maxlag)]
   lags.X <- matrix(NA_real_, ncol = nlag, nrow = n - maxlag)
-  for (i in 1:nlag){
+  for (i in 1:nlag) {
     lags.X[, i] <- xx[(maxlag - lags[i] + 1):(n - lags[i])]
   }
   # Add xreg into lagged matrix
@@ -256,14 +279,14 @@ modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=N
   ## Remove values not in subset
   j <- j & xsub[-(1:maxlag)]
   ## Stop if there's no data to fit (e.g. due to NAs or NaNs)
-  if (NROW(lags.X[j,, drop=FALSE]) == 0) {
+  if (NROW(lags.X[j, , drop = FALSE]) == 0) {
     stop("No data to fit (possibly due to NA or NaN)")
   }
   ## Fit selected model
   if (useoldmodel) {
     fit <- model$model
   } else {
-    fit <- FUN(x = lags.X[j,, drop=FALSE], y = y[j], ...)
+    fit <- FUN(x = lags.X[j, , drop = FALSE], y = y[j], ...)
   }
   # Return results
   out <- list()
@@ -282,7 +305,10 @@ modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=N
   out$modelargs <- list(...)
   if (useoldmodel) {
     out$modelargs <- model$modelargs
-    fits <- c(rep(NA_real_, maxlag), predict.FUN(fit, lags.X[j,, drop=FALSE]))
+    fits <- c(
+      rep(NA_real_, maxlag),
+      predict.FUN(fit, lags.X[j, , drop = FALSE])
+    )
   } else {
     fits <- c(rep(NA_real_, maxlag), predict.FUN(fit))
   }
@@ -301,9 +327,13 @@ modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=N
   out$series <- yname
   out$method <- deparse(substitute(FUN))
   out$method <- paste0(out$method, "-AR(", p)
-  if (P > 0) out$method <- paste0(out$method, ",", P)
+  if (P > 0) {
+    out$method <- paste0(out$method, ",", P)
+  }
   out$method <- paste0(out$method, ")")
-  if (P > 0) out$method <- paste0(out$method, "[", m, "]")
+  if (P > 0) {
+    out$method <- paste0(out$method, "[", m, "]")
+  }
   out$call <- match.call()
   return(structure(out, class = c("modelAR")))
 }
@@ -370,7 +400,19 @@ modelAR <- function(y, p, P=1, FUN, predict.FUN, xreg=NULL, lambda=NULL, model=N
 #' @keywords ts
 #'
 #' @export
-forecast.modelAR <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), PI=FALSE, level=c(80, 95), fan=FALSE, xreg=NULL, lambda=object$lambda, bootstrap=FALSE, npaths=1000, innov=NULL, ...) {
+forecast.modelAR <- function(
+  object,
+  h = ifelse(object$m > 1, 2 * object$m, 10),
+  PI = FALSE,
+  level = c(80, 95),
+  fan = FALSE,
+  xreg = NULL,
+  lambda = object$lambda,
+  bootstrap = FALSE,
+  npaths = 1000,
+  innov = NULL,
+  ...
+) {
   out <- object
   tspx <- tsp(out$x)
   #
@@ -386,11 +428,12 @@ forecast.modelAR <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), P
   # Check if xreg was used in fitted model
   if (is.null(object$xreg)) {
     if (!is.null(xreg)) {
-      warning("External regressors were not used in fitted model, xreg will be ignored")
+      warning(
+        "External regressors were not used in fitted model, xreg will be ignored"
+      )
     }
     xreg <- NULL
-  }
-  else {
+  } else {
     if (is.null(xreg)) {
       stop("No external regressors provided")
     }
@@ -411,7 +454,11 @@ forecast.modelAR <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), P
   if (!is.null(object$scalex)) {
     xx <- scale(xx, center = object$scalex$center, scale = object$scalex$scale)
     if (!is.null(xreg)) {
-      xxreg <- scale(xreg, center = object$scalexreg$center, scale = object$scalexreg$scale)
+      xxreg <- scale(
+        xreg,
+        center = object$scalexreg$center,
+        scale = object$scalexreg$scale
+      )
     }
   }
 
@@ -420,11 +467,12 @@ forecast.modelAR <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), P
   maxlag <- max(lags)
   flag <- rev(tail(xx, n = maxlag))
   # Iterative 1-step forecast
-  for (i in 1:h)
-  {
+  for (i in 1:h) {
     newdata <- c(flag[lags], xxreg[i, ])
     if (anyNA(newdata)) {
-      stop("I can't forecast when there are missing values near the end of the series.")
+      stop(
+        "I can't forecast when there are missing values near the end of the series."
+      )
     }
     fcast[i] <- object$predict.FUN(object$model, newdata)
     flag <- c(fcast[i], flag[-maxlag])
@@ -450,21 +498,28 @@ forecast.modelAR <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), P
       innov <- matrix(innov, nrow = h, ncol = npaths)
       bootstrap <- FALSE
     }
-    for (i in 1:npaths)
-      sim[i, ] <- simulate(object, nsim = h, bootstrap = bootstrap, xreg = xreg, lambda = lambda, innov = innov[, i], ...)
+    for (i in 1:npaths) {
+      sim[i, ] <- simulate(
+        object,
+        nsim = h,
+        bootstrap = bootstrap,
+        xreg = xreg,
+        lambda = lambda,
+        innov = innov[, i],
+        ...
+      )
+    }
     lower <- apply(sim, 2, quantile, 0.5 - level / 200, type = 8)
     upper <- apply(sim, 2, quantile, 0.5 + level / 200, type = 8)
     if (nint > 1L) {
       lower <- ts(t(lower))
       upper <- ts(t(upper))
-    }
-    else {
+    } else {
       lower <- ts(matrix(lower, ncol = 1L))
       upper <- ts(matrix(upper, ncol = 1L))
     }
     tsp(lower) <- tsp(upper) <- tsp(fcast)
-  }
-  else {
+  } else {
     level <- NULL
     lower <- NULL
     upper <- NULL
@@ -478,11 +533,10 @@ forecast.modelAR <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10), P
 
 #' @rdname fitted.Arima
 #' @export
-fitted.modelAR <- function(object, h=1, ...) {
+fitted.modelAR <- function(object, h = 1, ...) {
   if (h == 1) {
     return(object$fitted)
-  }
-  else {
+  } else {
     return(hfitted(object = object, h = h, FUN = "modelAR", ...))
   }
 }
@@ -495,8 +549,10 @@ print.modelAR <- function(x, digits = max(3, getOption("digits") - 3), ...) {
   print(x$call)
   print(x$model)
   cat(
-    "\nsigma^2 estimated as ", format(mean(residuals(x) ^ 2, na.rm = TRUE), digits = digits),
-    "\n", sep = ""
+    "\nsigma^2 estimated as ",
+    format(mean(residuals(x)^2, na.rm = TRUE), digits = digits),
+    "\n",
+    sep = ""
   )
   invisible(x)
 }

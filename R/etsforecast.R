@@ -52,9 +52,19 @@
 #'
 #' @export forecast.ets
 #' @export
-forecast.ets <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10),
-                         level=c(80, 95), fan=FALSE, simulate=FALSE, bootstrap=FALSE, npaths=5000, PI=TRUE,
-                         lambda=object$lambda, biasadj=NULL, ...) {
+forecast.ets <- function(
+  object,
+  h = ifelse(object$m > 1, 2 * object$m, 10),
+  level = c(80, 95),
+  fan = FALSE,
+  simulate = FALSE,
+  bootstrap = FALSE,
+  npaths = 5000,
+  PI = TRUE,
+  lambda = object$lambda,
+  biasadj = NULL,
+  ...
+) {
   # Check inputs
   # if(h>2000 | h<=0)
   if (h <= 0) {
@@ -62,8 +72,7 @@ forecast.ets <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10),
   }
   if (is.null(lambda)) {
     biasadj <- FALSE
-  }
-  else {
+  } else {
     if (is.null(biasadj)) {
       biasadj <- attr(lambda, "biasadj")
     }
@@ -98,15 +107,66 @@ forecast.ets <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10),
   }
 
   if (simulate) {
-    f <- pegelsfcast.C(h, object, level = level, bootstrap = bootstrap, npaths = npaths)
-  } else if (object$components[1] == "A" && is.element(object$components[2], c("A", "N")) && is.element(object$components[3], c("N", "A"))) {
-    f <- class1(h, object$states[n + 1, ], object$components[2], object$components[3], damped, object$m, object$sigma2, object$par)
-  } else if (object$components[1] == "M" && is.element(object$components[2], c("A", "N")) && is.element(object$components[3], c("N", "A"))) {
-    f <- class2(h, object$states[n + 1, ], object$components[2], object$components[3], damped, object$m, object$sigma2, object$par)
-  } else if (object$components[1] == "M" && object$components[3] == "M" && object$components[2] != "M") {
-    f <- class3(h, object$states[n + 1, ], object$components[2], object$components[3], damped, object$m, object$sigma2, object$par)
+    f <- pegelsfcast.C(
+      h,
+      object,
+      level = level,
+      bootstrap = bootstrap,
+      npaths = npaths
+    )
+  } else if (
+    object$components[1] == "A" &&
+      is.element(object$components[2], c("A", "N")) &&
+      is.element(object$components[3], c("N", "A"))
+  ) {
+    f <- class1(
+      h,
+      object$states[n + 1, ],
+      object$components[2],
+      object$components[3],
+      damped,
+      object$m,
+      object$sigma2,
+      object$par
+    )
+  } else if (
+    object$components[1] == "M" &&
+      is.element(object$components[2], c("A", "N")) &&
+      is.element(object$components[3], c("N", "A"))
+  ) {
+    f <- class2(
+      h,
+      object$states[n + 1, ],
+      object$components[2],
+      object$components[3],
+      damped,
+      object$m,
+      object$sigma2,
+      object$par
+    )
+  } else if (
+    object$components[1] == "M" &&
+      object$components[3] == "M" &&
+      object$components[2] != "M"
+  ) {
+    f <- class3(
+      h,
+      object$states[n + 1, ],
+      object$components[2],
+      object$components[3],
+      damped,
+      object$m,
+      object$sigma2,
+      object$par
+    )
   } else {
-    f <- pegelsfcast.C(h, object, level = level, bootstrap = bootstrap, npaths = npaths)
+    f <- pegelsfcast.C(
+      h,
+      object,
+      level = level,
+      bootstrap = bootstrap,
+      npaths = npaths
+    )
   }
 
   tsp.x <- tsp(object$x)
@@ -118,26 +178,24 @@ forecast.ets <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10),
   out <- list(
     model = object,
     mean = future_msts(object$x, f$mu),
-    level = level, x = object$x
+    level = level,
+    x = object$x
   )
   if (PI || biasadj) {
     if (!is.null(f$var)) {
       out$lower <- out$upper <- ts(matrix(NA, ncol = length(level), nrow = h))
       colnames(out$lower) <- colnames(out$upper) <- paste0(level, "%")
-      for (i in seq_along(level))
-      {
+      for (i in seq_along(level)) {
         marg.error <- sqrt(f$var) * abs(qnorm((100 - level[i]) / 200))
         out$lower[, i] <- out$mean - marg.error
         out$upper[, i] <- out$mean + marg.error
       }
       out$lower <- copy_msts(out$mean, out$lower)
       out$upper <- copy_msts(out$mean, out$upper)
-    }
-    else if (!is.null(f$lower)) {
+    } else if (!is.null(f$lower)) {
       out$lower <- copy_msts(out$mean, f$lower)
       out$upper <- copy_msts(out$mean, f$upper)
-    }
-    else if (PI) {
+    } else if (PI) {
       warning("No prediction intervals for this model")
     } else if (any(biasadj)) {
       warning("No bias adjustment possible")
@@ -148,8 +206,7 @@ forecast.ets <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10),
   out$method <- object$method
   if (!is.null(object$series)) {
     out$series <- object$series
-  }
-  else {
+  } else {
     out$series <- object$call$y
   }
   out$residuals <- copy_msts(object$x, residuals(object))
@@ -158,8 +215,8 @@ forecast.ets <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10),
     # out$x <- InvBoxCox(object$x,lambda)
     # out$fitted <- InvBoxCox(out$fitted,lambda)
     out$mean <- InvBoxCox(out$mean, lambda, biasadj, out)
-    if (PI) # PI = TRUE
-    {
+    if (PI) {
+      # PI = TRUE
       out$lower <- InvBoxCox(out$lower, lambda)
       out$upper <- InvBoxCox(out$upper, lambda)
     }
@@ -174,8 +231,9 @@ forecast.ets <- function(object, h=ifelse(object$m > 1, 2 * object$m, 10),
 pegelsfcast.C <- function(h, obj, npaths, level, bootstrap) {
   y.paths <- matrix(NA, nrow = npaths, ncol = h)
   obj$lambda <- NULL # No need to transform these here as we do it later.
-  for (i in 1:npaths)
+  for (i in 1:npaths) {
     y.paths[i, ] <- simulate.ets(obj, h, future = TRUE, bootstrap = bootstrap)
+  }
   y.f <- .C(
     "etsforecast",
     as.double(obj$states[length(obj$x) + 1, ]),
@@ -191,8 +249,22 @@ pegelsfcast.C <- function(h, obj, npaths, level, bootstrap) {
     stop("Problem with multiplicative damped trend")
   }
 
-  lower <- apply(y.paths, 2, quantile, 0.5 - level / 200, type = 8, na.rm = TRUE)
-  upper <- apply(y.paths, 2, quantile, 0.5 + level / 200, type = 8, na.rm = TRUE)
+  lower <- apply(
+    y.paths,
+    2,
+    quantile,
+    0.5 - level / 200,
+    type = 8,
+    na.rm = TRUE
+  )
+  upper <- apply(
+    y.paths,
+    2,
+    quantile,
+    0.5 + level / 200,
+    type = 8,
+    na.rm = TRUE
+  )
   if (length(level) > 1) {
     lower <- t(lower)
     upper <- t(upper)
@@ -200,7 +272,16 @@ pegelsfcast.C <- function(h, obj, npaths, level, bootstrap) {
   return(list(mu = y.f, lower = lower, upper = upper))
 }
 
-class1 <- function(h, last.state, trendtype, seasontype, damped, m, sigma2, par) {
+class1 <- function(
+  h,
+  last.state,
+  trendtype,
+  seasontype,
+  damped,
+  m,
+  sigma2,
+  par
+) {
   p <- length(last.state)
   H <- matrix(c(1, rep(0, p - 1)), nrow = 1)
   if (seasontype == "A") {
@@ -238,16 +319,14 @@ class1 <- function(h, last.state, trendtype, seasontype, damped, m, sigma2, par)
   Fj <- diag(p)
   cj <- numeric(h - 1)
   if (h > 1) {
-    for (i in 1:(h - 1))
-    {
+    for (i in 1:(h - 1)) {
       mu[i] <- H %*% Fj %*% last.state
       cj[i] <- H %*% Fj %*% G
       Fj <- Fj %*% F
     }
-    cj2 <- cumsum(cj ^ 2)
+    cj2 <- cumsum(cj^2)
     var <- sigma2 * c(1, 1 + cj2)
-  }
-  else {
+  } else {
     var <- sigma2
   }
   mu[h] <- H %*% Fj %*% last.state
@@ -255,27 +334,46 @@ class1 <- function(h, last.state, trendtype, seasontype, damped, m, sigma2, par)
   return(list(mu = mu, var = var, cj = cj))
 }
 
-class2 <- function(h, last.state, trendtype, seasontype, damped, m, sigma2, par) {
+class2 <- function(
+  h,
+  last.state,
+  trendtype,
+  seasontype,
+  damped,
+  m,
+  sigma2,
+  par
+) {
   tmp <- class1(h, last.state, trendtype, seasontype, damped, m, sigma2, par)
   theta <- numeric(h)
-  theta[1] <- tmp$mu[1] ^ 2
+  theta[1] <- tmp$mu[1]^2
   if (h > 1) {
-    for (j in 2:h)
-      theta[j] <- tmp$mu[j] ^ 2 + sigma2 * sum(tmp$cj[1:(j - 1)] ^ 2 * theta[(j - 1):1])
+    for (j in 2:h) {
+      theta[j] <- tmp$mu[j]^2 +
+        sigma2 * sum(tmp$cj[1:(j - 1)]^2 * theta[(j - 1):1])
+    }
   }
-  var <- (1 + sigma2) * theta - tmp$mu ^ 2
+  var <- (1 + sigma2) * theta - tmp$mu^2
   return(list(mu = tmp$mu, var = var))
 }
 
-class3 <- function(h, last.state, trendtype, seasontype, damped, m, sigma2, par) {
+class3 <- function(
+  h,
+  last.state,
+  trendtype,
+  seasontype,
+  damped,
+  m,
+  sigma2,
+  par
+) {
   p <- length(last.state)
   H1 <- matrix(rep(1, 1 + (trendtype != "N")), nrow = 1)
   H2 <- matrix(c(rep(0, m - 1), 1), nrow = 1)
   if (trendtype == "N") {
     F1 <- 1
     G1 <- par["alpha"]
-  }
-  else {
+  } else {
     F1 <- rbind(c(1, 1), c(0, ifelse(damped, par["phi"], 1)))
     G1 <- rbind(c(par["alpha"], par["alpha"]), c(par["beta"], par["beta"]))
   }
@@ -283,20 +381,28 @@ class3 <- function(h, last.state, trendtype, seasontype, damped, m, sigma2, par)
 
   G2 <- matrix(0, m, m)
   G2[1, m] <- par["gamma"]
-  Mh <- matrix(last.state[1:(p - m)]) %*% matrix(last.state[(p - m + 1):p], nrow = 1)
+  Mh <- matrix(last.state[1:(p - m)]) %*%
+    matrix(last.state[(p - m + 1):p], nrow = 1)
   Vh <- matrix(0, length(Mh), length(Mh))
   H21 <- H2 %x% H1
   F21 <- F2 %x% F1
   G21 <- G2 %x% G1
   K <- (G2 %x% F1) + (F2 %x% G1)
   mu <- var <- numeric(h)
-  for (i in 1:h)
-  {
+  for (i in 1:h) {
     mu[i] <- H1 %*% Mh %*% t(H2)
-    var[i] <- (1 + sigma2) * H21 %*% Vh %*% t(H21) + sigma2 * mu[i] ^ 2
+    var[i] <- (1 + sigma2) * H21 %*% Vh %*% t(H21) + sigma2 * mu[i]^2
     vecMh <- c(Mh)
-    Vh <- F21 %*% Vh %*% t(F21) + sigma2 * (F21 %*% Vh %*% t(G21) + G21 %*% Vh %*% t(F21) +
-      K %*% (Vh + vecMh %*% t(vecMh)) %*% t(K) + sigma2 * G21 %*% (3 * Vh + 2 * vecMh %*% t(vecMh)) %*% t(G21))
+    Vh <- F21 %*%
+      Vh %*%
+      t(F21) +
+      sigma2 *
+        (F21 %*%
+          Vh %*%
+          t(G21) +
+          G21 %*% Vh %*% t(F21) +
+          K %*% (Vh + vecMh %*% t(vecMh)) %*% t(K) +
+          sigma2 * G21 %*% (3 * Vh + 2 * vecMh %*% t(vecMh)) %*% t(G21))
     Mh <- F1 %*% Mh %*% t(F2) + G1 %*% Mh %*% t(G2) * sigma2
   }
   return(list(mu = mu, var = var))

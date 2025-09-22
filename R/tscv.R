@@ -58,50 +58,84 @@
 #' e <- tsCV(y, far2_xreg, h = 3, xreg = xreg)
 #'
 #' @export
-tsCV <- function(y, forecastfunction, h=1, window=NULL, xreg=NULL, initial=0, ...) {
+tsCV <- function(
+  y,
+  forecastfunction,
+  h = 1,
+  window = NULL,
+  xreg = NULL,
+  initial = 0,
+  ...
+) {
   y <- as.ts(y)
   n <- length(y)
   e <- ts(matrix(NA_real_, nrow = n, ncol = h))
-  if(initial >= n) stop("initial period too long")
+  if (initial >= n) {
+    stop("initial period too long")
+  }
   tsp(e) <- tsp(y)
   if (!is.null(xreg)) {
     # Make xreg a ts object to allow easy subsetting later
     xreg <- ts(as.matrix(xreg))
-    if(NROW(xreg) != length(y))
+    if (NROW(xreg) != length(y)) {
       stop("xreg must be of the same size as y")
+    }
     # Pad xreg with NAs
-    xreg <- ts(rbind(xreg, matrix(NA, nrow=h, ncol=NCOL(xreg))),
-               start = start(y),
-               frequency = frequency(y))
+    xreg <- ts(
+      rbind(xreg, matrix(NA, nrow = h, ncol = NCOL(xreg))),
+      start = start(y),
+      frequency = frequency(y)
+    )
   }
-  if (is.null(window))
-    indx <- seq(1+initial, n - 1L)
-  else
-    indx <- seq(window+initial, n - 1L, by = 1L)
+  if (is.null(window)) {
+    indx <- seq(1 + initial, n - 1L)
+  } else {
+    indx <- seq(window + initial, n - 1L, by = 1L)
+  }
   for (i in indx) {
     y_subset <- subset(
       y,
-      start = ifelse(is.null(window), 1L,
-              ifelse(i - window >= 0L, i - window + 1L, stop("small window"))),
-      end = i)
+      start = ifelse(
+        is.null(window),
+        1L,
+        ifelse(i - window >= 0L, i - window + 1L, stop("small window"))
+      ),
+      end = i
+    )
     if (is.null(xreg)) {
-      fc <- try(suppressWarnings(
-        forecastfunction(y_subset, h = h, ...)
-        ), silent = TRUE)
-    }
-    else {
+      fc <- try(
+        suppressWarnings(
+          forecastfunction(y_subset, h = h, ...)
+        ),
+        silent = TRUE
+      )
+    } else {
       xreg_subset <- subset(
         xreg,
-        start = ifelse(is.null(window), 1L,
-                ifelse(i - window >= 0L, i - window + 1L, stop("small window"))),
-        end = i)
+        start = ifelse(
+          is.null(window),
+          1L,
+          ifelse(i - window >= 0L, i - window + 1L, stop("small window"))
+        ),
+        end = i
+      )
       xreg_future <- subset(
         xreg,
-        start = i+1,
-        end = i+h)
-      fc <- try(suppressWarnings(
-        forecastfunction(y_subset, h = h, xreg = xreg_subset, newxreg=xreg_future, ...)
-        ), silent = TRUE)
+        start = i + 1,
+        end = i + h
+      )
+      fc <- try(
+        suppressWarnings(
+          forecastfunction(
+            y_subset,
+            h = h,
+            xreg = xreg_subset,
+            newxreg = xreg_future,
+            ...
+          )
+        ),
+        silent = TRUE
+      )
     }
     if (!inherits(fc, "try-error")) {
       e[i, ] <- y[i + seq(h)] - fc$mean[seq(h)]
@@ -162,7 +196,15 @@ tsCV <- function(y, forecastfunction, h=1, window=NULL, xreg=NULL, initial=0, ..
 #' ggAcf(modelcv$residuals)
 #'
 #' @export
-CVar <- function(y, k=10, FUN=nnetar, cvtrace=FALSE, blocked=FALSE, LBlags=24, ...) {
+CVar <- function(
+  y,
+  k = 10,
+  FUN = nnetar,
+  cvtrace = FALSE,
+  blocked = FALSE,
+  LBlags = 24,
+  ...
+) {
   nx <- length(y)
   # n-folds at most equal number of points
   k <- min(as.integer(k), nx)
@@ -212,11 +254,15 @@ CVar <- function(y, k=10, FUN=nnetar, cvtrace=FALSE, blocked=FALSE, LBlags=24, .
 
   out$k <- k
   # calculate mean accuracy accross all folds
-  CVmean <- matrix(colMeans(cvacc, na.rm = TRUE),
-    dimnames = list(colnames(acc), "Mean"))
+  CVmean <- matrix(
+    colMeans(cvacc, na.rm = TRUE),
+    dimnames = list(colnames(acc), "Mean")
+  )
   # calculate accuracy sd accross all folds --- include?
-  CVsd <- matrix(apply(cvacc, 2, FUN = sd, na.rm = TRUE),
-    dimnames = list(colnames(acc), "SD"))
+  CVsd <- matrix(
+    apply(cvacc, 2, FUN = sd, na.rm = TRUE),
+    dimnames = list(colnames(acc), "SD")
+  )
   out$CVsummary <- cbind(CVmean, CVsd)
   out$series <- deparse(substitute(y))
   out$call <- match.call()

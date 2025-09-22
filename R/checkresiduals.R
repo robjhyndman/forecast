@@ -78,7 +78,12 @@ checkresiduals <- function(object, lag, test, plot = TRUE, ...) {
   }
 
   if (plot) {
-    suppressWarnings(ggtsdisplay(residuals, plot.type = "histogram", main = main, ...))
+    suppressWarnings(ggtsdisplay(
+      residuals,
+      plot.type = "histogram",
+      main = main,
+      ...
+    ))
   }
 
   # Check if we have the model
@@ -117,7 +122,12 @@ checkresiduals <- function(object, lag, test, plot = TRUE, ...) {
     return(BGtest)
   } else {
     # Do Ljung-Box test
-    LBtest <- Box.test(zoo::na.approx(residuals), fitdf = df, lag = lag, type = "Ljung")
+    LBtest <- Box.test(
+      zoo::na.approx(residuals),
+      fitdf = df,
+      lag = lag,
+      type = "Ljung"
+    )
     LBtest$method <- "Ljung-Box test"
     LBtest$data.name <- main
     names(LBtest$statistic) <- "Q*"

@@ -1,6 +1,13 @@
 #' @rdname forecast.bats
 #' @export
-forecast.tbats <- function(object, h, level = c(80, 95), fan = FALSE, biasadj = NULL, ...) {
+forecast.tbats <- function(
+  object,
+  h,
+  level = c(80, 95),
+  fan = FALSE,
+  biasadj = NULL,
+  ...
+) {
   # Check if forecast.tbats called incorrectly
   if (identical(class(object), "bats")) {
     return(forecast.bats(object, h, level, fan, biasadj, ...))
@@ -10,7 +17,11 @@ forecast.tbats <- function(object, h, level = c(80, 95), fan = FALSE, biasadj = 
   if (is.ts(object$y)) {
     ts.frequency <- frequency(object$y)
   } else {
-    ts.frequency <- ifelse(!is.null(object$seasonal.periods), max(object$seasonal.periods), 1)
+    ts.frequency <- ifelse(
+      !is.null(object$seasonal.periods),
+      max(object$seasonal.periods),
+      1
+    )
   }
 
   if (missing(h)) {
@@ -19,8 +30,7 @@ forecast.tbats <- function(object, h, level = c(80, 95), fan = FALSE, biasadj = 
     } else {
       h <- 2 * max(object$seasonal.periods)
     }
-  }
-  else if (h <= 0) {
+  } else if (h <= 0) {
     stop("Forecast horizon out of bounds")
   }
 
@@ -48,11 +58,26 @@ forecast.tbats <- function(object, h, level = c(80, 95), fan = FALSE, biasadj = 
   }
 
   # Set up the matrices
-  w <- .Call("makeTBATSWMatrix", smallPhi_s = object$damping.parameter, kVector_s = as.integer(object$k.vector), arCoefs_s = object$ar.coefficients, maCoefs_s = object$ma.coefficients, tau_s = as.integer(tau), PACKAGE = "forecast")
+  w <- .Call(
+    "makeTBATSWMatrix",
+    smallPhi_s = object$damping.parameter,
+    kVector_s = as.integer(object$k.vector),
+    arCoefs_s = object$ar.coefficients,
+    maCoefs_s = object$ma.coefficients,
+    tau_s = as.integer(tau),
+    PACKAGE = "forecast"
+  )
 
   if (!is.null(object$seasonal.periods)) {
     gamma.bold <- matrix(0, nrow = 1, ncol = tau)
-    .Call("updateTBATSGammaBold", gammaBold_s = gamma.bold, kVector_s = as.integer(object$k.vector), gammaOne_s = object$gamma.one.values, gammaTwo_s = object$gamma.two.values, PACKAGE = "forecast")
+    .Call(
+      "updateTBATSGammaBold",
+      gammaBold_s = gamma.bold,
+      kVector_s = as.integer(object$k.vector),
+      gammaOne_s = object$gamma.one.values,
+      gammaTwo_s = object$gamma.two.values,
+      PACKAGE = "forecast"
+    )
   } else {
     gamma.bold <- NULL
   }
@@ -63,11 +88,27 @@ forecast.tbats <- function(object, h, level = c(80, 95), fan = FALSE, biasadj = 
   if (object$q != 0) {
     g[(1 + adj.beta + tau + object$p + 1), 1] <- 1
   }
-  .Call("updateTBATSGMatrix", g_s = g, gammaBold_s = gamma.bold, alpha_s = object$alpha, beta_s = object$beta.v, PACKAGE = "forecast")
+  .Call(
+    "updateTBATSGMatrix",
+    g_s = g,
+    gammaBold_s = gamma.bold,
+    alpha_s = object$alpha,
+    beta_s = object$beta.v,
+    PACKAGE = "forecast"
+  )
 
   # print(g)
 
-  F <- makeTBATSFMatrix(alpha = object$alpha, beta = object$beta, small.phi = object$damping.parameter, seasonal.periods = object$seasonal.periods, k.vector = as.integer(object$k.vector), gamma.bold.matrix = gamma.bold, ar.coefs = object$ar.coefficients, ma.coefs = object$ma.coefficients)
+  F <- makeTBATSFMatrix(
+    alpha = object$alpha,
+    beta = object$beta,
+    small.phi = object$damping.parameter,
+    seasonal.periods = object$seasonal.periods,
+    k.vector = as.integer(object$k.vector),
+    gamma.bold.matrix = gamma.bold,
+    ar.coefs = object$ar.coefficients,
+    ma.coefs = object$ma.coefficients
+  )
 
   # Do the forecast
   y.forecast[1] <- w$w.transpose %*% object$x[, ncol(object$x)]
@@ -105,7 +146,12 @@ forecast.tbats <- function(object, h, level = c(80, 95), fan = FALSE, biasadj = 
   }
   # Inv Box Cox transform if required
   if (!is.null(object$lambda)) {
-    y.forecast <- InvBoxCox(y.forecast, object$lambda, biasadj, list(level = level, upper = upper.bounds, lower = lower.bounds))
+    y.forecast <- InvBoxCox(
+      y.forecast,
+      object$lambda,
+      biasadj,
+      list(level = level, upper = upper.bounds, lower = lower.bounds)
+    )
     lower.bounds <- InvBoxCox(lower.bounds, object$lambda)
     if (object$lambda < 1) {
       lower.bounds <- pmax(lower.bounds, 0)
@@ -115,8 +161,11 @@ forecast.tbats <- function(object, h, level = c(80, 95), fan = FALSE, biasadj = 
   colnames(upper.bounds) <- colnames(lower.bounds) <- paste0(level, "%")
 
   forecast.object <- list(
-    model = object, mean = future_msts(object$y, y.forecast),
-    level = level, x = object$y, series = object$series,
+    model = object,
+    mean = future_msts(object$y, y.forecast),
+    level = level,
+    x = object$y,
+    series = object$series,
     upper = future_msts(object$y, upper.bounds),
     lower = future_msts(object$y, lower.bounds),
     fitted = copy_msts(object$y, object$fitted.values),
@@ -162,7 +211,14 @@ as.character.tbats <- function(x, ...) {
     name <- paste0(name, " {")
     M <- length(x$seasonal.periods)
     for (i in 1:M) {
-      name <- paste0(name, "<", round(x$seasonal.periods[i], 2), ",", x$k.vector[i], ">")
+      name <- paste0(
+        name,
+        "<",
+        round(x$seasonal.periods[i], 2),
+        ",",
+        x$k.vector[i],
+        ">"
+      )
       if (i < M) {
         name <- paste0(name, ", ")
       } else {

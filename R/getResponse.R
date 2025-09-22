@@ -2,8 +2,6 @@
 # If a Box-Cox transformation is used, the series returned here should
 # be on the original scale, not the Box-Cox transformed scale.
 
-
-
 #' Get response variable from time series model.
 #'
 #' \code{getResponse} is a generic function for extracting the historical data
@@ -35,10 +33,9 @@ getResponse.default <- function(object, ...) {
 #' @rdname getResponse
 #' @export
 getResponse.lm <- function(object, ...) {
-  if(!is.null(object[["x"]])){
+  if (!is.null(object[["x"]])) {
     object[["x"]]
-  }
-  else{
+  } else {
     responsevar <- deparse(formula(object)[[2]])
     model.frame(object$model)[, responsevar]
   }
@@ -55,10 +52,12 @@ getResponse.Arima <- function(object, ...) {
       return(NULL)
     } else {
       x <- try(eval.parent(parse(text = series.name)), silent = TRUE)
-      if (inherits(x, "try-error")) { # Try one level further up the chain
+      if (inherits(x, "try-error")) {
+        # Try one level further up the chain
         x <- try(eval.parent(parse(text = series.name), 2), silent = TRUE)
       }
-      if (inherits(x, "try-error")) { # Give up
+      if (inherits(x, "try-error")) {
+        # Give up
         return(NULL)
       }
     }
@@ -77,10 +76,12 @@ getResponse.fracdiff <- function(object, ...) {
       stop("missing original time series")
     } else {
       x <- try(eval.parent(parse(text = series.name)), silent = TRUE)
-      if (inherits(x, "try-error")) { # Try one level further up the chain
+      if (inherits(x, "try-error")) {
+        # Try one level further up the chain
         x <- try(eval.parent(parse(text = series.name), 2), silent = TRUE)
       }
-      if (inherits(x, "try-error")) { # Give up
+      if (inherits(x, "try-error")) {
+        # Give up
         return(NULL)
       }
     }

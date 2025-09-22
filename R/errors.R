@@ -64,9 +64,11 @@ testaccuracy <- function(f, x, test, d, D) {
   if (!is.null(dx)) {
     tspdx <- tsp(dx)
     if (!is.null(tspdx)) {
-      if (D > 0) { # seasonal differencing
+      if (D > 0) {
+        # seasonal differencing
         nsd <- diff(dx, lag = round(tspdx[3L]), differences = D)
-      } else { # non seasonal differencing
+      } else {
+        # non seasonal differencing
         nsd <- dx
       }
       if (d > 0) {
@@ -75,7 +77,8 @@ testaccuracy <- function(f, x, test, d, D) {
         nd <- nsd
       }
       scale <- mean(abs(nd), na.rm = TRUE)
-    } else { # not time series
+    } else {
+      # not time series
       scale <- mean(abs(dx - mean(dx, na.rm = TRUE)), na.rm = TRUE)
     }
     mase <- mean(abs(error / scale), na.rm = TRUE)
@@ -89,7 +92,11 @@ testaccuracy <- function(f, x, test, d, D) {
     ape <- (c(xx[2:n]) / c(xx[1:(n - 1)]) - 1)[test - 1]
     theil <- sqrt(sum((fpe - ape)^2, na.rm = TRUE) / sum(ape^2, na.rm = TRUE))
     if (length(error) > 1) {
-      r1 <- acf(error, plot = FALSE, lag.max = 2, na.action = na.pass)$acf[2, 1, 1]
+      r1 <- acf(error, plot = FALSE, lag.max = 2, na.action = na.pass)$acf[
+        2,
+        1,
+        1
+      ]
     } else {
       r1 <- NA
     }
@@ -139,9 +146,11 @@ trainingaccuracy <- function(f, test, d, D) {
   # Compute MASE if historical data available
   if (!is.null(dx)) {
     if (!is.null(tspdx)) {
-      if (D > 0) { # seasonal differencing
+      if (D > 0) {
+        # seasonal differencing
         nsd <- diff(dx, lag = round(tspdx[3L]), differences = D)
-      } else { # non seasonal differencing
+      } else {
+        # non seasonal differencing
         nsd <- dx
       }
       if (d > 0) {
@@ -150,7 +159,8 @@ trainingaccuracy <- function(f, test, d, D) {
         nd <- nsd
       }
       scale <- mean(abs(nd), na.rm = TRUE)
-    } else { # not time series
+    } else {
+      # not time series
       scale <- mean(abs(dx - mean(dx, na.rm = TRUE)), na.rm = TRUE)
     }
     mase <- mean(abs(res / scale), na.rm = TRUE)
@@ -161,7 +171,11 @@ trainingaccuracy <- function(f, test, d, D) {
   # Additional time series measures
   if (!is.null(tspdx)) {
     if (length(res) > 1) {
-      r1 <- acf(res, plot = FALSE, lag.max = 2, na.action = na.pass)$acf[2, 1, 1]
+      r1 <- acf(res, plot = FALSE, lag.max = 2, na.action = na.pass)$acf[
+        2,
+        1,
+        1
+      ]
     } else {
       r1 <- NA
     }
@@ -241,16 +255,46 @@ trainingaccuracy <- function(f, test, d, D) {
 #' plot(fit1)
 #' lines(EuStockMarkets[1:300, 1])
 #' @export
-accuracy.default <- function(object, x, test = NULL, d = NULL, D = NULL, f = NULL, ...) {
+accuracy.default <- function(
+  object,
+  x,
+  test = NULL,
+  d = NULL,
+  D = NULL,
+  f = NULL,
+  ...
+) {
   if (!is.null(f)) {
-    warning("Using `f` as the argument for `accuracy()` is deprecated. Please use `object` instead.")
+    warning(
+      "Using `f` as the argument for `accuracy()` is deprecated. Please use `object` instead."
+    )
     object <- f
   }
-  if (!inherits(object, c(
-    "ARFIMA", "mforecast", "forecast", "ts", "integer", "numeric",
-    "Arima", "ets", "lm", "bats", "tbats", "nnetar", "stlm", "baggedModel"
-  ))) {
-    stop(paste("No accuracy method found for an object of class",class(object)))
+  if (
+    !inherits(
+      object,
+      c(
+        "ARFIMA",
+        "mforecast",
+        "forecast",
+        "ts",
+        "integer",
+        "numeric",
+        "Arima",
+        "ets",
+        "lm",
+        "bats",
+        "tbats",
+        "nnetar",
+        "stlm",
+        "baggedModel"
+      )
+    )
+  ) {
+    stop(paste(
+      "No accuracy method found for an object of class",
+      class(object)
+    ))
   }
   if (is.mforecast(object)) {
     return(accuracy.mforecast(object, x, test, d, D))
@@ -270,18 +314,15 @@ accuracy.default <- function(object, x, test = NULL, d = NULL, D = NULL, f = NUL
     if (testset) {
       d <- as.numeric(frequency(x) == 1)
       D <- as.numeric(frequency(x) > 1)
-    }
-    else if (trainset) {
+    } else if (trainset) {
       if (!is.null(object$mean)) {
         d <- as.numeric(frequency(object$mean) == 1)
         D <- as.numeric(frequency(object$mean) > 1)
-      }
-      else {
+      } else {
         d <- as.numeric(frequency(object[["x"]]) == 1)
         D <- as.numeric(frequency(object[["x"]]) > 1)
       }
-    }
-    else {
+    } else {
       d <- as.numeric(frequency(object) == 1)
       D <- as.numeric(frequency(object) > 1)
     }
@@ -290,15 +331,13 @@ accuracy.default <- function(object, x, test = NULL, d = NULL, D = NULL, f = NUL
   if (trainset) {
     trainout <- trainingaccuracy(object, test, d, D)
     trainnames <- names(trainout)
-  }
-  else {
+  } else {
     trainnames <- NULL
   }
   if (testset) {
     testout <- testaccuracy(object, x, test, d, D)
     testnames <- names(testout)
-  }
-  else {
+  } else {
     testnames <- NULL
   }
   outnames <- unique(c(trainnames, testnames))
@@ -334,14 +373,15 @@ accuracy.mforecast <- function(
   ...
 ) {
   if (!is.null(f)) {
-    warning("Using `f` as the argument for `accuracy()` is deprecated. Please use `object` instead.")
+    warning(
+      "Using `f` as the argument for `accuracy()` is deprecated. Please use `object` instead."
+    )
     object <- f
   }
   out <- NULL
   nox <- missing(x)
   i <- 1
-  for (fcast in object$forecast)
-  {
+  for (fcast in object$forecast) {
     if (nox) {
       out1 <- accuracy(fcast, test = test, d = d, D = D)
     } else {

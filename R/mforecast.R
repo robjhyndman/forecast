@@ -4,11 +4,15 @@ is.mforecast <- function(x) {
   inherits(x, "mforecast")
 }
 
-mlmsplit <- function(x, index=NULL) {
+mlmsplit <- function(x, index = NULL) {
   if (is.null(index)) {
     stop("Must select lm using index=integer(1)")
   }
-  mfit <- match(c("coefficients", "residuals", "effects", "fitted.values"), names(x), 0L)
+  mfit <- match(
+    c("coefficients", "residuals", "effects", "fitted.values"),
+    names(x),
+    0L
+  )
   for (j in mfit) {
     x[[j]] <- x[[j]][, index]
   }
@@ -18,11 +22,16 @@ mlmsplit <- function(x, index=NULL) {
   yName <- make.names(colnames(x$model[[y]])[index])
   x$model[[y]] <- x$model[[y]][, index]
   colnames(x$model)[y] <- yName
-  attr(x$model, "terms") <- terms(reformulate(attr(x$terms, "term.labels"), response = yName), data = x$model)
+  attr(x$model, "terms") <- terms(
+    reformulate(attr(x$terms, "term.labels"), response = yName),
+    data = x$model
+  )
 
   if (!is.null(tsp(x$data[, 1]))) {
     tspx <- tsp(x$data[, 1]) # Consolidate ts attributes for forecast.lm
-    x$data <- lapply(x$model, function(x) ts(x, start = tspx[1], end = tspx[2], frequency = tspx[3]))
+    x$data <- lapply(x$model, function(x) {
+      ts(x, start = tspx[1], end = tspx[2], frequency = tspx[3])
+    })
     class(x$data) <- "data.frame"
     row.names(x$data) <- 1:max(vapply(x$data, NROW, integer(1)))
   }
@@ -93,8 +102,21 @@ mlmsplit <- function(x, index=NULL) {
 #' fcast <- forecast(fit, newdata = data.frame(carmpg = 30))
 #'
 #' @export
-forecast.mlm <- function(object, newdata, h=10, level=c(80, 95), fan=FALSE, lambda=object$lambda, biasadj=NULL, ts=TRUE, ...) {
-  out <- list(model = object, forecast = vector("list", NCOL(object$coefficients)))
+forecast.mlm <- function(
+  object,
+  newdata,
+  h = 10,
+  level = c(80, 95),
+  fan = FALSE,
+  lambda = object$lambda,
+  biasadj = NULL,
+  ts = TRUE,
+  ...
+) {
+  out <- list(
+    model = object,
+    forecast = vector("list", NCOL(object$coefficients))
+  )
 
   cl <- match.call()
   cl[[1]] <- quote(forecast.lm)
@@ -161,9 +183,18 @@ forecast.mlm <- function(object, newdata, h=10, level=c(80, 95), fan=FALSE, lamb
 #' are \code{\link{forecast.mlm}}, \code{forecast.varest}.
 #'
 #' @export
-forecast.mts <- function(object, h=ifelse(frequency(object) > 1, 2 * frequency(object), 10),
-                         level=c(80, 95), fan=FALSE, robust=FALSE, lambda = NULL, biasadj = FALSE, find.frequency = FALSE,
-                         allow.multiplicative.trend=FALSE, ...) {
+forecast.mts <- function(
+  object,
+  h = ifelse(frequency(object) > 1, 2 * frequency(object), 10),
+  level = c(80, 95),
+  fan = FALSE,
+  robust = FALSE,
+  lambda = NULL,
+  biasadj = FALSE,
+  find.frequency = FALSE,
+  allow.multiplicative.trend = FALSE,
+  ...
+) {
   out <- list(forecast = vector("list", NCOL(object)))
   cl <- match.call()
   cl[[1]] <- quote(forecast.ts)
@@ -232,11 +263,19 @@ print.mforecast <- function(x, ...) {
 #' autoplot(fcast, xlab = rep("Year", 2))
 #'
 #' @export
-plot.mforecast <- function(x, main=paste("Forecasts from", unique(x$method)), xlab="time", ...) {
-  oldpar <- par(mfrow = c(length(x$forecast), 1), mar = c(0, 5.1, 0, 2.1), oma = c(6, 0, 5, 0))
+plot.mforecast <- function(
+  x,
+  main = paste("Forecasts from", unique(x$method)),
+  xlab = "time",
+  ...
+) {
+  oldpar <- par(
+    mfrow = c(length(x$forecast), 1),
+    mar = c(0, 5.1, 0, 2.1),
+    oma = c(6, 0, 5, 0)
+  )
   on.exit(par(oldpar))
-  for (fcast in x$forecast)
-  {
+  for (fcast in x$forecast) {
     plot(fcast, main = "", xaxt = "n", ylab = fcast$series, ...)
   }
   axis(1)

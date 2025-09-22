@@ -35,8 +35,16 @@
 #' subset(USAccDeaths, start = 49)
 #'
 #' @export
-subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL,
-                      start=NULL, end=NULL, ...) {
+subset.ts <- function(
+  x,
+  subset = NULL,
+  month = NULL,
+  quarter = NULL,
+  season = NULL,
+  start = NULL,
+  end = NULL,
+  ...
+) {
   if (!is.null(subset)) {
     if (NROW(subset) != NROW(x)) {
       stop("subset must be the same length as x")
@@ -46,12 +54,10 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL,
     }
     if (is.mts(x)) {
       return(subset.matrix(x, subset))
-    }
-    else {
+    } else {
       return(subset.default(x, subset))
     }
-  }
-  else if (!is.null(start) || !is.null(end)) {
+  } else if (!is.null(start) || !is.null(end)) {
     if (is.null(start)) {
       start <- 1
     }
@@ -59,14 +65,17 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL,
       end <- NROW(x)
     }
     if (is.mts(x)) {
-      xsub <- x[start:end, , drop=FALSE]
+      xsub <- x[start:end, , drop = FALSE]
     } else {
       xsub <- x[start:end]
     }
     tspx <- tsp(x)
-    return(ts(xsub, frequency = tspx[3], start = tspx[1L] + (start - 1) / tspx[3L]))
-  }
-  else if (frequency(x) <= 1) {
+    return(ts(
+      xsub,
+      frequency = tspx[3],
+      start = tspx[1L] + (start - 1) / tspx[3L]
+    ))
+  } else if (frequency(x) <= 1) {
     stop("Data must be seasonal")
   }
   if (!is.null(month)) {
@@ -74,7 +83,11 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL,
       stop("Data is not monthly")
     }
     if (is.character(month)) {
-      season <- pmatch(tolower(month), tolower(month.name), duplicates.ok = TRUE)
+      season <- pmatch(
+        tolower(month),
+        tolower(month.name),
+        duplicates.ok = TRUE
+      )
     } else {
       season <- month
     }
@@ -85,8 +98,7 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL,
     if (min(season) < 1L || max(season) > 12L) {
       stop("Months must be between 1 and 12")
     }
-  }
-  else if (!is.null(quarter)) {
+  } else if (!is.null(quarter)) {
     if (frequency(x) != 4) {
       stop("Data is not quarterly")
     }
@@ -102,19 +114,16 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL,
     if (min(season) < 1L || max(season) > 4L) {
       stop("Quarters must be between 1 and 4")
     }
-  }
-  else if (is.null(season)) {
+  } else if (is.null(season)) {
     stop("No subset specified")
-  } else
-  if (min(season) < 1L || max(season) > frequency(x)) {
+  } else if (min(season) < 1L || max(season) > frequency(x)) {
     stop(paste("Seasons must be between 1 and", frequency(x)))
   }
 
   start <- utils::head(time(x)[is.element(cycle(x), season)], 1)
   if (is.mts(x)) {
     x <- subset.matrix(x, is.element(cycle(x), season))
-  }
-  else {
+  } else {
     x <- subset.default(x, is.element(cycle(x), season))
   }
   return(ts(x, frequency = length(season), start = start))
@@ -128,8 +137,8 @@ subset.ts <- function(x, subset=NULL, month=NULL, quarter=NULL, season=NULL,
 #' @rawNamespace if (getRversion() < "4.5.0") S3method(head, ts)
 #' @rawNamespace if (getRversion() < "4.5.0") S3method(tail, ts)
 
-if(getRversion() < "4.5.0") {
-  head.ts <- function(x, n=6L, ...) {
+if (getRversion() < "4.5.0") {
+  head.ts <- function(x, n = 6L, ...) {
     attr_x <- attributes(x)
     attr_x$names <- NULL
     if (NCOL(x) > 1) {
@@ -146,7 +155,7 @@ if(getRversion() < "4.5.0") {
     attributes(hx) <- attr_x
     return(hx)
   }
-  tail.ts <- function(x, n=6L, ...) {
+  tail.ts <- function(x, n = 6L, ...) {
     attr_x <- attributes(x)
     attr_x$names <- NULL
     if (NCOL(x) > 1) {
@@ -167,11 +176,13 @@ if(getRversion() < "4.5.0") {
 
 #' @rdname subset.ts
 #' @export
-subset.msts <- function(x, subset=NULL, start=NULL, end=NULL, ...) {
+subset.msts <- function(x, subset = NULL, start = NULL, end = NULL, ...) {
   out <- subset.ts(x, start = start, end = end, ...)
   tspx <- tsp(out)
   msts(
-    out, seasonal.periods = attr(x, "msts"),
-    start = tspx[1], ts.frequency = tspx[3]
+    out,
+    seasonal.periods = attr(x, "msts"),
+    start = tspx[1],
+    ts.frequency = tspx[3]
   )
 }

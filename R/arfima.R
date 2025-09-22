@@ -38,7 +38,7 @@ undo.na.ends <- function(x, y) {
 
 ## Undifference
 unfracdiff <- function(x, y, n, h, d) {
-  bin.c <- (-1) ^ (0:(n + h)) * choose(d, (0:(n + h)))
+  bin.c <- (-1)^(0:(n + h)) * choose(d, (0:(n + h)))
   b <- numeric(n)
   xnew <- LHS <- numeric(h)
   RHS <- cumsum(y)
@@ -46,8 +46,7 @@ unfracdiff <- function(x, y, n, h, d) {
   b <- bin.c[(1:n) + 1]
   xnew[1] <- RHS[1] <- y[1] - sum(b * rev(x))
   if (h > 1) {
-    for (k in 2:h)
-    {
+    for (k in 2:h) {
       b <- b + bin.c[(1:n) + k]
       RHS[k] <- RHS[k] - sum(b * rev(x))
       LHS[k] <- sum(rev(xnew[1:(k - 1)]) * bs[2:k])
@@ -119,8 +118,17 @@ unfracdiff <- function(x, y, n, h, d) {
 #' fit <- arfima(x)
 #' tsdisplay(residuals(fit))
 #'
-arfima <- function(y, drange = c(0, 0.5), estim = c("mle", "ls"), model = NULL,
-                   lambda = NULL, biasadj = FALSE, xreg = NULL, x = y, ...) {
+arfima <- function(
+  y,
+  drange = c(0, 0.5),
+  estim = c("mle", "ls"),
+  model = NULL,
+  lambda = NULL,
+  biasadj = FALSE,
+  xreg = NULL,
+  x = y,
+  ...
+) {
   estim <- match.arg(estim)
   seriesname <- deparse(substitute(y))
 
@@ -137,9 +145,8 @@ arfima <- function(y, drange = c(0, 0.5), estim = c("mle", "ls"), model = NULL,
     if (!is.null(lambda)) {
       fit$lambda <- lambda # Required for residuals.fracdiff()
     }
-  }
-  # Estimate model
-  else {
+  } else {
+    # Estimate model
     # Strip initial and final missing values
     xx <- na.ends(x)
 
@@ -153,19 +160,44 @@ arfima <- function(y, drange = c(0, 0.5), estim = c("mle", "ls"), model = NULL,
     # Choose p and q
     d <- fit$d
     y <- fracdiff::diffseries(xx, d = d)
-    fit <- auto.arima(y, max.P = 0, max.Q = 0, stationary = TRUE, xreg = xreg, ...)
+    fit <- auto.arima(
+      y,
+      max.P = 0,
+      max.Q = 0,
+      stationary = TRUE,
+      xreg = xreg,
+      ...
+    )
 
     # Refit model using fracdiff
-    suppressWarnings(fit <- fracdiff::fracdiff(xx, nar = fit$arma[1], nma = fit$arma[2], drange = drange))
+    suppressWarnings(
+      fit <- fracdiff::fracdiff(
+        xx,
+        nar = fit$arma[1],
+        nma = fit$arma[2],
+        drange = drange
+      )
+    )
 
     # Refine parameters with MLE
     if (estim == "mle") {
       y <- fracdiff::diffseries(xx, d = fit$d)
       p <- length(fit$ar)
       q <- length(fit$ma)
-      fit2 <- try(Arima(y, order = c(p, 0, q), include.mean = FALSE, xreg = xreg))
+      fit2 <- try(Arima(
+        y,
+        order = c(p, 0, q),
+        include.mean = FALSE,
+        xreg = xreg
+      ))
       if (inherits(fit2, "try-error")) {
-        fit2 <- try(Arima(y, order = c(p, 0, q), include.mean = FALSE, method = "ML", xreg = xreg))
+        fit2 <- try(Arima(
+          y,
+          order = c(p, 0, q),
+          include.mean = FALSE,
+          method = "ML",
+          xreg = xreg
+        ))
       }
       if (!inherits(fit2, "try-error")) {
         if (p > 0) {
@@ -175,8 +207,7 @@ arfima <- function(y, drange = c(0, 0.5), estim = c("mle", "ls"), model = NULL,
           fit$ma <- -fit2$coef[p + (1:q)]
         }
         fit$residuals <- fit2$residuals
-      }
-      else {
+      } else {
         warning("MLE estimation failed. Returning LS estimates")
       }
     }
@@ -193,7 +224,7 @@ arfima <- function(y, drange = c(0, 0.5), estim = c("mle", "ls"), model = NULL,
   fit$lambda <- lambda
   fit$call <- match.call()
   fit$series <- seriesname
-  fit <- structure(fit, class = c("ARFIMA","fracdiff"))
+  fit <- structure(fit, class = c("ARFIMA", "fracdiff"))
   # fit$call$data <- data.frame(x=x) #Consider replacing fit$call with match.call for consistency and tidyness
   return(fit)
 }
@@ -202,7 +233,15 @@ arfima <- function(y, drange = c(0, 0.5), estim = c("mle", "ls"), model = NULL,
 
 #' @rdname forecast.Arima
 #' @export
-forecast.fracdiff <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=object$lambda, biasadj=NULL, ...) {
+forecast.fracdiff <- function(
+  object,
+  h = 10,
+  level = c(80, 95),
+  fan = FALSE,
+  lambda = object$lambda,
+  biasadj = NULL,
+  ...
+) {
   # Extract data
   x <- object$x <- getResponse(object)
   if (is.null(x)) {
@@ -222,14 +261,19 @@ forecast.fracdiff <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=o
 
   # Construct ARMA part of model and forecast with it
   y <- fracdiff::diffseries(xx, d = object$d)
-  fit <- Arima(y, order = c(length(object$ar), 0, length(object$ma)), include.mean = FALSE, fixed = c(object$ar, -object$ma))
+  fit <- Arima(
+    y,
+    order = c(length(object$ar), 0, length(object$ma)),
+    include.mean = FALSE,
+    fixed = c(object$ar, -object$ma)
+  )
   fcast.y <- forecast(fit, h = h, level = level)
 
   # Undifference
   fcast.x <- unfracdiff(xx, fcast.y$mean, n, h, object$d)
 
   # Binomial coefficient for expansion of d
-  bin.c <- (-1) ^ (0:(n + h)) * choose(object$d, (0:(n + h)))
+  bin.c <- (-1)^(0:(n + h)) * choose(object$d, (0:(n + h)))
 
   # Cumulative forecasts of y and forecast of y
   # b <- numeric(n)
@@ -265,8 +309,7 @@ forecast.fracdiff <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=o
   psi[1] <- new.phi[1] <- 1
   if (h > 1) {
     new.phi[2:h] <- -bin.c[2:h]
-    for (i in 2:h)
-    {
+    for (i in 2:h) {
       if (p > 0) {
         new.phi[i] <- sum(phi[1:(i - 1)] * bin.c[(i - 1):1]) - bin.c[i]
       }
@@ -275,7 +318,7 @@ forecast.fracdiff <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=o
   }
 
   # Compute forecast variances
-  fse <- sqrt(cumsum(psi ^ 2) * fit$sigma2)
+  fse <- sqrt(cumsum(psi^2) * fit$sigma2)
 
   # Compute prediction intervals
   if (fan) {
@@ -289,8 +332,7 @@ forecast.fracdiff <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=o
   }
   nint <- length(level)
   upper <- lower <- matrix(NA, ncol = nint, nrow = h)
-  for (i in 1:nint)
-  {
+  for (i in 1:nint) {
     qq <- qnorm(0.5 * (1 + level[i] / 100))
     lower[, i] <- fcast.x - qq * fse
     upper[, i] <- fcast.x + qq * fse
@@ -303,31 +345,57 @@ forecast.fracdiff <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=o
   if (is.null(data.tsp)) {
     data.tsp <- c(1, length(x), 1)
   }
-  mean.fcast <- ts(fcast.x + meanx, frequency = data.tsp[3], start = data.tsp[2] + 1 / data.tsp[3])
-  lower <- ts(lower + meanx, frequency = data.tsp[3], start = data.tsp[2] + 1 / data.tsp[3])
-  upper <- ts(upper + meanx, frequency = data.tsp[3], start = data.tsp[2] + 1 / data.tsp[3])
+  mean.fcast <- ts(
+    fcast.x + meanx,
+    frequency = data.tsp[3],
+    start = data.tsp[2] + 1 / data.tsp[3]
+  )
+  lower <- ts(
+    lower + meanx,
+    frequency = data.tsp[3],
+    start = data.tsp[2] + 1 / data.tsp[3]
+  )
+  upper <- ts(
+    upper + meanx,
+    frequency = data.tsp[3],
+    start = data.tsp[2] + 1 / data.tsp[3]
+  )
   method <- paste0("ARFIMA(", p, ",", round(object$d, 2), ",", q, ")")
 
   if (!is.null(lambda)) {
     x <- InvBoxCox(x, lambda)
     fits <- InvBoxCox(fits, lambda)
-    mean.fcast <- InvBoxCox(mean.fcast, lambda, biasadj, list(level = level, upper = upper, lower = lower))
+    mean.fcast <- InvBoxCox(
+      mean.fcast,
+      lambda,
+      biasadj,
+      list(level = level, upper = upper, lower = lower)
+    )
     lower <- InvBoxCox(lower, lambda)
     upper <- InvBoxCox(upper, lambda)
   }
 
   seriesname <- if (!is.null(object$series)) {
     object$series
-  }
-  else {
+  } else {
     deparse(object$call$x)
   }
 
-  return(structure(list(
-    x = x, mean = mean.fcast, upper = upper, lower = lower,
-    level = level, method = method, model = object, series = seriesname,
-    residuals = res, fitted = fits
-  ), class = "forecast"))
+  return(structure(
+    list(
+      x = x,
+      mean = mean.fcast,
+      upper = upper,
+      lower = lower,
+      level = level,
+      method = method,
+      model = object,
+      series = seriesname,
+      residuals = res,
+      fitted = fits
+    ),
+    class = "forecast"
+  ))
 }
 
 # Fitted values from arfima()
@@ -335,17 +403,18 @@ forecast.fracdiff <- function(object, h=10, level=c(80, 95), fan=FALSE, lambda=o
 #' @rdname fitted.Arima
 #' @export
 fitted.ARFIMA <- function(object, h = 1, ...) {
-  if (!is.null(object$fitted)) { # Object produced by arfima()
+  if (!is.null(object$fitted)) {
+    # Object produced by arfima()
     if (h == 1) {
       return(object$fitted)
-    }
-    else {
+    } else {
       return(hfitted(object = object, h = h, FUN = "arfima", ...))
     }
-  }
-  else {
+  } else {
     if (h != 1) {
-      warning("h-step fits are not supported for models produced by fracdiff(), returning one-step fits (h=1)")
+      warning(
+        "h-step fits are not supported for models produced by fracdiff(), returning one-step fits (h=1)"
+      )
     }
     x <- getResponse(object)
     return(x - residuals(object))
