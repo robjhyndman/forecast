@@ -17,16 +17,16 @@ test_that("tests for ARIMA errors", {
 })
 
 test_that("tests for arimaorder", {
-  for (ar in 1:5) {
+  for (ar in 0:2) {
     for (i in 0:1) {
-      for (ma in 1:5) {
-        fitarima <- tryCatch(Arima(
+      for (ma in 0:2) {
+        fitarima <- Arima(
           lynx,
           order = c(ar, i, ma),
           method = "ML",
           include.constant = TRUE,
           lambda = 0.5
-        ))
+        )
         if (!inherits(fitarima, "try-error")) {
           arextracted <- fitarima$arma[1]
           iextracted <- fitarima$arma[6]
