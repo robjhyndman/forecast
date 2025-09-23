@@ -107,10 +107,12 @@ bcloglik <- function(x, lower = -1, upper = 2) {
 #' @examples
 #'
 #' lambda <- BoxCox.lambda(AirPassengers, lower = 0)
-#' air.fit <- Arima(AirPassengers,
-#'                  order = c(0, 1, 1),
-#'                  seasonal = list(order = c(0, 1, 1), period = 12),
-#'                  lambda = lambda)
+#' air.fit <- Arima(
+#'   AirPassengers,
+#'   order = c(0, 1, 1),
+#'   seasonal = list(order = c(0, 1, 1), period = 12),
+#'   lambda = lambda
+#' )
 #' plot(forecast(air.fit))
 #'
 #' @export

@@ -14,11 +14,19 @@
 #' @examples
 #'
 #' par(mfrow = c(2, 1))
-#' plot(ldeaths, xlab = "Year", ylab = "pounds",
-#'      main = "Monthly deaths from lung disease (UK)")
+#' plot(
+#'   ldeaths,
+#'   xlab = "Year",
+#'   ylab = "pounds",
+#'   main = "Monthly deaths from lung disease (UK)"
+#' )
 #' ldeaths.adj <- ldeaths / monthdays(ldeaths) * 365.25 / 12
-#' plot(ldeaths.adj, xlab = "Year", ylab = "pounds",
-#'      main = "Adjusted monthly deaths from lung disease (UK)")
+#' plot(
+#'   ldeaths.adj,
+#'   xlab = "Year",
+#'   ylab = "pounds",
+#'   main = "Adjusted monthly deaths from lung disease (UK)"
+#' )
 #'
 #' @export
 monthdays <- function(x) {
@@ -122,8 +130,10 @@ sindexf <- function(object, h) {
 #' month <- seasonaldummy(ldeaths)
 #' deaths.lm <- tslm(ldeaths ~ month)
 #' tsdisplay(residuals(deaths.lm))
-#' ldeaths.fcast <- forecast(deaths.lm,
-#'                           data.frame(month = I(seasonaldummy(ldeaths, 36))))
+#' ldeaths.fcast <- forecast(
+#'   deaths.lm,
+#'   data.frame(month = I(seasonaldummy(ldeaths, 36)))
+#' )
 #' plot(ldeaths.fcast)
 #'
 #' # A simpler approach to seasonal dummy variables
@@ -216,17 +226,23 @@ seasonaldummyf <- function(x, h) {
 #'
 #' # Using Fourier series for a "ts" object
 #' # K is chosen to minimize the AICc
-#' deaths.model <- auto.arima(USAccDeaths,
-#'                            xreg = fourier(USAccDeaths, K = 5),
-#'                            seasonal = FALSE)
-#' deaths.fcast <- forecast(deaths.model,
-#'                          xreg = fourier(USAccDeaths, K = 5, h = 36))
+#' deaths.model <- auto.arima(
+#'   USAccDeaths,
+#'   xreg = fourier(USAccDeaths, K = 5),
+#'   seasonal = FALSE
+#' )
+#' deaths.fcast <- forecast(
+#'   deaths.model,
+#'   xreg = fourier(USAccDeaths, K = 5, h = 36)
+#' )
 #' autoplot(deaths.fcast) + xlab("Year")
 #'
 #' # Using Fourier series for a "msts" object
 #' taylor.lm <- tslm(taylor ~ fourier(taylor, K = c(3, 3)))
-#' taylor.fcast <- forecast(taylor.lm,
-#'                          data.frame(fourier(taylor, K = c(3, 3), h = 270)))
+#' taylor.fcast <- forecast(
+#'   taylor.lm,
+#'   data.frame(fourier(taylor, K = c(3, 3), h = 270))
+#' )
 #' autoplot(taylor.fcast)
 #'
 #' @export
