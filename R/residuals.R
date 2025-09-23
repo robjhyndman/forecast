@@ -79,7 +79,7 @@ residuals.Arima <- function(
     }
     xreg <- getxreg(object)
     # Remove intercept
-    if (is.element("intercept", names(object$coef))) {
+    if ("intercept" %in% names(object$coef)) {
       xreg <- cbind(rep(1, length(x)), xreg)
     }
     # Return errors
@@ -159,7 +159,7 @@ residuals.ARFIMA <- function(object, type = c("innovation", "response"), ...) {
       return(object$residuals)
     } else {
       # Object produced by fracdiff()
-      if (is.element("x", names(object))) {
+      if ("x" %in% names(object)) {
         x <- object$x
       } else {
         x <- eval.parent(parse(text = as.character(object$call)[2]))

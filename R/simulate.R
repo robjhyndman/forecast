@@ -338,7 +338,7 @@ simulate.Arima <- function(
     xreg <- as.matrix(xreg)
     nsim <- nrow(xreg)
   }
-  use.drift <- is.element("drift", names(object$coef))
+  use.drift <- "drift" %in% names(object$coef)
   usexreg <- (!is.null(xreg) | use.drift | !is.null(object$xreg))
   xm <- oldxm <- 0
   if (use.drift) {

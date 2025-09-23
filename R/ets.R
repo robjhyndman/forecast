@@ -280,13 +280,13 @@ ets <- function(
   trendtype <- substr(model, 2, 2)
   seasontype <- substr(model, 3, 3)
 
-  if (!is.element(errortype, c("M", "A", "Z"))) {
+  if (!errortype %in% c("M", "A", "Z")) {
     stop("Invalid error type")
   }
-  if (!is.element(trendtype, c("N", "A", "M", "Z"))) {
+  if (!trendtype %in% c("N", "A", "M", "Z")) {
     stop("Invalid trend type")
   }
-  if (!is.element(seasontype, c("N", "A", "M", "Z"))) {
+  if (!seasontype %in% c("N", "A", "M", "Z")) {
     stop("Invalid season type")
   }
 
@@ -302,7 +302,7 @@ ets <- function(
     }
   }
   if (m > 24) {
-    if (is.element(seasontype, c("A", "M"))) {
+    if (seasontype %in% c("A", "M")) {
       stop("Frequency too high")
     } else if (seasontype == "Z") {
       warning(

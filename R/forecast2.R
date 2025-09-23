@@ -210,9 +210,9 @@ forecast.StructTS <- function(
     upper[, i] <- pred$pred + qq * pred$se
   }
   colnames(lower) <- colnames(upper) <- paste0(level, "%")
-  if (is.element("seas", names(object$coef))) {
+  if ("seas" %in% names(object$coef)) {
     method <- "Basic structural model"
-  } else if (is.element("slope", names(object$coef))) {
+  } else if ("slope" %in% names(object$coef)) {
     method <- "Local linear structural model"
   } else {
     method <- "Local level structural model"

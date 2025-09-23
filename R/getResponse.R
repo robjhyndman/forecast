@@ -43,7 +43,7 @@ getResponse.lm <- function(object, ...) {
 #' @rdname getResponse
 #' @export
 getResponse.Arima <- function(object, ...) {
-  if (is.element("x", names(object))) {
+  if ("x" %in% names(object)) {
     x <- object$x
   } else {
     series.name <- object$series
@@ -67,7 +67,7 @@ getResponse.Arima <- function(object, ...) {
 #' @rdname getResponse
 #' @export
 getResponse.fracdiff <- function(object, ...) {
-  if (is.element("x", names(object))) {
+  if ("x" %in% names(object)) {
     x <- object$x
   } else {
     series.name <- as.character(object$call)[2]
@@ -97,7 +97,7 @@ getResponse.ar <- function(object, ...) {
 #' @rdname getResponse
 #' @export
 getResponse.tbats <- function(object, ...) {
-  if (is.element("y", names(object))) {
+  if ("y" %in% names(object)) {
     y <- object$y
   } else {
     return(NULL)
@@ -120,7 +120,7 @@ getResponse.mforecast <- function(object, ...) {
 #' @rdname getResponse
 #' @export
 getResponse.baggedModel <- function(object, ...) {
-  if (is.element("y", names(object))) {
+  if ("y" %in% names(object)) {
     y <- object$y
   } else {
     return(NULL)

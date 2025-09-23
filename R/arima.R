@@ -361,9 +361,9 @@ forecast.Arima <- function(
     ))
   }
 
-  use.drift <- is.element("drift", names(object$coef))
+  use.drift <- "drift" %in% names(object$coef)
   x <- object$x <- getResponse(object)
-  usexreg <- (use.drift || is.element("xreg", names(object))) # | use.constant)
+  usexreg <- (use.drift || "xreg" %in% names(object)) # | use.constant)
 
   if (!is.null(xreg) && usexreg) {
     if (!is.numeric(xreg)) {
@@ -619,17 +619,17 @@ forecast.ar <- function(
 
 getxreg <- function(z) {
   # Look in the obvious place first
-  if (is.element("xreg", names(z))) {
+  if ("xreg" %in% names(z)) {
     return(z$xreg)
-  } else if (is.element("xreg", names(z$coef))) {
+  } else if ("xreg" %in% names(z$coef)) {
     # Next most obvious place
     return(eval.parent(z$coef$xreg))
-  } else if (is.element("xreg", names(z$call))) {
+  } else if ("xreg" %in% names(z$call)) {
     # Now check under call
     return(eval.parent(z$call$xreg))
   } else {
     # Otherwise check if it exists
-    armapar <- sum(z$arma[1:4]) + is.element("intercept", names(z$coef))
+    armapar <- sum(z$arma[1:4]) + "intercept" %in% names(z$coef)
     npar <- length(z$coef)
     if (npar > armapar) {
       stop(
@@ -962,9 +962,9 @@ Arima <- function(
 
 # Refits the model to new data x
 arima2 <- function(x, model, xreg, method) {
-  use.drift <- is.element("drift", names(model$coef))
-  use.intercept <- is.element("intercept", names(model$coef))
-  use.xreg <- is.element("xreg", names(model$call))
+  use.drift <- "drift" %in% names(model$coef)
+  use.intercept <- "intercept" %in% names(model$coef)
+  use.xreg <- "xreg" %in% names(model$call)
   sigma2 <- model$sigma2
   if (use.drift) {
     driftmod <- lm(model$xreg[, "drift"] ~ I(time(as.ts(model$x))))
