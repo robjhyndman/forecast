@@ -668,9 +668,9 @@ hfitted.default <- function(object, h = 1, FUN = NULL, ...) {
 
 #' @export
 forecast.forecast <- function(object, ...) {
-  input_names <- as.list(substitute(list(...)))
+  input_names <- ...names()
   # Read level argument
-  if (is.element("level", names(input_names))) {
+  if ("level" %in% input_names) {
     level <- list(...)[["level"]]
     if (!identical(level, object$level)) {
       stop(
@@ -679,7 +679,7 @@ forecast.forecast <- function(object, ...) {
     }
   }
   # Read h argument
-  if (is.element("h", names(input_names))) {
+  if ("h" %in% input_names) {
     h <- list(...)[["h"]]
     if (h > length(object$mean)) {
       stop(
