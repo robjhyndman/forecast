@@ -37,11 +37,11 @@ differences necessary.
 \details{
 \code{ndiffs} uses a unit root test to determine the number of differences
 required for time series \code{x} to be made stationary. If
-\code{test="kpss"}, the KPSS test is used with the null hypothesis that
+\code{test = "kpss"}, the KPSS test is used with the null hypothesis that
 \code{x} has a stationary root against a unit-root alternative. Then the
 test returns the least number of differences required to pass the test at
-the level \code{alpha}. If \code{test="adf"}, the Augmented Dickey-Fuller
-test is used and if \code{test="pp"} the Phillips-Perron test is used. In
+the level \code{alpha}. If \code{test = "adf"}, the Augmented Dickey-Fuller
+test is used and if \code{test = "pp"} the Phillips-Perron test is used. In
 both of these cases, the null hypothesis is that \code{x} has a unit root
 against a stationary root alternative. Then the test returns the least
 number of differences required to fail the test at the level \code{alpha}.
@@ -70,7 +70,7 @@ Moving Average Models of Unknown Order", \emph{Biometrika}
 \bold{71}:599-607.
 }
 \seealso{
-\code{\link{auto.arima}} and \code{\link{ndiffs}}
+\code{\link[=auto.arima]{auto.arima()}} and \code{\link[=ndiffs]{ndiffs()}}
 }
 \author{
 Rob J Hyndman, Slava Razbash & Mitchell O'Hara-Wild

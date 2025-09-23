@@ -54,15 +54,15 @@ mlmsplit <- function(x, index = NULL) {
 #' [stats::lm()] or [tslm()].
 #' @param newdata An optional data frame in which to look for variables with
 #' which to predict. If omitted, it is assumed that the only variables are
-#' trend and season, and \code{h} forecasts are produced.
+#' trend and season, and `h` forecasts are produced.
 #' @param level Confidence level for prediction intervals.
-#' @param fan If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
+#' @param fan If `TRUE`, level is set to `seq(51, 99, by = 3)`. This
 #' is suitable for fan plots.
-#' @param h Number of periods for forecasting. Ignored if \code{newdata}
+#' @param h Number of periods for forecasting. Ignored if `newdata`
 #' present.
-#' @param ts If \code{TRUE}, the forecasts will be treated as time series
-#' provided the original data is a time series; the \code{newdata} will be
-#' interpreted as related to the subsequent time periods. If \code{FALSE}, any
+#' @param ts If `TRUE`, the forecasts will be treated as time series
+#' provided the original data is a time series; the `newdata` will be
+#' interpreted as related to the subsequent time periods. If `FALSE`, any
 #' time series attributes of the original data will be ignored.
 #' @param ... Other arguments passed to [forecast.lm()].
 #' @inheritParams forecast.ts
@@ -73,22 +73,22 @@ mlmsplit <- function(x, index = NULL) {
 #' results, while the function `plot` produces a plot of the forecasts and
 #' prediction intervals.
 #'
-#' The generic accessor functions \code{fitted.values} and \code{residuals}
-#' extract useful features of the value returned by \code{forecast.lm}.
+#' The generic accessor functions `fitted.values` and `residuals`
+#' extract useful features of the value returned by `forecast.lm`.
 #'
-#' An object of class \code{"mforecast"} is a list containing at least the
-#' following elements: \item{model}{A list containing information about the
-#' fitted model} \item{method}{The name of the forecasting method as a
-#' character string} \item{mean}{Point forecasts as a multivariate time series}
+#' An object of class `"mforecast"` is a list containing at least the
+#' following elements:
+#' \item{model}{A list containing information about the fitted model}
+#' \item{method}{The name of the forecasting method as a character string}
+#' \item{mean}{Point forecasts as a multivariate time series}
 #' \item{lower}{Lower limits for prediction intervals of each series}
 #' \item{upper}{Upper limits for prediction intervals of each series}
 #' \item{level}{The confidence values associated with the prediction intervals}
 #' \item{x}{The historical data for the response variable.}
-#' \item{residuals}{Residuals from the fitted model. That is x minus fitted
-#' values.} \item{fitted}{Fitted values}
+#' \item{residuals}{Residuals from the fitted model. That is x minus fitted values.}
+#' \item{fitted}{Fitted values}
 #' @author Mitchell O'Hara-Wild
-#' @seealso \code{\link{tslm}}, \code{\link{forecast.lm}},
-#' \code{\link[stats]{lm}}.
+#' @seealso [tslm()], [forecast.lm()], [stats::lm()].
 #' @examples
 #'
 #' lungDeaths <- cbind(mdeaths, fdeaths)
@@ -131,12 +131,12 @@ forecast.mlm <- function(
 
 #' Forecasting time series
 #'
-#' \code{mforecast} is a class of objects for forecasting from multivariate
+#' `mforecast` is a class of objects for forecasting from multivariate
 #' time series or multivariate time series models. The function invokes
 #' particular \emph{methods} which depend on the class of the first argument.
 #'
-#' For example, the function \code{\link{forecast.mlm}} makes multivariate
-#' forecasts based on the results produced by \code{\link{tslm}}.
+#' For example, the function [forecast.mlm()] makes multivariate
+#' forecasts based on the results produced by [tslm()].
 #'
 #' @aliases mforecast print.mforecast summary.mforecast as.data.frame.mforecast
 #'
@@ -144,42 +144,42 @@ forecast.mlm <- function(
 #' for which forecasts are required
 #' @param h Number of periods for forecasting
 #' @param level Confidence level for prediction intervals.
-#' @param fan If \code{TRUE}, \code{level} is set to \code{seq(51, 99, by = 3)}.
+#' @param fan If `TRUE`, `level` is set to `seq(51, 99, by = 3)`.
 #' This is suitable for fan plots.
-#' @param robust If \code{TRUE}, the function is robust to missing values and outliers
-#' in \code{object}. This argument is only valid when \code{object} is of class
-#' \code{mts}.
-#' @param find.frequency If \code{TRUE}, the function determines the appropriate
+#' @param robust If `TRUE`, the function is robust to missing values and outliers
+#' in `object`. This argument is only valid when `object` is of class `mts`.
+#' @param find.frequency If `TRUE`, the function determines the appropriate
 #' period, if the data is of unknown period.
-#' @param allow.multiplicative.trend If \code{TRUE}, then ETS models with
+#' @param allow.multiplicative.trend If `TRUE`, then ETS models with
 #' multiplicative trends are allowed. Otherwise, only additive or no trend ETS
 #' models are permitted.
 #' @param ... Additional arguments affecting the forecasts produced.
 #' @inheritParams forecast.ts
-#' @return An object of class "\code{mforecast}".
+#' @return An object of class `"mforecast"`.
 #'
-#' The function \code{summary} is used to obtain and print a summary of the
-#' results, while the function \code{plot} produces a plot of the multivariate
+#' The function `summary` is used to obtain and print a summary of the
+#' results, while the function `plot` produces a plot of the multivariate
 #' forecasts and prediction intervals.
 #'
-#' The generic accessors functions \code{fitted.values} and \code{residuals}
-#' extract various useful features of the value returned by
-#' \code{forecast$model}.
+#' The generic accessors functions `fitted.values` and `residuals`
+#' extract various useful features of the value returned by `forecast$model`.
 #'
-#' An object of class \code{"mforecast"} is a list usually containing at least
-#' the following elements: \item{model}{A list containing information about the
-#' fitted model} \item{method}{The name of the forecasting method as a
-#' character string} \item{mean}{Point forecasts as a time series}
-#' \item{lower}{Lower limits for prediction intervals} \item{upper}{Upper
-#' limits for prediction intervals} \item{level}{The confidence values
-#' associated with the prediction intervals} \item{x}{The original time series
-#' (either \code{object} itself or the time series used to create the model
-#' stored as \code{object}).} \item{residuals}{Residuals from the fitted model.
-#' For models with additive errors, the residuals will be x minus the fitted
-#' values.} \item{fitted}{Fitted values (one-step forecasts)}
+#' An object of class `"mforecast"` is a list usually containing at least
+#' the following elements:
+#' \item{model}{A list containing information about the fitted model}
+#' \item{method}{The name of the forecasting method as a character string}
+#' \item{mean}{Point forecasts as a time series}
+#' \item{lower}{Lower limits for prediction intervals}
+#' \item{upper}{Upper limits for prediction intervals}
+#' \item{level}{The confidence values associated with the prediction intervals}
+#' \item{x}{The original time series (either `object` itself or the time series
+#'          used to create the model stored as `object`).}
+#' \item{residuals}{Residuals from the fitted model. For models with additive
+#'       errors, the residuals will be x minus the fitted values.}
+#' \item{fitted}{Fitted values (one-step forecasts)}
 #' @author Rob J Hyndman & Mitchell O'Hara-Wild
-#' @seealso Other functions which return objects of class \code{"mforecast"}
-#' are \code{\link{forecast.mlm}}, \code{forecast.varest}.
+#' @seealso Other functions which return objects of class `"mforecast"`
+#' are [forecast.mlm()], `forecast.varest()`.
 #'
 #' @export
 forecast.mts <- function(
@@ -222,25 +222,25 @@ print.mforecast <- function(x, ...) {
 #'
 #' Plots historical data with multivariate forecasts and prediction intervals.
 #'
-#' \code{autoplot} will produce an equivalent plot as a ggplot object.
+#' `autoplot` will produce an equivalent plot as a ggplot object.
 #'
-#' @param x Multivariate forecast object of class \code{mforecast}.
-#' @param object Multivariate forecast object of class \code{mforecast}. Used
+#' @param x Multivariate forecast object of class `mforecast`.
+#' @param object Multivariate forecast object of class `mforecast`. Used
 #' for ggplot graphics (S3 method consistency).
 #' @param main Main title. Default is the forecast method. For autoplot,
 #' specify a vector of titles for each plot.
 #' @param xlab X-axis label. For autoplot, specify a vector of labels for each
 #' plot.
-#' @param PI If \code{FALSE}, confidence intervals will not be plotted, giving
+#' @param PI If `FALSE`, confidence intervals will not be plotted, giving
 #' only the forecast line.
-#' @param facets If \code{TRUE}, multiple time series will be faceted. If
-#' \code{FALSE}, each series will be assigned a colour.
-#' @param colour If \code{TRUE}, the time series will be assigned a colour aesthetic
+#' @param facets If `TRUE`, multiple time series will be faceted. If
+#' `FALSE`, each series will be assigned a colour.
+#' @param colour If `TRUE`, the time series will be assigned a colour aesthetic
 #' @param series Matches an unidentified forecast layer with a coloured object
 #' on the plot.
-#' @param ... additional arguments to each individual \code{plot}.
+#' @param ... additional arguments to each individual `plot`.
 #' @author Mitchell O'Hara-Wild
-#' @seealso \code{\link[forecast]{plot.forecast}}, \code{\link[stats]{plot.ts}}
+#' @seealso [plot.forecast()], [stats::plot.ts()]
 #' @references Hyndman and Athanasopoulos (2018) \emph{Forecasting: principles
 #' and practice}, 2nd edition, OTexts: Melbourne, Australia.
 #' \url{https://otexts.com/fpp2/}

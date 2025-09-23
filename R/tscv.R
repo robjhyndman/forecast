@@ -6,37 +6,37 @@
 
 #' Time series cross-validation
 #'
-#' \code{tsCV} computes the forecast errors obtained by applying
-#' \code{forecastfunction} to subsets of the time series \code{y} using a
+#' `tsCV` computes the forecast errors obtained by applying
+#' `forecastfunction` to subsets of the time series `y` using a
 #' rolling forecast origin.
 #'
-#' Let \code{y} contain the time series \eqn{y_1,\dots,y_T}{y[1:T]}. Then
-#' \code{forecastfunction} is applied successively to the time series
+#' Let `y` contain the time series \eqn{y_1,\dots,y_T}{y[1:T]}. Then
+#' `forecastfunction` is applied successively to the time series
 #' \eqn{y_1,\dots,y_t}{y[1:t]}, for \eqn{t=1,\dots,T-h}, making predictions
 #' \eqn{\hat{y}_{t+h|t}}{f[t+h]}. The errors are given by \eqn{e_{t+h} =
 #' y_{t+h}-\hat{y}_{t+h|t}}{e[t+h] = y[t+h]-f[t+h]}. If h=1, these are returned as a
 #' vector, \eqn{e_1,\dots,e_T}{e[1:T]}. For h>1, they are returned as a matrix with
 #' the hth column containing errors for forecast horizon h.
 #'  The first few errors may be missing as
-#' it may not be possible to apply \code{forecastfunction} to very short time
+#' it may not be possible to apply `forecastfunction` to very short time
 #' series.
 #'
 #' @param y Univariate time series
 #' @param forecastfunction Function to return an object of class
-#' \code{forecast}. Its first argument must be a univariate time series, and it
-#' must have an argument \code{h} for the forecast horizon. If exogenous predictors are used,
-#' then it must also have \code{xreg} and \code{newxreg} arguments corresponding to the
+#' `forecast`. Its first argument must be a univariate time series, and it
+#' must have an argument `h` for the forecast horizon. If exogenous predictors are used,
+#' then it must also have `xreg` and `newxreg` arguments corresponding to the
 #' training and test periods.
 #' @param h Forecast horizon
 #' @param window Length of the rolling window, if NULL, a rolling window will not be used.
 #' @param xreg Exogeneous predictor variables passed to the forecast function if required.
 #' @param initial Initial period of the time series where no cross-validation is performed.
-#' @param ... Other arguments are passed to \code{forecastfunction}.
+#' @param ... Other arguments are passed to `forecastfunction`.
 #' @return Numerical time series object containing the forecast errors as a vector (if h=1)
 #' and a matrix otherwise. The time index corresponds to the last period of the training
 #' data. The columns correspond to the forecast horizons.
 #' @author Rob J Hyndman
-#' @seealso \link{CV}, \link{CVar}, \link{residuals.Arima}, \url{https://robjhyndman.com/hyndsight/tscv/}.
+#' @seealso [CV()], [CVar()], [residuals.Arima()], \url{https://robjhyndman.com/hyndsight/tscv/}.
 #'
 #' @keywords ts
 #' @examples
@@ -155,8 +155,8 @@ tsCV <- function(
 
 #' k-fold Cross-Validation applied to an autoregressive model
 #'
-#' \code{CVar} computes the errors obtained by applying an autoregressive
-#' modelling function to subsets of the time series \code{y} using k-fold
+#' `CVar` computes the errors obtained by applying an autoregressive
+#' modelling function to subsets of the time series `y` using k-fold
 #' cross-validation as described in Bergmeir, Hyndman and Koo (2015). It also
 #' applies a Ljung-Box test to the residuals. If this test is significant
 #' (see returned pvalue), there is serial correlation in the residuals and the
@@ -169,15 +169,15 @@ tsCV <- function(
 #' @param y Univariate time series
 #' @param k Number of folds to use for cross-validation.
 #' @param FUN Function to fit an autoregressive model. Currently, it only works
-#' with the \code{\link{nnetar}} function.
+#' with the [nnetar()] function.
 #' @param cvtrace Provide progress information.
 #' @param blocked choose folds randomly or as blocks?
 #' @param LBlags lags for the Ljung-Box test, defaults to 24, for yearly series can be set to 20
-#' @param ... Other arguments are passed to \code{FUN}.
+#' @param ... Other arguments are passed to `FUN`.
 #' @return A list containing information about the model and accuracy for each
 #' fold, plus other summary information computed across folds.
 #' @author Gabriel Caceres and Rob J Hyndman
-#' @seealso \link{CV}, \link{tsCV}.
+#' @seealso [CV()], [tsCV()].
 #' @references Bergmeir, C., Hyndman, R.J., Koo, B. (2018) A note on the
 #' validity of cross-validation for evaluating time series prediction.
 #' \emph{Computational Statistics & Data Analysis}, \bold{120}, 70-83.

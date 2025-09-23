@@ -43,7 +43,7 @@ it should return fitted values when new data is omitted.}
 \item{xreg}{Optionally, a vector or matrix of external regressors, which
 must have the same number of rows as \code{y}. Must be numeric.}
 
-\item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
+\item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.}

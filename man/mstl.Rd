@@ -9,7 +9,7 @@ mstl(x, lambda = NULL, iterate = 2, s.window = 7 + 4 * seq(6), ...)
 \arguments{
 \item{x}{Univariate time series of class \code{msts} or \code{ts}.}
 
-\item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
+\item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.}
@@ -20,16 +20,16 @@ data transformed before model is estimated.}
 the same value is used for all seasonal components. Otherwise, it should be a vector
 of the same length as the number of seasonal components (or longer).}
 
-\item{...}{Other arguments are passed to \code{\link[stats]{stl}}.}
+\item{...}{Other arguments are passed to \code{\link[stats:stl]{stats::stl()}}.}
 }
 \description{
 Decompose a time series into seasonal, trend and remainder components.
 Seasonal components are estimated iteratively using STL. Multiple seasonal periods are
 allowed. The trend component is computed for the last iteration of STL.
 Non-seasonal time series are decomposed into trend and remainder only.
-In this case, \code{\link[stats]{supsmu}} is used to estimate the trend.
+In this case, \code{\link[stats:supsmu]{stats::supsmu()}} is used to estimate the trend.
 Optionally, the time series may be Box-Cox transformed before decomposition.
-Unlike \code{\link[stats]{stl}}, \code{mstl} is completely automated.
+Unlike \code{\link[stats:stl]{stats::stl()}}, \code{mstl} is completely automated.
 }
 \examples{
 library(ggplot2)

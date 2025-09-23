@@ -20,7 +20,7 @@
 #' functions.
 #' @inheritParams forecast.ts
 #'
-#' @param ... Other arguments passed to \code{\link[stats]{lm}()}.
+#' @param ... Other arguments passed to [stats::lm()].
 #' @return Returns an object of class "lm".
 #' @author Mitchell O'Hara-Wild and Rob J Hyndman
 #' @seealso [forecast.lm()], [stats::lm()].
@@ -200,50 +200,52 @@ fitted.tslm <- function(object, ...) {
 
 #' Forecast a linear model with possible time series components
 #'
-#' \code{forecast.lm} is used to predict linear models, especially those
+#' `forecast.lm` is used to predict linear models, especially those
 #' involving trend and seasonality components.
 #'
-#' \code{forecast.lm} is largely a wrapper for
-#' \code{\link[stats]{predict.lm}()} except that it allows variables "trend"
+#' `forecast.lm` is largely a wrapper for
+#' [stats::predict.lm()] except that it allows variables "trend"
 #' and "season" which are created on the fly from the time series
 #' characteristics of the data. Also, the output is reformatted into a
-#' \code{forecast} object.
+#' `forecast` object.
 #'
 #' @param object Object of class "lm", usually the result of a call to
-#' \code{\link[stats]{lm}} or \code{\link{tslm}}.
+#' [stats::lm()] or [tslm()].
 #' @param newdata An optional data frame in which to look for variables with
 #' which to predict. If omitted, it is assumed that the only variables are
-#' trend and season, and \code{h} forecasts are produced.
+#' trend and season, and `h` forecasts are produced.
 #' @param level Confidence level for prediction intervals.
-#' @param fan If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
+#' @param fan If `TRUE`, level is set to `seq(51, 99, by = 3)`. This
 #' is suitable for fan plots.
-#' @param h Number of periods for forecasting. Ignored if \code{newdata}
+#' @param h Number of periods for forecasting. Ignored if `newdata`
 #' present.
-#' @param ts If \code{TRUE}, the forecasts will be treated as time series
-#' provided the original data is a time series; the \code{newdata} will be
-#' interpreted as related to the subsequent time periods. If \code{FALSE}, any
+#' @param ts If `TRUE`, the forecasts will be treated as time series
+#' provided the original data is a time series; the `newdata` will be
+#' interpreted as related to the subsequent time periods. If `FALSE`, any
 #' time series attributes of the original data will be ignored.
-#' @param ... Other arguments passed to \code{\link[stats]{predict.lm}()}.
+#' @param ... Other arguments passed to [stats::predict.lm()].
 #' @inheritParams forecast.ts
 #'
-#' @return An object of class "\code{forecast}".
+#' @return An object of class `"forecast"`.
 #'
-#' The function \code{summary} is used to obtain and print a summary of the
-#' results, while the function \code{plot} produces a plot of the forecasts and
+#' The function `summary` is used to obtain and print a summary of the
+#' results, while the function `plot` produces a plot of the forecasts and
 #' prediction intervals.
 #'
-#' The generic accessor functions \code{fitted.values} and \code{residuals}
-#' extract useful features of the value returned by \code{forecast.lm}.
+#' The generic accessor functions `fitted.values` and `residuals`
+#' extract useful features of the value returned by `forecast.lm`.
 #'
-#' An object of class \code{"forecast"} is a list containing at least the
-#' following elements: \item{model}{A list containing information about the
-#' fitted model} \item{method}{The name of the forecasting method as a
-#' character string} \item{mean}{Point forecasts as a time series}
-#' \item{lower}{Lower limits for prediction intervals} \item{upper}{Upper
-#' limits for prediction intervals} \item{level}{The confidence values
-#' associated with the prediction intervals} \item{x}{The historical data for
-#' the response variable.} \item{residuals}{Residuals from the fitted model.
-#' That is x minus fitted values.} \item{fitted}{Fitted values}
+#' An object of class `"forecast"` is a list containing at least the
+#' following elements:
+#' \item{model}{A list containing information about the fitted model}
+#' \item{method}{The name of the forecasting method as a character string}
+#' \item{mean}{Point forecasts as a time series}
+#' \item{lower}{Lower limits for prediction intervals}
+#' \item{upper}{Upper limits for prediction intervals}
+#' \item{level}{The confidence values associated with the prediction intervals}
+#' \item{x}{The historical data for the response variable.}
+#' \item{residuals}{Residuals from the fitted model. That is x minus fitted values.}
+#' \item{fitted}{Fitted values}
 #' @author Rob J Hyndman
 #' @seealso [tslm()], [stats::lm()].
 #' @keywords stats
@@ -585,7 +587,7 @@ summary.tslm <- function(object, ...) {
 #' R^2 values for a linear model.
 #'
 #'
-#' @param obj Output from \code{\link[stats]{lm}} or \code{\link{tslm}}.
+#' @param obj Output from [stats::lm()] or [tslm()].
 #' @return Numerical vector containing CV, AIC, AICc, BIC and AdjR2 values.
 #' @author Rob J Hyndman
 #' @seealso [stats::AIC()]

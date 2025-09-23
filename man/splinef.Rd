@@ -25,7 +25,7 @@ splinef(
 \item{fan}{If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
 is suitable for fan plots.}
 
-\item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
+\item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.}
@@ -37,14 +37,14 @@ biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
 and fitted values.}
 
 \item{method}{Method for selecting the smoothing parameter. If
-\code{method="gcv"}, the generalized cross-validation method from
-\code{\link[stats]{smooth.spline}} is used. If \code{method="mle"}, the
+\code{method = "gcv"}, the generalized cross-validation method from
+\code{\link[stats:smooth.spline]{stats::smooth.spline()}} is used. If \code{method = "mle"}, the
 maximum likelihood method from Hyndman et al (2002) is used.}
 
 \item{x}{Deprecated. Included for backwards compatibility.}
 }
 \value{
-An object of class "\code{forecast}".
+An object of class \code{"forecast"}.
 
 The function \code{summary} is used to obtain and print a summary of the
 results, while the function \code{plot} produces a plot of the forecasts and
@@ -91,8 +91,7 @@ Statistics}, \bold{47}(1), 87-99.
 \url{https://robjhyndman.com/publications/splinefcast/}.
 }
 \seealso{
-\code{\link[stats]{smooth.spline}}, \code{\link[stats]{arima}},
-\code{\link{holt}}.
+\code{\link[stats:smooth.spline]{stats::smooth.spline()}}, \code{\link[stats:arima]{stats::arima()}}, \code{\link[=holt]{holt()}}.
 }
 \author{
 Rob J Hyndman

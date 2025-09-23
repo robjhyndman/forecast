@@ -43,7 +43,7 @@ forecasts are calculated. If \code{PI} is \code{FALSE}, then \code{level},
 \code{fan}, \code{simulate}, \code{bootstrap} and \code{npaths} are all
 ignored.}
 
-\item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
+\item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.}

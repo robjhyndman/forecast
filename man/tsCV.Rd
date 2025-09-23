@@ -67,7 +67,7 @@ e <- tsCV(y, far2_xreg, h = 3, xreg = xreg)
 
 }
 \seealso{
-\link{CV}, \link{CVar}, \link{residuals.Arima}, \url{https://robjhyndman.com/hyndsight/tscv/}.
+\code{\link[=CV]{CV()}}, \code{\link[=CVar]{CVar()}}, \code{\link[=residuals.Arima]{residuals.Arima()}}, \url{https://robjhyndman.com/hyndsight/tscv/}.
 }
 \author{
 Rob J Hyndman

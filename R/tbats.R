@@ -52,7 +52,7 @@
 #' used in the model and k1,...,kJ are the corresponding number of Fourier
 #' terms used for each seasonality.
 #' @author Slava Razbash and Rob J Hyndman
-#' @seealso \code{\link{tbats.components}}.
+#' @seealso [tbats.components()].
 #' @references De Livera, A.M., Hyndman, R.J., & Snyder, R. D. (2011),
 #' Forecasting time series with complex seasonal patterns using exponential
 #' smoothing, \emph{Journal of the American Statistical Association},
@@ -938,10 +938,10 @@ plot.tbats <- function(x, main = "Decomposition by TBATS model", ...) {
 #' Extract the level, slope and seasonal components of a TBATS model. The extracted components are Box-Cox transformed using the estimated transformation parameter.
 #'
 #'
-#' @param x A tbats object created by \code{\link{tbats}}.
-#' @return A multiple time series (\code{mts}) object. The first series is the observed time series. The second series is the trend component of the fitted model. Series three onwards are the seasonal components of the fitted model with one time series for each of the seasonal components. All components are transformed using estimated Box-Cox parameter.
+#' @param x A tbats object created by [tbats()].
+#' @return A multiple time series (`mts`) object. The first series is the observed time series. The second series is the trend component of the fitted model. Series three onwards are the seasonal components of the fitted model with one time series for each of the seasonal components. All components are transformed using estimated Box-Cox parameter.
 #' @author Slava Razbash and Rob J Hyndman
-#' @seealso \code{\link{tbats}}.
+#' @seealso [tbats()].
 #' @references De Livera, A.M., Hyndman, R.J., & Snyder, R. D. (2011),
 #' Forecasting time series with complex seasonal patterns using exponential
 #' smoothing, \emph{Journal of the American Statistical Association},

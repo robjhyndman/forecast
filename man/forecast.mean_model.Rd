@@ -41,7 +41,7 @@ of \code{xreg}.}
 \item{fan}{If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
 is suitable for fan plots.}
 
-\item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
+\item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.}

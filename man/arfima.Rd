@@ -29,7 +29,7 @@ parameters are calculated using full MLE via the \code{\link[stats:arima]{stats:
 \item{model}{Output from a previous call to \code{arfima}. If model is
 passed, this same model is fitted to y without re-estimating any parameters.}
 
-\item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
+\item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.}

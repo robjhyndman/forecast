@@ -39,7 +39,7 @@ gglagchull(
 
 \item{diag.col}{color to be used for the diagonal if(diag).}
 
-\item{do.lines}{if TRUE, lines will be drawn, otherwise points will be
+\item{do.lines}{if \code{TRUE}, lines will be drawn, otherwise points will be
 drawn.}
 
 \item{colour}{logical indicating if lines should be coloured.}
@@ -50,7 +50,7 @@ discrete?}
 \item{labels}{logical indicating if labels should be used.}
 
 \item{seasonal}{Should the line colour be based on seasonal characteristics
-(TRUE), or sequential (FALSE).}
+(\code{TRUE}), or sequential (\code{FALSE}).}
 
 \item{...}{Not used (for consistency with lag.plot)}
 }

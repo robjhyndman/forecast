@@ -66,7 +66,7 @@ and practice}, 2nd edition, OTexts: Melbourne, Australia.
 \url{https://otexts.com/fpp2/}
 }
 \seealso{
-\code{\link[forecast]{plot.forecast}}, \code{\link[stats]{plot.ts}}
+\code{\link[=plot.forecast]{plot.forecast()}}, \code{\link[stats:plot.ts]{stats::plot.ts()}}
 }
 \author{
 Mitchell O'Hara-Wild

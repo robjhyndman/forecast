@@ -47,35 +47,35 @@
 \method{plot}{splineforecast}(x, fitcol = 2, type = "o", pch = 19, ...)
 }
 \arguments{
-\item{x}{Forecast object produced by \code{\link{forecast}}.}
+\item{x}{Forecast object produced by \code{\link[=forecast]{forecast()}}.}
 
 \item{include}{number of values from time series to include in plot. Default
 is all values.}
 
 \item{PI}{Logical flag indicating whether to plot prediction intervals.}
 
-\item{showgap}{If \code{showgap=FALSE}, the gap between the historical
+\item{showgap}{If \code{showgap = FALSE}, the gap between the historical
 observations and the forecasts is removed.}
 
 \item{shaded}{Logical flag indicating whether prediction intervals should be
-shaded (\code{TRUE}) or lines (\code{FALSE})}
+shaded (\code{TRUE}) or lines (\code{FALSE}).}
 
 \item{shadebars}{Logical flag indicating if prediction intervals should be
 plotted as shaded bars (if \code{TRUE}) or a shaded polygon (if
-\code{FALSE}).  Ignored if \code{shaded=FALSE}. Bars are plotted by default
+\code{FALSE}). Ignored if \code{shaded = FALSE}. Bars are plotted by default
 if there are fewer than five forecast horizons.}
 
 \item{shadecols}{Colors for shaded prediction intervals. To get default
-colors used prior to v3.26, set \code{shadecols="oldstyle"}.}
+colors used prior to v3.26, set \code{shadecols = "oldstyle"}.}
 
 \item{col}{Colour for the data line.}
 
 \item{fcol}{Colour for the forecast line.}
 
-\item{pi.col}{If \code{shaded=FALSE} and \code{PI=TRUE}, the prediction
+\item{pi.col}{If \code{shaded = FALSE} and \code{PI = TRUE}, the prediction
 intervals are plotted in this colour.}
 
-\item{pi.lty}{If \code{shaded=FALSE} and \code{PI=TRUE}, the prediction
+\item{pi.lty}{If \code{shaded = FALSE} and \code{PI = TRUE}, the prediction
 intervals are plotted using this line type.}
 
 \item{ylim}{Limits on y-axis.}
@@ -87,7 +87,7 @@ intervals are plotted using this line type.}
 \item{ylab}{Y-axis label.}
 
 \item{type}{1-character string giving the type of plot desired. As for
-\code{\link[graphics]{plot.default}}.}
+\code{\link[graphics:plot.default]{graphics::plot.default()}}.}
 
 \item{flty}{Line type for the forecast line.}
 
@@ -95,7 +95,7 @@ intervals are plotted using this line type.}
 
 \item{...}{Other plotting parameters to affect the plot.}
 
-\item{object}{Forecast object produced by \code{\link{forecast}}. Used for
+\item{object}{Forecast object produced by \code{\link[=forecast]{forecast()}}. Used for
 ggplot graphics (S3 method consistency).}
 
 \item{series}{Matches an unidentified forecast layer with a coloured object
@@ -103,7 +103,7 @@ on the plot.}
 
 \item{fitcol}{Line colour for fitted values.}
 
-\item{pch}{Plotting character (if \code{type="p"} or \code{type="o"}).}
+\item{pch}{Plotting character (if \code{type = "p"} or \code{type = "o"}).}
 }
 \value{
 None.
@@ -138,7 +138,7 @@ and practice}, 2nd edition, OTexts: Melbourne, Australia.
 \url{https://otexts.com/fpp2/}
 }
 \seealso{
-\code{\link[stats]{plot.ts}}
+\code{\link[stats:plot.ts]{stats::plot.ts()}}
 }
 \author{
 Rob J Hyndman & Mitchell O'Hara-Wild

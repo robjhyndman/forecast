@@ -77,8 +77,8 @@ values are \code{"correlation"} (the default), \code{"covariance"} or \code{"par
 CCF is plotted.}
 
 \item{na.action}{function to handle missing values. Default is
-\code{\link[stats]{na.contiguous}}.  Useful alternatives are
-\code{\link[stats]{na.pass}} and \code{\link{na.interp}}.}
+\code{\link[stats:na.contiguous]{stats::na.contiguous()}}. Useful alternatives are
+\code{\link[stats:na.fail]{stats::na.pass()}} and \code{\link[=na.interp]{na.interp()}}.}
 
 \item{demean}{Should covariances be about the sample means?}
 

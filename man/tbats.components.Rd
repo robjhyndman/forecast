@@ -7,7 +7,7 @@
 tbats.components(x)
 }
 \arguments{
-\item{x}{A tbats object created by \code{\link{tbats}}.}
+\item{x}{A tbats object created by \code{\link[=tbats]{tbats()}}.}
 }
 \value{
 A multiple time series (\code{mts}) object. The first series is the observed time series. The second series is the trend component of the fitted model. Series three onwards are the seasonal components of the fitted model with one time series for each of the seasonal components. All components are transformed using estimated Box-Cox parameter.
@@ -31,7 +31,7 @@ smoothing, \emph{Journal of the American Statistical Association},
 \bold{106}(496), 1513-1527.
 }
 \seealso{
-\code{\link{tbats}}.
+\code{\link[=tbats]{tbats()}}.
 }
 \author{
 Slava Razbash and Rob J Hyndman

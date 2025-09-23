@@ -29,9 +29,8 @@ mini time series. The blue lines represent the mean of the observations
 within each season.
 }
 \details{
-The \code{ggmonthplot} function is simply a wrapper for
-\code{ggsubseriesplot} as a convenience for users familiar with
-\code{\link[stats]{monthplot}}.
+The \code{ggmonthplot} function is simply a wrapper for \code{ggsubseriesplot} as a
+convenience for users familiar with \code{\link[stats:monthplot]{stats::monthplot()}}.
 }
 \examples{
 

@@ -45,7 +45,7 @@
 \item{colour}{If \code{TRUE}, the time series will be assigned a colour aesthetic}
 
 \item{series}{Identifies the time series with a colour, which integrates well
-with the functionality of \link{geom_forecast}.}
+with the functionality of \code{\link[=geom_forecast]{geom_forecast()}}.}
 
 \item{...}{Other plotting parameters to affect the plot.}
 
@@ -61,7 +61,7 @@ series will be assigned a colour.}
 
 \item{model}{Object of class \code{"ts"} to be converted to \code{"data.frame"}.}
 
-\item{data}{Not used (required for \code{\link[ggplot2]{fortify}} method)}
+\item{data}{Not used (required for \code{\link[ggplot2:fortify]{ggplot2::fortify()}} method)}
 }
 \value{
 None. Function produces a ggplot graph.

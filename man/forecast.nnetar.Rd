@@ -19,8 +19,8 @@
 )
 }
 \arguments{
-\item{object}{An object of class "\code{nnetar}" resulting from a call to
-\code{\link{nnetar}}.}
+\item{object}{An object of class \code{"nnetar"} resulting from a call to
+\code{\link[=nnetar]{nnetar()}}.}
 
 \item{h}{Number of periods for forecasting. If \code{xreg} is used, \code{h}
 is ignored and the number of forecast periods is set to the number of rows
@@ -37,7 +37,7 @@ is suitable for fan plots.}
 
 \item{xreg}{Future values of external regressor variables.}
 
-\item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
+\item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.}
@@ -53,10 +53,10 @@ intervals.}
 a matrix with \code{h} rows and \code{npaths} columns (vectors are coerced
 into a matrix). If present, \code{bootstrap} is ignored.}
 
-\item{...}{Additional arguments passed to \code{\link{simulate.nnetar}}.}
+\item{...}{Additional arguments passed to \code{\link[=simulate.nnetar]{simulate.nnetar()}}.}
 }
 \value{
-An object of class "\code{forecast}".
+An object of class \code{"forecast"}.
 
 The function \code{summary} is used to obtain and print a summary of the
 results, while the function \code{plot} produces a plot of the forecasts and
@@ -65,7 +65,7 @@ prediction intervals.
 The generic accessor functions \code{fitted.values} and \code{residuals}
 extract useful features of the value returned by \code{forecast.nnetar}.
 
-An object of class "\code{forecast}" is a list containing at least the
+An object of class \code{"forecast"} is a list containing at least the
 following elements:
 \item{model}{A list containing information about the fitted model}
 \item{method}{The name of the forecasting method as a character string}
@@ -73,8 +73,7 @@ following elements:
 \item{lower}{Lower limits for prediction intervals}
 \item{upper}{Upper limits for prediction intervals}
 \item{level}{The confidence values associated with the prediction intervals}
-\item{x}{The original time series (either \code{object} itself or the time series
-used to create the model stored as \code{object}).}
+\item{x}{The original time series (either \verb{object\\ itself or the time series used to create the model stored as }object`).}
 \item{xreg}{The external regressors used in fitting (if given).}
 \item{residuals}{Residuals from the fitted model. That is x minus fitted values.}
 \item{fitted}{Fitted values (one-step forecasts)}
@@ -113,7 +112,7 @@ plot(fcast3)
 
 }
 \seealso{
-\code{\link{nnetar}}.
+\code{\link[=nnetar]{nnetar()}}.
 }
 \author{
 Rob J Hyndman and Gabriel Caceres
