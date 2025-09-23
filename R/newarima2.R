@@ -1399,15 +1399,14 @@ arima.string <- function(object, padding = FALSE) {
     }
   }
   if (!is.null(object$xreg)) {
-    if (NCOL(object$xreg) == 1 && is.element("drift", names(object$coef))) {
+    if (NCOL(object$xreg) == 1 && "drift" %in% names(object$coef)) {
       result <- paste(result, "with drift        ")
     } else {
       result <- paste("Regression with", result, "errors")
     }
   } else {
     if (
-      is.element("constant", names(object$coef)) ||
-        is.element("intercept", names(object$coef))
+      "constant" %in% names(object$coef) || "intercept" %in% names(object$coef)
     ) {
       result <- paste(result, "with non-zero mean")
     } else if (order[2] == 0 && order[5] == 0) {

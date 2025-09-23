@@ -118,11 +118,11 @@ subset.ts <- function(
     stop(paste("Seasons must be between 1 and", frequency(x)))
   }
 
-  start <- utils::head(time(x)[is.element(cycle(x), season)], 1)
+  start <- utils::head(time(x)[cycle(x) %in% season], 1)
   if (is.mts(x)) {
-    x <- subset.matrix(x, is.element(cycle(x), season))
+    x <- subset.matrix(x, cycle(x) %in% season)
   } else {
-    x <- subset.default(x, is.element(cycle(x), season))
+    x <- subset.default(x, cycle(x) %in% season)
   }
   return(ts(x, frequency = length(season), start = start))
 }

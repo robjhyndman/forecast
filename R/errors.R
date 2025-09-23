@@ -9,14 +9,14 @@ testaccuracy <- function(f, x, test, d, D) {
   dx <- getResponse(f)
   if (is.data.frame(x)) {
     responsevar <- as.character(formula(f$model))[2]
-    if (is.element(responsevar, colnames(x))) {
+    if (responsevar %in% colnames(x)) {
       x <- x[, responsevar]
     } else {
       stop("I can't figure out what data to use.")
     }
   }
   if (is.list(f)) {
-    if (is.element("mean", names(f))) {
+    if ("mean" %in% names(f)) {
       f <- f$mean
     } else {
       stop("Unknown list structure")

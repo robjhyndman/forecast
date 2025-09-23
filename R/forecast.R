@@ -387,7 +387,7 @@ plot.forecast <- function(
   flwd = 2,
   ...
 ) {
-  if (is.element("x", names(x))) {
+  if ("x" %in% names(x)) {
     # Assume stored as x
     xx <- x$x
   } else {

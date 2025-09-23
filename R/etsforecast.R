@@ -115,8 +115,8 @@ forecast.ets <- function(
     )
   } else if (
     object$components[1] == "A" &&
-      is.element(object$components[2], c("A", "N")) &&
-      is.element(object$components[3], c("N", "A"))
+      object$components[2] %in% c("A", "N") &&
+      object$components[3] %in% c("N", "A")
   ) {
     f <- class1(
       h,
@@ -130,8 +130,8 @@ forecast.ets <- function(
     )
   } else if (
     object$components[1] == "M" &&
-      is.element(object$components[2], c("A", "N")) &&
-      is.element(object$components[3], c("N", "A"))
+      object$components[2] %in% c("A", "N") &&
+      object$components[3] %in% c("N", "A")
   ) {
     f <- class2(
       h,
