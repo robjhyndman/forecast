@@ -118,9 +118,7 @@ Acf <- function(
       plot(plot.out, ...)
     } else {
       # Check if there is a ylim input
-      input_list <- as.list(substitute(list(...)))
-      ylimarg <- is.element("ylim", names(input_list))
-      if (ylimarg) {
+      if ("ylim" %in% ...names()) {
         plot(plot.out, xaxt = "n", ...)
       } else {
         ylim <- c(-1, 1) * 3 / sqrt(length(x))
@@ -244,9 +242,7 @@ Pacf <- function(
     nlags <- dim(object$lag)[1]
     plot.out <- object
     # Check if there is a ylim input
-    input_list <- as.list(substitute(list(...)))
-    ylimarg <- is.element("ylim", names(input_list))
-    if (ylimarg) {
+    if ("ylim" %in% ...names()) {
       plot(plot.out, xaxt = "n", ...)
     } else {
       ylim <- c(-1, 1) * 3 / sqrt(length(x))
