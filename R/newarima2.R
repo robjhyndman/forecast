@@ -6,7 +6,7 @@
 #'
 #' The default arguments are designed for rapid estimation of models for many time series.
 #' If you are analysing just one time series, and can afford to take some more time, it
-#' is recommended that you set \code{stepwise=FALSE} and \code{approximation=FALSE}.
+#' is recommended that you set `stepwise = FALSE` and `approximation = FALSE`.
 #'
 #' Non-stepwise selection can be slow, especially for seasonal data. The stepwise
 #' algorithm outlined in Hyndman & Khandakar (2008) is used except that the default
@@ -18,9 +18,9 @@
 #' @inheritParams stats::arima
 #' @param y A univariate time series.
 #' @param d Order of first-differencing. If missing, will choose a value based
-#' on \code{test}.
+#' on `test`.
 #' @param D Order of seasonal-differencing. If missing, will choose a value
-#' based on \code{season.test}.
+#' based on `season.test`.
 #' @param max.p Maximum value of p.
 #' @param max.q Maximum value of q.
 #' @param max.P Maximum value of P.
@@ -33,53 +33,52 @@
 #' @param start.q Starting value of q in stepwise procedure.
 #' @param start.P Starting value of P in stepwise procedure.
 #' @param start.Q Starting value of Q in stepwise procedure.
-#' @param stationary If \code{TRUE}, restricts search to stationary models.
-#' @param seasonal If \code{FALSE}, restricts search to non-seasonal models.
+#' @param stationary If `TRUE`, restricts search to stationary models.
+#' @param seasonal If `FALSE`, restricts search to non-seasonal models.
 #' @param ic Information criterion to be used in model selection.
-#' @param stepwise If \code{TRUE}, will do stepwise selection (faster).
+#' @param stepwise If `TRUE`, will do stepwise selection (faster).
 #' Otherwise, it searches over all models. Non-stepwise selection can be very
 #' slow, especially for seasonal models.
 #' @param nmodels Maximum number of models considered in the stepwise search.
-#' @param trace If \code{TRUE}, the list of ARIMA models considered will be
+#' @param trace If `TRUE`, the list of ARIMA models considered will be
 #' reported.
-#' @param approximation If \code{TRUE}, estimation is via conditional sums of
+#' @param approximation If `TRUE`, estimation is via conditional sums of
 #' squares and the information criteria used for model selection are
 #' approximated. The final model is still computed using maximum likelihood
 #' estimation. Approximation should be used for long time series or a high
 #' seasonal period to avoid excessive computation times.
 #' @param truncate An integer value indicating how many observations to use in
-#' model selection. The last \code{truncate} values of the series are used to
-#' select a model when \code{truncate} is not \code{NULL} and
-#' \code{approximation=TRUE}. All observations are used if either
-#' \code{truncate=NULL} or \code{approximation=FALSE}.
+#' model selection. The last `truncate` values of the series are used to
+#' select a model when `truncate` is not `NULL` and
+#' `approximation = TRUE`. All observations are used if either
+#' `truncate = NULL` or `approximation = FALSE`.
 #' @param xreg Optionally, a numerical vector or matrix of external regressors, which
-#' must have the same number of rows as \code{y}. (It should not be a data frame.)
-#' @param test Type of unit root test to use. See \code{\link{ndiffs}} for
-#' details.
+#' must have the same number of rows as `y`. (It should not be a data frame.)
+#' @param test Type of unit root test to use. See [ndiffs()] for details.
 #' @param test.args Additional arguments to be passed to the unit root test.
 #' @param seasonal.test This determines which method is used to select the number of seasonal differences.
 #' The default method is to use a measure of seasonal strength computed from an STL decomposition.
 #' Other possibilities involve seasonal unit root tests.
 #' @param seasonal.test.args Additional arguments to be passed to the seasonal
 #' unit root test.
-#' See \code{\link{nsdiffs}} for details.
-#' @param allowdrift If \code{TRUE}, models with drift terms are considered.
-#' @param allowmean If \code{TRUE}, models with a non-zero mean are considered.
-#' @param parallel If \code{TRUE} and \code{stepwise = FALSE}, then the
-#' specification search is done in parallel via \code{parallel::mclapply}. This
+#' See [nsdiffs()] for details.
+#' @param allowdrift If `TRUE`, models with drift terms are considered.
+#' @param allowmean If `TRUE`, models with a non-zero mean are considered.
+#' @param parallel If `TRUE` and `stepwise = FALSE`, then the
+#' specification search is done in parallel via `parallel::mclapply`. This
 #' can give a significant speedup on multicore machines. On Windows, this
 #' option always fails because forking is not supported.
 #' @param num.cores Allows the user to specify the amount of parallel processes
-#' to be used if \code{parallel = TRUE} and \code{stepwise = FALSE}. If
-#' \code{NULL}, then the number of logical cores is automatically detected and
+#' to be used if `parallel = TRUE` and `stepwise = FALSE`. If
+#' `NULL`, then the number of logical cores is automatically detected and
 #' all available cores are used.
 #' @param x Deprecated. Included for backwards compatibility.
-#' @param ... Additional arguments to be passed to \code{\link[stats]{arima}}.
+#' @param ... Additional arguments to be passed to [stats::arima()].
 #' @inheritParams forecast.ts
 #'
-#' @return Same as for \code{\link{Arima}}
+#' @return Same as for [Arima()]
 #' @author Rob J Hyndman
-#' @seealso \code{\link{Arima}}
+#' @seealso [Arima()]
 #' @references Hyndman, RJ and Khandakar, Y (2008) "Automatic time series
 #' forecasting: The forecast package for R", \emph{Journal of Statistical
 #' Software}, \bold{26}(3).

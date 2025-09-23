@@ -54,7 +54,7 @@ difference taken, no constant is included regardless of the value of this
 argument. This is deliberate as otherwise quadratic and higher order
 polynomial trends would be induced.}
 
-\item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
+\item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.}
@@ -79,7 +79,8 @@ parameters.}
 }
 \value{
 See the \code{\link[stats:arima]{stats::arima()}} function in the stats package.
-The additional objects returned are \item{x}{The time series data}
+The additional objects returned are:
+\item{x}{The time series data}
 \item{xreg}{The regressors used in fitting (when relevant).}
 \item{sigma2}{The bias adjusted MLE of the innovations variance.}
 }

@@ -4,15 +4,15 @@
 #' Seasonal components are estimated iteratively using STL. Multiple seasonal periods are
 #' allowed. The trend component is computed for the last iteration of STL.
 #' Non-seasonal time series are decomposed into trend and remainder only.
-#' In this case, \code{\link[stats]{supsmu}} is used to estimate the trend.
+#' In this case, [stats::supsmu()] is used to estimate the trend.
 #' Optionally, the time series may be Box-Cox transformed before decomposition.
-#' Unlike \code{\link[stats]{stl}}, \code{mstl} is completely automated.
-#' @param x Univariate time series of class \code{msts} or \code{ts}.
+#' Unlike [stats::stl()], `mstl` is completely automated.
+#' @param x Univariate time series of class `msts` or `ts`.
 #' @param iterate Number of iterations to use to refine the seasonal component.
 #' @param s.window Seasonal windows to be used in the  decompositions. If scalar,
 #' the same value is used for all seasonal components. Otherwise, it should be a vector
 #' of the same length as the number of seasonal components (or longer).
-#' @param ... Other arguments are passed to \code{\link[stats]{stl}}.
+#' @param ... Other arguments are passed to [stats::stl()].
 #' @inheritParams forecast.ts
 #'
 #' @seealso [stats::stl()], [stats::supsmu()]
@@ -128,24 +128,24 @@ autoplot.mstl <- function(object, ...) {
 #' method to the seasonally adjusted data and re-seasonalizing using the last
 #' year of the seasonal component.
 #'
-#' \code{stlm} takes a time series \code{y}, applies an STL decomposition, and
+#' `stlm` takes a time series `y`, applies an STL decomposition, and
 #' models the seasonally adjusted data using the model passed as
-#' \code{modelfunction} or specified using \code{method}. It returns an object
+#' `modelfunction` or specified using `method`. It returns an object
 #' that includes the original STL decomposition and a time series model fitted
 #' to the seasonally adjusted data. This object can be passed to the
-#' \code{forecast.stlm} for forecasting.
+#' `forecast.stlm` for forecasting.
 #'
-#' \code{forecast.stlm} forecasts the seasonally adjusted data, then
+#' `forecast.stlm` forecasts the seasonally adjusted data, then
 #' re-seasonalizes the results by adding back the last year of the estimated
 #' seasonal component.
 #'
-#' \code{stlf} combines \code{stlm} and \code{forecast.stlm}. It takes a
-#' \code{ts} argument, applies an STL decomposition, models the seasonally
+#' `stlf` combines `stlm` and `forecast.stlm`. It takes a
+#' `ts` argument, applies an STL decomposition, models the seasonally
 #' adjusted data, reseasonalizes, and returns the forecasts. However, it allows
 #' more general forecasting methods to be specified via
-#' \code{forecastfunction}.
+#' `forecastfunction`.
 #'
-#' \code{forecast.stl} is similar to \code{stlf} except that it takes the STL
+#' `forecast.stl` is similar to `stlf` except that it takes the STL
 #' decomposition as the first argument, instead of the time series.
 #'
 #' Note that the prediction intervals ignore the uncertainty associated with
@@ -155,71 +155,70 @@ autoplot.mstl <- function(object, ...) {
 #' component is ignored.
 #'
 #' The time series model for the seasonally adjusted data can be specified in
-#' \code{stlm} using either \code{method} or \code{modelfunction}. The
-#' \code{method} argument provides a shorthand way of specifying
-#' \code{modelfunction} for a few special cases. More generally,
-#' \code{modelfunction} can be any function with first argument a \code{ts}
-#' object, that returns an object that can be passed to \code{\link{forecast}}.
-#' For example, \code{forecastfunction=ar} uses the \code{\link{ar}} function
+#' `stlm` using either `method` or `modelfunction`. The
+#' `method` argument provides a shorthand way of specifying
+#' `modelfunction` for a few special cases. More generally,
+#' `modelfunction` can be any function with first argument a `ts`
+#' object, that returns an object that can be passed to [forecast()].
+#' For example, `forecastfunction = ar` uses the [ar()] function
 #' for modelling the seasonally adjusted series.
 #'
 #' The forecasting method for the seasonally adjusted data can be specified in
-#' \code{stlf} and \code{forecast.stl} using either \code{method} or
-#' \code{forecastfunction}. The \code{method} argument provides a shorthand way
-#' of specifying \code{forecastfunction} for a few special cases. More
-#' generally, \code{forecastfunction} can be any function with first argument a
-#' \code{ts} object, and other \code{h} and \code{level}, which returns an
-#' object of class \code{\link{forecast}}. For example,
-#' \code{forecastfunction=thetaf} uses the \code{\link{thetaf}} function for
+#' `stlf` and `forecast.stl` using either `method` or
+#' `forecastfunction`. The `method` argument provides a shorthand way
+#' of specifying `forecastfunction` for a few special cases. More
+#' generally, `forecastfunction` can be any function with first argument a
+#' `ts` object, and other `h` and `level`, which returns an
+#' object of class [forecast()]. For example,
+#' `forecastfunction = thetaf` uses the [thetaf()] function for
 #' forecasting the seasonally adjusted series.
 #'
-#' @param y A univariate numeric time series of class \code{ts}.
-#' @param object An object of class \code{stl} or \code{stlm}. Usually the
-#' result of a call to \code{\link[stats]{stl}} or \code{stlm}.
+#' @param y A univariate numeric time series of class `ts`.
+#' @param object An object of class `stl` or `stlm`. Usually the
+#' result of a call to [stats::stl()] or `stlm`.
 #' @param method Method to use for forecasting the seasonally adjusted series.
 #' @param modelfunction An alternative way of specifying the function for
-#' modelling the seasonally adjusted series. If \code{modelfunction} is not
-#' \code{NULL}, then \code{method} is ignored. Otherwise \code{method} is used
+#' modelling the seasonally adjusted series. If `modelfunction` is not
+#' `NULL`, then `method` is ignored. Otherwise `method` is used
 #' to specify the time series model to be used.
-#' @param model Output from a previous call to \code{stlm}. If a \code{stlm}
+#' @param model Output from a previous call to `stlm`. If a `stlm`
 #' model is passed, this same model is fitted to y without re-estimating any
 #' parameters.
 #' @param forecastfunction An alternative way of specifying the function for
-#' forecasting the seasonally adjusted series. If \code{forecastfunction} is
-#' not \code{NULL}, then \code{method} is ignored. Otherwise \code{method} is
+#' forecasting the seasonally adjusted series. If `forecastfunction` is
+#' not `NULL`, then `method` is ignored. Otherwise `method` is
 #' used to specify the forecasting method to be used.
 #' @param etsmodel The ets model specification passed to
-#' \code{\link[forecast]{ets}}. By default it allows any non-seasonal model. If
-#' \code{method!="ets"}, this argument is ignored.
+#' [ets()]. By default it allows any non-seasonal model. If
+#' `method != "ets"`, this argument is ignored.
 #' @param xreg Historical regressors to be used in
-#' \code{\link[forecast]{auto.arima}()} when \code{method="arima"}.
-#' @param newxreg Future regressors to be used in
-#' \code{\link[forecast]{forecast.Arima}()}.
+#' [auto.arima()] when `method = "arima"`.
+#' @param newxreg Future regressors to be used in [forecast.Arima()].
 #' @param h Number of periods for forecasting.
 #' @param level Confidence level for prediction intervals.
-#' @param fan If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
+#' @param fan If `TRUE`, level is set to `seq(51, 99, by = 3)`. This
 #' is suitable for fan plots.
-#' @param s.window Either the character string \code{"periodic"} or the span (in
+#' @param s.window Either the character string `"periodic"` or the span (in
 #' lags) of the loess window for seasonal extraction.
 #' @param t.window A number to control the smoothness of the trend. See
-#' \code{\link[stats]{stl}} for details.
-#' @param robust If \code{TRUE}, robust fitting will used in the loess
-#' procedure within \code{\link[stats]{stl}}.
-#' @param allow.multiplicative.trend If \code{TRUE}, then ETS models with
+#' [stats::stl()] for details.
+#' @param robust If `TRUE`, robust fitting will used in the loess
+#' procedure within [stats::stl()].
+#' @param allow.multiplicative.trend If `TRUE`, then ETS models with
 #' multiplicative trends are allowed. Otherwise, only additive or no trend ETS
 #' models are permitted.
 #' @param x Deprecated. Included for backwards compatibility.
-#' @param ... Other arguments passed to \code{forecast.stl},
-#' \code{modelfunction} or \code{forecastfunction}.
+#' @param ... Other arguments passed to `forecast.stl`,
+#' `modelfunction` or `forecastfunction`.
 #' @inheritParams forecast.ts
 #'
-#' @return \code{stlm} returns an object of class \code{stlm}. The other
-#' functions return objects of class \code{forecast}.
+#' @return `stlm` returns an object of class `stlm`. The other
+#' functions return objects of class `forecast`.
 #'
-#' There are many methods for working with \code{\link{forecast}} objects
-#' including \code{summary} to obtain and print a summary of the results, while
-#' \code{plot} produces a plot of the forecasts and prediction intervals. The
-#' generic accessor functions \code{fitted.values} and \code{residuals} extract
+#' There are many methods for working with [forecast()] objects
+#' including `summary` to obtain and print a summary of the results, while
+#' `plot` produces a plot of the forecasts and prediction intervals. The
+#' generic accessor functions `fitted.values` and `residuals` extract
 #' useful features.
 #' @author Rob J Hyndman
 #' @seealso [stats::stl()], [forecast.ets()], [forecast.Arima()].
@@ -403,7 +402,7 @@ forecast.mstl <- function(
 # allows the result to be added to other time series with different lengths
 # but overlapping time indexes.
 # param mts a matrix or multivariate time series
-# return a vector of rowsums which is a ts if the \code{mts} is a ts
+# return a vector of rowsums which is a ts if the `mts` is a ts
 rowSumsTS <- function(mts) {
   the_tsp <- tsp(mts)
   ret <- rowSums(mts)

@@ -64,7 +64,7 @@ ggtsbreaks <- function(x) {
 #' Produces a ggplot object of their equivalent Acf, Pacf, Ccf, taperedacf and
 #' taperedpacf functions.
 #'
-#' If \code{autoplot} is given an \code{acf} or \code{mpacf} object, then an
+#' If `autoplot` is given an `acf` or `mpacf` object, then an
 #' appropriate ggplot object will be created.
 #'
 #' ggtaperedpacf
@@ -77,13 +77,13 @@ ggtsbreaks <- function(x) {
 #' @param lag.max maximum lag at which to calculate the acf.
 #' @param type character string giving the type of acf to be computed. Allowed
 #' values are `"correlation"` (the default), `"covariance"` or `"partial"`.
-#' @param plot logical. If \code{TRUE} (the default) the resulting ACF, PACF or
+#' @param plot logical. If `TRUE` (the default) the resulting ACF, PACF or
 #' CCF is plotted.
 #' @param na.action function to handle missing values. Default is
-#' \code{\link[stats]{na.contiguous}}.  Useful alternatives are
-#' \code{\link[stats]{na.pass}} and \code{\link{na.interp}}.
+#' [stats::na.contiguous()]. Useful alternatives are
+#' [stats::na.pass()] and [na.interp()].
 #' @param demean Should covariances be about the sample means?
-#' @param calc.ci If \code{TRUE}, confidence intervals for the ACF/PACF
+#' @param calc.ci If `TRUE`, confidence intervals for the ACF/PACF
 #' estimates are calculated.
 #' @param level Percentage level used for the confidence intervals.
 #' @param nsim The number of bootstrap samples used in estimating the
@@ -1301,19 +1301,19 @@ ggtsdisplay <- function(
 #' "gglagchull" will layer convex hulls of the lags, layered on a single
 #' plot. This helps visualise the change in 'auto-dependence' as lags increase.
 #'
-#' @param x a time series object (type \code{ts}).
+#' @param x a time series object (type `ts`).
 #' @param lags number of lag plots desired, see arg set.lags.
 #' @param set.lags vector of positive integers specifying which lags to use.
 #' @param diag logical indicating if the x=y diagonal should be drawn.
 #' @param diag.col color to be used for the diagonal if(diag).
-#' @param do.lines if TRUE, lines will be drawn, otherwise points will be
+#' @param do.lines if `TRUE`, lines will be drawn, otherwise points will be
 #' drawn.
 #' @param colour logical indicating if lines should be coloured.
 #' @param continuous Should the colour scheme for years be continuous or
 #' discrete?
 #' @param labels logical indicating if labels should be used.
 #' @param seasonal Should the line colour be based on seasonal characteristics
-#' (TRUE), or sequential (FALSE).
+#' (`TRUE`), or sequential (`FALSE`).
 #' @param ... Not used (for consistency with lag.plot)
 #' @return None.
 #' @author Mitchell O'Hara-Wild
@@ -1572,16 +1572,15 @@ gglagchull <- function(
 #' mini time series. The blue lines represent the mean of the observations
 #' within each season.
 #'
-#' The \code{ggmonthplot} function is simply a wrapper for
-#' \code{ggsubseriesplot} as a convenience for users familiar with
-#' \code{\link[stats]{monthplot}}.
+#' The `ggmonthplot` function is simply a wrapper for `ggsubseriesplot` as a
+#' convenience for users familiar with [stats::monthplot()].
 #'
-#' @param x a time series object (type \code{ts}).
+#' @param x a time series object (type `ts`).
 #' @param labels A vector of labels to use for each 'season'
 #' @param times A vector of times for each observation
 #' @param phase A vector of seasonal components
 #' @param ... Not used (for consistency with monthplot)
-#' @return Returns an object of class \code{ggplot}.
+#' @return Returns an object of class `ggplot`.
 #' @author Mitchell O'Hara-Wild
 #' @seealso [stats::monthplot()]
 #' @examples
@@ -2141,10 +2140,10 @@ autoplot.StructTS <- function(object, labels = NULL, range.bars = TRUE, ...) {
 #' @param object Object of class `"seas"`, `"stl"`, or `"decomposed.ts"`.
 #' @param labels Labels to replace "seasonal", "trend", and "remainder".
 #' @param range.bars Logical indicating if each plot should have a bar at its
-#' right side representing relative size. If \code{NULL}, automatic selection
+#' right side representing relative size. If `NULL`, automatic selection
 #' takes place.
 #' @param ... Other plotting parameters to affect the plot.
-#' @return Returns an object of class \code{ggplot}.
+#' @return Returns an object of class `ggplot`.
 #' @author Mitchell O'Hara-Wild
 #' @seealso [seasonal::seas()], [stats::stl()], [stats::decompose()],
 #' [stats::StructTS()], [stats::plot.stl()].
@@ -2422,21 +2421,21 @@ autolayer.mforecast <- function(object, series = NULL, PI = TRUE, ...) {
 
 #' Automatically create a ggplot for time series objects
 #'
-#' \code{autoplot} takes an object of type \code{ts} or \code{mts} and creates
-#' a ggplot object suitable for usage with \code{stat_forecast}.
+#' `autoplot` takes an object of type `ts` or `mts` and creates
+#' a ggplot object suitable for usage with `stat_forecast`.
 #'
-#' \code{fortify.ts} takes a \code{ts} object and converts it into a data frame
+#' `fortify.ts` takes a `ts` object and converts it into a data frame
 #' (for usage with ggplot2).
 #'
 #' @param object Object of class `"ts"` or `"mts"`.
 #' @param series Identifies the time series with a colour, which integrates well
-#' with the functionality of \link{geom_forecast}.
-#' @param facets If \code{TRUE}, multiple time series will be faceted (and
-#' unless specified, colour is set to \code{FALSE}). If \code{FALSE}, each
+#' with the functionality of [geom_forecast()].
+#' @param facets If `TRUE`, multiple time series will be faceted (and
+#' unless specified, colour is set to `FALSE`). If `FALSE`, each
 #' series will be assigned a colour.
-#' @param colour If \code{TRUE}, the time series will be assigned a colour aesthetic
+#' @param colour If `TRUE`, the time series will be assigned a colour aesthetic
 #' @param model Object of class `"ts"` to be converted to `"data.frame"`.
-#' @param data Not used (required for \code{\link[ggplot2]{fortify}} method)
+#' @param data Not used (required for [ggplot2::fortify()] method)
 #' @param ... Other plotting parameters to affect the plot.
 #' @inheritParams plot.forecast
 #' @return None. Function produces a ggplot graph.
@@ -2970,55 +2969,55 @@ GeomForecastInterval <- ggplot2::ggproto(
 
 #' Forecast plot
 #'
-#' Generates forecasts from \code{forecast.ts} and adds them to the plot.
+#' Generates forecasts from `forecast.ts` and adds them to the plot.
 #' Forecasts can be modified via sending forecast specific arguments above.
 #'
 #' Multivariate forecasting is supported by having each time series on a
 #' different group.
 #'
-#' You can also pass \code{geom_forecast} a \code{forecast} object to add it to
+#' You can also pass `geom_forecast` a `forecast` object to add it to
 #' the plot.
 #'
 #' The aesthetics required for the forecasting to work includes forecast
-#' observations on the y axis, and the \code{time} of the observations on the x
+#' observations on the y axis, and the `time` of the observations on the x
 #' axis. Refer to the examples below. To automatically set up aesthetics, use
-#' \code{autoplot}.
+#' `autoplot`.
 #'
 #' @inheritParams ggplot2::layer
 #' @param data The data to be displayed in this layer. There are three options:
 #'
-#' If \code{NULL}, the default, the data is inherited from the plot data as
-#' specified in the call to \code{\link[ggplot2]{ggplot}}.
+#' If `NULL`, the default, the data is inherited from the plot data as
+#' specified in the call to [ggplot2::ggplot()].
 #'
-#' A \code{data.frame}, or other object, will override the plot data. All
-#' objects will be fortified to produce a data frame. See \code{\link[ggplot2]{fortify}}
+#' A `data.frame`, or other object, will override the plot data. All
+#' objects will be fortified to produce a data frame. See [ggplot2::fortify()]
 #' for which variables will be created.
 #'
-#' A \code{function} will be called with a single argument, the plot data. The
-#' return value must be a \code{data.frame}, and will be used as the layer
+#' A `function` will be called with a single argument, the plot data. The
+#' return value must be a `data.frame`, and will be used as the layer
 #' data.
 #' @param stat The stat object to use calculate the data.
 #' @param position Position adjustment, either as a string, or the result of a
 #' call to a position adjustment function.
-#' @param na.rm If \code{FALSE} (the default), removes missing values with a
-#' warning.  If \code{TRUE} silently removes missing values.
+#' @param na.rm If `FALSE` (the default), removes missing values with a
+#' warning.  If `TRUE` silently removes missing values.
 #' @param show.legend logical. Should this layer be included in the legends?
-#' \code{NA}, the default, includes if any aesthetics are mapped. \code{FALSE}
-#' never includes, and \code{TRUE} always includes.
-#' @param inherit.aes If \code{FALSE}, overrides the default aesthetics, rather
+#' `NA`, the default, includes if any aesthetics are mapped. `FALSE`
+#' never includes, and `TRUE` always includes.
+#' @param inherit.aes If `FALSE`, overrides the default aesthetics, rather
 #' than combining with them. This is most useful for helper functions that
 #' define both data and aesthetics and shouldn't inherit behaviour from the
-#' default plot specification, e.g. \code{\link[ggplot2]{borders}}.
-#' @param PI If \code{FALSE}, confidence intervals will not be plotted, giving
+#' default plot specification, e.g. [ggplot2::borders()].
+#' @param PI If `FALSE`, confidence intervals will not be plotted, giving
 #' only the forecast line.
-#' @param showgap If \code{showgap=FALSE}, the gap between the historical
+#' @param showgap If `showgap = FALSE`, the gap between the historical
 #' observations and the forecasts is removed.
 #' @param series Matches an unidentified forecast layer with a coloured object
 #' on the plot.
-#' @param ... Additional arguments for \code{\link{forecast.ts}}, other
-#' arguments are passed on to \code{\link[ggplot2]{layer}}. These are often aesthetics,
-#' used to set an aesthetic to a fixed value, like \code{color = "red"} or
-#' \code{alpha = .5}. They may also be parameters to the paired geom/stat.
+#' @param ... Additional arguments for [forecast.ts()], other
+#' arguments are passed on to [ggplot2::layer()]. These are often aesthetics,
+#' used to set an aesthetic to a fixed value, like `color = "red"` or
+#' `alpha = .5`. They may also be parameters to the paired geom/stat.
 #' @return A layer for a ggplot graph.
 #' @author Mitchell O'Hara-Wild
 #' @seealso [generics::forecast()], [ggplot2::ggproto()]
@@ -3127,7 +3126,7 @@ geom_forecast <- function(
 #' @param add.kde Add a kernel density estimate for comparison
 #' @param add.rug Add a rug plot on the horizontal axis
 #' @param bins The number of bins to use for the histogram. Selected by default
-#' using the Friedman-Diaconis rule given by \code{\link[grDevices]{nclass.FD}}
+#' using the Friedman-Diaconis rule given by [grDevices::nclass.FD()]
 #' @param boundary A boundary between two bins.
 #' @return None.
 #' @author Rob J Hyndman

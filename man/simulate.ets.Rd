@@ -124,7 +124,7 @@ to length of \code{innov}.}
 \item{xreg}{New values of \code{xreg} to be used for forecasting. The value
 of \code{nsim} is set to the number of rows of \code{xreg} if it is not \code{NULL}.}
 
-\item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
+\item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.}

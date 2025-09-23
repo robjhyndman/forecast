@@ -22,8 +22,8 @@ seasadj(object, ...)
 \method{seasadj}{seas}(object, ...)
 }
 \arguments{
-\item{object}{Object created by \code{\link[stats]{decompose}},
-\code{\link[stats]{stl}} or \code{\link{tbats}}.}
+\item{object}{Object created by \code{\link[stats:decompose]{stats::decompose()}}, \code{\link[stats:stl]{stats::stl()}} or
+\code{\link[=tbats]{tbats()}}.}
 
 \item{...}{Other arguments not currently used.}
 }
@@ -40,8 +40,7 @@ lines(seasadj(decompose(AirPassengers, "multiplicative")), col = 4)
 
 }
 \seealso{
-\code{\link[stats]{stl}}, \code{\link[stats]{decompose}},
-\code{\link{tbats}}.
+\code{\link[stats:stl]{stats::stl()}}, \code{\link[stats:decompose]{stats::decompose()}}, \code{\link[=tbats]{tbats()}}.
 }
 \author{
 Rob J Hyndman

@@ -1,19 +1,19 @@
 #' Number of differences required for a stationary series
 #'
 #' Functions to estimate the number of differences required to make a given
-#' time series stationary. \code{ndiffs} estimates the number of first
+#' time series stationary. `ndiffs` estimates the number of first
 #' differences necessary.
 #'
-#' \code{ndiffs} uses a unit root test to determine the number of differences
-#' required for time series \code{x} to be made stationary. If
-#' \code{test="kpss"}, the KPSS test is used with the null hypothesis that
-#' \code{x} has a stationary root against a unit-root alternative. Then the
+#' `ndiffs` uses a unit root test to determine the number of differences
+#' required for time series `x` to be made stationary. If
+#' `test = "kpss"`, the KPSS test is used with the null hypothesis that
+#' `x` has a stationary root against a unit-root alternative. Then the
 #' test returns the least number of differences required to pass the test at
-#' the level \code{alpha}. If \code{test="adf"}, the Augmented Dickey-Fuller
-#' test is used and if \code{test="pp"} the Phillips-Perron test is used. In
-#' both of these cases, the null hypothesis is that \code{x} has a unit root
+#' the level `alpha`. If `test = "adf"`, the Augmented Dickey-Fuller
+#' test is used and if `test = "pp"` the Phillips-Perron test is used. In
+#' both of these cases, the null hypothesis is that `x` has a unit root
 #' against a stationary root alternative. Then the test returns the least
-#' number of differences required to fail the test at the level \code{alpha}.
+#' number of differences required to fail the test at the level `alpha`.
 #'
 #' @param x A univariate time series
 #' @param alpha Level of the test, possible values range from 0.01 to 0.1.
@@ -23,7 +23,7 @@
 #' @param ... Additional arguments to be passed on to the unit root test
 #' @return An integer indicating the number of differences required for stationarity.
 #' @author Rob J Hyndman, Slava Razbash & Mitchell O'Hara-Wild
-#' @seealso \code{\link{auto.arima}} and \code{\link{ndiffs}}
+#' @seealso [auto.arima()] and [ndiffs()]
 #' @references
 #' Dickey DA and Fuller WA (1979), "Distribution of the Estimators for
 #' Autoregressive Time Series with a Unit Root", \emph{Journal of the American
@@ -159,21 +159,21 @@ From %s(): %s
 #' Number of differences required for a seasonally stationary series
 #'
 #' Functions to estimate the number of differences required to make a given
-#' time series stationary. \code{nsdiffs} estimates the number of seasonal differences
+#' time series stationary. `nsdiffs` estimates the number of seasonal differences
 #' necessary.
 #'
-#' \code{nsdiffs} uses seasonal unit root tests to determine the number of
-#' seasonal differences required for time series \code{x} to be made stationary
+#' `nsdiffs` uses seasonal unit root tests to determine the number of
+#' seasonal differences required for time series `x` to be made stationary
 #' (possibly with some lag-one differencing as well).
 #'
 #' Several different tests are available:
-#' * If \code{test="seas"} (default), a measure of seasonal strength is used, where differencing is
+#' * If `test = "seas"` (default), a measure of seasonal strength is used, where differencing is
 #' selected if the seasonal strength (Wang, Smith & Hyndman, 2006) exceeds 0.64
 #' (based on minimizing MASE when forecasting using auto.arima on M3 and M4 data).
-#' * If \code{test="ch"}, the Canova-Hansen (1995) test is used
+#' * If `test = "ch"`, the Canova-Hansen (1995) test is used
 #' (with null hypothesis of deterministic seasonality)
-#' * If \code{test="hegy"}, the Hylleberg, Engle, Granger & Yoo (1990) test is used.
-#' * If \code{test="ocsb"}, the Osborn-Chui-Smith-Birchenhall
+#' * If `test = "hegy"`, the Hylleberg, Engle, Granger & Yoo (1990) test is used.
+#' * If `test = "ocsb"`, the Osborn-Chui-Smith-Birchenhall
 #' (1988) test is used (with null hypothesis that a seasonal unit root exists).
 #'
 #' @md
@@ -206,7 +206,7 @@ From %s(): %s
 #'
 #' @author Rob J Hyndman, Slava Razbash and Mitchell O'Hara-Wild
 #'
-#' @seealso \code{\link{auto.arima}}, \code{\link{ndiffs}}, \code{\link{ocsb.test}}, \code{\link[uroot]{hegy.test}}, and \code{\link[uroot]{ch.test}}
+#' @seealso [auto.arima()], [ndiffs()], [ocsb.test()], [uroot::hegy.test()], and [uroot::ch.test()]
 #'
 #' @examples
 #' nsdiffs(AirPassengers)
@@ -413,7 +413,7 @@ seas.heuristic <- function(x) {
 #' order of integration for consumption", \emph{Oxford Bulletin of Economics
 #' and Statistics} \bold{50}(4):361-377.
 #'
-#' @seealso \code{\link{nsdiffs}}
+#' @seealso [nsdiffs()]
 #'
 #' @examples
 #' ocsb.test(AirPassengers)

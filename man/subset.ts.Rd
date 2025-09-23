@@ -22,8 +22,7 @@
 \item{x}{A univariate time series to be subsetted.}
 
 \item{subset}{Optional logical expression indicating elements to keep;
-missing values are taken as false. \code{subset} must be the same length as
-\code{x}.}
+missing values are taken as false. \code{subset} must be the same length as \code{x}.}
 
 \item{month}{Numeric or character vector of months to retain. Partial
 matching on month names used.}
@@ -46,16 +45,15 @@ attributes retained. Otherwise, a ts object is returned with frequency equal
 to the length of \code{month}, \code{quarter} or \code{season}.
 }
 \description{
-Various types of subsetting of a time series. Allows subsetting by index
-values (unlike \code{\link[stats]{window}}). Also allows extraction of the
+Various types of subseting of a time series. Allows subsetting by index
+values (unlike \code{\link[stats:window]{stats::window()}}). Also allows extraction of the
 values of a specific season or subset of seasons in each year. For example,
 to extract all values for the month of May from a time series.
 }
 \details{
 If character values for months are used, either upper or lower case may be
 used, and partial unambiguous names are acceptable. Possible character
-values for quarters are \code{"Q1"}, \code{"Q2"}, \code{"Q3"}, and
-\code{"Q4"}.
+values for quarters are \code{"Q1"}, \code{"Q2"}, \code{"Q3"}, and \code{"Q4"}.
 }
 \examples{
 plot(subset(gas, month = "November"))
@@ -64,7 +62,7 @@ subset(USAccDeaths, start = 49)
 
 }
 \seealso{
-\code{\link[base]{subset}}, \code{\link[stats]{window}}
+\code{\link[=subset]{subset()}}, \code{\link[stats:window]{stats::window()}}
 }
 \author{
 Rob J Hyndman

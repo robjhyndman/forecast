@@ -23,7 +23,7 @@ gghistogram(
 \item{add.rug}{Add a rug plot on the horizontal axis}
 
 \item{bins}{The number of bins to use for the histogram. Selected by default
-using the Friedman-Diaconis rule given by \code{\link[grDevices]{nclass.FD}}}
+using the Friedman-Diaconis rule given by \code{\link[grDevices:nclass]{grDevices::nclass.FD()}}}
 
 \item{boundary}{A boundary between two bins.}
 }

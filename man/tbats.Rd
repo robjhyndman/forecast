@@ -103,7 +103,7 @@ smoothing, \emph{Journal of the American Statistical Association},
 \bold{106}(496), 1513-1527.
 }
 \seealso{
-\code{\link{tbats.components}}.
+\code{\link[=tbats.components]{tbats.components()}}.
 }
 \author{
 Slava Razbash and Rob J Hyndman

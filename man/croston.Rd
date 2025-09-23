@@ -17,15 +17,17 @@ croston(y, h = 10, alpha = 0.1, x = y)
 }
 \value{
 An object of class \code{"forecast"} is a list containing at least
-the following elements: \item{model}{A list containing information about the
-fitted model. The first element gives the model used for non-zero demands.
-The second element gives the model used for times between non-zero demands.
-Both elements are of class \code{forecast}.} \item{method}{The name of the
-forecasting method as a character string} \item{mean}{Point forecasts as a
-time series} \item{x}{The original time series (either \code{object} itself
+the following elements:
+\item{model}{A list containing information about the fitted model. The first
+element gives the model used for non-zero demands. The second element gives
+the model used for times between non-zero demands. Both elements are of
+class \code{forecast}.}
+\item{method}{The name of the forecasting method as a character string}
+\item{mean}{Point forecasts as a time series}
+\item{x}{The original time series (either \code{object} itself
 or the time series used to create the model stored as \code{object}).}
-\item{residuals}{Residuals from the fitted model. That is y minus fitted
-values.} \item{fitted}{Fitted values (one-step forecasts)}
+\item{residuals}{Residuals from the fitted model. That is y minus fitted values.}
+\item{fitted}{Fitted values (one-step forecasts)}
 
 The function \code{summary} is used to obtain and print a summary of the
 results, while the function \code{plot} produces a plot of the forecasts.

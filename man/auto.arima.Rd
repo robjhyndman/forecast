@@ -104,14 +104,13 @@ seasonal period to avoid excessive computation times.}
 \item{truncate}{An integer value indicating how many observations to use in
 model selection. The last \code{truncate} values of the series are used to
 select a model when \code{truncate} is not \code{NULL} and
-\code{approximation=TRUE}. All observations are used if either
-\code{truncate=NULL} or \code{approximation=FALSE}.}
+\code{approximation = TRUE}. All observations are used if either
+\code{truncate = NULL} or \code{approximation = FALSE}.}
 
 \item{xreg}{Optionally, a numerical vector or matrix of external regressors, which
 must have the same number of rows as \code{y}. (It should not be a data frame.)}
 
-\item{test}{Type of unit root test to use. See \code{\link{ndiffs}} for
-details.}
+\item{test}{Type of unit root test to use. See \code{\link[=ndiffs]{ndiffs()}} for details.}
 
 \item{test.args}{Additional arguments to be passed to the unit root test.}
 
@@ -121,13 +120,13 @@ Other possibilities involve seasonal unit root tests.}
 
 \item{seasonal.test.args}{Additional arguments to be passed to the seasonal
 unit root test.
-See \code{\link{nsdiffs}} for details.}
+See \code{\link[=nsdiffs]{nsdiffs()}} for details.}
 
 \item{allowdrift}{If \code{TRUE}, models with drift terms are considered.}
 
 \item{allowmean}{If \code{TRUE}, models with a non-zero mean are considered.}
 
-\item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
+\item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.}
@@ -150,10 +149,10 @@ all available cores are used.}
 
 \item{x}{Deprecated. Included for backwards compatibility.}
 
-\item{...}{Additional arguments to be passed to \code{\link[stats]{arima}}.}
+\item{...}{Additional arguments to be passed to \code{\link[stats:arima]{stats::arima()}}.}
 }
 \value{
-Same as for \code{\link{Arima}}
+Same as for \code{\link[=Arima]{Arima()}}
 }
 \description{
 Returns best ARIMA model according to either AIC, AICc or BIC value. The
@@ -163,7 +162,7 @@ provided.
 \details{
 The default arguments are designed for rapid estimation of models for many time series.
 If you are analysing just one time series, and can afford to take some more time, it
-is recommended that you set \code{stepwise=FALSE} and \code{approximation=FALSE}.
+is recommended that you set \code{stepwise = FALSE} and \code{approximation = FALSE}.
 
 Non-stepwise selection can be slow, especially for seasonal data. The stepwise
 algorithm outlined in Hyndman & Khandakar (2008) is used except that the default
@@ -187,7 +186,7 @@ for time series data", \emph{Data Mining and Knowledge Discovery},
 \bold{13}(3), 335-364.
 }
 \seealso{
-\code{\link{Arima}}
+\code{\link[=Arima]{Arima()}}
 }
 \author{
 Rob J Hyndman

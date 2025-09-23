@@ -29,9 +29,9 @@
 }
 \arguments{
 \item{object}{a time series or time series model for which forecasts are
-required}
+required.}
 
-\item{h}{Number of periods for forecasting}
+\item{h}{Number of periods for forecasting.}
 
 \item{level}{Confidence level for prediction intervals.}
 
@@ -39,10 +39,9 @@ required}
 This is suitable for fan plots.}
 
 \item{robust}{If \code{TRUE}, the function is robust to missing values and outliers
-in \code{object}. This argument is only valid when \code{object} is of class
-\code{ts}.}
+in \code{object}. This argument is only valid when \code{object} is of class \code{ts}.}
 
-\item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
+\item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.}
@@ -61,18 +60,18 @@ multiplicative trends are allowed. Otherwise, only additive or no trend ETS
 models are permitted.}
 
 \item{model}{An object describing a time series model; e.g., one of of class
-\code{ets}, \code{Arima}, \code{bats}, \code{tbats}, or \code{nnetar}.}
+\code{ets}, \code{Arima}, \code{bats}, \code{bats}, or \code{nnetar}.}
 
 \item{...}{Additional arguments affecting the forecasts produced. If
-\code{model=NULL}, \code{forecast.ts} passes these to \code{\link{ets}} or
-\code{\link{stlf}} depending on the frequency of the time series. If
+\code{model = NULL}, \code{forecast.ts} passes these to \code{\link[=ets]{ets()}} or
+\code{\link[=stlf]{stlf()}} depending on the frequency of the time series. If
 \code{model} is not \code{NULL}, the arguments are passed to the relevant
 modelling function.}
 
 \item{x}{a numeric vector or time series of class \code{ts}.}
 }
 \value{
-An object of class "\code{forecast}".
+An object of class \code{"forecast"}.
 
 The function \code{summary} is used to obtain and print a summary of the
 results, while the function \code{plot} produces a plot of the forecasts and
@@ -83,16 +82,18 @@ extract various useful features of the value returned by
 \code{forecast$model}.
 
 An object of class \code{"forecast"} is a list usually containing at least
-the following elements: \item{model}{A list containing information about the
-fitted model} \item{method}{The name of the forecasting method as a
-character string} \item{mean}{Point forecasts as a time series}
-\item{lower}{Lower limits for prediction intervals} \item{upper}{Upper
-limits for prediction intervals} \item{level}{The confidence values
-associated with the prediction intervals} \item{x}{The original time series
-(either \code{object} itself or the time series used to create the model
-stored as \code{object}).} \item{residuals}{Residuals from the fitted model.
-For models with additive errors, the residuals will be x minus the fitted
-values.} \item{fitted}{Fitted values (one-step forecasts)}
+the following elements:
+\item{model}{A list containing information about the fitted model}
+\item{method}{The name of the forecasting method as a character string}
+\item{mean}{Point forecasts as a time series}
+\item{lower}{Lower limits for prediction intervals}
+\item{upper}{Upper limits for prediction intervals}
+\item{level}{The confidence values associated with the prediction intervals}
+\item{x}{The original time series (either \code{object} itself or the time series
+used to create the model stored as \code{object}).}
+\item{residuals}{Residuals from the fitted model. For models with additive
+errors, the residuals will be x minus the fitted values.}
+\item{fitted}{Fitted values (one-step forecasts)}
 }
 \description{
 \code{forecast} is a generic function for forecasting from time series or
@@ -100,12 +101,12 @@ time series models. The function invokes particular \emph{methods} which
 depend on the class of the first argument.
 }
 \details{
-For example, the function \code{\link{forecast.Arima}} makes forecasts based
-on the results produced by \code{\link[stats]{arima}}.
+For example, the function \code{\link[=forecast.Arima]{forecast.Arima()}} makes forecasts based
+on the results produced by \code{\link[stats:arima]{stats::arima()}}.
 
-If \code{model=NULL},the function \code{\link{forecast.ts}} makes forecasts
-using \code{\link{ets}} models (if the data are non-seasonal or the seasonal
-period is 12 or less) or \code{\link{stlf}} (if the seasonal period is 13 or
+If \code{model = NULL},the function \code{\link[=forecast.ts]{forecast.ts()}} makes forecasts
+using \code{\link[=ets]{ets()}} models (if the data are non-seasonal or the seasonal
+period is 12 or less) or \code{\link[=stlf]{stlf()}} (if the seasonal period is 13 or
 more).
 
 If \code{model} is not \code{NULL}, \code{forecast.ts} will apply the
@@ -120,11 +121,9 @@ fc <- forecast(WWWusage, model = fit)
 }
 \seealso{
 Other functions which return objects of class \code{"forecast"} are
-\code{\link{forecast.ets}}, \code{\link{forecast.Arima}},
-\code{\link{forecast.HoltWinters}}, \code{\link{forecast.StructTS}},
-\code{\link{meanf}}, \code{\link{rwf}}, \code{\link{splinef}},
-\code{\link{thetaf}}, \code{\link{croston}}, \code{\link{ses}},
-\code{\link{holt}}, \code{\link{hw}}.
+\code{\link[=forecast.ets]{forecast.ets()}}, \code{\link[=forecast.Arima]{forecast.Arima()}}, \code{\link[=forecast.HoltWinters]{forecast.HoltWinters()}},
+\code{\link[=forecast.StructTS]{forecast.StructTS()}}, \code{\link[=meanf]{meanf()}}, \code{\link[=rwf]{rwf()}}, \code{\link[=splinef]{splinef()}}, \code{\link[=thetaf]{thetaf()}},
+\code{\link[=croston]{croston()}}, \code{\link[=ses]{ses()}}, \code{\link[=holt]{holt()}}, \code{\link[=hw]{hw()}}.
 }
 \author{
 Rob J Hyndman

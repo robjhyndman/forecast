@@ -41,5 +41,5 @@ order of integration for consumption", \emph{Oxford Bulletin of Economics
 and Statistics} \bold{50}(4):361-377.
 }
 \seealso{
-\code{\link{nsdiffs}}
+\code{\link[=nsdiffs]{nsdiffs()}}
 }

@@ -18,38 +18,38 @@
 #'
 #' Prediction intervals are computed using the underlying state space model.
 #'
-#' More general theta methods are available in the
-#' \code{\link[forecTheta]{forecTheta}} package.
+#' More general theta methods are available in the \CRANpkg{forecTheta}
+#' package.
 #'
-#' @param y a numeric vector or time series of class \code{ts}
+#' @param y a numeric vector or time series of class `ts`
 #' @param h Number of periods for forecasting
 #' @param level Confidence levels for prediction intervals.
-#' @param fan If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
+#' @param fan If `TRUE`, level is set to `seq(51, 99, by = 3)`. This
 #' is suitable for fan plots.
 #' @param x Deprecated. Included for backwards compatibility.
-#' @return An object of class "\code{forecast}".
+#' @return An object of class `"forecast"`.
 #'
-#' The function \code{summary} is used to obtain and print a summary of the
-#' results, while the function \code{plot} produces a plot of the forecasts and
+#' The function `summary` is used to obtain and print a summary of the
+#' results, while the function `plot` produces a plot of the forecasts and
 #' prediction intervals.
 #'
-#' The generic accessor functions \code{fitted.values} and \code{residuals}
-#' extract useful features of the value returned by \code{rwf}.
+#' The generic accessor functions `fitted.values` and `residuals`
+#' extract useful features of the value returned by `rwf`.
 #'
-#' An object of class \code{"forecast"} is a list containing at least the
-#' following elements: \item{model}{A list containing information about the
-#' fitted model} \item{method}{The name of the forecasting method as a
-#' character string} \item{mean}{Point forecasts as a time series}
-#' \item{lower}{Lower limits for prediction intervals} \item{upper}{Upper
-#' limits for prediction intervals} \item{level}{The confidence values
-#' associated with the prediction intervals} \item{x}{The original time series
-#' (either \code{object} itself or the time series used to create the model
-#' stored as \code{object}).} \item{residuals}{Residuals from the fitted model.
-#' That is x minus fitted values.} \item{fitted}{Fitted values (one-step
-#' forecasts)}
+#' An object of class `"forecast"` is a list containing at least the
+#' following elements:
+#' \item{model}{A list containing information about the fitted model}
+#' \item{method}{The name of the forecasting method as a character string}
+#' \item{mean}{Point forecasts as a time series}
+#' \item{lower}{Lower limits for prediction intervals}
+#' \item{upper}{Upper limits for prediction intervals}
+#' \item{level}{The confidence values associated with the prediction intervals}
+#' \item{x}{The original time series (either `object` itself or the time
+#' series used to create the model stored as `object`).}
+#' \item{residuals}{Residuals from the fitted model. That is x minus fitted values.}
+#' \item{fitted}{Fitted values (one-step forecasts)}
 #' @author Rob J Hyndman
-#' @seealso \code{\link[stats]{arima}}, \code{\link{meanf}}, \code{\link{rwf}},
-#' \code{\link{ses}}
+#' @seealso [stats::arima()], [meanf()], [rwf()], [ses()]
 #' @references Assimakopoulos, V. and Nikolopoulos, K. (2000). The theta model:
 #' a decomposition approach to forecasting. \emph{International Journal of
 #' Forecasting} \bold{16}, 521-530.

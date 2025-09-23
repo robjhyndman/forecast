@@ -1,78 +1,77 @@
 #' Forecasting time series
 #'
-#' \code{forecast} is a generic function for forecasting from time series or
+#' `forecast` is a generic function for forecasting from time series or
 #' time series models. The function invokes particular \emph{methods} which
 #' depend on the class of the first argument.
 #'
-#' For example, the function \code{\link{forecast.Arima}} makes forecasts based
-#' on the results produced by \code{\link[stats]{arima}}.
+#' For example, the function [forecast.Arima()] makes forecasts based
+#' on the results produced by [stats::arima()].
 #'
-#' If \code{model=NULL},the function \code{\link{forecast.ts}} makes forecasts
-#' using \code{\link{ets}} models (if the data are non-seasonal or the seasonal
-#' period is 12 or less) or \code{\link{stlf}} (if the seasonal period is 13 or
+#' If `model = NULL`,the function [forecast.ts()] makes forecasts
+#' using [ets()] models (if the data are non-seasonal or the seasonal
+#' period is 12 or less) or [stlf()] (if the seasonal period is 13 or
 #' more).
 #'
-#' If \code{model} is not \code{NULL}, \code{forecast.ts} will apply the
-#' \code{model} to the \code{object} time series, and then generate forecasts
+#' If `model` is not `NULL`, `forecast.ts` will apply the
+#' `model` to the `object` time series, and then generate forecasts
 #' accordingly.
 #'
 #' @aliases print.forecast summary.forecast as.data.frame.forecast as.ts.forecast
 #'
 #' @param object a time series or time series model for which forecasts are
-#' required
-#' @param h Number of periods for forecasting
+#' required.
+#' @param h Number of periods for forecasting.
 #' @param level Confidence level for prediction intervals.
-#' @param fan If \code{TRUE}, \code{level} is set to \code{seq(51, 99, by = 3)}.
+#' @param fan If `TRUE`, `level` is set to `seq(51, 99, by = 3)`.
 #' This is suitable for fan plots.
-#' @param robust If \code{TRUE}, the function is robust to missing values and outliers
-#' in \code{object}. This argument is only valid when \code{object} is of class
-#' \code{ts}.
-#' @param lambda Box-Cox transformation parameter. If \code{lambda="auto"},
-#' then a transformation is automatically selected using \code{BoxCox.lambda}.
+#' @param robust If `TRUE`, the function is robust to missing values and outliers
+#' in `object`. This argument is only valid when `object` is of class `ts`.
+#' @param lambda Box-Cox transformation parameter. If `lambda = "auto"`,
+#' then a transformation is automatically selected using `BoxCox.lambda`.
 #' The transformation is ignored if NULL. Otherwise,
 #' data transformed before model is estimated.
-#' @param find.frequency If \code{TRUE}, the function determines the appropriate
+#' @param find.frequency If `TRUE`, the function determines the appropriate
 #' period, if the data is of unknown period.
-#' @param allow.multiplicative.trend If \code{TRUE}, then ETS models with
+#' @param allow.multiplicative.trend If `TRUE`, then ETS models with
 #' multiplicative trends are allowed. Otherwise, only additive or no trend ETS
 #' models are permitted.
 #' @param model An object describing a time series model; e.g., one of of class
-#' \code{ets}, \code{Arima}, \code{bats}, \code{tbats}, or \code{nnetar}.
+#' `ets`, `Arima`, `bats`, `bats`, or `nnetar`.
 #' @param ... Additional arguments affecting the forecasts produced. If
-#' \code{model=NULL}, \code{forecast.ts} passes these to \code{\link{ets}} or
-#' \code{\link{stlf}} depending on the frequency of the time series. If
-#' \code{model} is not \code{NULL}, the arguments are passed to the relevant
+#' `model = NULL`, `forecast.ts` passes these to [ets()] or
+#' [stlf()] depending on the frequency of the time series. If
+#' `model` is not `NULL`, the arguments are passed to the relevant
 #' modelling function.
 #' @inheritParams BoxCox
 #'
-#' @return An object of class "\code{forecast}".
+#' @return An object of class `"forecast"`.
 #'
-#' The function \code{summary} is used to obtain and print a summary of the
-#' results, while the function \code{plot} produces a plot of the forecasts and
+#' The function `summary` is used to obtain and print a summary of the
+#' results, while the function `plot` produces a plot of the forecasts and
 #' prediction intervals.
 #'
-#' The generic accessors functions \code{fitted.values} and \code{residuals}
+#' The generic accessors functions `fitted.values` and `residuals`
 #' extract various useful features of the value returned by
-#' \code{forecast$model}.
+#' `forecast$model`.
 #'
-#' An object of class \code{"forecast"} is a list usually containing at least
-#' the following elements: \item{model}{A list containing information about the
-#' fitted model} \item{method}{The name of the forecasting method as a
-#' character string} \item{mean}{Point forecasts as a time series}
-#' \item{lower}{Lower limits for prediction intervals} \item{upper}{Upper
-#' limits for prediction intervals} \item{level}{The confidence values
-#' associated with the prediction intervals} \item{x}{The original time series
-#' (either \code{object} itself or the time series used to create the model
-#' stored as \code{object}).} \item{residuals}{Residuals from the fitted model.
-#' For models with additive errors, the residuals will be x minus the fitted
-#' values.} \item{fitted}{Fitted values (one-step forecasts)}
+#' An object of class `"forecast"` is a list usually containing at least
+#' the following elements:
+#' \item{model}{A list containing information about the fitted model}
+#' \item{method}{The name of the forecasting method as a character string}
+#' \item{mean}{Point forecasts as a time series}
+#' \item{lower}{Lower limits for prediction intervals}
+#' \item{upper}{Upper limits for prediction intervals}
+#' \item{level}{The confidence values associated with the prediction intervals}
+#' \item{x}{The original time series (either `object` itself or the time series
+#'          used to create the model stored as `object`).}
+#' \item{residuals}{Residuals from the fitted model. For models with additive
+#'                  errors, the residuals will be x minus the fitted values.}
+#' \item{fitted}{Fitted values (one-step forecasts)}
 #' @author Rob J Hyndman
-#' @seealso Other functions which return objects of class \code{"forecast"} are
-#' \code{\link{forecast.ets}}, \code{\link{forecast.Arima}},
-#' \code{\link{forecast.HoltWinters}}, \code{\link{forecast.StructTS}},
-#' \code{\link{meanf}}, \code{\link{rwf}}, \code{\link{splinef}},
-#' \code{\link{thetaf}}, \code{\link{croston}}, \code{\link{ses}},
-#' \code{\link{holt}}, \code{\link{hw}}.
+#' @seealso Other functions which return objects of class `"forecast"` are
+#' [forecast.ets()], [forecast.Arima()], [forecast.HoltWinters()],
+#' [forecast.StructTS()], [meanf()], [rwf()], [splinef()], [thetaf()],
+#' [croston()], [ses()], [holt()], [hw()].
 #' @keywords ts
 #' @examples
 #'
@@ -310,32 +309,32 @@ plotlmforecast <- function(
 #'
 #' Plots historical data with forecasts and prediction intervals.
 #'
-#' \code{autoplot} will produce a ggplot object.
+#' `autoplot` will produce a ggplot object.
 #'
 #' plot.splineforecast autoplot.splineforecast
-#' @param x Forecast object produced by \code{\link{forecast}}.
-#' @param object Forecast object produced by \code{\link{forecast}}. Used for
+#' @param x Forecast object produced by [forecast()].
+#' @param object Forecast object produced by [forecast()]. Used for
 #' ggplot graphics (S3 method consistency).
 #' @param include number of values from time series to include in plot. Default
 #' is all values.
 #' @param PI Logical flag indicating whether to plot prediction intervals.
-#' @param showgap If \code{showgap=FALSE}, the gap between the historical
+#' @param showgap If `showgap = FALSE`, the gap between the historical
 #' observations and the forecasts is removed.
 #' @param shaded Logical flag indicating whether prediction intervals should be
-#' shaded (\code{TRUE}) or lines (\code{FALSE})
+#' shaded (`TRUE`) or lines (`FALSE`).
 #' @param shadebars Logical flag indicating if prediction intervals should be
-#' plotted as shaded bars (if \code{TRUE}) or a shaded polygon (if
-#' \code{FALSE}).  Ignored if \code{shaded=FALSE}. Bars are plotted by default
+#' plotted as shaded bars (if `TRUE`) or a shaded polygon (if
+#' `FALSE`). Ignored if `shaded = FALSE`. Bars are plotted by default
 #' if there are fewer than five forecast horizons.
 #' @param shadecols Colors for shaded prediction intervals. To get default
-#' colors used prior to v3.26, set \code{shadecols="oldstyle"}.
+#' colors used prior to v3.26, set `shadecols = "oldstyle"`.
 #' @param col Colour for the data line.
 #' @param fcol Colour for the forecast line.
 #' @param flty Line type for the forecast line.
 #' @param flwd Line width for the forecast line.
-#' @param pi.col If \code{shaded=FALSE} and \code{PI=TRUE}, the prediction
+#' @param pi.col If `shaded = FALSE` and `PI = TRUE`, the prediction
 #' intervals are plotted in this colour.
-#' @param pi.lty If \code{shaded=FALSE} and \code{PI=TRUE}, the prediction
+#' @param pi.lty If `shaded = FALSE` and `PI = TRUE`, the prediction
 #' intervals are plotted using this line type.
 #' @param ylim Limits on y-axis.
 #' @param main Main title.
@@ -345,12 +344,12 @@ plotlmforecast <- function(
 #' on the plot.
 #' @param fitcol Line colour for fitted values.
 #' @param type 1-character string giving the type of plot desired. As for
-#' \code{\link[graphics]{plot.default}}.
-#' @param pch Plotting character (if \code{type="p"} or \code{type="o"}).
+#' [graphics::plot.default()].
+#' @param pch Plotting character (if `type = "p"` or `type = "o"`).
 #' @param ... Other plotting parameters to affect the plot.
 #' @return None.
 #' @author Rob J Hyndman & Mitchell O'Hara-Wild
-#' @seealso \code{\link[stats]{plot.ts}}
+#' @seealso [stats::plot.ts()]
 #' @references Hyndman and Athanasopoulos (2018) \emph{Forecasting: principles
 #' and practice}, 2nd edition, OTexts: Melbourne, Australia.
 #' \url{https://otexts.com/fpp2/}

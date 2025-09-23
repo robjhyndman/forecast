@@ -4,16 +4,15 @@
 
 #' Get response variable from time series model.
 #'
-#' \code{getResponse} is a generic function for extracting the historical data
-#' from a time series model (including \code{Arima}, \code{ets}, \code{ar},
-#' \code{fracdiff}), a linear model of class \code{lm}, or a forecast object.
-#' The function invokes particular \emph{methods} which depend on the class of
-#' the first argument.
+#' `getResponse` is a generic function for extracting the historical data from
+#' a time series model (including `Arima`, `ets`, `ar`, `fracdiff`), a linear
+#' model of class `lm`, or a forecast object. The function invokes particular
+#' \emph{methods} which depend on the class of the first argument.
 #'
 #'
 #' @param object a time series model or forecast object.
 #' @param ... Additional arguments that are ignored.
-#' @return A numerical vector or a time series object of class \code{ts}.
+#' @return A numerical vector or a time series object of class `ts`.
 #' @author Rob J Hyndman
 #' @keywords ts
 #'

@@ -32,7 +32,7 @@ present.}
 \item{fan}{If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
 is suitable for fan plots.}
 
-\item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
+\item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.}
@@ -61,15 +61,16 @@ The generic accessor functions \code{fitted.values} and \code{residuals}
 extract useful features of the value returned by \code{forecast.lm}.
 
 An object of class \code{"mforecast"} is a list containing at least the
-following elements: \item{model}{A list containing information about the
-fitted model} \item{method}{The name of the forecasting method as a
-character string} \item{mean}{Point forecasts as a multivariate time series}
+following elements:
+\item{model}{A list containing information about the fitted model}
+\item{method}{The name of the forecasting method as a character string}
+\item{mean}{Point forecasts as a multivariate time series}
 \item{lower}{Lower limits for prediction intervals of each series}
 \item{upper}{Upper limits for prediction intervals of each series}
 \item{level}{The confidence values associated with the prediction intervals}
 \item{x}{The historical data for the response variable.}
-\item{residuals}{Residuals from the fitted model. That is x minus fitted
-values.} \item{fitted}{Fitted values}
+\item{residuals}{Residuals from the fitted model. That is x minus fitted values.}
+\item{fitted}{Fitted values}
 }
 \description{
 \code{forecast.mlm} is used to predict multiple linear models, especially
@@ -93,8 +94,7 @@ fcast <- forecast(fit, newdata = data.frame(carmpg = 30))
 
 }
 \seealso{
-\code{\link{tslm}}, \code{\link{forecast.lm}},
-\code{\link[stats]{lm}}.
+\code{\link[=tslm]{tslm()}}, \code{\link[=forecast.lm]{forecast.lm()}}, \code{\link[stats:lm]{stats::lm()}}.
 }
 \author{
 Mitchell O'Hara-Wild

@@ -42,11 +42,10 @@ getResponse(object, ...)
 A numerical vector or a time series object of class \code{ts}.
 }
 \description{
-\code{getResponse} is a generic function for extracting the historical data
-from a time series model (including \code{Arima}, \code{ets}, \code{ar},
-\code{fracdiff}), a linear model of class \code{lm}, or a forecast object.
-The function invokes particular \emph{methods} which depend on the class of
-the first argument.
+\code{getResponse} is a generic function for extracting the historical data from
+a time series model (including \code{Arima}, \code{ets}, \code{ar}, \code{fracdiff}), a linear
+model of class \code{lm}, or a forecast object. The function invokes particular
+\emph{methods} which depend on the class of the first argument.
 }
 \author{
 Rob J Hyndman

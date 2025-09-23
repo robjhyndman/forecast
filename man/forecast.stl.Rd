@@ -65,13 +65,13 @@ stlf(
 }
 \arguments{
 \item{object}{An object of class \code{stl} or \code{stlm}. Usually the
-result of a call to \code{\link[stats]{stl}} or \code{stlm}.}
+result of a call to \code{\link[stats:stl]{stats::stl()}} or \code{stlm}.}
 
 \item{method}{Method to use for forecasting the seasonally adjusted series.}
 
 \item{etsmodel}{The ets model specification passed to
-\code{\link[forecast]{ets}}. By default it allows any non-seasonal model. If
-\code{method!="ets"}, this argument is ignored.}
+\code{\link[=ets]{ets()}}. By default it allows any non-seasonal model. If
+\code{method != "ets"}, this argument is ignored.}
 
 \item{forecastfunction}{An alternative way of specifying the function for
 forecasting the seasonally adjusted series. If \code{forecastfunction} is
@@ -85,7 +85,7 @@ used to specify the forecasting method to be used.}
 \item{fan}{If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
 is suitable for fan plots.}
 
-\item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
+\item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.}
@@ -97,10 +97,9 @@ biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
 and fitted values.}
 
 \item{xreg}{Historical regressors to be used in
-\code{\link[forecast]{auto.arima}()} when \code{method="arima"}.}
+\code{\link[=auto.arima]{auto.arima()}} when \code{method = "arima"}.}
 
-\item{newxreg}{Future regressors to be used in
-\code{\link[forecast]{forecast.Arima}()}.}
+\item{newxreg}{Future regressors to be used in \code{\link[=forecast.Arima]{forecast.Arima()}}.}
 
 \item{allow.multiplicative.trend}{If \code{TRUE}, then ETS models with
 multiplicative trends are allowed. Otherwise, only additive or no trend ETS
@@ -115,7 +114,7 @@ models are permitted.}
 lags) of the loess window for seasonal extraction.}
 
 \item{robust}{If \code{TRUE}, robust fitting will used in the loess
-procedure within \code{\link[stats]{stl}}.}
+procedure within \code{\link[stats:stl]{stats::stl()}}.}
 
 \item{modelfunction}{An alternative way of specifying the function for
 modelling the seasonally adjusted series. If \code{modelfunction} is not
@@ -129,13 +128,13 @@ parameters.}
 \item{x}{Deprecated. Included for backwards compatibility.}
 
 \item{t.window}{A number to control the smoothness of the trend. See
-\code{\link[stats]{stl}} for details.}
+\code{\link[stats:stl]{stats::stl()}} for details.}
 }
 \value{
 \code{stlm} returns an object of class \code{stlm}. The other
 functions return objects of class \code{forecast}.
 
-There are many methods for working with \code{\link{forecast}} objects
+There are many methods for working with \code{\link[=forecast]{forecast()}} objects
 including \code{summary} to obtain and print a summary of the results, while
 \code{plot} produces a plot of the forecasts and prediction intervals. The
 generic accessor functions \code{fitted.values} and \code{residuals} extract
@@ -178,8 +177,8 @@ The time series model for the seasonally adjusted data can be specified in
 \code{method} argument provides a shorthand way of specifying
 \code{modelfunction} for a few special cases. More generally,
 \code{modelfunction} can be any function with first argument a \code{ts}
-object, that returns an object that can be passed to \code{\link{forecast}}.
-For example, \code{forecastfunction=ar} uses the \code{\link{ar}} function
+object, that returns an object that can be passed to \code{\link[=forecast]{forecast()}}.
+For example, \code{forecastfunction = ar} uses the \code{\link[=ar]{ar()}} function
 for modelling the seasonally adjusted series.
 
 The forecasting method for the seasonally adjusted data can be specified in
@@ -188,8 +187,8 @@ The forecasting method for the seasonally adjusted data can be specified in
 of specifying \code{forecastfunction} for a few special cases. More
 generally, \code{forecastfunction} can be any function with first argument a
 \code{ts} object, and other \code{h} and \code{level}, which returns an
-object of class \code{\link{forecast}}. For example,
-\code{forecastfunction=thetaf} uses the \code{\link{thetaf}} function for
+object of class \code{\link[=forecast]{forecast()}}. For example,
+\code{forecastfunction = thetaf} uses the \code{\link[=thetaf]{thetaf()}} function for
 forecasting the seasonally adjusted series.
 }
 \examples{

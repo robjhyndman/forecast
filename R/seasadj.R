@@ -6,13 +6,12 @@
 #' component.
 #'
 #'
-#' @param object Object created by \code{\link[stats]{decompose}},
-#' \code{\link[stats]{stl}} or \code{\link{tbats}}.
+#' @param object Object created by [stats::decompose()], [stats::stl()] or
+#' [tbats()].
 #' @param ... Other arguments not currently used.
 #' @return Univariate time series.
 #' @author Rob J Hyndman
-#' @seealso \code{\link[stats]{stl}}, \code{\link[stats]{decompose}},
-#' \code{\link{tbats}}.
+#' @seealso [stats::stl()], [stats::decompose()], [tbats()].
 #' @keywords ts
 #' @examples
 #' plot(AirPassengers)

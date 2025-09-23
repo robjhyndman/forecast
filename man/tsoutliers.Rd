@@ -11,7 +11,7 @@ tsoutliers(x, iterate = 2, lambda = NULL)
 
 \item{iterate}{The number of iterations required.}
 
-\item{lambda}{Box-Cox transformation parameter. If \code{lambda="auto"},
+\item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.}

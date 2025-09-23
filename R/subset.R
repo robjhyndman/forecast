@@ -1,19 +1,17 @@
 #' Subsetting a time series
 #'
-#' Various types of subsetting of a time series. Allows subsetting by index
-#' values (unlike \code{\link[stats]{window}}). Also allows extraction of the
+#' Various types of subseting of a time series. Allows subsetting by index
+#' values (unlike [stats::window()]). Also allows extraction of the
 #' values of a specific season or subset of seasons in each year. For example,
 #' to extract all values for the month of May from a time series.
 #'
 #' If character values for months are used, either upper or lower case may be
 #' used, and partial unambiguous names are acceptable. Possible character
-#' values for quarters are \code{"Q1"}, \code{"Q2"}, \code{"Q3"}, and
-#' \code{"Q4"}.
+#' values for quarters are `"Q1"`, `"Q2"`, `"Q3"`, and `"Q4"`.
 #'
 #' @param x A univariate time series to be subsetted.
 #' @param subset Optional logical expression indicating elements to keep;
-#' missing values are taken as false. \code{subset} must be the same length as
-#' \code{x}.
+#' missing values are taken as false. `subset` must be the same length as `x`.
 #' @param month Numeric or character vector of months to retain. Partial
 #' matching on month names used.
 #' @param quarter Numeric or character vector of quarters to retain.
@@ -21,13 +19,13 @@
 #' @param start Index of start of contiguous subset.
 #' @param end Index of end of contiguous subset.
 #' @param ... Other arguments, unused.
-#' @return If \code{subset} is used, a numeric vector is returned with no ts
-#' attributes. If \code{start} and/or \code{end} are used, a ts object is
+#' @return If `subset` is used, a numeric vector is returned with no ts
+#' attributes. If `start` and/or `end` are used, a ts object is
 #' returned consisting of x\[start:end\], with the appropriate time series
 #' attributes retained. Otherwise, a ts object is returned with frequency equal
-#' to the length of \code{month}, \code{quarter} or \code{season}.
+#' to the length of `month`, `quarter` or `season`.
 #' @author Rob J Hyndman
-#' @seealso \code{\link[base]{subset}}, \code{\link[stats]{window}}
+#' @seealso [subset()], [stats::window()]
 #' @keywords ts
 #' @examples
 #' plot(subset(gas, month = "November"))

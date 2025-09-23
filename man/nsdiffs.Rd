@@ -41,13 +41,13 @@ seasonal differences required for time series \code{x} to be made stationary
 
 Several different tests are available:
 \itemize{
-\item If \code{test="seas"} (default), a measure of seasonal strength is used, where differencing is
+\item If \code{test = "seas"} (default), a measure of seasonal strength is used, where differencing is
 selected if the seasonal strength (Wang, Smith & Hyndman, 2006) exceeds 0.64
 (based on minimizing MASE when forecasting using auto.arima on M3 and M4 data).
-\item If \code{test="ch"}, the Canova-Hansen (1995) test is used
+\item If \code{test = "ch"}, the Canova-Hansen (1995) test is used
 (with null hypothesis of deterministic seasonality)
-\item If \code{test="hegy"}, the Hylleberg, Engle, Granger & Yoo (1990) test is used.
-\item If \code{test="ocsb"}, the Osborn-Chui-Smith-Birchenhall
+\item If \code{test = "hegy"}, the Hylleberg, Engle, Granger & Yoo (1990) test is used.
+\item If \code{test = "ocsb"}, the Osborn-Chui-Smith-Birchenhall
 (1988) test is used (with null hypothesis that a seasonal unit root exists).
 }
 }
@@ -71,7 +71,7 @@ Hylleberg S, Engle R, Granger C and Yoo B (1990) "Seasonal integration
 and cointegration.", \emph{Journal of Econometrics} \bold{44}(1), pp. 215-238.
 }
 \seealso{
-\code{\link{auto.arima}}, \code{\link{ndiffs}}, \code{\link{ocsb.test}}, \code{\link[uroot]{hegy.test}}, and \code{\link[uroot]{ch.test}}
+\code{\link[=auto.arima]{auto.arima()}}, \code{\link[=ndiffs]{ndiffs()}}, \code{\link[=ocsb.test]{ocsb.test()}}, \code{\link[uroot:hegy-test]{uroot::hegy.test()}}, and \code{\link[uroot:ch-test]{uroot::ch.test()}}
 }
 \author{
 Rob J Hyndman, Slava Razbash and Mitchell O'Hara-Wild
