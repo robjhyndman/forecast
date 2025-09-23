@@ -92,13 +92,13 @@ necessary.</p>
     <p><code>nsdiffs</code> uses seasonal unit root tests to determine the number of
 seasonal differences required for time series <code>x</code> to be made stationary
 (possibly with some lag-one differencing as well).</p>
-<p>Several different tests are available:</p><ul><li><p>If <code>test="seas"</code> (default), a measure of seasonal strength is used, where differencing is
+<p>Several different tests are available:</p><ul><li><p>If <code>test = "seas"</code> (default), a measure of seasonal strength is used, where differencing is
 selected if the seasonal strength (Wang, Smith &amp; Hyndman, 2006) exceeds 0.64
 (based on minimizing MASE when forecasting using auto.arima on M3 and M4 data).</p></li>
-<li><p>If <code>test="ch"</code>, the Canova-Hansen (1995) test is used
+<li><p>If <code>test = "ch"</code>, the Canova-Hansen (1995) test is used
 (with null hypothesis of deterministic seasonality)</p></li>
-<li><p>If <code>test="hegy"</code>, the Hylleberg, Engle, Granger &amp; Yoo (1990) test is used.</p></li>
-<li><p>If <code>test="ocsb"</code>, the Osborn-Chui-Smith-Birchenhall
+<li><p>If <code>test = "hegy"</code>, the Hylleberg, Engle, Granger &amp; Yoo (1990) test is used.</p></li>
+<li><p>If <code>test = "ocsb"</code>, the Osborn-Chui-Smith-Birchenhall
 (1988) test is used (with null hypothesis that a seasonal unit root exists).</p></li>
 </ul></div>
     <div class="section level2">
@@ -117,7 +117,7 @@ and cointegration.", <em>Journal of Econometrics</em> <b>44</b>(1), pp. 215-238.
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="auto.arima.html">auto.arima</a></code>, <code><a href="ndiffs.html">ndiffs</a></code>, <code><a href="ocsb.test.html">ocsb.test</a></code>, <code><a href="https://geobosh.github.io/uroot/reference/hegy-test.html" class="external-link">hegy.test</a></code>, and <code><a href="https://geobosh.github.io/uroot/reference/ch-test.html" class="external-link">ch.test</a></code></p></div>
+    <div class="dont-index"><p><code><a href="auto.arima.html">auto.arima()</a></code>, <code><a href="ndiffs.html">ndiffs()</a></code>, <code><a href="ocsb.test.html">ocsb.test()</a></code>, <code><a href="https://geobosh.github.io/uroot/reference/hegy-test.html" class="external-link">uroot::hegy.test()</a></code>, and <code><a href="https://geobosh.github.io/uroot/reference/ch-test.html" class="external-link">uroot::ch.test()</a></code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>

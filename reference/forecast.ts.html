@@ -73,11 +73,11 @@ depend on the class of the first argument.</p>
 
 <dl><dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
 <dd><p>a time series or time series model for which forecasts are
-required</p></dd>
+required.</p></dd>
 
 
 <dt id="arg-h">h<a class="anchor" aria-label="anchor" href="#arg-h"></a></dt>
-<dd><p>Number of periods for forecasting</p></dd>
+<dd><p>Number of periods for forecasting.</p></dd>
 
 
 <dt id="arg-level">level<a class="anchor" aria-label="anchor" href="#arg-level"></a></dt>
@@ -91,12 +91,11 @@ This is suitable for fan plots.</p></dd>
 
 <dt id="arg-robust">robust<a class="anchor" aria-label="anchor" href="#arg-robust"></a></dt>
 <dd><p>If <code>TRUE</code>, the function is robust to missing values and outliers
-in <code>object</code>. This argument is only valid when <code>object</code> is of class
-<code>ts</code>.</p></dd>
+in <code>object</code>. This argument is only valid when <code>object</code> is of class <code>ts</code>.</p></dd>
 
 
 <dt id="arg-lambda">lambda<a class="anchor" aria-label="anchor" href="#arg-lambda"></a></dt>
-<dd><p>Box-Cox transformation parameter. If <code>lambda="auto"</code>,
+<dd><p>Box-Cox transformation parameter. If <code>lambda = "auto"</code>,
 then a transformation is automatically selected using <code>BoxCox.lambda</code>.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.</p></dd>
@@ -123,13 +122,13 @@ models are permitted.</p></dd>
 
 <dt id="arg-model">model<a class="anchor" aria-label="anchor" href="#arg-model"></a></dt>
 <dd><p>An object describing a time series model; e.g., one of of class
-<code>ets</code>, <code>Arima</code>, <code>bats</code>, <code>tbats</code>, or <code>nnetar</code>.</p></dd>
+<code>ets</code>, <code>Arima</code>, <code>bats</code>, <code>bats</code>, or <code>nnetar</code>.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Additional arguments affecting the forecasts produced. If
-<code>model=NULL</code>, <code>forecast.ts</code> passes these to <code><a href="ets.html">ets</a></code> or
-<code><a href="forecast.stl.html">stlf</a></code> depending on the frequency of the time series. If
+<code>model = NULL</code>, <code>forecast.ts</code> passes these to <code><a href="ets.html">ets()</a></code> or
+<code><a href="forecast.stl.html">stlf()</a></code> depending on the frequency of the time series. If
 <code>model</code> is not <code>NULL</code>, the arguments are passed to the relevant
 modelling function.</p></dd>
 
@@ -140,7 +139,7 @@ modelling function.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object of class "<code>forecast</code>".</p>
+    <p>An object of class <code>"forecast"</code>.</p>
 <p>The function <code>summary</code> is used to obtain and print a summary of the
 results, while the function <code>plot</code> produces a plot of the forecasts and
 prediction intervals.</p>
@@ -150,41 +149,42 @@ extract various useful features of the value returned by
 <p>An object of class <code>"forecast"</code> is a list usually containing at least
 the following elements:</p>
 <dl><dt>model</dt>
-<dd><p>A list containing information about the
-fitted model</p></dd>
- <dt>method</dt>
-<dd><p>The name of the forecasting method as a
-character string</p></dd>
- <dt>mean</dt>
+<dd><p>A list containing information about the fitted model</p></dd>
+
+<dt>method</dt>
+<dd><p>The name of the forecasting method as a character string</p></dd>
+
+<dt>mean</dt>
 <dd><p>Point forecasts as a time series</p></dd>
 
 <dt>lower</dt>
 <dd><p>Lower limits for prediction intervals</p></dd>
- <dt>upper</dt>
-<dd><p>Upper
-limits for prediction intervals</p></dd>
- <dt>level</dt>
-<dd><p>The confidence values
-associated with the prediction intervals</p></dd>
- <dt>x</dt>
-<dd><p>The original time series
-(either <code>object</code> itself or the time series used to create the model
-stored as <code>object</code>).</p></dd>
- <dt>residuals</dt>
-<dd><p>Residuals from the fitted model.
-For models with additive errors, the residuals will be x minus the fitted
-values.</p></dd>
- <dt>fitted</dt>
+
+<dt>upper</dt>
+<dd><p>Upper limits for prediction intervals</p></dd>
+
+<dt>level</dt>
+<dd><p>The confidence values associated with the prediction intervals</p></dd>
+
+<dt>x</dt>
+<dd><p>The original time series (either <code>object</code> itself or the time series
+used to create the model stored as <code>object</code>).</p></dd>
+
+<dt>residuals</dt>
+<dd><p>Residuals from the fitted model. For models with additive
+errors, the residuals will be x minus the fitted values.</p></dd>
+
+<dt>fitted</dt>
 <dd><p>Fitted values (one-step forecasts)</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>For example, the function <code><a href="forecast.Arima.html">forecast.Arima</a></code> makes forecasts based
-on the results produced by <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">arima</a></code>.</p>
-<p>If <code>model=NULL</code>,the function <code>forecast.ts</code> makes forecasts
-using <code><a href="ets.html">ets</a></code> models (if the data are non-seasonal or the seasonal
-period is 12 or less) or <code><a href="forecast.stl.html">stlf</a></code> (if the seasonal period is 13 or
+    <p>For example, the function <code><a href="forecast.Arima.html">forecast.Arima()</a></code> makes forecasts based
+on the results produced by <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">stats::arima()</a></code>.</p>
+<p>If <code>model = NULL</code>,the function <code>forecast.ts()</code> makes forecasts
+using <code><a href="ets.html">ets()</a></code> models (if the data are non-seasonal or the seasonal
+period is 12 or less) or <code><a href="forecast.stl.html">stlf()</a></code> (if the seasonal period is 13 or
 more).</p>
 <p>If <code>model</code> is not <code>NULL</code>, <code>forecast.ts</code> will apply the
 <code>model</code> to the <code>object</code> time series, and then generate forecasts
@@ -193,11 +193,9 @@ accordingly.</p>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other functions which return objects of class <code>"forecast"</code> are
-<code><a href="forecast.ets.html">forecast.ets</a></code>, <code><a href="forecast.Arima.html">forecast.Arima</a></code>,
-<code><a href="forecast.HoltWinters.html">forecast.HoltWinters</a></code>, <code><a href="forecast.StructTS.html">forecast.StructTS</a></code>,
-<code><a href="forecast.mean_model.html">meanf</a></code>, <code><a href="naive.html">rwf</a></code>, <code><a href="splinef.html">splinef</a></code>,
-<code><a href="thetaf.html">thetaf</a></code>, <code><a href="croston.html">croston</a></code>, <code><a href="ses.html">ses</a></code>,
-<code><a href="ses.html">holt</a></code>, <code><a href="ses.html">hw</a></code>.</p></div>
+<code><a href="forecast.ets.html">forecast.ets()</a></code>, <code><a href="forecast.Arima.html">forecast.Arima()</a></code>, <code><a href="forecast.HoltWinters.html">forecast.HoltWinters()</a></code>,
+<code><a href="forecast.StructTS.html">forecast.StructTS()</a></code>, <code><a href="forecast.mean_model.html">meanf()</a></code>, <code><a href="naive.html">rwf()</a></code>, <code><a href="splinef.html">splinef()</a></code>, <code><a href="thetaf.html">thetaf()</a></code>,
+<code><a href="croston.html">croston()</a></code>, <code><a href="ses.html">ses()</a></code>, <code><a href="ses.html">holt()</a></code>, <code><a href="ses.html">hw()</a></code>.</p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>

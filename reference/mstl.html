@@ -3,15 +3,15 @@
 Seasonal components are estimated iteratively using STL. Multiple seasonal periods are
 allowed. The trend component is computed for the last iteration of STL.
 Non-seasonal time series are decomposed into trend and remainder only.
-In this case, supsmu is used to estimate the trend.
+In this case, stats::supsmu() is used to estimate the trend.
 Optionally, the time series may be Box-Cox transformed before decomposition.
-Unlike stl, mstl is completely automated."><meta property="og:description" content="Decompose a time series into seasonal, trend and remainder components.
+Unlike stats::stl(), mstl is completely automated."><meta property="og:description" content="Decompose a time series into seasonal, trend and remainder components.
 Seasonal components are estimated iteratively using STL. Multiple seasonal periods are
 allowed. The trend component is computed for the last iteration of STL.
 Non-seasonal time series are decomposed into trend and remainder only.
-In this case, supsmu is used to estimate the trend.
+In this case, stats::supsmu() is used to estimate the trend.
 Optionally, the time series may be Box-Cox transformed before decomposition.
-Unlike stl, mstl is completely automated."><meta property="og:image" content="https://pkg.robjhyndman.com/forecast/logo.png"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack-subset.css"></head><body>
+Unlike stats::stl(), mstl is completely automated."><meta property="og:image" content="https://pkg.robjhyndman.com/forecast/logo.png"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack-subset.css"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -50,9 +50,9 @@ Unlike stl, mstl is completely automated."><meta property="og:image" content="ht
 Seasonal components are estimated iteratively using STL. Multiple seasonal periods are
 allowed. The trend component is computed for the last iteration of STL.
 Non-seasonal time series are decomposed into trend and remainder only.
-In this case, <code><a href="https://rdrr.io/r/stats/supsmu.html" class="external-link">supsmu</a></code> is used to estimate the trend.
+In this case, <code><a href="https://rdrr.io/r/stats/supsmu.html" class="external-link">stats::supsmu()</a></code> is used to estimate the trend.
 Optionally, the time series may be Box-Cox transformed before decomposition.
-Unlike <code><a href="https://rdrr.io/r/stats/stl.html" class="external-link">stl</a></code>, <code>mstl</code> is completely automated.</p>
+Unlike <code><a href="https://rdrr.io/r/stats/stl.html" class="external-link">stats::stl()</a></code>, <code>mstl</code> is completely automated.</p>
     </div>
 
     <div class="section level2">
@@ -69,7 +69,7 @@ Unlike <code><a href="https://rdrr.io/r/stats/stl.html" class="external-link">st
 
 
 <dt id="arg-lambda">lambda<a class="anchor" aria-label="anchor" href="#arg-lambda"></a></dt>
-<dd><p>Box-Cox transformation parameter. If <code>lambda="auto"</code>,
+<dd><p>Box-Cox transformation parameter. If <code>lambda = "auto"</code>,
 then a transformation is automatically selected using <code>BoxCox.lambda</code>.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.</p></dd>
@@ -86,7 +86,7 @@ of the same length as the number of seasonal components (or longer).</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Other arguments are passed to <code><a href="https://rdrr.io/r/stats/stl.html" class="external-link">stl</a></code>.</p></dd>
+<dd><p>Other arguments are passed to <code><a href="https://rdrr.io/r/stats/stl.html" class="external-link">stats::stl()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

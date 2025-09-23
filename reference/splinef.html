@@ -76,7 +76,7 @@ is suitable for fan plots.</p></dd>
 
 
 <dt id="arg-lambda">lambda<a class="anchor" aria-label="anchor" href="#arg-lambda"></a></dt>
-<dd><p>Box-Cox transformation parameter. If <code>lambda="auto"</code>,
+<dd><p>Box-Cox transformation parameter. If <code>lambda = "auto"</code>,
 then a transformation is automatically selected using <code>BoxCox.lambda</code>.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.</p></dd>
@@ -92,8 +92,8 @@ and fitted values.</p></dd>
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
 <dd><p>Method for selecting the smoothing parameter. If
-<code>method="gcv"</code>, the generalized cross-validation method from
-<code><a href="https://rdrr.io/r/stats/smooth.spline.html" class="external-link">smooth.spline</a></code> is used. If <code>method="mle"</code>, the
+<code>method = "gcv"</code>, the generalized cross-validation method from
+<code><a href="https://rdrr.io/r/stats/smooth.spline.html" class="external-link">stats::smooth.spline()</a></code> is used. If <code>method = "mle"</code>, the
 maximum likelihood method from Hyndman et al (2002) is used.</p></dd>
 
 
@@ -103,7 +103,7 @@ maximum likelihood method from Hyndman et al (2002) is used.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object of class "<code>forecast</code>".</p>
+    <p>An object of class <code>"forecast"</code>.</p>
 <p>The function <code>summary</code> is used to obtain and print a summary of the
 results, while the function <code>plot</code> produces a plot of the forecasts and
 prediction intervals.</p>
@@ -160,8 +160,7 @@ Statistics</em>, <b>47</b>(1), 87-99.
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="https://rdrr.io/r/stats/smooth.spline.html" class="external-link">smooth.spline</a></code>, <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">arima</a></code>,
-<code><a href="ses.html">holt</a></code>.</p></div>
+    <div class="dont-index"><p><code><a href="https://rdrr.io/r/stats/smooth.spline.html" class="external-link">stats::smooth.spline()</a></code>, <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">stats::arima()</a></code>, <code><a href="ses.html">holt()</a></code>.</p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>

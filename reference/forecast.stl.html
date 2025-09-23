@@ -110,7 +110,7 @@ year of the seasonal component.</p>
 
 <dl><dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
 <dd><p>An object of class <code>stl</code> or <code>stlm</code>. Usually the
-result of a call to <code><a href="https://rdrr.io/r/stats/stl.html" class="external-link">stl</a></code> or <code>stlm</code>.</p></dd>
+result of a call to <code><a href="https://rdrr.io/r/stats/stl.html" class="external-link">stats::stl()</a></code> or <code>stlm</code>.</p></dd>
 
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
@@ -119,8 +119,8 @@ result of a call to <code><a href="https://rdrr.io/r/stats/stl.html" class="exte
 
 <dt id="arg-etsmodel">etsmodel<a class="anchor" aria-label="anchor" href="#arg-etsmodel"></a></dt>
 <dd><p>The ets model specification passed to
-<code><a href="ets.html">ets</a></code>. By default it allows any non-seasonal model. If
-<code>method!="ets"</code>, this argument is ignored.</p></dd>
+<code><a href="ets.html">ets()</a></code>. By default it allows any non-seasonal model. If
+<code>method != "ets"</code>, this argument is ignored.</p></dd>
 
 
 <dt id="arg-forecastfunction">forecastfunction<a class="anchor" aria-label="anchor" href="#arg-forecastfunction"></a></dt>
@@ -144,7 +144,7 @@ is suitable for fan plots.</p></dd>
 
 
 <dt id="arg-lambda">lambda<a class="anchor" aria-label="anchor" href="#arg-lambda"></a></dt>
-<dd><p>Box-Cox transformation parameter. If <code>lambda="auto"</code>,
+<dd><p>Box-Cox transformation parameter. If <code>lambda = "auto"</code>,
 then a transformation is automatically selected using <code>BoxCox.lambda</code>.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.</p></dd>
@@ -160,12 +160,11 @@ and fitted values.</p></dd>
 
 <dt id="arg-xreg">xreg<a class="anchor" aria-label="anchor" href="#arg-xreg"></a></dt>
 <dd><p>Historical regressors to be used in
-<code><a href="auto.arima.html">auto.arima</a>()</code> when <code>method="arima"</code>.</p></dd>
+<code><a href="auto.arima.html">auto.arima()</a></code> when <code>method = "arima"</code>.</p></dd>
 
 
 <dt id="arg-newxreg">newxreg<a class="anchor" aria-label="anchor" href="#arg-newxreg"></a></dt>
-<dd><p>Future regressors to be used in
-<code><a href="forecast.Arima.html">forecast.Arima</a>()</code>.</p></dd>
+<dd><p>Future regressors to be used in <code><a href="forecast.Arima.html">forecast.Arima()</a></code>.</p></dd>
 
 
 <dt id="arg-allow-multiplicative-trend">allow.multiplicative.trend<a class="anchor" aria-label="anchor" href="#arg-allow-multiplicative-trend"></a></dt>
@@ -190,7 +189,7 @@ lags) of the loess window for seasonal extraction.</p></dd>
 
 <dt id="arg-robust">robust<a class="anchor" aria-label="anchor" href="#arg-robust"></a></dt>
 <dd><p>If <code>TRUE</code>, robust fitting will used in the loess
-procedure within <code><a href="https://rdrr.io/r/stats/stl.html" class="external-link">stl</a></code>.</p></dd>
+procedure within <code><a href="https://rdrr.io/r/stats/stl.html" class="external-link">stats::stl()</a></code>.</p></dd>
 
 
 <dt id="arg-modelfunction">modelfunction<a class="anchor" aria-label="anchor" href="#arg-modelfunction"></a></dt>
@@ -212,14 +211,14 @@ parameters.</p></dd>
 
 <dt id="arg-t-window">t.window<a class="anchor" aria-label="anchor" href="#arg-t-window"></a></dt>
 <dd><p>A number to control the smoothness of the trend. See
-<code><a href="https://rdrr.io/r/stats/stl.html" class="external-link">stl</a></code> for details.</p></dd>
+<code><a href="https://rdrr.io/r/stats/stl.html" class="external-link">stats::stl()</a></code> for details.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p><code>stlm</code> returns an object of class <code>stlm</code>. The other
 functions return objects of class <code>forecast</code>.</p>
-<p>There are many methods for working with <code><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></code> objects
+<p>There are many methods for working with <code><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast()</a></code> objects
 including <code>summary</code> to obtain and print a summary of the results, while
 <code>plot</code> produces a plot of the forecasts and prediction intervals. The
 generic accessor functions <code>fitted.values</code> and <code>residuals</code> extract
@@ -253,8 +252,8 @@ component is ignored.</p>
 <code>method</code> argument provides a shorthand way of specifying
 <code>modelfunction</code> for a few special cases. More generally,
 <code>modelfunction</code> can be any function with first argument a <code>ts</code>
-object, that returns an object that can be passed to <code><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></code>.
-For example, <code>forecastfunction=ar</code> uses the <code><a href="https://rdrr.io/r/stats/ar.html" class="external-link">ar</a></code> function
+object, that returns an object that can be passed to <code><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast()</a></code>.
+For example, <code>forecastfunction = ar</code> uses the <code><a href="https://rdrr.io/r/stats/ar.html" class="external-link">ar()</a></code> function
 for modelling the seasonally adjusted series.</p>
 <p>The forecasting method for the seasonally adjusted data can be specified in
 <code>stlf</code> and <code>forecast.stl</code> using either <code>method</code> or
@@ -262,8 +261,8 @@ for modelling the seasonally adjusted series.</p>
 of specifying <code>forecastfunction</code> for a few special cases. More
 generally, <code>forecastfunction</code> can be any function with first argument a
 <code>ts</code> object, and other <code>h</code> and <code>level</code>, which returns an
-object of class <code><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></code>. For example,
-<code>forecastfunction=thetaf</code> uses the <code><a href="thetaf.html">thetaf</a></code> function for
+object of class <code><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast()</a></code>. For example,
+<code>forecastfunction = thetaf</code> uses the <code><a href="thetaf.html">thetaf()</a></code> function for
 forecasting the seasonally adjusted series.</p>
     </div>
     <div class="section level2">

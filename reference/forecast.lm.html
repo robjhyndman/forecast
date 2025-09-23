@@ -62,7 +62,7 @@ involving trend and seasonality components.</p>
 
 <dl><dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
 <dd><p>Object of class "lm", usually the result of a call to
-<code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></code> or <code><a href="tslm.html">tslm</a></code>.</p></dd>
+<code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">stats::lm()</a></code> or <code><a href="tslm.html">tslm()</a></code>.</p></dd>
 
 
 <dt id="arg-newdata">newdata<a class="anchor" aria-label="anchor" href="#arg-newdata"></a></dt>
@@ -86,7 +86,7 @@ is suitable for fan plots.</p></dd>
 
 
 <dt id="arg-lambda">lambda<a class="anchor" aria-label="anchor" href="#arg-lambda"></a></dt>
-<dd><p>Box-Cox transformation parameter. If <code>lambda="auto"</code>,
+<dd><p>Box-Cox transformation parameter. If <code>lambda = "auto"</code>,
 then a transformation is automatically selected using <code>BoxCox.lambda</code>.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.</p></dd>
@@ -108,12 +108,12 @@ time series attributes of the original data will be ignored.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Other arguments passed to <code><a href="https://rdrr.io/r/stats/predict.lm.html" class="external-link">predict.lm</a>()</code>.</p></dd>
+<dd><p>Other arguments passed to <code><a href="https://rdrr.io/r/stats/predict.lm.html" class="external-link">stats::predict.lm()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object of class "<code>forecast</code>".</p>
+    <p>An object of class <code>"forecast"</code>.</p>
 <p>The function <code>summary</code> is used to obtain and print a summary of the
 results, while the function <code>plot</code> produces a plot of the forecasts and
 prediction intervals.</p>
@@ -122,36 +122,37 @@ extract useful features of the value returned by <code>forecast.lm</code>.</p>
 <p>An object of class <code>"forecast"</code> is a list containing at least the
 following elements:</p>
 <dl><dt>model</dt>
-<dd><p>A list containing information about the
-fitted model</p></dd>
- <dt>method</dt>
-<dd><p>The name of the forecasting method as a
-character string</p></dd>
- <dt>mean</dt>
+<dd><p>A list containing information about the fitted model</p></dd>
+
+<dt>method</dt>
+<dd><p>The name of the forecasting method as a character string</p></dd>
+
+<dt>mean</dt>
 <dd><p>Point forecasts as a time series</p></dd>
 
 <dt>lower</dt>
 <dd><p>Lower limits for prediction intervals</p></dd>
- <dt>upper</dt>
-<dd><p>Upper
-limits for prediction intervals</p></dd>
- <dt>level</dt>
-<dd><p>The confidence values
-associated with the prediction intervals</p></dd>
- <dt>x</dt>
-<dd><p>The historical data for
-the response variable.</p></dd>
- <dt>residuals</dt>
-<dd><p>Residuals from the fitted model.
-That is x minus fitted values.</p></dd>
- <dt>fitted</dt>
+
+<dt>upper</dt>
+<dd><p>Upper limits for prediction intervals</p></dd>
+
+<dt>level</dt>
+<dd><p>The confidence values associated with the prediction intervals</p></dd>
+
+<dt>x</dt>
+<dd><p>The historical data for the response variable.</p></dd>
+
+<dt>residuals</dt>
+<dd><p>Residuals from the fitted model. That is x minus fitted values.</p></dd>
+
+<dt>fitted</dt>
 <dd><p>Fitted values</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p><code>forecast.lm</code> is largely a wrapper for
-<code><a href="https://rdrr.io/r/stats/predict.lm.html" class="external-link">predict.lm</a>()</code> except that it allows variables "trend"
+<code><a href="https://rdrr.io/r/stats/predict.lm.html" class="external-link">stats::predict.lm()</a></code> except that it allows variables "trend"
 and "season" which are created on the fly from the time series
 characteristics of the data. Also, the output is reformatted into a
 <code>forecast</code> object.</p>

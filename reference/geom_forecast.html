@@ -80,9 +80,9 @@ mapping.</p></dd>
 <dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
 <dd><p>The data to be displayed in this layer. There are three options:</p>
 <p>If <code>NULL</code>, the default, the data is inherited from the plot data as
-specified in the call to <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></code>.</p>
+specified in the call to <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot2::ggplot()</a></code>.</p>
 <p>A <code>data.frame</code>, or other object, will override the plot data. All
-objects will be fortified to produce a data frame. See <code><a href="https://ggplot2.tidyverse.org/reference/fortify.html" class="external-link">fortify</a></code>
+objects will be fortified to produce a data frame. See <code><a href="https://ggplot2.tidyverse.org/reference/fortify.html" class="external-link">ggplot2::fortify()</a></code>
 for which variables will be created.</p>
 <p>A <code>function</code> will be called with a single argument, the plot data. The
 return value must be a <code>data.frame</code>, and will be used as the layer
@@ -113,7 +113,7 @@ never includes, and <code>TRUE</code> always includes.</p></dd>
 <dd><p>If <code>FALSE</code>, overrides the default aesthetics, rather
 than combining with them. This is most useful for helper functions that
 define both data and aesthetics and shouldn't inherit behaviour from the
-default plot specification, e.g. <code><a href="https://ggplot2.tidyverse.org/reference/annotation_borders.html" class="external-link">borders</a></code>.</p></dd>
+default plot specification, e.g. <code><a href="https://ggplot2.tidyverse.org/reference/annotation_borders.html" class="external-link">ggplot2::borders()</a></code>.</p></dd>
 
 
 <dt id="arg-pi">PI<a class="anchor" aria-label="anchor" href="#arg-pi"></a></dt>
@@ -122,7 +122,7 @@ only the forecast line.</p></dd>
 
 
 <dt id="arg-showgap">showgap<a class="anchor" aria-label="anchor" href="#arg-showgap"></a></dt>
-<dd><p>If <code>showgap=FALSE</code>, the gap between the historical
+<dd><p>If <code>showgap = FALSE</code>, the gap between the historical
 observations and the forecasts is removed.</p></dd>
 
 
@@ -132,8 +132,8 @@ on the plot.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional arguments for <code><a href="forecast.ts.html">forecast.ts</a></code>, other
-arguments are passed on to <code><a href="https://ggplot2.tidyverse.org/reference/layer.html" class="external-link">layer</a></code>. These are often aesthetics,
+<dd><p>Additional arguments for <code><a href="forecast.ts.html">forecast.ts()</a></code>, other
+arguments are passed on to <code><a href="https://ggplot2.tidyverse.org/reference/layer.html" class="external-link">ggplot2::layer()</a></code>. These are often aesthetics,
 used to set an aesthetic to a fixed value, like <code>color = "red"</code> or
 <code>alpha = .5</code>. They may also be parameters to the paired geom/stat.</p></dd>
 

@@ -194,8 +194,8 @@ seasonal period to avoid excessive computation times.</p></dd>
 <dd><p>An integer value indicating how many observations to use in
 model selection. The last <code>truncate</code> values of the series are used to
 select a model when <code>truncate</code> is not <code>NULL</code> and
-<code>approximation=TRUE</code>. All observations are used if either
-<code>truncate=NULL</code> or <code>approximation=FALSE</code>.</p></dd>
+<code>approximation = TRUE</code>. All observations are used if either
+<code>truncate = NULL</code> or <code>approximation = FALSE</code>.</p></dd>
 
 
 <dt id="arg-xreg">xreg<a class="anchor" aria-label="anchor" href="#arg-xreg"></a></dt>
@@ -204,8 +204,7 @@ must have the same number of rows as <code>y</code>. (It should not be a data fr
 
 
 <dt id="arg-test">test<a class="anchor" aria-label="anchor" href="#arg-test"></a></dt>
-<dd><p>Type of unit root test to use. See <code><a href="ndiffs.html">ndiffs</a></code> for
-details.</p></dd>
+<dd><p>Type of unit root test to use. See <code><a href="ndiffs.html">ndiffs()</a></code> for details.</p></dd>
 
 
 <dt id="arg-test-args">test.args<a class="anchor" aria-label="anchor" href="#arg-test-args"></a></dt>
@@ -221,7 +220,7 @@ Other possibilities involve seasonal unit root tests.</p></dd>
 <dt id="arg-seasonal-test-args">seasonal.test.args<a class="anchor" aria-label="anchor" href="#arg-seasonal-test-args"></a></dt>
 <dd><p>Additional arguments to be passed to the seasonal
 unit root test.
-See <code><a href="nsdiffs.html">nsdiffs</a></code> for details.</p></dd>
+See <code><a href="nsdiffs.html">nsdiffs()</a></code> for details.</p></dd>
 
 
 <dt id="arg-allowdrift">allowdrift<a class="anchor" aria-label="anchor" href="#arg-allowdrift"></a></dt>
@@ -233,7 +232,7 @@ See <code><a href="nsdiffs.html">nsdiffs</a></code> for details.</p></dd>
 
 
 <dt id="arg-lambda">lambda<a class="anchor" aria-label="anchor" href="#arg-lambda"></a></dt>
-<dd><p>Box-Cox transformation parameter. If <code>lambda="auto"</code>,
+<dd><p>Box-Cox transformation parameter. If <code>lambda = "auto"</code>,
 then a transformation is automatically selected using <code>BoxCox.lambda</code>.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.</p></dd>
@@ -266,18 +265,18 @@ all available cores are used.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional arguments to be passed to <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">arima</a></code>.</p></dd>
+<dd><p>Additional arguments to be passed to <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">stats::arima()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Same as for <code><a href="Arima.html">Arima</a></code></p>
+    <p>Same as for <code><a href="Arima.html">Arima()</a></code></p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The default arguments are designed for rapid estimation of models for many time series.
 If you are analysing just one time series, and can afford to take some more time, it
-is recommended that you set <code>stepwise=FALSE</code> and <code>approximation=FALSE</code>.</p>
+is recommended that you set <code>stepwise = FALSE</code> and <code>approximation = FALSE</code>.</p>
 <p>Non-stepwise selection can be slow, especially for seasonal data. The stepwise
 algorithm outlined in Hyndman &amp; Khandakar (2008) is used except that the default
 method for selecting seasonal differences is now based on an estimate of seasonal
@@ -296,7 +295,7 @@ for time series data", <em>Data Mining and Knowledge Discovery</em>,
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="Arima.html">Arima</a></code></p></div>
+    <div class="dont-index"><p><code><a href="Arima.html">Arima()</a></code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>

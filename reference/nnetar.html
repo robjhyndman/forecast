@@ -96,7 +96,7 @@ must have the same number of rows as <code>y</code>. Must be numeric.</p></dd>
 
 
 <dt id="arg-lambda">lambda<a class="anchor" aria-label="anchor" href="#arg-lambda"></a></dt>
-<dd><p>Box-Cox transformation parameter. If <code>lambda="auto"</code>,
+<dd><p>Box-Cox transformation parameter. If <code>lambda = "auto"</code>,
 then a transformation is automatically selected using <code>BoxCox.lambda</code>.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.</p></dd>
@@ -130,7 +130,7 @@ is not <code>NULL</code>, scaling is applied after Box-Cox transformation.</p></
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Returns an object of class "<code>nnetar</code>".</p>
+    <p>Returns an object of class <code>"nnetar"</code>.</p>
 <p>The function <code>summary</code> is used to obtain and print a summary of the
 results.</p>
 <p>The generic accessor functions <code>fitted.values</code> and <code>residuals</code>
@@ -159,16 +159,15 @@ extract useful features of the value returned by <code>nnetar</code>.</p>
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>A feed-forward neural network is fitted with lagged values of <code>y</code> as
-inputs and a single hidden layer with <code>size</code> nodes. The inputs are for
-lags 1 to <code>p</code>, and lags <code>m</code> to <code>mP</code> where
-<code>m=frequency(y)</code>. If <code>xreg</code> is provided, its columns are also
-used as inputs. If there are missing values in <code>y</code> or
-<code>xreg</code>, the corresponding rows (and any others which depend on them as
-lags) are omitted from the fit. A total of <code>repeats</code> networks are
-fitted, each with random starting weights. These are then averaged when
-computing forecasts. The network is trained for one-step forecasting.
-Multi-step forecasts are computed recursively.</p>
+    <p>A feed-forward neural network is fitted with lagged values of <code>y</code> as inputs
+and a single hidden layer with <code>size</code> nodes. The inputs are for lags 1 to
+<code>p</code>, and lags <code>m</code> to <code>mP</code> where <code>m = frequency(y)</code>. If <code>xreg</code> is provided,
+its columns are also used as inputs. If there are missing values in <code>y</code> or
+<code>xreg</code>, the corresponding rows (and any others which depend on them as lags)
+are omitted from the fit. A total of <code>repeats</code> networks are fitted, each
+with random starting weights. These are then averaged when computing
+forecasts. The network is trained for one-step forecasting. Multi-step
+forecasts are computed recursively.</p>
 <p>For non-seasonal data, the fitted model is denoted as an NNAR(p,k) model,
 where k is the number of hidden nodes. This is analogous to an AR(p) model
 but with nonlinear functions. For seasonal data, the fitted model is called

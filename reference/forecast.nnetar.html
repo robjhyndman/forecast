@@ -63,8 +63,8 @@ models.</p>
 
 
 <dl><dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
-<dd><p>An object of class "<code>nnetar</code>" resulting from a call to
-<code><a href="nnetar.html">nnetar</a></code>.</p></dd>
+<dd><p>An object of class <code>"nnetar"</code> resulting from a call to
+<code><a href="nnetar.html">nnetar()</a></code>.</p></dd>
 
 
 <dt id="arg-h">h<a class="anchor" aria-label="anchor" href="#arg-h"></a></dt>
@@ -93,7 +93,7 @@ is suitable for fan plots.</p></dd>
 
 
 <dt id="arg-lambda">lambda<a class="anchor" aria-label="anchor" href="#arg-lambda"></a></dt>
-<dd><p>Box-Cox transformation parameter. If <code>lambda="auto"</code>,
+<dd><p>Box-Cox transformation parameter. If <code>lambda = "auto"</code>,
 then a transformation is automatically selected using <code>BoxCox.lambda</code>.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.</p></dd>
@@ -117,18 +117,18 @@ into a matrix). If present, <code>bootstrap</code> is ignored.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional arguments passed to <code><a href="simulate.ets.html">simulate.nnetar</a></code>.</p></dd>
+<dd><p>Additional arguments passed to <code><a href="simulate.ets.html">simulate.nnetar()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object of class "<code>forecast</code>".</p>
+    <p>An object of class <code>"forecast"</code>.</p>
 <p>The function <code>summary</code> is used to obtain and print a summary of the
 results, while the function <code>plot</code> produces a plot of the forecasts and
 prediction intervals.</p>
 <p>The generic accessor functions <code>fitted.values</code> and <code>residuals</code>
 extract useful features of the value returned by <code>forecast.nnetar</code>.</p>
-<p>An object of class "<code>forecast</code>" is a list containing at least the
+<p>An object of class <code>"forecast"</code> is a list containing at least the
 following elements:</p>
 <dl><dt>model</dt>
 <dd><p>A list containing information about the fitted model</p></dd>
@@ -149,8 +149,7 @@ following elements:</p>
 <dd><p>The confidence values associated with the prediction intervals</p></dd>
 
 <dt>x</dt>
-<dd><p>The original time series (either <code>object</code> itself or the time series
-used to create the model stored as <code>object</code>).</p></dd>
+<dd><p>The original time series (either <code>object\ itself or the time series used to create the model stored as </code>object`).</p></dd>
 
 <dt>xreg</dt>
 <dd><p>The external regressors used in fitting (if given).</p></dd>
@@ -175,7 +174,7 @@ residuals to ameliorate this, see examples.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="nnetar.html">nnetar</a></code>.</p></div>
+    <div class="dont-index"><p><code><a href="nnetar.html">nnetar()</a></code>.</p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
