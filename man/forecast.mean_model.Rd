@@ -97,7 +97,7 @@ where \eqn{\mu}{mu} is estimated by the sample mean.
 }
 \examples{
 fit_nile <- mean_model(Nile)
-fit_nile |> forecast(h=10) |> autoplot()
+fit_nile |> forecast(h = 10) |> autoplot()
 nile.fcast <- meanf(Nile, h = 10)
 }
 \seealso{

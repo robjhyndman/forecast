@@ -795,10 +795,12 @@ fitted.forecast_ARIMA <- fitted.Arima
 #'   autoplot()
 #'
 #' # Fit model to first few years of AirPassengers data
-#' air.model <- Arima(window(AirPassengers, end = 1956 + 11 / 12),
-#'                    order = c(0, 1, 1),
-#'                    seasonal = list(order = c(0, 1, 1), period = 12),
-#'                    lambda = 0)
+#' air.model <- Arima(
+#'   window(AirPassengers, end = 1956 + 11 / 12),
+#'   order = c(0, 1, 1),
+#'   seasonal = list(order = c(0, 1, 1), period = 12),
+#'   lambda = 0
+#' )
 #' plot(forecast(air.model, h = 48))
 #' lines(AirPassengers)
 #'
@@ -811,9 +813,10 @@ fitted.forecast_ARIMA <- fitted.Arima
 #' # out-of-sample one-step forecasts.
 #' accuracy(air.model2)
 #' # out-of-sample multi-step forecasts
-#' accuracy(forecast(air.model, h = 48, lambda = NULL),
-#'          log(window(AirPassengers, start = 1957)))
-#'
+#' accuracy(
+#'   forecast(air.model, h = 48, lambda = NULL),
+#'   log(window(AirPassengers, start = 1957))
+#' )
 Arima <- function(
   y,
   order = c(0, 0, 0),

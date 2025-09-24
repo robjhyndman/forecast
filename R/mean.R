@@ -28,7 +28,7 @@
 #' @keywords ts
 #' @examples
 #' fit_nile <- mean_model(Nile)
-#' fit_nile |> forecast(h=10) |> autoplot()
+#' fit_nile |> forecast(h = 10) |> autoplot()
 #' @export
 mean_model <- function(y, lambda = NULL, biasadj = FALSE) {
   seriesname <- deparse(substitute(y))
@@ -111,7 +111,7 @@ print.mean_model <- function(x, digits = max(3, getOption("digits") - 3), ...) {
 #' }
 #' @examples
 #' fit_nile <- mean_model(Nile)
-#' fit_nile |> forecast(h=10) |> autoplot()
+#' fit_nile |> forecast(h = 10) |> autoplot()
 #' nile.fcast <- meanf(Nile, h = 10)
 #' @seealso [mean_model()]
 #' @export

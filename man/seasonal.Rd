@@ -30,14 +30,16 @@ fit <- stl(USAccDeaths, s.window = "periodic")
 lines(trendcycle(fit), col = "red")
 
 library(ggplot2)
-autoplot(cbind(
+autoplot(
+  cbind(
     Data = USAccDeaths,
     Seasonal = seasonal(fit),
     Trend = trendcycle(fit),
     Remainder = remainder(fit)
   ),
-  facets = TRUE) +
- ylab("") + xlab("Year")
+  facets = TRUE
+) +
+  labs(x = "Year", y = "")
 
 }
 \seealso{

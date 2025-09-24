@@ -45,7 +45,7 @@ extract useful features of the object returned by \code{\link[=mean_model]{mean_
 }
 \examples{
 fit_nile <- mean_model(Nile)
-fit_nile |> forecast(h=10) |> autoplot()
+fit_nile |> forecast(h = 10) |> autoplot()
 }
 \seealso{
 \code{\link[=forecast.mean_model]{forecast.mean_model()}}, \code{\link[=meanf]{meanf()}}

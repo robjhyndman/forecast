@@ -47,14 +47,14 @@ not be used.
 }
 \examples{
 
-modelcv <- CVar(lynx, k=5, lambda=0.15)
+modelcv <- CVar(lynx, k = 5, lambda = 0.15)
 print(modelcv)
 print(modelcv$fold1)
 
 library(ggplot2)
-autoplot(lynx, series="Data") +
-  autolayer(modelcv$testfit, series="Fits") +
-  autolayer(modelcv$residuals, series="Residuals")
+autoplot(lynx, series = "Data") +
+  autolayer(modelcv$testfit, series = "Fits") +
+  autolayer(modelcv$residuals, series = "Residuals")
 ggAcf(modelcv$residuals)
 
 }

@@ -41,8 +41,10 @@ plot(ldeaths)
 month <- seasonaldummy(ldeaths)
 deaths.lm <- tslm(ldeaths ~ month)
 tsdisplay(residuals(deaths.lm))
-ldeaths.fcast <- forecast(deaths.lm,
-                          data.frame(month = I(seasonaldummy(ldeaths, 36))))
+ldeaths.fcast <- forecast(
+  deaths.lm,
+  data.frame(month = I(seasonaldummy(ldeaths, 36)))
+)
 plot(ldeaths.fcast)
 
 # A simpler approach to seasonal dummy variables
