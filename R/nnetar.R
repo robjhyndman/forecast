@@ -108,7 +108,7 @@ nnetar <- function(
   ...
 ) {
   useoldmodel <- FALSE
-  yname <- deparse(substitute(y))
+  yname <- deparse1(substitute(y))
   if (!is.null(model)) {
     # Use previously fitted model
     useoldmodel <- TRUE

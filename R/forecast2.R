@@ -460,7 +460,7 @@ croston <- function(y, h = 10, alpha = 0.1, x = y) {
     out$residuals <- x - out$fitted
   }
   out$method <- "Croston's method"
-  out$series <- deparse(substitute(y))
+  out$series <- deparse1(substitute(y))
   return(structure(out, class = "forecast"))
 }
 

@@ -143,7 +143,7 @@ auto.arima <- function(
     trace <- FALSE
   }
 
-  series <- deparse(substitute(y))
+  series <- deparse1(substitute(y))
   x <- as.ts(x)
   if (NCOL(x) > 1) {
     stop("auto.arima can only handle univariate time series")

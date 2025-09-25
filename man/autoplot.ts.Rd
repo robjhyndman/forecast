@@ -20,7 +20,7 @@
   object,
   series = NULL,
   xlab = "Time",
-  ylab = deparse(substitute(object)),
+  ylab = deparse1(substitute(object)),
   main = NULL,
   ...
 )
@@ -30,7 +30,7 @@
   colour = TRUE,
   facets = FALSE,
   xlab = "Time",
-  ylab = deparse(substitute(object)),
+  ylab = deparse1(substitute(object)),
   main = NULL,
   ...
 )

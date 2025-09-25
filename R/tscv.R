@@ -264,7 +264,7 @@ CVar <- function(
     dimnames = list(colnames(acc), "SD")
   )
   out$CVsummary <- cbind(CVmean, CVsd)
-  out$series <- deparse(substitute(y))
+  out$series <- deparse1(substitute(y))
   out$call <- match.call()
   return(structure(out, class = c("CVar", class(trainmodel))))
 }

@@ -228,7 +228,7 @@ ggAcf <- function(
   )
   object$tsp <- tsp(x)
   object$periods <- attributes(x)$msts
-  object$series <- deparse(substitute(x))
+  object$series <- deparse1(substitute(x))
   if (plot) {
     return(autoplot(object, ...))
   } else {
@@ -256,7 +256,7 @@ ggPacf <- function(
   )
   object$tsp <- tsp(x)
   object$periods <- attributes(x)$msts
-  object$series <- deparse(substitute(x))
+  object$series <- deparse1(substitute(x))
   if (plot) {
     return(autoplot(object, ...))
   } else {
@@ -283,7 +283,7 @@ ggCcf <- function(
     na.action = na.action,
     plot = FALSE
   )
-  object$snames <- paste(deparse(substitute(x)), "&", deparse(substitute(y)))
+  object$snames <- paste(deparse1(substitute(x)), "&", deparse1(substitute(y)))
   object$ccf <- TRUE
   if (plot) {
     return(autoplot(object, ...))
@@ -1163,7 +1163,7 @@ ggtsdisplay <- function(
     stop("ggtsdisplay is only for univariate time series")
   }
   plot.type <- match.arg(plot.type)
-  main <- deparse(substitute(x))
+  main <- deparse1(substitute(x))
 
   if (!is.ts(x)) {
     x <- ts(x)
@@ -1520,7 +1520,7 @@ gglagchull <- function(
     for (lag in set.lags) {
       sname <- colnames(x)[i]
       if (is.null(sname)) {
-        sname <- deparse(substitute(x))
+        sname <- deparse1(substitute(x))
       }
       data <- rbind(
         data,
@@ -1704,7 +1704,7 @@ ggsubseriesplot <- function(
     ggplot2::scale_x_continuous(breaks = 0.5 + (1:xfreq), labels = xbreaks)
 
   # Graph labels
-  p <- p + ggAddExtras(ylab = deparse(substitute(x)), xlab = xlab)
+  p <- p + ggAddExtras(ylab = deparse1(substitute(x)), xlab = xlab)
   return(p)
 }
 
@@ -1751,7 +1751,7 @@ ggseasonplot <- function(
   }
 
   # Grab name for plot title
-  xname <- deparse(substitute(x))
+  xname <- deparse1(substitute(x))
 
   tspx <- tsp(x)
   x <- ts(x, start = tspx[1], frequency = s)
@@ -2316,9 +2316,9 @@ autolayer.msts <- function(object, series = NULL, ...) {
     class(object) <- c("mts", "ts", "matrix")
   } else {
     if (is.null(series)) {
-      series <- deparse(substitute(series))
+      series <- deparse1(substitute(series))
     }
-    class(object) <- c("ts")
+    class(object) <- "ts"
   }
   attr(object, "msts") <- NULL
   autolayer(object, series = series, ...)
@@ -2336,7 +2336,7 @@ autolayer.ts <- function(object, colour = TRUE, series = NULL, ...) {
 
   tsdata <- data.frame(
     timeVal = as.numeric(time(object)),
-    series = ifelse(is.null(series), deparse(substitute(object)), series),
+    series = ifelse(is.null(series), deparse1(substitute(object)), series),
     seriesVal = as.numeric(object),
     check.names = FALSE
   )
@@ -2455,7 +2455,7 @@ autoplot.ts <- function(
   object,
   series = NULL,
   xlab = "Time",
-  ylab = deparse(substitute(object)),
+  ylab = deparse1(substitute(object)),
   main = NULL,
   ...
 ) {
@@ -2514,7 +2514,7 @@ autoplot.mts <- function(
   colour = TRUE,
   facets = FALSE,
   xlab = "Time",
-  ylab = deparse(substitute(object)),
+  ylab = deparse1(substitute(object)),
   main = NULL,
   ...
 ) {
@@ -2565,7 +2565,7 @@ autoplot.mts <- function(
 #' @rdname autoplot.ts
 #' @export
 autoplot.msts <- function(object, ...) {
-  sname <- deparse(substitute(object))
+  sname <- deparse1(substitute(object))
   if (NCOL(object) > 1) {
     class(object) <- c("mts", "ts", "matrix")
   } else {
@@ -3164,7 +3164,7 @@ gghistogram <- function(
       binwidth = binwidth,
       boundary = boundary
     ) +
-    ggplot2::xlab(deparse(substitute(x)))
+    ggplot2::xlab(deparse1(substitute(x)))
   # Add normal density estimate
   if (add.normal || add.kde) {
     xmin <- min(x, na.rm = TRUE)

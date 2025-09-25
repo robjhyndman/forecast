@@ -582,7 +582,7 @@ ses <- function(
 
   fcast$method <- fcast$model$method <- "Simple exponential smoothing"
   fcast$model$call <- match.call()
-  fcast$series <- deparse(substitute(y))
+  fcast$series <- deparse1(substitute(y))
 
   return(fcast)
 }
@@ -678,7 +678,7 @@ holt <- function(
   }
   fcast$model$method <- fcast$method
   fcast$model$call <- match.call()
-  fcast$series <- deparse(substitute(y))
+  fcast$series <- deparse1(substitute(y))
 
   return(fcast)
 }
@@ -813,7 +813,7 @@ hw <- function(
   }
   fcast$model$method <- fcast$method
   fcast$model$call <- match.call()
-  fcast$series <- deparse(substitute(y))
+  fcast$series <- deparse1(substitute(y))
 
   return(fcast)
 }

@@ -31,7 +31,7 @@
 #' fit_nile |> forecast(h = 10) |> autoplot()
 #' @export
 mean_model <- function(y, lambda = NULL, biasadj = FALSE) {
-  seriesname <- deparse(substitute(y))
+  seriesname <- deparse1(substitute(y))
   if (inherits(y, c("data.frame", "list", "matrix", "mts"))) {
     stop("y should be a univariate time series")
   }
@@ -210,7 +210,7 @@ meanf <- function(
   x = y
 ) {
   fit <- mean_model(y = x, lambda = lambda, biasadj = biasadj)
-  fit$series <- deparse(substitute(y))
+  fit$series <- deparse1(substitute(y))
   forecast(
     fit,
     h = h,

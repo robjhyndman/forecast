@@ -96,7 +96,7 @@ dshw <- function(
   if (min(y, na.rm = TRUE) <= 0) {
     stop("dshw not suitable when data contain zeros or negative numbers")
   }
-  seriesname <- deparse(substitute(y))
+  seriesname <- deparse1(substitute(y))
   if (!is.null(model) && model$method == "DSHW") {
     period1 <- model$period1
     period2 <- model$period2

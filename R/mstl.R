@@ -536,7 +536,7 @@ stlm <- function(
       modelfunction = modelfunction,
       lambda = lambda,
       x = origx,
-      series = deparse(substitute(y)),
+      series = deparse1(substitute(y)),
       m = frequency(origx),
       fitted = fits,
       residuals = res
@@ -651,7 +651,7 @@ stlf <- function(
   x = y,
   ...
 ) {
-  seriesname <- deparse(substitute(y))
+  seriesname <- deparse1(substitute(y))
 
   # Check univariate
   if (NCOL(x) > 1L) {

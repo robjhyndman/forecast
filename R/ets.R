@@ -124,7 +124,7 @@ ets <- function(
     na.action <- get(na.fn_name)
   }
 
-  seriesname <- deparse(substitute(y))
+  seriesname <- deparse1(substitute(y))
 
   if (inherits(y, c("data.frame", "list", "matrix", "mts"))) {
     stop("y should be a univariate time series")
@@ -376,7 +376,7 @@ ets <- function(
       if (!inherits(fit, "try-error")) {
         fit$call <- match.call()
         fit$method <- as.character(fit)
-        fit$series <- deparse(substitute(y))
+        fit$series <- deparse1(substitute(y))
         return(fit)
       } else {
         warning("Seasonal component could not be estimated")
@@ -400,7 +400,7 @@ ets <- function(
       if (!inherits(fit, "try-error")) {
         fit$call <- match.call()
         fit$method <- as.character(fit)
-        fit$series <- deparse(substitute(y))
+        fit$series <- deparse1(substitute(y))
         return(fit)
       } else {
         warning("Trend component could not be estimated")
@@ -422,7 +422,7 @@ ets <- function(
       if (!inherits(fit, "try-error")) {
         fit$call <- match.call()
         fit$method <- as.character(fit)
-        fit$series <- deparse(substitute(y))
+        fit$series <- deparse1(substitute(y))
         return(fit)
       }
     }
@@ -467,7 +467,7 @@ ets <- function(
     }
     fit$call <- match.call()
     fit$method <- as.character(fit)
-    fit$series <- deparse(substitute(y))
+    fit$series <- deparse1(substitute(y))
     return(fit)
   }
 
