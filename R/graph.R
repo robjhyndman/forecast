@@ -61,7 +61,7 @@ tsdisplay <- function(
   nf <- layout(matrix(c(1, 1, 2, 3), 2, 2, byrow = TRUE))
 
   if (is.null(main)) {
-    main <- deparse(substitute(x))
+    main <- deparse1(substitute(x))
   }
   if (!is.ts(x)) {
     x <- ts(x)
@@ -196,7 +196,7 @@ seasonplot <- function(
   ...
 ) {
   if (missing(main)) {
-    main <- paste("Seasonal plot:", deparse(substitute(x)))
+    main <- paste("Seasonal plot:", deparse1(substitute(x)))
   }
 
   # Check data are seasonal and convert to integer seasonality

@@ -19,7 +19,6 @@ search.arima <- function(
   num.cores = 2,
   ...
 ) {
-  # dataname <- substitute(x)
   ic <- match.arg(ic)
   m <- frequency(x)
 
@@ -177,7 +176,7 @@ search.arima <- function(
   }
 
   bestfit$x <- x
-  bestfit$series <- deparse(substitute(x))
+  bestfit$series <- deparse1(substitute(x))
   bestfit$ic <- NULL
   bestfit$call <- match.call()
 
@@ -838,7 +837,7 @@ Arima <- function(
   # if(length(j) != length(x))
   #    warning("Missing values encountered. Using longest contiguous portion of time series")
 
-  series <- deparse(substitute(y))
+  series <- deparse1(substitute(y))
 
   origx <- y
   if (!is.null(lambda)) {

@@ -82,7 +82,7 @@ modelAR <- function(
   ...
 ) {
   useoldmodel <- FALSE
-  yname <- deparse(substitute(y))
+  yname <- deparse1(substitute(y))
   if (!is.null(model)) {
     # Use previously fitted model
     useoldmodel <- TRUE
@@ -322,7 +322,7 @@ modelAR <- function(
   out$residuals <- out$x - out$fitted
   out$lags <- lags
   out$series <- yname
-  out$method <- deparse(substitute(FUN))
+  out$method <- deparse1(substitute(FUN))
   out$method <- paste0(out$method, "-AR(", p)
   if (P > 0) {
     out$method <- paste0(out$method, ",", P)
@@ -332,7 +332,7 @@ modelAR <- function(
     out$method <- paste0(out$method, "[", m, "]")
   }
   out$call <- match.call()
-  return(structure(out, class = c("modelAR")))
+  return(structure(out, class = "modelAR"))
 }
 
 #' Forecasting using user-defined model

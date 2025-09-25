@@ -223,7 +223,7 @@ splinef <- function(
       method = "Cubic Smoothing Spline",
       level = level,
       x = x,
-      series = deparse(substitute(y)),
+      series = deparse1(substitute(y)),
       mean = ts(Yhat, frequency = freq, start = tsp(x)[2] + 1 / freq),
       upper = ts(upper, start = tsp(x)[2] + 1 / freq, frequency = freq),
       lower = ts(lower, start = tsp(x)[2] + 1 / freq, frequency = freq),

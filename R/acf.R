@@ -94,7 +94,7 @@ Acf <- function(
 
   acf.out$tsp <- tsp(x)
   acf.out$periods <- attributes(x)$msts
-  acf.out$series <- deparse(substitute(x))
+  acf.out$series <- deparse1(substitute(x))
 
   # Make lags in integer units
   nlags <- dim(acf.out$lag)[1]
@@ -235,7 +235,7 @@ Pacf <- function(
     demean = demean,
     plot = FALSE
   )
-  object$series <- deparse(substitute(x))
+  object$series <- deparse1(substitute(x))
 
   # Plot if required
   if (plot) {
@@ -292,7 +292,7 @@ Ccf <- function(
   ccf.out$lag[, 1, 1] <- -nlags:nlags
   # Plot if required
   if (plot) {
-    vnames <- c(deparse(substitute(x))[1L], deparse(substitute(y))[1L])
+    vnames <- c(deparse1(substitute(x))[1L], deparse1(substitute(y))[1L])
     ccf.out$snames <- paste(vnames, collapse = " & ")
     plot(ccf.out, ylab = "CCF", xaxt = "n", ...)
     seasonalaxis(frequency(x), nlags, type = "ccf")
@@ -326,7 +326,7 @@ wacf <- function(x, lag.max = length(x) - 1) {
     plot = FALSE,
     na.action = na.contiguous
   )
-  acfest$series <- deparse(substitute(x))
+  acfest$series <- deparse1(substitute(x))
 
   # Taper estimates
   s <- seq_along(acfest$acf[,, 1])

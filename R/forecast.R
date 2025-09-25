@@ -174,7 +174,7 @@ forecast.ts <- function(
       ...
     )
   }
-  out$series <- deparse(substitute(object))
+  out$series <- deparse1(substitute(object))
   return(out)
 }
 

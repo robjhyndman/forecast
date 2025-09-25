@@ -58,14 +58,14 @@ lagwalk <- function(y, lag = 1, drift = FALSE, lambda = NULL, biasadj = FALSE) {
     attr(lambda, "biasadj") <- biasadj
   }
 
-  model <- structure(
+  structure(
     list(
       x = origy,
       fitted = fitted,
       future = tail(fits, lag),
       residuals = res,
       method = method,
-      series = deparse(substitute(y)),
+      series = deparse1(substitute(y)),
       sigma2 = sigma^2,
       par = list(includedrift = drift, drift = b, drift.se = b.se, lag = lag),
       lambda = lambda,
@@ -234,7 +234,7 @@ rwf <- function(
   )
 
   fc$model$call <- match.call()
-  fc$series <- deparse(substitute(y))
+  fc$series <- deparse1(substitute(y))
 
   if (drift) {
     fc$method <- "Random walk with drift"
@@ -333,7 +333,7 @@ naive <- function(
     ...
   )
   fc$model$call <- match.call()
-  fc$series <- deparse(substitute(y))
+  fc$series <- deparse1(substitute(y))
   fc$method <- "Naive method"
   return(fc)
 }
@@ -372,7 +372,7 @@ snaive <- function(
     ...
   )
   fc$model$call <- match.call()
-  fc$series <- deparse(substitute(y))
+  fc$series <- deparse1(substitute(y))
   fc$method <- "Seasonal naive method"
   return(fc)
 }

@@ -426,7 +426,7 @@ ocsb.test <- function(
   maxlag = 0
 ) {
   lag.method <- match.arg(lag.method)
-  sname <- deparse(substitute(x))
+  sname <- deparse1(substitute(x))
   period <- round(frequency(x)) # Avoid non-integer seasonal period
 
   if (period == 1) {

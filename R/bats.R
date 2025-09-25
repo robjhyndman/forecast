@@ -84,7 +84,7 @@ bats <- function(
     stop("y should be a univariate time series")
   }
 
-  seriesname <- deparse(substitute(y))
+  seriesname <- deparse1(substitute(y))
 
   origy <- y
   attr_y <- attributes(origy)

@@ -133,7 +133,7 @@ dm.test <- function(
       varestimator = varestimator,
       p.value = PVAL,
       method = "Diebold-Mariano Test",
-      data.name = c(deparse(substitute(e1)), deparse(substitute(e2)))
+      data.name = c(deparse1(substitute(e1)), deparse1(substitute(e2)))
     ),
     class = "htest"
   )

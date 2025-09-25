@@ -83,11 +83,11 @@ baggedModel <- function(
   tsp(out$fitted) <- tsp(out$y)
   out$residuals <- out$y - out$fitted
 
-  out$series <- deparse(substitute(y))
+  out$series <- deparse1(substitute(y))
   out$method <- "baggedModel"
 
   out$call <- match.call()
-  return(structure(out, class = c("baggedModel")))
+  return(structure(out, class = "baggedModel"))
 }
 
 #' @rdname baggedModel
