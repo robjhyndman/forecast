@@ -601,7 +601,7 @@ simulate.ar <- function(
 
 #' @rdname simulate.ets
 #' @export
-simulate.lagwalk <- function(
+simulate.rw_model <- function(
   object,
   nsim = length(object$x),
   seed = NULL,
