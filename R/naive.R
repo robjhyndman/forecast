@@ -295,6 +295,7 @@ rwf <- function(
 #' naive method where m is the seasonal period.
 #' @param x Deprecated. Included for backwards compatibility.
 #' @inheritParams forecast.ts
+#' @inheritParams forecast.ets
 #'
 #' @return An object of class `"forecast"`.
 #'

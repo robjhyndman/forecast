@@ -88,6 +88,15 @@ required.}
 \item{fan}{If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
 is suitable for fan plots.}
 
+\item{simulate}{If \code{TRUE}, prediction intervals are produced by simulation rather
+than using analytic formulae. Errors are assumed to be normally distributed.}
+
+\item{bootstrap}{If \code{TRUE}, then prediction intervals are produced by
+simulation using resampled errors (rather than normally distributed errors).}
+
+\item{npaths}{Number of sample paths used in computing simulated prediction
+intervals.}
+
 \item{...}{Additional arguments affecting the forecasts produced. If
 \code{model = NULL}, \code{forecast.ts} passes these to \code{\link[=ets]{ets()}} or
 \code{\link[=stlf]{stlf()}} depending on the frequency of the time series. If
