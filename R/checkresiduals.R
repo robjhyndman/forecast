@@ -172,7 +172,7 @@ modeldf.lm <- function(object, ...) {
 }
 
 #' @export
-modeldf.lagwalk <- function(object, ...) {
+modeldf.rw_model <- function(object, ...) {
   as.numeric(object$par$includedrift)
 }
 

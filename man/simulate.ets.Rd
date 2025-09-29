@@ -4,7 +4,7 @@
 \alias{simulate.ets}
 \alias{simulate.Arima}
 \alias{simulate.ar}
-\alias{simulate.lagwalk}
+\alias{simulate.rw_model}
 \alias{simulate.fracdiff}
 \alias{simulate.nnetar}
 \alias{simulate.modelAR}
@@ -43,7 +43,7 @@
   ...
 )
 
-\method{simulate}{lagwalk}(
+\method{simulate}{rw_model}(
   object,
   nsim = length(object$x),
   seed = NULL,

@@ -80,12 +80,13 @@ rw_model <- function(
       lambda = lambda,
       call = match.call()
     ),
-    class = "lagwalk"
+    class = "rw_model"
   )
 }
 
+#' @rdname naive
 #' @export
-forecast.lagwalk <- function(
+forecast.rw_model <- function(
   object,
   h = 10,
   level = c(80, 95),
@@ -185,7 +186,7 @@ forecast.lagwalk <- function(
 }
 
 #' @export
-print.lagwalk <- function(x, ...) {
+print.rw_model <- function(x, ...) {
   cat(paste("Call:", deparse(x$call), "\n\n"))
   if (x$par$includedrift) {
     cat(paste0(
@@ -200,7 +201,7 @@ print.lagwalk <- function(x, ...) {
 }
 
 #' @export
-fitted.lagwalk <- function(object, ...) {
+fitted.rw_model <- function(object, ...) {
   object$fitted
 }
 

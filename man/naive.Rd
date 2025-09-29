@@ -2,6 +2,7 @@
 % Please edit documentation in R/naive.R
 \name{rw_model}
 \alias{rw_model}
+\alias{forecast.rw_model}
 \alias{rwf}
 \alias{naive}
 \alias{print.naive}
@@ -9,6 +10,19 @@
 \title{Naive and Random Walk Forecasts}
 \usage{
 rw_model(y, lag = 1, drift = FALSE, lambda = NULL, biasadj = FALSE)
+
+\method{forecast}{rw_model}(
+  object,
+  h = 10,
+  level = c(80, 95),
+  fan = FALSE,
+  lambda = NULL,
+  simulate = FALSE,
+  bootstrap = FALSE,
+  npaths = 5000,
+  biasadj = FALSE,
+  ...
+)
 
 rwf(
   y,
@@ -63,6 +77,9 @@ transformations. If transformed data is used to produce forecasts and fitted
 values, a regular back transformation will result in median forecasts. If
 biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
 and fitted values.}
+
+\item{object}{a time series or time series model for which forecasts are
+required.}
 
 \item{h}{Number of periods for forecasting.}
 
