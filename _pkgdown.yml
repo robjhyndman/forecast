@@ -94,6 +94,7 @@ reference:
       - tbats
       - mean_model
       - nnetar
+      - rw_model
       - stlm
       - tslm
   - title: "Forecasting"
@@ -126,6 +127,7 @@ reference:
       - forecast.modelAR
       - forecast.mts
       - forecast.nnetar
+      - forecast.rw_model
       - forecast.stl
       - forecast.StructTS
       - forecast.ts
