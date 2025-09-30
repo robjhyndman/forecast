@@ -45,6 +45,7 @@
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.modelAR.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.mts.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.nnetar.html</loc></url>
+<url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.rw_model.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.stl.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.ts.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/fourier.html</loc></url>
@@ -67,7 +68,6 @@
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/mstl.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/msts.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/na.interp.html</loc></url>
-<url><loc>https://pkg.robjhyndman.com/forecast/reference/naive.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/ndiffs.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/nnetar.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/nsdiffs.html</loc></url>
@@ -79,6 +79,7 @@
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/plot.mforecast.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/reexports.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/residuals.forecast.html</loc></url>
+<url><loc>https://pkg.robjhyndman.com/forecast/reference/rw_model.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/seasadj.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/seasonal.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/seasonaldummy.html</loc></url>
