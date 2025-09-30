@@ -1,13 +1,47 @@
-# Random walk related forecasts
-# Based on lagged walks
-# lag=1 corresponds to standard random walk (i.e., naive forecast)
-# lag=m corresponds to seasonal naive method
-
-#' @rdname naive
+#' Random walk model
+#'
+#' Fit a generalized random walk with Gaussian errors (and optional drift) to a univariate time series.
+#'
+#' The model assumes that 
+#'
+#' \deqn{Y_t = Y_{t-p} + c + \varepsilon_{t}}{Y[t] = Y[t-p] + epsilon[t]}
+#' 
+#' where \eqn{p} is the lag parameter, 
+#' \eqn{c} is the drift parameter, and 
+#' \eqn{\varepsilon_t\sim N(0,\sigma^2)}{Y[t] ~ N(0, sigma^2)} are iid.
+#'
+#' The model without drift has \eqn{c=0}. 
+#' In the model with drift, \eqn{c} is estimated
+#' by the sample mean of the differences \eqn{Y_t - Y_{t-p}}{Y[t] - Y[t-p]}.
+#' 
+#' If \eqn{p=1}, this is equivalent to an ARIMA(0,1,0) model with
+#' an optional drift coefficient. For \eqn{p>1}, it is equivalent to an
+#' ARIMA(0,0,0)(0,1,0)p model.
+#'
+#' The forecasts are given by
+#'
+#' \deqn{Y_{T+h|T}= Y_{T+h-p(k+1)} + ch}{Y[T+h|T] = Y[T+h-p(k+1)]+ch}
+#'
+#' where \eqn{k} is the integer part of \eqn{(h-1)/p}. 
+#' For a regular random walk, \eqn{p=1} and \eqn{c=0}, so all forecasts are equal to the last observation.
+#' Forecast standard errors allow for uncertainty in estimating the drift parameter
+#' (unlike the corresponding forecasts obtained by fitting an ARIMA model
+#' directly).
+#' 
+#' The generic accessor functions [stats::fitted()] and [stats::residuals()]
+#' extract useful features of the object returned.
+#'
+#' @param y A univariate time series of class `ts`.
+#' @param lag Lag parameter. `lag = 1` corresponds to a standard random walk (giving naive forecasts if `drift = FALSE` or drift forecasts if `drift = TRUE`), 
+#' while `lag = m` corresponds to a seasonal random walk where m is the seasonal period (giving seasonal naive forecasts if `drift = FALSE`).
+#' @param drift Logical flag. If `TRUE`, fits a random walk with drift model.
+#' @inheritParams forecast.ts
 #' @export
+#' @seealso [forecast.rw_model()], [rwf()], [naive()], [snaive()]
+#' @return An object of class `rw_model`.
 #' @examples
 #' model <- rw_model(gold)
-#' forecast(model, h = 50)
+#' forecast(model, h = 50) |> autoplot()
 rw_model <- function(
   y,
   lag = 1,
@@ -84,7 +118,55 @@ rw_model <- function(
   )
 }
 
-#' @rdname naive
+#' @export
+print.rw_model <- function(x, ...) {
+  cat(paste("Call:", deparse(x$call), "\n\n"))
+  if (x$par$includedrift) {
+    cat(paste0(
+      "Drift: ",
+      round(x$par$drift, 4),
+      "  (se ",
+      round(x$par$drift.se, 4),
+      ")\n"
+    ))
+  }
+  cat(paste("Residual sd:", round(sqrt(x$sigma2), 4), "\n"))
+}
+
+#' @export
+fitted.rw_model <- function(object, ...) {
+  object$fitted
+}
+
+#' Naive and Random Walk Forecasts
+#'
+#' Returns forecasts and prediction intervals for a generalized random walk model. 
+#' [rwf()] is a convenience function that combines [rw_model()] and [forecast()]. 
+#' [naive()] is a wrapper to [rwf()] with `drift=FALSE` and `lag=1`, while 
+#' [snaive()] is a wrapper to [rwf()] with `drift=FALSE` and `lag=frequency(y)`.
+#' 
+#' @inherit rw_model details
+#' @inheritParams rw_model
+#' @inheritParams forecast.ts
+#' @inheritParams forecast.ets
+#' @author Rob J Hyndman
+#' @seealso [rw_model()], [Arima()]
+#' @keywords ts
+#' @examples
+#' # Three ways to do the same thing
+#' gold_model <- rw_model(gold)
+#' gold_fc1 <- forecast(gold_model, h = 50)
+#' gold_fc2 <- rwf(gold, h = 50)
+#' gold_fc3 <- naive(gold, h = 50)
+#'
+#' # Plot the forecasts
+#' autoplot(gold_fc1)
+#'
+#' # Drift forecasts
+#' rwf(gold, drift = TRUE) |> autoplot()
+#' 
+#' # Seasonal naive forecasts
+#' snaive(wineind) |> autoplot()
 #' @export
 forecast.rw_model <- function(
   object,
@@ -185,34 +267,7 @@ forecast.rw_model <- function(
   ))
 }
 
-#' @export
-print.rw_model <- function(x, ...) {
-  cat(paste("Call:", deparse(x$call), "\n\n"))
-  if (x$par$includedrift) {
-    cat(paste0(
-      "Drift: ",
-      round(x$par$drift, 4),
-      "  (se ",
-      round(x$par$drift.se, 4),
-      ")\n"
-    ))
-  }
-  cat(paste("Residual sd:", round(sqrt(x$sigma2), 4), "\n"))
-}
-
-#' @export
-fitted.rw_model <- function(object, ...) {
-  object$fitted
-}
-
-# Random walk
-#' @rdname naive
-#'
-#' @examples
-#'
-#' gold.fcast <- rwf(gold[1:60], h = 50)
-#' plot(gold.fcast)
-#'
+#' @rdname forecast.rw_model
 #' @export
 rwf <- function(
   y,
@@ -222,12 +277,13 @@ rwf <- function(
   fan = FALSE,
   lambda = NULL,
   biasadj = FALSE,
+  lag = 1,
   ...,
   x = y
 ) {
   fit <- rw_model(
     x,
-    lag = 1,
+    lag = lag,
     drift = drift,
     lambda = lambda,
     biasadj = biasadj
@@ -254,77 +310,7 @@ rwf <- function(
   return(fc)
 }
 
-#' Naive and Random Walk Forecasts
-#'
-#' `rwf()` returns forecasts and prediction intervals for a random walk with
-#' drift model applied to `y`. This is equivalent to an ARIMA(0,1,0) model with
-#' an optional drift coefficient. `naive()` is simply a wrapper to `rwf()` for
-#' simplicity. `snaive()` returns forecasts and prediction intervals from an
-#' ARIMA(0,0,0)(0,1,0)m model where m is the seasonal period.
-#'
-#' The random walk with drift model is
-#'
-#' \deqn{Y_t=c + Y_{t-1} + Z_t}{Y[t]=c + Y[t-1] + Z[t]}
-#'
-#' where \eqn{Z_t}{Z[t]} is a normal iid error. Forecasts are
-#' given by
-#'
-#' \deqn{Y_n(h)=ch+Y_n}{Y[n+h]=ch+Y[n]}
-#'
-#' If there is no drift (as in `naive`), the drift parameter c=0. Forecast
-#' standard errors allow for uncertainty in estimating the drift parameter
-#' (unlike the corresponding forecasts obtained by fitting an ARIMA model
-#' directly).
-#'
-#' The seasonal naive model is
-#'
-#' \deqn{Y_t= Y_{t-m} + Z_t}{Y[t]=Y[t-m] + Z[t]}
-#'
-#' where \eqn{Z_t}{Z[t]} is a normal iid error.
-#'
-#' @aliases print.naive
-#'
-#' @param y A numeric vector or time series of class `ts`.
-#' @param h Number of periods for forecasting.
-#' @param drift Logical flag. If `TRUE`, fits a random walk with drift model.
-#' @param level Confidence levels for prediction intervals.
-#' @param fan If `TRUE`, level is set to `seq(51, 99, by = 3)`. This
-#' is suitable for fan plots.
-#' @param lag Lag parameter for lagged walks. `lag = 1` corresponds to standard
-#' random walk (i.e., naive forecast), while `lag = m` corresponds to seasonal
-#' naive method where m is the seasonal period.
-#' @param x Deprecated. Included for backwards compatibility.
-#' @inheritParams forecast.ts
-#' @inheritParams forecast.ets
-#'
-#' @return An object of class `"forecast"`.
-#'
-#' The function `summary` is used to obtain and print a summary of the results,
-#' while the function `plot` produces a plot of the forecasts and prediction
-#' intervals.
-#'
-#' The generic accessor functions `fitted.values` and `residuals` extract
-#' useful features of the value returned by `naive` or `snaive`.
-#'
-#' An object of class `"forecast"` is a list containing at least the
-#' following elements:
-#' \item{model}{A list containing information about the fitted model}
-#' \item{method}{The name of the forecasting method as a character string}
-#' \item{mean}{Point forecasts as a time series}
-#' \item{lower}{Lower limits for prediction intervals}
-#' \item{upper}{Upper limits for prediction intervals}
-#' \item{level}{The confidence values associated with the prediction intervals}
-#' \item{x}{The original time series (either `object` itself or the time series
-#'          used to create the model stored as `object`).}
-#' \item{residuals}{Residuals from the fitted model. That is x minus fitted values.}
-#' \item{fitted}{Fitted values (one-step forecasts)}
-#' @author Rob J Hyndman
-#' @seealso [Arima()]
-#' @keywords ts
-#' @examples
-#'
-#' plot(naive(gold, h = 50), include = 200)
-#'
+#' @rdname forecast.rw_model
 #' @export
 naive <- function(
   y,
@@ -352,12 +338,7 @@ naive <- function(
   return(fc)
 }
 
-#' @rdname naive
-#'
-#' @examples
-#'
-#' plot(snaive(wineind))
-#'
+#' @rdname forecast.rw_model
 #' @export
 snaive <- function(
   y,
@@ -369,21 +350,15 @@ snaive <- function(
   ...,
   x = y
 ) {
-  fit <- rw_model(
+  fc <- rwf(
     x,
-    lag = frequency(x),
-    drift = FALSE,
-    lambda = lambda,
-    biasadj = biasadj
-  )
-  fc <- forecast(
-    fit,
     h = h,
     level = level,
     fan = fan,
-    lambda = fit$lambda,
+    lambda = lambda,
+    drift = FALSE,
     biasadj = biasadj,
-    ...
+    lag = frequency(x)
   )
   fc$model$call <- match.call()
   fc$series <- deparse1(substitute(y))
