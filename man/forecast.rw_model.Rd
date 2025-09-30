@@ -56,8 +56,7 @@ snaive(
 )
 }
 \arguments{
-\item{object}{a time series or time series model for which forecasts are
-required.}
+\item{object}{An object of class \code{rw_model} returned by \code{\link[=rw_model]{rw_model()}}.}
 
 \item{h}{Number of periods for forecasting.}
 
@@ -86,11 +85,7 @@ values, a regular back transformation will result in median forecasts. If
 biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
 and fitted values.}
 
-\item{...}{Additional arguments affecting the forecasts produced. If
-\code{model = NULL}, \code{forecast.ts} passes these to \code{\link[=ets]{ets()}} or
-\code{\link[=stlf]{stlf()}} depending on the frequency of the time series. If
-\code{model} is not \code{NULL}, the arguments are passed to the relevant
-modelling function.}
+\item{...}{Additional arguments not used.}
 
 \item{y}{A univariate time series of class \code{ts}.}
 

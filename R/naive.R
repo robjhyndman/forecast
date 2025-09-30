@@ -146,9 +146,11 @@ fitted.rw_model <- function(object, ...) {
 #' [snaive()] is a wrapper to [rwf()] with `drift=FALSE` and `lag=frequency(y)`.
 #' 
 #' @inherit rw_model details
+#' @param object An object of class `rw_model` returned by [rw_model()].
 #' @inheritParams rw_model
 #' @inheritParams forecast.ts
 #' @inheritParams forecast.ets
+#' @param ... Additional arguments not used.
 #' @author Rob J Hyndman
 #' @seealso [rw_model()], [Arima()]
 #' @keywords ts
