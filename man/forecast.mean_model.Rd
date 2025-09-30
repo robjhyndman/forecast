@@ -32,14 +32,12 @@ meanf(
 \arguments{
 \item{object}{An object of class \code{mean_model} as returned by \code{\link[=mean_model]{mean_model()}}.}
 
-\item{h}{Number of periods for forecasting. If \code{xreg} is used, \code{h}
-is ignored and the number of forecast periods is set to the number of rows
-of \code{xreg}.}
+\item{h}{Number of periods for forecasting.}
 
 \item{level}{Confidence level for prediction intervals.}
 
-\item{fan}{If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
-is suitable for fan plots.}
+\item{fan}{If \code{TRUE}, \code{level} is set to \code{seq(51, 99, by = 3)}.
+This is suitable for fan plots.}
 
 \item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
@@ -52,35 +50,21 @@ values, a regular back transformation will result in median forecasts. If
 biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
 and fitted values.}
 
-\item{bootstrap}{If \code{TRUE}, then prediction intervals computed using
-simulation with resampled errors.}
+\item{bootstrap}{If \code{TRUE}, then prediction intervals are produced by
+simulation using resampled errors (rather than normally distributed errors).}
 
 \item{npaths}{Number of sample paths used in computing simulated prediction
-intervals when \code{bootstrap = TRUE}.}
+intervals.}
 
-\item{...}{Other arguments.}
+\item{...}{Additional arguments not used.}
 
 \item{y}{A univariate time series of class \code{ts}.}
 
-\item{x}{Deprecated. Included for backwards compatibility.}
-}
-\value{
-An object of class \code{forecast} which is a list containing at least the
-following elements:
-\describe{
-\item{\code{model}}{A list containing information about the fitted model}
-\item{\code{method}}{The name of the forecasting method as a character string}
-\item{\code{mean}}{Point forecasts as a time series}
-\item{\code{lower}}{Lower limits for prediction intervals}
-\item{\code{upper}}{Upper limits for prediction intervals}
-\item{\code{level}}{The confidence values associated with the prediction intervals}
-\item{\code{x}}{The original time series}
-\item{\code{residuals}}{Residuals from the fitted model}
-\item{\code{fitted}}{Fitted values (one-step forecasts)}
-}
+\item{x}{a numeric vector or time series of class \code{ts}.}
 }
 \description{
 Returns forecasts and prediction intervals for a Gaussian iid model.
+\code{\link[=meanf]{meanf()}} is a convenience function that combines \code{\link[=mean_model]{mean_model()}} and \code{\link[=forecast]{forecast()}}.
 }
 \details{
 The model assumes that the data are independent and identically distributed
@@ -93,7 +77,11 @@ Forecasts are given by
 
 where \eqn{\mu}{mu} is estimated by the sample mean.
 
-\code{\link[=meanf]{meanf()}} is a convenience function that combines \code{\link[=mean_model]{mean_model()}} and \code{\link[=forecast]{forecast()}}.
+The function \code{\link[=summary]{summary()}} is used to obtain and print a summary of the
+results, while the function \code{\link[=plot]{plot()}} produces a plot of the forecasts and
+prediction intervals.
+The generic accessor functions \code{\link[stats:fitted.values]{stats::fitted()}} and \code{\link[stats:residuals]{stats::residuals()}}
+extract useful features of the object returned by \code{\link[=mean_model]{mean_model()}}.
 }
 \examples{
 fit_nile <- mean_model(Nile)
@@ -103,3 +91,7 @@ nile.fcast <- meanf(Nile, h = 10)
 \seealso{
 \code{\link[=mean_model]{mean_model()}}
 }
+\author{
+Rob J Hyndman
+}
+\keyword{ts}

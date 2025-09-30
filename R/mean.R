@@ -79,41 +79,21 @@ print.mean_model <- function(x, digits = max(3, getOption("digits") - 3), ...) {
 #' Mean Forecast
 #'
 #' Returns forecasts and prediction intervals for a Gaussian iid model.
+#' [meanf()] is a convenience function that combines [mean_model()] and [forecast()].
 #'
-#' The model assumes that the data are independent and identically distributed
-#'
-#' \deqn{Y_t \sim N(\mu,\sigma^2)}{Y[t] ~ N(mu, sigma^2)}
-#'
-#' Forecasts are given by
-#'
-#' \deqn{Y_{n+h|n}=\mu}{Y[n+h|n]=mu}
-#'
-#' where \eqn{\mu}{mu} is estimated by the sample mean.
-#'
-#' @details [meanf()] is a convenience function that combines [mean_model()] and [forecast()].
-#'
-#' @inheritParams forecast.Arima
+#' @inherit mean_model details
 #' @param object An object of class `mean_model` as returned by [mean_model()].
-#' @param y A univariate time series of class `ts`.
-#' @param x Deprecated. Included for backwards compatibility.
-#' @return An object of class `forecast` which is a list containing at least the
-#' following elements:
-#' \describe{
-#'  \item{`model`}{A list containing information about the fitted model}
-#'  \item{`method`}{The name of the forecasting method as a character string}
-#'  \item{`mean`}{Point forecasts as a time series}
-#'  \item{`lower`}{Lower limits for prediction intervals}
-#'  \item{`upper`}{Upper limits for prediction intervals}
-#'  \item{`level`}{The confidence values associated with the prediction intervals}
-#'  \item{`x`}{The original time series}
-#'  \item{`residuals`}{Residuals from the fitted model}
-#'  \item{`fitted`}{Fitted values (one-step forecasts)}
-#' }
+#' @inheritParams mean_model
+#' @inheritParams forecast.ts
+#' @inheritParams forecast.ets
+#' @param ... Additional arguments not used.
+#' @author Rob J Hyndman
 #' @examples
 #' fit_nile <- mean_model(Nile)
 #' fit_nile |> forecast(h = 10) |> autoplot()
 #' nile.fcast <- meanf(Nile, h = 10)
 #' @seealso [mean_model()]
+#' @keywords ts
 #' @export
 forecast.mean_model <- function(
   object,
