@@ -103,8 +103,7 @@ snaive() is a wrapper to rwf() with drift=FALSE and lag=frequency(y)."><meta pro
 
 
 <dl><dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
-<dd><p>a time series or time series model for which forecasts are
-required.</p></dd>
+<dd><p>An object of class <code>rw_model</code> returned by <code><a href="rw_model.html">rw_model()</a></code>.</p></dd>
 
 
 <dt id="arg-h">h<a class="anchor" aria-label="anchor" href="#arg-h"></a></dt>
@@ -151,11 +150,7 @@ and fitted values.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional arguments affecting the forecasts produced. If
-<code>model = NULL</code>, <code>forecast.ts</code> passes these to <code><a href="ets.html">ets()</a></code> or
-<code><a href="forecast.stl.html">stlf()</a></code> depending on the frequency of the time series. If
-<code>model</code> is not <code>NULL</code>, the arguments are passed to the relevant
-modelling function.</p></dd>
+<dd><p>Additional arguments not used.</p></dd>
 
 
 <dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
