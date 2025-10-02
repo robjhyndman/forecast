@@ -151,6 +151,8 @@ fitted.rw_model <- function(object, ...) {
 #' @inheritParams forecast.ts
 #' @inheritParams forecast.ets
 #' @param ... Additional arguments not used.
+#' @inherit forecast.ts format
+#' @return An object of class `forecast`.
 #' @author Rob J Hyndman
 #' @seealso [rw_model()], [Arima()]
 #' @keywords ts

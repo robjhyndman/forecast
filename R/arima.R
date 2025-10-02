@@ -296,28 +296,8 @@ SD.test <- function(wts, s = frequency(wts)) {
 #' intervals when `bootstrap = TRUE`.
 #' @param ... Other arguments.
 #' @inheritParams forecast.ts
-#'
-#' @return An object of class `"forecast"`.
-#'
-#' The function `summary` is used to obtain and print a summary of the
-#' results, while the function `plot` produces a plot of the forecasts and
-#' prediction intervals.
-#'
-#' The generic accessor functions `fitted.values` and `residuals`
-#' extract useful features of the value returned by `forecast.Arima`.
-#'
-#' An object of class `"forecast"` is a list containing at least the
-#' following elements:
-#' \item{model}{A list containing information about the fitted model}
-#' \item{method}{The name of the forecasting method as a character string}
-#' \item{mean}{Point forecasts as a time series}
-#' \item{lower}{Lower limits for prediction intervals}
-#' \item{upper}{Upper limits for prediction intervals}
-#' \item{level}{The confidence values associated with the prediction intervals}
-#' \item{x}{The original time series (either `object` itself or the time series
-#'          used to create the model stored as `object`).}
-#' \item{residuals}{Residuals from the fitted model. That is x minus fitted values.}
-#' \item{fitted}{Fitted values (one-step forecasts)}
+#' @return An object of class `forecast`.
+#' @inherit forecast.ts format
 #' @author Rob J Hyndman
 #' @seealso [stats::predict.Arima()], [stats::predict.ar()], [auto.arima()],
 #' [Arima()], [stats::arima()], [stats::ar()], [arfima()].

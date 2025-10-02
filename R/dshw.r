@@ -39,22 +39,8 @@
 #' set.
 #' @inheritParams forecast.ts
 #' @inheritParams BoxCox
-#'
-#' @return An object of class `"forecast"` which is a list that includes the
-#' following elements:
-#'   \item{model}{A list containing information about the fitted model}
-#'   \item{method}{The name of the forecasting method as a character string}
-#'   \item{mean}{Point forecasts as a time series}
-#'   \item{x}{The original time series.}
-#'   \item{residuals}{Residuals from the fitted model. That is x minus fitted values.}
-#'   \item{fitted}{Fitted values (one-step forecasts)}
-#'
-#' The function `summary` is used to obtain and print a summary of the
-#' results, while the function `plot` produces a plot of the forecasts.
-#'
-#' The generic accessor functions `fitted.values` and `residuals`
-#' extract useful features of the value returned by `dshw`.
-#'
+#' @return An object of class `forecast`.
+#' @inherit forecast.ts format
 #' @author Rob J Hyndman
 #' @seealso [stats::HoltWinters()], [ets()].
 #' @references Taylor, J.W. (2003) Short-term electricity demand forecasting

@@ -43,30 +43,26 @@
 #' `model` is not `NULL`, the arguments are passed to the relevant
 #' modelling function.
 #' @inheritParams BoxCox
-#'
-#' @return An object of class `"forecast"`.
-#'
-#' The function `summary` is used to obtain and print a summary of the
-#' results, while the function `plot` produces a plot of the forecasts and
-#' prediction intervals.
-#'
-#' The generic accessors functions `fitted.values` and `residuals`
-#' extract various useful features of the value returned by
-#' `forecast$model`.
-#'
-#' An object of class `"forecast"` is a list usually containing at least
+#' @return An object of class `forecast`.
+#' @format An object of class `forecast` is a list usually containing at least
 #' the following elements:
-#' \item{model}{A list containing information about the fitted model}
-#' \item{method}{The name of the forecasting method as a character string}
-#' \item{mean}{Point forecasts as a time series}
-#' \item{lower}{Lower limits for prediction intervals}
-#' \item{upper}{Upper limits for prediction intervals}
-#' \item{level}{The confidence values associated with the prediction intervals}
-#' \item{x}{The original time series (either `object` itself or the time series
-#'          used to create the model stored as `object`).}
-#' \item{residuals}{Residuals from the fitted model. For models with additive
-#'                  errors, the residuals will be x minus the fitted values.}
-#' \item{fitted}{Fitted values (one-step forecasts)}
+#' \describe{
+#'   \item{model}{A list containing information about the fitted model}
+#'   \item{method}{The name of the forecasting method as a character string}
+#'   \item{mean}{Point forecasts as a time series}
+#'   \item{lower}{Lower limits for prediction intervals}
+#'   \item{upper}{Upper limits for prediction intervals}
+#'   \item{level}{The confidence values associated with the prediction intervals}
+#'   \item{x}{The original time series.}
+#'   \item{residuals}{Residuals from the fitted model. For models with additive
+#'      errors, the residuals will be x minus the fitted values.}
+#'   \item{fitted}{Fitted values (one-step forecasts)}
+#' }
+#' The function `summary` can be used to obtain and print a summary of the
+#' results, while the functions `plot` and `autoplot` produce plots of the forecasts and
+#' prediction intervals. The generic accessors functions `fitted.values` and `residuals`
+#' extract various useful features from the underlying model.
+#'
 #' @author Rob J Hyndman
 #' @seealso Other functions which return objects of class `"forecast"` are
 #' [forecast.ets()], [forecast.Arima()], [forecast.HoltWinters()],

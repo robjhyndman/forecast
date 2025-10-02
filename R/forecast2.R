@@ -152,28 +152,8 @@ InvBoxCoxf <- function(x = NULL, fvar = NULL, lambda = NULL) {
 #' suitable for fan plots.
 #' @param ... Other arguments.
 #' @inheritParams forecast.ts
-#'
-#' @return An object of class `"forecast"`.
-#'
-#' The function `summary` is used to obtain and print a summary of the
-#' results, while the function `plot` produces a plot of the forecasts and
-#' prediction intervals.
-#'
-#' The generic accessor functions `fitted.values` and `residuals`
-#' extract useful features of the value returned by `forecast.StructTS`.
-#'
-#' An object of class `"forecast"` is a list containing at least the
-#' following elements:
-#' \item{model}{A list containing information about the fitted model}
-#' \item{method}{The name of the forecasting method as a character string}
-#' \item{mean}{Point forecasts as a time series}
-#' \item{lower}{Lower limits for prediction intervals}
-#' \item{upper}{Upper limits for prediction intervals}
-#' \item{level}{The confidence values associated with the prediction intervals}
-#' \item{x}{The original time series (either `object` itself or the time series
-#'          used to create the model stored as `object`).}
-#' \item{residuals}{Residuals from the fitted model. That is x minus fitted values.}
-#' \item{fitted}{Fitted values (one-step forecasts)}
+#' @return An object of class `forecast`.
+#' @inherit forecast.ts format
 #' @author Rob J Hyndman
 #' @seealso [stats::StructTS()].
 #' @keywords ts
@@ -279,28 +259,8 @@ forecast.StructTS <- function(
 #' @param ... Other arguments.
 #' @inheritParams forecast.ts
 #'
-#' @return An object of class `"forecast"`.
-#'
-#' The function `summary` is used to obtain and print a summary of the
-#' results, while the function `plot` produces a plot of the forecasts and
-#' prediction intervals.
-#'
-#' The generic accessor functions `fitted.values` and `residuals`
-#' extract useful features of the value returned by
-#' `forecast.HoltWinters`.
-#'
-#' An object of class `"forecast"` is a list containing at least the
-#' following elements:
-#' \item{model}{A list containing information about the fitted model}
-#' \item{method}{The name of the forecasting method as a character string}
-#' \item{mean}{Point forecasts as a time series}
-#' \item{lower}{Lower limits for prediction intervals}
-#' \item{upper}{Upper limits for prediction intervals}
-#' \item{level}{The confidence values associated with the prediction intervals}
-#' \item{x}{The original time series (either `object` itself or the time series
-#'          used to create the model stored as `object`).}
-#' \item{residuals}{Residuals from the fitted model.}
-#' \item{fitted}{Fitted values (one-step forecasts)}
+#' @return An object of class `forecast`.
+#' @inherit forecast.ts format
 #' @author Rob J Hyndman
 #' @seealso [stats::predict.HoltWinters], [stats::HoltWinters()].
 #' @keywords ts
@@ -415,25 +375,8 @@ forecast.HoltWinters <- function(
 #' @param h Number of periods for forecasting.
 #' @param alpha Value of alpha. Default value is 0.1.
 #' @param x Deprecated. Included for backwards compatibility.
-#' @return An object of class `"forecast"` is a list containing at least
-#' the following elements:
-#' \item{model}{A list containing information about the fitted model. The first
-#' element gives the model used for non-zero demands. The second element gives
-#' the model used for times between non-zero demands. Both elements are of
-#' class `forecast`.}
-#' \item{method}{The name of the forecasting method as a character string}
-#' \item{mean}{Point forecasts as a time series}
-#' \item{x}{The original time series (either `object` itself
-#' or the time series used to create the model stored as `object`).}
-#' \item{residuals}{Residuals from the fitted model. That is y minus fitted values.}
-#' \item{fitted}{Fitted values (one-step forecasts)}
-#'
-#' The function `summary` is used to obtain and print a summary of the
-#' results, while the function `plot` produces a plot of the forecasts.
-#'
-#' The generic accessor functions `fitted.values` and `residuals`
-#' extract useful features of the value returned by `croston` and
-#' associated functions.
+#' @return An object of class `forecast`.
+#' @inherit forecast.ts format
 #' @author Rob J Hyndman
 #' @seealso [ses()].
 #' @references Croston, J. (1972) "Forecasting and stock control for

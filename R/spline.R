@@ -70,27 +70,8 @@ spline.loglik <- function(beta, y, cc = 1e2) {
 #' maximum likelihood method from Hyndman et al (2002) is used.
 #' @param x Deprecated. Included for backwards compatibility.
 #' @inheritParams forecast.ts
-#' @return An object of class `"forecast"`.
-#'
-#' The function `summary` is used to obtain and print a summary of the
-#' results, while the function `plot` produces a plot of the forecasts and
-#' prediction intervals.
-#'
-#' The generic accessor functions `fitted.values` and `residuals`
-#' extract useful features of the value returned by `splinef`.
-#'
-#' An object of class `"forecast"` containing the following elements:
-#' \item{model}{A list containing information about the fitted model}
-#' \item{method}{The name of the forecasting method as a character string}
-#' \item{mean}{Point forecasts as a time series} \item{lower}{Lower limits for
-#' prediction intervals} \item{upper}{Upper limits for prediction intervals}
-#' \item{level}{The confidence values associated with the prediction intervals}
-#' \item{x}{The original time series (either `object` itself or the time
-#' series used to create the model stored as `object`).}
-#' \item{onestepf}{One-step forecasts from the fitted model.}
-#' \item{fitted}{Smooth estimates of the fitted trend using all data.}
-#' \item{residuals}{Residuals from the fitted model. That is x minus one-step
-#' forecasts.}
+#' @return An object of class `forecast`.
+#' @inherit forecast.ts format
 #' @author Rob J Hyndman
 #' @seealso [stats::smooth.spline()], [stats::arima()], [holt()].
 #' @references Hyndman, King, Pitrun and Billah (2005) Local linear forecasts

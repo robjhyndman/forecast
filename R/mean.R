@@ -23,6 +23,7 @@
 #' @param y A univariate time series of class `ts`.
 #' @inheritParams forecast.ts
 #' @return An object of class `mean_model`.
+#' @inherit forecast.ts format
 #' @seealso [forecast.mean_model()], [meanf()]
 #' @author Rob J Hyndman
 #' @keywords ts
@@ -87,6 +88,7 @@ print.mean_model <- function(x, digits = max(3, getOption("digits") - 3), ...) {
 #' @inheritParams forecast.ts
 #' @inheritParams forecast.ets
 #' @param ... Additional arguments not used.
+#' @inherit forecast.ts format
 #' @author Rob J Hyndman
 #' @examples
 #' fit_nile <- mean_model(Nile)

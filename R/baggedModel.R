@@ -107,30 +107,12 @@ baggedETS <- function(y, bootstrapped_series = bld.mbb.bootstrap(y, 100), ...) {
 #' intervals, but give an indication of how different the forecasts within the
 #' ensemble are.
 #'
-#' @param object An object of class `"baggedModel"` resulting from a call to
+#' @param object An object of class `baggedModel` resulting from a call to
 #' [baggedModel()].
 #' @param h Number of periods for forecasting.
 #' @param ... Other arguments, passed on to the [forecast()] function of the original method
-#' @return An object of class `"forecast"`.
-#'
-#' The function `summary` is used to obtain and print a summary of the
-#' results, while the function `plot` produces a plot of the forecasts and
-#' prediction intervals.
-#'
-#' An object of class `"forecast"` is a list containing at least the
-#' following elements:
-#' \item{model}{A list containing information about the fitted model}
-#' \item{method}{The name of the forecasting method as a character string}
-#' \item{mean}{Point forecasts as a time series}
-#' \item{lower}{Lower limits for prediction intervals}
-#' \item{upper}{Upper limits for prediction intervals}
-#' \item{level}{The confidence values associated with the prediction intervals}
-#' \item{x}{The original time series (either `object` itself or the
-#' time series used to create the model stored as `object`).}
-#' \item{xreg}{The external regressors used in fitting (if given).}
-#' \item{residuals}{Residuals from the fitted model. That
-#' is x minus fitted values.}
-#' \item{fitted}{Fitted values (one-step forecasts)}
+#' @return An object of class `forecast`.
+#' @inherit forecast.ts format
 #' @author Christoph Bergmeir, Fotios Petropoulos
 #' @seealso [baggedModel()].
 #' @references Bergmeir, C., R. J. Hyndman, and J. M. Benitez (2016). Bagging
