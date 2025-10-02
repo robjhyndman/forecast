@@ -27,9 +27,10 @@ extract various useful features from the underlying model.
 croston(y, h = 10, alpha = 0.1, x = y)
 }
 \arguments{
-\item{y}{a numeric vector or time series of class \code{ts}}
+\item{y}{a numeric vector or univariate time series of class \code{ts}}
 
-\item{h}{Number of periods for forecasting.}
+\item{h}{Number of periods for forecasting. Default value is twice the
+largest seasonal period (for seasonal data) or ten (for non-seasonal data).}
 
 \item{alpha}{Value of alpha. Default value is 0.1.}
 

@@ -7,7 +7,7 @@
 rw_model(y, lag = 1, drift = FALSE, lambda = NULL, biasadj = FALSE)
 }
 \arguments{
-\item{y}{A univariate time series of class \code{ts}.}
+\item{y}{a numeric vector or univariate time series of class \code{ts}}
 
 \item{lag}{Lag parameter. \code{lag = 1} corresponds to a standard random walk (giving naive forecasts if \code{drift = FALSE} or drift forecasts if \code{drift = TRUE}),
 while \code{lag = m} corresponds to a seasonal random walk where m is the seasonal period (giving seasonal naive forecasts if \code{drift = FALSE}).}

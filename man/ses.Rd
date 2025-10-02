@@ -76,14 +76,15 @@ hw(
 )
 }
 \arguments{
-\item{y}{A numeric vector or time series of class \code{ts}.}
+\item{y}{a numeric vector or univariate time series of class \code{ts}}
 
-\item{h}{Number of periods for forecasting.}
+\item{h}{Number of periods for forecasting. Default value is twice the
+largest seasonal period (for seasonal data) or ten (for non-seasonal data).}
 
-\item{level}{Confidence level for prediction intervals.}
+\item{level}{Confidence levels for prediction intervals.}
 
-\item{fan}{If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
-is suitable for fan plots.}
+\item{fan}{If \code{TRUE}, \code{level} is set to \code{seq(51, 99, by = 3)}.
+This is suitable for fan plots.}
 
 \item{initial}{Method used for selecting initial state values. If
 \code{optimal}, the initial values are optimized along with the smoothing

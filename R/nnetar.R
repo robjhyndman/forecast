@@ -28,7 +28,7 @@
 #'
 #' @aliases print.nnetar print.nnetarmodels
 #'
-#' @param y A numeric vector or time series of class `ts`.
+#' @inheritParams Arima
 #' @param p Embedding dimension for non-seasonal time series. Number of
 #' non-seasonal lags used as inputs. For non-seasonal time series, the default
 #' is the optimal number of lags (according to the AIC) for a linear AR(p)
@@ -41,8 +41,6 @@
 #' number of input nodes (including external regressors, if given) plus 1.
 #' @param repeats Number of networks to fit with different random starting
 #' weights. These are then averaged when producing forecasts.
-#' @param xreg Optionally, a vector or matrix of external regressors, which
-#' must have the same number of rows as `y`. Must be numeric.
 #' @param model Output from a previous call to `nnetar`. If model is
 #' passed, this same model is fitted to `y` without re-estimating any
 #' parameters.
@@ -52,9 +50,7 @@
 #' @param scale.inputs If `TRUE`, inputs are scaled by subtracting the column
 #' means and dividing by their respective standard deviations. If `lambda`
 #' is not `NULL`, scaling is applied after Box-Cox transformation.
-#' @param x Deprecated. Included for backwards compatibility.
 #' @param ... Other arguments passed to [nnet::nnet()] for `nnetar`.
-#' @inheritParams forecast.ts
 #'
 #' @return Returns an object of class `"nnetar"`.
 #'
@@ -423,29 +419,16 @@ print.nnetarmodels <- function(x, ...) {
 #' could lead to misleadingly small values. It is possible to use out-of-sample
 #' residuals to ameliorate this, see examples.
 #'
+#' @inheritParams forecast.Arima
 #' @param object An object of class `"nnetar"` resulting from a call to
 #' [nnetar()].
-#' @param h Number of periods for forecasting. If `xreg` is used, `h`
-#' is ignored and the number of forecast periods is set to the number of rows
-#' of `xreg`.
 #' @param PI If `TRUE`, prediction intervals are produced, otherwise only point
 #' forecasts are calculated. If `PI` is `FALSE`, then `level`,
 #' `fan`, `bootstrap` and `npaths` are all ignored.
-#' @param level Confidence level for prediction intervals.
-#' @param fan If `TRUE`, level is set to `seq(51, 99, by = 3)`. This
-#' is suitable for fan plots.
-#' @param xreg Future values of external regressor variables.
-#' @param bootstrap If `TRUE`, then prediction intervals computed using
-#' simulations with resampled residuals rather than normally distributed
-#' errors. Ignored if `innov` is not `NULL`.
-#' @param npaths Number of sample paths used in computing simulated prediction
-#' intervals.
 #' @param innov Values to use as innovations for prediction intervals. Must be
 #' a matrix with `h` rows and `npaths` columns (vectors are coerced
 #' into a matrix). If present, `bootstrap` is ignored.
 #' @param ... Additional arguments passed to [simulate.nnetar()].
-#' @inheritParams forecast.ts
-#'
 #' @return An object of class `forecast`.
 #' @inherit forecast.ts format
 #' @author Rob J Hyndman and Gabriel Caceres

@@ -78,9 +78,10 @@ snaive(
 \arguments{
 \item{object}{An object of class \code{rw_model} returned by \code{\link[=rw_model]{rw_model()}}.}
 
-\item{h}{Number of periods for forecasting.}
+\item{h}{Number of periods for forecasting. Default value is twice the
+largest seasonal period (for seasonal data) or ten (for non-seasonal data).}
 
-\item{level}{Confidence level for prediction intervals.}
+\item{level}{Confidence levels for prediction intervals.}
 
 \item{fan}{If \code{TRUE}, \code{level} is set to \code{seq(51, 99, by = 3)}.
 This is suitable for fan plots.}
@@ -107,14 +108,14 @@ and fitted values.}
 
 \item{...}{Additional arguments not used.}
 
-\item{y}{A univariate time series of class \code{ts}.}
+\item{y}{a numeric vector or univariate time series of class \code{ts}}
 
 \item{drift}{Logical flag. If \code{TRUE}, fits a random walk with drift model.}
 
 \item{lag}{Lag parameter. \code{lag = 1} corresponds to a standard random walk (giving naive forecasts if \code{drift = FALSE} or drift forecasts if \code{drift = TRUE}),
 while \code{lag = m} corresponds to a seasonal random walk where m is the seasonal period (giving seasonal naive forecasts if \code{drift = FALSE}).}
 
-\item{x}{a numeric vector or time series of class \code{ts}.}
+\item{x}{Deprecated. Included for backwards compatibility.}
 }
 \value{
 An object of class \code{forecast}.

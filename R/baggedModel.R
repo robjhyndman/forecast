@@ -18,7 +18,7 @@
 #'
 #' @aliases print.baggedModel
 #'
-#' @param y A numeric vector or time series of class `ts`.
+#' @param y A numeric vector or univariate time series of class `ts`.
 #' @param bootstrapped_series bootstrapped versions of y.
 #' @param fn the forecast function to use. Default is [ets()].
 #' @param ... Other arguments passed to the forecast function.
@@ -107,9 +107,9 @@ baggedETS <- function(y, bootstrapped_series = bld.mbb.bootstrap(y, 100), ...) {
 #' intervals, but give an indication of how different the forecasts within the
 #' ensemble are.
 #'
+#' @inheritParams forecast.ets
 #' @param object An object of class `baggedModel` resulting from a call to
 #' [baggedModel()].
-#' @param h Number of periods for forecasting.
 #' @param ... Other arguments, passed on to the [forecast()] function of the original method
 #' @return An object of class `forecast`.
 #' @inherit forecast.ts format

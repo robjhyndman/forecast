@@ -63,7 +63,7 @@ extract various useful features from the underlying model.
 )
 }
 \arguments{
-\item{object}{An object of class \code{"Arima"}, \verb{"ar"" or }"fracdiff"`. Usually
+\item{object}{An object of class \code{Arima}, \code{ar} or \code{fracdiff}. Usually
 the result of a call to \code{\link[stats:arima]{stats::arima()}}, \code{\link[=auto.arima]{auto.arima()}}, \code{\link[stats:ar]{stats::ar()}},
 \code{\link[=arfima]{arfima()}} or \code{\link[fracdiff:fracdiff]{fracdiff::fracdiff()}}.}
 
@@ -71,10 +71,10 @@ the result of a call to \code{\link[stats:arima]{stats::arima()}}, \code{\link[=
 is ignored and the number of forecast periods is set to the number of rows
 of \code{xreg}.}
 
-\item{level}{Confidence level for prediction intervals.}
+\item{level}{Confidence levels for prediction intervals.}
 
-\item{fan}{If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
-is suitable for fan plots.}
+\item{fan}{If \code{TRUE}, \code{level} is set to \code{seq(51, 99, by = 3)}.
+This is suitable for fan plots.}
 
 \item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
@@ -87,16 +87,16 @@ values, a regular back transformation will result in median forecasts. If
 biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
 and fitted values.}
 
-\item{...}{Other arguments.}
+\item{...}{Other arguments are ignored.}
 
-\item{xreg}{Future values of an regression variables (for class \code{Arima}
-objects only). A numerical vector or matrix of external regressors; it should not be a data frame.}
+\item{xreg}{Future values of any regression variables. A numerical vector or
+matrix of external regressors; it should not be a data frame.}
 
-\item{bootstrap}{If \code{TRUE}, then prediction intervals computed using
-simulation with resampled errors.}
+\item{bootstrap}{If \code{TRUE}, then prediction intervals are produced by
+simulation using resampled errors (rather than normally distributed errors).}
 
 \item{npaths}{Number of sample paths used in computing simulated prediction
-intervals when \code{bootstrap = TRUE}.}
+intervals.}
 }
 \value{
 An object of class \code{forecast}.
@@ -106,7 +106,7 @@ Returns forecasts and other information for univariate ARIMA models.
 }
 \details{
 For \code{Arima} or \code{ar} objects, the function calls \code{\link[stats:predict.arima]{stats::predict.Arima()}} or
-\link[stats:ar]{stats::predict.ar} and constructs an object of class \code{"forecast"} from the
+\link[stats:ar]{stats::predict.ar} and constructs an object of class \code{forecast} from the
 results. For \code{fracdiff} objects, the calculations are all done within
 \code{\link[fracdiff:fracdiff]{fracdiff::fracdiff()}} using the equations given by Peiris and Perera (1988).
 }

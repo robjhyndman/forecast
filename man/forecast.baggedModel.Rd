@@ -31,10 +31,11 @@ extract various useful features from the underlying model.
 )
 }
 \arguments{
-\item{object}{An object of class \code{"baggedModel"} resulting from a call to
+\item{object}{An object of class \code{baggedModel} resulting from a call to
 \code{\link[=baggedModel]{baggedModel()}}.}
 
-\item{h}{Number of periods for forecasting.}
+\item{h}{Number of periods for forecasting. Default value is twice the
+largest seasonal period (for seasonal data) or ten (for non-seasonal data).}
 
 \item{...}{Other arguments, passed on to the \code{\link[=forecast]{forecast()}} function of the original method}
 }

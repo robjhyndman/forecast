@@ -7,7 +7,7 @@
 \method{accuracy}{default}(object, x, test = NULL, d = NULL, D = NULL, f = NULL, ...)
 }
 \arguments{
-\item{object}{An object of class \code{"forecast"}, or a numerical vector
+\item{object}{An object of class \code{forecast}, or a numerical vector
 containing forecasts. It will also work with \code{Arima}, \code{ets} and
 \code{lm} objects if \code{x} is omitted -- in which case training set accuracy
 measures are returned.}

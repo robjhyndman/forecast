@@ -78,12 +78,14 @@ forecasting the seasonally adjusted series. If \code{forecastfunction} is
 not \code{NULL}, then \code{method} is ignored. Otherwise \code{method} is
 used to specify the forecasting method to be used.}
 
-\item{h}{Number of periods for forecasting.}
+\item{h}{Number of periods for forecasting. If \code{xreg} is used, \code{h}
+is ignored and the number of forecast periods is set to the number of rows
+of \code{xreg}.}
 
-\item{level}{Confidence level for prediction intervals.}
+\item{level}{Confidence levels for prediction intervals.}
 
-\item{fan}{If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
-is suitable for fan plots.}
+\item{fan}{If \code{TRUE}, \code{level} is set to \code{seq(51, 99, by = 3)}.
+This is suitable for fan plots.}
 
 \item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
@@ -108,7 +110,7 @@ models are permitted.}
 \item{...}{Other arguments passed to \code{forecast.stl},
 \code{modelfunction} or \code{forecastfunction}.}
 
-\item{y}{A univariate numeric time series of class \code{ts}.}
+\item{y}{a numeric vector or univariate time series of class \code{ts}}
 
 \item{s.window}{Either the character string \code{"periodic"} or the span (in
 lags) of the loess window for seasonal extraction.}

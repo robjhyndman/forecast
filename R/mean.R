@@ -20,8 +20,7 @@
 #' The generic accessor functions [stats::fitted()] and [stats::residuals()]
 #' extract useful features of the object returned by [mean_model()].
 #'
-#' @param y A univariate time series of class `ts`.
-#' @inheritParams forecast.ts
+#' @inheritParams Arima
 #' @return An object of class `mean_model`.
 #' @inherit forecast.ts format
 #' @seealso [forecast.mean_model()], [meanf()]

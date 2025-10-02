@@ -17,7 +17,7 @@ arfima(
 )
 }
 \arguments{
-\item{y}{A univariate time series (numeric vector).}
+\item{y}{a numeric vector or univariate time series of class \code{ts}}
 
 \item{drange}{Allowable values of d to be considered. Default of
 \code{c(0, 0.5)} ensures a stationary model is returned.}
@@ -41,7 +41,7 @@ biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
 and fitted values.}
 
 \item{xreg}{Optionally, a numerical vector or matrix of external regressors,
-which must have the same number of rows as y. It should not be a data frame.}
+which must have the same number of rows as \code{y}. It should not be a data frame.}
 
 \item{x}{Deprecated. Included for backwards compatibility.}
 

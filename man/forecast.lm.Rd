@@ -47,10 +47,10 @@ trend and season, and \code{h} forecasts are produced.}
 \item{h}{Number of periods for forecasting. Ignored if \code{newdata}
 present.}
 
-\item{level}{Confidence level for prediction intervals.}
+\item{level}{Confidence levels for prediction intervals.}
 
-\item{fan}{If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
-is suitable for fan plots.}
+\item{fan}{If \code{TRUE}, \code{level} is set to \code{seq(51, 99, by = 3)}.
+This is suitable for fan plots.}
 
 \item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.

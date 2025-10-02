@@ -2,13 +2,9 @@
 #'
 #' Returns forecasts and other information for univariate ETS models.
 #'
-#'
+#' @inheritParams forecast.ts
 #' @param object An object of class `"ets"`. Usually the result of a call
 #' to [ets()].
-#' @param h Number of periods for forecasting
-#' @param level Confidence level for prediction intervals.
-#' @param fan If `TRUE`, level is set to `seq(51, 99, by = 3)`. This
-#' is suitable for fan plots.
 #' @param simulate If `TRUE`, prediction intervals are produced by simulation rather
 #' than using analytic formulae. Errors are assumed to be normally distributed.
 #' @param bootstrap If `TRUE`, then prediction intervals are produced by
@@ -19,7 +15,7 @@
 #' forecasts are calculated. If `PI` is `FALSE`, then `level`,
 #' `fan`, `simulate`, `bootstrap` and `npaths` are all
 #' ignored.
-#' @param ... Other arguments.
+#' @param ... Other arguments are ignored.
 #' @return An object of class `forecast`.
 #' @inherit forecast.ts format
 #' @author Rob J Hyndman

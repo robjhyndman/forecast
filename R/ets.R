@@ -11,7 +11,8 @@
 #'
 #' @aliases print.ets summary.ets as.character.ets coef.ets tsdiag.ets
 #'
-#' @param y a numeric vector or time series of class `ts`
+#' @inheritParams forecast.ts
+#' @param y a numeric vector or univariate time series of class `ts`
 #' @param model Usually a three-character string identifying method using the
 #' framework terminology of Hyndman et al. (2002) and Hyndman et al. (2008).
 #' The first letter denotes the error type ("A", "M" or "Z"); the second letter
@@ -34,12 +35,11 @@
 #' @param gamma Value of gamma. If `NULL`, it is estimated.
 #' @param phi Value of phi. If `NULL`, it is estimated.
 #' @param additive.only If `TRUE`, will only consider additive models. Default is
-#' `FALSE`.
+#' `FALSE`. When `lambda` is specified, `additive.only` is set to `TRUE`.
 #' @param lambda Box-Cox transformation parameter. If `lambda = "auto"`,
 #' then a transformation is automatically selected using `BoxCox.lambda`.
 #' The transformation is ignored if NULL. Otherwise,
-#' data transformed before model is estimated. When `lambda` is specified,
-#' `additive.only` is set to `TRUE`.
+#' data transformed before model is estimated. 
 #' @param lower Lower bounds for the parameters (alpha, beta, gamma, phi). Ignored if `bounds = "admissible"`.
 #' @param upper Upper bounds for the parameters (alpha, beta, gamma, phi). Ignored if `bounds = "admissible"`.
 #' @param opt.crit Optimization criterion. One of "mse" (Mean Square Error),
@@ -65,7 +65,6 @@
 #' contains NA values. By default, the largest contiguous portion of the
 #' time-series will be used.
 #' @param ... Other undocumented arguments.
-#' @inheritParams forecast.ts
 #'
 #' @return An object of class `"ets"`.
 #'

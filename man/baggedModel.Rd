@@ -11,7 +11,7 @@ baggedModel(y, bootstrapped_series = bld.mbb.bootstrap(y, 100), fn = ets, ...)
 baggedETS(y, bootstrapped_series = bld.mbb.bootstrap(y, 100), ...)
 }
 \arguments{
-\item{y}{A numeric vector or time series of class \code{ts}.}
+\item{y}{A numeric vector or univariate time series of class \code{ts}.}
 
 \item{bootstrapped_series}{bootstrapped versions of y.}
 

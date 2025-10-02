@@ -42,12 +42,13 @@ extract various useful features from the underlying model.
 \item{object}{An object of class \code{"ets"}. Usually the result of a call
 to \code{\link[=ets]{ets()}}.}
 
-\item{h}{Number of periods for forecasting}
+\item{h}{Number of periods for forecasting. Default value is twice the
+largest seasonal period (for seasonal data) or ten (for non-seasonal data).}
 
-\item{level}{Confidence level for prediction intervals.}
+\item{level}{Confidence levels for prediction intervals.}
 
-\item{fan}{If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
-is suitable for fan plots.}
+\item{fan}{If \code{TRUE}, \code{level} is set to \code{seq(51, 99, by = 3)}.
+This is suitable for fan plots.}
 
 \item{simulate}{If \code{TRUE}, prediction intervals are produced by simulation rather
 than using analytic formulae. Errors are assumed to be normally distributed.}
@@ -74,10 +75,10 @@ values, a regular back transformation will result in median forecasts. If
 biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
 and fitted values.}
 
-\item{...}{Other arguments.}
+\item{...}{Other arguments are ignored.}
 }
 \value{
-An object of class \code{"forecast"}.
+An object of class \code{forecast}.
 }
 \description{
 Returns forecasts and other information for univariate ETS models.

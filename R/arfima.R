@@ -78,7 +78,7 @@ unfracdiff <- function(x, y, n, h, d) {
 #' re-estimated using [fracdiff::fracdiff()]. If `estim = "mle"`,
 #' the ARMA coefficients are refined using [stats::arima()].
 #'
-#' @param y A univariate time series (numeric vector).
+#' @inheritParams Arima
 #' @param drange Allowable values of d to be considered. Default of
 #' `c(0, 0.5)` ensures a stationary model is returned.
 #' @param estim If `estim = "ls"`, then the ARMA parameters are calculated
@@ -86,10 +86,7 @@ unfracdiff <- function(x, y, n, h, d) {
 #' parameters are calculated using full MLE via the [stats::arima()] function.
 #' @param model Output from a previous call to `arfima`. If model is
 #' passed, this same model is fitted to y without re-estimating any parameters.
-#' @param x Deprecated. Included for backwards compatibility.
 #' @param ... Other arguments passed to [auto.arima()] when selecting p and q.
-#' @inheritParams forecast.ts
-#' @inheritParams Arima
 #'
 #' @return A list object of S3 class `"fracdiff"`, which is described in
 #' the [fracdiff::fracdiff()] documentation. A few additional objects

@@ -24,20 +24,21 @@ Arima(
 )
 }
 \arguments{
-\item{y}{A univariate time series of class \code{ts}.}
+\item{y}{a numeric vector or univariate time series of class \code{ts}}
 
-\item{order}{A specification of the non-seasonal part of the ARIMA model:
-the three components (p, d, q) are the AR order, the degree of differencing,
-and the MA order.}
+\item{order}{a specification of the non-seasonal part of the ARIMA
+    model: the three integer components \eqn{(p, d, q)} are the AR order, the
+    degree of differencing, and the MA order.}
 
-\item{seasonal}{A specification of the seasonal part of the ARIMA model,
-plus the period (which defaults to \code{frequency(y)}). This should be a
-list with components order and period, but a specification of just a numeric
-vector of length 3 will be turned into a suitable list with the
-specification as the order.}
+\item{seasonal}{a specification of the seasonal part of the ARIMA
+    model, plus the period (which defaults to \code{frequency(x)}).
+    This may be a \code{\link{list}} with components \code{order} and
+    \code{period}, or just a numeric vector of length 3 which
+    specifies the seasonal \code{order}.  In the latter case the
+    default period is used.}
 
 \item{xreg}{Optionally, a numerical vector or matrix of external regressors,
-which must have the same number of rows as y. It should not be a data frame.}
+which must have the same number of rows as \code{y}. It should not be a data frame.}
 
 \item{include.mean}{Should the ARIMA model include a mean term? The default
 is \code{TRUE} for undifferenced series, \code{FALSE} for differenced ones
@@ -65,9 +66,10 @@ values, a regular back transformation will result in median forecasts. If
 biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
 and fitted values.}
 
-\item{method}{Fitting method: maximum likelihood or minimize conditional
-sum-of-squares. The default (unless there are missing values) is to use
-conditional-sum-of-squares to find starting values, then maximum likelihood.}
+\item{method}{fitting method: maximum likelihood or minimize
+    conditional sum-of-squares.  The default (unless there are missing
+    values) is to use conditional-sum-of-squares to find starting
+    values, then maximum likelihood.  Can be abbreviated.}
 
 \item{model}{Output from a previous call to \code{Arima}. If model is
 passed, this same model is fitted to \code{y} without re-estimating any

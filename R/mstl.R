@@ -173,7 +173,7 @@ autoplot.mstl <- function(object, ...) {
 #' `forecastfunction = thetaf` uses the [thetaf()] function for
 #' forecasting the seasonally adjusted series.
 #'
-#' @param y A univariate numeric time series of class `ts`.
+#' @inheritParams forecast.Arima
 #' @param object An object of class `stl` or `stlm`. Usually the
 #' result of a call to [stats::stl()] or `stlm`.
 #' @param method Method to use for forecasting the seasonally adjusted series.
@@ -194,10 +194,6 @@ autoplot.mstl <- function(object, ...) {
 #' @param xreg Historical regressors to be used in
 #' [auto.arima()] when `method = "arima"`.
 #' @param newxreg Future regressors to be used in [forecast.Arima()].
-#' @param h Number of periods for forecasting.
-#' @param level Confidence level for prediction intervals.
-#' @param fan If `TRUE`, level is set to `seq(51, 99, by = 3)`. This
-#' is suitable for fan plots.
 #' @param s.window Either the character string `"periodic"` or the span (in
 #' lags) of the loess window for seasonal extraction.
 #' @param t.window A number to control the smoothness of the trend. See
@@ -207,10 +203,8 @@ autoplot.mstl <- function(object, ...) {
 #' @param allow.multiplicative.trend If `TRUE`, then ETS models with
 #' multiplicative trends are allowed. Otherwise, only additive or no trend ETS
 #' models are permitted.
-#' @param x Deprecated. Included for backwards compatibility.
 #' @param ... Other arguments passed to `forecast.stl`,
 #' `modelfunction` or `forecastfunction`.
-#' @inheritParams forecast.ts
 #'
 #' @return `stlm` returns an object of class `stlm`. The other
 #' functions return objects of class `forecast`.
@@ -417,6 +411,7 @@ rowSumsTS <- function(mts) {
 # Function takes time series, does STL decomposition, and fits a model to seasonally adjusted series
 # But it does not forecast. Instead, the result can be passed to forecast().
 #' @rdname forecast.stl
+#' @inheritParams Arima
 #' @export
 stlm <- function(
   y,

@@ -50,23 +50,10 @@ mlmsplit <- function(x, index = NULL) {
 #' allows forecasts to be generated on multiple series. Also, the output is
 #' reformatted into a `mforecast` object.
 #'
+#' @inheritParams forecast.lm
 #' @param object Object of class "mlm", usually the result of a call to
 #' [stats::lm()] or [tslm()].
-#' @param newdata An optional data frame in which to look for variables with
-#' which to predict. If omitted, it is assumed that the only variables are
-#' trend and season, and `h` forecasts are produced.
-#' @param level Confidence level for prediction intervals.
-#' @param fan If `TRUE`, level is set to `seq(51, 99, by = 3)`. This
-#' is suitable for fan plots.
-#' @param h Number of periods for forecasting. Ignored if `newdata`
-#' present.
-#' @param ts If `TRUE`, the forecasts will be treated as time series
-#' provided the original data is a time series; the `newdata` will be
-#' interpreted as related to the subsequent time periods. If `FALSE`, any
-#' time series attributes of the original data will be ignored.
 #' @param ... Other arguments passed to [forecast.lm()].
-#' @inheritParams forecast.ts
-#'
 #' @return An object of class `"mforecast"`.
 #'
 #' The function `summary` is used to obtain and print a summary of the
@@ -140,12 +127,9 @@ forecast.mlm <- function(
 #'
 #' @aliases mforecast print.mforecast summary.mforecast as.data.frame.mforecast
 #'
+#' @inheritParams forecast.ts
 #' @param object a multivariate time series or multivariate time series model
 #' for which forecasts are required
-#' @param h Number of periods for forecasting
-#' @param level Confidence level for prediction intervals.
-#' @param fan If `TRUE`, `level` is set to `seq(51, 99, by = 3)`.
-#' This is suitable for fan plots.
 #' @param robust If `TRUE`, the function is robust to missing values and outliers
 #' in `object`. This argument is only valid when `object` is of class `mts`.
 #' @param find.frequency If `TRUE`, the function determines the appropriate
@@ -154,7 +138,6 @@ forecast.mlm <- function(
 #' multiplicative trends are allowed. Otherwise, only additive or no trend ETS
 #' models are permitted.
 #' @param ... Additional arguments affecting the forecasts produced.
-#' @inheritParams forecast.ts
 #' @return An object of class `"mforecast"`.
 #'
 #' The function `summary` is used to obtain and print a summary of the

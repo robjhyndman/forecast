@@ -22,7 +22,7 @@ nnetar(
 )
 }
 \arguments{
-\item{y}{A numeric vector or time series of class \code{ts}.}
+\item{y}{a numeric vector or univariate time series of class \code{ts}}
 
 \item{p}{Embedding dimension for non-seasonal time series. Number of
 non-seasonal lags used as inputs. For non-seasonal time series, the default
@@ -40,8 +40,8 @@ number of input nodes (including external regressors, if given) plus 1.}
 \item{repeats}{Number of networks to fit with different random starting
 weights. These are then averaged when producing forecasts.}
 
-\item{xreg}{Optionally, a vector or matrix of external regressors, which
-must have the same number of rows as \code{y}. Must be numeric.}
+\item{xreg}{Optionally, a numerical vector or matrix of external regressors,
+which must have the same number of rows as \code{y}. It should not be a data frame.}
 
 \item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.

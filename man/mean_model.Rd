@@ -27,7 +27,7 @@ extract various useful features from the underlying model.
 mean_model(y, lambda = NULL, biasadj = FALSE)
 }
 \arguments{
-\item{y}{A univariate time series of class \code{ts}.}
+\item{y}{a numeric vector or univariate time series of class \code{ts}}
 
 \item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.

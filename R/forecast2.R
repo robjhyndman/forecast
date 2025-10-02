@@ -142,16 +142,11 @@ InvBoxCoxf <- function(x = NULL, fvar = NULL, lambda = NULL) {
 #' series models.
 #'
 #' This function calls `predict.StructTS` and constructs an object of
-#' class `"forecast"` from the results.
+#' class `forecast` from the results.
 #'
 #' @param object An object of class `"StructTS"`. Usually the result of a
 #' call to [stats::StructTS()].
-#' @param h Number of periods for forecasting
-#' @param level Confidence level for prediction intervals.
-#' @param fan If `TRUE`, level is set to `seq(51, 99, by = 3)`. This is
-#' suitable for fan plots.
-#' @param ... Other arguments.
-#' @inheritParams forecast.ts
+#' @inheritParams forecast.ets
 #' @return An object of class `forecast`.
 #' @inherit forecast.ts format
 #' @author Rob J Hyndman
@@ -245,18 +240,14 @@ forecast.StructTS <- function(
 #' series models.
 #'
 #' This function calls [stats::predict.HoltWinters()] and constructs
-#' an object of class `"forecast"` from the results.
+#' an object of class `forecast` from the results.
 #'
 #' It is included for completeness, but the [ets()] is recommended
 #' for use instead of [stats::HoltWinters].
 #'
+#' @inheritParams forecast.ets 
 #' @param object An object of class `"HoltWinters"`. Usually the result of
 #' a call to [stats::HoltWinters()].
-#' @param h Number of periods for forecasting
-#' @param level Confidence level for prediction intervals.
-#' @param fan If `TRUE`, level is set to `seq(51, 99, by = 3)`. This
-#' is suitable for fan plots.
-#' @param ... Other arguments.
 #' @inheritParams forecast.ts
 #'
 #' @return An object of class `forecast`.
@@ -371,10 +362,9 @@ forecast.HoltWinters <- function(
 #' Note that prediction intervals are not computed as Croston's method has no
 #' underlying stochastic model.
 #'
-#' @param y a numeric vector or time series of class `ts`
-#' @param h Number of periods for forecasting.
+#' @inheritParams Arima
+#' @inheritParams forecast.ts
 #' @param alpha Value of alpha. Default value is 0.1.
-#' @param x Deprecated. Included for backwards compatibility.
 #' @return An object of class `forecast`.
 #' @inherit forecast.ts format
 #' @author Rob J Hyndman

@@ -7,7 +7,7 @@
 tsCV(y, forecastfunction, h = 1, window = NULL, xreg = NULL, initial = 0, ...)
 }
 \arguments{
-\item{y}{Univariate time series}
+\item{y}{a numeric vector or univariate time series of class \code{ts}}
 
 \item{forecastfunction}{Function to return an object of class
 \code{forecast}. Its first argument must be a univariate time series, and it
@@ -15,7 +15,8 @@ must have an argument \code{h} for the forecast horizon. If exogenous predictors
 then it must also have \code{xreg} and \code{newxreg} arguments corresponding to the
 training and test periods.}
 
-\item{h}{Forecast horizon}
+\item{h}{Number of periods for forecasting. Default value is twice the
+largest seasonal period (for seasonal data) or ten (for non-seasonal data).}
 
 \item{window}{Length of the rolling window, if NULL, a rolling window will not be used.}
 

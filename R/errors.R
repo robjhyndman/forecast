@@ -216,7 +216,7 @@ trainingaccuracy <- function(f, test, d, D) {
 #' See Hyndman and Koehler (2006) and Hyndman and Athanasopoulos (2014, Section
 #' 2.5) for further details.
 #'
-#' @param object An object of class `"forecast"`, or a numerical vector
+#' @param object An object of class `forecast`, or a numerical vector
 #' containing forecasts. It will also work with `Arima`, `ets` and
 #' `lm` objects if `x` is omitted -- in which case training set accuracy
 #' measures are returned.

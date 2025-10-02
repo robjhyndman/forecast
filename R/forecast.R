@@ -20,8 +20,9 @@
 #'
 #' @param object a time series or time series model for which forecasts are
 #' required.
-#' @param h Number of periods for forecasting.
-#' @param level Confidence level for prediction intervals.
+#' @param h Number of periods for forecasting. Default value is twice the
+#' largest seasonal period (for seasonal data) or ten (for non-seasonal data).
+#' @param level Confidence levels for prediction intervals.
 #' @param fan If `TRUE`, `level` is set to `seq(51, 99, by = 3)`.
 #' This is suitable for fan plots.
 #' @param robust If `TRUE`, the function is robust to missing values and outliers
@@ -64,7 +65,7 @@
 #' extract various useful features from the underlying model.
 #'
 #' @author Rob J Hyndman
-#' @seealso Other functions which return objects of class `"forecast"` are
+#' @seealso Other functions which return objects of class `forecast` are
 #' [forecast.ets()], [forecast.Arima()], [forecast.HoltWinters()],
 #' [forecast.StructTS()], [meanf()], [rwf()], [splinef()], [thetaf()],
 #' [croston()], [ses()], [holt()], [hw()].

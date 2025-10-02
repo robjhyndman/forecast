@@ -61,7 +61,6 @@ monthdays <- function(x) {
 #' Returns vector containing the seasonal index for `h` future periods. If
 #' the seasonal index is non-periodic, it uses the last values of the index.
 #'
-#'
 #' @param object Output from [stats::decompose()] or [stats::stl()].
 #' @param h Number of periods ahead to forecast.
 #' @return Time series
@@ -116,8 +115,7 @@ sindexf <- function(object, h) {
 #' for the matrix returned by `seasonaldummy`, typically used for
 #' forecasting. The values within `x` are not used.
 #'
-#' @param x Seasonal time series: a `ts` or a `msts` object
-#' @param h Number of periods ahead to forecast (optional)
+#' @inheritParams fourier
 #' @return Numerical matrix.
 #' @author Rob J Hyndman
 #' @seealso [fourier()]

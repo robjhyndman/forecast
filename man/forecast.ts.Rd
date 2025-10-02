@@ -51,9 +51,10 @@ extract various useful features from the underlying model.
 \item{object}{a time series or time series model for which forecasts are
 required.}
 
-\item{h}{Number of periods for forecasting.}
+\item{h}{Number of periods for forecasting. Default value is twice the
+largest seasonal period (for seasonal data) or ten (for non-seasonal data).}
 
-\item{level}{Confidence level for prediction intervals.}
+\item{level}{Confidence levels for prediction intervals.}
 
 \item{fan}{If \code{TRUE}, \code{level} is set to \code{seq(51, 99, by = 3)}.
 This is suitable for fan plots.}
@@ -118,7 +119,7 @@ fit <- ets(window(WWWusage, end = 60))
 fc <- forecast(WWWusage, model = fit)
 }
 \seealso{
-Other functions which return objects of class \code{"forecast"} are
+Other functions which return objects of class \code{forecast} are
 \code{\link[=forecast.ets]{forecast.ets()}}, \code{\link[=forecast.Arima]{forecast.Arima()}}, \code{\link[=forecast.HoltWinters]{forecast.HoltWinters()}},
 \code{\link[=forecast.StructTS]{forecast.StructTS()}}, \code{\link[=meanf]{meanf()}}, \code{\link[=rwf]{rwf()}}, \code{\link[=splinef]{splinef()}}, \code{\link[=thetaf]{thetaf()}},
 \code{\link[=croston]{croston()}}, \code{\link[=ses]{ses()}}, \code{\link[=holt]{holt()}}, \code{\link[=hw]{hw()}}.

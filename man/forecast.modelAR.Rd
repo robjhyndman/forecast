@@ -39,7 +39,7 @@ extract various useful features from the underlying model.
 )
 }
 \arguments{
-\item{object}{An object of class \code{"modelAR"} resulting from a call to
+\item{object}{An object of class \code{modelAR} resulting from a call to
 \code{\link[=modelAR]{modelAR()}}.}
 
 \item{h}{Number of periods for forecasting. If \code{xreg} is used, \code{h}
@@ -50,21 +50,21 @@ of \code{xreg}.}
 forecasts are calculated. If \code{PI} is \code{FALSE}, then \code{level},
 \code{fan}, \code{bootstrap} and \code{npaths} are all ignored.}
 
-\item{level}{Confidence level for prediction intervals.}
+\item{level}{Confidence levels for prediction intervals.}
 
-\item{fan}{If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
-is suitable for fan plots.}
+\item{fan}{If \code{TRUE}, \code{level} is set to \code{seq(51, 99, by = 3)}.
+This is suitable for fan plots.}
 
-\item{xreg}{Future values of external regressor variables.}
+\item{xreg}{Future values of any regression variables. A numerical vector or
+matrix of external regressors; it should not be a data frame.}
 
 \item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.}
 
-\item{bootstrap}{If \code{TRUE}, then prediction intervals computed using
-simulations with resampled residuals rather than normally distributed
-errors. Ignored if \code{innov} is not \code{NULL}.}
+\item{bootstrap}{If \code{TRUE}, then prediction intervals are produced by
+simulation using resampled errors (rather than normally distributed errors).}
 
 \item{npaths}{Number of sample paths used in computing simulated prediction
 intervals.}
@@ -73,7 +73,7 @@ intervals.}
 a matrix with \code{h} rows and \code{npaths} columns (vectors are coerced
 into a matrix). If present, \code{bootstrap} is ignored.}
 
-\item{...}{Additional arguments passed to \code{\link[=simulate.nnetar]{simulate.nnetar()}}}
+\item{...}{Additional arguments passed to \code{\link[=simulate.nnetar]{simulate.nnetar()}}.}
 }
 \value{
 An object of class \code{forecast}.

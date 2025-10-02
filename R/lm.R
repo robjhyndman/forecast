@@ -209,14 +209,12 @@ fitted.tslm <- function(object, ...) {
 #' characteristics of the data. Also, the output is reformatted into a
 #' `forecast` object.
 #'
+#' @inheritParams forecast.ts
 #' @param object Object of class "lm", usually the result of a call to
 #' [stats::lm()] or [tslm()].
 #' @param newdata An optional data frame in which to look for variables with
 #' which to predict. If omitted, it is assumed that the only variables are
 #' trend and season, and `h` forecasts are produced.
-#' @param level Confidence level for prediction intervals.
-#' @param fan If `TRUE`, level is set to `seq(51, 99, by = 3)`. This
-#' is suitable for fan plots.
 #' @param h Number of periods for forecasting. Ignored if `newdata`
 #' present.
 #' @param ts If `TRUE`, the forecasts will be treated as time series
@@ -224,7 +222,6 @@ fitted.tslm <- function(object, ...) {
 #' interpreted as related to the subsequent time periods. If `FALSE`, any
 #' time series attributes of the original data will be ignored.
 #' @param ... Other arguments passed to [stats::predict.lm()].
-#' @inheritParams forecast.ts
 #'
 #' @return An object of class `forecast`.
 #' @inherit forecast.ts format

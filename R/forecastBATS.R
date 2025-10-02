@@ -3,18 +3,9 @@
 #' Forecasts `h` steps ahead with a BATS model. Prediction intervals are
 #' also produced.
 #'
-#' @param object An object of class `"bats"`. Usually the result of a call to
+#' @inheritParams forecast.ets
+#' @param object An object of class `bats`. Usually the result of a call to
 #' [bats()].
-#' @param h Number of periods for forecasting. Default value is twice the
-#' largest seasonal period (for seasonal data) or ten (for non-seasonal data).
-#' @param level Confidence level for prediction intervals.
-#' @param fan If `TRUE`, level is set to `seq(51, 99, by = 3)`. This
-#' is suitable for fan plots.
-#' @param biasadj Use adjusted back-transformed mean for Box-Cox
-#' transformations. If `TRUE`, point forecasts and fitted values are mean
-#' forecast. Otherwise, these points can be considered the median of the
-#' forecast densities.
-#' @param ... Other arguments, currently ignored.
 #' @return An object of class `forecast`.
 #' @inherit forecast.ts format
 #' @author Slava Razbash and Rob J Hyndman

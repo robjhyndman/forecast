@@ -34,7 +34,7 @@ ets(
 )
 }
 \arguments{
-\item{y}{a numeric vector or time series of class \code{ts}}
+\item{y}{a numeric vector or univariate time series of class \code{ts}}
 
 \item{model}{Usually a three-character string identifying method using the
 framework terminology of Hyndman et al. (2002) and Hyndman et al. (2008).
@@ -64,13 +64,12 @@ returned.}
 \item{phi}{Value of phi. If \code{NULL}, it is estimated.}
 
 \item{additive.only}{If \code{TRUE}, will only consider additive models. Default is
-\code{FALSE}.}
+\code{FALSE}. When \code{lambda} is specified, \code{additive.only} is set to \code{TRUE}.}
 
 \item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
 The transformation is ignored if NULL. Otherwise,
-data transformed before model is estimated. When \code{lambda} is specified,
-\code{additive.only} is set to \code{TRUE}.}
+data transformed before model is estimated.}
 
 \item{biasadj}{Use adjusted back-transformed mean for Box-Cox
 transformations. If transformed data is used to produce forecasts and fitted

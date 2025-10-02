@@ -15,8 +15,7 @@
 #' There are also some other minor variations to the algorithm described in
 #' Hyndman and Khandakar (2008).
 #'
-#' @inheritParams stats::arima
-#' @param y A univariate time series.
+#' @inheritParams Arima
 #' @param d Order of first-differencing. If missing, will choose a value based
 #' on `test`.
 #' @param D Order of seasonal-differencing. If missing, will choose a value
@@ -52,8 +51,6 @@
 #' select a model when `truncate` is not `NULL` and
 #' `approximation = TRUE`. All observations are used if either
 #' `truncate = NULL` or `approximation = FALSE`.
-#' @param xreg Optionally, a numerical vector or matrix of external regressors, which
-#' must have the same number of rows as `y`. (It should not be a data frame.)
 #' @param test Type of unit root test to use. See [ndiffs()] for details.
 #' @param test.args Additional arguments to be passed to the unit root test.
 #' @param seasonal.test This determines which method is used to select the number of seasonal differences.
@@ -72,9 +69,6 @@
 #' to be used if `parallel = TRUE` and `stepwise = FALSE`. If
 #' `NULL`, then the number of logical cores is automatically detected and
 #' all available cores are used.
-#' @param x Deprecated. Included for backwards compatibility.
-#' @param ... Additional arguments to be passed to [stats::arima()].
-#' @inheritParams forecast.ts
 #'
 #' @return Same as for [Arima()]
 #' @author Rob J Hyndman

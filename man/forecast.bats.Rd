@@ -30,23 +30,24 @@ extract various useful features from the underlying model.
 \method{forecast}{tbats}(object, h, level = c(80, 95), fan = FALSE, biasadj = NULL, ...)
 }
 \arguments{
-\item{object}{An object of class \code{"bats"}. Usually the result of a call to
+\item{object}{An object of class \code{bats}. Usually the result of a call to
 \code{\link[=bats]{bats()}}.}
 
 \item{h}{Number of periods for forecasting. Default value is twice the
 largest seasonal period (for seasonal data) or ten (for non-seasonal data).}
 
-\item{level}{Confidence level for prediction intervals.}
+\item{level}{Confidence levels for prediction intervals.}
 
-\item{fan}{If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This
-is suitable for fan plots.}
+\item{fan}{If \code{TRUE}, \code{level} is set to \code{seq(51, 99, by = 3)}.
+This is suitable for fan plots.}
 
 \item{biasadj}{Use adjusted back-transformed mean for Box-Cox
-transformations. If \code{TRUE}, point forecasts and fitted values are mean
-forecast. Otherwise, these points can be considered the median of the
-forecast densities.}
+transformations. If transformed data is used to produce forecasts and fitted
+values, a regular back transformation will result in median forecasts. If
+biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
+and fitted values.}
 
-\item{...}{Other arguments, currently ignored.}
+\item{...}{Other arguments are ignored.}
 }
 \value{
 An object of class \code{forecast}.

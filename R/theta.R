@@ -21,12 +21,8 @@
 #' More general theta methods are available in the \CRANpkg{forecTheta}
 #' package.
 #'
-#' @param y a numeric vector or time series of class `ts`
-#' @param h Number of periods for forecasting
-#' @param level Confidence levels for prediction intervals.
-#' @param fan If `TRUE`, level is set to `seq(51, 99, by = 3)`. This
-#' is suitable for fan plots.
-#' @param x Deprecated. Included for backwards compatibility.
+#' @inheritParams Arima
+#' @inheritParams forecast.ets
 #' @return An object of class `forecast`.
 #' @inherit forecast.ts format
 #' @author Rob J Hyndman

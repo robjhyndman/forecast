@@ -468,14 +468,11 @@ zzhw <- function(
 #' ses, holt and hw are simply convenient wrapper functions for
 #' `forecast(ets(...))`.
 #'
-#' @param y A numeric vector or time series of class `ts`.
-#' @param h Number of periods for forecasting.
+#' @inheritParams Arima
+#' @inheritParams forecast.ets
 #' @param damped If `TRUE`, use a damped trend.
 #' @param seasonal Type of seasonality in `hw` model. `"additive"` or
 #' `"multiplicative"`.
-#' @param level Confidence level for prediction intervals.
-#' @param fan If `TRUE`, level is set to `seq(51, 99, by = 3)`. This
-#' is suitable for fan plots.
 #' @param initial Method used for selecting initial state values. If
 #' `optimal`, the initial values are optimized along with the smoothing
 #' parameters using [ets()]. If `simple`, the initial values are
@@ -491,9 +488,7 @@ zzhw <- function(
 #' `NULL`, it will be estimated.
 #' @param phi Value of damping parameter if `damped = TRUE`. If `NULL`,
 #' it will be estimated.
-#' @param x Deprecated. Included for backwards compatibility.
 #' @param ... Other arguments passed to `forecast.ets`.
-#' @inheritParams forecast.ts
 #'
 #' @return An object of class `forecast`.
 #' @inherit forecast.ts format

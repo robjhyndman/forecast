@@ -31,11 +31,11 @@
 #' The generic accessor functions [stats::fitted()] and [stats::residuals()]
 #' extract useful features of the object returned.
 #'
-#' @param y A univariate time series of class `ts`.
+#' @inheritParams ets
+#' @inheritParams forecast.ets
 #' @param lag Lag parameter. `lag = 1` corresponds to a standard random walk (giving naive forecasts if `drift = FALSE` or drift forecasts if `drift = TRUE`), 
 #' while `lag = m` corresponds to a seasonal random walk where m is the seasonal period (giving seasonal naive forecasts if `drift = FALSE`).
 #' @param drift Logical flag. If `TRUE`, fits a random walk with drift model.
-#' @inheritParams forecast.ts
 #' @export
 #' @seealso [forecast.rw_model()], [rwf()], [naive()], [snaive()]
 #' @return An object of class `rw_model`.
@@ -148,7 +148,6 @@ fitted.rw_model <- function(object, ...) {
 #' @inherit rw_model details
 #' @param object An object of class `rw_model` returned by [rw_model()].
 #' @inheritParams rw_model
-#' @inheritParams forecast.ts
 #' @inheritParams forecast.ets
 #' @param ... Additional arguments not used.
 #' @inherit forecast.ts format
@@ -315,6 +314,7 @@ rwf <- function(
 }
 
 #' @rdname forecast.rw_model
+#' @inheritParams Arima
 #' @export
 naive <- function(
   y,

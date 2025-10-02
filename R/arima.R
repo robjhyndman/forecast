@@ -275,27 +275,19 @@ SD.test <- function(wts, s = frequency(wts)) {
 #' Returns forecasts and other information for univariate ARIMA models.
 #'
 #' For `Arima` or `ar` objects, the function calls [stats::predict.Arima()] or
-#' [stats::predict.ar] and constructs an object of class `"forecast"` from the
+#' [stats::predict.ar] and constructs an object of class `forecast` from the
 #' results. For `fracdiff` objects, the calculations are all done within
 #' [fracdiff::fracdiff()] using the equations given by Peiris and Perera (1988).
 #'
-#' @param object An object of class `"Arima"`, `"ar"" or `"fracdiff"`. Usually
+#' @inheritParams forecast.ets
+#' @param object An object of class `Arima`, `ar` or `fracdiff`. Usually
 #' the result of a call to [stats::arima()], [auto.arima()], [stats::ar()],
 #' [arfima()] or [fracdiff::fracdiff()].
 #' @param h Number of periods for forecasting. If `xreg` is used, `h`
 #' is ignored and the number of forecast periods is set to the number of rows
 #' of `xreg`.
-#' @param level Confidence level for prediction intervals.
-#' @param fan If `TRUE`, level is set to `seq(51, 99, by = 3)`. This
-#' is suitable for fan plots.
-#' @param xreg Future values of an regression variables (for class `Arima`
-#' objects only). A numerical vector or matrix of external regressors; it should not be a data frame.
-#' @param bootstrap If `TRUE`, then prediction intervals computed using
-#' simulation with resampled errors.
-#' @param npaths Number of sample paths used in computing simulated prediction
-#' intervals when `bootstrap = TRUE`.
-#' @param ... Other arguments.
-#' @inheritParams forecast.ts
+#' @param xreg Future values of any regression variables. A numerical vector or 
+#' matrix of external regressors; it should not be a data frame.
 #' @return An object of class `forecast`.
 #' @inherit forecast.ts format
 #' @author Rob J Hyndman
@@ -721,17 +713,10 @@ fitted.forecast_ARIMA <- fitted.Arima
 #'
 #' @aliases print.ARIMA summary.Arima as.character.Arima
 #'
-#' @param y A univariate time series of class `ts`.
-#' @param order A specification of the non-seasonal part of the ARIMA model:
-#' the three components (p, d, q) are the AR order, the degree of differencing,
-#' and the MA order.
-#' @param seasonal A specification of the seasonal part of the ARIMA model,
-#' plus the period (which defaults to `frequency(y)`). This should be a
-#' list with components order and period, but a specification of just a numeric
-#' vector of length 3 will be turned into a suitable list with the
-#' specification as the order.
+#' @inheritParams stats::arima
+#' @inheritParams ets
 #' @param xreg Optionally, a numerical vector or matrix of external regressors,
-#' which must have the same number of rows as y. It should not be a data frame.
+#' which must have the same number of rows as `y`. It should not be a data frame.
 #' @param include.mean Should the ARIMA model include a mean term? The default
 #' is `TRUE` for undifferenced series, `FALSE` for differenced ones
 #' (where a mean would not affect the fit nor predictions).
@@ -744,15 +729,11 @@ fitted.forecast_ARIMA <- fitted.Arima
 #' difference taken, no constant is included regardless of the value of this
 #' argument. This is deliberate as otherwise quadratic and higher order
 #' polynomial trends would be induced.
-#' @param method Fitting method: maximum likelihood or minimize conditional
-#' sum-of-squares. The default (unless there are missing values) is to use
-#' conditional-sum-of-squares to find starting values, then maximum likelihood.
 #' @param model Output from a previous call to `Arima`. If model is
 #' passed, this same model is fitted to `y` without re-estimating any
 #' parameters.
 #' @param x Deprecated. Included for backwards compatibility.
 #' @param ... Additional arguments to be passed to [stats::arima()].
-#' @inheritParams forecast.ts
 #' @return See the [stats::arima()] function in the stats package.
 #' The additional objects returned are:
 #' \item{x}{The time series data}

@@ -59,16 +59,12 @@ spline.loglik <- function(beta, y, cc = 1e2) {
 #' that the forecast performance of the method is hardly affected by the
 #' restricted parameter space.
 #'
-#' @param y a numeric vector or time series of class `ts`
-#' @param h Number of periods for forecasting
-#' @param level Confidence level for prediction intervals.
-#' @param fan If `TRUE`, level is set to `seq(51, 99, by = 3)`. This
-#' is suitable for fan plots.
+#' @inheritParams Arima
+#' @inheritParams forecast.ets
 #' @param method Method for selecting the smoothing parameter. If
 #' `method = "gcv"`, the generalized cross-validation method from
 #' [stats::smooth.spline()] is used. If `method = "mle"`, the
 #' maximum likelihood method from Hyndman et al (2002) is used.
-#' @param x Deprecated. Included for backwards compatibility.
 #' @inheritParams forecast.ts
 #' @return An object of class `forecast`.
 #' @inherit forecast.ts format

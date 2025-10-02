@@ -38,12 +38,13 @@ extract various useful features from the underlying model.
 \item{object}{An object of class \code{"StructTS"}. Usually the result of a
 call to \code{\link[stats:StructTS]{stats::StructTS()}}.}
 
-\item{h}{Number of periods for forecasting}
+\item{h}{Number of periods for forecasting. Default value is twice the
+largest seasonal period (for seasonal data) or ten (for non-seasonal data).}
 
-\item{level}{Confidence level for prediction intervals.}
+\item{level}{Confidence levels for prediction intervals.}
 
-\item{fan}{If \code{TRUE}, level is set to \code{seq(51, 99, by = 3)}. This is
-suitable for fan plots.}
+\item{fan}{If \code{TRUE}, \code{level} is set to \code{seq(51, 99, by = 3)}.
+This is suitable for fan plots.}
 
 \item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
@@ -56,7 +57,7 @@ values, a regular back transformation will result in median forecasts. If
 biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
 and fitted values.}
 
-\item{...}{Other arguments.}
+\item{...}{Other arguments are ignored.}
 }
 \value{
 An object of class \code{forecast}.
@@ -67,7 +68,7 @@ series models.
 }
 \details{
 This function calls \code{predict.StructTS} and constructs an object of
-class \code{"forecast"} from the results.
+class \code{forecast} from the results.
 }
 \examples{
 fit <- StructTS(WWWusage, "level")

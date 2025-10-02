@@ -35,8 +35,7 @@
 #' estimated using least squares.
 #' @param armethod If `TRUE`, the forecasts are adjusted using an AR(1)
 #' model for the errors.
-#' @param model If it's specified, an existing model is applied to a new data
-#' set.
+#' @param model If it's specified, an existing model is applied to a new data set.
 #' @inheritParams forecast.ts
 #' @inheritParams BoxCox
 #' @return An object of class `forecast`.

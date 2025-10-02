@@ -21,13 +21,13 @@
 #' it may not be possible to apply `forecastfunction` to very short time
 #' series.
 #'
-#' @param y Univariate time series
+#' @inheritParams Arima
+#' @inheritParams forecast.ts
 #' @param forecastfunction Function to return an object of class
 #' `forecast`. Its first argument must be a univariate time series, and it
 #' must have an argument `h` for the forecast horizon. If exogenous predictors are used,
 #' then it must also have `xreg` and `newxreg` arguments corresponding to the
 #' training and test periods.
-#' @param h Forecast horizon
 #' @param window Length of the rolling window, if NULL, a rolling window will not be used.
 #' @param xreg Exogeneous predictor variables passed to the forecast function if required.
 #' @param initial Initial period of the time series where no cross-validation is performed.
