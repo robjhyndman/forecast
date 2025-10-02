@@ -344,9 +344,6 @@ modelAR <- function(
 #' @inheritParams forecast.nnetar
 #' @param object An object of class `modelAR` resulting from a call to
 #' [modelAR()].
-#' @param PI If `TRUE`, prediction intervals are produced, otherwise only point
-#' forecasts are calculated. If `PI` is `FALSE`, then `level`,
-#' `fan`, `bootstrap` and `npaths` are all ignored.
 #'
 #' @return An object of class `forecast`.
 #' @inherit forecast.ts format

@@ -59,13 +59,11 @@ spline.loglik <- function(beta, y, cc = 1e2) {
 #' that the forecast performance of the method is hardly affected by the
 #' restricted parameter space.
 #'
-#' @inheritParams Arima
-#' @inheritParams forecast.ets
+#' @inheritParams ses
 #' @param method Method for selecting the smoothing parameter. If
 #' `method = "gcv"`, the generalized cross-validation method from
 #' [stats::smooth.spline()] is used. If `method = "mle"`, the
 #' maximum likelihood method from Hyndman et al (2002) is used.
-#' @inheritParams forecast.ts
 #' @return An object of class `forecast`.
 #' @inherit forecast.ts format
 #' @author Rob J Hyndman

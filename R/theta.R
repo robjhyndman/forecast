@@ -21,8 +21,7 @@
 #' More general theta methods are available in the \CRANpkg{forecTheta}
 #' package.
 #'
-#' @inheritParams Arima
-#' @inheritParams forecast.ets
+#' @inheritParams ses
 #' @return An object of class `forecast`.
 #' @inherit forecast.ts format
 #' @author Rob J Hyndman

@@ -2,18 +2,18 @@
 #'
 #' Fit a generalized random walk with Gaussian errors (and optional drift) to a univariate time series.
 #'
-#' The model assumes that 
+#' The model assumes that
 #'
 #' \deqn{Y_t = Y_{t-p} + c + \varepsilon_{t}}{Y[t] = Y[t-p] + epsilon[t]}
-#' 
-#' where \eqn{p} is the lag parameter, 
-#' \eqn{c} is the drift parameter, and 
+#'
+#' where \eqn{p} is the lag parameter,
+#' \eqn{c} is the drift parameter, and
 #' \eqn{\varepsilon_t\sim N(0,\sigma^2)}{Y[t] ~ N(0, sigma^2)} are iid.
 #'
-#' The model without drift has \eqn{c=0}. 
+#' The model without drift has \eqn{c=0}.
 #' In the model with drift, \eqn{c} is estimated
 #' by the sample mean of the differences \eqn{Y_t - Y_{t-p}}{Y[t] - Y[t-p]}.
-#' 
+#'
 #' If \eqn{p=1}, this is equivalent to an ARIMA(0,1,0) model with
 #' an optional drift coefficient. For \eqn{p>1}, it is equivalent to an
 #' ARIMA(0,0,0)(0,1,0)p model.
@@ -22,18 +22,17 @@
 #'
 #' \deqn{Y_{T+h|T}= Y_{T+h-p(k+1)} + ch}{Y[T+h|T] = Y[T+h-p(k+1)]+ch}
 #'
-#' where \eqn{k} is the integer part of \eqn{(h-1)/p}. 
+#' where \eqn{k} is the integer part of \eqn{(h-1)/p}.
 #' For a regular random walk, \eqn{p=1} and \eqn{c=0}, so all forecasts are equal to the last observation.
 #' Forecast standard errors allow for uncertainty in estimating the drift parameter
 #' (unlike the corresponding forecasts obtained by fitting an ARIMA model
 #' directly).
-#' 
+#'
 #' The generic accessor functions [stats::fitted()] and [stats::residuals()]
 #' extract useful features of the object returned.
 #'
-#' @inheritParams ets
-#' @inheritParams forecast.ets
-#' @param lag Lag parameter. `lag = 1` corresponds to a standard random walk (giving naive forecasts if `drift = FALSE` or drift forecasts if `drift = TRUE`), 
+#' @inheritParams ses
+#' @param lag Lag parameter. `lag = 1` corresponds to a standard random walk (giving naive forecasts if `drift = FALSE` or drift forecasts if `drift = TRUE`),
 #' while `lag = m` corresponds to a seasonal random walk where m is the seasonal period (giving seasonal naive forecasts if `drift = FALSE`).
 #' @param drift Logical flag. If `TRUE`, fits a random walk with drift model.
 #' @export
@@ -140,11 +139,11 @@ fitted.rw_model <- function(object, ...) {
 
 #' Naive and Random Walk Forecasts
 #'
-#' Returns forecasts and prediction intervals for a generalized random walk model. 
-#' [rwf()] is a convenience function that combines [rw_model()] and [forecast()]. 
-#' [naive()] is a wrapper to [rwf()] with `drift=FALSE` and `lag=1`, while 
+#' Returns forecasts and prediction intervals for a generalized random walk model.
+#' [rwf()] is a convenience function that combines [rw_model()] and [forecast()].
+#' [naive()] is a wrapper to [rwf()] with `drift=FALSE` and `lag=1`, while
 #' [snaive()] is a wrapper to [rwf()] with `drift=FALSE` and `lag=frequency(y)`.
-#' 
+#'
 #' @inherit rw_model details
 #' @param object An object of class `rw_model` returned by [rw_model()].
 #' @inheritParams rw_model
@@ -167,7 +166,7 @@ fitted.rw_model <- function(object, ...) {
 #'
 #' # Drift forecasts
 #' rwf(gold, drift = TRUE) |> autoplot()
-#' 
+#'
 #' # Seasonal naive forecasts
 #' snaive(wineind) |> autoplot()
 #' @export
@@ -314,7 +313,7 @@ rwf <- function(
 }
 
 #' @rdname forecast.rw_model
-#' @inheritParams Arima
+#' @inheritParams ses
 #' @export
 naive <- function(
   y,

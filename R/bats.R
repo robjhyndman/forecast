@@ -10,6 +10,7 @@
 #'
 #' @aliases as.character.bats print.bats
 #'
+#' @inheritParams forecast.ts
 #' @param y The time series to be forecast. Can be `numeric`, `msts`
 #' or `ts`. Only univariate time series are supported.
 #' @param use.box.cox `TRUE`/`FALSE` indicates whether to use the Box-Cox
@@ -20,7 +21,7 @@
 #' @param use.damped.trend `TRUE`/`FALSE` indicates whether to include a
 #' damping parameter in the trend or not. If `NULL` then both are tried
 #' and the best fit is selected by AIC.
-#' @param seasonal.periods If `y` is a numeric then seasonal periods can
+#' @param seasonal.periods If `y` is `numeric`, then seasonal periods can
 #' be specified with this parameter.
 #' @param use.arma.errors `TRUE`/`FALSE` indicates whether to include ARMA
 #' errors or not. If `TRUE` the best fit is selected by AIC. If
@@ -32,10 +33,6 @@
 #' detected and all available cores are used.
 #' @param bc.lower The lower limit (inclusive) for the Box-Cox transformation.
 #' @param bc.upper The upper limit (inclusive) for the Box-Cox transformation.
-#' @param biasadj Use adjusted back-transformed mean for Box-Cox
-#' transformations. If `TRUE`, point forecasts and fitted values are mean
-#' forecast. Otherwise, these points can be considered the median of the
-#' forecast densities.
 #' @param model Output from a previous call to `bats`. If model is passed,
 #' this same model is fitted to `y` without re-estimating any parameters.
 #' @param ... Additional arguments to be passed to `auto.arima` when

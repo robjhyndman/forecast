@@ -27,25 +27,25 @@ tbats(
 \item{y}{The time series to be forecast. Can be \code{numeric}, \code{msts}
 or \code{ts}. Only univariate time series are supported.}
 
-\item{use.box.cox}{\code{TRUE/FALSE} indicates whether to use the Box-Cox
+\item{use.box.cox}{\code{TRUE}/\code{FALSE} indicates whether to use the Box-Cox
 transformation or not. If \code{NULL} then both are tried and the best fit
 is selected by AIC.}
 
-\item{use.trend}{\code{TRUE/FALSE} indicates whether to include a trend or
+\item{use.trend}{\code{TRUE}/\code{FALSE} indicates whether to include a trend or
 not. If \code{NULL} then both are tried and the best fit is selected by AIC.}
 
-\item{use.damped.trend}{\code{TRUE/FALSE} indicates whether to include a
+\item{use.damped.trend}{\code{TRUE}/\code{FALSE} indicates whether to include a
 damping parameter in the trend or not. If \code{NULL} then both are tried
 and the best fit is selected by AIC.}
 
-\item{seasonal.periods}{If \code{y} is \code{numeric} then seasonal periods
-can be specified with this parameter.}
+\item{seasonal.periods}{If \code{y} is \code{numeric}, then seasonal periods can
+be specified with this parameter.}
 
-\item{use.arma.errors}{\code{TRUE/FALSE} indicates whether to include ARMA
+\item{use.arma.errors}{\code{TRUE}/\code{FALSE} indicates whether to include ARMA
 errors or not. If \code{TRUE} the best fit is selected by AIC. If
 \code{FALSE} then the selection algorithm does not consider ARMA errors.}
 
-\item{use.parallel}{\code{TRUE/FALSE} indicates whether or not to use
+\item{use.parallel}{\code{TRUE}/\code{FALSE} indicates whether or not to use
 parallel processing.}
 
 \item{num.cores}{The number of parallel processes to be used if using
@@ -57,9 +57,10 @@ detected and all available cores are used.}
 \item{bc.upper}{The upper limit (inclusive) for the Box-Cox transformation.}
 
 \item{biasadj}{Use adjusted back-transformed mean for Box-Cox
-transformations. If \code{TRUE}, point forecasts and fitted values are mean
-forecast. Otherwise, these points can be considered the median of the
-forecast densities.}
+transformations. If transformed data is used to produce forecasts and fitted
+values, a regular back transformation will result in median forecasts. If
+biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
+and fitted values.}
 
 \item{model}{Output from a previous call to \code{tbats}. If model is
 passed, this same model is fitted to \code{y} without re-estimating any
@@ -72,8 +73,8 @@ controlling the values of p and q will be used.)}
 }
 \value{
 An object with class \code{c("tbats", "bats")}. The generic accessor
-functions \code{fitted.values} and \code{residuals} extract useful features
-of the value returned by \code{bats} and associated functions. The fitted
+functions \code{fitted.values()} and \code{residuals()} extract useful features
+of the value returned by \code{\link[=bats]{bats()}} and associated functions. The fitted
 model is designated TBATS(omega, p,q, phi, <m1,k1>,...,<mJ,kJ>) where omega
 is the Box-Cox parameter and phi is the damping parameter; the error is
 modelled as an ARMA(p,q) process and m1,...,mJ list the seasonal periods

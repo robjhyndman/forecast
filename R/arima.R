@@ -286,7 +286,7 @@ SD.test <- function(wts, s = frequency(wts)) {
 #' @param h Number of periods for forecasting. If `xreg` is used, `h`
 #' is ignored and the number of forecast periods is set to the number of rows
 #' of `xreg`.
-#' @param xreg Future values of any regression variables. A numerical vector or 
+#' @param xreg Future values of any regression variables. A numerical vector or
 #' matrix of external regressors; it should not be a data frame.
 #' @return An object of class `forecast`.
 #' @inherit forecast.ts format
@@ -714,7 +714,7 @@ fitted.forecast_ARIMA <- fitted.Arima
 #' @aliases print.ARIMA summary.Arima as.character.Arima
 #'
 #' @inheritParams stats::arima
-#' @inheritParams ets
+#' @inheritParams ses
 #' @param xreg Optionally, a numerical vector or matrix of external regressors,
 #' which must have the same number of rows as `y`. It should not be a data frame.
 #' @param include.mean Should the ARIMA model include a mean term? The default
@@ -1083,7 +1083,6 @@ print.forecast_ARIMA <- function(
 #' Return the order of an ARIMA or ARFIMA model
 #'
 #' Returns the order of a univariate ARIMA or ARFIMA model.
-#'
 #'
 #' @param object An object of class `Arima`, `ar` or
 #' `fracdiff`. Usually the result of a call to [stats::arima()],

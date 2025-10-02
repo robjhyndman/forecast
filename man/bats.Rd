@@ -38,7 +38,7 @@ not. If \code{NULL} then both are tried and the best fit is selected by AIC.}
 damping parameter in the trend or not. If \code{NULL} then both are tried
 and the best fit is selected by AIC.}
 
-\item{seasonal.periods}{If \code{y} is a numeric then seasonal periods can
+\item{seasonal.periods}{If \code{y} is \code{numeric}, then seasonal periods can
 be specified with this parameter.}
 
 \item{use.arma.errors}{\code{TRUE}/\code{FALSE} indicates whether to include ARMA
@@ -57,9 +57,10 @@ detected and all available cores are used.}
 \item{bc.upper}{The upper limit (inclusive) for the Box-Cox transformation.}
 
 \item{biasadj}{Use adjusted back-transformed mean for Box-Cox
-transformations. If \code{TRUE}, point forecasts and fitted values are mean
-forecast. Otherwise, these points can be considered the median of the
-forecast densities.}
+transformations. If transformed data is used to produce forecasts and fitted
+values, a regular back transformation will result in median forecasts. If
+biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
+and fitted values.}
 
 \item{model}{Output from a previous call to \code{bats}. If model is passed,
 this same model is fitted to \code{y} without re-estimating any parameters.}

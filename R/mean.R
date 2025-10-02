@@ -20,7 +20,7 @@
 #' The generic accessor functions [stats::fitted()] and [stats::residuals()]
 #' extract useful features of the object returned by [mean_model()].
 #'
-#' @inheritParams Arima
+#' @inheritParams ets
 #' @return An object of class `mean_model`.
 #' @inherit forecast.ts format
 #' @seealso [forecast.mean_model()], [meanf()]
@@ -84,7 +84,6 @@ print.mean_model <- function(x, digits = max(3, getOption("digits") - 3), ...) {
 #' @inherit mean_model details
 #' @param object An object of class `mean_model` as returned by [mean_model()].
 #' @inheritParams mean_model
-#' @inheritParams forecast.ts
 #' @inheritParams forecast.ets
 #' @param ... Additional arguments not used.
 #' @inherit forecast.ts format
@@ -178,6 +177,7 @@ forecast.mean_model <- function(
 }
 
 #' @rdname forecast.mean_model
+#' @inheritParams ses
 #' @export
 meanf <- function(
   y,

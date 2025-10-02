@@ -81,7 +81,7 @@ intervals.}
 
 \item{y}{a numeric vector or univariate time series of class \code{ts}}
 
-\item{x}{a numeric vector or time series of class \code{ts}.}
+\item{x}{Deprecated. Included for backwards compatibility.}
 }
 \description{
 Returns forecasts and prediction intervals for a Gaussian iid model.

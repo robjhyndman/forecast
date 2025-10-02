@@ -111,7 +111,7 @@ re-estimated.}
 contains NA values. By default, the largest contiguous portion of the
 time-series will be used.}
 
-\item{...}{Other undocumented arguments.}
+\item{...}{Other arguments are ignored.}
 }
 \value{
 An object of class \code{ets}.

@@ -468,8 +468,8 @@ zzhw <- function(
 #' ses, holt and hw are simply convenient wrapper functions for
 #' `forecast(ets(...))`.
 #'
-#' @inheritParams Arima
-#' @inheritParams forecast.ets
+#' @inheritParams ets
+#' @inheritParams forecast.ts
 #' @param damped If `TRUE`, use a damped trend.
 #' @param seasonal Type of seasonality in `hw` model. `"additive"` or
 #' `"multiplicative"`.
@@ -488,6 +488,7 @@ zzhw <- function(
 #' `NULL`, it will be estimated.
 #' @param phi Value of damping parameter if `damped = TRUE`. If `NULL`,
 #' it will be estimated.
+#' @param x Deprecated. Included for backwards compatibility.
 #' @param ... Other arguments passed to `forecast.ets`.
 #'
 #' @return An object of class `forecast`.

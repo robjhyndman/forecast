@@ -39,7 +39,7 @@
 #' @param lambda Box-Cox transformation parameter. If `lambda = "auto"`,
 #' then a transformation is automatically selected using `BoxCox.lambda`.
 #' The transformation is ignored if NULL. Otherwise,
-#' data transformed before model is estimated. 
+#' data transformed before model is estimated.
 #' @param lower Lower bounds for the parameters (alpha, beta, gamma, phi). Ignored if `bounds = "admissible"`.
 #' @param upper Upper bounds for the parameters (alpha, beta, gamma, phi). Ignored if `bounds = "admissible"`.
 #' @param opt.crit Optimization criterion. One of "mse" (Mean Square Error),
@@ -64,7 +64,7 @@
 #' @param na.action A function which indicates what should happen when the data
 #' contains NA values. By default, the largest contiguous portion of the
 #' time-series will be used.
-#' @param ... Other undocumented arguments.
+#' @param ... Other arguments are ignored.
 #'
 #' @return An object of class `ets`.
 #'

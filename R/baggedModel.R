@@ -107,7 +107,7 @@ baggedETS <- function(y, bootstrapped_series = bld.mbb.bootstrap(y, 100), ...) {
 #' intervals, but give an indication of how different the forecasts within the
 #' ensemble are.
 #'
-#' @inheritParams forecast.ets
+#' @inheritParams forecast.ts
 #' @param object An object of class `baggedModel` resulting from a call to
 #' [baggedModel()].
 #' @param ... Other arguments, passed on to the [forecast()] function of the original method

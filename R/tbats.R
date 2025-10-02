@@ -4,48 +4,19 @@
 #' TBATS model (Exponential smoothing state space model with Box-Cox
 #' transformation, ARMA errors, Trend and Seasonal components)
 #'
-#' Fits a TBATS model applied to \code{y}, as described in De Livera, Hyndman &
+#' Fits a TBATS model applied to `y`, as described in De Livera, Hyndman &
 #' Snyder (2011). Parallel processing is used by default to speed up the
 #' computations.
 #'
 #' @aliases as.character.tbats print.tbats
 #'
-#' @param y The time series to be forecast. Can be \code{numeric}, \code{msts}
-#' or \code{ts}. Only univariate time series are supported.
-#' @param use.box.cox \code{TRUE/FALSE} indicates whether to use the Box-Cox
-#' transformation or not. If \code{NULL} then both are tried and the best fit
-#' is selected by AIC.
-#' @param use.trend \code{TRUE/FALSE} indicates whether to include a trend or
-#' not. If \code{NULL} then both are tried and the best fit is selected by AIC.
-#' @param use.damped.trend \code{TRUE/FALSE} indicates whether to include a
-#' damping parameter in the trend or not. If \code{NULL} then both are tried
-#' and the best fit is selected by AIC.
-#' @param seasonal.periods If \code{y} is \code{numeric} then seasonal periods
-#' can be specified with this parameter.
-#' @param use.arma.errors \code{TRUE/FALSE} indicates whether to include ARMA
-#' errors or not. If \code{TRUE} the best fit is selected by AIC. If
-#' \code{FALSE} then the selection algorithm does not consider ARMA errors.
-#' @param use.parallel \code{TRUE/FALSE} indicates whether or not to use
-#' parallel processing.
-#' @param num.cores The number of parallel processes to be used if using
-#' parallel processing. If \code{NULL} then the number of logical cores is
-#' detected and all available cores are used.
-#' @param bc.lower The lower limit (inclusive) for the Box-Cox transformation.
-#' @param bc.upper The upper limit (inclusive) for the Box-Cox transformation.
-#' @param biasadj Use adjusted back-transformed mean for Box-Cox
-#' transformations. If \code{TRUE}, point forecasts and fitted values are mean
-#' forecast. Otherwise, these points can be considered the median of the
-#' forecast densities.
-#' @param model Output from a previous call to \code{tbats}. If model is
-#' passed, this same model is fitted to \code{y} without re-estimating any
+#' @inheritParams bats
+#' @param model Output from a previous call to `tbats`. If model is
+#' passed, this same model is fitted to `y` without re-estimating any
 #' parameters.
-#' @param ... Additional arguments to be passed to \code{auto.arima} when
-#' choose an ARMA(p, q) model for the errors. (Note that xreg will be ignored,
-#' as will any arguments concerning seasonality and differencing, but arguments
-#' controlling the values of p and q will be used.)
-#' @return An object with class \code{c("tbats", "bats")}. The generic accessor
-#' functions \code{fitted.values} and \code{residuals} extract useful features
-#' of the value returned by \code{bats} and associated functions. The fitted
+#' @return An object with class `c("tbats", "bats")`. The generic accessor
+#' functions `fitted.values()` and `residuals()` extract useful features
+#' of the value returned by [bats()] and associated functions. The fitted
 #' model is designated TBATS(omega, p,q, phi, <m1,k1>,...,<mJ,kJ>) where omega
 #' is the Box-Cox parameter and phi is the damping parameter; the error is
 #' modelled as an ARMA(p,q) process and m1,...,mJ list the seasonal periods
