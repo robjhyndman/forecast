@@ -144,7 +144,7 @@ InvBoxCoxf <- function(x = NULL, fvar = NULL, lambda = NULL) {
 #' This function calls `predict.StructTS` and constructs an object of
 #' class `forecast` from the results.
 #'
-#' @param object An object of class `"StructTS"`. Usually the result of a
+#' @param object An object of class `StructTS`. Usually the result of a
 #' call to [stats::StructTS()].
 #' @inheritParams forecast.ets
 #' @return An object of class `forecast`.
@@ -246,7 +246,7 @@ forecast.StructTS <- function(
 #' for use instead of [stats::HoltWinters].
 #'
 #' @inheritParams forecast.ets 
-#' @param object An object of class `"HoltWinters"`. Usually the result of
+#' @param object An object of class `HoltWinters`. Usually the result of
 #' a call to [stats::HoltWinters()].
 #' @inheritParams forecast.ts
 #'

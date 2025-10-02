@@ -88,7 +88,7 @@ unfracdiff <- function(x, y, n, h, d) {
 #' passed, this same model is fitted to y without re-estimating any parameters.
 #' @param ... Other arguments passed to [auto.arima()] when selecting p and q.
 #'
-#' @return A list object of S3 class `"fracdiff"`, which is described in
+#' @return A list object of S3 class `fracdiff`, which is described in
 #' the [fracdiff::fracdiff()] documentation. A few additional objects
 #' are added to the list including `x` (the original time series), and the
 #' `residuals` and `fitted` values.

@@ -43,7 +43,7 @@
 #' is not `NULL`, scaling is applied after Box-Cox transformation.
 #' @param ... Other arguments passed to `FUN` for `modelAR`.
 #'
-#' @return Returns an object of class `"modelAR"`.
+#' @return Returns an object of class `modelAR`.
 #'
 #' The function `summary` is used to obtain and print a summary of the
 #' results.

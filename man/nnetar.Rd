@@ -65,7 +65,7 @@ is not \code{NULL}, scaling is applied after Box-Cox transformation.}
 \item{...}{Other arguments passed to \code{\link[nnet:nnet]{nnet::nnet()}} for \code{nnetar}.}
 }
 \value{
-Returns an object of class \code{"nnetar"}.
+Returns an object of class \code{nnetar}.
 
 The function \code{summary} is used to obtain and print a summary of the
 results.

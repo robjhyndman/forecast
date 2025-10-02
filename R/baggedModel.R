@@ -22,7 +22,7 @@
 #' @param bootstrapped_series bootstrapped versions of y.
 #' @param fn the forecast function to use. Default is [ets()].
 #' @param ... Other arguments passed to the forecast function.
-#' @return Returns an object of class `"baggedModel"`.
+#' @return Returns an object of class `baggedModel`.
 #'
 #' The function `print` is used to obtain and print a summary of the
 #' results.

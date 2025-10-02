@@ -70,7 +70,7 @@ as will any arguments concerning seasonality and differencing, but arguments
 controlling the values of p and q will be used.)}
 }
 \value{
-An object of class \code{"bats"}. The generic accessor functions
+An object of class \code{bats}. The generic accessor functions
 \code{fitted.values} and \code{residuals} extract useful features of the
 value returned by \code{bats} and associated functions. The fitted model is
 designated BATS(omega, p,q, phi, m1,...mJ) where omega is the Box-Cox

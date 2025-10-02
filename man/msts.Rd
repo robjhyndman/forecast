@@ -25,7 +25,7 @@ example \code{start=c(1987, 5)}.}
 \value{
 An object of class \code{c("msts", "ts")}. If there is only one
 seasonal period (i.e., \code{length(seasonal.periods) == 1}), then the object
-is of class \code{"ts"}.
+is of class \code{ts}.
 }
 \description{
 msts is an S3 class for multi seasonal time series objects, intended to be

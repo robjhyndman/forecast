@@ -22,7 +22,7 @@
 #' simple exponential smoothing with additive errors, "MAM" is multiplicative
 #' Holt-Winters' method with multiplicative errors, and so on.
 #'
-#' It is also possible for the model to be of class `"ets"`, and equal to
+#' It is also possible for the model to be of class `ets`, and equal to
 #' the output from a previous call to `ets`. In this case, the same model
 #' is fitted to `y` without re-estimating any smoothing parameters. See
 #' also the `use.initial.values` argument.
@@ -66,7 +66,7 @@
 #' time-series will be used.
 #' @param ... Other undocumented arguments.
 #'
-#' @return An object of class `"ets"`.
+#' @return An object of class `ets`.
 #'
 #' The generic accessor functions `fitted.values` and `residuals`
 #' extract useful features of the value returned by `ets` and associated

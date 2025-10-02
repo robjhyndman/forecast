@@ -39,7 +39,7 @@ extract various useful features from the underlying model.
 )
 }
 \arguments{
-\item{object}{An object of class \code{"nnetar"} resulting from a call to
+\item{object}{An object of class \code{nnetar} resulting from a call to
 \code{\link[=nnetar]{nnetar()}}.}
 
 \item{h}{Number of periods for forecasting. If \code{xreg} is used, \code{h}

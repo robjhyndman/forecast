@@ -58,7 +58,7 @@ ggtaperedacf(
 ggtaperedpacf(x, ...)
 }
 \arguments{
-\item{object}{Object of class \code{"acf"}.}
+\item{object}{Object of class \code{acf}.}
 
 \item{ci}{coverage probability for confidence interval. Plotting of the
 confidence interval is suppressed if ci is zero or negative.}

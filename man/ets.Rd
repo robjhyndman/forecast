@@ -45,7 +45,7 @@ the season type ("N","A","M" or "Z"). In all cases, "N"=none, "A"=additive,
 simple exponential smoothing with additive errors, "MAM" is multiplicative
 Holt-Winters' method with multiplicative errors, and so on.
 
-It is also possible for the model to be of class \code{"ets"}, and equal to
+It is also possible for the model to be of class \code{ets}, and equal to
 the output from a previous call to \code{ets}. In this case, the same model
 is fitted to \code{y} without re-estimating any smoothing parameters. See
 also the \code{use.initial.values} argument.}
@@ -114,7 +114,7 @@ time-series will be used.}
 \item{...}{Other undocumented arguments.}
 }
 \value{
-An object of class \code{"ets"}.
+An object of class \code{ets}.
 
 The generic accessor functions \code{fitted.values} and \code{residuals}
 extract useful features of the value returned by \code{ets} and associated

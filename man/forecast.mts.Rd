@@ -57,7 +57,7 @@ models are permitted.}
 \item{...}{Additional arguments affecting the forecasts produced.}
 }
 \value{
-An object of class \code{"mforecast"}.
+An object of class \code{mforecast}.
 
 The function \code{summary} is used to obtain and print a summary of the
 results, while the function \code{plot} produces a plot of the multivariate
@@ -66,7 +66,7 @@ forecasts and prediction intervals.
 The generic accessors functions \code{fitted.values} and \code{residuals}
 extract various useful features of the value returned by \code{forecast$model}.
 
-An object of class \code{"mforecast"} is a list usually containing at least
+An object of class \code{mforecast} is a list usually containing at least
 the following elements:
 \item{model}{A list containing information about the fitted model}
 \item{method}{The name of the forecasting method as a character string}
@@ -90,7 +90,7 @@ For example, the function \code{\link[=forecast.mlm]{forecast.mlm()}} makes mult
 forecasts based on the results produced by \code{\link[=tslm]{tslm()}}.
 }
 \seealso{
-Other functions which return objects of class \code{"mforecast"}
+Other functions which return objects of class \code{mforecast}
 are \code{\link[=forecast.mlm]{forecast.mlm()}}, \code{forecast.varest()}.
 }
 \author{

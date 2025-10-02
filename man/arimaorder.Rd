@@ -7,8 +7,8 @@
 arimaorder(object)
 }
 \arguments{
-\item{object}{An object of class \code{"Arima"}, \code{"ar"} or
-\code{"fracdiff"}. Usually the result of a call to \code{\link[stats:arima]{stats::arima()}},
+\item{object}{An object of class \code{Arima}, \code{ar} or
+\code{fracdiff}. Usually the result of a call to \code{\link[stats:arima]{stats::arima()}},
 \code{\link[=Arima]{Arima()}}, \code{\link[=auto.arima]{auto.arima()}}, \code{\link[stats:ar]{stats::ar()}}, \code{\link[=arfima]{arfima()}} or \code{\link[fracdiff:fracdiff]{fracdiff::fracdiff()}}.}
 }
 \value{

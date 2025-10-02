@@ -3,7 +3,7 @@
 #' Returns forecasts and other information for univariate ETS models.
 #'
 #' @inheritParams forecast.ts
-#' @param object An object of class `"ets"`. Usually the result of a call
+#' @param object An object of class `ets`. Usually the result of a call
 #' to [ets()].
 #' @param simulate If `TRUE`, prediction intervals are produced by simulation rather
 #' than using analytic formulae. Errors are assumed to be normally distributed.

@@ -35,7 +35,7 @@ extract various useful features from the underlying model.
 )
 }
 \arguments{
-\item{object}{An object of class \code{"StructTS"}. Usually the result of a
+\item{object}{An object of class \code{StructTS}. Usually the result of a
 call to \code{\link[stats:StructTS]{stats::StructTS()}}.}
 
 \item{h}{Number of periods for forecasting. Default value is twice the

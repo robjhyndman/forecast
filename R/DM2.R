@@ -27,7 +27,7 @@
 #' @param power The power used in the loss function. Usually 1 or 2.
 #' @param varestimator A character string specifying the long-run variance estimator.
 #' Options are `"acf"` (default) or `"bartlett"`.
-#' @return A list with class `"htest"` containing the following
+#' @return A list with class `htest` containing the following
 #' components:
 #' \item{statistic}{the value of the DM-statistic.}
 #' \item{parameter}{the forecast horizon and loss function power used in the test.}

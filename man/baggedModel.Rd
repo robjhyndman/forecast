@@ -20,7 +20,7 @@ baggedETS(y, bootstrapped_series = bld.mbb.bootstrap(y, 100), ...)
 \item{...}{Other arguments passed to the forecast function.}
 }
 \value{
-Returns an object of class \code{"baggedModel"}.
+Returns an object of class \code{baggedModel}.
 
 The function \code{print} is used to obtain and print a summary of the
 results.

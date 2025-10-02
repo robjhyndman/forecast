@@ -30,7 +30,7 @@ must be one of \code{"two.sided"} (default), \code{"greater"} or
 Options are \code{"acf"} (default) or \code{"bartlett"}.}
 }
 \value{
-A list with class \code{"htest"} containing the following
+A list with class \code{htest} containing the following
 components:
 \item{statistic}{the value of the DM-statistic.}
 \item{parameter}{the forecast horizon and loss function power used in the test.}

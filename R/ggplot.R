@@ -68,7 +68,7 @@ ggtsbreaks <- function(x) {
 #' appropriate ggplot object will be created.
 #'
 #' ggtaperedpacf
-#' @param object Object of class `"acf"`.
+#' @param object Object of class `acf`.
 #' @param x a univariate or multivariate (not Ccf) numeric time series object
 #' or a numeric vector or matrix.
 #' @param y a univariate numeric time series object or a numeric vector.
@@ -2133,11 +2133,11 @@ autoplot.StructTS <- function(object, labels = NULL, range.bars = TRUE, ...) {
 #' Plot time series decomposition components using ggplot
 #'
 #' Produces a ggplot object of seasonally decomposed time series for objects of
-#' class `"stl"` (created with [stats::stl()], class `"seas"` (created with
-#' [seasonal::seas()]), or class `"decomposed.ts"` (created with
+#' class `stl` (created with [stats::stl()], class `seas` (created with
+#' [seasonal::seas()]), or class `decomposed.ts` (created with
 #' [stats::decompose()]).
 #'
-#' @param object Object of class `"seas"`, `"stl"`, or `"decomposed.ts"`.
+#' @param object Object of class `seas`, `stl`, or `decomposed.ts`.
 #' @param labels Labels to replace "seasonal", "trend", and "remainder".
 #' @param range.bars Logical indicating if each plot should have a bar at its
 #' right side representing relative size. If `NULL`, automatic selection
@@ -2427,14 +2427,14 @@ autolayer.mforecast <- function(object, series = NULL, PI = TRUE, ...) {
 #' `fortify.ts` takes a `ts` object and converts it into a data frame
 #' (for usage with ggplot2).
 #'
-#' @param object Object of class `"ts"` or `"mts"`.
+#' @param object Object of class `ts` or `mts`.
 #' @param series Identifies the time series with a colour, which integrates well
 #' with the functionality of [geom_forecast()].
 #' @param facets If `TRUE`, multiple time series will be faceted (and
 #' unless specified, colour is set to `FALSE`). If `FALSE`, each
 #' series will be assigned a colour.
 #' @param colour If `TRUE`, the time series will be assigned a colour aesthetic
-#' @param model Object of class `"ts"` to be converted to `"data.frame"`.
+#' @param model Object of class `ts` to be converted to `data.frame`.
 #' @param data Not used (required for [ggplot2::fortify()] method)
 #' @param ... Other plotting parameters to affect the plot.
 #' @inheritParams plot.forecast

@@ -39,7 +39,7 @@ extract various useful features from the underlying model.
 )
 }
 \arguments{
-\item{object}{An object of class \code{"ets"}. Usually the result of a call
+\item{object}{An object of class \code{ets}. Usually the result of a call
 to \code{\link[=ets]{ets()}}.}
 
 \item{h}{Number of periods for forecasting. Default value is twice the

@@ -65,7 +65,7 @@ is not \code{NULL}, scaling is applied after Box-Cox transformation.}
 \item{...}{Other arguments passed to \code{FUN} for \code{modelAR}.}
 }
 \value{
-Returns an object of class \code{"modelAR"}.
+Returns an object of class \code{modelAR}.
 
 The function \code{summary} is used to obtain and print a summary of the
 results.

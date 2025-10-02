@@ -35,7 +35,7 @@ extract various useful features from the underlying model.
 )
 }
 \arguments{
-\item{object}{An object of class \code{"HoltWinters"}. Usually the result of
+\item{object}{An object of class \code{HoltWinters}. Usually the result of
 a call to \code{\link[stats:HoltWinters]{stats::HoltWinters()}}.}
 
 \item{h}{Number of periods for forecasting. Default value is twice the

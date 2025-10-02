@@ -42,7 +42,7 @@
 #' choose an ARMA(p, q) model for the errors. (Note that xreg will be ignored,
 #' as will any arguments concerning seasonality and differencing, but arguments
 #' controlling the values of p and q will be used.)
-#' @return An object of class `"bats"`. The generic accessor functions
+#' @return An object of class `bats`. The generic accessor functions
 #' `fitted.values` and `residuals` extract useful features of the
 #' value returned by `bats` and associated functions. The fitted model is
 #' designated BATS(omega, p,q, phi, m1,...mJ) where omega is the Box-Cox

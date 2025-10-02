@@ -51,7 +51,7 @@ time series attributes of the original data will be ignored.}
 \item{...}{Other arguments passed to \code{\link[=forecast.lm]{forecast.lm()}}.}
 }
 \value{
-An object of class \code{"mforecast"}.
+An object of class \code{mforecast}.
 
 The function \code{summary} is used to obtain and print a summary of the
 results, while the function \code{plot} produces a plot of the forecasts and
@@ -60,7 +60,7 @@ prediction intervals.
 The generic accessor functions \code{fitted.values} and \code{residuals}
 extract useful features of the value returned by \code{forecast.lm}.
 
-An object of class \code{"mforecast"} is a list containing at least the
+An object of class \code{mforecast} is a list containing at least the
 following elements:
 \item{model}{A list containing information about the fitted model}
 \item{method}{The name of the forecasting method as a character string}

@@ -54,7 +54,7 @@ mlmsplit <- function(x, index = NULL) {
 #' @param object Object of class "mlm", usually the result of a call to
 #' [stats::lm()] or [tslm()].
 #' @param ... Other arguments passed to [forecast.lm()].
-#' @return An object of class `"mforecast"`.
+#' @return An object of class `mforecast`.
 #'
 #' The function `summary` is used to obtain and print a summary of the
 #' results, while the function `plot` produces a plot of the forecasts and
@@ -63,7 +63,7 @@ mlmsplit <- function(x, index = NULL) {
 #' The generic accessor functions `fitted.values` and `residuals`
 #' extract useful features of the value returned by `forecast.lm`.
 #'
-#' An object of class `"mforecast"` is a list containing at least the
+#' An object of class `mforecast` is a list containing at least the
 #' following elements:
 #' \item{model}{A list containing information about the fitted model}
 #' \item{method}{The name of the forecasting method as a character string}
@@ -138,7 +138,7 @@ forecast.mlm <- function(
 #' multiplicative trends are allowed. Otherwise, only additive or no trend ETS
 #' models are permitted.
 #' @param ... Additional arguments affecting the forecasts produced.
-#' @return An object of class `"mforecast"`.
+#' @return An object of class `mforecast`.
 #'
 #' The function `summary` is used to obtain and print a summary of the
 #' results, while the function `plot` produces a plot of the multivariate
@@ -147,7 +147,7 @@ forecast.mlm <- function(
 #' The generic accessors functions `fitted.values` and `residuals`
 #' extract various useful features of the value returned by `forecast$model`.
 #'
-#' An object of class `"mforecast"` is a list usually containing at least
+#' An object of class `mforecast` is a list usually containing at least
 #' the following elements:
 #' \item{model}{A list containing information about the fitted model}
 #' \item{method}{The name of the forecasting method as a character string}
@@ -161,7 +161,7 @@ forecast.mlm <- function(
 #'       errors, the residuals will be x minus the fitted values.}
 #' \item{fitted}{Fitted values (one-step forecasts)}
 #' @author Rob J Hyndman & Mitchell O'Hara-Wild
-#' @seealso Other functions which return objects of class `"mforecast"`
+#' @seealso Other functions which return objects of class `mforecast`
 #' are [forecast.mlm()], `forecast.varest()`.
 #'
 #' @export

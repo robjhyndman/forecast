@@ -14,7 +14,7 @@
 #' non-stationary, the location of the sample paths is arbitrary, so they all
 #' start at the value of the first observation.
 #'
-#' @param object An object of class `"ets"`, `"Arima"`, `"ar"` or `"nnetar"`.
+#' @param object An object of class `ets`, `Arima`, `ar` or `nnetar`.
 #' @param nsim Number of periods for the simulated series. Ignored if either
 #' `xreg` or `innov` are not `NULL`. Otherwise the default is
 #' the length of series used to train model (or 100 if no data found).
@@ -33,7 +33,7 @@
 #' @param ... Other arguments, not currently used.
 #' @inheritParams forecast.ts
 #'
-#' @return An object of class `"ts"`.
+#' @return An object of class `ts`.
 #' @author Rob J Hyndman
 #' @seealso [ets()], [Arima()], [auto.arima()], [ar()], [arfima()], [nnetar()].
 #' @keywords ts

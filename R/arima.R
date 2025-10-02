@@ -642,8 +642,8 @@ arima.errors <- function(object) {
 #'
 #' Returns h-step forecasts for the data used in fitting the model.
 #'
-#' @param object An object of class `"Arima"`, `"bats"`, `"tbats"`, `"ets"` or
-#' `"nnetar"`.
+#' @param object An object of class `Arima`, `bats`, `tbats`, `ets` or
+#' `nnetar`.
 #' @param h The number of steps to forecast ahead.
 #' @param ... Other arguments.
 #' @return A time series of the h-step forecasts.
@@ -1085,8 +1085,8 @@ print.forecast_ARIMA <- function(
 #' Returns the order of a univariate ARIMA or ARFIMA model.
 #'
 #'
-#' @param object An object of class `"Arima"`, `"ar"` or
-#' `"fracdiff"`. Usually the result of a call to [stats::arima()],
+#' @param object An object of class `Arima`, `ar` or
+#' `fracdiff`. Usually the result of a call to [stats::arima()],
 #' [Arima()], [auto.arima()], [stats::ar()], [arfima()] or [fracdiff::fracdiff()].
 #' @return A numerical vector giving the values \eqn{p}, \eqn{d} and \eqn{q} of
 #' the ARIMA or ARFIMA model. For a seasonal ARIMA model, the returned vector

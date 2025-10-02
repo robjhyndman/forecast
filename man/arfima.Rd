@@ -48,7 +48,7 @@ which must have the same number of rows as \code{y}. It should not be a data fra
 \item{...}{Other arguments passed to \code{\link[=auto.arima]{auto.arima()}} when selecting p and q.}
 }
 \value{
-A list object of S3 class \code{"fracdiff"}, which is described in
+A list object of S3 class \code{fracdiff}, which is described in
 the \code{\link[fracdiff:fracdiff]{fracdiff::fracdiff()}} documentation. A few additional objects
 are added to the list including \code{x} (the original time series), and the
 \code{residuals} and \code{fitted} values.

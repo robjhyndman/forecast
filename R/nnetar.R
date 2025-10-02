@@ -52,7 +52,7 @@
 #' is not `NULL`, scaling is applied after Box-Cox transformation.
 #' @param ... Other arguments passed to [nnet::nnet()] for `nnetar`.
 #'
-#' @return Returns an object of class `"nnetar"`.
+#' @return Returns an object of class `nnetar`.
 #'
 #' The function `summary` is used to obtain and print a summary of the
 #' results.
@@ -420,7 +420,7 @@ print.nnetarmodels <- function(x, ...) {
 #' residuals to ameliorate this, see examples.
 #'
 #' @inheritParams forecast.Arima
-#' @param object An object of class `"nnetar"` resulting from a call to
+#' @param object An object of class `nnetar` resulting from a call to
 #' [nnetar()].
 #' @param PI If `TRUE`, prediction intervals are produced, otherwise only point
 #' forecasts are calculated. If `PI` is `FALSE`, then `level`,

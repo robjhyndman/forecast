@@ -18,7 +18,7 @@
 #' example `start=c(1987, 5)`.
 #' @return An object of class `c("msts", "ts")`. If there is only one
 #' seasonal period (i.e., `length(seasonal.periods) == 1`), then the object
-#' is of class `"ts"`.
+#' is of class `ts`.
 #' @author Slava Razbash and Rob J Hyndman
 #' @keywords ts
 #' @examples

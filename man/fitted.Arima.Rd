@@ -30,8 +30,8 @@
 \method{fitted}{tbats}(object, h = 1, ...)
 }
 \arguments{
-\item{object}{An object of class \code{"Arima"}, \code{"bats"}, \code{"tbats"}, \code{"ets"} or
-\code{"nnetar"}.}
+\item{object}{An object of class \code{Arima}, \code{bats}, \code{tbats}, \code{ets} or
+\code{nnetar}.}
 
 \item{h}{The number of steps to forecast ahead.}
 

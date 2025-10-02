@@ -99,7 +99,7 @@
 )
 }
 \arguments{
-\item{object}{An object of class \code{"ets"}, \code{"Arima"}, \code{"ar"} or \code{"nnetar"}.}
+\item{object}{An object of class \code{ets}, \code{Arima}, \code{ar} or \code{nnetar}.}
 
 \item{nsim}{Number of periods for the simulated series. Ignored if either
 \code{xreg} or \code{innov} are not \code{NULL}. Otherwise the default is
@@ -130,7 +130,7 @@ The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.}
 }
 \value{
-An object of class \code{"ts"}.
+An object of class \code{ts}.
 }
 \description{
 Returns a time series based on the model object \code{object}.
