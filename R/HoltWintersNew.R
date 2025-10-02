@@ -492,7 +492,7 @@ zzhw <- function(
 #' @param ... Other arguments passed to `forecast.ets`.
 #'
 #' @return An object of class `forecast`.
-#' @inherit forecast.ts format
+#' @inheritSection forecast.ts forecast class
 #' @author Rob J Hyndman
 #' @seealso [ets()], [stats::HoltWinters()], [rwf()], [stats::arima()].
 #' @references Hyndman, R.J., Koehler, A.B., Ord, J.K., Snyder, R.D. (2008)

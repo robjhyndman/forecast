@@ -112,7 +112,7 @@ baggedETS <- function(y, bootstrapped_series = bld.mbb.bootstrap(y, 100), ...) {
 #' [baggedModel()].
 #' @param ... Other arguments, passed on to the [forecast()] function of the original method
 #' @return An object of class `forecast`.
-#' @inherit forecast.ts format
+#' @inheritSection forecast.ts forecast class
 #' @author Christoph Bergmeir, Fotios Petropoulos
 #' @seealso [baggedModel()].
 #' @references Bergmeir, C., R. J. Hyndman, and J. M. Benitez (2016). Bagging

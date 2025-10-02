@@ -7,7 +7,7 @@
 #' @param object An object of class `bats`. Usually the result of a call to
 #' [bats()].
 #' @return An object of class `forecast`.
-#' @inherit forecast.ts format
+#' @inheritSection forecast.ts forecast class
 #' @author Slava Razbash and Rob J Hyndman
 #' @seealso [bats()], [tbats()], [forecast.ets()].
 #' @references De Livera, A.M., Hyndman, R.J., & Snyder, R. D. (2011),

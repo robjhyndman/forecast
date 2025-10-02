@@ -289,7 +289,7 @@ SD.test <- function(wts, s = frequency(wts)) {
 #' @param xreg Future values of any regression variables. A numerical vector or
 #' matrix of external regressors; it should not be a data frame.
 #' @return An object of class `forecast`.
-#' @inherit forecast.ts format
+#' @inheritSection forecast.ts forecast class
 #' @author Rob J Hyndman
 #' @seealso [stats::predict.Arima()], [stats::predict.ar()], [auto.arima()],
 #' [Arima()], [stats::arima()], [stats::ar()], [arfima()].

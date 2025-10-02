@@ -45,7 +45,8 @@
 #' modelling function.
 #' @inheritParams BoxCox
 #' @return An object of class `forecast`.
-#' @format An object of class `forecast` is a list usually containing at least
+#' @section forecast class:
+#' An object of class `forecast` is a list usually containing at least
 #' the following elements:
 #' \describe{
 #'   \item{model}{A list containing information about the fitted model}

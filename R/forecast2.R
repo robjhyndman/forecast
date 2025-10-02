@@ -148,7 +148,7 @@ InvBoxCoxf <- function(x = NULL, fvar = NULL, lambda = NULL) {
 #' @param object An object of class `StructTS`. Usually the result of a
 #' call to [stats::StructTS()].
 #' @return An object of class `forecast`.
-#' @inherit forecast.ts format
+#' @inheritSection forecast.ts forecast class
 #' @author Rob J Hyndman
 #' @seealso [stats::StructTS()].
 #' @keywords ts
@@ -250,7 +250,7 @@ forecast.StructTS <- function(
 #' a call to [stats::HoltWinters()].
 #'
 #' @return An object of class `forecast`.
-#' @inherit forecast.ts format
+#' @inheritSection forecast.ts forecast class
 #' @author Rob J Hyndman
 #' @seealso [stats::predict.HoltWinters], [stats::HoltWinters()].
 #' @keywords ts
@@ -365,7 +365,7 @@ forecast.HoltWinters <- function(
 #' @inheritParams forecast.ts
 #' @param alpha Value of alpha. Default value is 0.1.
 #' @return An object of class `forecast`.
-#' @inherit forecast.ts format
+#' @inheritSection forecast.ts forecast class
 #' @author Rob J Hyndman
 #' @seealso [ses()].
 #' @references Croston, J. (1972) "Forecasting and stock control for

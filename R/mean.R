@@ -22,7 +22,7 @@
 #'
 #' @inheritParams ets
 #' @return An object of class `mean_model`.
-#' @inherit forecast.ts format
+#' @inheritSection forecast.ts forecast class
 #' @seealso [forecast.mean_model()], [meanf()]
 #' @author Rob J Hyndman
 #' @keywords ts
@@ -86,7 +86,7 @@ print.mean_model <- function(x, digits = max(3, getOption("digits") - 3), ...) {
 #' @inheritParams mean_model
 #' @inheritParams forecast.ets
 #' @param ... Additional arguments not used.
-#' @inherit forecast.ts format
+#' @inheritSection forecast.ts forecast class
 #' @author Rob J Hyndman
 #' @examples
 #' fit_nile <- mean_model(Nile)

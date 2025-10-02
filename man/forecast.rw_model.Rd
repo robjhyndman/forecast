@@ -6,26 +6,6 @@
 \alias{naive}
 \alias{snaive}
 \title{Naive and Random Walk Forecasts}
-\format{
-An object of class \code{forecast} is a list usually containing at least
-the following elements:
-\describe{
-\item{model}{A list containing information about the fitted model}
-\item{method}{The name of the forecasting method as a character string}
-\item{mean}{Point forecasts as a time series}
-\item{lower}{Lower limits for prediction intervals}
-\item{upper}{Upper limits for prediction intervals}
-\item{level}{The confidence values associated with the prediction intervals}
-\item{x}{The original time series.}
-\item{residuals}{Residuals from the fitted model. For models with additive
-errors, the residuals will be x minus the fitted values.}
-\item{fitted}{Fitted values (one-step forecasts)}
-}
-The function \code{summary} can be used to obtain and print a summary of the
-results, while the functions \code{plot} and \code{autoplot} produce plots of the forecasts and
-prediction intervals. The generic accessors functions \code{fitted.values} and \code{residuals}
-extract various useful features from the underlying model.
-}
 \usage{
 \method{forecast}{rw_model}(
   object,
@@ -156,6 +136,28 @@ directly).
 The generic accessor functions \code{\link[stats:fitted.values]{stats::fitted()}} and \code{\link[stats:residuals]{stats::residuals()}}
 extract useful features of the object returned.
 }
+\section{forecast class}{
+
+An object of class \code{forecast} is a list usually containing at least
+the following elements:
+\describe{
+\item{model}{A list containing information about the fitted model}
+\item{method}{The name of the forecasting method as a character string}
+\item{mean}{Point forecasts as a time series}
+\item{lower}{Lower limits for prediction intervals}
+\item{upper}{Upper limits for prediction intervals}
+\item{level}{The confidence values associated with the prediction intervals}
+\item{x}{The original time series.}
+\item{residuals}{Residuals from the fitted model. For models with additive
+errors, the residuals will be x minus the fitted values.}
+\item{fitted}{Fitted values (one-step forecasts)}
+}
+The function \code{summary} can be used to obtain and print a summary of the
+results, while the functions \code{plot} and \code{autoplot} produce plots of the forecasts and
+prediction intervals. The generic accessors functions \code{fitted.values} and \code{residuals}
+extract various useful features from the underlying model.
+}
+
 \examples{
 # Three ways to do the same thing
 gold_model <- rw_model(gold)

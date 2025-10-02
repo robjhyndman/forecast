@@ -346,7 +346,7 @@ modelAR <- function(
 #' [modelAR()].
 #'
 #' @return An object of class `forecast`.
-#' @inherit forecast.ts format
+#' @inheritSection forecast.ts forecast class
 #' @author Rob J Hyndman and Gabriel Caceres
 #' @seealso [nnetar()].
 #' @keywords ts

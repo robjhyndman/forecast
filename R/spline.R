@@ -65,7 +65,7 @@ spline.loglik <- function(beta, y, cc = 1e2) {
 #' [stats::smooth.spline()] is used. If `method = "mle"`, the
 #' maximum likelihood method from Hyndman et al (2002) is used.
 #' @return An object of class `forecast`.
-#' @inherit forecast.ts format
+#' @inheritSection forecast.ts forecast class
 #' @author Rob J Hyndman
 #' @seealso [stats::smooth.spline()], [stats::arima()], [holt()].
 #' @references Hyndman, King, Pitrun and Billah (2005) Local linear forecasts

@@ -17,7 +17,7 @@
 #' ignored.
 #' @param ... Other arguments are ignored.
 #' @return An object of class `forecast`.
-#' @inherit forecast.ts format
+#' @inheritSection forecast.ts forecast class
 #' @author Rob J Hyndman
 #' @seealso [ets()], [ses()], [holt()], [hw()].
 #' @keywords ts

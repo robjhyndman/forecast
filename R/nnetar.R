@@ -430,7 +430,7 @@ print.nnetarmodels <- function(x, ...) {
 #' into a matrix). If present, `bootstrap` is ignored.
 #' @param ... Additional arguments passed to [simulate.nnetar()].
 #' @return An object of class `forecast`.
-#' @inherit forecast.ts format
+#' @inheritSection forecast.ts forecast class
 #' @author Rob J Hyndman and Gabriel Caceres
 #' @seealso [nnetar()].
 #' @keywords ts

@@ -23,7 +23,7 @@
 #'
 #' @inheritParams ses
 #' @return An object of class `forecast`.
-#' @inherit forecast.ts format
+#' @inheritSection forecast.ts forecast class
 #' @author Rob J Hyndman
 #' @seealso [stats::arima()], [meanf()], [rwf()], [ses()]
 #' @references Assimakopoulos, V. and Nikolopoulos, K. (2000). The theta model:
