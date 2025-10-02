@@ -48,8 +48,39 @@
     </div>
 
     <div class="section level2">
-    <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>An object of class <code>forecast</code> is a list usually containing at least
+    <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
+
+
+<dl><dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
+<dd><p>An object of class <code>baggedModel</code> resulting from a call to
+<code><a href="baggedModel.html">baggedModel()</a></code>.</p></dd>
+
+
+<dt id="arg-h">h<a class="anchor" aria-label="anchor" href="#arg-h"></a></dt>
+<dd><p>Number of periods for forecasting. Default value is twice the
+largest seasonal period (for seasonal data) or ten (for non-seasonal data).</p></dd>
+
+
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>Other arguments, passed on to the <code><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast()</a></code> function of the original method</p></dd>
+
+</dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>An object of class <code>forecast</code>.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>Intervals are calculated as min and max values over the point forecasts from
+the models in the ensemble. I.e., the intervals are not prediction
+intervals, but give an indication of how different the forecasts within the
+ensemble are.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="forecast-class">forecast class<a class="anchor" aria-label="anchor" href="#forecast-class"></a></h2>
+
+
+<p>An object of class <code>forecast</code> is a list usually containing at least
 the following elements:</p><dl><dt>model</dt>
 <dd><p>A list containing information about the fitted model</p></dd>
 
@@ -83,35 +114,6 @@ errors, the residuals will be x minus the fitted values.</p></dd>
 results, while the functions <code>plot</code> and <code>autoplot</code> produce plots of the forecasts and
 prediction intervals. The generic accessors functions <code>fitted.values</code> and <code>residuals</code>
 extract various useful features from the underlying model.</p>
-    </div>
-    <div class="section level2">
-    <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-
-
-<dl><dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
-<dd><p>An object of class <code>baggedModel</code> resulting from a call to
-<code><a href="baggedModel.html">baggedModel()</a></code>.</p></dd>
-
-
-<dt id="arg-h">h<a class="anchor" aria-label="anchor" href="#arg-h"></a></dt>
-<dd><p>Number of periods for forecasting. Default value is twice the
-largest seasonal period (for seasonal data) or ten (for non-seasonal data).</p></dd>
-
-
-<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Other arguments, passed on to the <code><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast()</a></code> function of the original method</p></dd>
-
-</dl></div>
-    <div class="section level2">
-    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object of class <code>forecast</code>.</p>
-    </div>
-    <div class="section level2">
-    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Intervals are calculated as min and max values over the point forecasts from
-the models in the ensemble. I.e., the intervals are not prediction
-intervals, but give an indication of how different the forecasts within the
-ensemble are.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
