@@ -69,7 +69,7 @@
 
 
 <dl><dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
-<dd><p>a numeric vector or time series of class <code>ts</code></p></dd>
+<dd><p>a numeric vector or univariate time series of class <code>ts</code></p></dd>
 
 
 <dt id="arg-model">model<a class="anchor" aria-label="anchor" href="#arg-model"></a></dt>
@@ -81,7 +81,7 @@ the season type ("N","A","M" or "Z"). In all cases, "N"=none, "A"=additive,
 "M"=multiplicative and "Z"=automatically selected. So, for example, "ANN" is
 simple exponential smoothing with additive errors, "MAM" is multiplicative
 Holt-Winters' method with multiplicative errors, and so on.</p>
-<p>It is also possible for the model to be of class <code>"ets"</code>, and equal to
+<p>It is also possible for the model to be of class <code>ets</code>, and equal to
 the output from a previous call to <code>ets</code>. In this case, the same model
 is fitted to <code>y</code> without re-estimating any smoothing parameters. See
 also the <code>use.initial.values</code> argument.</p></dd>
@@ -112,15 +112,14 @@ returned.</p></dd>
 
 <dt id="arg-additive-only">additive.only<a class="anchor" aria-label="anchor" href="#arg-additive-only"></a></dt>
 <dd><p>If <code>TRUE</code>, will only consider additive models. Default is
-<code>FALSE</code>.</p></dd>
+<code>FALSE</code>. When <code>lambda</code> is specified, <code>additive.only</code> is set to <code>TRUE</code>.</p></dd>
 
 
 <dt id="arg-lambda">lambda<a class="anchor" aria-label="anchor" href="#arg-lambda"></a></dt>
 <dd><p>Box-Cox transformation parameter. If <code>lambda = "auto"</code>,
 then a transformation is automatically selected using <code>BoxCox.lambda</code>.
 The transformation is ignored if NULL. Otherwise,
-data transformed before model is estimated. When <code>lambda</code> is specified,
-<code>additive.only</code> is set to <code>TRUE</code>.</p></dd>
+data transformed before model is estimated.</p></dd>
 
 
 <dt id="arg-biasadj">biasadj<a class="anchor" aria-label="anchor" href="#arg-biasadj"></a></dt>
@@ -186,12 +185,12 @@ time-series will be used.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Other undocumented arguments.</p></dd>
+<dd><p>Other arguments are ignored.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object of class <code>"ets"</code>.</p>
+    <p>An object of class <code>ets</code>.</p>
 <p>The generic accessor functions <code>fitted.values</code> and <code>residuals</code>
 extract useful features of the value returned by <code>ets</code> and associated
 functions.</p>

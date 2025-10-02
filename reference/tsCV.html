@@ -53,7 +53,7 @@ rolling forecast origin.</p>
 
 
 <dl><dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
-<dd><p>Univariate time series</p></dd>
+<dd><p>a numeric vector or univariate time series of class <code>ts</code></p></dd>
 
 
 <dt id="arg-forecastfunction">forecastfunction<a class="anchor" aria-label="anchor" href="#arg-forecastfunction"></a></dt>
@@ -65,7 +65,8 @@ training and test periods.</p></dd>
 
 
 <dt id="arg-h">h<a class="anchor" aria-label="anchor" href="#arg-h"></a></dt>
-<dd><p>Forecast horizon</p></dd>
+<dd><p>Number of periods for forecasting. Default value is twice the
+largest seasonal period (for seasonal data) or ten (for non-seasonal data).</p></dd>
 
 
 <dt id="arg-window">window<a class="anchor" aria-label="anchor" href="#arg-window"></a></dt>

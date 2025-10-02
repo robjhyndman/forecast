@@ -63,7 +63,7 @@ user-defined model</p>
 
 
 <dl><dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
-<dd><p>A numeric vector or time series of class <code>ts</code>.</p></dd>
+<dd><p>a numeric vector or univariate time series of class <code>ts</code></p></dd>
 
 
 <dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
@@ -92,8 +92,8 @@ it should return fitted values when new data is omitted.</p></dd>
 
 
 <dt id="arg-xreg">xreg<a class="anchor" aria-label="anchor" href="#arg-xreg"></a></dt>
-<dd><p>Optionally, a vector or matrix of external regressors, which
-must have the same number of rows as <code>y</code>. Must be numeric.</p></dd>
+<dd><p>Optionally, a numerical vector or matrix of external regressors,
+which must have the same number of rows as <code>y</code>. It should not be a data frame.</p></dd>
 
 
 <dt id="arg-lambda">lambda<a class="anchor" aria-label="anchor" href="#arg-lambda"></a></dt>
@@ -131,7 +131,7 @@ is not <code>NULL</code>, scaling is applied after Box-Cox transformation.</p></
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Returns an object of class <code>"modelAR"</code>.</p>
+    <p>Returns an object of class <code>modelAR</code>.</p>
 <p>The function <code>summary</code> is used to obtain and print a summary of the
 results.</p>
 <p>The generic accessor functions <code>fitted.values</code> and <code>residuals</code>

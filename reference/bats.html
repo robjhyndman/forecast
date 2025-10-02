@@ -89,7 +89,7 @@ and the best fit is selected by AIC.</p></dd>
 
 
 <dt id="arg-seasonal-periods">seasonal.periods<a class="anchor" aria-label="anchor" href="#arg-seasonal-periods"></a></dt>
-<dd><p>If <code>y</code> is a numeric then seasonal periods can
+<dd><p>If <code>y</code> is <code>numeric</code>, then seasonal periods can
 be specified with this parameter.</p></dd>
 
 
@@ -120,9 +120,10 @@ detected and all available cores are used.</p></dd>
 
 <dt id="arg-biasadj">biasadj<a class="anchor" aria-label="anchor" href="#arg-biasadj"></a></dt>
 <dd><p>Use adjusted back-transformed mean for Box-Cox
-transformations. If <code>TRUE</code>, point forecasts and fitted values are mean
-forecast. Otherwise, these points can be considered the median of the
-forecast densities.</p></dd>
+transformations. If transformed data is used to produce forecasts and fitted
+values, a regular back transformation will result in median forecasts. If
+biasadj is <code>TRUE</code>, an adjustment will be made to produce mean forecasts
+and fitted values.</p></dd>
 
 
 <dt id="arg-model">model<a class="anchor" aria-label="anchor" href="#arg-model"></a></dt>
@@ -139,7 +140,7 @@ controlling the values of p and q will be used.)</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object of class <code>"bats"</code>. The generic accessor functions
+    <p>An object of class <code>bats</code>. The generic accessor functions
 <code>fitted.values</code> and <code>residuals</code> extract useful features of the
 value returned by <code>bats</code> and associated functions. The fitted model is
 designated BATS(omega, p,q, phi, m1,...mJ) where omega is the Box-Cox

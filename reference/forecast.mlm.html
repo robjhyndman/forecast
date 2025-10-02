@@ -77,12 +77,12 @@ present.</p></dd>
 
 
 <dt id="arg-level">level<a class="anchor" aria-label="anchor" href="#arg-level"></a></dt>
-<dd><p>Confidence level for prediction intervals.</p></dd>
+<dd><p>Confidence levels for prediction intervals.</p></dd>
 
 
 <dt id="arg-fan">fan<a class="anchor" aria-label="anchor" href="#arg-fan"></a></dt>
-<dd><p>If <code>TRUE</code>, level is set to <code>seq(51, 99, by = 3)</code>. This
-is suitable for fan plots.</p></dd>
+<dd><p>If <code>TRUE</code>, <code>level</code> is set to <code>seq(51, 99, by = 3)</code>.
+This is suitable for fan plots.</p></dd>
 
 
 <dt id="arg-lambda">lambda<a class="anchor" aria-label="anchor" href="#arg-lambda"></a></dt>
@@ -113,13 +113,13 @@ time series attributes of the original data will be ignored.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object of class <code>"mforecast"</code>.</p>
+    <p>An object of class <code>mforecast</code>.</p>
 <p>The function <code>summary</code> is used to obtain and print a summary of the
 results, while the function <code>plot</code> produces a plot of the forecasts and
 prediction intervals.</p>
 <p>The generic accessor functions <code>fitted.values</code> and <code>residuals</code>
 extract useful features of the value returned by <code>forecast.lm</code>.</p>
-<p>An object of class <code>"mforecast"</code> is a list containing at least the
+<p>An object of class <code>mforecast</code> is a list containing at least the
 following elements:</p>
 <dl><dt>model</dt>
 <dd><p>A list containing information about the fitted model</p></dd>

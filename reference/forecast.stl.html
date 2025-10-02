@@ -131,16 +131,18 @@ used to specify the forecasting method to be used.</p></dd>
 
 
 <dt id="arg-h">h<a class="anchor" aria-label="anchor" href="#arg-h"></a></dt>
-<dd><p>Number of periods for forecasting.</p></dd>
+<dd><p>Number of periods for forecasting. If <code>xreg</code> is used, <code>h</code>
+is ignored and the number of forecast periods is set to the number of rows
+of <code>xreg</code>.</p></dd>
 
 
 <dt id="arg-level">level<a class="anchor" aria-label="anchor" href="#arg-level"></a></dt>
-<dd><p>Confidence level for prediction intervals.</p></dd>
+<dd><p>Confidence levels for prediction intervals.</p></dd>
 
 
 <dt id="arg-fan">fan<a class="anchor" aria-label="anchor" href="#arg-fan"></a></dt>
-<dd><p>If <code>TRUE</code>, level is set to <code>seq(51, 99, by = 3)</code>. This
-is suitable for fan plots.</p></dd>
+<dd><p>If <code>TRUE</code>, <code>level</code> is set to <code>seq(51, 99, by = 3)</code>.
+This is suitable for fan plots.</p></dd>
 
 
 <dt id="arg-lambda">lambda<a class="anchor" aria-label="anchor" href="#arg-lambda"></a></dt>
@@ -179,7 +181,7 @@ models are permitted.</p></dd>
 
 
 <dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
-<dd><p>A univariate numeric time series of class <code>ts</code>.</p></dd>
+<dd><p>a numeric vector or univariate time series of class <code>ts</code></p></dd>
 
 
 <dt id="arg-s-window">s.window<a class="anchor" aria-label="anchor" href="#arg-s-window"></a></dt>

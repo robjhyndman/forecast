@@ -72,35 +72,35 @@ or <code>ts</code>. Only univariate time series are supported.</p></dd>
 
 
 <dt id="arg-use-box-cox">use.box.cox<a class="anchor" aria-label="anchor" href="#arg-use-box-cox"></a></dt>
-<dd><p><code>TRUE/FALSE</code> indicates whether to use the Box-Cox
+<dd><p><code>TRUE</code>/<code>FALSE</code> indicates whether to use the Box-Cox
 transformation or not. If <code>NULL</code> then both are tried and the best fit
 is selected by AIC.</p></dd>
 
 
 <dt id="arg-use-trend">use.trend<a class="anchor" aria-label="anchor" href="#arg-use-trend"></a></dt>
-<dd><p><code>TRUE/FALSE</code> indicates whether to include a trend or
+<dd><p><code>TRUE</code>/<code>FALSE</code> indicates whether to include a trend or
 not. If <code>NULL</code> then both are tried and the best fit is selected by AIC.</p></dd>
 
 
 <dt id="arg-use-damped-trend">use.damped.trend<a class="anchor" aria-label="anchor" href="#arg-use-damped-trend"></a></dt>
-<dd><p><code>TRUE/FALSE</code> indicates whether to include a
+<dd><p><code>TRUE</code>/<code>FALSE</code> indicates whether to include a
 damping parameter in the trend or not. If <code>NULL</code> then both are tried
 and the best fit is selected by AIC.</p></dd>
 
 
 <dt id="arg-seasonal-periods">seasonal.periods<a class="anchor" aria-label="anchor" href="#arg-seasonal-periods"></a></dt>
-<dd><p>If <code>y</code> is <code>numeric</code> then seasonal periods
-can be specified with this parameter.</p></dd>
+<dd><p>If <code>y</code> is <code>numeric</code>, then seasonal periods can
+be specified with this parameter.</p></dd>
 
 
 <dt id="arg-use-arma-errors">use.arma.errors<a class="anchor" aria-label="anchor" href="#arg-use-arma-errors"></a></dt>
-<dd><p><code>TRUE/FALSE</code> indicates whether to include ARMA
+<dd><p><code>TRUE</code>/<code>FALSE</code> indicates whether to include ARMA
 errors or not. If <code>TRUE</code> the best fit is selected by AIC. If
 <code>FALSE</code> then the selection algorithm does not consider ARMA errors.</p></dd>
 
 
 <dt id="arg-use-parallel">use.parallel<a class="anchor" aria-label="anchor" href="#arg-use-parallel"></a></dt>
-<dd><p><code>TRUE/FALSE</code> indicates whether or not to use
+<dd><p><code>TRUE</code>/<code>FALSE</code> indicates whether or not to use
 parallel processing.</p></dd>
 
 
@@ -120,9 +120,10 @@ detected and all available cores are used.</p></dd>
 
 <dt id="arg-biasadj">biasadj<a class="anchor" aria-label="anchor" href="#arg-biasadj"></a></dt>
 <dd><p>Use adjusted back-transformed mean for Box-Cox
-transformations. If <code>TRUE</code>, point forecasts and fitted values are mean
-forecast. Otherwise, these points can be considered the median of the
-forecast densities.</p></dd>
+transformations. If transformed data is used to produce forecasts and fitted
+values, a regular back transformation will result in median forecasts. If
+biasadj is <code>TRUE</code>, an adjustment will be made to produce mean forecasts
+and fitted values.</p></dd>
 
 
 <dt id="arg-model">model<a class="anchor" aria-label="anchor" href="#arg-model"></a></dt>
@@ -141,8 +142,8 @@ controlling the values of p and q will be used.)</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>An object with class <code>c("tbats", "bats")</code>. The generic accessor
-functions <code>fitted.values</code> and <code>residuals</code> extract useful features
-of the value returned by <code>bats</code> and associated functions. The fitted
+functions <code><a href="https://rdrr.io/r/stats/fitted.values.html" class="external-link">fitted.values()</a></code> and <code><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals()</a></code> extract useful features
+of the value returned by <code><a href="bats.html">bats()</a></code> and associated functions. The fitted
 model is designated TBATS(omega, p,q, phi, &lt;m1,k1&gt;,...,&lt;mJ,kJ&gt;) where omega
 is the Box-Cox parameter and phi is the damping parameter; the error is
 modelled as an ARMA(p,q) process and m1,...,mJ list the seasonal periods

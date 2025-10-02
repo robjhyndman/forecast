@@ -70,26 +70,27 @@ and re-apply it to the data <code>y</code>.</p>
 
 
 <dl><dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
-<dd><p>A univariate time series of class <code>ts</code>.</p></dd>
+<dd><p>a numeric vector or univariate time series of class <code>ts</code></p></dd>
 
 
 <dt id="arg-order">order<a class="anchor" aria-label="anchor" href="#arg-order"></a></dt>
-<dd><p>A specification of the non-seasonal part of the ARIMA model:
-the three components (p, d, q) are the AR order, the degree of differencing,
-and the MA order.</p></dd>
+<dd><p>a specification of the non-seasonal part of the ARIMA
+    model: the three integer components \((p, d, q)\) are the AR order, the
+    degree of differencing, and the MA order.</p></dd>
 
 
 <dt id="arg-seasonal">seasonal<a class="anchor" aria-label="anchor" href="#arg-seasonal"></a></dt>
-<dd><p>A specification of the seasonal part of the ARIMA model,
-plus the period (which defaults to <code>frequency(y)</code>). This should be a
-list with components order and period, but a specification of just a numeric
-vector of length 3 will be turned into a suitable list with the
-specification as the order.</p></dd>
+<dd><p>a specification of the seasonal part of the ARIMA
+    model, plus the period (which defaults to <code>frequency(x)</code>).
+    This may be a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></code> with components <code>order</code> and
+    <code>period</code>, or just a numeric vector of length 3 which
+    specifies the seasonal <code>order</code>.  In the latter case the
+    default period is used.</p></dd>
 
 
 <dt id="arg-xreg">xreg<a class="anchor" aria-label="anchor" href="#arg-xreg"></a></dt>
 <dd><p>Optionally, a numerical vector or matrix of external regressors,
-which must have the same number of rows as y. It should not be a data frame.</p></dd>
+which must have the same number of rows as <code>y</code>. It should not be a data frame.</p></dd>
 
 
 <dt id="arg-include-mean">include.mean<a class="anchor" aria-label="anchor" href="#arg-include-mean"></a></dt>
@@ -129,9 +130,10 @@ and fitted values.</p></dd>
 
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
-<dd><p>Fitting method: maximum likelihood or minimize conditional
-sum-of-squares. The default (unless there are missing values) is to use
-conditional-sum-of-squares to find starting values, then maximum likelihood.</p></dd>
+<dd><p>fitting method: maximum likelihood or minimize
+    conditional sum-of-squares.  The default (unless there are missing
+    values) is to use conditional-sum-of-squares to find starting
+    values, then maximum likelihood.  Can be abbreviated.</p></dd>
 
 
 <dt id="arg-model">model<a class="anchor" aria-label="anchor" href="#arg-model"></a></dt>

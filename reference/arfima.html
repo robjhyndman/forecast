@@ -63,7 +63,7 @@ Raftery (1989) algorithm to estimate the parameters including d.</p>
 
 
 <dl><dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
-<dd><p>A univariate time series (numeric vector).</p></dd>
+<dd><p>a numeric vector or univariate time series of class <code>ts</code></p></dd>
 
 
 <dt id="arg-drange">drange<a class="anchor" aria-label="anchor" href="#arg-drange"></a></dt>
@@ -99,7 +99,7 @@ and fitted values.</p></dd>
 
 <dt id="arg-xreg">xreg<a class="anchor" aria-label="anchor" href="#arg-xreg"></a></dt>
 <dd><p>Optionally, a numerical vector or matrix of external regressors,
-which must have the same number of rows as y. It should not be a data frame.</p></dd>
+which must have the same number of rows as <code>y</code>. It should not be a data frame.</p></dd>
 
 
 <dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
@@ -112,7 +112,7 @@ which must have the same number of rows as y. It should not be a data frame.</p>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A list object of S3 class <code>"fracdiff"</code>, which is described in
+    <p>A list object of S3 class <code>fracdiff</code>, which is described in
 the <code><a href="https://rdrr.io/pkg/fracdiff/man/fracdiff.html" class="external-link">fracdiff::fracdiff()</a></code> documentation. A few additional objects
 are added to the list including <code>x</code> (the original time series), and the
 <code>residuals</code> and <code>fitted</code> values.</p>
