@@ -6,7 +6,7 @@
 \usage{
 \method{forecast}{HoltWinters}(
   object,
-  h = ifelse(frequency(object$x) > 1, 2 * frequency(object$x), 10),
+  h = if (frequency(object$x) > 1) 2 * frequency(object$x) else 10,
   level = c(80, 95),
   fan = FALSE,
   lambda = NULL,

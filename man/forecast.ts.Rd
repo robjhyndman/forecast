@@ -11,7 +11,7 @@
 \usage{
 \method{forecast}{ts}(
   object,
-  h = ifelse(frequency(object) > 1, 2 * frequency(object), 10),
+  h = if (frequency(object) > 1) 2 * frequency(object) else 10,
   level = c(80, 95),
   fan = FALSE,
   robust = FALSE,

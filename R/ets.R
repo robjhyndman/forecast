@@ -365,7 +365,7 @@ ets <- function(
           gamma = gamma,
           phi = phi,
           exponential = (trendtype == "M"),
-          seasonal = ifelse(seasontype != "A", "multiplicative", "additive"),
+          seasonal = if (seasontype != "A") "multiplicative" else "additive",
           lambda = lambda,
           biasadj = biasadj,
           warnings = FALSE

@@ -457,7 +457,7 @@ print.nnetarmodels <- function(x, ...) {
 #' @export
 forecast.nnetar <- function(
   object,
-  h = ifelse(object$m > 1, 2 * object$m, 10),
+  h = if (object$m > 1) 2 * object$m else 10,
   PI = FALSE,
   level = c(80, 95),
   fan = FALSE,

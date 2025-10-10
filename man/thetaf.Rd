@@ -6,7 +6,7 @@
 \usage{
 thetaf(
   y,
-  h = ifelse(frequency(y) > 1, 2 * frequency(y), 10),
+  h = if (frequency(y) > 1) 2 * frequency(y) else 10,
   level = c(80, 95),
   fan = FALSE,
   x = y

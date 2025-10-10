@@ -255,7 +255,7 @@ SD.test <- function(wts, s = frequency(wts)) {
   for (i in 1:(s - 1)) {
     if (frecob[i] == 1) {
       A[i, j] <- 1
-      ifelse(frecob[i] == 1, j <- j + 1, j <- j)
+      j <- j + 1
     }
   }
   tmp <- t(A) %*% Omfhat %*% A
@@ -310,7 +310,7 @@ SD.test <- function(wts, s = frequency(wts)) {
 #' @export
 forecast.Arima <- function(
   object,
-  h = ifelse(object$arma[5] > 1, 2 * object$arma[5], 10),
+  h = if (object$arma[5] > 1) 2 * object$arma[5] else 10,
   level = c(80, 95),
   fan = FALSE,
   xreg = NULL,
