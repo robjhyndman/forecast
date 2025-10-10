@@ -54,11 +54,11 @@ baggedModel <- function(
 ) {
   # Add package info in case forecast not loaded
   if (!is.function(fn)) {
-    warning(paste0(
+    warning(
       "Using character specification for `fn` is deprecated. Please use `fn = ",
       match.arg(fn, c("ets", "auto.arima")),
       "`."
-    ))
+    )
     fn <- utils::getFromNamespace(
       match.arg(fn, c("ets", "auto.arima")),
       "forecast"

@@ -406,11 +406,11 @@ forecast.lm <- function(
             text = paste0("solvedFN___", match(i, reqvars))
           )[[1]]
         } else {
-          warning(paste0(
+          warning(
             "Could not find required variable ",
             i,
             " in newdata. Specify newdata as a named data.frame"
-          ))
+          )
         }
       }
     }

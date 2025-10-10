@@ -239,14 +239,12 @@ nsdiffs <- function(
     )
     alpha <- 0.05
   }
-  if (test %in% c("hegy", "ch")) {
-    if (!requireNamespace("uroot", quietly = TRUE)) {
-      stop(paste0(
-        "Using a ",
-        test,
-        ' test requires the uroot package. Please install it using `install.packages("uroot")`'
-      ))
-    }
+  if (test %in% c("hegy", "ch") && !requireNamespace("uroot", quietly = TRUE)) {
+    stop(
+      "Using a ",
+      test,
+      ' test requires the uroot package. Please install it using `install.packages("uroot")`'
+    )
   }
 
   if (is.constant(x)) {
