@@ -936,7 +936,7 @@ tbats.components <- function(x) {
     y <- x$y
   }
   # Compute matrices
-  tau <- ifelse(!is.null(x$k.vector), 2 * sum(x$k.vector), 0)
+  tau <- if (!is.null(x$k.vector)) 2 * sum(x$k.vector) else 0
   w <- .Call(
     "makeTBATSWMatrix",
     smallPhi_s = x$damping.parameter,

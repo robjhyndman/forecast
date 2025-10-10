@@ -1330,7 +1330,7 @@ ggtsdisplay <- function(
 #' @export
 gglagplot <- function(
   x,
-  lags = ifelse(frequency(x) > 9, 16, 9),
+  lags = if (frequency(x) > 9) 16 else 9,
   set.lags = 1:lags,
   diag = TRUE,
   diag.col = "gray",
@@ -1496,7 +1496,7 @@ gglagplot <- function(
 #' @export
 gglagchull <- function(
   x,
-  lags = ifelse(frequency(x) > 1, min(12, frequency(x)), 4),
+  lags = if (frequency(x) > 1) min(12, frequency(x)) else 4,
   set.lags = 1:lags,
   diag = TRUE,
   diag.col = "gray",
@@ -2336,7 +2336,7 @@ autolayer.ts <- function(object, colour = TRUE, series = NULL, ...) {
 
   tsdata <- data.frame(
     timeVal = as.numeric(time(object)),
-    series = ifelse(is.null(series), deparse1(substitute(object)), series),
+    series = if (is.null(series)) deparse1(substitute(object)) else series,
     seriesVal = as.numeric(object),
     check.names = FALSE
   )

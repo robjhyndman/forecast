@@ -19,7 +19,7 @@
 
 \method{forecast}{Arima}(
   object,
-  h = ifelse(object$arma[5] > 1, 2 * object$arma[5], 10),
+  h = if (object$arma[5] > 1) 2 * object$arma[5] else 10,
   level = c(80, 95),
   fan = FALSE,
   xreg = NULL,

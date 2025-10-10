@@ -29,7 +29,7 @@
 #' @export
 forecast.ets <- function(
   object,
-  h = ifelse(object$m > 1, 2 * object$m, 10),
+  h = if (object$m > 1) 2 * object$m else 10,
   level = c(80, 95),
   fan = FALSE,
   simulate = FALSE,

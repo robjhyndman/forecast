@@ -6,7 +6,7 @@
 \usage{
 \method{forecast}{baggedModel}(
   object,
-  h = ifelse(frequency(object$y) > 1, 2 * frequency(object$y), 10),
+  h = if (frequency(object$y) > 1) 2 * frequency(object$y) else 10,
   ...
 )
 }

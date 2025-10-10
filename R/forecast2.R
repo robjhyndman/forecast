@@ -159,7 +159,7 @@ InvBoxCoxf <- function(x = NULL, fvar = NULL, lambda = NULL) {
 #' @export
 forecast.StructTS <- function(
   object,
-  h = ifelse(object$coef["epsilon"] > 1e-10, 2 * object$xtsp[3], 10),
+  h = if (object$coef["epsilon"] > 1e-10) 2 * object$xtsp[3] else 10,
   level = c(80, 95),
   fan = FALSE,
   lambda = NULL,
@@ -261,7 +261,7 @@ forecast.StructTS <- function(
 #' @export
 forecast.HoltWinters <- function(
   object,
-  h = ifelse(frequency(object$x) > 1, 2 * frequency(object$x), 10),
+  h = if (frequency(object$x) > 1) 2 * frequency(object$x) else 10,
   level = c(80, 95),
   fan = FALSE,
   lambda = NULL,

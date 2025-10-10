@@ -7,7 +7,7 @@
 \usage{
 gglagplot(
   x,
-  lags = ifelse(frequency(x) > 9, 16, 9),
+  lags = if (frequency(x) > 9) 16 else 9,
   set.lags = 1:lags,
   diag = TRUE,
   diag.col = "gray",
@@ -21,7 +21,7 @@ gglagplot(
 
 gglagchull(
   x,
-  lags = ifelse(frequency(x) > 1, min(12, frequency(x)), 4),
+  lags = if (frequency(x) > 1) min(12, frequency(x)) else 4,
   set.lags = 1:lags,
   diag = TRUE,
   diag.col = "gray",

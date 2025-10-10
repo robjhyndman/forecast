@@ -91,7 +91,7 @@ bld.mbb.bootstrap <- function(x, num, block_size = NULL) {
   }
 
   if (is.null(block_size)) {
-    block_size <- ifelse(freq > 1, 2 * freq, min(8, floor(length(x) / 2)))
+    block_size <- if (freq > 1) 2 * freq else min(8, floor(length(x) / 2))
   }
 
   xs <- list()

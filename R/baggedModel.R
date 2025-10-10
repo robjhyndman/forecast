@@ -134,7 +134,7 @@ baggedETS <- function(y, bootstrapped_series = bld.mbb.bootstrap(y, 100), ...) {
 #' @export
 forecast.baggedModel <- function(
   object,
-  h = ifelse(frequency(object$y) > 1, 2 * frequency(object$y), 10),
+  h = if (frequency(object$y) > 1) 2 * frequency(object$y) else 10,
   ...
 ) {
   out <- list(
