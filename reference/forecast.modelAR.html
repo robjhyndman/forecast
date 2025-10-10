@@ -45,7 +45,7 @@ models.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'modelAR'</span></span>
 <span><span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span></span>
 <span>  <span class="va">object</span>,</span>
-<span>  h <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">m</span> <span class="op">&gt;</span> <span class="fl">1</span>, <span class="fl">2</span> <span class="op">*</span> <span class="va">object</span><span class="op">$</span><span class="va">m</span>, <span class="fl">10</span><span class="op">)</span>,</span>
+<span>  h <span class="op">=</span> <span class="kw">if</span> <span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">m</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">object</span><span class="op">$</span><span class="va">m</span> <span class="kw">else</span> <span class="fl">10</span>,</span>
 <span>  PI <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">95</span><span class="op">)</span>,</span>
 <span>  fan <span class="op">=</span> <span class="cn">FALSE</span>,</span>
