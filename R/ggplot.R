@@ -1864,13 +1864,13 @@ ggseasonplot <- function(
 
   if (!is.null(season.labels)) {
     if (length(season.labels) != length(labs)) {
-      warning(paste0(
+      warning(
         "Provided season.labels have length ",
         length(season.labels),
         ", but ",
         length(labs),
         " are required. Ignoring season.labels."
-      ))
+      )
     } else {
       labs <- season.labels
     }
