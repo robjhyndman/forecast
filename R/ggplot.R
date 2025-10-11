@@ -2569,7 +2569,7 @@ autoplot.msts <- function(object, ...) {
   if (NCOL(object) > 1) {
     class(object) <- c("mts", "ts", "matrix")
   } else {
-    class(object) <- c("ts")
+    class(object) <- "ts"
   }
   attr(object, "msts") <- NULL
   autoplot(object, ...) + ggAddExtras(ylab = sname)
