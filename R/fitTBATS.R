@@ -510,8 +510,6 @@ fitSpecificTBATS <- function(
       variance
     )
     attr(lambda, "biasadj") <- biasadj
-    # e <- InvBoxCox(e, lambda=lambda)
-    ee <- y - fitted.values
   } else {
     # else if we are not using the Box-Cox transformation
     # Optimise the likelihood function

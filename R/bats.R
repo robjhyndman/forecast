@@ -350,7 +350,6 @@ filterSpecifics <- function(
       } else {
         ma.coefs <- NULL
       }
-      starting.params <- first.model$parameters
       # printCASE(box.cox, trend, damping, seasonal.periods, ar.coefs, ma.coefs, p, q)
       second.model <- fitSpecificBATS(
         y,
@@ -446,7 +445,6 @@ parFilterSpecifics <- function(
       } else {
         ma.coefs <- NULL
       }
-      starting.params <- first.model$parameters
       # printCASE(box.cox, trend, damping, seasonal.periods, ar.coefs, ma.coefs, p, q)
       second.model <- fitSpecificBATS(
         y,
@@ -551,7 +549,6 @@ plot.bats <- function(x, main = "Decomposition by BATS model", ...) {
   # Get original data, transform if necessary
   if (!is.null(x$lambda)) {
     y <- BoxCox(x$y, x$lambda)
-    lambda <- attr(y, "lambda")
   } else {
     y <- x$y
   }
