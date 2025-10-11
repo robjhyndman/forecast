@@ -27,7 +27,6 @@
 #'
 #' @export
 findfrequency <- function(x) {
-  n <- length(x)
   x <- as.ts(x)
   # Remove trend from data
   x <- residuals(tslm(x ~ trend))

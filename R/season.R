@@ -152,7 +152,6 @@ seasonaldummy <- function(x, h = NULL) {
     }
     dummy <- as.factor(cycle(x))
     dummy.mat <- matrix(0, ncol = frequency(x) - 1, nrow = length(x))
-    nrow <- seq_along(x)
     for (i in 1:(frequency(x) - 1)) {
       dummy.mat[dummy == paste(i), i] <- 1
     }

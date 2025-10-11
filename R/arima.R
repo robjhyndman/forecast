@@ -20,7 +20,6 @@ search.arima <- function(
   ...
 ) {
   ic <- match.arg(ic)
-  m <- frequency(x)
 
   allowdrift <- allowdrift && (d + D) == 1
   allowmean <- allowmean && (d + D) == 0
@@ -214,7 +213,6 @@ SD.test <- function(wts, s = frequency(wts)) {
   if (s == 1) {
     stop("Not seasonal data")
   }
-  t0 <- start(wts)
   N <- length(wts)
   if (N <= s) {
     stop("Insufficient data")
@@ -551,7 +549,6 @@ forecast.ar <- function(
   }
   colnames(lower) <- colnames(upper) <- paste0(level, "%")
   method <- paste0("AR(", object$order, ")")
-  f <- frequency(x)
   res <- residuals.ar(object)
   fits <- fitted.ar(object)
 

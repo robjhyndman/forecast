@@ -65,9 +65,7 @@ baggedModel <- function(
     )
   }
 
-  mod_boot <- lapply(bootstrapped_series, function(x) {
-    mod <- fn(x, ...)
-  })
+  mod_boot <- lapply(bootstrapped_series, function(x) fn(x, ...))
 
   # Return results
   out <- list()

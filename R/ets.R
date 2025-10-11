@@ -939,12 +939,6 @@ etsmodel <- function(
     colnames(states)[(2 + (trendtype != "N")):ncol(states)] <- paste0("s", 1:m)
   }
 
-  tmp <- c(
-    "alpha",
-    rep("beta", trendtype != "N"),
-    rep("gamma", seasontype != "N"),
-    rep("phi", damped)
-  )
   fit.par <- c(fit.par, par.noopt)
   #    fit.par <- fit.par[order(names(fit.par))]
   if (errortype == "A") {
