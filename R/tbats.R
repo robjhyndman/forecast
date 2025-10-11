@@ -174,13 +174,12 @@ tbats <- function(
     use.damped.trend <- c(FALSE, TRUE)
   }
   # Set a vector of model params for later comparison
-  model.params <- logical(length = 3)
+  model.params <- logical(3)
   model.params[1] <- any(use.box.cox)
   model.params[2] <- any(use.trend)
   model.params[3] <- any(use.damped.trend)
 
   y <- as.numeric(y)
-  n <- length(y)
   k.vector <- rep(1, length(seasonal.periods))
 
   if (use.parallel) {
@@ -629,7 +628,6 @@ parFilterTBATSSpecifics <- function(
         } else {
           ma.coefs <- NULL
         }
-        starting.params <- first.model$parameters
 
         second.model <- try(
           fitSpecificTBATS(
@@ -765,7 +763,6 @@ filterTBATSSpecifics <- function(
         } else {
           ma.coefs <- NULL
         }
-        starting.params <- first.model$parameters
 
         second.model <- try(
           fitSpecificTBATS(

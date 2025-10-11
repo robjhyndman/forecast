@@ -63,7 +63,6 @@ mstl <- function(
     x <- BoxCox(x, lambda = lambda)
     lambda <- attr(x, "lambda")
   }
-  tt <- seq_len(n)
 
   # Now fit stl models with only one type of seasonality at a time
   if (msts[1L] > 1) {
@@ -600,7 +599,6 @@ forecast.stlm <- function(
   xdata <- object$stl[, "Data"]
   seascols <- grep("Seasonal", colnames(object$stl), fixed = TRUE)
   allseas <- rowSumsTS(object$stl[, seascols, drop = FALSE])
-  series <- NULL
 
   #  m <- frequency(object$stl$time.series)
   n <- NROW(xdata)

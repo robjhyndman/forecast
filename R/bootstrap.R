@@ -4,7 +4,6 @@
 # Non-robust version
 tl <- function(x, ...) {
   x <- as.ts(x)
-  tspx <- tsp(x)
   n <- length(x)
   tt <- 1:n
   fit <- supsmu(tt, x)

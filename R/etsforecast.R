@@ -144,12 +144,6 @@ forecast.ets <- function(
     )
   }
 
-  tsp.x <- tsp(object$x)
-  if (!is.null(tsp.x)) {
-    start.f <- tsp(object$x)[2] + 1 / object$m
-  } else {
-    start.f <- length(object$x) + 1
-  }
   out <- list(
     model = object,
     mean = future_msts(object$x, f$mu),
