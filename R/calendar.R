@@ -88,7 +88,7 @@ bizdays <- function(
   # }
   num.days <- table(bizdays)
   out <- ts(num.days, start = tsp(x)[1L], frequency = freq)
-  return(out)
+  out
 }
 
 
@@ -170,5 +170,5 @@ easter <- function(x, easter.mon = FALSE) {
     dummies[dummies == 1L] <- round(dif / unclass(denominator), digits = 2)
   }
   out <- ts(dummies, start = tsp(x)[1L], frequency = freq)
-  return(out)
+  out
 }

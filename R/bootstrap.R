@@ -10,8 +10,7 @@ tl <- function(x, ...) {
   out <- ts(cbind(trend = fit$y, remainder = x - fit$y))
   tsp(out) <- tsp(x)
 
-  out <- structure(list(time.series = out), class = "stl")
-  return(out)
+  structure(list(time.series = out), class = "stl")
 }
 
 # Function to return some bootstrap samples of x
@@ -35,7 +34,7 @@ lpb <- function(x, nsim = 100) {
       meanx
   )
   tsp(out) <- tsp(x)
-  return(out)
+  out
 }
 
 

@@ -150,7 +150,7 @@ tsclean <- function(x, replace.missing = TRUE, iterate = 2, lambda = NULL) {
   if (replace.missing) {
     x <- na.interp(x, lambda = lambda)
   }
-  return(x)
+  x
 }
 
 # Function to identify time series outlieres
@@ -255,5 +255,5 @@ tsoutliers <- function(x, iterate = 2, lambda = NULL) {
   }
 
   # Return outlier indexes and replacements
-  return(list(index = outliers, replacements = x[outliers]))
+  list(index = outliers, replacements = x[outliers])
 }

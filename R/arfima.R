@@ -12,7 +12,7 @@ na.ends <- function(x) {
   if (!is.null(tspx)) {
     x <- ts(x, start = tspx[1] + (j - 1) / tspx[3], frequency = tspx[3])
   }
-  return(x)
+  x
 }
 
 # Add back missing values at ends
@@ -33,7 +33,7 @@ undo.na.ends <- function(x, y) {
   if (!is.null(tspx)) {
     tsp(y) <- tsp(x)
   }
-  return(y)
+  y
 }
 
 ## Undifference
@@ -57,7 +57,7 @@ unfracdiff <- function(x, y, n, h, d) {
   if (is.null(tspx)) {
     tspx <- c(1, length(x), 1)
   }
-  return(ts(xnew, frequency = tspx[3], start = tspx[2] + 1 / tspx[3]))
+  ts(xnew, frequency = tspx[3], start = tspx[2] + 1 / tspx[3])
 }
 
 ## Automatic ARFIMA modelling
@@ -220,7 +220,7 @@ arfima <- function(
   fit$series <- seriesname
   fit <- structure(fit, class = c("ARFIMA", "fracdiff"))
   # fit$call$data <- data.frame(x=x) #Consider replacing fit$call with match.call for consistency and tidyness
-  return(fit)
+  fit
 }
 
 # Forecast the output of fracdiff() or arfima()
@@ -375,7 +375,7 @@ forecast.fracdiff <- function(
     deparse(object$call$x)
   }
 
-  return(structure(
+  structure(
     list(
       x = x,
       mean = mean.fcast,
@@ -389,7 +389,7 @@ forecast.fracdiff <- function(
       fitted = fits
     ),
     class = "forecast"
-  ))
+  )
 }
 
 # Fitted values from arfima()

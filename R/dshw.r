@@ -230,7 +230,7 @@ dshw <- function(
     yhat <- InvBoxCox(yhat, lambda)
   }
 
-  return(structure(
+  structure(
     list(
       mean = fcast,
       method = "DSHW",
@@ -256,7 +256,7 @@ dshw <- function(
       period2 = period2
     ),
     class = "forecast"
-  ))
+  )
 }
 
 ### Double Seasonal Holt-Winters smoothing parameter optimization
@@ -272,7 +272,7 @@ par_dshw <- function(y, period1, period2, pars) {
     pars = pars
   )
   pars[is.na(pars)] <- out$par
-  return(pars)
+  pars
 }
 
 dshw.mse <- function(par, y, period1, period2, pars) {
@@ -314,5 +314,5 @@ seasindex <- function(y, p) {
     average[(p - 1) / 2 + 1:p] <- shorty[(p - 1) / 2 + 1:p] / simplema[1:p]
     si <- average[c(p + (1:((p - 1) / 2)), (1 + (p - 1) / 2):p)]
   }
-  return(si)
+  si
 }

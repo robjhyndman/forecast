@@ -50,5 +50,5 @@ checkAdmissibility <- function(
     only.values = TRUE
   )$values
 
-  return(all(abs(D.eigen.values) < 1 + 1e-2))
+  all(abs(D.eigen.values) < 1 + 1e-2)
 }

@@ -22,7 +22,7 @@ arroots <- function(object) {
       ))
     }
   }
-  return(structure(list(roots = numeric(0), type = "AR"), class = "armaroots"))
+  structure(list(roots = numeric(0), type = "AR"), class = "armaroots")
 }
 
 # Compute MA roots
@@ -43,7 +43,7 @@ maroots <- function(object) {
       ))
     }
   }
-  return(structure(list(roots = numeric(0), type = "MA"), class = "armaroots"))
+  structure(list(roots = numeric(0), type = "MA"), class = "armaroots")
 }
 
 #' @export
