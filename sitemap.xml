@@ -25,7 +25,7 @@
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/bizdays.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/bld.mbb.bootstrap.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/checkresiduals.html</loc></url>
-<url><loc>https://pkg.robjhyndman.com/forecast/reference/croston.html</loc></url>
+<url><loc>https://pkg.robjhyndman.com/forecast/reference/croston_model.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/dm.test.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/dshw.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/easter.html</loc></url>
@@ -38,6 +38,7 @@
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.StructTS.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.baggedModel.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.bats.html</loc></url>
+<url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.croston_model.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.ets.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.lm.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.mean_model.html</loc></url>
