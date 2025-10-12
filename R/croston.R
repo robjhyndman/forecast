@@ -18,7 +18,7 @@
 #' \eqn{1 - \alpha / (2 - \alpha)}, where \eqn{\alpha} is the smoothing parameter for
 #' the interval SES application.
 #' 
-#' @inheritParams ets
+#' @inheritParams Arima
 #' @param alpha Value of alpha. Default value is 0.1.
 #' @param type Which variant of Croston's method to use. Defaults to `"croston"` for
 #' Croston's method, but can also be set to `"sba"` for the Syntetos-Boylan
@@ -123,6 +123,7 @@ print.croston_model <- function(
 #'
 #' @inheritParams croston_model
 #' @inheritParams forecast.ts
+#' @param object An object of class `croston_model` as returned by [croston_model()].
 #' @return An object of class `forecast`.
 #' @inheritSection forecast.ts forecast class
 #' @author Rob J Hyndman
@@ -167,6 +168,7 @@ forecast.croston_model <- function(object, h = 10, ...) {
 }
 
 #' @rdname forecast.croston_model
+#' @param x Deprecated. Included for backwards compatibility.
 #' @inheritParams croston_model
 #' @export
 croston <- function(y, h = 10, alpha = 0.1, type = c("croston", "sba", "sbj"), x = y) {

@@ -10,8 +10,7 @@
 croston(y, h = 10, alpha = 0.1, type = c("croston", "sba", "sbj"), x = y)
 }
 \arguments{
-\item{object}{a time series or time series model for which forecasts are
-required.}
+\item{object}{An object of class \code{croston_model} as returned by \code{\link[=croston_model]{croston_model()}}.}
 
 \item{h}{Number of periods for forecasting. Default value is twice the
 largest seasonal period (for seasonal data) or ten (for non-seasonal data).}
@@ -30,7 +29,7 @@ modelling function.}
 Croston's method, but can also be set to \code{"sba"} for the Syntetos-Boylan
 approximation, and \code{"sbj"} for the Shale-Boylan-Johnston method.}
 
-\item{x}{a numeric vector or time series of class \code{ts}.}
+\item{x}{Deprecated. Included for backwards compatibility.}
 }
 \value{
 An object of class \code{forecast}.
