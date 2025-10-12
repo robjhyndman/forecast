@@ -183,7 +183,7 @@ search.arima <- function(
     cat("\n\n")
   }
 
-  return(bestfit)
+  bestfit
 }
 
 # Set up seasonal dummies using Fourier series
@@ -199,7 +199,7 @@ SeasDummy <- function(x) {
     fmat[, 2 * i] <- sin(2 * pi * i * tt / m)
     fmat[, 2 * (i - 1) + 1] <- cos(2 * pi * i * tt / m)
   }
-  return(fmat[, 1:(m - 1)])
+  fmat[, 1:(m - 1)]
 }
 
 # CANOVA-HANSEN TEST
@@ -264,7 +264,7 @@ SD.test <- function(wts, s = frequency(wts)) {
     stL <- (1 / N^2) *
       sum(diag(solve(tmp, tol = 1e-25) %*% t(A) %*% t(Fhat) %*% Fhat %*% A))
   }
-  return(stL)
+  stL
 }
 
 
@@ -487,7 +487,7 @@ forecast.Arima <- function(
       upper <- InvBoxCox(upper, lambda)
     }
   }
-  return(structure(
+  structure(
     list(
       method = method,
       model = object,
@@ -501,7 +501,7 @@ forecast.Arima <- function(
       residuals = copy_msts(x, residuals.Arima(object))
     ),
     class = "forecast"
-  ))
+  )
 }
 
 #' @export
@@ -566,7 +566,7 @@ forecast.ar <- function(
     x <- InvBoxCox(x, lambda)
   }
 
-  return(structure(
+  structure(
     list(
       method = method,
       model = object,
@@ -580,7 +580,7 @@ forecast.ar <- function(
       residuals = copy_msts(x, res)
     ),
     class = "forecast"
-  ))
+  )
 }
 
 # Find xreg matrix in an Arima object
@@ -917,7 +917,7 @@ Arima <- function(
   out <- structure(tmp, class = c("forecast_ARIMA", "ARIMA", "Arima"))
   out$fitted <- fitted.Arima(out)
   out$series <- series
-  return(out)
+  out
 }
 
 # Refits the model to new data x
@@ -1008,7 +1008,7 @@ arima2 <- function(x, model, xreg, method) {
   }
   refit$sigma2 <- sigma2
 
-  return(refit)
+  refit
 }
 
 # Modified version of function print.Arima from stats package

@@ -283,7 +283,7 @@ bats <- function(
   best.model$y <- origy
   best.model$series <- seriesname
   best.model$method <- "BATS"
-  return(best.model)
+  best.model
 }
 
 filterSpecifics <- function(
@@ -477,9 +477,9 @@ parFilterSpecifics <- function(
 #' @export
 fitted.bats <- function(object, h = 1, ...) {
   if (h == 1) {
-    return(object$fitted.values)
+    object$fitted.values
   } else {
-    return(hfitted(object = object, h = h, FUN = "bats", ...))
+    hfitted(object = object, h = h, FUN = "bats", ...)
   }
 }
 

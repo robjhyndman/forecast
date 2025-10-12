@@ -307,7 +307,7 @@ kappa <- function(x) {
   x <- abs(x)
   k[x <= 1] <- 1
   k[x > 1 & x <= 2] <- 2 - x[x > 1 & x <= 2]
-  return(k)
+  k
 }
 
 # McMurray-Politis estimate of ACF
@@ -371,7 +371,7 @@ wacf <- function(x, lag.max = length(x) - 1) {
   acfest$acf[,, 1] <- gamma
   ############### end of shrinkage
 
-  return(acfest)
+  acfest
 }
 
 # Find tapered PACF using LD recursions
@@ -404,7 +404,7 @@ wpacf <- function(x, lag.max = length(x) - 1) {
   }
   out$acf[,, 1] <- pacf
 
-  return(out)
+  out
 }
 
 # Function to produce new style plot of ACF or PACF with CI
@@ -461,7 +461,7 @@ taperedacf <- function(
     plot(out, ...)
     return(invisible(out))
   }
-  return(out)
+  out
 }
 
 #' @rdname Acf

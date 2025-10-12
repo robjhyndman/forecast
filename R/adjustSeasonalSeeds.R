@@ -47,7 +47,7 @@ cutWTBATS <- function(
     w.tilda.transpose <- w.tilda.transpose[, -c(start.cut:end.cut)]
   }
 
-  return(list(matrix = w.tilda.transpose, mask.vector = mask.vector))
+  list(matrix = w.tilda.transpose, mask.vector = mask.vector)
 }
 
 # BATS code below
@@ -103,7 +103,7 @@ cutW <- function(use.beta, w.tilda.transpose, seasonal.periods, p = 0, q = 0) {
     w.tilda.transpose <- w.tilda.transpose[, -c(start.cut:end.cut)]
   }
 
-  return(list(matrix = w.tilda.transpose, mask.vector = mask.vector))
+  list(matrix = w.tilda.transpose, mask.vector = mask.vector)
 }
 
 calcSeasonalSeeds <- function(
@@ -185,14 +185,14 @@ calcSeasonalSeeds <- function(
   } else {
     x.nought <- new.x.nought
   }
-  return(x.nought)
+  x.nought
 }
 
 findGCD <- function(larger, smaller) {
   remainder <- larger %% smaller
   if (remainder != 0) {
-    return(findGCD(smaller, remainder))
+    findGCD(smaller, remainder)
   } else {
-    return(smaller)
+    smaller
   }
 }

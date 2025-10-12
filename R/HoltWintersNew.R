@@ -561,7 +561,7 @@ ses <- function(
   fcast$model$call <- match.call()
   fcast$series <- deparse1(substitute(y))
 
-  return(fcast)
+  fcast
 }
 
 #' @rdname ses
@@ -657,7 +657,7 @@ holt <- function(
   fcast$model$call <- match.call()
   fcast$series <- deparse1(substitute(y))
 
-  return(fcast)
+  fcast
 }
 
 #' @rdname ses
@@ -792,5 +792,5 @@ hw <- function(
   fcast$model$call <- match.call()
   fcast$series <- deparse1(substitute(y))
 
-  return(fcast)
+  fcast
 }

@@ -105,7 +105,7 @@ testaccuracy <- function(f, x, test, d, D) {
     names(out)[nj + (1:2)] <- c("ACF1", "Theil's U")
   }
 
-  return(out)
+  out
 }
 
 trainingaccuracy <- function(f, test, d, D) {
@@ -184,7 +184,7 @@ trainingaccuracy <- function(f, test, d, D) {
     names(out)[nj + 1] <- "ACF1"
   }
 
-  return(out)
+  out
 }
 
 
@@ -358,7 +358,7 @@ accuracy.default <- function(
   if (!trainset) {
     out <- out[2, , drop = FALSE]
   }
-  return(out)
+  out
 }
 
 # Compute accuracy for an mforecast object
@@ -391,5 +391,5 @@ accuracy.mforecast <- function(
     out <- rbind(out, out1)
     i <- i + 1
   }
-  return(out)
+  out
 }
