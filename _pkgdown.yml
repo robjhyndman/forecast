@@ -88,14 +88,15 @@ reference:
       - arfima
       - Arima
       - auto.arima
-      - ets
       - baggedModel
       - bats
-      - tbats
+      - croston_model
+      - ets
       - mean_model
       - nnetar
       - rw_model
       - stlm
+      - tbats
       - tslm
   - title: "Forecasting"
     desc: "Functions for producing forecasts"
@@ -118,6 +119,7 @@ reference:
       - forecast.ets
       - forecast.baggedModel
       - forecast.bats
+      - forecast.croston_model
       - forecast.tbats
       - forecast.fracdiff
       - forecast.HoltWinters

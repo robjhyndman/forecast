@@ -50,9 +50,12 @@ test_that("test for forecast.StructTS()", {
 })
 
 test_that("test croston()", {
-  set.seed(1234)
   expect_error(croston(rnorm(100)))
-  expect_true(all(croston(rep(0, 100))$mean == 0))
+  fc <- croston(c(0,0,1,0,0,2,0,0,3,0,0))
+  expect_equal(c(fc$mean), rep(0.43, 10))
+  expect_error(croston_model(c(0,0,0,0,0)))
+  expect_error(croston_model(c(0,1,0,0,0)))
+  expect_no_error(croston_model(c(0,1,0,0,1)))
 })
 
 test_that("test hw()", {
