@@ -55,6 +55,7 @@ croston_model <- function(y, alpha = 0.1, type = c("croston", "sba", "sbj")) {
   if (length(non_zero) < 2) {
     stop("At least two non-zero values are required to use Croston's method.")
   }
+  series <- deparse1(substitute(y))
   y <- as.ts(y)
   y_demand <- y[non_zero]
   y_interval <- c(non_zero[1], diff(non_zero))
@@ -87,7 +88,7 @@ croston_model <- function(y, alpha = 0.1, type = c("croston", "sba", "sbj")) {
     fit_interval = fit_interval,
     fitted = fits,
     residuals = y - fits,
-    series = deparse1(substitute(y))
+    series = series
   )
   output$call <- match.call()
   structure(output, class = "croston_model")
