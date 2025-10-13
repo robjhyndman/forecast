@@ -45,7 +45,7 @@ msts <- function(
     class(object) <- c("msts", "ts")
     attr(object, "msts") <- sort(seasonal.periods)
   }
-  return(object)
+  object
 }
 
 #' @export
@@ -72,7 +72,7 @@ window.msts <- function(x, ...) {
   x <- window(x, ...)
   class(x) <- c("msts", "ts")
   attr(x, "msts") <- seasonal.periods
-  return(x)
+  x
 }
 
 #' @export
@@ -109,7 +109,7 @@ copy_msts <- function(x, y) {
   attr <- attributes(x)
   attributes(y)$tsp <- attr$tsp
   attributes(y)$msts <- attr$msts
-  return(y)
+  y
 }
 
 # Copy msts attributes from x to y shifted to forecast period
@@ -126,5 +126,5 @@ future_msts <- function(x, y) {
   attr$tsp[1:2] <- attr$tsp[2] + c(1, NROW(y)) / attr$tsp[3]
   attributes(y)$tsp <- attr$tsp
   attributes(y)$msts <- attr$msts
-  return(y)
+  y
 }

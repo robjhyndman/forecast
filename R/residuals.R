@@ -205,7 +205,7 @@ residuals.nnetar <- function(
   tspx <- tsp(getResponse(object))
   res <- ts(res, frequency = tspx[3L], end = tspx[2L])
 
-  return(res)
+  res
 }
 
 #' @rdname residuals.forecast

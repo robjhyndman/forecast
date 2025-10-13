@@ -190,7 +190,7 @@ tslm <- function(formula, data, subset, lambda = NULL, biasadj = FALSE, ...) {
     fit$x <- InvBoxCox(fit$x, lambda)
   }
   class(fit) <- c("tslm", class(fit))
-  return(fit)
+  fit
 }
 
 #' @export
@@ -543,7 +543,7 @@ forecast.lm <- function(
     fcast$upper <- InvBoxCox(fcast$upper, lambda)
   }
 
-  return(structure(fcast, class = "forecast"))
+  structure(fcast, class = "forecast")
 }
 
 #' @export
@@ -593,5 +593,5 @@ CV <- function(obj) {
   adjr2 <- summary(obj)$adj
   out <- c(cv, aic, aicc, bic, adjr2)
   names(out) <- c("CV", "AIC", "AICc", "BIC", "AdjR2")
-  return(out)
+  out
 }

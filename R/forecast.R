@@ -173,7 +173,7 @@ forecast.ts <- function(
     )
   }
   out$series <- deparse1(substitute(object))
-  return(out)
+  out
 }
 
 #' @rdname forecast.ts
@@ -657,7 +657,7 @@ hfitted.default <- function(object, h = 1, FUN = NULL, ...) {
       fits[i + h] <- suppressWarnings(do.call("forecast", fcarg)$mean[h])
     }
   }
-  return(fits)
+  fits
 }
 
 # The following function is for when users don't realise they already have the forecasts.
@@ -698,7 +698,7 @@ forecast.forecast <- function(object, ...) {
       )
     }
   }
-  return(object)
+  object
 }
 
 #' @export
@@ -707,7 +707,7 @@ subset.forecast <- function(x, ...) {
   x$mean <- subset(x$mean, ...)
   x$lower <- subset(ts(x$lower, start = tspx[1], frequency = tspx[3]), ...)
   x$upper <- subset(ts(x$upper, start = tspx[1], frequency = tspx[3]), ...)
-  return(x)
+  x
 }
 
 
@@ -725,7 +725,7 @@ is.forecast <- function(x) {
 as.ts.forecast <- function(x, ...) {
   df <- ts(as.matrix(as.data.frame.forecast(x)))
   tsp(df) <- tsp(x$mean)
-  return(df)
+  df
 }
 
 #' @export
@@ -744,7 +744,7 @@ as.data.frame.mforecast <- function(x, ...) {
     }
   }
   rownames(output) <- NULL
-  return(output)
+  output
 }
 
 #' @export
@@ -864,5 +864,5 @@ as.data.frame.forecast <- function(x, ...) {
     }
     attr(x, "class") <- attr(x, "tsp") <- attr(x, "na.action") <- NULL
   }
-  return(as.data.frame(x))
+  as.data.frame(x)
 }

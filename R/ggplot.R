@@ -49,12 +49,12 @@ ggAddExtras <- function(xlab = NA, ylab = NA, main = NA) {
   if ("ylim" %in% names(dots)) {
     extras[[length(extras) + 1]] <- ggplot2::ylim(dots$ylim)
   }
-  return(extras)
+  extras
 }
 
 ggtsbreaks <- function(x) {
   # Make x axis contain only whole numbers (e.g., years)
-  return(unique(round(pretty(floor(x[1]):ceiling(x[2])))))
+  unique(round(pretty(floor(x[1]):ceiling(x[2]))))
 }
 
 
@@ -204,7 +204,7 @@ autoplot.acf <- function(object, ci = 0.95, ...) {
       minor_breaks = minorbreaks
     )
   p <- p + ggAddExtras(ylab = ylab, xlab = "Lag", main = main)
-  return(p)
+  p
 }
 
 #' @rdname autoplot.acf
@@ -230,9 +230,9 @@ ggAcf <- function(
   object$periods <- attributes(x)$msts
   object$series <- deparse1(substitute(x))
   if (plot) {
-    return(autoplot(object, ...))
+    autoplot(object, ...)
   } else {
-    return(object)
+    object
   }
 }
 
@@ -258,9 +258,9 @@ ggPacf <- function(
   object$periods <- attributes(x)$msts
   object$series <- deparse1(substitute(x))
   if (plot) {
-    return(autoplot(object, ...))
+    autoplot(object, ...)
   } else {
-    return(object)
+    object
   }
 }
 
@@ -286,9 +286,9 @@ ggCcf <- function(
   object$snames <- paste(deparse1(substitute(x)), "&", deparse1(substitute(y)))
   object$ccf <- TRUE
   if (plot) {
-    return(autoplot(object, ...))
+    autoplot(object, ...)
   } else {
-    return(object)
+    object
   }
 }
 
@@ -389,8 +389,7 @@ autoplot.mpacf <- function(object, ...) {
   }
 
   p <- p + ggAddExtras(ylab = ylab)
-
-  return(p)
+  p
 }
 
 #' @rdname autoplot.acf
@@ -412,9 +411,9 @@ ggtaperedacf <- function(
   cl[[1]] <- quote(taperedacf)
   object <- eval.parent(cl)
   if (plot) {
-    return(autoplot(object, ...))
+    autoplot(object, ...)
   } else {
-    return(object)
+    object
   }
 }
 
@@ -528,7 +527,7 @@ autoplot.Arima <- function(object, type = c("both", "ar", "ma"), ...) {
         lapply(labels, function(x) paste("Inverse", as.character(x), "roots"))
       })
   }
-  return(p)
+  p
 }
 
 #' @rdname plot.Arima
@@ -656,7 +655,7 @@ autoplot.decomposed.ts <- function(
   p <- p +
     ggplot2::scale_x_continuous(breaks = unique(round(pretty(data$datetime))))
 
-  return(p)
+  p
 }
 
 #' @rdname plot.ets
@@ -742,7 +741,7 @@ autoplot.ets <- function(object, range.bars = NULL, ...) {
       ylab = "",
       main = paste("Components of", object$method, "method")
     )
-  return(p)
+  p
 }
 
 #' @rdname plot.bats
@@ -819,7 +818,7 @@ autoplot.bats <- function(object, range.bars = FALSE, ...) {
       ylab = "",
       main = paste("Components of", object$method, "method")
     )
-  return(p)
+  p
 }
 
 #' @rdname plot.forecast
@@ -1035,7 +1034,7 @@ Interval shading is now done automatically based on the level and `fcol`.",
   }
 
   p <- p + ggAddExtras(main = paste0("Forecasts from ", object$method))
-  return(p)
+  p
 }
 
 #' @rdname plot.mforecast
@@ -1485,7 +1484,7 @@ gglagplot <- function(
 
   p <- p + ggAddExtras(ylab = NULL, xlab = NULL)
 
-  return(p)
+  p
 }
 
 #' @rdname gglagplot
@@ -1562,7 +1561,7 @@ gglagchull <- function(
 
   p <- p + ggAddExtras(ylab = "lagged", xlab = "original")
 
-  return(p)
+  p
 }
 
 
@@ -1705,7 +1704,7 @@ ggsubseriesplot <- function(
 
   # Graph labels
   p <- p + ggAddExtras(ylab = deparse1(substitute(x)), xlab = xlab)
-  return(p)
+  p
 }
 
 #' @rdname seasonplot
@@ -1892,7 +1891,7 @@ ggseasonplot <- function(
   # Graph title and axes
   p <- p +
     ggAddExtras(main = paste("Seasonal plot:", xname), xlab = xLab, ylab = NULL)
-  return(p)
+  p
 }
 
 #' @rdname plot.forecast
@@ -1922,7 +1921,7 @@ autoplot.splineforecast <- function(object, PI = TRUE, ...) {
   if (!is.null(object$series)) {
     p <- p + ggplot2::ylab(object$series)
   }
-  return(p)
+  p
 }
 
 #' @rdname autoplot.seas
@@ -2040,7 +2039,7 @@ autoplot.stl <- function(object, labels = NULL, range.bars = TRUE, ...) {
   # ^^ Remove rightmost x axis gap with `expand=c(0.05, 0, 0, 0)` argument when assymetric `expand` feature is supported
   # issue: tidyverse/ggplot2#1669
 
-  return(p)
+  p
 }
 
 #' @rdname autoplot.seas
@@ -2126,7 +2125,7 @@ autoplot.StructTS <- function(object, labels = NULL, range.bars = TRUE, ...) {
   p <- p +
     ggplot2::scale_x_continuous(breaks = unique(round(pretty(data$datetime))))
 
-  return(p)
+  p
 }
 
 
@@ -2278,7 +2277,7 @@ autoplot.seas <- function(object, labels = NULL, range.bars = NULL, ...) {
   p <- p +
     ggplot2::scale_x_continuous(breaks = unique(round(pretty(data$datetime))))
 
-  return(p)
+  p
 }
 
 #' @rdname autoplot.ts
@@ -2306,7 +2305,7 @@ autolayer.mts <- function(object, colour = TRUE, series = NULL, ...) {
     cl$series <- series[i]
     out[[i]] <- eval(cl)
   }
-  return(out)
+  out
 }
 
 #' @rdname autoplot.ts
@@ -2415,7 +2414,7 @@ autolayer.mforecast <- function(object, series = NULL, PI = TRUE, ...) {
     cl$series <- series[i]
     out[[i]] <- eval(cl)
   }
-  return(out)
+  out
 }
 
 
@@ -2504,7 +2503,7 @@ autoplot.ts <- function(
 
   # Make x axis contain only whole numbers (e.g., years)
   p <- p + ggplot2::scale_x_continuous(breaks = ggtsbreaks)
-  return(p)
+  p
 }
 
 #' @rdname autoplot.ts
@@ -2559,7 +2558,7 @@ autoplot.mts <- function(
     p <- p + ggplot2::facet_grid(series ~ ., scales = "free_y")
   }
   p <- p + ggAddExtras(xlab = xlab, ylab = ylab, main = main)
-  return(p)
+  p
 }
 
 #' @rdname autoplot.ts
@@ -2673,7 +2672,7 @@ forecast2plotdf <- function(
       out <- rbind(intervalGap, out)
     }
   }
-  return(out)
+  out
 }
 
 #' @rdname geom_forecast
@@ -2901,7 +2900,7 @@ blendHex <- function(mixcol, seqcol, alpha = 1) {
   mixcolHex <- methods::as(mixcolHLS, "RGB")
   mixcolHex <- colorspace::hex(mixcolHex)
   mixcolHex <- ggplot2::alpha(mixcolHex, mixcol[4, ] / 255)
-  return(mixcolHex)
+  mixcolHex
 }
 
 GeomForecastInterval <- ggplot2::ggproto(
@@ -3207,5 +3206,5 @@ gghistogram <- function(
   if (add.rug) {
     p <- p + ggplot2::geom_rug(ggplot2::aes(x))
   }
-  return(p)
+  p
 }

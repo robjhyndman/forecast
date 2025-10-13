@@ -61,5 +61,5 @@ simulate.tbats <- function(
     )
     fitplus <- tbats(dataplusy, model = fitplus)
   }
-  return(tail(dataplusy, nsim))
+  tail(dataplusy, nsim)
 }

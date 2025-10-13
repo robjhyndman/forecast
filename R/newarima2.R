@@ -1138,7 +1138,7 @@ auto.arima <- function(
     cat("\n\n Best model:", arima.string(bestfit, padding = TRUE), "\n\n")
   }
 
-  return(bestfit)
+  bestfit
 }
 
 # Calls arima from stats package and adds data to the returned object
@@ -1361,7 +1361,7 @@ newmodel <- function(p, d, q, P, D, Q, constant, results) {
       }
     }
   }
-  return(TRUE)
+  TRUE
 }
 
 arima.string <- function(object, padding = FALSE) {
@@ -1413,7 +1413,7 @@ arima.string <- function(object, padding = FALSE) {
     # Strip trailing spaces
     result <- gsub("[ ]*$", "", result)
   }
-  return(result)
+  result
 }
 
 #' @export
@@ -1431,8 +1431,7 @@ print.summary.Arima <- function(x, ...) {
 
 # Check that Arima object has positive coefficient variances without returning warnings
 checkarima <- function(object) {
-  suppressWarnings(test <- any(is.nan(sqrt(diag(object$var.coef)))))
-  return(test)
+  suppressWarnings(any(is.nan(sqrt(diag(object$var.coef)))))
 }
 
 #' Is an object constant?
@@ -1445,5 +1444,5 @@ checkarima <- function(object) {
 is.constant <- function(x) {
   x <- as.numeric(x)
   y <- rep(x[1], length(x))
-  return(isTRUE(all.equal(x, y)))
+  isTRUE(all.equal(x, y))
 }

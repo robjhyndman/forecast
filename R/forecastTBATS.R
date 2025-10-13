@@ -177,7 +177,7 @@ forecast.tbats <- function(
   }
 
   class(forecast.object) <- "forecast"
-  return(forecast.object)
+  forecast.object
 }
 
 #' @export
@@ -228,5 +228,5 @@ as.character.tbats <- function(x, ...) {
   } else {
     name <- paste0(name, "{-})")
   }
-  return(name)
+  name
 }

@@ -23,9 +23,9 @@ getResponse <- function(object, ...) UseMethod("getResponse")
 #' @export
 getResponse.default <- function(object, ...) {
   if (is.list(object)) {
-    return(object$x)
+    object$x
   } else {
-    return(NULL)
+    NULL
   }
 }
 
@@ -61,7 +61,7 @@ getResponse.Arima <- function(object, ...) {
       }
     }
   }
-  return(as.ts(x))
+  as.ts(x)
 }
 
 #' @rdname getResponse
@@ -85,7 +85,7 @@ getResponse.fracdiff <- function(object, ...) {
       }
     }
   }
-  return(as.ts(x))
+  as.ts(x)
 }
 
 #' @rdname getResponse
@@ -102,19 +102,19 @@ getResponse.tbats <- function(object, ...) {
   } else {
     return(NULL)
   }
-  return(as.ts(y))
+  as.ts(y)
 }
 
 #' @rdname getResponse
 #' @export
 getResponse.bats <- function(object, ...) {
-  return(getResponse.tbats(object, ...))
+  getResponse.tbats(object, ...)
 }
 
 #' @rdname getResponse
 #' @export
 getResponse.mforecast <- function(object, ...) {
-  return(do.call(cbind, lapply(object$forecast, function(x) x$x)))
+  do.call(cbind, lapply(object$forecast, function(x) x$x))
 }
 
 #' @rdname getResponse
@@ -125,5 +125,5 @@ getResponse.baggedModel <- function(object, ...) {
   } else {
     return(NULL)
   }
-  return(as.ts(y))
+  as.ts(y)
 }

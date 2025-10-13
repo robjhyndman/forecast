@@ -17,7 +17,7 @@ guer.cv <- function(lam, x, nonseasonal.length = 2) {
   x.mean <- colMeans(x.mat, na.rm = TRUE)
   x.sd <- apply(x.mat, 2, sd, na.rm = TRUE)
   x.rat <- x.sd / x.mean^(1 - lam)
-  return(sd(x.rat, na.rm = TRUE) / mean(x.rat, na.rm = TRUE))
+  sd(x.rat, na.rm = TRUE) / mean(x.rat, na.rm = TRUE)
 }
 
 # guerrero extracts the required lambda
@@ -30,14 +30,12 @@ guerrero <- function(x, lower = -1, upper = 2, nonseasonal.length = 2) {
       "Guerrero's method for selecting a Box-Cox parameter (lambda) is given for strictly positive data."
     )
   }
-  return(
-    optimize(
-      guer.cv,
-      c(lower, upper),
-      x = x,
-      nonseasonal.length = nonseasonal.length
-    )$minimum
-  )
+  optimize(
+    guer.cv,
+    c(lower, upper),
+    x = x,
+    nonseasonal.length = nonseasonal.length
+  )$minimum
 }
 
 # Modified version of boxcox from MASS package
@@ -76,7 +74,7 @@ bcloglik <- function(x, lower = -1, upper = 2) {
     }
     loglik[i] <- -n / 2 * log(sum(qr.resid(xqr, xt / xdot^(la - 1))^2))
   }
-  return(xl[which.max(loglik)])
+  xl[which.max(loglik)]
 }
 
 

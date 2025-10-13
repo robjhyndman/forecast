@@ -77,7 +77,7 @@ fitPreviousBATSModel <- function(y, model, biasadj = FALSE) {
   attributes(model.for.output$fitted.values) <- attributes(
     model.for.output$errors
   ) <- attributes(y)
-  return(model.for.output)
+  model.for.output
 }
 
 fitSpecificBATS <- function(
@@ -530,8 +530,7 @@ fitSpecificBATS <- function(
     y = y
   )
   class(model.for.output) <- "bats"
-  ####
-  return(model.for.output)
+  model.for.output
 }
 
 calcModel <- function(y, x.nought, F, g, w) {
@@ -557,7 +556,7 @@ calcModel <- function(y, x.nought, F, g, w) {
     PACKAGE = "forecast"
   )
 
-  return(list(y.hat = loop$y.hat, e = loop$e, x = loop$x))
+  list(y.hat = loop$y.hat, e = loop$e, x = loop$x)
 }
 
 calcLikelihood <- function(

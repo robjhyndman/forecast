@@ -37,7 +37,7 @@ mlmsplit <- function(x, index = NULL) {
   }
 
   x$terms <- terms(x$model)
-  return(x)
+  x
 }
 
 
@@ -113,7 +113,7 @@ forecast.mlm <- function(
   }
   out$method <- rep("Multiple linear regression model", length(out$forecast))
   names(out$forecast) <- names(out$method) <- colnames(object$coefficients)
-  return(structure(out, class = "mforecast"))
+  structure(out, class = "mforecast")
 }
 
 #' Forecasting time series
@@ -187,7 +187,7 @@ forecast.mts <- function(
   }
   out$method <- vapply(out$forecast, function(x) x$method, character(1))
   names(out$forecast) <- names(out$method) <- colnames(object)
-  return(structure(out, class = "mforecast"))
+  structure(out, class = "mforecast")
 }
 
 #' @export
@@ -197,7 +197,7 @@ print.mforecast <- function(x, ...) {
     print(x)
     cat("\n")
   })
-  return(invisible())
+  invisible()
 }
 
 

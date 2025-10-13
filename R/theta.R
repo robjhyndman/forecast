@@ -109,5 +109,5 @@ thetaf <- function(
   fcast$method <- "Theta"
   fcast$model <- list(alpha = alpha, drift = tmp2, sigma = fcast$model$sigma2)
   fcast$model$call <- match.call()
-  return(fcast)
+  fcast
 }

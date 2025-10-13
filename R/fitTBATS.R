@@ -129,7 +129,7 @@ fitPreviousTBATSModel <- function(y, model, biasadj = FALSE) {
   tsp(model.for.output$fitted.values) <- tsp(model.for.output$errors) <- tsp(y)
   model.for.output$x <- fitted.values.and.errors$x
   model.for.output$y <- y
-  return(model.for.output)
+  model.for.output
 }
 
 fitSpecificTBATS <- function(
@@ -654,7 +654,7 @@ fitSpecificTBATS <- function(
     q = q
   )
   class(model.for.output) <- c("tbats", "bats")
-  return(model.for.output)
+  model.for.output
 }
 
 
