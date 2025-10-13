@@ -251,7 +251,7 @@ forecast.rw_model <- function(
   upper <- future_msts(object$x, upper)
   colnames(lower) <- colnames(upper) <- paste0(level, "%")
 
-  return(structure(
+  structure(
     list(
       method = object$method,
       model = object,
@@ -266,7 +266,7 @@ forecast.rw_model <- function(
       upper = upper
     ),
     class = "forecast"
-  ))
+  )
 }
 
 #' @rdname forecast.rw_model
@@ -309,7 +309,7 @@ rwf <- function(
   } else {
     fc$method <- "Random walk"
   }
-  return(fc)
+  fc
 }
 
 #' @rdname forecast.rw_model
@@ -338,7 +338,7 @@ naive <- function(
   fc$model$call <- match.call()
   fc$series <- deparse1(substitute(y))
   fc$method <- "Naive method"
-  return(fc)
+  fc
 }
 
 #' @rdname forecast.rw_model
@@ -366,5 +366,5 @@ snaive <- function(
   fc$model$call <- match.call()
   fc$series <- deparse1(substitute(y))
   fc$method <- "Seasonal naive method"
-  return(fc)
+  fc
 }

@@ -124,7 +124,7 @@ subset.ts <- function(
   } else {
     x <- subset.default(x, cycle(x) %in% season)
   }
-  return(ts(x, frequency = length(season), start = start))
+  ts(x, frequency = length(season), start = start)
 }
 
 # head.ts and tail.ts only defined/exported for R < 4.5.0
@@ -151,7 +151,7 @@ if (getRversion() < "4.5.0") {
       attr_x$dim[1] <- NROW(hx)
     }
     attributes(hx) <- attr_x
-    return(hx)
+    hx
   }
   tail.ts <- function(x, n = 6L, ...) {
     attr_x <- attributes(x)
@@ -168,7 +168,7 @@ if (getRversion() < "4.5.0") {
       attr_x$dim[1] <- NROW(hx)
     }
     attributes(hx) <- attr_x
-    return(hx)
+    hx
   }
 }
 

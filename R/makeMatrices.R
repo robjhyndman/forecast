@@ -164,7 +164,7 @@ makeTBATSFMatrix <- function(
     ma.rows <- cbind(ma.rows, ma.part)
     F <- rbind(F, ma.rows)
   }
-  return(F)
+  F
 }
 
 # makeWMatrix <- function(small.phi=NULL, seasonal.periods=NULL, ar.coefs=NULL, ma.coefs=NULL) {
@@ -318,7 +318,7 @@ makeFMatrix <- function(
     ma.rows <- cbind(ma.rows, ma.part)
     F <- rbind(F, ma.rows)
   }
-  return(F)
+  F
 }
 
 makeXMatrix <- function(
@@ -354,5 +354,5 @@ makeXMatrix <- function(
   }
 
   x <- t(x.transpose)
-  return(list(x = x, x.transpose = x.transpose))
+  list(x = x, x.transpose = x.transpose)
 }

@@ -128,7 +128,7 @@ simulate.ets <- function(
   if (!is.null(object$lambda)) {
     tmp <- InvBoxCox(tmp, object$lambda)
   }
-  return(tmp)
+  tmp
 }
 
 # Simulate ARIMA model starting with observed data x
@@ -291,7 +291,7 @@ myarima.sim <- function(model, n, x, e, ...) {
     frequency = frequency(data),
     start = tsp(data)[2] + 1 / tsp(data)[3]
   )
-  return(x)
+  x
 }
 
 #' @rdname simulate.ets
@@ -525,7 +525,7 @@ simulate.Arima <- function(
     sim <- InvBoxCox(sim, lambda)
   }
 
-  return(sim)
+  sim
 }
 
 #' @rdname simulate.ets
@@ -746,7 +746,7 @@ simulate.fracdiff <- function(
   )
 
   # Undo differencing and add back mean
-  return(unfracdiff(xx, ysim, n, nsim, object$d) + meanx)
+  unfracdiff(xx, ysim, n, nsim, object$d) + meanx
 }
 
 #' @rdname simulate.ets
@@ -875,7 +875,7 @@ simulate.nnetar <- function(
   if (!is.null(lambda)) {
     path <- InvBoxCox(path, lambda)
   }
-  return(path)
+  path
 }
 
 #' @rdname simulate.ets
@@ -1004,5 +1004,5 @@ simulate.modelAR <- function(
   if (!is.null(lambda)) {
     path <- InvBoxCox(path, lambda)
   }
-  return(path)
+  path
 }

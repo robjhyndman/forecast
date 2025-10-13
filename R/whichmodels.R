@@ -19,7 +19,7 @@ WhichModels <- function(max.p, max.q, max.P, max.Q, maxK) {
       }
     }
   }
-  return(x)
+  x
 }
 
 UndoWhichModels <- function(n) {

@@ -588,7 +588,7 @@ ets <- function(
   model$lambda <- lambda
   # model$call$data <- dataname
 
-  return(structure(model, class = "ets"))
+  structure(model, class = "ets")
 }
 
 #' @export
@@ -947,7 +947,7 @@ etsmodel <- function(
     fits <- y / (1 + e$e)
   }
 
-  return(list(
+  list(
     loglik = -0.5 * e$lik,
     aic = aic,
     bic = bic,
@@ -959,7 +959,7 @@ etsmodel <- function(
     fitted = ts(fits, frequency = tsp.y[3], start = tsp.y[1]),
     states = states,
     par = fit.par
-  ))
+  )
 }
 
 etsTargetFunctionInit <- function(
@@ -1164,7 +1164,7 @@ initparam <- function(
     par <- c(par, phi = phi)
   }
 
-  return(par)
+  par
 }
 
 check.param <- function(alpha, beta, gamma, phi, lower, upper, bounds, m) {
@@ -1195,7 +1195,7 @@ check.param <- function(alpha, beta, gamma, phi, lower, upper, bounds, m) {
       return(0)
     }
   }
-  return(1)
+  1
 }
 
 initstate <- function(y, trendtype, seasontype) {
@@ -1287,7 +1287,7 @@ initstate <- function(y, trendtype, seasontype) {
   if (!is.null(b0)) {
     names(b0) <- "b"
   }
-  return(c(l0, b0, init.seas))
+  c(l0, b0, init.seas)
 }
 
 lik <- function(
@@ -1524,12 +1524,12 @@ pegelsresid.C <- function(
   e <- ts(Cout[[12]])
   tsp(e) <- tsp.y
 
-  return(list(
+  list(
     lik = Cout[[13]],
     amse = Cout[[14]],
     e = e,
     states = matrix(Cout[[3]], nrow = n + 1, ncol = p, byrow = TRUE)
-  ))
+  )
 }
 
 admissible <- function(alpha, beta, gamma, phi, m) {
@@ -1580,7 +1580,7 @@ admissible <- function(alpha, beta, gamma, phi, m) {
     }
   }
   # Passed all tests
-  return(1)
+  1
 }
 
 ### PLOT COMPONENTS
@@ -1673,9 +1673,9 @@ coef.ets <- function(object, ...) {
 #' @export
 fitted.ets <- function(object, h = 1, ...) {
   if (h == 1) {
-    return(object$fitted)
+    object$fitted
   } else {
-    return(hfitted(object = object, h = h, FUN = "ets", ...))
+    hfitted(object = object, h = h, FUN = "ets", ...)
   }
 }
 

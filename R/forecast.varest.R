@@ -62,5 +62,5 @@ forecast.varest <- function(
   names(out$forecast) <- names(pr$fcst)
   out$method <- rep(method, object$K)
   names(out$forecast) <- names(out$method) <- names(pr$fcst)
-  return(structure(out, class = "mforecast"))
+  structure(out, class = "mforecast")
 }

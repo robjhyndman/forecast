@@ -173,7 +173,7 @@ forecast.mean_model <- function(
   )
   out$model$call <- match.call()
 
-  return(structure(out, class = "forecast"))
+  structure(out, class = "forecast")
 }
 
 #' @rdname forecast.mean_model

@@ -2,7 +2,7 @@ toMat <- function(x) {
   if (NCOL(x) > 1 && !is.matrix(x)) {
     x <- matrix(x, ncol = NCOL(x))
   }
-  return(x)
+  x
 }
 
 # Converts arguments into data.frame, whilst retaining mts/ts/matrix properties
@@ -47,11 +47,11 @@ datamat <- function(..., flatten = TRUE, functions = TRUE) {
   #       attr(vars, "tsp") <- tspx
   #     }
   #   }
-  return(vars)
+  vars
 }
 
 recoverTSP <- function(times.x) {
   freq <- sort(unique(round(times.x %% 1, digits = 6))) # The subset cannot increase frequency
   freq <- length(freq)
-  return(c(min(times.x), min(times.x) + (length(times.x) - 1) / freq, freq))
+  c(min(times.x), min(times.x) + (length(times.x) - 1) / freq, freq)
 }

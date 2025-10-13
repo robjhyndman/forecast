@@ -560,7 +560,7 @@ tbats <- function(
   best.model$y <- origy
   best.model$series <- seriesname
   best.model$method <- "TBATS"
-  return(best.model)
+  best.model
 }
 
 ######################################################################################################################################
@@ -700,7 +700,7 @@ parFitSpecificTBATS <- function(
   if (inherits(model, "try-error")) {
     model <- list(AIC = Inf)
   }
-  return(model)
+  model
 }
 
 filterTBATSSpecifics <- function(
@@ -808,7 +808,7 @@ makeSingleFourier <- function(j, m, T) {
     frier[t, 1] <- cos((2 * pi * j) / m)
     frier[t, 2] <- sin((2 * pi * j) / m)
   }
-  return(frier)
+  frier
 }
 
 calcFTest <- function(
@@ -826,16 +826,16 @@ calcFTest <- function(
     (num.observations - num.u.params),
     lower.tail = FALSE
   )
-  return(p.value)
+  p.value
 }
 
 #' @rdname fitted.Arima
 #' @export
 fitted.tbats <- function(object, h = 1, ...) {
   if (h == 1) {
-    return(object$fitted.values)
+    object$fitted.values
   } else {
-    return(hfitted(object = object, h = h, FUN = "tbats", ...))
+    hfitted(object = object, h = h, FUN = "tbats", ...)
   }
 }
 
@@ -975,5 +975,5 @@ tbats.components <- function(x) {
   # Add time series characteristics
   out <- ts(out)
   tsp(out) <- tsp(y)
-  return(out)
+  out
 }

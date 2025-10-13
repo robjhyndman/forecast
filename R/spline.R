@@ -14,7 +14,7 @@ make.Sigma <- function(n, n0 = 0) {
   for (i in 1:nn) {
     Sigma[i, i:nn] <- Sigma[i:nn, i] <- (i * i * (3 * (i:nn) - i)) / 6
   }
-  return(Sigma / (n^3))
+  Sigma / (n^3)
 }
 
 ## Compute spline matrices
@@ -26,13 +26,13 @@ spline.matrices <- function(n, beta, cc = 1e2, n0 = 0) {
   max.Omega <- max(Omega)
   inv.Omega <- solve(Omega / max.Omega, tol = 1e-10) / max.Omega
   P <- chol(inv.Omega)
-  return(list(
+  list(
     s = s,
     Sigma = Sigma,
     Omega = Omega,
     inv.Omega = inv.Omega,
     P = P
-  ))
+  )
 }
 
 ## Compute smoothing splines
@@ -42,7 +42,7 @@ spline.loglik <- function(beta, y, cc = 1e2) {
   n <- length(y)
   mat <- spline.matrices(n, beta / 1e6, cc = cc)
   y.star <- mat$P %*% matrix(y)
-  return(-log(det(mat$P)) + 0.5 * n * log(sum(y.star^2)))
+  -log(det(mat$P)) + 0.5 * n * log(sum(y.star^2))
 }
 
 # Spline forecasts
@@ -193,7 +193,7 @@ splinef <- function(
     x <- origx
   }
 
-  return(structure(
+  structure(
     list(
       method = "Cubic Smoothing Spline",
       level = level,
@@ -210,7 +210,7 @@ splinef <- function(
     ),
     lambda = lambda,
     class = c("splineforecast", "forecast")
-  ))
+  )
 }
 
 #' @rdname plot.forecast

@@ -165,7 +165,7 @@ forecast.bats <- function(
     forecast.object$series <- deparse(object$call$y)
   }
   class(forecast.object) <- "forecast"
-  return(forecast.object)
+  forecast.object
 }
 
 #' @export
@@ -208,5 +208,5 @@ as.character.bats <- function(x, ...) {
   } else {
     name <- paste0(name, "-)")
   }
-  return(name)
+  name
 }

@@ -100,7 +100,7 @@ unParameteriseTBATS <- function(param.vector, control) {
       ma.coefs <- NULL
     }
   }
-  return(list(
+  list(
     lambda = lambda,
     alpha = alpha,
     beta = beta,
@@ -109,11 +109,10 @@ unParameteriseTBATS <- function(param.vector, control) {
     gamma.two.v = gamma.two.vector,
     ar.coefs = ar.coefs,
     ma.coefs = ma.coefs
-  ))
+  )
 }
 
 makeParscale <- function(control) {
-  # print(control)
   if (control$use.box.cox) {
     parscale <- c(.001, .01)
   } else {
@@ -133,14 +132,12 @@ makeParscale <- function(control) {
   if ((control$p != 0) || (control$q != 0)) {
     parscale <- c(parscale, rep(1e-1, (control$p + control$q)))
   }
-  # print(parscale)
-  return(parscale)
+  parscale
 }
 ##############################################################################################################################################################################################
 ## BATS related stuff below
 ########################################
 makeParscaleBATS <- function(control) {
-  # print(control)
   if (control$use.box.cox) {
     parscale <- c(.001, .1)
   } else {
@@ -160,8 +157,7 @@ makeParscaleBATS <- function(control) {
   if ((control$p != 0) || (control$q != 0)) {
     parscale <- c(parscale, rep(1e-1, (control$p + control$q)))
   }
-  # print(parscale)
-  return(parscale)
+  parscale
 }
 
 parameterise <- function(
@@ -229,7 +225,7 @@ parameterise <- function(
     p = p,
     q = q
   )
-  return(list(vect = as.numeric(param.vector), control = control))
+  list(vect = as.numeric(param.vector), control = control)
 }
 
 unParameterise <- function(param.vector, control) {
@@ -317,7 +313,7 @@ unParameterise <- function(param.vector, control) {
       ma.coefs <- NULL
     }
   }
-  return(list(
+  list(
     lambda = lambda,
     alpha = alpha,
     beta = beta,
@@ -325,5 +321,5 @@ unParameterise <- function(param.vector, control) {
     gamma.v = gamma.vector,
     ar.coefs = ar.coefs,
     ma.coefs = ma.coefs
-  ))
+  )
 }

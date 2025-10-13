@@ -373,7 +373,7 @@ nnetar <- function(
     out$method <- paste0(out$method, "[", m, "]")
   }
   out$call <- match.call()
-  return(structure(out, class = "nnetar"))
+  structure(out, class = "nnetar")
 }
 
 # Aggregate several neural network models
@@ -382,7 +382,7 @@ avnnet <- function(x, y, repeats, linout = TRUE, trace = FALSE, ...) {
   for (i in 1:repeats) {
     mods[[i]] <- nnet::nnet(x, y, linout = linout, trace = trace, ...)
   }
-  return(structure(mods, class = "nnetarmodels"))
+  structure(mods, class = "nnetarmodels")
 }
 
 # Fit old model to new data
@@ -398,7 +398,7 @@ oldmodel_avnnet <- function(x, y, size, model) {
     args$Wts <- model$model[[i]]$wts
     mods[[i]] <- do.call(nnet::nnet, args)
   }
-  return(structure(mods, class = "nnetarmodels"))
+  structure(mods, class = "nnetarmodels")
 }
 
 #' @export
@@ -588,16 +588,16 @@ forecast.nnetar <- function(
   out$mean <- future_msts(out$x, fcast)
   out$level <- level
 
-  return(structure(out, class = "forecast"))
+  structure(out, class = "forecast")
 }
 
 #' @rdname fitted.Arima
 #' @export
 fitted.nnetar <- function(object, h = 1, ...) {
   if (h == 1) {
-    return(object$fitted)
+    object$fitted
   } else {
-    return(hfitted(object = object, h = h, FUN = "nnetar", ...))
+    hfitted(object = object, h = h, FUN = "nnetar", ...)
   }
 }
 
@@ -636,5 +636,5 @@ scale.ts <- function(x, center = TRUE, scale = TRUE) {
   tspx <- tsp(x)
   x <- as.ts(scale.default(x, center = center, scale = scale))
   tsp(x) <- tspx
-  return(x)
+  x
 }

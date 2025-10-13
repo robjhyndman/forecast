@@ -52,7 +52,7 @@ BoxCox <- function(x, lambda) {
     colnames(out) <- colnames(x)
   }
   attr(out, "lambda") <- lambda
-  return(out)
+  out
 }
 
 #' @rdname BoxCox
@@ -103,7 +103,7 @@ InvBoxCox <- function(x, lambda, biasadj = FALSE, fvar = NULL) {
     out <- out *
       (1 + 0.5 * as.numeric(fvar) * (1 - lambda) / (out)^(2 * lambda))
   }
-  return(out)
+  out
 }
 
 # Deprecated
@@ -132,7 +132,7 @@ InvBoxCoxf <- function(x = NULL, fvar = NULL, lambda = NULL) {
     fvar <- diag(fvar)
   }
 
-  return(x$mean * (1 + 0.5 * fvar * (1 - lambda) / (x$mean)^(2 * lambda)))
+  x$mean * (1 + 0.5 * fvar * (1 - lambda) / (x$mean)^(2 * lambda))
 }
 
 
@@ -217,7 +217,7 @@ forecast.StructTS <- function(
   fits <- copy_msts(x, fits)
   res <- copy_msts(x, res)
 
-  return(structure(
+  structure(
     list(
       method = method,
       model = object,
@@ -231,7 +231,7 @@ forecast.StructTS <- function(
       residuals = res
     ),
     class = "forecast"
-  ))
+  )
 }
 
 #' Forecasting using Holt-Winters objects
@@ -327,7 +327,7 @@ forecast.HoltWinters <- function(
   lower <- future_msts(object$x, lower)
   upper <- future_msts(object$x, upper)
 
-  return(structure(
+  structure(
     list(
       method = "HoltWinters",
       model = object,
@@ -341,5 +341,5 @@ forecast.HoltWinters <- function(
       residuals = x - fitted
     ),
     class = "forecast"
-  ))
+  )
 }

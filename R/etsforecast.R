@@ -194,7 +194,7 @@ forecast.ets <- function(
     out$lower <- out$upper <- out$level <- NULL
   }
 
-  return(structure(out, class = "forecast"))
+  structure(out, class = "forecast")
 }
 
 pegelsfcast.C <- function(h, obj, npaths, level, bootstrap) {
@@ -238,7 +238,7 @@ pegelsfcast.C <- function(h, obj, npaths, level, bootstrap) {
     lower <- t(lower)
     upper <- t(upper)
   }
-  return(list(mu = y.f, lower = lower, upper = upper))
+  list(mu = y.f, lower = lower, upper = upper)
 }
 
 class1 <- function(
@@ -300,7 +300,7 @@ class1 <- function(
   }
   mu[h] <- H %*% Fj %*% last.state
 
-  return(list(mu = mu, var = var, cj = cj))
+  list(mu = mu, var = var, cj = cj)
 }
 
 class2 <- function(
@@ -323,7 +323,7 @@ class2 <- function(
     }
   }
   var <- (1 + sigma2) * theta - tmp$mu^2
-  return(list(mu = tmp$mu, var = var))
+  list(mu = tmp$mu, var = var)
 }
 
 class3 <- function(
@@ -374,7 +374,7 @@ class3 <- function(
           sigma2 * G21 %*% (3 * Vh + 2 * vecMh %*% t(vecMh)) %*% t(G21))
     Mh <- F1 %*% Mh %*% t(F2) + G1 %*% Mh %*% t(G2) * sigma2
   }
-  return(list(mu = mu, var = var))
+  list(mu = mu, var = var)
 }
 
 # ses <- function(x,h=10,level=c(80,95),fan=FALSE,...)

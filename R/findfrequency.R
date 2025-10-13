@@ -54,5 +54,5 @@ findfrequency <- function(x) {
     period <- 1L
   }
 
-  return(as.integer(period))
+  as.integer(period)
 }

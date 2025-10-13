@@ -328,7 +328,7 @@ modelAR <- function(
     out$method <- paste0(out$method, "[", m, "]")
   }
   out$call <- match.call()
-  return(structure(out, class = "modelAR"))
+  structure(out, class = "modelAR")
 }
 
 #' Forecasting using user-defined model
@@ -480,16 +480,16 @@ forecast.modelAR <- function(
   out$level <- level
   out$lower <- lower
   out$upper <- upper
-  return(structure(out, class = "forecast"))
+  structure(out, class = "forecast")
 }
 
 #' @rdname fitted.Arima
 #' @export
 fitted.modelAR <- function(object, h = 1, ...) {
   if (h == 1) {
-    return(object$fitted)
+    object$fitted
   } else {
-    return(hfitted(object = object, h = h, FUN = "modelAR", ...))
+    hfitted(object = object, h = h, FUN = "modelAR", ...)
   }
 }
 

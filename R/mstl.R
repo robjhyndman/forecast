@@ -112,7 +112,7 @@ mstl <- function(
 
   output <- copy_msts(origx, output)
   class(output) <- c("mstl", class(output))
-  return(output)
+  output
 }
 
 #' @rdname autoplot.seas
@@ -259,12 +259,12 @@ forecast.stl <- function(
           allow.multiplicative.trend = allow.multiplicative.trend,
           ...
         )
-        return(forecast(fit, h = h, level = level))
+        forecast(fit, h = h, level = level)
       }
     } else if (method == "arima") {
       forecastfunction <- function(x, h, level, ...) {
         fit <- auto.arima(x, xreg = xreg, seasonal = FALSE, ...)
-        return(forecast(fit, h = h, level = level, xreg = newxreg))
+        forecast(fit, h = h, level = level, xreg = newxreg)
       }
     } else if (method == "naive") {
       forecastfunction <- function(x, h, level, ...) {
@@ -353,7 +353,7 @@ forecast.stl <- function(
     fcast$lambda <- lambda
   }
 
-  return(fcast)
+  fcast
 }
 
 #' @export
@@ -461,16 +461,16 @@ stlm <- function(
   if (!is.null(model)) {
     if (inherits(model$model, "ets")) {
       modelfunction <- function(x, ...) {
-        return(ets(x, model = model$model, use.initial.values = TRUE, ...))
+        ets(x, model = model$model, use.initial.values = TRUE, ...)
       }
     } else if (inherits(model$model, "Arima")) {
       modelfunction <- function(x, ...) {
-        return(Arima(x, model = model$model, xreg = xreg, ...))
+        Arima(x, model = model$model, xreg = xreg, ...)
       }
     } else if (!is.null(model$modelfunction)) {
       if ("model" %in% names(formals(model$modelfunction))) {
         modelfunction <- function(x, ...) {
-          return(model$modelfunction(x, model = model$model, ...))
+          model$modelfunction(x, model = model$model, ...)
         }
       }
     }
@@ -491,16 +491,16 @@ stlm <- function(
         substr(etsmodel, 3, 3) <- "N"
       }
       modelfunction <- function(x, ...) {
-        return(ets(
+        ets(
           x,
           model = etsmodel,
           allow.multiplicative.trend = allow.multiplicative.trend,
           ...
-        ))
+        )
       }
     } else if (method == "arima") {
       modelfunction <- function(x, ...) {
-        return(auto.arima(x, xreg = xreg, seasonal = FALSE, ...))
+        auto.arima(x, xreg = xreg, seasonal = FALSE, ...)
       }
     }
   }
@@ -523,7 +523,7 @@ stlm <- function(
     attr(lambda, "biasadj") <- biasadj
   }
 
-  return(structure(
+  structure(
     list(
       stl = stld,
       model = fit,
@@ -536,7 +536,7 @@ stlm <- function(
       residuals = res
     ),
     class = "stlm"
-  ))
+  )
 }
 
 #' @rdname forecast.stl
@@ -624,7 +624,7 @@ forecast.stlm <- function(
   }
   fcast$x <- object$x
 
-  return(fcast)
+  fcast
 }
 
 #' @rdname forecast.stl
@@ -685,7 +685,7 @@ stlf <- function(
 
   fcast$series <- seriesname
 
-  return(fcast)
+  fcast
 }
 
 #' @rdname is.ets

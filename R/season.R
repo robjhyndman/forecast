@@ -53,7 +53,7 @@ monthdays <- function(x) {
     dummy[leap.years, 1] <- 91
   }
   xx <- c(t(dummy))[start(x)[2] - 1 + seq_along(x)]
-  return(ts(xx, start = start(x), frequency = f))
+  ts(xx, start = start(x), frequency = f)
 }
 
 #' Forecast seasonal index
@@ -96,7 +96,7 @@ sindexf <- function(object, h) {
   }
   out <- ts(rep(ss, h / m + 1)[1:h], frequency = m, start = tsp.x[2] + 1 / m)
 
-  return(out)
+  out
 }
 
 #' Seasonal dummy variables
@@ -181,7 +181,7 @@ seasonaldummyf <- function(x, h) {
     stop("Not a time series")
   }
   f <- frequency(x)
-  return(seasonaldummy(ts(rep(0, h), start = tsp(x)[2] + 1 / f, frequency = f)))
+  seasonaldummy(ts(rep(0, h), start = tsp(x)[2] + 1 / f, frequency = f))
 }
 
 #' Fourier terms for modelling seasonality
@@ -245,9 +245,9 @@ seasonaldummyf <- function(x, h) {
 #' @export
 fourier <- function(x, K, h = NULL) {
   if (is.null(h)) {
-    return(...fourier(x, K, seq_len(NROW(x))))
+    ...fourier(x, K, seq_len(NROW(x)))
   } else {
-    return(...fourier(x, K, NROW(x) + (1:h)))
+    ...fourier(x, K, NROW(x) + (1:h))
   }
 }
 
@@ -255,7 +255,7 @@ fourier <- function(x, K, h = NULL) {
 #' @export
 fourierf <- function(x, K, h) {
   warning("fourierf() is deprecated, please use fourier()")
-  return(...fourier(x, K, length(x) + (1:h)))
+  ...fourier(x, K, length(x) + (1:h))
 }
 
 # Function to do the work.
@@ -320,7 +320,7 @@ fourierf <- function(x, K, h) {
   # Remove missing columns
   X <- X[, !is.na(colSums(X)), drop = FALSE]
 
-  return(X)
+  X
 }
 
 #' Moving-average smoothing
@@ -370,5 +370,5 @@ ma <- function(x, order, centre = TRUE) {
     w <- rep(1, order) / order
   }
 
-  return(filter(x, w))
+  filter(x, w)
 }

@@ -152,7 +152,7 @@ From %s(): %s
       return(d - 1)
     }
   }
-  return(d)
+  d
 }
 
 # Number of seasonal differences
@@ -346,7 +346,7 @@ From %s(): %s
       dodiff <- FALSE
     }
   }
-  return(D)
+  D
 }
 
 # Adjusted from robjhyndman/tsfeatures
@@ -379,7 +379,7 @@ seas.heuristic <- function(x) {
       )
     }
   }
-  return(season)
+  season
 }
 
 # Model specification from Osborn DR, Chui APL, Smith J, and Birchenhall CR (1988) "Seasonality and the order of integration for consumption", Oxford Bulletin of Economics and Statistics 50(4):361-377.
@@ -442,7 +442,7 @@ ocsb.test <- function(
     if (NCOL(out) > 1) {
       colnames(out) <- paste0("lag_", seq_len(maxlag))
     }
-    return(out)
+    out
   }
 
   fitOCSB <- function(x, lag, maxlag) {
@@ -538,16 +538,12 @@ ocsb.test <- function(
 # Approximation based on extensive simulations.
 calcOCSBCritVal <- function(seasonal.period) {
   log.m <- log(seasonal.period)
-  return(
-    -0.2937411 *
-      exp(
-        -0.2850853 *
-          (log.m - 0.7656451) +
-          (-0.05983644) *
-            ((log.m - 0.7656451)^2)
-      ) -
-      1.652202
-  )
+
+  -0.2937411 *
+    exp(
+      -0.2850853 * (log.m - 0.7656451) + (-0.05983644) * ((log.m - 0.7656451)^2)
+    ) -
+    1.652202
 }
 
 #' @export
