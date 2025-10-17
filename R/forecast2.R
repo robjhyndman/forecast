@@ -170,12 +170,10 @@ forecast.StructTS <- function(
   pred <- predict(object, n.ahead = h)
   if (fan) {
     level <- seq(51, 99, by = 3)
-  } else {
-    if (min(level) > 0 && max(level) < 1) {
-      level <- 100 * level
-    } else if (min(level) < 0 || max(level) > 99.99) {
-      stop("Confidence limit out of range")
-    }
+  } else if (min(level) > 0 && max(level) < 1) {
+    level <- 100 * level
+  } else if (min(level) < 0 || max(level) > 99.99) {
+    stop("Confidence limit out of range")
   }
   nint <- length(level)
   upper <- lower <- matrix(NA, ncol = nint, nrow = length(pred$pred))
@@ -277,12 +275,10 @@ forecast.HoltWinters <- function(
 
   if (fan) {
     level <- seq(51, 99, by = 3)
-  } else {
-    if (min(level) > 0 && max(level) < 1) {
-      level <- 100 * level
-    } else if (min(level) < 0 || max(level) > 99.99) {
-      stop("Confidence limit out of range")
-    }
+  } else if (min(level) > 0 && max(level) < 1) {
+    level <- 100 * level
+  } else if (min(level) < 0 || max(level) > 99.99) {
+    stop("Confidence limit out of range")
   }
   nint <- length(level)
 

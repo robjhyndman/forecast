@@ -1625,11 +1625,11 @@ ggsubseriesplot <- function(
   if ("1" %in% dimnames(table(table(phase)))[[1]]) {
     stop(paste(
       "Each season requires at least 2 observations.",
-      ifelse(
-        frequency(x) %% 1 == 0,
-        "Your series length may be too short for this graphic.",
+      if (frequency(x) %% 1 == 0) {
+        "Your series length may be too short for this graphic."
+      } else {
         "This may be caused from specifying a time-series with non-integer frequency."
-      )
+      }
     ))
   }
 
@@ -2701,7 +2701,7 @@ StatForecast <- ggplot2::ggproto(
     ## TODO: Rewrite
     tspx <- recoverTSP(data$x)
     if (is.null(h)) {
-      h <- ifelse(tspx[3] > 1, 2 * tspx[3], 10)
+      h <- if (tspx[3] > 1) 2 * tspx[3] else 10
     }
     tsdat <- ts(data = data$y, start = tspx[1], frequency = tspx[3])
     fcast <- forecast(

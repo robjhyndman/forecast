@@ -93,37 +93,29 @@ tsCV <- function(
     indx <- seq(window + initial, n - 1L, by = 1L)
   }
   for (i in indx) {
-    y_subset <- subset(
-      y,
-      start = ifelse(
-        is.null(window),
-        1L,
-        ifelse(i - window >= 0L, i - window + 1L, stop("small window"))
-      ),
-      end = i
-    )
+    if (is.null(window)) {
+      start <- 1L
+    } else if (i - window >= 0L) {
+      start <- i - window + 1L
+    } else {
+      stop("small window")
+    }
+    y_subset <- subset(y, start = start, end = i)
     if (is.null(xreg)) {
       fc <- try(
-        suppressWarnings(
-          forecastfunction(y_subset, h = h, ...)
-        ),
+        suppressWarnings(forecastfunction(y_subset, h = h, ...)),
         silent = TRUE
       )
     } else {
-      xreg_subset <- subset(
-        xreg,
-        start = ifelse(
-          is.null(window),
-          1L,
-          ifelse(i - window >= 0L, i - window + 1L, stop("small window"))
-        ),
-        end = i
-      )
-      xreg_future <- subset(
-        xreg,
-        start = i + 1,
-        end = i + h
-      )
+      if (is.null(window)) {
+        start <- 1L
+      } else if (i - window >= 0L) {
+        start <- i - window + 1L
+      } else {
+        stop("small window")
+      }
+      xreg_subset <- subset(xreg, start = start, end = i)
+      xreg_future <- subset(xreg, start = i + 1, end = i + h)
       fc <- try(
         suppressWarnings(
           forecastfunction(

@@ -16,17 +16,15 @@ forecast.tbats <- function(
   # Set up the variables
   if (is.ts(object$y)) {
     ts.frequency <- frequency(object$y)
+  } else if (!is.null(object$seasonal.periods)) {
+    ts.frequency <- max(object$seasonal.periods)
   } else {
-    ts.frequency <- ifelse(
-      !is.null(object$seasonal.periods),
-      max(object$seasonal.periods),
-      1
-    )
+    ts.frequency <- 1
   }
 
   if (missing(h)) {
     if (is.null(object$seasonal.periods)) {
-      h <- ifelse(ts.frequency == 1, 10, 2 * ts.frequency)
+      h <- if (ts.frequency == 1) 10 else 2 * ts.frequency
     } else {
       h <- 2 * max(object$seasonal.periods)
     }
@@ -36,12 +34,10 @@ forecast.tbats <- function(
 
   if (fan) {
     level <- seq(51, 99, by = 3)
-  } else {
-    if (min(level) > 0 && max(level) < 1) {
-      level <- 100 * level
-    } else if (min(level) < 0 || max(level) > 99.99) {
-      stop("Confidence limit out of range")
-    }
+  } else if (min(level) > 0 && max(level) < 1) {
+    level <- 100 * level
+  } else if (min(level) < 0 || max(level) > 99.99) {
+    stop("Confidence limit out of range")
   }
 
   if (!is.null(object$k.vector)) {

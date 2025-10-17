@@ -38,10 +38,11 @@ HoltWintersZZ <- function(
   ) {
     stop("'alpha', 'beta' and 'gamma' must be within the unit interval.")
   }
-  if ((is.null(gamma) || gamma > 0)) {
-    if (seasonal == "multiplicative" && any(x <= 0)) {
-      stop("data must be positive for multiplicative Holt-Winters.")
-    }
+  if (
+    (is.null(gamma) || gamma > 0) &&
+      (seasonal == "multiplicative" && any(x <= 0))
+  ) {
+    stop("data must be positive for multiplicative Holt-Winters.")
   }
 
   if (m <= 1) {
@@ -348,7 +349,7 @@ zzhw <- function(
   }
   if (!doseasonal) {
     gamma <- 0
-    s.start[seq_along(s.start)] <- ifelse(seasonal == "additive", 0, 1)
+    s.start <- if (seasonal == "additive") 0 else 1
   }
   lastlevel <- level0 <- l.start
   lasttrend <- trend0 <- b.start
@@ -370,7 +371,7 @@ zzhw <- function(
       lastseason <- season0[i]
     }
     if (is.na(lastseason)) {
-      lastseason <- ifelse(seasonal == "additive", 0, 1)
+      lastseason <- if (seasonal == "additive") 0 else 1
     }
 
     # stop((lastlevel + phi*lasttrend)*lastseason)
@@ -382,12 +383,10 @@ zzhw <- function(
       } else {
         xhat <- lastlevel * lasttrend^phi + lastseason
       }
+    } else if (!exponential) {
+      xhat <- (lastlevel + phi * lasttrend) * lastseason
     } else {
-      if (!exponential) {
-        xhat <- (lastlevel + phi * lasttrend) * lastseason
-      } else {
-        xhat <- lastlevel * lasttrend^phi * lastseason
-      }
+      xhat <- lastlevel * lasttrend^phi * lastseason
     }
 
     xfit[i] <- xhat
@@ -406,16 +405,14 @@ zzhw <- function(
           (x[i] - lastseason) +
           (1 - alpha) * (lastlevel * lasttrend^phi)
       }
+    } else if (!exponential) {
+      level[i] <- alpha *
+        (x[i] / lastseason) +
+        (1 - alpha) * (lastlevel + phi * lasttrend)
     } else {
-      if (!exponential) {
-        level[i] <- alpha *
-          (x[i] / lastseason) +
-          (1 - alpha) * (lastlevel + phi * lasttrend)
-      } else {
-        level[i] <- alpha *
-          (x[i] / lastseason) +
-          (1 - alpha) * (lastlevel * lasttrend^phi)
-      }
+      level[i] <- alpha *
+        (x[i] / lastseason) +
+        (1 - alpha) * (lastlevel * lasttrend^phi)
     }
 
     # calculate trend[i]

@@ -65,12 +65,10 @@ forecast.ets <- function(
   }
   if (fan) {
     level <- seq(51, 99, by = 3)
-  } else {
-    if (min(level) > 0 && max(level) < 1) {
-      level <- 100 * level
-    } else if (min(level) < 0 || max(level) > 99.99) {
-      stop("Confidence limit out of range")
-    }
+  } else if (min(level) > 0 && max(level) < 1) {
+    level <- 100 * level
+  } else if (min(level) < 0 || max(level) > 99.99) {
+    stop("Confidence limit out of range")
   }
   # Order levels
   level <- sort(level)
@@ -207,9 +205,9 @@ pegelsfcast.C <- function(h, obj, npaths, level, bootstrap) {
     "etsforecast",
     as.double(obj$states[length(obj$x) + 1, ]),
     as.integer(obj$m),
-    as.integer(switch(obj$components[2], "N" = 0, "A" = 1, "M" = 2)),
-    as.integer(switch(obj$components[3], "N" = 0, "A" = 1, "M" = 2)),
-    as.double(ifelse(obj$components[4] == "FALSE", 1, obj$par["phi"])),
+    as.integer(switch(obj$components[2], N = 0, A = 1, M = 2)),
+    as.integer(switch(obj$components[3], N = 0, A = 1, M = 2)),
+    as.double(if (obj$components[4] == "FALSE") 1 else obj$par["phi"]),
     as.integer(h),
     as.double(numeric(h)),
     PACKAGE = "forecast"
@@ -343,7 +341,7 @@ class3 <- function(
     F1 <- 1
     G1 <- par["alpha"]
   } else {
-    F1 <- rbind(c(1, 1), c(0, ifelse(damped, par["phi"], 1)))
+    F1 <- rbind(c(1, 1), c(0, if (damped) par["phi"] else 1))
     G1 <- rbind(c(par["alpha"], par["alpha"]), c(par["beta"], par["beta"]))
   }
   F2 <- rbind(c(rep(0, m - 1), 1), cbind(diag(m - 1), rep(0, m - 1)))

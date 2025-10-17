@@ -251,12 +251,10 @@ forecast.lm <- function(
   }
   if (fan) {
     level <- seq(51, 99, by = 3)
-  } else {
-    if (min(level) > 0 && max(level) < 1) {
-      level <- 100 * level
-    } else if (min(level) < 0 || max(level) > 99.99) {
-      stop("Confidence limit out of range")
-    }
+  } else if (min(level) > 0 && max(level) < 1) {
+    level <- 100 * level
+  } else if (min(level) < 0 || max(level) > 99.99) {
+    stop("Confidence limit out of range")
   }
 
   if (!is.null(object$data)) {
@@ -323,11 +321,11 @@ forecast.lm <- function(
     })
     if (!is.data.frame(newdata)) {
       newdata <- datamat(newdata)
-      colnames(newdata)[1] <- ifelse(
-        sum(tsvar > 0),
-        reqvars[-tsvar][1],
+      colnames(newdata)[1] <- if (sum(tsvar > 0)) {
+        reqvars[-tsvar][1]
+      } else {
         reqvars[1]
-      )
+      }
       warning(
         "newdata column names not specified, defaulting to first variable required."
       )
@@ -422,12 +420,11 @@ forecast.lm <- function(
   }
   if (!is.null(tspx)) {
     # Always generate trend series
-    trend <- ifelse(
-      is.null(origdata$trend),
-      NCOL(origdata),
-      max(origdata$trend)
-    ) +
-      seq_len(h)
+    if (is.null(origdata$trend)) {
+      trend <- NCOL(origdata) + seq_len(h)
+    } else {
+      trend <- max(origdata$trend) + seq_len(h)
+    }
     if (!missing(newdata)) {
       newdata <- cbind(newdata, trend)
     } else {

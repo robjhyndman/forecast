@@ -489,7 +489,7 @@ plot.mpacf <- function(
     ylim <- range(object$z, object$upper, object$lower)
   }
   if (ylab == "") {
-    ylab <- ifelse(object$type == "partial", "PACF", "ACF")
+    ylab <- if (object$type == "partial") "PACF" else "ACF"
   }
 
   plot(
