@@ -103,24 +103,24 @@ simulate.ets <- function(
       "etssimulate",
       as.double(initstate),
       as.integer(object$m),
-      as.integer(switch(object$components[1], "A" = 1, "M" = 2)),
-      as.integer(switch(object$components[2], "N" = 0, "A" = 1, "M" = 2)),
-      as.integer(switch(object$components[3], "N" = 0, "A" = 1, "M" = 2)),
+      as.integer(switch(object$components[1], A = 1, M = 2)),
+      as.integer(switch(object$components[2], N = 0, A = 1, M = 2)),
+      as.integer(switch(object$components[3], N = 0, A = 1, M = 2)),
       as.double(object$par["alpha"]),
-      as.double(ifelse(object$components[2] == "N", 0, object$par["beta"])),
-      as.double(ifelse(object$components[3] == "N", 0, object$par["gamma"])),
-      as.double(ifelse(object$components[4] == "FALSE", 1, object$par["phi"])),
+      as.double(if (object$components[2] == "N") 0 else object$par["beta"]),
+      as.double(if (object$components[3] == "N") 0 else object$par["gamma"]),
+      as.double(if (object$components[4] == "FALSE") 1 else object$par["phi"]),
       as.integer(nsim),
       as.double(numeric(nsim)),
       as.double(e),
       PACKAGE = "forecast"
     )[[11]],
     frequency = object$m,
-    start = ifelse(
-      future,
-      tsp(object$x)[2] + 1 / tsp(object$x)[3],
+    start = if (future) {
+      tsp(object$x)[2] + 1 / tsp(object$x)[3]
+    } else {
       tsp(object$x)[1]
-    )
+    }
   )
   if (is.na(tmp[1])) {
     stop("Problem with multiplicative damped trend")
@@ -216,7 +216,7 @@ myarima.sim <- function(model, n, x, e, ...) {
 
     for (i in (length(diff.data) + 1):length(x.with.data)) {
       lagged.x.values <- x.with.data[(i - len.ar):(i - 1)]
-      ar.coefficients <- model$ar[rev(seq_along(model$ar))]
+      ar.coefficients <- rev(model$ar)
       sum.multiplied.x <- sum((lagged.x.values * ar.coefficients)[
         abs(ar.coefficients) > .Machine$double.eps
       ])
@@ -691,7 +691,7 @@ simulate.rw_model <- function(
   tspx <- tsp(x)
   ts(
     sim,
-    start = ifelse(future, tspx[2] + 1 / tspx[3], tspx[1]),
+    start = if (future) tspx[2] + 1 / tspx[3] else tspx[1],
     frequency = tspx[3]
   )
 }

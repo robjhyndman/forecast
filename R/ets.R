@@ -568,7 +568,7 @@ ets <- function(
     best.e,
     ",",
     best.t,
-    ifelse(best.d, "d", ""),
+    if (best.d) "d" else "",
     ",",
     best.s,
     ")"
@@ -598,7 +598,7 @@ as.character.ets <- function(x, ...) {
     x$components[1],
     ",",
     x$components[2],
-    ifelse(x$components[4], "d", ""),
+    if (x$components[4]) "d" else "",
     ",",
     x$components[3],
     ")"
@@ -723,7 +723,7 @@ etsmodel <- function(
       errortype,
       ",",
       trendtype,
-      ifelse(damped, "d", ""),
+      if (damped) "d" else "",
       ",",
       seasontype,
       ")",
@@ -1023,29 +1023,21 @@ etsTargetFunctionInit <- function(
   givenGamma <- FALSE
   givenPhi <- FALSE
 
-  if (!is.null(par.noopt["alpha"])) {
-    if (!is.na(par.noopt["alpha"])) {
-      optAlpha <- FALSE
-      givenAlpha <- TRUE
-    }
+  if (!is.null(par.noopt["alpha"]) && !is.na(par.noopt["alpha"])) {
+    optAlpha <- FALSE
+    givenAlpha <- TRUE
   }
-  if (!is.null(par.noopt["beta"])) {
-    if (!is.na(par.noopt["beta"])) {
-      optBeta <- FALSE
-      givenBeta <- TRUE
-    }
+  if (!is.null(par.noopt["beta"]) && !is.na(par.noopt["beta"])) {
+    optBeta <- FALSE
+    givenBeta <- TRUE
   }
-  if (!is.null(par.noopt["gamma"])) {
-    if (!is.na(par.noopt["gamma"])) {
-      optGamma <- FALSE
-      givenGamma <- TRUE
-    }
+  if (!is.null(par.noopt["gamma"]) && !is.na(par.noopt["gamma"])) {
+    optGamma <- FALSE
+    givenGamma <- TRUE
   }
-  if (!is.null(par.noopt["phi"])) {
-    if (!is.na(par.noopt["phi"])) {
-      optPhi <- FALSE
-      givenPhi <- TRUE
-    }
+  if (!is.null(par.noopt["phi"]) && !is.na(par.noopt["phi"])) {
+    optPhi <- FALSE
+    givenPhi <- TRUE
   }
 
   if (!damped) {
@@ -1392,17 +1384,14 @@ lik <- function(
   #      cat("lik: ", e$lik, "\n")
   #    points(alpha,e$lik,col=2)
 
-  if (opt.crit == "lik") {
-    return(e$lik)
-  } else if (opt.crit == "mse") {
-    return(e$amse[1])
-  } else if (opt.crit == "amse") {
-    return(mean(e$amse))
-  } else if (opt.crit == "sigma") {
-    return(mean(e$e^2))
-  } else if (opt.crit == "mae") {
-    return(mean(abs(e$e)))
-  }
+  switch(
+    opt.crit,
+    lik = e$lik,
+    mse = e$amse[1],
+    amse = mean(e$amse),
+    sigma = mean(e$e^2),
+    mae = mean(abs(e$e))
+  )
 }
 
 #' @export
@@ -1688,9 +1677,9 @@ hfitted.ets <- function(object, h = 1, ...) {
       "etsforecast",
       as.double(object$states[i, ]),
       as.integer(object$m),
-      as.integer(switch(object$components[2], "N" = 0, "A" = 1, "M" = 2)),
-      as.integer(switch(object$components[3], "N" = 0, "A" = 1, "M" = 2)),
-      as.double(ifelse(object$components[4] == "FALSE", 1, object$par["phi"])),
+      as.integer(switch(object$components[2], N = 0, A = 1, M = 2)),
+      as.integer(switch(object$components[3], N = 0, A = 1, M = 2)),
+      as.double(if (object$components[4] == "FALSE") 1 else object$par["phi"]),
       as.integer(h),
       as.double(numeric(h)),
       PACKAGE = "forecast"
