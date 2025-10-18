@@ -462,9 +462,9 @@ forecast.lm <- function(
   predict_object <- object
   predict_object$residuals <- na.omit(as.numeric(object$residuals))
 
-  out <- list()
   nl <- length(level)
-  for (i in 1:nl) {
+  out <- vector("list", nl)
+  for (i in seq_len(nl)) {
     out[[i]] <- predict(
       predict_object,
       newdata = newdata,

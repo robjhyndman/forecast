@@ -378,8 +378,8 @@ nnetar <- function(
 
 # Aggregate several neural network models
 avnnet <- function(x, y, repeats, linout = TRUE, trace = FALSE, ...) {
-  mods <- list()
-  for (i in 1:repeats) {
+  mods <- vector("list", repeats)
+  for (i in seq_len(repeats)) {
     mods[[i]] <- nnet::nnet(x, y, linout = linout, trace = trace, ...)
   }
   structure(mods, class = "nnetarmodels")
@@ -393,8 +393,8 @@ oldmodel_avnnet <- function(x, y, size, model) {
   args <- c(args, model$nnetargs)
   # set iterations to zero (i.e. weights stay fixed)
   args$maxit <- 0
-  mods <- list()
-  for (i in 1:repeats) {
+  mods <- vector("list", repeats)
+  for (i in seq_len(repeats)) {
     args$Wts <- model$model[[i]]$wts
     mods[[i]] <- do.call(nnet::nnet, args)
   }

@@ -9,8 +9,8 @@ test_that("Tests for modelAR", {
     trace = FALSE,
     ...
   ) {
-    mods <- list()
-    for (i in 1:repeats) {
+    mods <- vector("list", repeats)
+    for (i in seq_len(repeats)) {
       mods[[i]] <- nnet::nnet(x, y, linout = linout, trace = trace, ...)
     }
     return(structure(mods, class = "nnetarmodels"))
