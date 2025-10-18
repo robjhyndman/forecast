@@ -50,6 +50,12 @@
 #' @param scale.inputs If `TRUE`, inputs are scaled by subtracting the column
 #' means and dividing by their respective standard deviations. If `lambda`
 #' is not `NULL`, scaling is applied after Box-Cox transformation.
+#' @param parallel If `TRUE`, then the specification search is done in parallel
+#' via [parallel::parLapply()]. This can give a significant speedup on
+#' multicore machines.
+#' @param num.cores Allows the user to specify the amount of parallel processes
+#' to be used if `parallel = TRUE`. If `NULL`, then the number of logical cores
+#' is automatically detected and all available cores are used.
 #' @param ... Other arguments passed to [nnet::nnet()] for `nnetar`.
 #'
 #' @return Returns an object of class `nnetar`.
@@ -100,6 +106,8 @@ nnetar <- function(
   model = NULL,
   subset = NULL,
   scale.inputs = TRUE,
+  parallel = FALSE,
+  num.cores = 2,
   x = y,
   ...
 ) {
@@ -319,13 +327,22 @@ nnetar <- function(
   }
   ## Fit average ANN.
   if (useoldmodel) {
-    fit <- oldmodel_avnnet(lags.X[j, , drop = FALSE], y[j], size = size, model)
+    fit <- oldmodel_avnnet(
+      lags.X[j, , drop = FALSE],
+      y[j],
+      size = size,
+      model = model,
+      parallel = parallel,
+      num.cores = num.cores
+    )
   } else {
     fit <- avnnet(
       lags.X[j, , drop = FALSE],
       y[j],
       size = size,
       repeats = repeats,
+      parallel = parallel,
+      num.cores = num.cores,
       ...
     )
   }
@@ -377,7 +394,28 @@ nnetar <- function(
 }
 
 # Aggregate several neural network models
-avnnet <- function(x, y, repeats, linout = TRUE, trace = FALSE, ...) {
+avnnet <- function(
+  x,
+  y,
+  repeats,
+  parallel,
+  num.cores,
+  linout = TRUE,
+  trace = FALSE,
+  ...
+) {
+  if (parallel) {
+    if (is.null(num.cores)) {
+      num.cores <- detectCores()
+    }
+    cl <- makeCluster(num.cores)
+    on.exit(stopCluster(cl), add = TRUE)
+    mods <- parLapply(cl, seq_len(repeats), function(i) {
+      nnet::nnet(x = x, y = y, linout = linout, trace = trace, ...)
+    })
+    return(structure(mods, class = "nnetarmodels"))
+  }
+
   mods <- vector("list", repeats)
   for (i in seq_len(repeats)) {
     mods[[i]] <- nnet::nnet(x, y, linout = linout, trace = trace, ...)
@@ -386,13 +424,27 @@ avnnet <- function(x, y, repeats, linout = TRUE, trace = FALSE, ...) {
 }
 
 # Fit old model to new data
-oldmodel_avnnet <- function(x, y, size, model) {
+oldmodel_avnnet <- function(x, y, size, model, parallel, num.cores) {
   repeats <- length(model$model)
   args <- list(x = x, y = y, size = size, linout = 1, trace = FALSE)
   # include additional nnet arguments
   args <- c(args, model$nnetargs)
   # set iterations to zero (i.e. weights stay fixed)
   args$maxit <- 0
+
+  if (parallel) {
+    if (is.null(num.cores)) {
+      num.cores <- detectCores()
+    }
+    cl <- makeCluster(num.cores)
+    on.exit(stopCluster(cl), add = TRUE)
+    mods <- parLapply(cl, seq_len(repeats), function(i) {
+      args$Wts <- model$model[[i]]$wts
+      do.call(nnet::nnet, args)
+    })
+    return(structure(mods, class = "nnetarmodels"))
+  }
+
   mods <- vector("list", repeats)
   for (i in seq_len(repeats)) {
     args$Wts <- model$model[[i]]$wts

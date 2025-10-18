@@ -17,6 +17,8 @@ nnetar(
   model = NULL,
   subset = NULL,
   scale.inputs = TRUE,
+  parallel = FALSE,
+  num.cores = 2,
   x = y,
   ...
 )
@@ -59,6 +61,14 @@ length as \code{y}. All observations are used by default.}
 \item{scale.inputs}{If \code{TRUE}, inputs are scaled by subtracting the column
 means and dividing by their respective standard deviations. If \code{lambda}
 is not \code{NULL}, scaling is applied after Box-Cox transformation.}
+
+\item{parallel}{If \code{TRUE}, then the specification search is done in parallel
+via \code{\link[parallel:clusterApply]{parallel::parLapply()}}. This can give a significant speedup on
+multicore machines.}
+
+\item{num.cores}{Allows the user to specify the amount of parallel processes
+to be used if \code{parallel = TRUE}. If \code{NULL}, then the number of logical cores
+is automatically detected and all available cores are used.}
 
 \item{x}{Deprecated. Included for backwards compatibility.}
 
