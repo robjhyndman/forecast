@@ -2300,8 +2300,8 @@ autolayer.mts <- function(object, colour = TRUE, series = NULL, ...) {
     }
     series <- colnames(object)
   }
-  out <- list()
-  for (i in seq_len(NCOL(object))) {
+  out <- vector("list", NCOL(object))
+  for (i in seq_along(out)) {
     cl$series <- series[i]
     out[[i]] <- eval(cl)
   }
@@ -2409,8 +2409,8 @@ autolayer.mforecast <- function(object, series = NULL, PI = TRUE, ...) {
       series <- names(object$forecast)
     }
   }
-  out <- list()
-  for (i in seq_along(object$forecast)) {
+  out <- vector("list", length(object$forecast))
+  for (i in seq_along(out)) {
     cl$series <- series[i]
     out[[i]] <- eval(cl)
   }

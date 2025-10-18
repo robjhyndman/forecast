@@ -214,15 +214,15 @@ CVar <- function(
   # Set up folds
   ind <- seq_len(nx)
   fold <- if (blocked) {
-    sort(rep(1:k, length.out = nx))
+    sort(rep_len(1:k, nx))
   } else {
-    sample(rep(1:k, length.out = nx))
+    sample(rep_len(1:k, nx))
   }
 
   cvacc <- matrix(NA_real_, nrow = k, ncol = 7)
-  out <- list()
-  alltestfit <- rep(NA, length.out = nx)
-  for (i in 1:k) {
+  out <- vector("list", k)
+  alltestfit <- rep_len(NA, nx)
+  for (i in seq_len(k)) {
     out[[paste0("fold", i)]] <- list()
     testset <- ind[fold == i]
     trainset <- ind[fold != i]
