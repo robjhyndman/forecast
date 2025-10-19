@@ -158,13 +158,7 @@ splinef <- function(
   sd <- sqrt(sigma2 * diag(Omega0 - t(U) %*% mat$inv.Omega %*% U))
 
   # Compute prediction intervals.
-  if (fan) {
-    level <- seq(51, 99, by = 3)
-  } else if (min(level) > 0 && max(level) < 1) {
-    level <- 100 * level
-  } else if (min(level) < 0 || max(level) > 99.99) {
-    stop("Confidence limit out of range")
-  }
+  level <- getConfLevel(level, fan)
   nconf <- length(level)
   lower <- upper <- matrix(NA, nrow = h, ncol = nconf)
   for (i in 1:nconf) {
