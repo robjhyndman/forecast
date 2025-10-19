@@ -53,6 +53,8 @@ for forecasting univariate time series.</p>
 <span>  model <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  subset <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  scale.inputs <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  parallel <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  num.cores <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  x <span class="op">=</span> <span class="va">y</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -118,6 +120,18 @@ length as <code>y</code>. All observations are used by default.</p></dd>
 <dd><p>If <code>TRUE</code>, inputs are scaled by subtracting the column
 means and dividing by their respective standard deviations. If <code>lambda</code>
 is not <code>NULL</code>, scaling is applied after Box-Cox transformation.</p></dd>
+
+
+<dt id="arg-parallel">parallel<a class="anchor" aria-label="anchor" href="#arg-parallel"></a></dt>
+<dd><p>If <code>TRUE</code>, then the specification search is done in parallel
+via <code><a href="https://rdrr.io/r/parallel/clusterApply.html" class="external-link">parallel::parLapply()</a></code>. This can give a significant speedup on
+multicore machines.</p></dd>
+
+
+<dt id="arg-num-cores">num.cores<a class="anchor" aria-label="anchor" href="#arg-num-cores"></a></dt>
+<dd><p>Allows the user to specify the amount of parallel processes
+to be used if <code>parallel = TRUE</code>. If <code>NULL</code>, then the number of logical cores
+is automatically detected and all available cores are used.</p></dd>
 
 
 <dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>

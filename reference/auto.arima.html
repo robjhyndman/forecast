@@ -247,17 +247,17 @@ and fitted values.</p></dd>
 
 
 <dt id="arg-parallel">parallel<a class="anchor" aria-label="anchor" href="#arg-parallel"></a></dt>
-<dd><p>If <code>TRUE</code> and <code>stepwise = FALSE</code>, then the
-specification search is done in parallel via <code><a href="https://rdrr.io/r/parallel/mclapply.html" class="external-link">parallel::mclapply</a></code>. This
-can give a significant speedup on multicore machines. On Windows, this
-option always fails because forking is not supported.</p></dd>
+<dd><p>If <code>TRUE</code> and <code>stepwise = FALSE</code>, then the specification
+search is done in parallel via <code><a href="https://rdrr.io/r/parallel/mclapply.html" class="external-link">parallel::mclapply()</a></code>. This can give a
+significant speedup on multicore machines. On Windows, this option always
+fails because forking is not supported.</p></dd>
 
 
 <dt id="arg-num-cores">num.cores<a class="anchor" aria-label="anchor" href="#arg-num-cores"></a></dt>
 <dd><p>Allows the user to specify the amount of parallel processes
-to be used if <code>parallel = TRUE</code> and <code>stepwise = FALSE</code>. If
-<code>NULL</code>, then the number of logical cores is automatically detected and
-all available cores are used.</p></dd>
+to be used if <code>parallel = TRUE</code> and <code>stepwise = FALSE</code>. If <code>NULL</code>, then the
+number of logical cores is automatically detected and all available cores
+are used.</p></dd>
 
 
 <dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
