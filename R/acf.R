@@ -99,9 +99,9 @@ Acf <- function(
   # Make lags in integer units
   nlags <- dim(acf.out$lag)[1]
   if (type == "partial") {
-    acf.out$lag[,,] <- seq(nlags)
+    acf.out$lag[] <- seq(nlags)
   } else {
-    acf.out$lag[,,] <- seq(nlags) - 1
+    acf.out$lag[] <- seq(nlags) - 1
   }
 
   # Plot if required
