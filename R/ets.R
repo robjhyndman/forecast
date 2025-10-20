@@ -330,10 +330,8 @@ ets <- function(
     stop("Inappropriate model for data with negative or zero values")
   }
 
-  if (!is.null(damped)) {
-    if (damped && trendtype == "N") {
-      stop("Forbidden model combination")
-    }
+  if (!is.null(damped) && damped && trendtype == "N") {
+    stop("Forbidden model combination")
   }
 
   n <- length(y)
@@ -351,10 +349,8 @@ ets <- function(
 
   # Produce something non-optimized for tiny data sets
   if (n <= npars + 4L) {
-    if (!is.null(damped)) {
-      if (damped) {
-        warning("Not enough data to use damping")
-      }
+    if (!is.null(damped) && damped) {
+      warning("Not enough data to use damping")
     }
     if (seasontype == "A" || seasontype == "M") {
       fit <- try(
@@ -544,15 +540,13 @@ ets <- function(
           } else {
             fit.ic <- switch(ic, aic = fit$aic, bic = fit$bic, aicc = fit$aicc)
           }
-          if (!is.na(fit.ic)) {
-            if (fit.ic < best.ic) {
-              model <- fit
-              best.ic <- fit.ic
-              best.e <- errortype[i]
-              best.t <- trendtype[j]
-              best.s <- seasontype[k]
-              best.d <- damped[l]
-            }
+          if (!is.na(fit.ic) && fit.ic < best.ic) {
+            model <- fit
+            best.ic <- fit.ic
+            best.e <- errortype[i]
+            best.t <- trendtype[j]
+            best.s <- seasontype[k]
+            best.d <- damped[l]
           }
         }
       }

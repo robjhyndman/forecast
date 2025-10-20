@@ -151,7 +151,7 @@ bats <- function(
     use.box.cox <- FALSE
   }
 
-  if ((!is.null(use.box.cox)) && (!is.null(use.trend)) && (use.parallel)) {
+  if (!is.null(use.box.cox) && !is.null(use.trend) && use.parallel) {
     if (use.trend && (!is.null(use.damped.trend))) {
       # In the this case, there is only one alternative.
       use.parallel <- FALSE
@@ -211,7 +211,7 @@ bats <- function(
     }
     ## Fit the models
     if (is.null(num.cores)) {
-      num.cores <- detectCores(all.tests = FALSE, logical = TRUE)
+      num.cores <- detectCores()
     }
     clus <- makeCluster(num.cores)
     models.list <- clusterApplyLB(
