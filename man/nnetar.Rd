@@ -10,7 +10,7 @@ nnetar(
   y,
   p,
   P = 1,
-  size,
+  size = NULL,
   repeats = 20,
   xreg = NULL,
   lambda = NULL,
