@@ -184,7 +184,7 @@ tbats <- function(
 
   if (use.parallel) {
     if (is.null(num.cores)) {
-      num.cores <- detectCores(all.tests = FALSE, logical = TRUE)
+      num.cores <- detectCores()
     }
     clus <- makeCluster(num.cores)
   }

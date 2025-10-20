@@ -143,9 +143,8 @@ sindexf <- function(object, h) {
 seasonaldummy <- function(x, h = NULL) {
   if (!is.ts(x)) {
     stop("Not a time series")
-  } else {
-    fr.x <- frequency(x)
   }
+  fr.x <- frequency(x)
   if (is.null(h)) {
     if (fr.x == 1) {
       stop("Non-seasonal time series")

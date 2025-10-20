@@ -116,13 +116,12 @@ dm.test <- function(
   k <- ((n + 1 - 2 * h + (h / n) * (h - 1)) / n)^(1 / 2)
   STATISTIC <- STATISTIC * k
   names(STATISTIC) <- "DM"
-  if (alternative == "two.sided") {
-    PVAL <- 2 * pt(-abs(STATISTIC), df = n - 1)
-  } else if (alternative == "less") {
-    PVAL <- pt(STATISTIC, df = n - 1)
-  } else if (alternative == "greater") {
-    PVAL <- pt(STATISTIC, df = n - 1, lower.tail = FALSE)
-  }
+  PVAL <- switch(
+    alternative,
+    two.sided = 2 * pt(-abs(STATISTIC), df = n - 1),
+    less = pt(STATISTIC, df = n - 1),
+    greater = pt(STATISTIC, df = n - 1, lower.tail = FALSE)
+  )
   PARAMETER <- c(h, power)
   names(PARAMETER) <- c("Forecast horizon", "Loss function power")
   structure(
