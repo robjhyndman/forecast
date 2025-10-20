@@ -99,7 +99,7 @@ nnetar <- function(
   y,
   p,
   P = 1,
-  size,
+  size = NULL,
   repeats = 20,
   xreg = NULL,
   lambda = NULL,
@@ -314,7 +314,7 @@ nnetar <- function(
   }
   # Add xreg into lagged matrix
   lags.X <- cbind(lags.X, xxreg[-(1:maxlag), , drop = FALSE])
-  if (missing(size)) {
+  if (is.null(size)) {
     size <- round((NCOL(lags.X) + 1) / 2)
   }
   # Remove missing values if present
