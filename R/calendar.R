@@ -48,17 +48,14 @@ bizdays <- function(
   years <- start(x)[1L]:end(x)[1L]
   # Grab the holidays from years and financial center
   FinCenter <- match.arg(FinCenter)
-  if (FinCenter == "New York") {
-    holidays <- timeDate::holidayNYSE(years)
-  } else if (FinCenter == "London") {
-    holidays <- timeDate::holidayLONDON(years)
-  } else if (FinCenter == "NERC") {
-    holidays <- timeDate::holidayNERC(years)
-  } else if (FinCenter == "Toronto") {
-    holidays <- timeDate::holidayTSX(years)
-  } else if (FinCenter == "Zurich") {
-    holidays <- timeDate::holidayZURICH(years)
-  }
+  holidays <- switch(
+    FinCenter,
+    "New York" = timeDate::holidayNYSE(years),
+    "London" = timeDate::holidayLONDON(years),
+    "NERC" = timeDate::holidayNERC(years),
+    "Toronto" = timeDate::holidayTSX(years),
+    "Zurich" = timeDate::holidayZURICH(years)
+  )
   if (freq == 12L) {
     # monthly data
     date <- zoo::as.Date(time(x))
