@@ -1,6 +1,10 @@
 # A unit test for spline.R
 test_that("Tests for splinef()", {
-  plot.splineforecast(splinef(airmiles))
+  fit <- spline_model(airmiles)
+  expect_equal(fit$beta, 0.5591, tolerance = 1e-4)
+  fc <- forecast(fit)
+  expect_true(all(as.data.frame(fc) > 24000))
+  expect_no_error(autoplot(fc))
   fit1 <- splinef(woolyrnq, lambda = 0.2, biasadj = FALSE)
   fit2 <- splinef(woolyrnq, lambda = 0.2, biasadj = TRUE)
   expect_false(identical(fit1$mean, fit2$mean))

@@ -11,8 +11,9 @@
 make.Sigma <- function(n, n0 = 0) {
   nn <- n + n0
   Sigma <- matrix(0, nrow = nn, ncol = nn)
-  for (i in 1:nn) {
-    Sigma[i, i:nn] <- Sigma[i:nn, i] <- (i * i * (3 * (i:nn) - i)) / 6
+  for (i in seq(nn)) {
+    inn <- i:nn
+    Sigma[i, inn] <- Sigma[inn, i] <- (i * i * (3 * (inn) - i)) / 6
   }
   Sigma / (n^3)
 }
@@ -21,7 +22,7 @@ make.Sigma <- function(n, n0 = 0) {
 spline.matrices <- function(n, beta, cc = 1e2, n0 = 0) {
   nn <- n + n0
   Sigma <- make.Sigma(n, n0)
-  s <- cbind(rep(1, nn), (1:nn) / n)
+  s <- cbind(rep(1, nn), seq(nn) / n)
   Omega <- cc * s %*% t(s) + Sigma / beta + diag(nn)
   max.Omega <- max(Omega)
   inv.Omega <- solve(Omega / max.Omega, tol = 1e-10) / max.Omega
@@ -45,13 +46,11 @@ spline.loglik <- function(beta, y, cc = 1e2) {
   -log(det(mat$P)) + 0.5 * n * log(sum(y.star^2))
 }
 
-# Spline forecasts
+# Spline forecasting model
 
-#' Cubic Spline Forecast
+#' Cubic spline stochastic model
 #'
-#' Returns local linear forecasts and prediction intervals using cubic
-#' smoothing splines.
-#'
+#' Fits a state space model based on cubic smoothing splines.
 #' The cubic smoothing spline model is equivalent to an ARIMA(0,2,2) model but
 #' with a restricted parameter space. The advantage of the spline model over
 #' the full ARIMA model is that it provides a smooth historical trend as well
@@ -59,13 +58,12 @@ spline.loglik <- function(beta, y, cc = 1e2) {
 #' that the forecast performance of the method is hardly affected by the
 #' restricted parameter space.
 #'
-#' @inheritParams ses
+#' @inheritParams Arima
 #' @param method Method for selecting the smoothing parameter. If
 #' `method = "gcv"`, the generalized cross-validation method from
 #' [stats::smooth.spline()] is used. If `method = "mle"`, the
 #' maximum likelihood method from Hyndman et al (2002) is used.
-#' @return An object of class `forecast`.
-#' @inheritSection forecast.ts forecast class
+#' @return An object of class `spline_model`.
 #' @author Rob J Hyndman
 #' @seealso [stats::smooth.spline()], [stats::arima()], [holt()].
 #' @references Hyndman, King, Pitrun and Billah (2005) Local linear forecasts
@@ -74,10 +72,216 @@ spline.loglik <- function(beta, y, cc = 1e2) {
 #' \url{https://robjhyndman.com/publications/splinefcast/}.
 #' @keywords ts
 #' @examples
-#' fcast <- splinef(uspop, h = 5)
-#' plot(fcast)
+#' fit <- spline_model(uspop)
+#' fit
+#' fit |> forecast() |> autoplot()
+#'
+#' @export
+spline_model <- function(
+  y,
+  method = c("gcv", "mle"),
+  lambda = NULL,
+  biasadj = FALSE
+) {
+  method <- match.arg(method)
+  seriesname <- deparse1(substitute(y))
+  if (inherits(y, c("data.frame", "list", "matrix", "mts"))) {
+    stop("y should be a univariate time series")
+  }
+  y <- as.ts(y)
+  n <- length(y)
+  tsattr <- tsp(y)
+  orig.y <- y
+  if (!is.null(lambda)) {
+    y <- BoxCox(y, lambda)
+    lambda <- attr(y, "lambda")
+    attr(lambda, "biasadj") <- biasadj
+  }
+
+  # Find optimal beta using likelihood approach in Hyndman et al paper.
+  if (method == "mle") {
+    # Use only last 100 observations to get beta
+    xx <- tail(y, min(100, n))
+    beta.est <- 1e-6 *
+      optimize(
+        spline.loglik,
+        interval = c(1e-6, 1e7),
+        y = xx
+      )$minimum
+    # Compute spar which is equivalent to beta
+    r <- 256 * smooth.spline(seq(n), y, spar = 0)$lambda
+    lss <- beta.est / (1 - 1 / n)^3
+    spar <- (log(lss / r) / log(256) + 1) / 3
+    splinefit <- smooth.spline(seq(n), y, spar = spar)
+    sfits <- splinefit$y
+  } else {
+    # Use GCV
+    splinefit <- smooth.spline(seq(n), y, cv = FALSE, spar = NULL)
+    sfits <- ts(splinefit$y)
+    beta.est <- pmax(1e-7, splinefit$lambda * (1 - 1 / n)^3)
+  }
+
+  # Compute matrices for optimal beta
+  mat <- spline.matrices(n, beta.est)
+
+  # Get one-step predictors
+  yfit <- e <- ts(rep(NA, n))
+  if (n > 1000) {
+    warning("Series too long to compute training set fits and residuals")
+  } else {
+    # This is probably grossly inefficient but I can't think of a better way
+    for (i in seq(n - 1)) {
+      idx <- seq(i)
+      U <- mat$Omega[seq(i), i + 1]
+      Oinv <- solve(mat$Omega[idx, idx] / 1e6) / 1e6
+      yfit[i + 1] <- t(U) %*% Oinv %*% y[idx]
+      sd <- sqrt(mat$Omega[i + 1, i + 1] - t(U) %*% Oinv %*% U)
+      e[i + 1] <- (y[i + 1] - yfit[i + 1]) / sd
+    }
+  }
+  # Compute sigma^2
+  sigma2 <- mean(e^2, na.rm = TRUE)
+  res <- ts(c(y) - c(yfit))
+  if (!is.null(lambda)) {
+    yfit <- InvBoxCox(yfit, lambda)
+    sfits <- InvBoxCox(sfits, lambda)
+  }
+  tsp(e) <- tsp(res) <- tsp(yfit) <- tsp(sfits) <- tsattr
+
+  structure(
+    list(
+      method = "Cubic Smoothing Spline",
+      series = seriesname,
+      y = orig.y,
+      lambda = lambda,
+      beta = beta.est * n^3,
+      sigma2 = sigma2,
+      fitted = sfits,
+      residuals = res,
+      standardizedresiduals = e,
+      onestepf = yfit,
+      call = match.call()
+    ),
+    class = "spline_model"
+  )
+}
+
+#' @export
+print.spline_model <- function(
+  x,
+  digits = max(3, getOption("digits") - 3),
+  ...
+) {
+  cat("Cubic spline stochastic model\n")
+  cat("Call:", deparse(x$call), "\n")
+  cat("Smoothing parameter:", format(x$beta, digits = digits), "\n")
+  invisible(x)
+}
+
+#' Returns local linear forecasts and prediction intervals using cubic
+#' smoothing splines estimated with [spline_model()].
+#'
+#' The cubic smoothing spline model is equivalent to an ARIMA(0,2,2) model but
+#' with a restricted parameter space. The advantage of the spline model over
+#' the full ARIMA model is that it provides a smooth historical trend as well
+#' as a linear forecast function. Hyndman, King, Pitrun, and Billah (2002) show
+#' that the forecast performance of the method is hardly affected by the
+#' restricted parameter space.
+#'
+#' @param object An object of class `spline_model`, produced using [spline_model()].
+#' @inheritParams forecast.ets
+#' @return An object of class `forecast`.
+#' @inheritSection forecast.ts forecast class
+#' @author Rob J Hyndman
+#' @seealso [spline_model()]
+#' @references Hyndman, King, Pitrun and Billah (2005) Local linear forecasts
+#' using cubic smoothing splines. \emph{Australian and New Zealand Journal of
+#' Statistics}, \bold{47}(1), 87-99.
+#' \url{https://robjhyndman.com/publications/splinefcast/}.
+#' @keywords ts
+#' @examples
+#' fit <- spline_model(uspop)
+#' fcast <- forecast(fit)
+#' autoplot(fcast)
 #' summary(fcast)
 #'
+#' @export
+forecast.spline_model <- function(
+  object,
+  h = 10,
+  level = c(80, 95),
+  fan = FALSE,
+  lambda = object$lambda,
+  biasadj = NULL,
+  bootstrap = FALSE,
+  npaths = 5000,
+  ...
+) {
+  n <- length(object$y)
+  freq <- frequency(object$y)
+  if (!is.null(lambda)) {
+    y <- BoxCox(object$y, lambda)
+  } else {
+    y <- object$y
+  }
+  # Compute matrices for optimal beta
+  mat <- spline.matrices(n, object$beta / n^3)
+  newmat <- spline.matrices(n, object$beta / n^3, n0 = h)
+
+  # Compute mean and var of forecasts
+  U <- newmat$Omega[seq(n), n + seq(h)]
+  Omega0 <- newmat$Omega[n + seq(h), n + seq(h)]
+  Yhat <- t(U) %*% mat$inv.Omega %*% y
+  sd <- sqrt(object$sigma2 * diag(Omega0 - t(U) %*% mat$inv.Omega %*% U))
+
+  # Compute prediction intervals.
+  level <- getConfLevel(level, fan)
+  nconf <- length(level)
+  startf <- tsp(y)[2] + 1 / freq
+  lower <- upper <- ts(
+    matrix(NA, nrow = h, ncol = nconf),
+    start = startf,
+    frequency = freq
+  )
+  for (i in seq(nconf)) {
+    conf.factor <- qnorm(0.5 + 0.005 * level[i])
+    upper[, i] <- Yhat + conf.factor * sd
+    lower[, i] <- Yhat - conf.factor * sd
+  }
+
+  if (!is.null(lambda)) {
+    Yhat <- InvBoxCox(
+      Yhat,
+      lambda,
+      biasadj,
+      list(level = level, upper = upper, lower = lower)
+    )
+    upper <- InvBoxCox(upper, lambda)
+    lower <- InvBoxCox(lower, lambda)
+  }
+
+  structure(
+    list(
+      method = "Cubic Smoothing Spline",
+      level = level,
+      x = object$y,
+      series = object$series,
+      model = object,
+      mean = ts(Yhat, frequency = freq, start = startf),
+      upper = upper,
+      lower = lower,
+      fitted = object$fitted,
+      residuals = object$residuals,
+      standardizedresiduals = object$standardizedresiduals,
+      onestepf = object$onestepf
+    ),
+    lambda = lambda,
+    class = c("splineforecast", "forecast")
+  )
+}
+
+#' @rdname forecast.spline_model
+#' @inheritParams Arima
 #' @export
 splinef <- function(
   y,
@@ -89,120 +293,8 @@ splinef <- function(
   method = c("gcv", "mle"),
   x = y
 ) {
-  method <- match.arg(method)
-  if (!is.ts(x)) {
-    x <- ts(x)
-  }
-  n <- length(x)
-  freq <- frequency(x)
-
-  if (!is.null(lambda)) {
-    origx <- x
-    x <- BoxCox(x, lambda)
-    lambda <- attr(x, "lambda")
-  }
-
-  # Find optimal beta using likelihood approach in Hyndman et al paper.
-
-  if (method == "mle") {
-    if (n > 100) {
-      # Use only last 100 observations to get beta
-      xx <- x[(n - 99):n]
-    } else {
-      xx <- x
-    }
-    beta.est <- optimize(
-      spline.loglik,
-      interval = c(1e-6, 1e7),
-      y = xx
-    )$minimum /
-      1e6
-    # Compute spar which is equivalent to beta
-    r <- 256 * smooth.spline(1:n, x, spar = 0)$lambda
-    lss <- beta.est * n^3 / (n - 1)^3
-    spar <- (log(lss / r) / log(256) + 1) / 3
-    splinefit <- smooth.spline(1:n, x, spar = spar)
-    sfits <- splinefit$y
-  } else {
-    # Use GCV
-    splinefit <- smooth.spline(1:n, x, cv = FALSE, spar = NULL)
-    sfits <- splinefit$y
-    beta.est <- pmax(1e-7, splinefit$lambda * (n - 1)^3 / n^3)
-  }
-
-  # Compute matrices for optimal beta
-  mat <- spline.matrices(n, beta.est)
-  newmat <- spline.matrices(n, beta.est, n0 = h)
-
-  # Get one-step predictors
-  yfit <- e <- rep(NA, n)
-  if (n > 1000) {
-    warning("Series too long to compute training set fits and residuals")
-  } else {
-    # This is probably grossly inefficient but I can't think of a better way right now
-    for (i in 1:(n - 1)) {
-      U <- mat$Omega[1:i, i + 1]
-      Oinv <- solve(mat$Omega[1:i, 1:i] / 1e6) / 1e6
-      yfit[i + 1] <- t(U) %*% Oinv %*% x[1:i]
-      sd <- sqrt(mat$Omega[i + 1, i + 1] - t(U) %*% Oinv %*% U)
-      e[i + 1] <- (x[i + 1] - yfit[i + 1]) / sd
-    }
-  }
-  # Compute sigma^2
-  sigma2 <- mean(e^2, na.rm = TRUE)
-
-  # Compute mean and var of forecasts
-  U <- newmat$Omega[1:n, n + (1:h)]
-  Omega0 <- newmat$Omega[n + (1:h), n + (1:h)]
-  Yhat <- t(U) %*% mat$inv.Omega %*% x
-  sd <- sqrt(sigma2 * diag(Omega0 - t(U) %*% mat$inv.Omega %*% U))
-
-  # Compute prediction intervals.
-  level <- getConfLevel(level, fan)
-  nconf <- length(level)
-  lower <- upper <- matrix(NA, nrow = h, ncol = nconf)
-  for (i in 1:nconf) {
-    conf.factor <- qnorm(0.5 + 0.005 * level[i])
-    upper[, i] <- Yhat + conf.factor * sd
-    lower[, i] <- Yhat - conf.factor * sd
-  }
-  lower <- ts(lower, start = tsp(x)[2] + 1 / freq, frequency = freq)
-  upper <- ts(upper, start = tsp(x)[2] + 1 / freq, frequency = freq)
-
-  res <- ts(x - yfit, start = start(x), frequency = freq)
-
-  if (!is.null(lambda)) {
-    Yhat <- InvBoxCox(
-      Yhat,
-      lambda,
-      biasadj,
-      list(level = level, upper = upper, lower = lower)
-    )
-    upper <- InvBoxCox(upper, lambda)
-    lower <- InvBoxCox(lower, lambda)
-    yfit <- InvBoxCox(yfit, lambda)
-    sfits <- InvBoxCox(sfits, lambda)
-    x <- origx
-  }
-
-  structure(
-    list(
-      method = "Cubic Smoothing Spline",
-      level = level,
-      x = x,
-      series = deparse1(substitute(y)),
-      mean = ts(Yhat, frequency = freq, start = tsp(x)[2] + 1 / freq),
-      upper = ts(upper, start = tsp(x)[2] + 1 / freq, frequency = freq),
-      lower = ts(lower, start = tsp(x)[2] + 1 / freq, frequency = freq),
-      model = list(beta = beta.est * n^3, call = match.call()),
-      fitted = ts(sfits, start = start(x), frequency = freq),
-      residuals = res,
-      standardizedresiduals = ts(e, start = start(x), frequency = freq),
-      onestepf = ts(yfit, start = start(x), frequency = freq)
-    ),
-    lambda = lambda,
-    class = c("splineforecast", "forecast")
-  )
+  fit <- spline_model(x, method = method, lambda = lambda, biasadj=biasadj)
+  forecast(fit, h=h, level=level, fan = fan)
 }
 
 #' @rdname plot.forecast
