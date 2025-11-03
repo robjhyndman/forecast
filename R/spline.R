@@ -213,6 +213,7 @@ forecast.spline_model <- function(
   fan = FALSE,
   lambda = object$lambda,
   biasadj = NULL,
+  simulate = FALSE,
   bootstrap = FALSE,
   npaths = 5000,
   ...
@@ -243,10 +244,32 @@ forecast.spline_model <- function(
     start = startf,
     frequency = freq
   )
-  for (i in seq(nconf)) {
-    conf.factor <- qnorm(0.5 + 0.005 * level[i])
-    upper[, i] <- Yhat + conf.factor * sd
-    lower[, i] <- Yhat - conf.factor * sd
+  if (simulate || bootstrap) {
+    # Compute prediction intervals using simulations
+    sim <- matrix(NA, nrow = npaths, ncol = h)
+    for (i in 1:npaths) {
+      sim[i, ] <- simulate(
+        object,
+        nsim = h,
+        bootstrap = bootstrap,
+        lambda = lambda
+      )
+    }
+    lower <- apply(sim, 2, quantile, 0.5 - level / 200, type = 8)
+    upper <- apply(sim, 2, quantile, 0.5 + level / 200, type = 8)
+    if (nconf > 1L) {
+      lower <- t(lower)
+      upper <- t(upper)
+    } else {
+      lower <- matrix(lower, ncol = 1)
+      upper <- matrix(upper, ncol = 1)
+    }
+  } else {
+    conf.factor <- qnorm(0.5 + 0.005 * level)
+    for (i in seq(nconf)) {
+      upper[, i] <- Yhat + conf.factor[i] * sd
+      lower[, i] <- Yhat - conf.factor[i] * sd
+    }
   }
 
   if (!is.null(lambda)) {
@@ -293,8 +316,8 @@ splinef <- function(
   method = c("gcv", "mle"),
   x = y
 ) {
-  fit <- spline_model(x, method = method, lambda = lambda, biasadj=biasadj)
-  forecast(fit, h=h, level=level, fan = fan)
+  fit <- spline_model(x, method = method, lambda = lambda, biasadj = biasadj)
+  forecast(fit, h = h, level = level, fan = fan)
 }
 
 #' @rdname plot.forecast
@@ -314,4 +337,84 @@ plot.splineforecast <- function(x, fitcol = 2, type = "o", pch = 19, ...) {
 #' @export
 is.splineforecast <- function(x) {
   inherits(x, "splineforecast")
+}
+
+#' @rdname simulate.ets
+#' @export
+simulate.spline_model <- function(
+  object,
+  nsim = length(object$y),
+  seed = NULL,
+  future = TRUE,
+  bootstrap = FALSE,
+  innov = NULL,
+  lambda = object$lambda,
+  ...
+) {
+  if (is.null(innov)) {
+    if (!exists(".Random.seed", envir = .GlobalEnv)) {
+      runif(1)
+    }
+    if (is.null(seed)) {
+      RNGstate <- .Random.seed
+    } else {
+      R.seed <- .Random.seed
+      set.seed(seed)
+      RNGstate <- structure(seed, kind = as.list(RNGkind()))
+      on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
+    }
+  } else {
+    nsim <- length(innov)
+  }
+
+  if (bootstrap) {
+    res <- na.omit(c(object$residuals) - mean(object$residuals, na.rm = TRUE))
+    e <- sample(res, nsim, replace = TRUE)
+  } else if (is.null(innov)) {
+    se <- sqrt(object$sigma2)
+    e <- rnorm(nsim, 0, se)
+  } else {
+    e <- innov
+  }
+
+  # Find starting position
+  y <- object$y
+  if (is.null(y)) {
+    future <- FALSE
+    if (nsim == 0L) {
+      nsim <- 100
+    }
+    y <- 1
+  }
+  if (!is.null(lambda)) {
+    y <- BoxCox(y, lambda)
+  }
+
+  # Construct simulated ts
+  nhistory <- min(length(object$y), 100)
+  if (future) {
+    y <- tail(y, nhistory)
+  } else {
+    y <- object$y[sample(nhistory - length(object$y)) + seq(nhistory)]
+  }
+  y <- c(y, rep(NA, nsim))
+  n <- length(y)
+  mat <- spline.matrices(n, object$beta / nsim^3)
+  for (i in nhistory + seq(nsim) - 1) {
+    idx <- seq(i)
+    U <- mat$Omega[seq(i), i + 1]
+    Oinv <- solve(mat$Omega[idx, idx] / 1e6) / 1e6
+    sd <- sqrt(mat$Omega[i + 1, i + 1] - t(U) %*% Oinv %*% U)
+    y[i + 1] <- t(U) %*% Oinv %*% y[idx] + e[i - nhistory+1]*sd
+  }
+  sim <- tail(y, nsim)
+  if (!is.null(lambda)) {
+    sim <- InvBoxCox(sim, lambda)
+  }
+  tspx <- tsp(object$y)
+  ts(
+    sim,
+    start = if (future) tspx[2] + 1 / tspx[3] else tspx[1],
+    frequency = tspx[3]
+  )
 }

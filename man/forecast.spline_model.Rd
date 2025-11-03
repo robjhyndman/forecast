@@ -13,6 +13,7 @@ smoothing splines estimated with \code{\link[=spline_model]{spline_model()}}.}
   fan = FALSE,
   lambda = object$lambda,
   biasadj = NULL,
+  simulate = FALSE,
   bootstrap = FALSE,
   npaths = 5000,
   ...
@@ -51,7 +52,16 @@ values, a regular back transformation will result in median forecasts. If
 biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
 and fitted values.}
 
-\item{...}{Other arguments passed to \code{forecast.ets}.}
+\item{simulate}{If \code{TRUE}, prediction intervals are produced by simulation rather
+than using analytic formulae. Errors are assumed to be normally distributed.}
+
+\item{bootstrap}{If \code{TRUE}, then prediction intervals are produced by
+simulation using resampled errors (rather than normally distributed errors).}
+
+\item{npaths}{Number of sample paths used in computing simulated prediction
+intervals.}
+
+\item{...}{Other arguments are ignored.}
 
 \item{y}{a numeric vector or univariate time series of class \code{ts}}
 
