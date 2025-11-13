@@ -34,7 +34,7 @@ test_that("tests for arimaorder", {
           expect_true(all(
             arimaorder(fitarima) == c(arextracted, iextracted, maextracted)
           ))
-          expect_true(all(names(arimaorder(fitarima)) == c("p", "d", "q")))
+          expect_named(arimaorder(fitarima), c("p", "d", "q"))
           expect_true(arimaorder(fitarima)["p"] == ar)
           expect_true(arimaorder(fitarima)["d"] == i)
           expect_true(arimaorder(fitarima)["q"] == ma)
@@ -48,13 +48,14 @@ test_that("tests for arimaorder", {
   expect_true(arimaorder(arMod)["p"] == 2)
   expect_true(arimaorder(arMod)["d"] == 0)
   expect_true(arimaorder(arMod)["q"] == 0)
-  expect_true(all(names(arimaorder(arMod)) == c("p", "d", "q")))
+  expect_named(arimaorder(arMod), c("p", "d", "q"))
 
   # Test SARIMA
   sarimaMod <- Arima(wineind, order = c(1, 1, 2), seasonal = c(0, 1, 1))
-  expect_true(all(
-    names(arimaorder(sarimaMod)) == c("p", "d", "q", "P", "D", "Q", "Frequency")
-  ))
+  expect_named(
+    arimaorder(sarimaMod),
+    c("p", "d", "q", "P", "D", "Q", "Frequency")
+  )
   expect_true(arimaorder(sarimaMod)["p"] == 1)
   expect_true(arimaorder(sarimaMod)["d"] == 1)
   expect_true(arimaorder(sarimaMod)["q"] == 2)
@@ -66,7 +67,7 @@ test_that("tests for arimaorder", {
   # Test fracdiff
   set.seed(4)
   fracdiffMod <- fracdiff::fracdiff(lynx, nar = 2)
-  expect_true(all(names(arimaorder(fracdiffMod)) == c("p", "d", "q")))
+  expect_named(arimaorder(fracdiffMod), c("p", "d", "q"))
   expect_true(arimaorder(fracdiffMod)["p"] == 2)
   expect_true(arimaorder(fracdiffMod)["d"] >= 0)
   expect_true(arimaorder(fracdiffMod)["d"] <= 1)
@@ -152,10 +153,11 @@ test_that("tests for search.arima", {
 test_that("tests for forecast.ar()", {
   fitar <- ar(taylor)
   arfc <- forecast.ar(fitar)$mean
-  expect_true(all(
-    arfc == forecast.ar(fitar, bootstrap = TRUE, npaths = 100)$mean
-  ))
-  expect_true(all(arfc == forecast.ar(fitar, fan = TRUE)$mean))
+  expect_identical(
+    arfc,
+    forecast.ar(fitar, bootstrap = TRUE, npaths = 100)$mean
+  )
+  expect_identical(arfc, forecast.ar(fitar, fan = TRUE)$mean)
   expect_error(forecast.ar(fitar, level = -10))
   expect_error(forecast.ar(fitar, level = 110))
   expect_true(all(arfc + 1 == forecast.ar(fitar, lambda = 1)$mean))

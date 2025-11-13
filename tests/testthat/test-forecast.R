@@ -9,7 +9,7 @@ test_that("tests for findfrequency()", {
 test_that("tests forecast.ts()", {
   fc1 <- as.numeric(forecast(as.numeric(airmiles), find.frequency = TRUE)$mean)
   fc2 <- as.numeric(forecast(airmiles)$mean)
-  expect_true(all(fc1 == fc2))
+  expect_identical(fc1, fc2)
 })
 
 test_that("tests summary.forecast() and forecast.forecast()", {

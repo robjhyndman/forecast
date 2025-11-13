@@ -23,12 +23,10 @@ test_that("Tests for modelAR", {
       } else {
         mean(sapply(model, predict))
       }
+    } else if (NCOL(newdata) >= 2 & NROW(newdata) >= 2) {
+      rowMeans(sapply(model, predict, newdata = newdata))
     } else {
-      if (NCOL(newdata) >= 2 & NROW(newdata) >= 2) {
-        rowMeans(sapply(model, predict, newdata = newdata))
-      } else {
-        mean(sapply(model, predict, newdata = newdata))
-      }
+      mean(sapply(model, predict, newdata = newdata))
     }
   }
   ## compare residuals to 'nnetar'
@@ -130,7 +128,7 @@ test_that("Tests for modelAR", {
       repeats = 10
     )
   })
-  expect_true(all(dim(woolyrnqnnet$xreg) == c(119, 1)))
+  expect_shape(woolyrnqnnet$xreg, dim = c(119, 1))
   expect_length(forecast(woolyrnqnnet, xreg = 120:130)$mean, 11)
   expect_identical(
     forecast(woolyrnqnnet, xreg = 120:130)$mean,

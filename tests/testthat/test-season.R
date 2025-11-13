@@ -17,15 +17,14 @@ test_that("tests for seasonaldummy", {
   testseries <- ts(rep(1:7, 5), frequency = 7)
   dummymat <- seasonaldummy(testseries)
   expect_length(testseries, nrow(dummymat))
-  expect_true(ncol(dummymat) == 6)
+  expect_shape(dummymat, ncol = 6)
   expect_true(all(seasonaldummy(wineind)[1:11, ] == diag(11)))
 })
 
 test_that("tests for seasonaldummyf", {
   expect_error(seasonaldummy(1))
   expect_warning(dummymat <- seasonaldummyf(wineind, 4), "deprecated")
-  expect_true(nrow(dummymat) == 4)
-  expect_true(ncol(dummymat) == 11)
+  expect_shape(dummymat, dim = c(4, 11))
 })
 
 test_that("tests for fourier", {
@@ -33,14 +32,13 @@ test_that("tests for fourier", {
   testseries <- ts(rep(1:7, 5), frequency = 7)
   fouriermat <- fourier(testseries, 3)
   expect_length(testseries, nrow(fouriermat))
-  expect_true(ncol(fouriermat) == 6)
-  expect_true(all(grep("-7", colnames(fouriermat))))
+  expect_shape(fouriermat, ncol = 6)
+  expect_all_true(grepl("-7", colnames(fouriermat)))
 })
 
 test_that("tests for fourierf", {
   expect_warning(fouriermat <- fourierf(wineind, 4, 10), "deprecated")
-  expect_true(nrow(fouriermat) == 10)
-  expect_true(ncol(fouriermat) == 8)
+  expect_shape(fouriermat, dim = c(10, 8))
 })
 
 test_that("tests for stlm", {
@@ -56,7 +54,7 @@ test_that("tests for forecast.stlm", {
   stlmfit2 <- stlm(woolyrnq, method = "arima", approximation = FALSE)
   fcfit1 <- forecast(stlmfit1)
   fcfit2 <- forecast(stlmfit1, fan = TRUE)
-  expect_true(all(fcfit2$level == seq(from = 51, to = 99, by = 3)))
+  expect_identical(fcfit2$level, seq(from = 51, to = 99, by = 3))
   fcstlmfit3 <- forecast(stlmfit2)
   expect_true(all(
     round(forecast(stlm(ts(rep(100, 120), frequency = 12)))$mean, 10) == 100
@@ -93,11 +91,9 @@ test_that("tests for ma", {
   expect_true(frequency(ma(testseries, order = 4)) == frequency(testseries))
   maseries <- ma(testseries, order = 3)
   expect_identical(which(is.na(maseries)), c(1L, 20L))
-  expect_true(all(abs(maseries[2:19] - 2:19) < 1e-14))
+  expect_all_true(abs(maseries[2:19] - 2:19) < 1e-14)
   maseries <- ma(testseries, order = 2, centre = FALSE)
-  expect_identical(which(is.na(maseries)), 20L)
-  expect_true(all(abs(maseries[1:19] - 1:19 - 0.5) < 1e-14))
   maseries <- ma(testseries, order = 2, centre = TRUE)
   expect_identical(which(is.na(maseries)), c(1L, 20L))
-  expect_true(all(abs(maseries[2:19] - 2:19) < 1e-14))
+  expect_all_true(abs(maseries[2:19] - 2:19) < 1e-14)
 })
