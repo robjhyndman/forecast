@@ -1,0 +1,61 @@
+# Multiple seasonal decomposition
+
+Decompose a time series into seasonal, trend and remainder components.
+Seasonal components are estimated iteratively using STL. Multiple
+seasonal periods are allowed. The trend component is computed for the
+last iteration of STL. Non-seasonal time series are decomposed into
+trend and remainder only. In this case,
+[`stats::supsmu()`](https://rdrr.io/r/stats/supsmu.html) is used to
+estimate the trend. Optionally, the time series may be Box-Cox
+transformed before decomposition. Unlike
+[`stats::stl()`](https://rdrr.io/r/stats/stl.html), `mstl` is completely
+automated.
+
+## Usage
+
+``` r
+mstl(x, lambda = NULL, iterate = 2, s.window = 7 + 4 * seq(6), ...)
+```
+
+## Arguments
+
+- x:
+
+  Univariate time series of class `msts` or `ts`.
+
+- lambda:
+
+  Box-Cox transformation parameter. If `lambda = "auto"`, then a
+  transformation is automatically selected using `BoxCox.lambda`. The
+  transformation is ignored if NULL. Otherwise, data transformed before
+  model is estimated.
+
+- iterate:
+
+  Number of iterations to use to refine the seasonal component.
+
+- s.window:
+
+  Seasonal windows to be used in the decompositions. If scalar, the same
+  value is used for all seasonal components. Otherwise, it should be a
+  vector of the same length as the number of seasonal components (or
+  longer).
+
+- ...:
+
+  Other arguments are passed to
+  [`stats::stl()`](https://rdrr.io/r/stats/stl.html).
+
+## See also
+
+[`stats::stl()`](https://rdrr.io/r/stats/stl.html),
+[`stats::supsmu()`](https://rdrr.io/r/stats/supsmu.html)
+
+## Examples
+
+``` r
+library(ggplot2)
+mstl(taylor) |> autoplot()
+
+mstl(AirPassengers, lambda = "auto") |> autoplot()
+```
