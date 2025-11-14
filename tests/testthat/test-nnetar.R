@@ -8,7 +8,7 @@ test_that("Tests for nnetar", {
   #
   # Test with single-column xreg (which might be a vector)
   uscnnet <- nnetar(woolyrnq, xreg = seq_along(woolyrnq))
-  expect_true(all(dim(uscnnet$xreg) == c(119, 1)))
+  expect_shape(uscnnet$xreg, dim = c(119, 1))
   expect_length(forecast(uscnnet, xreg = 120:130)$mean, 11)
   # Test default size with and without xreg
   uscnnet <- nnetar(woolyrnq, p = 2, P = 2)

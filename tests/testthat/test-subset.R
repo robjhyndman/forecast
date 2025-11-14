@@ -19,11 +19,11 @@ test_that("tests specifying correct argument", {
   expect_identical(round(sum(sub)), 1948985)
   expect_length(sub, 91)
   sub <- subset(mtsobj, c(1, 1, rep(0, 98)) == 1)
-  expect_identical(ncol(sub), 2L)
-  expect_identical(nrow(sub), 2L)
+  expect_shape(sub, ncol = 2L)
+  expect_shape(sub, nrow = 2L)
   sub <- subset(mtsobj, quarter = 1)
-  expect_identical(ncol(sub), 2L)
-  expect_identical(nrow(sub), 25L)
+  expect_shape(sub, ncol = 2L)
+  expect_shape(sub, nrow = 25L)
 })
 
 test_that("tests specifying wrong argument", {

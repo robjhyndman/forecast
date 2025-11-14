@@ -7,8 +7,8 @@ test_that("tests for dimension (output)", {
   train <- window(USAccDeaths, start = c(1973, 1), end = c(1976, 12))
   test <- window(USAccDeaths, start = c(1977, 1))
   fcasts <- forecast(train, h = 6)
-  expect_identical(dim(accuracy(fcasts)), c(1L, 7L))
-  expect_identical(dim(accuracy(fcasts, test)), c(2L, 8L))
+  expect_shape(accuracy(fcasts), dim = c(1L, 7L))
+  expect_shape(accuracy(fcasts, test), dim = c(2L, 8L))
   expect_false(
     all(dim(accuracy(fcasts, test, test = 1:2)) == dim(accuracy(fcasts, test)))
   )

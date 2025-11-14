@@ -77,11 +77,11 @@ test_that("test ets() for errors", {
 test_that("forecast.ets()", {
   fit <- ets(airmiles, lambda = 0.15, biasadj = TRUE)
   fcast1 <- forecast(fit, PI = FALSE)
-  expect_true(is.null(fcast1$upper) & is.null(fcast1$lower))
+  expect_true(is.null(fcast1$upper) && is.null(fcast1$lower))
   fcast1 <- forecast(fit, biasadj = FALSE)
   fcast2 <- forecast(fit, biasadj = TRUE)
   expect_false(identical(fcast1$mean, fcast2$mean))
   fcast <- forecast(fit, simulate = TRUE)
-  expect_true(!is.null(fcast$upper) & !is.null(fcast$lower))
+  expect_true(!is.null(fcast$upper) && !is.null(fcast$lower))
   expect_true(all(fcast$upper > fcast$lower))
 })
