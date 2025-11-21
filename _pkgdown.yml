@@ -97,8 +97,10 @@ reference:
       - mean_model
       - nnetar
       - rw_model
+      - spline_model
       - stlm
       - tbats
+      - theta_model
       - tslm
   - title: "Forecasting"
     desc: "Functions for producing forecasts"
@@ -131,9 +133,11 @@ reference:
       - forecast.mts
       - forecast.nnetar
       - forecast.rw_model
+      - forecast.spline_model
       - forecast.stl
       - forecast.StructTS
       - forecast.tbats
+      - forecast.theta_model
       - forecast.ts
       - is.forecast
   - title: "Plotting"
