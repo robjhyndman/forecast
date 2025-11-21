@@ -31,7 +31,10 @@ thetaf(
   h = if (frequency(y) > 1) 2 * frequency(y) else 10,
   level = c(80, 95),
   fan = FALSE,
-  x = y
+  lambda = NULL,
+  biasadj = FALSE,
+  x = y,
+  ...
 )
 ```
 

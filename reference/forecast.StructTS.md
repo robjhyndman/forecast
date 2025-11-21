@@ -13,7 +13,7 @@ forecast(
   level = c(80, 95),
   fan = FALSE,
   lambda = NULL,
-  biasadj = NULL,
+  biasadj = FALSE,
   ...
 )
 ```

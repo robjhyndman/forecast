@@ -194,11 +194,8 @@ Functions for estimating time series models
   : Random walk model
 - [`spline_model()`](https://pkg.robjhyndman.com/forecast/reference/spline_model.md)
   : Cubic spline stochastic model
-- [`forecast(`*`<stl>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
-  [`stlm()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
-  [`forecast(`*`<stlm>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
-  [`stlf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
-  : Forecasting using stl objects
+- [`stlm()`](https://pkg.robjhyndman.com/forecast/reference/stlm.md) :
+  Forecasting model using STL with a generative time series model
 - [`tbats()`](https://pkg.robjhyndman.com/forecast/reference/tbats.md) :
   TBATS model (Exponential smoothing state space model with Box-Cox
   transformation, ARMA errors, Trend and Seasonal components)
@@ -248,7 +245,6 @@ Functions for producing forecasts
   [`spline_model()`](https://pkg.robjhyndman.com/forecast/reference/spline_model.md).
 
 - [`forecast(`*`<stl>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
-  [`stlm()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
   [`forecast(`*`<stlm>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
   [`stlf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
   : Forecasting using stl objects

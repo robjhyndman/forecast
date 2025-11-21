@@ -23,9 +23,9 @@ forecast(
   level = c(80, 95),
   fan = FALSE,
   xreg = NULL,
-  lambda = object$lambda,
   bootstrap = FALSE,
   npaths = 5000,
+  lambda = object$lambda,
   biasadj = NULL,
   ...
 )
@@ -36,9 +36,9 @@ forecast(
   h = 10,
   level = c(80, 95),
   fan = FALSE,
-  lambda = NULL,
   bootstrap = FALSE,
   npaths = 5000,
+  lambda = NULL,
   biasadj = FALSE,
   ...
 )

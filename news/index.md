@@ -114,7 +114,7 @@ CRAN release: 2021-06-01
   [`mstl()`](https://pkg.robjhyndman.com/forecast/reference/mstl.md),
   [`stlf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
   and
-  [`stlm()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md).
+  [`stlm()`](https://pkg.robjhyndman.com/forecast/reference/stlm.md).
   The new defaults are based on extensive empirical testing.
 
 ## forecast 8.14

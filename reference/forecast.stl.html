@@ -55,26 +55,10 @@ year of the seasonal component.</p>
 <span>  level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">95</span><span class="op">)</span>,</span>
 <span>  fan <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  lambda <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  biasadj <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  biasadj <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  xreg <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  newxreg <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  allow.multiplicative.trend <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">stlm</span><span class="op">(</span></span>
-<span>  <span class="va">y</span>,</span>
-<span>  s.window <span class="op">=</span> <span class="fl">7</span> <span class="op">+</span> <span class="fl">4</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">6</span><span class="op">)</span>,</span>
-<span>  robust <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ets"</span>, <span class="st">"arima"</span><span class="op">)</span>,</span>
-<span>  modelfunction <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  model <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  etsmodel <span class="op">=</span> <span class="st">"ZZN"</span>,</span>
-<span>  lambda <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  biasadj <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  xreg <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  allow.multiplicative.trend <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  x <span class="op">=</span> <span class="va">y</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -180,13 +164,14 @@ models are permitted.</p></dd>
 <code>modelfunction</code> or <code>forecastfunction</code>.</p></dd>
 
 
-<dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
-<dd><p>a numeric vector or univariate time series of class <code>ts</code></p></dd>
-
-
 <dt id="arg-s-window">s.window<a class="anchor" aria-label="anchor" href="#arg-s-window"></a></dt>
 <dd><p>Either the character string <code>"periodic"</code> or the span (in
 lags) of the loess window for seasonal extraction.</p></dd>
+
+
+<dt id="arg-t-window">t.window<a class="anchor" aria-label="anchor" href="#arg-t-window"></a></dt>
+<dd><p>A number to control the smoothness of the trend. See
+<code><a href="https://rdrr.io/r/stats/stl.html" class="external-link">stats::stl()</a></code> for details.</p></dd>
 
 
 <dt id="arg-robust">robust<a class="anchor" aria-label="anchor" href="#arg-robust"></a></dt>
@@ -206,15 +191,6 @@ to specify the time series model to be used.</p></dd>
 model is passed, this same model is fitted to y without re-estimating any
 parameters.</p></dd>
 
-
-<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>Deprecated. Included for backwards compatibility.</p></dd>
-
-
-<dt id="arg-t-window">t.window<a class="anchor" aria-label="anchor" href="#arg-t-window"></a></dt>
-<dd><p>A number to control the smoothness of the trend. See
-<code><a href="https://rdrr.io/r/stats/stl.html" class="external-link">stats::stl()</a></code> for details.</p></dd>
-
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -228,16 +204,10 @@ useful features.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p><code>stlm</code> takes a time series <code>y</code>, applies an STL decomposition, and
-models the seasonally adjusted data using the model passed as
-<code>modelfunction</code> or specified using <code>method</code>. It returns an object
-that includes the original STL decomposition and a time series model fitted
-to the seasonally adjusted data. This object can be passed to the
-<code>forecast.stlm</code> for forecasting.</p>
-<p><code>forecast.stlm</code> forecasts the seasonally adjusted data, then
+    <p><code>forecast.stlm</code> forecasts the seasonally adjusted data, then
 re-seasonalizes the results by adding back the last year of the estimated
 seasonal component.</p>
-<p><code>stlf</code> combines <code>stlm</code> and <code>forecast.stlm</code>. It takes a
+<p><code>stlf</code> combines <code><a href="stlm.html">stlm()</a></code> and <code>forecast.stlm</code>. It takes a
 <code>ts</code> argument, applies an STL decomposition, models the seasonally
 adjusted data, reseasonalizes, and returns the forecasts. However, it allows
 more general forecasting methods to be specified via
@@ -249,14 +219,6 @@ the seasonal component. They are computed using the prediction intervals
 from the seasonally adjusted series, which are then reseasonalized using the
 last year of the seasonal component. The uncertainty in the seasonal
 component is ignored.</p>
-<p>The time series model for the seasonally adjusted data can be specified in
-<code>stlm</code> using either <code>method</code> or <code>modelfunction</code>. The
-<code>method</code> argument provides a shorthand way of specifying
-<code>modelfunction</code> for a few special cases. More generally,
-<code>modelfunction</code> can be any function with first argument a <code>ts</code>
-object, that returns an object that can be passed to <code><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast()</a></code>.
-For example, <code>forecastfunction = ar</code> uses the <code><a href="https://rdrr.io/r/stats/ar.html" class="external-link">ar()</a></code> function
-for modelling the seasonally adjusted series.</p>
 <p>The forecasting method for the seasonally adjusted data can be specified in
 <code>stlf</code> and <code>forecast.stl</code> using either <code>method</code> or
 <code>forecastfunction</code>. The <code>method</code> argument provides a shorthand way
@@ -279,7 +241,7 @@ forecasting the seasonally adjusted series.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">tsmod</span> <span class="op">&lt;-</span> <span class="fu">stlm</span><span class="op">(</span><span class="va">USAccDeaths</span>, modelfunction <span class="op">=</span> <span class="va">ar</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tsmod</span> <span class="op">&lt;-</span> <span class="fu"><a href="stlm.html">stlm</a></span><span class="op">(</span><span class="va">USAccDeaths</span>, modelfunction <span class="op">=</span> <span class="va">ar</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="va">tsmod</span>, h <span class="op">=</span> <span class="fl">36</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="forecast.stl-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>

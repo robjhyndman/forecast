@@ -54,10 +54,10 @@ snaive() is a wrapper to rwf() with drift=FALSE and lag=frequency(y)."><meta pro
 <span>  h <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">95</span><span class="op">)</span>,</span>
 <span>  fan <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  lambda <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  simulate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  npaths <span class="op">=</span> <span class="fl">5000</span>,</span>
+<span>  lambda <span class="op">=</span> <span class="va">object</span><span class="op">$</span><span class="va">lambda</span>,</span>
 <span>  biasadj <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
@@ -120,13 +120,6 @@ largest seasonal period (for seasonal data) or ten (for non-seasonal data).</p><
 This is suitable for fan plots.</p></dd>
 
 
-<dt id="arg-lambda">lambda<a class="anchor" aria-label="anchor" href="#arg-lambda"></a></dt>
-<dd><p>Box-Cox transformation parameter. If <code>lambda = "auto"</code>,
-then a transformation is automatically selected using <code>BoxCox.lambda</code>.
-The transformation is ignored if NULL. Otherwise,
-data transformed before model is estimated.</p></dd>
-
-
 <dt id="arg-simulate">simulate<a class="anchor" aria-label="anchor" href="#arg-simulate"></a></dt>
 <dd><p>If <code>TRUE</code>, prediction intervals are produced by simulation rather
 than using analytic formulae. Errors are assumed to be normally distributed.</p></dd>
@@ -140,6 +133,13 @@ simulation using resampled errors (rather than normally distributed errors).</p>
 <dt id="arg-npaths">npaths<a class="anchor" aria-label="anchor" href="#arg-npaths"></a></dt>
 <dd><p>Number of sample paths used in computing simulated prediction
 intervals.</p></dd>
+
+
+<dt id="arg-lambda">lambda<a class="anchor" aria-label="anchor" href="#arg-lambda"></a></dt>
+<dd><p>Box-Cox transformation parameter. If <code>lambda = "auto"</code>,
+then a transformation is automatically selected using <code>BoxCox.lambda</code>.
+The transformation is ignored if NULL. Otherwise,
+data transformed before model is estimated.</p></dd>
 
 
 <dt id="arg-biasadj">biasadj<a class="anchor" aria-label="anchor" href="#arg-biasadj"></a></dt>

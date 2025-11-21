@@ -17,10 +17,10 @@ forecast(
   h = 10,
   level = c(80, 95),
   fan = FALSE,
-  lambda = NULL,
   simulate = FALSE,
   bootstrap = FALSE,
   npaths = 5000,
+  lambda = object$lambda,
   biasadj = FALSE,
   ...
 )
@@ -82,13 +82,6 @@ snaive(
   If `TRUE`, `level` is set to `seq(51, 99, by = 3)`. This is suitable
   for fan plots.
 
-- lambda:
-
-  Box-Cox transformation parameter. If `lambda = "auto"`, then a
-  transformation is automatically selected using `BoxCox.lambda`. The
-  transformation is ignored if NULL. Otherwise, data transformed before
-  model is estimated.
-
 - simulate:
 
   If `TRUE`, prediction intervals are produced by simulation rather than
@@ -104,6 +97,13 @@ snaive(
 
   Number of sample paths used in computing simulated prediction
   intervals.
+
+- lambda:
+
+  Box-Cox transformation parameter. If `lambda = "auto"`, then a
+  transformation is automatically selected using `BoxCox.lambda`. The
+  transformation is ignored if NULL. Otherwise, data transformed before
+  model is estimated.
 
 - biasadj:
 
