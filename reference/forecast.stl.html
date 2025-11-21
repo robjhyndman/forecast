@@ -164,6 +164,10 @@ models are permitted.</p></dd>
 <code>modelfunction</code> or <code>forecastfunction</code>.</p></dd>
 
 
+<dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
+<dd><p>a numeric vector or univariate time series of class <code>ts</code></p></dd>
+
+
 <dt id="arg-s-window">s.window<a class="anchor" aria-label="anchor" href="#arg-s-window"></a></dt>
 <dd><p>Either the character string <code>"periodic"</code> or the span (in
 lags) of the loess window for seasonal extraction.</p></dd>
@@ -179,17 +183,8 @@ lags) of the loess window for seasonal extraction.</p></dd>
 procedure within <code><a href="https://rdrr.io/r/stats/stl.html" class="external-link">stats::stl()</a></code>.</p></dd>
 
 
-<dt id="arg-modelfunction">modelfunction<a class="anchor" aria-label="anchor" href="#arg-modelfunction"></a></dt>
-<dd><p>An alternative way of specifying the function for
-modelling the seasonally adjusted series. If <code>modelfunction</code> is not
-<code>NULL</code>, then <code>method</code> is ignored. Otherwise <code>method</code> is used
-to specify the time series model to be used.</p></dd>
-
-
-<dt id="arg-model">model<a class="anchor" aria-label="anchor" href="#arg-model"></a></dt>
-<dd><p>Output from a previous call to <code>stlm</code>. If a <code>stlm</code>
-model is passed, this same model is fitted to y without re-estimating any
-parameters.</p></dd>
+<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
+<dd><p>Deprecated. Included for backwards compatibility.</p></dd>
 
 </dl></div>
     <div class="section level2">

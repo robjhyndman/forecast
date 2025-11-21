@@ -63,6 +63,7 @@ to the seasonally adjusted data. This object can be passed to the
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">stlm</span><span class="op">(</span></span>
 <span>  <span class="va">y</span>,</span>
 <span>  s.window <span class="op">=</span> <span class="fl">7</span> <span class="op">+</span> <span class="fl">4</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">6</span><span class="op">)</span>,</span>
+<span>  t.window <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  robust <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ets"</span>, <span class="st">"arima"</span><span class="op">)</span>,</span>
 <span>  modelfunction <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -88,6 +89,11 @@ to the seasonally adjusted data. This object can be passed to the
 <dt id="arg-s-window">s.window<a class="anchor" aria-label="anchor" href="#arg-s-window"></a></dt>
 <dd><p>Either the character string <code>"periodic"</code> or the span (in
 lags) of the loess window for seasonal extraction.</p></dd>
+
+
+<dt id="arg-t-window">t.window<a class="anchor" aria-label="anchor" href="#arg-t-window"></a></dt>
+<dd><p>A number to control the smoothness of the trend. See
+<code><a href="https://rdrr.io/r/stats/stl.html" class="external-link">stats::stl()</a></code> for details.</p></dd>
 
 
 <dt id="arg-robust">robust<a class="anchor" aria-label="anchor" href="#arg-robust"></a></dt>
@@ -150,11 +156,6 @@ models are permitted.</p></dd>
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Other arguments passed to <code>modelfunction</code>.</p></dd>
-
-
-<dt id="arg-t-window">t.window<a class="anchor" aria-label="anchor" href="#arg-t-window"></a></dt>
-<dd><p>A number to control the smoothness of the trend. See
-<code><a href="https://rdrr.io/r/stats/stl.html" class="external-link">stats::stl()</a></code> for details.</p></dd>
 
 </dl></div>
     <div class="section level2">

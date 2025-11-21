@@ -15,6 +15,7 @@ data. This object can be passed to the `forecast.stlm` for forecasting.
 stlm(
   y,
   s.window = 7 + 4 * seq(6),
+  t.window = NULL,
   robust = FALSE,
   method = c("ets", "arima"),
   modelfunction = NULL,
@@ -39,6 +40,11 @@ stlm(
 
   Either the character string `"periodic"` or the span (in lags) of the
   loess window for seasonal extraction.
+
+- t.window:
+
+  A number to control the smoothness of the trend. See
+  [`stats::stl()`](https://rdrr.io/r/stats/stl.html) for details.
 
 - robust:
 
@@ -101,11 +107,6 @@ stlm(
 - ...:
 
   Other arguments passed to `modelfunction`.
-
-- t.window:
-
-  A number to control the smoothness of the trend. See
-  [`stats::stl()`](https://rdrr.io/r/stats/stl.html) for details.
 
 ## Value
 

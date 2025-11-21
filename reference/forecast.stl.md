@@ -126,6 +126,10 @@ stlf(
   Other arguments passed to `forecast.stl`, `modelfunction` or
   `forecastfunction`.
 
+- y:
+
+  a numeric vector or univariate time series of class `ts`
+
 - s.window:
 
   Either the character string `"periodic"` or the span (in lags) of the
@@ -141,17 +145,9 @@ stlf(
   If `TRUE`, robust fitting will used in the loess procedure within
   [`stats::stl()`](https://rdrr.io/r/stats/stl.html).
 
-- modelfunction:
+- x:
 
-  An alternative way of specifying the function for modelling the
-  seasonally adjusted series. If `modelfunction` is not `NULL`, then
-  `method` is ignored. Otherwise `method` is used to specify the time
-  series model to be used.
-
-- model:
-
-  Output from a previous call to `stlm`. If a `stlm` model is passed,
-  this same model is fitted to y without re-estimating any parameters.
+  Deprecated. Included for backwards compatibility.
 
 ## Value
 
