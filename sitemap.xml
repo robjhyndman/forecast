@@ -47,7 +47,9 @@
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.mts.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.nnetar.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.rw_model.html</loc></url>
+<url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.spline_model.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.stl.html</loc></url>
+<url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/forecast.ts.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/fourier.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/gas.html</loc></url>
@@ -88,12 +90,12 @@
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/ses.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/simulate.ets.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/sindexf.html</loc></url>
-<url><loc>https://pkg.robjhyndman.com/forecast/reference/splinef.html</loc></url>
+<url><loc>https://pkg.robjhyndman.com/forecast/reference/spline_model.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/subset.ts.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/taylor.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/tbats.components.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/tbats.html</loc></url>
-<url><loc>https://pkg.robjhyndman.com/forecast/reference/thetaf.html</loc></url>
+<url><loc>https://pkg.robjhyndman.com/forecast/reference/theta_model.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/tsCV.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/tsclean.html</loc></url>
 <url><loc>https://pkg.robjhyndman.com/forecast/reference/tsdisplay.html</loc></url>

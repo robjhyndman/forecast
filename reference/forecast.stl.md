@@ -235,7 +235,7 @@ specifying `forecastfunction` for a few special cases. More generally,
 object, and other `h` and `level`, which returns an object of class
 [`forecast()`](https://generics.r-lib.org/reference/forecast.html). For
 example, `forecastfunction = thetaf` uses the
-[`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/thetaf.md)
+[`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
 function for forecasting the seasonally adjusted series.
 
 ## See also

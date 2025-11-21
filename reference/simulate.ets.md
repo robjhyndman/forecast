@@ -99,6 +99,18 @@ simulate(
   innov = NULL,
   ...
 )
+
+# S3 method for class 'spline_model'
+simulate(
+  object,
+  nsim = length(object$y),
+  seed = NULL,
+  future = TRUE,
+  bootstrap = FALSE,
+  innov = NULL,
+  lambda = object$lambda,
+  ...
+)
 ```
 
 ## Arguments

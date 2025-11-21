@@ -29,7 +29,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Simulation from a time series model</h1>
-      <small class="dont-index">Source: <a href="https://github.com/robjhyndman/forecast/blob/master/R/simulate.R" class="external-link"><code>R/simulate.R</code></a>, <a href="https://github.com/robjhyndman/forecast/blob/master/R/simulate_tbats.R" class="external-link"><code>R/simulate_tbats.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/robjhyndman/forecast/blob/master/R/simulate.R" class="external-link"><code>R/simulate.R</code></a>, <a href="https://github.com/robjhyndman/forecast/blob/master/R/simulate_tbats.R" class="external-link"><code>R/simulate_tbats.R</code></a>, <a href="https://github.com/robjhyndman/forecast/blob/master/R/spline.R" class="external-link"><code>R/spline.R</code></a></small>
       <div class="d-none name"><code>simulate.ets.Rd</code></div>
     </div>
 
@@ -131,6 +131,18 @@
 <span>  future <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  innov <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'spline_model'</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  nsim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">y</span><span class="op">)</span>,</span>
+<span>  seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  future <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  innov <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lambda <span class="op">=</span> <span class="va">object</span><span class="op">$</span><span class="va">lambda</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>

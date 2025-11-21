@@ -3,6 +3,8 @@
 ## forecast (development version)
 
 - Added mean_model() and forecast.mean_model()
+- Added rw_model() and forecast.rw_model()
+- Added spline_model() and forecast.spline_model()
 - Bug fixes
 - Documentation improvements
 

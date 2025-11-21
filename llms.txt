@@ -192,6 +192,8 @@ Functions for estimating time series models
   : Neural Network Time Series Forecasts
 - [`rw_model()`](https://pkg.robjhyndman.com/forecast/reference/rw_model.md)
   : Random walk model
+- [`spline_model()`](https://pkg.robjhyndman.com/forecast/reference/spline_model.md)
+  : Cubic spline stochastic model
 - [`forecast(`*`<stl>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
   [`stlm()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
   [`forecast(`*`<stlm>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
@@ -200,6 +202,8 @@ Functions for estimating time series models
 - [`tbats()`](https://pkg.robjhyndman.com/forecast/reference/tbats.md) :
   TBATS model (Exponential smoothing state space model with Box-Cox
   transformation, ARMA errors, Trend and Seasonal components)
+- [`theta_model()`](https://pkg.robjhyndman.com/forecast/reference/theta_model.md)
+  : Theta model
 - [`tslm()`](https://pkg.robjhyndman.com/forecast/reference/tslm.md) :
   Fit a linear model with time series components
 
@@ -210,63 +214,91 @@ Functions for producing forecasts
 - [`forecast(`*`<croston_model>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.croston_model.md)
   [`croston()`](https://pkg.robjhyndman.com/forecast/reference/forecast.croston_model.md)
   : Forecasts for intermittent demand using Croston's method
+
 - [`dshw()`](https://pkg.robjhyndman.com/forecast/reference/dshw.md) :
   Double-Seasonal Holt-Winters Forecasting
+
 - [`ses()`](https://pkg.robjhyndman.com/forecast/reference/ses.md)
   [`holt()`](https://pkg.robjhyndman.com/forecast/reference/ses.md)
   [`hw()`](https://pkg.robjhyndman.com/forecast/reference/ses.md) :
   Exponential smoothing forecasts
+
 - [`forecast(`*`<mean_model>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.mean_model.md)
   [`meanf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.mean_model.md)
   : Mean Forecast
+
 - [`modelAR()`](https://pkg.robjhyndman.com/forecast/reference/modelAR.md)
   : Time Series Forecasts with a user-defined model
+
 - [`forecast(`*`<rw_model>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.rw_model.md)
   [`rwf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.rw_model.md)
   [`naive()`](https://pkg.robjhyndman.com/forecast/reference/forecast.rw_model.md)
   [`snaive()`](https://pkg.robjhyndman.com/forecast/reference/forecast.rw_model.md)
   : Naive and Random Walk Forecasts
+
 - [`sindexf()`](https://pkg.robjhyndman.com/forecast/reference/sindexf.md)
   : Forecast seasonal index
-- [`splinef()`](https://pkg.robjhyndman.com/forecast/reference/splinef.md)
-  : Cubic Spline Forecast
+
+- [`forecast(`*`<spline_model>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.spline_model.md)
+  [`splinef()`](https://pkg.robjhyndman.com/forecast/reference/forecast.spline_model.md)
+  :
+
+  Returns local linear forecasts and prediction intervals using cubic
+  smoothing splines estimated with
+  [`spline_model()`](https://pkg.robjhyndman.com/forecast/reference/spline_model.md).
+
 - [`forecast(`*`<stl>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
   [`stlm()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
   [`forecast(`*`<stlm>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
   [`stlf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
   : Forecasting using stl objects
-- [`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/thetaf.md)
-  : Theta method forecast
+
+- [`forecast(`*`<theta_model>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
+  [`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
+  : Theta method forecasts.
+
 - [`forecast(`*`<fracdiff>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.Arima.md)
   [`forecast(`*`<Arima>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.Arima.md)
   [`forecast(`*`<ar>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.Arima.md)
   : Forecasting using ARIMA or ARFIMA models
+
 - [`forecast(`*`<baggedModel>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.baggedModel.md)
   : Forecasting using a bagged model
+
 - [`forecast(`*`<bats>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.bats.md)
   [`forecast(`*`<tbats>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.bats.md)
   : Forecasting using BATS and TBATS models
+
 - [`forecast(`*`<ets>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.ets.md)
   : Forecasting using ETS models
+
 - [`forecast(`*`<HoltWinters>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.HoltWinters.md)
   : Forecasting using Holt-Winters objects
+
 - [`forecast(`*`<lm>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.lm.md)
   : Forecast a linear model with possible time series components
+
 - [`forecast(`*`<mlm>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.mlm.md)
   : Forecast a multiple linear model with possible time series
   components
+
 - [`forecast(`*`<modelAR>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.modelAR.md)
   : Forecasting using user-defined model
+
 - [`forecast(`*`<mts>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.mts.md)
   : Forecasting time series
+
 - [`forecast(`*`<nnetar>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.nnetar.md)
   : Forecasting using neural network models
+
 - [`forecast(`*`<StructTS>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.StructTS.md)
   : Forecasting using Structural Time Series models
+
 - [`forecast(`*`<ts>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.ts.md)
   [`forecast(`*`<default>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.ts.md)
   [`print(`*`<forecast>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.ts.md)
   : Forecasting time series
+
 - [`is.forecast()`](https://pkg.robjhyndman.com/forecast/reference/is.forecast.md)
   [`is.mforecast()`](https://pkg.robjhyndman.com/forecast/reference/is.forecast.md)
   [`is.splineforecast()`](https://pkg.robjhyndman.com/forecast/reference/is.forecast.md)
@@ -403,6 +435,7 @@ Functions for analysing time series models
   [`simulate(`*`<nnetar>`*`)`](https://pkg.robjhyndman.com/forecast/reference/simulate.ets.md)
   [`simulate(`*`<modelAR>`*`)`](https://pkg.robjhyndman.com/forecast/reference/simulate.ets.md)
   [`simulate(`*`<tbats>`*`)`](https://pkg.robjhyndman.com/forecast/reference/simulate.ets.md)
+  [`simulate(`*`<spline_model>`*`)`](https://pkg.robjhyndman.com/forecast/reference/simulate.ets.md)
   : Simulation from a time series model
 - [`tbats.components()`](https://pkg.robjhyndman.com/forecast/reference/tbats.components.md)
   : Extract components of a TBATS model
