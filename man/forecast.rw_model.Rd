@@ -12,10 +12,10 @@
   h = 10,
   level = c(80, 95),
   fan = FALSE,
-  lambda = NULL,
   simulate = FALSE,
   bootstrap = FALSE,
   npaths = 5000,
+  lambda = object$lambda,
   biasadj = FALSE,
   ...
 )
@@ -66,11 +66,6 @@ largest seasonal period (for seasonal data) or ten (for non-seasonal data).}
 \item{fan}{If \code{TRUE}, \code{level} is set to \code{seq(51, 99, by = 3)}.
 This is suitable for fan plots.}
 
-\item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
-then a transformation is automatically selected using \code{BoxCox.lambda}.
-The transformation is ignored if NULL. Otherwise,
-data transformed before model is estimated.}
-
 \item{simulate}{If \code{TRUE}, prediction intervals are produced by simulation rather
 than using analytic formulae. Errors are assumed to be normally distributed.}
 
@@ -79,6 +74,11 @@ simulation using resampled errors (rather than normally distributed errors).}
 
 \item{npaths}{Number of sample paths used in computing simulated prediction
 intervals.}
+
+\item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
+then a transformation is automatically selected using \code{BoxCox.lambda}.
+The transformation is ignored if NULL. Otherwise,
+data transformed before model is estimated.}
 
 \item{biasadj}{Use adjusted back-transformed mean for Box-Cox
 transformations. If transformed data is used to produce forecasts and fitted
