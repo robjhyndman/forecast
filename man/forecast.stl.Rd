@@ -2,7 +2,6 @@
 % Please edit documentation in R/mstl.R
 \name{forecast.stl}
 \alias{forecast.stl}
-\alias{stlm}
 \alias{forecast.stlm}
 \alias{stlf}
 \title{Forecasting using stl objects}
@@ -16,26 +15,10 @@
   level = c(80, 95),
   fan = FALSE,
   lambda = NULL,
-  biasadj = NULL,
+  biasadj = FALSE,
   xreg = NULL,
   newxreg = NULL,
   allow.multiplicative.trend = FALSE,
-  ...
-)
-
-stlm(
-  y,
-  s.window = 7 + 4 * seq(6),
-  robust = FALSE,
-  method = c("ets", "arima"),
-  modelfunction = NULL,
-  model = NULL,
-  etsmodel = "ZZN",
-  lambda = NULL,
-  biasadj = FALSE,
-  xreg = NULL,
-  allow.multiplicative.trend = FALSE,
-  x = y,
   ...
 )
 
@@ -110,10 +93,11 @@ models are permitted.}
 \item{...}{Other arguments passed to \code{forecast.stl},
 \code{modelfunction} or \code{forecastfunction}.}
 
-\item{y}{a numeric vector or univariate time series of class \code{ts}}
-
 \item{s.window}{Either the character string \code{"periodic"} or the span (in
 lags) of the loess window for seasonal extraction.}
+
+\item{t.window}{A number to control the smoothness of the trend. See
+\code{\link[stats:stl]{stats::stl()}} for details.}
 
 \item{robust}{If \code{TRUE}, robust fitting will used in the loess
 procedure within \code{\link[stats:stl]{stats::stl()}}.}
@@ -126,11 +110,6 @@ to specify the time series model to be used.}
 \item{model}{Output from a previous call to \code{stlm}. If a \code{stlm}
 model is passed, this same model is fitted to y without re-estimating any
 parameters.}
-
-\item{x}{Deprecated. Included for backwards compatibility.}
-
-\item{t.window}{A number to control the smoothness of the trend. See
-\code{\link[stats:stl]{stats::stl()}} for details.}
 }
 \value{
 \code{stlm} returns an object of class \code{stlm}. The other
@@ -148,18 +127,11 @@ method to the seasonally adjusted data and re-seasonalizing using the last
 year of the seasonal component.
 }
 \details{
-\code{stlm} takes a time series \code{y}, applies an STL decomposition, and
-models the seasonally adjusted data using the model passed as
-\code{modelfunction} or specified using \code{method}. It returns an object
-that includes the original STL decomposition and a time series model fitted
-to the seasonally adjusted data. This object can be passed to the
-\code{forecast.stlm} for forecasting.
-
 \code{forecast.stlm} forecasts the seasonally adjusted data, then
 re-seasonalizes the results by adding back the last year of the estimated
 seasonal component.
 
-\code{stlf} combines \code{stlm} and \code{forecast.stlm}. It takes a
+\code{stlf} combines \code{\link[=stlm]{stlm()}} and \code{forecast.stlm}. It takes a
 \code{ts} argument, applies an STL decomposition, models the seasonally
 adjusted data, reseasonalizes, and returns the forecasts. However, it allows
 more general forecasting methods to be specified via
@@ -173,15 +145,6 @@ the seasonal component. They are computed using the prediction intervals
 from the seasonally adjusted series, which are then reseasonalized using the
 last year of the seasonal component. The uncertainty in the seasonal
 component is ignored.
-
-The time series model for the seasonally adjusted data can be specified in
-\code{stlm} using either \code{method} or \code{modelfunction}. The
-\code{method} argument provides a shorthand way of specifying
-\code{modelfunction} for a few special cases. More generally,
-\code{modelfunction} can be any function with first argument a \code{ts}
-object, that returns an object that can be passed to \code{\link[=forecast]{forecast()}}.
-For example, \code{forecastfunction = ar} uses the \code{\link[=ar]{ar()}} function
-for modelling the seasonally adjusted series.
 
 The forecasting method for the seasonally adjusted data can be specified in
 \code{stlf} and \code{forecast.stl} using either \code{method} or

@@ -127,18 +127,11 @@ autoplot.mstl <- function(object, ...) {
 #' method to the seasonally adjusted data and re-seasonalizing using the last
 #' year of the seasonal component.
 #'
-#' `stlm` takes a time series `y`, applies an STL decomposition, and
-#' models the seasonally adjusted data using the model passed as
-#' `modelfunction` or specified using `method`. It returns an object
-#' that includes the original STL decomposition and a time series model fitted
-#' to the seasonally adjusted data. This object can be passed to the
-#' `forecast.stlm` for forecasting.
-#'
 #' `forecast.stlm` forecasts the seasonally adjusted data, then
 #' re-seasonalizes the results by adding back the last year of the estimated
 #' seasonal component.
 #'
-#' `stlf` combines `stlm` and `forecast.stlm`. It takes a
+#' `stlf` combines [stlm()] and `forecast.stlm`. It takes a
 #' `ts` argument, applies an STL decomposition, models the seasonally
 #' adjusted data, reseasonalizes, and returns the forecasts. However, it allows
 #' more general forecasting methods to be specified via
@@ -152,15 +145,6 @@ autoplot.mstl <- function(object, ...) {
 #' from the seasonally adjusted series, which are then reseasonalized using the
 #' last year of the seasonal component. The uncertainty in the seasonal
 #' component is ignored.
-#'
-#' The time series model for the seasonally adjusted data can be specified in
-#' `stlm` using either `method` or `modelfunction`. The
-#' `method` argument provides a shorthand way of specifying
-#' `modelfunction` for a few special cases. More generally,
-#' `modelfunction` can be any function with first argument a `ts`
-#' object, that returns an object that can be passed to [forecast()].
-#' For example, `forecastfunction = ar` uses the [ar()] function
-#' for modelling the seasonally adjusted series.
 #'
 #' The forecasting method for the seasonally adjusted data can be specified in
 #' `stlf` and `forecast.stl` using either `method` or
@@ -407,10 +391,63 @@ rowSumsTS <- function(mts) {
   }
 }
 
-# Function takes time series, does STL decomposition, and fits a model to seasonally adjusted series
-# But it does not forecast. Instead, the result can be passed to forecast().
-#' @rdname forecast.stl
+#' Forecasting model using STL with a generative time series model
+#'
+#' Forecasts of STL objects are obtained by applying a non-seasonal forecasting
+#' model to the seasonally adjusted data and re-seasonalizing using the last
+#' year of the seasonal component. `stlm` takes a time series `y`, applies an STL decomposition, and
+#' models the seasonally adjusted data using the model passed as
+#' `modelfunction` or specified using `method`. It returns an object
+#' that includes the original STL decomposition and a time series model fitted
+#' to the seasonally adjusted data. This object can be passed to the
+#' `forecast.stlm` for forecasting.
+#'
+#' The time series model for the seasonally adjusted data can be specified in
+#' `stlm` using either `method` or `modelfunction`. The
+#' `method` argument provides a shorthand way of specifying
+#' `modelfunction` for a few special cases. More generally,
+#' `modelfunction` can be any function with first argument a `ts`
+#' object, that returns an object that can be passed to [forecast()].
+#' For example, `modelfunction = ar` uses the [ar()] function
+#' for modelling the seasonally adjusted series.
+#'
 #' @inheritParams Arima
+#' @param method Method to use for forecasting the seasonally adjusted series.
+#' @param modelfunction An alternative way of specifying the function for
+#' modelling the seasonally adjusted series. If `modelfunction` is not
+#' `NULL`, then `method` is ignored. Otherwise `method` is used
+#' to specify the time series model to be used.
+#' @param model Output from a previous call to `stlm`. If a `stlm`
+#' model is passed, this same model is fitted to y without re-estimating any
+#' parameters.
+#' @param etsmodel The ets model specification passed to
+#' [ets()]. By default it allows any non-seasonal model. If
+#' `method != "ets"`, this argument is ignored.
+#' @param xreg Historical regressors to be used in
+#' [auto.arima()] when `method = "arima"`.
+#' @param s.window Either the character string `"periodic"` or the span (in
+#' lags) of the loess window for seasonal extraction.
+#' @param t.window A number to control the smoothness of the trend. See
+#' [stats::stl()] for details.
+#' @param robust If `TRUE`, robust fitting will used in the loess
+#' procedure within [stats::stl()].
+#' @param allow.multiplicative.trend If `TRUE`, then ETS models with
+#' multiplicative trends are allowed. Otherwise, only additive or no trend ETS
+#' models are permitted.
+#' @param ... Other arguments passed to `modelfunction`.
+#'
+#' @return An object of class `stlm`. 
+#'
+#' @author Rob J Hyndman
+#' @seealso [stats::stl()], [ets()], [Arima()].
+#' @keywords ts
+#' @examples
+#'
+#' tsmod <- stlm(USAccDeaths, modelfunction = ar)
+#' forecast(tsmod, h = 36) |> autoplot()
+#'
+#' decomp <- stl(USAccDeaths, s.window = "periodic")
+#' forecast(decomp) |> autoplot()
 #' @export
 stlm <- function(
   y,
