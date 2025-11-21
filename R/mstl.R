@@ -233,7 +233,7 @@ forecast.stl <- function(
   level = c(80, 95),
   fan = FALSE,
   lambda = NULL,
-  biasadj = NULL,
+  biasadj = FALSE,
   xreg = NULL,
   newxreg = NULL,
   allow.multiplicative.trend = FALSE,
@@ -366,7 +366,7 @@ forecast.mstl <- function(
   level = c(80, 95),
   fan = FALSE,
   lambda = NULL,
-  biasadj = NULL,
+  biasadj = FALSE,
   xreg = NULL,
   newxreg = NULL,
   allow.multiplicative.trend = FALSE,
@@ -446,6 +446,10 @@ stlm <- function(
     stop("y is not a seasonal ts object")
   } else if (tspx[3] <= 1L) {
     stop("y is not a seasonal ts object")
+  }
+
+  if (!is.null(model) && is.null(lambda)) {
+    lambda <- model$lambda
   }
 
   # Transform data if necessary

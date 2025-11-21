@@ -175,10 +175,10 @@ forecast.rw_model <- function(
   h = 10,
   level = c(80, 95),
   fan = FALSE,
-  lambda = NULL,
   simulate = FALSE,
   bootstrap = FALSE,
   npaths = 5000,
+  lambda = object$lambda,
   biasadj = FALSE,
   ...
 ) {

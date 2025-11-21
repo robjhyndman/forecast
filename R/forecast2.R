@@ -163,7 +163,7 @@ forecast.StructTS <- function(
   level = c(80, 95),
   fan = FALSE,
   lambda = NULL,
-  biasadj = NULL,
+  biasadj = FALSE,
   ...
 ) {
   x <- object$data
@@ -257,7 +257,7 @@ forecast.HoltWinters <- function(
   level = c(80, 95),
   fan = FALSE,
   lambda = NULL,
-  biasadj = NULL,
+  biasadj = FALSE,
   ...
 ) {
   x <- object$x
