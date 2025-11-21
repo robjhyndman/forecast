@@ -172,8 +172,11 @@ reference:
       - modeldf
       - starts_with("fitted")
       - starts_with("residuals")
-      - starts_with("simulate")
       - tbats.components
+  - title: "Simulation"
+    desc: "Functions for simulating time series data from fitted models"
+    contents:
+      - starts_with("simulate")
   - title: "Forecast evaluation"
     desc: "Functions used for evaluating forecasts"
     contents:
