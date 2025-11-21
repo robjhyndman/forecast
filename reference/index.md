@@ -324,6 +324,13 @@ Functions for analysing time series models
   [`residuals(`*`<stlm>`*`)`](https://pkg.robjhyndman.com/forecast/reference/residuals.forecast.md)
   [`residuals(`*`<tslm>`*`)`](https://pkg.robjhyndman.com/forecast/reference/residuals.forecast.md)
   : Residuals for various time series models
+- [`tbats.components()`](https://pkg.robjhyndman.com/forecast/reference/tbats.components.md)
+  : Extract components of a TBATS model
+
+## Simulation
+
+Functions for simulating time series data from fitted models
+
 - [`simulate(`*`<ets>`*`)`](https://pkg.robjhyndman.com/forecast/reference/simulate.ets.md)
   [`simulate(`*`<Arima>`*`)`](https://pkg.robjhyndman.com/forecast/reference/simulate.ets.md)
   [`simulate(`*`<ar>`*`)`](https://pkg.robjhyndman.com/forecast/reference/simulate.ets.md)
@@ -334,8 +341,6 @@ Functions for analysing time series models
   [`simulate(`*`<tbats>`*`)`](https://pkg.robjhyndman.com/forecast/reference/simulate.ets.md)
   [`simulate(`*`<spline_model>`*`)`](https://pkg.robjhyndman.com/forecast/reference/simulate.ets.md)
   : Simulation from a time series model
-- [`tbats.components()`](https://pkg.robjhyndman.com/forecast/reference/tbats.components.md)
-  : Extract components of a TBATS model
 
 ## Forecast evaluation
 
