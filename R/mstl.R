@@ -160,13 +160,6 @@ autoplot.mstl <- function(object, ...) {
 #' @param object An object of class `stl` or `stlm`. Usually the
 #' result of a call to [stats::stl()] or `stlm`.
 #' @param method Method to use for forecasting the seasonally adjusted series.
-#' @param modelfunction An alternative way of specifying the function for
-#' modelling the seasonally adjusted series. If `modelfunction` is not
-#' `NULL`, then `method` is ignored. Otherwise `method` is used
-#' to specify the time series model to be used.
-#' @param model Output from a previous call to `stlm`. If a `stlm`
-#' model is passed, this same model is fitted to y without re-estimating any
-#' parameters.
 #' @param forecastfunction An alternative way of specifying the function for
 #' forecasting the seasonally adjusted series. If `forecastfunction` is
 #' not `NULL`, then `method` is ignored. Otherwise `method` is
@@ -188,6 +181,7 @@ autoplot.mstl <- function(object, ...) {
 #' models are permitted.
 #' @param ... Other arguments passed to `forecast.stl`,
 #' `modelfunction` or `forecastfunction`.
+#' @inheritParams Arima
 #'
 #' @return `stlm` returns an object of class `stlm`. The other
 #' functions return objects of class `forecast`.
@@ -452,6 +446,7 @@ rowSumsTS <- function(mts) {
 stlm <- function(
   y,
   s.window = 7 + 4 * seq(6),
+  t.window = NULL,
   robust = FALSE,
   method = c("ets", "arima"),
   modelfunction = NULL,
@@ -497,7 +492,7 @@ stlm <- function(
   }
 
   # Do STL decomposition
-  stld <- mstl(x, s.window = s.window, robust = robust)
+  stld <- mstl(x, s.window = s.window, t.window = t.window, robust = robust)
 
   if (!is.null(model)) {
     if (inherits(model$model, "ets")) {

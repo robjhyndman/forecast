@@ -93,6 +93,8 @@ models are permitted.}
 \item{...}{Other arguments passed to \code{forecast.stl},
 \code{modelfunction} or \code{forecastfunction}.}
 
+\item{y}{a numeric vector or univariate time series of class \code{ts}}
+
 \item{s.window}{Either the character string \code{"periodic"} or the span (in
 lags) of the loess window for seasonal extraction.}
 
@@ -102,14 +104,7 @@ lags) of the loess window for seasonal extraction.}
 \item{robust}{If \code{TRUE}, robust fitting will used in the loess
 procedure within \code{\link[stats:stl]{stats::stl()}}.}
 
-\item{modelfunction}{An alternative way of specifying the function for
-modelling the seasonally adjusted series. If \code{modelfunction} is not
-\code{NULL}, then \code{method} is ignored. Otherwise \code{method} is used
-to specify the time series model to be used.}
-
-\item{model}{Output from a previous call to \code{stlm}. If a \code{stlm}
-model is passed, this same model is fitted to y without re-estimating any
-parameters.}
+\item{x}{Deprecated. Included for backwards compatibility.}
 }
 \value{
 \code{stlm} returns an object of class \code{stlm}. The other

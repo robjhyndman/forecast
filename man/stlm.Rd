@@ -7,6 +7,7 @@
 stlm(
   y,
   s.window = 7 + 4 * seq(6),
+  t.window = NULL,
   robust = FALSE,
   method = c("ets", "arima"),
   modelfunction = NULL,
@@ -25,6 +26,9 @@ stlm(
 
 \item{s.window}{Either the character string \code{"periodic"} or the span (in
 lags) of the loess window for seasonal extraction.}
+
+\item{t.window}{A number to control the smoothness of the trend. See
+\code{\link[stats:stl]{stats::stl()}} for details.}
 
 \item{robust}{If \code{TRUE}, robust fitting will used in the loess
 procedure within \code{\link[stats:stl]{stats::stl()}}.}
@@ -65,9 +69,6 @@ models are permitted.}
 \item{x}{Deprecated. Included for backwards compatibility.}
 
 \item{...}{Other arguments passed to \code{modelfunction}.}
-
-\item{t.window}{A number to control the smoothness of the trend. See
-\code{\link[stats:stl]{stats::stl()}} for details.}
 }
 \value{
 An object of class \code{stlm}.
