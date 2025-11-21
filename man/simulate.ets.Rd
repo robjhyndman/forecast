@@ -101,7 +101,7 @@
 
 \method{simulate}{spline_model}(
   object,
-  nsim = length(object$x),
+  nsim = length(object$y),
   seed = NULL,
   future = TRUE,
   bootstrap = FALSE,
