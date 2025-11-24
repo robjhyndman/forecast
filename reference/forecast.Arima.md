@@ -11,6 +11,10 @@ forecast(
   h = 10,
   level = c(80, 95),
   fan = FALSE,
+  simulate = FALSE,
+  bootstrap = FALSE,
+  innov = NULL,
+  npaths = 5000,
   lambda = object$lambda,
   biasadj = NULL,
   ...
@@ -75,30 +79,6 @@ forecast(
   If `TRUE`, `level` is set to `seq(51, 99, by = 3)`. This is suitable
   for fan plots.
 
-- lambda:
-
-  Box-Cox transformation parameter. If `lambda = "auto"`, then a
-  transformation is automatically selected using `BoxCox.lambda`. The
-  transformation is ignored if NULL. Otherwise, data transformed before
-  model is estimated.
-
-- biasadj:
-
-  Use adjusted back-transformed mean for Box-Cox transformations. If
-  transformed data is used to produce forecasts and fitted values, a
-  regular back transformation will result in median forecasts. If
-  biasadj is `TRUE`, an adjustment will be made to produce mean
-  forecasts and fitted values.
-
-- ...:
-
-  Other arguments are ignored.
-
-- xreg:
-
-  Future values of any regression variables. A numerical vector or
-  matrix of external regressors; it should not be a data frame.
-
 - simulate:
 
   If `TRUE`, prediction intervals are produced by simulation rather than
@@ -122,6 +102,30 @@ forecast(
 
   Number of sample paths used in computing simulated prediction
   intervals.
+
+- lambda:
+
+  Box-Cox transformation parameter. If `lambda = "auto"`, then a
+  transformation is automatically selected using `BoxCox.lambda`. The
+  transformation is ignored if NULL. Otherwise, data transformed before
+  model is estimated.
+
+- biasadj:
+
+  Use adjusted back-transformed mean for Box-Cox transformations. If
+  transformed data is used to produce forecasts and fitted values, a
+  regular back transformation will result in median forecasts. If
+  biasadj is `TRUE`, an adjustment will be made to produce mean
+  forecasts and fitted values.
+
+- ...:
+
+  Other arguments are ignored.
+
+- xreg:
+
+  Future values of any regression variables. A numerical vector or
+  matrix of external regressors; it should not be a data frame.
 
 ## Value
 

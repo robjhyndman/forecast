@@ -10,7 +10,18 @@ also produced.
 forecast(object, h, level = c(80, 95), fan = FALSE, biasadj = NULL, ...)
 
 # S3 method for class 'tbats'
-forecast(object, h, level = c(80, 95), fan = FALSE, biasadj = NULL, ...)
+forecast(
+  object,
+  h,
+  level = c(80, 95),
+  fan = FALSE,
+  simulate = FALSE,
+  bootstrap = FALSE,
+  innov = NULL,
+  npaths = 5000,
+  biasadj = NULL,
+  ...
+)
 ```
 
 ## Arguments
@@ -45,6 +56,30 @@ forecast(object, h, level = c(80, 95), fan = FALSE, biasadj = NULL, ...)
 - ...:
 
   Other arguments are ignored.
+
+- simulate:
+
+  If `TRUE`, prediction intervals are produced by simulation rather than
+  using analytic formulae. Errors are assumed to be normally
+  distributed.
+
+- bootstrap:
+
+  If `TRUE`, then prediction intervals are produced by simulation using
+  resampled errors (rather than normally distributed errors). Ignored if
+  `innov` is not `NULL`.
+
+- innov:
+
+  Optional matrix of future innovations to be used in simulations.
+  Ignored if `simulate = FALSE`. If provided, this overrides the
+  `bootstrap` argument. The matrix should have `h` rows and `npaths`
+  columns.
+
+- npaths:
+
+  Number of sample paths used in computing simulated prediction
+  intervals.
 
 ## Value
 

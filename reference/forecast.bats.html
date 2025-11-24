@@ -46,7 +46,18 @@ also produced.</p>
 <span><span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">h</span>, level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">95</span><span class="op">)</span>, fan <span class="op">=</span> <span class="cn">FALSE</span>, biasadj <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'tbats'</span></span>
-<span><span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">h</span>, level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">95</span><span class="op">)</span>, fan <span class="op">=</span> <span class="cn">FALSE</span>, biasadj <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  <span class="va">h</span>,</span>
+<span>  level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">95</span><span class="op">)</span>,</span>
+<span>  fan <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  simulate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  innov <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  npaths <span class="op">=</span> <span class="fl">5000</span>,</span>
+<span>  biasadj <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -82,6 +93,27 @@ and fitted values.</p></dd>
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Other arguments are ignored.</p></dd>
+
+
+<dt id="arg-simulate">simulate<a class="anchor" aria-label="anchor" href="#arg-simulate"></a></dt>
+<dd><p>If <code>TRUE</code>, prediction intervals are produced by simulation rather
+than using analytic formulae. Errors are assumed to be normally distributed.</p></dd>
+
+
+<dt id="arg-bootstrap">bootstrap<a class="anchor" aria-label="anchor" href="#arg-bootstrap"></a></dt>
+<dd><p>If <code>TRUE</code>, then prediction intervals are produced by
+simulation using resampled errors (rather than normally distributed errors). Ignored if <code>innov</code> is not <code>NULL</code>.</p></dd>
+
+
+<dt id="arg-innov">innov<a class="anchor" aria-label="anchor" href="#arg-innov"></a></dt>
+<dd><p>Optional matrix of future innovations to be used in
+simulations. Ignored if <code>simulate = FALSE</code>. If provided, this overrides the <code>bootstrap</code> argument. The matrix
+should have <code>h</code> rows and <code>npaths</code> columns.</p></dd>
+
+
+<dt id="arg-npaths">npaths<a class="anchor" aria-label="anchor" href="#arg-npaths"></a></dt>
+<dd><p>Number of sample paths used in computing simulated prediction
+intervals.</p></dd>
 
 </dl></div>
     <div class="section level2">
