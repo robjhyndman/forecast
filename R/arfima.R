@@ -232,6 +232,10 @@ forecast.fracdiff <- function(
   h = 10,
   level = c(80, 95),
   fan = FALSE,
+  simulate = FALSE,
+  bootstrap = FALSE,
+  innov = NULL,
+  npaths = 5000,
   lambda = object$lambda,
   biasadj = NULL,
   ...
@@ -317,11 +321,27 @@ forecast.fracdiff <- function(
   # Compute prediction intervals
   level <- getConfLevel(level, fan)
   nint <- length(level)
-  upper <- lower <- matrix(NA, ncol = nint, nrow = h)
-  for (i in 1:nint) {
-    qq <- qnorm(0.5 * (1 + level[i] / 100))
-    lower[, i] <- fcast.x - qq * fse
-    upper[, i] <- fcast.x + qq * fse
+  if (simulate || bootstrap) {
+    # Compute prediction intervals using simulations
+    hilo <- simulate_forecast(
+      object = fit,
+      h = h,
+      level = level,
+      npaths = npaths,
+      bootstrap = bootstrap,
+      innov = innov,
+      ...
+    )
+    lower <- hilo$lower
+    upper <- hilo$upper
+  } else {
+    # Compute prediction intervals using normal approximation
+    upper <- lower <- matrix(NA, ncol = nint, nrow = h)
+    for (i in 1:nint) {
+      qq <- qnorm(0.5 * (1 + level[i] / 100))
+      lower[, i] <- fcast.x - qq * fse
+      upper[, i] <- fcast.x + qq * fse
+    }
   }
   colnames(lower) <- colnames(upper) <- paste0(level, "%")
 

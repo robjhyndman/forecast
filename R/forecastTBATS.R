@@ -5,6 +5,10 @@ forecast.tbats <- function(
   h,
   level = c(80, 95),
   fan = FALSE,
+  simulate = FALSE,
+  bootstrap = FALSE,
+  innov = NULL,
+  npaths = 5000,
   biasadj = NULL,
   ...
 ) {
@@ -110,43 +114,67 @@ forecast.tbats <- function(
       y.forecast[t] <- w$w.transpose %*% x[, (t - 1)]
     }
   }
-  ## Make prediction intervals here
-  lower.bounds <- upper.bounds <- matrix(NA, ncol = length(level), nrow = h)
-  variance.multiplier <- numeric(h)
-  variance.multiplier[1] <- 1
-  if (h > 1) {
-    for (j in 1:(h - 1)) {
-      if (j == 1) {
-        f.running <- diag(ncol(F))
-      } else {
-        f.running <- f.running %*% F
-      }
-      c.j <- w$w.transpose %*% f.running %*% g
-      variance.multiplier[(j + 1)] <- variance.multiplier[j] + c.j^2
-    }
-  }
-
-  variance <- object$variance * variance.multiplier
-  # print(variance)
-  st.dev <- sqrt(variance)
-  for (i in seq_along(level)) {
-    marg.error <- st.dev * abs(qnorm((100 - level[i]) / 200))
-    lower.bounds[, i] <- y.forecast - marg.error
-    upper.bounds[, i] <- y.forecast + marg.error
-  }
-  # Inv Box Cox transform if required
-  if (!is.null(object$lambda)) {
-    y.forecast <- InvBoxCox(
-      y.forecast,
-      object$lambda,
-      biasadj,
-      list(level = level, upper = upper.bounds, lower = lower.bounds)
+  if (simulate || bootstrap) {
+    # Compute prediction intervals using simulations
+    hilo <- simulate_forecast(
+      object = object,
+      h = h,
+      level = level,
+      npaths = npaths,
+      bootstrap = bootstrap,
+      innov = innov,
+      ...
     )
-    lower.bounds <- InvBoxCox(lower.bounds, object$lambda)
-    if (object$lambda < 1) {
-      lower.bounds <- pmax(lower.bounds, 0)
+    lower.bounds <- hilo$lower
+    upper.bounds <- hilo$upper
+    # Inv Box Cox transform if required
+    if (!is.null(object$lambda)) {
+      y.forecast <- InvBoxCox(
+        y.forecast,
+        object$lambda,
+        biasadj,
+        list(level = level, upper = upper.bounds, lower = lower.bounds)
+      )
     }
-    upper.bounds <- InvBoxCox(upper.bounds, object$lambda)
+  } else {
+    ## Make prediction intervals here
+    lower.bounds <- upper.bounds <- matrix(NA, ncol = length(level), nrow = h)
+    variance.multiplier <- numeric(h)
+    variance.multiplier[1] <- 1
+    if (h > 1) {
+      for (j in 1:(h - 1)) {
+        if (j == 1) {
+          f.running <- diag(ncol(F))
+        } else {
+          f.running <- f.running %*% F
+        }
+        c.j <- w$w.transpose %*% f.running %*% g
+        variance.multiplier[(j + 1)] <- variance.multiplier[j] + c.j^2
+      }
+    }
+
+    variance <- object$variance * variance.multiplier
+    # print(variance)
+    st.dev <- sqrt(variance)
+    for (i in seq_along(level)) {
+      marg.error <- st.dev * abs(qnorm((100 - level[i]) / 200))
+      lower.bounds[, i] <- y.forecast - marg.error
+      upper.bounds[, i] <- y.forecast + marg.error
+    }
+    # Inv Box Cox transform if required
+    if (!is.null(object$lambda)) {
+      y.forecast <- InvBoxCox(
+        y.forecast,
+        object$lambda,
+        biasadj,
+        list(level = level, upper = upper.bounds, lower = lower.bounds)
+      )
+      lower.bounds <- InvBoxCox(lower.bounds, object$lambda)
+      if (object$lambda < 1) {
+        lower.bounds <- pmax(lower.bounds, 0)
+      }
+      upper.bounds <- InvBoxCox(upper.bounds, object$lambda)
+    }
   }
   colnames(upper.bounds) <- colnames(lower.bounds) <- paste0(level, "%")
 
