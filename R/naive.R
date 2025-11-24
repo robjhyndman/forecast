@@ -178,6 +178,7 @@ forecast.rw_model <- function(
   simulate = FALSE,
   bootstrap = FALSE,
   npaths = 5000,
+  innov = NULL,
   lambda = object$lambda,
   biasadj = FALSE,
   ...
@@ -200,24 +201,18 @@ forecast.rw_model <- function(
 
   if (simulate || bootstrap) {
     # Compute prediction intervals using simulations
-    sim <- matrix(NA, nrow = npaths, ncol = h)
-    for (i in 1:npaths) {
-      sim[i, ] <- simulate(
-        object,
-        nsim = h,
-        bootstrap = bootstrap,
-        lambda = lambda
-      )
-    }
-    lower <- apply(sim, 2, quantile, 0.5 - level / 200, type = 8)
-    upper <- apply(sim, 2, quantile, 0.5 + level / 200, type = 8)
-    if (nconf > 1L) {
-      lower <- t(lower)
-      upper <- t(upper)
-    } else {
-      lower <- matrix(lower, ncol = 1)
-      upper <- matrix(upper, ncol = 1)
-    }
+    hilo <- simulate_forecast(
+      object = object,
+      h = h,
+      level = level,
+      npaths =npaths,
+      bootstrap = bootstrap,
+      innov = innov,
+      lambda = lambda,
+      ...
+    )
+    lower <- hilo$lower
+    upper <- hilo$upper
   } else {
     z <- qnorm(.5 + level / 200)
     lower <- upper <- matrix(NA, nrow = h, ncol = nconf)

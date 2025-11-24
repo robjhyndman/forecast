@@ -8,7 +8,10 @@
 #' @param simulate If `TRUE`, prediction intervals are produced by simulation rather
 #' than using analytic formulae. Errors are assumed to be normally distributed.
 #' @param bootstrap If `TRUE`, then prediction intervals are produced by
-#' simulation using resampled errors (rather than normally distributed errors).
+#' simulation using resampled errors (rather than normally distributed errors). Ignored if `innov` is not `NULL`.
+#' @param innov Optional matrix of future innovations to be used in
+#' simulations. Ignored if `simulate = FALSE`. If provided, this overrides the `bootstrap` argument. The matrix
+#' should have `h` rows and `npaths` columns.
 #' @param npaths Number of sample paths used in computing simulated prediction
 #' intervals.
 #' @param PI If `TRUE`, prediction intervals are produced, otherwise only point
@@ -34,6 +37,7 @@ forecast.ets <- function(
   fan = FALSE,
   simulate = FALSE,
   bootstrap = FALSE,
+  innov = NULL,
   npaths = 5000,
   PI = TRUE,
   lambda = object$lambda,
@@ -189,12 +193,9 @@ forecast.ets <- function(
   structure(out, class = "forecast")
 }
 
-pegelsfcast.C <- function(h, obj, npaths, level, bootstrap) {
+pegelsfcast.C <- function(h, obj, npaths, level, bootstrap, innov=NULL) {
   y.paths <- matrix(NA, nrow = npaths, ncol = h)
   obj$lambda <- NULL # No need to transform these here as we do it later.
-  for (i in 1:npaths) {
-    y.paths[i, ] <- simulate.ets(obj, h, future = TRUE, bootstrap = bootstrap)
-  }
   y.f <- .C(
     "etsforecast",
     as.double(obj$states[length(obj$x) + 1, ]),
@@ -209,27 +210,16 @@ pegelsfcast.C <- function(h, obj, npaths, level, bootstrap) {
   if (abs(y.f[1] + 99999) < 1e-7) {
     stop("Problem with multiplicative damped trend")
   }
-
-  lower <- apply(
-    y.paths,
-    2,
-    quantile,
-    0.5 - level / 200,
-    type = 8,
-    na.rm = TRUE
+  hilo <- simulate_forecast(
+    object = obj,
+    h = h,
+    level = level,
+    npaths = npaths,
+    bootstrap = bootstrap,
+    innov = innov,
   )
-  upper <- apply(
-    y.paths,
-    2,
-    quantile,
-    0.5 + level / 200,
-    type = 8,
-    na.rm = TRUE
-  )
-  if (length(level) > 1) {
-    lower <- t(lower)
-    upper <- t(upper)
-  }
+  lower <- hilo$lower
+  upper <- hilo$upper
   list(mu = y.f, lower = lower, upper = upper)
 }
 

@@ -13,8 +13,8 @@
   xreg = NULL,
   lambda = object$lambda,
   bootstrap = FALSE,
-  npaths = 1000,
   innov = NULL,
+  npaths = 1000,
   ...
 )
 }
@@ -44,14 +44,14 @@ The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.}
 
 \item{bootstrap}{If \code{TRUE}, then prediction intervals are produced by
-simulation using resampled errors (rather than normally distributed errors).}
-
-\item{npaths}{Number of sample paths used in computing simulated prediction
-intervals.}
+simulation using resampled errors (rather than normally distributed errors). Ignored if \code{innov} is not \code{NULL}.}
 
 \item{innov}{Values to use as innovations for prediction intervals. Must be
 a matrix with \code{h} rows and \code{npaths} columns (vectors are coerced
 into a matrix). If present, \code{bootstrap} is ignored.}
+
+\item{npaths}{Number of sample paths used in computing simulated prediction
+intervals.}
 
 \item{...}{Additional arguments passed to \code{\link[=simulate.nnetar]{simulate.nnetar()}}.}
 }

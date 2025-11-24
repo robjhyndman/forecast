@@ -15,6 +15,7 @@
   simulate = FALSE,
   bootstrap = FALSE,
   npaths = 5000,
+  innov = NULL,
   lambda = object$lambda,
   biasadj = FALSE,
   ...
@@ -70,10 +71,14 @@ This is suitable for fan plots.}
 than using analytic formulae. Errors are assumed to be normally distributed.}
 
 \item{bootstrap}{If \code{TRUE}, then prediction intervals are produced by
-simulation using resampled errors (rather than normally distributed errors).}
+simulation using resampled errors (rather than normally distributed errors). Ignored if \code{innov} is not \code{NULL}.}
 
 \item{npaths}{Number of sample paths used in computing simulated prediction
 intervals.}
+
+\item{innov}{Optional matrix of future innovations to be used in
+simulations. Ignored if \code{simulate = FALSE}. If provided, this overrides the \code{bootstrap} argument. The matrix
+should have \code{h} rows and \code{npaths} columns.}
 
 \item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.

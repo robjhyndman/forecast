@@ -361,8 +361,8 @@ forecast.modelAR <- function(
   xreg = NULL,
   lambda = object$lambda,
   bootstrap = FALSE,
-  npaths = 1000,
   innov = NULL,
+  npaths = 1000,
   ...
 ) {
   out <- object
@@ -433,34 +433,18 @@ forecast.modelAR <- function(
   # Compute prediction intervals using simulations
   if (isTRUE(PI)) {
     nint <- length(level)
-    sim <- matrix(NA, nrow = npaths, ncol = h)
-    if (!is.null(innov)) {
-      if (length(innov) != h * npaths) {
-        stop("Incorrect number of innovations, need h*npaths values")
-      }
-      innov <- matrix(innov, nrow = h, ncol = npaths)
-      bootstrap <- FALSE
-    }
-    for (i in 1:npaths) {
-      sim[i, ] <- simulate(
-        object,
-        nsim = h,
-        bootstrap = bootstrap,
-        xreg = xreg,
-        lambda = lambda,
-        innov = innov[, i],
-        ...
-      )
-    }
-    lower <- apply(sim, 2, quantile, 0.5 - level / 200, type = 8)
-    upper <- apply(sim, 2, quantile, 0.5 + level / 200, type = 8)
-    if (nint > 1L) {
-      lower <- ts(t(lower))
-      upper <- ts(t(upper))
-    } else {
-      lower <- ts(matrix(lower, ncol = 1L))
-      upper <- ts(matrix(upper, ncol = 1L))
-    }
+    hilo <- simulate_forecast(
+      object = object,
+      h = h,
+      level = level,
+      npaths = npaths,
+      bootstrap = bootstrap,
+      innov = innov,
+      lambda = lambda,
+      ...
+    )
+    lower <- ts(hilo$lower)
+    upper <- ts(hilo$upper)
     tsp(lower) <- tsp(upper) <- tsp(fcast)
   } else {
     level <- NULL

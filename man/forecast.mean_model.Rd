@@ -52,7 +52,7 @@ biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
 and fitted values.}
 
 \item{bootstrap}{If \code{TRUE}, then prediction intervals are produced by
-simulation using resampled errors (rather than normally distributed errors).}
+simulation using resampled errors (rather than normally distributed errors). Ignored if \code{innov} is not \code{NULL}.}
 
 \item{npaths}{Number of sample paths used in computing simulated prediction
 intervals.}

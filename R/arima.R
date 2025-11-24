@@ -312,7 +312,9 @@ forecast.Arima <- function(
   level = c(80, 95),
   fan = FALSE,
   xreg = NULL,
+  simulate = FALSE,
   bootstrap = FALSE,
+  innov = NULL,
   npaths = 5000,
   lambda = object$lambda,
   biasadj = NULL,
@@ -423,27 +425,19 @@ forecast.Arima <- function(
 
   # Compute prediction intervals
   nint <- length(level)
-  if (bootstrap) {
+  if (simulate || bootstrap) {
     # Compute prediction intervals using simulations
-    sim <- matrix(NA, nrow = npaths, ncol = h)
-    for (i in 1:npaths) {
-      sim[i, ] <- simulate(
-        object,
-        nsim = h,
-        bootstrap = TRUE,
-        xreg = origxreg,
-        lambda = lambda
-      )
-    }
-    lower <- apply(sim, 2, quantile, 0.5 - level / 200, type = 8)
-    upper <- apply(sim, 2, quantile, 0.5 + level / 200, type = 8)
-    if (nint > 1L) {
-      lower <- t(lower)
-      upper <- t(upper)
-    } else {
-      lower <- matrix(lower, ncol = 1)
-      upper <- matrix(upper, ncol = 1)
-    }
+    hilo <- simulate_forecast(
+      object,
+      h,
+      level = level,
+      npaths = npaths,
+      bootstrap = bootstrap,
+      innov = innov,
+      lambda = lambda
+    )
+    lower <- hilo$lower
+    upper <- hilo$upper
   } else {
     # Compute prediction intervals via the normal distribution
     lower <- matrix(NA, ncol = nint, nrow = length(pred$pred))
@@ -506,7 +500,9 @@ forecast.ar <- function(
   h = 10,
   level = c(80, 95),
   fan = FALSE,
+  simulate = FALSE,
   bootstrap = FALSE,
+  innov = NULL,
   npaths = 5000,
   lambda = NULL,
   biasadj = FALSE,
@@ -514,22 +510,28 @@ forecast.ar <- function(
 ) {
   x <- getResponse(object)
   pred <- predict(object, newdata = x, n.ahead = h)
-  if (bootstrap) {
-    # Recompute se using simulations
-    sim <- matrix(NA, nrow = npaths, ncol = h)
-    for (i in 1:npaths) {
-      sim[i, ] <- simulate(object, nsim = h, bootstrap = TRUE)
-    }
-    pred$se <- apply(sim, 2, sd)
-  }
   level <- getConfLevel(level, fan)
   nint <- length(level)
-  lower <- matrix(NA, ncol = nint, nrow = length(pred$pred))
-  upper <- lower
-  for (i in 1:nint) {
-    qq <- qnorm(0.5 * (1 + level[i] / 100))
-    lower[, i] <- pred$pred - qq * pred$se
-    upper[, i] <- pred$pred + qq * pred$se
+  if (simulate || bootstrap) {
+    hilo <- simulate_forecast(
+      object,
+      h,
+      level = level,
+      npaths = npaths,
+      bootstrap = bootstrap,
+      innov = innov,
+      lambda = lambda
+    )
+    lower <- hilo$lower
+    upper <- hilo$upper
+  } else {
+    lower <- matrix(NA, ncol = nint, nrow = length(pred$pred))
+    upper <- lower
+    for (i in 1:nint) {
+      qq <- qnorm(0.5 * (1 + level[i] / 100))
+      lower[, i] <- pred$pred - qq * pred$se
+      upper[, i] <- pred$pred + qq * pred$se
+    }
   }
   colnames(lower) <- colnames(upper) <- paste0(level, "%")
   method <- paste0("AR(", object$order, ")")

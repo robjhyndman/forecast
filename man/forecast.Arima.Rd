@@ -23,7 +23,9 @@
   level = c(80, 95),
   fan = FALSE,
   xreg = NULL,
+  simulate = FALSE,
   bootstrap = FALSE,
+  innov = NULL,
   npaths = 5000,
   lambda = object$lambda,
   biasadj = NULL,
@@ -35,7 +37,9 @@
   h = 10,
   level = c(80, 95),
   fan = FALSE,
+  simulate = FALSE,
   bootstrap = FALSE,
+  innov = NULL,
   npaths = 5000,
   lambda = NULL,
   biasadj = FALSE,
@@ -72,8 +76,15 @@ and fitted values.}
 \item{xreg}{Future values of any regression variables. A numerical vector or
 matrix of external regressors; it should not be a data frame.}
 
+\item{simulate}{If \code{TRUE}, prediction intervals are produced by simulation rather
+than using analytic formulae. Errors are assumed to be normally distributed.}
+
 \item{bootstrap}{If \code{TRUE}, then prediction intervals are produced by
-simulation using resampled errors (rather than normally distributed errors).}
+simulation using resampled errors (rather than normally distributed errors). Ignored if \code{innov} is not \code{NULL}.}
+
+\item{innov}{Optional matrix of future innovations to be used in
+simulations. Ignored if \code{simulate = FALSE}. If provided, this overrides the \code{bootstrap} argument. The matrix
+should have \code{h} rows and \code{npaths} columns.}
 
 \item{npaths}{Number of sample paths used in computing simulated prediction
 intervals.}

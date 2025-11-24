@@ -215,6 +215,7 @@ forecast.spline_model <- function(
   biasadj = NULL,
   simulate = FALSE,
   bootstrap = FALSE,
+  innov = NULL,
   npaths = 5000,
   ...
 ) {
@@ -246,24 +247,17 @@ forecast.spline_model <- function(
   )
   if (simulate || bootstrap) {
     # Compute prediction intervals using simulations
-    sim <- matrix(NA, nrow = npaths, ncol = h)
-    for (i in 1:npaths) {
-      sim[i, ] <- simulate(
-        object,
-        nsim = h,
-        bootstrap = bootstrap,
-        lambda = lambda
-      )
-    }
-    lower <- apply(sim, 2, quantile, 0.5 - level / 200, type = 8)
-    upper <- apply(sim, 2, quantile, 0.5 + level / 200, type = 8)
-    if (nconf > 1L) {
-      lower <- t(lower)
-      upper <- t(upper)
-    } else {
-      lower <- matrix(lower, ncol = 1)
-      upper <- matrix(upper, ncol = 1)
-    }
+    hilo <- simulate_forecast(
+      object = object,
+      h = h,
+      level = max(level),
+      npaths = npaths,
+      bootstrap = bootstrap,
+      innov = innov,
+      lambda = lambda
+    )
+    lower <- hilo$lower
+    upper <- hilo$upper
   } else {
     conf.factor <- qnorm(0.5 + 0.005 * level)
     for (i in seq(nconf)) {
