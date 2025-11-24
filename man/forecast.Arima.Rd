@@ -12,6 +12,10 @@
   h = 10,
   level = c(80, 95),
   fan = FALSE,
+  simulate = FALSE,
+  bootstrap = FALSE,
+  innov = NULL,
+  npaths = 5000,
   lambda = object$lambda,
   biasadj = NULL,
   ...
@@ -60,6 +64,19 @@ of \code{xreg}.}
 \item{fan}{If \code{TRUE}, \code{level} is set to \code{seq(51, 99, by = 3)}.
 This is suitable for fan plots.}
 
+\item{simulate}{If \code{TRUE}, prediction intervals are produced by simulation rather
+than using analytic formulae. Errors are assumed to be normally distributed.}
+
+\item{bootstrap}{If \code{TRUE}, then prediction intervals are produced by
+simulation using resampled errors (rather than normally distributed errors). Ignored if \code{innov} is not \code{NULL}.}
+
+\item{innov}{Optional matrix of future innovations to be used in
+simulations. Ignored if \code{simulate = FALSE}. If provided, this overrides the \code{bootstrap} argument. The matrix
+should have \code{h} rows and \code{npaths} columns.}
+
+\item{npaths}{Number of sample paths used in computing simulated prediction
+intervals.}
+
 \item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
 The transformation is ignored if NULL. Otherwise,
@@ -75,19 +92,6 @@ and fitted values.}
 
 \item{xreg}{Future values of any regression variables. A numerical vector or
 matrix of external regressors; it should not be a data frame.}
-
-\item{simulate}{If \code{TRUE}, prediction intervals are produced by simulation rather
-than using analytic formulae. Errors are assumed to be normally distributed.}
-
-\item{bootstrap}{If \code{TRUE}, then prediction intervals are produced by
-simulation using resampled errors (rather than normally distributed errors). Ignored if \code{innov} is not \code{NULL}.}
-
-\item{innov}{Optional matrix of future innovations to be used in
-simulations. Ignored if \code{simulate = FALSE}. If provided, this overrides the \code{bootstrap} argument. The matrix
-should have \code{h} rows and \code{npaths} columns.}
-
-\item{npaths}{Number of sample paths used in computing simulated prediction
-intervals.}
 }
 \value{
 An object of class \code{forecast}.
