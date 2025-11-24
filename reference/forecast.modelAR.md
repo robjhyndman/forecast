@@ -15,8 +15,8 @@ forecast(
   xreg = NULL,
   lambda = object$lambda,
   bootstrap = FALSE,
-  npaths = 1000,
   innov = NULL,
+  npaths = 1000,
   ...
 )
 ```
@@ -64,18 +64,19 @@ forecast(
 - bootstrap:
 
   If `TRUE`, then prediction intervals are produced by simulation using
-  resampled errors (rather than normally distributed errors).
-
-- npaths:
-
-  Number of sample paths used in computing simulated prediction
-  intervals.
+  resampled errors (rather than normally distributed errors). Ignored if
+  `innov` is not `NULL`.
 
 - innov:
 
   Values to use as innovations for prediction intervals. Must be a
   matrix with `h` rows and `npaths` columns (vectors are coerced into a
   matrix). If present, `bootstrap` is ignored.
+
+- npaths:
+
+  Number of sample paths used in computing simulated prediction
+  intervals.
 
 - ...:
 

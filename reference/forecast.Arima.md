@@ -23,7 +23,9 @@ forecast(
   level = c(80, 95),
   fan = FALSE,
   xreg = NULL,
+  simulate = FALSE,
   bootstrap = FALSE,
+  innov = NULL,
   npaths = 5000,
   lambda = object$lambda,
   biasadj = NULL,
@@ -36,7 +38,9 @@ forecast(
   h = 10,
   level = c(80, 95),
   fan = FALSE,
+  simulate = FALSE,
   bootstrap = FALSE,
+  innov = NULL,
   npaths = 5000,
   lambda = NULL,
   biasadj = FALSE,
@@ -95,10 +99,24 @@ forecast(
   Future values of any regression variables. A numerical vector or
   matrix of external regressors; it should not be a data frame.
 
+- simulate:
+
+  If `TRUE`, prediction intervals are produced by simulation rather than
+  using analytic formulae. Errors are assumed to be normally
+  distributed.
+
 - bootstrap:
 
   If `TRUE`, then prediction intervals are produced by simulation using
-  resampled errors (rather than normally distributed errors).
+  resampled errors (rather than normally distributed errors). Ignored if
+  `innov` is not `NULL`.
+
+- innov:
+
+  Optional matrix of future innovations to be used in simulations.
+  Ignored if `simulate = FALSE`. If provided, this overrides the
+  `bootstrap` argument. The matrix should have `h` rows and `npaths`
+  columns.
 
 - npaths:
 

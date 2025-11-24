@@ -57,6 +57,7 @@ snaive() is a wrapper to rwf() with drift=FALSE and lag=frequency(y)."><meta pro
 <span>  simulate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  npaths <span class="op">=</span> <span class="fl">5000</span>,</span>
+<span>  innov <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  lambda <span class="op">=</span> <span class="va">object</span><span class="op">$</span><span class="va">lambda</span>,</span>
 <span>  biasadj <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -127,12 +128,18 @@ than using analytic formulae. Errors are assumed to be normally distributed.</p>
 
 <dt id="arg-bootstrap">bootstrap<a class="anchor" aria-label="anchor" href="#arg-bootstrap"></a></dt>
 <dd><p>If <code>TRUE</code>, then prediction intervals are produced by
-simulation using resampled errors (rather than normally distributed errors).</p></dd>
+simulation using resampled errors (rather than normally distributed errors). Ignored if <code>innov</code> is not <code>NULL</code>.</p></dd>
 
 
 <dt id="arg-npaths">npaths<a class="anchor" aria-label="anchor" href="#arg-npaths"></a></dt>
 <dd><p>Number of sample paths used in computing simulated prediction
 intervals.</p></dd>
+
+
+<dt id="arg-innov">innov<a class="anchor" aria-label="anchor" href="#arg-innov"></a></dt>
+<dd><p>Optional matrix of future innovations to be used in
+simulations. Ignored if <code>simulate = FALSE</code>. If provided, this overrides the <code>bootstrap</code> argument. The matrix
+should have <code>h</code> rows and <code>npaths</code> columns.</p></dd>
 
 
 <dt id="arg-lambda">lambda<a class="anchor" aria-label="anchor" href="#arg-lambda"></a></dt>

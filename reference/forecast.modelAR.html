@@ -52,8 +52,8 @@ models.</p>
 <span>  xreg <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  lambda <span class="op">=</span> <span class="va">object</span><span class="op">$</span><span class="va">lambda</span>,</span>
 <span>  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  npaths <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>  innov <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  npaths <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -102,18 +102,18 @@ data transformed before model is estimated.</p></dd>
 
 <dt id="arg-bootstrap">bootstrap<a class="anchor" aria-label="anchor" href="#arg-bootstrap"></a></dt>
 <dd><p>If <code>TRUE</code>, then prediction intervals are produced by
-simulation using resampled errors (rather than normally distributed errors).</p></dd>
-
-
-<dt id="arg-npaths">npaths<a class="anchor" aria-label="anchor" href="#arg-npaths"></a></dt>
-<dd><p>Number of sample paths used in computing simulated prediction
-intervals.</p></dd>
+simulation using resampled errors (rather than normally distributed errors). Ignored if <code>innov</code> is not <code>NULL</code>.</p></dd>
 
 
 <dt id="arg-innov">innov<a class="anchor" aria-label="anchor" href="#arg-innov"></a></dt>
 <dd><p>Values to use as innovations for prediction intervals. Must be
 a matrix with <code>h</code> rows and <code>npaths</code> columns (vectors are coerced
 into a matrix). If present, <code>bootstrap</code> is ignored.</p></dd>
+
+
+<dt id="arg-npaths">npaths<a class="anchor" aria-label="anchor" href="#arg-npaths"></a></dt>
+<dd><p>Number of sample paths used in computing simulated prediction
+intervals.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

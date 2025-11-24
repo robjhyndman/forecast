@@ -13,6 +13,7 @@ forecast(
   fan = FALSE,
   simulate = FALSE,
   bootstrap = FALSE,
+  innov = NULL,
   npaths = 5000,
   PI = TRUE,
   lambda = object$lambda,
@@ -51,7 +52,15 @@ forecast(
 - bootstrap:
 
   If `TRUE`, then prediction intervals are produced by simulation using
-  resampled errors (rather than normally distributed errors).
+  resampled errors (rather than normally distributed errors). Ignored if
+  `innov` is not `NULL`.
+
+- innov:
+
+  Optional matrix of future innovations to be used in simulations.
+  Ignored if `simulate = FALSE`. If provided, this overrides the
+  `bootstrap` argument. The matrix should have `h` rows and `npaths`
+  columns.
 
 - npaths:
 

@@ -73,7 +73,8 @@ meanf(
 - bootstrap:
 
   If `TRUE`, then prediction intervals are produced by simulation using
-  resampled errors (rather than normally distributed errors).
+  resampled errors (rather than normally distributed errors). Ignored if
+  `innov` is not `NULL`.
 
 - npaths:
 

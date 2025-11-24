@@ -20,6 +20,7 @@ forecast(
   simulate = FALSE,
   bootstrap = FALSE,
   npaths = 5000,
+  innov = NULL,
   lambda = object$lambda,
   biasadj = FALSE,
   ...
@@ -91,12 +92,20 @@ snaive(
 - bootstrap:
 
   If `TRUE`, then prediction intervals are produced by simulation using
-  resampled errors (rather than normally distributed errors).
+  resampled errors (rather than normally distributed errors). Ignored if
+  `innov` is not `NULL`.
 
 - npaths:
 
   Number of sample paths used in computing simulated prediction
   intervals.
+
+- innov:
+
+  Optional matrix of future innovations to be used in simulations.
+  Ignored if `simulate = FALSE`. If provided, this overrides the
+  `bootstrap` argument. The matrix should have `h` rows and `npaths`
+  columns.
 
 - lambda:
 

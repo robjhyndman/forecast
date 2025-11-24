@@ -64,6 +64,7 @@ restricted parameter space.</p>
 <span>  biasadj <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  simulate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  innov <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  npaths <span class="op">=</span> <span class="fl">5000</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
@@ -124,7 +125,13 @@ than using analytic formulae. Errors are assumed to be normally distributed.</p>
 
 <dt id="arg-bootstrap">bootstrap<a class="anchor" aria-label="anchor" href="#arg-bootstrap"></a></dt>
 <dd><p>If <code>TRUE</code>, then prediction intervals are produced by
-simulation using resampled errors (rather than normally distributed errors).</p></dd>
+simulation using resampled errors (rather than normally distributed errors). Ignored if <code>innov</code> is not <code>NULL</code>.</p></dd>
+
+
+<dt id="arg-innov">innov<a class="anchor" aria-label="anchor" href="#arg-innov"></a></dt>
+<dd><p>Optional matrix of future innovations to be used in
+simulations. Ignored if <code>simulate = FALSE</code>. If provided, this overrides the <code>bootstrap</code> argument. The matrix
+should have <code>h</code> rows and <code>npaths</code> columns.</p></dd>
 
 
 <dt id="arg-npaths">npaths<a class="anchor" aria-label="anchor" href="#arg-npaths"></a></dt>
