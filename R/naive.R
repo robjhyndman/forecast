@@ -224,7 +224,7 @@ forecast.rw_model <- function(
 
   if (!is.null(lambda)) {
     fc <- InvBoxCox(fc, lambda, biasadj, se^2)
-    if (!bootstrap) {
+    if (!bootstrap & !simulate) {
       # Bootstrap intervals are already backtransformed
       upper <- InvBoxCox(upper, lambda)
       lower <- InvBoxCox(lower, lambda)
