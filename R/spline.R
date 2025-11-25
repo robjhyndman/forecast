@@ -141,12 +141,11 @@ spline_model <- function(
   }
   # Compute sigma^2
   sigma2 <- mean(e^2, na.rm = TRUE)
-  res <- ts(c(y) - c(yfit))
   if (!is.null(lambda)) {
     yfit <- InvBoxCox(yfit, lambda)
     sfits <- InvBoxCox(sfits, lambda)
   }
-  tsp(e) <- tsp(res) <- tsp(yfit) <- tsp(sfits) <- tsattr
+  tsp(e) <- tsp(yfit) <- tsp(sfits) <- tsattr
 
   structure(
     list(
@@ -157,8 +156,7 @@ spline_model <- function(
       beta = beta.est * n^3,
       sigma2 = sigma2,
       fitted = sfits,
-      residuals = res,
-      standardizedresiduals = e,
+      residuals = e,
       onestepf = yfit,
       call = match.call()
     ),
@@ -250,7 +248,7 @@ forecast.spline_model <- function(
     hilo <- simulate_forecast(
       object = object,
       h = h,
-      level = max(level),
+      level = level,
       npaths = npaths,
       bootstrap = bootstrap,
       innov = innov,
@@ -273,9 +271,13 @@ forecast.spline_model <- function(
       biasadj,
       list(level = level, upper = upper, lower = lower)
     )
-    upper <- InvBoxCox(upper, lambda)
-    lower <- InvBoxCox(lower, lambda)
+    if (!simulate & !bootstrap) {
+      upper <- InvBoxCox(upper, lambda)
+      lower <- InvBoxCox(lower, lambda)
+    }
   }
+
+  colnames(lower) <- colnames(upper) <- paste0(level, "%")
 
   structure(
     list(
@@ -289,7 +291,6 @@ forecast.spline_model <- function(
       lower = lower,
       fitted = object$fitted,
       residuals = object$residuals,
-      standardizedresiduals = object$standardizedresiduals,
       onestepf = object$onestepf
     ),
     lambda = lambda,
@@ -399,7 +400,7 @@ simulate.spline_model <- function(
     U <- mat$Omega[seq(i), i + 1]
     Oinv <- solve(mat$Omega[idx, idx] / 1e6) / 1e6
     sd <- sqrt(mat$Omega[i + 1, i + 1] - t(U) %*% Oinv %*% U)
-    y[i + 1] <- t(U) %*% Oinv %*% y[idx] + e[i - nhistory+1]*sd
+    y[i + 1] <- t(U) %*% Oinv %*% y[idx] + e[i - nhistory + 1] * sd
   }
   sim <- tail(y, nsim)
   if (!is.null(lambda)) {
@@ -411,4 +412,23 @@ simulate.spline_model <- function(
     start = if (future) tspx[2] + 1 / tspx[3] else tspx[1],
     frequency = tspx[3]
   )
+}
+
+#' @export
+residuals.spline_model <- function(
+  object,
+  type = c("innovation", "response"),
+  h = 1,
+  ...
+) {
+  y <- getResponse(object)
+  type <- match.arg(type)
+  if (type == "innovation" && !is.null(object$lambda)) {
+    res <- object$residuals
+  } else {
+    res <- y - fitted(object, h = h)
+  }
+  res <- ts(res)
+  tsp(res) <- tsp(y)
+  res
 }
