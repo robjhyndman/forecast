@@ -41,5 +41,12 @@ simulate_forecast <- function(
     upper <- matrix(upper, ncol = 1)
   }
   colnames(lower) <- colnames(upper) <- paste0(level, "%")
+  y <- getResponse(object)
+  tspy <- tsp(y)
+  if(is.null(tspy)) {
+    tspy <- c(1, length(y), 1)
+  }
+  lower <- ts(lower, start = tspy[2] + deltat(y), frequency = frequency(y))
+  upper <- ts(upper, start = tspy[2] + deltat(y), frequency = frequency(y))
   return(list(lower = lower, upper = upper))
 }
