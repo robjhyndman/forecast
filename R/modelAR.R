@@ -305,6 +305,7 @@ modelAR <- function(
   } else {
     fits <- c(rep(NA_real_, maxlag), predict.FUN(fit))
   }
+  out$residuals <- c(xx - fits)
   if (scale.inputs) {
     fits <- fits * scalex$scale + scalex$center
   }
@@ -315,7 +316,6 @@ modelAR <- function(
   out$fitted <- ts(rep(NA_real_, length(out$x)))
   out$fitted[c(rep(TRUE, maxlag), j)] <- fits
   tsp(out$fitted) <- tsp(out$x)
-  out$residuals <- out$x - out$fitted
   out$lags <- lags
   out$series <- yname
   out$method <- deparse1(substitute(FUN))
@@ -488,4 +488,23 @@ print.modelAR <- function(x, digits = max(3, getOption("digits") - 3), ...) {
 #' @export
 is.modelAR <- function(x) {
   inherits(x, "modelAR")
+}
+
+#' @export
+residuals.modelAR <- function(
+  object,
+  type = c("innovation", "response"),
+  h = 1,
+  ...
+) {
+  y <- getResponse(object)
+  type <- match.arg(type)
+  if (type == "innovation" && !is.null(object$lambda)) {
+    res <- object$residuals
+  } else {
+    res <- y - fitted(object, h = h)
+  }
+  res <- ts(res)
+  tsp(res) <- tsp(y)
+  res
 }
