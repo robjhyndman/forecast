@@ -498,9 +498,8 @@ print.modelAR <- function(x, digits = max(3, getOption("digits") - 3), ...) {
   cat("Model: ", x$method, "\n")
   cat("Call:   ")
   print(x$call)
-  print(x$model)
   cat(
-    "\nsigma^2 estimated as ",
+    "sigma^2 estimated as ",
     format(mean(residuals(x)^2, na.rm = TRUE), digits = digits),
     "\n",
     sep = ""
