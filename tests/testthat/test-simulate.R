@@ -64,7 +64,7 @@ test_that("simulated_nonseasonal", {
   }
 })
 
-testthat("simulated_ModelAR", {
+test_that("simulated_ModelAR", {
   my_lm <- function(x, y) {
     structure(lsfit(x, y), class = "lsfit")
   }
