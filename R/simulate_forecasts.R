@@ -27,6 +27,7 @@ simulate_forecast <- function(
       bootstrap = bootstrap,
       lambda = lambda,
       innov = innov,
+      future = TRUE,
       ...
     )
   }
@@ -39,5 +40,6 @@ simulate_forecast <- function(
     lower <- matrix(lower, ncol = 1)
     upper <- matrix(upper, ncol = 1)
   }
+  colnames(lower) <- colnames(upper) <- paste0(level, "%")
   return(list(lower = lower, upper = upper))
 }
