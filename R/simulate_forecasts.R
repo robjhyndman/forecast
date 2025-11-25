@@ -46,7 +46,7 @@ simulate_forecast <- function(
   if(is.null(tspy)) {
     tspy <- c(1, length(y), 1)
   }
-  lower <- ts(lower, start = tspy[2] + deltat(y), frequency = frequency(y))
-  upper <- ts(upper, start = tspy[2] + deltat(y), frequency = frequency(y))
+  lower <- ts(lower, start = tspy[2] + stats::deltat(y), frequency = frequency(y))
+  upper <- ts(upper, start = tspy[2] + stats::deltat(y), frequency = frequency(y))
   return(list(lower = lower, upper = upper))
 }
