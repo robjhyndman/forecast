@@ -5,6 +5,10 @@
 - Added mean_model() and forecast.mean_model()
 - Added rw_model() and forecast.rw_model()
 - Added spline_model() and forecast.spline_model()
+- Added theta_model() and forecast.theta_model()
+- Added croston_model() and forecast.croston_model()
+- Added simulated and bootstrapped prediction intervals to more models
+- Added parallelization for nnetar
 - Bug fixes
 - Documentation improvements
 
