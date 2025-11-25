@@ -22,7 +22,15 @@ getResponse <- function(object, ...) UseMethod("getResponse")
 #' @rdname getResponse
 #' @export
 getResponse.default <- function(object, ...) {
-  if (is.list(object)) object$x else NULL
+  if (is.list(object)) {
+    output <- object$x
+    if (is.null(output)) {
+      output <- object$y
+    }
+    return(output)
+  } else {
+    return(NULL)
+  }
 }
 
 #' @rdname getResponse
