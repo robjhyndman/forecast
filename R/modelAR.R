@@ -320,16 +320,15 @@ modelAR <- function(
   out$subset <- seq_along(x)[xsub]
   out$model <- fit
   out$modelargs <- list(...)
+  fits <- rep(NA_real_, n)
+  nonmiss <- c(rep(FALSE, maxlag), j)
   if (useoldmodel) {
     out$modelargs <- model$modelargs
-    fits <- c(
-      rep(NA_real_, maxlag),
-      predict.FUN(fit, lags.X[j, , drop = FALSE])
-    )
+    fits[nonmiss] <- predict.FUN(fit, lags.X[j, , drop = FALSE])
   } else {
-    fits <- c(rep(NA_real_, maxlag), predict.FUN(fit))
+    fits[nonmiss] <- predict.FUN(fit)
   }
-  out$residuals <- c(xx - fits)
+  out$residuals <- xx - fits
   if (scale.inputs) {
     fits <- fits * scalex$scale + scalex$center
   }
@@ -337,8 +336,7 @@ modelAR <- function(
   if (!is.null(lambda)) {
     fits <- InvBoxCox(fits, lambda)
   }
-  out$fitted <- ts(rep(NA_real_, length(out$x)))
-  out$fitted[c(rep(TRUE, maxlag), j)] <- fits
+  out$fitted <- ts(fits)
   tsp(out$fitted) <- tsp(out$x)
   out$lags <- lags
   out$series <- yname
