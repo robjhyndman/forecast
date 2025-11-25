@@ -111,7 +111,8 @@
 )
 }
 \arguments{
-\item{object}{An object of class \code{ets}, \code{Arima}, \code{ar} or \code{nnetar}.}
+\item{object}{An object representing a fitted time series model. For example,
+it may be of class \code{ets}, \code{Arima}, \code{ar}, \code{nnetar}, etc.}
 
 \item{nsim}{Number of periods for the simulated series. Ignored if either
 \code{xreg} or \code{innov} are not \code{NULL}. Otherwise the default is

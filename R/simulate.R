@@ -15,7 +15,8 @@
 #' start at the value of the first observation.
 #'
 #' @inheritParams forecast.Arima
-#' @param object An object of class `ets`, `Arima`, `ar` or `nnetar`.
+#' @param object An object representing a fitted time series model. For example, 
+#' it may be of class `ets`, `Arima`, `ar`, `nnetar`, etc.
 #' @param nsim Number of periods for the simulated series. Ignored if either
 #' `xreg` or `innov` are not `NULL`. Otherwise the default is
 #' the length of series used to train model (or 100 if no data found).
@@ -911,7 +912,7 @@ simulate.modelAR <- function(
   }
   ## only future currently implemented
   if (!future) {
-    warning("simulate.nnetar() currently only supports future=TRUE")
+    warning("simulate.modelAR() currently only supports future=TRUE")
   }
   ## set simulation innovations
   if (bootstrap) {
