@@ -71,7 +71,7 @@ The function \code{summary} is used to obtain and print a summary of the
 results.
 
 The generic accessor functions \code{fitted.values} and \code{residuals}
-extract useful features of the value returned by \code{nnetar}.
+extract useful features of the value returned by \code{modelAR}.
 
 \item{model}{A list containing information about the fitted model}
 \item{method}{The name of the forecasting method as a character string}
@@ -87,9 +87,35 @@ user-defined model
 }
 \details{
 This is an experimental function and only recommended for advanced users.
-The selected model is fitted with lagged values of \verb{y as inputs. The inputs are for lags 1 to }p\verb{, and lags }m\code{to}mP\code{where}m=frequency(y)\verb{. If }xreg\verb{is provided, its columns are also used as inputs. If there are missing values in}y\code{or}xreg`, the corresponding rows (and any others
+The selected model is fitted with lagged values of \verb{y as inputs. The inputs are for lags 1 to }p\verb{, and lags }m\code{to}mP\code{where}m = frequency(y)\verb{. If }xreg\verb{is provided, its columns are also used as inputs. If there are missing values in}y\code{or}xreg`, the corresponding rows (and any others
 which depend on them as lags) are omitted from the fit. The model is trained
 for one-step forecasting. Multi-step forecasts are computed recursively.
+}
+\examples{
+## Set up functions
+my_lm <- function(x, y) {
+ structure(lsfit(x,y), class = "lsfit")
+}
+predict.lsfit <- function(object, newdata = NULL) {
+  n <- length(object$qr$qt)
+  if(is.null(newdata)) {
+    z <- numeric(n)
+    z[seq_len(object$qr$rank)] <- object$qr$qt[seq_len(object$qr$rank)]
+    as.numeric(qr.qy(object$qr, z))
+  } else {
+    sum(object$coefficients * c(1, newdata))
+  }
+}
+# Fit an AR(2) model
+fit <- modelAR(
+  y = lynx,
+  p = 2,
+  FUN = my_lm,
+  predict.FUN = predict.lsfit,
+  lambda = 0.5,
+  scale.inputs = TRUE
+)
+forecast(fit, h = 20) |> autoplot()
 }
 \author{
 Rob J Hyndman and Gabriel Caceres

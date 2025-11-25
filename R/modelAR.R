@@ -10,7 +10,7 @@
 #'
 #' This is an experimental function and only recommended for advanced users.
 #' The selected model is fitted with lagged values of `y as inputs. The inputs
-#' are for lags 1 to `p`, and lags `m` to `mP` where `m=frequency(y)`. If
+#' are for lags 1 to `p`, and lags `m` to `mP` where `m = frequency(y)`. If
 #' `xreg` is provided, its columns are also used as inputs. If there are
 #' missing values in `y` or `xreg`, the corresponding rows (and any others
 #' which depend on them as lags) are omitted from the fit. The model is trained
@@ -49,7 +49,7 @@
 #' results.
 #'
 #' The generic accessor functions `fitted.values` and `residuals`
-#' extract useful features of the value returned by `nnetar`.
+#' extract useful features of the value returned by `modelAR`.
 #'
 #' \item{model}{A list containing information about the fitted model}
 #' \item{method}{The name of the forecasting method as a character string}
@@ -61,7 +61,31 @@
 #'
 #' @author Rob J Hyndman and Gabriel Caceres
 #' @keywords ts
-#'
+#' @examples
+#' ## Set up functions
+#' my_lm <- function(x, y) {
+#'  structure(lsfit(x,y), class = "lsfit")
+#' }
+#' predict.lsfit <- function(object, newdata = NULL) {
+#'   n <- length(object$qr$qt)
+#'   if(is.null(newdata)) {
+#'     z <- numeric(n)
+#'     z[seq_len(object$qr$rank)] <- object$qr$qt[seq_len(object$qr$rank)]
+#'     as.numeric(qr.qy(object$qr, z))
+#'   } else {
+#'     sum(object$coefficients * c(1, newdata))
+#'   }
+#' }
+#' # Fit an AR(2) model
+#' fit <- modelAR(
+#'   y = lynx,
+#'   p = 2,
+#'   FUN = my_lm,
+#'   predict.FUN = predict.lsfit,
+#'   lambda = 0.5,
+#'   scale.inputs = TRUE
+#' )
+#' forecast(fit, h = 20) |> autoplot()
 #' @export
 modelAR <- function(
   y,
