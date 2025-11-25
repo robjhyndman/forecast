@@ -135,7 +135,7 @@ is not <code>NULL</code>, scaling is applied after Box-Cox transformation.</p></
 <p>The function <code>summary</code> is used to obtain and print a summary of the
 results.</p>
 <p>The generic accessor functions <code>fitted.values</code> and <code>residuals</code>
-extract useful features of the value returned by <code>nnetar</code>.</p>
+extract useful features of the value returned by <code>modelAR</code>.</p>
 <dl><dt>model</dt>
 <dd><p>A list containing information about the fitted model</p></dd>
 
@@ -161,7 +161,7 @@ extract useful features of the value returned by <code>nnetar</code>.</p>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This is an experimental function and only recommended for advanced users.
-The selected model is fitted with lagged values of <code>y as inputs. The inputs are for lags 1 to </code>p<code>, and lags </code>m<code>to</code>mP<code>where</code>m=frequency(y)<code>. If </code>xreg<code>is provided, its columns are also used as inputs. If there are missing values in</code>y<code>or</code>xreg`, the corresponding rows (and any others
+The selected model is fitted with lagged values of <code>y as inputs. The inputs are for lags 1 to </code>p<code>, and lags </code>m<code>to</code>mP<code>where</code>m = frequency(y)<code>. If </code>xreg<code>is provided, its columns are also used as inputs. If there are missing values in</code>y<code>or</code>xreg`, the corresponding rows (and any others
 which depend on them as lags) are omitted from the fit. The model is trained
 for one-step forecasting. Multi-step forecasts are computed recursively.</p>
     </div>
@@ -170,6 +170,35 @@ for one-step forecasting. Multi-step forecasts are computed recursively.</p>
     <p>Rob J Hyndman and Gabriel Caceres</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Set up functions</span></span></span>
+<span class="r-in"><span><span class="va">my_lm</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span> <span class="fu"><a href="https://rdrr.io/r/base/structure.html" class="external-link">structure</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lsfit.html" class="external-link">lsfit</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span>, class <span class="op">=</span> <span class="st">"lsfit"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="va">predict.lsfit</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">object</span>, <span class="va">newdata</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">qr</span><span class="op">$</span><span class="va">qt</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">newdata</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="va">z</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">qr</span><span class="op">$</span><span class="va">rank</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">object</span><span class="op">$</span><span class="va">qr</span><span class="op">$</span><span class="va">qt</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">qr</span><span class="op">$</span><span class="va">rank</span><span class="op">)</span><span class="op">]</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/qr.html" class="external-link">qr.qy</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">qr</span>, <span class="va">z</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">object</span><span class="op">$</span><span class="va">coefficients</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">newdata</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">}</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="co"># Fit an AR(2) model</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">modelAR</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  y <span class="op">=</span> <span class="va">lynx</span>,</span></span>
+<span class="r-in"><span>  p <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>  FUN <span class="op">=</span> <span class="va">my_lm</span>,</span></span>
+<span class="r-in"><span>  predict.FUN <span class="op">=</span> <span class="va">predict.lsfit</span>,</span></span>
+<span class="r-in"><span>  lambda <span class="op">=</span> <span class="fl">0.5</span>,</span></span>
+<span class="r-in"><span>  scale.inputs <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="va">fit</span>, h <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="modelAR-1.png" alt="" width="700" height="433"></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
