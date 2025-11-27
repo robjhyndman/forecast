@@ -6,8 +6,8 @@
 #' Theta model
 #'
 #' The theta method of Assimakopoulos and Nikolopoulos (2000) is equivalent to
-#' simple exponential smoothing with drift (Hyndman and Billah, 2003). 
-#' This function fits the theta model to a time series. 
+#' simple exponential smoothing with drift (Hyndman and Billah, 2003).
+#' This function fits the theta model to a time series.
 #' The series is tested for seasonality using the test outlined in A&N. If
 #' deemed seasonal, the series is seasonally adjusted using a classical
 #' multiplicative decomposition before fitting the theta model.
@@ -39,6 +39,7 @@ theta_model <- function(y, lambda = NULL, biasadj = FALSE) {
   if (!is.null(lambda)) {
     y <- BoxCox(y, lambda)
     lambda <- attr(y, "lambda")
+    attr(lambda, "biasadj") <- biasadj
   }
   # Seasonal decomposition
   m <- frequency(y)
@@ -72,7 +73,6 @@ theta_model <- function(y, lambda = NULL, biasadj = FALSE) {
   }
   if (!is.null(lambda)) {
     fitted <- InvBoxCox(fitted, lambda, biasadj, var(res))
-    attr(lambda, "biasadj") <- biasadj
     res <- y - fitted
   }
 
@@ -113,11 +113,11 @@ print.theta_model <- function(
   invisible(x)
 }
 
-#' Theta method forecasts. 
+#' Theta method forecasts.
 #'
 #' Returns forecasts and prediction intervals for a theta method forecast.
 #' `thetaf()` is a convenience function that combines `theta_model()` and
-#' `forecast.theta_model()`. 
+#' `forecast.theta_model()`.
 #' The theta method of Assimakopoulos and Nikolopoulos (2000) is equivalent to
 #' simple exponential smoothing with drift (Hyndman and Billah, 2003).
 #' The series is tested for seasonality using the test outlined in A&N. If
@@ -152,7 +152,7 @@ forecast.theta_model <- function(
   level = c(80, 95),
   fan = FALSE,
   lambda = object$lambda,
-  biasadj = NULL,
+  biasadj = FALSE,
   ...
 ) {
   # Check inputs
@@ -206,7 +206,7 @@ thetaf <- function(
   fan = FALSE,
   lambda = NULL,
   biasadj = FALSE,
-  x = y, 
+  x = y,
   ...
 ) {
   fit <- theta_model(x, lambda = lambda, biasadj = biasadj)

@@ -24,6 +24,7 @@
 mstl <- function(
   x,
   lambda = NULL,
+  biasadj = FALSE,
   iterate = 2,
   s.window = 7 + 4 * seq(6),
   ...
@@ -61,7 +62,7 @@ mstl <- function(
   # Transform if necessary
   if (!is.null(lambda)) {
     x <- BoxCox(x, lambda = lambda)
-    lambda <- attr(x, "lambda")
+    attr(lambda, "biasadj") <- biasadj
   }
 
   # Now fit stl models with only one type of seasonality at a time
@@ -343,8 +344,8 @@ forecast.mstl <- function(
   h = frequency(object) * 2,
   level = c(80, 95),
   fan = FALSE,
-  lambda = NULL,
-  biasadj = FALSE,
+  lambda = object$lambda,
+  biasadj = attr(object$lambda, "biasadj"),
   xreg = NULL,
   newxreg = NULL,
   allow.multiplicative.trend = FALSE,
@@ -489,6 +490,7 @@ stlm <- function(
   if (!is.null(lambda)) {
     x <- BoxCox(x, lambda)
     lambda <- attr(x, "lambda")
+    attr(lambda, "biasadj") <- biasadj
   }
 
   # Do STL decomposition
@@ -556,7 +558,6 @@ stlm <- function(
   res <- residuals(fit)
   if (!is.null(lambda)) {
     fits <- InvBoxCox(fits, lambda, biasadj, var(res))
-    attr(lambda, "biasadj") <- biasadj
   }
 
   structure(
@@ -583,7 +584,7 @@ forecast.stlm <- function(
   level = c(80, 95),
   fan = FALSE,
   lambda = object$lambda,
-  biasadj = NULL,
+  biasadj = attr(lambda, "biasadj"),
   newxreg = NULL,
   allow.multiplicative.trend = FALSE,
   ...
@@ -704,6 +705,7 @@ stlf <- function(
   if (!is.null(lambda)) {
     x <- BoxCox(x, lambda)
     lambda <- attr(x, "lambda")
+    attr(lambda, "biasadj") <- biasadj
   }
 
   fit <- mstl(x, s.window = s.window, t.window = t.window, robust = robust)

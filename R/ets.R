@@ -151,7 +151,8 @@ ets <- function(
   }
   if (!is.null(lambda)) {
     y <- BoxCox(y, lambda)
-    lambda <- attr(y, "lambda")
+    lambda <- attr(y, "lambda")    
+    attr(lambda, "biasadj") <- biasadj
     additive.only <- TRUE
   }
 
@@ -259,7 +260,6 @@ ets <- function(
           biasadj,
           var(model$residuals)
         )
-        attr(lambda, "biasadj") <- biasadj
       }
       model$lambda <- lambda
 
@@ -576,7 +576,6 @@ ets <- function(
   model$x <- orig.y
   if (!is.null(lambda)) {
     model$fitted <- InvBoxCox(model$fitted, lambda, biasadj, model$sigma2)
-    attr(lambda, "biasadj") <- biasadj
   }
 
   model$lambda <- lambda

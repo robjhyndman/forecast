@@ -130,6 +130,7 @@ arfima <- function(
   if (!is.null(lambda)) {
     x <- BoxCox(x, lambda)
     lambda <- attr(x, "lambda")
+    attr(lambda, "biasadj") <- biasadj
   }
 
   # Re-fit arfima model
@@ -213,7 +214,6 @@ arfima <- function(
   fit$fitted <- x - fit$residuals
   if (!is.null(lambda)) {
     fit$fitted <- InvBoxCox(fit$fitted, lambda, biasadj, var(fit$residuals))
-    attr(lambda, "biasadj") <- biasadj
   }
   fit$lambda <- lambda
   fit$call <- match.call()
@@ -237,7 +237,7 @@ forecast.fracdiff <- function(
   innov = NULL,
   npaths = 5000,
   lambda = object$lambda,
-  biasadj = FALSE,
+  biasadj = attr(lambda, "biasadj"),
   ...
 ) {
   if(abs(h - round(h)) > .Machine$double.eps^0.5 || h <= 0) {
@@ -255,6 +255,7 @@ forecast.fracdiff <- function(
   if (!is.null(lambda)) {
     x <- BoxCox(x, lambda)
     lambda <- attr(x, "lambda")
+    attr(lambda, "biasadj") <- biasadj
   }
   xx <- na.ends(x)
   meanx <- mean(xx)

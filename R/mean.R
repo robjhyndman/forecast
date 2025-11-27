@@ -40,6 +40,7 @@ mean_model <- function(y, lambda = NULL, biasadj = FALSE) {
   if (!is.null(lambda)) {
     y <- BoxCox(y, lambda)
     lambda <- attr(y, "lambda")
+    attr(lambda, "biasadj") <- biasadj
   }
   n <- length(y)
   mu <- mean(y, na.rm = TRUE)
@@ -50,7 +51,6 @@ mean_model <- function(y, lambda = NULL, biasadj = FALSE) {
   res <- copy_msts(y, res)
   if (!is.null(lambda)) {
     fits <- InvBoxCox(fits, lambda, biasadj, s^2)
-    attr(lambda, "biasadj") <- biasadj
   }
 
   out <- list(
@@ -101,7 +101,7 @@ forecast.mean_model <- function(
   level = c(80, 95),
   fan = FALSE,
   lambda = object$lambda,
-  biasadj = NULL,
+  biasadj = attr(object$lambda, "biasadj"),
   bootstrap = FALSE,
   npaths = 5000,
   ...

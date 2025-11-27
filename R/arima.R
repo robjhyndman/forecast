@@ -317,7 +317,7 @@ forecast.Arima <- function(
   innov = NULL,
   npaths = 5000,
   lambda = object$lambda,
-  biasadj = NULL,
+  biasadj = attr(lambda, "biasadj"),
   ...
 ) {
   # Check whether there are non-existent arguments
@@ -780,12 +780,14 @@ Arima <- function(
   #    warning("Missing values encountered. Using longest contiguous portion of time series")
 
   series <- deparse1(substitute(y))
+  if(is.null(biasadj) & !is.null(lambda)) {
+    biasadj <- attr(lambda, "biasadj")
+  }
 
   origx <- y
   if (!is.null(lambda)) {
     x <- BoxCox(x, lambda)
     lambda <- attr(x, "lambda")
-
     if (is.null(attr(lambda, "biasadj"))) {
       attr(lambda, "biasadj") <- biasadj
     }

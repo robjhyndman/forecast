@@ -210,7 +210,7 @@ forecast.spline_model <- function(
   level = c(80, 95),
   fan = FALSE,
   lambda = object$lambda,
-  biasadj = NULL,
+  biasadj = FALSE,
   simulate = FALSE,
   bootstrap = FALSE,
   innov = NULL,

@@ -42,6 +42,13 @@ forecast.bats <- function(
   } else {
     ts.frequency <- 1
   }
+  if(is.null(biasadj)) {
+    if(!is.null(object$lambda)) {
+      biasadj <- attr(object$lambda, "biasadj")
+    } else {
+      biasadj <- FALSE
+    }
+  }
 
   if (missing(h)) {
     if (is.null(object$seasonal.periods)) {

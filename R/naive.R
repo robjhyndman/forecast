@@ -62,7 +62,8 @@ rw_model <- function(
   if (!is.null(lambda)) {
     y <- BoxCox(y, lambda)
     lambda <- attr(y, "lambda")
-  }
+    attr(lambda, "biasadj") <- biasadj
+}
 
   m <- frequency(y)
   # Complete missing values with lagged values
@@ -98,7 +99,6 @@ rw_model <- function(
 
   if (!is.null(lambda)) {
     fitted <- InvBoxCox(fitted, lambda, biasadj, var(res))
-    attr(lambda, "biasadj") <- biasadj
   }
 
   structure(

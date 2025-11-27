@@ -156,6 +156,7 @@ tslm <- function(formula, data, subset, lambda = NULL, biasadj = FALSE, ...) {
     resp_var <- deparse(attr(mt, "variables")[[attr(mt, "response") + 1]])
     data[, resp_var] <- BoxCox(data[, resp_var], lambda)
     lambda <- attr(data[, resp_var], "lambda")
+    attr(lambda, "biasadj") <- biasadj
   }
   if (tsdat[2] == 0 && tsvar[2] != 0) {
     data$season <- factor(data$season) # fix for lost factor information, may not be needed?
@@ -250,7 +251,13 @@ forecast.lm <- function(
     stop("The forecast horizon must be at least 1.")
   }
   level <- getConfLevel(level, fan)
-
+  if(is.null(biasadj)) {
+    if(!is.null(object$lambda)) {
+      biasadj <- attr(object$lambda, "biasadj")
+    } else {
+      biasadj <- FALSE
+    }
+  }
   if (!is.null(object$data)) {
     # no longer exists
     origdata <- object$data

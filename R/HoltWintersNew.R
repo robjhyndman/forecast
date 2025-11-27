@@ -24,6 +24,7 @@ HoltWintersZZ <- function(
   if (!is.null(lambda)) {
     x <- BoxCox(x, lambda)
     lambda <- attr(x, "lambda")
+    attr(lambda, "biasadj") <- biasadj
   }
 
   if (is.null(phi) || !is.numeric(phi)) {
@@ -215,7 +216,6 @@ HoltWintersZZ <- function(
   res <- ts(final.fit$residuals, frequency = m, start = tspx[1])
   if (!is.null(lambda)) {
     fitted <- InvBoxCox(fitted, lambda, biasadj, var(final.fit$residuals))
-    attr(lambda, "biasadj") <- biasadj
   }
   states <- matrix(final.fit$level, ncol = 1)
   colnames(states) <- "l"
