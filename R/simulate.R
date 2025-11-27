@@ -706,9 +706,13 @@ simulate.fracdiff <- function(
   future = TRUE,
   bootstrap = FALSE,
   innov = NULL,
+  lambda = object$lambda,
   ...
 ) {
   x <- getResponse(object)
+  if(!is.null(lambda)) {
+    x <- BoxCox(x, lambda)
+  }
   if (is.null(x)) {
     future <- FALSE
     if (is.null(nsim)) {
@@ -747,7 +751,13 @@ simulate.fracdiff <- function(
   )
 
   # Undo differencing and add back mean
-  unfracdiff(xx, ysim, n, nsim, object$d) + meanx
+  ysim <- unfracdiff(xx, ysim, n, nsim, object$d) + meanx
+
+  # Undo transformation
+  if(!is.null(lambda)) {
+    ysim <- InvBoxCox(ysim, lambda)
+  }
+  ysim
 }
 
 #' @rdname simulate.ets

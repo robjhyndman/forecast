@@ -519,15 +519,14 @@ forecast.ar <- function(
       level = level,
       npaths = npaths,
       bootstrap = bootstrap,
-      innov = innov,
-      lambda = lambda
+      innov = innov
     )
     lower <- hilo$lower
     upper <- hilo$upper
   } else {
     lower <- matrix(NA, ncol = nint, nrow = length(pred$pred))
     upper <- lower
-    for (i in 1:nint) {
+    for (i in seq(nint)) {
       qq <- qnorm(0.5 * (1 + level[i] / 100))
       lower[, i] <- pred$pred - qq * pred$se
       upper[, i] <- pred$pred + qq * pred$se
@@ -545,10 +544,8 @@ forecast.ar <- function(
       biasadj,
       list(level = level, upper = upper, lower = lower)
     )
-    if (!simulate && !bootstrap) {
-      lower <- InvBoxCox(lower, lambda)
-      upper <- InvBoxCox(upper, lambda)
-    }
+    lower <- InvBoxCox(lower, lambda)
+    upper <- InvBoxCox(upper, lambda)
     fits <- InvBoxCox(fits, lambda)
     x <- InvBoxCox(x, lambda)
   }
