@@ -48,6 +48,7 @@ rw_model <- function(
   lambda = NULL,
   biasadj = FALSE
 ) {
+  seriesname <- deparse1(substitute(y))
   if (!is.ts(y)) {
     y <- as.ts(y)
   }
@@ -107,7 +108,7 @@ rw_model <- function(
       future = tail(fits, lag),
       residuals = res,
       method = method,
-      series = deparse1(substitute(y)),
+      series = seriesname,
       sigma2 = sigma^2,
       par = list(includedrift = drift, drift = b, drift.se = b.se, lag = lag),
       lambda = lambda,
