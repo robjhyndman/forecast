@@ -237,23 +237,26 @@ forecast.fracdiff <- function(
   innov = NULL,
   npaths = 5000,
   lambda = object$lambda,
-  biasadj = NULL,
+  biasadj = FALSE,
   ...
 ) {
+  if(abs(h - round(h)) > .Machine$double.eps^0.5 || h <= 0) {
+    stop("h must be a positive integer")
+  }
+  h <- as.integer(round(h))
   # Extract data
   x <- object$x <- getResponse(object)
+  n <- length(x)
+  m <- frequency(x)
+  endx <- tsp(x)[2]
   if (is.null(x)) {
     stop("Unable to find original time series")
   }
-
   if (!is.null(lambda)) {
     x <- BoxCox(x, lambda)
     lambda <- attr(x, "lambda")
   }
-
   xx <- na.ends(x)
-  n <- length(xx)
-
   meanx <- mean(xx)
   xx <- xx - meanx
 
@@ -266,61 +269,38 @@ forecast.fracdiff <- function(
     fixed = c(object$ar, -object$ma)
   )
   fcast.y <- forecast(fit, h = h, level = level)
-
   # Undifference
   fcast.x <- unfracdiff(xx, fcast.y$mean, n, h, object$d)
-
   # Binomial coefficient for expansion of d
   bin.c <- (-1)^(0:(n + h)) * choose(object$d, (0:(n + h)))
-
-  # Cumulative forecasts of y and forecast of y
-  # b <- numeric(n)
-  # fcast.x <- LHS <- numeric(h)
-  # RHS <- cumsum(fcast.y$mean)
-  # bs <- cumsum(bin.c[1:h])
-  # b <- bin.c[(1:n)+1]
-  # fcast.x[1] <- RHS[1] <- fcast.y$mean[1] - sum(b*rev(xx))
-  # if(h>1)
-  # {
-  # for (k in 2:h)
-  # {
-  # b <- b + bin.c[(1:n)+k]
-  # RHS[k] <- RHS[k] - sum(b*rev(xx))
-  # LHS[k] <- sum(rev(fcast.x[1:(k-1)]) * bs[2:k])
-  # fcast.x[k] <- RHS[k] - LHS[k]
-  # }
-  # }
 
   # Extract stuff from ARMA model
   p <- fit$arma[1]
   q <- fit$arma[2]
   phi <- theta <- numeric(h)
   if (p > 0) {
-    phi[1:p] <- fit$coef[1:p]
+    phi[seq(p)] <- fit$coef[seq(p)]
   }
   if (q > 0) {
-    theta[1:q] <- fit$coef[p + (1:q)]
+    theta[seq(q)] <- fit$coef[p + seq(q)]
   }
-
   # Calculate psi weights
   new.phi <- psi <- numeric(h)
   psi[1] <- new.phi[1] <- 1
   if (h > 1) {
-    new.phi[2:h] <- -bin.c[2:h]
-    for (i in 2:h) {
+    new.phi[2L:h] <- -bin.c[2L:h]
+    for (i in 2L:h) {
       if (p > 0) {
-        new.phi[i] <- sum(phi[1:(i - 1)] * bin.c[(i - 1):1]) - bin.c[i]
+        new.phi[i] <- sum(phi[seq(i - 1)] * bin.c[rev(seq(i - 1))]) - bin.c[i]
       }
-      psi[i] <- sum(new.phi[2:i] * rev(psi[1:(i - 1)])) + theta[i - 1]
+      psi[i] <- sum(new.phi[2L:i] * rev(psi[seq(i - 1)])) + theta[i - 1]
     }
   }
 
   # Compute forecast variances
   fse <- sqrt(cumsum(psi^2) * fit$sigma2)
-
   # Compute prediction intervals
   level <- getConfLevel(level, fan)
-  nint <- length(level)
   if (simulate || bootstrap) {
     # Compute prediction intervals using simulations
     hilo <- simulate_forecast(
@@ -337,49 +317,35 @@ forecast.fracdiff <- function(
     upper <- hilo$upper
   } else {
     # Compute prediction intervals using normal approximation
+    nint <- length(level)
     upper <- lower <- matrix(NA, ncol = nint, nrow = h)
-    for (i in 1:nint) {
+    for (i in seq(nint)) {
       qq <- qnorm(0.5 * (1 + level[i] / 100))
       lower[, i] <- fcast.x - qq * fse
       upper[, i] <- fcast.x + qq * fse
     }
+    lower <- ts(lower + meanx, start = endx + 1/m, frequency = m)
+    upper <- ts(upper + meanx, start = endx + 1/m, frequency = m)
+    colnames(lower) <- colnames(upper) <- paste0(level, "%")
   }
-  colnames(lower) <- colnames(upper) <- paste0(level, "%")
-
   res <- undo.na.ends(x, residuals(fit))
   fits <- x - res
-  data.tsp <- tsp(x)
-  if (is.null(data.tsp)) {
-    data.tsp <- c(1, length(x), 1)
-  }
   mean.fcast <- ts(
     fcast.x + meanx,
-    frequency = data.tsp[3],
-    start = data.tsp[2] + 1 / data.tsp[3]
+    start = endx + 1/m,
+    frequency = m
   )
-  lower <- ts(
-    lower + meanx * as.numeric(!simulate && !bootstrap),
-    frequency = data.tsp[3],
-    start = data.tsp[2] + 1 / data.tsp[3]
-  )
-  upper <- ts(
-    upper + meanx * as.numeric(!simulate && !bootstrap),
-    ,
-    frequency = data.tsp[3],
-    start = data.tsp[2] + 1 / data.tsp[3]
-  )
-  method <- paste0("ARFIMA(", p, ",", round(object$d, 2), ",", q, ")")
-
   if (!is.null(lambda)) {
     x <- InvBoxCox(x, lambda)
     fits <- InvBoxCox(fits, lambda)
     mean.fcast <- InvBoxCox(
       mean.fcast,
-      lambda,
-      biasadj,
-      list(level = level, upper = upper, lower = lower)
+      lambda = lambda,
+      biasadj = biasadj,
+      fvar = fse^2
     )
-    if (!simulate && !bootstrap) {
+    if(!bootstrap && !simulate) {
+      # Bootstrap intervals are already backtransformed
       lower <- InvBoxCox(lower, lambda)
       upper <- InvBoxCox(upper, lambda)
     }
@@ -390,7 +356,6 @@ forecast.fracdiff <- function(
   } else {
     deparse(object$call$x)
   }
-
   structure(
     list(
       x = x,
@@ -398,7 +363,7 @@ forecast.fracdiff <- function(
       upper = upper,
       lower = lower,
       level = level,
-      method = method,
+      method = paste0("ARFIMA(", p, ",", round(object$d, 2), ",", q, ")"),
       model = object,
       series = seriesname,
       residuals = res,
