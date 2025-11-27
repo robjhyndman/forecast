@@ -134,9 +134,9 @@ forecast.bats <- function(
   if (!is.null(object$lambda)) {
     y.forecast <- InvBoxCox(
       y.forecast,
-      object$lambda,
-      biasadj,
-      list(level = level, upper = upper.bounds, lower = lower.bounds)
+      lambda = object$lambda,
+      biasadj = biasadj,
+      fvar = variance
     )
     lower.bounds <- InvBoxCox(lower.bounds, object$lambda)
     if (object$lambda < 1) {

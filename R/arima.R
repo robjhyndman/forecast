@@ -540,9 +540,9 @@ forecast.ar <- function(
   if (!is.null(lambda)) {
     pred$pred <- InvBoxCox(
       pred$pred,
-      lambda,
-      biasadj,
-      list(level = level, upper = upper, lower = lower)
+      lambda = lambda,
+      biasadj=biasadj,
+      fvar = pred$se^2
     )
     lower <- InvBoxCox(lower, lambda)
     upper <- InvBoxCox(upper, lambda)
@@ -767,7 +767,7 @@ Arima <- function(
   include.drift = FALSE,
   include.constant = NULL,
   lambda = model$lambda,
-  biasadj = FALSE,
+  biasadj = NULL,
   method = c("CSS-ML", "ML", "CSS"),
   model = NULL,
   x = y,

@@ -267,9 +267,9 @@ forecast.spline_model <- function(
   if (!is.null(lambda)) {
     Yhat <- InvBoxCox(
       Yhat,
-      lambda,
-      biasadj,
-      list(level = level, upper = upper, lower = lower)
+      lambda = lambda,
+      biasadj = biasadj,
+      fvar = sd^2
     )
     if (!simulate && !bootstrap) {
       upper <- InvBoxCox(upper, lambda)
