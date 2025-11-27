@@ -324,12 +324,13 @@ forecast.fracdiff <- function(
   if (simulate || bootstrap) {
     # Compute prediction intervals using simulations
     hilo <- simulate_forecast(
-      object = fit,
+      object = object,
       h = h,
       level = level,
       npaths = npaths,
       bootstrap = bootstrap,
       innov = innov,
+      lambda = lambda,
       ...
     )
     lower <- hilo$lower
@@ -357,12 +358,13 @@ forecast.fracdiff <- function(
     start = data.tsp[2] + 1 / data.tsp[3]
   )
   lower <- ts(
-    lower + meanx,
+    lower + meanx * (!simulate & !bootstrap),
     frequency = data.tsp[3],
     start = data.tsp[2] + 1 / data.tsp[3]
   )
   upper <- ts(
-    upper + meanx,
+    upper + meanx * (!simulate & !bootstrap),
+    ,
     frequency = data.tsp[3],
     start = data.tsp[2] + 1 / data.tsp[3]
   )
@@ -377,8 +379,10 @@ forecast.fracdiff <- function(
       biasadj,
       list(level = level, upper = upper, lower = lower)
     )
-    lower <- InvBoxCox(lower, lambda)
-    upper <- InvBoxCox(upper, lambda)
+    if (!simulate && !bootstrap) {
+      lower <- InvBoxCox(lower, lambda)
+      upper <- InvBoxCox(upper, lambda)
+    }
   }
 
   seriesname <- if (!is.null(object$series)) {
