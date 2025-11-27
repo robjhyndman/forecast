@@ -271,7 +271,7 @@ forecast.spline_model <- function(
       biasadj,
       list(level = level, upper = upper, lower = lower)
     )
-    if (!simulate & !bootstrap) {
+    if (!simulate && !bootstrap) {
       upper <- InvBoxCox(upper, lambda)
       lower <- InvBoxCox(lower, lambda)
     }
