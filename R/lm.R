@@ -180,7 +180,6 @@ tslm <- function(formula, data, subset, lambda = NULL, biasadj = FALSE, ...) {
     fit$call$data <- dataname
   }
   if (!is.null(lambda)) {
-    attr(lambda, "biasadj") <- biasadj
     fit$lambda <- lambda
     fit$fitted.values <- InvBoxCox(
       fit$fitted.values,

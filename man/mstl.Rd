@@ -4,7 +4,14 @@
 \alias{mstl}
 \title{Multiple seasonal decomposition}
 \usage{
-mstl(x, lambda = NULL, iterate = 2, s.window = 7 + 4 * seq(6), ...)
+mstl(
+  x,
+  lambda = NULL,
+  biasadj = FALSE,
+  iterate = 2,
+  s.window = 7 + 4 * seq(6),
+  ...
+)
 }
 \arguments{
 \item{x}{Univariate time series of class \code{msts} or \code{ts}.}
@@ -13,6 +20,12 @@ mstl(x, lambda = NULL, iterate = 2, s.window = 7 + 4 * seq(6), ...)
 then a transformation is automatically selected using \code{BoxCox.lambda}.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.}
+
+\item{biasadj}{Use adjusted back-transformed mean for Box-Cox
+transformations. If transformed data is used to produce forecasts and fitted
+values, a regular back transformation will result in median forecasts. If
+biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
+and fitted values.}
 
 \item{iterate}{Number of iterations to use to refine the seasonal component.}
 
