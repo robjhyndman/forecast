@@ -40,27 +40,31 @@ test_that("simulated_nonseasonal", {
   )
   for (i in seq_along(fitting_functions)) {
     # With Box-Cox
-    fit <- fitting_functions[[i]](Nile, lambda = 0.5)
-    fc1 <- forecast(fit)
-    fc2 <- forecast(fit, simulate = TRUE, npaths = 300)
-    fc3 <- forecast(fit, bootstrap = TRUE, npaths = 300)
+    if (i == 1) {
+      fit <- fitting_functions[[i]](BoxCox(Nile, 0.5))
+    } else {
+      fit <- fitting_functions[[i]](Nile, lambda = 0.5)
+    }
+    fc1 <- forecast(fit, lambda = 0.5)
+    fc2 <- forecast(fit, lambda = 0.5, simulate = TRUE, npaths = 300)
+    fc3 <- forecast(fit, lambda = 0.5, bootstrap = TRUE, npaths = 300)
     expect_equal(fc1$mean, fc2$mean, tolerance = 1e-2)
     expect_equal(fc1$mean, fc3$mean, tolerance = 1e-2)
-    expect_equal(fc1$lower, fc2$lower, tolerance = 1e-0)
-    expect_equal(fc1$lower, fc3$lower, tolerance = 1e-0)
-    expect_equal(fc1$upper, fc2$upper, tolerance = 1e-0)
-    expect_equal(fc1$upper, fc3$upper, tolerance = 1e-0)
+    expect_equal(fc1$lower, fc2$lower, tolerance = 5e-1)
+    expect_equal(fc1$lower, fc3$lower, tolerance = 5e-1)
+    expect_equal(fc1$upper, fc2$upper, tolerance = 5e-1)
+    expect_equal(fc1$upper, fc3$upper, tolerance = 5e-1)
     # No Box-Cox
-    fit <- fitting_functions[[i]](uspop)
+    fit <- fitting_functions[[i]](Nile)
     fc1 <- forecast(fit)
     fc2 <- forecast(fit, simulate = TRUE, npaths = 300)
     fc3 <- forecast(fit, bootstrap = TRUE, npaths = 300)
     expect_equal(fc1$mean, fc2$mean, tolerance = 1e-2)
     expect_equal(fc1$mean, fc3$mean, tolerance = 1e-2)
-    expect_equal(fc1$lower, fc2$lower, tolerance = 1e1)
-    expect_equal(fc1$lower, fc3$lower, tolerance = 1e1)
-    expect_equal(fc1$upper, fc2$upper, tolerance = 1e1)
-    expect_equal(fc1$upper, fc3$upper, tolerance = 1e1)
+    expect_equal(fc1$lower, fc2$lower, tolerance = 3e-1)
+    expect_equal(fc1$lower, fc3$lower, tolerance = 3e-1)
+    expect_equal(fc1$upper, fc2$upper, tolerance = 3e-1)
+    expect_equal(fc1$upper, fc3$upper, tolerance = 3e-1)
   }
 })
 
