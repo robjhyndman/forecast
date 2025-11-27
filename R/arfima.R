@@ -358,12 +358,12 @@ forecast.fracdiff <- function(
     start = data.tsp[2] + 1 / data.tsp[3]
   )
   lower <- ts(
-    lower + meanx * (!simulate & !bootstrap),
+    lower + meanx * as.numeric(!simulate && !bootstrap),
     frequency = data.tsp[3],
     start = data.tsp[2] + 1 / data.tsp[3]
   )
   upper <- ts(
-    upper + meanx * (!simulate & !bootstrap),
+    upper + meanx * as.numeric(!simulate && !bootstrap),
     ,
     frequency = data.tsp[3],
     start = data.tsp[2] + 1 / data.tsp[3]
