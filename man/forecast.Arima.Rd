@@ -17,7 +17,7 @@
   innov = NULL,
   npaths = 5000,
   lambda = object$lambda,
-  biasadj = NULL,
+  biasadj = FALSE,
   ...
 )
 

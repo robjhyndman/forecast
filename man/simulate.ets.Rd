@@ -62,6 +62,7 @@
   future = TRUE,
   bootstrap = FALSE,
   innov = NULL,
+  lambda = object$lambda,
   ...
 )
 
