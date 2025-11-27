@@ -545,9 +545,10 @@ forecast.ar <- function(
       biasadj,
       list(level = level, upper = upper, lower = lower)
     )
-
-    lower <- InvBoxCox(lower, lambda)
-    upper <- InvBoxCox(upper, lambda)
+    if (!simulate && !bootstrap) {
+      lower <- InvBoxCox(lower, lambda)
+      upper <- InvBoxCox(upper, lambda)
+    }
     fits <- InvBoxCox(fits, lambda)
     x <- InvBoxCox(x, lambda)
   }
