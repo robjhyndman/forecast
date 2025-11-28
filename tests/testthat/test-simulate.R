@@ -42,12 +42,14 @@ test_that("simulated_nonseasonal", {
     # With Box-Cox
     if (i == 1) {
       fit <- fitting_functions[[i]](BoxCox(Nile, 0.5))
+      fit$lambda <- 0.5
+      attr(fit$lambda, "biasadj") <- FALSE
     } else {
       fit <- fitting_functions[[i]](Nile, lambda = 0.5)
     }
-    fc1 <- forecast(fit, lambda = 0.5)
-    fc2 <- forecast(fit, lambda = 0.5, simulate = TRUE, npaths = 300)
-    fc3 <- forecast(fit, lambda = 0.5, bootstrap = TRUE, npaths = 300)
+    fc1 <- forecast(fit, lambda = fit$lambda)
+    fc2 <- forecast(fit, lambda = fit$lambda, simulate = TRUE, npaths = 300)
+    fc3 <- forecast(fit, lambda = fit$lambda, bootstrap = TRUE, npaths = 300)
     expect_equal(fc1$mean, fc2$mean, tolerance = 1e-2)
     expect_equal(fc1$mean, fc3$mean, tolerance = 1e-2)
     expect_equal(fc1$lower, fc2$lower, tolerance = 5e-1)
