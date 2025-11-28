@@ -142,7 +142,7 @@ spline_model <- function(
   # Compute matrices for optimal beta
   mat <- spline.matrices(n, beta.est, compute_inverse = FALSE)
   maxO <- max(mat$Omega)
-  
+
   # Get one-step predictors
   yfit <- e <- ts(rep(NA, n))
   if (n > 1000) {
@@ -229,7 +229,7 @@ forecast.spline_model <- function(
   level = c(80, 95),
   fan = FALSE,
   lambda = object$lambda,
-  biasadj = FALSE,
+  biasadj = attr(lambda, "biasadj"),
   simulate = FALSE,
   bootstrap = FALSE,
   innov = NULL,

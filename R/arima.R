@@ -541,7 +541,7 @@ forecast.ar <- function(
     pred$pred <- InvBoxCox(
       pred$pred,
       lambda = lambda,
-      biasadj=biasadj,
+      biasadj = biasadj,
       fvar = pred$se^2
     )
     lower <- InvBoxCox(lower, lambda)
@@ -767,21 +767,15 @@ Arima <- function(
   include.drift = FALSE,
   include.constant = NULL,
   lambda = model$lambda,
-  biasadj = NULL,
+  biasadj = attr(lambda, "biasadj"),
   method = c("CSS-ML", "ML", "CSS"),
   model = NULL,
   x = y,
   ...
 ) {
-  # Remove outliers near ends
-  # j <- time(x)
-  # x <- na.contiguous(x)
-  # if(length(j) != length(x))
-  #    warning("Missing values encountered. Using longest contiguous portion of time series")
-
   series <- deparse1(substitute(y))
-  if(is.null(biasadj) & !is.null(lambda)) {
-    biasadj <- attr(lambda, "biasadj")
+  if (is.null(biasadj)) {
+    biasadj <- FALSE
   }
 
   origx <- y

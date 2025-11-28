@@ -242,7 +242,7 @@ forecast.lm <- function(
   level = c(80, 95),
   fan = FALSE,
   lambda = object$lambda,
-  biasadj = NULL,
+  biasadj = attr(lambda, "biasadj"),
   ts = TRUE,
   ...
 ) {
