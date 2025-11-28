@@ -16,7 +16,7 @@ forecast(
   innov = NULL,
   npaths = 5000,
   lambda = object$lambda,
-  biasadj = FALSE,
+  biasadj = attr(lambda, "biasadj"),
   ...
 )
 
@@ -32,7 +32,7 @@ forecast(
   innov = NULL,
   npaths = 5000,
   lambda = object$lambda,
-  biasadj = NULL,
+  biasadj = attr(lambda, "biasadj"),
   ...
 )
 

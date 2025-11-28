@@ -57,7 +57,14 @@ Unlike <code><a href="https://rdrr.io/r/stats/stl.html" class="external-link">st
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mstl</span><span class="op">(</span><span class="va">x</span>, lambda <span class="op">=</span> <span class="cn">NULL</span>, iterate <span class="op">=</span> <span class="fl">2</span>, s.window <span class="op">=</span> <span class="fl">7</span> <span class="op">+</span> <span class="fl">4</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">6</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mstl</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  lambda <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  biasadj <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  iterate <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  s.window <span class="op">=</span> <span class="fl">7</span> <span class="op">+</span> <span class="fl">4</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">6</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -73,6 +80,14 @@ Unlike <code><a href="https://rdrr.io/r/stats/stl.html" class="external-link">st
 then a transformation is automatically selected using <code>BoxCox.lambda</code>.
 The transformation is ignored if NULL. Otherwise,
 data transformed before model is estimated.</p></dd>
+
+
+<dt id="arg-biasadj">biasadj<a class="anchor" aria-label="anchor" href="#arg-biasadj"></a></dt>
+<dd><p>Use adjusted back-transformed mean for Box-Cox
+transformations. If transformed data is used to produce forecasts and fitted
+values, a regular back transformation will result in median forecasts. If
+biasadj is <code>TRUE</code>, an adjustment will be made to produce mean forecasts
+and fitted values.</p></dd>
 
 
 <dt id="arg-iterate">iterate<a class="anchor" aria-label="anchor" href="#arg-iterate"></a></dt>

@@ -14,7 +14,7 @@ forecast(
   level = c(80, 95),
   fan = FALSE,
   lambda = object$lambda,
-  biasadj = NULL,
+  biasadj = attr(object$lambda, "biasadj"),
   ts = TRUE,
   ...
 )
