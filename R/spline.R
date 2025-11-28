@@ -19,14 +19,32 @@ make.Sigma <- function(n, n0 = 0) {
 }
 
 ## Compute spline matrices
-spline.matrices <- function(n, beta, cc = 1e2, n0 = 0) {
+spline.matrices <- function(
+  n,
+  beta,
+  cc = 1e2,
+  n0 = 0,
+  compute_inverse = TRUE,
+  compute_P = TRUE
+) {
+  if(!compute_inverse) {
+    compute_P <- FALSE
+  }
   nn <- n + n0
   Sigma <- make.Sigma(n, n0)
   s <- cbind(rep(1, nn), seq(nn) / n)
   Omega <- cc * s %*% t(s) + Sigma / beta + diag(nn)
   maxO <- max(Omega)
-  inv.Omega <- solve(Omega / maxO, tol = 1e-10) / maxO
-  P <- chol(inv.Omega)
+  if (compute_inverse) {
+    inv.Omega <- solve(Omega / maxO, tol = 1e-10) / maxO
+  } else {
+    inv.Omega <- NULL
+  }
+  if (compute_P) {
+    P <- chol(inv.Omega)
+  } else {
+    P <- NULL
+  }
   list(
     s = s,
     Sigma = Sigma,
@@ -122,9 +140,9 @@ spline_model <- function(
   }
 
   # Compute matrices for optimal beta
-  mat <- spline.matrices(n, beta.est)
+  mat <- spline.matrices(n, beta.est, compute_inverse = FALSE)
   maxO <- max(mat$Omega)
-
+  
   # Get one-step predictors
   yfit <- e <- ts(rep(NA, n))
   if (n > 1000) {
@@ -226,8 +244,8 @@ forecast.spline_model <- function(
     y <- object$y
   }
   # Compute matrices for optimal beta
-  mat <- spline.matrices(n, object$beta / n^3)
-  newmat <- spline.matrices(n, object$beta / n^3, n0 = h)
+  mat <- spline.matrices(n, object$beta / n^3, compute_P = FALSE)
+  newmat <- spline.matrices(n, object$beta / n^3, n0 = h, compute_inverse = FALSE)
 
   # Compute mean and var of forecasts
   U <- newmat$Omega[seq(n), n + seq(h)]
@@ -396,12 +414,12 @@ simulate.spline_model <- function(
   y <- c(y, rep(NA, nsim))
   n <- length(y)
   for (i in nhistory + seq(nsim) - 1) {
-    mat <- spline.matrices(i, object$beta / i^3)
-    newmat <- spline.matrices(i, object$beta / i^3, n0 = 1)
+    mat <- spline.matrices(i, object$beta / i^3, compute_P = FALSE)
+    newmat <- spline.matrices(i, object$beta / i^3, n0 = 1, compute_inverse = FALSE)
     inv.Omega <- mat$inv.Omega
     Omega <- newmat$Omega
     U <- Omega[seq(i), i + 1]
-    Omega0 <- Omega[i+1,i+1]
+    Omega0 <- Omega[i + 1, i + 1]
     Yhat <- t(U) %*% inv.Omega %*% y[seq(i)]
     sd <- sqrt(Omega0 - t(U) %*% inv.Omega %*% U)
     y[i + 1] <- Yhat + e[i - nhistory + 1] * sd
