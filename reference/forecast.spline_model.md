@@ -17,7 +17,7 @@ forecast(
   level = c(80, 95),
   fan = FALSE,
   lambda = object$lambda,
-  biasadj = FALSE,
+  biasadj = attr(lambda, "biasadj"),
   simulate = FALSE,
   bootstrap = FALSE,
   innov = NULL,
