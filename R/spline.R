@@ -24,8 +24,8 @@ spline.matrices <- function(n, beta, cc = 1e2, n0 = 0) {
   Sigma <- make.Sigma(n, n0)
   s <- cbind(rep(1, nn), seq(nn) / n)
   Omega <- cc * s %*% t(s) + Sigma / beta + diag(nn)
-  max.Omega <- max(Omega)
-  inv.Omega <- solve(Omega / max.Omega, tol = 1e-10) / max.Omega
+  maxO <- max(Omega)
+  inv.Omega <- solve(Omega / maxO, tol = 1e-10) / maxO
   P <- chol(inv.Omega)
   list(
     s = s,
@@ -123,6 +123,7 @@ spline_model <- function(
 
   # Compute matrices for optimal beta
   mat <- spline.matrices(n, beta.est)
+  maxO <- max(mat$Omega)
 
   # Get one-step predictors
   yfit <- e <- ts(rep(NA, n))
@@ -133,7 +134,7 @@ spline_model <- function(
     for (i in seq(n - 1)) {
       idx <- seq(i)
       U <- mat$Omega[seq(i), i + 1]
-      Oinv <- solve(mat$Omega[idx, idx] / 1e6) / 1e6
+      Oinv <- solve(mat$Omega[idx, idx] / maxO, tol = 1e-10) / maxO
       yfit[i + 1] <- t(U) %*% Oinv %*% y[idx]
       sd <- sqrt(mat$Omega[i + 1, i + 1] - t(U) %*% Oinv %*% U)
       e[i + 1] <- (y[i + 1] - yfit[i + 1]) / sd
@@ -394,13 +395,16 @@ simulate.spline_model <- function(
   }
   y <- c(y, rep(NA, nsim))
   n <- length(y)
-  mat <- spline.matrices(n, object$beta / nsim^3)
   for (i in nhistory + seq(nsim) - 1) {
-    idx <- seq(i)
-    U <- mat$Omega[seq(i), i + 1]
-    Oinv <- solve(mat$Omega[idx, idx] / 1e6) / 1e6
-    sd <- sqrt(mat$Omega[i + 1, i + 1] - t(U) %*% Oinv %*% U)
-    y[i + 1] <- t(U) %*% Oinv %*% y[idx] + e[i - nhistory + 1] * sd
+    mat <- spline.matrices(i, object$beta / i^3)
+    newmat <- spline.matrices(i, object$beta / i^3, n0 = 1)
+    inv.Omega <- mat$inv.Omega
+    Omega <- newmat$Omega
+    U <- Omega[seq(i), i + 1]
+    Omega0 <- Omega[i+1,i+1]
+    Yhat <- t(U) %*% inv.Omega %*% y[seq(i)]
+    sd <- sqrt(Omega0 - t(U) %*% inv.Omega %*% U)
+    y[i + 1] <- Yhat + e[i - nhistory + 1] * sd
   }
   sim <- tail(y, nsim)
   if (!is.null(lambda)) {
@@ -408,7 +412,7 @@ simulate.spline_model <- function(
   }
   tspx <- tsp(object$y)
   ts(
-    sim,
+    c(sim),
     start = if (future) tspx[2] + 1 / tspx[3] else tspx[1],
     frequency = tspx[3]
   )
