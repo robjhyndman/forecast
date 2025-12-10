@@ -180,7 +180,7 @@ reference:
   - title: "Forecast evaluation"
     desc: "Functions used for evaluating forecasts"
     contents:
-      - accuracy.default
+      - accuracy.forecast
       - CV
       - CVar
       - dm.test
