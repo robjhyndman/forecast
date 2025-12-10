@@ -13,7 +13,7 @@ forecast.tbats <- function(
   ...
 ) {
   # Check if forecast.tbats called incorrectly
-  if (inherits(object, "bats")) {
+  if (inherits(object, "bats") & !inherits(object, "tbats")) {
     return(forecast.bats(object, h, level, fan, biasadj, ...))
   }
 
