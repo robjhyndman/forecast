@@ -346,7 +346,13 @@ Functions for simulating time series data from fitted models
 
 Functions used for evaluating forecasts
 
-- [`accuracy(`*`<default>`*`)`](https://pkg.robjhyndman.com/forecast/reference/accuracy.default.md)
+- [`accuracy(`*`<forecast>`*`)`](https://pkg.robjhyndman.com/forecast/reference/accuracy.forecast.md)
+  [`accuracy(`*`<mforecast>`*`)`](https://pkg.robjhyndman.com/forecast/reference/accuracy.forecast.md)
+  [`accuracy(`*`<fc_model>`*`)`](https://pkg.robjhyndman.com/forecast/reference/accuracy.forecast.md)
+  [`accuracy(`*`<Arima>`*`)`](https://pkg.robjhyndman.com/forecast/reference/accuracy.forecast.md)
+  [`accuracy(`*`<lm>`*`)`](https://pkg.robjhyndman.com/forecast/reference/accuracy.forecast.md)
+  [`accuracy(`*`<ts>`*`)`](https://pkg.robjhyndman.com/forecast/reference/accuracy.forecast.md)
+  [`accuracy(`*`<numeric>`*`)`](https://pkg.robjhyndman.com/forecast/reference/accuracy.forecast.md)
   : Accuracy measures for a forecast model
 - [`CV()`](https://pkg.robjhyndman.com/forecast/reference/CV.md) :
   Cross-validation statistic
