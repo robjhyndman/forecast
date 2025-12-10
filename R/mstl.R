@@ -572,7 +572,7 @@ stlm <- function(
       fitted = fits,
       residuals = res
     ),
-    class = "stlm"
+    class = c("fc_model", "stlm")
   )
 }
 

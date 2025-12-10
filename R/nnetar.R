@@ -390,7 +390,7 @@ nnetar <- function(
     out$method <- paste0(out$method, "[", m, "]")
   }
   out$call <- match.call()
-  structure(out, class = "nnetar")
+  structure(out, class = c("fc_model", "nnetar"))
 }
 
 # Aggregate several neural network models

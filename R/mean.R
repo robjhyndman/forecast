@@ -65,7 +65,7 @@ mean_model <- function(y, lambda = NULL, biasadj = FALSE) {
     residuals = res
   )
   out$call <- match.call()
-  structure(out, class = "mean_model")
+  structure(out, class = c("fc_model", "mean_model"))
 }
 
 #' @export

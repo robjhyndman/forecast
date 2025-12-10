@@ -121,7 +121,7 @@ tbats <- function(
       method = "TBATS",
       call = match.call()
     )
-    return(structure(fit, class = "bats"))
+    return(structure(fit, class = c("fc_model", "bats")))
   }
 
   # Check for observations are positive

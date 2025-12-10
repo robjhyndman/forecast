@@ -143,7 +143,7 @@ bats <- function(
       method = "BATS",
       call = match.call()
     )
-    return(structure(fit, class = "bats"))
+    return(structure(fit, class = c("fc_model", "bats")))
   }
 
   # Check for non-positive data

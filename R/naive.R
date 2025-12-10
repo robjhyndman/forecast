@@ -114,7 +114,7 @@ rw_model <- function(
       lambda = lambda,
       call = match.call()
     ),
-    class = "rw_model"
+    class = c("fc_model", "rw_model")
   )
 }
 

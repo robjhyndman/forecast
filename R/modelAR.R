@@ -350,7 +350,7 @@ modelAR <- function(
     out$method <- paste0(out$method, "[", m, "]")
   }
   out$call <- match.call()
-  structure(out, class = "modelAR")
+  structure(out, class = c("fc_model", "modelAR"))
 }
 
 #' Forecasting using user-defined model

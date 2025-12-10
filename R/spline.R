@@ -179,7 +179,7 @@ spline_model <- function(
       onestepf = yfit,
       call = match.call()
     ),
-    class = "spline_model"
+    class = c("fc_model", "spline_model")
   )
 }
 

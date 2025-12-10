@@ -529,7 +529,7 @@ fitSpecificBATS <- function(
     seasonal.periods = seasonal.periods,
     y = y
   )
-  class(model.for.output) <- "bats"
+  class(model.for.output) <- c("fc_model", "bats")
   model.for.output
 }
 

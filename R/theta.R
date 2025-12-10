@@ -91,7 +91,7 @@ theta_model <- function(y, lambda = NULL, biasadj = FALSE) {
       lambda = lambda,
       call = match.call()
     ),
-    class = "theta_model"
+    class = c("fc_model", "theta_model")
   )
 }
 

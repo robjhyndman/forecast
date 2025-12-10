@@ -187,7 +187,6 @@ trainingaccuracy <- function(f, test, d, D) {
   out
 }
 
-
 #' Accuracy measures for a forecast model
 #'
 #' Returns range of summary measures of the forecast accuracy. If `x` is
@@ -232,7 +231,6 @@ trainingaccuracy <- function(f, test, d, D) {
 #' for the denominator in MASE calculation. Default value is 0 for non-seasonal
 #' series and 1 for seasonal series.
 #' @param ... Additional arguments depending on the specific method.
-#' @param f Deprecated. Please use `object` instead.
 #' @return Matrix giving forecast accuracy measures.
 #' @author Rob J Hyndman
 #' @references Hyndman, R.J. and Koehler, A.B. (2006) "Another look at measures
@@ -245,7 +243,6 @@ trainingaccuracy <- function(f, test, d, D) {
 #' \url{https://otexts.com/fpp2/accuracy.html}.
 #' @keywords ts
 #' @examples
-#'
 #' fit1 <- rwf(EuStockMarkets[1:200, 1], h = 100)
 #' fit2 <- meanf(EuStockMarkets[1:200, 1], h = 100)
 #' accuracy(fit1)
@@ -255,53 +252,16 @@ trainingaccuracy <- function(f, test, d, D) {
 #' plot(fit1)
 #' lines(EuStockMarkets[1:300, 1])
 #' @export
-accuracy.default <- function(
+accuracy.forecast <- function(
   object,
   x,
   test = NULL,
   d = NULL,
   D = NULL,
-  f = NULL,
   ...
 ) {
-  if (!is.null(f)) {
-    warning(
-      "Using `f` as the argument for `accuracy()` is deprecated. Please use `object` instead."
-    )
-    object <- f
-  }
-  if (
-    !inherits(
-      object,
-      c(
-        "ARFIMA",
-        "mforecast",
-        "forecast",
-        "ts",
-        "integer",
-        "numeric",
-        "Arima",
-        "ets",
-        "lm",
-        "bats",
-        "tbats",
-        "nnetar",
-        "stlm",
-        "baggedModel"
-      )
-    )
-  ) {
-    stop(paste(
-      "No accuracy method found for an object of class",
-      class(object)
-    ))
-  }
-  if (is.mforecast(object)) {
-    return(accuracy.mforecast(object, x, test, d, D))
-  }
-
-  trainset <- (is.list(object))
-  testset <- (!missing(x))
+  trainset <- is.list(object)
+  testset <- !missing(x)
   if (testset && !is.null(test)) {
     trainset <- FALSE
   }
@@ -319,8 +279,9 @@ accuracy.default <- function(
         d <- as.numeric(frequency(object$mean) == 1)
         D <- as.numeric(frequency(object$mean) > 1)
       } else {
-        d <- as.numeric(frequency(object[["x"]]) == 1)
-        D <- as.numeric(frequency(object[["x"]]) > 1)
+        y <- getResponse(object)
+        d <- as.numeric(frequency(y) == 1)
+        D <- as.numeric(frequency(y) > 1)
       }
     } else {
       d <- as.numeric(frequency(object) == 1)
@@ -361,7 +322,7 @@ accuracy.default <- function(
   out
 }
 
-# Compute accuracy for an mforecast object
+#' @rdname accuracy.forecast
 #' @export
 accuracy.mforecast <- function(
   object,
@@ -369,27 +330,85 @@ accuracy.mforecast <- function(
   test = NULL,
   d = NULL,
   D = NULL,
-  f = NULL,
   ...
 ) {
-  if (!is.null(f)) {
-    warning(
-      "Using `f` as the argument for `accuracy()` is deprecated. Please use `object` instead."
-    )
-    object <- f
-  }
   out <- NULL
   nox <- missing(x)
   i <- 1
   for (fcast in object$forecast) {
     if (nox) {
-      out1 <- accuracy(fcast, test = test, d = d, D = D)
+      out1 <- accuracy(fcast, test = test, d = d, D = D, ...)
     } else {
-      out1 <- accuracy(fcast, x[, i], test, d, D)
+      out1 <- accuracy(fcast, x = x[, i], test = test, d = d, D = D, ...)
     }
     rownames(out1) <- paste(fcast$series, rownames(out1))
     out <- rbind(out, out1)
     i <- i + 1
   }
   out
+}
+
+#' @rdname accuracy.forecast
+#' @export
+accuracy.fc_model <- function(
+  object,
+  x,
+  test = NULL,
+  d = NULL,
+  D = NULL,
+  ...
+) {
+  accuracy.forecast(object, x, test, d, D, ...)
+}
+
+#' @rdname accuracy.forecast
+#' @export
+accuracy.Arima <- function(
+  object,
+  x,
+  test = NULL,
+  d = NULL,
+  D = NULL,
+  ...
+) {
+  accuracy.forecast(object, x, test, d, D, ...)
+}
+
+#' @rdname accuracy.forecast
+#' @export
+accuracy.lm <- function(
+  object,
+  x,
+  test = NULL,
+  d = NULL,
+  D = NULL,
+  ...
+) {
+  accuracy.forecast(object, x, test, d, D, ...)
+}
+
+#' @rdname accuracy.forecast
+#' @export
+accuracy.ts <- function(
+  object,
+  x,
+  test = NULL,
+  d = NULL,
+  D = NULL,
+  ...
+) {
+  accuracy.forecast(object, x, test, d, D, ...)
+}
+
+#' @rdname accuracy.forecast
+#' @export
+accuracy.numeric <- function(
+  object,
+  x,
+  test = NULL,
+  d = NULL,
+  D = NULL,
+  ...
+) {
+  accuracy.forecast(object, x, test, d, D, ...)
 }

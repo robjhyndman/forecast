@@ -91,7 +91,7 @@ croston_model <- function(y, alpha = 0.1, type = c("croston", "sba", "sbj")) {
     series = series
   )
   output$call <- match.call()
-  structure(output, class = "croston_model")
+  structure(output, class = c("fc_model", "croston_model"))
 }
 
 #' @export

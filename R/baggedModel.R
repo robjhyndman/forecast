@@ -85,7 +85,7 @@ baggedModel <- function(
   out$method <- "baggedModel"
 
   out$call <- match.call()
-  structure(out, class = "baggedModel")
+  structure(out, class = c("fc_model", "baggedModel"))
 }
 
 #' @rdname baggedModel

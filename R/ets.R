@@ -581,7 +581,7 @@ ets <- function(
   model$lambda <- lambda
   # model$call$data <- dataname
 
-  structure(model, class = "ets")
+  structure(model, class = c("fc_model", "ets"))
 }
 
 #' @export

@@ -115,7 +115,7 @@ search.arima <- function(
         constant <- unlist(all.models[[i]][1, 2])
       }
     }
-    class(bestfit) <- c("forecast_ARIMA", "ARIMA", "Arima")
+    class(bestfit) <- c("fc_model", "forecast_ARIMA", "ARIMA", "Arima")
   }
 
   if (exists("bestfit")) {
@@ -894,7 +894,7 @@ Arima <- function(
   if (is.null(model)) {
     tmp$sigma2 <- sum(tmp$residuals^2, na.rm = TRUE) / (nstar - npar + 1)
   }
-  out <- structure(tmp, class = c("forecast_ARIMA", "ARIMA", "Arima"))
+  out <- structure(tmp, class = c("fc_model", "forecast_ARIMA", "ARIMA", "Arima"))
   out$fitted <- fitted.Arima(out)
   out$series <- series
   out

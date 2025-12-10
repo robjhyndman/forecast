@@ -653,7 +653,7 @@ fitSpecificTBATS <- function(
     p = p,
     q = q
   )
-  class(model.for.output) <- c("tbats", "bats")
+  class(model.for.output) <- c("fc_model", "tbats", "bats")
   model.for.output
 }
 

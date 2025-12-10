@@ -1314,7 +1314,7 @@ myarima <- function(
       cat("\n", arima.string(fit, padding = TRUE), ":", fit$ic)
     }
 
-    return(structure(fit, class = c("forecast_ARIMA", "ARIMA", "Arima")))
+    return(structure(fit, class = c("fc_model", "forecast_ARIMA", "ARIMA", "Arima")))
   } else {
     # Catch errors due to unused arguments
     if (length(grep("unused argument", fit, fixed = TRUE)) > 0L) {
