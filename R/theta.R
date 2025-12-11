@@ -194,6 +194,7 @@ forecast.theta_model <- function(
   fcast$method <- "Theta"
   fcast$model <- object
   fcast$series <- object$series
+  fcast$fitted <- object$fitted
   fcast
 }
 
