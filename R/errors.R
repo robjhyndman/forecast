@@ -113,7 +113,7 @@ trainingaccuracy <- function(f, test, d, D) {
   # if(!is.list(f))
   #  stop("f must be a forecast object or a time series model object.")
   dx <- getResponse(f)
-  if (is.splineforecast(f)) {
+  if (is.splineforecast(f) || inherits(f, "spline_model")) {
     fits <- f$onestepf
   } else {
     fits <- fitted(f)
@@ -121,8 +121,8 @@ trainingaccuracy <- function(f, test, d, D) {
 
   res <- dx - fits
   n <- length(res)
-  if (is.null(test)) {
-    test <- 1:n
+  if (is.null(test) && n > 0) {
+    test <- seq(n)
   }
   if (min(test) < 1 || max(test) > n) {
     warning("test elements must be within sample")
