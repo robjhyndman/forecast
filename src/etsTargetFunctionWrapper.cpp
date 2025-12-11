@@ -74,61 +74,6 @@ RcppExport SEXP etsTargetFunctionInit(SEXP p_y, SEXP p_nstate, SEXP p_errortype,
 	END_RCPP;
 }
 
-// RcppExport double targetFunctionRmalschains(SEXP p_par, SEXP p_env)
-// {
-// 	Rcpp::NumericVector par(p_par);
-
-// 	Rcpp::Environment e(p_env);
-// 	Rcpp::XPtr<EtsTargetFunction> sp(e.get("ets.xptr"));
-
-// 	sp->eval(par.begin(), par.size());
-
-// 	//return Rcpp::wrap(sp->getObjVal());
-// 	return sp->getObjVal();
-
-// }
-
-// RcppExport SEXP etsGetTargetFunctionRmalschainsPtr() {
-
-// 	typedef double (*funcPtr)(SEXP, SEXP);
-// 	return (Rcpp::XPtr<funcPtr>(new funcPtr(&targetFunctionRmalschains)));
-// }
-
-/*
-RcppExport SEXP targetFunctionRdonlp2(SEXP p_var, SEXP p_env)
-{
-
-	Rcpp::Environment e(p_env);
-	Rcpp::XPtr<EtsTargetFunction> sp(e.get("ets.xptr"));
-
-	Rcpp::NumericVector var(p_var);
-
-	int mode = var[0];
-	int fun_id = var[1];
-
-	sp->eval(var.begin()+2, var.size()-2);
-
-	if(mode == 0) {
-		if(fun_id == 0) {
-			return Rcpp::wrap(sp->getObjVal());
-		} else {
-			return Rcpp::wrap(0);
-			//return Rcpp::wrap(sp->restrictions[fun_id-1]);
-		}
-	} else if(mode==1) {
-		//		error("Gradients are not implemented, exiting.");
-	};
-
-	return R_NilValue;
-}
-
-RcppExport SEXP etsGetTargetFunctionRdonlp2Ptr() {
-
-	typedef SEXP (*funcPtr)(SEXP, SEXP);
-	return (Rcpp::XPtr<funcPtr>(new funcPtr(&targetFunctionRdonlp2)));
-}
-*/
-
 double targetFunctionEtsNelderMead(int n, double *par, void *ex)
 {
 	EtsTargetFunction* sp = (EtsTargetFunction*) ex;

@@ -1,4 +1,5 @@
 #include <math.h>
+#include <R_ext/Arith.h>
 
 #define NONE 0
 #define ADD 1
@@ -76,7 +77,9 @@ void etscalc(double *y, int *n, double *x, int *m, int *error, int *trend, int *
             return;
         }
 
-        if(*error == ADD)
+        if(ISNAN(y[i]))
+            e[i] = 0.0;
+        else if(*error == ADD)
             e[i] = y[i] - f[0];
         else
             e[i] = (y[i] - f[0])/f[0];
@@ -85,7 +88,10 @@ void etscalc(double *y, int *n, double *x, int *m, int *error, int *trend, int *
             if(i+j<(*n))
             {
                 denom[j] += 1.0;
-                tmp = y[i+j]-f[j];
+                if(ISNAN(y[i+j]))
+                  tmp = 0.0;
+                else
+                  tmp = y[i+j]-f[j];
                 amse[j] = (amse[j] * (denom[j]-1.0) + (tmp*tmp)) / denom[j];
             }
         }
@@ -181,7 +187,7 @@ void etsforecast(double *x, int *m, int *trend, int *season, double *phi, int *h
 
     // Copy initial state components
     l = x[0];
-	b = 0.0;
+  	b = 0.0;
     if(*trend > NONE)
         b = x[1];
     if(*season > NONE)
@@ -260,7 +266,9 @@ void update(double *oldl, double *l, double *oldb, double *b, double *olds, doub
         phib = pow(*oldb,phi);
         q = (*oldl) * phib;          // l(t-1)*b(t-1)^phi
     }
-    if(season==NONE)
+    if(ISNAN(y))
+        p = q;
+    else if(season==NONE)
         p = y;
     else if(season==ADD)
         p = y - olds[m-1];         // y[t] - s[t-m]
@@ -292,7 +300,9 @@ void update(double *oldl, double *l, double *oldb, double *b, double *olds, doub
     // NEW SEASON
     if(season > NONE)
     {
-        if(season==ADD)
+        if(ISNAN(y))
+            t = olds[m-1];
+        else if(season==ADD)
             t = y - q;
         else //if(season==MULT)
         {
