@@ -111,38 +111,23 @@ ets <- function(
   restrict = TRUE,
   allow.multiplicative.trend = FALSE,
   use.initial.values = FALSE,
-  na.action = c("na.contiguous", "na.interp", "na.fail"),
   ...
 ) {
   # dataname <- substitute(y)
   opt.crit <- match.arg(opt.crit)
   bounds <- match.arg(bounds)
   ic <- match.arg(ic)
-  if (!is.function(na.action)) {
-    na.fn_name <- match.arg(na.action)
-    na.action <- get(na.fn_name)
-  }
-
   seriesname <- deparse1(substitute(y))
 
   if (inherits(y, c("data.frame", "list", "matrix", "mts"))) {
     stop("y should be a univariate time series")
   }
   y <- as.ts(y)
+  ny <- length(y)
 
   # Check if data is constant
   if (missing(model) && is.constant(y)) {
     return(ses(y, alpha = 0.99999, initial = "simple")$model)
-  }
-
-  # Remove missing values near ends
-  ny <- length(y)
-  y <- na.action(y)
-  if (ny != length(y) && na.fn_name == "na.contiguous") {
-    warning(
-      "Missing values encountered. Using longest contiguous portion of time series"
-    )
-    ny <- length(y)
   }
 
   orig.y <- y
@@ -151,7 +136,7 @@ ets <- function(
   }
   if (!is.null(lambda)) {
     y <- BoxCox(y, lambda)
-    lambda <- attr(y, "lambda")    
+    lambda <- attr(y, "lambda")
     attr(lambda, "biasadj") <- biasadj
     additive.only <- TRUE
   }
@@ -159,11 +144,12 @@ ets <- function(
   if (nmse < 1 || nmse > 30) {
     stop("nmse out of range")
   }
-  m <- frequency(y)
+  m <- max(1, frequency(y))
   if (abs(m - round(m)) > 1e-4) {
     warning(
       "Non-integer seasonal period. Only non-seasonal models will be considered."
     )
+    m <- 1
   } else {
     m <- round(m)
   }
@@ -324,7 +310,7 @@ ets <- function(
     }
   }
 
-  data.positive <- (min(y) > 0)
+  data.positive <- (min(y, na.rm=TRUE) > 0)
 
   if (!data.positive && errortype == "M") {
     stop("Inappropriate model for data with negative or zero values")
@@ -334,7 +320,7 @@ ets <- function(
     stop("Forbidden model combination")
   }
 
-  n <- length(y)
+  n <- sum(!is.na(y))
   # Check we have enough data to fit a model
   npars <- 2L # alpha + l0
   if (trendtype == "A" || trendtype == "M") {
@@ -747,80 +733,6 @@ etsmodel <- function(
     ))
   }
 
-  # -------------------------------------------------
-
-  #  if(is.null(seed)) seed <- 1000*runif(1)
-
-  # if(solver=="malschains" || solver=="malschains_c") {
-
-  #   malschains <- NULL
-  #   if(!myRequire("Rmalschains"))
-  #     stop("malschains optimizer unavailable")
-
-  #   func <- NULL
-  #   #env <- NULL
-
-  #   if(solver=="malschains") {
-
-  #     func <- function(myPar) {
-  #       names(myPar) <- names(par)
-  #       res <- lik(myPar,y=y,nstate=nstate, errortype=errortype, trendtype=trendtype,
-  #           seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
-  #           opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt))
-  #       res
-  #     }
-
-  #     env <- new.env()
-
-  #   } else {
-
-  #     env <- etsTargetFunctionInit(par=par, y=y, nstate=nstate, errortype=errortype, trendtype=trendtype,
-  #         seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
-  #         opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt))
-
-  #     func <- .Call("etsGetTargetFunctionRmalschainsPtr", PACKAGE="forecast")
-
-  #   }
-
-  #   myBounds <- getNewBounds(par, lower, upper, nstate)
-
-  #   if(is.null(control)) {
-  #     control <- Rmalschains::malschains.control(ls="simplex", lsOnly=TRUE)
-  #   }
-
-  #   control$optimum <- if(opt.crit=="lik") -1e12 else 0
-
-  #   fredTmp <- Rmalschains::malschains(func, env=env, lower=myBounds$lower, upper=myBounds$upper,
-  #       maxEvals=maxit, seed=seed, initialpop=par, control=control)
-
-  #   fred <- NULL
-  #   fred$par <- fredTmp$sol
-
-  #   fit.par <- fred$par
-
-  #   names(fit.par) <- names(par)
-
-  #  } else if (solver=="Rdonlp2") {
-  #
-  #    donlp2 <- NULL
-  #    myRequire("Rdonlp2")
-  #
-  #    env <- etsTargetFunctionInit(par=par, y=y, nstate=nstate, errortype=errortype, trendtype=trendtype,
-  #        seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
-  #        opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt))
-  #
-  #    func <- .Call("etsGetTargetFunctionRdonlp2Ptr", PACKAGE="forecast")
-  #
-  #    myBounds <- getNewBounds(par, lower, upper, nstate)
-  #
-  #    fred <- donlp2(par, func, env=env, par.lower=myBounds$lower, par.upper=myBounds$upper)#, nlin.lower=c(-1), nlin.upper=c(1)) #nlin.lower=c(0,-Inf, -Inf, -Inf), nlin.upper=c(0,0,0,0))
-  #
-  #    fit.par <- fred$par
-  #
-  #    names(fit.par) <- names(par)
-
-  #  } else if(solver=="optim_c"){
-
   env <- etsTargetFunctionInit(
     par = par,
     y = y,
@@ -853,32 +765,11 @@ etsmodel <- function(
     maxit,
     PACKAGE = "forecast"
   )
-
   fit.par <- fred$par
-
   names(fit.par) <- names(par)
-
-  # } else { #if(solver=="optim")
-
-  #   # Optimize parameters and state
-  #   if(length(par)==1)
-  #     method <- "Brent"
-  #   else
-  #   	method <- "Nelder-Mead"
-
-  #   fred <- optim(par,lik,method=method,y=y,nstate=nstate, errortype=errortype, trendtype=trendtype,
-  #       seasontype=seasontype, damped=damped, par.noopt=par.noopt, lowerb=lower, upperb=upper,
-  #       opt.crit=opt.crit, nmse=nmse, bounds=bounds, m=m,pnames=names(par),pnames2=names(par.noopt),
-  #       control=list(maxit=maxit))
-
-  #   fit.par <- fred$par
-  #   names(fit.par) <- names(par)
-  # }
-
-  # -------------------------------------------------
-
   init.state <- fit.par[(np - nstate + 1):np]
-  # Add extra state
+
+    # Add extra state
   if (seasontype != "N") {
     init.state <- c(
       init.state,
@@ -1231,14 +1122,18 @@ initstate <- function(y, trendtype, seasontype) {
     y.sa <- y
   }
 
+  # Extract first 10 (or 2m) non missing values from y.sa
+  y.sa <- na.omit(c(y.sa))
   maxn <- min(max(10, 2 * m), length(y.sa))
+  y.sa <- head(y.sa, maxn)
 
   if (trendtype == "N") {
-    l0 <- mean(y.sa[1:maxn])
+    l0 <- mean(y.sa)
     b0 <- NULL
   } else {
     # Simple linear regression on seasonally adjusted data
-    fit <- lsfit(1:maxn, y.sa[1:maxn])
+
+    fit <- lsfit(seq(maxn), y.sa)
     if (trendtype == "A") {
       l0 <- fit$coefficients[1]
       b0 <- fit$coefficients[2]
