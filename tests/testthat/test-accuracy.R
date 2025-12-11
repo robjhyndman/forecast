@@ -44,3 +44,49 @@ test_that("tests for accuracy (output)", {
   ]
   expect_gt(accuracylm, accuracylmsim)
 })
+
+test_that("accuracy fc_model", {
+  mods <- c(
+    arfima,
+    Arima,
+    ets,
+    bats,
+    tbats,
+    nnetar,
+    stlm,
+    baggedModel,
+    rw_model,
+    mean_model,
+    croston_model,
+    theta_model,
+    spline_model
+  )
+  train <- window(USAccDeaths, start = c(1973, 1), end = c(1976, 12))
+  test <- window(USAccDeaths, start = c(1977, 1))
+  for (i in seq_along(mods)) {
+    fit <- mods[[i]](train)
+    fc <- forecast(fit)
+    a <- accuracy(fit)
+    b <- accuracy(fc)
+    c <- accuracy(fc, test)
+    expect_shape(a, dim = c(1, 7))
+    expect_shape(c, dim = c(2, 8))
+    expect_identical(a, b)
+    expect_identical(b, c[1, 1:7, drop=FALSE])
+    expect_lt(a[, "MASE"], 1.8)
+    expect_lt(b[, "MASE"], 1.8)
+    expect_identical(colnames(a), colnames(b))
+    expect_identical(
+      colnames(a),
+      c(
+        "ME",
+        "RMSE",
+        "MAE",
+        "MPE",
+        "MAPE",
+        "MASE",
+        "ACF1"
+      )
+    )
+  }
+})
