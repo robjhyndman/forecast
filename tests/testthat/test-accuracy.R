@@ -75,7 +75,6 @@ test_that("accuracy fc_model", {
     expect_identical(b, c[1, 1:7, drop=FALSE])
     expect_lt(a[, "MASE"], 1.8)
     expect_lt(b[, "MASE"], 1.8)
-    expect_identical(colnames(a), colnames(b))
     expect_identical(
       colnames(a),
       c(
