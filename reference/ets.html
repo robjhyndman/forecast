@@ -59,7 +59,6 @@
 <span>  restrict <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  allow.multiplicative.trend <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  use.initial.values <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  na.action <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"na.contiguous"</span>, <span class="st">"na.interp"</span>, <span class="st">"na.fail"</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -176,12 +175,6 @@ explicitly requested (e.g., using <code>model = "MMN"</code>).</p></dd>
 <dd><p>If <code>TRUE</code> and <code>model</code> is of class
 <code>"ets"</code>, then the initial values in the model are also not
 re-estimated.</p></dd>
-
-
-<dt id="arg-na-action">na.action<a class="anchor" aria-label="anchor" href="#arg-na-action"></a></dt>
-<dd><p>A function which indicates what should happen when the data
-contains NA values. By default, the largest contiguous portion of the
-time-series will be used.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

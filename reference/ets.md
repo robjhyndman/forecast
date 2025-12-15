@@ -25,7 +25,6 @@ ets(
   restrict = TRUE,
   allow.multiplicative.trend = FALSE,
   use.initial.values = FALSE,
-  na.action = c("na.contiguous", "na.interp", "na.fail"),
   ...
 )
 ```
@@ -143,12 +142,6 @@ ets(
 
   If `TRUE` and `model` is of class `"ets"`, then the initial values in
   the model are also not re-estimated.
-
-- na.action:
-
-  A function which indicates what should happen when the data contains
-  NA values. By default, the largest contiguous portion of the
-  time-series will be used.
 
 - ...:
 

@@ -2,14 +2,26 @@
 
 ## forecast (development version)
 
+- ets() now allows missing values in the time series
+  ([\#952](https://github.com/robjhyndman/forecast/issues/952))
 - Added mean_model() and forecast.mean_model()
-- Added rw_model() and forecast.rw_model()
+- Added rw_model() and forecast.rw_model() (m-muecke,
+  [\#969](https://github.com/robjhyndman/forecast/issues/969))
 - Added spline_model() and forecast.spline_model()
+  ([\#1013](https://github.com/robjhyndman/forecast/issues/1013))
 - Added theta_model() and forecast.theta_model()
+  ([\#1014](https://github.com/robjhyndman/forecast/issues/1014))
 - Added croston_model() and forecast.croston_model()
+  ([\#1015](https://github.com/robjhyndman/forecast/issues/1015))
 - Added simulated and bootstrapped prediction intervals to more models
-- Added parallelization for nnetar
-- Bug fixes
+  ([\#1040](https://github.com/robjhyndman/forecast/issues/1040))
+- Added parallelization for nnetar (m-muecke,
+  [\#346](https://github.com/robjhyndman/forecast/issues/346))
+- More consistent handling of biasadj across models
+- accuracy() rewritten to use S3 methods for models and remove
+  accuracy.default()
+  ([\#912](https://github.com/robjhyndman/forecast/issues/912))
+- Bug fixes and performance improvements
 - Documentation improvements
 
 ## forecast 8.24.0

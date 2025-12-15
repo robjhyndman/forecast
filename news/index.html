@@ -34,14 +34,17 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="forecast-development-version">forecast (development version)<a class="anchor" aria-label="anchor" href="#forecast-development-version"></a></h2>
-<ul><li>Added mean_model() and forecast.mean_model()</li>
-<li>Added rw_model() and forecast.rw_model()</li>
-<li>Added spline_model() and forecast.spline_model()</li>
-<li>Added theta_model() and forecast.theta_model()</li>
-<li>Added croston_model() and forecast.croston_model()</li>
-<li>Added simulated and bootstrapped prediction intervals to more models</li>
-<li>Added parallelization for nnetar</li>
-<li>Bug fixes</li>
+<ul><li>ets() now allows missing values in the time series (<a href="https://github.com/robjhyndman/forecast/issues/952" class="external-link">#952</a>)</li>
+<li>Added mean_model() and forecast.mean_model()</li>
+<li>Added rw_model() and forecast.rw_model() (m-muecke, <a href="https://github.com/robjhyndman/forecast/issues/969" class="external-link">#969</a>)</li>
+<li>Added spline_model() and forecast.spline_model() (<a href="https://github.com/robjhyndman/forecast/issues/1013" class="external-link">#1013</a>)</li>
+<li>Added theta_model() and forecast.theta_model() (<a href="https://github.com/robjhyndman/forecast/issues/1014" class="external-link">#1014</a>)</li>
+<li>Added croston_model() and forecast.croston_model() (<a href="https://github.com/robjhyndman/forecast/issues/1015" class="external-link">#1015</a>)</li>
+<li>Added simulated and bootstrapped prediction intervals to more models (<a href="https://github.com/robjhyndman/forecast/issues/1040" class="external-link">#1040</a>)</li>
+<li>Added parallelization for nnetar (m-muecke, <a href="https://github.com/robjhyndman/forecast/issues/346" class="external-link">#346</a>)</li>
+<li>More consistent handling of biasadj across models</li>
+<li>accuracy() rewritten to use S3 methods for models and remove accuracy.default() (<a href="https://github.com/robjhyndman/forecast/issues/912" class="external-link">#912</a>)</li>
+<li>Bug fixes and performance improvements</li>
 <li>Documentation improvements</li>
 </ul></div>
     <div class="section level2">
