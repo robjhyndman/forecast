@@ -107,10 +107,6 @@ explicitly requested (e.g., using \code{model = "MMN"}).}
 re-estimated.}
 
 \item{...}{Other arguments are ignored.}
-
-\item{na.action}{A function which indicates what should happen when the data
-contains NA values. By default, the largest contiguous portion of the
-time-series will be used.}
 }
 \value{
 An object of class \code{ets}.

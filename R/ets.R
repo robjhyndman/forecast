@@ -61,9 +61,6 @@
 #' @param use.initial.values If `TRUE` and `model` is of class
 #' `"ets"`, then the initial values in the model are also not
 #' re-estimated.
-#' @param na.action A function which indicates what should happen when the data
-#' contains NA values. By default, the largest contiguous portion of the
-#' time-series will be used.
 #' @param ... Other arguments are ignored.
 #'
 #' @return An object of class `ets`.
