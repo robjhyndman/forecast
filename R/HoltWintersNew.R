@@ -50,7 +50,7 @@ HoltWintersZZ <- function(
   }
 
   ## initialise l0, b0, s0
-  x_nonmiss <- na.omit(c(x))
+  x_nonmiss <- na.interp(x)
   if (!is.null(gamma) && is.logical(gamma) && !gamma) {
     seasonal <- "none"
     l.start <- x_nonmiss[1L]
