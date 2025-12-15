@@ -1081,7 +1081,7 @@ initstate <- function(y, trendtype, seasontype) {
     n <- length(y)
     if (n < 4) {
       stop("You've got to be joking (not enough data).")
-    } else if (n < 3 * m) {
+    } else if (n < 3 * m | anyNA(y)) {
       # Fit simple Fourier model.
       fouriery <- fourier(y, 1)
       fit <- tslm(y ~ trend + fouriery)
@@ -1104,6 +1104,10 @@ initstate <- function(y, trendtype, seasontype) {
     }
 
     init.seas <- rev(y.d$seasonal[2:m]) # initial seasonal component
+    if(anyNA(init.seas)) {
+      # Use averages
+      init.seas <- rowMeans(matrix(y.d$seasonal, nrow = m), na.rm = TRUE)
+    }
     names(init.seas) <- paste0("s", 0:(m - 2))
     # Seasonally adjusted data
     if (seasontype == "A") {
