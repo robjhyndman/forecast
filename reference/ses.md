@@ -202,7 +202,7 @@ underlying model.
 
 Hyndman, R.J., Koehler, A.B., Ord, J.K., Snyder, R.D. (2008)
 *Forecasting with exponential smoothing: the state space approach*,
-Springer-Verlag: New York. <http://www.exponentialsmoothing.net>.
+Springer-Verlag: New York. <https://robjhyndman.com/expsmooth/>.
 
 Hyndman and Athanasopoulos (2018) *Forecasting: principles and
 practice*, 2nd edition, OTexts: Melbourne, Australia.
