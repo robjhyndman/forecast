@@ -1060,10 +1060,11 @@ initstate <- function(y, trendtype, seasontype) {
     # Do decomposition
     m <- frequency(y)
     n <- length(y)
+    y <- na.interp(y)
     if (n < 4) {
       stop("You've got to be joking (not enough data).")
-    } else if (n < 3 * m | anyNA(y)) {
-      # Fit simple Fourier model.
+    } else if (n < 3 * m) {
+      # Fit simple Fourier model
       fouriery <- fourier(y, 1)
       fit <- tslm(y ~ trend + fouriery)
       if (seasontype == "A") {
@@ -1085,10 +1086,6 @@ initstate <- function(y, trendtype, seasontype) {
     }
 
     init.seas <- rev(y.d$seasonal[2:m]) # initial seasonal component
-    if(anyNA(init.seas)) {
-      # Use averages
-      init.seas <- rowMeans(matrix(y.d$seasonal, nrow = m), na.rm = TRUE)
-    }
     names(init.seas) <- paste0("s", 0:(m - 2))
     # Seasonally adjusted data
     if (seasontype == "A") {
@@ -1107,18 +1104,12 @@ initstate <- function(y, trendtype, seasontype) {
     y.sa <- y
   }
 
-  # Extract first 10 (or 2m) non missing values from y.sa
-  y.sa <- na.omit(c(y.sa))
-  maxn <- min(max(10, 2 * m), length(y.sa))
-  y.sa <- head(y.sa, maxn)
-
   if (trendtype == "N") {
     l0 <- mean(y.sa)
     b0 <- NULL
   } else {
     # Simple linear regression on seasonally adjusted data
-
-    fit <- lsfit(seq(maxn), y.sa)
+    fit <- lsfit(seq_along(y.sa), y.sa)
     if (trendtype == "A") {
       l0 <- fit$coefficients[1]
       b0 <- fit$coefficients[2]
