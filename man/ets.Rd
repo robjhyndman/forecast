@@ -29,7 +29,6 @@ ets(
   restrict = TRUE,
   allow.multiplicative.trend = FALSE,
   use.initial.values = FALSE,
-  na.action = c("na.contiguous", "na.interp", "na.fail"),
   ...
 )
 }
@@ -106,10 +105,6 @@ explicitly requested (e.g., using \code{model = "MMN"}).}
 \item{use.initial.values}{If \code{TRUE} and \code{model} is of class
 \code{"ets"}, then the initial values in the model are also not
 re-estimated.}
-
-\item{na.action}{A function which indicates what should happen when the data
-contains NA values. By default, the largest contiguous portion of the
-time-series will be used.}
 
 \item{...}{Other arguments are ignored.}
 }

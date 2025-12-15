@@ -19,7 +19,6 @@ HoltWintersZZ <- function(
   origx <- x
   seasonal <- match.arg(seasonal)
   m <- frequency(x)
-  lenx <- length(x)
 
   if (!is.null(lambda)) {
     x <- BoxCox(x, lambda)
@@ -51,25 +50,26 @@ HoltWintersZZ <- function(
   }
 
   ## initialise l0, b0, s0
+  x_nonmiss <- na.interp(x)
   if (!is.null(gamma) && is.logical(gamma) && !gamma) {
     seasonal <- "none"
-    l.start <- x[1L]
+    l.start <- x_nonmiss[1L]
     s.start <- 0
     if (is.null(beta) || !is.logical(beta) || beta) {
       if (!exponential) {
-        b.start <- x[2L] - x[1L]
+        b.start <- x_nonmiss[2L] - x_nonmiss[1L]
       } else {
-        b.start <- x[2L] / x[1L]
+        b.start <- x_nonmiss[2L] / x_nonmiss[1L]
       }
     }
   } else {
     ## seasonal Holt-Winters
-    l.start <- mean(x[1:m])
-    b.start <- (mean(x[m + (1:m)]) - l.start) / m
+    l.start <- mean(head(x_nonmiss, m))
+    b.start <- (mean(x_nonmiss[m + seq(m)]) - l.start) / m
     if (seasonal == "additive") {
-      s.start <- x[1:m] - l.start
+      s.start <- head(x_nonmiss, m) - l.start
     } else {
-      s.start <- x[1:m] / l.start
+      s.start <- head(x_nonmiss, m) / l.start
     }
   }
 
@@ -86,13 +86,13 @@ HoltWintersZZ <- function(
   } else {
     trendtype <- "A"
   }
-
-  if (seasonal == "none") {
-    seasontype <- "N"
-  } else if (seasonal == "multiplicative") {
-    seasontype <- "M"
-  } else {
-    seasontype <- "A"
+  seasontype <- switch(seasonal,
+    "additive" = "A",
+    "multiplicative" = "M",
+    "none" = "N"
+  )
+  if (seasontype == "N") {
+    m <- 1
   }
 
   ## initialise smoothing parameter
@@ -109,26 +109,6 @@ HoltWintersZZ <- function(
     m = m,
     bounds = "usual"
   )
-
-  # if(!is.na(optim.start["alpha"]))
-  # 	alpha2 <- optim.start["alpha"]
-  # else
-  # 	alpha2 <- alpha
-  # if(!is.na(optim.start["beta"]))
-  # 	beta2 <- optim.start["beta"]
-  # else
-  # 	beta2 <- beta
-  # if(!is.na(optim.start["gamma"]))
-  # 	gamma2 <- optim.start["gamma"]
-  # else
-  # 	gamma2 <- gamma
-
-  # 	if(!check.param(alpha = alpha2,beta = beta2, gamma = gamma2,phi=1,lower,upper,bounds="haha",m=m))
-  # 	{
-  # 		print(paste("alpha=", alpha2, "beta=",beta2, "gamma=",gamma2))
-  # 		stop("Parameters out of range")
-  # 	}
-
   ###################################################################################
   # optimisation: alpha, beta, gamma, if any of them is null, then optimise them
   error <- function(p, select) {
@@ -144,7 +124,6 @@ HoltWintersZZ <- function(
 
     zzhw(
       x,
-      lenx = lenx,
       alpha = alpha,
       beta = beta,
       gamma = gamma,
@@ -196,7 +175,6 @@ HoltWintersZZ <- function(
 
   final.fit <- zzhw(
     x,
-    lenx = lenx,
     alpha = alpha,
     beta = beta,
     gamma = gamma,
@@ -225,10 +203,10 @@ HoltWintersZZ <- function(
   if (seasontype != "N") {
     nr <- nrow(states)
     nc <- ncol(states)
-    for (i in 1:m) {
+    for (i in seq(m)) {
       states <- cbind(states, final.fit$season[(m - i) + (1:nr)])
     }
-    colnames(states)[nc + (1:m)] <- paste0("s", 1:m)
+    colnames(states)[nc + seq(m)] <- paste0("s", seq(m))
   }
   states <- ts(states, frequency = m, start = tspx[1] - 1 / m)
 
@@ -283,9 +261,9 @@ HoltWintersZZ <- function(
   }
 
   if (components[1] == "A") {
-    sigma2 <- mean(res^2)
+    sigma2 <- mean(res^2, na.rm = TRUE)
   } else {
-    sigma2 <- mean((res / fitted)^2)
+    sigma2 <- mean((res / fitted)^2, na.rm = TRUE)
   }
   structure(
     list(
@@ -310,7 +288,6 @@ HoltWintersZZ <- function(
 # filter function
 zzhw <- function(
   x,
-  lenx,
   alpha = NULL,
   beta = NULL,
   gamma = NULL,
@@ -327,12 +304,10 @@ zzhw <- function(
   if (!exponential || is.null(exponential)) {
     exponential <- FALSE
   }
-
   if (is.null(phi) || !is.numeric(phi)) {
     phi <- 1
   }
-
-  if (abs(m - round(m)) > 1e-4) {
+  if (m < 1 || abs(m - round(m)) > 1e-4) {
     # Ignore seasonality
     m <- 1
   } else {
@@ -340,8 +315,8 @@ zzhw <- function(
   }
 
   # initialise array of l, b, s
-  level <- trend <- season <- xfit <- residuals <- numeric(lenx)
-  SSE <- 0
+  n <- length(x)
+  level <- trend <- season <- xfit <- numeric(n)
 
   if (!dotrend) {
     beta <- 0
@@ -355,16 +330,11 @@ zzhw <- function(
   lasttrend <- trend0 <- b.start
   season0 <- s.start
 
-  for (i in 1:lenx) {
-    # definel l(t-1)
+  for (i in seq(n)) {
     if (i > 1) {
       lastlevel <- level[i - 1]
-    }
-    # define b(t-1)
-    if (i > 1) {
       lasttrend <- trend[i - 1]
     }
-    # define s(t-m)
     if (i > m) {
       lastseason <- season[i - m]
     } else {
@@ -374,82 +344,45 @@ zzhw <- function(
       lastseason <- if (seasonal == "additive") 0 else 1
     }
 
-    # stop((lastlevel + phi*lasttrend)*lastseason)
-
-    # forecast for this period i
+    # forecast and update for period i
     if (seasonal == "additive") {
       if (!exponential) {
-        xhat <- lastlevel + phi * lasttrend + lastseason
+        xfit[i] <- lastlevel + phi * lasttrend + lastseason
+        ladjust <- sadjust <- x[i] - xfit[i]
       } else {
-        xhat <- lastlevel * lasttrend^phi + lastseason
+        xfit[i] <- lastlevel * lasttrend^phi + lastseason
+        ladjust <- sadjust <- x[i] - xfit[i]
       }
     } else if (!exponential) {
-      xhat <- (lastlevel + phi * lasttrend) * lastseason
+      xfit[i] <- (lastlevel + phi * lasttrend) * lastseason
+      ladjust <- x[i] / lastseason - (lastlevel + phi * lasttrend)
+      sadjust <- x[i] / (lastlevel + phi * lasttrend) - lastseason
     } else {
-      xhat <- lastlevel * lasttrend^phi * lastseason
+      xfit[i] <- lastlevel * lasttrend^phi * lastseason
+      ladjust <- x[i] / lastseason - lastlevel * lasttrend^phi
+      sadjust <- x[i] / (lastlevel * lasttrend^phi) - lastseason
     }
 
-    xfit[i] <- xhat
-    res <- x[i] - xhat
-    residuals[i] <- res
-    SSE <- SSE + res * res
-
-    # calculate level[i]
-    if (seasonal == "additive") {
-      if (!exponential) {
-        level[i] <- alpha *
-          (x[i] - lastseason) +
-          (1 - alpha) * (lastlevel + phi * lasttrend)
-      } else {
-        level[i] <- alpha *
-          (x[i] - lastseason) +
-          (1 - alpha) * (lastlevel * lasttrend^phi)
-      }
-    } else if (!exponential) {
-      level[i] <- alpha *
-        (x[i] / lastseason) +
-        (1 - alpha) * (lastlevel + phi * lasttrend)
-    } else {
-      level[i] <- alpha *
-        (x[i] / lastseason) +
-        (1 - alpha) * (lastlevel * lasttrend^phi)
+    # calculate level[i] and trend[i]
+    if (is.na(x[i])) {
+      ladjust <- sadjust <- 0.0
     }
-
-    # calculate trend[i]
     if (!exponential) {
+      level[i] <- lastlevel + phi * lasttrend + alpha * ladjust
       trend[i] <- beta * (level[i] - lastlevel) + (1 - beta) * phi * lasttrend
     } else {
+      level[i] <- lastlevel * lasttrend^phi + alpha * ladjust
       trend[i] <- beta * (level[i] / lastlevel) + (1 - beta) * lasttrend^phi
     }
-
     # calculate season[i]
-    if (seasonal == "additive") {
-      if (!exponential) {
-        season[i] <- gamma *
-          (x[i] - lastlevel - phi * lasttrend) +
-          (1 - gamma) * lastseason
-      } else {
-        season[i] <- gamma *
-          (x[i] - lastlevel * lasttrend^phi) +
-          (1 - gamma) * lastseason
-      }
-    } else {
-      if (!exponential) {
-        season[i] <- gamma *
-          (x[i] / (lastlevel + phi * lasttrend)) +
-          (1 - gamma) * lastseason
-      } else {
-        season[i] <- gamma *
-          (x[i] / (lastlevel * lasttrend^phi)) +
-          (1 - gamma) * lastseason
-      }
-    }
+    season[i] <- lastseason + gamma * sadjust
   }
+  res <- x - xfit
 
   list(
-    SSE = SSE,
+    SSE = sum(res^2, na.rm = TRUE),
     fitted = xfit,
-    residuals = residuals,
+    residuals = res,
     level = c(level0, level),
     trend = c(trend0, trend),
     season = c(season0, season),
@@ -580,7 +513,7 @@ holt <- function(
   ...
 ) {
   initial <- match.arg(initial)
-  if (length(y) <= 1L) {
+  if (sum(!is.na(y)) <= 1L) {
     stop("I need at least two observations to estimate trend.")
   }
   if (initial == "optimal" || damped) {
@@ -683,7 +616,7 @@ hw <- function(
   if (m <= 1L) {
     stop("The time series should have frequency greater than 1.")
   }
-  if (length(y) < m + 3) {
+  if (sum(!is.na(y)) < m + 3) {
     stop(paste(
       "I need at least",
       m + 3,
