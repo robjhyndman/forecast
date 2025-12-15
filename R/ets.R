@@ -1104,12 +1104,13 @@ initstate <- function(y, trendtype, seasontype) {
     y.sa <- y
   }
 
+  maxn <- min(max(10, 2*m), length(y.sa))
   if (trendtype == "N") {
-    l0 <- mean(y.sa)
+    l0 <- mean(head(y.sa, maxn))
     b0 <- NULL
   } else {
     # Simple linear regression on seasonally adjusted data
-    fit <- lsfit(seq_along(y.sa), y.sa)
+    fit <- lsfit(seq(maxn), head(y.sa, maxn))
     if (trendtype == "A") {
       l0 <- fit$coefficients[1]
       b0 <- fit$coefficients[2]
@@ -1164,10 +1165,6 @@ lik <- function(
   pnames,
   pnames2
 ) {
-  # browser()
-
-  # cat("par: ", par, "\n")
-
   names(par) <- pnames
   names(par.noopt) <- pnames2
   alpha <- c(par["alpha"], par.noopt["alpha"])["alpha"]
