@@ -223,15 +223,7 @@ ets <- function(
           (2 + (trendtype != "N")):ncol(model$states)
         ] <- paste0("s", 1:m)
       }
-      if (errortype == "A") {
-        model$fitted <- ts(y - e$e, frequency = tsp.y[3], start = tsp.y[1])
-      } else {
-        model$fitted <- ts(
-          y / (1 + e$e),
-          frequency = tsp.y[3],
-          start = tsp.y[1]
-        )
-      }
+      model$fitted <- ts(e$fits, frequency = tsp.y[3], start = tsp.y[1])
       model$residuals <- ts(e$e, frequency = tsp.y[3], start = tsp.y[1])
       model$sigma2 <- sum(model$residuals^2, na.rm = TRUE) / (ny - np)
       model$x <- orig.y
@@ -820,9 +812,6 @@ etsmodel <- function(
     colnames(states)[(2 + (trendtype != "N")):ncol(states)] <- paste0("s", 1:m)
   }
 
-  fit.par <- c(fit.par, par.noopt)
-  fits <- e$fits
-
   list(
     loglik = -0.5 * e$lik,
     aic = aic,
@@ -832,9 +821,9 @@ etsmodel <- function(
     amse = amse,
     fit = fred,
     residuals = ts(e$e, frequency = tsp.y[3], start = tsp.y[1]),
-    fitted = ts(fits, frequency = tsp.y[3], start = tsp.y[1]),
+    fitted = ts(e$fits, frequency = tsp.y[3], start = tsp.y[1]),
     states = states,
-    par = fit.par
+    par = c(fit.par, par.noopt)
   )
 }
 
