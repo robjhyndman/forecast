@@ -74,8 +74,8 @@ void etscalc(double *y, int *n, double *x, int *m, int *error, int *trend, int *
       *lik = NA_REAL;
       return;
     }
-    if(ISNA(y[i]))
-      e[i] = 0.0;
+    if(R_IsNA(y[i]))
+      e[i] = NA_REAL;
     else if(*error == ADD)
       e[i] = y[i] - f[0];
     else
@@ -85,7 +85,7 @@ void etscalc(double *y, int *n, double *x, int *m, int *error, int *trend, int *
       if(i+j<(*n))
       {
         denom[j] += 1.0;
-        if(ISNA(y[i+j]))
+        if(R_IsNA(y[i+j]))
           tmp = 0.0;
         else
           tmp = y[i+j]-f[j];
@@ -105,7 +105,8 @@ void etscalc(double *y, int *n, double *x, int *m, int *error, int *trend, int *
        for(j=0; j<(*m); j++)
         x[(*trend>NONE)+nstates*(i+1)+j+1] = s[j];
     }
-    *lik = *lik + e[i]*e[i];
+    if(!R_IsNA(e[i]))
+      *lik = *lik + e[i]*e[i];
     lik2 += log(fabs(f[0]));
   }
   *lik = (*n) * log(*lik);
@@ -153,7 +154,7 @@ void etssimulate(double *x, int *m, int *error, int *trend, int *season,
 
     // ONE STEP FORECAST
     forecast(oldl, oldb, olds, *m, *trend, *season, *phi, f, 1);
-    if(ISNA(f[0]))
+    if(R_IsNA(f[0]))
     {
       y[0] = NA_REAL;
       return;
@@ -262,7 +263,7 @@ void update(double *oldl, double *l, double *oldb, double *b, double *olds, doub
     phib = pow(*oldb,phi);
     q = (*oldl) * phib;      // l(t-1)*b(t-1)^phi
   }
-  if(ISNA(y))
+  if(R_IsNA(y))
     p = q;
   else if(season==NONE)
     p = y;
@@ -296,7 +297,7 @@ void update(double *oldl, double *l, double *oldb, double *b, double *olds, doub
   // NEW SEASON
   if(season > NONE)
   {
-    if(ISNA(y))
+    if(R_IsNA(y))
       t = olds[m-1];
     else if(season==ADD)
       t = y - q;
