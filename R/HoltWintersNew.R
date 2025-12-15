@@ -427,7 +427,7 @@ zzhw <- function(
 #' @seealso [ets()], [stats::HoltWinters()], [rwf()], [stats::arima()].
 #' @references Hyndman, R.J., Koehler, A.B., Ord, J.K., Snyder, R.D. (2008)
 #' \emph{Forecasting with exponential smoothing: the state space approach},
-#' Springer-Verlag: New York. \url{http://www.exponentialsmoothing.net}.
+#' Springer-Verlag: New York. \url{https://robjhyndman.com/expsmooth/}.
 #'
 #' @references Hyndman and Athanasopoulos (2018) \emph{Forecasting: principles
 #' and practice}, 2nd edition, OTexts: Melbourne, Australia.
