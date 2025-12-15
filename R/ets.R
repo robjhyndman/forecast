@@ -824,12 +824,7 @@ etsmodel <- function(
   }
 
   fit.par <- c(fit.par, par.noopt)
-  #    fit.par <- fit.par[order(names(fit.par))]
-  if (errortype == "A") {
-    fits <- y - e$e
-  } else {
-    fits <- y / (1 + e$e)
-  }
+  fits <- e$fits
 
   list(
     loglik = -0.5 * e$lik,
@@ -1363,7 +1358,7 @@ pegelsresid.C <- function(
   p <- length(init.state)
   x <- numeric(p * (n + 1))
   x[1:p] <- init.state
-  e <- numeric(n)
+  e <- fits <- numeric(n)
   lik <- 0
   if (!damped) {
     phi <- 1
@@ -1376,7 +1371,6 @@ pegelsresid.C <- function(
   }
 
   amse <- numeric(nmse)
-
   Cout <- .C(
     "etscalc",
     as.double(y),
@@ -1391,24 +1385,22 @@ pegelsresid.C <- function(
     as.double(gamma),
     as.double(phi),
     as.double(e),
+    as.double(fits),
     as.double(lik),
     as.double(amse),
     as.integer(nmse),
+    NAOK = TRUE,
     PACKAGE = "forecast"
   )
-  if (!is.na(Cout[[13]])) {
-    if (abs(Cout[[13]] + 99999) < 1e-7) {
-      Cout[[13]] <- NA
-    }
-  }
   tsp.y <- tsp(y)
   e <- ts(Cout[[12]])
   tsp(e) <- tsp.y
 
   list(
-    lik = Cout[[13]],
-    amse = Cout[[14]],
+    lik = Cout[[14]],
+    amse = Cout[[15]],
     e = e,
+    fits = Cout[[13]],
     states = matrix(Cout[[3]], nrow = n + 1, ncol = p, byrow = TRUE)
   )
 }
