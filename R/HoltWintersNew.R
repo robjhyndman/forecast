@@ -189,9 +189,9 @@ HoltWintersZZ <- function(
     s.start = s.start
   )
 
-  tspx <- tsp(x)
-  fitted <- ts(final.fit$fitted, frequency = m, start = tspx[1])
-  res <- ts(final.fit$residuals, frequency = m, start = tspx[1])
+  tspx <- tsp(origx)
+  fitted <- ts(final.fit$fitted, frequency = tspx[3], start = tspx[1])
+  res <- ts(final.fit$residuals, frequency = tspx[3], start = tspx[1])
   if (!is.null(lambda)) {
     fitted <- InvBoxCox(fitted, lambda, biasadj, var(final.fit$residuals))
   }
@@ -208,7 +208,7 @@ HoltWintersZZ <- function(
     }
     colnames(states)[nc + seq(m)] <- paste0("s", seq(m))
   }
-  states <- ts(states, frequency = m, start = tspx[1] - 1 / m)
+  states <- ts(states, frequency = tspx[3], start = tspx[1] - 1 / tspx[3])
 
   # Package output as HoltWinters class
   # structure(list(fitted    = fitted,
