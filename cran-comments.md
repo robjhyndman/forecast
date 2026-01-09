@@ -12,4 +12,11 @@
 
 ## revdep checks
 
-All reverse dependencies have been checked with no new errors detected.
+All reverse dependencies have been checked, and this update causes new errors in
+three packages. I provided patches to fix the errors via GitHub pull requests 
+on 16 December, asked the maintainers to submit new versions to CRAN.
+
+* https://github.com/xqnwang/conformalForecast/pull/4
+* https://github.com/frehbach/EventDetectR/pull/24
+* https://github.com/ellisp/forecastHybrid/pull/101
+
