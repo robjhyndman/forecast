@@ -59,14 +59,14 @@ Source:
 [`inst/CITATION`](https://github.com/robjhyndman/forecast/blob/master/inst/CITATION)
 
 Hyndman R, Athanasopoulos G, Bergmeir C, Caceres G, Chhay L, O'Hara-Wild
-M, Petropoulos F, Razbash S, Wang E, Yasmeen F (2025). *forecast:
+M, Petropoulos F, Razbash S, Wang E, Yasmeen F (2026). *forecast:
 Forecasting functions for time series and linear models*. R package
 version 8.24.0.9000, <https://pkg.robjhyndman.com/forecast/>.
 
     @Manual{,
       title = {{forecast}: Forecasting functions for time series and linear models},
       author = {Rob Hyndman and George Athanasopoulos and Christoph Bergmeir and Gabriel Caceres and Leanne Chhay and Mitchell O'Hara-Wild and Fotios Petropoulos and Slava Razbash and Earo Wang and Farah Yasmeen},
-      year = {2025},
+      year = {2026},
       note = {R package version 8.24.0.9000},
       url = {https://pkg.robjhyndman.com/forecast/},
     }
