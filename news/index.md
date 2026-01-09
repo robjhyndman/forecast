@@ -1,6 +1,6 @@
 # Changelog
 
-## forecast (development version)
+## forecast 9.0.0
 
 - ets() now allows missing values in the time series
   ([\#952](https://github.com/robjhyndman/forecast/issues/952))
