@@ -37,6 +37,7 @@ preamble: >
   \Year{2008}
   \Submitdate{2007-05-29}
   \Acceptdate{2008-03-22}
+  \DOI{10.18637/jss.v027.i03}
   \def\damped{$_{\mbox{\footnotesize d}}$}
   \let\var=\VAR
   \def\R{\proglang{R}}
