@@ -280,9 +280,9 @@ bool EtsTargetFunction::admissible() {
 		std::vector<double> zeror(degree);
 		std::vector<double> zeroi(degree);
 
-		Rboolean fail;
+		bool fail;
 
-		cpolyroot(&opr[0], &opi[0], &degree, &zeror[0], &zeroi[0], &fail);
+		R_cpolyroot(&opr[0], &opi[0], &degree, &zeror[0], &zeroi[0], &fail);
 
 		double max = 0;
 		for(int i=0;i<zeror.size();i++) {
