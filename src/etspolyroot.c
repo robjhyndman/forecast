@@ -42,6 +42,7 @@
 #include <R_ext/Memory.h> /* for declaration of R_alloc */
 
 #include <float.h> /* for FLT_RADIX */
+#include <stdbool.h> /* for bool */
 
 #include <Rmath.h> /* for R_pow_di */
 
