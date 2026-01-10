@@ -7,8 +7,9 @@ extern "C" {
 void etscalc(double *, int *, double *, int *, int *, int *, int *,
 		double *, double *, double *, double *, double *, double *, double *, double *, int *);
 
-void cpolyroot(double *opr, double *opi, int *degree,
-			double *zeror, double *zeroi, Rboolean *fail);
+void R_cpolyroot(double *opr, double *opi, int *degree,
+			double *zeror, double *zeroi, bool *fail);
+
 }
 
 class EtsTargetFunction {

@@ -42,13 +42,14 @@
 #include <R_ext/Memory.h> /* for declaration of R_alloc */
 
 #include <float.h> /* for FLT_RADIX */
+#include <stdbool.h> /* for bool */
 
 #include <Rmath.h> /* for R_pow_di */
 
-static void calct(Rboolean *);
-static Rboolean fxshft(int, double *, double *);
-static Rboolean vrshft(int, double *, double *);
-static void nexth(Rboolean);
+static void calct(bool *);
+static bool fxshft(int, double *, double *);
+static bool vrshft(int, double *, double *);
+static void nexth(bool);
 static void noshft(int);
 
 static void polyev(int, double, double,
@@ -71,15 +72,15 @@ static const double are = /* eta = */DBL_EPSILON;
 static const double mre = 2. * M_SQRT2 * /* eta, i.e. */DBL_EPSILON;
 static const double infin = DBL_MAX;
 
-void cpolyroot(double *opr, double *opi, int *degree,
-			double *zeror, double *zeroi, Rboolean *fail)
+void R_cpolyroot(double *opr, double *opi, int *degree,
+			double *zeror, double *zeroi, bool *fail)
 {
     static const double smalno = DBL_MIN;
     static const double base = (double)FLT_RADIX;
     static int d_n, i, i1, i2;
     static double zi, zr, xx, yy;
     static double bnd, xxx;
-    Rboolean conv;
+    bool conv;
     int d1;
     double *tmp;
     static const double cosr =/* cos 94 */ -0.06975647374412529990;
@@ -87,7 +88,7 @@ void cpolyroot(double *opr, double *opi, int *degree,
     xx = M_SQRT1_2;/* 1/sqrt(2) = 0.707.... */
 
     yy = -xx;
-    *fail = FALSE;
+    *fail = false;
 
     nn = *degree;
     d1 = nn - 1;
@@ -95,7 +96,7 @@ void cpolyroot(double *opr, double *opi, int *degree,
     /* algorithm fails if the leading coefficient is zero. */
 
     if (opr[0] == 0. && opi[0] == 0.) {
-	*fail = TRUE;
+	*fail = true;
 	return;
     }
 
@@ -113,6 +114,7 @@ void cpolyroot(double *opr, double *opi, int *degree,
     if (nn == 1) return;
 
     /* Use a single allocation as these as small */
+    const void *vmax = vmaxget();
     tmp = (double *) R_alloc((size_t) (10*nn), sizeof(double));
     pr = tmp; pi = tmp + nn; hr = tmp + 2*nn; hi = tmp + 3*nn;
     qpr = tmp + 4*nn; qpi = tmp + 5*nn; qhr = tmp + 6*nn; qhi = tmp + 7*nn;
@@ -177,7 +179,8 @@ void cpolyroot(double *opr, double *opi, int *degree,
 	/* the zerofinder has failed on two major passes */
 	/* return empty handed */
 
-	*fail = TRUE;
+	*fail = true;
+	vmaxset(vmax);
 	return;
 
 	/* the second stage jumps directly to the third stage iteration.
@@ -197,8 +200,10 @@ void cpolyroot(double *opr, double *opi, int *degree,
     /*	calculate the final zero and return */
     cdivid(-pr[1], -pi[1], pr[0], pi[0], &zeror[d1], &zeroi[d1]);
 
+    vmaxset(vmax);
     return;
 }
+
 
 /*  Computes the derivative polynomial as the initial
  *  polynomial and computes l1 no-shift h polynomials.	*/
@@ -245,11 +250,12 @@ static void noshft(int l1)
     }
 }
 
+
 /*  Computes l2 fixed-shift h polynomials and tests for convergence.
  *  initiates a variable-shift iteration and returns with the
  *  approximate zero if successful.
  */
-static Rboolean fxshft(int l2, double *zr, double *zi)
+static bool fxshft(int l2, double *zr, double *zi)
 {
 /*  l2	  - limit of fixed shift steps
  *  zr,zi - approximate zero if convergence (result TRUE)
@@ -259,7 +265,7 @@ static Rboolean fxshft(int l2, double *zr, double *zi)
  * Uses global (sr,si), nn, pr[], pi[], .. (all args of polyev() !)
 */
 
-    Rboolean pasd, boool, test;
+    bool pasd, h_s_0, test;
     static double svsi, svsr;
     static int i, j, n;
     static double oti, otr;
@@ -270,12 +276,12 @@ static Rboolean fxshft(int l2, double *zr, double *zi)
 
     polyev(nn, sr, si, pr, pi, qpr, qpi, &pvr, &pvi);
 
-    test = TRUE;
-    pasd = FALSE;
+    test = true;
+    pasd = false;
 
     /* calculate first t = -p(s)/h(s). */
 
-    calct(&boool);
+    calct(&h_s_0);
 
     /* main loop for one second stage step. */
 
@@ -286,20 +292,20 @@ static Rboolean fxshft(int l2, double *zr, double *zi)
 
 	/* compute next h polynomial and new t. */
 
-	nexth(boool);
-	calct(&boool);
+	nexth(h_s_0);
+	calct(&h_s_0);
 	*zr = sr + tr;
 	*zi = si + ti;
 
 	/* test for convergence unless stage 3 has */
 	/* failed once or this is the last h polynomial. */
 
-	if (!boool && test && j != l2) {
+	if (!h_s_0 && test && j != l2) {
 	    if (hypot(tr - otr, ti - oti) >= hypot(*zr, *zi) * 0.5) {
-		pasd = FALSE;
+		pasd = false;
 	    }
 	    else if (! pasd) {
-		pasd = TRUE;
+		pasd = true;
 	    }
 	    else {
 
@@ -315,14 +321,14 @@ static Rboolean fxshft(int l2, double *zr, double *zi)
 		svsr = sr;
 		svsi = si;
 		if (vrshft(10, zr, zi)) {
-		    return TRUE;
+		    return true;
 		}
 
 		/* the iteration failed to converge. */
 		/* turn off testing and restore */
 		/* h, s, pv and t. */
 
-		test = FALSE;
+		test = false;
 		for (i=1 ; i<=n ; i++) {
 		    hr[i-1] = shr[i-1];
 		    hi[i-1] = shi[i-1];
@@ -330,7 +336,7 @@ static Rboolean fxshft(int l2, double *zr, double *zi)
 		sr = svsr;
 		si = svsi;
 		polyev(nn, sr, si, pr, pi, qpr, qpi, &pvr, &pvi);
-		calct(&boool);
+		calct(&h_s_0);
 	    }
 	}
     }
@@ -341,9 +347,10 @@ static Rboolean fxshft(int l2, double *zr, double *zi)
     return(vrshft(10, zr, zi));
 }
 
+
 /* carries out the third stage iteration.
  */
-static Rboolean vrshft(int l3, double *zr, double *zi)
+static bool vrshft(int l3, double *zr, double *zi)
 {
 /*  l3	    - limit of steps in stage 3.
  *  zr,zi   - on entry contains the initial iterate;
@@ -353,12 +360,12 @@ static Rboolean vrshft(int l3, double *zr, double *zi)
  *
  * Assign and uses  GLOBAL sr, si
 */
-    Rboolean boool, b;
+    bool h_s_0, b;
     static int i, j;
     static double r1, r2, mp, ms, tp, relstp;
     static double omp;
 
-    b = FALSE;
+    b = false;
     sr = *zr;
     si = *zi;
 
@@ -389,7 +396,7 @@ static Rboolean vrshft(int l3, double *zr, double *zi)
 		/* one zero to dominate. */
 
 		tp = relstp;
-		b = TRUE;
+		b = true;
 		if (relstp < eta)
 		    tp = eta;
 		r1 = sqrt(tp);
@@ -398,8 +405,8 @@ static Rboolean vrshft(int l3, double *zr, double *zi)
 		sr = r2;
 		polyev(nn, sr, si, pr, pi, qpr, qpi, &pvr, &pvi);
 		for (j = 1; j <= 5; ++j) {
-		    calct(&boool);
-		    nexth(boool);
+		    calct(&h_s_0);
+		    nexth(h_s_0);
 		}
 		omp = infin;
 		goto L10;
@@ -410,7 +417,7 @@ static Rboolean vrshft(int l3, double *zr, double *zi)
 		/* increases significantly. */
 
 		if (mp * .1 > omp)
-		    return FALSE;
+		    return false;
 	    }
 	}
 	omp = mp;
@@ -418,27 +425,27 @@ static Rboolean vrshft(int l3, double *zr, double *zi)
 	/* calculate next iterate. */
 
     L10:
-	calct(&boool);
-	nexth(boool);
-	calct(&boool);
-	if (!boool) {
+	calct(&h_s_0);
+	nexth(h_s_0);
+	calct(&h_s_0);
+	if (!h_s_0) {
 	    relstp = hypot(tr, ti) / hypot(sr, si);
 	    sr += tr;
 	    si += ti;
 	}
     }
-    return FALSE;
+    return false;
 
 L_conv:
     *zr = sr;
     *zi = si;
-    return TRUE;
+    return true;
 }
 
-static void calct(Rboolean *boool)
+static void calct(bool *h_s_0)
 {
     /* computes	 t = -p(s)/h(s).
-     * boool   - logical, set true if h(s) is essentially zero.	*/
+     * h_s_0   - logical, set true if h(s) is essentially zero.	*/
 
     int n = nn - 1;
     double hvi, hvr;
@@ -447,8 +454,8 @@ static void calct(Rboolean *boool)
     polyev(n, sr, si, hr, hi,
 	   qhr, qhi, &hvr, &hvi);
 
-    *boool = hypot(hvr, hvi) <= are * 10. * hypot(hr[n-1], hi[n-1]);
-    if (!*boool) {
+    *h_s_0 = hypot(hvr, hvi) <= are * 10. * hypot(hr[n-1], hi[n-1]);
+    if (!*h_s_0) {
 	cdivid(-pvr, -pvi, hvr, hvi, &tr, &ti);
     }
     else {
@@ -457,15 +464,15 @@ static void calct(Rboolean *boool)
     }
 }
 
-static void nexth(Rboolean boool)
+static void nexth(bool h_s_0)
 {
     /* calculates the next shifted h polynomial.
-     * boool :	if TRUE  h(s) is essentially zero
+     * h_s_0 :	if TRUE  h(s) is essentially zero
      */
     int j, n = nn - 1;
     double t1, t2;
 
-    if (!boool) {
+    if (!h_s_0) {
 	for (j=1; j < n; j++) {
 	    t1 = qhr[j - 1];
 	    t2 = qhi[j - 1];
@@ -534,6 +541,7 @@ double errev(int n, double *qr, double *qi,
 
     return e * (a_re + m_re) - mp * m_re;
 }
+
 
 static
 double cpoly_cauchy(int n, double *pot, double *q)
@@ -634,6 +642,7 @@ double cpoly_scale(int n, double *pot,
     }
     else return 1.0;
 }
+
 
 static
 void cdivid(double ar, double ai, double br, double bi,
