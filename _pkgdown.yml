@@ -2,6 +2,7 @@ url: https://pkg.robjhyndman.com/forecast/
 
 template:
   bootstrap: 5
+  light-switch: true
   bootswatch: flatly
   bslib:
     base_font: {google: "Fira Sans"}
@@ -18,7 +19,7 @@ navbar:
   type: light
   structure:
     left: [reference, jsspaper, changelog]
-    right: [search, github]
+    right: [search, github, lightswitch]
   components:
     jsspaper:
       text: "JSS paper"
