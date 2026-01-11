@@ -2,6 +2,8 @@
 
 ## forecast 9.0.0
 
+CRAN release: 2026-01-11
+
 - ets() now allows missing values in the time series
   ([\#952](https://github.com/robjhyndman/forecast/issues/952))
 - Added mean_model() and forecast.mean_model()
