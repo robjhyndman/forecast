@@ -1,5 +1,7 @@
 # Changelog
 
+## forecast (development version)
+
 ## forecast 9.0.0
 
 CRAN release: 2026-01-11
