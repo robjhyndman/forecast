@@ -18,7 +18,7 @@ template:
 navbar:
   type: light
   structure:
-    left: [reference, jsspaper, changelog]
+    left: [reference, jsspaper, news]
     right: [search, github, lightswitch]
   components:
     jsspaper:
@@ -194,3 +194,28 @@ reference:
       - taylor
       - wineind
       - woolyrnq
+
+news:
+  releases:
+  - text: "Version 3.0"
+    href: https://robjhyndman.com/hyndsight/forecast3/
+  - text: "Version 4.0"
+    href: https://robjhyndman.com/hyndsight/forecast4/
+  - text: "Version 5.0"
+    href: https://robjhyndman.com/hyndsight/forecast5/
+  - text: "Version 6.0"
+    href: https://robjhyndman.com/hyndsight/forecast6/
+  - text: "Version 6.2"
+    href: https://robjhyndman.com/hyndsight/forecast6-2/
+  - text: "Version 7.0(a)"
+    href: https://robjhyndman.com/hyndsight/forecast7-ggplot2/
+  - text: "Version 7.0(b)"
+    href: https://robjhyndman.com/hyndsight/forecast7-part-2/
+  - text: "Version 7.2"
+    href: https://robjhyndman.com/hyndsight/forecast-v7-2/
+  - text: "Version 8.0"
+    href: https://robjhyndman.com/hyndsight/forecast8/
+  - text: "Version 8.3"
+    href: https://robjhyndman.com/hyndsight/forecast83/
+  - text: "Version 8.5"
+    href: https://robjhyndman.com/hyndsight/forecast85/
