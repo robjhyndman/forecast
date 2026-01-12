@@ -197,6 +197,8 @@ reference:
 
 news:
   releases:
+  - text: "Version 9.0"
+    href: https://robjhyndman.com/hyndsight/forecast9.html
   - text: "Version 8.5"
     href: https://robjhyndman.com/hyndsight/forecast85/
   - text: "Version 8.3"
