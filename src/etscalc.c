@@ -31,7 +31,7 @@ void etscalc(double *y, int *n, double *x, int *m, int *error, int *trend, int *
   int i, j, nstates;
   double oldl, l, oldb, b, olds[24], s[24], f[30], lik2, tmp, denom[30];
 
-  if((*m > 24) & (*season > NONE))
+  if((*m > 24) && (*season > NONE))
     return;
   else if(*m < 1)
     *m = 1;
@@ -122,12 +122,11 @@ void etscalc(double *y, int *n, double *x, int *m, int *error, int *trend, int *
 
 void etssimulate(double *x, int *m, int *error, int *trend, int *season,
   double *alpha, double *beta, double *gamma, double *phi, int *h, double *y, double *e)
-
 {
   int i, j, nstates;
   double oldl, l, oldb, b, olds[24], s[24], f[10];
 
-  if((*m > 24) & (*season > NONE))
+  if((*m > 24) && (*season > NONE))
     return;
 	else if(*m < 1)
 		*m = 1;
@@ -176,12 +175,11 @@ void etssimulate(double *x, int *m, int *error, int *trend, int *season,
 // *********************************************************************************
 
 void etsforecast(double *x, int *m, int *trend, int *season, double *phi, int *h, double *f)
-
 {
   int j;
   double l, b, s[24];
 
-  if((*m > 24) & (*season > NONE))
+  if((*m > 24) && (*season > NONE))
     return;
   else if(*m < 1)
     *m = 1;
