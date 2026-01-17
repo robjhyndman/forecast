@@ -100,22 +100,21 @@ simulate.ets <- function(
     e <- pmax(-1, e)
   }
   tmp <- ts(
-    .C(
+    .Call(
       "etssimulate",
       as.double(initstate),
       as.integer(object$m),
-      as.integer(switch(object$components[1], A = 1, M = 2)),
-      as.integer(switch(object$components[2], N = 0, A = 1, M = 2)),
-      as.integer(switch(object$components[3], N = 0, A = 1, M = 2)),
+      switch(object$components[1], A = 1L, M = 2L),
+      switch(object$components[2], N = 0L, A = 1L, M = 2L),
+      switch(object$components[3], N = 0L, A = 1L, M = 2L),
       as.double(object$par["alpha"]),
       as.double(if (object$components[2] == "N") 0 else object$par["beta"]),
       as.double(if (object$components[3] == "N") 0 else object$par["gamma"]),
       as.double(if (object$components[4] == "FALSE") 1 else object$par["phi"]),
       as.integer(nsim),
-      as.double(numeric(nsim)),
       as.double(e),
       PACKAGE = "forecast"
-    )[[11]],
+    ),
     frequency = object$m,
     start = if (future) {
       tsp(object$x)[2] + 1 / tsp(object$x)[3]

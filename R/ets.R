@@ -299,7 +299,7 @@ ets <- function(
     }
   }
 
-  data.positive <- (min(y, na.rm=TRUE) > 0)
+  data.positive <- (min(y, na.rm = TRUE) > 0)
 
   if (!data.positive && errortype == "M") {
     stop("Inappropriate model for data with negative or zero values")
@@ -758,7 +758,7 @@ etsmodel <- function(
   names(fit.par) <- names(par)
   init.state <- fit.par[(np - nstate + 1):np]
 
-    # Add extra state
+  # Add extra state
   if (seasontype != "N") {
     init.state <- c(
       init.state,
@@ -1104,7 +1104,7 @@ initstate <- function(y, trendtype, seasontype) {
     y.sa <- y
   }
 
-  maxn <- min(max(10, 2*m), length(y.sa))
+  maxn <- min(max(10, 2 * m), length(y.sa))
   if (trendtype == "N") {
     l0 <- mean(head(y.sa, maxn))
     b0 <- NULL
@@ -1332,8 +1332,6 @@ pegelsresid.C <- function(
   p <- length(init.state)
   x <- numeric(p * (n + 1))
   x[1:p] <- init.state
-  e <- fits <- numeric(n)
-  lik <- 0
   if (!damped) {
     phi <- 1
   }
@@ -1344,38 +1342,31 @@ pegelsresid.C <- function(
     gamma <- 0
   }
 
-  amse <- numeric(nmse)
-  Cout <- .C(
+  res <- .Call(
     "etscalc",
     as.double(y),
-    as.integer(n),
     as.double(x),
     as.integer(m),
-    as.integer(switch(errortype, "A" = 1, "M" = 2)),
-    as.integer(switch(trendtype, "N" = 0, "A" = 1, "M" = 2)),
-    as.integer(switch(seasontype, "N" = 0, "A" = 1, "M" = 2)),
+    switch(errortype, A = 1L, M = 2L),
+    switch(trendtype, N = 0L, A = 1L, M = 2L),
+    switch(seasontype, N = 0L, A = 1L, M = 2L),
     as.double(alpha),
     as.double(beta),
     as.double(gamma),
     as.double(phi),
-    as.double(e),
-    as.double(fits),
-    as.double(lik),
-    as.double(amse),
     as.integer(nmse),
-    NAOK = TRUE,
     PACKAGE = "forecast"
   )
   tsp.y <- tsp(y)
-  e <- ts(Cout[[12]])
+  e <- ts(res$e)
   tsp(e) <- tsp.y
 
   list(
-    lik = Cout[[14]],
-    amse = Cout[[15]],
+    lik = res$lik,
+    amse = res$amse,
     e = e,
-    fits = Cout[[13]],
-    states = matrix(Cout[[3]], nrow = n + 1, ncol = p, byrow = TRUE)
+    fits = res$fitted,
+    states = matrix(res$states, nrow = n + 1, ncol = p, byrow = TRUE)
   )
 }
 
@@ -1531,17 +1522,16 @@ hfitted.ets <- function(object, h = 1, ...) {
   n <- length(object$x)
   out <- rep(NA_real_, n)
   for (i in seq_len(n - h + 1)) {
-    out[i + h - 1] <- .C(
+    out[i + h - 1] <- .Call(
       "etsforecast",
       as.double(object$states[i, ]),
       as.integer(object$m),
-      as.integer(switch(object$components[2], N = 0, A = 1, M = 2)),
-      as.integer(switch(object$components[3], N = 0, A = 1, M = 2)),
+      switch(object$components[2], N = 0L, A = 1L, M = 2L),
+      switch(object$components[3], N = 0L, A = 1L, M = 2L),
       as.double(if (object$components[4] == "FALSE") 1 else object$par["phi"]),
       as.integer(h),
-      as.double(numeric(h)),
       PACKAGE = "forecast"
-    )[[7]][h]
+    )[h]
   }
   out
 }

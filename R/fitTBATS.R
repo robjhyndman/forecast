@@ -35,7 +35,7 @@ fitPreviousTBATSModel <- function(y, model, biasadj = FALSE) {
     tau <- as.integer(2 * sum(model$k.vector))
     gamma.bold <- matrix(0, nrow = 1, ncol = (2 * sum(model$k.vector)))
   } else {
-    tau <- as.integer(0)
+    tau <- 0L
     gamma.bold <- NULL
   }
 
@@ -272,7 +272,7 @@ fitSpecificTBATS <- function(
   if (!is.null(seasonal.periods)) {
     tau <- as.integer(2 * sum(k.vector))
   } else {
-    tau <- as.integer(0)
+    tau <- 0L
   }
 
   w <- .Call(
