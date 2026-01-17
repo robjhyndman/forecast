@@ -1,9 +1,8 @@
-#include "calcBATS.h"
-
+#include <RcppArmadillo.h>
 using namespace Rcpp ;
 
+// [[Rcpp::export]]
 SEXP makeTBATSWMatrix(SEXP smallPhi_s, SEXP kVector_s, SEXP arCoefs_s, SEXP maCoefs_s, SEXP tau_s) {
-	BEGIN_RCPP
 	double *smallPhi, *arCoefs, *maCoefs;
 	int *kVector, *tau;
 	int adjustPhi = 0;
@@ -77,13 +76,10 @@ SEXP makeTBATSWMatrix(SEXP smallPhi_s, SEXP kVector_s, SEXP arCoefs_s, SEXP maCo
 			Named("w") = w,
 			Named("w.transpose") = wTranspose
 			);
-
-	END_RCPP
 }
 
+// [[Rcpp::export]]
 SEXP makeCIMatrix(SEXP k_s, SEXP m_s) {
-	BEGIN_RCPP
-
   double pi = arma::datum::pi;
 	double lambda, *m;
 	int *k;
@@ -96,13 +92,10 @@ SEXP makeCIMatrix(SEXP k_s, SEXP m_s) {
 		C((j-1),(j-1)) = std::cos(lambda);
 	}
 	return wrap(C);
-
-	END_RCPP
 }
 
+// [[Rcpp::export]]
 SEXP makeSIMatrix(SEXP k_s, SEXP m_s) {
-	BEGIN_RCPP
-
   double pi = arma::datum::pi;
 	double lambda, *m;
 	int *k;
@@ -115,10 +108,9 @@ SEXP makeSIMatrix(SEXP k_s, SEXP m_s) {
 		S((j-1),(j-1)) = std::sin(lambda);
 	}
 	return wrap(S);
-
-	END_RCPP
 }
 
+// [[Rcpp::export]]
 SEXP makeAIMatrix(SEXP C_s, SEXP S_s, SEXP k_s) {
 	int *k;
 	k = &INTEGER(k_s)[0];

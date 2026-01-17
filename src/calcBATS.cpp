@@ -1,11 +1,8 @@
-#include "calcBATS.h"
-
+#include <RcppArmadillo.h>
 using namespace Rcpp ;
 
+// [[Rcpp::export]]
 SEXP calcBATS(SEXP ys, SEXP yHats, SEXP wTransposes, SEXP Fs, SEXP xs, SEXP gs, SEXP es ){
-	BEGIN_RCPP
-
-
 	NumericMatrix yr(ys);
 	NumericMatrix yHatr(yHats);
 	NumericMatrix wTransposer(wTransposes);
@@ -35,13 +32,10 @@ SEXP calcBATS(SEXP ys, SEXP yHats, SEXP wTransposes, SEXP Fs, SEXP xs, SEXP gs, 
 			Named("e") = e,
 			Named("x") = x
 	);
-
-	END_RCPP
 }
 
+// [[Rcpp::export]]
 SEXP calcBATSFaster(SEXP ys, SEXP yHats, SEXP wTransposes, SEXP Fs, SEXP xs, SEXP gs, SEXP es, SEXP xNought_s, SEXP sPeriods_s, SEXP betaV, SEXP tau_s, SEXP p_s, SEXP q_s ) {
-	BEGIN_RCPP
-
 	NumericMatrix yr(ys);
 	NumericMatrix yHatr(yHats);
 	NumericMatrix wTransposer(wTransposes);
@@ -251,13 +245,10 @@ SEXP calcBATSFaster(SEXP ys, SEXP yHats, SEXP wTransposes, SEXP Fs, SEXP xs, SEX
 	}
 
 	return R_NilValue;
-
-	END_RCPP
 }
 
+// [[Rcpp::export]]
 SEXP calcWTilda(SEXP wTildaTransposes, SEXP Ds) {
-	BEGIN_RCPP
-
 	NumericMatrix wTildaTransposer(wTildaTransposes);
 	NumericMatrix Dr(Ds);
 
@@ -271,6 +262,4 @@ SEXP calcWTilda(SEXP wTildaTransposes, SEXP Ds) {
 	}
 
 	return wTildaTransposer;
-
-	END_RCPP
 }

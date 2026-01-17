@@ -1,10 +1,9 @@
 #include <vector>
-
-#include <Rcpp.h>
+#include <string>
 
 extern "C" {
 
-void etscalc_internal(double *y, int n, double *x, int m, int error, int trend, int season,
+void etscalc_internal(const double *y, int n, double *x, int m, int error, int trend, int season,
   double alpha, double beta, double gamma, double phi,
   double *e, double *fits, double *lik, double *amse, int nmse);
 

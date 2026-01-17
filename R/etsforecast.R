@@ -197,14 +197,13 @@ pegelsfcast.C <- function(h, obj, npaths, level, bootstrap, innov = NULL) {
   y.paths <- matrix(NA, nrow = npaths, ncol = h)
   obj$lambda <- NULL # No need to transform these here as we do it later.
   y.f <- .Call(
-    "etsforecast",
+    etsforecast,
     as.double(obj$states[length(obj$x) + 1, ]),
     as.integer(obj$m),
     switch(obj$components[2], N = 0L, A = 1L, M = 2L),
     switch(obj$components[3], N = 0L, A = 1L, M = 2L),
     as.double(if (obj$components[4] == "FALSE") 1 else obj$par["phi"]),
-    as.integer(h),
-    PACKAGE = "forecast"
+    as.integer(h)
   )
   if (abs(y.f[1] + 99999) < 1e-7) {
     stop("Problem with multiplicative damped trend")

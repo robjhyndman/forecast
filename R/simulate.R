@@ -101,7 +101,7 @@ simulate.ets <- function(
   }
   tmp <- ts(
     .Call(
-      "etssimulate",
+      etssimulate,
       as.double(initstate),
       as.integer(object$m),
       switch(object$components[1], A = 1L, M = 2L),
@@ -112,8 +112,7 @@ simulate.ets <- function(
       as.double(if (object$components[3] == "N") 0 else object$par["gamma"]),
       as.double(if (object$components[4] == "FALSE") 1 else object$par["phi"]),
       as.integer(nsim),
-      as.double(e),
-      PACKAGE = "forecast"
+      as.double(e)
     ),
     frequency = object$m,
     start = if (future) {

@@ -5,7 +5,6 @@
 #define NONE 0
 #define ADD 1
 #define MULT 2
-#define DAMPED 1
 #define TOL 1.0e-10
 #define HUGEN 1.0e10
 
@@ -17,19 +16,18 @@ SEXP etssimulate(SEXP x, SEXP m, SEXP error, SEXP trend, SEXP season,
 SEXP etsforecast(SEXP x, SEXP m, SEXP trend, SEXP season, SEXP phi, SEXP h);
 
 // Internal functions
-void forecast(double, double, double *, int, int, int, double, double *, int);
-void update(double *, double *, double *, double *, double *, double *, int, int, int,
+static void forecast(double, double, const double *, int, int, int, double, double *, int);
+static void update(double *, double *, double *, double *, const double *, double *, int, int, int,
   double, double, double, double, double);
-void etscalc_internal(double *y, int n, double *x, int m, int error, int trend, int season,
+void etscalc_internal(const double *y, int n, double *x, int m, int error, int trend, int season,
   double alpha, double beta, double gamma, double phi,
   double *e, double *fits, double *lik, double *amse, int nmse);
 
 // ******************************************************************
 
-void etscalc_internal(double *y, int n, double *x, int m, int error, int trend, int season,
+void etscalc_internal(const double *y, int n, double *x, int m, int error, int trend, int season,
                       double alpha, double beta, double gamma, double phi,
                       double *e, double *fits, double *lik, double *amse, int nmse) {
-  int i, j, nstates;
   double oldl, l, oldb, b, olds[24], s[24], f[30], lik2, tmp, denom[30];
 
   if (m > 24 && season > NONE)
@@ -40,31 +38,31 @@ void etscalc_internal(double *y, int n, double *x, int m, int error, int trend, 
   if (nmse > 30)
     nmse = 30;
 
-  nstates = m * (season > NONE) + 1 + (trend > NONE);
+  const int nstates = m * (season > NONE) + 1 + (trend > NONE);
 
   // Copy initial state components
   l = x[0];
   if (trend > NONE)
     b = x[1];
   if (season > NONE) {
-    for (j = 0; j < m; j++)
+    for (int j = 0; j < m; j++)
       s[j] = x[(trend > NONE) + j + 1];
   }
 
   *lik = 0.0;
   lik2 = 0.0;
-  for (j = 0; j < nmse; j++) {
+  for (int j = 0; j < nmse; j++) {
     amse[j] = 0.0;
     denom[j] = 0.0;
   }
 
-  for (i = 0; i < n; i++) {
+  for (int i = 0; i < n; i++) {
     // COPY PREVIOUS STATE
     oldl = l;
     if (trend > NONE)
       oldb = b;
     if (season > NONE) {
-      for (j = 0; j < m; j++)
+      for (int j = 0; j < m; j++)
         olds[j] = s[j];
     }
     // ONE STEP FORECAST
@@ -82,7 +80,7 @@ void etscalc_internal(double *y, int n, double *x, int m, int error, int trend, 
     else
       e[i] = (y[i] - fits[i]) / fits[i];
 
-    for (j = 0; j < nmse; j++) {
+    for (int j = 0; j < nmse; j++) {
       if (i + j < n) {
         denom[j] += 1.0;
         if (R_IsNA(y[i + j]))
@@ -101,7 +99,7 @@ void etscalc_internal(double *y, int n, double *x, int m, int error, int trend, 
     if (trend > NONE)
       x[nstates * (i + 1) + 1] = b;
     if (season > NONE) {
-       for (j = 0; j < m; j++)
+      for (int j = 0; j < m; j++)
         x[(trend > NONE) + nstates * (i + 1) + j + 1] = s[j];
     }
     if (!R_IsNA(e[i]))
@@ -115,56 +113,43 @@ void etscalc_internal(double *y, int n, double *x, int m, int error, int trend, 
 
 SEXP etscalc(SEXP y, SEXP x, SEXP m, SEXP error, SEXP trend, SEXP season,
              SEXP alpha, SEXP beta, SEXP gamma, SEXP phi, SEXP nmse) {
-  int n_val = length(y);
-  int m_val = asInteger(m);
-  int error_val = asInteger(error);
-  int trend_val = asInteger(trend);
-  int season_val = asInteger(season);
-  double alpha_val = asReal(alpha);
-  double beta_val = asReal(beta);
-  double gamma_val = asReal(gamma);
-  double phi_val = asReal(phi);
-  int nmse_val = asInteger(nmse);
+  const int n_val = LENGTH(y);
+  const int m_val = Rf_asInteger(m);
+  const int error_val = Rf_asInteger(error);
+  const int trend_val = Rf_asInteger(trend);
+  const int season_val = Rf_asInteger(season);
+  const double alpha_val = Rf_asReal(alpha);
+  const double beta_val = Rf_asReal(beta);
+  const double gamma_val = Rf_asReal(gamma);
+  const double phi_val = Rf_asReal(phi);
+  int nmse_val = Rf_asInteger(nmse);
 
   if (nmse_val > 30)
     nmse_val = 30;
 
   const double *y_ptr = REAL_RO(y);
 
-  SEXP x_out = PROTECT(duplicate(x));
-  double *x_ptr = REAL(x_out);
-
-  SEXP e_out = PROTECT(allocVector(REALSXP, n_val));
-  double *e_ptr = REAL(e_out);
-
-  SEXP fits_out = PROTECT(allocVector(REALSXP, n_val));
-  double *fits_ptr = REAL(fits_out);
-
-  SEXP amse_out = PROTECT(allocVector(REALSXP, nmse_val));
-  double *amse_ptr = REAL(amse_out);
+  SEXP x_out = PROTECT(Rf_duplicate(x));
+  SEXP e_out = PROTECT(Rf_allocVector(REALSXP, n_val));
+  SEXP fits_out = PROTECT(Rf_allocVector(REALSXP, n_val));
+  SEXP amse_out = PROTECT(Rf_allocVector(REALSXP, nmse_val));
 
   double lik;
 
-  etscalc_internal((double *)y_ptr, n_val, x_ptr, m_val, error_val, trend_val, season_val,
+  etscalc_internal(y_ptr, n_val, REAL(x_out), m_val, error_val, trend_val, season_val,
                    alpha_val, beta_val, gamma_val, phi_val,
-                   e_ptr, fits_ptr, &lik, amse_ptr, nmse_val);
+                   REAL(e_out), REAL(fits_out), &lik, REAL(amse_out), nmse_val);
 
-  SEXP result = PROTECT(allocVector(VECSXP, 5));
+
+  const char *names[] = {"e", "fitted", "lik", "amse", "states", ""};
+  SEXP result = PROTECT(Rf_mkNamed(VECSXP, names));
   SET_VECTOR_ELT(result, 0, e_out);
   SET_VECTOR_ELT(result, 1, fits_out);
-  SET_VECTOR_ELT(result, 2, ScalarReal(lik));
+  SET_VECTOR_ELT(result, 2, Rf_ScalarReal(lik));
   SET_VECTOR_ELT(result, 3, amse_out);
   SET_VECTOR_ELT(result, 4, x_out);
 
-  SEXP names = PROTECT(allocVector(STRSXP, 5));
-  SET_STRING_ELT(names, 0, mkChar("e"));
-  SET_STRING_ELT(names, 1, mkChar("fitted"));
-  SET_STRING_ELT(names, 2, mkChar("lik"));
-  SET_STRING_ELT(names, 3, mkChar("amse"));
-  SET_STRING_ELT(names, 4, mkChar("states"));
-  setAttrib(result, R_NamesSymbol, names);
-
-  UNPROTECT(6);
+  UNPROTECT(5);
   return result;
 }
 
@@ -172,15 +157,15 @@ SEXP etscalc(SEXP y, SEXP x, SEXP m, SEXP error, SEXP trend, SEXP season,
 
 SEXP etssimulate(SEXP x, SEXP m, SEXP error, SEXP trend, SEXP season,
                  SEXP alpha, SEXP beta, SEXP gamma, SEXP phi, SEXP h, SEXP e) {
-  int m_val = asInteger(m);
-  int error_val = asInteger(error);
-  int trend_val = asInteger(trend);
-  int season_val = asInteger(season);
-  double alpha_val = asReal(alpha);
-  double beta_val = asReal(beta);
-  double gamma_val = asReal(gamma);
-  double phi_val = asReal(phi);
-  int h_val = asInteger(h);
+  int m_val = Rf_asInteger(m);
+  const int error_val = Rf_asInteger(error);
+  const int trend_val = Rf_asInteger(trend);
+  const int season_val = Rf_asInteger(season);
+  const double alpha_val = Rf_asReal(alpha);
+  const double beta_val = Rf_asReal(beta);
+  const double gamma_val = Rf_asReal(gamma);
+  const double phi_val = Rf_asReal(phi);
+  const int h_val = Rf_asInteger(h);
 
   if (m_val > 24 && season_val > NONE)
     return R_NilValue;
@@ -201,7 +186,7 @@ SEXP etssimulate(SEXP x, SEXP m, SEXP error, SEXP trend, SEXP season,
       s[j] = x_ptr[(trend_val > NONE) + j + 1];
   }
 
-  SEXP result = PROTECT(allocVector(REALSXP, h_val));
+  SEXP result = PROTECT(Rf_allocVector(REALSXP, h_val));
   double *y = REAL(result);
 
   double oldl, oldb, olds[24], f[10];
@@ -239,11 +224,11 @@ SEXP etssimulate(SEXP x, SEXP m, SEXP error, SEXP trend, SEXP season,
 // *********************************************************************************
 
 SEXP etsforecast(SEXP x, SEXP m, SEXP trend, SEXP season, SEXP phi, SEXP h) {
-  int m_val = asInteger(m);
-  int trend_val = asInteger(trend);
-  int season_val = asInteger(season);
-  double phi_val = asReal(phi);
-  int h_val = asInteger(h);
+  int m_val = Rf_asInteger(m);
+  const int trend_val = Rf_asInteger(trend);
+  const int season_val = Rf_asInteger(season);
+  const double phi_val = Rf_asReal(phi);
+  const int h_val = Rf_asInteger(h);
 
   if (m_val > 24 && season_val > NONE)
     return R_NilValue;
@@ -264,7 +249,7 @@ SEXP etsforecast(SEXP x, SEXP m, SEXP trend, SEXP season, SEXP phi, SEXP h) {
     }
   }
 
-  SEXP result = PROTECT(allocVector(REALSXP, h_val));
+  SEXP result = PROTECT(Rf_allocVector(REALSXP, h_val));
   double *f_ptr = REAL(result);
 
   forecast(l, b, s, m_val, trend_val, season_val, phi_val, f_ptr, h_val);
@@ -275,7 +260,7 @@ SEXP etsforecast(SEXP x, SEXP m, SEXP trend, SEXP season, SEXP phi, SEXP h) {
 
 // *****************************************************************
 
-void forecast(double l, double b, double *s, int m, int trend, int season, double phi, double *f, int h)
+static void forecast(double l, double b, const double *s, int m, int trend, int season, double phi, double *f, int h)
 {
   int i,j;
   double phistar;
@@ -312,7 +297,7 @@ void forecast(double l, double b, double *s, int m, int trend, int season, doubl
 
 // *****************************************************************
 
-void update(double *oldl, double *l, double *oldb, double *b, double *olds, double *s, int m, int trend, int season,
+static void update(double *oldl, double *l, double *oldb, double *b, const double *olds, double *s, int m, int trend, int season,
   double alpha, double beta, double gamma, double phi, double y)
 {
   int j;

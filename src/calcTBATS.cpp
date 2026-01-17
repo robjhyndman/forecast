@@ -1,10 +1,8 @@
-#include "calcBATS.h"
-
+#include <RcppArmadillo.h>
 using namespace Rcpp ;
 
+// [[Rcpp::export]]
 SEXP calcTBATSFaster(SEXP ys, SEXP yHats, SEXP wTransposes, SEXP Fs, SEXP xs, SEXP gs, SEXP es, SEXP xNought_s) {
-	BEGIN_RCPP
-
 	NumericMatrix yr(ys);
 	NumericMatrix yHatr(yHats);
 	NumericMatrix wTransposer(wTransposes);
@@ -36,6 +34,4 @@ SEXP calcTBATSFaster(SEXP ys, SEXP yHats, SEXP wTransposes, SEXP Fs, SEXP xs, SE
 	}
 
 	return R_NilValue;
-
-	END_RCPP
 }

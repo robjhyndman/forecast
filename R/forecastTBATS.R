@@ -59,25 +59,21 @@ forecast.tbats <- function(
   }
 
   # Set up the matrices
-  w <- .Call(
-    "makeTBATSWMatrix",
+  w <- makeTBATSWMatrix(
     smallPhi_s = object$damping.parameter,
     kVector_s = as.integer(object$k.vector),
     arCoefs_s = object$ar.coefficients,
     maCoefs_s = object$ma.coefficients,
-    tau_s = as.integer(tau),
-    PACKAGE = "forecast"
+    tau_s = as.integer(tau)
   )
 
   if (!is.null(object$seasonal.periods)) {
     gamma.bold <- matrix(0, nrow = 1, ncol = tau)
-    .Call(
-      "updateTBATSGammaBold",
+    updateTBATSGammaBold(
       gammaBold_s = gamma.bold,
       kVector_s = as.integer(object$k.vector),
       gammaOne_s = object$gamma.one.values,
-      gammaTwo_s = object$gamma.two.values,
-      PACKAGE = "forecast"
+      gammaTwo_s = object$gamma.two.values
     )
   } else {
     gamma.bold <- NULL
@@ -89,13 +85,11 @@ forecast.tbats <- function(
   if (object$q != 0) {
     g[(1 + adj.beta + tau + object$p + 1), 1] <- 1
   }
-  .Call(
-    "updateTBATSGMatrix",
+  updateTBATSGMatrix(
     g_s = g,
     gammaBold_s = gamma.bold,
     alpha_s = object$alpha,
-    beta_s = object$beta.v,
-    PACKAGE = "forecast"
+    beta_s = object$beta.v
   )
 
   F <- makeTBATSFMatrix(

@@ -5,13 +5,11 @@
  *      Author: srazbash
  */
 
-#include "calcBATS.h"
-
+#include <RcppArmadillo.h>
 using namespace Rcpp ;
 
+// [[Rcpp::export]]
 SEXP updateFMatrix(SEXP F_s, SEXP smallPhi_s, SEXP alpha_s, SEXP beta_s, SEXP gammaBold_s, SEXP ar_s, SEXP ma_s, SEXP tau_s) {
-	BEGIN_RCPP
-
 	NumericMatrix F_r(F_s);
 	arma::mat F(F_r.begin(), F_r.nrow(), F_r.ncol(), false);
 
@@ -101,14 +99,10 @@ SEXP updateFMatrix(SEXP F_s, SEXP smallPhi_s, SEXP alpha_s, SEXP beta_s, SEXP ga
 	}
 
 	return R_NilValue;
-
-	END_RCPP
-
 }
 
+// [[Rcpp::export]]
 SEXP updateWtransposeMatrix(SEXP wTranspose_s, SEXP smallPhi_s, SEXP tau_s, SEXP arCoefs_s, SEXP maCoefs_s, SEXP p_s, SEXP q_s) {
-	BEGIN_RCPP
-
 	NumericMatrix wTranspose(wTranspose_s);
 
 	double *arCoefs, *maCoefs;
@@ -142,13 +136,10 @@ SEXP updateWtransposeMatrix(SEXP wTranspose_s, SEXP smallPhi_s, SEXP tau_s, SEXP
 	}
 
 	return R_NilValue;
-
-	END_RCPP
 }
 
+// [[Rcpp::export]]
 SEXP updateGMatrix(SEXP g_s, SEXP gammaBold_s, SEXP alpha_s, SEXP beta_s, SEXP gammaVector_s, SEXP seasonalPeriods_s) {
-	BEGIN_RCPP
-
 	int adjBeta = 0, *seasonalPeriods;
 
 	double *gammaVector;
@@ -180,6 +171,4 @@ SEXP updateGMatrix(SEXP g_s, SEXP gammaBold_s, SEXP alpha_s, SEXP beta_s, SEXP g
 	}
 
 	return R_NilValue;
-
-	END_RCPP
 }
