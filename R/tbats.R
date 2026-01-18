@@ -804,7 +804,7 @@ filterTBATSSpecifics <- function(
 
 makeSingleFourier <- function(j, m, T) {
   frier <- matrix(0, nrow = T, ncol = 2)
-  for (t in 1:T) {
+  for (t in seq_len(T)) {
     frier[t, 1] <- cos((2 * pi * j) / m)
     frier[t, 2] <- sin((2 * pi * j) / m)
   }

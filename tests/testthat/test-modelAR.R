@@ -23,7 +23,7 @@ test_that("Tests for modelAR", {
       } else {
         mean(sapply(model, predict))
       }
-    } else if (NCOL(newdata) >= 2 & NROW(newdata) >= 2) {
+    } else if (NCOL(newdata) >= 2 && NROW(newdata) >= 2) {
       rowMeans(sapply(model, predict, newdata = newdata))
     } else {
       mean(sapply(model, predict, newdata = newdata))

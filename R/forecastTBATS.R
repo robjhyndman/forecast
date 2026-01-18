@@ -13,7 +13,7 @@ forecast.tbats <- function(
   ...
 ) {
   # Check if forecast.tbats called incorrectly
-  if (inherits(object, "bats") & !inherits(object, "tbats")) {
+  if (inherits(object, "bats") && !inherits(object, "tbats")) {
     return(forecast.bats(object, h, level, fan, biasadj, ...))
   }
 
@@ -26,8 +26,8 @@ forecast.tbats <- function(
     ts.frequency <- 1
   }
 
-  if(is.null(biasadj)) {
-    if(!is.null(object$lambda)) {
+  if (is.null(biasadj)) {
+    if (!is.null(object$lambda)) {
       biasadj <- attr(object$lambda, "biasadj")
     } else {
       biasadj <- FALSE

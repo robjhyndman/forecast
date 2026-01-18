@@ -110,7 +110,6 @@ ets <- function(
   use.initial.values = FALSE,
   ...
 ) {
-  # dataname <- substitute(y)
   opt.crit <- match.arg(opt.crit)
   bounds <- match.arg(bounds)
   ic <- match.arg(ic)
@@ -128,7 +127,7 @@ ets <- function(
   }
 
   orig.y <- y
-  if (identical(class(model), "ets") && is.null(lambda)) {
+  if (inherits(model, "ets") && is.null(lambda)) {
     lambda <- model$lambda
   }
   if (!is.null(lambda)) {
@@ -299,7 +298,7 @@ ets <- function(
     }
   }
 
-  data.positive <- (min(y, na.rm=TRUE) > 0)
+  data.positive <- (min(y, na.rm = TRUE) > 0)
 
   if (!data.positive && errortype == "M") {
     stop("Inappropriate model for data with negative or zero values")
@@ -554,8 +553,6 @@ ets <- function(
   }
 
   model$lambda <- lambda
-  # model$call$data <- dataname
-
   structure(model, class = c("fc_model", "ets"))
 }
 
@@ -758,7 +755,7 @@ etsmodel <- function(
   names(fit.par) <- names(par)
   init.state <- fit.par[(np - nstate + 1):np]
 
-    # Add extra state
+  # Add extra state
   if (seasontype != "N") {
     init.state <- c(
       init.state,
@@ -1104,7 +1101,7 @@ initstate <- function(y, trendtype, seasontype) {
     y.sa <- y
   }
 
-  maxn <- min(max(10, 2*m), length(y.sa))
+  maxn <- min(max(10, 2 * m), length(y.sa))
   if (trendtype == "N") {
     l0 <- mean(head(y.sa, maxn))
     b0 <- NULL
