@@ -161,6 +161,7 @@ arfima <- function(
       max.Q = 0,
       stationary = TRUE,
       xreg = xreg,
+      allowmean = FALSE,
       ...
     )
 
