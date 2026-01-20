@@ -110,7 +110,6 @@ ets <- function(
   use.initial.values = FALSE,
   ...
 ) {
-  # dataname <- substitute(y)
   opt.crit <- match.arg(opt.crit)
   bounds <- match.arg(bounds)
   ic <- match.arg(ic)
@@ -128,7 +127,7 @@ ets <- function(
   }
 
   orig.y <- y
-  if (identical(class(model), "ets") && is.null(lambda)) {
+  if (inherits(model, "ets") && is.null(lambda)) {
     lambda <- model$lambda
   }
   if (!is.null(lambda)) {
@@ -554,8 +553,6 @@ ets <- function(
   }
 
   model$lambda <- lambda
-  # model$call$data <- dataname
-
   structure(model, class = c("fc_model", "ets"))
 }
 
