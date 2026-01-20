@@ -23,8 +23,8 @@ You can install the **development** version from
 [Github](https://github.com/robjhyndman/forecast)
 
 ```r
-# install.packages("remotes")
-remotes::install_github("robjhyndman/forecast")
+# install.packages("pak")
+pak::pak("robjhyndman/forecast")
 ```
 
 ## Usage
