@@ -22,28 +22,24 @@ fitPreviousBATSModel <- function(y, model, biasadj = FALSE) {
 
   ## Calculate the variance:
   # 1. Re-set up the matrices
-  w <- .Call(
-    "makeBATSWMatrix",
+  w <- makeBATSWMatrix(
     smallPhi_s = small.phi,
     sPeriods_s = seasonal.periods,
     arCoefs_s = ar.coefs,
-    maCoefs_s = ma.coefs,
-    PACKAGE = "forecast"
+    maCoefs_s = ma.coefs
   )
-  g <- .Call(
-    "makeBATSGMatrix",
+  g <- makeBATSGMatrix(
     as.numeric(alpha),
     beta.v,
     gamma.v,
     seasonal.periods,
     as.integer(p),
-    as.integer(q),
-    PACKAGE = "forecast"
+    as.integer(q)
   )
   F <- makeFMatrix(
     alpha = alpha,
     beta = beta.v,
-    small.phi <- small.phi,
+    small.phi = small.phi,
     seasonal.periods = seasonal.periods,
     gamma.bold.matrix = g$gamma.bold.matrix,
     ar.coefs = ar.coefs,
@@ -218,24 +214,20 @@ fitSpecificBATS <- function(
   par.scale <- makeParscaleBATS(param.vector$control)
 
   # w <- makeWMatrix(small.phi=small.phi, seasonal.periods=seasonal.periods, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
-  w <- .Call(
-    "makeBATSWMatrix",
+  w <- makeBATSWMatrix(
     smallPhi_s = small.phi,
     sPeriods_s = seasonal.periods,
     arCoefs_s = ar.coefs,
-    maCoefs_s = ma.coefs,
-    PACKAGE = "forecast"
+    maCoefs_s = ma.coefs
   )
   # g <- makeGMatrix(alpha=alpha, beta=beta.v, gamma.vector=gamma, seasonal.periods=seasonal.periods, p=p, q=q)
-  g <- .Call(
-    "makeBATSGMatrix",
+  g <- makeBATSGMatrix(
     as.numeric(alpha),
     beta.v,
     gamma.v,
     seasonal.periods,
     as.integer(p),
-    as.integer(q),
-    PACKAGE = "forecast"
+    as.integer(q)
   )
   F <- makeFMatrix(
     alpha = alpha,
@@ -262,11 +254,9 @@ fitSpecificBATS <- function(
   # for(i in 2:length(y)) {
   #  w.tilda.transpose[i,] <- w.tilda.transpose[(i-1),] %*% D
   # }
-  w.tilda.transpose <- .Call(
-    "calcWTilda",
+  w.tilda.transpose <- calcWTilda(
     wTildaTransposes = w.tilda.transpose,
-    Ds = D,
-    PACKAGE = "forecast"
+    Ds = D
   )
   ## If there is a seasonal component in the model, then the follow adjustment need to be made so that the seed states can be found
   if (!is.null(seasonal.periods)) {
@@ -376,24 +366,20 @@ fitSpecificBATS <- function(
     ## Calculate the variance:
     # 1. Re-set up the matrices
     # w <- makeWMatrix(small.phi=small.phi, seasonal.periods=seasonal.periods, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
-    w <- .Call(
-      "makeBATSWMatrix",
+    w <- makeBATSWMatrix(
       smallPhi_s = small.phi,
       sPeriods_s = seasonal.periods,
       arCoefs_s = ar.coefs,
-      maCoefs_s = ma.coefs,
-      PACKAGE = "forecast"
+      maCoefs_s = ma.coefs
     )
     # g <- makeGMatrix(alpha=alpha, beta=beta.v, gamma.vector=gamma, seasonal.periods=seasonal.periods, p=p, q=q)
-    g <- .Call(
-      "makeBATSGMatrix",
+    g <- makeBATSGMatrix(
       as.numeric(alpha),
       beta.v,
       gamma.v,
       seasonal.periods,
       as.integer(p),
-      as.integer(q),
-      PACKAGE = "forecast"
+      as.integer(q)
     )
     F <- makeFMatrix(
       alpha = alpha,
@@ -469,24 +455,20 @@ fitSpecificBATS <- function(
     ## Calculate the variance:
     # 1. Re-set up the matrices
     # w <- makeWMatrix(small.phi=small.phi, seasonal.periods=seasonal.periods, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
-    w <- .Call(
-      "makeBATSWMatrix",
+    w <- makeBATSWMatrix(
       smallPhi_s = small.phi,
       sPeriods_s = seasonal.periods,
       arCoefs_s = ar.coefs,
-      maCoefs_s = ma.coefs,
-      PACKAGE = "forecast"
+      maCoefs_s = ma.coefs
     )
     # g <- makeGMatrix(alpha=alpha, beta=beta.v, gamma.vector=gamma, seasonal.periods=seasonal.periods, p=p, q=q)
-    g <- .Call(
-      "makeBATSGMatrix",
+    g <- makeBATSGMatrix(
       as.numeric(alpha),
       beta.v,
       gamma.v,
       seasonal.periods,
       as.integer(p),
-      as.integer(q),
-      PACKAGE = "forecast"
+      as.integer(q)
     )
     F <- makeFMatrix(
       alpha = alpha,
@@ -544,16 +526,14 @@ calcModel <- function(y, x.nought, F, g, w) {
   x[, 1] <- F %*% x.nought + g %*% e[, 1]
   y <- matrix(y, nrow = 1, ncol = length.ts)
 
-  loop <- .Call(
-    "calcBATS",
+  loop <- calcBATS(
     ys = y,
     yHats = y.hat,
     wTransposes = w$w.transpose,
     Fs = F,
     xs = x,
     gs = g,
-    es = e,
-    PACKAGE = "forecast"
+    es = e
   )
 
   list(y.hat = loop$y.hat, e = loop$e, x = loop$x)
@@ -620,35 +600,30 @@ calcLikelihood <- function(
   x.nought <- BoxCox(opt.env$x.nought.untransformed, lambda = box.cox.parameter)
   lambda <- attr(x.nought, "lambda")
   # w <- makeWMatrix(small.phi=small.phi, seasonal.periods=seasonal.periods, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
-  # w <- .Call("makeBATSWMatrix", smallPhi_s = small.phi, sPeriods_s = seasonal.periods, arCoefs_s = ar.coefs, maCoefs_s = ma.coefs, PACKAGE = "forecast")
-  .Call(
-    "updateWtransposeMatrix",
+  # w <- makeBATSWMatrix(smallPhi_s = small.phi, sPeriods_s = seasonal.periods, arCoefs_s = ar.coefs, maCoefs_s = ma.coefs)
+  updateWtransposeMatrix(
     wTranspose_s = opt.env$w.transpose,
     smallPhi_s = small.phi,
     tau_s = as.integer(tau),
     arCoefs_s = ar.coefs,
     maCoefs_s = ma.coefs,
     p_s = as.integer(p),
-    q_s = as.integer(q),
-    PACKAGE = "forecast"
+    q_s = as.integer(q)
   )
 
   # g <- makeGMatrix(alpha=alpha, beta=beta, gamma.vector=gamma.vector, seasonal.periods=seasonal.periods, p=p, q=q)
-  # g <- .Call("makeBATSGMatrix", as.numeric(alpha), beta.v, gamma.vector, seasonal.periods, as.integer(p), as.integer(q), PACKAGE="forecast")
-  .Call(
-    "updateGMatrix",
+  # g <- makeBATSGMatrix(as.numeric(alpha), beta.v, gamma.vector, seasonal.periods, as.integer(p), as.integer(q))
+  updateGMatrix(
     g_s = opt.env$g,
     gammaBold_s = opt.env$gamma.bold.matrix,
     alpha_s = alpha,
     beta_s = beta.v,
     gammaVector_s = gamma.vector,
-    seasonalPeriods_s = seasonal.periods,
-    PACKAGE = "forecast"
+    seasonalPeriods_s = seasonal.periods
   )
 
   # F <- makeFMatrix(alpha=alpha, beta=beta.v, small.phi=small.phi, seasonal.periods=seasonal.periods, gamma.bold.matrix=g$gamma.bold.matrix, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
-  .Call(
-    "updateFMatrix",
+  updateFMatrix(
     opt.env$F,
     small.phi,
     alpha,
@@ -656,16 +631,14 @@ calcLikelihood <- function(
     opt.env$gamma.bold.matrix,
     ar.coefs,
     ma.coefs,
-    tau,
-    PACKAGE = "forecast"
+    tau
   )
 
   mat.transformed.y <- BoxCox(opt.env$y, box.cox.parameter)
   lambda <- attr(mat.transformed.y, "lambda")
   n <- ncol(opt.env$y)
 
-  .Call(
-    "calcBATSFaster",
+  calcBATSFaster(
     ys = mat.transformed.y,
     yHats = opt.env$y.hat,
     wTransposes = opt.env$w.transpose,
@@ -678,8 +651,7 @@ calcLikelihood <- function(
     betaV = beta.v,
     tau_s = as.integer(tau),
     p_s = as.integer(p),
-    q_s = as.integer(q),
-    PACKAGE = "forecast"
+    q_s = as.integer(q)
   )
 
   log.likelihood <- n *
@@ -765,34 +737,29 @@ calcLikelihoodNOTransformed <- function(
   }
 
   # w <- makeWMatrix(small.phi=small.phi, seasonal.periods=seasonal.periods, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
-  # w <- .Call("makeBATSWMatrix", smallPhi_s = small.phi, sPeriods_s = seasonal.periods, arCoefs_s = ar.coefs, maCoefs_s = ma.coefs, PACKAGE = "forecast")
-  .Call(
-    "updateWtransposeMatrix",
+  # w <- makeBATSWMatrix(smallPhi_s = small.phi, sPeriods_s = seasonal.periods, arCoefs_s = ar.coefs, maCoefs_s = ma.coefs)
+  updateWtransposeMatrix(
     wTranspose_s = opt.env$w.transpose,
     smallPhi_s = small.phi,
     tau_s = as.integer(tau),
     arCoefs_s = ar.coefs,
     maCoefs_s = ma.coefs,
     p_s = as.integer(p),
-    q_s = as.integer(q),
-    PACKAGE = "forecast"
+    q_s = as.integer(q)
   )
   # g <- makeGMatrix(alpha=alpha, beta=beta, gamma.vector=gamma.vector, seasonal.periods=seasonal.periods, p=p, q=q)
-  # g <- .Call("makeBATSGMatrix", alpha, beta.v, gamma.vector, seasonal.periods, as.integer(p), as.integer(q), PACKAGE="forecast")
-  .Call(
-    "updateGMatrix",
+  # g <- makeBATSGMatrix(alpha, beta.v, gamma.vector, seasonal.periods, as.integer(p), as.integer(q))
+  updateGMatrix(
     g_s = opt.env$g,
     gammaBold_s = opt.env$gamma.bold.matrix,
     alpha_s = alpha,
     beta_s = beta.v,
     gammaVector_s = gamma.vector,
-    seasonalPeriods_s = seasonal.periods,
-    PACKAGE = "forecast"
+    seasonalPeriods_s = seasonal.periods
   )
 
   # F <- makeFMatrix(alpha=alpha, beta=beta.v, small.phi=small.phi, seasonal.periods=seasonal.periods, gamma.bold.matrix=g$gamma.bold.matrix, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
-  .Call(
-    "updateFMatrix",
+  updateFMatrix(
     opt.env$F,
     small.phi,
     alpha,
@@ -800,8 +767,7 @@ calcLikelihoodNOTransformed <- function(
     opt.env$gamma.bold.matrix,
     ar.coefs,
     ma.coefs,
-    tau,
-    PACKAGE = "forecast"
+    tau
   )
   n <- ncol(opt.env$y)
 
@@ -818,8 +784,7 @@ calcLikelihoodNOTransformed <- function(
   # opt.env$x[,1] <- opt.env$F %*% x.nought + g$g %*% opt.env$e[,1]
   # mat.y <- matrix(opt.env$y, nrow=1, ncol=n)
 
-  .Call(
-    "calcBATSFaster",
+  calcBATSFaster(
     ys = opt.env$y,
     yHats = opt.env$y.hat,
     wTransposes = opt.env$w.transpose,
@@ -832,8 +797,7 @@ calcLikelihoodNOTransformed <- function(
     betaV = beta.v,
     tau_s = as.integer(tau),
     p_s = as.integer(p),
-    q_s = as.integer(q),
-    PACKAGE = "forecast"
+    q_s = as.integer(q)
   )
   ##
   ####

@@ -1,10 +1,8 @@
-#include "calcBATS.h"
-
+#include <RcppArmadillo.h>
 using namespace Rcpp ;
 
+// [[Rcpp::export]]
 SEXP updateTBATSGammaBold(SEXP gammaBold_s, SEXP kVector_s, SEXP gammaOne_s, SEXP gammaTwo_s) {
-	BEGIN_RCPP
-
 	NumericMatrix gammaBold(gammaBold_s);
 	IntegerVector kVector(kVector_s);
 	NumericVector gammaOne(gammaOne_s);
@@ -24,14 +22,10 @@ SEXP updateTBATSGammaBold(SEXP gammaBold_s, SEXP kVector_s, SEXP gammaOne_s, SEX
 	}
 
 	return R_NilValue;
-
-	END_RCPP
-
 }
 
+// [[Rcpp::export]]
 SEXP updateTBATSGMatrix(SEXP g_s, SEXP gammaBold_s, SEXP alpha_s, SEXP beta_s) {
-	BEGIN_RCPP
-
 	int adjBeta = 0;
 
 	NumericMatrix g_r(g_s);
@@ -53,6 +47,4 @@ SEXP updateTBATSGMatrix(SEXP g_s, SEXP gammaBold_s, SEXP alpha_s, SEXP beta_s) {
 	}
 	//Rprintf("five\n");
 	return R_NilValue;
-
-	END_RCPP
 }

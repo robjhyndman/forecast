@@ -1,14 +1,14 @@
 #include <vector>
-
-#include <Rcpp.h>
+#include <string>
 
 extern "C" {
 
-void etscalc(double *, int *, double *, int *, int *, int *, int *,
-		double *, double *, double *, double *, double *, double *, double *, double *, int *);
+void etscalc_internal(const double *y, int n, double *x, int m, int error, int trend, int season,
+  double alpha, double beta, double gamma, double phi,
+  double *e, double *fits, double *lik, double *amse, int nmse);
 
 void R_cpolyroot(double *opr, double *opi, int *degree,
-			double *zeror, double *zeroi, bool *fail);
+  double *zeror, double *zeroi, bool *fail);
 
 }
 
