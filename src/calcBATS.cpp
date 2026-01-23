@@ -1,5 +1,5 @@
 #include <RcppArmadillo.h>
-using namespace Rcpp ;
+using namespace Rcpp;
 
 // [[Rcpp::export]]
 SEXP calcBATS(SEXP ys, SEXP yHats, SEXP wTransposes, SEXP Fs, SEXP xs, SEXP gs, SEXP es ){

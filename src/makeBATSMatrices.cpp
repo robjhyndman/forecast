@@ -1,5 +1,5 @@
 #include <RcppArmadillo.h>
-using namespace Rcpp ;
+using namespace Rcpp;
 
 // [[Rcpp::export]]
 SEXP makeBATSWMatrix(SEXP smallPhi_s, SEXP sPeriods_s, SEXP arCoefs_s, SEXP maCoefs_s) {
