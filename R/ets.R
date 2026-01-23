@@ -268,7 +268,7 @@ ets <- function(
     seasontype <- "N"
   }
   if (m == 1) {
-    if (seasontype == "A" || seasontype == "M") {
+    if (seasontype %in% c("A", "M")) {
       stop("Nonseasonal data")
     } else {
       substr(model, 3, 3) <- seasontype <- "N"
@@ -311,10 +311,10 @@ ets <- function(
   n <- sum(!is.na(y))
   # Check we have enough data to fit a model
   npars <- 2L # alpha + l0
-  if (trendtype == "A" || trendtype == "M") {
+  if (trendtype %in% c("A", "M")) {
     npars <- npars + 2L
   } # beta + b0
-  if (seasontype == "A" || seasontype == "M") {
+  if (seasontype %in% c("A", "M")) {
     npars <- npars + m
   } # gamma + s
   if (!is.null(damped)) {
@@ -326,7 +326,7 @@ ets <- function(
     if (!is.null(damped) && damped) {
       warning("Not enough data to use damping")
     }
-    if (seasontype == "A" || seasontype == "M") {
+    if (seasontype %in% c("A", "M")) {
       fit <- try(
         HoltWintersZZ(
           orig.y,
@@ -351,7 +351,7 @@ ets <- function(
         warning("Seasonal component could not be estimated")
       }
     }
-    if (trendtype == "A" || trendtype == "M") {
+    if (trendtype %in% c("A", "M")) {
       fit <- try(
         HoltWintersZZ(
           orig.y,

@@ -227,7 +227,7 @@ residuals.tslm <- function(
   ...
 ) {
   type <- match.arg(type)
-  if (type == "innovation" || type == "deviance") {
+  if (type %in% c("innovation", "deviance")) {
     object$residuals
   } else {
     getResponse(object) - fitted(object)
