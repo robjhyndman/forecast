@@ -303,19 +303,15 @@ fitSpecificBATS <- function(
   }
   ####
   # Set up environment
-  opt.env <- new.env()
-  assign("F", F, envir = opt.env)
-  assign("w.transpose", w$w.transpose, envir = opt.env)
-  assign("g", g$g, envir = opt.env)
-  assign("gamma.bold.matrix", g$gamma.bold.matrix, envir = opt.env)
-  assign("y", matrix(y, nrow = 1, ncol = length(y)), envir = opt.env)
-  assign("y.hat", matrix(0, nrow = 1, ncol = length(y)), envir = opt.env)
-  assign("e", matrix(0, nrow = 1, ncol = length(y)), envir = opt.env)
-  assign(
-    "x",
-    matrix(0, nrow = length(x.nought), ncol = length(y)),
-    envir = opt.env
-  )
+  opt.env <- new.env(parent = emptyenv())
+  opt.env$F <- F
+  opt.env$w.transpose <- w$w.transpose
+  opt.env$g <- g$g
+  opt.env$gamma.bold.matrix <- g$gamma.bold.matrix
+  opt.env$y <- matrix(y, nrow = 1, ncol = length(y))
+  opt.env$y.hat <- matrix(0, nrow = 1, ncol = length(y))
+  opt.env$e <- matrix(0, nrow = 1, ncol = length(y))
+  opt.env$x <- matrix(0, nrow = length(x.nought), ncol = length(y))
   if (!is.null(seasonal.periods)) {
     tau <- sum(seasonal.periods)
   } else {
@@ -326,11 +322,7 @@ fitSpecificBATS <- function(
   if (use.box.cox) {
     # Un-transform the seed states
     # x.nought.untransformed <- InvBoxCox(x.nought, lambda=lambda)
-    assign(
-      "x.nought.untransformed",
-      InvBoxCox(x.nought, lambda = lambda),
-      envir = opt.env
-    )
+    opt.env$x.nought.untransformed <- InvBoxCox(x.nought, lambda = lambda)
     # Optimise the likelihood function
     optim.like <- optim(
       par = param.vector$vect,
@@ -658,7 +650,7 @@ calcLikelihood <- function(
     log(sum(opt.env$e^2)) -
     2 * (box.cox.parameter - 1) * sum(log(opt.env$y))
 
-  assign("D", (opt.env$F - opt.env$g %*% opt.env$w.transpose), envir = opt.env)
+  opt.env$D <- opt.env$F - opt.env$g %*% opt.env$w.transpose
 
   if (
     checkAdmissibility(
@@ -805,7 +797,7 @@ calcLikelihoodNOTransformed <- function(
 
   log.likelihood <- n * log(sum(opt.env$e * opt.env$e))
   # D <- opt.env$F - g$g %*% w$w.transpose
-  assign("D", (opt.env$F - opt.env$g %*% opt.env$w.transpose), envir = opt.env)
+  opt.env$D <- opt.env$F - opt.env$g %*% opt.env$w.transpose
 
   if (
     checkAdmissibility(
