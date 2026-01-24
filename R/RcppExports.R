@@ -37,16 +37,16 @@ makeTBATSWMatrix <- function(smallPhi_s, kVector_s, arCoefs_s, maCoefs_s, tau_s)
     .Call(`_forecast_makeTBATSWMatrix`, smallPhi_s, kVector_s, arCoefs_s, maCoefs_s, tau_s)
 }
 
-makeCIMatrix <- function(k_s, m_s) {
-    .Call(`_forecast_makeCIMatrix`, k_s, m_s)
+makeCIMatrix <- function(k, m) {
+    .Call(`_forecast_makeCIMatrix`, k, m)
 }
 
-makeSIMatrix <- function(k_s, m_s) {
-    .Call(`_forecast_makeSIMatrix`, k_s, m_s)
+makeSIMatrix <- function(k, m) {
+    .Call(`_forecast_makeSIMatrix`, k, m)
 }
 
-makeAIMatrix <- function(C_s, S_s, k_s) {
-    .Call(`_forecast_makeAIMatrix`, C_s, S_s, k_s)
+makeAIMatrix <- function(C, S, k) {
+    .Call(`_forecast_makeAIMatrix`, C, S, k)
 }
 
 updateFMatrix <- function(F_s, smallPhi_s, alpha_s, beta_s, gammaBold_s, ar_s, ma_s, tau_s) {

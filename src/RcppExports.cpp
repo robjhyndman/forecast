@@ -180,39 +180,39 @@ BEGIN_RCPP
 END_RCPP
 }
 // makeCIMatrix
-SEXP makeCIMatrix(SEXP k_s, SEXP m_s);
-RcppExport SEXP _forecast_makeCIMatrix(SEXP k_sSEXP, SEXP m_sSEXP) {
+arma::mat makeCIMatrix(int k, double m);
+RcppExport SEXP _forecast_makeCIMatrix(SEXP kSEXP, SEXP mSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type k_s(k_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type m_s(m_sSEXP);
-    rcpp_result_gen = Rcpp::wrap(makeCIMatrix(k_s, m_s));
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< double >::type m(mSEXP);
+    rcpp_result_gen = Rcpp::wrap(makeCIMatrix(k, m));
     return rcpp_result_gen;
 END_RCPP
 }
 // makeSIMatrix
-SEXP makeSIMatrix(SEXP k_s, SEXP m_s);
-RcppExport SEXP _forecast_makeSIMatrix(SEXP k_sSEXP, SEXP m_sSEXP) {
+arma::mat makeSIMatrix(int k, double m);
+RcppExport SEXP _forecast_makeSIMatrix(SEXP kSEXP, SEXP mSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type k_s(k_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type m_s(m_sSEXP);
-    rcpp_result_gen = Rcpp::wrap(makeSIMatrix(k_s, m_s));
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< double >::type m(mSEXP);
+    rcpp_result_gen = Rcpp::wrap(makeSIMatrix(k, m));
     return rcpp_result_gen;
 END_RCPP
 }
 // makeAIMatrix
-SEXP makeAIMatrix(SEXP C_s, SEXP S_s, SEXP k_s);
-RcppExport SEXP _forecast_makeAIMatrix(SEXP C_sSEXP, SEXP S_sSEXP, SEXP k_sSEXP) {
+arma::mat makeAIMatrix(const arma::mat& C, const arma::mat& S, int k);
+RcppExport SEXP _forecast_makeAIMatrix(SEXP CSEXP, SEXP SSEXP, SEXP kSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type C_s(C_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type S_s(S_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type k_s(k_sSEXP);
-    rcpp_result_gen = Rcpp::wrap(makeAIMatrix(C_s, S_s, k_s));
+    Rcpp::traits::input_parameter< const arma::mat& >::type C(CSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type S(SSEXP);
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    rcpp_result_gen = Rcpp::wrap(makeAIMatrix(C, S, k));
     return rcpp_result_gen;
 END_RCPP
 }
