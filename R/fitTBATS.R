@@ -359,8 +359,8 @@ fitSpecificTBATS <- function(
   w.tilda.transpose <- matrix(0, nrow = length(y), ncol = ncol(w$w.transpose))
   w.tilda.transpose[1, ] <- w$w.transpose
   w.tilda.transpose <- calcWTilda(
-    wTildaTransposes = w.tilda.transpose,
-    Ds = D
+    wTildaTranspose = w.tilda.transpose,
+    D = D
   )
   # Remove the AR() and MA() bits if they exist
   if ((p != 0) || (q != 0)) {

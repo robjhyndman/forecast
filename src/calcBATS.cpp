@@ -1,37 +1,28 @@
 #include <RcppArmadillo.h>
+// [[Rcpp::depends(RcppArmadillo)]]
+
 using namespace Rcpp;
 
+
 // [[Rcpp::export]]
-SEXP calcBATS(SEXP ys, SEXP yHats, SEXP wTransposes, SEXP Fs, SEXP xs, SEXP gs, SEXP es ){
-	NumericMatrix yr(ys);
-	NumericMatrix yHatr(yHats);
-	NumericMatrix wTransposer(wTransposes);
-	NumericMatrix Fr(Fs);
-	NumericMatrix xr(xs);
-	NumericMatrix gr(gs);
-	NumericMatrix er(es);
+List calcBATS(const arma::mat& y,
+              arma::mat& yHat,
+              const arma::mat& wTranspose,
+              const arma::mat& F,
+              arma::mat& x,
+              const arma::mat& g,
+              arma::mat& e) {
+  for (arma::uword t = 1; t < y.n_cols; t++) {
+    yHat.col(t) = wTranspose * x.col(t - 1);
+    e(0, t) = y(0, t) - yHat(0, t);
+    x.col(t) = F * x.col(t - 1) + g * e(0, t);
+  }
 
-	int t;
-
-	arma::mat y(yr.begin(), yr.nrow(), yr.ncol(), false);
-	arma::mat yHat(yHatr.begin(), yHatr.nrow(), yHatr.ncol(), false);
-	arma::mat wTranspose(wTransposer.begin(), wTransposer.nrow(), wTransposer.ncol(), false);
-	arma::mat F(Fr.begin(), Fr.nrow(), Fr.ncol(), false);
-	arma::mat x(xr.begin(), xr.nrow(), xr.ncol(), false);
-	arma::mat g(gr.begin(), gr.nrow(), gr.ncol(), false);
-	arma::mat e(er.begin(), er.nrow(), er.ncol(), false);
-
-	for(t = 1; t < yr.ncol(); t++) {
-		yHat.col(t) = wTranspose * x.col((t-1));
-		e(0,t) = y(0, t) - yHat(0, t);
-		x.col(t) = F * x.col((t-1)) + g * e(0,t);
-	}
-
-	return List::create(
-			Named("y.hat") = yHat,
-			Named("e") = e,
-			Named("x") = x
-	);
+  return List::create(
+    Named("y.hat") = yHat,
+    Named("e") = e,
+    Named("x") = x
+  );
 }
 
 // [[Rcpp::export]]
@@ -248,18 +239,9 @@ SEXP calcBATSFaster(SEXP ys, SEXP yHats, SEXP wTransposes, SEXP Fs, SEXP xs, SEX
 }
 
 // [[Rcpp::export]]
-SEXP calcWTilda(SEXP wTildaTransposes, SEXP Ds) {
-	NumericMatrix wTildaTransposer(wTildaTransposes);
-	NumericMatrix Dr(Ds);
-
-	int t;
-
-	arma::mat wTildaTranspose(wTildaTransposer.begin(), wTildaTransposer.nrow(), wTildaTransposer.ncol(), false);
-	arma::mat D(Dr.begin(), Dr.nrow(), Dr.ncol(), false);
-
-	for(t = 1; t < wTildaTransposer.nrow(); t++) {
-		wTildaTranspose.row(t) = wTildaTranspose.row((t-1)) * D;
-	}
-
-	return wTildaTransposer;
+arma::mat calcWTilda(arma::mat& wTildaTranspose, const arma::mat& D) {
+  for (arma::uword t = 1; t < wTildaTranspose.n_rows; t++) {
+    wTildaTranspose.row(t) = wTildaTranspose.row(t - 1) * D;
+  }
+  return wTildaTranspose;
 }
