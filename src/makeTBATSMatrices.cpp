@@ -1,4 +1,6 @@
 #include <RcppArmadillo.h>
+//[[Rcpp::depends(RcppArmadillo)]]
+
 using namespace Rcpp;
 
 // [[Rcpp::export]]
@@ -79,53 +81,36 @@ SEXP makeTBATSWMatrix(SEXP smallPhi_s, SEXP kVector_s, SEXP arCoefs_s, SEXP maCo
 }
 
 // [[Rcpp::export]]
-SEXP makeCIMatrix(SEXP k_s, SEXP m_s) {
-  double pi = arma::datum::pi;
-	double lambda, *m;
-	int *k;
+arma::mat makeCIMatrix(int k, double m) {
+  const double pi = arma::datum::pi;
+  arma::mat C(k, k, arma::fill::zeros);
 
-	k = &INTEGER(k_s)[0];
-	m = &REAL(m_s)[0];
-	NumericMatrix C(*k, *k);
-	for(int j = 1; j<=*k; j++) {
-		lambda = (2 * pi * j) / *m;
-		C((j-1),(j-1)) = std::cos(lambda);
-	}
-	return wrap(C);
+  for (int j = 1; j <= k; j++) {
+    C(j - 1, j - 1) = std::cos((2 * pi * j) / m);
+  }
+  return C;
 }
 
 // [[Rcpp::export]]
-SEXP makeSIMatrix(SEXP k_s, SEXP m_s) {
-  double pi = arma::datum::pi;
-	double lambda, *m;
-	int *k;
-	k = &INTEGER(k_s)[0];
-	m = &REAL(m_s)[0];
+arma::mat makeSIMatrix(int k, double m) {
+  const double pi = arma::datum::pi;
+  arma::mat S(k, k, arma::fill::zeros);
 
-	NumericMatrix S(*k, *k);
-	for(int j = 1; j<=*k; j++) {
-		lambda = (2 * pi * j) / *m;
-		S((j-1),(j-1)) = std::sin(lambda);
-	}
-	return wrap(S);
+  for (int j = 1; j <= k; j++) {
+    double lambda = (2 * pi * j) / m;
+    S(j - 1, j - 1) = std::sin(lambda);
+  }
+  return S;
 }
 
 // [[Rcpp::export]]
-SEXP makeAIMatrix(SEXP C_s, SEXP S_s, SEXP k_s) {
-	int *k;
-	k = &INTEGER(k_s)[0];
+arma::mat makeAIMatrix(const arma::mat &C, const arma::mat &S, int k) {
+  arma::mat A(k * 2, k * 2);
 
-	NumericMatrix C_r(C_s);
-	NumericMatrix S_r(S_s);
+  A.submat(0, 0, k - 1, k - 1) = C;
+  A.submat(0, k, k - 1, k * 2 - 1) = S;
+  A.submat(k, 0, k * 2 - 1, k - 1) = -S;
+  A.submat(k, k, k * 2 - 1, k * 2 - 1) = C;
 
-	arma::mat C(C_r.begin(), C_r.nrow(), C_r.ncol(), false);
-	arma::mat S(S_r.begin(), S_r.nrow(), S_r.ncol(), false);
-	arma::mat A((*k * 2), (*k * 2));
-	A.submat(0,0, (*k -1), (*k -1)) = C;
-	A.submat(0,*k, (*k -1), ((*k *2) -1)) = S;
-	A.submat(*k,0, ((*k *2) -1), (*k -1)) = (-1 * S);
-	A.submat(*k,*k, ((*k *2) -1), ((*k *2) -1)) = C;
-
-	return wrap(A);
-
+  return A;
 }
