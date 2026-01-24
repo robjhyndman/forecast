@@ -70,10 +70,10 @@ forecast.tbats <- function(
   if (!is.null(object$seasonal.periods)) {
     gamma.bold <- matrix(0, nrow = 1, ncol = tau)
     updateTBATSGammaBold(
-      gammaBold_s = gamma.bold,
-      kVector_s = as.integer(object$k.vector),
-      gammaOne_s = object$gamma.one.values,
-      gammaTwo_s = object$gamma.two.values
+      gammaBold = gamma.bold,
+      kVector = as.integer(object$k.vector),
+      gammaOne = object$gamma.one.values,
+      gammaTwo = object$gamma.two.values
     )
   } else {
     gamma.bold <- NULL
@@ -86,10 +86,10 @@ forecast.tbats <- function(
     g[(1 + adj.beta + tau + object$p + 1), 1] <- 1
   }
   updateTBATSGMatrix(
-    g_s = g,
-    gammaBold_s = gamma.bold,
-    alpha_s = object$alpha,
-    beta_s = object$beta.v
+    g = g,
+    gammaBold = gamma.bold,
+    alpha = object$alpha,
+    beta = object$beta.v
   )
 
   F <- makeTBATSFMatrix(
