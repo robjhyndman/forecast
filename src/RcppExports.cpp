@@ -12,19 +12,19 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // calcBATS
-SEXP calcBATS(SEXP ys, SEXP yHats, SEXP wTransposes, SEXP Fs, SEXP xs, SEXP gs, SEXP es);
-RcppExport SEXP _forecast_calcBATS(SEXP ysSEXP, SEXP yHatsSEXP, SEXP wTransposesSEXP, SEXP FsSEXP, SEXP xsSEXP, SEXP gsSEXP, SEXP esSEXP) {
+List calcBATS(const arma::mat& y, arma::mat& yHat, const arma::mat& wTranspose, const arma::mat& F, arma::mat& x, const arma::mat& g, arma::mat& e);
+RcppExport SEXP _forecast_calcBATS(SEXP ySEXP, SEXP yHatSEXP, SEXP wTransposeSEXP, SEXP FSEXP, SEXP xSEXP, SEXP gSEXP, SEXP eSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type ys(ysSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type yHats(yHatsSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type wTransposes(wTransposesSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type Fs(FsSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type xs(xsSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type gs(gsSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type es(esSEXP);
-    rcpp_result_gen = Rcpp::wrap(calcBATS(ys, yHats, wTransposes, Fs, xs, gs, es));
+    Rcpp::traits::input_parameter< const arma::mat& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type yHat(yHatSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type wTranspose(wTransposeSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type F(FSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type g(gSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type e(eSEXP);
+    rcpp_result_gen = Rcpp::wrap(calcBATS(y, yHat, wTranspose, F, x, g, e));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -52,14 +52,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // calcWTilda
-SEXP calcWTilda(SEXP wTildaTransposes, SEXP Ds);
-RcppExport SEXP _forecast_calcWTilda(SEXP wTildaTransposesSEXP, SEXP DsSEXP) {
+arma::mat calcWTilda(arma::mat& wTildaTranspose, const arma::mat& D);
+RcppExport SEXP _forecast_calcWTilda(SEXP wTildaTransposeSEXP, SEXP DSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type wTildaTransposes(wTildaTransposesSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type Ds(DsSEXP);
-    rcpp_result_gen = Rcpp::wrap(calcWTilda(wTildaTransposes, Ds));
+    Rcpp::traits::input_parameter< arma::mat& >::type wTildaTranspose(wTildaTransposeSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type D(DSEXP);
+    rcpp_result_gen = Rcpp::wrap(calcWTilda(wTildaTranspose, D));
     return rcpp_result_gen;
 END_RCPP
 }

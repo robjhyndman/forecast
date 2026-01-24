@@ -255,8 +255,8 @@ fitSpecificBATS <- function(
   #  w.tilda.transpose[i,] <- w.tilda.transpose[(i-1),] %*% D
   # }
   w.tilda.transpose <- calcWTilda(
-    wTildaTransposes = w.tilda.transpose,
-    Ds = D
+    wTildaTranspose = w.tilda.transpose,
+    D = D
   )
   ## If there is a seasonal component in the model, then the follow adjustment need to be made so that the seed states can be found
   if (!is.null(seasonal.periods)) {
@@ -519,13 +519,13 @@ calcModel <- function(y, x.nought, F, g, w) {
   y <- matrix(y, nrow = 1, ncol = length.ts)
 
   loop <- calcBATS(
-    ys = y,
-    yHats = y.hat,
-    wTransposes = w$w.transpose,
-    Fs = F,
-    xs = x,
-    gs = g,
-    es = e
+    y = y,
+    yHat = y.hat,
+    wTranspose = w$w.transpose,
+    F = F,
+    x = x,
+    g = g,
+    e = e
   )
 
   list(y.hat = loop$y.hat, e = loop$e, x = loop$x)
