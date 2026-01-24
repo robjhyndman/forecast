@@ -13,8 +13,8 @@ calcWTilda <- function(wTildaTransposes, Ds) {
     .Call(`_forecast_calcWTilda`, wTildaTransposes, Ds)
 }
 
-calcTBATSFaster <- function(ys, yHats, wTransposes, Fs, xs, gs, es, xNought_s) {
-    .Call(`_forecast_calcTBATSFaster`, ys, yHats, wTransposes, Fs, xs, gs, es, xNought_s)
+calcTBATSFaster <- function(y, yHat, wTranspose, F, x, g, e, xNought) {
+    invisible(.Call(`_forecast_calcTBATSFaster`, y, yHat, wTranspose, F, x, g, e, xNought))
 }
 
 etsTargetFunctionInit <- function(p_y, p_nstate, p_errortype, p_trendtype, p_seasontype, p_damped, p_lower, p_upper, p_opt_crit, p_nmse, p_bounds, p_m, p_optAlpha, p_optBeta, p_optGamma, p_optPhi, p_givenAlpha, p_givenBeta, p_givenGamma, p_givenPhi, p_alpha, p_beta, p_gamma, p_phi, p_rho) {
