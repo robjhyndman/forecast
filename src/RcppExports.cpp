@@ -64,21 +64,20 @@ BEGIN_RCPP
 END_RCPP
 }
 // calcTBATSFaster
-SEXP calcTBATSFaster(SEXP ys, SEXP yHats, SEXP wTransposes, SEXP Fs, SEXP xs, SEXP gs, SEXP es, SEXP xNought_s);
-RcppExport SEXP _forecast_calcTBATSFaster(SEXP ysSEXP, SEXP yHatsSEXP, SEXP wTransposesSEXP, SEXP FsSEXP, SEXP xsSEXP, SEXP gsSEXP, SEXP esSEXP, SEXP xNought_sSEXP) {
+void calcTBATSFaster(arma::mat& y, arma::mat& yHat, const arma::mat& wTranspose, const arma::mat& F, arma::mat& x, const arma::mat& g, arma::mat& e, const arma::mat& xNought);
+RcppExport SEXP _forecast_calcTBATSFaster(SEXP ySEXP, SEXP yHatSEXP, SEXP wTransposeSEXP, SEXP FSEXP, SEXP xSEXP, SEXP gSEXP, SEXP eSEXP, SEXP xNoughtSEXP) {
 BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type ys(ysSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type yHats(yHatsSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type wTransposes(wTransposesSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type Fs(FsSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type xs(xsSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type gs(gsSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type es(esSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type xNought_s(xNought_sSEXP);
-    rcpp_result_gen = Rcpp::wrap(calcTBATSFaster(ys, yHats, wTransposes, Fs, xs, gs, es, xNought_s));
-    return rcpp_result_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type yHat(yHatSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type wTranspose(wTransposeSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type F(FSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type g(gSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type e(eSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type xNought(xNoughtSEXP);
+    calcTBATSFaster(y, yHat, wTranspose, F, x, g, e, xNought);
+    return R_NilValue;
 END_RCPP
 }
 // etsTargetFunctionInit

@@ -333,26 +333,26 @@ fitSpecificTBATS <- function(
     y.transformed <- BoxCox(y, lambda = lambda)
     lambda <- attr(y.transformed, "lambda")
     calcTBATSFaster(
-      ys = matrix(y.transformed, nrow = 1, ncol = length(y.transformed)),
-      yHats = opt.env$y.hat,
-      wTransposes = opt.env$w.transpose,
-      Fs = opt.env$F,
-      xs = opt.env$x,
-      gs = opt.env$g,
-      es = opt.env$e,
-      xNought_s = x.nought
+      y = matrix(y.transformed, nrow = 1, ncol = length(y.transformed)),
+      yHat = opt.env$y.hat,
+      wTranspose = opt.env$w.transpose,
+      F = opt.env$F,
+      x = opt.env$x,
+      g = opt.env$g,
+      e = opt.env$e,
+      xNought = x.nought
     )
     y.tilda <- opt.env$e
   } else {
     calcTBATSFaster(
-      ys = opt.env$y,
-      yHats = opt.env$y.hat,
-      wTransposes = opt.env$w.transpose,
-      Fs = opt.env$F,
-      xs = opt.env$x,
-      gs = opt.env$g,
-      es = opt.env$e,
-      xNought_s = x.nought
+      y = opt.env$y,
+      yHat = opt.env$y.hat,
+      wTranspose = opt.env$w.transpose,
+      F = opt.env$F,
+      x = opt.env$x,
+      g = opt.env$g,
+      e = opt.env$e,
+      xNought = x.nought
     )
     y.tilda <- opt.env$e
   }
@@ -704,14 +704,14 @@ calcLikelihoodTBATS <- function(
   n <- ncol(opt.env$y)
 
   calcTBATSFaster(
-    ys = mat.transformed.y,
-    yHats = opt.env$y.hat,
-    wTransposes = opt.env$w.transpose,
-    Fs = opt.env$F,
-    xs = opt.env$x,
-    gs = opt.env$g,
-    es = opt.env$e,
-    xNought_s = x.nought
+    y = mat.transformed.y,
+    yHat = opt.env$y.hat,
+    wTranspose = opt.env$w.transpose,
+    F = opt.env$F,
+    x = opt.env$x,
+    g = opt.env$g,
+    e = opt.env$e,
+    xNought = x.nought
   )
 
   ##
@@ -824,14 +824,14 @@ calcLikelihoodNOTransformedTBATS <- function(
   n <- ncol(opt.env$y)
 
   calcTBATSFaster(
-    ys = opt.env$y,
-    yHats = opt.env$y.hat,
-    wTransposes = opt.env$w.transpose,
-    Fs = opt.env$F,
-    xs = opt.env$x,
-    gs = opt.env$g,
-    es = opt.env$e,
-    xNought_s = x.nought
+    y = opt.env$y,
+    yHat = opt.env$y.hat,
+    wTranspose = opt.env$w.transpose,
+    F = opt.env$F,
+    x = opt.env$x,
+    g = opt.env$g,
+    e = opt.env$e,
+    xNought = x.nought
   )
   ##
   ####
