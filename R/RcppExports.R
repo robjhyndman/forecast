@@ -61,11 +61,11 @@ updateGMatrix <- function(g_s, gammaBold_s, alpha_s, beta_s, gammaVector_s, seas
     .Call(`_forecast_updateGMatrix`, g_s, gammaBold_s, alpha_s, beta_s, gammaVector_s, seasonalPeriods_s)
 }
 
-updateTBATSGammaBold <- function(gammaBold_s, kVector_s, gammaOne_s, gammaTwo_s) {
-    .Call(`_forecast_updateTBATSGammaBold`, gammaBold_s, kVector_s, gammaOne_s, gammaTwo_s)
+updateTBATSGammaBold <- function(gammaBold, kVector, gammaOne, gammaTwo) {
+    invisible(.Call(`_forecast_updateTBATSGammaBold`, gammaBold, kVector, gammaOne, gammaTwo))
 }
 
-updateTBATSGMatrix <- function(g_s, gammaBold_s, alpha_s, beta_s) {
-    .Call(`_forecast_updateTBATSGMatrix`, g_s, gammaBold_s, alpha_s, beta_s)
+updateTBATSGMatrix <- function(g, gammaBold, alpha, beta) {
+    invisible(.Call(`_forecast_updateTBATSGMatrix`, g, gammaBold, alpha, beta))
 }
 

@@ -268,31 +268,29 @@ BEGIN_RCPP
 END_RCPP
 }
 // updateTBATSGammaBold
-SEXP updateTBATSGammaBold(SEXP gammaBold_s, SEXP kVector_s, SEXP gammaOne_s, SEXP gammaTwo_s);
-RcppExport SEXP _forecast_updateTBATSGammaBold(SEXP gammaBold_sSEXP, SEXP kVector_sSEXP, SEXP gammaOne_sSEXP, SEXP gammaTwo_sSEXP) {
+void updateTBATSGammaBold(NumericMatrix& gammaBold, const IntegerVector& kVector, const NumericVector& gammaOne, const NumericVector& gammaTwo);
+RcppExport SEXP _forecast_updateTBATSGammaBold(SEXP gammaBoldSEXP, SEXP kVectorSEXP, SEXP gammaOneSEXP, SEXP gammaTwoSEXP) {
 BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type gammaBold_s(gammaBold_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type kVector_s(kVector_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type gammaOne_s(gammaOne_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type gammaTwo_s(gammaTwo_sSEXP);
-    rcpp_result_gen = Rcpp::wrap(updateTBATSGammaBold(gammaBold_s, kVector_s, gammaOne_s, gammaTwo_s));
-    return rcpp_result_gen;
+    Rcpp::traits::input_parameter< NumericMatrix& >::type gammaBold(gammaBoldSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector& >::type kVector(kVectorSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type gammaOne(gammaOneSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type gammaTwo(gammaTwoSEXP);
+    updateTBATSGammaBold(gammaBold, kVector, gammaOne, gammaTwo);
+    return R_NilValue;
 END_RCPP
 }
 // updateTBATSGMatrix
-SEXP updateTBATSGMatrix(SEXP g_s, SEXP gammaBold_s, SEXP alpha_s, SEXP beta_s);
-RcppExport SEXP _forecast_updateTBATSGMatrix(SEXP g_sSEXP, SEXP gammaBold_sSEXP, SEXP alpha_sSEXP, SEXP beta_sSEXP) {
+void updateTBATSGMatrix(arma::mat& g, Nullable<arma::mat> gammaBold, double alpha, Nullable<double> beta);
+RcppExport SEXP _forecast_updateTBATSGMatrix(SEXP gSEXP, SEXP gammaBoldSEXP, SEXP alphaSEXP, SEXP betaSEXP) {
 BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type g_s(g_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type gammaBold_s(gammaBold_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type alpha_s(alpha_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type beta_s(beta_sSEXP);
-    rcpp_result_gen = Rcpp::wrap(updateTBATSGMatrix(g_s, gammaBold_s, alpha_s, beta_s));
-    return rcpp_result_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type g(gSEXP);
+    Rcpp::traits::input_parameter< Nullable<arma::mat> >::type gammaBold(gammaBoldSEXP);
+    Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< Nullable<double> >::type beta(betaSEXP);
+    updateTBATSGMatrix(g, gammaBold, alpha, beta);
+    return R_NilValue;
 END_RCPP
 }
 

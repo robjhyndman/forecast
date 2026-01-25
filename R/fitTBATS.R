@@ -68,17 +68,17 @@ fitPreviousTBATSModel <- function(y, model, biasadj = FALSE) {
   )
   if (!is.null(gamma.bold)) {
     updateTBATSGammaBold(
-      gammaBold_s = gamma.bold,
-      kVector_s = model$k.vector,
-      gammaOne_s = gamma.one.v,
-      gammaTwo_s = gamma.two.v
+      gammaBold = gamma.bold,
+      kVector = model$k.vector,
+      gammaOne = gamma.one.v,
+      gammaTwo = gamma.two.v
     )
   }
   updateTBATSGMatrix(
-    g_s = g,
-    gammaBold_s = gamma.bold,
-    alpha_s = alpha,
-    beta_s = beta.v
+    g = g,
+    gammaBold = gamma.bold,
+    alpha = alpha,
+    beta = beta.v
   )
   F <- makeTBATSFMatrix(
     alpha = alpha,
@@ -278,10 +278,10 @@ fitSpecificTBATS <- function(
   if (!is.null(seasonal.periods)) {
     gamma.bold <- matrix(0, nrow = 1, ncol = (2 * sum(k.vector)))
     updateTBATSGammaBold(
-      gammaBold_s = gamma.bold,
-      kVector_s = k.vector,
-      gammaOne_s = gamma.one.v,
-      gammaTwo_s = gamma.two.v
+      gammaBold = gamma.bold,
+      kVector = k.vector,
+      gammaOne = gamma.one.v,
+      gammaTwo = gamma.two.v
     )
   } else {
     gamma.bold <- NULL
@@ -294,10 +294,10 @@ fitSpecificTBATS <- function(
     g[(1 + adj.beta + tau + p + 1), 1] <- 1
   }
   updateTBATSGMatrix(
-    g_s = g,
-    gammaBold_s = gamma.bold,
-    alpha_s = alpha,
-    beta_s = beta.v
+    g = g,
+    gammaBold = gamma.bold,
+    alpha = alpha,
+    beta = beta.v
   )
   F <- makeTBATSFMatrix(
     alpha = alpha,
@@ -438,17 +438,17 @@ fitSpecificTBATS <- function(
     )
     if (!is.null(gamma.bold)) {
       updateTBATSGammaBold(
-        gammaBold_s = gamma.bold,
-        kVector_s = k.vector,
-        gammaOne_s = gamma.one.v,
-        gammaTwo_s = gamma.two.v
+        gammaBold = gamma.bold,
+        kVector = k.vector,
+        gammaOne = gamma.one.v,
+        gammaTwo = gamma.two.v
       )
     }
     updateTBATSGMatrix(
-      g_s = g,
-      gammaBold_s = gamma.bold,
-      alpha_s = alpha,
-      beta_s = beta.v
+      g = g,
+      gammaBold = gamma.bold,
+      alpha = alpha,
+      beta = beta.v
     )
     updateFMatrix(
       F,
@@ -548,17 +548,17 @@ fitSpecificTBATS <- function(
     )
     if (!is.null(gamma.bold)) {
       updateTBATSGammaBold(
-        gammaBold_s = gamma.bold,
-        kVector_s = k.vector,
-        gammaOne_s = gamma.one.v,
-        gammaTwo_s = gamma.two.v
+        gammaBold = gamma.bold,
+        kVector = k.vector,
+        gammaOne = gamma.one.v,
+        gammaTwo = gamma.two.v
       )
     }
     updateTBATSGMatrix(
-      g_s = g,
-      gammaBold_s = gamma.bold,
-      alpha_s = alpha,
-      beta_s = beta.v
+      g = g,
+      gammaBold = gamma.bold,
+      alpha = alpha,
+      beta = beta.v
     )
     updateFMatrix(
       F,
@@ -667,17 +667,17 @@ calcLikelihoodTBATS <- function(
 
   if (!is.null(opt.env$gamma.bold)) {
     updateTBATSGammaBold(
-      gammaBold_s = opt.env$gamma.bold,
-      kVector_s = opt.env$k.vector,
-      gammaOne_s = gamma.one.v,
-      gammaTwo_s = gamma.two.v
+      gammaBold = opt.env$gamma.bold,
+      kVector = opt.env$k.vector,
+      gammaOne = gamma.one.v,
+      gammaTwo = gamma.two.v
     )
   }
   updateTBATSGMatrix(
-    g_s = opt.env$g,
-    gammaBold_s = opt.env$gamma.bold,
-    alpha_s = alpha,
-    beta_s = beta.v
+    g = opt.env$g,
+    gammaBold = opt.env$gamma.bold,
+    alpha = alpha,
+    beta = beta.v
   )
 
   updateFMatrix(
@@ -788,18 +788,18 @@ calcLikelihoodNOTransformedTBATS <- function(
 
   if (!is.null(opt.env$gamma.bold)) {
     updateTBATSGammaBold(
-      gammaBold_s = opt.env$gamma.bold,
-      kVector_s = opt.env$k.vector,
-      gammaOne_s = gamma.one.v,
-      gammaTwo_s = gamma.two.v
+      gammaBold = opt.env$gamma.bold,
+      kVector = opt.env$k.vector,
+      gammaOne = gamma.one.v,
+      gammaTwo = gamma.two.v
     )
   }
 
   updateTBATSGMatrix(
-    g_s = opt.env$g,
-    gammaBold_s = opt.env$gamma.bold,
-    alpha_s = alpha,
-    beta_s = beta.v
+    g = opt.env$g,
+    gammaBold = opt.env$gamma.bold,
+    alpha = alpha,
+    beta = beta.v
   )
 
   updateFMatrix(
