@@ -48,10 +48,8 @@ mstl <- function(
     msts <- 1L
   }
   # Check dimension
-  if (!is.null(dim(x))) {
-    if (NCOL(x) == 1L) {
-      x <- x[, 1]
-    }
+  if (!is.null(dim(x)) && NCOL(x) == 1L) {
+    x <- x[, 1]
   }
 
   # Replace missing values if necessary
@@ -258,12 +256,10 @@ forecast.stl <- function(
   if (is.null(xreg) != is.null(newxreg)) {
     stop("xreg and newxreg arguments must both be supplied")
   }
-  if (!is.null(newxreg)) {
-    if (NROW(as.matrix(newxreg)) != h) {
-      stop(
-        "newxreg should have the same number of rows as the forecast horizon h"
-      )
-    }
+  if (!is.null(newxreg) && NROW(as.matrix(newxreg)) != h) {
+    stop(
+      "newxreg should have the same number of rows as the forecast horizon h"
+    )
   }
   if (fan) {
     level <- seq(51, 99, by = 3)
@@ -280,7 +276,7 @@ forecast.stl <- function(
       fixed = TRUE
     ))
     n <- NROW(object)
-    for (i in seq(nseasons)) {
+    for (i in seq_len(nseasons)) {
       mp <- seasonal.periods[i]
       colname <- colnames(object)[seasoncolumns[i]]
       seascomp[, i] <- rep(
@@ -431,7 +427,7 @@ rowSumsTS <- function(mts) {
 #' models are permitted.
 #' @param ... Other arguments passed to `modelfunction`.
 #'
-#' @return An object of class `stlm`. 
+#' @return An object of class `stlm`.
 #'
 #' @author Rob J Hyndman
 #' @seealso [stats::stl()], [ets()], [Arima()].
@@ -465,19 +461,14 @@ stlm <- function(
   # Check univariate
   if (NCOL(x) > 1L) {
     stop("y must be a univariate time series")
-  } else {
-    if (!is.null(ncol(x))) {
-      if (ncol(x) == 1L) {
-        # Probably redundant check
-        x <- x[, 1L]
-      }
-    }
+  }
+  if (!is.null(ncol(x)) && ncol(x) == 1L) {
+    # Probably redundant check
+    x <- x[, 1L]
   }
   # Check x is a seasonal time series
   tspx <- tsp(x)
-  if (is.null(tspx)) {
-    stop("y is not a seasonal ts object")
-  } else if (tspx[3] <= 1L) {
+  if (is.null(tspx) || tspx[3] <= 1L) {
     stop("y is not a seasonal ts object")
   }
 
@@ -505,11 +496,12 @@ stlm <- function(
       modelfunction <- function(x, ...) {
         Arima(x, model = model$model, xreg = xreg, ...)
       }
-    } else if (!is.null(model$modelfunction)) {
-      if ("model" %in% names(formals(model$modelfunction))) {
-        modelfunction <- function(x, ...) {
-          model$modelfunction(x, model = model$model, ...)
-        }
+    } else if (
+      !is.null(model$modelfunction) &&
+        "model" %in% names(formals(model$modelfunction))
+    ) {
+      modelfunction <- function(x, ...) {
+        model$modelfunction(x, model = model$model, ...)
       }
     }
     if (is.null(modelfunction)) {
@@ -589,12 +581,10 @@ forecast.stlm <- function(
   allow.multiplicative.trend = FALSE,
   ...
 ) {
-  if (!is.null(newxreg)) {
-    if (nrow(as.matrix(newxreg)) != h) {
-      stop(
-        "newxreg should have the same number of rows as the forecast horizon h"
-      )
-    }
+  if (!is.null(newxreg) && nrow(as.matrix(newxreg)) != h) {
+    stop(
+      "newxreg should have the same number of rows as the forecast horizon h"
+    )
   }
   if (fan) {
     level <- seq(51, 99, by = 3)
@@ -686,19 +676,14 @@ stlf <- function(
   # Check univariate
   if (NCOL(x) > 1L) {
     stop("y must be a univariate time series")
-  } else {
-    if (!is.null(ncol(x))) {
-      if (ncol(x) == 1L) {
-        # Probably redundant check
-        x <- x[, 1L]
-      }
-    }
+  }
+  if (!is.null(ncol(x)) && ncol(x) == 1L) {
+    # Probably redundant check
+    x <- x[, 1L]
   }
   # Check x is a seasonal time series
   tspx <- tsp(x)
-  if (is.null(tspx)) {
-    stop("y is not a seasonal ts object")
-  } else if (tspx[3] <= 1L) {
+  if (is.null(tspx) || tspx[3] <= 1L) {
     stop("y is not a seasonal ts object")
   }
 
