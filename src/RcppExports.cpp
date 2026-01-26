@@ -235,36 +235,34 @@ BEGIN_RCPP
 END_RCPP
 }
 // updateWtransposeMatrix
-SEXP updateWtransposeMatrix(SEXP wTranspose_s, SEXP smallPhi_s, SEXP tau_s, SEXP arCoefs_s, SEXP maCoefs_s, SEXP p_s, SEXP q_s);
-RcppExport SEXP _forecast_updateWtransposeMatrix(SEXP wTranspose_sSEXP, SEXP smallPhi_sSEXP, SEXP tau_sSEXP, SEXP arCoefs_sSEXP, SEXP maCoefs_sSEXP, SEXP p_sSEXP, SEXP q_sSEXP) {
+void updateWtransposeMatrix(NumericMatrix& wTranspose, const Nullable<double>& smallPhi, int tau, const Nullable<NumericVector>& arCoefs, const Nullable<NumericVector>& maCoefs, int p, int q);
+RcppExport SEXP _forecast_updateWtransposeMatrix(SEXP wTransposeSEXP, SEXP smallPhiSEXP, SEXP tauSEXP, SEXP arCoefsSEXP, SEXP maCoefsSEXP, SEXP pSEXP, SEXP qSEXP) {
 BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type wTranspose_s(wTranspose_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type smallPhi_s(smallPhi_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type tau_s(tau_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type arCoefs_s(arCoefs_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type maCoefs_s(maCoefs_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_s(p_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type q_s(q_sSEXP);
-    rcpp_result_gen = Rcpp::wrap(updateWtransposeMatrix(wTranspose_s, smallPhi_s, tau_s, arCoefs_s, maCoefs_s, p_s, q_s));
-    return rcpp_result_gen;
+    Rcpp::traits::input_parameter< NumericMatrix& >::type wTranspose(wTransposeSEXP);
+    Rcpp::traits::input_parameter< const Nullable<double>& >::type smallPhi(smallPhiSEXP);
+    Rcpp::traits::input_parameter< int >::type tau(tauSEXP);
+    Rcpp::traits::input_parameter< const Nullable<NumericVector>& >::type arCoefs(arCoefsSEXP);
+    Rcpp::traits::input_parameter< const Nullable<NumericVector>& >::type maCoefs(maCoefsSEXP);
+    Rcpp::traits::input_parameter< int >::type p(pSEXP);
+    Rcpp::traits::input_parameter< int >::type q(qSEXP);
+    updateWtransposeMatrix(wTranspose, smallPhi, tau, arCoefs, maCoefs, p, q);
+    return R_NilValue;
 END_RCPP
 }
 // updateGMatrix
-SEXP updateGMatrix(SEXP g_s, SEXP gammaBold_s, SEXP alpha_s, SEXP beta_s, SEXP gammaVector_s, SEXP seasonalPeriods_s);
-RcppExport SEXP _forecast_updateGMatrix(SEXP g_sSEXP, SEXP gammaBold_sSEXP, SEXP alpha_sSEXP, SEXP beta_sSEXP, SEXP gammaVector_sSEXP, SEXP seasonalPeriods_sSEXP) {
+void updateGMatrix(NumericMatrix& g, const Nullable<NumericMatrix>& gammaBold, double alpha, const Nullable<double>& beta, const Nullable<NumericVector>& gammaVector, const Nullable<IntegerVector>& seasonalPeriods);
+RcppExport SEXP _forecast_updateGMatrix(SEXP gSEXP, SEXP gammaBoldSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP gammaVectorSEXP, SEXP seasonalPeriodsSEXP) {
 BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type g_s(g_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type gammaBold_s(gammaBold_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type alpha_s(alpha_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type beta_s(beta_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type gammaVector_s(gammaVector_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type seasonalPeriods_s(seasonalPeriods_sSEXP);
-    rcpp_result_gen = Rcpp::wrap(updateGMatrix(g_s, gammaBold_s, alpha_s, beta_s, gammaVector_s, seasonalPeriods_s));
-    return rcpp_result_gen;
+    Rcpp::traits::input_parameter< NumericMatrix& >::type g(gSEXP);
+    Rcpp::traits::input_parameter< const Nullable<NumericMatrix>& >::type gammaBold(gammaBoldSEXP);
+    Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< const Nullable<double>& >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< const Nullable<NumericVector>& >::type gammaVector(gammaVectorSEXP);
+    Rcpp::traits::input_parameter< const Nullable<IntegerVector>& >::type seasonalPeriods(seasonalPeriodsSEXP);
+    updateGMatrix(g, gammaBold, alpha, beta, gammaVector, seasonalPeriods);
+    return R_NilValue;
 END_RCPP
 }
 // updateTBATSGammaBold

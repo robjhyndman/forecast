@@ -53,12 +53,12 @@ updateFMatrix <- function(F_s, smallPhi_s, alpha_s, beta_s, gammaBold_s, ar_s, m
     .Call(`_forecast_updateFMatrix`, F_s, smallPhi_s, alpha_s, beta_s, gammaBold_s, ar_s, ma_s, tau_s)
 }
 
-updateWtransposeMatrix <- function(wTranspose_s, smallPhi_s, tau_s, arCoefs_s, maCoefs_s, p_s, q_s) {
-    .Call(`_forecast_updateWtransposeMatrix`, wTranspose_s, smallPhi_s, tau_s, arCoefs_s, maCoefs_s, p_s, q_s)
+updateWtransposeMatrix <- function(wTranspose, smallPhi, tau, arCoefs, maCoefs, p, q) {
+    invisible(.Call(`_forecast_updateWtransposeMatrix`, wTranspose, smallPhi, tau, arCoefs, maCoefs, p, q))
 }
 
-updateGMatrix <- function(g_s, gammaBold_s, alpha_s, beta_s, gammaVector_s, seasonalPeriods_s) {
-    .Call(`_forecast_updateGMatrix`, g_s, gammaBold_s, alpha_s, beta_s, gammaVector_s, seasonalPeriods_s)
+updateGMatrix <- function(g, gammaBold, alpha, beta, gammaVector, seasonalPeriods) {
+    invisible(.Call(`_forecast_updateGMatrix`, g, gammaBold, alpha, beta, gammaVector, seasonalPeriods))
 }
 
 updateTBATSGammaBold <- function(gammaBold, kVector, gammaOne, gammaTwo) {

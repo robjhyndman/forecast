@@ -594,24 +594,24 @@ calcLikelihood <- function(
   # w <- makeWMatrix(small.phi=small.phi, seasonal.periods=seasonal.periods, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
   # w <- makeBATSWMatrix(smallPhi_s = small.phi, sPeriods_s = seasonal.periods, arCoefs_s = ar.coefs, maCoefs_s = ma.coefs)
   updateWtransposeMatrix(
-    wTranspose_s = opt.env$w.transpose,
-    smallPhi_s = small.phi,
-    tau_s = as.integer(tau),
-    arCoefs_s = ar.coefs,
-    maCoefs_s = ma.coefs,
-    p_s = as.integer(p),
-    q_s = as.integer(q)
+    wTranspose = opt.env$w.transpose,
+    smallPhi = small.phi,
+    tau = as.integer(tau),
+    arCoefs = ar.coefs,
+    maCoefs = ma.coefs,
+    p = as.integer(p),
+    q = as.integer(q)
   )
 
   # g <- makeGMatrix(alpha=alpha, beta=beta, gamma.vector=gamma.vector, seasonal.periods=seasonal.periods, p=p, q=q)
   # g <- makeBATSGMatrix(as.numeric(alpha), beta.v, gamma.vector, seasonal.periods, as.integer(p), as.integer(q))
   updateGMatrix(
-    g_s = opt.env$g,
-    gammaBold_s = opt.env$gamma.bold.matrix,
-    alpha_s = alpha,
-    beta_s = beta.v,
-    gammaVector_s = gamma.vector,
-    seasonalPeriods_s = seasonal.periods
+    g = opt.env$g,
+    gammaBold = opt.env$gamma.bold.matrix,
+    alpha = alpha,
+    beta = beta.v,
+    gammaVector = gamma.vector,
+    seasonalPeriods = seasonal.periods
   )
 
   # F <- makeFMatrix(alpha=alpha, beta=beta.v, small.phi=small.phi, seasonal.periods=seasonal.periods, gamma.bold.matrix=g$gamma.bold.matrix, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
@@ -731,23 +731,23 @@ calcLikelihoodNOTransformed <- function(
   # w <- makeWMatrix(small.phi=small.phi, seasonal.periods=seasonal.periods, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
   # w <- makeBATSWMatrix(smallPhi_s = small.phi, sPeriods_s = seasonal.periods, arCoefs_s = ar.coefs, maCoefs_s = ma.coefs)
   updateWtransposeMatrix(
-    wTranspose_s = opt.env$w.transpose,
-    smallPhi_s = small.phi,
-    tau_s = as.integer(tau),
-    arCoefs_s = ar.coefs,
-    maCoefs_s = ma.coefs,
-    p_s = as.integer(p),
-    q_s = as.integer(q)
+    wTranspose = opt.env$w.transpose,
+    smallPhi = small.phi,
+    tau = as.integer(tau),
+    arCoefs = ar.coefs,
+    maCoefs = ma.coefs,
+    p = as.integer(p),
+    q = as.integer(q)
   )
   # g <- makeGMatrix(alpha=alpha, beta=beta, gamma.vector=gamma.vector, seasonal.periods=seasonal.periods, p=p, q=q)
   # g <- makeBATSGMatrix(alpha, beta.v, gamma.vector, seasonal.periods, as.integer(p), as.integer(q))
   updateGMatrix(
-    g_s = opt.env$g,
-    gammaBold_s = opt.env$gamma.bold.matrix,
-    alpha_s = alpha,
-    beta_s = beta.v,
-    gammaVector_s = gamma.vector,
-    seasonalPeriods_s = seasonal.periods
+    g = opt.env$g,
+    gammaBold = opt.env$gamma.bold.matrix,
+    alpha = alpha,
+    beta = beta.v,
+    gammaVector = gamma.vector,
+    seasonalPeriods = seasonal.periods
   )
 
   # F <- makeFMatrix(alpha=alpha, beta=beta.v, small.phi=small.phi, seasonal.periods=seasonal.periods, gamma.bold.matrix=g$gamma.bold.matrix, ar.coefs=ar.coefs, ma.coefs=ma.coefs)

@@ -6,6 +6,8 @@
  */
 
 #include <RcppArmadillo.h>
+// [[Rcpp::depends(RcppArmadillo)]]
+
 using namespace Rcpp;
 
 // [[Rcpp::export]]
@@ -102,73 +104,69 @@ SEXP updateFMatrix(SEXP F_s, SEXP smallPhi_s, SEXP alpha_s, SEXP beta_s, SEXP ga
 }
 
 // [[Rcpp::export]]
-SEXP updateWtransposeMatrix(SEXP wTranspose_s, SEXP smallPhi_s, SEXP tau_s, SEXP arCoefs_s, SEXP maCoefs_s, SEXP p_s, SEXP q_s) {
-	NumericMatrix wTranspose(wTranspose_s);
+void updateWtransposeMatrix(NumericMatrix &wTranspose,
+                            const Nullable<double> &smallPhi,
+                            int tau,
+                            const Nullable<NumericVector> &arCoefs,
+                            const Nullable<NumericVector> &maCoefs,
+                            int p,
+                            int q) {
+  int adjBeta = 0;
+  if (smallPhi.isNotNull()) {
+    adjBeta = 1;
+    wTranspose(0, 1) = as<double>(smallPhi);
+  }
 
-	double *arCoefs, *maCoefs;
-	int *p, *q, *tau, adjBeta = 0;
-
-	p = &INTEGER(p_s)[0];
-	q = &INTEGER(q_s)[0];
-	tau = &INTEGER(tau_s)[0];
-
-	if(!Rf_isNull(smallPhi_s)) {
-		adjBeta = 1;
-		wTranspose(0,1) = REAL(smallPhi_s)[0];
-	}
-
-	if(*p > 0) {
-		arCoefs = REAL(arCoefs_s);
-		for(int i = 1; i <= *p; i++) {
-			wTranspose(0,(adjBeta + *tau + i)) = arCoefs[(i - 1)];
-		}
-		if(*q > 0) {
-			maCoefs = REAL(maCoefs_s);
-			for(int i = 1; i <= *q; i++) {
-				wTranspose(0,(adjBeta + *tau + *p + i)) = maCoefs[(i - 1)];
-			}
-		}
-	} else if(*q > 0) {
-		maCoefs = REAL(maCoefs_s);
-		for(int i = 1; i <= *q; i++) {
-			wTranspose(0,(adjBeta + *tau + i)) = maCoefs[(i - 1)];
-		}
-	}
-
-	return R_NilValue;
+  if (p > 0) {
+    const NumericVector ar = as<NumericVector>(arCoefs);
+    for (int i = 1; i <= p; i++) {
+      wTranspose(0, adjBeta + tau + i) = ar[i - 1];
+    }
+    if (q > 0) {
+      const NumericVector ma = as<NumericVector>(maCoefs);
+      for (int i = 1; i <= q; i++) {
+        wTranspose(0, adjBeta + tau + p + i) = ma[i - 1];
+      }
+    }
+  } else if (q > 0) {
+    const NumericVector ma = as<NumericVector>(maCoefs);
+    for (int i = 1; i <= q; i++) {
+      wTranspose(0, adjBeta + tau + i) = ma[i - 1];
+    }
+  }
 }
 
 // [[Rcpp::export]]
-SEXP updateGMatrix(SEXP g_s, SEXP gammaBold_s, SEXP alpha_s, SEXP beta_s, SEXP gammaVector_s, SEXP seasonalPeriods_s) {
-	int adjBeta = 0, *seasonalPeriods;
+void updateGMatrix(NumericMatrix &g,
+                   const Nullable<NumericMatrix> &gammaBold,
+                   double alpha,
+                   const Nullable<double> &beta,
+                   const Nullable<NumericVector> &gammaVector,
+                   const Nullable<IntegerVector> &seasonalPeriods) {
+  int adjBeta = 0;
+  g(0, 0) = alpha;
+  if (beta.isNotNull()) {
+    g(1, 0) = as<double>(beta);
+    adjBeta = 1;
+  }
 
-	double *gammaVector;
+  if (gammaVector.isNotNull() && seasonalPeriods.isNotNull()) {
+    NumericMatrix gammaBoldMat = as<NumericMatrix>(gammaBold);
+    const NumericVector gamma = as<NumericVector>(gammaVector);
+    const IntegerVector periods = as<IntegerVector>(seasonalPeriods);
 
-	NumericMatrix g(g_s);
+    int position = adjBeta + 1;
+    int bPos = 0;
 
-	g(0,0) = REAL(alpha_s)[0];
-	if(!Rf_isNull(beta_s)) {
-		g(1,0) = REAL(beta_s)[0];
-		adjBeta = 1;
-	}
+    gammaBoldMat(0, bPos) = gamma[0];
+    g(position, 0) = gamma[0];
 
-	if((!Rf_isNull(gammaVector_s))&&(!Rf_isNull(seasonalPeriods_s))) {
-		NumericMatrix gammaBold(gammaBold_s);
-		seasonalPeriods = INTEGER(seasonalPeriods_s);
-		gammaVector = REAL(gammaVector_s);
-		int position = adjBeta + 1;
-		int bPos = 0;
-		gammaBold(0,bPos) = gammaVector[0];
-		g(position, 0) = gammaVector[0];
-		if(LENGTH(gammaVector_s) > 1) {
-			for(R_len_t s = 0; s < (LENGTH(seasonalPeriods_s)-1); s++) {
-				position = position + seasonalPeriods[s];
-				bPos = bPos + seasonalPeriods[s];
-				g(position, 0) = gammaVector[(s+1)];
-			}
-
-		}
-	}
-
-	return R_NilValue;
+    if (gamma.size() > 1) {
+      for (int s = 0; s < periods.size() - 1; s++) {
+        position += periods[s];
+        bPos += periods[s];
+        g(position, 0) = gamma[s + 1];
+      }
+    }
+  }
 }
