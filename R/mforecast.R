@@ -103,12 +103,18 @@ forecast.mlm <- function(
     model = object,
     forecast = vector("list", NCOL(object$coefficients))
   )
-
-  cl <- match.call()
-  cl[[1]] <- quote(forecast.lm)
-  cl$object <- quote(mlmsplit(object, index = i))
   for (i in seq_along(out$forecast)) {
-    out$forecast[[i]] <- eval(cl)
+    out$forecast[[i]] <- forecast.lm(
+      object = mlmsplit(object, index = i),
+      newdata = newdata,
+      h = h,
+      level = level,
+      fan = fan,
+      lambda = lambda,
+      biasadj = biasadj,
+      ts = ts,
+      ...
+    )
     out$forecast[[i]]$series <- colnames(object$coefficients)[i]
   }
   out$method <- rep("Multiple linear regression model", length(out$forecast))
@@ -178,11 +184,19 @@ forecast.mts <- function(
   ...
 ) {
   out <- list(forecast = vector("list", NCOL(object)))
-  cl <- match.call()
-  cl[[1]] <- quote(forecast.ts)
-  cl$object <- quote(object[, i])
   for (i in seq_len(NCOL(object))) {
-    out$forecast[[i]] <- eval(cl)
+    out$forecast[[i]] <- forecast.ts(
+      object = object[, i],
+      h = h,
+      level = level,
+      fan = fan,
+      robust = robust,
+      lambda = lambda,
+      biasadj = biasadj,
+      find.frequency = find.frequency,
+      allow.multiplicative.trend = allow.multiplicative.trend,
+      ...
+    )
     out$forecast[[i]]$series <- colnames(object)[i]
   }
   out$method <- vapply(out$forecast, function(x) x$method, character(1))
