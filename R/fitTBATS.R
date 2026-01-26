@@ -656,13 +656,13 @@ calcLikelihoodTBATS <- function(
   lambda <- attr(x.nought, "lambda")
 
   updateWtransposeMatrix(
-    wTranspose_s = opt.env$w.transpose,
-    smallPhi_s = small.phi,
-    tau_s = as.integer(tau),
-    arCoefs_s = ar.coefs,
-    maCoefs_s = ma.coefs,
-    p_s = as.integer(p),
-    q_s = as.integer(q)
+    wTranspose = opt.env$w.transpose,
+    smallPhi = small.phi,
+    tau = as.integer(tau),
+    arCoefs = ar.coefs,
+    maCoefs = ma.coefs,
+    p = as.integer(p),
+    q = as.integer(q)
   )
 
   if (!is.null(opt.env$gamma.bold)) {
@@ -777,13 +777,13 @@ calcLikelihoodNOTransformedTBATS <- function(
   }
 
   updateWtransposeMatrix(
-    wTranspose_s = opt.env$w.transpose,
-    smallPhi_s = small.phi,
-    tau_s = as.integer(tau),
-    arCoefs_s = ar.coefs,
-    maCoefs_s = ma.coefs,
-    p_s = as.integer(p),
-    q_s = as.integer(q)
+    wTranspose = opt.env$w.transpose,
+    smallPhi = small.phi,
+    tau = as.integer(tau),
+    arCoefs = ar.coefs,
+    maCoefs = ma.coefs,
+    p = as.integer(p),
+    q = as.integer(q)
   )
 
   if (!is.null(opt.env$gamma.bold)) {
