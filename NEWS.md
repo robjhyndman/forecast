@@ -1,18 +1,19 @@
 # forecast (development version)
 
 * Performance improvements for ARFIMA model search
+* `forecast.mlm()` now finds `newdata` when passed as an argument from another function (#880)
 
 # forecast 9.0.0
-  * ets() now allows missing values in the time series (#952)
-  * Added mean_model() and forecast.mean_model() 
-  * Added rw_model() and forecast.rw_model() (m-muecke, #969)
-  * Added spline_model() and forecast.spline_model() (#1013)
-  * Added theta_model() and forecast.theta_model() (#1014)
-  * Added croston_model() and forecast.croston_model() (#1015)
+  * `ets()` now allows missing values in the time series (#952)
+  * Added `mean_model()` and `forecast.mean_model()`
+  * Added `rw_model()` and `forecast.rw_model()` (m-muecke, #969)
+  * Added `spline_model()` and `forecast.spline_model()` (#1013)
+  * Added `theta_model()` and `forecast.theta_model()` (#1014)
+  * Added `croston_model()` and `forecast.croston_model()` (#1015)
   * Added simulated and bootstrapped prediction intervals to more models (#1040)
   * Added parallelization for nnetar (m-muecke, #346)
   * More consistent handling of biasadj across models
-  * accuracy() rewritten to use S3 methods for models and remove accuracy.default() (#912)
+  * `accuracy()` rewritten to use S3 methods for models and remove `accuracy.default()` (#912)
   * Bug fixes and performance improvements
   * Documentation improvements
 
@@ -26,7 +27,7 @@
 
 # forecast 8.22.0
   * hfitted now much faster for ARIMA models (danigiro, #949)
-  * hfitted now much faster for ETS models, and produces fitted values from 
+  * hfitted now much faster for ETS models, and produces fitted values from
     initial states (#950)
 
 # forecast 8.21.1
