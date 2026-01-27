@@ -3,29 +3,49 @@
 ## forecast (development version)
 
 - Performance improvements for ARFIMA model search
+- [`forecast.mlm()`](https://pkg.robjhyndman.com/forecast/reference/forecast.mlm.md)
+  now finds `newdata` when passed as an argument from another function
+  ([\#880](https://github.com/robjhyndman/forecast/issues/880))
 
 ## forecast 9.0.0
 
 CRAN release: 2026-01-11
 
-- ets() now allows missing values in the time series
+- [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md) now
+  allows missing values in the time series
   ([\#952](https://github.com/robjhyndman/forecast/issues/952))
-- Added mean_model() and forecast.mean_model()
-- Added rw_model() and forecast.rw_model() (m-muecke,
+- Added
+  [`mean_model()`](https://pkg.robjhyndman.com/forecast/reference/mean_model.md)
+  and
+  [`forecast.mean_model()`](https://pkg.robjhyndman.com/forecast/reference/forecast.mean_model.md)
+- Added
+  [`rw_model()`](https://pkg.robjhyndman.com/forecast/reference/rw_model.md)
+  and
+  [`forecast.rw_model()`](https://pkg.robjhyndman.com/forecast/reference/forecast.rw_model.md)
+  (m-muecke,
   [\#969](https://github.com/robjhyndman/forecast/issues/969))
-- Added spline_model() and forecast.spline_model()
+- Added
+  [`spline_model()`](https://pkg.robjhyndman.com/forecast/reference/spline_model.md)
+  and
+  [`forecast.spline_model()`](https://pkg.robjhyndman.com/forecast/reference/forecast.spline_model.md)
   ([\#1013](https://github.com/robjhyndman/forecast/issues/1013))
-- Added theta_model() and forecast.theta_model()
+- Added
+  [`theta_model()`](https://pkg.robjhyndman.com/forecast/reference/theta_model.md)
+  and
+  [`forecast.theta_model()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
   ([\#1014](https://github.com/robjhyndman/forecast/issues/1014))
-- Added croston_model() and forecast.croston_model()
+- Added
+  [`croston_model()`](https://pkg.robjhyndman.com/forecast/reference/croston_model.md)
+  and
+  [`forecast.croston_model()`](https://pkg.robjhyndman.com/forecast/reference/forecast.croston_model.md)
   ([\#1015](https://github.com/robjhyndman/forecast/issues/1015))
 - Added simulated and bootstrapped prediction intervals to more models
   ([\#1040](https://github.com/robjhyndman/forecast/issues/1040))
 - Added parallelization for nnetar (m-muecke,
   [\#346](https://github.com/robjhyndman/forecast/issues/346))
 - More consistent handling of biasadj across models
-- accuracy() rewritten to use S3 methods for models and remove
-  accuracy.default()
+- [`accuracy()`](https://generics.r-lib.org/reference/accuracy.html)
+  rewritten to use S3 methods for models and remove `accuracy.default()`
   ([\#912](https://github.com/robjhyndman/forecast/issues/912))
 - Bug fixes and performance improvements
 - Documentation improvements

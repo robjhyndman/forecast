@@ -58,19 +58,24 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="forecast-development-version">forecast (development version)<a class="anchor" aria-label="anchor" href="#forecast-development-version"></a></h2>
 <ul><li>Performance improvements for ARFIMA model search</li>
+<li>
+<code><a href="../reference/forecast.mlm.html">forecast.mlm()</a></code> now finds <code>newdata</code> when passed as an argument from another function (<a href="https://github.com/robjhyndman/forecast/issues/880" class="external-link">#880</a>)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="9.0.0" id="forecast-900">forecast 9.0.0<a class="anchor" aria-label="anchor" href="#forecast-900"></a></h2><p class="text-muted">CRAN release: 2026-01-11</p>
-<ul><li>ets() now allows missing values in the time series (<a href="https://github.com/robjhyndman/forecast/issues/952" class="external-link">#952</a>)</li>
-<li>Added mean_model() and forecast.mean_model()</li>
-<li>Added rw_model() and forecast.rw_model() (m-muecke, <a href="https://github.com/robjhyndman/forecast/issues/969" class="external-link">#969</a>)</li>
-<li>Added spline_model() and forecast.spline_model() (<a href="https://github.com/robjhyndman/forecast/issues/1013" class="external-link">#1013</a>)</li>
-<li>Added theta_model() and forecast.theta_model() (<a href="https://github.com/robjhyndman/forecast/issues/1014" class="external-link">#1014</a>)</li>
-<li>Added croston_model() and forecast.croston_model() (<a href="https://github.com/robjhyndman/forecast/issues/1015" class="external-link">#1015</a>)</li>
+<ul><li>
+<code><a href="../reference/ets.html">ets()</a></code> now allows missing values in the time series (<a href="https://github.com/robjhyndman/forecast/issues/952" class="external-link">#952</a>)</li>
+<li>Added <code><a href="../reference/mean_model.html">mean_model()</a></code> and <code><a href="../reference/forecast.mean_model.html">forecast.mean_model()</a></code>
+</li>
+<li>Added <code><a href="../reference/rw_model.html">rw_model()</a></code> and <code><a href="../reference/forecast.rw_model.html">forecast.rw_model()</a></code> (m-muecke, <a href="https://github.com/robjhyndman/forecast/issues/969" class="external-link">#969</a>)</li>
+<li>Added <code><a href="../reference/spline_model.html">spline_model()</a></code> and <code><a href="../reference/forecast.spline_model.html">forecast.spline_model()</a></code> (<a href="https://github.com/robjhyndman/forecast/issues/1013" class="external-link">#1013</a>)</li>
+<li>Added <code><a href="../reference/theta_model.html">theta_model()</a></code> and <code><a href="../reference/forecast.theta_model.html">forecast.theta_model()</a></code> (<a href="https://github.com/robjhyndman/forecast/issues/1014" class="external-link">#1014</a>)</li>
+<li>Added <code><a href="../reference/croston_model.html">croston_model()</a></code> and <code><a href="../reference/forecast.croston_model.html">forecast.croston_model()</a></code> (<a href="https://github.com/robjhyndman/forecast/issues/1015" class="external-link">#1015</a>)</li>
 <li>Added simulated and bootstrapped prediction intervals to more models (<a href="https://github.com/robjhyndman/forecast/issues/1040" class="external-link">#1040</a>)</li>
 <li>Added parallelization for nnetar (m-muecke, <a href="https://github.com/robjhyndman/forecast/issues/346" class="external-link">#346</a>)</li>
 <li>More consistent handling of biasadj across models</li>
-<li>accuracy() rewritten to use S3 methods for models and remove accuracy.default() (<a href="https://github.com/robjhyndman/forecast/issues/912" class="external-link">#912</a>)</li>
+<li>
+<code><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy()</a></code> rewritten to use S3 methods for models and remove <code>accuracy.default()</code> (<a href="https://github.com/robjhyndman/forecast/issues/912" class="external-link">#912</a>)</li>
 <li>Bug fixes and performance improvements</li>
 <li>Documentation improvements</li>
 </ul></div>
