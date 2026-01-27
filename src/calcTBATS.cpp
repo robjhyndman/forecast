@@ -2,7 +2,7 @@
 // [[Rcpp::depends(RcppArmadillo)]]
 
 // [[Rcpp::export]]
-void calcTBATSFaster(arma::mat &y,
+void calcTBATSFaster(const arma::mat &y,
                      arma::mat &yHat,
                      const arma::mat &wTranspose,
                      const arma::mat &F,

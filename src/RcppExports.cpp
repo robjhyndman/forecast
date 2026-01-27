@@ -64,11 +64,11 @@ BEGIN_RCPP
 END_RCPP
 }
 // calcTBATSFaster
-void calcTBATSFaster(arma::mat& y, arma::mat& yHat, const arma::mat& wTranspose, const arma::mat& F, arma::mat& x, const arma::mat& g, arma::mat& e, const arma::mat& xNought);
+void calcTBATSFaster(const arma::mat& y, arma::mat& yHat, const arma::mat& wTranspose, const arma::mat& F, arma::mat& x, const arma::mat& g, arma::mat& e, const arma::mat& xNought);
 RcppExport SEXP _forecast_calcTBATSFaster(SEXP ySEXP, SEXP yHatSEXP, SEXP wTransposeSEXP, SEXP FSEXP, SEXP xSEXP, SEXP gSEXP, SEXP eSEXP, SEXP xNoughtSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::mat& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type y(ySEXP);
     Rcpp::traits::input_parameter< arma::mat& >::type yHat(yHatSEXP);
     Rcpp::traits::input_parameter< const arma::mat& >::type wTranspose(wTransposeSEXP);
     Rcpp::traits::input_parameter< const arma::mat& >::type F(FSEXP);
@@ -217,21 +217,20 @@ BEGIN_RCPP
 END_RCPP
 }
 // updateFMatrix
-SEXP updateFMatrix(SEXP F_s, SEXP smallPhi_s, SEXP alpha_s, SEXP beta_s, SEXP gammaBold_s, SEXP ar_s, SEXP ma_s, SEXP tau_s);
-RcppExport SEXP _forecast_updateFMatrix(SEXP F_sSEXP, SEXP smallPhi_sSEXP, SEXP alpha_sSEXP, SEXP beta_sSEXP, SEXP gammaBold_sSEXP, SEXP ar_sSEXP, SEXP ma_sSEXP, SEXP tau_sSEXP) {
+void updateFMatrix(arma::mat& F, const Nullable<double>& smallPhi, double alpha, const Nullable<double>& beta, const Nullable<arma::mat>& gammaBold, const Nullable<arma::mat>& ar, const Nullable<arma::mat>& ma, int tau);
+RcppExport SEXP _forecast_updateFMatrix(SEXP FSEXP, SEXP smallPhiSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP gammaBoldSEXP, SEXP arSEXP, SEXP maSEXP, SEXP tauSEXP) {
 BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type F_s(F_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type smallPhi_s(smallPhi_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type alpha_s(alpha_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type beta_s(beta_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type gammaBold_s(gammaBold_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type ar_s(ar_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type ma_s(ma_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type tau_s(tau_sSEXP);
-    rcpp_result_gen = Rcpp::wrap(updateFMatrix(F_s, smallPhi_s, alpha_s, beta_s, gammaBold_s, ar_s, ma_s, tau_s));
-    return rcpp_result_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type F(FSEXP);
+    Rcpp::traits::input_parameter< const Nullable<double>& >::type smallPhi(smallPhiSEXP);
+    Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< const Nullable<double>& >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< const Nullable<arma::mat>& >::type gammaBold(gammaBoldSEXP);
+    Rcpp::traits::input_parameter< const Nullable<arma::mat>& >::type ar(arSEXP);
+    Rcpp::traits::input_parameter< const Nullable<arma::mat>& >::type ma(maSEXP);
+    Rcpp::traits::input_parameter< int >::type tau(tauSEXP);
+    updateFMatrix(F, smallPhi, alpha, beta, gammaBold, ar, ma, tau);
+    return R_NilValue;
 END_RCPP
 }
 // updateWtransposeMatrix
