@@ -50,15 +50,15 @@
   * Bug fixes
 
 # forecast 8.17.0
-  * Updated dm.test() to add alternative variance estimators. (#898)
+  * Updated `dm.test()` to add alternative variance estimators. (#898)
   * Added `simulate.tbats()` for simulating from TBATS models.
-  * Added dependency on generics for accuracy() and forecast() (#902)
-  * Bux fixes
+  * Added dependency on generics for `accuracy()` and `forecast()` (#902)
+  * Bug fixes
 
 # forecast 8.16
   * Fixed `tslm()` incorrectly applying Box-Cox transformations when an `mts`
 is provided to the `data` argument (#886).
-  * Set D=0 when auto.arima applied to series with 2m observations or fewer.
+  * Set D=0 when `auto.arima()` applied to series with 2m observations or fewer.
   * Improved performance of parallel search of ARIMA models (jonlachmann, #891).
   * Fixed scoping of functions used in `ggAcf()` (#896).
   * Fixed checks on xreg in `simulate.Arima()` (#818)
@@ -107,32 +107,32 @@ is provided to the `data` argument (#886).
 
 # forecast 8.6
   * Reduced conflicts with tidy forecasting packages
-  * Forecast autoplots now use same colour shading as autolayer() and geom_forecast
+  * Forecast autoplots now use same colour shading as `autolayer()` and geom_forecast
   * Documentation improvements
   * Bug fixes
 
 # forecast 8.5
-  * Updated tsCV() to handle exogenous regressors
+  * Updated `tsCV()` to handle exogenous regressors
   * Reimplemented lagwalk methods (naive, snaive, rwf) for speed improvements
-  * Added support for passing arguments to auto.arima() unit root tests
-  * Improved auto.arima() stepwise search algorithm
+  * Added support for passing arguments to `auto.arima()` unit root tests
+  * Improved `auto.arima()` stepwise search algorithm
   * Documentation improvements
   * Bug fixes
 
 # forecast 8.4
-  * Added modelAR(), generalising nnetar() to support user-defined functions
+  * Added `modelAR()`, generalising `nnetar()` to support user-defined functions
   * Added na.action argument to ets
   * Documentation improvements
   * Bug fixes
 
 # forecast 8.3
-  * Added mstl() to handle multiple seasonal decomposition
-  * stlf(), stlm(), tsoutliers() and tsclean() all now use mstl().
-  * Updated tsCV() to handle multiple horizons
-  * Switched unit root tests in ndiffs() to use urca package
+  * Added `mstl()` to handle multiple seasonal decomposition
+  * `stlf()`, `stlm()`, `tsoutliers()` and `tsclean()` all now use `mstl()`.
+  * Updated `tsCV()` to handle multiple horizons
+  * Switched unit root tests in `ndiffs()` to use urca package
   * Added ocsb.test
-  * Changed method for choosing D in auto.arima() to a measure of seasonal strength.
-  * Added baggedModel() function to generalize baggedETS
+  * Changed method for choosing D in `auto.arima()` to a measure of seasonal strength.
+  * Added `baggedModel()` function to generalize baggedETS
   * Added bootstrapped PI to more functions
   * Allowed lambda='auto' for all functions with lambda argument.
   * Updated author list to include all major contributors
@@ -147,10 +147,10 @@ is provided to the `data` argument (#886).
 
 # forecast 8.1
   * Added as.character.ets, as.character.bats, as.character.tbats
-  * Made gghistogram() and checkresiduals() robust to missing values
+  * Made `gghistogram()` and `checkresiduals()` robust to missing values
   * All documentation now generated using roxygen
   * Improved documentation for many functions
-  * Added autoplot.msts() and autolayer.msts
+  * Added `autoplot.msts()` and autolayer.msts
   * Added as.character methods for many models to generate model names
   * Added as.ts.forecast
   * autoplot method for bats/tbats models
@@ -161,14 +161,14 @@ is provided to the `data` argument (#886).
 # forecast 8.0
   * Added tips to start up message
   * Added pipe operator
-  * Added tsCV() and CVar() functions
+  * Added `tsCV()` and `CVar()` functions
   * Added baggedETS
-  * Added head.ts() and tail.ts(), so head and tail now work properly on ts objects.
-  * Added gghistogram() and checkresiduals
+  * Added `head.ts()` and `tail.ts()`, so head and tail now work properly on ts objects.
+  * Added `gghistogram()` and `checkresiduals()`
   * Added ggseasonplot with polar coordinates
   * Modified defaults for gglagplot
   * Added autolayer.ts
-  * Added type argument to residuals() for different types of residuals
+  * Added type argument to `residuals()` for different types of residuals
   * Added support for seas objects from the seasonal package
   * Component extraction for seasonal decomposition methods
   * Range bars for decomposition autoplots
@@ -178,37 +178,37 @@ is provided to the `data` argument (#886).
   * mforecast objects re-structured
   * Added as.data.frame.mforecast
   * autoplot functions now exported
-  * Refit support for arfima() and stlm
+  * Refit support for `arfima()` and stlm
   * Better bias adjustment support after Box-Cox transformation
   * print.ARIMA has better labelling of constants
   * Bug fixes
   * Removed fortify method for forecast objects
 
 # forecast 7.3
-  * Added prediction intervals and simulation for nnetar().
+  * Added prediction intervals and simulation for `nnetar()`.
   * Documentation improvement
   * Bug fixes
 
 # forecast 7.2
   * Faceting for autoplot.mts
   * Box-Cox support for ses, holt, hw
-  * ets() now works for tiny time series
-  * Added h-step fitted values in fitted() function.
+  * `ets()` now works for tiny time series
+  * Added h-step fitted values in `fitted()` function.
   * seasonal adjustment added to thetaf
   * y now the standard first argument in all modelling functions
-  * Added truncate argument to auto.arima
-  * seasadj() now an S3 method
+  * Added truncate argument to `auto.arima()`
+  * `seasadj()` now an S3 method
   * series with frequency < 1 and non-integer seasonality now handled better
   * ggplot2 theme support
   * Added gglagplot, gglagchull
-  * Arima() and auto.arima() now allow any argument to be passed to stats::arima().
+  * `Arima()` and `auto.arima()` now allow any argument to be passed to `stats::arima()`.
   * Bug fixes and speed improvements
 
 # forecast 7.1
-  * Fixed bug in auto.arima where the Box-Cox transformation was sometimes applied twice
+  * Fixed bug in `auto.arima()` where the Box-Cox transformation was sometimes applied twice
   * Improved axes for ggseasonalplot
-  * Improved tslm() to avoid some problems finding data
-  * nnetar() updated to allow subsets
+  * Improved `tslm()` to avoid some problems finding data
+  * `nnetar()` updated to allow subsets
   * Modified initial values for ets
   * Improved unit tests to avoid deprecated functions and to avoid data from fpp
   * Removed fpp from Suggests list
@@ -217,9 +217,9 @@ is provided to the `data` argument (#886).
   * Added ggplot2 graphics
   * Bias adjustment option added for all functions that allow Box-Cox transformations
   * Added Ccf function, and rewrote Acf to handle multivariate series.
-  * tslm() completely rewritten to be more robust and to handle fourier terms more easily
+  * `tslm()` completely rewritten to be more robust and to handle fourier terms more easily
   * Support for multivariate linear models added
-  * subset.ts() more robust, and captures some errors.
+  * `subset.ts()` more robust, and captures some errors.
   * Added xreg argument to nnetar
   * Improved labels in seasonplot
   * More unit tests added
