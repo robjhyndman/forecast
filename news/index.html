@@ -120,15 +120,15 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="8.17.0" id="forecast-8170">forecast 8.17.0<a class="anchor" aria-label="anchor" href="#forecast-8170"></a></h2><p class="text-muted">CRAN release: 2022-07-25</p>
-<ul><li>Updated dm.test() to add alternative variance estimators. (<a href="https://github.com/robjhyndman/forecast/issues/898" class="external-link">#898</a>)</li>
+<ul><li>Updated <code><a href="../reference/dm.test.html">dm.test()</a></code> to add alternative variance estimators. (<a href="https://github.com/robjhyndman/forecast/issues/898" class="external-link">#898</a>)</li>
 <li>Added <code><a href="../reference/simulate.ets.html">simulate.tbats()</a></code> for simulating from TBATS models.</li>
-<li>Added dependency on generics for accuracy() and forecast() (<a href="https://github.com/robjhyndman/forecast/issues/902" class="external-link">#902</a>)</li>
-<li>Bux fixes</li>
+<li>Added dependency on generics for <code><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy()</a></code> and <code><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast()</a></code> (<a href="https://github.com/robjhyndman/forecast/issues/902" class="external-link">#902</a>)</li>
+<li>Bug fixes</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="8.16" id="forecast-816">forecast 8.16<a class="anchor" aria-label="anchor" href="#forecast-816"></a></h2><p class="text-muted">CRAN release: 2022-01-10</p>
 <ul><li>Fixed <code><a href="../reference/tslm.html">tslm()</a></code> incorrectly applying Box-Cox transformations when an <code>mts</code> is provided to the <code>data</code> argument (<a href="https://github.com/robjhyndman/forecast/issues/886" class="external-link">#886</a>).</li>
-<li>Set D=0 when auto.arima applied to series with 2m observations or fewer.</li>
+<li>Set D=0 when <code><a href="../reference/auto.arima.html">auto.arima()</a></code> applied to series with 2m observations or fewer.</li>
 <li>Improved performance of parallel search of ARIMA models (jonlachmann, <a href="https://github.com/robjhyndman/forecast/issues/891" class="external-link">#891</a>).</li>
 <li>Fixed scoping of functions used in <code><a href="../reference/autoplot.acf.html">ggAcf()</a></code> (<a href="https://github.com/robjhyndman/forecast/issues/896" class="external-link">#896</a>).</li>
 <li>Fixed checks on xreg in <code><a href="../reference/simulate.ets.html">simulate.Arima()</a></code> (<a href="https://github.com/robjhyndman/forecast/issues/818" class="external-link">#818</a>)</li>
@@ -189,35 +189,36 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="8.6" id="forecast-86">forecast 8.6<a class="anchor" aria-label="anchor" href="#forecast-86"></a></h2><p class="text-muted">CRAN release: 2019-04-16</p>
 <ul><li>Reduced conflicts with tidy forecasting packages</li>
-<li>Forecast autoplots now use same colour shading as autolayer() and geom_forecast</li>
+<li>Forecast autoplots now use same colour shading as <code><a href="../reference/autolayer.html">autolayer()</a></code> and geom_forecast</li>
 <li>Documentation improvements</li>
 <li>Bug fixes</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="8.5" id="forecast-85">forecast 8.5<a class="anchor" aria-label="anchor" href="#forecast-85"></a></h2><p class="text-muted">CRAN release: 2019-01-18</p>
-<ul><li>Updated tsCV() to handle exogenous regressors</li>
+<ul><li>Updated <code><a href="../reference/tsCV.html">tsCV()</a></code> to handle exogenous regressors</li>
 <li>Reimplemented lagwalk methods (naive, snaive, rwf) for speed improvements</li>
-<li>Added support for passing arguments to auto.arima() unit root tests</li>
-<li>Improved auto.arima() stepwise search algorithm</li>
+<li>Added support for passing arguments to <code><a href="../reference/auto.arima.html">auto.arima()</a></code> unit root tests</li>
+<li>Improved <code><a href="../reference/auto.arima.html">auto.arima()</a></code> stepwise search algorithm</li>
 <li>Documentation improvements</li>
 <li>Bug fixes</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="8.4" id="forecast-84">forecast 8.4<a class="anchor" aria-label="anchor" href="#forecast-84"></a></h2><p class="text-muted">CRAN release: 2018-06-21</p>
-<ul><li>Added modelAR(), generalising nnetar() to support user-defined functions</li>
+<ul><li>Added <code><a href="../reference/modelAR.html">modelAR()</a></code>, generalising <code><a href="../reference/nnetar.html">nnetar()</a></code> to support user-defined functions</li>
 <li>Added na.action argument to ets</li>
 <li>Documentation improvements</li>
 <li>Bug fixes</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="8.3" id="forecast-83">forecast 8.3<a class="anchor" aria-label="anchor" href="#forecast-83"></a></h2><p class="text-muted">CRAN release: 2018-04-11</p>
-<ul><li>Added mstl() to handle multiple seasonal decomposition</li>
-<li>stlf(), stlm(), tsoutliers() and tsclean() all now use mstl().</li>
-<li>Updated tsCV() to handle multiple horizons</li>
-<li>Switched unit root tests in ndiffs() to use urca package</li>
+<ul><li>Added <code><a href="../reference/mstl.html">mstl()</a></code> to handle multiple seasonal decomposition</li>
+<li>
+<code><a href="../reference/forecast.stl.html">stlf()</a></code>, <code><a href="../reference/stlm.html">stlm()</a></code>, <code><a href="../reference/tsoutliers.html">tsoutliers()</a></code> and <code><a href="../reference/tsclean.html">tsclean()</a></code> all now use <code><a href="../reference/mstl.html">mstl()</a></code>.</li>
+<li>Updated <code><a href="../reference/tsCV.html">tsCV()</a></code> to handle multiple horizons</li>
+<li>Switched unit root tests in <code><a href="../reference/ndiffs.html">ndiffs()</a></code> to use urca package</li>
 <li>Added ocsb.test</li>
-<li>Changed method for choosing D in auto.arima() to a measure of seasonal strength.</li>
-<li>Added baggedModel() function to generalize baggedETS</li>
+<li>Changed method for choosing D in <code><a href="../reference/auto.arima.html">auto.arima()</a></code> to a measure of seasonal strength.</li>
+<li>Added <code><a href="../reference/baggedModel.html">baggedModel()</a></code> function to generalize baggedETS</li>
 <li>Added bootstrapped PI to more functions</li>
 <li>Allowed lambda=‘auto’ for all functions with lambda argument.</li>
 <li>Updated author list to include all major contributors</li>
@@ -234,10 +235,10 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="8.1" id="forecast-81">forecast 8.1<a class="anchor" aria-label="anchor" href="#forecast-81"></a></h2><p class="text-muted">CRAN release: 2017-06-17</p>
 <ul><li>Added as.character.ets, as.character.bats, as.character.tbats</li>
-<li>Made gghistogram() and checkresiduals() robust to missing values</li>
+<li>Made <code><a href="../reference/gghistogram.html">gghistogram()</a></code> and <code><a href="../reference/checkresiduals.html">checkresiduals()</a></code> robust to missing values</li>
 <li>All documentation now generated using roxygen</li>
 <li>Improved documentation for many functions</li>
-<li>Added autoplot.msts() and autolayer.msts</li>
+<li>Added <code><a href="../reference/autoplot.ts.html">autoplot.msts()</a></code> and autolayer.msts</li>
 <li>Added as.character methods for many models to generate model names</li>
 <li>Added as.ts.forecast</li>
 <li>autoplot method for bats/tbats models</li>
@@ -249,14 +250,15 @@
 <h2 class="pkg-version" data-toc-text="8.0" id="forecast-80">forecast 8.0<a class="anchor" aria-label="anchor" href="#forecast-80"></a></h2><p class="text-muted">CRAN release: 2017-02-23</p>
 <ul><li>Added tips to start up message</li>
 <li>Added pipe operator</li>
-<li>Added tsCV() and CVar() functions</li>
+<li>Added <code><a href="../reference/tsCV.html">tsCV()</a></code> and <code><a href="../reference/CVar.html">CVar()</a></code> functions</li>
 <li>Added baggedETS</li>
-<li>Added head.ts() and tail.ts(), so head and tail now work properly on ts objects.</li>
-<li>Added gghistogram() and checkresiduals</li>
+<li>Added <code>head.ts()</code> and <code>tail.ts()</code>, so head and tail now work properly on ts objects.</li>
+<li>Added <code><a href="../reference/gghistogram.html">gghistogram()</a></code> and <code><a href="../reference/checkresiduals.html">checkresiduals()</a></code>
+</li>
 <li>Added ggseasonplot with polar coordinates</li>
 <li>Modified defaults for gglagplot</li>
 <li>Added autolayer.ts</li>
-<li>Added type argument to residuals() for different types of residuals</li>
+<li>Added type argument to <code><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals()</a></code> for different types of residuals</li>
 <li>Added support for seas objects from the seasonal package</li>
 <li>Component extraction for seasonal decomposition methods</li>
 <li>Range bars for decomposition autoplots</li>
@@ -266,7 +268,7 @@
 <li>mforecast objects re-structured</li>
 <li>Added as.data.frame.mforecast</li>
 <li>autoplot functions now exported</li>
-<li>Refit support for arfima() and stlm</li>
+<li>Refit support for <code><a href="../reference/arfima.html">arfima()</a></code> and stlm</li>
 <li>Better bias adjustment support after Box-Cox transformation</li>
 <li>print.ARIMA has better labelling of constants</li>
 <li>Bug fixes</li>
@@ -274,7 +276,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="7.3" id="forecast-73">forecast 7.3<a class="anchor" aria-label="anchor" href="#forecast-73"></a></h2><p class="text-muted">CRAN release: 2016-10-13</p>
-<ul><li>Added prediction intervals and simulation for nnetar().</li>
+<ul><li>Added prediction intervals and simulation for <code><a href="../reference/nnetar.html">nnetar()</a></code>.</li>
 <li>Documentation improvement</li>
 <li>Bug fixes</li>
 </ul></div>
@@ -282,24 +284,29 @@
 <h2 class="pkg-version" data-toc-text="7.2" id="forecast-72">forecast 7.2<a class="anchor" aria-label="anchor" href="#forecast-72"></a></h2><p class="text-muted">CRAN release: 2016-09-09</p>
 <ul><li>Faceting for autoplot.mts</li>
 <li>Box-Cox support for ses, holt, hw</li>
-<li>ets() now works for tiny time series</li>
-<li>Added h-step fitted values in fitted() function.</li>
+<li>
+<code><a href="../reference/ets.html">ets()</a></code> now works for tiny time series</li>
+<li>Added h-step fitted values in <code><a href="https://rdrr.io/r/stats/fitted.values.html" class="external-link">fitted()</a></code> function.</li>
 <li>seasonal adjustment added to thetaf</li>
 <li>y now the standard first argument in all modelling functions</li>
-<li>Added truncate argument to auto.arima</li>
-<li>seasadj() now an S3 method</li>
+<li>Added truncate argument to <code><a href="../reference/auto.arima.html">auto.arima()</a></code>
+</li>
+<li>
+<code><a href="../reference/seasadj.html">seasadj()</a></code> now an S3 method</li>
 <li>series with frequency &lt; 1 and non-integer seasonality now handled better</li>
 <li>ggplot2 theme support</li>
 <li>Added gglagplot, gglagchull</li>
-<li>Arima() and auto.arima() now allow any argument to be passed to stats::arima().</li>
+<li>
+<code><a href="../reference/Arima.html">Arima()</a></code> and <code><a href="../reference/auto.arima.html">auto.arima()</a></code> now allow any argument to be passed to <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">stats::arima()</a></code>.</li>
 <li>Bug fixes and speed improvements</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="7.1" id="forecast-71">forecast 7.1<a class="anchor" aria-label="anchor" href="#forecast-71"></a></h2><p class="text-muted">CRAN release: 2016-04-14</p>
-<ul><li>Fixed bug in auto.arima where the Box-Cox transformation was sometimes applied twice</li>
+<ul><li>Fixed bug in <code><a href="../reference/auto.arima.html">auto.arima()</a></code> where the Box-Cox transformation was sometimes applied twice</li>
 <li>Improved axes for ggseasonalplot</li>
-<li>Improved tslm() to avoid some problems finding data</li>
-<li>nnetar() updated to allow subsets</li>
+<li>Improved <code><a href="../reference/tslm.html">tslm()</a></code> to avoid some problems finding data</li>
+<li>
+<code><a href="../reference/nnetar.html">nnetar()</a></code> updated to allow subsets</li>
 <li>Modified initial values for ets</li>
 <li>Improved unit tests to avoid deprecated functions and to avoid data from fpp</li>
 <li>Removed fpp from Suggests list</li>
@@ -309,9 +316,11 @@
 <ul><li>Added ggplot2 graphics</li>
 <li>Bias adjustment option added for all functions that allow Box-Cox transformations</li>
 <li>Added Ccf function, and rewrote Acf to handle multivariate series.</li>
-<li>tslm() completely rewritten to be more robust and to handle fourier terms more easily</li>
+<li>
+<code><a href="../reference/tslm.html">tslm()</a></code> completely rewritten to be more robust and to handle fourier terms more easily</li>
 <li>Support for multivariate linear models added</li>
-<li>subset.ts() more robust, and captures some errors.</li>
+<li>
+<code><a href="../reference/subset.ts.html">subset.ts()</a></code> more robust, and captures some errors.</li>
 <li>Added xreg argument to nnetar</li>
 <li>Improved labels in seasonplot</li>
 <li>More unit tests added</li>

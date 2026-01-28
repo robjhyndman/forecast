@@ -115,14 +115,18 @@ CRAN release: 2022-10-02
 
 CRAN release: 2022-07-25
 
-- Updated dm.test() to add alternative variance estimators.
+- Updated
+  [`dm.test()`](https://pkg.robjhyndman.com/forecast/reference/dm.test.md)
+  to add alternative variance estimators.
   ([\#898](https://github.com/robjhyndman/forecast/issues/898))
 - Added
   [`simulate.tbats()`](https://pkg.robjhyndman.com/forecast/reference/simulate.ets.md)
   for simulating from TBATS models.
-- Added dependency on generics for accuracy() and forecast()
+- Added dependency on generics for
+  [`accuracy()`](https://generics.r-lib.org/reference/accuracy.html) and
+  [`forecast()`](https://generics.r-lib.org/reference/forecast.html)
   ([\#902](https://github.com/robjhyndman/forecast/issues/902))
-- Bux fixes
+- Bug fixes
 
 ## forecast 8.16
 
@@ -133,8 +137,9 @@ CRAN release: 2022-01-10
   incorrectly applying Box-Cox transformations when an `mts` is provided
   to the `data` argument
   ([\#886](https://github.com/robjhyndman/forecast/issues/886)).
-- Set D=0 when auto.arima applied to series with 2m observations or
-  fewer.
+- Set D=0 when
+  [`auto.arima()`](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md)
+  applied to series with 2m observations or fewer.
 - Improved performance of parallel search of ARIMA models (jonlachmann,
   [\#891](https://github.com/robjhyndman/forecast/issues/891)).
 - Fixed scoping of functions used in
@@ -241,8 +246,9 @@ CRAN release: 2019-04-29
 CRAN release: 2019-04-16
 
 - Reduced conflicts with tidy forecasting packages
-- Forecast autoplots now use same colour shading as autolayer() and
-  geom_forecast
+- Forecast autoplots now use same colour shading as
+  [`autolayer()`](https://pkg.robjhyndman.com/forecast/reference/autolayer.md)
+  and geom_forecast
 - Documentation improvements
 - Bug fixes
 
@@ -250,11 +256,17 @@ CRAN release: 2019-04-16
 
 CRAN release: 2019-01-18
 
-- Updated tsCV() to handle exogenous regressors
+- Updated
+  [`tsCV()`](https://pkg.robjhyndman.com/forecast/reference/tsCV.md) to
+  handle exogenous regressors
 - Reimplemented lagwalk methods (naive, snaive, rwf) for speed
   improvements
-- Added support for passing arguments to auto.arima() unit root tests
-- Improved auto.arima() stepwise search algorithm
+- Added support for passing arguments to
+  [`auto.arima()`](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md)
+  unit root tests
+- Improved
+  [`auto.arima()`](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md)
+  stepwise search algorithm
 - Documentation improvements
 - Bug fixes
 
@@ -262,8 +274,11 @@ CRAN release: 2019-01-18
 
 CRAN release: 2018-06-21
 
-- Added modelAR(), generalising nnetar() to support user-defined
-  functions
+- Added
+  [`modelAR()`](https://pkg.robjhyndman.com/forecast/reference/modelAR.md),
+  generalising
+  [`nnetar()`](https://pkg.robjhyndman.com/forecast/reference/nnetar.md)
+  to support user-defined functions
 - Added na.action argument to ets
 - Documentation improvements
 - Bug fixes
@@ -272,14 +287,29 @@ CRAN release: 2018-06-21
 
 CRAN release: 2018-04-11
 
-- Added mstl() to handle multiple seasonal decomposition
-- stlf(), stlm(), tsoutliers() and tsclean() all now use mstl().
-- Updated tsCV() to handle multiple horizons
-- Switched unit root tests in ndiffs() to use urca package
+- Added
+  [`mstl()`](https://pkg.robjhyndman.com/forecast/reference/mstl.md) to
+  handle multiple seasonal decomposition
+- [`stlf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md),
+  [`stlm()`](https://pkg.robjhyndman.com/forecast/reference/stlm.md),
+  [`tsoutliers()`](https://pkg.robjhyndman.com/forecast/reference/tsoutliers.md)
+  and
+  [`tsclean()`](https://pkg.robjhyndman.com/forecast/reference/tsclean.md)
+  all now use
+  [`mstl()`](https://pkg.robjhyndman.com/forecast/reference/mstl.md).
+- Updated
+  [`tsCV()`](https://pkg.robjhyndman.com/forecast/reference/tsCV.md) to
+  handle multiple horizons
+- Switched unit root tests in
+  [`ndiffs()`](https://pkg.robjhyndman.com/forecast/reference/ndiffs.md)
+  to use urca package
 - Added ocsb.test
-- Changed method for choosing D in auto.arima() to a measure of seasonal
-  strength.
-- Added baggedModel() function to generalize baggedETS
+- Changed method for choosing D in
+  [`auto.arima()`](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md)
+  to a measure of seasonal strength.
+- Added
+  [`baggedModel()`](https://pkg.robjhyndman.com/forecast/reference/baggedModel.md)
+  function to generalize baggedETS
 - Added bootstrapped PI to more functions
 - Allowed lambda=‘auto’ for all functions with lambda argument.
 - Updated author list to include all major contributors
@@ -300,10 +330,16 @@ CRAN release: 2017-09-25
 CRAN release: 2017-06-17
 
 - Added as.character.ets, as.character.bats, as.character.tbats
-- Made gghistogram() and checkresiduals() robust to missing values
+- Made
+  [`gghistogram()`](https://pkg.robjhyndman.com/forecast/reference/gghistogram.md)
+  and
+  [`checkresiduals()`](https://pkg.robjhyndman.com/forecast/reference/checkresiduals.md)
+  robust to missing values
 - All documentation now generated using roxygen
 - Improved documentation for many functions
-- Added autoplot.msts() and autolayer.msts
+- Added
+  [`autoplot.msts()`](https://pkg.robjhyndman.com/forecast/reference/autoplot.ts.md)
+  and autolayer.msts
 - Added as.character methods for many models to generate model names
 - Added as.ts.forecast
 - autoplot method for bats/tbats models
@@ -317,15 +353,23 @@ CRAN release: 2017-02-23
 
 - Added tips to start up message
 - Added pipe operator
-- Added tsCV() and CVar() functions
+- Added
+  [`tsCV()`](https://pkg.robjhyndman.com/forecast/reference/tsCV.md) and
+  [`CVar()`](https://pkg.robjhyndman.com/forecast/reference/CVar.md)
+  functions
 - Added baggedETS
-- Added head.ts() and tail.ts(), so head and tail now work properly on
-  ts objects.
-- Added gghistogram() and checkresiduals
+- Added `head.ts()` and `tail.ts()`, so head and tail now work properly
+  on ts objects.
+- Added
+  [`gghistogram()`](https://pkg.robjhyndman.com/forecast/reference/gghistogram.md)
+  and
+  [`checkresiduals()`](https://pkg.robjhyndman.com/forecast/reference/checkresiduals.md)
 - Added ggseasonplot with polar coordinates
 - Modified defaults for gglagplot
 - Added autolayer.ts
-- Added type argument to residuals() for different types of residuals
+- Added type argument to
+  [`residuals()`](https://rdrr.io/r/stats/residuals.html) for different
+  types of residuals
 - Added support for seas objects from the seasonal package
 - Component extraction for seasonal decomposition methods
 - Range bars for decomposition autoplots
@@ -335,7 +379,9 @@ CRAN release: 2017-02-23
 - mforecast objects re-structured
 - Added as.data.frame.mforecast
 - autoplot functions now exported
-- Refit support for arfima() and stlm
+- Refit support for
+  [`arfima()`](https://pkg.robjhyndman.com/forecast/reference/arfima.md)
+  and stlm
 - Better bias adjustment support after Box-Cox transformation
 - print.ARIMA has better labelling of constants
 - Bug fixes
@@ -345,7 +391,8 @@ CRAN release: 2017-02-23
 
 CRAN release: 2016-10-13
 
-- Added prediction intervals and simulation for nnetar().
+- Added prediction intervals and simulation for
+  [`nnetar()`](https://pkg.robjhyndman.com/forecast/reference/nnetar.md).
 - Documentation improvement
 - Bug fixes
 
@@ -355,29 +402,40 @@ CRAN release: 2016-09-09
 
 - Faceting for autoplot.mts
 - Box-Cox support for ses, holt, hw
-- ets() now works for tiny time series
-- Added h-step fitted values in fitted() function.
+- [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md) now
+  works for tiny time series
+- Added h-step fitted values in
+  [`fitted()`](https://rdrr.io/r/stats/fitted.values.html) function.
 - seasonal adjustment added to thetaf
 - y now the standard first argument in all modelling functions
-- Added truncate argument to auto.arima
-- seasadj() now an S3 method
+- Added truncate argument to
+  [`auto.arima()`](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md)
+- [`seasadj()`](https://pkg.robjhyndman.com/forecast/reference/seasadj.md)
+  now an S3 method
 - series with frequency \< 1 and non-integer seasonality now handled
   better
 - ggplot2 theme support
 - Added gglagplot, gglagchull
-- Arima() and auto.arima() now allow any argument to be passed to
-  stats::arima().
+- [`Arima()`](https://pkg.robjhyndman.com/forecast/reference/Arima.md)
+  and
+  [`auto.arima()`](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md)
+  now allow any argument to be passed to
+  [`stats::arima()`](https://rdrr.io/r/stats/arima.html).
 - Bug fixes and speed improvements
 
 ## forecast 7.1
 
 CRAN release: 2016-04-14
 
-- Fixed bug in auto.arima where the Box-Cox transformation was sometimes
-  applied twice
+- Fixed bug in
+  [`auto.arima()`](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md)
+  where the Box-Cox transformation was sometimes applied twice
 - Improved axes for ggseasonalplot
-- Improved tslm() to avoid some problems finding data
-- nnetar() updated to allow subsets
+- Improved
+  [`tslm()`](https://pkg.robjhyndman.com/forecast/reference/tslm.md) to
+  avoid some problems finding data
+- [`nnetar()`](https://pkg.robjhyndman.com/forecast/reference/nnetar.md)
+  updated to allow subsets
 - Modified initial values for ets
 - Improved unit tests to avoid deprecated functions and to avoid data
   from fpp
@@ -391,10 +449,12 @@ CRAN release: 2016-04-04
 - Bias adjustment option added for all functions that allow Box-Cox
   transformations
 - Added Ccf function, and rewrote Acf to handle multivariate series.
-- tslm() completely rewritten to be more robust and to handle fourier
-  terms more easily
+- [`tslm()`](https://pkg.robjhyndman.com/forecast/reference/tslm.md)
+  completely rewritten to be more robust and to handle fourier terms
+  more easily
 - Support for multivariate linear models added
-- subset.ts() more robust, and captures some errors.
+- [`subset.ts()`](https://pkg.robjhyndman.com/forecast/reference/subset.ts.md)
+  more robust, and captures some errors.
 - Added xreg argument to nnetar
 - Improved labels in seasonplot
 - More unit tests added
