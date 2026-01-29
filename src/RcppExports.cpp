@@ -279,14 +279,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // updateTBATSGMatrix
-void updateTBATSGMatrix(arma::mat& g, Nullable<arma::mat> gammaBold, double alpha, Nullable<double> beta);
+void updateTBATSGMatrix(arma::mat& g, const Nullable<arma::mat>& gammaBold, double alpha, const Nullable<double>& beta);
 RcppExport SEXP _forecast_updateTBATSGMatrix(SEXP gSEXP, SEXP gammaBoldSEXP, SEXP alphaSEXP, SEXP betaSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::mat& >::type g(gSEXP);
-    Rcpp::traits::input_parameter< Nullable<arma::mat> >::type gammaBold(gammaBoldSEXP);
+    Rcpp::traits::input_parameter< const Nullable<arma::mat>& >::type gammaBold(gammaBoldSEXP);
     Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
-    Rcpp::traits::input_parameter< Nullable<double> >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< const Nullable<double>& >::type beta(betaSEXP);
     updateTBATSGMatrix(g, gammaBold, alpha, beta);
     return R_NilValue;
 END_RCPP

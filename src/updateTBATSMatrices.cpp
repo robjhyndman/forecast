@@ -23,9 +23,9 @@ void updateTBATSGammaBold(NumericMatrix &gammaBold,
 
 // [[Rcpp::export]]
 void updateTBATSGMatrix(arma::mat &g,
-                        Nullable<arma::mat> gammaBold,
+                        const Nullable<arma::mat> &gammaBold,
                         double alpha,
-                        Nullable<double> beta) {
+                        const Nullable<double> &beta) {
   int adjBeta = 0;
   g(0, 0) = alpha;
 
