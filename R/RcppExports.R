@@ -49,8 +49,8 @@ makeAIMatrix <- function(C, S, k) {
     .Call(`_forecast_makeAIMatrix`, C, S, k)
 }
 
-updateFMatrix <- function(F_s, smallPhi_s, alpha_s, beta_s, gammaBold_s, ar_s, ma_s, tau_s) {
-    .Call(`_forecast_updateFMatrix`, F_s, smallPhi_s, alpha_s, beta_s, gammaBold_s, ar_s, ma_s, tau_s)
+updateFMatrix <- function(F, smallPhi, alpha, beta, gammaBold, ar, ma, tau) {
+    invisible(.Call(`_forecast_updateFMatrix`, F, smallPhi, alpha, beta, gammaBold, ar, ma, tau))
 }
 
 updateWtransposeMatrix <- function(wTranspose, smallPhi, tau, arCoefs, maCoefs, p, q) {
