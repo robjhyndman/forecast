@@ -365,7 +365,7 @@ seas.heuristic <- function(x) {
   nseas <- NCOL(seasonal)
   if (nseas > 0) {
     season <- numeric(nseas)
-    for (i in seq(nseas)) {
+    for (i in seq_len(nseas)) {
       season[i] <- max(
         0,
         min(1, 1 - vare / var(remainder + seasonal[, i], na.rm = TRUE))

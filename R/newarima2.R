@@ -1095,7 +1095,7 @@ auto.arima <- function(
     }
     icorder <- order(results[, 8])
     nmodels <- sum(!is.na(results[, 8]))
-    for (i in seq(nmodels)) {
+    for (i in seq_len(nmodels)) {
       k <- icorder[i]
       fit <- myarima(
         x,

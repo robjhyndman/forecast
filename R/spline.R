@@ -11,7 +11,7 @@
 make.Sigma <- function(n, n0 = 0) {
   nn <- n + n0
   Sigma <- matrix(0, nrow = nn, ncol = nn)
-  for (i in seq(nn)) {
+  for (i in seq_len(nn)) {
     inn <- i:nn
     Sigma[i, inn] <- Sigma[inn, i] <- (i * i * (3 * (inn) - i)) / 6
   }
@@ -149,7 +149,7 @@ spline_model <- function(
     warning("Series too long to compute training set fits and residuals")
   } else {
     # This is probably grossly inefficient but I can't think of a better way
-    for (i in seq(n - 1)) {
+    for (i in seq_len(n - 1)) {
       idx <- seq(i)
       U <- mat$Omega[seq(i), i + 1]
       Oinv <- solve(mat$Omega[idx, idx] / maxO, tol = 1e-10) / maxO
@@ -277,7 +277,7 @@ forecast.spline_model <- function(
     upper <- hilo$upper
   } else {
     conf.factor <- qnorm(0.5 + 0.005 * level)
-    for (i in seq(nconf)) {
+    for (i in seq_len(nconf)) {
       upper[, i] <- Yhat + conf.factor[i] * sd
       lower[, i] <- Yhat - conf.factor[i] * sd
     }
