@@ -7,6 +7,7 @@
 \alias{forecast}
 \alias{accuracy}
 \alias{autoplot}
+\alias{autolayer}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -16,7 +17,7 @@ below to see their documentation.
 \describe{
   \item{generics}{\code{\link[generics]{accuracy}}, \code{\link[generics]{forecast}}}
 
-  \item{ggplot2}{\code{\link[ggplot2]{autoplot}}}
+  \item{ggplot2}{\code{\link[ggplot2]{autolayer}}, \code{\link[ggplot2]{autoplot}}}
 
   \item{magrittr}{\code{\link[magrittr:pipe]{\%>\%}}}
 }}

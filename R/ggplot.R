@@ -1,14 +1,10 @@
 globalVariables(".data")
 
-#' @inherit ggplot2::autolayer
-#' @export
-autolayer <- function(object, ...) {
-  UseMethod("autolayer")
-}
-
-#' @importFrom ggplot2 autoplot
 #' @export
 ggplot2::autoplot
+
+#' @export
+ggplot2::autolayer
 
 ggAddExtras <- function(xlab = NA, ylab = NA, main = NA) {
   dots <- eval.parent(quote(list(...)))

@@ -15,7 +15,7 @@
 #' @importFrom stats Box.test acf approx ar arima arima.sim as.ts complete.cases cycle decompose diffinv end extractAIC fitted formula frequency window filter na.contiguous spec.ar hatvalues is.ts ksmooth lm lsfit loess median model.frame na.exclude na.omit na.pass optim optimize pf plot.ts poly predict pt qnorm qt quantile residuals rnorm runif sd simulate smooth.spline start stl supsmu terms time ts tsp tsp<- tsdiag var logLik nobs napredict
 #' @importFrom stats aggregate as.formula is.mts reformulate
 #' @importFrom utils packageVersion tail head
-#' @importFrom ggplot2 autoplot fortify
+#' @importFrom ggplot2 autoplot autolayer fortify
 #' @importFrom lmtest bgtest
 #' @importFrom stats supsmu
 #' @importFrom magrittr %>%
@@ -28,7 +28,9 @@ NULL
 
 #' @export
 magrittr::`%>%`
+
 #' @export
 generics::forecast
+
 #' @export
 generics::accuracy
