@@ -453,7 +453,6 @@ plot.forecast <- function(
   if (n > 0) {
     xx <- as.ts(xx)
     freq <- frequency(xx)
-    strt <- start(xx)
     nx <- max(which(!is.na(xx)))
     xxx <- xx[1:nx]
     include <- min(include, nx)
@@ -467,7 +466,6 @@ plot.forecast <- function(
     }
   } else {
     freq <- frequency(x$mean)
-    strt <- start(x$mean)
     nx <- include <- 1
     xx <- xxx <- ts(NA, frequency = freq, end = tsp(x$mean)[1] - 1 / freq)
 
@@ -757,7 +755,7 @@ as.data.frame.forecast <- function(x, ...) {
     out <- ts(out)
     attributes(out)$tsp <- attributes(x$mean)$tsp
   }
-  names <- c("Point Forecast")
+  names <- "Point Forecast"
   if (!is.null(x$lower) && !is.null(x$upper) && !is.null(x$level)) {
     x$upper <- as.matrix(x$upper)
     x$lower <- as.matrix(x$lower)

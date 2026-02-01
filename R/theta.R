@@ -33,7 +33,6 @@
 theta_model <- function(y, lambda = NULL, biasadj = FALSE) {
   series <- deparse1(substitute(y))
   n <- length(y)
-  x <- as.ts(y)
   origy <- y
 
   if (!is.null(lambda)) {

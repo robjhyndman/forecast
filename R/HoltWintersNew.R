@@ -203,7 +203,7 @@ HoltWintersZZ <- function(
   if (seasontype != "N") {
     nr <- nrow(states)
     nc <- ncol(states)
-    for (i in seq(m)) {
+    for (i in seq_len(m)) {
       states <- cbind(states, final.fit$season[(m - i) + (1:nr)])
     }
     colnames(states)[nc + seq(m)] <- paste0("s", seq(m))
@@ -330,7 +330,7 @@ zzhw <- function(
   lasttrend <- trend0 <- b.start
   season0 <- s.start
 
-  for (i in seq(n)) {
+  for (i in seq_len(n)) {
     if (i > 1) {
       lastlevel <- level[i - 1]
       lasttrend <- trend[i - 1]

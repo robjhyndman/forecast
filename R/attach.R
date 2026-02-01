@@ -1,4 +1,4 @@
-.onAttach <- function(...) {
+.onAttach <- function(libname, pkgname) {
   if (!interactive() || withr::with_preserve_seed(stats::runif(1)) > 0.2) {
     return()
   }
@@ -62,7 +62,7 @@ overwrite_s3_generic <- function(pkg, generic) {
 }
 
 #' @importFrom utils methods
-.onLoad <- function(...) {
+.onLoad <- function(libname, pkgname) {
   overwrite_s3_generic("ggplot2", "autolayer")
   register_s3_method("ggplot2", "autolayer", "ts")
   register_s3_method("ggplot2", "autolayer", "mts")

@@ -321,7 +321,7 @@ forecast.fracdiff <- function(
     # Compute prediction intervals using normal approximation
     nint <- length(level)
     upper <- lower <- matrix(NA, ncol = nint, nrow = h)
-    for (i in seq(nint)) {
+    for (i in seq_len(nint)) {
       qq <- qnorm(0.5 * (1 + level[i] / 100))
       lower[, i] <- fcast.x - qq * fse
       upper[, i] <- fcast.x + qq * fse

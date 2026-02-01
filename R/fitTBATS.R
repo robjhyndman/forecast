@@ -653,7 +653,6 @@ calcLikelihoodTBATS <- function(
     q <- 0
   }
   x.nought <- BoxCox(opt.env$x.nought.untransformed, lambda = box.cox.parameter)
-  lambda <- attr(x.nought, "lambda")
 
   updateWtransposeMatrix(
     wTranspose = opt.env$w.transpose,
@@ -692,7 +691,6 @@ calcLikelihoodTBATS <- function(
   )
 
   mat.transformed.y <- BoxCox(opt.env$y, box.cox.parameter)
-  lambda <- attr(mat.transformed.y, "lambda")
   n <- ncol(opt.env$y)
 
   calcTBATSFaster(

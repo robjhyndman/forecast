@@ -349,7 +349,7 @@ forecast.Arima <- function(
       }
     }
 
-    origxreg <- xreg <- as.matrix(xreg)
+    xreg <- as.matrix(xreg)
     h <- nrow(xreg)
   } else {
     if (!is.null(xreg)) {
@@ -358,7 +358,6 @@ forecast.Arima <- function(
       )
       xreg <- NULL
     }
-    origxreg <- NULL
   }
 
   level <- getConfLevel(level, fan)
@@ -526,7 +525,7 @@ forecast.ar <- function(
   } else {
     lower <- matrix(NA, ncol = nint, nrow = length(pred$pred))
     upper <- lower
-    for (i in seq(nint)) {
+    for (i in seq_len(nint)) {
       qq <- qnorm(0.5 * (1 + level[i] / 100))
       lower[, i] <- pred$pred - qq * pred$se
       upper[, i] <- pred$pred + qq * pred$se
