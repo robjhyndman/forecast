@@ -591,7 +591,6 @@ forecast.nnetar <- function(
   }
   # Compute prediction intervals using simulations
   if (isTRUE(PI)) {
-    nint <- length(level)
     hilo <- simulate_forecast(
       object = object,
       h = h,

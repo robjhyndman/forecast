@@ -351,15 +351,8 @@ From %s(): %s
 
 # Adjusted from robjhyndman/tsfeatures
 seas.heuristic <- function(x) {
-  if (inherits(x, "msts")) {
-    msts <- attributes(x)$msts
-    nperiods <- length(msts)
-  } else if (is.ts(x)) {
-    msts <- frequency(x)
-    nperiods <- msts > 1
-    season <- 0
-  } else {
-    stop("The object provided must be a time-series object (`msts` or `ts`)")
+  if (!inherits(x, "msts") && !is.ts(x)) {
+    stop("The object provided must be a time-series object `msts` or `ts`)")
   }
   season <- NA
   stlfit <- mstl(x)
@@ -486,7 +479,6 @@ ocsb.test <- function(
   # Estimate maxlag
   if (maxlag > 0) {
     if (lag.method != "fixed") {
-      tmp <- vector("list", maxlag + 1)
       fits <- lapply(seq_len(maxlag), function(lag) fitOCSB(x, lag, maxlag))
       icvals <- unlist(switch(
         lag.method,

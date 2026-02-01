@@ -27,7 +27,7 @@ spline.matrices <- function(
   compute_inverse = TRUE,
   compute_P = TRUE
 ) {
-  if(!compute_inverse) {
+  if (!compute_inverse) {
     compute_P <- FALSE
   }
   nn <- n + n0
@@ -412,7 +412,6 @@ simulate.spline_model <- function(
     y <- object$y[sample(nhistory - length(object$y)) + seq(nhistory)]
   }
   y <- c(y, rep(NA, nsim))
-  n <- length(y)
   for (i in nhistory + seq(nsim) - 1) {
     mat <- spline.matrices(i, object$beta / i^3, compute_P = FALSE)
     newmat <- spline.matrices(i, object$beta / i^3, n0 = 1, compute_inverse = FALSE)

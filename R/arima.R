@@ -349,7 +349,7 @@ forecast.Arima <- function(
       }
     }
 
-    origxreg <- xreg <- as.matrix(xreg)
+    xreg <- as.matrix(xreg)
     h <- nrow(xreg)
   } else {
     if (!is.null(xreg)) {
@@ -358,7 +358,6 @@ forecast.Arima <- function(
       )
       xreg <- NULL
     }
-    origxreg <- NULL
   }
 
   level <- getConfLevel(level, fan)

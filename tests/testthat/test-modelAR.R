@@ -292,7 +292,6 @@ test_that("Tests for modelAR", {
     set.seed(123)
     airnnet <- modelAR(
       airmiles,
-      ,
       FUN = avnnet2,
       predict.FUN = predict.avnnet2,
       scale.inputs = TRUE,
@@ -304,7 +303,6 @@ test_that("Tests for modelAR", {
     set.seed(123)
     airnnet2 <- nnetar(
       airmiles,
-      ,
       subset = 11:20,
       p = 1,
       size = 1,
@@ -325,7 +323,7 @@ test_that("Tests for modelAR", {
       FUN = avnnet2,
       predict.FUN = predict.avnnet2,
       scale.inputs = TRUE,
-      subset = c(rep(F, 10), rep(T, 10), rep(F, length(airmiles) - 20)),
+      subset = c(rep(FALSE, 10), rep(TRUE, 10), rep(FALSE, length(airmiles) - 20)),
       p = 1,
       size = 1,
       repeats = 10
@@ -333,8 +331,7 @@ test_that("Tests for modelAR", {
     set.seed(123)
     airnnet2 <- nnetar(
       airmiles,
-      ,
-      subset = c(rep(F, 10), rep(T, 10), rep(F, length(airmiles) - 20)),
+      subset = c(rep(FALSE, 10), rep(TRUE, 10), rep(FALSE, length(airmiles) - 20)),
       p = 1,
       size = 1,
       repeats = 10

@@ -926,12 +926,7 @@ plot.tbats <- function(x, main = "Decomposition by TBATS model", ...) {
 #' @export
 tbats.components <- function(x) {
   # Get original data, transform if necessary
-  if (!is.null(x$lambda)) {
-    y <- BoxCox(x$y, x$lambda)
-    lambda <- attr(y, "lambda")
-  } else {
-    y <- x$y
-  }
+  y <- if (!is.null(x$lambda)) BoxCox(x$y, x$lambda) else x$y
   # Compute matrices
   tau <- if (!is.null(x$k.vector)) 2 * sum(x$k.vector) else 0
   w <- makeTBATSWMatrix(

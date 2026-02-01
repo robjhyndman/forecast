@@ -1238,17 +1238,9 @@ myarima <- function(
       )
     }
   }
-  if (is.null(xreg)) {
-    nxreg <- 0
-  } else {
-    nxreg <- ncol(as.matrix(xreg))
-  }
   if (!inherits(fit, "try-error")) {
     nstar <- n - order[2] - seasonal[2] * m
     if (diffs == 1 && constant) {
-      # fitnames <- names(fit$coef)
-      # fitnames[length(fitnames)-nxreg] <- "drift"
-      # names(fit$coef) <- fitnames
       fit$xreg <- xreg
     }
     npar <- length(fit$coef[fit$mask]) + 1
