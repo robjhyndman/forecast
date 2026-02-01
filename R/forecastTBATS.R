@@ -60,11 +60,11 @@ forecast.tbats <- function(
 
   # Set up the matrices
   w <- makeTBATSWMatrix(
-    smallPhi_s = object$damping.parameter,
-    kVector_s = as.integer(object$k.vector),
-    arCoefs_s = object$ar.coefficients,
-    maCoefs_s = object$ma.coefficients,
-    tau_s = as.integer(tau)
+    smallPhi = object$damping.parameter,
+    kVector = as.integer(object$k.vector),
+    arCoefs = object$ar.coefficients,
+    maCoefs = object$ma.coefficients,
+    tau = as.integer(tau)
   )
 
   if (!is.null(object$seasonal.periods)) {

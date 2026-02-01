@@ -935,11 +935,11 @@ tbats.components <- function(x) {
   # Compute matrices
   tau <- if (!is.null(x$k.vector)) 2 * sum(x$k.vector) else 0
   w <- makeTBATSWMatrix(
-    smallPhi_s = x$damping.parameter,
-    kVector_s = as.integer(x$k.vector),
-    arCoefs_s = x$ar.coefficients,
-    maCoefs_s = x$ma.coefficients,
-    tau_s = as.integer(tau)
+    smallPhi = x$damping.parameter,
+    kVector = as.integer(x$k.vector),
+    arCoefs = x$ar.coefficients,
+    maCoefs = x$ma.coefficients,
+    tau = as.integer(tau)
   )
 
   out <- cbind(observed = c(y), level = x$x[1, ])

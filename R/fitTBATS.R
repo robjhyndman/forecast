@@ -60,11 +60,11 @@ fitPreviousTBATSModel <- function(y, model, biasadj = FALSE) {
   ## Calculate the variance:
   # 1. Re-set up the matrices
   w <- makeTBATSWMatrix(
-    smallPhi_s = small.phi,
-    kVector_s = model$k.vector,
-    arCoefs_s = ar.coefs,
-    maCoefs_s = ma.coefs,
-    tau_s = tau
+    smallPhi = small.phi,
+    kVector = model$k.vector,
+    arCoefs = ar.coefs,
+    maCoefs = ma.coefs,
+    tau = tau
   )
   if (!is.null(gamma.bold)) {
     updateTBATSGammaBold(
@@ -268,11 +268,11 @@ fitSpecificTBATS <- function(
   }
 
   w <- makeTBATSWMatrix(
-    smallPhi_s = small.phi,
-    kVector_s = k.vector,
-    arCoefs_s = ar.coefs,
-    maCoefs_s = ma.coefs,
-    tau_s = tau
+    smallPhi = small.phi,
+    kVector = k.vector,
+    arCoefs = ar.coefs,
+    maCoefs = ma.coefs,
+    tau = tau
   )
 
   if (!is.null(seasonal.periods)) {
@@ -430,11 +430,11 @@ fitSpecificTBATS <- function(
     ## Calculate the variance:
     # 1. Re-set up the matrices
     w <- makeTBATSWMatrix(
-      smallPhi_s = small.phi,
-      kVector_s = k.vector,
-      arCoefs_s = ar.coefs,
-      maCoefs_s = ma.coefs,
-      tau_s = tau
+      smallPhi = small.phi,
+      kVector = k.vector,
+      arCoefs = ar.coefs,
+      maCoefs = ma.coefs,
+      tau = tau
     )
     if (!is.null(gamma.bold)) {
       updateTBATSGammaBold(
@@ -540,11 +540,11 @@ fitSpecificTBATS <- function(
     ## Calculate the variance:
     # 1. Re-set up the matrices
     w <- makeTBATSWMatrix(
-      smallPhi_s = small.phi,
-      kVector_s = k.vector,
-      arCoefs_s = ar.coefs,
-      maCoefs_s = ma.coefs,
-      tau_s = tau
+      smallPhi = small.phi,
+      kVector = k.vector,
+      arCoefs = ar.coefs,
+      maCoefs = ma.coefs,
+      tau = tau
     )
     if (!is.null(gamma.bold)) {
       updateTBATSGammaBold(

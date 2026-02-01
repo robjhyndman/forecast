@@ -33,8 +33,8 @@ makeBATSGMatrix <- function(alpha_s, beta_s, gammaVector_s, seasonalPeriods_s, p
     .Call(`_forecast_makeBATSGMatrix`, alpha_s, beta_s, gammaVector_s, seasonalPeriods_s, p_s, q_s)
 }
 
-makeTBATSWMatrix <- function(smallPhi_s, kVector_s, arCoefs_s, maCoefs_s, tau_s) {
-    .Call(`_forecast_makeTBATSWMatrix`, smallPhi_s, kVector_s, arCoefs_s, maCoefs_s, tau_s)
+makeTBATSWMatrix <- function(smallPhi, kVector, arCoefs, maCoefs, tau) {
+    .Call(`_forecast_makeTBATSWMatrix`, smallPhi, kVector, arCoefs, maCoefs, tau)
 }
 
 makeCIMatrix <- function(k, m) {

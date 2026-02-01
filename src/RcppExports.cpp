@@ -165,17 +165,17 @@ BEGIN_RCPP
 END_RCPP
 }
 // makeTBATSWMatrix
-SEXP makeTBATSWMatrix(SEXP smallPhi_s, SEXP kVector_s, SEXP arCoefs_s, SEXP maCoefs_s, SEXP tau_s);
-RcppExport SEXP _forecast_makeTBATSWMatrix(SEXP smallPhi_sSEXP, SEXP kVector_sSEXP, SEXP arCoefs_sSEXP, SEXP maCoefs_sSEXP, SEXP tau_sSEXP) {
+List makeTBATSWMatrix(const Nullable<double>& smallPhi, const Nullable<IntegerVector>& kVector, const Nullable<NumericVector>& arCoefs, const Nullable<NumericVector>& maCoefs, const Nullable<int>& tau);
+RcppExport SEXP _forecast_makeTBATSWMatrix(SEXP smallPhiSEXP, SEXP kVectorSEXP, SEXP arCoefsSEXP, SEXP maCoefsSEXP, SEXP tauSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type smallPhi_s(smallPhi_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type kVector_s(kVector_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type arCoefs_s(arCoefs_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type maCoefs_s(maCoefs_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type tau_s(tau_sSEXP);
-    rcpp_result_gen = Rcpp::wrap(makeTBATSWMatrix(smallPhi_s, kVector_s, arCoefs_s, maCoefs_s, tau_s));
+    Rcpp::traits::input_parameter< const Nullable<double>& >::type smallPhi(smallPhiSEXP);
+    Rcpp::traits::input_parameter< const Nullable<IntegerVector>& >::type kVector(kVectorSEXP);
+    Rcpp::traits::input_parameter< const Nullable<NumericVector>& >::type arCoefs(arCoefsSEXP);
+    Rcpp::traits::input_parameter< const Nullable<NumericVector>& >::type maCoefs(maCoefsSEXP);
+    Rcpp::traits::input_parameter< const Nullable<int>& >::type tau(tauSEXP);
+    rcpp_result_gen = Rcpp::wrap(makeTBATSWMatrix(smallPhi, kVector, arCoefs, maCoefs, tau));
     return rcpp_result_gen;
 END_RCPP
 }
