@@ -141,7 +141,7 @@ is provided to the `data` argument (#886).
 
 # forecast 8.2
   * Added pkgdown site
-  * Added rolling window option to tsCV
+  * Added rolling window option to `tsCV()`
   * Improved robustness to short time series and missing values
   * Bug fixes
 
@@ -150,7 +150,7 @@ is provided to the `data` argument (#886).
   * Made `gghistogram()` and `checkresiduals()` robust to missing values
   * All documentation now generated using roxygen
   * Improved documentation for many functions
-  * Added `autoplot.msts()` and autolayer.msts
+  * Added `autoplot.msts()` and `autolayer.msts()`
   * Added as.character methods for many models to generate model names
   * Added as.ts.forecast
   * autoplot method for bats/tbats models
@@ -167,12 +167,12 @@ is provided to the `data` argument (#886).
   * Added `gghistogram()` and `checkresiduals()`
   * Added ggseasonplot with polar coordinates
   * Modified defaults for gglagplot
-  * Added autolayer.ts
+  * Added `autolayer.ts()`
   * Added type argument to `residuals()` for different types of residuals
   * Added support for seas objects from the seasonal package
   * Component extraction for seasonal decomposition methods
   * Range bars for decomposition autoplots
-  * Added autoplot.StructTS
+  * Added `autoplot.StructTS()`
   * Added vignette based on 2008 JSS article by Hyndman and Khandakar
   * Improved ggplot functions
   * mforecast objects re-structured
@@ -190,7 +190,7 @@ is provided to the `data` argument (#886).
   * Bug fixes
 
 # forecast 7.2
-  * Faceting for autoplot.mts
+  * Faceting for `autoplot.mts()`
   * Box-Cox support for ses, holt, hw
   * `ets()` now works for tiny time series
   * Added h-step fitted values in `fitted()` function.
