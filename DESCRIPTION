@@ -16,10 +16,9 @@ Imports:
   magrittr,
   nnet,
   parallel,
-  Rcpp (>= 0.11.0),
+  Rcpp (>= 0.12.4),
   stats,
   timeDate,
-  tseries,
   urca,
   withr,
   zoo
