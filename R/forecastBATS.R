@@ -67,10 +67,10 @@ forecast.bats <- function(
   y.forecast <- numeric(h)
   # w <- makeWMatrix(small.phi=object$damping.parameter, seasonal.periods=object$seasonal.periods, ar.coefs=object$ar.coefficients, ma.coefs=object$ma.coefficients)
   w <- makeBATSWMatrix(
-    smallPhi_s = object$damping.parameter,
-    sPeriods_s = object$seasonal.periods,
-    arCoefs_s = object$ar.coefficients,
-    maCoefs_s = object$ma.coefficients
+    smallPhi = object$damping.parameter,
+    sPeriods = object$seasonal.periods,
+    arCoefs = object$ar.coefficients,
+    maCoefs = object$ma.coefficients
   )
   # g <- makeGMatrix(alpha=object$alpha, beta=object$beta, gamma.vector=object$gamma.values, seasonal.periods=object$seasonal.periods, p=length(object$ar.coefficients), q=length(object$ma.coefficients))
   g <- makeBATSGMatrix(

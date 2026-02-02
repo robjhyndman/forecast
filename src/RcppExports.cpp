@@ -135,32 +135,32 @@ BEGIN_RCPP
 END_RCPP
 }
 // makeBATSWMatrix
-SEXP makeBATSWMatrix(SEXP smallPhi_s, SEXP sPeriods_s, SEXP arCoefs_s, SEXP maCoefs_s);
-RcppExport SEXP _forecast_makeBATSWMatrix(SEXP smallPhi_sSEXP, SEXP sPeriods_sSEXP, SEXP arCoefs_sSEXP, SEXP maCoefs_sSEXP) {
+List makeBATSWMatrix(const Nullable<double>& smallPhi, const Nullable<IntegerVector>& sPeriods, const Nullable<NumericVector>& arCoefs, const Nullable<NumericVector>& maCoefs);
+RcppExport SEXP _forecast_makeBATSWMatrix(SEXP smallPhiSEXP, SEXP sPeriodsSEXP, SEXP arCoefsSEXP, SEXP maCoefsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type smallPhi_s(smallPhi_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type sPeriods_s(sPeriods_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type arCoefs_s(arCoefs_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type maCoefs_s(maCoefs_sSEXP);
-    rcpp_result_gen = Rcpp::wrap(makeBATSWMatrix(smallPhi_s, sPeriods_s, arCoefs_s, maCoefs_s));
+    Rcpp::traits::input_parameter< const Nullable<double>& >::type smallPhi(smallPhiSEXP);
+    Rcpp::traits::input_parameter< const Nullable<IntegerVector>& >::type sPeriods(sPeriodsSEXP);
+    Rcpp::traits::input_parameter< const Nullable<NumericVector>& >::type arCoefs(arCoefsSEXP);
+    Rcpp::traits::input_parameter< const Nullable<NumericVector>& >::type maCoefs(maCoefsSEXP);
+    rcpp_result_gen = Rcpp::wrap(makeBATSWMatrix(smallPhi, sPeriods, arCoefs, maCoefs));
     return rcpp_result_gen;
 END_RCPP
 }
 // makeBATSGMatrix
-SEXP makeBATSGMatrix(SEXP alpha_s, SEXP beta_s, SEXP gammaVector_s, SEXP seasonalPeriods_s, SEXP p_s, SEXP q_s);
-RcppExport SEXP _forecast_makeBATSGMatrix(SEXP alpha_sSEXP, SEXP beta_sSEXP, SEXP gammaVector_sSEXP, SEXP seasonalPeriods_sSEXP, SEXP p_sSEXP, SEXP q_sSEXP) {
+List makeBATSGMatrix(double alpha, const Nullable<double>& beta, const Nullable<NumericVector>& gammaVector, const Nullable<IntegerVector>& seasonalPeriods, int p, int q);
+RcppExport SEXP _forecast_makeBATSGMatrix(SEXP alphaSEXP, SEXP betaSEXP, SEXP gammaVectorSEXP, SEXP seasonalPeriodsSEXP, SEXP pSEXP, SEXP qSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type alpha_s(alpha_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type beta_s(beta_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type gammaVector_s(gammaVector_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type seasonalPeriods_s(seasonalPeriods_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_s(p_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type q_s(q_sSEXP);
-    rcpp_result_gen = Rcpp::wrap(makeBATSGMatrix(alpha_s, beta_s, gammaVector_s, seasonalPeriods_s, p_s, q_s));
+    Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< const Nullable<double>& >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< const Nullable<NumericVector>& >::type gammaVector(gammaVectorSEXP);
+    Rcpp::traits::input_parameter< const Nullable<IntegerVector>& >::type seasonalPeriods(seasonalPeriodsSEXP);
+    Rcpp::traits::input_parameter< int >::type p(pSEXP);
+    Rcpp::traits::input_parameter< int >::type q(qSEXP);
+    rcpp_result_gen = Rcpp::wrap(makeBATSGMatrix(alpha, beta, gammaVector, seasonalPeriods, p, q));
     return rcpp_result_gen;
 END_RCPP
 }
