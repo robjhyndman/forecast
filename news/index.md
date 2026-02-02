@@ -247,7 +247,7 @@ CRAN release: 2019-04-16
 
 - Reduced conflicts with tidy forecasting packages
 - Forecast autoplots now use same colour shading as
-  [`autolayer()`](https://pkg.robjhyndman.com/forecast/reference/autolayer.md)
+  [`autolayer()`](https://ggplot2.tidyverse.org/reference/autolayer.html)
   and geom_forecast
 - Documentation improvements
 - Bug fixes
@@ -321,7 +321,8 @@ CRAN release: 2018-04-11
 CRAN release: 2017-09-25
 
 - Added pkgdown site
-- Added rolling window option to tsCV
+- Added rolling window option to
+  [`tsCV()`](https://pkg.robjhyndman.com/forecast/reference/tsCV.md)
 - Improved robustness to short time series and missing values
 - Bug fixes
 
@@ -339,7 +340,8 @@ CRAN release: 2017-06-17
 - Improved documentation for many functions
 - Added
   [`autoplot.msts()`](https://pkg.robjhyndman.com/forecast/reference/autoplot.ts.md)
-  and autolayer.msts
+  and
+  [`autolayer.msts()`](https://pkg.robjhyndman.com/forecast/reference/autoplot.ts.md)
 - Added as.character methods for many models to generate model names
 - Added as.ts.forecast
 - autoplot method for bats/tbats models
@@ -366,14 +368,16 @@ CRAN release: 2017-02-23
   [`checkresiduals()`](https://pkg.robjhyndman.com/forecast/reference/checkresiduals.md)
 - Added ggseasonplot with polar coordinates
 - Modified defaults for gglagplot
-- Added autolayer.ts
+- Added
+  [`autolayer.ts()`](https://pkg.robjhyndman.com/forecast/reference/autoplot.ts.md)
 - Added type argument to
   [`residuals()`](https://rdrr.io/r/stats/residuals.html) for different
   types of residuals
 - Added support for seas objects from the seasonal package
 - Component extraction for seasonal decomposition methods
 - Range bars for decomposition autoplots
-- Added autoplot.StructTS
+- Added
+  [`autoplot.StructTS()`](https://pkg.robjhyndman.com/forecast/reference/autoplot.seas.md)
 - Added vignette based on 2008 JSS article by Hyndman and Khandakar
 - Improved ggplot functions
 - mforecast objects re-structured
@@ -400,7 +404,8 @@ CRAN release: 2016-10-13
 
 CRAN release: 2016-09-09
 
-- Faceting for autoplot.mts
+- Faceting for
+  [`autoplot.mts()`](https://pkg.robjhyndman.com/forecast/reference/autoplot.ts.md)
 - Box-Cox support for ses, holt, hw
 - [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md) now
   works for tiny time series

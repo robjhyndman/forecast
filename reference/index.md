@@ -243,8 +243,6 @@ Functions for plotting time series and forecasts
   [`is.nnetar()`](https://pkg.robjhyndman.com/forecast/reference/is.ets.md)
   [`is.nnetarmodels()`](https://pkg.robjhyndman.com/forecast/reference/is.ets.md)
   : Is an object a particular model type?
-- [`autolayer()`](https://pkg.robjhyndman.com/forecast/reference/autolayer.md)
-  : Create a ggplot layer appropriate to a particular data type
 - [`autolayer(`*`<mts>`*`)`](https://pkg.robjhyndman.com/forecast/reference/autoplot.ts.md)
   [`autolayer(`*`<msts>`*`)`](https://pkg.robjhyndman.com/forecast/reference/autoplot.ts.md)
   [`autolayer(`*`<ts>`*`)`](https://pkg.robjhyndman.com/forecast/reference/autoplot.ts.md)
