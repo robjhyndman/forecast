@@ -65,7 +65,7 @@ bcloglik <- function(x, lower = -1, upper = 2) {
   xl <- loglik <- as.vector(lambda)
   m <- length(xl)
   x <- na.omit(c(x))
-  for (i in 1L:m) {
+  for (i in seq_len(m)) {
     if (abs(la <- xl[i]) > 0.02) {
       xt <- (x^la - 1) / la
     } else {

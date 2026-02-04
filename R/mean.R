@@ -123,7 +123,7 @@ forecast.mean_model <- function(
     upper <- t(apply(sim, 1, quantile, prob = .5 + level / 200))
   } else {
     lower <- upper <- matrix(NA, nrow = h, ncol = nconf)
-    for (i in 1:nconf) {
+    for (i in seq_len(nconf)) {
       if (n > 1) {
         tfrac <- qt(0.5 - level[i] / 200, n - 1)
       } else {

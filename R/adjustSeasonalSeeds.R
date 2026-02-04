@@ -11,7 +11,7 @@ cutWTBATS <- function(
   mask.vector <- numeric(length(seasonal.periods))
   i <- length(seasonal.periods)
   while (i > 1) {
-    for (j in 1:(i - 1)) {
+    for (j in seq_len(i - 1)) {
       if ((seasonal.periods[i] %% seasonal.periods[j]) == 0) {
         mask.vector[j] <- 1
       }
@@ -56,7 +56,7 @@ cutW <- function(use.beta, w.tilda.transpose, seasonal.periods, p = 0, q = 0) {
   mask.vector <- numeric(length(seasonal.periods))
   i <- length(seasonal.periods)
   while (i > 1) {
-    for (j in 1:(i - 1)) {
+    for (j in seq_len(i - 1)) {
       if ((seasonal.periods[i] %% seasonal.periods[j]) == 0) {
         mask.vector[j] <- 1
       }

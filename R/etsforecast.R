@@ -268,7 +268,7 @@ class1 <- function(
   Fj <- diag(p)
   cj <- numeric(h - 1)
   if (h > 1) {
-    for (i in 1:(h - 1)) {
+    for (i in seq_len(h - 1)) {
       mu[i] <- H %*% Fj %*% last.state
       cj[i] <- H %*% Fj %*% G
       Fj <- Fj %*% F
@@ -338,7 +338,7 @@ class3 <- function(
   G21 <- G2 %x% G1
   K <- (G2 %x% F1) + (F2 %x% G1)
   mu <- var <- numeric(h)
-  for (i in 1:h) {
+  for (i in seq_len(h)) {
     mu[i] <- H1 %*% Mh %*% t(H2)
     var[i] <- (1 + sigma2) * H21 %*% Vh %*% t(H21) + sigma2 * mu[i]^2
     vecMh <- c(Mh)

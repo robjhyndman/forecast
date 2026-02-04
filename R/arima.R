@@ -193,9 +193,9 @@ SeasDummy <- function(x) {
   if (m == 1) {
     stop("Non-seasonal data")
   }
-  tt <- 1:n
+  tt <- seq_len(n)
   fmat <- matrix(NA, nrow = n, ncol = 2 * m)
-  for (i in 1:m) {
+  for (i in seq_len(m)) {
     fmat[, 2 * i] <- sin(2 * pi * i * tt / m)
     fmat[, 2 * (i - 1) + 1] <- cos(2 * pi * i * tt / m)
   }
@@ -222,18 +222,18 @@ SD.test <- function(wts, s = frequency(wts)) {
   R1 <- as.matrix(SeasDummy(wts))
   lmch <- lm(wts ~ R1, na.action = na.exclude) # run the regression : y(i)=mu+f(i)'gamma(i)+e(i)
   Fhat <- Fhataux <- matrix(nrow = N, ncol = s - 1)
-  for (i in 1:(s - 1)) {
+  for (i in seq_len(s - 1)) {
     Fhataux[, i] <- R1[, i] * residuals(lmch)
   }
-  for (i in 1:N) {
-    for (n in 1:(s - 1)) {
+  for (i in seq_len(N)) {
+    for (n in seq_len(s - 1)) {
       Fhat[i, n] <- sum(Fhataux[1:i, n])
     }
   }
   wnw <- 1 - seq(1, ltrunc, 1) / (ltrunc + 1)
   Ne <- nrow(Fhataux)
   Omnw <- 0
-  for (k in 1:ltrunc) {
+  for (k in seq_len(ltrunc)) {
     Omnw <- Omnw + (t(Fhataux)[, (k + 1):Ne] %*% Fhataux[1:(Ne - k), ]) * wnw[k]
   }
   Omfhat <- (crossprod(Fhataux) + Omnw + t(Omnw)) / Ne
@@ -250,7 +250,7 @@ SD.test <- function(wts, s = frequency(wts)) {
   a <- length(which(frecob == 1))
   A <- matrix(0, nrow = s - 1, ncol = a)
   j <- 1
-  for (i in 1:(s - 1)) {
+  for (i in seq_len(s - 1)) {
     if (frecob[i] == 1) {
       A[i, j] <- 1
       j <- j + 1
@@ -441,7 +441,7 @@ forecast.Arima <- function(
     # Compute prediction intervals via the normal distribution
     lower <- matrix(NA, ncol = nint, nrow = length(pred$pred))
     upper <- lower
-    for (i in 1:nint) {
+    for (i in seq_len(nint)) {
       qq <- qnorm(0.5 * (1 + level[i] / 100))
       lower[, i] <- pred$pred - qq * pred$se
       upper[, i] <- pred$pred + qq * pred$se

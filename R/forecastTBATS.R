@@ -217,7 +217,7 @@ as.character.tbats <- function(x, ...) {
   if (!is.null(x$seasonal.periods)) {
     name <- paste0(name, " {")
     M <- length(x$seasonal.periods)
-    for (i in 1:M) {
+    for (i in seq_len(M)) {
       name <- paste0(
         name,
         "<",

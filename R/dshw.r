@@ -182,7 +182,7 @@ dshw <- function(
   s <- s.start <- (mean(y[1:(2 * period2)]) - (period2 + 0.5) * t)
 
   ## In-sample fit
-  for (i in 1:n) {
+  for (i in seq_len(n)) {
     yhat[i] <- (s + t) * I[i] * w[i]
     snew <- alpha * (y[i] / (I[i] * w[i])) + (1 - alpha) * (s + t)
     tnew <- beta * (snew - s) + (1 - beta) * t

@@ -23,7 +23,7 @@ lpb <- function(x, nsim = 100) {
   s <- length(gamma)
   Gamma <- matrix(1, s, s)
   d <- row(Gamma) - col(Gamma)
-  for (i in 1:(s - 1)) {
+  for (i in seq_len(s - 1)) {
     Gamma[d == i | d == (-i)] <- gamma[i + 1]
   }
   L <- t(chol(Gamma))
@@ -43,7 +43,7 @@ lpb <- function(x, nsim = 100) {
 
 MBB <- function(x, window_size) {
   bx <- array(0, (floor(length(x) / window_size) + 2) * window_size)
-  for (i in 1:(floor(length(x) / window_size) + 2)) {
+  for (i in seq_len(floor(length(x) / window_size) + 2)) {
     c <- sample(1:(length(x) - window_size + 1), 1)
     bx[((i - 1) * window_size + 1):(i * window_size)] <- x[
       c:(c + window_size - 1)

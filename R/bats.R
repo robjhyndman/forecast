@@ -563,7 +563,7 @@ plot.bats <- function(x, main = "Decomposition by BATS model", ...) {
   if (!is.null(x$gamma.values)) {
     seas.states <- x$x[-(1:(1 + !is.null(x$beta))), ]
     j <- cumsum(c(1, x$seasonal.periods))
-    for (i in 1:nseas) {
+    for (i in seq_len(nseas)) {
       out <- cbind(out, season = seas.states[j[i], ])
     }
     if (nseas > 1) {

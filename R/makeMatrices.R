@@ -79,12 +79,12 @@ makeTBATSFMatrix <- function(
       )
 
       # C <- matrix(0,k.vector[i],k.vector[i])
-      # for(j in 1:k.vector[i]) {
+      # for(j in seq_len(k.vector[i])) {
       # 	l <- round((2*pi*j/seasonal.periods[i]), digits=15)
       # 	C[j,j] <- cos(l)
       # }
       # S <- matrix(0,k.vector[i],k.vector[i])
-      # for(j in 1:k.vector[i]) {
+      # for(j in seq_len(k.vector[i])) {
       # 	S[j,j] <- sin(2*pi*j/seasonal.periods[i])
       # }
       # print(C)

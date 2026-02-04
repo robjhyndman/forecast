@@ -107,7 +107,7 @@ forecast.bats <- function(
   variance.multiplier <- numeric(h)
   variance.multiplier[1] <- 1
   if (h > 1) {
-    for (j in 1:(h - 1)) {
+    for (j in seq_len(h - 1)) {
       if (j == 1) {
         f.running <- diag(ncol(F))
       } else {
