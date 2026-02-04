@@ -93,7 +93,7 @@ Acf <- function(
   )
 
   acf.out$tsp <- tsp(x)
-  acf.out$periods <- attributes(x)$msts
+  acf.out$periods <- attr(x, "msts")
   acf.out$series <- deparse1(substitute(x))
 
   # Make lags in integer units
@@ -127,7 +127,7 @@ Acf <- function(
       }
       # Make nice horizontal axis
       if (inherits(x, "msts")) {
-        seasonalaxis(attributes(x)$msts, nlags, type = "acf")
+        seasonalaxis(attr(x, "msts"), nlags, type = "acf")
       } else {
         seasonalaxis(frequency(x), nlags, type = "acf")
       }
@@ -251,7 +251,7 @@ Pacf <- function(
     }
     # Make nice horizontal axis
     if (inherits(x, "msts")) {
-      seasonalaxis(attributes(x)$msts, nlags, type = "acf")
+      seasonalaxis(attr(x, "msts"), nlags, type = "acf")
     } else {
       seasonalaxis(frequency(x), nlags, type = "acf")
     }

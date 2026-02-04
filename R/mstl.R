@@ -33,7 +33,7 @@ mstl <- function(
   origx <- x
   n <- length(x)
   if (inherits(x, "msts")) {
-    msts <- attributes(x)$msts
+    msts <- attr(x, "msts")
     if (any(msts >= n / 2)) {
       warning("Dropping seasonal components with fewer than two full periods.")
       msts <- msts[msts < n / 2]
@@ -608,7 +608,7 @@ forecast.stlm <- function(
   # In-case forecast method uses different horizon length (such as using xregs)
   h <- NROW(fcast$mean)
   # Forecast seasonal series with seasonal naive
-  seasonal.periods <- attributes(object$stl)$msts
+  seasonal.periods <- attr(object$stl, "msts")
   if (is.null(seasonal.periods)) {
     seasonal.periods <- frequency(object$stl)
   }
