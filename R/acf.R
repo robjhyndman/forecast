@@ -353,7 +353,7 @@ wacf <- function(x, lag.max = length(x) - 1) {
   s <- length(gamma)
   Gamma <- matrix(1, s, s)
   d <- row(Gamma) - col(Gamma)
-  for (i in 1:(s - 1)) {
+  for (i in seq_len(s - 1)) {
     Gamma[d == i | d == (-i)] <- gamma[i + 1]
   }
   # Compute eigenvalue decomposition
@@ -441,11 +441,11 @@ taperedacf <- function(
     bootsim <- lpb(x, nsim = nsim)
     s1 <- matrix(0, nrow = lag, ncol = nsim)
     if (type == "correlation") {
-      for (i in 1:nsim) {
+      for (i in seq_len(nsim)) {
         s1[, i] <- wacf(bootsim[, i])$acf[2:(lag + 1), , 1]
       }
     } else {
-      for (i in 1:nsim) {
+      for (i in seq_len(nsim)) {
         s1[, i] <- wpacf(bootsim[, i])$acf[1:lag, , 1]
       }
     }
@@ -516,7 +516,7 @@ plot.mpacf <- function(
     grid(col = gray(.80), ny = NA, lty = 1)
   }
   if (!is.null(object$lower)) {
-    for (j in 1:object$lag) {
+    for (j in seq_len(object$lag)) {
       polygon(
         lagx[j] + c(-0.55, 0.55, 0.55, -0.55),
         c(rep(object$lower[j], 2), rep(object$upper[j], 2)),

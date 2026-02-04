@@ -217,7 +217,7 @@ forecast.rw_model <- function(
   } else {
     z <- qnorm(.5 + level / 200)
     lower <- upper <- matrix(NA, nrow = h, ncol = nconf)
-    for (i in 1:nconf) {
+    for (i in seq_len(nconf)) {
       lower[, i] <- fc - z[i] * se
       upper[, i] <- fc + z[i] * se
     }

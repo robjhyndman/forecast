@@ -18,7 +18,7 @@ forecast.varest <- function(
   # out$mean <- out$lower <- out$upper <- vector("list",object$K)
   for (i in seq_along(level)) {
     pr <- predict(object, n.ahead = h, ci = level[i] / 100, ...)
-    for (j in 1:object$K) {
+    for (j in seq_len(object$K)) {
       out$forecast[[j]]$lower <- cbind(
         out$forecast[[j]]$lower,
         pr$fcst[[j]][, "lower"]

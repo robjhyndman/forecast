@@ -951,7 +951,7 @@ tbats.components <- function(x) {
     w <- w$w.transpose[, -(1:(1 + !is.null(x$beta))), drop = FALSE]
     w <- w[, 1:tau, drop = FALSE]
     j <- cumsum(c(1, 2 * x$k.vector))
-    for (i in 1:nseas) {
+    for (i in seq_len(nseas)) {
       out <- cbind(
         out,
         season = c(

@@ -279,8 +279,8 @@ plotlmforecast <- function(
       }
     }
 
-    for (i in 1:nf) {
-      for (j in 1:nint) {
+    for (i in seq_len(nf)) {
+      for (j in seq_len(nint)) {
         if (shaded) {
           lines(
             rep(object$newdata[i, xvar], 2),
@@ -530,9 +530,9 @@ plot.forecast <- function(
         ]
       }
     }
-    for (i in 1:nint) {
+    for (i in seq_len(nint)) {
       if (shadebars) {
-        for (j in 1:npred) {
+        for (j in seq_len(npred)) {
           polygon(
             xxx[j] + c(-0.5, 0.5, 0.5, -0.5) / freq,
             c(rep(x$lower[j, idx[i]], 2), rep(x$upper[j, idx[i]], 2)),
@@ -618,7 +618,7 @@ hfitted.default <- function(object, h = 1, FUN = NULL, ...) {
   if (FUN == "ets") {
     refitarg$use.initial.values <- TRUE
   }
-  for (i in 1:(n - h)) {
+  for (i in seq_len(n - h)) {
     refitarg[[1]] <- ts(x[1:i], start = tspx[1], frequency = tspx[3])
     if (!is.null(object$xreg) && any(colnames(object$xreg) != "drift")) {
       if (any(colnames(object$xreg) == "drift")) {
@@ -759,7 +759,7 @@ as.data.frame.forecast <- function(x, ...) {
   if (!is.null(x$lower) && !is.null(x$upper) && !is.null(x$level)) {
     x$upper <- as.matrix(x$upper)
     x$lower <- as.matrix(x$lower)
-    for (i in 1:nconf) {
+    for (i in seq_len(nconf)) {
       out <- cbind(out, x$lower[, i, drop = FALSE], x$upper[, i, drop = FALSE])
       names <- c(names, paste("Lo", x$level[i]), paste("Hi", x$level[i]))
     }

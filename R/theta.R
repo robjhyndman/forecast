@@ -175,7 +175,7 @@ forecast.theta_model <- function(
   nconf <- length(level)
   fcast$lower <- fcast$upper <- ts(matrix(NA, nrow = h, ncol = nconf))
   tsp(fcast$lower) <- tsp(fcast$upper) <- tsp(fcast$mean)
-  for (i in 1:nconf) {
+  for (i in seq_len(nconf)) {
     zt <- -qnorm(0.5 - level[i] / 200)
     fcast$lower[, i] <- fcast$mean - zt * fcast.se
     fcast$upper[, i] <- fcast$mean + zt * fcast.se

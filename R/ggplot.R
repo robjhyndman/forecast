@@ -1098,7 +1098,7 @@ autoplot.mforecast <- function(
       layout = grid::grid.layout(nrow(gridlayout), ncol(gridlayout))
     ))
 
-    for (i in 1:K) {
+    for (i in seq_len(K)) {
       partialfcast <- object$forecast[[i]]
       partialfcast$model <- mlmsplit(object$model, index = i)
       matchidx <- as.data.frame(which(gridlayout == i, arr.ind = TRUE))

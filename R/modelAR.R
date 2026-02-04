@@ -286,7 +286,7 @@ modelAR <- function(
   nlag <- length(lags)
   y <- xx[-(1:maxlag)]
   lags.X <- matrix(NA_real_, ncol = nlag, nrow = n - maxlag)
-  for (i in 1:nlag) {
+  for (i in seq_len(nlag)) {
     lags.X[, i] <- xx[(maxlag - lags[i] + 1):(n - lags[i])]
   }
   # Add xreg into lagged matrix
@@ -432,7 +432,7 @@ forecast.modelAR <- function(
   maxlag <- max(lags)
   flag <- rev(tail(xx, n = maxlag))
   # Iterative 1-step forecast
-  for (i in 1:h) {
+  for (i in seq_len(h)) {
     newdata <- c(flag[lags], xxreg[i, ])
     if (anyNA(newdata)) {
       stop(
