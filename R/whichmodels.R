@@ -1,25 +1,6 @@
 WhichModels <- function(max.p, max.q, max.P, max.Q, maxK) {
-  total.models <- (max.p + 1) *
-    (max.q + 1) *
-    (max.P + 1) *
-    (max.Q + 1) *
-    length(0:maxK)
-  x <- numeric(total.models)
-  i <- 1
-
-  for (x1 in 0:max.p) {
-    for (x2 in 0:max.q) {
-      for (x3 in 0:max.P) {
-        for (x4 in 0:max.Q) {
-          for (K in 0:maxK) {
-            x[i] <- paste0(x1, "f", x2, "f", x3, "f", x4, "f", K)
-            i <- i + 1
-          }
-        }
-      }
-    }
-  }
-  x
+  grid <- expand.grid(0:max.p, 0:max.q, 0:max.P, 0:max.Q, 0:maxK, stringsAsFactors = FALSE)
+  do.call(paste, c(rev(grid), sep = "f"))
 }
 
 UndoWhichModels <- function(n) {
