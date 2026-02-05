@@ -728,21 +728,17 @@ as.ts.forecast <- function(x, ...) {
 
 #' @export
 as.data.frame.mforecast <- function(x, ...) {
-  tmp <- lapply(x$forecast, as.data.frame)
-  series <- names(tmp)
-  times <- rownames(tmp[[1]])
-  h <- NROW(tmp[[1]])
-  output <- cbind(Time = times, Series = rep(series[1], h), tmp[[1]])
-  if (length(tmp) > 1) {
-    for (i in 2:length(tmp)) {
-      output <- rbind(
-        output,
-        cbind(Time = times, Series = rep(series[i], h), tmp[[i]])
-      )
-    }
+  dfs <- lapply(x$forecast, as.data.frame)
+  series <- names(dfs)
+  times <- rownames(dfs[[1]])
+  h <- NROW(dfs[[1]])
+  out <- vector("list", length(dfs))
+  for (i in seq_along(out)) {
+    out[[i]] <- cbind(Time = times, Series = rep(series[i], h), dfs[[i]])
   }
-  rownames(output) <- NULL
-  output
+  out <- do.call(rbind, out)
+  rownames(out) <- NULL
+  out
 }
 
 #' @export
