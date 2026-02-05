@@ -225,7 +225,7 @@ plotlmforecast <- function(
   xlab,
   ...
 ) {
-  xvar <- attributes(terms(object$model))$term.labels
+  xvar <- attr(terms(object$model), "term.labels")
   if (length(xvar) > 1) {
     stop(
       "Forecast plot for regression models only available for a single predictor"
@@ -753,7 +753,7 @@ as.data.frame.forecast <- function(x, ...) {
   fr.x <- frequency(x$mean)
   if (ists) {
     out <- ts(out)
-    attributes(out)$tsp <- attributes(x$mean)$tsp
+    attr(out, "tsp") <- attr(x$mean, "tsp")
   }
   names <- "Point Forecast"
   if (!is.null(x$lower) && !is.null(x$upper) && !is.null(x$level)) {

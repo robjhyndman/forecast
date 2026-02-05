@@ -106,9 +106,9 @@ copy_msts <- function(x, y) {
   if (inherits(x, "msts")) {
     class(y) <- c("msts", class(y))
   }
-  attr <- attributes(x)
-  attributes(y)$tsp <- attr$tsp
-  attributes(y)$msts <- attr$msts
+  attrs <- attributes(x)
+  attr(y, "tsp") <- attrs$tsp
+  attr(y, "msts") <- attrs$msts
   y
 }
 
@@ -122,9 +122,9 @@ future_msts <- function(x, y) {
   if (inherits(x, "msts")) {
     class(y) <- c("msts", class(y))
   }
-  attr <- attributes(x)
-  attr$tsp[1:2] <- attr$tsp[2] + c(1, NROW(y)) / attr$tsp[3]
-  attributes(y)$tsp <- attr$tsp
-  attributes(y)$msts <- attr$msts
+  attrs <- attributes(x)
+  attrs$tsp[1:2] <- attrs$tsp[2] + c(1, NROW(y)) / attrs$tsp[3]
+  attr(y, "tsp") <- attrs$tsp
+  attr(y, "msts") <- attrs$msts
   y
 }

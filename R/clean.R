@@ -76,7 +76,7 @@ na.interp <- function(
     # Fit Fourier series for seasonality and a polynomial for the trend,
     # just to get something reasonable to start with
     if (inherits(x, "msts")) {
-      K <- pmin(trunc(attributes(x)$msts / 2), 20L)
+      K <- pmin(trunc(attr(x, "msts") / 2), 20L)
     } else {
       K <- min(trunc(freq / 2), 5)
     }

@@ -217,7 +217,7 @@ ggAcf <- function(
     plot = FALSE
   )
   object$tsp <- tsp(x)
-  object$periods <- attributes(x)$msts
+  object$periods <- attr(x, "msts")
   object$series <- deparse1(substitute(x))
   if (plot) {
     autoplot(object, ...)
@@ -245,7 +245,7 @@ ggPacf <- function(
     plot = FALSE
   )
   object$tsp <- tsp(x)
-  object$periods <- attributes(x)$msts
+  object$periods <- attr(x, "msts")
   object$series <- deparse1(substitute(x))
   if (plot) {
     autoplot(object, ...)
@@ -354,7 +354,7 @@ autoplot.mpacf <- function(object, ...) {
 
   # Add seasonal x-axis
   if (msts) {
-    periods <- attributes(object$x)$msts
+    periods <- attr(object$x, "msts")
     periods <- periods[periods != freq]
     minorbreaks <- periods * seq(-20:20)
   } else {
