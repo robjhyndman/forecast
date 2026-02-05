@@ -5,8 +5,8 @@ calcBATS <- function(y, yHat, wTranspose, F, x, g, e) {
     .Call(`_forecast_calcBATS`, y, yHat, wTranspose, F, x, g, e)
 }
 
-calcBATSFaster <- function(ys, yHats, wTransposes, Fs, xs, gs, es, xNought_s, sPeriods_s, betaV, tau_s, p_s, q_s) {
-    .Call(`_forecast_calcBATSFaster`, ys, yHats, wTransposes, Fs, xs, gs, es, xNought_s, sPeriods_s, betaV, tau_s, p_s, q_s)
+calcBATSFaster <- function(y, yHat, wTranspose, F, x, g, e, xNought, sPeriods, beta, tau, p, q) {
+    invisible(.Call(`_forecast_calcBATSFaster`, y, yHat, wTranspose, F, x, g, e, xNought, sPeriods, beta, tau, p, q))
 }
 
 calcWTilda <- function(wTildaTranspose, D) {
