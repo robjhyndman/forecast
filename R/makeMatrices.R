@@ -163,7 +163,7 @@ makeTBATSFMatrix <- function(
 
 # makeWMatrix <- function(small.phi=NULL, seasonal.periods=NULL, ar.coefs=NULL, ma.coefs=NULL) {
 #
-# 	the.list <- makeBATSWMatrix(smallPhi_s = small.phi, sPeriods_s = as.integer(seasonal.periods), arCoefs_s = ar.coefs, maCoefs_s = ma.coefs)
+# 	the.list <- makeBATSWMatrix(smallPhi = small.phi, sPeriods = as.integer(seasonal.periods), arCoefs = ar.coefs, maCoefs = ma.coefs)
 #
 #
 # 	return(the.list)

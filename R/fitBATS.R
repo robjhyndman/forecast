@@ -21,10 +21,10 @@ fitPreviousBATSModel <- function(y, model, biasadj = FALSE) {
   ## Calculate the variance:
   # 1. Re-set up the matrices
   w <- makeBATSWMatrix(
-    smallPhi_s = small.phi,
-    sPeriods_s = seasonal.periods,
-    arCoefs_s = ar.coefs,
-    maCoefs_s = ma.coefs
+    smallPhi = small.phi,
+    sPeriods = seasonal.periods,
+    arCoefs = ar.coefs,
+    maCoefs = ma.coefs
   )
   g <- makeBATSGMatrix(
     as.numeric(alpha),
@@ -213,10 +213,10 @@ fitSpecificBATS <- function(
 
   # w <- makeWMatrix(small.phi=small.phi, seasonal.periods=seasonal.periods, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
   w <- makeBATSWMatrix(
-    smallPhi_s = small.phi,
-    sPeriods_s = seasonal.periods,
-    arCoefs_s = ar.coefs,
-    maCoefs_s = ma.coefs
+    smallPhi = small.phi,
+    sPeriods = seasonal.periods,
+    arCoefs = ar.coefs,
+    maCoefs = ma.coefs
   )
   # g <- makeGMatrix(alpha=alpha, beta=beta.v, gamma.vector=gamma, seasonal.periods=seasonal.periods, p=p, q=q)
   g <- makeBATSGMatrix(
@@ -357,10 +357,10 @@ fitSpecificBATS <- function(
     # 1. Re-set up the matrices
     # w <- makeWMatrix(small.phi=small.phi, seasonal.periods=seasonal.periods, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
     w <- makeBATSWMatrix(
-      smallPhi_s = small.phi,
-      sPeriods_s = seasonal.periods,
-      arCoefs_s = ar.coefs,
-      maCoefs_s = ma.coefs
+      smallPhi = small.phi,
+      sPeriods = seasonal.periods,
+      arCoefs = ar.coefs,
+      maCoefs = ma.coefs
     )
     # g <- makeGMatrix(alpha=alpha, beta=beta.v, gamma.vector=gamma, seasonal.periods=seasonal.periods, p=p, q=q)
     g <- makeBATSGMatrix(
@@ -446,10 +446,10 @@ fitSpecificBATS <- function(
     # 1. Re-set up the matrices
     # w <- makeWMatrix(small.phi=small.phi, seasonal.periods=seasonal.periods, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
     w <- makeBATSWMatrix(
-      smallPhi_s = small.phi,
-      sPeriods_s = seasonal.periods,
-      arCoefs_s = ar.coefs,
-      maCoefs_s = ma.coefs
+      smallPhi = small.phi,
+      sPeriods = seasonal.periods,
+      arCoefs = ar.coefs,
+      maCoefs = ma.coefs
     )
     # g <- makeGMatrix(alpha=alpha, beta=beta.v, gamma.vector=gamma, seasonal.periods=seasonal.periods, p=p, q=q)
     g <- makeBATSGMatrix(
@@ -590,7 +590,7 @@ calcLikelihood <- function(
   x.nought <- BoxCox(opt.env$x.nought.untransformed, lambda = box.cox.parameter)
   lambda <- attr(x.nought, "lambda")
   # w <- makeWMatrix(small.phi=small.phi, seasonal.periods=seasonal.periods, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
-  # w <- makeBATSWMatrix(smallPhi_s = small.phi, sPeriods_s = seasonal.periods, arCoefs_s = ar.coefs, maCoefs_s = ma.coefs)
+  # w <- makeBATSWMatrix(smallPhi = small.phi, sPeriods = seasonal.periods, arCoefs = ar.coefs, maCoefs = ma.coefs)
   updateWtransposeMatrix(
     wTranspose = opt.env$w.transpose,
     smallPhi = small.phi,
@@ -727,7 +727,7 @@ calcLikelihoodNOTransformed <- function(
   }
 
   # w <- makeWMatrix(small.phi=small.phi, seasonal.periods=seasonal.periods, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
-  # w <- makeBATSWMatrix(smallPhi_s = small.phi, sPeriods_s = seasonal.periods, arCoefs_s = ar.coefs, maCoefs_s = ma.coefs)
+  # w <- makeBATSWMatrix(smallPhi = small.phi, sPeriods = seasonal.periods, arCoefs = ar.coefs, maCoefs = ma.coefs)
   updateWtransposeMatrix(
     wTranspose = opt.env$w.transpose,
     smallPhi = small.phi,

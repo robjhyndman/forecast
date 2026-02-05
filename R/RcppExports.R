@@ -25,12 +25,12 @@ etsNelderMead <- function(p_var, p_env, p_abstol, p_intol, p_alpha, p_beta, p_ga
     .Call(`_forecast_etsNelderMead`, p_var, p_env, p_abstol, p_intol, p_alpha, p_beta, p_gamma, p_trace, p_maxit)
 }
 
-makeBATSWMatrix <- function(smallPhi_s, sPeriods_s, arCoefs_s, maCoefs_s) {
-    .Call(`_forecast_makeBATSWMatrix`, smallPhi_s, sPeriods_s, arCoefs_s, maCoefs_s)
+makeBATSWMatrix <- function(smallPhi, sPeriods, arCoefs, maCoefs) {
+    .Call(`_forecast_makeBATSWMatrix`, smallPhi, sPeriods, arCoefs, maCoefs)
 }
 
-makeBATSGMatrix <- function(alpha_s, beta_s, gammaVector_s, seasonalPeriods_s, p_s, q_s) {
-    .Call(`_forecast_makeBATSGMatrix`, alpha_s, beta_s, gammaVector_s, seasonalPeriods_s, p_s, q_s)
+makeBATSGMatrix <- function(alpha, beta, gammaVector, seasonalPeriods, p, q) {
+    .Call(`_forecast_makeBATSGMatrix`, alpha, beta, gammaVector, seasonalPeriods, p, q)
 }
 
 makeTBATSWMatrix <- function(smallPhi, kVector, arCoefs, maCoefs, tau) {
