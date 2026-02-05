@@ -1071,13 +1071,6 @@ autoplot.mforecast <- function(
     return(p)
   } else {
     # lm forecasts
-    if (!requireNamespace("grid")) {
-      stop(
-        "grid is needed for this function to work. Install it via install.packages(\"grid\")",
-        call. = FALSE
-      )
-    }
-
     K <- length(object$forecast)
     if (K < 2) {
       warning("Expected at least two plots but forecast required less.")
@@ -1141,13 +1134,6 @@ ggtsdisplay <- function(
       call. = FALSE
     )
   }
-  if (!requireNamespace("grid", quietly = TRUE)) {
-    stop(
-      "grid is needed for this function to work. Install it via install.packages(\"grid\")",
-      call. = FALSE
-    )
-  }
-
   if (NCOL(x) > 1) {
     stop("ggtsdisplay is only for univariate time series")
   }
@@ -2857,7 +2843,6 @@ GeomForecastPoint <- ggplot2::ggproto(
 )
 
 blendHex <- function(mixcol, seqcol, alpha = 1) {
-  requireNamespace("methods")
   if (is.na(seqcol)) {
     return(mixcol)
   }
