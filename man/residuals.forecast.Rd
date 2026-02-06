@@ -32,16 +32,20 @@
 
 \method{residuals}{stlm}(object, type = c("innovation", "response"), ...)
 
-\method{residuals}{tslm}(object, type = c("innovation", "response", "deviance"), ...)
+\method{residuals}{tslm}(
+  object,
+  type = c("innovation", "response", "working", "deviance"),
+  ...
+)
 }
 \arguments{
 \item{object}{An object containing a time series model of class \code{ar},
-\code{Arima}, \code{bats}, \code{ets}, \code{arfima}, \code{nnetar} or \code{stlm}.
+\code{Arima}, \code{bats}, \code{ets}, \code{arfima}, \code{nnetar}, \code{stlm} or \code{tslm}.
 If \code{object} is of class \code{forecast}, then the function will return
 \code{object$residuals} if it exists, otherwise it returns the differences between
 the observations and their fitted values.}
 
-\item{type}{Type of residual.}
+\item{type}{Type of residual. The \code{innovation} residuals are estimates of the innovations in the model; these should look like white noise for a well-fitted model. The \code{response} residuals are equal to the observation minus its fitted value. For many models, \code{innovation} and \code{response} residuals will be identical, but not if there has been a transformation used, or for an ETS model with multiplicative errors. A \code{regression} residual from a dynamic regression model (\code{residuals.Arima}) is equal to the response variable minus the linear combination of predictors.}
 
 \item{...}{Other arguments not used.}
 

@@ -17,11 +17,11 @@
 #' matrix of time-series consisting of the residuals from each of the fitted neural networks is returned.
 #'
 #' @param object An object containing a time series model of class `ar`,
-#' `Arima`, `bats`, `ets`, `arfima`, `nnetar` or `stlm`.
+#' `Arima`, `bats`, `ets`, `arfima`, `nnetar`, `stlm` or `tslm`.
 #' If `object` is of class `forecast`, then the function will return
 #' `object$residuals` if it exists, otherwise it returns the differences between
 #' the observations and their fitted values.
-#' @param type Type of residual.
+#' @param type Type of residual. The `innovation` residuals are estimates of the innovations in the model; these should look like white noise for a well-fitted model. The `response` residuals are equal to the observation minus its fitted value. For many models, `innovation` and `response` residuals will be identical, but not if there has been a transformation used, or for an ETS model with multiplicative errors. A `regression` residual from a dynamic regression model (`residuals.Arima`) is equal to the response variable minus the linear combination of predictors.
 #' @param h If `type = "response"`, then the fitted values are computed for
 #' `h`-step forecasts.
 #' @param ... Other arguments not used.
@@ -223,7 +223,7 @@ residuals.stlm <- function(object, type = c("innovation", "response"), ...) {
 #' @export
 residuals.tslm <- function(
   object,
-  type = c("innovation", "response", "deviance"),
+  type = c("innovation", "response", "working", "deviance"),
   ...
 ) {
   type <- match.arg(type)
