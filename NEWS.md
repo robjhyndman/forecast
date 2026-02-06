@@ -2,6 +2,8 @@
 
 * Performance improvements for ARFIMA model search
 * `forecast.mlm()` now finds `newdata` when passed as an argument from another function (#880)
+* `residuals.tslm()` now allows `type = "working"` as per CRAN request
+* Code modernization and performance improvements
 
 # forecast 9.0.0
   * `ets()` now allows missing values in the time series (#952)
