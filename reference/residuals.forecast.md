@@ -33,7 +33,11 @@ residuals(object, type = c("innovation", "response"), h = 1, ...)
 residuals(object, type = c("innovation", "response"), ...)
 
 # S3 method for class 'tslm'
-residuals(object, type = c("innovation", "response", "deviance"), ...)
+residuals(
+  object,
+  type = c("innovation", "response", "working", "deviance"),
+  ...
+)
 ```
 
 ## Arguments
@@ -41,14 +45,22 @@ residuals(object, type = c("innovation", "response", "deviance"), ...)
 - object:
 
   An object containing a time series model of class `ar`, `Arima`,
-  `bats`, `ets`, `arfima`, `nnetar` or `stlm`. If `object` is of class
-  `forecast`, then the function will return `object$residuals` if it
-  exists, otherwise it returns the differences between the observations
-  and their fitted values.
+  `bats`, `ets`, `arfima`, `nnetar`, `stlm` or `tslm`. If `object` is of
+  class `forecast`, then the function will return `object$residuals` if
+  it exists, otherwise it returns the differences between the
+  observations and their fitted values.
 
 - type:
 
-  Type of residual.
+  Type of residual. The `innovation` residuals are estimates of the
+  innovations in the model; these should look like white noise for a
+  well-fitted model. The `response` residuals are equal to the
+  observation minus its fitted value. For many models, `innovation` and
+  `response` residuals will be identical, but not if there has been a
+  transformation used, or for an ETS model with multiplicative errors. A
+  `regression` residual from a dynamic regression model
+  (`residuals.Arima`) is equal to the response variable minus the linear
+  combination of predictors.
 
 - ...:
 
