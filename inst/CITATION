@@ -20,7 +20,9 @@ bibentry(bibtype = "Manual",
   author = "Rob Hyndman and George Athanasopoulos and Christoph Bergmeir and Gabriel Caceres and Leanne Chhay and Mitchell O'Hara-Wild and Fotios Petropoulos and Slava Razbash and Earo Wang and Farah Yasmeen",
   year = year,
   note = vers,
-  url = "https://pkg.robjhyndman.com/forecast/")
+  url = "https://pkg.robjhyndman.com/forecast/",
+  doi = "10.32614/CRAN.package.forecast"
+)
 
 bibentry(bibtype = "Article",
   title     = "Automatic time series forecasting: the forecast package for {R}",
