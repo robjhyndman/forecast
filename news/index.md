@@ -6,6 +6,9 @@
 - [`forecast.mlm()`](https://pkg.robjhyndman.com/forecast/reference/forecast.mlm.md)
   now finds `newdata` when passed as an argument from another function
   ([\#880](https://github.com/robjhyndman/forecast/issues/880))
+- [`residuals.tslm()`](https://pkg.robjhyndman.com/forecast/reference/residuals.forecast.md)
+  now allows `type = "working"` as per CRAN request
+- Code modernization and performance improvements
 
 ## forecast 9.0.0
 
