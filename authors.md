@@ -60,8 +60,9 @@ Source:
 
 Hyndman R, Athanasopoulos G, Bergmeir C, Caceres G, Chhay L, O'Hara-Wild
 M, Petropoulos F, Razbash S, Wang E, Yasmeen F (2026). *forecast:
-Forecasting functions for time series and linear models*. R package
-version 9.0.0.9000, <https://pkg.robjhyndman.com/forecast/>.
+Forecasting functions for time series and linear models*.
+[doi:10.32614/CRAN.package.forecast](https://doi.org/10.32614/CRAN.package.forecast),
+R package version 9.0.0.9000, <https://pkg.robjhyndman.com/forecast/>.
 
     @Manual{,
       title = {{forecast}: Forecasting functions for time series and linear models},
@@ -69,6 +70,7 @@ version 9.0.0.9000, <https://pkg.robjhyndman.com/forecast/>.
       year = {2026},
       note = {R package version 9.0.0.9000},
       url = {https://pkg.robjhyndman.com/forecast/},
+      doi = {10.32614/CRAN.package.forecast},
     }
 
 Hyndman RJ, Khandakar Y (2008). “Automatic time series forecasting: the
