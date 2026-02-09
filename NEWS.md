@@ -13,7 +13,7 @@
   * Added `theta_model()` and `forecast.theta_model()` (#1014)
   * Added `croston_model()` and `forecast.croston_model()` (#1015)
   * Added simulated and bootstrapped prediction intervals to more models (#1040)
-  * Added parallelization for nnetar (m-muecke, #346)
+  * Added parallelization for `nnetar()` (m-muecke, #346)
   * More consistent handling of biasadj across models
   * `accuracy()` rewritten to use S3 methods for models and remove `accuracy.default()` (#912)
   * Bug fixes and performance improvements
@@ -25,19 +25,19 @@
 
 # forecast 8.23.0
   * Prevented RNG state changing when the package is attached (#954, #955).
-  * head.ts and tail.ts only defined for R < 4.5.0 due to new base R functions.
+  * `head.ts()` and `tail.ts()` only defined for R < 4.5.0 due to new base R functions.
 
 # forecast 8.22.0
-  * hfitted now much faster for ARIMA models (danigiro, #949)
-  * hfitted now much faster for ETS models, and produces fitted values from
+  * `hfitted()` now much faster for ARIMA models (danigiro, #949)
+  * `hfitted()` now much faster for ETS models, and produces fitted values from
     initial states (#950)
 
 # forecast 8.21.1
-  * nnetar now allows p or P to be 0
+  * `nnetar()` now allows p or P to be 0
   * Bug fixes and improved docs
 
 # forecast 8.21
-  * Fixed df calculation for Ljung-Box tests in checkresiduals
+  * Fixed df calculation for Ljung-Box tests in `checkresiduals()`
   * Fixed some broken tests
 
 # forecast 8.20
@@ -78,7 +78,7 @@ is provided to the `data` argument (#886).
   * Fixed handling of `xreg` in `tsCV()`.
 
 # forecast 8.13
-  * Fixed forecasts from Arima with drift with initial NAs.
+  * Fixed forecasts from `Arima()` with drift with initial NAs.
   * Fixed season colours in `gglagplot()` to match y-axis (original data).
   * Fixed facet order for classical decomposition `autoplot()`
   * Fixed `summary()` erroring for `tslm()` models containing NA values.
@@ -123,7 +123,7 @@ is provided to the `data` argument (#886).
 
 # forecast 8.4
   * Added `modelAR()`, generalising `nnetar()` to support user-defined functions
-  * Added na.action argument to ets
+  * Added na.action argument to `ets()`
   * Documentation improvements
   * Bug fixes
 
@@ -132,7 +132,7 @@ is provided to the `data` argument (#886).
   * `stlf()`, `stlm()`, `tsoutliers()` and `tsclean()` all now use `mstl()`.
   * Updated `tsCV()` to handle multiple horizons
   * Switched unit root tests in `ndiffs()` to use urca package
-  * Added ocsb.test
+  * Added `ocsb.test()`
   * Changed method for choosing D in `auto.arima()` to a measure of seasonal strength.
   * Added `baggedModel()` function to generalize baggedETS
   * Added bootstrapped PI to more functions
@@ -148,13 +148,13 @@ is provided to the `data` argument (#886).
   * Bug fixes
 
 # forecast 8.1
-  * Added as.character.ets, as.character.bats, as.character.tbats
+  * Added `as.character.ets()`, `as.character.bats()`, `as.character.tbats()`
   * Made `gghistogram()` and `checkresiduals()` robust to missing values
   * All documentation now generated using roxygen
   * Improved documentation for many functions
   * Added `autoplot.msts()` and `autolayer.msts()`
   * Added as.character methods for many models to generate model names
-  * Added as.ts.forecast
+  * Added `as.ts.forecast()`
   * autoplot method for bats/tbats models
   * Better ARIMA trace output
   * Made accuracy an S3 method
@@ -167,8 +167,8 @@ is provided to the `data` argument (#886).
   * Added baggedETS
   * Added `head.ts()` and `tail.ts()`, so head and tail now work properly on ts objects.
   * Added `gghistogram()` and `checkresiduals()`
-  * Added ggseasonplot with polar coordinates
-  * Modified defaults for gglagplot
+  * Added `ggseasonplot()` with polar coordinates
+  * Modified defaults for `gglagplot()`
   * Added `autolayer.ts()`
   * Added type argument to `residuals()` for different types of residuals
   * Added support for seas objects from the seasonal package
@@ -178,9 +178,9 @@ is provided to the `data` argument (#886).
   * Added vignette based on 2008 JSS article by Hyndman and Khandakar
   * Improved ggplot functions
   * mforecast objects re-structured
-  * Added as.data.frame.mforecast
-  * autoplot functions now exported
-  * Refit support for `arfima()` and stlm
+  * Added `as.data.frame.mforecast()`
+  * `autoplot()` functions now exported
+  * Refit support for `arfima()` and `stlm()`
   * Better bias adjustment support after Box-Cox transformation
   * print.ARIMA has better labelling of constants
   * Bug fixes
@@ -222,7 +222,7 @@ is provided to the `data` argument (#886).
   * `tslm()` completely rewritten to be more robust and to handle fourier terms more easily
   * Support for multivariate linear models added
   * `subset.ts()` more robust, and captures some errors.
-  * Added xreg argument to nnetar
+  * Added xreg argument to `nnetar()`
   * Improved labels in seasonplot
   * More unit tests added
   * Documentation improvements
@@ -231,8 +231,8 @@ is provided to the `data` argument (#886).
 # forecast 6.2
   * Many unit tests added using testthat.
   * Fixed bug in ets when very short seasonal series were passed in a data frame.
-  * Fixed bug in nnetar where the initial predictor vector was reversed.
-  * Corrected model name returned in nnetar().
+  * Fixed bug in `nnetar()` where the initial predictor vector was reversed.
+  * Corrected model name returned in `nnetar()`.
   * Fixed bug in accuracy() when non-integer seasonality used.
   * Made auto.arima() robust to non-integer seasonality.
   * Fixed bug in auto.arima where allowmean was ignored when stepwise=FALSE.
@@ -353,13 +353,13 @@ is provided to the `data` argument (#886).
   * Added arguments max.D and max.d to auto.arima(), ndiffs() and nsdiffs().
   * Made several functions more robust to zoo objects.
   * Corrected an error in the calculation of AICc when using CV().
-  * Made minimum default p in nnetar equal to 1.
+  * Made minimum default p in `nnetar()` equal to 1.
   * Added tsoutliers() and tsclean() for identifying and replacing outliers
   * Improved na.interp() to handle seasonality and added argument lambda to na.interp
   * Added robust option to forecast.ts() to allow outliers and missing values
   * Improved output from snaive() and naive() to better reflect user expectations
   * Allowed Acf() to handle missing values by using na.contiguous
-  * Changed default information criterion in ets() to AICc.
+  * Changed default information criterion in `ets()` to AICc.
   * Removed drift term in Arima() when d+D>1.
   * Added bootstrap option to forecast.Arima
 
@@ -372,7 +372,7 @@ is provided to the `data` argument (#886).
   * better handling of nearly constant time series, and nearly linear time series
   * improved handling of missing values in rwf
   * corrected fitted values and residuals in meanf() for time series data
-  * bats() and tbats() now handle missing values in the same way as ets(). i.e., using longest contiguous portion.
+  * bats() and tbats() now handle missing values in the same way as `ets()`. i.e., using longest contiguous portion.
   * better handling of very short time series
   * initial states for ets() modified for very short time series (less than 3 years).
   * nsdiffs with CH test now handles degenerate cases without returning an error.
