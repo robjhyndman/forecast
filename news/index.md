@@ -44,7 +44,9 @@ CRAN release: 2026-01-11
   ([\#1015](https://github.com/robjhyndman/forecast/issues/1015))
 - Added simulated and bootstrapped prediction intervals to more models
   ([\#1040](https://github.com/robjhyndman/forecast/issues/1040))
-- Added parallelization for nnetar (m-muecke,
+- Added parallelization for
+  [`nnetar()`](https://pkg.robjhyndman.com/forecast/reference/nnetar.md)
+  (m-muecke,
   [\#346](https://github.com/robjhyndman/forecast/issues/346))
 - More consistent handling of biasadj across models
 - [`accuracy()`](https://generics.r-lib.org/reference/accuracy.html)
@@ -67,16 +69,16 @@ CRAN release: 2024-06-20
 - Prevented RNG state changing when the package is attached
   ([\#954](https://github.com/robjhyndman/forecast/issues/954),
   [\#955](https://github.com/robjhyndman/forecast/issues/955)).
-- head.ts and tail.ts only defined for R \< 4.5.0 due to new base R
-  functions.
+- `head.ts()` and `tail.ts()` only defined for R \< 4.5.0 due to new
+  base R functions.
 
 ## forecast 8.22.0
 
 CRAN release: 2024-03-04
 
-- hfitted now much faster for ARIMA models (danigiro,
+- `hfitted()` now much faster for ARIMA models (danigiro,
   [\#949](https://github.com/robjhyndman/forecast/issues/949))
-- hfitted now much faster for ETS models, and produces fitted values
+- `hfitted()` now much faster for ETS models, and produces fitted values
   from initial states
   ([\#950](https://github.com/robjhyndman/forecast/issues/950))
 
@@ -84,14 +86,16 @@ CRAN release: 2024-03-04
 
 CRAN release: 2023-08-31
 
-- nnetar now allows p or P to be 0
+- [`nnetar()`](https://pkg.robjhyndman.com/forecast/reference/nnetar.md)
+  now allows p or P to be 0
 - Bug fixes and improved docs
 
 ## forecast 8.21
 
 CRAN release: 2023-02-27
 
-- Fixed df calculation for Ljung-Box tests in checkresiduals
+- Fixed df calculation for Ljung-Box tests in
+  [`checkresiduals()`](https://pkg.robjhyndman.com/forecast/reference/checkresiduals.md)
 - Fixed some broken tests
 
 ## forecast 8.20
@@ -187,7 +191,9 @@ CRAN release: 2021-03-11
 
 CRAN release: 2020-09-12
 
-- Fixed forecasts from Arima with drift with initial NAs.
+- Fixed forecasts from
+  [`Arima()`](https://pkg.robjhyndman.com/forecast/reference/Arima.md)
+  with drift with initial NAs.
 - Fixed season colours in
   [`gglagplot()`](https://pkg.robjhyndman.com/forecast/reference/gglagplot.md)
   to match y-axis (original data).
@@ -282,7 +288,8 @@ CRAN release: 2018-06-21
   generalising
   [`nnetar()`](https://pkg.robjhyndman.com/forecast/reference/nnetar.md)
   to support user-defined functions
-- Added na.action argument to ets
+- Added na.action argument to
+  [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md)
 - Documentation improvements
 - Bug fixes
 
@@ -306,7 +313,8 @@ CRAN release: 2018-04-11
 - Switched unit root tests in
   [`ndiffs()`](https://pkg.robjhyndman.com/forecast/reference/ndiffs.md)
   to use urca package
-- Added ocsb.test
+- Added
+  [`ocsb.test()`](https://pkg.robjhyndman.com/forecast/reference/ocsb.test.md)
 - Changed method for choosing D in
   [`auto.arima()`](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md)
   to a measure of seasonal strength.
@@ -333,7 +341,10 @@ CRAN release: 2017-09-25
 
 CRAN release: 2017-06-17
 
-- Added as.character.ets, as.character.bats, as.character.tbats
+- Added
+  [`as.character.ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md),
+  [`as.character.bats()`](https://pkg.robjhyndman.com/forecast/reference/bats.md),
+  [`as.character.tbats()`](https://pkg.robjhyndman.com/forecast/reference/tbats.md)
 - Made
   [`gghistogram()`](https://pkg.robjhyndman.com/forecast/reference/gghistogram.md)
   and
@@ -346,7 +357,8 @@ CRAN release: 2017-06-17
   and
   [`autolayer.msts()`](https://pkg.robjhyndman.com/forecast/reference/autoplot.ts.md)
 - Added as.character methods for many models to generate model names
-- Added as.ts.forecast
+- Added
+  [`as.ts.forecast()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ts.md)
 - autoplot method for bats/tbats models
 - Better ARIMA trace output
 - Made accuracy an S3 method
@@ -369,8 +381,11 @@ CRAN release: 2017-02-23
   [`gghistogram()`](https://pkg.robjhyndman.com/forecast/reference/gghistogram.md)
   and
   [`checkresiduals()`](https://pkg.robjhyndman.com/forecast/reference/checkresiduals.md)
-- Added ggseasonplot with polar coordinates
-- Modified defaults for gglagplot
+- Added
+  [`ggseasonplot()`](https://pkg.robjhyndman.com/forecast/reference/seasonplot.md)
+  with polar coordinates
+- Modified defaults for
+  [`gglagplot()`](https://pkg.robjhyndman.com/forecast/reference/gglagplot.md)
 - Added
   [`autolayer.ts()`](https://pkg.robjhyndman.com/forecast/reference/autoplot.ts.md)
 - Added type argument to
@@ -384,11 +399,13 @@ CRAN release: 2017-02-23
 - Added vignette based on 2008 JSS article by Hyndman and Khandakar
 - Improved ggplot functions
 - mforecast objects re-structured
-- Added as.data.frame.mforecast
-- autoplot functions now exported
+- Added
+  [`as.data.frame.mforecast()`](https://pkg.robjhyndman.com/forecast/reference/forecast.mts.md)
+- [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+  functions now exported
 - Refit support for
   [`arfima()`](https://pkg.robjhyndman.com/forecast/reference/arfima.md)
-  and stlm
+  and [`stlm()`](https://pkg.robjhyndman.com/forecast/reference/stlm.md)
 - Better bias adjustment support after Box-Cox transformation
 - print.ARIMA has better labelling of constants
 - Bug fixes
@@ -463,7 +480,8 @@ CRAN release: 2016-04-04
 - Support for multivariate linear models added
 - [`subset.ts()`](https://pkg.robjhyndman.com/forecast/reference/subset.ts.md)
   more robust, and captures some errors.
-- Added xreg argument to nnetar
+- Added xreg argument to
+  [`nnetar()`](https://pkg.robjhyndman.com/forecast/reference/nnetar.md)
 - Improved labels in seasonplot
 - More unit tests added
 - Documentation improvements
@@ -476,8 +494,11 @@ CRAN release: 2015-10-20
 - Many unit tests added using testthat.
 - Fixed bug in ets when very short seasonal series were passed in a data
   frame.
-- Fixed bug in nnetar where the initial predictor vector was reversed.
-- Corrected model name returned in nnetar().
+- Fixed bug in
+  [`nnetar()`](https://pkg.robjhyndman.com/forecast/reference/nnetar.md)
+  where the initial predictor vector was reversed.
+- Corrected model name returned in
+  [`nnetar()`](https://pkg.robjhyndman.com/forecast/reference/nnetar.md).
 - Fixed bug in accuracy() when non-integer seasonality used.
 - Made auto.arima() robust to non-integer seasonality.
 - Fixed bug in auto.arima where allowmean was ignored when
@@ -660,7 +681,9 @@ CRAN release: 2014-01-17
   nsdiffs().
 - Made several functions more robust to zoo objects.
 - Corrected an error in the calculation of AICc when using CV().
-- Made minimum default p in nnetar equal to 1.
+- Made minimum default p in
+  [`nnetar()`](https://pkg.robjhyndman.com/forecast/reference/nnetar.md)
+  equal to 1.
 - Added tsoutliers() and tsclean() for identifying and replacing
   outliers
 - Improved na.interp() to handle seasonality and added argument lambda
@@ -670,7 +693,9 @@ CRAN release: 2014-01-17
 - Improved output from snaive() and naive() to better reflect user
   expectations
 - Allowed Acf() to handle missing values by using na.contiguous
-- Changed default information criterion in ets() to AICc.
+- Changed default information criterion in
+  [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md) to
+  AICc.
 - Removed drift term in Arima() when d+D\>1.
 - Added bootstrap option to forecast.Arima
 
@@ -690,7 +715,8 @@ CRAN release: 2013-09-27
   series
 - improved handling of missing values in rwf
 - corrected fitted values and residuals in meanf() for time series data
-- bats() and tbats() now handle missing values in the same way as ets().
+- bats() and tbats() now handle missing values in the same way as
+  [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md).
   i.e., using longest contiguous portion.
 - better handling of very short time series
 - initial states for ets() modified for very short time series (less
