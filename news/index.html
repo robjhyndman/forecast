@@ -151,7 +151,7 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="8.14" id="forecast-814">forecast 8.14<a class="anchor" aria-label="anchor" href="#forecast-814"></a></h2><p class="text-muted">CRAN release: 2021-03-11</p>
 <ul><li>Changed default <code>BoxCox(lambda = "auto")</code> lower bound to -0.9.</li>
-<li>Use better variance estimates for <code><a href="../reference/ets.html">ets()</a></code> bias adjustments.</li>
+<li>Use better variance estimates for ets bias adjustments.</li>
 <li>Improved robustness of <code><a href="../reference/autoplot.seas.html">autoplot.seas()</a></code> for non-seasonal decomposition.</li>
 <li>Fixed scoping of parameters in <code>auto.arima(parallel = TRUE)</code> (<a href="https://github.com/robjhyndman/forecast/issues/874" class="external-link">#874</a>).</li>
 <li>Fixed handling of <code>xreg</code> in <code><a href="../reference/tsCV.html">tsCV()</a></code>.</li>
@@ -204,7 +204,7 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="8.5" id="forecast-85">forecast 8.5<a class="anchor" aria-label="anchor" href="#forecast-85"></a></h2><p class="text-muted">CRAN release: 2019-01-18</p>
 <ul><li>Updated <code><a href="../reference/tsCV.html">tsCV()</a></code> to handle exogenous regressors</li>
-<li>Reimplemented lagwalk methods (naive, snaive, rwf) for speed improvements</li>
+<li>Reimplemented lagwalk methods (<code><a href="../reference/forecast.rw_model.html">naive()</a></code>, <code><a href="../reference/forecast.rw_model.html">snaive()</a></code>, <code><a href="../reference/forecast.rw_model.html">rwf()</a></code>) for speed improvements</li>
 <li>Added support for passing arguments to <code><a href="../reference/auto.arima.html">auto.arima()</a></code> unit root tests</li>
 <li>Improved <code><a href="../reference/auto.arima.html">auto.arima()</a></code> stepwise search algorithm</li>
 <li>Documentation improvements</li>
@@ -290,7 +290,8 @@
 <li>Refit support for <code><a href="../reference/arfima.html">arfima()</a></code> and <code><a href="../reference/stlm.html">stlm()</a></code>
 </li>
 <li>Better bias adjustment support after Box-Cox transformation</li>
-<li>print.ARIMA has better labelling of constants</li>
+<li>
+<code><a href="../reference/Arima.html">print.ARIMA()</a></code> has better labelling of constants</li>
 <li>Bug fixes</li>
 <li>Removed fortify method for forecast objects</li>
 </ul></div>
@@ -308,7 +309,8 @@
 <li>
 <code><a href="../reference/ets.html">ets()</a></code> now works for tiny time series</li>
 <li>Added h-step fitted values in <code><a href="https://rdrr.io/r/stats/fitted.values.html" class="external-link">fitted()</a></code> function.</li>
-<li>seasonal adjustment added to thetaf</li>
+<li>seasonal adjustment added to <code><a href="../reference/forecast.theta_model.html">thetaf()</a></code>
+</li>
 <li>y now the standard first argument in all modelling functions</li>
 <li>Added truncate argument to <code><a href="../reference/auto.arima.html">auto.arima()</a></code>
 </li>
@@ -328,7 +330,8 @@
 <li>Improved <code><a href="../reference/tslm.html">tslm()</a></code> to avoid some problems finding data</li>
 <li>
 <code><a href="../reference/nnetar.html">nnetar()</a></code> updated to allow subsets</li>
-<li>Modified initial values for ets</li>
+<li>Modified initial values for <code><a href="../reference/ets.html">ets()</a></code>
+</li>
 <li>Improved unit tests to avoid deprecated functions and to avoid data from fpp</li>
 <li>Removed fpp from Suggests list</li>
 </ul></div>
@@ -336,7 +339,7 @@
 <h2 class="pkg-version" data-toc-text="7.0" id="forecast-70">forecast 7.0<a class="anchor" aria-label="anchor" href="#forecast-70"></a></h2><p class="text-muted">CRAN release: 2016-04-04</p>
 <ul><li>Added ggplot2 graphics</li>
 <li>Bias adjustment option added for all functions that allow Box-Cox transformations</li>
-<li>Added Ccf function, and rewrote Acf to handle multivariate series.</li>
+<li>Added <code><a href="../reference/Acf.html">Ccf()</a></code> function, and rewrote <code><a href="../reference/Acf.html">Acf()</a></code> to handle multivariate series.</li>
 <li>
 <code><a href="../reference/tslm.html">tslm()</a></code> completely rewritten to be more robust and to handle fourier terms more easily</li>
 <li>Support for multivariate linear models added</li>
@@ -352,301 +355,321 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="6.2" id="forecast-62">forecast 6.2<a class="anchor" aria-label="anchor" href="#forecast-62"></a></h2><p class="text-muted">CRAN release: 2015-10-20</p>
 <ul><li>Many unit tests added using testthat.</li>
-<li>Fixed bug in ets when very short seasonal series were passed in a data frame.</li>
+<li>Fixed bug in <code><a href="../reference/ets.html">ets()</a></code> when very short seasonal series were passed in a data frame.</li>
 <li>Fixed bug in <code><a href="../reference/nnetar.html">nnetar()</a></code> where the initial predictor vector was reversed.</li>
 <li>Corrected model name returned in <code><a href="../reference/nnetar.html">nnetar()</a></code>.</li>
-<li>Fixed bug in accuracy() when non-integer seasonality used.</li>
-<li>Made auto.arima() robust to non-integer seasonality.</li>
-<li>Fixed bug in auto.arima where allowmean was ignored when stepwise=FALSE.</li>
-<li>Improved robustness of forecast.ets() for explosive models with multiplicative trends.</li>
+<li>Fixed bug in <code><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy()</a></code> when non-integer seasonality used.</li>
+<li>Made <code><a href="../reference/auto.arima.html">auto.arima()</a></code> robust to non-integer seasonality.</li>
+<li>Fixed bug in <code><a href="../reference/auto.arima.html">auto.arima()</a></code> where allowmean was ignored when stepwise=FALSE.</li>
+<li>Improved robustness of <code><a href="../reference/forecast.ets.html">forecast.ets()</a></code> for explosive models with multiplicative trends.</li>
 <li>Exogenous variables now passed to VAR forecasts</li>
-<li>Increased maximum nmse in ets() to 30.</li>
-<li>Made tsoutliers() more robust to weak seasonality</li>
-<li>Changed tsoutliers() to use supsmu on non-seasonal and seasonally adjusted data.</li>
-<li>Fixed bug in tbats() when seasonal period 1 is a small multiple of seasonal period 2.</li>
+<li>Increased maximum nmse in <code><a href="../reference/ets.html">ets()</a></code> to 30.</li>
+<li>Made <code><a href="../reference/tsoutliers.html">tsoutliers()</a></code> more robust to weak seasonality</li>
+<li>Changed <code><a href="../reference/tsoutliers.html">tsoutliers()</a></code> to use supsmu on non-seasonal and seasonally adjusted data.</li>
+<li>Fixed bug in <code><a href="../reference/tbats.html">tbats()</a></code> when seasonal period 1 is a small multiple of seasonal period 2.</li>
 <li>Other bug fixes</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="6.1" id="forecast-61">forecast 6.1<a class="anchor" aria-label="anchor" href="#forecast-61"></a></h2><p class="text-muted">CRAN release: 2015-05-12</p>
-<ul><li>Made auto.arima more robust</li>
+<ul><li>Made <code><a href="../reference/auto.arima.html">auto.arima()</a></code> more robust</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="6.0" id="forecast-60">forecast 6.0<a class="anchor" aria-label="anchor" href="#forecast-60"></a></h2><p class="text-muted">CRAN release: 2015-05-09</p>
-<ul><li>Modified dm.test to give error when variance is zero</li>
-<li>Corrected help file for splinef().</li>
+<ul><li>Modified <code><a href="../reference/dm.test.html">dm.test()</a></code> to give error when variance is zero</li>
+<li>Corrected help file for <code><a href="../reference/forecast.spline_model.html">splinef()</a></code>.</li>
 <li>Fixed typo in accuracy help file regarding RMSE</li>
-<li>Fixed bug in accuracy() which occurred with Arima and ets objects.</li>
-<li>Fixed arima.errors() to handle Box-Cox transformed models.</li>
-<li>Modified auto.arima() to be stricter on near-unit-roots.</li>
-<li>Added allowmean argument in auto.arima().</li>
-<li>Improved handling of constant series in Arima() and forecast.Arima().</li>
-<li>Added plot.Arima() and plot.ar() functions.</li>
+<li>Fixed bug in <code><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy()</a></code> which occurred with Arima and ets objects.</li>
+<li>Fixed <code><a href="../reference/arima.errors.html">arima.errors()</a></code> to handle Box-Cox transformed models.</li>
+<li>Modified <code><a href="../reference/auto.arima.html">auto.arima()</a></code> to be stricter on near-unit-roots.</li>
+<li>Added allowmean argument in <code><a href="../reference/auto.arima.html">auto.arima()</a></code>.</li>
+<li>Improved handling of constant series in <code><a href="../reference/Arima.html">Arima()</a></code> and <code><a href="../reference/forecast.Arima.html">forecast.Arima()</a></code>.</li>
+<li>Added <code><a href="../reference/plot.Arima.html">plot.Arima()</a></code> and <code><a href="../reference/plot.Arima.html">plot.ar()</a></code> functions.</li>
 <li>Added as.character.Arima</li>
 <li>Captured problem in bats/tbats where data are constant.</li>
 <li>Modified TBATS and BATS estimation to avoid occasional instabilities.</li>
 <li>Fixed bug in forecasts from bats which labelled them as TBATS.</li>
-<li>Added allow.multiplicative.trend argument to ets().</li>
-<li>Set allow.multiplictive.trend=FALSE in stlf(), stlm() and forecast.ts().</li>
-<li>Simplified arguments in stlf().</li>
+<li>Added allow.multiplicative.trend argument to <code><a href="../reference/ets.html">ets()</a></code>.</li>
+<li>Set allow.multiplictive.trend=FALSE in <code><a href="../reference/forecast.stl.html">stlf()</a></code>, <code><a href="../reference/stlm.html">stlm()</a></code> and <code><a href="../reference/forecast.ts.html">forecast.ts()</a></code>.</li>
+<li>Simplified arguments in <code><a href="../reference/forecast.stl.html">stlf()</a></code>.</li>
 <li>Added taperedacf and taperedpacf functions</li>
 <li>Added functions for bootstrapping time series</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="5.9" id="forecast-59">forecast 5.9<a class="anchor" aria-label="anchor" href="#forecast-59"></a></h2><p class="text-muted">CRAN release: 2015-02-26</p>
-<ul><li>Improved documentation of accuracy() function.</li>
-<li>Fixed occasional bug in accuracy() when test set is a single observation.</li>
-<li>Improved Acf() to give better handling of horizontal axis for seasonal data or when … is passed.</li>
-<li>Removed print.Arima and predict.Arima and added print.ARIMA</li>
+<ul><li>Improved documentation of <code><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy()</a></code> function.</li>
+<li>Fixed occasional bug in <code><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy()</a></code> when test set is a single observation.</li>
+<li>Improved <code><a href="../reference/Acf.html">Acf()</a></code> to give better handling of horizontal axis for seasonal data or when … is passed.</li>
+<li>Removed <code>print.Arima()</code> and <code>predict.Arima()</code> and added <code><a href="../reference/Arima.html">print.ARIMA()</a></code>
+</li>
 <li>method argument now passed when re-fitting an ARIMA model.</li>
 <li>Fixed error when CH test applied to short series</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="5.8" id="forecast-58">forecast 5.8<a class="anchor" aria-label="anchor" href="#forecast-58"></a></h2><p class="text-muted">CRAN release: 2015-01-06</p>
 <ul><li>Fixed bug in versions of R before 3.10 when using fourier and fourierf.</li>
-<li>Made BoxCox.lambda() robust to missing values.</li>
+<li>Made <code><a href="../reference/BoxCox.lambda.html">BoxCox.lambda()</a></code> robust to missing values.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="5.7" id="forecast-57">forecast 5.7<a class="anchor" aria-label="anchor" href="#forecast-57"></a></h2><p class="text-muted">CRAN release: 2014-12-17</p>
-<ul><li>Fixed bug in tbats/bats where optional arguments were not being passed to auto.arima().</li>
-<li>Revised fourier() and fourierf() to avoid large orders, and to avoid zero columns.</li>
-<li>Improved accuracy of fourier() and fourierf(), while simplifying the code.</li>
+<ul><li>Fixed bug in tbats/bats where optional arguments were not being passed to <code><a href="../reference/auto.arima.html">auto.arima()</a></code>.</li>
+<li>Revised <code><a href="../reference/fourier.html">fourier()</a></code> and <code><a href="../reference/fourier.html">fourierf()</a></code> to avoid large orders, and to avoid zero columns.</li>
+<li>Improved accuracy of <code><a href="../reference/fourier.html">fourier()</a></code> and <code><a href="../reference/fourier.html">fourierf()</a></code>, while simplifying the code.</li>
 <li>Removed duplicate columns returned by fourier/fourierf with multiple seasonal periods.</li>
-<li>Corrected some bugs in simulate.Arima for models involving xreg.</li>
-<li>Centred simulations from simulate.Arima for non-stationary models by conditioning on first observation.</li>
-<li>Added findfrequency() function.</li>
-<li>Fixed error in computed residuals from forecast.stl().</li>
-<li>Improved handling of very short series in auto.arima().</li>
+<li>Corrected some bugs in <code><a href="../reference/simulate.ets.html">simulate.Arima()</a></code> for models involving xreg.</li>
+<li>Centred simulations from <code><a href="../reference/simulate.ets.html">simulate.Arima()</a></code> for non-stationary models by conditioning on first observation.</li>
+<li>Added <code><a href="../reference/findfrequency.html">findfrequency()</a></code> function.</li>
+<li>Fixed error in computed residuals from <code><a href="../reference/forecast.stl.html">forecast.stl()</a></code>.</li>
+<li>Improved handling of very short series in <code><a href="../reference/auto.arima.html">auto.arima()</a></code>.</li>
 <li>Fixed error in forecasting with additive damped models. Damping previously applied only from second forecast horizon.</li>
-<li>Fixed misuse of abs() in two places in C code.</li>
-<li>Added na.action argument to Acf() and fixed na.action argument in tsdisplay().</li>
+<li>Fixed misuse of <code><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs()</a></code> in two places in C code.</li>
+<li>Added na.action argument to <code><a href="../reference/Acf.html">Acf()</a></code> and fixed na.action argument in <code><a href="../reference/tsdisplay.html">tsdisplay()</a></code>.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="5.6" id="forecast-56">forecast 5.6<a class="anchor" aria-label="anchor" href="#forecast-56"></a></h2><p class="text-muted">CRAN release: 2014-09-24</p>
 <ul><li>Improved tbats and bats by ensuring ARMA coefficients are not close to the boundary of invertibility and stationarity.</li>
-<li>Improved nsdiffs() handling of degenerate series (e.g., all zeros).</li>
-<li>Improved forecast.ar() when function buried within other functions.</li>
+<li>Improved <code><a href="../reference/nsdiffs.html">nsdiffs()</a></code> handling of degenerate series (e.g., all zeros).</li>
+<li>Improved <code><a href="../reference/forecast.Arima.html">forecast.ar()</a></code> when function buried within other functions.</li>
 <li>Improved handling of degenerate ARIMA models when xreg used.</li>
-<li>More robust ets() initialization.</li>
-<li>Fixed problem in na.interp() with seasonal data having frequency &lt;= 5.</li>
-<li>Removed undocumented option to use Rmalschains for optimization of ets().</li>
+<li>More robust ets initialization.</li>
+<li>Fixed problem in <code><a href="../reference/na.interp.html">na.interp()</a></code> with seasonal data having frequency &lt;= 5.</li>
+<li>Removed undocumented option to use Rmalschains for optimization of ets.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="5.5" id="forecast-55">forecast 5.5<a class="anchor" aria-label="anchor" href="#forecast-55"></a></h2><p class="text-muted">CRAN release: 2014-08-12</p>
 <ul><li>Improved documentation for croston</li>
-<li>Added stlm() and forecast.stlm() functions, and added forecastfunction argument as a way of specifying a forecast method in stlf() and forecast.stl().</li>
-<li>Improved forecast.ar() so that it is more likely to work if ar() and forecast.ar() are embedded within other functions.</li>
+<li>Added <code><a href="../reference/stlm.html">stlm()</a></code> and <code><a href="../reference/forecast.stl.html">forecast.stlm()</a></code> functions, and added forecastfunction argument as a way of specifying a forecast method in <code><a href="../reference/forecast.stl.html">stlf()</a></code> and <code><a href="../reference/forecast.stl.html">forecast.stl()</a></code>.</li>
+<li>Improved <code><a href="../reference/forecast.Arima.html">forecast.ar()</a></code> so that it is more likely to work if <code><a href="https://rdrr.io/r/stats/ar.html" class="external-link">ar()</a></code> and <code><a href="../reference/forecast.Arima.html">forecast.ar()</a></code> are embedded within other functions.</li>
 <li>Improved handling of ARIMA models with seasonality greater than 48</li>
 <li>Improved handling of some degenerate regression models in nsdiffs</li>
 <li>Changed AIC for poor models from 1e20 to Inf.
-<ul><li>Update fourier() and fourierf() to work with msts object.</li>
-<li>Added a new argument find.frequency to forecast.ts().</li>
-<li>Added new arguments d and D to accuracy() for MASE.</li>
+<ul><li>Update <code><a href="../reference/fourier.html">fourier()</a></code> and <code><a href="../reference/fourier.html">fourierf()</a></code> to work with msts object.</li>
+<li>Added a new argument find.frequency to <code><a href="../reference/forecast.ts.html">forecast.ts()</a></code>.</li>
+<li>Added new arguments d and D to <code><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy()</a></code> for MASE.</li>
 </ul></li>
-<li>Corrected bugs in accuracy().</li>
-<li>Better handling of regression models with perfect fit in auto.arima().</li>
-<li>Fixed bug in tbats.components() when there are no seasonal components.</li>
+<li>Corrected bugs in <code><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy()</a></code>.</li>
+<li>Better handling of regression models with perfect fit in <code><a href="../reference/auto.arima.html">auto.arima()</a></code>.</li>
+<li>Fixed bug in <code><a href="../reference/tbats.components.html">tbats.components()</a></code> when there are no seasonal components.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="5.4" id="forecast-54">forecast 5.4<a class="anchor" aria-label="anchor" href="#forecast-54"></a></h2><p class="text-muted">CRAN release: 2014-05-08</p>
-<ul><li>Fixed bug in forecast.tbats() and forecast.bats() when ts.frequency does not match seasonal.periods.</li>
-<li>Fixed bug in getResponse.lm() when there’s a logged dependent variable.</li>
-<li>Modified ets() to avoid problems when data contains large numbers.</li>
-<li>Modified ets() to produce forecasts when the data are constant.</li>
-<li>Improved arima.errors() to find xreg more often, and to return an error if it can’t be found.</li>
+<ul><li>Fixed bug in <code><a href="../reference/forecast.bats.html">forecast.tbats()</a></code> and <code><a href="../reference/forecast.bats.html">forecast.bats()</a></code> when ts.frequency does not match seasonal.periods.</li>
+<li>Fixed bug in <code><a href="../reference/getResponse.html">getResponse.lm()</a></code> when there’s a logged dependent variable.</li>
+<li>Modified <code><a href="../reference/ets.html">ets()</a></code> to avoid problems when data contains large numbers.</li>
+<li>Modified <code><a href="../reference/ets.html">ets()</a></code> to produce forecasts when the data are constant.</li>
+<li>Improved <code><a href="../reference/arima.errors.html">arima.errors()</a></code> to find xreg more often, and to return an error if it can’t be found.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="5.3" id="forecast-53">forecast 5.3<a class="anchor" aria-label="anchor" href="#forecast-53"></a></h2><p class="text-muted">CRAN release: 2014-03-24</p>
 <ul><li>Unit tests added</li>
-<li>Fixed bug in zzhw() which reversed the sign of the residuals.</li>
-<li>Updated help file for CV() to specify it is only leave-one-out.</li>
-<li>Fixed guer.cv() to allow non-integer periods without warning.</li>
-<li>Added use.initial.values argument in ets().</li>
-<li>Added arimaorder() function.</li>
-<li>Modified warnings suppression by using suppressWarnings() throughout.</li>
+<li>Fixed bug in <code>zzhw()</code> which reversed the sign of the residuals.</li>
+<li>Updated help file for <code><a href="../reference/CV.html">CV()</a></code> to specify it is only leave-one-out.</li>
+<li>Fixed <code>guer.cv()</code> to allow non-integer periods without warning.</li>
+<li>Added use.initial.values argument in <code><a href="../reference/ets.html">ets()</a></code>.</li>
+<li>Added <code><a href="../reference/arimaorder.html">arimaorder()</a></code> function.</li>
+<li>Modified warnings suppression by using <code><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings()</a></code> throughout.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="5.2" id="forecast-52">forecast 5.2<a class="anchor" aria-label="anchor" href="#forecast-52"></a></h2><p class="text-muted">CRAN release: 2014-02-24</p>
 <ul><li>Changed default number of cores to 2 for all functions that use parallel processing.</li>
-<li>Removed remaining call to bats() from examples that are run.</li>
+<li>Removed remaining call to <code><a href="../reference/bats.html">bats()</a></code> from examples that are run.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="5.1" id="forecast-51">forecast 5.1<a class="anchor" aria-label="anchor" href="#forecast-51"></a></h2><p class="text-muted">CRAN release: 2014-02-08</p>
-<ul><li>Fixed bug in tsoutliers() and tsclean() with very short seasonal series.</li>
-<li>Fixed bug in Arima() when seasonal order is specified numerically instead of via a list.</li>
-<li>Removed dimension attribution from output of arima.errors</li>
+<ul><li>Fixed bug in <code><a href="../reference/tsoutliers.html">tsoutliers()</a></code> and <code><a href="../reference/tsclean.html">tsclean()</a></code> with very short seasonal series.</li>
+<li>Fixed bug in <code><a href="../reference/Arima.html">Arima()</a></code> when seasonal order is specified numerically instead of via a list.</li>
+<li>Removed dimension attribution from output of <code><a href="../reference/arima.errors.html">arima.errors()</a></code>
+</li>
 <li>Improved handling of “test” in accuracy</li>
-<li>Changed parallel processing to parLapply for auto.arima</li>
-<li>Added timeDate dependency to avoid errors in easter() and link to Rcpp &gt;= 0.11.0.</li>
+<li>Changed parallel processing to parLapply for <code><a href="../reference/auto.arima.html">auto.arima()</a></code>
+</li>
+<li>Added timeDate dependency to avoid errors in <code><a href="../reference/easter.html">easter()</a></code> and link to Rcpp &gt;= 0.11.0.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="5.0" id="forecast-50">forecast 5.0<a class="anchor" aria-label="anchor" href="#forecast-50"></a></h2><p class="text-muted">CRAN release: 2014-01-17</p>
-<ul><li>Added argument model to dshw().</li>
-<li>Added bizdays() and easter() for calendar variables.</li>
-<li>Added arguments max.D and max.d to auto.arima(), ndiffs() and nsdiffs().</li>
+<ul><li>Added argument model to <code><a href="../reference/dshw.html">dshw()</a></code>.</li>
+<li>Added <code><a href="../reference/bizdays.html">bizdays()</a></code> and <code><a href="../reference/easter.html">easter()</a></code> for calendar variables.</li>
+<li>Added arguments max.D and max.d to <code><a href="../reference/auto.arima.html">auto.arima()</a></code>, <code><a href="../reference/ndiffs.html">ndiffs()</a></code> and <code><a href="../reference/nsdiffs.html">nsdiffs()</a></code>.</li>
 <li>Made several functions more robust to zoo objects.</li>
-<li>Corrected an error in the calculation of AICc when using CV().</li>
+<li>Corrected an error in the calculation of AICc when using <code><a href="../reference/CV.html">CV()</a></code>.</li>
 <li>Made minimum default p in <code><a href="../reference/nnetar.html">nnetar()</a></code> equal to 1.</li>
-<li>Added tsoutliers() and tsclean() for identifying and replacing outliers</li>
-<li>Improved na.interp() to handle seasonality and added argument lambda to na.interp</li>
-<li>Added robust option to forecast.ts() to allow outliers and missing values</li>
-<li>Improved output from snaive() and naive() to better reflect user expectations</li>
-<li>Allowed Acf() to handle missing values by using na.contiguous</li>
+<li>Added <code><a href="../reference/tsoutliers.html">tsoutliers()</a></code> and <code><a href="../reference/tsclean.html">tsclean()</a></code> for identifying and replacing outliers</li>
+<li>Improved <code><a href="../reference/na.interp.html">na.interp()</a></code> to handle seasonality and added argument lambda to <code><a href="../reference/na.interp.html">na.interp()</a></code>
+</li>
+<li>Added robust option to <code><a href="../reference/forecast.ts.html">forecast.ts()</a></code> to allow outliers and missing values</li>
+<li>Improved output from <code><a href="../reference/forecast.rw_model.html">snaive()</a></code> and <code><a href="../reference/forecast.rw_model.html">naive()</a></code> to better reflect user expectations</li>
+<li>Allowed <code><a href="../reference/Acf.html">Acf()</a></code> to handle missing values by using na.contiguous</li>
 <li>Changed default information criterion in <code><a href="../reference/ets.html">ets()</a></code> to AICc.</li>
-<li>Removed drift term in Arima() when d+D&gt;1.</li>
-<li>Added bootstrap option to forecast.Arima</li>
+<li>Removed drift term in <code><a href="../reference/Arima.html">Arima()</a></code> when d+D&gt;1.</li>
+<li>Added bootstrap option to <code><a href="../reference/forecast.Arima.html">forecast.Arima()</a></code>
+</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="4.8" id="forecast-48">forecast 4.8<a class="anchor" aria-label="anchor" href="#forecast-48"></a></h2><p class="text-muted">CRAN release: 2013-09-30</p>
-<ul><li>Fixed bug in rwf() that was introduced in v4.7</li>
+<ul><li>Fixed bug in <code><a href="../reference/forecast.rw_model.html">rwf()</a></code> that was introduced in v4.7</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="4.7" id="forecast-47">forecast 4.7<a class="anchor" aria-label="anchor" href="#forecast-47"></a></h2><p class="text-muted">CRAN release: 2013-09-27</p>
-<ul><li>Added forecast.forecast() to simply return the object that is passed.</li>
+<ul><li>Added <code>forecast.forecast()</code> to simply return the object that is passed.</li>
 <li>Removed leading zero in package number. i.e., 4.7 instead of 4.07.</li>
 <li>better handling of nearly constant time series, and nearly linear time series</li>
-<li>improved handling of missing values in rwf</li>
-<li>corrected fitted values and residuals in meanf() for time series data</li>
-<li>bats() and tbats() now handle missing values in the same way as <code><a href="../reference/ets.html">ets()</a></code>. i.e., using longest contiguous portion.</li>
+<li>improved handling of missing values in <code><a href="../reference/forecast.rw_model.html">rwf()</a></code>
+</li>
+<li>corrected fitted values and residuals in <code><a href="../reference/forecast.mean_model.html">meanf()</a></code> for time series data</li>
+<li>
+<code><a href="../reference/bats.html">bats()</a></code> and <code><a href="../reference/tbats.html">tbats()</a></code> now handle missing values in the same way as <code><a href="../reference/ets.html">ets()</a></code>. i.e., using longest contiguous portion.</li>
 <li>better handling of very short time series</li>
-<li>initial states for ets() modified for very short time series (less than 3 years).</li>
+<li>initial states for <code><a href="../reference/ets.html">ets()</a></code> modified for very short time series (less than 3 years).</li>
 <li>nsdiffs with CH test now handles degenerate cases without returning an error.</li>
 <li>nnetar now handles missing values</li>
-<li>Fixed bug in forecast.varest() so residuals and fitted values computed correctly.</li>
-<li>Added accuracy() calculation for VAR models</li>
-<li>Fixed a bug in simulate.fracdiff() when future=TRUE. Sometimes the future argument was being ignored.</li>
+<li>Fixed bug in <code>forecast.varest()</code> so residuals and fitted values computed correctly.</li>
+<li>Added <code><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy()</a></code> calculation for VAR models</li>
+<li>Fixed a bug in <code><a href="../reference/simulate.ets.html">simulate.fracdiff()</a></code> when future=TRUE. Sometimes the future argument was being ignored.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="4.06" id="forecast-406">forecast 4.06<a class="anchor" aria-label="anchor" href="#forecast-406"></a></h2><p class="text-muted">CRAN release: 2013-06-30</p>
-<ul><li>accuracy() was returning a mape and mpe 100 times too large for in-sample errors.</li>
+<ul><li>
+<code><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy()</a></code> was returning a mape and mpe 100 times too large for in-sample errors.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="4.05" id="forecast-405">forecast 4.05<a class="anchor" aria-label="anchor" href="#forecast-405"></a></h2><p class="text-muted">CRAN release: 2013-06-19</p>
-<ul><li>Fixed bug in hw() so it works when initial=“simple”</li>
-<li>Allowed bats() and tbats() to take non-positive values.</li>
-<li>ets() now calls optim direct via c code making ets() run much faster.</li>
-<li>Added Rmalschains as a possible optimizer in ets(). Not documented.</li>
-<li>Modified forecast.lm so it is more likely that the original data are stored in the returned object.</li>
-<li>Corrected bug in forecast.Arima that occurred when a Box-Cox transformation was used with bootstrap=TRUE.</li>
-<li>accuracy() updated so that it gives more information, and returns a matrix of both test and training measures.</li>
-<li>Corrected training error measures for splinef() forecasts.</li>
+<ul><li>Fixed bug in <code><a href="../reference/ses.html">hw()</a></code> so it works when initial=“simple”</li>
+<li>Allowed <code><a href="../reference/bats.html">bats()</a></code> and <code><a href="../reference/tbats.html">tbats()</a></code> to take non-positive values.</li>
+<li>
+<code><a href="../reference/ets.html">ets()</a></code> now calls optim direct via c code making <code><a href="../reference/ets.html">ets()</a></code> run much faster.</li>
+<li>Added Rmalschains as a possible optimizer in <code><a href="../reference/ets.html">ets()</a></code>. Not documented.</li>
+<li>Modified <code><a href="../reference/forecast.lm.html">forecast.lm()</a></code> so it is more likely that the original data are stored in the returned object.</li>
+<li>Corrected bug in <code><a href="../reference/forecast.Arima.html">forecast.Arima()</a></code> that occurred when a Box-Cox transformation was used with bootstrap=TRUE.</li>
+<li>
+<code><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy()</a></code> updated so that it gives more information, and returns a matrix of both test and training measures.</li>
+<li>Corrected training error measures for <code><a href="../reference/forecast.spline_model.html">splinef()</a></code> forecasts.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="4.04" id="forecast-404">forecast 4.04<a class="anchor" aria-label="anchor" href="#forecast-404"></a></h2><p class="text-muted">CRAN release: 2013-04-22</p>
-<ul><li>Added ylim argument to Acf</li>
-<li>Avoided clash with the signal package when using auto.arima().</li>
-<li>Fixed problem in plot.forecast() when all historical data are NA or when there is no available historical data.</li>
-<li>forecast.Arima() is now a little more robust if a zoo object is passed instead of a ts object.</li>
-<li>CV() now handles missing values in the residuals.</li>
-<li>Fixed bug in holt() and hw() so that the printed model no longer contains missing values.</li>
+<ul><li>Added ylim argument to <code><a href="../reference/Acf.html">Acf()</a></code>
+</li>
+<li>Avoided clash with the signal package when using <code><a href="../reference/auto.arima.html">auto.arima()</a></code>.</li>
+<li>Fixed problem in <code><a href="../reference/plot.forecast.html">plot.forecast()</a></code> when all historical data are NA or when there is no available historical data.</li>
+<li>
+<code><a href="../reference/forecast.Arima.html">forecast.Arima()</a></code> is now a little more robust if a zoo object is passed instead of a ts object.</li>
+<li>
+<code><a href="../reference/CV.html">CV()</a></code> now handles missing values in the residuals.</li>
+<li>Fixed bug in <code><a href="../reference/ses.html">holt()</a></code> and <code><a href="../reference/ses.html">hw()</a></code> so that the printed model no longer contains missing values.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="4.03" id="forecast-403">forecast 4.03<a class="anchor" aria-label="anchor" href="#forecast-403"></a></h2><p class="text-muted">CRAN release: 2013-03-17</p>
-<ul><li>forecast.lm now guesses the variable name if there is only one predictor variable.</li>
-<li>Removed error trap in forecast.lm when no xreg variables passed as it was catching legitimate calls.</li>
+<ul><li>
+<code><a href="../reference/forecast.lm.html">forecast.lm()</a></code> now guesses the variable name if there is only one predictor variable.</li>
+<li>Removed error trap in <code><a href="../reference/forecast.lm.html">forecast.lm()</a></code> when no xreg variables passed as it was catching legitimate calls.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="4.02" id="forecast-402">forecast 4.02<a class="anchor" aria-label="anchor" href="#forecast-402"></a></h2><p class="text-muted">CRAN release: 2013-03-06</p>
-<ul><li>Fixed error in the prediction intervals returned by forecast.ets() when simulation was used and a Box-Cox transformation was specified.</li>
-<li>Fixed bug in accuracy() when a numerical f vector was passed.</li>
+<ul><li>Fixed error in the prediction intervals returned by <code><a href="../reference/forecast.ets.html">forecast.ets()</a></code> when simulation was used and a Box-Cox transformation was specified.</li>
+<li>Fixed bug in <code><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy()</a></code> when a numerical f vector was passed.</li>
 <li>Fixed man file for Diebold-Mariano test.</li>
-<li>Corrected references in nsdiffs() help page.</li>
+<li>Corrected references in <code><a href="../reference/nsdiffs.html">nsdiffs()</a></code> help page.</li>
 <li>Added warning to nsdiffs when series too short for seasonal differencing.</li>
-<li>Fixed problem in getResponse.Arima when Arima object created by stats::arima() from within a function.</li>
-<li>Added tbats.components() and extended seasadj() to allow tbats objects.</li>
+<li>Fixed problem in getResponse.Arima when Arima object created by stats::<code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">arima()</a></code> from within a function.</li>
+<li>Added <code><a href="../reference/tbats.components.html">tbats.components()</a></code> and extended <code><a href="../reference/seasadj.html">seasadj()</a></code> to allow tbats objects.</li>
 <li>Added undocumented functions for forecasting, printing and plotting output from vars::VAR.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="4.01" id="forecast-401">forecast 4.01<a class="anchor" aria-label="anchor" href="#forecast-401"></a></h2><p class="text-muted">CRAN release: 2013-01-22</p>
-<ul><li>Error now trapped when newxreg variables not passed to forecast.lm</li>
-<li>Corrected help file for dshw() to remove references to prediction intervals.</li>
-<li>Improved help file for dm.test() to give more information about the alternative hypotheses.</li>
-<li>Improved dm.test() performance for small samples by using a t-distribution instead of normal.</li>
-<li>Modified bats() and tbats() examples to follow CRAN policies on parallel processing.</li>
+<ul><li>Error now trapped when newxreg variables not passed to <code><a href="../reference/forecast.lm.html">forecast.lm()</a></code>
+</li>
+<li>Corrected help file for <code><a href="../reference/dshw.html">dshw()</a></code> to remove references to prediction intervals.</li>
+<li>Improved help file for <code><a href="../reference/dm.test.html">dm.test()</a></code> to give more information about the alternative hypotheses.</li>
+<li>Improved <code><a href="../reference/dm.test.html">dm.test()</a></code> performance for small samples by using a t-distribution instead of normal.</li>
+<li>Modified <code><a href="../reference/bats.html">bats()</a></code> and <code><a href="../reference/tbats.html">tbats()</a></code> examples to follow CRAN policies on parallel processing.</li>
 <li>Moved some packages from Depends to Imports.</li>
-<li>Added getResponse() function to return the historical time series from various time series model objects.</li>
-<li>Modified accuracy() to use getResponse().</li>
-<li>Allowed user-generated innovations in simulate.ets(), simulate.Arima(), etc.</li>
-<li>Allowed xreg argument in forecast.stl() and stlf() when ARIMA model used.</li>
+<li>Added <code><a href="../reference/getResponse.html">getResponse()</a></code> function to return the historical time series from various time series model objects.</li>
+<li>Modified <code><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy()</a></code> to use <code><a href="../reference/getResponse.html">getResponse()</a></code>.</li>
+<li>Allowed user-generated innovations in <code><a href="../reference/simulate.ets.html">simulate.ets()</a></code>, <code><a href="../reference/simulate.ets.html">simulate.Arima()</a></code>, etc.</li>
+<li>Allowed xreg argument in <code><a href="../reference/forecast.stl.html">forecast.stl()</a></code> and <code><a href="../reference/forecast.stl.html">stlf()</a></code> when ARIMA model used.</li>
 <li>Removed reliance on caret, and associated fitted and residuals functions.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="4.00" id="forecast-400">forecast 4.00<a class="anchor" aria-label="anchor" href="#forecast-400"></a></h2><p class="text-muted">CRAN release: 2012-11-27</p>
 <ul><li>More robust handling of degenerate ARIMA models.</li>
 <li>New defaults for shaded colors used for prediction intervals in plots.</li>
-<li>auto.arima() now remembers the name of the series when a Box-Cox transformation is used.</li>
-<li>New function nnetar() for automatic neural network forecasting of time series.</li>
-<li>arfima() now tries harder to ensure the ARMA part is stationary.</li>
-<li>ts control added for forecast of linear models in forecast.lm().</li>
-<li>Fixed bug in bats() which caused an error when use.box.cox=FALSE and use.trend=FALSE.</li>
+<li>
+<code><a href="../reference/auto.arima.html">auto.arima()</a></code> now remembers the name of the series when a Box-Cox transformation is used.</li>
+<li>New function <code><a href="../reference/nnetar.html">nnetar()</a></code> for automatic neural network forecasting of time series.</li>
+<li>
+<code><a href="../reference/arfima.html">arfima()</a></code> now tries harder to ensure the ARMA part is stationary.</li>
+<li>ts control added for forecast of linear models in <code><a href="../reference/forecast.lm.html">forecast.lm()</a></code>.</li>
+<li>Fixed bug in <code><a href="../reference/bats.html">bats()</a></code> which caused an error when use.box.cox=FALSE and use.trend=FALSE.</li>
 <li>Added residuals and fitted methods for train and avNNet objects from caret package.</li>
-<li>accuracy() can now figure out overlapping times for x and f.</li>
-<li>rwf() now handles missing values.</li>
-<li>Revised ses(), holt() and hw() so that they can optionally use traditional initialization.</li>
+<li>
+<code><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy()</a></code> can now figure out overlapping times for x and f.</li>
+<li>
+<code><a href="../reference/forecast.rw_model.html">rwf()</a></code> now handles missing values.</li>
+<li>Revised <code><a href="../reference/ses.html">ses()</a></code>, <code><a href="../reference/ses.html">holt()</a></code> and <code><a href="../reference/ses.html">hw()</a></code> so that they can optionally use traditional initialization.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.25" id="forecast-325">forecast 3.25<a class="anchor" aria-label="anchor" href="#forecast-325"></a></h2><p class="text-muted">CRAN release: 2012-09-11</p>
-<ul><li>Fixed bug in simulate.Arima.</li>
-<li>Improved handling of short seasonal time series in auto.arima().</li>
-<li>Added seasonal argument to auto.arima().</li>
-<li>Fixed bug in splinef() and added gcv method for estimating smoothing parameter.</li>
+<ul><li>Fixed bug in <code><a href="../reference/simulate.ets.html">simulate.Arima()</a></code>.</li>
+<li>Improved handling of short seasonal time series in <code><a href="../reference/auto.arima.html">auto.arima()</a></code>.</li>
+<li>Added seasonal argument to <code><a href="../reference/auto.arima.html">auto.arima()</a></code>.</li>
+<li>Fixed bug in <code><a href="../reference/forecast.spline_model.html">splinef()</a></code> and added gcv method for estimating smoothing parameter.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.24" id="forecast-324-23-july-2012">forecast 3.24 (23 July 2012<a class="anchor" aria-label="anchor" href="#forecast-324-23-july-2012"></a></h2><p class="text-muted">CRAN release: 2012-07-23</p>
-<ul><li>Fixed bug in auto.arima() introduced in v3.23 which meant a ARIMA(0,0,0) model was returned about half the time.</li>
+<ul><li>Fixed bug in <code><a href="../reference/auto.arima.html">auto.arima()</a></code> introduced in v3.23 which meant a ARIMA(0,0,0) model was returned about half the time.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.23" id="forecast-323">forecast 3.23<a class="anchor" aria-label="anchor" href="#forecast-323"></a></h2><p class="text-muted">CRAN release: 2012-07-18</p>
-<ul><li>Fixed bug in arfima() which meant the drange argument was being ignored.</li>
-<li>Extended auto.arima() so it returns something sensible when the data are constant.</li>
+<ul><li>Fixed bug in <code><a href="../reference/arfima.html">arfima()</a></code> which meant the drange argument was being ignored.</li>
+<li>Extended <code><a href="../reference/auto.arima.html">auto.arima()</a></code> so it returns something sensible when the data are constant.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.22" id="forecast-322">forecast 3.22<a class="anchor" aria-label="anchor" href="#forecast-322"></a></h2><p class="text-muted">CRAN release: 2012-06-07</p>
 <ul><li>Increased maximum forecast horizon for ets models from 2000 to unlimited.</li>
-<li>Corrected bug in Arima(). Previously include.constant=FALSE was ignored.</li>
+<li>Corrected bug in <code><a href="../reference/Arima.html">Arima()</a></code>. Previously include.constant=FALSE was ignored.</li>
 <li>Some corrections to bats and tbats.</li>
-<li>Modified parallel implementation in auto.arima for Windows.</li>
+<li>Modified parallel implementation in <code><a href="../reference/auto.arima.html">auto.arima()</a></code> for Windows.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.21" id="forecast-321">forecast 3.21<a class="anchor" aria-label="anchor" href="#forecast-321"></a></h2><p class="text-muted">CRAN release: 2012-04-30</p>
-<ul><li>Fixed bug in auto.arima() when lambda is non-zero and stepwise is FALSE.</li>
-<li>Fixed bug in auto.arima() in selecting d when D&gt;0.</li>
-<li>Fixed bug in ets() when seasonal period is less than 1.</li>
-<li>Turned off warnings in auto.arima() and ets() when seasonal period is less than 1.</li>
+<ul><li>Fixed bug in <code><a href="../reference/auto.arima.html">auto.arima()</a></code> when lambda is non-zero and stepwise is FALSE.</li>
+<li>Fixed bug in <code><a href="../reference/auto.arima.html">auto.arima()</a></code> in selecting d when D&gt;0.</li>
+<li>Fixed bug in <code><a href="../reference/ets.html">ets()</a></code> when seasonal period is less than 1.</li>
+<li>Turned off warnings in <code><a href="../reference/auto.arima.html">auto.arima()</a></code> and <code><a href="../reference/ets.html">ets()</a></code> when seasonal period is less than 1.</li>
 <li>Added plotting methods for bats and tbats objects.</li>
 <li>Changed default forecast horizons for bats and tbats objects.</li>
 <li>Modified bats and tbats so they now use seasonal.periods when ts and msts objects are being modelled.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.20" id="forecast-320">forecast 3.20<a class="anchor" aria-label="anchor" href="#forecast-320"></a></h2><p class="text-muted">CRAN release: 2012-04-02</p>
-<ul><li>Fixed bugs in forecast.lm().</li>
-<li>Improved handling of newdata in forecast.lm() to provide more meaningful error messages.</li>
-<li>Fixed bug in dm.test() that occurred when errors were very small.</li>
+<ul><li>Fixed bugs in <code><a href="../reference/forecast.lm.html">forecast.lm()</a></code>.</li>
+<li>Improved handling of newdata in <code><a href="../reference/forecast.lm.html">forecast.lm()</a></code> to provide more meaningful error messages.</li>
+<li>Fixed bug in <code><a href="../reference/dm.test.html">dm.test()</a></code> that occurred when errors were very small.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.19" id="forecast-319">forecast 3.19<a class="anchor" aria-label="anchor" href="#forecast-319"></a></h2><p class="text-muted">CRAN release: 2012-02-22</p>
 <ul><li>Improved plotting of forecast objects from lm models</li>
 <li>Added MASE for lm forecasts using insample mean forecasts for scaling.</li>
-<li>Modified definition of MASE for seasonal time series to use seasonal naive insample scaling.</li>
-<li>Modified meanf() to allow it to be used with cross-sectional data.</li>
-<li>Updated accuracy() to allow it to be used with cross-sectional data, lm forecasts and lm objects.</li>
+<li>Modified definition of MASE for seasonal time series to use seasonal <code><a href="../reference/forecast.rw_model.html">naive()</a></code> insample scaling.</li>
+<li>Modified <code><a href="../reference/forecast.mean_model.html">meanf()</a></code> to allow it to be used with cross-sectional data.</li>
+<li>Updated <code><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy()</a></code> to allow it to be used with cross-sectional data, lm forecasts and lm objects.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.18" id="forecast-318">forecast 3.18<a class="anchor" aria-label="anchor" href="#forecast-318"></a></h2><p class="text-muted">CRAN release: 2012-02-17</p>
-<ul><li>Added method for plotting non-time-series forecasts to plot.forecast().</li>
+<ul><li>Added method for plotting non-time-series forecasts to <code><a href="../reference/plot.forecast.html">plot.forecast()</a></code>.</li>
 <li>Removed partial arg matching.</li>
 <li>Cleaned up some code, removing commented out sections, etc.</li>
-<li>Added robust option to stlf().</li>
-<li>Added naive and rwdrift options to stlf() and forecast.stl().</li>
-<li>Improved handling of msts objects in BoxCox.lambda</li>
-<li>Fixed some minor bugs in tbats() and bats</li>
-<li>Improved speed of bats() and tbats().</li>
+<li>Added robust option to <code><a href="../reference/forecast.stl.html">stlf()</a></code>.</li>
+<li>Added <code><a href="../reference/forecast.rw_model.html">naive()</a></code> and rwdrift options to <code><a href="../reference/forecast.stl.html">stlf()</a></code> and <code><a href="../reference/forecast.stl.html">forecast.stl()</a></code>.</li>
+<li>Improved handling of msts objects in <code><a href="../reference/BoxCox.lambda.html">BoxCox.lambda()</a></code>
+</li>
+<li>Fixed some minor bugs in <code><a href="../reference/tbats.html">tbats()</a></code> and bats</li>
+<li>Improved speed of <code><a href="../reference/bats.html">bats()</a></code> and <code><a href="../reference/tbats.html">tbats()</a></code>.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.17" id="forecast-317">forecast 3.17<a class="anchor" aria-label="anchor" href="#forecast-317"></a></h2><p class="text-muted">CRAN release: 2012-02-02</p>
-<ul><li>Improved forecast.lm() so it is more likely to find the original data from an lm object.</li>
-<li>Parallel processing now available in auto.arima() when stepwise=FALSE</li>
-<li>Default model selection in auto.arima() changed to AICc rather than AIC. This may affect model selection for very short time series.</li>
-<li>max orders in auto.arima() now restricted to be less than 1/3 of length of data.</li>
+<ul><li>Improved <code><a href="../reference/forecast.lm.html">forecast.lm()</a></code> so it is more likely to find the original data from an lm object.</li>
+<li>Parallel processing now available in <code><a href="../reference/auto.arima.html">auto.arima()</a></code> when stepwise=FALSE</li>
+<li>Default model selection in <code><a href="../reference/auto.arima.html">auto.arima()</a></code> changed to AICc rather than AIC. This may affect model selection for very short time series.</li>
+<li>max orders in <code><a href="../reference/auto.arima.html">auto.arima()</a></code> now restricted to be less than 1/3 of length of data.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.16" id="forecast-316">forecast 3.16<a class="anchor" aria-label="anchor" href="#forecast-316"></a></h2><p class="text-muted">CRAN release: 2011-12-24</p>
@@ -656,60 +679,64 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.15" id="forecast-315">forecast 3.15<a class="anchor" aria-label="anchor" href="#forecast-315"></a></h2><p class="text-muted">CRAN release: 2011-12-22</p>
-<ul><li>New functions tbats() and forecast.tbats() for multiple seasonal time series modelling.</li>
-<li>bats() and tbats() use parallel processing when possible.</li>
-<li>Minor improvements to bats() and forecast.bats().</li>
-<li>decompose() removed as the function in the stats package has now been fixed.</li>
+<ul><li>New functions <code><a href="../reference/tbats.html">tbats()</a></code> and <code><a href="../reference/forecast.bats.html">forecast.tbats()</a></code> for multiple seasonal time series modelling.</li>
+<li>
+<code><a href="../reference/bats.html">bats()</a></code> and <code><a href="../reference/tbats.html">tbats()</a></code> use parallel processing when possible.</li>
+<li>Minor improvements to <code><a href="../reference/bats.html">bats()</a></code> and <code><a href="../reference/forecast.bats.html">forecast.bats()</a></code>.</li>
+<li>
+<code><a href="https://rdrr.io/r/stats/decompose.html" class="external-link">decompose()</a></code> removed as the function in the stats package has now been fixed.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.14" id="forecast-314">forecast 3.14<a class="anchor" aria-label="anchor" href="#forecast-314"></a></h2><p class="text-muted">CRAN release: 2011-12-09</p>
-<ul><li>Improved documentation for forecast.ts</li>
-<li>Corrected bug in dshw() when applied to a non-ts object.</li>
-<li>Added error message when dshw() applied to data containing zeros or negative values</li>
-<li>Added checks when dshw() applied to time series with non-nested periods.</li>
+<ul><li>Improved documentation for <code><a href="../reference/forecast.ts.html">forecast.ts()</a></code>
+</li>
+<li>Corrected bug in <code><a href="../reference/dshw.html">dshw()</a></code> when applied to a non-ts object.</li>
+<li>Added error message when <code><a href="../reference/dshw.html">dshw()</a></code> applied to data containing zeros or negative values</li>
+<li>Added checks when <code><a href="../reference/dshw.html">dshw()</a></code> applied to time series with non-nested periods.</li>
 <li>Added msts object class for multiple seasonal time series</li>
 <li>Made taylor data set an msts object.</li>
-<li>Added bats() function for multiple seasonal time series modelling</li>
-<li>Added forecast.bats() function for forecasting BATS models</li>
+<li>Added <code><a href="../reference/bats.html">bats()</a></code> function for multiple seasonal time series modelling</li>
+<li>Added <code><a href="../reference/forecast.bats.html">forecast.bats()</a></code> function for forecasting BATS models</li>
 <li>Byte compiling turned on</li>
 <li>Depending on Rcpp and RcppArmadillo to speed some code up.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.13" id="forecast-313">forecast 3.13<a class="anchor" aria-label="anchor" href="#forecast-313"></a></h2><p class="text-muted">CRAN release: 2011-11-20</p>
-<ul><li>Bug fix for forecast.StructTS() due to changes in the StructTS object. The default h was being set to 0. Thanks to Tarmo Leinonen for reporting this problem.</li>
-<li>Bug fix for forecast.stl() where h longer than one seasonal period sometimes returned missing forecasts. Thanks to Kevin Burton for reporting this problem.</li>
-<li>forecast.stl() no longer allows a seasonal ETS model to be specified. Thanks to Stefano Birmani for the suggestion.</li>
+<ul><li>Bug fix for <code><a href="../reference/forecast.StructTS.html">forecast.StructTS()</a></code> due to changes in the StructTS object. The default h was being set to 0. Thanks to Tarmo Leinonen for reporting this problem.</li>
+<li>Bug fix for <code><a href="../reference/forecast.stl.html">forecast.stl()</a></code> where h longer than one seasonal period sometimes returned missing forecasts. Thanks to Kevin Burton for reporting this problem.</li>
+<li>
+<code><a href="../reference/forecast.stl.html">forecast.stl()</a></code> no longer allows a seasonal ETS model to be specified. Thanks to Stefano Birmani for the suggestion.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.12" id="forecast-312">forecast 3.12<a class="anchor" aria-label="anchor" href="#forecast-312"></a></h2><p class="text-muted">CRAN release: 2011-11-16</p>
-<ul><li>Added option to control ets model in stlf() and forecast.stl(). Thanks to Stefano Birmani for the suggestion.</li>
-<li>Reordered arguments for forecast.lm() and stlf() to be consistent with other forecast functions.</li>
-<li>Modified tslm() so that it is more likely to find the relevant data when it is not passed as an argument.</li>
-<li>Fixed bug in forecast.ets which returned all zero forecasts for some models when seasonal period &gt; 24.</li>
+<ul><li>Added option to control ets model in <code><a href="../reference/forecast.stl.html">stlf()</a></code> and <code><a href="../reference/forecast.stl.html">forecast.stl()</a></code>. Thanks to Stefano Birmani for the suggestion.</li>
+<li>Reordered arguments for <code><a href="../reference/forecast.lm.html">forecast.lm()</a></code> and <code><a href="../reference/forecast.stl.html">stlf()</a></code> to be consistent with other forecast functions.</li>
+<li>Modified <code><a href="../reference/tslm.html">tslm()</a></code> so that it is more likely to find the relevant data when it is not passed as an argument.</li>
+<li>Fixed bug in <code><a href="../reference/forecast.ets.html">forecast.ets()</a></code> which returned all zero forecasts for some models when seasonal period &gt; 24.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.11" id="forecast-311">forecast 3.11<a class="anchor" aria-label="anchor" href="#forecast-311"></a></h2><p class="text-muted">CRAN release: 2011-11-02</p>
-<ul><li>Fixed bug in dshw() when smallest period is odd</li>
+<ul><li>Fixed bug in <code><a href="../reference/dshw.html">dshw()</a></code> when smallest period is odd</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.10" id="forecast-310">forecast 3.10<a class="anchor" aria-label="anchor" href="#forecast-310"></a></h2><p class="text-muted">CRAN release: 2011-10-27</p>
-<ul><li>Added lambda argument to naive() and snaive().</li>
-<li>Fixed bug in ets() with high frequency data.</li>
-<li>Fixed bug in rwf() where incorrect fitted values and residuals were sometimes returned.</li>
-<li>Modified number of lags displayed by default in tsdisplay().</li>
+<ul><li>Added lambda argument to <code><a href="../reference/forecast.rw_model.html">naive()</a></code> and <code><a href="../reference/forecast.rw_model.html">snaive()</a></code>.</li>
+<li>Fixed bug in <code><a href="../reference/ets.html">ets()</a></code> with high frequency data.</li>
+<li>Fixed bug in <code><a href="../reference/forecast.rw_model.html">rwf()</a></code> where incorrect fitted values and residuals were sometimes returned.</li>
+<li>Modified number of lags displayed by default in <code><a href="../reference/tsdisplay.html">tsdisplay()</a></code>.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.09" id="forecast-309">forecast 3.09<a class="anchor" aria-label="anchor" href="#forecast-309"></a></h2><p class="text-muted">CRAN release: 2011-10-18</p>
-<ul><li>Fixed bug causing occasional problems in simulate.Arima() when MA order greater than 2 and future=TRUE.</li>
+<ul><li>Fixed bug causing occasional problems in <code><a href="../reference/simulate.ets.html">simulate.Arima()</a></code> when MA order greater than 2 and future=TRUE.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.08" id="forecast-308">forecast 3.08<a class="anchor" aria-label="anchor" href="#forecast-308"></a></h2><p class="text-muted">CRAN release: 2011-10-15</p>
-<ul><li>Bug fix in forecast.stl() which occurred when forecast horizon is less than seasonal period.</li>
-<li>Added lambda argument to forecast.stl().</li>
+<ul><li>Bug fix in <code><a href="../reference/forecast.stl.html">forecast.stl()</a></code> which occurred when forecast horizon is less than seasonal period.</li>
+<li>Added lambda argument to <code><a href="../reference/forecast.stl.html">forecast.stl()</a></code>.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.07" id="forecast-307">forecast 3.07<a class="anchor" aria-label="anchor" href="#forecast-307"></a></h2><p class="text-muted">CRAN release: 2011-10-11</p>
-<ul><li>Bug fix in ets() concerning non-seasonal models and high-frequency data. It sometimes returned all forecasts equal to zero.</li>
+<ul><li>Bug fix in <code><a href="../reference/ets.html">ets()</a></code> concerning non-seasonal models and high-frequency data. It sometimes returned all forecasts equal to zero.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.06" id="forecast-306">forecast 3.06<a class="anchor" aria-label="anchor" href="#forecast-306"></a></h2><p class="text-muted">CRAN release: 2011-10-04</p>
@@ -717,16 +744,16 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.05" id="forecast-305">forecast 3.05<a class="anchor" aria-label="anchor" href="#forecast-305"></a></h2><p class="text-muted">CRAN release: 2011-10-03</p>
-<ul><li>Fixed bug in ets() which prevent non-seasonal models being fitted to high frequency data.</li>
+<ul><li>Fixed bug in <code><a href="../reference/ets.html">ets()</a></code> which prevent non-seasonal models being fitted to high frequency data.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.04" id="forecast-304">forecast 3.04<a class="anchor" aria-label="anchor" href="#forecast-304"></a></h2><p class="text-muted">CRAN release: 2011-09-23</p>
-<ul><li>Fixed bug when drift and xreg used together in auto.arima() or Arima().</li>
+<ul><li>Fixed bug when drift and xreg used together in <code><a href="../reference/auto.arima.html">auto.arima()</a></code> or <code><a href="../reference/Arima.html">Arima()</a></code>.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.03" id="forecast-303">forecast 3.03<a class="anchor" aria-label="anchor" href="#forecast-303"></a></h2><p class="text-muted">CRAN release: 2011-09-02</p>
-<ul><li>Bug fix in dshw() which was using slightly incorrect seasonal estimates for the forecasts</li>
-<li>Bug fix in forecast.StructTS due to change in structure of StructTS object.</li>
+<ul><li>Bug fix in <code><a href="../reference/dshw.html">dshw()</a></code> which was using slightly incorrect seasonal estimates for the forecasts</li>
+<li>Bug fix in <code><a href="../reference/forecast.StructTS.html">forecast.StructTS()</a></code> due to change in structure of StructTS object.</li>
 <li>Better error capture in tslm when seasonal dummies are specified for non-seasonal data.</li>
 <li>Re-formatted some help files to prevent viewing problems with the pdf manual.</li>
 </ul></div>
@@ -736,41 +763,43 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.00" id="forecast-300">forecast 3.00<a class="anchor" aria-label="anchor" href="#forecast-300"></a></h2><p class="text-muted">CRAN release: 2011-08-24</p>
-<ul><li>Added Box-Cox parameter as argument to Arima(), ets(), arfima(), stlf(), rwf(), meanf(), splinef</li>
-<li>Added Box-Cox parameter as argument to forecast.Arima(), forecast.ets(), forecast.fracdiff(), forecast.ar(), forecast.StructTS, forecast.HoltWinters().</li>
-<li>Removed lambda argument from plot.forecast() and accuracy().</li>
-<li>Added BoxCox.lambda() function to allow automatic choice for Box-Cox parameter using Guerrero’s method or the profile log likelihood method.</li>
+<ul><li>Added Box-Cox parameter as argument to <code><a href="../reference/Arima.html">Arima()</a></code>, <code><a href="../reference/ets.html">ets()</a></code>, <code><a href="../reference/arfima.html">arfima()</a></code>, <code><a href="../reference/forecast.stl.html">stlf()</a></code>, <code><a href="../reference/forecast.rw_model.html">rwf()</a></code>, <code><a href="../reference/forecast.mean_model.html">meanf()</a></code>, <code><a href="../reference/forecast.spline_model.html">splinef()</a></code>
+</li>
+<li>Added Box-Cox parameter as argument to <code><a href="../reference/forecast.Arima.html">forecast.Arima()</a></code>, <code><a href="../reference/forecast.ets.html">forecast.ets()</a></code>, <code><a href="../reference/forecast.Arima.html">forecast.fracdiff()</a></code>, <code><a href="../reference/forecast.Arima.html">forecast.ar()</a></code>, <code><a href="../reference/forecast.StructTS.html">forecast.StructTS()</a></code>, <code><a href="../reference/forecast.HoltWinters.html">forecast.HoltWinters()</a></code>.</li>
+<li>Removed lambda argument from <code><a href="../reference/plot.forecast.html">plot.forecast()</a></code> and <code><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy()</a></code>.</li>
+<li>Added <code><a href="../reference/BoxCox.lambda.html">BoxCox.lambda()</a></code> function to allow automatic choice for Box-Cox parameter using Guerrero’s method or the profile log likelihood method.</li>
 <li>Modified BoxCox and InvBoxCox to return missing values when lambda &lt; 0 and data &lt; 0.</li>
-<li>Add nsdiffs() function for selecting the number of seasonal differences.</li>
-<li>Modified selection of seasonal differencing in auto.arima().</li>
-<li>Better error message if seasonal factor used in tslm() with non-seasonal data.</li>
-<li>Added PI argument to forecast.ets() to allow only point forecasts to be computed.</li>
-<li>Added include.constant argument to Arima().</li>
-<li>Added subset.ts() function.</li>
-<li>Upgraded seasonplot() function to allow colors and to fix some bugs.</li>
-<li>Fixed fitted values returned by forecast.HoltWinters</li>
-<li>Modified simulate.Arima() because of undocumented changes in filter() function in stats package.</li>
-<li>Changed residuals returned by splinef() to be ordinary residuals. The standardized residuals are now returned as standardizedresiduals.</li>
-<li>Added dshw() function for double-seasonal Holt-Winters method based on Taylor (2003).</li>
-<li>Fixed further bugs in the decompose() function that caused the results to be incorrect with odd frequencies.</li>
+<li>Add <code><a href="../reference/nsdiffs.html">nsdiffs()</a></code> function for selecting the number of seasonal differences.</li>
+<li>Modified selection of seasonal differencing in <code><a href="../reference/auto.arima.html">auto.arima()</a></code>.</li>
+<li>Better error message if seasonal factor used in <code><a href="../reference/tslm.html">tslm()</a></code> with non-seasonal data.</li>
+<li>Added PI argument to <code><a href="../reference/forecast.ets.html">forecast.ets()</a></code> to allow only point forecasts to be computed.</li>
+<li>Added include.constant argument to <code><a href="../reference/Arima.html">Arima()</a></code>.</li>
+<li>Added <code><a href="../reference/subset.ts.html">subset.ts()</a></code> function.</li>
+<li>Upgraded <code><a href="../reference/seasonplot.html">seasonplot()</a></code> function to allow colors and to fix some bugs.</li>
+<li>Fixed fitted values returned by <code><a href="../reference/forecast.HoltWinters.html">forecast.HoltWinters()</a></code>
+</li>
+<li>Modified <code><a href="../reference/simulate.ets.html">simulate.Arima()</a></code> because of undocumented changes in <code><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter()</a></code> function in stats package.</li>
+<li>Changed residuals returned by <code><a href="../reference/forecast.spline_model.html">splinef()</a></code> to be ordinary residuals. The standardized residuals are now returned as standardizedresiduals.</li>
+<li>Added <code><a href="../reference/dshw.html">dshw()</a></code> function for double-seasonal Holt-Winters method based on Taylor (2003).</li>
+<li>Fixed further bugs in the <code><a href="https://rdrr.io/r/stats/decompose.html" class="external-link">decompose()</a></code> function that caused the results to be incorrect with odd frequencies.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.19" id="forecast-219">forecast 2.19<a class="anchor" aria-label="anchor" href="#forecast-219"></a></h2><p class="text-muted">CRAN release: 2011-06-04</p>
-<ul><li>Added xreg information to the object returned by auto.arima().</li>
-<li>Added Acf(), Pacf(), ma() and CV() functions.</li>
+<ul><li>Added xreg information to the object returned by <code><a href="../reference/auto.arima.html">auto.arima()</a></code>.</li>
+<li>Added <code><a href="../reference/Acf.html">Acf()</a></code>, <code><a href="../reference/Acf.html">Pacf()</a></code>, <code><a href="../reference/ma.html">ma()</a></code> and <code><a href="../reference/CV.html">CV()</a></code> functions.</li>
 <li>Fixed bugs in re-fitting ARIMA models to new data.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.18" id="forecast-218-2011-05-19">forecast 2.18 (2011-05-19)<a class="anchor" aria-label="anchor" href="#forecast-218-2011-05-19"></a></h2>
-<ul><li>Fixed bug in seasonplot() where year labels were sometimes incorrect.</li>
+<ul><li>Fixed bug in <code><a href="../reference/seasonplot.html">seasonplot()</a></code> where year labels were sometimes incorrect.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.17" id="forecast-217">forecast 2.17<a class="anchor" aria-label="anchor" href="#forecast-217"></a></h2><p class="text-muted">CRAN release: 2011-04-06</p>
-<ul><li>Modified simulate.Arima() to handle seasonal ARIMA models.</li>
-<li>Modified ets() to handle missing values. The largest continuous section of data is now modelled.</li>
-<li>Improved plot.forecast() to handle missing values at the end of the observed series.</li>
-<li>Added replacement decompose() to avoid truncation of seasonal term and seasonally adjusted series.</li>
-<li>Fixed bug in seasadj() to handle multiplicative decomposition, and to avoid missing values at ends.</li>
+<ul><li>Modified <code><a href="../reference/simulate.ets.html">simulate.Arima()</a></code> to handle seasonal ARIMA models.</li>
+<li>Modified <code><a href="../reference/ets.html">ets()</a></code> to handle missing values. The largest continuous section of data is now modelled.</li>
+<li>Improved <code><a href="../reference/plot.forecast.html">plot.forecast()</a></code> to handle missing values at the end of the observed series.</li>
+<li>Added replacement <code><a href="https://rdrr.io/r/stats/decompose.html" class="external-link">decompose()</a></code> to avoid truncation of seasonal term and seasonally adjusted series.</li>
+<li>Fixed bug in <code><a href="../reference/seasadj.html">seasadj()</a></code> to handle multiplicative decomposition, and to avoid missing values at ends.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.16" id="forecast-216">forecast 2.16<a class="anchor" aria-label="anchor" href="#forecast-216"></a></h2><p class="text-muted">CRAN release: 2011-03-07</p>
@@ -778,80 +807,83 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.15" id="forecast-215">forecast 2.15<a class="anchor" aria-label="anchor" href="#forecast-215"></a></h2><p class="text-muted">CRAN release: 2011-03-05</p>
-<ul><li>Added fourier(), fourierf(), tslm</li>
-<li>Improved forecast.lm() to allow trend and seasonal terms.</li>
+<ul><li>Added <code><a href="../reference/fourier.html">fourier()</a></code>, <code><a href="../reference/fourier.html">fourierf()</a></code>, tslm</li>
+<li>Improved <code><a href="../reference/forecast.lm.html">forecast.lm()</a></code> to allow trend and seasonal terms.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.14" id="forecast-214">forecast 2.14<a class="anchor" aria-label="anchor" href="#forecast-214"></a></h2><p class="text-muted">CRAN release: 2011-03-04</p>
-<ul><li>Added forecast.lm</li>
-<li>Modified accuracy() and print.forecast() to allow non time series forecasts.</li>
-<li>Fixed visibility of stlf().</li>
+<ul><li>Added <code><a href="../reference/forecast.lm.html">forecast.lm()</a></code>
+</li>
+<li>Modified <code><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy()</a></code> and <code><a href="../reference/forecast.ts.html">print.forecast()</a></code> to allow non time series forecasts.</li>
+<li>Fixed visibility of <code><a href="../reference/forecast.stl.html">stlf()</a></code>.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.13" id="forecast-213">forecast 2.13<a class="anchor" aria-label="anchor" href="#forecast-213"></a></h2><p class="text-muted">CRAN release: 2011-02-16</p>
-<ul><li>Fixed bug in accuracy() when only 1 forecast is specified.</li>
-<li>Added forecast.stl() and stlf() functions</li>
-<li>Modified forecast.ts() to use stlf() if frequency &gt; 12.</li>
-<li>Made BoxCox() and InvBoxCox() robust to negative values</li>
-<li>Fixed bug in simulate.Arima() when future=TRUE. There was a bias in the sample paths.</li>
+<ul><li>Fixed bug in <code><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy()</a></code> when only 1 forecast is specified.</li>
+<li>Added <code><a href="../reference/forecast.stl.html">forecast.stl()</a></code> and <code><a href="../reference/forecast.stl.html">stlf()</a></code> functions</li>
+<li>Modified <code><a href="../reference/forecast.ts.html">forecast.ts()</a></code> to use <code><a href="../reference/forecast.stl.html">stlf()</a></code> if frequency &gt; 12.</li>
+<li>Made <code><a href="../reference/BoxCox.html">BoxCox()</a></code> and <code><a href="../reference/BoxCox.html">InvBoxCox()</a></code> robust to negative values</li>
+<li>Fixed bug in <code><a href="../reference/simulate.ets.html">simulate.Arima()</a></code> when future=TRUE. There was a bias in the sample paths.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.12" id="forecast-212">forecast 2.12<a class="anchor" aria-label="anchor" href="#forecast-212"></a></h2><p class="text-muted">CRAN release: 2011-01-19</p>
-<ul><li>Added naive() and snaive() functions.</li>
+<ul><li>Added <code><a href="../reference/forecast.rw_model.html">naive()</a></code> and <code><a href="../reference/forecast.rw_model.html">snaive()</a></code> functions.</li>
 <li>Improved handling of seasonal data with frequency &lt; 1.</li>
-<li>Added lambda argument to accuracy().</li>
+<li>Added lambda argument to <code><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy()</a></code>.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.11" id="forecast-211">forecast 2.11<a class="anchor" aria-label="anchor" href="#forecast-211"></a></h2><p class="text-muted">CRAN release: 2010-11-04</p>
-<ul><li>If MLE in arfima() fails (usually because the series is non-stationary), the LS estimate is now returned.</li>
+<ul><li>If MLE in <code><a href="../reference/arfima.html">arfima()</a></code> fails (usually because the series is non-stationary), the LS estimate is now returned.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.10" id="forecast-210">forecast 2.10<a class="anchor" aria-label="anchor" href="#forecast-210"></a></h2>
-<ul><li>Fixed bug in arfima() where the MA parameters were of the wrong sign if estim=“mle” chosen.</li>
-<li>arfima() now allowed to have a sequence of missing values at the start of the series and end of the series</li>
+<ul><li>Fixed bug in <code><a href="../reference/arfima.html">arfima()</a></code> where the MA parameters were of the wrong sign if estim=“mle” chosen.</li>
+<li>
+<code><a href="../reference/arfima.html">arfima()</a></code> now allowed to have a sequence of missing values at the start of the series and end of the series</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.09" id="forecast-209">forecast 2.09<a class="anchor" aria-label="anchor" href="#forecast-209"></a></h2><p class="text-muted">CRAN release: 2010-10-15</p>
-<ul><li>Fixed bug in forecast.fracdiff() which caused an error when h=1.</li>
-<li>Added shadebars to plot.forecast().</li>
-<li>Fixed bug in plot.forecast() to allow plotting when h=1.</li>
+<ul><li>Fixed bug in <code><a href="../reference/forecast.Arima.html">forecast.fracdiff()</a></code> which caused an error when h=1.</li>
+<li>Added shadebars to <code><a href="../reference/plot.forecast.html">plot.forecast()</a></code>.</li>
+<li>Fixed bug in <code><a href="../reference/plot.forecast.html">plot.forecast()</a></code> to allow plotting when h=1.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.08" id="forecast-208">forecast 2.08<a class="anchor" aria-label="anchor" href="#forecast-208"></a></h2><p class="text-muted">CRAN release: 2010-09-22</p>
-<ul><li>Added pp test option for auto.arima() and ndiffs().</li>
-<li>Fixed bug in simulate.ets() which was causing problems when forecasting from some ETS models including ETS(M,M,N).</li>
+<ul><li>Added pp test option for <code><a href="../reference/auto.arima.html">auto.arima()</a></code> and <code><a href="../reference/ndiffs.html">ndiffs()</a></code>.</li>
+<li>Fixed bug in <code><a href="../reference/simulate.ets.html">simulate.ets()</a></code> which was causing problems when forecasting from some ETS models including ETS(M,M,N).</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.07" id="forecast-207">forecast 2.07<a class="anchor" aria-label="anchor" href="#forecast-207"></a></h2><p class="text-muted">CRAN release: 2010-09-09</p>
-<ul><li>Fixed bug in simulate.Arima(). Previous sample paths when d=2 and future=TRUE were incorrect.</li>
-<li>Changed way color is implemented in plot.forecast() to avoid colour changes when the graphics window is refreshed.</li>
+<ul><li>Fixed bug in <code><a href="../reference/simulate.ets.html">simulate.Arima()</a></code>. Previous sample paths when d=2 and future=TRUE were incorrect.</li>
+<li>Changed way color is implemented in <code><a href="../reference/plot.forecast.html">plot.forecast()</a></code> to avoid colour changes when the graphics window is refreshed.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.06" id="forecast-206">forecast 2.06<a class="anchor" aria-label="anchor" href="#forecast-206"></a></h2><p class="text-muted">CRAN release: 2010-07-29</p>
-<ul><li>Added MLE option for arfima().</li>
-<li>Added simulate.Arima(), simulate.ar() and simulate.fracdiff</li>
+<ul><li>Added MLE option for <code><a href="../reference/arfima.html">arfima()</a></code>.</li>
+<li>Added <code><a href="../reference/simulate.ets.html">simulate.Arima()</a></code>, <code><a href="../reference/simulate.ets.html">simulate.ar()</a></code> and <code><a href="../reference/simulate.ets.html">simulate.fracdiff()</a></code>
+</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.05" id="forecast-205">forecast 2.05<a class="anchor" aria-label="anchor" href="#forecast-205"></a></h2><p class="text-muted">CRAN release: 2010-05-11</p>
-<ul><li>Added arfima() and a forecast method to handle ARFIMA models from arfima() and fracdiff().</li>
+<ul><li>Added <code><a href="../reference/arfima.html">arfima()</a></code> and a forecast method to handle ARFIMA models from <code><a href="../reference/arfima.html">arfima()</a></code> and <code><a href="https://rdrr.io/pkg/fracdiff/man/fracdiff.html" class="external-link">fracdiff()</a></code>.</li>
 <li>Added residuals and fitted methods for fracdiff objects.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.04" id="forecast-204">forecast 2.04<a class="anchor" aria-label="anchor" href="#forecast-204"></a></h2><p class="text-muted">CRAN release: 2010-04-16</p>
-<ul><li>Fixed bug in auto.arima() that occurred rarely.</li>
+<ul><li>Fixed bug in <code><a href="../reference/auto.arima.html">auto.arima()</a></code> that occurred rarely.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.03" id="forecast-203">forecast 2.03<a class="anchor" aria-label="anchor" href="#forecast-203"></a></h2><p class="text-muted">CRAN release: 2009-12-24</p>
-<ul><li>Added an option to auto.arima() to allow drift terms to be excluded from the models considered.</li>
+<ul><li>Added an option to <code><a href="../reference/auto.arima.html">auto.arima()</a></code> to allow drift terms to be excluded from the models considered.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.02" id="forecast-202">forecast 2.02<a class="anchor" aria-label="anchor" href="#forecast-202"></a></h2><p class="text-muted">CRAN release: 2009-12-23</p>
-<ul><li>Fixed bug in auto.arima() that occurred when there was an xreg but no drift, approximation=TRUE and stepwise=FALSE.</li>
+<ul><li>Fixed bug in <code><a href="../reference/auto.arima.html">auto.arima()</a></code> that occurred when there was an xreg but no drift, approximation=TRUE and stepwise=FALSE.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.01" id="forecast-201">forecast 2.01<a class="anchor" aria-label="anchor" href="#forecast-201"></a></h2><p class="text-muted">CRAN release: 2009-09-18</p>
-<ul><li>Fixed bug in time index of croston() output.</li>
-<li>Added further explanation about models to croston() help file.</li>
+<ul><li>Fixed bug in time index of <code><a href="../reference/forecast.croston_model.html">croston()</a></code> output.</li>
+<li>Added further explanation about models to <code><a href="../reference/forecast.croston_model.html">croston()</a></code> help file.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.00" id="forecast-200">forecast 2.00<a class="anchor" aria-label="anchor" href="#forecast-200"></a></h2><p class="text-muted">CRAN release: 2009-09-07</p>
@@ -859,26 +891,26 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.26" id="forecast-126-29-august-2009">forecast 1.26 (29 August 2009)<a class="anchor" aria-label="anchor" href="#forecast-126-29-august-2009"></a></h2>
-<ul><li>Added as.data.frame.forecast(). This allows write.table() to work for forecast objects.</li>
+<ul><li>Added <code><a href="../reference/forecast.ts.html">as.data.frame.forecast()</a></code>. This allows <code><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.table()</a></code> to work for forecast objects.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.25" id="forecast-125-22-july-2009">forecast 1.25 (22 July 2009)<a class="anchor" aria-label="anchor" href="#forecast-125-22-july-2009"></a></h2>
-<ul><li>Added argument to auto.arima() and ndiffs() to allow the ADF test to be used instead of the KPSS test in selecting the number of differences.</li>
-<li>Added argument to plot.forecast() to allow different colors and line types when plotting prediction intervals.</li>
-<li>Modified forecast.ts() to give sensible results with a time series containing fewer than four observations.</li>
+<ul><li>Added argument to <code><a href="../reference/auto.arima.html">auto.arima()</a></code> and <code><a href="../reference/ndiffs.html">ndiffs()</a></code> to allow the ADF test to be used instead of the KPSS test in selecting the number of differences.</li>
+<li>Added argument to <code><a href="../reference/plot.forecast.html">plot.forecast()</a></code> to allow different colors and line types when plotting prediction intervals.</li>
+<li>Modified <code><a href="../reference/forecast.ts.html">forecast.ts()</a></code> to give sensible results with a time series containing fewer than four observations.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.24" id="forecast-124-9-april-2009">forecast 1.24 (9 April 2009)<a class="anchor" aria-label="anchor" href="#forecast-124-9-april-2009"></a></h2>
-<ul><li>Fixed bug in dm.test() to avoid errors when there are missing values in the residuals.</li>
-<li>More informative error messages when auto.arima() fails to find a suitable model.</li>
+<ul><li>Fixed bug in <code><a href="../reference/dm.test.html">dm.test()</a></code> to avoid errors when there are missing values in the residuals.</li>
+<li>More informative error messages when <code><a href="../reference/auto.arima.html">auto.arima()</a></code> fails to find a suitable model.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.23" id="forecast-123-22-february-2009">forecast 1.23 (22 February 2009)<a class="anchor" aria-label="anchor" href="#forecast-123-22-february-2009"></a></h2>
-<ul><li>Fixed bugs that meant xreg terms in auto.arima() sometimes caused errors when stepwise=FALSE.</li>
+<ul><li>Fixed bugs that meant xreg terms in <code><a href="../reference/auto.arima.html">auto.arima()</a></code> sometimes caused errors when stepwise=FALSE.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.22" id="forecast-122-30-january-2009">forecast 1.22 (30 January 2009)<a class="anchor" aria-label="anchor" href="#forecast-122-30-january-2009"></a></h2>
-<ul><li>Fixed bug that meant regressor variables could not be used with seasonal time series in auto.arima().</li>
+<ul><li>Fixed bug that meant regressor variables could not be used with seasonal time series in <code><a href="../reference/auto.arima.html">auto.arima()</a></code>.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.21" id="forecast-121-16-december-2008">forecast 1.21 (16 December 2008)<a class="anchor" aria-label="anchor" href="#forecast-121-16-december-2008"></a></h2>
@@ -886,32 +918,33 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.20" id="forecast-120-14-december-2008">forecast 1.20 (14 December 2008)<a class="anchor" aria-label="anchor" href="#forecast-120-14-december-2008"></a></h2>
-<ul><li>Updated auto.arima() to allow regression variables.</li>
-<li>Fixed a bug in print.Arima() which caused problems when the data were inside a data.frame.</li>
-<li>In forecast.Arima(), argument h is now set to the length of the xreg argument if it is not null.</li>
+<ul><li>Updated <code><a href="../reference/auto.arima.html">auto.arima()</a></code> to allow regression variables.</li>
+<li>Fixed a bug in <code>print.Arima()</code> which caused problems when the data were inside a data.frame.</li>
+<li>In <code><a href="../reference/forecast.Arima.html">forecast.Arima()</a></code>, argument h is now set to the length of the xreg argument if it is not null.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.19" id="forecast-119-7-november-2008">forecast 1.19 (7 November 2008)<a class="anchor" aria-label="anchor" href="#forecast-119-7-november-2008"></a></h2>
-<ul><li>Updated Arima() to allow regression variables when refitting an existing model to new data.</li>
+<ul><li>Updated <code><a href="../reference/Arima.html">Arima()</a></code> to allow regression variables when refitting an existing model to new data.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.18" id="forecast-118-6-november-2008">forecast 1.18 (6 November 2008)<a class="anchor" aria-label="anchor" href="#forecast-118-6-november-2008"></a></h2>
-<ul><li>Bug fix in ets(): models with frequency less than 1 would cause R to hang.</li>
-<li>Bug fix in ets(): models with frequency greater than 12 would not fit due to parameters being out of range.</li>
-<li>Default lower and upper bounds on parameters , and in ets() changed to 0.0001 and 0.9999 (instead of 0.01 and 0.99).</li>
+<ul><li>Bug fix in <code><a href="../reference/ets.html">ets()</a></code>: models with frequency less than 1 would cause R to hang.</li>
+<li>Bug fix in <code><a href="../reference/ets.html">ets()</a></code>: models with frequency greater than 12 would not fit due to parameters being out of range.</li>
+<li>Default lower and upper bounds on parameters alpha, beta and gamma in <code><a href="../reference/ets.html">ets()</a></code> changed to 0.0001 and 0.9999 (instead of 0.01 and 0.99).</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.17" id="forecast-117-10-october-2008">forecast 1.17 (10 October 2008)<a class="anchor" aria-label="anchor" href="#forecast-117-10-october-2008"></a></h2>
-<ul><li>Calculation of BIC did not account for reduction in length of series due to differencing. Now fixed in auto.arima() and in print.Arima().</li>
-<li>tsdiag() now works with ets objects.</li>
+<ul><li>Calculation of BIC did not account for reduction in length of series due to differencing. Now fixed in <code><a href="../reference/auto.arima.html">auto.arima()</a></code> and in <code>print.Arima()</code>.</li>
+<li>
+<code><a href="https://rdrr.io/r/stats/tsdiag.html" class="external-link">tsdiag()</a></code> now works with ets objects.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.16" id="forecast-116-29-september-2008">forecast 1.16 (29 September 2008)<a class="anchor" aria-label="anchor" href="#forecast-116-29-september-2008"></a></h2>
-<ul><li>Another bug fix in auto.arima(). Occasionally the root checking would cause an error. The condition is now trapped.</li>
+<ul><li>Another bug fix in <code><a href="../reference/auto.arima.html">auto.arima()</a></code>. Occasionally the root checking would cause an error. The condition is now trapped.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.15" id="forecast-115-16-september-2008">forecast 1.15 (16 September 2008)<a class="anchor" aria-label="anchor" href="#forecast-115-16-september-2008"></a></h2>
-<ul><li>Bug fix in auto.arima(). The series wasn’t always being stored as part of the return object when stepwise=FALSE.</li>
+<ul><li>Bug fix in <code><a href="../reference/auto.arima.html">auto.arima()</a></code>. The series wasn’t always being stored as part of the return object when stepwise=FALSE.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.14" id="forecast-114-1-august-2008">forecast 1.14 (1 August 2008)<a class="anchor" aria-label="anchor" href="#forecast-114-1-august-2008"></a></h2>
@@ -919,69 +952,75 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.13" id="forecast-113-16-june-2008">forecast 1.13 (16 June 2008)<a class="anchor" aria-label="anchor" href="#forecast-113-16-june-2008"></a></h2>
-<ul><li>Bug in plot.ets() fixed so that plots of non-seasonal models for seasonal data now work.</li>
-<li>Warning added to ets() if the time series contains very large numbers (which can cause numerical problems). Anything up to 1,000,000 should be ok, but any larger and it is best to scale the series first.</li>
-<li>Fixed problem in forecast.HoltWinters() where the lower and upper limits were interchanged.</li>
+<ul><li>Bug in <code><a href="../reference/plot.ets.html">plot.ets()</a></code> fixed so that plots of non-seasonal models for seasonal data now work.</li>
+<li>Warning added to <code><a href="../reference/ets.html">ets()</a></code> if the time series contains very large numbers (which can cause numerical problems). Anything up to 1,000,000 should be ok, but any larger and it is best to scale the series first.</li>
+<li>Fixed problem in <code><a href="../reference/forecast.HoltWinters.html">forecast.HoltWinters()</a></code> where the lower and upper limits were interchanged.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.12" id="forecast-112-22-april-2008">forecast 1.12 (22 April 2008)<a class="anchor" aria-label="anchor" href="#forecast-112-22-april-2008"></a></h2>
-<ul><li>Objects are now coerced to class ts in ets(). This allows it to work with zoo objects.</li>
-<li>A new function dm.test() has been added. This implements the Diebold-Mariano test for predictive accuracy.</li>
-<li>Yet more bug-fixes for auto.arima().</li>
+<ul><li>Objects are now coerced to class ts in <code><a href="../reference/ets.html">ets()</a></code>. This allows it to work with zoo objects.</li>
+<li>A new function <code><a href="../reference/dm.test.html">dm.test()</a></code> has been added. This implements the Diebold-Mariano test for predictive accuracy.</li>
+<li>Yet more bug-fixes for <code><a href="../reference/auto.arima.html">auto.arima()</a></code>.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.11" id="forecast-111-8-february-2008">forecast 1.11 (8 February 2008)<a class="anchor" aria-label="anchor" href="#forecast-111-8-february-2008"></a></h2>
-<ul><li>Modifications to auto.arima() in the case where ML estimation does not work for the chosen model. Previously this would return no model. Now it returns the model estimated using CSS.</li>
-<li>AIC values reported in auto.arima() when trace=TRUE and approximation=TRUE are now comparable to the final AIC values.</li>
+<ul><li>Modifications to <code><a href="../reference/auto.arima.html">auto.arima()</a></code> in the case where ML estimation does not work for the chosen model. Previously this would return no model. Now it returns the model estimated using CSS.</li>
+<li>AIC values reported in <code><a href="../reference/auto.arima.html">auto.arima()</a></code> when trace=TRUE and approximation=TRUE are now comparable to the final AIC values.</li>
 <li>Addition of the expsmooth package.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.10" id="forecast-110-21-january-2008">forecast 1.10 (21 January 2008)<a class="anchor" aria-label="anchor" href="#forecast-110-21-january-2008"></a></h2>
-<ul><li>Fixed bug in seasadj() so it allows multiple seasonality</li>
-<li>Fixed another bug in print.Arima()</li>
-<li>Bug fixes in auto.arima(). It was sometimes returning a non-optimal model, and occasionally no model at all. Also, additional stationarity and invertibility testing is now done.</li>
+<ul><li>Fixed bug in <code><a href="../reference/seasadj.html">seasadj()</a></code> so it allows multiple seasonality</li>
+<li>Fixed another bug in <code>print.Arima()</code>
+</li>
+<li>Bug fixes in <code><a href="../reference/auto.arima.html">auto.arima()</a></code>. It was sometimes returning a non-optimal model, and occasionally no model at all. Also, additional stationarity and invertibility testing is now done.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.09" id="forecast-109-11-december-2007">forecast 1.09 (11 December 2007)<a class="anchor" aria-label="anchor" href="#forecast-109-11-december-2007"></a></h2>
-<ul><li>A new argument ‘restrict’ has been added to ets() with default TRUE. If set to FALSE, then the unstable ETS models are also allowed.</li>
-<li>A bug in the print.Arima() function was fixed.</li>
+<ul><li>A new argument ‘restrict’ has been added to <code><a href="../reference/ets.html">ets()</a></code> with default TRUE. If set to FALSE, then the unstable ETS models are also allowed.</li>
+<li>A bug in the <code>print.Arima()</code> function was fixed.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.08" id="forecast-108-21-november-2007">forecast 1.08 (21 November 2007)<a class="anchor" aria-label="anchor" href="#forecast-108-21-november-2007"></a></h2>
 <ul><li>AICc and BIC corrected. Previously I had not taken account of the sigma^2 parameter when computing the number of parameters.</li>
-<li>arima() function changed to Arima() to avoid the clash with the arima() function in the stats package.</li>
-<li>auto.arima now uses an approximation to the likelihood when selecting a model if the series is more than 100 observations or the seasonal period is greater than 12. This behaviour can be over-ridden via the approximation argument.</li>
-<li>A new function plot.ets() provides a decomposition plot of an ETS model.</li>
-<li>predict() is now an alias for forecast() wherever there is not an existing predict() method.</li>
+<li>
+<code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">arima()</a></code> function changed to <code><a href="../reference/Arima.html">Arima()</a></code> to avoid the clash with the <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">arima()</a></code> function in the stats package.</li>
+<li>
+<code><a href="../reference/auto.arima.html">auto.arima()</a></code> now uses an approximation to the likelihood when selecting a model if the series is more than 100 observations or the seasonal period is greater than 12. This behaviour can be over-ridden via the approximation argument.</li>
+<li>A new function <code><a href="../reference/plot.ets.html">plot.ets()</a></code> provides a decomposition plot of an ETS model.</li>
+<li>
+<code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> is now an alias for <code><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast()</a></code> wherever there is not an existing <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> method.</li>
 <li>The argument conf has been changed to level in all forecasting methods to be consistent with other R functions.</li>
-<li>The functions gof() and forecasterrors() have been replaced by accuracy() which handles in-sample and out-of-sample forecast accuracy.</li>
+<li>The functions <code>gof()</code> and <code>forecasterrors()</code> have been replaced by <code><a href="https://generics.r-lib.org/reference/accuracy.html" class="external-link">accuracy()</a></code> which handles in-sample and out-of-sample forecast accuracy.</li>
 <li>The initialization method used for a non-seasonal ETS model applied to seasonal data was changed slightly.</li>
 <li>The following methods for ets objects were added: summary, coef and logLik.</li>
 <li>The following methods for Arima objects were added: summary.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.07" id="forecast-107-25-july-2007">forecast 1.07 (25 July 2007)<a class="anchor" aria-label="anchor" href="#forecast-107-25-july-2007"></a></h2>
-<ul><li>Bug fix in summary of in-sample errors. For ets models with multiplicative errors, the reported in-sample values of MSE, MAPE, MASE, etc., in summary() and gof() were incorrect.</li>
+<ul><li>Bug fix in summary of in-sample errors. For ets models with multiplicative errors, the reported in-sample values of MSE, MAPE, MASE, etc., in <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> and <code>gof()</code> were incorrect.</li>
 <li>ARIMA models with frequency greater than 49 now allowed. But there is no unit-root testing if the frequency is 50 or more, so be careful!</li>
 <li>Improvements in documentation.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.06" id="forecast-106-15-june-2007">forecast 1.06 (15 June 2007)<a class="anchor" aria-label="anchor" href="#forecast-106-15-june-2007"></a></h2>
-<ul><li>Bug fix in auto.arima(). It would not always respect the stated values of max.p, max.q, max.P and max.Q.</li>
+<ul><li>Bug fix in <code><a href="../reference/auto.arima.html">auto.arima()</a></code>. It would not always respect the stated values of max.p, max.q, max.P and max.Q.</li>
 <li>The tseries package is now installed automatically along with the forecasting bundle, whereas previously it was only suggested.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.05" id="forecast-105-28-may-2007">forecast 1.05 (28 May 2007)<a class="anchor" aria-label="anchor" href="#forecast-105-28-may-2007"></a></h2>
-<ul><li>Introduced auto.arima() to provide a stepwise approach to ARIMA modelling. This is much faster than the old best.arima().</li>
-<li>The old grid-search method used by best.arima() is still available by using stepwise=FALSE when calling auto.arima().</li>
-<li>Automated choice of seasonal differences introduced in auto.arima().</li>
-<li>Some small changes to the starting values of ets() models.</li>
-<li>Fixed a bug in applying ets() to new data using a previously fitted model.</li>
+<ul><li>Introduced <code><a href="../reference/auto.arima.html">auto.arima()</a></code> to provide a stepwise approach to ARIMA modelling. This is much faster than the old <code>best.arima()</code>.</li>
+<li>The old grid-search method used by <code>best.arima()</code> is still available by using stepwise=FALSE when calling <code><a href="../reference/auto.arima.html">auto.arima()</a></code>.</li>
+<li>Automated choice of seasonal differences introduced in <code><a href="../reference/auto.arima.html">auto.arima()</a></code>.</li>
+<li>Some small changes to the starting values of ets models.</li>
+<li>Fixed a bug in applying <code><a href="../reference/ets.html">ets()</a></code> to new data using a previously fitted model.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.04" id="forecast-104-30-january-2007">forecast 1.04 (30 January 2007)<a class="anchor" aria-label="anchor" href="#forecast-104-30-january-2007"></a></h2>
-<ul><li>Added include.drift to arima()</li>
-<li>Fixed bug in seasonal forecasting with ets()</li>
+<ul><li>Added include.drift to <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">arima()</a></code>
+</li>
+<li>Fixed bug in seasonal forecasting with <code><a href="../reference/ets.html">ets()</a></code>
+</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.03" id="forecast-103-20-october-2006">forecast 1.03 (20 October 2006)<a class="anchor" aria-label="anchor" href="#forecast-103-20-october-2006"></a></h2>
@@ -989,18 +1028,20 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.02" id="forecast-102-12-october-2006">forecast 1.02 (12 October 2006)<a class="anchor" aria-label="anchor" href="#forecast-102-12-october-2006"></a></h2>
-<ul><li>Added AICc option to ets() and best.arima().</li>
+<ul><li>Added AICc option to <code><a href="../reference/ets.html">ets()</a></code> and <code>best.arima()</code>.</li>
 <li>Corrected bug in calculation of fitted values in ets models with multiplicative errors.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.01" id="forecast-101-25-september-2006">forecast 1.01 (25 September 2006)<a class="anchor" aria-label="anchor" href="#forecast-101-25-september-2006"></a></h2>
-<ul><li>Modified ndiffs() so that the maximum number of differences allowed is 2.</li>
+<ul><li>Modified <code><a href="../reference/ndiffs.html">ndiffs()</a></code> so that the maximum number of differences allowed is 2.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0" id="forecast-10-31-august-2006">forecast 1.0 (31 August 2006)<a class="anchor" aria-label="anchor" href="#forecast-10-31-august-2006"></a></h2>
-<ul><li>Added MASE to gof().</li>
-<li>croston() now returns fitted values and residuals.</li>
-<li>arima() no longer allows linear trend + ARMA errors by default. Also, drift in non-stationary models can be turned off.</li>
+<ul><li>Added MASE to <code>gof()</code>.</li>
+<li>
+<code><a href="../reference/forecast.croston_model.html">croston()</a></code> now returns fitted values and residuals.</li>
+<li>
+<code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">arima()</a></code> no longer allows linear trend + ARMA errors by default. Also, drift in non-stationary models can be turned off.</li>
 <li>This version is the first to be uploaded to CRAN.</li>
 </ul></div>
     <div class="section level2">
@@ -1009,62 +1050,70 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.99991" id="forecast-099991-2-august-2006">forecast 0.99991 (2 August 2006)<a class="anchor" aria-label="anchor" href="#forecast-099991-2-august-2006"></a></h2>
-<ul><li>More bug fixes. ets now converges to a good model more often.</li>
+<ul><li>More bug fixes. <code><a href="../reference/ets.html">ets()</a></code> now converges to a good model more often.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.9999" id="forecast-09999-1-august-2006">forecast 0.9999 (1 August 2006)<a class="anchor" aria-label="anchor" href="#forecast-09999-1-august-2006"></a></h2>
 <ul><li>Mostly bug fixes.</li>
 <li>A few data sets have been moved from fma to forecast as they are not used in my book.</li>
-<li>ets is now considerably slower but gives better results. Full optimization is now the only option (which is what slows it down). I had too many problems with poor models when partial optimization was used. I’ll work on speeding it up sometime, but this is not a high priority. It is fast enough for most use. If you really need to forecast 1000 series, run it overnight.</li>
-<li>In ets, I’ve experimented with new starting conditions for optimization and it seems to be fairly robust now.</li>
+<li>
+<code><a href="../reference/ets.html">ets()</a></code> is now considerably slower but gives better results. Full optimization is now the only option (which is what slows it down). I had too many problems with poor models when partial optimization was used. I’ll work on speeding it up sometime, but this is not a high priority. It is fast enough for most use. If you really need to forecast 1000 series, run it overnight.</li>
+<li>In <code><a href="../reference/ets.html">ets()</a></code>, I’ve experimented with new starting conditions for optimization and it seems to be fairly robust now.</li>
 <li>Multiplicative error models can no longer be applied to series containing zeros or negative values. However, the forecasts from these models are not constrained to be positive.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.999" id="forecast-0999-27-july-2006">forecast 0.999 (27 July 2006)<a class="anchor" aria-label="anchor" href="#forecast-0999-27-july-2006"></a></h2>
 <ul><li>The package has been turned into three packages forming a bundle. The functions and a few datasets are still in the forecast package. The data from Makridakis, Wheelwright and Hyndman (1998) is now in the fma package. The M-competition data is now in the Mcomp package. Both fma and Mcomp automatically load forecast.</li>
 <li>This is the first version available on all operating systems (not just Windows).</li>
-<li>pegels has been replaced by ets. ets only fits the model; it doesn’t produce forecasts. To get forecasts, apply the forecast function to the ets object.</li>
-<li>ets has been completely rewritten which makes it slower, but much easier to maintain. Different boundary conditions are used and a different optimizer is used, so don’t expect the results to be identical to what was done by the old pegels function. To get something like the results from the old pegels function, use forecast(ets()).</li>
-<li>simulate.ets() added to simulate from an ets model.</li>
+<li>
+<code>pegels()</code> has been replaced by <code><a href="../reference/ets.html">ets()</a></code>. <code><a href="../reference/ets.html">ets()</a></code> only fits the model; it doesn’t produce forecasts. To get forecasts, apply the forecast function to the ets object.</li>
+<li>
+<code><a href="../reference/ets.html">ets()</a></code> has been completely rewritten which makes it slower, but much easier to maintain. Different boundary conditions are used and a different optimizer is used, so don’t expect the results to be identical to what was done by the old <code>pegels()</code> function. To get something like the results from the old <code>pegels()</code> function, use <code><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast()</a></code> on <code><a href="../reference/ets.html">ets()</a></code>.</li>
+<li>
+<code><a href="../reference/simulate.ets.html">simulate.ets()</a></code> added to simulate from an ets model.</li>
 <li>Changed name of cars to auto to avoid clash with the cars data in the datasets package.</li>
-<li>arima2 functionality is now handled by arima() and pegels2 functionality is now handled by ets.</li>
-<li>best.arima now allows the option of BIC to be used for model selection.</li>
-<li>Croston’s method added in function croston().</li>
-<li>ts.display renamed as tsdisplay</li>
-<li>mean.f changed to meanf, theta.f changed to thetaf, rw.f changed to rwf, seasonaldummy.f to seasonaldummyf, sindex.f to sindexf, and spline.f to splinef. These changes are to avoid potential problems if anyone introduces an ‘f’ class.</li>
+<li>arima2 functionality is now handled by <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">arima()</a></code> and pegels2 functionality is now handled by <code><a href="../reference/ets.html">ets()</a></code>.</li>
+<li>
+<code>best.arima()</code> now allows the option of BIC to be used for model selection.</li>
+<li>Croston’s method added in function <code><a href="../reference/forecast.croston_model.html">croston()</a></code>.</li>
+<li>
+<code>ts.display()</code> renamed as <code><a href="../reference/tsdisplay.html">tsdisplay()</a></code>
+</li>
+<li>
+<code>mean.f()</code> changed to <code><a href="../reference/forecast.mean_model.html">meanf()</a></code>, <code>theta.f()</code> changed to <code><a href="../reference/forecast.theta_model.html">thetaf()</a></code>, <code>rw.f()</code> changed to <code><a href="../reference/forecast.rw_model.html">rwf()</a></code>, <code>seasonaldummy.f()</code> to <code><a href="../reference/seasonaldummy.html">seasonaldummyf()</a></code>, <code>sindex.f()</code> to <code><a href="../reference/sindexf.html">sindexf()</a></code>, and <code>spline.f()</code> to <code><a href="../reference/forecast.spline_model.html">splinef()</a></code>. These changes are to avoid potential problems if anyone introduces an ‘f’ class.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.994" id="forecast-0994-4-october-2004">forecast 0.994 (4 October 2004)<a class="anchor" aria-label="anchor" href="#forecast-0994-4-october-2004"></a></h2>
-<ul><li>Fixed bug in arima which caused predict() to sometimes fail when there was no xreg term.</li>
+<ul><li>Fixed bug in <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">arima()</a></code> which caused <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> to sometimes fail when there was no xreg term.</li>
 <li>More bug fixes in handling regression terms in arima models.</li>
-<li>New print.Arima function for more informative output.</li>
+<li>New <code>print.Arima()</code> function for more informative output.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.993" id="forecast-0993-20-july-2004">forecast 0.993 (20 July 2004)<a class="anchor" aria-label="anchor" href="#forecast-0993-20-july-2004"></a></h2>
-<ul><li>Added forecast function for structural time series models obtained using StructTS().</li>
-<li>Changed default parameter space for pegels() to force admissibility.</li>
-<li>Added option to pegels() to allow restriction to models with finite forecast variance. This restriction is imposed by default.</li>
-<li>Fixed bug in arima.errors(). Changes made to arima() meant arima.errors() was often returning an error message.</li>
+<ul><li>Added forecast function for structural time series models obtained using <code><a href="https://rdrr.io/r/stats/StructTS.html" class="external-link">StructTS()</a></code>.</li>
+<li>Changed default parameter space for <code>pegels()</code> to force admissibility.</li>
+<li>Added option to <code>pegels()</code> to allow restriction to models with finite forecast variance. This restriction is imposed by default.</li>
+<li>Fixed bug in <code><a href="../reference/arima.errors.html">arima.errors()</a></code>. Changes made to <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">arima()</a></code> meant <code><a href="../reference/arima.errors.html">arima.errors()</a></code> was often returning an error message.</li>
 <li>Added a namespace to the package making fewer functions visible to the user.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.99" id="forecast-099-21-may-2004">forecast 0.99 (21 May 2004)<a class="anchor" aria-label="anchor" href="#forecast-099-21-may-2004"></a></h2>
-<ul><li>Added automatic selection of order of differencing for best.arima.</li>
+<ul><li>Added automatic selection of order of differencing for <code>best.arima()</code>.</li>
 <li>Added possibility of linear trend in arima models.</li>
-<li>In pegels(), option added to allow parameters of an exponential smoothing model to be in the ‘admissible’ (or invertible) region rather than within the usual (0,1) region.</li>
-<li>Fixed some bugs in pegels.</li>
+<li>In <code>pegels()</code>, option added to allow parameters of an exponential smoothing model to be in the ‘admissible’ (or invertible) region rather than within the usual (0,1) region.</li>
+<li>Fixed some bugs in <code>pegels()</code>.</li>
 <li>Included all M1 and M3 data and some functions to subset and plot them.</li>
 <li>Note: This package will only work in R1.9 or later.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.98" id="forecast-098-23-august-2003">forecast 0.98 (23 August 2003)<a class="anchor" aria-label="anchor" href="#forecast-098-23-august-2003"></a></h2>
-<ul><li>Added facilities in pegels. o It is now possible to specify particular values of the smoothing parameters rather than always use the optimized values. If none are specified, the optimal values are still estimated as before. o It is also possible to specify upper and lower bounds for each parameter separately.</li>
-<li>New function: theta.f. This implements the Theta method which did very well in the M3 competition.</li>
-<li>A few minor problems with pegels fixed and a bug in forecast.plot that meant it didn’t work when the series contained missing values.</li>
+<ul><li>Added facilities in <code>pegels()</code>. o It is now possible to specify particular values of the smoothing parameters rather than always use the optimized values. If none are specified, the optimal values are still estimated as before. o It is also possible to specify upper and lower bounds for each parameter separately.</li>
+<li>New function: <code>theta.f()</code>. This implements the Theta method which did very well in the M3 competition.</li>
+<li>A few minor problems with <code>pegels()</code> fixed and a bug in <code>forecast.plot()</code> that meant it didn’t work when the series contained missing values.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.972" id="forecast-0972-11-july-2003">forecast 0.972 (11 July 2003)<a class="anchor" aria-label="anchor" href="#forecast-0972-11-july-2003"></a></h2>
-<ul><li>Small bug fix: pegels did not return correct model when model was partially specified.</li>
+<ul><li>Small bug fix: <code>pegels()</code> did not return correct model when model was partially specified.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.971" id="forecast-0971-10-july-2003">forecast 0.971 (10 July 2003)<a class="anchor" aria-label="anchor" href="#forecast-0971-10-july-2003"></a></h2>
@@ -1078,12 +1127,14 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.96" id="forecast-096-15-may-2003">forecast 0.96 (15 May 2003)<a class="anchor" aria-label="anchor" href="#forecast-096-15-may-2003"></a></h2>
 <ul><li>Many functions rewritten to make use of methods and classes. Consequently several functions have had their names changed and many arguments have been altered. Please see the help files for details.</li>
-<li>Added functions forecast.Arima and forecat.ar</li>
-<li>Added functions gof and seasadj</li>
-<li>Fixed bug in plot.forecast. The starting date for the plot was sometimes incorrect.</li>
-<li>Added residuals components to rw.f and mean.f.</li>
+<li>Added functions <code><a href="../reference/forecast.Arima.html">forecast.Arima()</a></code> and <code>forecat.ar()</code>
+</li>
+<li>Added functions <code>gof()</code> and <code><a href="../reference/seasadj.html">seasadj()</a></code>
+</li>
+<li>Fixed bug in <code><a href="../reference/plot.forecast.html">plot.forecast()</a></code>. The starting date for the plot was sometimes incorrect.</li>
+<li>Added residuals components to <code>rw.f()</code> and <code>mean.f()</code>.</li>
 <li>Made several changes to ensure compatibility with Rv1.7.0.</li>
-<li>Removed a work-around to fix a bug in monthplot command present in R v&lt;=1.6.2.</li>
+<li>Removed a work-around to fix a bug in <code><a href="https://rdrr.io/r/stats/monthplot.html" class="external-link">monthplot()</a></code> command present in R v&lt;=1.6.2.</li>
 <li>Fixed the motel data set (columns were swapped)</li>
 </ul></div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
