@@ -1,6 +1,6 @@
 # Changelog
 
-## forecast (development version)
+## forecast 9.0.1
 
 - Performance improvements for ARFIMA model search
 - [`forecast.mlm()`](https://pkg.robjhyndman.com/forecast/reference/forecast.mlm.md)

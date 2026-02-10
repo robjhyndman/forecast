@@ -62,13 +62,13 @@ Hyndman R, Athanasopoulos G, Bergmeir C, Caceres G, Chhay L, O'Hara-Wild
 M, Petropoulos F, Razbash S, Wang E, Yasmeen F (2026). *forecast:
 Forecasting functions for time series and linear models*.
 [doi:10.32614/CRAN.package.forecast](https://doi.org/10.32614/CRAN.package.forecast),
-R package version 9.0.0.9000, <https://pkg.robjhyndman.com/forecast/>.
+R package version 9.0.1, <https://pkg.robjhyndman.com/forecast/>.
 
     @Manual{,
       title = {{forecast}: Forecasting functions for time series and linear models},
       author = {Rob Hyndman and George Athanasopoulos and Christoph Bergmeir and Gabriel Caceres and Leanne Chhay and Mitchell O'Hara-Wild and Fotios Petropoulos and Slava Razbash and Earo Wang and Farah Yasmeen},
       year = {2026},
-      note = {R package version 9.0.0.9000},
+      note = {R package version 9.0.1},
       url = {https://pkg.robjhyndman.com/forecast/},
       doi = {10.32614/CRAN.package.forecast},
     }
