@@ -1,4 +1,4 @@
-# forecast (development version)
+# forecast 9.0.1
 
 * Performance improvements for ARFIMA model search
 * `forecast.mlm()` now finds `newdata` when passed as an argument from another function (#880)
