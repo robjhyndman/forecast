@@ -27,53 +27,26 @@ search.arima <- function(
   maxK <- (allowdrift || allowmean)
 
   # Choose model orders
-  # Serial - technically could be combined with the code below
+  to.check <- expand.grid(
+    K = 0:maxK,
+    Q = 0:max.Q,
+    P = 0:max.P,
+    q = 0:max.q,
+    p = 0:max.p
+  )
   if (!parallel) {
     best.ic <- Inf
-    for (i in 0:max.p) {
-      for (j in 0:max.q) {
-        for (I in 0:max.P) {
-          for (J in 0:max.Q) {
-            if (i + j + I + J <= max.order) {
-              for (K in 0:maxK) {
-                fit <- myarima(
-                  x,
-                  order = c(i, d, j),
-                  seasonal = c(I, D, J),
-                  constant = (K == 1),
-                  trace = trace,
-                  ic = ic,
-                  approximation = approximation,
-                  offset = offset,
-                  xreg = xreg,
-                  ...
-                )
-                if (fit$ic < best.ic) {
-                  best.ic <- fit$ic
-                  bestfit <- fit
-                  constant <- (K == 1)
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  } else if (parallel) {
-    to.check <- WhichModels(max.p, max.q, max.P, max.Q, maxK)
-
-    par.all.arima <- function(l, max.order) {
-      .tmp <- UndoWhichModels(l)
-      i <- .tmp[1]
-      j <- .tmp[2]
-      I <- .tmp[3]
-      J <- .tmp[4]
-      K <- .tmp[5] == 1
-      if (i + j + I + J <= max.order) {
+    for (i in seq_len(nrow(to.check))) {
+      p <- to.check[i, "p"]
+      q <- to.check[i, "q"]
+      P <- to.check[i, "P"]
+      Q <- to.check[i, "Q"]
+      K <- to.check[i, "K"]
+      if (p + q + P + Q <= max.order) {
         fit <- myarima(
           x,
-          order = c(i, d, j),
-          seasonal = c(I, D, J),
+          order = c(p, d, q),
+          seasonal = c(P, D, Q),
           constant = (K == 1),
           trace = trace,
           ic = ic,
@@ -82,11 +55,36 @@ search.arima <- function(
           xreg = xreg,
           ...
         )
+        if (fit$ic < best.ic) {
+          best.ic <- fit$ic
+          bestfit <- fit
+          constant <- (K == 1)
+        }
       }
-      if (exists("fit")) {
-        return(cbind(fit, K))
+    }
+  } else if (parallel) {
+    par.all.arima <- function(i, max.order) {
+      p <- to.check[i, "p"]
+      q <- to.check[i, "q"]
+      P <- to.check[i, "P"]
+      Q <- to.check[i, "Q"]
+      K <- to.check[i, "K"]
+      if (p + q + P + Q <= max.order) {
+        fit <- myarima(
+          x,
+          order = c(p, d, q),
+          seasonal = c(P, D, Q),
+          constant = (K == 1),
+          trace = trace,
+          ic = ic,
+          approximation = approximation,
+          offset = offset,
+          xreg = xreg,
+          ...
+        )
+        cbind(fit, K)
       } else {
-        return(NULL)
+        NULL
       }
     }
 
@@ -95,7 +93,7 @@ search.arima <- function(
     }
 
     all.models <- mclapply(
-      X = to.check,
+      X = seq_len(nrow(to.check)),
       FUN = par.all.arima,
       max.order = max.order,
       mc.cores = num.cores
@@ -130,7 +128,7 @@ search.arima <- function(
         order = bestfit$arma[c(1, 6, 2)],
         seasonal = bestfit$arma[c(3, 7, 4)],
         constant = constant,
-        ic,
+        ic = ic,
         trace = FALSE,
         approximation = FALSE,
         xreg = xreg,
@@ -893,7 +891,10 @@ Arima <- function(
   if (is.null(model)) {
     tmp$sigma2 <- sum(tmp$residuals^2, na.rm = TRUE) / (nstar - npar + 1)
   }
-  out <- structure(tmp, class = c("fc_model", "forecast_ARIMA", "ARIMA", "Arima"))
+  out <- structure(
+    tmp,
+    class = c("fc_model", "forecast_ARIMA", "ARIMA", "Arima")
+  )
   out$fitted <- fitted.Arima(out)
   out$series <- series
   out
