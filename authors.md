@@ -56,7 +56,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/robjhyndman/forecast/blob/master/inst/CITATION)
+[`inst/CITATION`](https://github.com/robjhyndman/forecast/blob/v9.0.1/inst/CITATION)
 
 Hyndman R, Athanasopoulos G, Bergmeir C, Caceres G, Chhay L, O'Hara-Wild
 M, Petropoulos F, Razbash S, Wang E, Yasmeen F (2026). *forecast:
