@@ -217,7 +217,7 @@ tsoutliers <- function(x, iterate = 2, lambda = NULL) {
   mod <- supsmu(tt, xx)
   resid <- xx - mod$y
 
-  # Make sure missing values are not interpeted as outliers
+  # Make sure missing values are not interpreted as outliers
   if (nmiss > 0L) {
     resid[missng] <- NA
   }

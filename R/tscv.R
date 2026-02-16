@@ -29,7 +29,7 @@
 #' then it must also have `xreg` and `newxreg` arguments corresponding to the
 #' training and test periods.
 #' @param window Length of the rolling window, if NULL, a rolling window will not be used.
-#' @param xreg Exogeneous predictor variables passed to the forecast function if required.
+#' @param xreg Exogenous predictor variables passed to the forecast function if required.
 #' @param initial Initial period of the time series where no cross-validation is performed.
 #' @param ... Other arguments are passed to `forecastfunction`.
 #' @return Numerical time series object containing the forecast errors as a vector (if h=1)
@@ -245,12 +245,12 @@ CVar <- function(
   out$LBpvalue <- Box.test(out$residuals, type = "Ljung", lag = LBlags)$p.value
 
   out$k <- k
-  # calculate mean accuracy accross all folds
+  # calculate mean accuracy across all folds
   CVmean <- matrix(
     colMeans(cvacc, na.rm = TRUE),
     dimnames = list(colnames(acc), "Mean")
   )
-  # calculate accuracy sd accross all folds --- include?
+  # calculate accuracy sd across all folds --- include?
   CVsd <- matrix(
     apply(cvacc, 2, FUN = sd, na.rm = TRUE),
     dimnames = list(colnames(acc), "SD")

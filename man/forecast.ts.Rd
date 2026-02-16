@@ -60,8 +60,8 @@ period, if the data is of unknown period.}
 multiplicative trends are allowed. Otherwise, only additive or no trend ETS
 models are permitted.}
 
-\item{model}{An object describing a time series model; e.g., one of of class
-\code{ets}, \code{Arima}, \code{bats}, \code{bats}, or \code{nnetar}.}
+\item{model}{An object describing a time series model; e.g., one of class
+\code{ets}, \code{Arima}, \code{bats}, \code{tbats}, or \code{nnetar}.}
 
 \item{...}{Additional arguments affecting the forecasts produced. If
 \code{model = NULL}, \code{forecast.ts} passes these to \code{\link[=ets]{ets()}} or

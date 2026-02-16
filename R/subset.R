@@ -1,6 +1,6 @@
 #' Subsetting a time series
 #'
-#' Various types of subseting of a time series. Allows subsetting by index
+#' Various types of subsetting of a time series. Allows subsetting by index
 #' values (unlike [stats::window()]). Also allows extraction of the
 #' values of a specific season or subset of seasons in each year. For example,
 #' to extract all values for the month of May from a time series.

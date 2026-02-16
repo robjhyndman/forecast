@@ -13,7 +13,7 @@
 #' `alternative = "greater"`, the alternative hypothesis is that method 2 is
 #' more accurate than method 1. For `alternative = "two.sided"`, the
 #' alternative hypothesis is that method 1 and method 2 have different levels
-#' of accuracy. The long-run variance estimator can either the
+#' of accuracy. The long-run variance estimator can either be the
 #' auto-correlation estimator `varestimator = "acf"`, or the estimator based
 #' on Bartlett weights `varestimator = "bartlett"` which ensures a positive estimate.
 #' Both long-run variance estimators are proposed in Diebold and Mariano (1995).

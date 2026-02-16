@@ -20,7 +20,7 @@ largest seasonal period (for seasonal data) or ten (for non-seasonal data).}
 
 \item{window}{Length of the rolling window, if NULL, a rolling window will not be used.}
 
-\item{xreg}{Exogeneous predictor variables passed to the forecast function if required.}
+\item{xreg}{Exogenous predictor variables passed to the forecast function if required.}
 
 \item{initial}{Initial period of the time series where no cross-validation is performed.}
 

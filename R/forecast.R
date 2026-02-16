@@ -36,8 +36,8 @@
 #' @param allow.multiplicative.trend If `TRUE`, then ETS models with
 #' multiplicative trends are allowed. Otherwise, only additive or no trend ETS
 #' models are permitted.
-#' @param model An object describing a time series model; e.g., one of of class
-#' `ets`, `Arima`, `bats`, `bats`, or `nnetar`.
+#' @param model An object describing a time series model; e.g., one of class
+#' `ets`, `Arima`, `bats`, `tbats`, or `nnetar`.
 #' @param ... Additional arguments affecting the forecasts produced. If
 #' `model = NULL`, `forecast.ts` passes these to [ets()] or
 #' [stlf()] depending on the frequency of the time series. If

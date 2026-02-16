@@ -45,7 +45,7 @@ attributes retained. Otherwise, a ts object is returned with frequency equal
 to the length of \code{month}, \code{quarter} or \code{season}.
 }
 \description{
-Various types of subseting of a time series. Allows subsetting by index
+Various types of subsetting of a time series. Allows subsetting by index
 values (unlike \code{\link[stats:window]{stats::window()}}). Also allows extraction of the
 values of a specific season or subset of seasons in each year. For example,
 to extract all values for the month of May from a time series.
