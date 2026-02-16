@@ -2570,7 +2570,7 @@ StatForecast <- ggplot2::ggproto(
         (abs(data$group[1]) - 1) %% length(series) + 1
       ]
     }
-    do.call("transform", extraInfo)
+    do.call(transform, extraInfo)
   }
 )
 

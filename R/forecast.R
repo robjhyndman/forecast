@@ -652,7 +652,7 @@ hfitted.default <- function(object, h = 1, FUN = NULL, ...) {
       if (!is.null(object$sigma2)) {
         fcarg$object$sigma2 <- object$sigma2
       }
-      fits[i + h] <- suppressWarnings(do.call("forecast", fcarg)$mean[h])
+      fits[i + h] <- suppressWarnings(do.call(forecast, fcarg)$mean[h])
     }
   }
   fits
