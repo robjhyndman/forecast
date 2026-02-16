@@ -40,7 +40,7 @@ checkresiduals(fit)
 
 }
 \seealso{
-\code{\link[=ggtsdisplay]{ggtsdisplay()}}, \code{\link[stats:box.test]{stats::Box.test()}}, [lmtest::bgtest()
+\code{\link[=ggtsdisplay]{ggtsdisplay()}}, \code{\link[stats:box.test]{stats::Box.test()}}, \code{\link[lmtest:bgtest]{lmtest::bgtest()}}
 }
 \author{
 Rob J Hyndman

@@ -54,7 +54,7 @@ test_that("tests on model building with univariate time series", {
 test_that("tslm parity with lm", {
   fit1 <- tslm(v_y ~ v_x + fourier(v_y, 3), data = data.frame(v_y = v_y))
   fit2 <- lm(v_y ~ v_x + fourier(v_y, 3), data = data.frame(v_y = v_y))
-  expect_equal(fit1$coefficients, fit1$coefficients)
+  expect_equal(fit1$coefficients, fit2$coefficients)
   expect_equal(fit1$model, fit2$model, ignore_attr = "terms")
 })
 

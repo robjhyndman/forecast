@@ -19,7 +19,7 @@
 #' @param ... Other arguments are passed to [ggtsdisplay()].
 #' @return None
 #' @author Rob J Hyndman
-#' @seealso [ggtsdisplay()], [stats::Box.test()], [lmtest::bgtest()
+#' @seealso [ggtsdisplay()], [stats::Box.test()], [lmtest::bgtest()]
 #' @examples
 #'
 #' fit <- ets(WWWusage)

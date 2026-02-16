@@ -2,7 +2,7 @@
 ##### Forecasting Using Smoothing Splines #####
 ###############################################
 
-# Optimal smoothing paramter denoted by beta
+# Optimal smoothing parameter denoted by beta
 # lambda is Box-Cox parameter.
 
 ################# FUNCTIONS ##################
