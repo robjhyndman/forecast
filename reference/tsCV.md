@@ -36,7 +36,7 @@ tsCV(y, forecastfunction, h = 1, window = NULL, xreg = NULL, initial = 0, ...)
 
 - xreg:
 
-  Exogeneous predictor variables passed to the forecast function if
+  Exogenous predictor variables passed to the forecast function if
   required.
 
 - initial:

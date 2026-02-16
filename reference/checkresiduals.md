@@ -50,7 +50,7 @@ None
 
 [`ggtsdisplay()`](https://pkg.robjhyndman.com/forecast/reference/tsdisplay.md),
 [`stats::Box.test()`](https://rdrr.io/r/stats/box.test.html),
-\[lmtest::bgtest()
+[`lmtest::bgtest()`](https://rdrr.io/pkg/lmtest/man/bgtest.html)
 
 ## Author
 

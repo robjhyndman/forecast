@@ -81,8 +81,8 @@ print(x, ...)
 
 - model:
 
-  An object describing a time series model; e.g., one of of class `ets`,
-  `Arima`, `bats`, `bats`, or `nnetar`.
+  An object describing a time series model; e.g., one of class `ets`,
+  `Arima`, `bats`, `tbats`, or `nnetar`.
 
 - ...:
 

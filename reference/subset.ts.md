@@ -1,6 +1,6 @@
 # Subsetting a time series
 
-Various types of subseting of a time series. Allows subsetting by index
+Various types of subsetting of a time series. Allows subsetting by index
 values (unlike
 [`stats::window()`](https://rdrr.io/r/stats/window.html)). Also allows
 extraction of the values of a specific season or subset of seasons in
