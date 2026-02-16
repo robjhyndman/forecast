@@ -4,6 +4,8 @@
 
 ## forecast 9.0.1
 
+CRAN release: 2026-02-14
+
 - Performance improvements for ARFIMA model search
 - [`forecast.mlm()`](https://pkg.robjhyndman.com/forecast/reference/forecast.mlm.md)
   now finds `newdata` when passed as an argument from another function
