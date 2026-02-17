@@ -708,7 +708,7 @@ simulate.fracdiff <- function(
   ...
 ) {
   x <- getResponse(object)
-  if(!is.null(lambda)) {
+  if (!is.null(lambda)) {
     x <- BoxCox(x, lambda)
   }
   if (is.null(x)) {
@@ -752,7 +752,7 @@ simulate.fracdiff <- function(
   ysim <- unfracdiff(xx, ysim, n, nsim, object$d) + meanx
 
   # Undo transformation
-  if(!is.null(lambda)) {
+  if (!is.null(lambda)) {
     ysim <- InvBoxCox(ysim, lambda)
   }
   ysim
@@ -871,7 +871,7 @@ simulate.nnetar <- function(
         "I can't simulate when there are missing values near the end of the series."
       )
     }
-    path[i] <- mean(sapply(object$model, predict, newdata = newdata)) + e[i]
+    path[i] <- mean(vapply(object$model, predict, numeric(1), newdata = newdata)) + e[i]
     flag <- c(path[i], flag[-maxlag])
   }
   ## Re-scale simulated points
