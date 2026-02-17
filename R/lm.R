@@ -250,8 +250,8 @@ forecast.lm <- function(
     stop("The forecast horizon must be at least 1.")
   }
   level <- getConfLevel(level, fan)
-  if(is.null(biasadj)) {
-    if(!is.null(object$lambda)) {
+  if (is.null(biasadj)) {
+    if (!is.null(object$lambda)) {
       biasadj <- attr(object$lambda, "biasadj")
     } else {
       biasadj <- FALSE
@@ -315,10 +315,14 @@ forecast.lm <- function(
     # Search for time series variables
     tsvar <- match(c("trend", "season"), reqvars, 0L)
     # Check if required variables are functions
-    fnvar <- sapply(reqvars, function(x) {
-      !(is.symbol(parse(text = x)[[1]]) ||
-        typeof(eval(parse(text = x)[[1]][[1]])) != "closure")
-    })
+    fnvar <- vapply(
+      reqvars,
+      function(x) {
+        expr <- str2lang(x)
+        !is.symbol(expr) && typeof(eval(expr[[1]])) == "closure"
+      },
+      logical(1)
+    )
     if (!is.data.frame(newdata)) {
       newdata <- datamat(newdata)
       colnames(newdata)[1] <- if (sum(tsvar > 0)) {
