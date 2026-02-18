@@ -108,7 +108,7 @@ For example, the function
 makes forecasts based on the results produced by
 [`stats::arima()`](https://rdrr.io/r/stats/arima.html).
 
-If `model = NULL`,the function `forecast.ts()` makes forecasts using
+If `model = NULL`, the function `forecast.ts()` makes forecasts using
 [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md) models
 (if the data are non-seasonal or the seasonal period is 12 or less) or
 [`stlf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
@@ -161,7 +161,7 @@ following elements:
 
 The function `summary` can be used to obtain and print a summary of the
 results, while the functions `plot` and `autoplot` produce plots of the
-forecasts and prediction intervals. The generic accessors functions
+forecasts and prediction intervals. The generic accessor functions
 `fitted.values` and `residuals` extract various useful features from the
 underlying model.
 

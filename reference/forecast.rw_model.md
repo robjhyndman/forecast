@@ -225,7 +225,7 @@ following elements:
 
 The function `summary` can be used to obtain and print a summary of the
 results, while the functions `plot` and `autoplot` produce plots of the
-forecasts and prediction intervals. The generic accessors functions
+forecasts and prediction intervals. The generic accessor functions
 `fitted.values` and `residuals` extract various useful features from the
 underlying model.
 

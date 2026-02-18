@@ -62,7 +62,7 @@ An object of class `GeomForecast` (inherits from `Geom`, `ggproto`,
 
 - stat:
 
-  The stat object to use calculate the data.
+  The stat object used to calculate the data.
 
 - position:
 

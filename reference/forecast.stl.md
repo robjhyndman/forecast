@@ -142,7 +142,7 @@ stlf(
 
 - robust:
 
-  If `TRUE`, robust fitting will used in the loess procedure within
+  If `TRUE`, robust fitting will be used in the loess procedure within
   [`stats::stl()`](https://rdrr.io/r/stats/stl.html).
 
 - x:

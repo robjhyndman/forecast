@@ -48,7 +48,7 @@ BIC or corrected AIC, AICc, obtained as AIC + (2k(k+1))/(n-k-1), where k
 is the number of parameters and n is the number of available
 observations in the model.
 
-Critical values for the test are based on simulations, which has been
+Critical values for the test are based on simulations, which have been
 smoothed over to produce critical values for all seasonal periods.
 
 ## References

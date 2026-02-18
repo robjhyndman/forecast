@@ -92,7 +92,7 @@ bats(
 
 - ...:
 
-  Additional arguments to be passed to `auto.arima` when choose an
+  Additional arguments to be passed to `auto.arima` when choosing an
   ARMA(p, q) model for the errors. (Note that xreg will be ignored, as
   will any arguments concerning seasonality and differencing, but
   arguments controlling the values of p and q will be used.)

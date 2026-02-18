@@ -132,13 +132,13 @@ useful features of the value returned by `modelAR`.
 ## Details
 
 This is an experimental function and only recommended for advanced
-users. The selected model is fitted with lagged values of
-`y as inputs. The inputs are for lags 1 to `p`, and lags `m`to`mP`where`m
-=
-frequency(y)`. If `xreg`is provided, its columns are also used as inputs. If there are missing values in`y`or`xreg\`,
-the corresponding rows (and any others which depend on them as lags) are
-omitted from the fit. The model is trained for one-step forecasting.
-Multi-step forecasts are computed recursively.
+users. The selected model is fitted with lagged values of `y` as inputs.
+The inputs are for lags 1 to `p`, and lags `m` to `mP` where
+`m = frequency(y)`. If `xreg` is provided, its columns are also used as
+inputs. If there are missing values in `y` or `xreg`, the corresponding
+rows (and any others which depend on them as lags) are omitted from the
+fit. The model is trained for one-step forecasting. Multi-step forecasts
+are computed recursively.
 
 ## Author
 

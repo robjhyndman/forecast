@@ -582,7 +582,7 @@ CRAN release: 2015-05-09
 - Fixed bug in forecasts from bats which labelled them as TBATS.
 - Added allow.multiplicative.trend argument to
   [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md).
-- Set allow.multiplictive.trend=FALSE in
+- Set allow.multiplicative.trend=FALSE in
   [`stlf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md),
   [`stlm()`](https://pkg.robjhyndman.com/forecast/reference/stlm.md) and
   [`forecast.ts()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ts.md).
@@ -2113,7 +2113,8 @@ CRAN release: 2009-09-07
   arguments have been altered. Please see the help files for details.
 - Added functions
   [`forecast.Arima()`](https://pkg.robjhyndman.com/forecast/reference/forecast.Arima.md)
-  and `forecat.ar()`
+  and
+  [`forecast.ar()`](https://pkg.robjhyndman.com/forecast/reference/forecast.Arima.md)
 - Added functions `gof()` and
   [`seasadj()`](https://pkg.robjhyndman.com/forecast/reference/seasadj.md)
 - Fixed bug in

@@ -1,7 +1,7 @@
 # Fit best ARIMA model to univariate time series
 
 Returns best ARIMA model according to either AIC, AICc or BIC value. The
-function conducts a search over possible model within the order
+function conducts a search over possible models within the order
 constraints provided.
 
 ## Usage
