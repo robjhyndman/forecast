@@ -49,7 +49,7 @@ A \code{function} will be called with a single argument, the plot data. The
 return value must be a \code{data.frame}, and will be used as the layer
 data.}
 
-\item{stat}{The stat object to use calculate the data.}
+\item{stat}{The stat object used to calculate the data.}
 
 \item{position}{Position adjustment, either as a string, or the result of a
 call to a position adjustment function.}

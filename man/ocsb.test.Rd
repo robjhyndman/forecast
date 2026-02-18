@@ -30,7 +30,7 @@ An implementation of the Osborn, Chui, Smith, and Birchenhall (OCSB) test.
 \details{
 The regression equation may include lags of the dependent variable. When lag.method = "fixed", the lag order is fixed to maxlag; otherwise, maxlag is the maximum number of lags considered in a lag selection procedure that minimises the lag.method criterion, which can be AIC or BIC or corrected AIC, AICc, obtained as AIC + (2k(k+1))/(n-k-1), where k is the number of parameters and n is the number of available observations in the model.
 
-Critical values for the test are based on simulations, which has been smoothed over to produce critical values for all seasonal periods.
+Critical values for the test are based on simulations, which have been smoothed over to produce critical values for all seasonal periods.
 }
 \examples{
 ocsb.test(AirPassengers)

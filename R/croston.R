@@ -1,23 +1,23 @@
 #' Croston forecast model
 #'
-#' Based on Croston's (1972) method for intermittent demand forecasting, also described in Shenstone and Hyndman (2005). 
-#' Croston's method involves using simple exponential smoothing (SES) on the non-zero elements of the time series 
-#' and a separate application of SES to the times between non-zero elements of the time series. 
+#' Based on Croston's (1972) method for intermittent demand forecasting, also described in Shenstone and Hyndman (2005).
+#' Croston's method involves using simple exponential smoothing (SES) on the non-zero elements of the time series
+#' and a separate application of SES to the times between non-zero elements of the time series.
 #' Returns a model object that can be used to generate forecasts using Croston's method
 #' for intermittent demand time series. It isn't a true statistical model in that it
 #' doesn't describe a data generating process that would lead to the forecasts produced
 #' using Croston's method.
-#' 
+#'
 #' Note that prediction intervals are not computed as Croston's method has no
-#' underlying stochastic model. 
-#' 
+#' underlying stochastic model.
+#'
 #' There are two variant methods available which apply multiplicative correction factors
 #' to the forecasts that result from the original Croston's method. For the
 #' Syntetos-Boylan approximation (`type = "sba"`), this factor is \eqn{1 - \alpha / 2},
 #' and for the Shale-Boylan-Johnston method (`type = "sbj"`), this factor is
 #' \eqn{1 - \alpha / (2 - \alpha)}, where \eqn{\alpha} is the smoothing parameter for
 #' the interval SES application.
-#' 
+#'
 #' @inheritParams Arima
 #' @param alpha Value of alpha. Default value is 0.1.
 #' @param type Which variant of Croston's method to use. Defaults to `"croston"` for
@@ -26,15 +26,15 @@
 #' @references Croston, J. (1972) "Forecasting and stock control for
 #' intermittent demands", \emph{Operational Research Quarterly}, \bold{23}(3),
 #' 289-303.
-#' 
-#' Shale, E.A., Boylan, J.E., & Johnston, F.R. (2006). Forecasting for intermittent demand: 
+#'
+#' Shale, E.A., Boylan, J.E., & Johnston, F.R. (2006). Forecasting for intermittent demand:
 #' the estimation of an unbiased average. \emph{Journal of the Operational Research Society}, \bold{57}(5), 588-592.
-#' 
+#'
 #' Shenstone, L., and Hyndman, R.J. (2005) "Stochastic models underlying
 #' Croston's method for intermittent demand forecasting". \emph{Journal of
 #' Forecasting}, \bold{24}, 389-402.
-#' 
-#' Syntetos A.A., Boylan J.E. (2001). On the bias of intermittent demand estimates. 
+#'
+#' Syntetos A.A., Boylan J.E. (2001). On the bias of intermittent demand estimates.
 #' \emph{International Journal of Production Economics}, \bold{71}, 457–466.
 #' @author Rob J Hyndman
 #' @return An object of class `croston_model`
@@ -45,7 +45,7 @@
 #' @export
 croston_model <- function(y, alpha = 0.1, type = c("croston", "sba", "sbj")) {
   type <- match.arg(type)
-  if(alpha < 0 || alpha > 1) {
+  if (alpha < 0 || alpha > 1) {
     stop("alpha must be between 0 and 1")
   }
   if (any(y < 0)) {
@@ -131,15 +131,15 @@ print.croston_model <- function(
 #' @references Croston, J. (1972) "Forecasting and stock control for
 #' intermittent demands", \emph{Operational Research Quarterly}, \bold{23}(3),
 #' 289-303.
-#' 
-#' Shale, E.A., Boylan, J.E., & Johnston, F.R. (2006). Forecasting for intermittent demand: 
+#'
+#' Shale, E.A., Boylan, J.E., & Johnston, F.R. (2006). Forecasting for intermittent demand:
 #' the estimation of an unbiased average. \emph{Journal of the Operational Research Society}, \bold{57}(5), 588-592.
-#' 
+#'
 #' Shenstone, L., and Hyndman, R.J. (2005) "Stochastic models underlying
 #' Croston's method for intermittent demand forecasting". \emph{Journal of
 #' Forecasting}, \bold{24}, 389-402.
-#' 
-#' Syntetos A.A., Boylan J.E. (2001). On the bias of intermittent demand estimates. 
+#'
+#' Syntetos A.A., Boylan J.E. (2001). On the bias of intermittent demand estimates.
 #' \emph{International Journal of Production Economics}, \bold{71}, 457–466.
 #' @keywords ts
 #' @examples
@@ -172,7 +172,7 @@ forecast.croston_model <- function(object, h = 10, ...) {
 #' @inheritParams croston_model
 #' @export
 croston <- function(y, h = 10, alpha = 0.1, type = c("croston", "sba", "sbj"), x = y) {
-  fit <- croston_model(x, alpha=alpha, type = type)
+  fit <- croston_model(x, alpha = alpha, type = type)
   fit$series <- deparse1(substitute(y))
   forecast(fit, h = h)
 }

@@ -310,7 +310,7 @@ kappa <- function(x) {
   k
 }
 
-# McMurray-Politis estimate of ACF
+# McMurry-Politis estimate of ACF
 
 wacf <- function(x, lag.max = length(x) - 1) {
   n <- length(x)

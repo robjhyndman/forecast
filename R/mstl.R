@@ -173,7 +173,7 @@ autoplot.mstl <- function(object, ...) {
 #' lags) of the loess window for seasonal extraction.
 #' @param t.window A number to control the smoothness of the trend. See
 #' [stats::stl()] for details.
-#' @param robust If `TRUE`, robust fitting will used in the loess
+#' @param robust If `TRUE`, robust fitting will be used in the loess
 #' procedure within [stats::stl()].
 #' @param allow.multiplicative.trend If `TRUE`, then ETS models with
 #' multiplicative trends are allowed. Otherwise, only additive or no trend ETS
@@ -420,7 +420,7 @@ rowSumsTS <- function(mts) {
 #' lags) of the loess window for seasonal extraction.
 #' @param t.window A number to control the smoothness of the trend. See
 #' [stats::stl()] for details.
-#' @param robust If `TRUE`, robust fitting will used in the loess
+#' @param robust If `TRUE`, robust fitting will be used in the loess
 #' procedure within [stats::stl()].
 #' @param allow.multiplicative.trend If `TRUE`, then ETS models with
 #' multiplicative trends are allowed. Otherwise, only additive or no trend ETS

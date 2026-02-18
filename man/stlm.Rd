@@ -30,7 +30,7 @@ lags) of the loess window for seasonal extraction.}
 \item{t.window}{A number to control the smoothness of the trend. See
 \code{\link[stats:stl]{stats::stl()}} for details.}
 
-\item{robust}{If \code{TRUE}, robust fitting will used in the loess
+\item{robust}{If \code{TRUE}, robust fitting will be used in the loess
 procedure within \code{\link[stats:stl]{stats::stl()}}.}
 
 \item{method}{Method to use for forecasting the seasonally adjusted series.}

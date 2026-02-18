@@ -448,7 +448,7 @@ tbats <- function(
       (length(use.damped.trend) == 1) &&
       (use.parallel)
   ) {
-    # In the this case, there is only one alternative.
+    # In this case, there is only one alternative.
     use.parallel <- FALSE
     stopCluster(clus)
   } else if (
@@ -457,7 +457,7 @@ tbats <- function(
       (length(use.trend) == 1) &&
       (use.parallel)
   ) {
-    # As above, in the this case, there is only one alternative.
+    # As above, in this case, there is only one alternative.
     use.parallel <- FALSE
     stopCluster(clus)
   }

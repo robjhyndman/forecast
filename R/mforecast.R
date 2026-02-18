@@ -150,7 +150,7 @@ forecast.mlm <- function(
 #' results, while the function `plot` produces a plot of the multivariate
 #' forecasts and prediction intervals.
 #'
-#' The generic accessors functions `fitted.values` and `residuals`
+#' The generic accessor functions `fitted.values` and `residuals`
 #' extract various useful features of the value returned by `forecast$model`.
 #'
 #' An object of class `mforecast` is a list usually containing at least
