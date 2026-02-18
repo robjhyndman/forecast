@@ -36,7 +36,7 @@
 #' @param model Output from a previous call to `bats`. If model is passed,
 #' this same model is fitted to `y` without re-estimating any parameters.
 #' @param ... Additional arguments to be passed to `auto.arima` when
-#' choose an ARMA(p, q) model for the errors. (Note that xreg will be ignored,
+#' choosing an ARMA(p, q) model for the errors. (Note that xreg will be ignored,
 #' as will any arguments concerning seasonality and differencing, but arguments
 #' controlling the values of p and q will be used.)
 #' @return An object of class `bats`. The generic accessor functions
@@ -153,10 +153,10 @@ bats <- function(
 
   if (!is.null(use.box.cox) && !is.null(use.trend) && use.parallel) {
     if (use.trend && (!is.null(use.damped.trend))) {
-      # In the this case, there is only one alternative.
+      # In this case, there is only one alternative.
       use.parallel <- FALSE
     } else if (!use.trend) {
-      # As above, in the this case, there is only one alternative.
+      # As above, in this case, there is only one alternative.
       use.parallel <- FALSE
     }
   }

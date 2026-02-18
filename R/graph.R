@@ -301,7 +301,7 @@ seasonplot <- function(
     idx <- which(Season[!is.na(xnew)] == 1)
     year <- round(time(tsx)[idx], nchar(s))
     if (min(idx) > 1) {
-      # First year starts after season 1n
+      # First year starts after season 1
       col <- col[-1]
     }
     text(

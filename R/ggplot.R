@@ -1916,7 +1916,7 @@ autoplot.stl <- function(object, labels = NULL, range.bars = TRUE, ...) {
   # Make x axis contain only whole numbers (e.g., years)
   p <- p +
     ggplot2::scale_x_continuous(breaks = unique(round(pretty(data$datetime))))
-  # ^^ Remove rightmost x axis gap with `expand=c(0.05, 0, 0, 0)` argument when assymetric `expand` feature is supported
+  # ^^ Remove rightmost x axis gap with `expand=c(0.05, 0, 0, 0)` argument when asymmetric `expand` feature is supported
   # issue: tidyverse/ggplot2#1669
 
   p
@@ -2731,7 +2731,7 @@ blendHex <- function(mixcol, seqcol, alpha = 1) {
     "HLS"
   )
 
-  # copy luminence
+  # copy luminance
   mixcolHLS@coords[, "L"] <- seqcolHLS@coords[, "L"]
   mixcolHLS@coords[, "S"] <- alpha *
     mixcolHLS@coords[, "S"] +
@@ -2834,7 +2834,7 @@ GeomForecastInterval <- ggplot2::ggproto(
 #' A `function` will be called with a single argument, the plot data. The
 #' return value must be a `data.frame`, and will be used as the layer
 #' data.
-#' @param stat The stat object to use calculate the data.
+#' @param stat The stat object used to calculate the data.
 #' @param position Position adjustment, either as a string, or the result of a
 #' call to a position adjustment function.
 #' @param na.rm If `FALSE` (the default), removes missing values with a

@@ -83,7 +83,7 @@ depend on the class of the first argument.
 For example, the function \code{\link[=forecast.Arima]{forecast.Arima()}} makes forecasts based
 on the results produced by \code{\link[stats:arima]{stats::arima()}}.
 
-If \code{model = NULL},the function \code{\link[=forecast.ts]{forecast.ts()}} makes forecasts
+If \code{model = NULL}, the function \code{\link[=forecast.ts]{forecast.ts()}} makes forecasts
 using \code{\link[=ets]{ets()}} models (if the data are non-seasonal or the seasonal
 period is 12 or less) or \code{\link[=stlf]{stlf()}} (if the seasonal period is 13 or
 more).
@@ -110,7 +110,7 @@ errors, the residuals will be x minus the fitted values.}
 }
 The function \code{summary} can be used to obtain and print a summary of the
 results, while the functions \code{plot} and \code{autoplot} produce plots of the forecasts and
-prediction intervals. The generic accessors functions \code{fitted.values} and \code{residuals}
+prediction intervals. The generic accessor functions \code{fitted.values} and \code{residuals}
 extract various useful features from the underlying model.
 }
 

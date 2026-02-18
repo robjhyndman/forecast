@@ -264,7 +264,7 @@ is provided to the `data` argument (#886).
   * Modified TBATS and BATS estimation to avoid occasional instabilities.
   * Fixed bug in forecasts from bats which labelled them as TBATS.
   * Added allow.multiplicative.trend argument to `ets()`.
-  * Set allow.multiplictive.trend=FALSE in `stlf()`, `stlm()` and `forecast.ts()`.
+  * Set allow.multiplicative.trend=FALSE in `stlf()`, `stlm()` and `forecast.ts()`.
   * Simplified arguments in `stlf()`.
   * Added taperedacf and taperedpacf functions
   * Added functions for bootstrapping time series
@@ -860,7 +860,7 @@ is provided to the `data` argument (#886).
 
 # forecast 0.96 (15 May 2003)
   * Many functions rewritten to make use of methods and classes. Consequently several functions have had their names changed and many arguments have been altered. Please see the help files for details.
-  * Added functions `forecast.Arima()` and `forecat.ar()`
+  * Added functions `forecast.Arima()` and `forecast.ar()`
   * Added functions `gof()` and `seasadj()`
   * Fixed bug in `plot.forecast()`. The starting date for the plot was sometimes incorrect.
   * Added residuals components to `rw.f()` and `mean.f()`.

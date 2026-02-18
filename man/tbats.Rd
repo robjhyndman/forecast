@@ -67,7 +67,7 @@ passed, this same model is fitted to \code{y} without re-estimating any
 parameters.}
 
 \item{...}{Additional arguments to be passed to \code{auto.arima} when
-choose an ARMA(p, q) model for the errors. (Note that xreg will be ignored,
+choosing an ARMA(p, q) model for the errors. (Note that xreg will be ignored,
 as will any arguments concerning seasonality and differencing, but arguments
 controlling the values of p and q will be used.)}
 }

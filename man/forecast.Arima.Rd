@@ -123,7 +123,7 @@ errors, the residuals will be x minus the fitted values.}
 }
 The function \code{summary} can be used to obtain and print a summary of the
 results, while the functions \code{plot} and \code{autoplot} produce plots of the forecasts and
-prediction intervals. The generic accessors functions \code{fitted.values} and \code{residuals}
+prediction intervals. The generic accessor functions \code{fitted.values} and \code{residuals}
 extract various useful features from the underlying model.
 }
 

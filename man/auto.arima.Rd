@@ -156,7 +156,7 @@ Same as for \code{\link[=Arima]{Arima()}}
 }
 \description{
 Returns best ARIMA model according to either AIC, AICc or BIC value. The
-function conducts a search over possible model within the order constraints
+function conducts a search over possible models within the order constraints
 provided.
 }
 \details{

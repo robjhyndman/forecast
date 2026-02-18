@@ -7,7 +7,7 @@
 #' For example, the function [forecast.Arima()] makes forecasts based
 #' on the results produced by [stats::arima()].
 #'
-#' If `model = NULL`,the function [forecast.ts()] makes forecasts
+#' If `model = NULL`, the function [forecast.ts()] makes forecasts
 #' using [ets()] models (if the data are non-seasonal or the seasonal
 #' period is 12 or less) or [stlf()] (if the seasonal period is 13 or
 #' more).
@@ -62,7 +62,7 @@
 #' }
 #' The function `summary` can be used to obtain and print a summary of the
 #' results, while the functions `plot` and `autoplot` produce plots of the forecasts and
-#' prediction intervals. The generic accessors functions `fitted.values` and `residuals`
+#' prediction intervals. The generic accessor functions `fitted.values` and `residuals`
 #' extract various useful features from the underlying model.
 #'
 #' @author Rob J Hyndman

@@ -63,7 +63,7 @@ The function \code{summary} is used to obtain and print a summary of the
 results, while the function \code{plot} produces a plot of the multivariate
 forecasts and prediction intervals.
 
-The generic accessors functions \code{fitted.values} and \code{residuals}
+The generic accessor functions \code{fitted.values} and \code{residuals}
 extract various useful features of the value returned by \code{forecast$model}.
 
 An object of class \code{mforecast} is a list usually containing at least

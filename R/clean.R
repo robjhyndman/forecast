@@ -153,7 +153,7 @@ tsclean <- function(x, replace.missing = TRUE, iterate = 2, lambda = NULL) {
   x
 }
 
-# Function to identify time series outlieres
+# Function to identify time series outliers
 
 #' Identify and replace outliers in a time series
 #'
