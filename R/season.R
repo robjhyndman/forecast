@@ -265,16 +265,6 @@ fourierf <- function(x, K, h) {
     period <- frequency(x)
   }
 
-  # Patch for older versions of R that do not have sinpi and cospi functions.
-  if (!exists("sinpi")) {
-    sinpi <- function(x) {
-      sin(pi * x)
-    }
-    cospi <- function(x) {
-      cos(pi * x)
-    }
-  }
-
   if (length(period) != length(K)) {
     stop("Number of periods does not match number of orders")
   }
