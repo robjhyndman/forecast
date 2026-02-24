@@ -99,7 +99,7 @@ dshw <- function(
       period1 <- tmp
     }
   }
-  if (any(class(y) != "msts")) {
+  if (!inherits(y, "msts")) {
     y <- msts(y, c(period1, period2))
   }
 
