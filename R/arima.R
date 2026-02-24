@@ -245,7 +245,7 @@ SD.test <- function(wts, s = frequency(wts)) {
       frecob[sq[i]] <- frecob[sq[i] + 1] <- 1
     }
   }
-  a <- length(which(frecob == 1))
+  a <- sum(frecob == 1)
   A <- matrix(0, nrow = s - 1, ncol = a)
   j <- 1
   for (i in seq_len(s - 1)) {
