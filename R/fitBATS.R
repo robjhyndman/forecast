@@ -629,19 +629,19 @@ calcLikelihood <- function(
   n <- ncol(opt.env$y)
 
   calcBATSFaster(
-    ys = mat.transformed.y,
-    yHats = opt.env$y.hat,
-    wTransposes = opt.env$w.transpose,
-    Fs = opt.env$F,
-    xs = opt.env$x,
-    gs = opt.env$g,
-    es = opt.env$e,
-    xNought_s = x.nought,
-    sPeriods_s = seasonal.periods,
-    betaV = beta.v,
-    tau_s = as.integer(tau),
-    p_s = as.integer(p),
-    q_s = as.integer(q)
+    y = mat.transformed.y,
+    yHat = opt.env$y.hat,
+    wTranspose = opt.env$w.transpose,
+    F = opt.env$F,
+    x = opt.env$x,
+    g = opt.env$g,
+    e = opt.env$e,
+    xNought = x.nought,
+    sPeriods = seasonal.periods,
+    beta = beta.v,
+    tau = as.integer(tau),
+    p = as.integer(p),
+    q = as.integer(q)
   )
 
   log.likelihood <- n *
@@ -775,19 +775,19 @@ calcLikelihoodNOTransformed <- function(
   # mat.y <- matrix(opt.env$y, nrow=1, ncol=n)
 
   calcBATSFaster(
-    ys = opt.env$y,
-    yHats = opt.env$y.hat,
-    wTransposes = opt.env$w.transpose,
-    Fs = opt.env$F,
-    xs = opt.env$x,
-    gs = opt.env$g,
-    es = opt.env$e,
-    xNought_s = x.nought,
-    sPeriods_s = seasonal.periods,
-    betaV = beta.v,
-    tau_s = as.integer(tau),
-    p_s = as.integer(p),
-    q_s = as.integer(q)
+    y = opt.env$y,
+    yHat = opt.env$y.hat,
+    wTranspose = opt.env$w.transpose,
+    F = opt.env$F,
+    x = opt.env$x,
+    g = opt.env$g,
+    e = opt.env$e,
+    xNought = x.nought,
+    sPeriods = seasonal.periods,
+    beta = beta.v,
+    tau = as.integer(tau),
+    p = as.integer(p),
+    q = as.integer(q)
   )
   ##
   ####

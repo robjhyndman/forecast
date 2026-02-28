@@ -29,26 +29,25 @@ BEGIN_RCPP
 END_RCPP
 }
 // calcBATSFaster
-SEXP calcBATSFaster(SEXP ys, SEXP yHats, SEXP wTransposes, SEXP Fs, SEXP xs, SEXP gs, SEXP es, SEXP xNought_s, SEXP sPeriods_s, SEXP betaV, SEXP tau_s, SEXP p_s, SEXP q_s);
-RcppExport SEXP _forecast_calcBATSFaster(SEXP ysSEXP, SEXP yHatsSEXP, SEXP wTransposesSEXP, SEXP FsSEXP, SEXP xsSEXP, SEXP gsSEXP, SEXP esSEXP, SEXP xNought_sSEXP, SEXP sPeriods_sSEXP, SEXP betaVSEXP, SEXP tau_sSEXP, SEXP p_sSEXP, SEXP q_sSEXP) {
+void calcBATSFaster(const arma::mat& y, arma::mat& yHat, const arma::mat& wTranspose, const arma::mat& F, arma::mat& x, const arma::mat& g, arma::mat& e, const arma::mat& xNought, const Nullable<IntegerVector>& sPeriods, const Nullable<double>& beta, int tau, int p, int q);
+RcppExport SEXP _forecast_calcBATSFaster(SEXP ySEXP, SEXP yHatSEXP, SEXP wTransposeSEXP, SEXP FSEXP, SEXP xSEXP, SEXP gSEXP, SEXP eSEXP, SEXP xNoughtSEXP, SEXP sPeriodsSEXP, SEXP betaSEXP, SEXP tauSEXP, SEXP pSEXP, SEXP qSEXP) {
 BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type ys(ysSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type yHats(yHatsSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type wTransposes(wTransposesSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type Fs(FsSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type xs(xsSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type gs(gsSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type es(esSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type xNought_s(xNought_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type sPeriods_s(sPeriods_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type betaV(betaVSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type tau_s(tau_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_s(p_sSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type q_s(q_sSEXP);
-    rcpp_result_gen = Rcpp::wrap(calcBATSFaster(ys, yHats, wTransposes, Fs, xs, gs, es, xNought_s, sPeriods_s, betaV, tau_s, p_s, q_s));
-    return rcpp_result_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type yHat(yHatSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type wTranspose(wTransposeSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type F(FSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type g(gSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type e(eSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type xNought(xNoughtSEXP);
+    Rcpp::traits::input_parameter< const Nullable<IntegerVector>& >::type sPeriods(sPeriodsSEXP);
+    Rcpp::traits::input_parameter< const Nullable<double>& >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< int >::type tau(tauSEXP);
+    Rcpp::traits::input_parameter< int >::type p(pSEXP);
+    Rcpp::traits::input_parameter< int >::type q(qSEXP);
+    calcBATSFaster(y, yHat, wTranspose, F, x, g, e, xNought, sPeriods, beta, tau, p, q);
+    return R_NilValue;
 END_RCPP
 }
 // calcWTilda
