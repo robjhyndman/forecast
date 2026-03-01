@@ -920,7 +920,7 @@ etsTargetFunctionInitWrapper <- function(
   #  cat(" useGamma: ", useGamma)
   #  cat(" usePhi: ", usePhi, "\n")
 
-  env <- new.env()
+  env <- new.env(parent = emptyenv())
 
   res <- etsTargetFunctionInit(
     p_y = y,
