@@ -8,10 +8,10 @@
 
 #include <R_ext/Print.h>
 
-void EtsTargetFunction::init(std::vector<double> & p_y, int p_nstate, int p_errortype,
+void EtsTargetFunction::init(const std::vector<double> &p_y, int p_nstate, int p_errortype,
 		int p_trendtype, int p_seasontype, bool p_damped,
-		std::vector<double> & p_lower, std::vector<double> & p_upper, std::string p_opt_crit,
-		int p_nmse, std::string p_bounds, int p_m,
+		const std::vector<double> &p_lower, const std::vector<double> &p_upper,
+		std::string p_opt_crit, int p_nmse, std::string p_bounds, int p_m,
 		bool p_optAlpha, bool p_optBeta, bool p_optGamma, bool p_optPhi,
 		bool p_givenAlpha, bool p_givenBeta, bool p_givenGamma, bool p_givenPhi,
 		double alpha, double beta, double gamma, double phi) {

@@ -80,56 +80,56 @@ BEGIN_RCPP
 END_RCPP
 }
 // etsTargetFunctionInit
-SEXP etsTargetFunctionInit(SEXP p_y, SEXP p_nstate, SEXP p_errortype, SEXP p_trendtype, SEXP p_seasontype, SEXP p_damped, SEXP p_lower, SEXP p_upper, SEXP p_opt_crit, SEXP p_nmse, SEXP p_bounds, SEXP p_m, SEXP p_optAlpha, SEXP p_optBeta, SEXP p_optGamma, SEXP p_optPhi, SEXP p_givenAlpha, SEXP p_givenBeta, SEXP p_givenGamma, SEXP p_givenPhi, SEXP p_alpha, SEXP p_beta, SEXP p_gamma, SEXP p_phi, SEXP p_rho);
-RcppExport SEXP _forecast_etsTargetFunctionInit(SEXP p_ySEXP, SEXP p_nstateSEXP, SEXP p_errortypeSEXP, SEXP p_trendtypeSEXP, SEXP p_seasontypeSEXP, SEXP p_dampedSEXP, SEXP p_lowerSEXP, SEXP p_upperSEXP, SEXP p_opt_critSEXP, SEXP p_nmseSEXP, SEXP p_boundsSEXP, SEXP p_mSEXP, SEXP p_optAlphaSEXP, SEXP p_optBetaSEXP, SEXP p_optGammaSEXP, SEXP p_optPhiSEXP, SEXP p_givenAlphaSEXP, SEXP p_givenBetaSEXP, SEXP p_givenGammaSEXP, SEXP p_givenPhiSEXP, SEXP p_alphaSEXP, SEXP p_betaSEXP, SEXP p_gammaSEXP, SEXP p_phiSEXP, SEXP p_rhoSEXP) {
+Rcpp::Environment etsTargetFunctionInit(const Rcpp::NumericVector& y, int nstate, int errortype, int trendtype, int seasontype, bool damped, const Rcpp::NumericVector& lower, const Rcpp::NumericVector& upper, const std::string& opt_crit, int nmse, const std::string& bounds, int m, bool optAlpha, bool optBeta, bool optGamma, bool optPhi, bool givenAlpha, bool givenBeta, bool givenGamma, bool givenPhi, double alpha, double beta, double gamma, double phi, Rcpp::Environment& rho);
+RcppExport SEXP _forecast_etsTargetFunctionInit(SEXP ySEXP, SEXP nstateSEXP, SEXP errortypeSEXP, SEXP trendtypeSEXP, SEXP seasontypeSEXP, SEXP dampedSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP opt_critSEXP, SEXP nmseSEXP, SEXP boundsSEXP, SEXP mSEXP, SEXP optAlphaSEXP, SEXP optBetaSEXP, SEXP optGammaSEXP, SEXP optPhiSEXP, SEXP givenAlphaSEXP, SEXP givenBetaSEXP, SEXP givenGammaSEXP, SEXP givenPhiSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP gammaSEXP, SEXP phiSEXP, SEXP rhoSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type p_y(p_ySEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_nstate(p_nstateSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_errortype(p_errortypeSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_trendtype(p_trendtypeSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_seasontype(p_seasontypeSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_damped(p_dampedSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_lower(p_lowerSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_upper(p_upperSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_opt_crit(p_opt_critSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_nmse(p_nmseSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_bounds(p_boundsSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_m(p_mSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_optAlpha(p_optAlphaSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_optBeta(p_optBetaSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_optGamma(p_optGammaSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_optPhi(p_optPhiSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_givenAlpha(p_givenAlphaSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_givenBeta(p_givenBetaSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_givenGamma(p_givenGammaSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_givenPhi(p_givenPhiSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_alpha(p_alphaSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_beta(p_betaSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_gamma(p_gammaSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_phi(p_phiSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_rho(p_rhoSEXP);
-    rcpp_result_gen = Rcpp::wrap(etsTargetFunctionInit(p_y, p_nstate, p_errortype, p_trendtype, p_seasontype, p_damped, p_lower, p_upper, p_opt_crit, p_nmse, p_bounds, p_m, p_optAlpha, p_optBeta, p_optGamma, p_optPhi, p_givenAlpha, p_givenBeta, p_givenGamma, p_givenPhi, p_alpha, p_beta, p_gamma, p_phi, p_rho));
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< int >::type nstate(nstateSEXP);
+    Rcpp::traits::input_parameter< int >::type errortype(errortypeSEXP);
+    Rcpp::traits::input_parameter< int >::type trendtype(trendtypeSEXP);
+    Rcpp::traits::input_parameter< int >::type seasontype(seasontypeSEXP);
+    Rcpp::traits::input_parameter< bool >::type damped(dampedSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type lower(lowerSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type upper(upperSEXP);
+    Rcpp::traits::input_parameter< const std::string& >::type opt_crit(opt_critSEXP);
+    Rcpp::traits::input_parameter< int >::type nmse(nmseSEXP);
+    Rcpp::traits::input_parameter< const std::string& >::type bounds(boundsSEXP);
+    Rcpp::traits::input_parameter< int >::type m(mSEXP);
+    Rcpp::traits::input_parameter< bool >::type optAlpha(optAlphaSEXP);
+    Rcpp::traits::input_parameter< bool >::type optBeta(optBetaSEXP);
+    Rcpp::traits::input_parameter< bool >::type optGamma(optGammaSEXP);
+    Rcpp::traits::input_parameter< bool >::type optPhi(optPhiSEXP);
+    Rcpp::traits::input_parameter< bool >::type givenAlpha(givenAlphaSEXP);
+    Rcpp::traits::input_parameter< bool >::type givenBeta(givenBetaSEXP);
+    Rcpp::traits::input_parameter< bool >::type givenGamma(givenGammaSEXP);
+    Rcpp::traits::input_parameter< bool >::type givenPhi(givenPhiSEXP);
+    Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< double >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< double >::type gamma(gammaSEXP);
+    Rcpp::traits::input_parameter< double >::type phi(phiSEXP);
+    Rcpp::traits::input_parameter< Rcpp::Environment& >::type rho(rhoSEXP);
+    rcpp_result_gen = Rcpp::wrap(etsTargetFunctionInit(y, nstate, errortype, trendtype, seasontype, damped, lower, upper, opt_crit, nmse, bounds, m, optAlpha, optBeta, optGamma, optPhi, givenAlpha, givenBeta, givenGamma, givenPhi, alpha, beta, gamma, phi, rho));
     return rcpp_result_gen;
 END_RCPP
 }
 // etsNelderMead
-SEXP etsNelderMead(SEXP p_var, SEXP p_env, SEXP p_abstol, SEXP p_intol, SEXP p_alpha, SEXP p_beta, SEXP p_gamma, SEXP p_trace, SEXP p_maxit);
-RcppExport SEXP _forecast_etsNelderMead(SEXP p_varSEXP, SEXP p_envSEXP, SEXP p_abstolSEXP, SEXP p_intolSEXP, SEXP p_alphaSEXP, SEXP p_betaSEXP, SEXP p_gammaSEXP, SEXP p_traceSEXP, SEXP p_maxitSEXP) {
+Rcpp::List etsNelderMead(Rcpp::NumericVector par, const Rcpp::Environment& env, double abstol, double intol, double alpha, double beta, double gamma, int trace, int maxit);
+RcppExport SEXP _forecast_etsNelderMead(SEXP parSEXP, SEXP envSEXP, SEXP abstolSEXP, SEXP intolSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP gammaSEXP, SEXP traceSEXP, SEXP maxitSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type p_var(p_varSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_env(p_envSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_abstol(p_abstolSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_intol(p_intolSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_alpha(p_alphaSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_beta(p_betaSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_gamma(p_gammaSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_trace(p_traceSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type p_maxit(p_maxitSEXP);
-    rcpp_result_gen = Rcpp::wrap(etsNelderMead(p_var, p_env, p_abstol, p_intol, p_alpha, p_beta, p_gamma, p_trace, p_maxit));
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type par(parSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::Environment& >::type env(envSEXP);
+    Rcpp::traits::input_parameter< double >::type abstol(abstolSEXP);
+    Rcpp::traits::input_parameter< double >::type intol(intolSEXP);
+    Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< double >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< double >::type gamma(gammaSEXP);
+    Rcpp::traits::input_parameter< int >::type trace(traceSEXP);
+    Rcpp::traits::input_parameter< int >::type maxit(maxitSEXP);
+    rcpp_result_gen = Rcpp::wrap(etsNelderMead(par, env, abstol, intol, alpha, beta, gamma, trace, maxit));
     return rcpp_result_gen;
 END_RCPP
 }

@@ -17,12 +17,12 @@ calcTBATSFaster <- function(y, yHat, wTranspose, F, x, g, e, xNought) {
     invisible(.Call(`_forecast_calcTBATSFaster`, y, yHat, wTranspose, F, x, g, e, xNought))
 }
 
-etsTargetFunctionInit <- function(p_y, p_nstate, p_errortype, p_trendtype, p_seasontype, p_damped, p_lower, p_upper, p_opt_crit, p_nmse, p_bounds, p_m, p_optAlpha, p_optBeta, p_optGamma, p_optPhi, p_givenAlpha, p_givenBeta, p_givenGamma, p_givenPhi, p_alpha, p_beta, p_gamma, p_phi, p_rho) {
-    .Call(`_forecast_etsTargetFunctionInit`, p_y, p_nstate, p_errortype, p_trendtype, p_seasontype, p_damped, p_lower, p_upper, p_opt_crit, p_nmse, p_bounds, p_m, p_optAlpha, p_optBeta, p_optGamma, p_optPhi, p_givenAlpha, p_givenBeta, p_givenGamma, p_givenPhi, p_alpha, p_beta, p_gamma, p_phi, p_rho)
+etsTargetFunctionInit <- function(y, nstate, errortype, trendtype, seasontype, damped, lower, upper, opt_crit, nmse, bounds, m, optAlpha, optBeta, optGamma, optPhi, givenAlpha, givenBeta, givenGamma, givenPhi, alpha, beta, gamma, phi, rho) {
+    .Call(`_forecast_etsTargetFunctionInit`, y, nstate, errortype, trendtype, seasontype, damped, lower, upper, opt_crit, nmse, bounds, m, optAlpha, optBeta, optGamma, optPhi, givenAlpha, givenBeta, givenGamma, givenPhi, alpha, beta, gamma, phi, rho)
 }
 
-etsNelderMead <- function(p_var, p_env, p_abstol, p_intol, p_alpha, p_beta, p_gamma, p_trace, p_maxit) {
-    .Call(`_forecast_etsNelderMead`, p_var, p_env, p_abstol, p_intol, p_alpha, p_beta, p_gamma, p_trace, p_maxit)
+etsNelderMead <- function(par, env, abstol, intol, alpha, beta, gamma, trace, maxit) {
+    .Call(`_forecast_etsNelderMead`, par, env, abstol, intol, alpha, beta, gamma, trace, maxit)
 }
 
 makeBATSWMatrix <- function(smallPhi, sPeriods, arCoefs, maCoefs) {
