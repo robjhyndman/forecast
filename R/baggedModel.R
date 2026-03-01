@@ -75,8 +75,7 @@ baggedModel <- function(
 
   out$modelargs <- list(...)
 
-  fitted_boot <- lapply(out$models, fitted)
-  fitted_boot <- as.matrix(as.data.frame(fitted_boot))
+  fitted_boot <- do.call(cbind, lapply(out$models, fitted))
   out$fitted <- ts(rowMeans(fitted_boot))
   tsp(out$fitted) <- tsp(out$y)
   out$residuals <- out$y - out$fitted
@@ -143,7 +142,6 @@ forecast.baggedModel <- function(
     fitted = object$fitted,
     residuals = object$residuals
   )
-  # out <- object
   tspx <- tsp(out$x)
 
   forecasts_boot <- lapply(out$model$models, function(mod) {
@@ -153,8 +151,7 @@ forecast.baggedModel <- function(
       forecast(mod, h = h, ...)$mean
     }
   })
-
-  forecasts_boot <- as.matrix(as.data.frame(forecasts_boot))
+  forecasts_boot <- do.call(cbind, forecasts_boot)
   colnames(forecasts_boot) <- NULL
 
   if (!is.null(tspx)) {
@@ -163,11 +160,7 @@ forecast.baggedModel <- function(
     start.f <- length(out$x) + 1
   }
 
-  # out <- list()
   out$forecasts_boot <- forecasts_boot
-
-  #  browser()
-  #  out$model$models
 
   out$mean <- ts(
     rowMeans(forecasts_boot),

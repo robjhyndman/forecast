@@ -363,10 +363,14 @@ nnetar <- function(
   if (useoldmodel) {
     out$nnetargs <- model$nnetargs
   }
-  if (NROW(lags.X[j, , drop = FALSE]) == 1) {
+  n <- NROW(lags.X[j, , drop = FALSE])
+  if (n == 1L) {
     fits <- c(rep(NA_real_, maxlag), mean(vapply(fit, predict, numeric(1))))
   } else {
-    fits <- c(rep(NA_real_, maxlag), rowMeans(sapply(fit, predict)))
+    fits <- c(
+      rep(NA_real_, maxlag),
+      rowMeans(vapply(fit, predict, numeric(n)))
+    )
   }
   if (scale.inputs) {
     fits <- fits * scalex$scale + scalex$center
