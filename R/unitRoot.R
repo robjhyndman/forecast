@@ -477,27 +477,26 @@ ocsb.test <- function(
   }
 
   # Estimate maxlag
-  if (maxlag > 0) {
-    if (lag.method != "fixed") {
-      fits <- lapply(seq_len(maxlag), function(lag) fitOCSB(x, lag, maxlag))
-      icvals <- unlist(switch(
-        lag.method,
-        AIC = lapply(fits, AIC),
-        BIC = lapply(fits, BIC),
-        AICc = lapply(
-          fits,
-          function(x) {
-            k <- x$rank + 1
-            -2 *
-              logLik(x) +
-              2 * k +
-              (2 * k * (k + 1)) / (length(residuals(x)) - k - 1)
-          }
-        )
-      ))
-      id <- which.min(icvals)
-      maxlag <- id - 1
-    }
+  if (maxlag > 0 && lag.method != "fixed") {
+    fits <- lapply(seq_len(maxlag), function(lag) fitOCSB(x, lag, maxlag))
+    icvals <- switch(
+      lag.method,
+      AIC = vapply(fits, AIC, numeric(1)),
+      BIC = vapply(fits, BIC, numeric(1)),
+      AICc = vapply(
+        fits,
+        function(x) {
+          k <- x$rank + 1
+          -2 *
+            logLik(x) +
+            2 * k +
+            (2 * k * (k + 1)) / (length(residuals(x)) - k - 1)
+        },
+        numeric(1)
+      )
+    )
+    id <- which.min(icvals)
+    maxlag <- id - 1
   }
 
   regression <- fitOCSB(x, maxlag, maxlag)
