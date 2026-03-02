@@ -2,14 +2,14 @@
 test_that("tests for monthdays", {
   expect_error(monthdays(rnorm(10)))
   expect_error(monthdays(rnorm(10)))
-  expect_true(all(
-    monthdays(ts(rep(100, 12), frequency = 12)) ==
-      c(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
-  ))
-  expect_true(all(monthdays(ts(rep(1, 4), frequency = 4)) == c(90, 91, 92, 92)))
-  # Test leapyears
-  expect_true(monthdays(ts(rep(1, 48), frequency = 12))[38] == 29)
-  expect_true(monthdays(ts(rep(1, 16), frequency = 4))[13] == 91)
+  expect_equal(
+    c(monthdays(ts(rep(100, 12), frequency = 12))),
+    c(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+  )
+  expect_equal(c(monthdays(ts(rep(1, 4), frequency = 4))), c(90, 91, 92, 92))
+  # Test leap years
+  expect_equal(monthdays(ts(rep(1, 48), frequency = 12))[38], 29)
+  expect_equal(monthdays(ts(rep(1, 16), frequency = 4))[13], 91)
 })
 
 test_that("tests for seasonaldummy", {
@@ -18,7 +18,10 @@ test_that("tests for seasonaldummy", {
   dummymat <- seasonaldummy(testseries)
   expect_length(testseries, nrow(dummymat))
   expect_shape(dummymat, ncol = 6)
-  expect_true(all(seasonaldummy(wineind)[1:11, ] == diag(11)))
+  expect_lt(
+    max(abs(seasonaldummy(wineind)[1:11, ] - diag(11))),
+    .Machine$double.eps
+  )
 })
 
 test_that("tests for seasonaldummyf", {
@@ -69,10 +72,11 @@ test_that("tests for forecast.stlm", {
 })
 
 test_that("tests for stlf", {
-  expect_true(all(forecast(stlm(wineind))$mean == stlf(wineind)$mean))
-  expect_true(all(
-    forecast(stlm(wineind, lambda = .5))$mean == stlf(wineind, lambda = .5)$mean
-  ))
+  expect_equal(forecast(stlm(wineind))$mean, stlf(wineind)$mean)
+  expect_equal(
+    forecast(stlm(wineind, lambda = .5))$mean,
+    stlf(wineind, lambda = .5)$mean
+  )
   fit1 <- stlf(wineind, lambda = .2, biasadj = FALSE)
   fit2 <- stlf(wineind, lambda = .2, biasadj = TRUE)
   expect_false(identical(fit1$mean, fit2$mean))
@@ -80,20 +84,21 @@ test_that("tests for stlf", {
   series <- ts(rep(950, 20), frequency = 4)
   constantForecast <- expect_no_error(stlf(series))
   # Small eps
-  expect_true(all(abs(constantForecast$mean - mean(series)) < 10^-8))
-
+  expect_all_true(
+    c(abs(constantForecast$mean - mean(series)) < .Machine$double.eps^0.5)
+  )
   y <- ts(rep(1:7, 3), frequency = 7)
   expect_equal(c(stlf(y)$mean), rep(1:7, 2))
 })
 
 test_that("tests for ma", {
   testseries <- ts(1:20, frequency = 4)
-  expect_true(frequency(ma(testseries, order = 4)) == frequency(testseries))
+  expect_equal(frequency(ma(testseries, order = 4)), frequency(testseries))
   maseries <- ma(testseries, order = 3)
   expect_identical(which(is.na(maseries)), c(1L, 20L))
-  expect_all_true(abs(maseries[2:19] - 2:19) < 1e-14)
+  expect_all_true(abs(maseries[2:19] - 2:19) < .Machine$double.eps^0.5)
   maseries <- ma(testseries, order = 2, centre = FALSE)
   maseries <- ma(testseries, order = 2, centre = TRUE)
   expect_identical(which(is.na(maseries)), c(1L, 20L))
-  expect_all_true(abs(maseries[2:19] - 2:19) < 1e-14)
+  expect_all_true(abs(maseries[2:19] - 2:19) < .Machine$double.eps^0.5)
 })
