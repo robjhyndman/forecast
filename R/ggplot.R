@@ -2638,18 +2638,12 @@ GeomForecast <- ggplot2::ggproto(
     # Draw forecasted points and intervals
     if (length(data) == 1) {
       # PI=FALSE
-      ggplot2:::ggname(
-        "geom_forecast",
-        GeomForecastPoint$draw_panel(data[[1]], panel_scales, coord)
-      )
+      GeomForecastPoint$draw_panel(data[[1]], panel_scales, coord)
     } else {
       # PI=TRUE
-      ggplot2:::ggname(
-        "geom_forecast",
-        grid::addGrob(
-          GeomForecastInterval$draw_group(data[[2]], panel_scales, coord),
-          GeomForecastPoint$draw_panel(data[[1]], panel_scales, coord)
-        )
+      grid::addGrob(
+        GeomForecastInterval$draw_group(data[[2]], panel_scales, coord),
+        GeomForecastPoint$draw_panel(data[[1]], panel_scales, coord)
       )
     }
   }
@@ -2699,10 +2693,7 @@ GeomForecastPoint <- ggplot2::ggproto(
     }
 
     # Draw forecast points
-    ggplot2:::ggname(
-      "geom_forecast_point",
-      grid::grobTree(GeomForecastPointGeom(pointpred, panel_scales, coord))
-    )
+    grid::grobTree(GeomForecastPointGeom(pointpred, panel_scales, coord))
   }
 )
 
@@ -2797,10 +2788,7 @@ GeomForecastInterval <- ggplot2::ggproto(
     )
 
     # Draw forecast intervals
-    ggplot2:::ggname(
-      "geom_forecast_interval",
-      do.call(grid::grobTree, rev(intervalGrobList))
-    ) # TODO: Find reliable method to stacking them correctly
+    do.call(grid::grobTree, rev(intervalGrobList)) # TODO: Find reliable method to stacking them correctly
   }
 )
 
