@@ -60,6 +60,7 @@ mstl <- function(
   # Transform if necessary
   if (!is.null(lambda)) {
     x <- BoxCox(x, lambda = lambda)
+    lambda <- attr(x, "lambda")
     attr(lambda, "biasadj") <- biasadj
   }
 
@@ -110,6 +111,7 @@ mstl <- function(
   colnames(output)[NCOL(output)] <- "Remainder"
 
   output <- copy_msts(origx, output)
+  attr(output, "lambda") <- lambda
   class(output) <- c("mstl", class(output))
   output
 }
@@ -340,8 +342,8 @@ forecast.mstl <- function(
   h = frequency(object) * 2,
   level = c(80, 95),
   fan = FALSE,
-  lambda = object$lambda,
-  biasadj = attr(object$lambda, "biasadj"),
+  lambda = attr(object, "lambda"),
+  biasadj = attr(attr(object, "lambda"), "biasadj"),
   xreg = NULL,
   newxreg = NULL,
   allow.multiplicative.trend = FALSE,
