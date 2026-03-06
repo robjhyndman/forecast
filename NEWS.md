@@ -1,5 +1,8 @@
 # forecast (development version)
 
+* `checkresiduals()` correctly handles the `test` argument again (#1100)
+* `mstl()` now correctly accesses the `lambda` attribute on mstl matrix objects (#1097)
+
 # forecast 9.0.1
 
 * Performance improvements for ARFIMA model search
