@@ -29,8 +29,8 @@
 checkresiduals <- function(object, lag, test, plot = TRUE, ...) {
   showtest <- TRUE
   if (missing(test)) {
-    test <- ifelse(inherits(object, "lm"), "BG", "LB")
-  } else if (test != FALSE) {
+    test <- if (inherits(object, "lm")) "BG" else "LB"
+  } else if (!isFALSE(test)) {
     test <- match.arg(test, c("LB", "BG"))
   } else {
     showtest <- FALSE
