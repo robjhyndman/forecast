@@ -915,10 +915,8 @@ autoplot.forecast <- function(
       if (NROW(object$model$coefficients) == 2) {
         coef$m <- object$model$coefficients[-i]
       }
-    } else {
-      if (NROW(object$model$coefficients) == 1) {
-        coef$m <- object$model$coefficients
-      }
+    } else if (NROW(object$model$coefficients) == 1) {
+      coef$m <- object$model$coefficients
     }
     p <- p + ggplot2::geom_abline(intercept = coef$int, slope = coef$m)
   } else {
@@ -953,7 +951,7 @@ Interval shading is now done automatically based on the level and `fcol`.",
       ggplot2::labs(y = vars["yvar"], x = "Time")
 
     # Forecasted intervals
-    p <- p + autolayer(object, PI = PI, colour = fcol, size = flwd)
+    p <- p + autolayer(object, PI = PI, colour = fcol, linewidth = flwd)
 
     # predicted <- data.frame(xvar = time(object$mean), yvar = object$mean)
     # colnames(predicted) <- c("datetime", "ypred")
@@ -1276,7 +1274,7 @@ gglagplot <- function(
   }
 
   # Make sure lags is evaluated
-  tmp <- lags
+  force(lags)
   x <- as.matrix(x)
 
   # Prepare data for plotting
@@ -1416,7 +1414,7 @@ gglagchull <- function(
   ...
 ) {
   # Make sure lags is evaluated
-  tmp <- lags
+  force(lags)
   x <- as.matrix(x)
 
   # Prepare data for plotting
@@ -2584,14 +2582,14 @@ GeomForecast <- ggplot2::ggproto(
   default_aes = ggplot2::aes(
     colour = "blue",
     fill = "grey60",
-    size = .5,
+    linewidth = 0.5,
     linetype = 1,
     weight = 1,
     alpha = 1,
     level = NA
   ),
   draw_key = function(data, params, size) {
-    lwd <- min(data$size, min(size) / 4)
+    lwd <- min(data$linewidth, min(size) / 4)
 
     # Calculate and set colour
     linecol <- blendHex(data$col, "gray30", 1)
