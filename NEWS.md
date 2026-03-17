@@ -1,4 +1,4 @@
-# forecast (development version)
+# forecast 9.0.2
 
 * `checkresiduals()` correctly handles the `test` argument again (#1100)
 * `mstl()` now correctly accesses the `lambda` attribute on mstl matrix objects (#1097)
