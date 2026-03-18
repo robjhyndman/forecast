@@ -1,6 +1,6 @@
 # Changelog
 
-## forecast (development version)
+## forecast 9.0.2
 
 - [`checkresiduals()`](https://pkg.robjhyndman.com/forecast/reference/checkresiduals.md)
   correctly handles the `test` argument again
