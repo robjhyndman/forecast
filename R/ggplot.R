@@ -1276,7 +1276,7 @@ gglagplot <- function(
   }
 
   # Make sure lags is evaluated
-  tmp <- lags
+  force(lags)
   x <- as.matrix(x)
 
   # Prepare data for plotting
@@ -1416,7 +1416,7 @@ gglagchull <- function(
   ...
 ) {
   # Make sure lags is evaluated
-  tmp <- lags
+  force(lags)
   x <- as.matrix(x)
 
   # Prepare data for plotting
