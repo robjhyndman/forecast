@@ -4,6 +4,8 @@
 
 ## forecast 9.0.2
 
+CRAN release: 2026-03-18
+
 - [`checkresiduals()`](https://pkg.robjhyndman.com/forecast/reference/checkresiduals.md)
   correctly handles the `test` argument again
   ([\#1100](https://github.com/robjhyndman/forecast/issues/1100))
