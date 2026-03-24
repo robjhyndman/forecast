@@ -594,17 +594,8 @@ hfitted.default <- function(object, h = 1, FUN = NULL, ...) {
   }
   # Attempt to get model function
   if (is.null(FUN)) {
-    FUN <- class(object)
-    for (i in FUN) {
-      if (exists(i)) {
-        if (typeof(eval(parse(text = i)[[1]])) == "closure") {
-          FUN <- i
-          i <- "Y"
-          break
-        }
-      }
-    }
-    if (i != "Y") {
+    FUN <- Find(function(x) typeof(get0(x)) == "closure", class(object))
+    if (is.null(FUN)) {
       stop("Could not find appropriate function to refit, specify FUN=function")
     }
   }
