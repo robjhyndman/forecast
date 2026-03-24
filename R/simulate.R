@@ -338,7 +338,7 @@ simulate.Arima <- function(
     nsim <- nrow(xreg)
   }
   use.drift <- "drift" %in% names(object$coef)
-  usexreg <- (!is.null(xreg) | use.drift | !is.null(object$xreg))
+  use.xreg <- !is.null(xreg) || use.drift || !is.null(object$xreg)
   xm <- oldxm <- 0
   if (use.drift) {
     # Remove existing drift column
@@ -351,7 +351,7 @@ simulate.Arima <- function(
     xreg <- cbind(drift = as.matrix(seq(nsim) + n * future), xreg)
   }
   # Check xreg has the correct dimensions
-  if (usexreg) {
+  if (use.xreg) {
     if (is.null(xreg)) {
       stop("xreg argument missing")
     } else if (is.null(object$xreg)) {

@@ -332,9 +332,9 @@ forecast.Arima <- function(
 
   use.drift <- "drift" %in% names(object$coef)
   x <- object$x <- getResponse(object)
-  usexreg <- (use.drift || "xreg" %in% names(object)) # | use.constant)
+  use.xreg <- (use.drift || "xreg" %in% names(object)) # | use.constant)
 
-  if (!is.null(xreg) && usexreg) {
+  if (!is.null(xreg) && use.xreg) {
     if (!is.numeric(xreg)) {
       stop("xreg should be a numeric matrix or a numeric vector")
     }
@@ -390,7 +390,7 @@ forecast.Arima <- function(
     } else {
       stop("Strange value of object$constant")
     }
-  } else if (usexreg) {
+  } else if (use.xreg) {
     if (is.null(xreg)) {
       stop("No regressors provided")
     }
