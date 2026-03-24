@@ -53,16 +53,12 @@ simulate.ets <- function(
   ...
 ) {
   if (is.null(innov)) {
-    if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE)) {
-      runif(1)
-    }
-    if (is.null(seed)) {
-      RNGstate <- get(".Random.seed", envir = .GlobalEnv)
-    } else {
-      R.seed <- get(".Random.seed", envir = .GlobalEnv)
+    RNGstate <- get_seed()
+    if (!is.null(seed)) {
+      R.seed <- RNGstate
       set.seed(seed)
       RNGstate <- structure(seed, kind = as.list(RNGkind()))
-      on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
+      on.exit(assign(".Random.seed", R.seed, envir = globalenv()))
     }
   } else {
     nsim <- length(innov)
@@ -363,16 +359,12 @@ simulate.Arima <- function(
 
   ######## Random Seed Code
   if (is.null(innov)) {
-    if (!exists(".Random.seed", envir = .GlobalEnv)) {
-      runif(1)
-    }
-    if (is.null(seed)) {
-      RNGstate <- .Random.seed
-    } else {
-      R.seed <- .Random.seed
+    RNGstate <- get_seed()
+    if (!is.null(seed)) {
+      R.seed <- RNGstate
       set.seed(seed)
       RNGstate <- structure(seed, kind = as.list(RNGkind()))
-      on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
+      on.exit(assign(".Random.seed", R.seed, envir = globalenv()))
     }
   } else {
     nsim <- length(innov)
@@ -539,16 +531,12 @@ simulate.ar <- function(
   ...
 ) {
   if (is.null(innov)) {
-    if (!exists(".Random.seed", envir = .GlobalEnv)) {
-      runif(1)
-    }
-    if (is.null(seed)) {
-      RNGstate <- .Random.seed
-    } else {
-      R.seed <- .Random.seed
+    RNGstate <- get_seed()
+    if (!is.null(seed)) {
+      R.seed <- RNGstate
       set.seed(seed)
       RNGstate <- structure(seed, kind = as.list(RNGkind()))
-      on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
+      on.exit(assign(".Random.seed", R.seed, envir = globalenv()))
     }
   } else {
     nsim <- length(innov)
@@ -611,16 +599,12 @@ simulate.rw_model <- function(
   ...
 ) {
   if (is.null(innov)) {
-    if (!exists(".Random.seed", envir = .GlobalEnv)) {
-      runif(1)
-    }
-    if (is.null(seed)) {
-      RNGstate <- .Random.seed
-    } else {
-      R.seed <- .Random.seed
+    RNGstate <- get_seed()
+    if (!is.null(seed)) {
+      R.seed <- RNGstate
       set.seed(seed)
       RNGstate <- structure(seed, kind = as.list(RNGkind()))
-      on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
+      on.exit(assign(".Random.seed", R.seed, envir = globalenv()))
     }
   } else {
     nsim <- length(innov)
@@ -772,16 +756,12 @@ simulate.nnetar <- function(
   ...
 ) {
   if (is.null(innov)) {
-    if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE)) {
-      runif(1)
-    }
-    if (is.null(seed)) {
-      RNGstate <- get(".Random.seed", envir = .GlobalEnv)
-    } else {
-      R.seed <- get(".Random.seed", envir = .GlobalEnv)
+    RNGstate <- get_seed()
+    if (!is.null(seed)) {
+      R.seed <- RNGstate
       set.seed(seed)
       RNGstate <- structure(seed, kind = as.list(RNGkind()))
-      on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
+      on.exit(assign(".Random.seed", R.seed, envir = globalenv()))
     }
   } else {
     nsim <- length(innov)
@@ -901,16 +881,12 @@ simulate.modelAR <- function(
   ...
 ) {
   if (is.null(innov)) {
-    if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE)) {
-      runif(1)
-    }
-    if (is.null(seed)) {
-      RNGstate <- get(".Random.seed", envir = .GlobalEnv)
-    } else {
-      R.seed <- get(".Random.seed", envir = .GlobalEnv)
+    RNGstate <- get_seed()
+    if (!is.null(seed)) {
+      R.seed <- RNGstate
       set.seed(seed)
       RNGstate <- structure(seed, kind = as.list(RNGkind()))
-      on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
+      on.exit(assign(".Random.seed", R.seed, envir = globalenv()))
     }
   } else {
     nsim <- length(innov)

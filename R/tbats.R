@@ -285,7 +285,7 @@ tbats <- function(
         k.control.array <- rbind(step.up.k, step.down.k, k.vector)
         models.list <- clusterApplyLB(
           clus,
-          c(1:3),
+          1:3,
           parFitSpecificTBATS,
           y = y,
           box.cox = model.params[1],

@@ -10,16 +10,12 @@ simulate.tbats <- function(
   ...
 ) {
   if (is.null(innov)) {
-    if (!exists(".Random.seed", envir = .GlobalEnv)) {
-      runif(1)
-    }
-    if (is.null(seed)) {
-      RNGstate <- .Random.seed
-    } else {
-      R.seed <- .Random.seed
+    RNGstate <- get_seed()
+    if (!is.null(seed)) {
+      R.seed <- RNGstate
       set.seed(seed)
       RNGstate <- structure(seed, kind = as.list(RNGkind()))
-      on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
+      on.exit(assign(".Random.seed", R.seed, envir = globalenv()))
     }
   } else {
     nsim <- length(innov)
