@@ -39,3 +39,9 @@ test_that("variance test on h-step fits", {
   j <- !is.na(h1) & !is.na(h2)
   expect_lt(var(diff(h1[j])), var(diff(h2[j])))
 })
+
+test_that("hfitted errors when no model function found", {
+  obj <- structure(list(), class = "nonexistent_model_class")
+  obj$fitted <- ts(1:10)
+  expect_error(hfitted(obj, h = 2), "Could not find appropriate function")
+})

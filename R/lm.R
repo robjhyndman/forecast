@@ -51,16 +51,12 @@ tslm <- function(formula, data, subset, lambda = NULL, biasadj = FALSE, ...) {
   # Check for time series variables
   tsvar <- match(c("trend", "season"), as.character(vars), 0L)
   # Check for functions (which should be evaluated later, in lm)
-  fnvar <- NULL
-  for (i in 2:length(vars)) {
-    term <- vars[[i]]
-    if (!is.symbol(term)) {
-      if (typeof(eval(term[[1]])) == "closure") {
-        # If this term is a function (alike fourier)
-        fnvar <- c(fnvar, i)
-      }
-    }
-  }
+  fnvar <- which(vapply(
+    vars[-1],
+    function(x) !is.symbol(x) && typeof(eval(x[[1]])) == "closure",
+    logical(1)
+  )) +
+    1L
 
   ## Fix formula's environment for correct `...` scoping.
   attr(formula, ".Environment") <- environment()
