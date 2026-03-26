@@ -431,7 +431,8 @@ forecast.Arima <- function(
       npaths = npaths,
       bootstrap = bootstrap,
       innov = innov,
-      lambda = lambda
+      lambda = lambda,
+      xreg = xreg
     )
     lower <- hilo$lower
     upper <- hilo$upper
