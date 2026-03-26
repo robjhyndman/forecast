@@ -117,6 +117,8 @@ test_that("tests for forecast.Arima", {
   expect_error(forecast.Arima(fit4, xreg = matrix(rnorm(40), ncol = 2)))
   forecast.Arima(fit4, xreg = rnorm(20))$mean |>
     expect_length(20)
+  forecast.Arima(fit4, xreg = rnorm(20), bootstrap = TRUE, npaths = 100)$mean |>
+    expect_length(20)
 
   fit5 <- Arima(
     wineind[1:150],

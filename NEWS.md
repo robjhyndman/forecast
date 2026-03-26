@@ -1,5 +1,7 @@
 # forecast (development version)
 
+* `forecast.Arima()` now correctly passes `xreg` when `bootstrap = TRUE` (#1115).
+
 # forecast 9.0.2
 
 * `checkresiduals()` correctly handles the `test` argument again (#1100)
