@@ -2,6 +2,10 @@
 
 ## forecast (development version)
 
+- [`forecast.Arima()`](https://pkg.robjhyndman.com/forecast/reference/forecast.Arima.md)
+  now correctly passes `xreg` when `bootstrap = TRUE`
+  ([\#1115](https://github.com/robjhyndman/forecast/issues/1115)).
+
 ## forecast 9.0.2
 
 CRAN release: 2026-03-18
