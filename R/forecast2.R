@@ -170,7 +170,7 @@ forecast.StructTS <- function(
   pred <- predict(object, n.ahead = h)
   level <- getConfLevel(level, fan)
   nint <- length(level)
-  upper <- lower <- matrix(NA, ncol = nint, nrow = length(pred$pred))
+  upper <- lower <- matrix(NA_real_, ncol = nint, nrow = length(pred$pred))
   for (i in seq_len(nint)) {
     qq <- qnorm(0.5 * (1 + level[i] / 100))
     lower[, i] <- pred$pred - qq * pred$se
@@ -277,7 +277,7 @@ forecast.HoltWinters <- function(
     level = level[1] / 100
   )
   pmean <- pred[, 1]
-  upper <- lower <- matrix(NA, ncol = nint, nrow = length(pred[, 1]))
+  upper <- lower <- matrix(NA_real_, ncol = nint, nrow = length(pred[, 1]))
   se <- (pred[, 2] - pred[, 3]) / (2 * qnorm(0.5 * (1 + level[1] / 100)))
   for (i in seq_len(nint)) {
     qq <- qnorm(0.5 * (1 + level[i] / 100))

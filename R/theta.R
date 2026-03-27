@@ -173,7 +173,7 @@ forecast.theta_model <- function(
   # Find prediction intervals
   fcast.se <- sqrt(object$sigma2) * sqrt((0:(h - 1)) * object$alpha^2 + 1)
   nconf <- length(level)
-  fcast$lower <- fcast$upper <- ts(matrix(NA, nrow = h, ncol = nconf))
+  fcast$lower <- fcast$upper <- ts(matrix(NA_real_, nrow = h, ncol = nconf))
   tsp(fcast$lower) <- tsp(fcast$upper) <- tsp(fcast$mean)
   for (i in seq_len(nconf)) {
     zt <- -qnorm(0.5 - level[i] / 200)

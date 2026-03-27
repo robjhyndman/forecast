@@ -103,7 +103,7 @@ forecast.bats <- function(
     }
   }
   ## Make prediction intervals here
-  lower.bounds <- upper.bounds <- matrix(NA, ncol = length(level), nrow = h)
+  lower.bounds <- upper.bounds <- matrix(NA_real_, ncol = length(level), nrow = h)
   variance.multiplier <- numeric(h)
   variance.multiplier[1] <- 1
   if (h > 1) {
