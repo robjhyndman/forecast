@@ -258,7 +258,7 @@ forecast.spline_model <- function(
   nconf <- length(level)
   startf <- tsp(y)[2] + 1 / freq
   lower <- upper <- ts(
-    matrix(NA, nrow = h, ncol = nconf),
+    matrix(NA_real_, nrow = h, ncol = nconf),
     start = startf,
     frequency = freq
   )

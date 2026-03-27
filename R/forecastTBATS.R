@@ -127,7 +127,7 @@ forecast.tbats <- function(
 
   if (!simulate && !bootstrap) {
     ## Make prediction intervals here
-    lower.bounds <- upper.bounds <- matrix(NA, ncol = length(level), nrow = h)
+    lower.bounds <- upper.bounds <- matrix(NA_real_, ncol = length(level), nrow = h)
     st.dev <- sqrt(variance)
     for (i in seq_along(level)) {
       marg.error <- st.dev * abs(qnorm((100 - level[i]) / 200))

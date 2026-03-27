@@ -484,7 +484,7 @@ auto.arima <- function(
   P <- start.P <- min(start.P, max.P)
   Q <- start.Q <- min(start.Q, max.Q)
 
-  results <- matrix(NA, nrow = nmodels, ncol = 8)
+  results <- matrix(NA_real_, nrow = nmodels, ncol = 8)
 
   bestfit <- myarima(
     x,

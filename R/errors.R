@@ -303,7 +303,7 @@ accuracy.forecast <- function(
   }
   outnames <- unique(c(trainnames, testnames))
 
-  out <- matrix(NA, nrow = 2, ncol = length(outnames))
+  out <- matrix(NA_real_, nrow = 2, ncol = length(outnames))
   colnames(out) <- outnames
   rownames(out) <- c("Training set", "Test set")
   if (trainset) {

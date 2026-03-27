@@ -93,7 +93,7 @@ copy_msts <- function(x, y) {
     if (NCOL(y) == 1) {
       y <- c(rep(NA, NROW(x) - NROW(y)), y)
     } else {
-      y <- rbind(matrix(NA, ncol = NCOL(y), nrow = NROW(x) - NROW(y)), y)
+      y <- rbind(matrix(NA_real_, ncol = NCOL(y), nrow = NROW(x) - NROW(y)), y)
     }
   } else if (NROW(x) != NROW(y)) {
     stop("x and y should have the same number of observations")

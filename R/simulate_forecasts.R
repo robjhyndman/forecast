@@ -19,7 +19,7 @@ simulate_forecast <- function(
     }
     bootstrap <- FALSE
   }
-  sim <- matrix(NA, nrow = npaths, ncol = h)
+  sim <- matrix(NA_real_, nrow = npaths, ncol = h)
   for (i in seq_len(npaths)) {
     sim[i, ] <- simulate(
       object,

@@ -82,7 +82,7 @@ tsCV <- function(
     }
     # Pad xreg with NAs
     xreg <- ts(
-      rbind(xreg, matrix(NA, nrow = h, ncol = NCOL(xreg))),
+      rbind(xreg, matrix(NA_real_, nrow = h, ncol = NCOL(xreg))),
       start = start(y),
       frequency = frequency(y)
     )

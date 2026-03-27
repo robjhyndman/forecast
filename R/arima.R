@@ -192,7 +192,7 @@ SeasDummy <- function(x) {
     stop("Non-seasonal data")
   }
   tt <- seq_len(n)
-  fmat <- matrix(NA, nrow = n, ncol = 2 * m)
+  fmat <- matrix(NA_real_, nrow = n, ncol = 2 * m)
   for (i in seq_len(m)) {
     fmat[, 2 * i] <- sin(2 * pi * i * tt / m)
     fmat[, 2 * (i - 1) + 1] <- cos(2 * pi * i * tt / m)
@@ -438,7 +438,7 @@ forecast.Arima <- function(
     upper <- hilo$upper
   } else {
     # Compute prediction intervals via the normal distribution
-    lower <- matrix(NA, ncol = nint, nrow = length(pred$pred))
+    lower <- matrix(NA_real_, ncol = nint, nrow = length(pred$pred))
     upper <- lower
     for (i in seq_len(nint)) {
       qq <- qnorm(0.5 * (1 + level[i] / 100))
@@ -522,7 +522,7 @@ forecast.ar <- function(
     lower <- hilo$lower
     upper <- hilo$upper
   } else {
-    lower <- matrix(NA, ncol = nint, nrow = length(pred$pred))
+    lower <- matrix(NA_real_, ncol = nint, nrow = length(pred$pred))
     upper <- lower
     for (i in seq_len(nint)) {
       qq <- qnorm(0.5 * (1 + level[i] / 100))

@@ -148,7 +148,7 @@ forecast.ets <- function(
   )
   if (PI || biasadj) {
     if (!is.null(f$var)) {
-      out$lower <- out$upper <- ts(matrix(NA, ncol = length(level), nrow = h))
+      out$lower <- out$upper <- ts(matrix(NA_real_, ncol = length(level), nrow = h))
       colnames(out$lower) <- colnames(out$upper) <- paste0(level, "%")
       for (i in seq_along(level)) {
         marg.error <- sqrt(f$var) * abs(qnorm((100 - level[i]) / 200))
@@ -194,7 +194,7 @@ forecast.ets <- function(
 }
 
 pegelsfcast.C <- function(h, obj, npaths, level, bootstrap, innov = NULL) {
-  y.paths <- matrix(NA, nrow = npaths, ncol = h)
+  y.paths <- matrix(NA_real_, nrow = npaths, ncol = h)
   obj$lambda <- NULL # No need to transform these here as we do it later.
   y.f <- .Call(
     etsforecast,
