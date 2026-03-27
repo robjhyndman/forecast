@@ -4,9 +4,9 @@ Returns forecasts and prediction intervals for a generalized random walk
 model. `rwf()` is a convenience function that combines
 [`rw_model()`](https://pkg.robjhyndman.com/forecast/reference/rw_model.md)
 and [`forecast()`](https://generics.r-lib.org/reference/forecast.html).
-`naive()` is a wrapper to `rwf()` with `drift=FALSE` and `lag=1`, while
-`snaive()` is a wrapper to `rwf()` with `drift=FALSE` and
-`lag=frequency(y)`.
+`naive()` is a wrapper to `rwf()` with `drift = FALSE` and `lag = 1`,
+while `snaive()` is a wrapper to `rwf()` with `drift = FALSE` and
+`lag = frequency(y)`.
 
 ## Usage
 
