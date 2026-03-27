@@ -214,7 +214,7 @@ forecast.StructTS <- function(
       method = method,
       model = object,
       level = level,
-      mean = pred$pred,
+      mean = mean,
       lower = lower,
       upper = upper,
       x = x,
