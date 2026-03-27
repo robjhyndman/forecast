@@ -142,8 +142,8 @@ fitted.rw_model <- function(object, ...) {
 #'
 #' Returns forecasts and prediction intervals for a generalized random walk model.
 #' [rwf()] is a convenience function that combines [rw_model()] and [forecast()].
-#' [naive()] is a wrapper to [rwf()] with `drift=FALSE` and `lag=1`, while
-#' [snaive()] is a wrapper to [rwf()] with `drift=FALSE` and `lag=frequency(y)`.
+#' [naive()] is a wrapper to [rwf()] with `drift = FALSE` and `lag = 1`, while
+#' [snaive()] is a wrapper to [rwf()] with `drift = FALSE` and `lag = frequency(y)`.
 #'
 #' @inherit rw_model details
 #' @param object An object of class `rw_model` returned by [rw_model()].
@@ -348,7 +348,8 @@ snaive <- function(
     lambda = lambda,
     drift = FALSE,
     biasadj = biasadj,
-    lag = frequency(x)
+    lag = frequency(x),
+    ...
   )
   fc$model$call <- match.call()
   fc$series <- deparse1(substitute(y))
