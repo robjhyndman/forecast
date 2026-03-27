@@ -40,7 +40,6 @@ private:
 	int trendtype;
 	int seasontype;
 	bool damped;
-	std::vector<double> par_noopt;
 	std::vector<double> lower;
 	std::vector<double> upper;
 	std::string opt_crit;
