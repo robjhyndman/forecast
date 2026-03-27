@@ -108,8 +108,8 @@ An object of class \code{forecast}.
 \description{
 Returns forecasts and prediction intervals for a generalized random walk model.
 \code{\link[=rwf]{rwf()}} is a convenience function that combines \code{\link[=rw_model]{rw_model()}} and \code{\link[=forecast]{forecast()}}.
-\code{\link[=naive]{naive()}} is a wrapper to \code{\link[=rwf]{rwf()}} with \code{drift=FALSE} and \code{lag=1}, while
-\code{\link[=snaive]{snaive()}} is a wrapper to \code{\link[=rwf]{rwf()}} with \code{drift=FALSE} and \code{lag=frequency(y)}.
+\code{\link[=naive]{naive()}} is a wrapper to \code{\link[=rwf]{rwf()}} with \code{drift = FALSE} and \code{lag = 1}, while
+\code{\link[=snaive]{snaive()}} is a wrapper to \code{\link[=rwf]{rwf()}} with \code{drift = FALSE} and \code{lag = frequency(y)}.
 }
 \details{
 The model assumes that
