@@ -53,6 +53,7 @@ void etscalc_internal(const double *y, int n, double *x, int m, int error, int t
 
   *lik = 0.0;
   lik2 = 0.0;
+  int nobs = 0;
   for (int j = 0; j < nmse; j++) {
     amse[j] = 0.0;
     denom[j] = 0.0;
@@ -102,11 +103,13 @@ void etscalc_internal(const double *y, int n, double *x, int m, int error, int t
     if (season > NONE) {
       memcpy(&x[(trend > NONE) + nstates * (i + 1) + 1], s, m * sizeof(double));
     }
-    if (!R_IsNA(e[i]))
+    if (!R_IsNA(e[i])) {
       *lik = *lik + e[i] * e[i];
-    lik2 += log(fabs(f[0]));
+      lik2 += log(fabs(f[0]));
+      nobs++;
+    }
   }
-  *lik = n * log(*lik);
+  *lik = nobs * log(*lik);
   if (error == MULT)
     *lik += 2 * lik2;
 }
@@ -188,7 +191,7 @@ SEXP etssimulate(SEXP x, SEXP m, SEXP error, SEXP trend, SEXP season,
   SEXP result = PROTECT(Rf_allocVector(REALSXP, h_val));
   double *y = REAL(result);
 
-  double oldl, oldb = 0.0, olds[24], f[10];
+  double oldl, oldb = 0.0, olds[24], f[1];
 
   for (int i = 0; i < h_val; i++) {
     oldl = l;
