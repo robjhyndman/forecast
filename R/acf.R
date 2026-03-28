@@ -199,7 +199,7 @@ seasonalaxis <- function(frequency, nlags, type, plot = TRUE) {
   } else {
     # Determine which frequency to show
     np <- trunc(nlags / frequency)
-    frequency <- frequency[which(np <= 16)]
+    frequency <- frequency[np <= 16]
     if (length(frequency) > 0L) {
       frequency <- min(frequency)
     } else {
