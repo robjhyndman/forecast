@@ -12,3 +12,9 @@ test_that("tests for acf", {
     1
   )
 })
+
+test_that("acf works with msts objects", {
+  x <- msts(rnorm(200), seasonal.periods = c(7, 365.25 / 7))
+  out <- Acf(x, plot = FALSE)
+  expect_s3_class(out, "acf")
+})
