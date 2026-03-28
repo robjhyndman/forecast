@@ -26,7 +26,7 @@ simulate_forecast <- function(
       nsim = h,
       bootstrap = bootstrap,
       lambda = lambda,
-      innov = innov,
+      innov = if (is.null(innov)) NULL else innov[, i],
       future = TRUE,
       ...
     )
@@ -49,5 +49,5 @@ simulate_forecast <- function(
   m <- tspy[3]
   lower <- ts(lower, start = tspy[2] + 1 / m, frequency = m)
   upper <- ts(upper, start = tspy[2] + 1 / m, frequency = m)
-  return(list(lower = lower, upper = upper))
+  list(lower = lower, upper = upper)
 }
