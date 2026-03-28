@@ -611,7 +611,7 @@ getxreg <- function(z) {
 #'
 #' @export
 arima.errors <- function(object) {
-  message("Deprecated, use residuals.Arima(object, type='regression') instead")
+  .Deprecated("residuals.Arima(object, type='regression')")
   residuals.Arima(object, type = "regression")
 }
 

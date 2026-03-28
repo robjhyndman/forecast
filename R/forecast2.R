@@ -108,7 +108,7 @@ InvBoxCox <- function(x, lambda, biasadj = FALSE, fvar = NULL) {
 
 # Deprecated
 InvBoxCoxf <- function(x = NULL, fvar = NULL, lambda = NULL) {
-  message("Deprecated, use InvBoxCox instead")
+  .Deprecated("InvBoxCox")
   if (is.null(lambda)) {
     stop("Must specify lambda using lambda=numeric(1)")
   }

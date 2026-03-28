@@ -252,9 +252,8 @@ nsdiffs <- function(
   }
 
   if (!missing(m)) {
-    warning(
-      "argument m is deprecated; please set the frequency in the ts object.",
-      call. = FALSE
+    .Deprecated(
+      msg = "argument `m` is deprecated; please set the frequency in the ts object."
     )
     x <- ts(x, frequency = m)
   }

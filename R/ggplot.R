@@ -924,10 +924,8 @@ autoplot.forecast <- function(
   } else {
     # Time series objects (assumed)
     if (!missing(shadecols)) {
-      warning(
-        "The `schadecols` argument is deprecated for time series forecasts.
-Interval shading is now done automatically based on the level and `fcol`.",
-        call. = FALSE
+      .Deprecated(
+        msg = "The `shadecols` argument is deprecated for time series forecasts. Interval shading is now done automatically based on the level and `fcol`."
       )
     }
     # Data points
