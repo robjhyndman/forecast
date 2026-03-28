@@ -175,7 +175,7 @@ seasonaldummy <- function(x, h = NULL) {
 #' @rdname seasonaldummy
 #' @export
 seasonaldummyf <- function(x, h) {
-  warning("seasonaldummyf() is deprecated, please use seasonaldummy()")
+  .Deprecated("seasonaldummy")
   if (!is.ts(x)) {
     stop("Not a time series")
   }
@@ -253,7 +253,7 @@ fourier <- function(x, K, h = NULL) {
 #' @rdname fourier
 #' @export
 fourierf <- function(x, K, h) {
-  warning("fourierf() is deprecated, please use fourier()")
+  .Deprecated("fourier")
   ...fourier(x, K, length(x) + (1:h))
 }
 
