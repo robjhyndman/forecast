@@ -17,6 +17,60 @@ test_that("croston_model with custom alpha", {
   expect_equal(fit$alpha, 0.5)
 })
 
+test_that("croston_model with optimized alpha", {
+  fit <- croston_model(y, alpha = NULL)
+  expect_s3_class(fit, "croston_model")
+  expect_true(fit$alpha >= 0 && fit$alpha <= 1)
+  mse_opt <- mean(fit$residuals^2, na.rm = TRUE)
+  mse_default <- mean(croston_model(y, alpha = 0.1)$residuals^2, na.rm = TRUE)
+  expect_lte(mse_opt, mse_default)
+})
+
+test_that("croston_model optimized alpha works with type variants", {
+  fit_sba <- croston_model(y, alpha = NULL, type = "sba")
+  fit_sbj <- croston_model(y, alpha = NULL, type = "sbj")
+  expect_true(fit_sba$alpha >= 0 && fit_sba$alpha <= 1)
+  expect_true(fit_sbj$alpha >= 0 && fit_sbj$alpha <= 1)
+})
+
+test_that("croston_model with mean initialization", {
+  fit_mean <- croston_model(y, init = "mean")
+  fit_naive <- croston_model(y, init = "naive")
+  expect_equal(fit_mean$init, "mean")
+  expect_equal(fit_naive$init, "naive")
+  expect_false(identical(fit_mean$fitted, fit_naive$fitted))
+})
+
+test_that("croston_model with numeric init", {
+  fit <- croston_model(y, init = c(3, 2))
+  expect_equal(fit$init, c(3, 2))
+  expect_equal(fit$fit_demand[1], 3)
+  expect_equal(fit$fit_interval[1], 2)
+})
+
+test_that("croston_model with numeric init and optimized alpha", {
+  fit <- croston_model(y, alpha = NULL, init = c(3, 2))
+  expect_true(fit$alpha >= 0 && fit$alpha <= 1)
+  expect_equal(fit$fit_demand[1], 3)
+  expect_equal(fit$fit_interval[1], 2)
+})
+
+test_that("croston_model errors on invalid init", {
+  expect_error(croston_model(y, init = c(3)), "length 2")
+  expect_error(croston_model(y, init = c(-1, 2)), "non-negative")
+  expect_error(croston_model(y, init = c(3, 0.5)), "at least 1")
+})
+
+test_that("croston_model with mae optimization", {
+  fit_mse <- croston_model(y, alpha = NULL, opt.crit = "mse")
+  fit_mae <- croston_model(y, alpha = NULL, opt.crit = "mae")
+  expect_true(fit_mse$alpha >= 0 && fit_mse$alpha <= 1)
+  expect_true(fit_mae$alpha >= 0 && fit_mae$alpha <= 1)
+  mae_mae <- mean(abs(fit_mae$residuals), na.rm = TRUE)
+  mae_mse <- mean(abs(fit_mse$residuals), na.rm = TRUE)
+  expect_lte(mae_mae, mae_mse)
+})
+
 test_that("croston_model type variants", {
   fit_cr <- croston_model(y, type = "croston")
   fit_sba <- croston_model(y, type = "sba")
@@ -66,6 +120,11 @@ test_that("croston shortcut", {
   fc <- croston(y, h = 5)
   expect_s3_class(fc, "forecast")
   expect_length(fc$mean, 5)
+})
+
+test_that("croston shortcut passes init and opt.crit", {
+  fc <- croston(y, alpha = NULL, init = "mean", opt.crit = "mae")
+  expect_s3_class(fc, "forecast")
 })
 
 test_that("croston shortcut with type variants", {
