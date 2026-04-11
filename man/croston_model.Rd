@@ -4,16 +4,31 @@
 \alias{croston_model}
 \title{Croston forecast model}
 \usage{
-croston_model(y, alpha = 0.1, type = c("croston", "sba", "sbj"))
+croston_model(
+  y,
+  alpha = 0.1,
+  type = c("croston", "sba", "sbj"),
+  init = c("naive", "mean"),
+  opt.crit = c("mse", "mae")
+)
 }
 \arguments{
 \item{y}{a numeric vector or univariate time series of class \code{ts}}
 
-\item{alpha}{Value of alpha. Default value is 0.1.}
+\item{alpha}{Value of alpha. Default value is 0.1. If \code{NULL}, the alpha and initial values are
+jointly optimized.}
 
 \item{type}{Which variant of Croston's method to use. Defaults to \code{"croston"} for
 Croston's method, but can also be set to \code{"sba"} for the Syntetos-Boylan
 approximation, and \code{"sbj"} for the Shale-Boylan-Johnston method.}
+
+\item{init}{Either a string specifying the initialization method for the SES components
+(\code{"naive"} or \code{"mean"}), or a numeric vector of length 2 giving the initial values for
+demand and interval respectively. When a string is used, demand is initialized to the first
+non-zero value and interval is initialized using the selected method. String values are used as
+starting points for optimization when \code{alpha = NULL}; numeric values are fixed.}
+
+\item{opt.crit}{Optimization criterion when \code{alpha = NULL}. Either \code{"mse"} or \code{"mae"}.}
 }
 \value{
 An object of class \code{croston_model}
