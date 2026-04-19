@@ -186,36 +186,36 @@ void EtsTargetFunction::eval(const double *p_par, int p_par_length) {
 bool EtsTargetFunction::check_params() {
   if (bounds != "admissible") {
     if (optAlpha) {
-      if (alpha < lower[0] || alpha > upper[0]) return (false);
+      if (alpha < lower[0] || alpha > upper[0]) return false;
     }
     if (optBeta) {
-      if (beta < lower[1] || beta > alpha || beta > upper[1]) return (false);
+      if (beta < lower[1] || beta > alpha || beta > upper[1]) return false;
     }
     if (optPhi) {
-      if (phi < lower[3] || phi > upper[3]) return (false);
+      if (phi < lower[3] || phi > upper[3]) return false;
     }
     if (optGamma) {
       if (gamma < lower[2] || gamma > 1 - alpha || gamma > upper[2])
-        return (false);
+        return false;
     }
   }
   if (bounds != "usual") {
-    if (!admissible()) return (false);
+    if (!admissible()) return false;
   }
-  return (TRUE);
+  return true;
 }
 
 bool EtsTargetFunction::admissible() {
-  if (phi < 0 || phi > 1 + 1e-8) return (false);
+  if (phi < 0 || phi > 1 + 1e-8) return false;
 
   // If gamma was set by the user or it is optimized, the bounds need to be
   // enforced
   if (!optGamma && !givenGamma) {
-    if (alpha < 1 - 1 / phi || alpha > 1 + 1 / phi) return (false);
+    if (alpha < 1 - 1 / phi || alpha > 1 + 1 / phi) return false;
 
     if (optBeta || givenBeta) {
       if (beta < alpha * (phi - 1) || beta > (1 + phi) * (2 - alpha))
-        return (false);
+        return false;
     }
   } else if (m > 1) {  // Seasonal model
     if (!optBeta && !givenBeta) beta = 0;
@@ -223,12 +223,12 @@ bool EtsTargetFunction::admissible() {
     // max(1-1/phi-alpha,0)
     double d = 1 - 1 / phi - alpha;
     if (gamma < ((d > 0) ? d : 0) || gamma > 1 + 1 / phi - alpha)
-      return (false);
+      return false;
 
     if (alpha < 1 - 1 / phi - gamma * (1 - m + phi + phi * m) / (2 * phi * m))
-      return (false);
+      return false;
 
-    if (beta < -(1 - phi) * (gamma / m + alpha)) return (false);
+    if (beta < -(1 - phi) * (gamma / m + alpha)) return false;
 
     // End of easy tests. Now use characteristic equation
 
@@ -259,8 +259,8 @@ bool EtsTargetFunction::admissible() {
       if (abs_val > max) max = abs_val;
     }
 
-    if (max > 1 + 1e-10) return (false);
+    if (max > 1 + 1e-10) return false;
   }
 
-  return (true);
+  return true;
 }
