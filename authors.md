@@ -61,7 +61,7 @@ Source:
 Hyndman R, Athanasopoulos G, Bergmeir C, Caceres G, Chhay L, O'Hara-Wild
 M, Petropoulos F, Razbash S, Wang E, Yasmeen F (2026). *forecast:
 Forecasting functions for time series and linear models*.
-[doi:10.32614/CRAN.package.forecast](https://doi.org/10.32614/CRAN.package.forecast),
+[doi:10.32614/CRAN.package.forecast](https://doi.org/10.32614/CRAN.package.forecast).
 R package version 9.0.2.9000, <https://pkg.robjhyndman.com/forecast/>.
 
     @Manual{,
