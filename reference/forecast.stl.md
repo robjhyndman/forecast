@@ -40,7 +40,7 @@ forecast(
 stlf(
   y,
   h = frequency(x) * 2,
-  s.window = 7 + 4 * seq(6),
+  s.window = 7 + 4 * seq_len(6),
   t.window = NULL,
   robust = FALSE,
   lambda = NULL,

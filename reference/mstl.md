@@ -19,7 +19,7 @@ mstl(
   lambda = NULL,
   biasadj = FALSE,
   iterate = 2,
-  s.window = 7 + 4 * seq(6),
+  s.window = 7 + 4 * seq_len(6),
   ...
 )
 ```

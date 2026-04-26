@@ -14,7 +14,7 @@ data. This object can be passed to the `forecast.stlm` for forecasting.
 ``` r
 stlm(
   y,
-  s.window = 7 + 4 * seq(6),
+  s.window = 7 + 4 * seq_len(6),
   t.window = NULL,
   robust = FALSE,
   method = c("ets", "arima"),
