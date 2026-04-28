@@ -10,7 +10,12 @@ multiplicative decomposition before fitting the theta model.
 ## Usage
 
 ``` r
-theta_model(y, lambda = NULL, biasadj = FALSE)
+theta_model(
+  y,
+  lambda = NULL,
+  biasadj = FALSE,
+  type = c("multiplicative", "additive")
+)
 ```
 
 ## Arguments
@@ -33,6 +38,11 @@ theta_model(y, lambda = NULL, biasadj = FALSE)
   regular back transformation will result in median forecasts. If
   biasadj is `TRUE`, an adjustment will be made to produce mean
   forecasts and fitted values.
+
+- type:
+
+  Type of seasonal decomposition. Either `"multiplicative"` (default) or
+  `"additive"`.
 
 ## Value
 

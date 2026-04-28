@@ -77,7 +77,12 @@ multiplicative decomposition before fitting the theta model.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">theta_model</span><span class="op">(</span><span class="va">y</span>, lambda <span class="op">=</span> <span class="cn">NULL</span>, biasadj <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">theta_model</span><span class="op">(</span></span>
+<span>  <span class="va">y</span>,</span>
+<span>  lambda <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  biasadj <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"multiplicative"</span>, <span class="st">"additive"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -101,6 +106,10 @@ transformations. If transformed data is used to produce forecasts and fitted
 values, a regular back transformation will result in median forecasts. If
 biasadj is <code>TRUE</code>, an adjustment will be made to produce mean forecasts
 and fitted values.</p></dd>
+
+
+<dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
+<dd><p>Type of seasonal decomposition. Either <code>"multiplicative"</code> (default) or <code>"additive"</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
