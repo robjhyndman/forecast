@@ -55,6 +55,7 @@ Mitchell O'Hara-Wild
 ## Examples
 
 ``` r
+
 ggsubseriesplot(AirPassengers)
 
 ggsubseriesplot(woolyrnq)

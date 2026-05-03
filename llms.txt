@@ -19,6 +19,7 @@ You can install the **stable** version from
 [CRAN](https://cran.r-project.org/package=forecast).
 
 ``` r
+
 install.packages("forecast", dependencies = TRUE)
 ```
 
@@ -26,6 +27,7 @@ You can install the **development** version from
 [Github](https://github.com/robjhyndman/forecast)
 
 ``` r
+
 # install.packages("pak")
 pak::pak("robjhyndman/forecast")
 ```
@@ -33,6 +35,7 @@ pak::pak("robjhyndman/forecast")
 ## Usage
 
 ``` r
+
 library(forecast)
 library(ggplot2)
 

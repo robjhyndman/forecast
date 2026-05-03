@@ -51,6 +51,7 @@ Rob J Hyndman
 ## Examples
 
 ``` r
+
 plot(ldeaths)
 
 

@@ -144,6 +144,7 @@ Mitchell O'Hara-Wild
 ## Examples
 
 ``` r
+
 library(ggplot2)
 ggAcf(wineind)
 

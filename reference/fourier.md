@@ -65,6 +65,7 @@ Rob J Hyndman
 ## Examples
 
 ``` r
+
 library(ggplot2)
 
 # Using Fourier series for a "ts" object

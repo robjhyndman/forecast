@@ -25,14 +25,6 @@ geom_forecast(
 )
 ```
 
-## Format
-
-An object of class `StatForecast` (inherits from `Stat`, `ggproto`,
-`gg`) of length 3.
-
-An object of class `GeomForecast` (inherits from `Geom`, `ggproto`,
-`gg`) of length 7.
-
 ## Arguments
 
 - mapping:
@@ -142,6 +134,7 @@ Mitchell O'Hara-Wild
 ## Examples
 
 ``` r
+
 if (FALSE) { # \dontrun{
 library(ggplot2)
 autoplot(USAccDeaths) + geom_forecast()

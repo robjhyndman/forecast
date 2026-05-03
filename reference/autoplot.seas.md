@@ -66,6 +66,7 @@ Mitchell O'Hara-Wild
 ## Examples
 
 ``` r
+
 library(ggplot2)
 co2 |>
   decompose() |>

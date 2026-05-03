@@ -55,5 +55,6 @@ Rob J Hyndman
 ## Examples
 
 ``` r
+
 cleangold <- tsclean(gold)
 ```

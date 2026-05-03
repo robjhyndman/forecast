@@ -112,6 +112,7 @@ Mitchell O'Hara-Wild
 ## Examples
 
 ``` r
+
 library(ggplot2)
 autoplot(USAccDeaths)
 

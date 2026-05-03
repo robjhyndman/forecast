@@ -21,6 +21,9 @@ Useful links:
 
 Authors:
 
+- Rob Hyndman <Rob.Hyndman@monash.edu>
+  ([ORCID](https://orcid.org/0000-0002-2140-5352)) \[copyright holder\]
+
 - George Athanasopoulos ([ORCID](https://orcid.org/0000-0002-5389-2802))
 
 - Christoph Bergmeir ([ORCID](https://orcid.org/0000-0002-3665-9021))

@@ -6,7 +6,7 @@ Australian total wine sales by wine makers in bottles \<= 1 litre. Jan
 ## Usage
 
 ``` r
-wineind
+data(wineind)
 ```
 
 ## Format

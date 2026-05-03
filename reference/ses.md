@@ -222,6 +222,7 @@ Rob J Hyndman
 ## Examples
 
 ``` r
+
 fcast <- holt(airmiles)
 plot(fcast)
 

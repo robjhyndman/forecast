@@ -34,6 +34,7 @@ Rob J Hyndman
 ## Examples
 
 ``` r
+
 par(mfrow = c(2, 1))
 plot(
   ldeaths,

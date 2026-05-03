@@ -100,6 +100,7 @@ Mitchell O'Hara-Wild
 ## Examples
 
 ``` r
+
 gglagplot(woolyrnq)
 
 gglagplot(woolyrnq, seasonal = FALSE)

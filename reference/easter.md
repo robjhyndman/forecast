@@ -36,6 +36,7 @@ Earo Wang
 ## Examples
 
 ``` r
+
 easter(wineind, easter.mon = TRUE)
 #>       Jan  Feb  Mar  Apr  May  Jun  Jul  Aug  Sep  Oct  Nov  Dec
 #> 1980 0.00 0.00 0.00 1.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00

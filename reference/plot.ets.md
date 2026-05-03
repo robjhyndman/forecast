@@ -53,6 +53,7 @@ Rob J Hyndman & Mitchell O'Hara-Wild
 ## Examples
 
 ``` r
+
 fit <- ets(USAccDeaths)
 plot(fit)
 

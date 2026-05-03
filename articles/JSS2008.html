@@ -141,12 +141,11 @@ the Comprehensive Archive Network at . Version 9.0.2.9000 of the package
 was used for this paper. The package contains functions for univariate
 forecasting and a few examples of real time series data. For more
 extensive testing of forecasting methods, the package contains the 90
-data sets from <span class="citation">Spyros Makridakis, Wheelwright,
-and Hyndman (1998)</span>, the package contains 24 data sets from <span class="citation">Hyndman et al. (2008)</span>, and the package contains
-the 1001 time series from the M-competition <span class="citation">(S.
-Makridakis et al. 1982)</span> and the 3003 time series from the
-M3-competition <span class="citation">(Spyros Makridakis and Hibon
-2000)</span>.</p>
+data sets from <span class="citation">Makridakis et al. (1998)</span>,
+the package contains 24 data sets from <span class="citation">Hyndman,
+Koehler, et al. (2008)</span>, and the package contains the 1001 time
+series from the M-competition <span class="citation">(Makridakis et al.
+1982)</span> and the 3003 time series from the M3-competition <span class="citation">(Makridakis and Hibon 2000)</span>.</p>
 <p>The package implements automatic forecasting using exponential
 smoothing, ARIMA models, the Theta method <span class="citation">(Assimakopoulos and Nikolopoulos 2000)</span>, cubic
 splines <span class="citation">(Hyndman, King, et al. 2005)</span>, as
@@ -161,7 +160,7 @@ with other features of the package.</p>
 </h2>
 <p>Although exponential smoothing methods have been around since the
 1950s, a modelling framework incorporating procedures for model
-selection was not developed until relatively recently. <span class="citation">J. K. Ord, Koehler, and Snyder (1997)</span>, <span class="citation">Hyndman et al. (2002)</span> and <span class="citation">Hyndman, Koehler, et al. (2005)</span> have shown that
+selection was not developed until relatively recently. <span class="citation">Ord et al. (1997)</span>, <span class="citation">Hyndman et al. (2002)</span> and <span class="citation">Hyndman, Koehler, et al. (2005)</span> have shown that
 all exponential smoothing methods (including non-linear methods) are
 optimal forecasts from innovations state space models.</p>
 <p>Exponential smoothing methods were originally classified by Pegels’
@@ -192,9 +191,9 @@ values for the initial states <span class="math inline">\ell_0</span>,
 parameters <span class="math inline">\alpha</span>, <span class="math inline">\beta^*</span> and <span class="math inline">\gamma</span>. All of these will be estimated from
 the observed data.</p>
 <p>Equation is slightly different from the usual Holt-Winters equations
-such as those in <span class="citation">Spyros Makridakis, Wheelwright,
-and Hyndman (1998)</span> or <span class="citation">Bowerman, O’Connell,
-and Koehler (2005)</span>. These authors replace with <span class="math display">
+such as those in <span class="citation">Makridakis et al. (1998)</span>
+or <span class="citation">Bowerman et al. (2005)</span>. These authors
+replace with <span class="math display">
 s_t = \gamma^*(y_t - \ell_{t}) + (1-\gamma^*)s_{t-m}.
 </span> If <span class="math inline">\ell_t</span> is substituted using
 , we obtain <span class="math display">s_t = \gamma^*(1-\alpha)(y_t -
@@ -202,10 +201,9 @@ s_t = \gamma^*(y_t - \ell_{t}) + (1-\gamma^*)s_{t-m}.
 \{1-\gamma^*(1-\alpha)\}s_{t-m}.
 </span> Thus, we obtain identical forecasts using this approach by
 replacing <span class="math inline">\gamma</span> in with <span class="math inline">\gamma^*(1-\alpha)</span>. The modification given in
-was proposed by <span class="citation">J. K. Ord, Koehler, and Snyder
-(1997)</span> to make the state space formulation simpler. It is
-equivalent to Archibald’s (1990) variation of the Holt-Winters’
-method.</p>
+was proposed by <span class="citation">Ord et al. (1997)</span> to make
+the state space formulation simpler. It is equivalent to Archibald’s
+(1990) variation of the Holt-Winters’ method.</p>
 <p>Table gives recursive formulae for computing point forecasts <span class="math inline">h</span> periods ahead for all of the exponential
 smoothing methods. Some interesting special cases can be obtained by
 setting the smoothing parameters to extreme values. For example, if
@@ -222,12 +220,12 @@ damped counterparts obtained by letting <span class="math inline">\phi=1</span>.
 <div class="section level3">
 <h3 id="sec:statespace">Innovations state space models<a class="anchor" aria-label="anchor" href="#sec:statespace"></a>
 </h3>
-<p>For each exponential smoothing method in Table , <span class="citation">Hyndman et al. (2008)</span> describe two possible
-innovations state space models, one corresponding to a model with
-additive errors and the other to a model with multiplicative errors. If
-the same parameter values are used, these two models give equivalent
-point forecasts, although different prediction intervals. Thus there are
-30 potential models described in this classification.</p>
+<p>For each exponential smoothing method in Table , <span class="citation">Hyndman, Koehler, et al. (2008)</span> describe two
+possible innovations state space models, one corresponding to a model
+with additive errors and the other to a model with multiplicative
+errors. If the same parameter values are used, these two models give
+equivalent point forecasts, although different prediction intervals.
+Thus there are 30 potential models described in this classification.</p>
 <p>Historically, the nature of the error component has often been
 ignored, because the distinction between additive and multiplicative
 errors makes no difference to point forecasts.</p>
@@ -324,8 +322,8 @@ the relative error for the multiplicative model. The models are not
 unique. Clearly, any value of <span class="math inline">r(\bm{x}_{t-1})</span> will lead to identical point
 forecasts for <span class="math inline">y_t</span>.</p>
 <p>All of the methods in Table can be written in the form and . The
-specific form for each model is given in <span class="citation">Hyndman
-et al. (2008)</span>.</p>
+specific form for each model is given in <span class="citation">Hyndman,
+Koehler, et al. (2008)</span>.</p>
 <p>Some of the combinations of trend, seasonality and error can
 occasionally lead to numerical difficulties; specifically, any model
 equation that requires division by a state component could involve
@@ -369,8 +367,8 @@ the whole distribution.</p>
 values of <span class="math inline">\bm{x}_0</span> and the parameters
 <span class="math inline">\alpha</span>, <span class="math inline">\beta</span>, <span class="math inline">\gamma</span> and <span class="math inline">\phi</span>. It is easy to compute the likelihood of
 the innovations state space model , and so obtain maximum likelihood
-estimates. <span class="citation">J. K. Ord, Koehler, and Snyder
-(1997)</span> show that <span class="math display">\begin{equation}\label{likelihood}
+estimates. <span class="citation">Ord et al. (1997)</span> show that
+<span class="math display">\begin{equation}\label{likelihood}
 L^*(\bm\theta,\bm{x}_0) = n\log\Big(\sum_{t=1}^n
 \varepsilon^2_t\Big) + 2\sum_{t=1}^n \log|r(\bm{x}_{t-1})|
 \end{equation}</span> is equal to twice the negative logarithm of the
@@ -395,7 +393,7 @@ that the various equations can be interpreted as weighted averages, thus
 requiring <span class="math inline">\alpha</span>, <span class="math inline">\beta^*=\beta/\alpha</span>, <span class="math inline">\gamma^*=\gamma/(1-\alpha)</span> and <span class="math inline">\phi</span> to all lie within <span class="math inline">(0,1)</span>. This suggests <span class="math display">0&lt;\alpha&lt;1,\qquad 0&lt;\beta&lt;\alpha,\qquad
 0&lt;\gamma &lt;
 1-\alpha,\qquad\mbox{and}\qquad 0&lt;\phi&lt;1.
-</span> However, <span class="citation">Hyndman, Akram, and Archibald
+</span> However, <span class="citation">Hyndman, Akram, et al.
 (2008)</span> show that these restrictions are usually stricter than
 necessary (although in a few cases they are not restrictive enough).</p>
 </div>
@@ -431,8 +429,8 @@ We combine the preceding ideas to obtain a robust and widely applicable
 automatic forecasting algorithm. The steps involved are summarized
 below.
 <p><span class="citation">Hyndman et al. (2002)</span> applied this
-automatic forecasting strategy to the M-competition data <span class="citation">(S. Makridakis et al. 1982)</span> and the IJF-M3
-competition data <span class="citation">(Spyros Makridakis and Hibon
+automatic forecasting strategy to the M-competition data <span class="citation">(Makridakis et al. 1982)</span> and the IJF-M3
+competition data <span class="citation">(Makridakis and Hibon
 2000)</span> using a restricted set of exponential smoothing models, and
 demonstrated that the methodology is particularly good at short term
 forecasts (up to about 6 periods ahead), and especially for seasonal
@@ -471,8 +469,8 @@ Series Expert’’ ().</p>
 <p>Other algorithms are in use in commercial software, although they are
 not documented in the public domain literature. In particular, <span class="citation">(Goodrich 2000)</span> is well-known for its excellent
 automatic ARIMA algorithm which was used in the M3-forecasting
-competition <span class="citation">(Spyros Makridakis and Hibon
-2000)</span>. Another proprietary algorithm is implemented in <span class="citation">(Reilly 2000)</span>. <span class="citation">K. Ord and
+competition <span class="citation">(Makridakis and Hibon 2000)</span>.
+Another proprietary algorithm is implemented in <span class="citation">(Reilly 2000)</span>. <span class="citation">Ord and
 Lowe (1996)</span> provide an early review of some of the commercial
 software that implement automatic ARIMA forecasting.</p>
 <div class="section level3">
@@ -586,8 +584,8 @@ produce forecasts.</p>
 <p>There is a widespread myth that ARIMA models are more general than
 exponential smoothing. This is not true. The two classes of models
 overlap. The linear exponential smoothing models are all special cases
-of ARIMA models—the equivalences are discussed in <span class="citation">Hyndman, Akram, and Archibald (2008)</span>. However,
-the non-linear exponential smoothing models have no equivalent ARIMA
+of ARIMA models—the equivalences are discussed in <span class="citation">Hyndman, Akram, et al. (2008)</span>. However, the
+non-linear exponential smoothing models have no equivalent ARIMA
 counterpart. On the other hand, there are many ARIMA models which have
 no exponential smoothing counterpart. Thus, the two model classes
 overlap and are complimentary; each has its strengths and
@@ -915,22 +913,21 @@ using a random walk with drift.</p>
 <p>In addition, there are some new plotting functions for time
 series.</p>
 <p>: provides a time plot along with an ACF and PACF.</p>
-<p>: produces a seasonal plot as described in <span class="citation">Spyros Makridakis, Wheelwright, and Hyndman
-(1998)</span>.</p>
+<p>: produces a seasonal plot as described in <span class="citation">Makridakis et al. (1998)</span>.</p>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="bibliography">Bibliography<a class="anchor" aria-label="anchor" href="#bibliography"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-AM79" class="csl-entry">
 Anderson, B. D. O., and J. B. Moore. 1979. <em>Optimal Filtering</em>.
-Englewood Cliffs: Prentice-Hall.
+Prentice-Hall.
 </div>
 <div id="ref-Aoki87" class="csl-entry">
 Aoki, Masanao. 1987. <em>State Space Modeling of Time Series</em>.
-Berlin: Springer-Verlag.
+Springer-Verlag.
 </div>
 <div id="ref-AN00" class="csl-entry">
 Assimakopoulos, V., and K. Nikolopoulos. 2000. <span>“The Theta Model: A
@@ -940,11 +937,11 @@ of Forecasting</em> 16: 521–30.
 <div id="ref-BOK05" class="csl-entry">
 Bowerman, B. L., R. T. O’Connell, and Anne B. Koehler. 2005.
 <em>Forecasting, Time Series and Regression: An Applied Approach</em>.
-Belmont CA: Thomson Brooks/Cole.
+Thomson Brooks/Cole.
 </div>
 <div id="ref-BDbook91" class="csl-entry">
 Brockwell, P. J., and R. A Davis. 1991. <em>Time Series: Theory and
-Methods</em>. 2nd ed. New York: Springer-Verlag.
+Methods</em>. 2nd ed. Springer-Verlag.
 </div>
 <div id="ref-CH95" class="csl-entry">
 Canova, F., and B. E. Hansen. 1995. <span>“Are Seasonal Patterns
@@ -963,8 +960,7 @@ Intermittent Demands.”</span> <em>Operational Research Quarterly</em> 23
 </div>
 <div id="ref-R" class="csl-entry">
 Development Core Team. 2008. <em>: A Language and Environment for
-Statistical Computing</em>. Vienna, Austria: Foundation for Statistical
-Computing. <a href="https://www.R-project.org/" class="external-link">https://www.R-project.org/</a>.
+Statistical Computing</em>. Foundation for Statistical Computing. <a href="https://www.R-project.org/" class="external-link">https://www.R-project.org/</a>.
 </div>
 <div id="ref-DF81" class="csl-entry">
 Dickey, D. A., and W. A. Fuller. 1981. <span>“Likelihood Ratio
@@ -973,7 +969,7 @@ Statistics for Autoregressive Time Series with a Unit Root.”</span>
 </div>
 <div id="ref-DKbook01" class="csl-entry">
 Durbin, J, and Siem J Koopman. 2001. <em>Time Series Analysis by State
-Space Methods</em>. Oxford: Oxford University Press.
+Space Methods</em>. Oxford University Press.
 </div>
 <div id="ref-Gardner85" class="csl-entry">
 Gardner, Everette S., Jr. 1985. <span>“Exponential Smoothing: The State
@@ -985,15 +981,15 @@ Trends in Time Series.”</span> <em>Management Science</em> 31 (10):
 1237–46.
 </div>
 <div id="ref-Gomez98" class="csl-entry">
-Gómez, Victor. 1998. <span>“Automatic Model Identification in the
-Presence of Missing Observations and Outliers.”</span> Working paper
-D-98009. Ministerio de Econom<span>ı́</span>a y Hacienda,
-Direcci<span>ó</span>n General de An<span>á</span>lisis y
-Programaci<span>ó</span>n Presupuestaria.
+Gómez, Victor. 1998. <em>Automatic Model Identification in the Presence
+of Missing Observations and Outliers</em>. Working Paper D-98009.
+Ministerio de Econom<span>ı́</span>a y Hacienda, Direcci<span>ó</span>n
+General de An<span>á</span>lisis y Programaci<span>ó</span>n
+Presupuestaria.
 </div>
 <div id="ref-TRAMOSEATS98" class="csl-entry">
-Gómez, Victor, and Agustín Maravall. 1998. <span>“Programs and ,
-Instructions for the Users.”</span> Working paper 97001. Beta version.
+Gómez, Victor, and Agustín Maravall. 1998. <em>Programs and ,
+Instructions for the Users</em>. Working Paper No. 97001. Beta version.
 Ministerio de Econom<span>ı́</span>a y Hacienda, Direcci<span>ó</span>n
 General de An<span>á</span>lisis y Programaci<span>ó</span>n
 Presupuestaria.
@@ -1056,7 +1052,8 @@ Classes of State Space Models.”</span> <em>Journal of Forecasting</em>
 24: 17–37.
 </div>
 <div id="ref-expsmooth08" class="csl-entry">
-———. 2008. <em>Forecasting with Exponential Smoothing: The State Space
+Hyndman, Rob J, Anne B Koehler, J Keith Ord, and Ralph D Snyder. 2008.
+<em>Forecasting with Exponential Smoothing: The State Space
 Approach</em>. Springer-Verlag. <a href="https://robjhyndman.com/expsmooth//" class="external-link">https://robjhyndman.com/expsmooth//</a>.
 </div>
 <div id="ref-HKSG02" class="csl-entry">
@@ -1082,8 +1079,7 @@ Models Using a Filtering Method.”</span> <em>Communications in
 Statistics: Theory &amp; Methods</em> 18: 2279–88.
 </div>
 <div id="ref-Mcomp82" class="csl-entry">
-Makridakis, S., A. Anderson, R. Carbone, R. Fildes, M. Hibon, R.
-Lewandowski, J. Newton, E. Parzen, and R. Winkler. 1982. <span>“The
+Makridakis, S., A. Anderson, R. Carbone, et al. 1982. <span>“The
 Accuracy of Extrapolation (Time Series) Methods: Results of a
 Forecasting Competition.”</span> <em>Journal of Forecasting</em> 1:
 111–53.
@@ -1096,8 +1092,8 @@ Implications.”</span> <em>International Journal of Forecasting</em> 16:
 </div>
 <div id="ref-MWH3" class="csl-entry">
 Makridakis, Spyros, Steven C. Wheelwright, and Rob J Hyndman. 1998.
-<em>Forecasting: Methods and Applications</em>. 3rd ed. New York: John
-Wiley &amp; Sons. <a href="https://robjhyndman.com/forecasting/" class="external-link">https://robjhyndman.com/forecasting/</a>.
+<em>Forecasting: Methods and Applications</em>. 3rd ed. John Wiley &amp;
+Sons. <a href="https://robjhyndman.com/forecasting/" class="external-link">https://robjhyndman.com/forecasting/</a>.
 </div>
 <div id="ref-MP00a" class="csl-entry">
 Mélard, G., and J.-M Pasteels. 2000. <span>“Automatic <span>ARIMA</span>

@@ -134,6 +134,7 @@ Rob J Hyndman
 ## Examples
 
 ``` r
+
 if (FALSE) { # \dontrun{
 fcast <- dshw(taylor)
 plot(fcast)
