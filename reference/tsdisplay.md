@@ -11,7 +11,7 @@ ggtsdisplay(
   plot.type = c("partial", "histogram", "scatter", "spectrum"),
   points = TRUE,
   smooth = FALSE,
-  lag.max,
+  lag.max = NULL,
   na.action = na.contiguous,
   theme = NULL,
   ...
