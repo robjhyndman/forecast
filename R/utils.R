@@ -10,6 +10,10 @@ getConfLevel <- function(level, fan) {
   }
 }
 
+is_count <- function(x) {
+  is.numeric(x) && length(x) == 1L && is.finite(x) && x == round(x) && x > 0
+}
+
 get_seed <- function() {
   seed <- get0(".Random.seed", globalenv(), mode = "integer", inherits = FALSE)
   if (is.null(seed)) {
