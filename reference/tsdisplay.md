@@ -22,7 +22,7 @@ tsdisplay(
   plot.type = c("partial", "histogram", "scatter", "spectrum"),
   points = TRUE,
   ci.type = c("white", "ma"),
-  lag.max,
+  lag.max = NULL,
   na.action = na.contiguous,
   main = NULL,
   xlab = "",

@@ -27,7 +27,7 @@ seasonplot(
   year.labels = FALSE,
   year.labels.left = FALSE,
   type = "o",
-  main,
+  main = NULL,
   xlab = NULL,
   ylab = "",
   col = 1,
