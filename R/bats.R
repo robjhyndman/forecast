@@ -214,6 +214,7 @@ bats <- function(
       num.cores <- detectCores()
     }
     clus <- makeCluster(num.cores)
+    on.exit(stopCluster(clus), add = TRUE)
     models.list <- clusterApplyLB(
       clus,
       seq_len(nrow(control.array)),
@@ -228,7 +229,6 @@ bats <- function(
       biasadj = biasadj,
       ...
     )
-    stopCluster(clus)
     ## Choose the best model
     #### Get the AICs
     aics <- numeric(nrow(control.array))

@@ -187,6 +187,7 @@ tbats <- function(
       num.cores <- detectCores()
     }
     clus <- makeCluster(num.cores)
+    on.exit(stopCluster(clus), add = TRUE)
   }
 
   best.model <- try(
@@ -450,7 +451,6 @@ tbats <- function(
   ) {
     # In this case, there is only one alternative.
     use.parallel <- FALSE
-    stopCluster(clus)
   } else if (
     (length(use.box.cox) == 1) &&
       !use.trend[1] &&
@@ -459,7 +459,6 @@ tbats <- function(
   ) {
     # As above, in this case, there is only one alternative.
     use.parallel <- FALSE
-    stopCluster(clus)
   }
 
   if (use.parallel) {
@@ -497,7 +496,6 @@ tbats <- function(
       biasadj = biasadj,
       ...
     )
-    stopCluster(clus)
     ## Choose the best model
     #### Get the AICs
     aics <- numeric(nrow(control.array))
