@@ -74,7 +74,7 @@ MBB <- function(x, window_size) {
 #'
 #' @export
 bld.mbb.bootstrap <- function(x, num, block_size = NULL) {
-  if (length(x) <= 1L) {
+  if (length(x) <= 1L || num <= 1) {
     return(rep(list(x), num))
   }
 
@@ -90,35 +90,33 @@ bld.mbb.bootstrap <- function(x, num, block_size = NULL) {
   xs <- list()
   xs[[1]] <- x # the first series is the original one
 
-  if (num > 1) {
-    # Box-Cox transformation
-    if (min(x) > 1e-6) {
-      lambda <- BoxCox.lambda(x, lower = 0, upper = 1)
-    } else {
-      lambda <- 1
-    }
-    x.bc <- BoxCox(x, lambda)
-    lambda <- attr(x.bc, "lambda")
-    if (freq > 1) {
-      # STL decomposition
-      x.stl <- stl(ts(x.bc, frequency = freq), "per")$time.series
-      seasonal <- x.stl[, 1]
-      trend <- x.stl[, 2]
-      remainder <- x.stl[, 3]
-    } else {
-      # Loess
-      trend <- seq_along(x)
-      suppressWarnings(
-        x.loess <- loess(
-          ts(x.bc, frequency = 1) ~ trend,
-          span = 6 / length(x),
-          degree = 1
-        )
+  # Box-Cox transformation
+  if (min(x) > 1e-6) {
+    lambda <- BoxCox.lambda(x, lower = 0, upper = 1)
+  } else {
+    lambda <- 1
+  }
+  x.bc <- BoxCox(x, lambda)
+  lambda <- attr(x.bc, "lambda")
+  if (freq > 1) {
+    # STL decomposition
+    x.stl <- stl(ts(x.bc, frequency = freq), "per")$time.series
+    seasonal <- x.stl[, 1]
+    trend <- x.stl[, 2]
+    remainder <- x.stl[, 3]
+  } else {
+    # Loess
+    trend <- seq_along(x)
+    suppressWarnings(
+      x.loess <- loess(
+        ts(x.bc, frequency = 1) ~ trend,
+        span = 6 / length(x),
+        degree = 1
       )
-      seasonal <- rep(0, length(x))
-      trend <- x.loess$fitted
-      remainder <- x.loess$residuals
-    }
+    )
+    seasonal <- rep(0, length(x))
+    trend <- x.loess$fitted
+    remainder <- x.loess$residuals
   }
 
   # Bootstrap some series, using MBB
