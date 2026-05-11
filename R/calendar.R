@@ -141,7 +141,7 @@ easter <- function(x, easter.mon = FALSE) {
   }
   span <- cbind(gd.fri, easter) # the span of easter holidays
   hdays <- unlist(apply(span, 1, unique))
-  dummies <- ifelse(yr.mon %in% hdays, 1L, 0L)
+  dummies <- as.integer(yr.mon %in% hdays)
   # Allow fractional results
   denominator <- (easter0 - gd.fri0 + 1L)[1L]
   last.mar <- as.timeDate(paste0(yr.span, "-03-31"))
