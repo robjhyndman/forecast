@@ -57,8 +57,12 @@ tsdisplay <- function(
   plot.type <- match.arg(plot.type)
   ci.type <- match.arg(ci.type)
 
-  def.par <- par(no.readonly = TRUE) # save default, for resetting...
-  nf <- layout(matrix(c(1, 1, 2, 3), 2, 2, byrow = TRUE))
+  def.par <- par(no.readonly = TRUE)
+  on.exit({
+    par(def.par)
+    layout(1)
+  })
+  layout(matrix(c(1, 1, 2, 3), 2, 2, byrow = TRUE))
 
   if (is.null(main)) {
     main <- deparse1(substitute(x))
@@ -110,7 +114,7 @@ tsdisplay <- function(
     ylim <- range(ylim, junk2$acf)
   }
 
-  oldpar <- par(mar = c(5, 4.1, 1.5, 2))
+  par(mar = c(5, 4.1, 1.5, 2))
   plot(
     junk1,
     ylim = ylim,
@@ -143,8 +147,6 @@ tsdisplay <- function(
       ...
     )
   }
-  par(def.par)
-  layout(1)
   invisible()
 }
 
