@@ -326,7 +326,7 @@ class3 <- function(
     F1 <- rbind(c(1, 1), c(0, if (damped) par["phi"] else 1))
     G1 <- rbind(c(par["alpha"], par["alpha"]), c(par["beta"], par["beta"]))
   }
-  F2 <- rbind(c(rep(0, m - 1), 1), cbind(diag(m - 1), rep(0, m - 1)))
+  F2 <- rbind(c(rep(0, m - 1), 1), cbind(diag(m - 1), 0))
 
   G2 <- matrix(0, m, m)
   G2[1, m] <- par["gamma"]

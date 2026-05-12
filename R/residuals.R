@@ -80,7 +80,7 @@ residuals.Arima <- function(
     xreg <- getxreg(object)
     # Remove intercept
     if ("intercept" %in% names(object$coef)) {
-      xreg <- cbind(rep(1, length(x)), xreg)
+      xreg <- cbind(1, xreg)
     }
     # Return errors
     if (is.null(xreg)) {

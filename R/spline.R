@@ -32,7 +32,7 @@ spline.matrices <- function(
   }
   nn <- n + n0
   Sigma <- make.Sigma(n, n0)
-  s <- cbind(rep(1, nn), seq_len(nn) / n)
+  s <- cbind(1, seq_len(nn) / n)
   Omega <- cc * s %*% t(s) + Sigma / beta + diag(nn)
   maxO <- max(Omega)
   if (compute_inverse) {

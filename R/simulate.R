@@ -468,9 +468,9 @@ simulate.Arima <- function(
   narma <- sum(object$arma[1L:4L])
   if (length(object$coef) > narma) {
     if (names(object$coef)[narma + 1L] == "intercept") {
-      xreg <- cbind(intercept = rep(1, nsim), xreg)
+      xreg <- cbind(intercept = 1, xreg)
       if (future) {
-        object$xreg <- cbind(intercept = rep(1, n), object$xreg)
+        object$xreg <- cbind(intercept = 1, object$xreg)
       }
     }
     if (!is.null(xreg)) {
