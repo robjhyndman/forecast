@@ -1,5 +1,8 @@
 # forecast (development version)
 
+* `croston_model()` fitted values for periods before the first non-zero demand are now `NA` instead of `0`.
+* `croston_model()` gains an `init` parameter to control the initialization method for the interval component, or to supply fixed initial values for the demand and interval SES components.
+* `croston_model()` gains support for optimized alpha and initial value selection via `alpha = NULL`.
 * `forecast.Arima()` now correctly passes `xreg` when `bootstrap = TRUE` (#1115).
 * `theta_model()` and `thetaf()` gained a `type` argument to select additive or multiplicative seasonal decomposition.
 
