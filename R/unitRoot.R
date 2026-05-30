@@ -277,7 +277,7 @@ nsdiffs <- function(
         suppressWarnings(
           diff <- switch(
             test,
-            seas = seas.heuristic(x, ...) > 0.64, # Threshold chosen based on seasonal M3 auto.arima accuracy.
+            seas = seas.heuristic(x) > 0.64, # Threshold chosen based on seasonal M3 auto.arima accuracy.
             ocsb = with(
               ocsb.test(x, maxlag = 3, lag.method = "AIC", ...),
               statistics > critical
