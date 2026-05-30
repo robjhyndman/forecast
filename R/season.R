@@ -263,17 +263,13 @@ fourierf <- function(x, K, h) {
 
 # Function to do the work.
 ...fourier <- function(x, K, times) {
-  if (inherits(x, "msts")) {
-    period <- attr(x, "msts")
-  } else {
-    period <- frequency(x)
-  }
+  period <- if (inherits(x, "msts")) attr(x, "msts") else frequency(x)
 
   if (length(period) != length(K)) {
     stop("Number of periods does not match number of orders")
   }
   if (any(2 * K > period)) {
-    stop("K must be not be greater than period/2")
+    stop("K must not be greater than period/2")
   }
 
   # Compute periods of all Fourier terms
