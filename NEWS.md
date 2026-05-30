@@ -1,5 +1,6 @@
 # forecast (development version)
 
+* `autoplot.forecast()` no longer errors for cross-sectional regression models fitted without an intercept.
 * `forecast.Arima()` now correctly passes `xreg` when `bootstrap = TRUE` (#1115).
 * `theta_model()` and `thetaf()` gained a `type` argument to select additive or multiplicative seasonal decomposition.
 

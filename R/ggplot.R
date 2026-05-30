@@ -909,7 +909,7 @@ autoplot.forecast <- function(
 
     # Line of best fit
     coef <- data.frame(int = 0, m = 0, check.names = FALSE)
-    i <- match("(Intercept)", names(object$model$coefficients))
+    i <- match("(Intercept)", names(object$model$coefficients), nomatch = 0L)
     if (i != 0) {
       coef$int <- object$model$coefficients[i]
       if (NROW(object$model$coefficients) == 2) {
