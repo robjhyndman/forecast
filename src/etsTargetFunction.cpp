@@ -153,7 +153,7 @@ void EtsTargetFunction::eval(const double *p_par, int p_par_length) {
 
   if (ISNAN(this->lik)) this->lik = R_PosInf;
 
-  if (fabs(this->lik + 99999) < 1e-7) this->lik = R_PosInf;
+  if (std::fabs(this->lik + 99999) < 1e-7) this->lik = R_PosInf;
 
   if (this->opt_crit == "lik")
     this->objval = this->lik;
@@ -178,7 +178,7 @@ void EtsTargetFunction::eval(const double *p_par, int p_par_length) {
     double mean = 0;
     const int ne = e.size();
     for (int i = 0; i < ne; i++) {
-      mean += fabs(e[i]) / ne;
+      mean += std::fabs(e[i]) / ne;
     }
     this->objval = mean;
   }
@@ -257,7 +257,7 @@ bool EtsTargetFunction::admissible() {
 
     double max = 0;
     for (int i = 0; i < zeror.size(); i++) {
-      const double abs_val = sqrt(zeror[i] * zeror[i] + zeroi[i] * zeroi[i]);
+      const double abs_val = std::sqrt(zeror[i] * zeror[i] + zeroi[i] * zeroi[i]);
       if (abs_val > max) max = abs_val;
     }
 
