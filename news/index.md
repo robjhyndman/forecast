@@ -2,6 +2,9 @@
 
 ## forecast (development version)
 
+- [`autoplot.forecast()`](https://pkg.robjhyndman.com/forecast/reference/plot.forecast.md)
+  no longer errors for cross-sectional regression models fitted without
+  an intercept.
 - [`forecast.Arima()`](https://pkg.robjhyndman.com/forecast/reference/forecast.Arima.md)
   now correctly passes `xreg` when `bootstrap = TRUE`
   ([\#1115](https://github.com/robjhyndman/forecast/issues/1115)).
