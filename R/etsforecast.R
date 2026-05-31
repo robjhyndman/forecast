@@ -194,7 +194,6 @@ forecast.ets <- function(
 }
 
 pegelsfcast.C <- function(h, obj, npaths, level, bootstrap, innov = NULL) {
-  y.paths <- matrix(NA_real_, nrow = npaths, ncol = h)
   obj$lambda <- NULL # No need to transform these here as we do it later.
   y.f <- .Call(
     etsforecast,
@@ -356,38 +355,3 @@ class3 <- function(
   }
   list(mu = mu, var = var)
 }
-
-# ses <- function(x,h=10,level=c(80,95),fan=FALSE,...)
-# {
-#   fcast <- forecast(ets(x,"ANN"),h,level=level,fan=fan,...)
-#   fcast$method <- "Simple exponential smoothing"
-#   fcast$model$call <- match.call()
-#   return(fcast)
-# }
-
-# holt <- function(x,h=10, damped=FALSE, level=c(80,95), fan=FALSE, ...)
-# {
-#   junk <- forecast(ets(x,"AAN",damped=damped),h,level=level,fan=fan,...)
-#   if(damped)
-#     junk$method <- "Damped Holt's method"
-#   else
-#     junk$method <- "Holt's method"
-#   junk$model$call <- match.call()
-#   return(junk)
-# }
-
-# hw <- function(x,h=2*frequency(x),seasonal="additive",damped=FALSE,level=c(80,95), fan=FALSE, ...)
-# {
-#   if(seasonal=="additive")
-#   {
-#     junk <- forecast(ets(x,"AAA",damped=damped),h,level=level,fan=fan,...)
-#     junk$method <- "Holt-Winters' additive method"
-#   }
-#   else
-#   {
-#     junk <- forecast(ets(x,"MAM",damped=damped),h,level=level,fan=fan,...)
-#     junk$method <- "Holt-Winters' multiplicative method"
-#   }
-#   junk$model$call <- match.call()
-#   return(junk)
-# }
