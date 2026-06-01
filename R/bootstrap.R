@@ -74,6 +74,9 @@ MBB <- function(x, window_size) {
 #'
 #' @export
 bld.mbb.bootstrap <- function(x, num, block_size = NULL) {
+  if (!is_count(num)) {
+    stop("num must be a positive integer")
+  }
   if (length(x) <= 1L) {
     return(rep(list(x), num))
   }
@@ -119,15 +122,15 @@ bld.mbb.bootstrap <- function(x, num, block_size = NULL) {
       trend <- x.loess$fitted
       remainder <- x.loess$residuals
     }
-  }
 
-  # Bootstrap some series, using MBB
-  for (i in 2:num) {
-    xs[[i]] <- ts(InvBoxCox(
-      trend + seasonal + MBB(remainder, block_size),
-      lambda
-    ))
-    tsp(xs[[i]]) <- tsp(x)
+    # Bootstrap some series, using MBB
+    for (i in 2:num) {
+      xs[[i]] <- ts(InvBoxCox(
+        trend + seasonal + MBB(remainder, block_size),
+        lambda
+      ))
+      tsp(xs[[i]]) <- tsp(x)
+    }
   }
 
   xs
