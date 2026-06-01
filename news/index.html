@@ -60,6 +60,8 @@
 <ul><li>
 <code><a href="../reference/plot.forecast.html">autoplot.forecast()</a></code> no longer errors for cross-sectional regression models fitted without an intercept.</li>
 <li>
+<code><a href="../reference/bld.mbb.bootstrap.html">bld.mbb.bootstrap()</a></code> no longer errors when <code>num = 1</code> and now validates that <code>num</code> is a positive integer.</li>
+<li>
 <code><a href="../reference/forecast.Arima.html">forecast.Arima()</a></code> now correctly passes <code>xreg</code> when <code>bootstrap = TRUE</code> (<a href="https://github.com/robjhyndman/forecast/issues/1115" class="external-link">#1115</a>).</li>
 <li>
 <code><a href="../reference/nsdiffs.html">nsdiffs()</a></code> now ignores extra arguments passed via <code>...</code> with <code>test = "seas"</code> instead of silently returning 0.</li>
