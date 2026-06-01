@@ -280,13 +280,10 @@ forecast.lm <- function(
   # Check if the forecasts will be time series
   if (ts && is.ts(origdata)) {
     tspx <- tsp(origdata)
-    timesx <- time(origdata)
   } else if (ts && is.ts(origdata[, 1])) {
     tspx <- tsp(origdata[, 1])
-    timesx <- time(origdata[, 1])
   } else if (ts && is.ts(fitted(object))) {
     tspx <- tsp(fitted(object))
-    timesx <- time(fitted(object))
   } else {
     tspx <- NULL
   }

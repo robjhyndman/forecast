@@ -751,7 +751,6 @@ calcLikelihoodNOTransformedTBATS <- function(
   # param vector should be as follows: alpha, beta, small.phi, gamma.vector, ar.coefs, ma.coefs
   # Put the components of the param.vector into meaningful individual variables
   paramz <- unParameteriseTBATS(param.vector, param.control)
-  box.cox.parameter <- paramz$lambda
   alpha <- paramz$alpha
   beta.v <- paramz$beta
   small.phi <- paramz$small.phi
