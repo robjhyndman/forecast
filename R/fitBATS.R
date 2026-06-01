@@ -588,7 +588,6 @@ calcLikelihood <- function(
     ma.coefs <- NULL
   }
   x.nought <- BoxCox(opt.env$x.nought.untransformed, lambda = box.cox.parameter)
-  lambda <- attr(x.nought, "lambda")
   # w <- makeWMatrix(small.phi=small.phi, seasonal.periods=seasonal.periods, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
   # w <- makeBATSWMatrix(smallPhi = small.phi, sPeriods = seasonal.periods, arCoefs = ar.coefs, maCoefs = ma.coefs)
   updateWtransposeMatrix(
@@ -625,7 +624,6 @@ calcLikelihood <- function(
   )
 
   mat.transformed.y <- BoxCox(opt.env$y, box.cox.parameter)
-  lambda <- attr(mat.transformed.y, "lambda")
   n <- ncol(opt.env$y)
 
   calcBATSFaster(
