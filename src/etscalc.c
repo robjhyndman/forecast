@@ -22,15 +22,15 @@ static void forecast(double l, double b, const double *s, int m, int trend,
 static void update(const double *oldl, double *l, const double *oldb, double *b,
   const double *olds, double *s, int m, int trend, int season,
   double alpha, double beta, double gamma, double phi, double y);
-void etscalc_internal(const double *y, int n, double *x, int m, int error, int trend, int season,
-  double alpha, double beta, double gamma, double phi,
+void etscalc_internal(const double *y, int n, const double *x_init, double *states, int m,
+  int error, int trend, int season, double alpha, double beta, double gamma, double phi,
   double *e, double *fits, double *lik, double *amse, int nmse);
 
 // ******************************************************************
 
-void etscalc_internal(const double *y, int n, double *x, int m, int error, int trend, int season,
-                      double alpha, double beta, double gamma, double phi,
-                      double *e, double *fits, double *lik, double *amse, int nmse) {
+void etscalc_internal(const double *y, int n, const double *x_init, double *states, int m,
+                      int error, int trend, int season, double alpha, double beta, double gamma,
+                      double phi, double *e, double *fits, double *lik, double *amse, int nmse) {
   double oldl, l, oldb = 0.0, b = 0.0, olds[24], s[24], f[30], lik2, tmp, denom[30];
 
   if (m > 24 && season > NONE)
@@ -44,11 +44,11 @@ void etscalc_internal(const double *y, int n, double *x, int m, int error, int t
   const int nstates = m * (season > NONE) + 1 + (trend > NONE);
 
   // Copy initial state components
-  l = x[0];
+  l = x_init[0];
   if (trend > NONE)
-    b = x[1];
+    b = x_init[1];
   if (season > NONE) {
-    memcpy(s, &x[(trend > NONE) + 1], m * sizeof(double));
+    memcpy(s, &x_init[(trend > NONE) + 1], m * sizeof(double));
   }
 
   *lik = 0.0;
@@ -96,11 +96,13 @@ void etscalc_internal(const double *y, int n, double *x, int m, int error, int t
     update(&oldl, &l, &oldb, &b, olds, s, m, trend, season, alpha, beta, gamma, phi, y[i]);
 
     // STORE NEW STATE
-    x[nstates * (i + 1)] = l;
-    if (trend > NONE)
-      x[nstates * (i + 1) + 1] = b;
-    if (season > NONE) {
-      memcpy(&x[(trend > NONE) + nstates * (i + 1) + 1], s, m * sizeof(double));
+    if (states != NULL) {
+      states[nstates * (i + 1)] = l;
+      if (trend > NONE)
+        states[nstates * (i + 1) + 1] = b;
+      if (season > NONE) {
+        memcpy(&states[(trend > NONE) + nstates * (i + 1) + 1], s, m * sizeof(double));
+      }
     }
     if (!R_IsNA(e[i]))
       *lik = *lik + e[i] * e[i];
@@ -136,7 +138,7 @@ SEXP etscalc(SEXP y, SEXP x, SEXP m, SEXP error, SEXP trend, SEXP season,
 
   double lik;
 
-  etscalc_internal(y_ptr, n_val, REAL(x_out), m_val, error_val, trend_val, season_val,
+  etscalc_internal(y_ptr, n_val, REAL_RO(x), REAL(x_out), m_val, error_val, trend_val, season_val,
                    alpha_val, beta_val, gamma_val, phi_val,
                    REAL(e_out), REAL(fits_out), &lik, REAL(amse_out), nmse_val);
 

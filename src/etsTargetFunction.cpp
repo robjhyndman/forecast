@@ -138,11 +138,7 @@ void EtsTargetFunction::eval(const double *p_par, int p_par_length) {
     }
   };
 
-  const int p = state.size();
-
-  for (int i = 0; i <= p * this->y.size(); i++) state.push_back(0);
-
-  etscalc_internal(this->y.data(), this->n, this->state.data(), this->m,
+  etscalc_internal(this->y.data(), this->n, this->state.data(), nullptr, this->m,
                    this->errortype, this->trendtype, this->seasontype,
                    this->alpha, this->beta, this->gamma, this->phi,
                    this->e.data(), this->fits.data(), &this->lik,
