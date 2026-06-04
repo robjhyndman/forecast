@@ -86,11 +86,7 @@ void EtsTargetFunction::eval(const double *p_par, int p_par_length) {
 
   if (equal) return;
 
-  this->par.clear();
-
-  for (int j = 0; j < p_par_length; j++) {
-    this->par.push_back(p_par[j]);
-  }
+  this->par.assign(p_par, p_par + p_par_length);
 
   int j = 0;
   if (optAlpha) this->alpha = par[j++];
@@ -103,11 +99,7 @@ void EtsTargetFunction::eval(const double *p_par, int p_par_length) {
     return;
   }
 
-  this->state.clear();
-
-  for (int i = par.size() - nstate; i < par.size(); i++) {
-    this->state.push_back(par[i]);
-  }
+  this->state.assign(par.end() - nstate, par.end());
 
   // Add extra state
   if (seasontype != 0) {
