@@ -3,8 +3,8 @@
 
 extern "C" {
 
-void etscalc_internal(const double *y, int n, double *x, int m, int error, int trend, int season,
-  double alpha, double beta, double gamma, double phi,
+void etscalc_internal(const double *y, int n, const double *x_init, double *states, int m,
+  int error, int trend, int season, double alpha, double beta, double gamma, double phi,
   double *e, double *fits, double *lik, double *amse, int nmse);
 
 void R_cpolyroot(double *opr, double *opi, int *degree,
