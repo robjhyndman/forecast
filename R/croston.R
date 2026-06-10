@@ -151,12 +151,16 @@ print.croston_model <- function(
 forecast.croston_model <- function(object, h = 10, ...) {
   m <- frequency(object$y)
   start <- tsp(object$y)[2] + 1 / m
+  coeff <- switch(
+    object$type,
+    sba = 1 - object$alpha / 2,
+    sbj = 1 - object$alpha / (2 - object$alpha),
+    1
+  )
+  k <- length(object$fit_demand)
+  fc <- coeff * object$fit_demand[k] / object$fit_interval[k]
   output <- list(
-    mean = ts(
-      rep(object$fitted[length(object$fitted)], h),
-      start = start,
-      frequency = m
-    ),
+    mean = ts(rep(fc, h), start = start, frequency = m),
     x = object$y,
     fitted = object$fitted,
     residuals = object$residuals,
