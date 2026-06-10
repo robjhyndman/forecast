@@ -141,8 +141,6 @@ void EtsTargetFunction::eval(const double *p_par, int p_par_length) {
 
   if (ISNAN(this->lik)) this->lik = R_PosInf;
 
-  if (std::fabs(this->lik + 99999) < 1e-7) this->lik = R_PosInf;
-
   if (this->opt_crit == "lik")
     this->objval = this->lik;
   else if (this->opt_crit == "mse")

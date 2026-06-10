@@ -3,6 +3,7 @@
 * `autoplot.forecast()` no longer errors for cross-sectional regression models fitted without an intercept.
 * `bld.mbb.bootstrap()` no longer errors when `num = 1` and now validates that `num` is a positive integer.
 * `forecast.Arima()` now correctly passes `xreg` when `bootstrap = TRUE` (#1115).
+* `forecast.ets()` now gives the intended error message when forecasting fails for a multiplicative trend model.
 * `nsdiffs()` now ignores extra arguments passed via `...` with `test = "seas"` instead of silently returning 0.
 * `theta_model()` and `thetaf()` gained a `type` argument to select additive or multiplicative seasonal decomposition.
 

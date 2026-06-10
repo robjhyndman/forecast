@@ -204,7 +204,7 @@ pegelsfcast.C <- function(h, obj, npaths, level, bootstrap, innov = NULL) {
     as.double(if (obj$components[4] == "FALSE") 1 else obj$par["phi"]),
     as.integer(h)
   )
-  if (abs(y.f[1] + 99999) < 1e-7) {
+  if (is.na(y.f[1])) {
     stop("Problem with multiplicative damped trend")
   }
   hilo <- simulate_forecast(
