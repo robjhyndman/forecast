@@ -463,7 +463,7 @@ fitSpecificBATS <- function(
     F <- makeFMatrix(
       alpha = alpha,
       beta = beta.v,
-      small.phi <- small.phi,
+      small.phi = small.phi,
       seasonal.periods = seasonal.periods,
       gamma.bold.matrix = g$gamma.bold.matrix,
       ar.coefs = ar.coefs,
