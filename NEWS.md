@@ -4,6 +4,7 @@
 * `bld.mbb.bootstrap()` no longer errors when `num = 1` and now validates that `num` is a positive integer.
 * `forecast.Arima()` now correctly passes `xreg` when `bootstrap = TRUE` (#1115).
 * `nsdiffs()` now ignores extra arguments passed via `...` with `test = "seas"` instead of silently returning 0.
+* `print()` for `Arima()` models now displays the stored AICc and BIC values instead of recomputing them, which gave slightly different results for series with interior missing values.
 * `theta_model()` and `thetaf()` gained a `type` argument to select additive or multiplicative seasonal decomposition.
 
 # forecast 9.0.2
