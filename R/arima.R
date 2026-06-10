@@ -1041,17 +1041,9 @@ print.forecast_ARIMA <- function(
   cat("\n")
   if (is.null(cm) || cm != "CSS") {
     if (!is.na(x$aic)) {
-      npar <- length(x$coef[x$mask]) + 1
-      missing <- is.na(x$residuals)
-      firstnonmiss <- head(which(!missing), 1)
-      lastnonmiss <- tail(which(!missing), 1)
-      n <- lastnonmiss - firstnonmiss + 1
-      nstar <- n - x$arma[6] - x$arma[7] * x$arma[5]
-      bic <- x$aic + npar * (log(nstar) - 2)
-      aicc <- x$aic + 2 * npar * (nstar / (nstar - npar - 1) - 1)
       cat("AIC=", format(round(x$aic, 2L)), sep = "")
-      cat("   AICc=", format(round(aicc, 2L)), sep = "")
-      cat("   BIC=", format(round(bic, 2L)), "\n", sep = "")
+      cat("   AICc=", format(round(x$aicc, 2L)), sep = "")
+      cat("   BIC=", format(round(x$bic, 2L)), "\n", sep = "")
     }
   }
   invisible(x)
