@@ -17,6 +17,11 @@
 - [`nsdiffs()`](https://pkg.robjhyndman.com/forecast/reference/nsdiffs.md)
   now ignores extra arguments passed via `...` with `test = "seas"`
   instead of silently returning 0.
+- [`print()`](https://rdrr.io/r/base/print.html) for
+  [`Arima()`](https://pkg.robjhyndman.com/forecast/reference/Arima.md)
+  models now displays the stored AICc and BIC values instead of
+  recomputing them, which gave slightly different results for series
+  with interior missing values.
 - [`theta_model()`](https://pkg.robjhyndman.com/forecast/reference/theta_model.md)
   and
   [`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
