@@ -398,6 +398,9 @@ auto.arima <- function(
       tspx <- tsp(x)
       if (length(x) > truncate) {
         x <- ts(tail(x, truncate), end = tspx[2], frequency = tspx[3])
+        if (!is.null(xreg)) {
+          xreg <- tail(xreg, truncate)
+        }
       }
     }
     if (D == 0) {
