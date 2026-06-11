@@ -2,6 +2,10 @@
 
 ## forecast (development version)
 
+- [`auto.arima()`](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md)
+  now truncates `xreg` together with the series when
+  `approximation = TRUE` and `truncate` is set, so model selection no
+  longer fails.
 - [`autoplot.forecast()`](https://pkg.robjhyndman.com/forecast/reference/plot.forecast.md)
   no longer errors for cross-sectional regression models fitted without
   an intercept.

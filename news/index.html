@@ -58,6 +58,8 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="forecast-development-version">forecast (development version)<a class="anchor" aria-label="anchor" href="#forecast-development-version"></a></h2>
 <ul><li>
+<code><a href="../reference/auto.arima.html">auto.arima()</a></code> now truncates <code>xreg</code> together with the series when <code>approximation = TRUE</code> and <code>truncate</code> is set, so model selection no longer fails.</li>
+<li>
 <code><a href="../reference/plot.forecast.html">autoplot.forecast()</a></code> no longer errors for cross-sectional regression models fitted without an intercept.</li>
 <li>
 <code><a href="../reference/bld.mbb.bootstrap.html">bld.mbb.bootstrap()</a></code> no longer errors when <code>num = 1</code> and now validates that <code>num</code> is a positive integer.</li>
