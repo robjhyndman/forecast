@@ -15,6 +15,13 @@ test_that("tests for dimension (output)", {
   expect_identical(accuracy(fcasts, test = seq_along(train)), accuracy(fcasts))
 })
 
+test_that("d and D default independently when only one is supplied", {
+  fc <- rwf(AirPassengers, h = 12)
+  expect_identical(accuracy(fc, d = 0), accuracy(fc))
+  expect_identical(accuracy(fc, D = 1), accuracy(fc))
+  expect_identical(accuracy(fc, d = 0, D = 1), accuracy(fc))
+})
+
 test_that("tests for accuracy (output)", {
   # Test arima
   fitarima <- Arima(USAccDeaths, order = c(0, 1, 1), seasonal = c(0, 1, 1))
@@ -72,7 +79,7 @@ test_that("accuracy fc_model", {
     expect_shape(a, dim = c(1, 7))
     expect_shape(c, dim = c(2, 8))
     expect_identical(a, b)
-    expect_identical(b, c[1, 1:7, drop=FALSE])
+    expect_identical(b, c[1, 1:7, drop = FALSE])
     expect_lt(a[, "MASE"], 1.8)
     expect_lt(b[, "MASE"], 1.8)
     expect_identical(
