@@ -252,14 +252,7 @@ trainingaccuracy <- function(f, test, d, D) {
 #' plot(fit1)
 #' lines(EuStockMarkets[1:300, 1])
 #' @export
-accuracy.forecast <- function(
-  object,
-  x,
-  test = NULL,
-  d = NULL,
-  D = NULL,
-  ...
-) {
+accuracy.forecast <- function(object, x, test = NULL, d = NULL, D = NULL, ...) {
   trainset <- is.list(object)
   testset <- !missing(x)
   if (testset && !is.null(test)) {
@@ -270,22 +263,19 @@ accuracy.forecast <- function(
   }
 
   # Find d and D
-  if (is.null(D) && is.null(d)) {
-    if (testset) {
-      d <- as.numeric(frequency(x) == 1)
-      D <- as.numeric(frequency(x) > 1)
-    } else if (trainset) {
-      if (!is.null(object$mean)) {
-        d <- as.numeric(frequency(object$mean) == 1)
-        D <- as.numeric(frequency(object$mean) > 1)
-      } else {
-        y <- getResponse(object)
-        d <- as.numeric(frequency(y) == 1)
-        D <- as.numeric(frequency(y) > 1)
-      }
+  if (is.null(d) || is.null(D)) {
+    freq <- if (testset) {
+      frequency(x)
+    } else if (!is.null(object$mean)) {
+      frequency(object$mean)
     } else {
-      d <- as.numeric(frequency(object) == 1)
-      D <- as.numeric(frequency(object) > 1)
+      frequency(getResponse(object))
+    }
+    if (is.null(d)) {
+      d <- as.numeric(freq == 1)
+    }
+    if (is.null(D)) {
+      D <- as.numeric(freq > 1)
     }
   }
 
@@ -349,65 +339,30 @@ accuracy.mforecast <- function(
 
 #' @rdname accuracy.forecast
 #' @export
-accuracy.fc_model <- function(
-  object,
-  x,
-  test = NULL,
-  d = NULL,
-  D = NULL,
-  ...
-) {
+accuracy.fc_model <- function(object, x, test = NULL, d = NULL, D = NULL, ...) {
   accuracy.forecast(object, x, test, d, D, ...)
 }
 
 #' @rdname accuracy.forecast
 #' @export
-accuracy.Arima <- function(
-  object,
-  x,
-  test = NULL,
-  d = NULL,
-  D = NULL,
-  ...
-) {
+accuracy.Arima <- function(object, x, test = NULL, d = NULL, D = NULL, ...) {
   accuracy.forecast(object, x, test, d, D, ...)
 }
 
 #' @rdname accuracy.forecast
 #' @export
-accuracy.lm <- function(
-  object,
-  x,
-  test = NULL,
-  d = NULL,
-  D = NULL,
-  ...
-) {
+accuracy.lm <- function(object, x, test = NULL, d = NULL, D = NULL, ...) {
   accuracy.forecast(object, x, test, d, D, ...)
 }
 
 #' @rdname accuracy.forecast
 #' @export
-accuracy.ts <- function(
-  object,
-  x,
-  test = NULL,
-  d = NULL,
-  D = NULL,
-  ...
-) {
+accuracy.ts <- function(object, x, test = NULL, d = NULL, D = NULL, ...) {
   accuracy.forecast(object, x, test, d, D, ...)
 }
 
 #' @rdname accuracy.forecast
 #' @export
-accuracy.numeric <- function(
-  object,
-  x,
-  test = NULL,
-  d = NULL,
-  D = NULL,
-  ...
-) {
+accuracy.numeric <- function(object, x, test = NULL, d = NULL, D = NULL, ...) {
   accuracy.forecast(object, x, test, d, D, ...)
 }
