@@ -1,5 +1,6 @@
 # forecast (development version)
 
+* `auto.arima()` now truncates `xreg` together with the series when `approximation = TRUE` and `truncate` is set, so model selection no longer fails.
 * `autoplot.forecast()` no longer errors for cross-sectional regression models fitted without an intercept.
 * `bld.mbb.bootstrap()` no longer errors when `num = 1` and now validates that `num` is a positive integer.
 * `forecast.Arima()` now correctly passes `xreg` when `bootstrap = TRUE` (#1115).

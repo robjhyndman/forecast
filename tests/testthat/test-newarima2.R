@@ -38,6 +38,15 @@ test_that("test auto.arima() and associated methods", {
   expect_false(identical(fit1$fitted, fit2$fitted))
 })
 
+test_that("auto.arima() truncates xreg alongside x with approximation", {
+  set.seed(1)
+  n <- 200
+  xreg <- matrix(rnorm(n), ncol = 1)
+  y <- ts(cumsum(rnorm(n)) + 0.5 * xreg[, 1], frequency = 12)
+  fit <- auto.arima(y, xreg = xreg, approximation = TRUE, truncate = 100)
+  expect_s3_class(fit, "Arima")
+})
+
 test_that("test parallel = FALSE and stepwise = FALSE for auto.arima()", {
   skip_on_ci()
   expect_equal(
