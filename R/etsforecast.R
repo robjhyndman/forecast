@@ -261,7 +261,7 @@ class1 <- function(
     G[2, 1] <- par["beta"]
   }
   if (seasontype == "A") {
-    G[3, 1] <- par["gamma"]
+    G[p - m + 1, 1] <- par["gamma"]
   }
   mu <- numeric(h)
   Fj <- diag(p)
