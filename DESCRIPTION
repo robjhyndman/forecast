@@ -49,7 +49,7 @@ Authors@R: c(
   person("Slava", "Razbash", role = "aut"),
   person("Earo", "Wang", role = "aut", comment = c(ORCID = "0000-0001-6448-5260")),
   person("Farah", "Yasmeen", role = "aut", comment = c(ORCID = "0000-0002-1479-5401")),
-  person("Federico", "Garza", role = "ctb"),
+  person("Azul", "Garza", role = "ctb"),
   person("Daniele", "Girolimetto", role = "ctb"),
   person("Ross", "Ihaka", role = c("ctb", "cph")),
   person("R Core Team", role = c("ctb", "cph")),
