@@ -51,7 +51,8 @@ test_that("forecast.croston_model", {
   expect_s3_class(fc, "forecast")
   expect_length(fc$mean, 12)
   expect_true(all(fc$mean == fc$mean[1]))
-  expect_equal(fc$mean[1], fit$fitted[length(y)])
+  k <- length(fit$fit_demand)
+  expect_equal(fc$mean[1], fit$fit_demand[k] / fit$fit_interval[k])
   expect_identical(fc$x, fit$y)
 })
 

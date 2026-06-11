@@ -86,6 +86,7 @@ croston_model <- function(y, alpha = 0.1, type = c("croston", "sba", "sbj")) {
     y = y,
     fit_demand = fit_demand,
     fit_interval = fit_interval,
+    ratio = ratio[k],
     fitted = fits,
     residuals = y - fits,
     series = series
@@ -153,7 +154,7 @@ forecast.croston_model <- function(object, h = 10, ...) {
   start <- tsp(object$y)[2] + 1 / m
   output <- list(
     mean = ts(
-      rep(object$fitted[length(object$fitted)], h),
+      rep(object$ratio, h),
       start = start,
       frequency = m
     ),
