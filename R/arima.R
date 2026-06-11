@@ -34,6 +34,7 @@ search.arima <- function(
     q = 0:max.q,
     p = 0:max.p
   )
+  bestfit <- NULL
   if (!parallel) {
     best.ic <- Inf
     for (i in seq_len(nrow(to.check))) {
@@ -113,10 +114,12 @@ search.arima <- function(
         constant <- unlist(all.models[[i]][1, 2])
       }
     }
-    class(bestfit) <- c("fc_model", "forecast_ARIMA", "ARIMA", "Arima")
+    if (!is.null(bestfit)) {
+      class(bestfit) <- c("fc_model", "forecast_ARIMA", "ARIMA", "Arima")
+    }
   }
 
-  if (exists("bestfit")) {
+  if (!is.null(bestfit)) {
     # Refit using ML if approximation used for IC
     if (approximation) {
       if (trace) {
