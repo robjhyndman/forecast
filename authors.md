@@ -34,7 +34,7 @@
 
 - **Farah Yasmeen**. Author. [](https://orcid.org/0000-0002-1479-5401)
 
-- **Federico Garza**. Contributor.
+- **Azul Garza**. Contributor.
 
 - **Daniele Girolimetto**. Contributor.
 
