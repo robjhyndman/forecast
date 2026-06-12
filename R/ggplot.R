@@ -2174,7 +2174,7 @@ autolayer.msts <- function(object, series = NULL, ...) {
     class(object) <- c("mts", "ts", "matrix")
   } else {
     if (is.null(series)) {
-      series <- deparse1(substitute(series))
+      series <- deparse1(substitute(object))
     }
     class(object) <- "ts"
   }
