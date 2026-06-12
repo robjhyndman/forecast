@@ -135,6 +135,7 @@ void updateGMatrix(NumericMatrix &g,
       for (int s = 0; s < periods.size() - 1; s++) {
         position += periods[s];
         bPos += periods[s];
+        gammaBoldMat(0, bPos) = gamma[s + 1];
         g(position, 0) = gamma[s + 1];
       }
     }
