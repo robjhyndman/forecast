@@ -6,6 +6,9 @@
   now truncates `xreg` together with the series when
   `approximation = TRUE` and `truncate` is set, so model selection no
   longer fails.
+- [`autolayer()`](https://ggplot2.tidyverse.org/reference/autolayer.html)
+  now labels an unnamed `msts` series with the name of the object
+  instead of “NULL”.
 - [`autoplot.forecast()`](https://pkg.robjhyndman.com/forecast/reference/plot.forecast.md)
   no longer errors for cross-sectional regression models fitted without
   an intercept.
