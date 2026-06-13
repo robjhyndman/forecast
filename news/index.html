@@ -70,6 +70,8 @@
 <li>
 <code><a href="../reference/forecast.ets.html">forecast.ets()</a></code> now gives the intended error message when forecasting fails for a multiplicative trend model.</li>
 <li>
+<code><a href="../reference/forecast.mean_model.html">meanf()</a></code> no longer errors with <code>bootstrap = TRUE</code> when a single confidence level is supplied.</li>
+<li>
 <code><a href="../reference/nsdiffs.html">nsdiffs()</a></code> now ignores extra arguments passed via <code>...</code> with <code>test = "seas"</code> instead of silently returning 0.</li>
 <li>
 <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code><a href="../reference/Arima.html">Arima()</a></code> models now displays the stored AICc and BIC values instead of recomputing them, which gave slightly different results for series with interior missing values.</li>

@@ -21,6 +21,9 @@
 - [`forecast.ets()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ets.md)
   now gives the intended error message when forecasting fails for a
   multiplicative trend model.
+- [`meanf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.mean_model.md)
+  no longer errors with `bootstrap = TRUE` when a single confidence
+  level is supplied.
 - [`nsdiffs()`](https://pkg.robjhyndman.com/forecast/reference/nsdiffs.md)
   now ignores extra arguments passed via `...` with `test = "seas"`
   instead of silently returning 0.
