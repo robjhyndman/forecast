@@ -80,8 +80,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // etsTargetFunctionInit
-Rcpp::Environment etsTargetFunctionInit(const Rcpp::NumericVector& y, int nstate, int errortype, int trendtype, int seasontype, bool damped, const Rcpp::NumericVector& lower, const Rcpp::NumericVector& upper, const std::string& opt_crit, int nmse, const std::string& bounds, int m, bool optAlpha, bool optBeta, bool optGamma, bool optPhi, bool givenAlpha, bool givenBeta, bool givenGamma, bool givenPhi, double alpha, double beta, double gamma, double phi, Rcpp::Environment& rho);
-RcppExport SEXP _forecast_etsTargetFunctionInit(SEXP ySEXP, SEXP nstateSEXP, SEXP errortypeSEXP, SEXP trendtypeSEXP, SEXP seasontypeSEXP, SEXP dampedSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP opt_critSEXP, SEXP nmseSEXP, SEXP boundsSEXP, SEXP mSEXP, SEXP optAlphaSEXP, SEXP optBetaSEXP, SEXP optGammaSEXP, SEXP optPhiSEXP, SEXP givenAlphaSEXP, SEXP givenBetaSEXP, SEXP givenGammaSEXP, SEXP givenPhiSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP gammaSEXP, SEXP phiSEXP, SEXP rhoSEXP) {
+Rcpp::Environment etsTargetFunctionInit(const Rcpp::NumericVector& y, int nstate, int errortype, int trendtype, int seasontype, const Rcpp::NumericVector& lower, const Rcpp::NumericVector& upper, const std::string& opt_crit, int nmse, const std::string& bounds, int m, bool optAlpha, bool optBeta, bool optGamma, bool optPhi, bool givenAlpha, bool givenBeta, bool givenGamma, bool givenPhi, double alpha, double beta, double gamma, double phi, Rcpp::Environment& rho);
+RcppExport SEXP _forecast_etsTargetFunctionInit(SEXP ySEXP, SEXP nstateSEXP, SEXP errortypeSEXP, SEXP trendtypeSEXP, SEXP seasontypeSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP opt_critSEXP, SEXP nmseSEXP, SEXP boundsSEXP, SEXP mSEXP, SEXP optAlphaSEXP, SEXP optBetaSEXP, SEXP optGammaSEXP, SEXP optPhiSEXP, SEXP givenAlphaSEXP, SEXP givenBetaSEXP, SEXP givenGammaSEXP, SEXP givenPhiSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP gammaSEXP, SEXP phiSEXP, SEXP rhoSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -90,7 +90,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type errortype(errortypeSEXP);
     Rcpp::traits::input_parameter< int >::type trendtype(trendtypeSEXP);
     Rcpp::traits::input_parameter< int >::type seasontype(seasontypeSEXP);
-    Rcpp::traits::input_parameter< bool >::type damped(dampedSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type lower(lowerSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type upper(upperSEXP);
     Rcpp::traits::input_parameter< const std::string& >::type opt_crit(opt_critSEXP);
@@ -110,7 +109,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type gamma(gammaSEXP);
     Rcpp::traits::input_parameter< double >::type phi(phiSEXP);
     Rcpp::traits::input_parameter< Rcpp::Environment& >::type rho(rhoSEXP);
-    rcpp_result_gen = Rcpp::wrap(etsTargetFunctionInit(y, nstate, errortype, trendtype, seasontype, damped, lower, upper, opt_crit, nmse, bounds, m, optAlpha, optBeta, optGamma, optPhi, givenAlpha, givenBeta, givenGamma, givenPhi, alpha, beta, gamma, phi, rho));
+    rcpp_result_gen = Rcpp::wrap(etsTargetFunctionInit(y, nstate, errortype, trendtype, seasontype, lower, upper, opt_crit, nmse, bounds, m, optAlpha, optBeta, optGamma, optPhi, givenAlpha, givenBeta, givenGamma, givenPhi, alpha, beta, gamma, phi, rho));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -299,7 +298,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_forecast_calcBATSFaster", (DL_FUNC) &_forecast_calcBATSFaster, 13},
     {"_forecast_calcWTilda", (DL_FUNC) &_forecast_calcWTilda, 2},
     {"_forecast_calcTBATSFaster", (DL_FUNC) &_forecast_calcTBATSFaster, 8},
-    {"_forecast_etsTargetFunctionInit", (DL_FUNC) &_forecast_etsTargetFunctionInit, 25},
+    {"_forecast_etsTargetFunctionInit", (DL_FUNC) &_forecast_etsTargetFunctionInit, 24},
     {"_forecast_etsNelderMead", (DL_FUNC) &_forecast_etsNelderMead, 9},
     {"_forecast_makeBATSWMatrix", (DL_FUNC) &_forecast_makeBATSWMatrix, 4},
     {"_forecast_makeBATSGMatrix", (DL_FUNC) &_forecast_makeBATSGMatrix, 6},
