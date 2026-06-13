@@ -21,6 +21,10 @@
 - [`forecast.ets()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ets.md)
   now gives the intended error message when forecasting fails for a
   multiplicative trend model.
+- [`mstl()`](https://pkg.robjhyndman.com/forecast/reference/mstl.md) now
+  drops short seasonal periods from the `msts` attribute, so
+  [`forecast.stlm()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
+  no longer errors.
 - [`meanf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.mean_model.md)
   no longer errors with `bootstrap = TRUE` when a single confidence
   level is supplied.

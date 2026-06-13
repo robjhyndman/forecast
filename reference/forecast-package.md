@@ -48,7 +48,7 @@ Authors:
 
 Other contributors:
 
-- Federico Garza \[contributor\]
+- Azul Garza \[contributor\]
 
 - Daniele Girolimetto \[contributor\]
 
