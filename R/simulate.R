@@ -209,12 +209,11 @@ myarima.sim <- function(model, n, x, e, ...) {
     x.new.innovations <- x[(length(start.innov) + 1):length(x)]
     x.with.data <- c(diff.data, x.new.innovations)
 
+    ar.coefficients <- rev(model$ar)
+    keep <- abs(ar.coefficients) > .Machine$double.eps
     for (i in (length(diff.data) + 1):length(x.with.data)) {
       lagged.x.values <- x.with.data[(i - len.ar):(i - 1)]
-      ar.coefficients <- rev(model$ar)
-      sum.multiplied.x <- sum((lagged.x.values * ar.coefficients)[
-        abs(ar.coefficients) > .Machine$double.eps
-      ])
+      sum.multiplied.x <- sum(lagged.x.values[keep] * ar.coefficients[keep])
       x.with.data[i] <- x.with.data[i] + sum.multiplied.x
     }
 
