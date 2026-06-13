@@ -260,7 +260,7 @@ SEXP etsforecast(SEXP x, SEXP m, SEXP trend, SEXP season, SEXP phi, SEXP h) {
 
 static void forecast(double l, double b, const double *s, int m, int trend,
                      int season, double phi, double *f, int h) {
-  double phistar = phi;
+  double phistar = phi, phipow = phi;
 
   // FORECASTS
   for (int i = 0; i < h; i++) {
@@ -280,10 +280,12 @@ static void forecast(double l, double b, const double *s, int m, int trend,
     else if (season == MULT)
       f[i] = f[i] * s[j];
     if (i < (h - 1)) {
-      if (fabs(phi - 1.0) < TOL)
+      if (fabs(phi - 1.0) < TOL) {
         phistar = phistar + 1.0;
-      else
-        phistar = phistar + pow(phi, (double)(i + 2));
+      } else {
+        phipow *= phi;
+        phistar += phipow;
+      }
     }
   }
 }
