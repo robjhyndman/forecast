@@ -226,11 +226,7 @@ SD.test <- function(wts, s = frequency(wts)) {
   for (i in seq_len(s - 1)) {
     Fhataux[, i] <- R1[, i] * residuals(lmch)
   }
-  for (i in seq_len(N)) {
-    for (n in seq_len(s - 1)) {
-      Fhat[i, n] <- sum(Fhataux[1:i, n])
-    }
-  }
+  Fhat[] <- apply(Fhataux, 2, cumsum)
   wnw <- 1 - seq_len(ltrunc) / (ltrunc + 1)
   Ne <- nrow(Fhataux)
   Omnw <- 0
