@@ -38,6 +38,7 @@ mstl <- function(
       warning("Dropping seasonal components with fewer than two full periods.")
       msts <- msts[msts < n / 2]
       x <- msts(x, seasonal.periods = msts)
+      attr(origx, "msts") <- msts
     }
     msts <- sort(msts, decreasing = FALSE)
   } else if (is.ts(x)) {
