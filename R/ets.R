@@ -928,7 +928,6 @@ etsTargetFunctionInitWrapper <- function(
     errortype = switch(errortype, A = 1L, M = 2L),
     trendtype = switch(trendtype, N = 0L, A = 1L, M = 2L),
     seasontype = switch(seasontype, N = 0L, A = 1L, M = 2L),
-    damped = damped,
     lower = lowerb,
     upper = upperb,
     opt_crit = opt.crit,

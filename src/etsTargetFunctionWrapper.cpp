@@ -18,7 +18,6 @@ Rcpp::Environment etsTargetFunctionInit(const Rcpp::NumericVector &y,
                                         int errortype,
                                         int trendtype,
                                         int seasontype,
-                                        bool damped,
                                         const Rcpp::NumericVector &lower,
                                         const Rcpp::NumericVector &upper,
                                         const std::string &opt_crit,
@@ -41,7 +40,7 @@ Rcpp::Environment etsTargetFunctionInit(const Rcpp::NumericVector &y,
   EtsTargetFunction* sp = new EtsTargetFunction();
 
   sp->init(Rcpp::as<std::vector<double>>(y), nstate, errortype, trendtype,
-           seasontype, damped, Rcpp::as<std::vector<double>>(lower),
+           seasontype, Rcpp::as<std::vector<double>>(lower),
            Rcpp::as<std::vector<double>>(upper), opt_crit, nmse, bounds, m,
            optAlpha, optBeta, optGamma, optPhi, givenAlpha, givenBeta,
            givenGamma, givenPhi, alpha, beta, gamma, phi);

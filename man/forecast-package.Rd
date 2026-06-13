@@ -39,7 +39,7 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item Federico Garza [contributor]
+  \item Azul Garza [contributor]
   \item Daniele Girolimetto [contributor]
   \item Ross Ihaka [contributor, copyright holder]
   \item R Core Team [contributor, copyright holder]
