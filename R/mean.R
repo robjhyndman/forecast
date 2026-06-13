@@ -119,8 +119,15 @@ forecast.mean_model <- function(
       nrow = h
     )
     sim <- sweep(sim, 1, f, "+")
-    lower <- t(apply(sim, 1, quantile, prob = .5 - level / 200))
-    upper <- t(apply(sim, 1, quantile, prob = .5 + level / 200))
+    lower <- apply(sim, 1, quantile, prob = .5 - level / 200)
+    upper <- apply(sim, 1, quantile, prob = .5 + level / 200)
+    if (nconf > 1L) {
+      lower <- t(lower)
+      upper <- t(upper)
+    } else {
+      lower <- matrix(lower, ncol = 1)
+      upper <- matrix(upper, ncol = 1)
+    }
   } else {
     lower <- upper <- matrix(NA_real_, nrow = h, ncol = nconf)
     for (i in seq_len(nconf)) {
