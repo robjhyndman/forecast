@@ -9,7 +9,6 @@ void EtsTargetFunction::init(const std::vector<double> &p_y,
                              int p_errortype,
                              int p_trendtype,
                              int p_seasontype,
-                             bool p_damped,
                              const std::vector<double> &p_lower,
                              const std::vector<double> &p_upper,
                              std::string p_opt_crit,
@@ -35,7 +34,6 @@ void EtsTargetFunction::init(const std::vector<double> &p_y,
 
   this->trendtype = p_trendtype;
   this->seasontype = p_seasontype;
-  this->damped = p_damped;
 
   this->lower = p_lower;
   this->upper = p_upper;
@@ -128,7 +126,7 @@ void EtsTargetFunction::eval(const double *p_par, int p_par_length) {
       this->objval = R_PosInf;
       return;
     }
-  };
+  }
 
   etscalc_internal(this->y.data(), this->n, this->state.data(), nullptr, this->m,
                    this->errortype, this->trendtype, this->seasontype,

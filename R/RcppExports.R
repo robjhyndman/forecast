@@ -17,8 +17,8 @@ calcTBATSFaster <- function(y, yHat, wTranspose, F, x, g, e, xNought) {
     invisible(.Call(`_forecast_calcTBATSFaster`, y, yHat, wTranspose, F, x, g, e, xNought))
 }
 
-etsTargetFunctionInit <- function(y, nstate, errortype, trendtype, seasontype, damped, lower, upper, opt_crit, nmse, bounds, m, optAlpha, optBeta, optGamma, optPhi, givenAlpha, givenBeta, givenGamma, givenPhi, alpha, beta, gamma, phi, rho) {
-    .Call(`_forecast_etsTargetFunctionInit`, y, nstate, errortype, trendtype, seasontype, damped, lower, upper, opt_crit, nmse, bounds, m, optAlpha, optBeta, optGamma, optPhi, givenAlpha, givenBeta, givenGamma, givenPhi, alpha, beta, gamma, phi, rho)
+etsTargetFunctionInit <- function(y, nstate, errortype, trendtype, seasontype, lower, upper, opt_crit, nmse, bounds, m, optAlpha, optBeta, optGamma, optPhi, givenAlpha, givenBeta, givenGamma, givenPhi, alpha, beta, gamma, phi, rho) {
+    .Call(`_forecast_etsTargetFunctionInit`, y, nstate, errortype, trendtype, seasontype, lower, upper, opt_crit, nmse, bounds, m, optAlpha, optBeta, optGamma, optPhi, givenAlpha, givenBeta, givenGamma, givenPhi, alpha, beta, gamma, phi, rho)
 }
 
 etsNelderMead <- function(par, env, abstol, intol, alpha, beta, gamma, trace, maxit) {
