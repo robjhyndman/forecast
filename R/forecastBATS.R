@@ -42,8 +42,8 @@ forecast.bats <- function(
   } else {
     ts.frequency <- 1
   }
-  if(is.null(biasadj)) {
-    if(!is.null(object$lambda)) {
+  if (is.null(biasadj)) {
+    if (!is.null(object$lambda)) {
       biasadj <- attr(object$lambda, "biasadj")
     } else {
       biasadj <- FALSE
@@ -107,13 +107,10 @@ forecast.bats <- function(
   variance.multiplier <- numeric(h)
   variance.multiplier[1] <- 1
   if (h > 1) {
+    f.running.g <- g$g
     for (j in seq_len(h - 1)) {
-      if (j == 1) {
-        f.running <- diag(ncol(F))
-      } else {
-        f.running <- f.running %*% F
-      }
-      c.j <- w$w.transpose %*% f.running %*% g$g
+      c.j <- w$w.transpose %*% f.running.g
+      f.running.g <- F %*% f.running.g
       variance.multiplier[(j + 1)] <- variance.multiplier[j] + c.j^2
     }
   }

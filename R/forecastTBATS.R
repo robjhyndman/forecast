@@ -110,17 +110,13 @@ forecast.tbats <- function(
   variance.multiplier <- numeric(h)
   variance.multiplier[1] <- 1
   if (h > 1) {
+    f.running.g <- g
     for (t in 2L:h) {
       x[, t] <- F %*% x[, (t - 1)]
       y.forecast[t] <- w$w.transpose %*% x[, (t - 1)]
-      j <- t - 1
-      if (j == 1) {
-        f.running <- diag(ncol(F))
-      } else {
-        f.running <- f.running %*% F
-      }
-      c.j <- w$w.transpose %*% f.running %*% g
-      variance.multiplier[j + 1] <- variance.multiplier[j] + c.j^2
+      c.j <- w$w.transpose %*% f.running.g
+      f.running.g <- F %*% f.running.g
+      variance.multiplier[t] <- variance.multiplier[t - 1] + c.j^2
     }
   }
   variance <- object$variance * variance.multiplier
