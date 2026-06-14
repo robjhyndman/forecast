@@ -144,6 +144,8 @@ croston_model <- function(
     alpha = alpha,
     type = type,
     init = init,
+    init_demand = init_demand,
+    init_interval = init_interval,
     y = y,
     fit_demand = res$fit_demand,
     fit_interval = res$fit_interval,
@@ -233,6 +235,14 @@ print.croston_model <- function(
   cat("Call:", deparse(x$call), "\n\n")
   cat("alpha:", format(x$alpha, digits = digits), "\n")
   cat("method:", x$type, "\n")
+  cat(
+    "initial:",
+    "demand =",
+    format(x$init_demand, digits = digits),
+    ", interval =",
+    format(x$init_interval, digits = digits),
+    "\n"
+  )
   invisible(x)
 }
 

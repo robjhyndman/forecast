@@ -55,6 +55,16 @@ test_that("croston_model with numeric init and optimized alpha", {
   expect_equal(fit$fit_interval[1], 2)
 })
 
+test_that("croston_model stores resolved initial values", {
+  fit <- croston_model(y, init = c(3, 2))
+  expect_equal(fit$init_demand, 3)
+  expect_equal(fit$init_interval, 2)
+
+  fit_opt <- croston_model(y, alpha = NULL, init = "mean")
+  expect_equal(fit_opt$init_demand, fit_opt$fit_demand[1])
+  expect_equal(fit_opt$init_interval, fit_opt$fit_interval[1])
+})
+
 test_that("croston_model errors on invalid init", {
   expect_error(croston_model(y, init = c(3)), "length 2")
   expect_error(croston_model(y, init = c(-1, 2)), "non-negative")
