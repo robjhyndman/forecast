@@ -8,31 +8,32 @@ croston_model(
   y,
   alpha = 0.1,
   type = c("croston", "sba", "sbj"),
-  init = c("naive", "mean"),
-  opt.crit = c("mse", "mae")
+  opt_alpha = FALSE,
+  opt_crit = c("mse", "mae")
 )
 }
 \arguments{
 \item{y}{a numeric vector or univariate time series of class \code{ts}}
 
-\item{alpha}{Value of alpha. Default value is 0.1. If \code{NULL}, the alpha and
-initial values are jointly optimized.}
+\item{alpha}{Smoothing parameter. A single value (the default, \code{0.1}) uses
+the same smoothing parameter for both the demand and interval SES
+applications. A numeric vector of length 2 uses separate parameters, with
+\code{alpha[1]} for the demand and \code{alpha[2]} for the interval. Each value must
+be between 0 and 1.}
 
 \item{type}{Which variant of Croston's method to use. Defaults to
 \code{"croston"} for Croston's method, but can also be set to \code{"sba"} for the
 Syntetos-Boylan approximation, and \code{"sbj"} for the Shale-Boylan-Johnston
 method.}
 
-\item{init}{Either a string specifying the initialization method for the
-SES components (\code{"naive"} or \code{"mean"}), or a numeric vector of length 2
-giving the initial values for demand and interval respectively. When a
-string is used, demand is initialized to the first non-zero value and
-interval is initialized using the selected method. String values are used
-as starting points for optimization when \code{alpha = NULL}; numeric values
-are fixed.}
+\item{opt_alpha}{If \code{TRUE}, the smoothing parameter(s) are optimized, using
+the supplied \code{alpha} value(s) as starting points. A single \code{alpha}
+optimizes one shared parameter, while a length-2 \code{alpha} optimizes the
+demand and interval parameters separately. Defaults to \code{FALSE}, which uses
+the supplied \code{alpha} value(s) directly.}
 
-\item{opt.crit}{Optimization criterion when \code{alpha = NULL}. Either \code{"mse"}
-or \code{"mae"}.}
+\item{opt_crit}{Optimization criterion used when \code{opt_alpha = TRUE}. Either
+\code{"mse"} (mean squared error) or \code{"mae"} (mean absolute error).}
 }
 \value{
 An object of class \code{croston_model}
