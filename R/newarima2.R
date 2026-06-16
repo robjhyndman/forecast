@@ -62,9 +62,8 @@
 #' @param allowdrift If `TRUE`, models with drift terms are considered.
 #' @param allowmean If `TRUE`, models with a non-zero mean are considered.
 #' @param parallel If `TRUE` and `stepwise = FALSE`, then the specification
-#' search is done in parallel via [parallel::mclapply()]. This can give a
-#' significant speedup on multicore machines. On Windows, this option always
-#' fails because forking is not supported.
+#' search is done in parallel via [parallel::clusterApplyLB()]. This can give a
+#' significant speedup on multicore machines.
 #' @param num.cores Allows the user to specify the amount of parallel processes
 #' to be used if `parallel = TRUE` and `stepwise = FALSE`. If `NULL`, then the
 #' number of logical cores is automatically detected and all available cores
