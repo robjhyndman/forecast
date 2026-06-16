@@ -35,6 +35,13 @@
 #'   the supplied `alpha` value(s) directly.
 #' @param opt_crit Optimization criterion used when `opt_alpha = TRUE`. Either
 #'   `"mse"` (mean squared error) or `"mae"` (mean absolute error).
+#' @param init Initial values for the demand and interval SES applications.
+#'   Either a string giving the initialization method (`"naive"`, the default,
+#'   initializes the interval to the first interval; `"mean"` to the mean of
+#'   the intervals; both initialize the demand to the first non-zero value), or
+#'   a numeric vector of length 2 giving the initial demand and interval
+#'   directly. When `opt_alpha = TRUE`, string-derived initial values are
+#'   optimized jointly with `alpha`, while numeric values are held fixed.
 #' @references Croston, J. (1972) "Forecasting and stock control for
 #' intermittent demands", \emph{Operational Research Quarterly}, \bold{23}(3),
 #' 289-303.
@@ -60,7 +67,8 @@ croston_model <- function(
   alpha = 0.1,
   type = c("croston", "sba", "sbj"),
   opt_alpha = FALSE,
-  opt_crit = c("mse", "mae")
+  opt_crit = c("mse", "mae"),
+  init = c("naive", "mean")
 ) {
   type <- match.arg(type)
   opt_crit <- match.arg(opt_crit)
@@ -82,40 +90,78 @@ croston_model <- function(
   y_demand <- y[non_zero]
   y_interval <- c(non_zero[1], diff(non_zero))
   n <- length(y)
+  if (is.numeric(init)) {
+    if (length(init) != 2) {
+      stop("init must be a numeric vector of length 2 (demand, interval)")
+    }
+    if (init[1] < 0) {
+      stop("initial demand must be non-negative")
+    }
+    if (init[2] < 1) {
+      stop("initial interval must be at least 1")
+    }
+    init_demand <- init[1]
+    init_interval <- init[2]
+    opt_init <- FALSE
+  } else {
+    init <- match.arg(init)
+    init_demand <- y_demand[1]
+    init_interval <- if (init == "mean") mean(y_interval) else y_interval[1]
+    opt_init <- TRUE
+  }
   alpha_demand <- alpha[1]
   alpha_interval <- alpha[length(alpha)]
   if (opt_alpha) {
-    separate <- length(alpha) == 2
-    par <- if (separate) c(alpha_demand, alpha_interval) else alpha_demand
+    n_alpha <- length(alpha)
+    # Only optimize the interval initial when more than one interval is feasible
+    opt_interval <- opt_init && max(y_interval) > 1
+    par <- c(alpha, if (opt_init) init_demand, if (opt_interval) init_interval)
+    lower <- c(rep(0, n_alpha), if (opt_init) 0, if (opt_interval) 1)
+    upper <- c(
+      rep(1, n_alpha),
+      if (opt_init) max(y_demand),
+      if (opt_interval) max(y_interval)
+    )
     opt <- optim(
       par = par,
       fn = function(par) {
         croston_cost(
           alpha_demand = par[1],
-          alpha_interval = par[length(par)],
+          alpha_interval = par[n_alpha],
           y = y,
           y_demand = y_demand,
           y_interval = y_interval,
+          init_demand = if (opt_init) par[n_alpha + 1] else init_demand,
+          init_interval = if (opt_interval) par[length(par)] else init_interval,
           non_zero = non_zero,
           n = n,
           type = type,
           opt_crit = opt_crit
         )
       },
-      lower = 0,
-      upper = 1,
+      lower = lower,
+      upper = upper,
       method = "L-BFGS-B",
       control = list(maxit = 2000)
     )
-    alpha <- opt$par
+    par <- opt$par
+    alpha <- par[seq_len(n_alpha)]
     alpha_demand <- alpha[1]
-    alpha_interval <- alpha[length(alpha)]
+    alpha_interval <- alpha[n_alpha]
+    if (opt_init) {
+      init_demand <- par[n_alpha + 1]
+    }
+    if (opt_interval) {
+      init_interval <- par[length(par)]
+    }
   }
   res <- croston_estimate(
     alpha_demand,
     alpha_interval,
     y_demand,
     y_interval,
+    init_demand,
+    init_interval,
     non_zero,
     n,
     type
@@ -123,6 +169,8 @@ croston_model <- function(
   output <- list(
     alpha = alpha,
     type = type,
+    init_demand = init_demand,
+    init_interval = init_interval,
     y = y,
     fit_demand = res$fit_demand,
     fit_interval = res$fit_interval,
@@ -140,6 +188,8 @@ croston_estimate <- function(
   alpha_interval,
   y_demand,
   y_interval,
+  init_demand,
+  init_interval,
   non_zero,
   n,
   type
@@ -147,8 +197,8 @@ croston_estimate <- function(
   k <- length(y_demand)
   fit_demand <- numeric(k)
   fit_interval <- numeric(k)
-  fit_demand[1] <- y_demand[1]
-  fit_interval[1] <- y_interval[1]
+  fit_demand[1] <- init_demand
+  fit_interval[1] <- init_interval
   for (i in 2:k) {
     fit_demand[i] <- fit_demand[i - 1] +
       alpha_demand * (y_demand[i] - fit_demand[i - 1])
@@ -178,6 +228,8 @@ croston_cost <- function(
   y,
   y_demand,
   y_interval,
+  init_demand,
+  init_interval,
   non_zero,
   n,
   type,
@@ -188,6 +240,8 @@ croston_cost <- function(
     alpha_interval,
     y_demand,
     y_interval,
+    init_demand,
+    init_interval,
     non_zero,
     n,
     type
@@ -219,6 +273,13 @@ print.croston_model <- function(
     cat("alpha:", format(x$alpha, digits = digits), "\n")
   }
   cat("method:", x$type, "\n")
+  cat(
+    "initial: demand =",
+    format(x$init_demand, digits = digits),
+    ", interval =",
+    format(x$init_interval, digits = digits),
+    "\n"
+  )
   invisible(x)
 }
 
@@ -295,6 +356,7 @@ croston <- function(
   type = c("croston", "sba", "sbj"),
   opt_alpha = FALSE,
   opt_crit = c("mse", "mae"),
+  init = c("naive", "mean"),
   x = y
 ) {
   fit <- croston_model(
@@ -302,7 +364,8 @@ croston <- function(
     alpha = alpha,
     type = type,
     opt_alpha = opt_alpha,
-    opt_crit = opt_crit
+    opt_crit = opt_crit,
+    init = init
   )
   fit$series <- deparse1(substitute(y))
   forecast(fit, h = h)

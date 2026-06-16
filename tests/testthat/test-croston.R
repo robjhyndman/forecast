@@ -50,6 +50,35 @@ test_that("croston_model optimized alpha works with type variants", {
   expect_true(fit_sbj$alpha >= 0 && fit_sbj$alpha <= 1)
 })
 
+test_that("croston_model optimizes initial values with alpha", {
+  fit <- croston_model(y, opt_alpha = TRUE)
+  nz <- which(y != 0)
+  # initial values should move away from the naive starting points
+  expect_false(fit$init_demand == y[nz[1]])
+  expect_false(fit$init_interval == nz[1])
+  mse_opt <- mean(fit$residuals^2, na.rm = TRUE)
+  mse_alpha_only <- mean(
+    croston_model(y, opt_alpha = TRUE, init = c(y[nz[1]], nz[1]))$residuals^2,
+    na.rm = TRUE
+  )
+  expect_lte(mse_opt, mse_alpha_only)
+})
+
+test_that("croston_model with fixed numeric init", {
+  fit <- croston_model(y, init = c(2, 4))
+  expect_equal(fit$init_demand, 2)
+  expect_equal(fit$init_interval, 4)
+  fit_opt <- croston_model(y, opt_alpha = TRUE, init = c(2, 4))
+  expect_equal(fit_opt$init_demand, 2)
+  expect_equal(fit_opt$init_interval, 4)
+})
+
+test_that("croston_model with mean init", {
+  fit <- croston_model(y, init = "mean")
+  nz <- which(y != 0)
+  expect_equal(fit$init_interval, mean(c(nz[1], diff(nz))))
+})
+
 test_that("croston_model with mae optimization", {
   fit_mse <- croston_model(y, opt_alpha = TRUE, opt_crit = "mse")
   fit_mae <- croston_model(y, opt_alpha = TRUE, opt_crit = "mae")
@@ -78,6 +107,12 @@ test_that("croston_model errors on invalid input", {
   expect_error(croston_model(y, alpha = -0.1), "alpha must be between 0 and 1")
   expect_error(croston_model(y, alpha = 1.5), "alpha must be between 0 and 1")
   expect_error(croston_model(y, alpha = c(0.1, 0.2, 0.3)), "length 1 or 2")
+  expect_error(croston_model(y, init = c(1, 2, 3)), "length 2")
+  expect_error(croston_model(y, init = c(-1, 2)), "demand must be non-negative")
+  expect_error(
+    croston_model(y, init = c(1, 0.5)),
+    "interval must be at least 1"
+  )
   expect_error(croston_model(c(-1, 2, 0)), "non-negative data")
   expect_error(croston_model(c(0, 0, 1, 0)), "At least two non-zero values")
   expect_error(croston_model(c(0, 0, 0)), "At least two non-zero values")

@@ -9,7 +9,8 @@ croston_model(
   alpha = 0.1,
   type = c("croston", "sba", "sbj"),
   opt_alpha = FALSE,
-  opt_crit = c("mse", "mae")
+  opt_crit = c("mse", "mae"),
+  init = c("naive", "mean")
 )
 }
 \arguments{
@@ -34,6 +35,14 @@ the supplied \code{alpha} value(s) directly.}
 
 \item{opt_crit}{Optimization criterion used when \code{opt_alpha = TRUE}. Either
 \code{"mse"} (mean squared error) or \code{"mae"} (mean absolute error).}
+
+\item{init}{Initial values for the demand and interval SES applications.
+Either a string giving the initialization method (\code{"naive"}, the default,
+initializes the interval to the first interval; \code{"mean"} to the mean of
+the intervals; both initialize the demand to the first non-zero value), or
+a numeric vector of length 2 giving the initial demand and interval
+directly. When \code{opt_alpha = TRUE}, string-derived initial values are
+optimized jointly with \code{alpha}, while numeric values are held fixed.}
 }
 \value{
 An object of class \code{croston_model}
