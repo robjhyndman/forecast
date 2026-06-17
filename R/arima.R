@@ -93,11 +93,13 @@ search.arima <- function(
       num.cores <- detectCores()
     }
 
-    all.models <- mclapply(
-      X = seq_len(nrow(to.check)),
-      FUN = par.all.arima,
-      max.order = max.order,
-      mc.cores = num.cores
+    clus <- makeCluster(num.cores)
+    on.exit(stopCluster(clus), add = TRUE)
+    all.models <- clusterApplyLB(
+      clus,
+      seq_len(nrow(to.check)),
+      par.all.arima,
+      max.order = max.order
     )
 
     # Removing null elements
