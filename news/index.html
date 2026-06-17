@@ -58,6 +58,8 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="forecast-development-version">forecast (development version)<a class="anchor" aria-label="anchor" href="#forecast-development-version"></a></h2>
 <ul><li>
+<code><a href="../reference/auto.arima.html">auto.arima()</a></code> parallel model search (<code>stepwise = FALSE</code>) now works on Windows (<a href="https://github.com/robjhyndman/forecast/issues/1187" class="external-link">#1187</a>).</li>
+<li>
 <code><a href="../reference/auto.arima.html">auto.arima()</a></code> now truncates <code>xreg</code> together with the series when <code>approximation = TRUE</code> and <code>truncate</code> is set, so model selection no longer fails.</li>
 <li>
 <code><a href="https://ggplot2.tidyverse.org/reference/autolayer.html" class="external-link">autolayer()</a></code> now labels an unnamed <code>msts</code> series with the name of the object instead of “NULL”.</li>

@@ -212,9 +212,8 @@ auto.arima(
 
   If `TRUE` and `stepwise = FALSE`, then the specification search is
   done in parallel via
-  [`parallel::mclapply()`](https://rdrr.io/r/parallel/mclapply.html).
-  This can give a significant speedup on multicore machines. On Windows,
-  this option always fails because forking is not supported.
+  [`parallel::clusterApplyLB()`](https://rdrr.io/r/parallel/clusterApply.html).
+  This can give a significant speedup on multicore machines.
 
 - num.cores:
 

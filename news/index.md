@@ -3,6 +3,9 @@
 ## forecast (development version)
 
 - [`auto.arima()`](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md)
+  parallel model search (`stepwise = FALSE`) now works on Windows
+  ([\#1187](https://github.com/robjhyndman/forecast/issues/1187)).
+- [`auto.arima()`](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md)
   now truncates `xreg` together with the series when
   `approximation = TRUE` and `truncate` is set, so model selection no
   longer fails.
