@@ -2,6 +2,7 @@
 
 #include <R.h>
 
+#include <algorithm>
 #include <cmath>
 
 void EtsTargetFunction::init(const std::vector<double> &p_y,
@@ -119,7 +120,7 @@ void EtsTargetFunction::eval(const double *p_par, int p_par_length) {
     if (trendtype != 0) start = 2;
 
     for (int i = start; i < state.size(); i++) {
-      if (state[i] < min) min = state[i];
+      min = std::min(min, state[i]);
     }
 
     if (min < 0) {
@@ -135,7 +136,7 @@ void EtsTargetFunction::eval(const double *p_par, int p_par_length) {
                    this->amse.data(), this->nmse);
 
   // Avoid perfect fits
-  if (this->lik < -1e10) this->lik = -1e10;
+  this->lik = std::max(this->lik, -1e10);
 
   if (ISNAN(this->lik)) this->lik = R_PosInf;
 
@@ -242,7 +243,7 @@ bool EtsTargetFunction::admissible() {
     double max = 0;
     for (int i = 0; i < zeror.size(); i++) {
       const double abs_val = std::sqrt(zeror[i] * zeror[i] + zeroi[i] * zeroi[i]);
-      if (abs_val > max) max = abs_val;
+      max = std::max(max, abs_val);
     }
 
     if (max > 1 + 1e-10) return false;
