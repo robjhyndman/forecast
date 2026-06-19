@@ -241,7 +241,7 @@ bool EtsTargetFunction::admissible() {
                 &fail);
 
     double max = 0;
-    for (int i = 0; i < zeror.size(); i++) {
+    for (std::size_t i = 0; i < zeror.size(); i++) {
       const double abs_val = std::sqrt(zeror[i] * zeror[i] + zeroi[i] * zeroi[i]);
       max = std::max(max, abs_val);
     }

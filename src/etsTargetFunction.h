@@ -16,7 +16,7 @@ class EtsTargetFunction {
 
 public:
 
-	void eval(const double* p_var, int p_var_length);
+	void eval(const double* p_par, int p_par_length);
 	void init(const std::vector<double> &p_y, int p_nstate, int p_errortype,
 			int p_trendtype, int p_seasontype,
 			const std::vector<double> &p_lower, const std::vector<double> &p_upper,
