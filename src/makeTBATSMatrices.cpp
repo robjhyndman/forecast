@@ -75,25 +75,14 @@ List makeTBATSWMatrix(const Nullable<double> &smallPhi,
 
 // [[Rcpp::export]]
 arma::mat makeCIMatrix(int k, double m) {
-  const double pi = arma::datum::pi;
-  arma::mat C(k, k, arma::fill::zeros);
-
-  for (int j = 1; j <= k; j++) {
-    C(j - 1, j - 1) = std::cos((2 * pi * j) / m);
-  }
-  return C;
+  const arma::vec j = arma::regspace(1, 1, k);
+  return arma::diagmat(arma::cos((2 * arma::datum::pi / m) * j));
 }
 
 // [[Rcpp::export]]
 arma::mat makeSIMatrix(int k, double m) {
-  const double pi = arma::datum::pi;
-  arma::mat S(k, k, arma::fill::zeros);
-
-  for (int j = 1; j <= k; j++) {
-    const double lambda = (2 * pi * j) / m;
-    S(j - 1, j - 1) = std::sin(lambda);
-  }
-  return S;
+  const arma::vec j = arma::regspace(1, 1, k);
+  return arma::diagmat(arma::sin((2 * arma::datum::pi / m) * j));
 }
 
 // [[Rcpp::export]]

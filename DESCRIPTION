@@ -33,7 +33,7 @@ Suggests:
   uroot
 LinkingTo:
   Rcpp (>= 0.12.4),
-  RcppArmadillo (>= 0.2.35)
+  RcppArmadillo (>= 0.6.700.3.0)
 LazyData: yes
 ByteCompile: TRUE
 Authors@R: c(
