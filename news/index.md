@@ -22,6 +22,9 @@
   now correctly passes `xreg` when `bootstrap = TRUE`
   ([\#1115](https://github.com/robjhyndman/forecast/issues/1115)).
 - [`forecast.ets()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ets.md)
+  now uses the supplied `innov` matrix when `simulate = TRUE` instead of
+  silently ignoring it.
+- [`forecast.ets()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ets.md)
   now gives the intended error message when forecasting fails for a
   multiplicative trend model.
 - [`mstl()`](https://pkg.robjhyndman.com/forecast/reference/mstl.md) now
