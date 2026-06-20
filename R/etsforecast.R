@@ -83,7 +83,8 @@ forecast.ets <- function(
       object,
       level = level,
       bootstrap = bootstrap,
-      npaths = npaths
+      npaths = npaths,
+      innov = innov
     )
   } else if (
     object$components[1] == "A" &&
