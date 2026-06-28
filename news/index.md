@@ -42,6 +42,8 @@
   models now displays the stored AICc and BIC values instead of
   recomputing them, which gave slightly different results for series
   with interior missing values.
+- [`subset()`](https://rdrr.io/r/base/subset.html) no longer ignores the
+  `subset` argument for `msts` objects.
 - [`theta_model()`](https://pkg.robjhyndman.com/forecast/reference/theta_model.md)
   and
   [`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
