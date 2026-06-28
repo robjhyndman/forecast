@@ -175,8 +175,11 @@ if (getRversion() < "4.5.0") {
 #' @rdname subset.ts
 #' @export
 subset.msts <- function(x, subset = NULL, start = NULL, end = NULL, ...) {
-  out <- subset.ts(x, start = start, end = end, ...)
+  out <- subset.ts(x, subset = subset, start = start, end = end, ...)
   tspx <- tsp(out)
+  if (is.null(tspx)) {
+    return(out)
+  }
   msts(
     out,
     seasonal.periods = attr(x, "msts"),
