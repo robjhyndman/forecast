@@ -261,6 +261,7 @@ SEXP etsforecast(SEXP x, SEXP m, SEXP trend, SEXP season, SEXP phi, SEXP h) {
 static void forecast(double l, double b, const double *s, int m, int trend,
                      int season, double phi, double *f, int h) {
   double phistar = phi, phipow = phi;
+  int j = m - 1;
 
   // FORECASTS
   for (int i = 0; i < h; i++) {
@@ -272,13 +273,12 @@ static void forecast(double l, double b, const double *s, int m, int trend,
       f[i] = NA_REAL;
     else
       f[i] = l * pow(b, phistar);
-    int j = m - 1 - i;
-    while (j < 0)
-      j += m;
     if (season == ADD)
       f[i] = f[i] + s[j];
     else if (season == MULT)
       f[i] = f[i] * s[j];
+    if (--j < 0)
+      j = m - 1;
     if (i < (h - 1)) {
       if (fabs(phi - 1.0) < TOL) {
         phistar = phistar + 1.0;
