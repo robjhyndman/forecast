@@ -10,7 +10,7 @@ calcBATSFaster <- function(y, yHat, wTranspose, F, x, g, e, xNought, sPeriods, b
 }
 
 calcWTilda <- function(wTildaTranspose, D) {
-    .Call(`_forecast_calcWTilda`, wTildaTranspose, D)
+    invisible(.Call(`_forecast_calcWTilda`, wTildaTranspose, D))
 }
 
 calcTBATSFaster <- function(y, yHat, wTranspose, F, x, g, e, xNought) {

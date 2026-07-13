@@ -178,9 +178,8 @@ void calcBATSFaster(const arma::mat& y,
 }
 
 // [[Rcpp::export]]
-arma::mat calcWTilda(arma::mat& wTildaTranspose, const arma::mat& D) {
+void calcWTilda(arma::mat& wTildaTranspose, const arma::mat& D) {
   for (arma::uword t = 1; t < wTildaTranspose.n_rows; t++) {
     wTildaTranspose.row(t) = wTildaTranspose.row(t - 1) * D;
   }
-  return wTildaTranspose;
 }
