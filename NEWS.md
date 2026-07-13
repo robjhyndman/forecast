@@ -4,7 +4,7 @@
 * `autolayer()` now labels an unnamed `msts` series with the name of the object instead of "NULL".
 * `autoplot.forecast()` no longer errors for cross-sectional regression models fitted without an intercept.
 * `bld.mbb.bootstrap()` no longer errors when `num = 1` and now validates that `num` is a positive integer.
-* `croston_model()` and `croston()` gained an `opt_alpha` argument to optimize the smoothing parameters from the supplied `alpha` starting values and an `opt_crit` argument to select the optimization criterion, and `alpha` may now be length 2 to use separate smoothing parameters for the demand and interval components.
+* `croston_model()` and `croston()` can now optimize and separately specify Croston smoothing parameters.
 * `croston_model()` now returns `NA` for fitted values before the first non-zero demand instead of 0.
 * `forecast.Arima()` now correctly passes `xreg` when `bootstrap = TRUE` (#1115).
 * `forecast.ets()` now gives the intended error message when forecasting fails for a multiplicative trend model.
