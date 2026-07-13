@@ -1,9 +1,9 @@
 pandoc: 3.8.3
-pkgdown: 2.2.0
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   JSS2008: JSS2008.html
-last_built: 2026-06-28T05:30Z
+last_built: 2026-07-13T00:27Z
 urls:
   reference: https://pkg.robjhyndman.com/forecast/reference
   article: https://pkg.robjhyndman.com/forecast/articles
