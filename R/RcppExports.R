@@ -2,7 +2,7 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 calcBATS <- function(y, yHat, wTranspose, F, x, g, e) {
-    .Call(`_forecast_calcBATS`, y, yHat, wTranspose, F, x, g, e)
+    invisible(.Call(`_forecast_calcBATS`, y, yHat, wTranspose, F, x, g, e))
 }
 
 calcBATSFaster <- function(y, yHat, wTranspose, F, x, g, e, xNought, sPeriods, beta, tau, p, q) {

@@ -516,7 +516,7 @@ calcModel <- function(y, x.nought, F, g, w) {
   x[, 1] <- F %*% x.nought + g %*% e[, 1]
   y <- matrix(y, nrow = 1, ncol = length.ts)
 
-  loop <- calcBATS(
+  calcBATS(
     y = y,
     yHat = y.hat,
     wTranspose = w$w.transpose,
@@ -526,7 +526,7 @@ calcModel <- function(y, x.nought, F, g, w) {
     e = e
   )
 
-  list(y.hat = loop$y.hat, e = loop$e, x = loop$x)
+  list(y.hat = y.hat, e = e, x = x)
 }
 
 calcLikelihood <- function(
