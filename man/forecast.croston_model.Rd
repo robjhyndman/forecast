@@ -32,33 +32,27 @@ modelling function.}
 
 \item{y}{a numeric vector or univariate time series of class \code{ts}}
 
-\item{alpha}{Smoothing parameter. A single value (the default, \code{0.1}) uses
-the same smoothing parameter for both the demand and interval SES
-applications. A numeric vector of length 2 uses separate parameters, with
-\code{alpha[1]} for the demand and \code{alpha[2]} for the interval. Each value must
-be between 0 and 1.}
+\item{alpha}{Smoothing parameter(s), each between 0 and 1. A single value
+(the default, \code{0.1}) is shared by the demand and interval SES applications. A
+length-2 vector uses \code{alpha[1]} for the demand and \code{alpha[2]} for the
+interval.}
 
-\item{type}{Which variant of Croston's method to use. Defaults to
-\code{"croston"} for Croston's method, but can also be set to \code{"sba"} for the
-Syntetos-Boylan approximation, and \code{"sbj"} for the Shale-Boylan-Johnston
-method.}
+\item{type}{Which variant of Croston's method to use. Defaults to \code{"croston"}
+for Croston's method, but can also be set to \code{"sba"} for the Syntetos-Boylan
+approximation, and \code{"sbj"} for the Shale-Boylan-Johnston method.}
 
-\item{opt_alpha}{If \code{TRUE}, the smoothing parameter(s) are optimized, using
-the supplied \code{alpha} value(s) as starting points. A single \code{alpha}
-optimizes one shared parameter, while a length-2 \code{alpha} optimizes the
-demand and interval parameters separately. Defaults to \code{FALSE}, which uses
-the supplied \code{alpha} value(s) directly.}
+\item{opt_alpha}{If \code{TRUE}, optimize the smoothing parameter(s) starting from
+\code{alpha}. Defaults to \code{FALSE}, which uses \code{alpha} directly.}
 
-\item{opt_crit}{Optimization criterion used when \code{opt_alpha = TRUE}. Either
-\code{"mse"} (mean squared error) or \code{"mae"} (mean absolute error).}
+\item{opt_crit}{Optimization criterion when \code{opt_alpha = TRUE}. One of \code{"mse"}
+(mean squared error) or \code{"mae"} (mean absolute error).}
 
-\item{init}{Initial values for the demand and interval SES applications.
-Either a string giving the initialization method (\code{"naive"}, the default,
-initializes the interval to the first interval; \code{"mean"} to the mean of
-the intervals; both initialize the demand to the first non-zero value), or
-a numeric vector of length 2 giving the initial demand and interval
-directly. When \code{opt_alpha = TRUE}, string-derived initial values are
-optimized jointly with \code{alpha}, while numeric values are held fixed.}
+\item{init}{Initial demand and interval values. Either a string method or a
+length-2 numeric \code{c(demand, interval)}. The \code{"naive"} method (the default)
+takes the interval from the first interval and \code{"mean"} from the mean
+interval, both taking demand from the first non-zero value. String values are
+optimized alongside \code{alpha} when \code{opt_alpha = TRUE}, while numeric values are
+held fixed.}
 
 \item{x}{Deprecated. Included for backwards compatibility.}
 }

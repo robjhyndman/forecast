@@ -19,29 +19,23 @@
 #' the interval SES application.
 #'
 #' @inheritParams Arima
-#' @param alpha Smoothing parameter. A single value (the default, `0.1`) uses
-#'   the same smoothing parameter for both the demand and interval SES
-#'   applications. A numeric vector of length 2 uses separate parameters, with
-#'   `alpha[1]` for the demand and `alpha[2]` for the interval. Each value must
-#'   be between 0 and 1.
-#' @param type Which variant of Croston's method to use. Defaults to
-#'   `"croston"` for Croston's method, but can also be set to `"sba"` for the
-#'   Syntetos-Boylan approximation, and `"sbj"` for the Shale-Boylan-Johnston
-#'   method.
-#' @param opt_alpha If `TRUE`, the smoothing parameter(s) are optimized, using
-#'   the supplied `alpha` value(s) as starting points. A single `alpha`
-#'   optimizes one shared parameter, while a length-2 `alpha` optimizes the
-#'   demand and interval parameters separately. Defaults to `FALSE`, which uses
-#'   the supplied `alpha` value(s) directly.
-#' @param opt_crit Optimization criterion used when `opt_alpha = TRUE`. Either
-#'   `"mse"` (mean squared error) or `"mae"` (mean absolute error).
-#' @param init Initial values for the demand and interval SES applications.
-#'   Either a string giving the initialization method (`"naive"`, the default,
-#'   initializes the interval to the first interval; `"mean"` to the mean of
-#'   the intervals; both initialize the demand to the first non-zero value), or
-#'   a numeric vector of length 2 giving the initial demand and interval
-#'   directly. When `opt_alpha = TRUE`, string-derived initial values are
-#'   optimized jointly with `alpha`, while numeric values are held fixed.
+#' @param alpha Smoothing parameter(s), each between 0 and 1. A single value
+#' (the default, `0.1`) is shared by the demand and interval SES applications. A
+#' length-2 vector uses `alpha[1]` for the demand and `alpha[2]` for the
+#' interval.
+#' @param type Which variant of Croston's method to use. Defaults to `"croston"`
+#' for Croston's method, but can also be set to `"sba"` for the Syntetos-Boylan
+#' approximation, and `"sbj"` for the Shale-Boylan-Johnston method.
+#' @param opt_alpha If `TRUE`, optimize the smoothing parameter(s) starting from
+#' `alpha`. Defaults to `FALSE`, which uses `alpha` directly.
+#' @param opt_crit Optimization criterion when `opt_alpha = TRUE`. One of `"mse"`
+#' (mean squared error) or `"mae"` (mean absolute error).
+#' @param init Initial demand and interval values. Either a string method or a
+#' length-2 numeric `c(demand, interval)`. The `"naive"` method (the default)
+#' takes the interval from the first interval and `"mean"` from the mean
+#' interval, both taking demand from the first non-zero value. String values are
+#' optimized alongside `alpha` when `opt_alpha = TRUE`, while numeric values are
+#' held fixed.
 #' @references Croston, J. (1972) "Forecasting and stock control for
 #' intermittent demands", \emph{Operational Research Quarterly}, \bold{23}(3),
 #' 289-303.
