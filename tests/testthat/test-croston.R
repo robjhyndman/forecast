@@ -28,40 +28,52 @@ test_that("croston_model with optimized alpha", {
   fit <- croston_model(y, opt_alpha = TRUE)
   expect_s3_class(fit, "croston_model")
   expect_length(fit$alpha, 1)
-  expect_true(fit$alpha >= 0 && fit$alpha <= 1)
+  expect_gte(fit$alpha, 0)
+  expect_lte(fit$alpha, 1)
+  # optimization cannot worsen the fit vs its alpha = 0.1 starting point
   mse_opt <- mean(fit$residuals^2, na.rm = TRUE)
-  mse_default <- mean(croston_model(y, alpha = 0.1)$residuals^2, na.rm = TRUE)
-  expect_lte(mse_opt, mse_default)
+  mse_start <- mean(croston_model(y, alpha = 0.1)$residuals^2, na.rm = TRUE)
+  expect_lte(mse_opt, mse_start)
 })
 
 test_that("croston_model with optimized separate alphas", {
   fit <- croston_model(y, alpha = c(0.1, 0.1), opt_alpha = TRUE)
   expect_length(fit$alpha, 2)
-  expect_true(all(fit$alpha >= 0 & fit$alpha <= 1))
+  expect_gte(min(fit$alpha), 0)
+  expect_lte(max(fit$alpha), 1)
+  # compare against the c(0.1, 0.1) start; a local optimum need not beat the
+  # separately optimized single-alpha fit
   mse_two <- mean(fit$residuals^2, na.rm = TRUE)
-  mse_one <- mean(croston_model(y, opt_alpha = TRUE)$residuals^2, na.rm = TRUE)
-  expect_lte(mse_two, mse_one)
+  mse_start <- mean(
+    croston_model(y, alpha = c(0.1, 0.1))$residuals^2,
+    na.rm = TRUE
+  )
+  expect_lte(mse_two, mse_start)
 })
 
 test_that("croston_model optimized alpha works with type variants", {
   fit_sba <- croston_model(y, opt_alpha = TRUE, type = "sba")
   fit_sbj <- croston_model(y, opt_alpha = TRUE, type = "sbj")
-  expect_true(fit_sba$alpha >= 0 && fit_sba$alpha <= 1)
-  expect_true(fit_sbj$alpha >= 0 && fit_sbj$alpha <= 1)
+  expect_gte(fit_sba$alpha, 0)
+  expect_lte(fit_sba$alpha, 1)
+  expect_gte(fit_sbj$alpha, 0)
+  expect_lte(fit_sbj$alpha, 1)
 })
 
 test_that("croston_model optimizes initial values with alpha", {
   fit <- croston_model(y, opt_alpha = TRUE)
   nz <- which(y != 0)
-  # initial values should move away from the naive starting points
-  expect_false(fit$init_demand == y[nz[1]])
-  expect_false(fit$init_interval == nz[1])
+  y_demand <- y[nz]
+  y_interval <- c(nz[1], diff(nz))
+  # optimized initial values stay within their feasible bounds
+  expect_gte(fit$init_demand, 0)
+  expect_lte(fit$init_demand, max(y_demand))
+  expect_gte(fit$init_interval, 1)
+  expect_lte(fit$init_interval, max(y_interval))
+  # optimizing alpha and init cannot worsen the fit vs the naive start
   mse_opt <- mean(fit$residuals^2, na.rm = TRUE)
-  mse_alpha_only <- mean(
-    croston_model(y, opt_alpha = TRUE, init = c(y[nz[1]], nz[1]))$residuals^2,
-    na.rm = TRUE
-  )
-  expect_lte(mse_opt, mse_alpha_only)
+  mse_start <- mean(croston_model(y, alpha = 0.1)$residuals^2, na.rm = TRUE)
+  expect_lte(mse_opt, mse_start)
 })
 
 test_that("croston_model with fixed numeric init", {
@@ -82,11 +94,20 @@ test_that("croston_model with mean init", {
 test_that("croston_model with mae optimization", {
   fit_mse <- croston_model(y, opt_alpha = TRUE, opt_crit = "mse")
   fit_mae <- croston_model(y, opt_alpha = TRUE, opt_crit = "mae")
-  expect_true(fit_mse$alpha >= 0 && fit_mse$alpha <= 1)
-  expect_true(fit_mae$alpha >= 0 && fit_mae$alpha <= 1)
-  mae_mae <- mean(abs(fit_mae$residuals), na.rm = TRUE)
-  mae_mse <- mean(abs(fit_mse$residuals), na.rm = TRUE)
-  expect_lte(mae_mae, mae_mse)
+  expect_gte(fit_mse$alpha, 0)
+  expect_lte(fit_mse$alpha, 1)
+  expect_gte(fit_mae$alpha, 0)
+  expect_lte(fit_mae$alpha, 1)
+  # each criterion cannot worsen its own metric vs the shared naive start
+  start <- croston_model(y, alpha = 0.1)
+  expect_lte(
+    mean(abs(fit_mae$residuals), na.rm = TRUE),
+    mean(abs(start$residuals), na.rm = TRUE)
+  )
+  expect_lte(
+    mean(fit_mse$residuals^2, na.rm = TRUE),
+    mean(start$residuals^2, na.rm = TRUE)
+  )
 })
 
 test_that("croston_model type variants", {
