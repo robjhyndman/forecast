@@ -197,12 +197,16 @@ SeasDummy <- function(x) {
     stop("Non-seasonal data")
   }
   tt <- seq_len(n)
-  fmat <- matrix(NA_real_, nrow = n, ncol = 2 * m)
-  for (i in seq_len(m)) {
-    fmat[, 2 * i] <- sin(2 * pi * i * tt / m)
-    fmat[, 2 * (i - 1) + 1] <- cos(2 * pi * i * tt / m)
+  fmat <- matrix(NA_real_, nrow = n, ncol = m - 1L)
+  for (j in seq_len(m - 1L)) {
+    i <- (j + 1L) %/% 2L
+    if (j %% 2L == 1L) {
+      fmat[, j] <- cos(2 * pi * i * tt / m)
+    } else {
+      fmat[, j] <- sin(2 * pi * i * tt / m)
+    }
   }
-  fmat[, 1:(m - 1)]
+  fmat[, seq_len(m - 1L)]
 }
 
 # CANOVA-HANSEN TEST
