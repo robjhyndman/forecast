@@ -348,10 +348,10 @@ croston <- function(
   h = 10,
   alpha = 0.1,
   type = c("croston", "sba", "sbj"),
+  x = y,
   opt_alpha = FALSE,
   opt_crit = c("mse", "mae"),
-  init = c("naive", "mean"),
-  x = y
+  init = c("naive", "mean")
 ) {
   fit <- croston_model(
     x,
