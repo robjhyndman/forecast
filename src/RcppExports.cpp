@@ -51,15 +51,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // calcWTilda
-arma::mat calcWTilda(arma::mat& wTildaTranspose, const arma::mat& D);
+void calcWTilda(arma::mat& wTildaTranspose, const arma::mat& D);
 RcppExport SEXP _forecast_calcWTilda(SEXP wTildaTransposeSEXP, SEXP DSEXP) {
 BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::mat& >::type wTildaTranspose(wTildaTransposeSEXP);
     Rcpp::traits::input_parameter< const arma::mat& >::type D(DSEXP);
-    rcpp_result_gen = Rcpp::wrap(calcWTilda(wTildaTranspose, D));
-    return rcpp_result_gen;
+    calcWTilda(wTildaTranspose, D);
+    return R_NilValue;
 END_RCPP
 }
 // calcTBATSFaster
