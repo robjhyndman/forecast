@@ -4,7 +4,7 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-List calcBATS(const arma::mat& y,
+void calcBATS(const arma::mat& y,
               arma::mat& yHat,
               const arma::mat& wTranspose,
               const arma::mat& F,
@@ -16,12 +16,6 @@ List calcBATS(const arma::mat& y,
     e(0, t) = y(0, t) - yHat(0, t);
     x.col(t) = F * x.col(t - 1) + g * e(0, t);
   }
-
-  return List::create(
-    Named("y.hat") = yHat,
-    Named("e") = e,
-    Named("x") = x
-  );
 }
 
 // [[Rcpp::export]]

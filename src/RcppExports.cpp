@@ -12,10 +12,9 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // calcBATS
-List calcBATS(const arma::mat& y, arma::mat& yHat, const arma::mat& wTranspose, const arma::mat& F, arma::mat& x, const arma::mat& g, arma::mat& e);
+void calcBATS(const arma::mat& y, arma::mat& yHat, const arma::mat& wTranspose, const arma::mat& F, arma::mat& x, const arma::mat& g, arma::mat& e);
 RcppExport SEXP _forecast_calcBATS(SEXP ySEXP, SEXP yHatSEXP, SEXP wTransposeSEXP, SEXP FSEXP, SEXP xSEXP, SEXP gSEXP, SEXP eSEXP) {
 BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const arma::mat& >::type y(ySEXP);
     Rcpp::traits::input_parameter< arma::mat& >::type yHat(yHatSEXP);
@@ -24,8 +23,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::mat& >::type x(xSEXP);
     Rcpp::traits::input_parameter< const arma::mat& >::type g(gSEXP);
     Rcpp::traits::input_parameter< arma::mat& >::type e(eSEXP);
-    rcpp_result_gen = Rcpp::wrap(calcBATS(y, yHat, wTranspose, F, x, g, e));
-    return rcpp_result_gen;
+    calcBATS(y, yHat, wTranspose, F, x, g, e);
+    return R_NilValue;
 END_RCPP
 }
 // calcBATSFaster
