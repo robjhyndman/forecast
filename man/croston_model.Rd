@@ -4,16 +4,39 @@
 \alias{croston_model}
 \title{Croston forecast model}
 \usage{
-croston_model(y, alpha = 0.1, type = c("croston", "sba", "sbj"))
+croston_model(
+  y,
+  alpha = 0.1,
+  type = c("croston", "sba", "sbj"),
+  opt_alpha = FALSE,
+  opt_crit = c("mse", "mae"),
+  init = c("naive", "mean")
+)
 }
 \arguments{
 \item{y}{a numeric vector or univariate time series of class \code{ts}}
 
-\item{alpha}{Value of alpha. Default value is 0.1.}
+\item{alpha}{Smoothing parameter(s), each between 0 and 1. A single value
+(the default, \code{0.1}) is shared by the demand and interval SES applications. A
+length-2 vector uses \code{alpha[1]} for the demand and \code{alpha[2]} for the
+interval.}
 
-\item{type}{Which variant of Croston's method to use. Defaults to \code{"croston"} for
-Croston's method, but can also be set to \code{"sba"} for the Syntetos-Boylan
+\item{type}{Which variant of Croston's method to use. Defaults to \code{"croston"}
+for Croston's method, but can also be set to \code{"sba"} for the Syntetos-Boylan
 approximation, and \code{"sbj"} for the Shale-Boylan-Johnston method.}
+
+\item{opt_alpha}{If \code{TRUE}, optimize the smoothing parameter(s) starting from
+\code{alpha}. Defaults to \code{FALSE}, which uses \code{alpha} directly.}
+
+\item{opt_crit}{Optimization criterion when \code{opt_alpha = TRUE}. One of \code{"mse"}
+(mean squared error) or \code{"mae"} (mean absolute error).}
+
+\item{init}{Initial demand and interval values. Either a string method or a
+length-2 numeric \code{c(demand, interval)}. The \code{"naive"} method (the default)
+takes the interval from the first interval and \code{"mean"} from the mean
+interval, both taking demand from the first non-zero value. String values are
+optimized alongside \code{alpha} when \code{opt_alpha = TRUE}, while numeric values are
+held fixed.}
 }
 \value{
 An object of class \code{croston_model}

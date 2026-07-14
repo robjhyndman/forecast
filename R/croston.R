@@ -19,10 +19,23 @@
 #' the interval SES application.
 #'
 #' @inheritParams Arima
-#' @param alpha Value of alpha. Default value is 0.1.
-#' @param type Which variant of Croston's method to use. Defaults to `"croston"` for
-#' Croston's method, but can also be set to `"sba"` for the Syntetos-Boylan
+#' @param alpha Smoothing parameter(s), each between 0 and 1. A single value
+#' (the default, `0.1`) is shared by the demand and interval SES applications. A
+#' length-2 vector uses `alpha[1]` for the demand and `alpha[2]` for the
+#' interval.
+#' @param type Which variant of Croston's method to use. Defaults to `"croston"`
+#' for Croston's method, but can also be set to `"sba"` for the Syntetos-Boylan
 #' approximation, and `"sbj"` for the Shale-Boylan-Johnston method.
+#' @param opt_alpha If `TRUE`, optimize the smoothing parameter(s) starting from
+#' `alpha`. Defaults to `FALSE`, which uses `alpha` directly.
+#' @param opt_crit Optimization criterion when `opt_alpha = TRUE`. One of `"mse"`
+#' (mean squared error) or `"mae"` (mean absolute error).
+#' @param init Initial demand and interval values. Either a string method or a
+#' length-2 numeric `c(demand, interval)`. The `"naive"` method (the default)
+#' takes the interval from the first interval and `"mean"` from the mean
+#' interval, both taking demand from the first non-zero value. String values are
+#' optimized alongside `alpha` when `opt_alpha = TRUE`, while numeric values are
+#' held fixed.
 #' @references Croston, J. (1972) "Forecasting and stock control for
 #' intermittent demands", \emph{Operational Research Quarterly}, \bold{23}(3),
 #' 289-303.
@@ -43,9 +56,20 @@
 #' fit <- croston_model(y)
 #' forecast(fit) |> autoplot()
 #' @export
-croston_model <- function(y, alpha = 0.1, type = c("croston", "sba", "sbj")) {
+croston_model <- function(
+  y,
+  alpha = 0.1,
+  type = c("croston", "sba", "sbj"),
+  opt_alpha = FALSE,
+  opt_crit = c("mse", "mae"),
+  init = c("naive", "mean")
+) {
   type <- match.arg(type)
-  if (alpha < 0 || alpha > 1) {
+  opt_crit <- match.arg(opt_crit)
+  if (!is.numeric(alpha) || length(alpha) < 1 || length(alpha) > 2) {
+    stop("alpha must be a numeric vector of length 1 or 2")
+  }
+  if (any(alpha < 0 | alpha > 1)) {
     stop("alpha must be between 0 and 1")
   }
   if (any(y < 0)) {
@@ -59,40 +83,169 @@ croston_model <- function(y, alpha = 0.1, type = c("croston", "sba", "sbj")) {
   y <- as.ts(y)
   y_demand <- y[non_zero]
   y_interval <- c(non_zero[1], diff(non_zero))
-  k <- length(y_demand)
-  fit_demand <- numeric(k)
-  fit_interval <- numeric(k)
-  fit_demand[1] <- y_demand[1]
-  fit_interval[1] <- y_interval[1]
-  for (i in 2:k) {
-    fit_demand[i] <- fit_demand[i - 1] +
-      alpha * (y_demand[i] - fit_demand[i - 1])
-    fit_interval[i] <- fit_interval[i - 1] +
-      alpha * (y_interval[i] - fit_interval[i - 1])
-  }
-  if (type == "sba") {
-    coeff <- 1 - alpha / 2
-  } else if (type == "sbj") {
-    coeff <- 1 - alpha / (2 - alpha)
+  n <- length(y)
+  if (is.numeric(init)) {
+    if (length(init) != 2) {
+      stop("init must be a numeric vector of length 2 (demand, interval)")
+    }
+    if (init[1] < 0) {
+      stop("initial demand must be non-negative")
+    }
+    if (init[2] < 1) {
+      stop("initial interval must be at least 1")
+    }
+    init_demand <- init[1]
+    init_interval <- init[2]
+    opt_init <- FALSE
   } else {
-    coeff <- 1
+    init <- match.arg(init)
+    init_demand <- y_demand[1]
+    init_interval <- if (init == "mean") mean(y_interval) else y_interval[1]
+    opt_init <- TRUE
   }
-  ratio <- coeff * fit_demand / fit_interval
-  fits <- rep(c(0, ratio), diff(c(0, non_zero, length(y))))
-  fits[1] <- NA_real_
+  alpha_demand <- alpha[1]
+  alpha_interval <- alpha[length(alpha)]
+  if (opt_alpha) {
+    n_alpha <- length(alpha)
+    # Only optimize the interval initial when more than one interval is feasible
+    opt_interval <- opt_init && max(y_interval) > 1
+    par <- c(alpha, if (opt_init) init_demand, if (opt_interval) init_interval)
+    lower <- c(rep(0, n_alpha), if (opt_init) 0, if (opt_interval) 1)
+    upper <- c(
+      rep(1, n_alpha),
+      if (opt_init) max(y_demand),
+      if (opt_interval) max(y_interval)
+    )
+    opt <- optim(
+      par = par,
+      fn = function(par) {
+        croston_cost(
+          alpha_demand = par[1],
+          alpha_interval = par[n_alpha],
+          y = y,
+          y_demand = y_demand,
+          y_interval = y_interval,
+          init_demand = if (opt_init) par[n_alpha + 1] else init_demand,
+          init_interval = if (opt_interval) par[length(par)] else init_interval,
+          non_zero = non_zero,
+          n = n,
+          type = type,
+          opt_crit = opt_crit
+        )
+      },
+      lower = lower,
+      upper = upper,
+      method = "L-BFGS-B",
+      control = list(maxit = 2000)
+    )
+    par <- opt$par
+    alpha <- par[seq_len(n_alpha)]
+    alpha_demand <- alpha[1]
+    alpha_interval <- alpha[n_alpha]
+    if (opt_init) {
+      init_demand <- par[n_alpha + 1]
+    }
+    if (opt_interval) {
+      init_interval <- par[length(par)]
+    }
+  }
+  res <- croston_estimate(
+    alpha_demand,
+    alpha_interval,
+    y_demand,
+    y_interval,
+    init_demand,
+    init_interval,
+    non_zero,
+    n,
+    type
+  )
   output <- list(
     alpha = alpha,
     type = type,
+    init_demand = init_demand,
+    init_interval = init_interval,
     y = y,
-    fit_demand = fit_demand,
-    fit_interval = fit_interval,
-    ratio = ratio[k],
-    fitted = fits,
-    residuals = y - fits,
+    fit_demand = res$fit_demand,
+    fit_interval = res$fit_interval,
+    ratio = res$ratio,
+    fitted = res$fitted,
+    residuals = y - res$fitted,
     series = series
   )
   output$call <- match.call()
   structure(output, class = c("fc_model", "croston_model"))
+}
+
+croston_estimate <- function(
+  alpha_demand,
+  alpha_interval,
+  y_demand,
+  y_interval,
+  init_demand,
+  init_interval,
+  non_zero,
+  n,
+  type
+) {
+  k <- length(y_demand)
+  fit_demand <- numeric(k)
+  fit_interval <- numeric(k)
+  fit_demand[1] <- init_demand
+  fit_interval[1] <- init_interval
+  for (i in 2:k) {
+    fit_demand[i] <- fit_demand[i - 1] +
+      alpha_demand * (y_demand[i] - fit_demand[i - 1])
+    fit_interval[i] <- fit_interval[i - 1] +
+      alpha_interval * (y_interval[i] - fit_interval[i - 1])
+  }
+  if (type == "sba") {
+    coeff <- 1 - alpha_interval / 2
+  } else if (type == "sbj") {
+    coeff <- 1 - alpha_interval / (2 - alpha_interval)
+  } else {
+    coeff <- 1
+  }
+  ratio <- coeff * fit_demand / fit_interval
+  fitted <- rep(c(NA_real_, ratio), diff(c(0, non_zero, n)))
+  list(
+    fit_demand = fit_demand,
+    fit_interval = fit_interval,
+    ratio = ratio[k],
+    fitted = fitted
+  )
+}
+
+croston_cost <- function(
+  alpha_demand,
+  alpha_interval,
+  y,
+  y_demand,
+  y_interval,
+  init_demand,
+  init_interval,
+  non_zero,
+  n,
+  type,
+  opt_crit
+) {
+  res <- croston_estimate(
+    alpha_demand,
+    alpha_interval,
+    y_demand,
+    y_interval,
+    init_demand,
+    init_interval,
+    non_zero,
+    n,
+    type
+  )
+  resid <- y - res$fitted
+  if (opt_crit == "mae") {
+    mean(abs(resid), na.rm = TRUE)
+  } else {
+    mean(resid^2, na.rm = TRUE)
+  }
 }
 
 #' @export
@@ -102,8 +255,25 @@ print.croston_model <- function(
   ...
 ) {
   cat("Call:", deparse(x$call), "\n\n")
-  cat("alpha:", format(x$alpha, digits = digits), "\n")
+  if (length(x$alpha) == 2) {
+    cat(
+      "alpha: demand =",
+      format(x$alpha[1], digits = digits),
+      ", interval =",
+      format(x$alpha[2], digits = digits),
+      "\n"
+    )
+  } else {
+    cat("alpha:", format(x$alpha, digits = digits), "\n")
+  }
   cat("method:", x$type, "\n")
+  cat(
+    "initial: demand =",
+    format(x$init_demand, digits = digits),
+    ", interval =",
+    format(x$init_interval, digits = digits),
+    "\n"
+  )
   invisible(x)
 }
 
@@ -117,7 +287,8 @@ print.croston_model <- function(
 #' simple exponential smoothing (SES) on the non-zero elements of the time
 #' series and a separate application of SES to the times between non-zero
 #' elements of the time series. The smoothing parameters of the two
-#' applications of SES are assumed to be equal and are denoted by `alpha`.
+#' applications of SES are denoted by `alpha`, and may be shared (the default)
+#' or specified separately for the demand and interval components.
 #'
 #' Note that prediction intervals are not computed as Croston's method has no
 #' underlying stochastic model.
@@ -172,8 +343,24 @@ forecast.croston_model <- function(object, h = 10, ...) {
 #' @param x Deprecated. Included for backwards compatibility.
 #' @inheritParams croston_model
 #' @export
-croston <- function(y, h = 10, alpha = 0.1, type = c("croston", "sba", "sbj"), x = y) {
-  fit <- croston_model(x, alpha = alpha, type = type)
+croston <- function(
+  y,
+  h = 10,
+  alpha = 0.1,
+  type = c("croston", "sba", "sbj"),
+  x = y,
+  opt_alpha = FALSE,
+  opt_crit = c("mse", "mae"),
+  init = c("naive", "mean")
+) {
+  fit <- croston_model(
+    x,
+    alpha = alpha,
+    type = type,
+    opt_alpha = opt_alpha,
+    opt_crit = opt_crit,
+    init = init
+  )
   fit$series <- deparse1(substitute(y))
   forecast(fit, h = h)
 }

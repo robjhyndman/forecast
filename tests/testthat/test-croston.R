@@ -17,6 +17,99 @@ test_that("croston_model with custom alpha", {
   expect_equal(fit$alpha, 0.5)
 })
 
+test_that("croston_model with separate alphas", {
+  fit <- croston_model(y, alpha = c(0.3, 0.2))
+  expect_equal(fit$alpha, c(0.3, 0.2))
+  fit_shared <- croston_model(y, alpha = 0.3)
+  expect_false(identical(fit$fitted, fit_shared$fitted))
+})
+
+test_that("croston_model with optimized alpha", {
+  fit <- croston_model(y, opt_alpha = TRUE)
+  expect_s3_class(fit, "croston_model")
+  expect_length(fit$alpha, 1)
+  expect_gte(fit$alpha, 0)
+  expect_lte(fit$alpha, 1)
+  # optimization cannot worsen the fit vs its alpha = 0.1 starting point
+  mse_opt <- mean(fit$residuals^2, na.rm = TRUE)
+  mse_start <- mean(croston_model(y, alpha = 0.1)$residuals^2, na.rm = TRUE)
+  expect_lte(mse_opt, mse_start)
+})
+
+test_that("croston_model with optimized separate alphas", {
+  fit <- croston_model(y, alpha = c(0.1, 0.1), opt_alpha = TRUE)
+  expect_length(fit$alpha, 2)
+  expect_gte(min(fit$alpha), 0)
+  expect_lte(max(fit$alpha), 1)
+  # compare against the c(0.1, 0.1) start; a local optimum need not beat the
+  # separately optimized single-alpha fit
+  mse_two <- mean(fit$residuals^2, na.rm = TRUE)
+  mse_start <- mean(
+    croston_model(y, alpha = c(0.1, 0.1))$residuals^2,
+    na.rm = TRUE
+  )
+  expect_lte(mse_two, mse_start)
+})
+
+test_that("croston_model optimized alpha works with type variants", {
+  fit_sba <- croston_model(y, opt_alpha = TRUE, type = "sba")
+  fit_sbj <- croston_model(y, opt_alpha = TRUE, type = "sbj")
+  expect_gte(fit_sba$alpha, 0)
+  expect_lte(fit_sba$alpha, 1)
+  expect_gte(fit_sbj$alpha, 0)
+  expect_lte(fit_sbj$alpha, 1)
+})
+
+test_that("croston_model optimizes initial values with alpha", {
+  fit <- croston_model(y, opt_alpha = TRUE)
+  nz <- which(y != 0)
+  y_demand <- y[nz]
+  y_interval <- c(nz[1], diff(nz))
+  # optimized initial values stay within their feasible bounds
+  expect_gte(fit$init_demand, 0)
+  expect_lte(fit$init_demand, max(y_demand))
+  expect_gte(fit$init_interval, 1)
+  expect_lte(fit$init_interval, max(y_interval))
+  # optimizing alpha and init cannot worsen the fit vs the naive start
+  mse_opt <- mean(fit$residuals^2, na.rm = TRUE)
+  mse_start <- mean(croston_model(y, alpha = 0.1)$residuals^2, na.rm = TRUE)
+  expect_lte(mse_opt, mse_start)
+})
+
+test_that("croston_model with fixed numeric init", {
+  fit <- croston_model(y, init = c(2, 4))
+  expect_equal(fit$init_demand, 2)
+  expect_equal(fit$init_interval, 4)
+  fit_opt <- croston_model(y, opt_alpha = TRUE, init = c(2, 4))
+  expect_equal(fit_opt$init_demand, 2)
+  expect_equal(fit_opt$init_interval, 4)
+})
+
+test_that("croston_model with mean init", {
+  fit <- croston_model(y, init = "mean")
+  nz <- which(y != 0)
+  expect_equal(fit$init_interval, mean(c(nz[1], diff(nz))))
+})
+
+test_that("croston_model with mae optimization", {
+  fit_mse <- croston_model(y, opt_alpha = TRUE, opt_crit = "mse")
+  fit_mae <- croston_model(y, opt_alpha = TRUE, opt_crit = "mae")
+  expect_gte(fit_mse$alpha, 0)
+  expect_lte(fit_mse$alpha, 1)
+  expect_gte(fit_mae$alpha, 0)
+  expect_lte(fit_mae$alpha, 1)
+  # each criterion cannot worsen its own metric vs the shared naive start
+  start <- croston_model(y, alpha = 0.1)
+  expect_lte(
+    mean(abs(fit_mae$residuals), na.rm = TRUE),
+    mean(abs(start$residuals), na.rm = TRUE)
+  )
+  expect_lte(
+    mean(fit_mse$residuals^2, na.rm = TRUE),
+    mean(start$residuals^2, na.rm = TRUE)
+  )
+})
+
 test_that("croston_model type variants", {
   fit_cr <- croston_model(y, type = "croston")
   fit_sba <- croston_model(y, type = "sba")
@@ -34,6 +127,13 @@ test_that("croston_model type variants", {
 test_that("croston_model errors on invalid input", {
   expect_error(croston_model(y, alpha = -0.1), "alpha must be between 0 and 1")
   expect_error(croston_model(y, alpha = 1.5), "alpha must be between 0 and 1")
+  expect_error(croston_model(y, alpha = c(0.1, 0.2, 0.3)), "length 1 or 2")
+  expect_error(croston_model(y, init = c(1, 2, 3)), "length 2")
+  expect_error(croston_model(y, init = c(-1, 2)), "demand must be non-negative")
+  expect_error(
+    croston_model(y, init = c(1, 0.5)),
+    "interval must be at least 1"
+  )
   expect_error(croston_model(c(-1, 2, 0)), "non-negative data")
   expect_error(croston_model(c(0, 0, 1, 0)), "At least two non-zero values")
   expect_error(croston_model(c(0, 0, 0)), "At least two non-zero values")
@@ -67,6 +167,11 @@ test_that("croston shortcut", {
   fc <- croston(y, h = 5)
   expect_s3_class(fc, "forecast")
   expect_length(fc$mean, 5)
+})
+
+test_that("croston shortcut passes opt_alpha and opt_crit", {
+  fc <- croston(y, opt_alpha = TRUE, opt_crit = "mae")
+  expect_s3_class(fc, "forecast")
 })
 
 test_that("croston shortcut with type variants", {
