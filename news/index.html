@@ -68,6 +68,10 @@
 <li>
 <code><a href="../reference/bld.mbb.bootstrap.html">bld.mbb.bootstrap()</a></code> no longer errors when <code>num = 1</code> and now validates that <code>num</code> is a positive integer.</li>
 <li>
+<code><a href="../reference/croston_model.html">croston_model()</a></code> and <code><a href="../reference/forecast.croston_model.html">croston()</a></code> can now optimize and separately specify Croston smoothing parameters.</li>
+<li>
+<code><a href="../reference/croston_model.html">croston_model()</a></code> now returns <code>NA</code> for fitted values before the first non-zero demand instead of 0.</li>
+<li>
 <code><a href="../reference/forecast.Arima.html">forecast.Arima()</a></code> now correctly passes <code>xreg</code> when <code>bootstrap = TRUE</code> (<a href="https://github.com/robjhyndman/forecast/issues/1115" class="external-link">#1115</a>).</li>
 <li>
 <code><a href="../reference/forecast.ets.html">forecast.ets()</a></code> now uses the supplied <code>innov</code> matrix when <code>simulate = TRUE</code> instead of silently ignoring it.</li>

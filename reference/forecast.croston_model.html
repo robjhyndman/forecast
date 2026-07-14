@@ -68,7 +68,16 @@ y.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'croston_model'</span></span>
 <span><span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="va">object</span>, h <span class="op">=</span> <span class="fl">10</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">croston</span><span class="op">(</span><span class="va">y</span>, h <span class="op">=</span> <span class="fl">10</span>, alpha <span class="op">=</span> <span class="fl">0.1</span>, type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"croston"</span>, <span class="st">"sba"</span>, <span class="st">"sbj"</span><span class="op">)</span>, x <span class="op">=</span> <span class="va">y</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">croston</span><span class="op">(</span></span>
+<span>  <span class="va">y</span>,</span>
+<span>  h <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"croston"</span>, <span class="st">"sba"</span>, <span class="st">"sbj"</span><span class="op">)</span>,</span>
+<span>  x <span class="op">=</span> <span class="va">y</span>,</span>
+<span>  opt_alpha <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  opt_crit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mse"</span>, <span class="st">"mae"</span><span class="op">)</span>,</span>
+<span>  init <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"naive"</span>, <span class="st">"mean"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -97,13 +106,35 @@ modelling function.</p></dd>
 
 
 <dt id="arg-alpha">alpha<a class="anchor" aria-label="anchor" href="#arg-alpha"></a></dt>
-<dd><p>Value of alpha. Default value is 0.1.</p></dd>
+<dd><p>Smoothing parameter(s), each between 0 and 1. A single value
+(the default, <code>0.1</code>) is shared by the demand and interval SES applications. A
+length-2 vector uses <code>alpha[1]</code> for the demand and <code>alpha[2]</code> for the
+interval.</p></dd>
 
 
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
-<dd><p>Which variant of Croston's method to use. Defaults to <code>"croston"</code> for
-Croston's method, but can also be set to <code>"sba"</code> for the Syntetos-Boylan
+<dd><p>Which variant of Croston's method to use. Defaults to <code>"croston"</code>
+for Croston's method, but can also be set to <code>"sba"</code> for the Syntetos-Boylan
 approximation, and <code>"sbj"</code> for the Shale-Boylan-Johnston method.</p></dd>
+
+
+<dt id="arg-opt-alpha">opt_alpha<a class="anchor" aria-label="anchor" href="#arg-opt-alpha"></a></dt>
+<dd><p>If <code>TRUE</code>, optimize the smoothing parameter(s) starting from
+<code>alpha</code>. Defaults to <code>FALSE</code>, which uses <code>alpha</code> directly.</p></dd>
+
+
+<dt id="arg-opt-crit">opt_crit<a class="anchor" aria-label="anchor" href="#arg-opt-crit"></a></dt>
+<dd><p>Optimization criterion when <code>opt_alpha = TRUE</code>. One of <code>"mse"</code>
+(mean squared error) or <code>"mae"</code> (mean absolute error).</p></dd>
+
+
+<dt id="arg-init">init<a class="anchor" aria-label="anchor" href="#arg-init"></a></dt>
+<dd><p>Initial demand and interval values. Either a string method or a
+length-2 numeric <code>c(demand, interval)</code>. The <code>"naive"</code> method (the default)
+takes the interval from the first interval and <code>"mean"</code> from the mean
+interval, both taking demand from the first non-zero value. String values are
+optimized alongside <code>alpha</code> when <code>opt_alpha = TRUE</code>, while numeric values are
+held fixed.</p></dd>
 
 
 <dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
@@ -121,7 +152,8 @@ described in Shenstone and Hyndman (2005). Croston's method involves using
 simple exponential smoothing (SES) on the non-zero elements of the time
 series and a separate application of SES to the times between non-zero
 elements of the time series. The smoothing parameters of the two
-applications of SES are assumed to be equal and are denoted by <code>alpha</code>.</p>
+applications of SES are denoted by <code>alpha</code>, and may be shared (the default)
+or specified separately for the demand and interval components.</p>
 <p>Note that prediction intervals are not computed as Croston's method has no
 underlying stochastic model.</p>
     </div>

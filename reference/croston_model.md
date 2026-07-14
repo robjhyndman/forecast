@@ -13,7 +13,14 @@ the forecasts produced using Croston's method.
 ## Usage
 
 ``` r
-croston_model(y, alpha = 0.1, type = c("croston", "sba", "sbj"))
+croston_model(
+  y,
+  alpha = 0.1,
+  type = c("croston", "sba", "sbj"),
+  opt_alpha = FALSE,
+  opt_crit = c("mse", "mae"),
+  init = c("naive", "mean")
+)
 ```
 
 ## Arguments
@@ -24,7 +31,10 @@ croston_model(y, alpha = 0.1, type = c("croston", "sba", "sbj"))
 
 - alpha:
 
-  Value of alpha. Default value is 0.1.
+  Smoothing parameter(s), each between 0 and 1. A single value (the
+  default, `0.1`) is shared by the demand and interval SES applications.
+  A length-2 vector uses `alpha[1]` for the demand and `alpha[2]` for
+  the interval.
 
 - type:
 
@@ -32,6 +42,25 @@ croston_model(y, alpha = 0.1, type = c("croston", "sba", "sbj"))
   Croston's method, but can also be set to `"sba"` for the
   Syntetos-Boylan approximation, and `"sbj"` for the
   Shale-Boylan-Johnston method.
+
+- opt_alpha:
+
+  If `TRUE`, optimize the smoothing parameter(s) starting from `alpha`.
+  Defaults to `FALSE`, which uses `alpha` directly.
+
+- opt_crit:
+
+  Optimization criterion when `opt_alpha = TRUE`. One of `"mse"` (mean
+  squared error) or `"mae"` (mean absolute error).
+
+- init:
+
+  Initial demand and interval values. Either a string method or a
+  length-2 numeric `c(demand, interval)`. The `"naive"` method (the
+  default) takes the interval from the first interval and `"mean"` from
+  the mean interval, both taking demand from the first non-zero value.
+  String values are optimized alongside `alpha` when `opt_alpha = TRUE`,
+  while numeric values are held fixed.
 
 ## Value
 

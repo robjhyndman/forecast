@@ -18,6 +18,13 @@
 - [`bld.mbb.bootstrap()`](https://pkg.robjhyndman.com/forecast/reference/bld.mbb.bootstrap.md)
   no longer errors when `num = 1` and now validates that `num` is a
   positive integer.
+- [`croston_model()`](https://pkg.robjhyndman.com/forecast/reference/croston_model.md)
+  and
+  [`croston()`](https://pkg.robjhyndman.com/forecast/reference/forecast.croston_model.md)
+  can now optimize and separately specify Croston smoothing parameters.
+- [`croston_model()`](https://pkg.robjhyndman.com/forecast/reference/croston_model.md)
+  now returns `NA` for fitted values before the first non-zero demand
+  instead of 0.
 - [`forecast.Arima()`](https://pkg.robjhyndman.com/forecast/reference/forecast.Arima.md)
   now correctly passes `xreg` when `bootstrap = TRUE`
   ([\#1115](https://github.com/robjhyndman/forecast/issues/1115)).
