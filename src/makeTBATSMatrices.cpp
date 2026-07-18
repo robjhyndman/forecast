@@ -67,10 +67,7 @@ List makeTBATSWMatrix(const Nullable<double> &smallPhi,
     }
   }
 
-  return List::create(
-    Named("w") = wTranspose.t(),
-    Named("w.transpose") = wTranspose
-  );
+  return List::create(Named("w.transpose") = wTranspose);
 }
 
 // [[Rcpp::export]]
