@@ -90,16 +90,6 @@ fitPreviousTBATSModel <- function(y, model, biasadj = FALSE) {
     ar.coefs = ar.coefs,
     ma.coefs = ma.coefs
   )
-  updateFMatrix(
-    F,
-    small.phi,
-    alpha,
-    beta.v,
-    gamma.bold,
-    ar.coefs,
-    ma.coefs,
-    tau
-  )
   # 2. Calculate!
   fitted.values.and.errors <- calcModel(y.touse, model$seed.states, F, g, w)
   e <- fitted.values.and.errors$e
