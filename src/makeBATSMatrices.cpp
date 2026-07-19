@@ -66,10 +66,7 @@ List makeBATSWMatrix(const Nullable<double> &smallPhi,
     }
   }
 
-  return List::create(
-    Named("w") = wTranspose.t(),
-    Named("w.transpose") = wTranspose
-  );
+  return List::create(Named("w.transpose") = wTranspose);
 }
 
 // [[Rcpp::export]]
@@ -133,14 +130,12 @@ List makeBATSGMatrix(double alpha,
     const arma::mat gammaBold = gTranspose.cols(1 + adjustBeta, adjustBeta + gammaLength);
     return List::create(
       Named("g") = g,
-      Named("g.transpose") = gTranspose,
       Named("gamma.bold.matrix") = gammaBold
     );
   }
 
   return List::create(
     Named("g") = g,
-    Named("g.transpose") = gTranspose,
     Named("gamma.bold.matrix") = R_NilValue
   );
 }
