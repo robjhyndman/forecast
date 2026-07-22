@@ -1279,27 +1279,27 @@ gglagplot <- function(
 
   # Prepare data for plotting
   n <- NROW(x)
-  data <- data.frame()
+  data <- vector("list", NCOL(x) * length(set.lags))
+  k <- 0L
   for (i in seq_len(NCOL(x))) {
+    sname <- colnames(x)[i]
+    if (is.null(sname)) {
+      sname <- deparse(match.call()$x)
+    }
     for (lagi in set.lags) {
-      sname <- colnames(x)[i]
-      if (is.null(sname)) {
-        sname <- deparse(match.call()$x)
-      }
-      data <- rbind(
-        data,
-        data.frame(
-          lagnum = 1:(n - lagi),
-          freqcur = if (seasonal) linecol[(lagi + 1):n] else (lagi + 1):n,
-          orig = x[(lagi + 1):n, i],
-          lagged = x[1:(n - lagi), i],
-          lagVal = rep(lagi, n - lagi),
-          series = factor(rep(sname, n - lagi)),
-          check.names = FALSE
-        )
+      k <- k + 1L
+      data[[k]] <- data.frame(
+        lagnum = seq_len(n - lagi),
+        freqcur = if (seasonal) linecol[(lagi + 1):n] else (lagi + 1):n,
+        orig = x[(lagi + 1):n, i],
+        lagged = x[seq_len(n - lagi), i],
+        lagVal = rep(lagi, n - lagi),
+        series = factor(rep(sname, n - lagi)),
+        check.names = FALSE
       )
     }
   }
+  data <- do.call(rbind, data)
   if (!continuous) {
     data$freqcur <- factor(data$freqcur)
   }
