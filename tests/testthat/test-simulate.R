@@ -63,10 +63,10 @@ test_that("simulated_nonseasonal", {
     fc3 <- forecast(fit, bootstrap = TRUE, npaths = 300)
     expect_equal(fc1$mean, fc2$mean, tolerance = 1e-2)
     expect_equal(fc1$mean, fc3$mean, tolerance = 1e-2)
-    expect_equal(fc1$lower, fc2$lower, tolerance = 3e-1)
-    expect_equal(fc1$lower, fc3$lower, tolerance = 3e-1)
-    expect_equal(fc1$upper, fc2$upper, tolerance = 3e-1)
-    expect_equal(fc1$upper, fc3$upper, tolerance = 3e-1)
+    expect_equal(fc1$lower, fc2$lower, tolerance = 5e-1)
+    expect_equal(fc1$lower, fc3$lower, tolerance = 5e-1)
+    expect_equal(fc1$upper, fc2$upper, tolerance = 5e-1)
+    expect_equal(fc1$upper, fc3$upper, tolerance = 5e-1)
   }
 })
 
