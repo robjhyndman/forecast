@@ -1097,12 +1097,25 @@ initstate <- function(y, trendtype, seasontype) {
   }
 
   maxn <- min(max(10, 2 * m), length(y.sa))
+  # A leading run of missing values can leave too few usable observations
+  # in the initial window; widen it (up to the full series) until there
+  # are enough, rather than erroring out on an arbitrary cutoff.
+  min.needed <- if (trendtype == "N") 1L else 2L
+  navail <- cumsum(!is.na(y.sa))
+  if (navail[length(navail)] < min.needed) {
+    stop("Not enough non-missing observations to initialize the model.")
+  }
+  maxn <- max(maxn, which(navail >= min.needed)[1L])
+
+  y0 <- head(y.sa, maxn)
+  ok <- !is.na(y0)
   if (trendtype == "N") {
-    l0 <- mean(head(y.sa, maxn))
+    l0 <- mean(y0[ok])
     b0 <- NULL
   } else {
-    # Simple linear regression on seasonally adjusted data
-    fit <- lsfit(seq_len(maxn), head(y.sa, maxn))
+    # Simple linear regression on seasonally adjusted data,
+    # ignoring any missing values
+    fit <- lsfit(seq_len(maxn)[ok], y0[ok])
     if (trendtype == "A") {
       l0 <- fit$coefficients[1]
       b0 <- fit$coefficients[2]
@@ -1126,8 +1139,9 @@ initstate <- function(y, trendtype, seasontype) {
       }
       if (l0 < 1e-8 || b0 < 1e-8) {
         # Simple linear approximation didn't work.
-        l0 <- max(y.sa[1], 1e-3)
-        b0 <- max(y.sa[2] / y.sa[1], 1e-3)
+        y.ok <- y0[ok]
+        l0 <- max(y.ok[1], 1e-3)
+        b0 <- max(y.ok[2] / y.ok[1], 1e-3)
       }
     }
   }
