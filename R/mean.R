@@ -196,7 +196,7 @@ meanf <- function(
     h = h,
     level = level,
     fan = fan,
-    lambda = lambda,
+    lambda = fit$lambda,
     biasadj = biasadj,
     bootstrap = bootstrap,
     npaths = npaths
