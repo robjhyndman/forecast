@@ -6,7 +6,7 @@ Sep 1994.
 ## Usage
 
 ``` r
-data(woolyrnq)
+woolyrnq
 ```
 
 ## Format

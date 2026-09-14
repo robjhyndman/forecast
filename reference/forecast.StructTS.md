@@ -9,7 +9,7 @@ series models.
 # S3 method for class 'StructTS'
 forecast(
   object,
-  h = if (object$coef["epsilon"] > 1e-10) 2 * object$xtsp[3] else 10,
+  h = if (object$xtsp[3] > 1) 2 * object$xtsp[3] else 10,
   level = c(80, 95),
   fan = FALSE,
   lambda = NULL,

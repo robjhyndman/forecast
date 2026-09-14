@@ -5,7 +5,7 @@ Australian monthly gas production: 1956–1995.
 ## Usage
 
 ``` r
-data(gas)
+gas
 ```
 
 ## Format

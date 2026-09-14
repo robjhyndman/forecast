@@ -7,7 +7,7 @@ provided by James W Taylor. Units: Megawatts
 ## Usage
 
 ``` r
-data(taylor)
+taylor
 ```
 
 ## Format

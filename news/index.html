@@ -76,6 +76,8 @@
 <li>
 <code><a href="../reference/forecast.Arima.html">forecast.Arima()</a></code> now correctly passes <code>xreg</code> when <code>bootstrap = TRUE</code> (<a href="https://github.com/robjhyndman/forecast/issues/1115" class="external-link">#1115</a>).</li>
 <li>
+<code><a href="../reference/forecast.StructTS.html">forecast.StructTS()</a></code> now uses the series frequency for its default forecast horizon.</li>
+<li>
 <code><a href="../reference/forecast.ets.html">forecast.ets()</a></code> now uses the supplied <code>innov</code> matrix when <code>simulate = TRUE</code> instead of silently ignoring it.</li>
 <li>
 <code><a href="../reference/forecast.ets.html">forecast.ets()</a></code> now gives the intended error message when forecasting fails for a multiplicative trend model.</li>

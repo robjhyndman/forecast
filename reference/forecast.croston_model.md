@@ -60,6 +60,10 @@ croston(
   Syntetos-Boylan approximation, and `"sbj"` for the
   Shale-Boylan-Johnston method.
 
+- x:
+
+  Deprecated. Included for backwards compatibility.
+
 - opt_alpha:
 
   If `TRUE`, optimize the smoothing parameter(s) starting from `alpha`.
@@ -78,10 +82,6 @@ croston(
   the mean interval, both taking demand from the first non-zero value.
   String values are optimized alongside `alpha` when `opt_alpha = TRUE`,
   while numeric values are held fixed.
-
-- x:
-
-  Deprecated. Included for backwards compatibility.
 
 ## Value
 
