@@ -65,5 +65,5 @@ URL: https://pkg.robjhyndman.com/forecast/, https://github.com/robjhyndman/forec
 VignetteBuilder: knitr
 Encoding: UTF-8
 Config/roxygen2/markdown: TRUE
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.0
 Config/testthat/edition: 3

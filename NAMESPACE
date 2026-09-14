@@ -281,114 +281,134 @@ if (getRversion() < "4.5.0") S3method(tail, ts)
 import(Rcpp)
 import(parallel)
 importFrom(colorspace,sequential_hcl)
-importFrom(fracdiff,diffseries)
-importFrom(fracdiff,fracdiff)
-importFrom(fracdiff,fracdiff.sim)
-importFrom(generics,accuracy)
-importFrom(generics,forecast)
-importFrom(ggplot2,autolayer)
-importFrom(ggplot2,autoplot)
-importFrom(ggplot2,fortify)
-importFrom(grDevices,gray)
-importFrom(grDevices,heat.colors)
-importFrom(grDevices,nclass.FD)
-importFrom(grDevices,palette)
-importFrom(graphics,abline)
-importFrom(graphics,axis)
-importFrom(graphics,grid)
-importFrom(graphics,hist)
-importFrom(graphics,layout)
-importFrom(graphics,lines)
-importFrom(graphics,mtext)
-importFrom(graphics,par)
-importFrom(graphics,plot)
-importFrom(graphics,points)
-importFrom(graphics,polygon)
-importFrom(graphics,text)
-importFrom(graphics,title)
+importFrom(fracdiff,
+  diffseries,
+  fracdiff,
+  fracdiff.sim
+)
+importFrom(generics,
+  accuracy,
+  forecast
+)
+importFrom(ggplot2,
+  autolayer,
+  autoplot,
+  fortify
+)
+importFrom(grDevices,
+  gray,
+  heat.colors,
+  nclass.FD,
+  palette
+)
+importFrom(graphics,
+  abline,
+  axis,
+  grid,
+  hist,
+  layout,
+  lines,
+  mtext,
+  par,
+  plot,
+  points,
+  polygon,
+  text,
+  title
+)
 importFrom(magrittr,"%>%")
 importFrom(nnet,nnet)
-importFrom(stats,"tsp<-")
-importFrom(stats,AIC)
-importFrom(stats,BIC)
-importFrom(stats,Box.test)
-importFrom(stats,acf)
-importFrom(stats,aggregate)
-importFrom(stats,approx)
-importFrom(stats,ar)
-importFrom(stats,arima)
-importFrom(stats,arima.sim)
-importFrom(stats,as.formula)
-importFrom(stats,as.ts)
-importFrom(stats,complete.cases)
-importFrom(stats,cycle)
-importFrom(stats,decompose)
-importFrom(stats,diffinv)
-importFrom(stats,end)
-importFrom(stats,extractAIC)
-importFrom(stats,filter)
-importFrom(stats,fitted)
-importFrom(stats,formula)
-importFrom(stats,frequency)
-importFrom(stats,hatvalues)
-importFrom(stats,is.mts)
-importFrom(stats,is.ts)
-importFrom(stats,ksmooth)
-importFrom(stats,lm)
-importFrom(stats,loess)
-importFrom(stats,logLik)
-importFrom(stats,lsfit)
-importFrom(stats,median)
-importFrom(stats,model.frame)
-importFrom(stats,na.contiguous)
-importFrom(stats,na.exclude)
-importFrom(stats,na.omit)
-importFrom(stats,na.pass)
-importFrom(stats,napredict)
-importFrom(stats,nobs)
-importFrom(stats,optim)
-importFrom(stats,optimize)
-importFrom(stats,pf)
-importFrom(stats,plot.ts)
-importFrom(stats,poly)
-importFrom(stats,predict)
-importFrom(stats,pt)
-importFrom(stats,qnorm)
-importFrom(stats,qt)
-importFrom(stats,quantile)
-importFrom(stats,reformulate)
-importFrom(stats,residuals)
-importFrom(stats,rnorm)
-importFrom(stats,runif)
-importFrom(stats,sd)
-importFrom(stats,simulate)
-importFrom(stats,smooth.spline)
-importFrom(stats,spec.ar)
-importFrom(stats,start)
-importFrom(stats,stl)
-importFrom(stats,supsmu)
-importFrom(stats,terms)
-importFrom(stats,time)
-importFrom(stats,toeplitz)
-importFrom(stats,ts)
-importFrom(stats,tsdiag)
-importFrom(stats,tsp)
-importFrom(stats,var)
-importFrom(stats,window)
-importFrom(timeDate,Easter)
-importFrom(timeDate,as.Date.timeDate)
-importFrom(timeDate,as.timeDate)
-importFrom(timeDate,difftimeDate)
-importFrom(timeDate,isBizday)
-importFrom(urca,ur.df)
-importFrom(urca,ur.kpss)
-importFrom(urca,ur.pp)
-importFrom(utils,head)
-importFrom(utils,head.matrix)
-importFrom(utils,packageVersion)
-importFrom(utils,tail)
-importFrom(utils,tail.matrix)
-importFrom(zoo,as.Date)
-importFrom(zoo,as.yearqtr)
-importFrom(zoo,rollmean)
+importFrom(stats,
+  "tsp<-",
+  AIC,
+  BIC,
+  Box.test,
+  acf,
+  aggregate,
+  approx,
+  ar,
+  arima,
+  arima.sim,
+  as.formula,
+  as.ts,
+  complete.cases,
+  cycle,
+  decompose,
+  diffinv,
+  end,
+  extractAIC,
+  filter,
+  fitted,
+  formula,
+  frequency,
+  hatvalues,
+  is.mts,
+  is.ts,
+  ksmooth,
+  lm,
+  loess,
+  logLik,
+  lsfit,
+  median,
+  model.frame,
+  na.contiguous,
+  na.exclude,
+  na.omit,
+  na.pass,
+  napredict,
+  nobs,
+  optim,
+  optimize,
+  pf,
+  plot.ts,
+  poly,
+  predict,
+  pt,
+  qnorm,
+  qt,
+  quantile,
+  reformulate,
+  residuals,
+  rnorm,
+  runif,
+  sd,
+  simulate,
+  smooth.spline,
+  spec.ar,
+  start,
+  stl,
+  supsmu,
+  terms,
+  time,
+  toeplitz,
+  ts,
+  tsdiag,
+  tsp,
+  var,
+  window
+)
+importFrom(timeDate,
+  Easter,
+  as.Date.timeDate,
+  as.timeDate,
+  difftimeDate,
+  isBizday
+)
+importFrom(urca,
+  ur.df,
+  ur.kpss,
+  ur.pp
+)
+importFrom(utils,
+  head,
+  head.matrix,
+  packageVersion,
+  tail,
+  tail.matrix
+)
+importFrom(zoo,
+  as.Date,
+  as.yearqtr,
+  rollmean
+)
 useDynLib(forecast, .registration = TRUE)

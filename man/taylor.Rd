@@ -11,7 +11,7 @@ Time series data
 James W Taylor
 }
 \usage{
-data(taylor)
+taylor
 }
 \description{
 Half-hourly electricity demand in England and Wales from Monday 5 June 2000

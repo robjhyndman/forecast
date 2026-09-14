@@ -11,7 +11,7 @@ Time series data
 Time Series Data Library. \url{https://pkg.yangzhuoranyang.com/tsdl/}
 }
 \usage{
-data(wineind)
+wineind
 }
 \description{
 Australian total wine sales by wine makers in bottles <= 1 litre. Jan 1980
