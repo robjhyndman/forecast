@@ -80,7 +80,7 @@ tbats <- function(
       y <- msts(y, seasonal.periods)
     }
   }
-  seasonal.periods <- unique(pmax(seasonal.periods, 1))
+  seasonal.periods <- sort(unique(pmax(seasonal.periods, 1)))
   if (all(seasonal.periods == 1)) {
     seasonal.periods <- NULL
   }
