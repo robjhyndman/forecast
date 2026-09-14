@@ -9,6 +9,9 @@
   now truncates `xreg` together with the series when
   `approximation = TRUE` and `truncate` is set, so model selection no
   longer fails.
+- [`Arima()`](https://pkg.robjhyndman.com/forecast/reference/Arima.md)
+  no longer errors when the series is supplied via the deprecated `x`
+  argument.
 - [`autolayer()`](https://ggplot2.tidyverse.org/reference/autolayer.html)
   now labels an unnamed `msts` series with the name of the object
   instead of “NULL”.
