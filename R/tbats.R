@@ -80,7 +80,7 @@ tbats <- function(
       y <- msts(y, seasonal.periods)
     }
   }
-  seasonal.periods <- unique(pmax(seasonal.periods, 1))
+  seasonal.periods <- sort(unique(pmax(seasonal.periods, 1)))
   if (all(seasonal.periods == 1)) {
     seasonal.periods <- NULL
   }
@@ -264,11 +264,11 @@ tbats <- function(
           k.vector[i] <- k.vector[i] + 1
           break
         } else {
+          best.model <- new.model
           if (k.vector[i] == 1) {
             break
           }
           k.vector[i] <- k.vector[i] - 1
-          best.model <- new.model
         }
       }
       next

@@ -18,6 +18,7 @@
 * `ocsb.test()` lag selection now considers lag 0 and returns the lag that minimises the criterion.
 * `print()` for `Arima()` models now displays the stored AICc and BIC values instead of recomputing them, which gave slightly different results for series with interior missing values.
 * `subset()` no longer ignores the `subset` argument for `msts` objects.
+* `tbats()` results no longer depend on the order of `seasonal.periods`, and the harmonic search now retains `k = 1` when it minimizes AIC.
 * `theta_model()` and `thetaf()` gained a `type` argument to select additive or multiplicative seasonal decomposition.
 
 # forecast 9.0.2
