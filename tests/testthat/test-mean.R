@@ -13,6 +13,13 @@ test_that("test meanf()", {
   expect_true(is.constant(constantForecast$mean))
 })
 
+test_that("meanf() works with lambda = \"auto\"", {
+  fc <- meanf(wineind, h = 5, lambda = "auto")
+  fit <- mean_model(wineind, lambda = "auto")
+  expect_equal(fc$lambda, fit$lambda)
+  expect_equal(fc$mean, forecast(fit, h = 5)$mean)
+})
+
 test_that("test mean_model", {
   meanmod <- mean_model(wineind)
   f1 <- forecast(meanmod)

@@ -12,6 +12,7 @@
 * `forecast.ets()` now gives the intended error message when forecasting fails for a multiplicative trend model.
 * `mstl()` now drops short seasonal periods from the `msts` attribute, so `forecast.stlm()` no longer errors.
 * `meanf()` no longer errors with `bootstrap = TRUE` when a single confidence level is supplied.
+* `meanf()` no longer errors when `lambda = "auto"`.
 * `nsdiffs()` now ignores extra arguments passed via `...` with `test = "seas"` instead of silently returning 0.
 * `print()` for `Arima()` models now displays the stored AICc and BIC values instead of recomputing them, which gave slightly different results for series with interior missing values.
 * `subset()` no longer ignores the `subset` argument for `msts` objects.
