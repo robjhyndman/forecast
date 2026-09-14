@@ -44,3 +44,12 @@ test_that("ocsb.test with lag selection", {
   result <- ocsb.test(AirPassengers, lag.method = "AIC", maxlag = 2)
   expect_s3_class(result, "OCSBtest")
 })
+
+test_that("ocsb.test selects the lag minimising the criterion", {
+  result <- ocsb.test(AirPassengers, lag.method = "AIC", maxlag = 3)
+  expect_equal(result$lag.order, 1)
+  expect_equal(
+    AIC(result$fitted.model),
+    AIC(ocsb.test(AirPassengers, maxlag = 1)$fitted.model)
+  )
+})
