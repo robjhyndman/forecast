@@ -11,6 +11,13 @@ test_that("tests for a ts with the seasonal component", {
   expect_identical(fit$arma, c(1L, 1L, 0L, 1L, 12L, 1L, 1L))
 })
 
+test_that("deprecated x argument still works", {
+  fit_y <- Arima(wineind, order = c(1, 0, 0))
+  fit_x <- Arima(x = wineind, order = c(1, 0, 0))
+  expect_equal(fit_x$coef, fit_y$coef)
+  expect_identical(fit_x$x, wineind)
+})
+
 test_that("tests for ARIMA errors", {
   fit <- Arima(wineind, order = c(1, 1, 1), seasonal = c(0, 1, 1))
   expect_identical(residuals(fit, type = "regression"), wineind)
