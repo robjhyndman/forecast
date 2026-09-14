@@ -781,7 +781,7 @@ Arima <- function(
     biasadj <- FALSE
   }
 
-  origx <- y
+  origx <- x
   if (!is.null(lambda)) {
     x <- BoxCox(x, lambda)
     lambda <- attr(x, "lambda")
