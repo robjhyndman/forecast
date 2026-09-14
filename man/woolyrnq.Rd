@@ -11,7 +11,7 @@ Time series data
 Time Series Data Library. \url{https://pkg.yangzhuoranyang.com/tsdl/}
 }
 \usage{
-data(woolyrnq)
+woolyrnq
 }
 \description{
 Quarterly production of woollen yarn in Australia: tonnes. Mar 1965 -- Sep

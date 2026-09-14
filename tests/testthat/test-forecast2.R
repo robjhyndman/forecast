@@ -32,6 +32,7 @@ test_that("test forecast.HoltWinters()", {
 test_that("test for forecast.StructTS()", {
   structtsmod <- stats::StructTS(wineind)
   fc1 <- forecast(structtsmod)$mean
+  expect_length(forecast(stats::StructTS(AirPassengers))$mean, 24)
   expect_true(all(fc1 == forecast(structtsmod, fan = TRUE)$mean))
   expect_error(forecast(structtsmod, level = -10))
   expect_error(forecast(structtsmod, level = 110))

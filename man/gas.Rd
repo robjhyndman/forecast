@@ -11,7 +11,7 @@ Time series data
 Australian Bureau of Statistics.
 }
 \usage{
-data(gas)
+gas
 }
 \description{
 Australian monthly gas production: 1956--1995.

@@ -41,6 +41,8 @@ interval.}
 for Croston's method, but can also be set to \code{"sba"} for the Syntetos-Boylan
 approximation, and \code{"sbj"} for the Shale-Boylan-Johnston method.}
 
+\item{x}{Deprecated. Included for backwards compatibility.}
+
 \item{opt_alpha}{If \code{TRUE}, optimize the smoothing parameter(s) starting from
 \code{alpha}. Defaults to \code{FALSE}, which uses \code{alpha} directly.}
 
@@ -53,8 +55,6 @@ takes the interval from the first interval and \code{"mean"} from the mean
 interval, both taking demand from the first non-zero value. String values are
 optimized alongside \code{alpha} when \code{opt_alpha = TRUE}, while numeric values are
 held fixed.}
-
-\item{x}{Deprecated. Included for backwards compatibility.}
 }
 \value{
 An object of class \code{forecast}.
