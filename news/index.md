@@ -44,9 +44,14 @@
 - [`meanf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.mean_model.md)
   no longer errors with `bootstrap = TRUE` when a single confidence
   level is supplied.
+- [`meanf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.mean_model.md)
+  no longer errors when `lambda = "auto"`.
 - [`nsdiffs()`](https://pkg.robjhyndman.com/forecast/reference/nsdiffs.md)
   now ignores extra arguments passed via `...` with `test = "seas"`
   instead of silently returning 0.
+- [`ocsb.test()`](https://pkg.robjhyndman.com/forecast/reference/ocsb.test.md)
+  lag selection now considers lag 0 and returns the lag that minimises
+  the criterion.
 - [`print()`](https://rdrr.io/r/base/print.html) for
   [`Arima()`](https://pkg.robjhyndman.com/forecast/reference/Arima.md)
   models now displays the stored AICc and BIC values instead of
@@ -54,6 +59,9 @@
   with interior missing values.
 - [`subset()`](https://rdrr.io/r/base/subset.html) no longer ignores the
   `subset` argument for `msts` objects.
+- [`tbats()`](https://pkg.robjhyndman.com/forecast/reference/tbats.md)
+  results no longer depend on the order of `seasonal.periods`, and the
+  harmonic search now retains `k = 1` when it minimizes AIC.
 - [`theta_model()`](https://pkg.robjhyndman.com/forecast/reference/theta_model.md)
   and
   [`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)

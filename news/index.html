@@ -84,11 +84,17 @@
 <li>
 <code><a href="../reference/forecast.mean_model.html">meanf()</a></code> no longer errors with <code>bootstrap = TRUE</code> when a single confidence level is supplied.</li>
 <li>
+<code><a href="../reference/forecast.mean_model.html">meanf()</a></code> no longer errors when <code>lambda = "auto"</code>.</li>
+<li>
 <code><a href="../reference/nsdiffs.html">nsdiffs()</a></code> now ignores extra arguments passed via <code>...</code> with <code>test = "seas"</code> instead of silently returning 0.</li>
+<li>
+<code><a href="../reference/ocsb.test.html">ocsb.test()</a></code> lag selection now considers lag 0 and returns the lag that minimises the criterion.</li>
 <li>
 <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code><a href="../reference/Arima.html">Arima()</a></code> models now displays the stored AICc and BIC values instead of recomputing them, which gave slightly different results for series with interior missing values.</li>
 <li>
 <code><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset()</a></code> no longer ignores the <code>subset</code> argument for <code>msts</code> objects.</li>
+<li>
+<code><a href="../reference/tbats.html">tbats()</a></code> results no longer depend on the order of <code>seasonal.periods</code>, and the harmonic search now retains <code>k = 1</code> when it minimizes AIC.</li>
 <li>
 <code><a href="../reference/theta_model.html">theta_model()</a></code> and <code><a href="../reference/forecast.theta_model.html">thetaf()</a></code> gained a <code>type</code> argument to select additive or multiplicative seasonal decomposition.</li>
 </ul></div>
