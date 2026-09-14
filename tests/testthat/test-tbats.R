@@ -49,6 +49,29 @@ test_that("Test tbats() and forecasts", {
   ))
 })
 
+test_that("tbats() selects harmonics independently of period order", {
+  set.seed(42)
+  y <- 10 +
+    sin(2 * pi * (1:120) / 4) +
+    0.5 * sin(2 * pi * (1:120) / 6) +
+    rnorm(120, sd = 0.1)
+  fit <- function(periods) {
+    tbats(
+      y,
+      seasonal.periods = periods,
+      use.box.cox = FALSE,
+      use.trend = FALSE,
+      use.arma.errors = FALSE,
+      use.parallel = FALSE
+    )
+  }
+  fits <- lapply(list(c(6, 4), c(4, 6)), fit)
+  fields <- c("seasonal.periods", "k.vector", "AIC")
+
+  expect_equal(fits[[1]][fields], fits[[2]][fields])
+  expect_equal(fits[[1]]$k.vector, c(1, 1))
+})
+
 #test_that("Test tbats() with parallel", {
 # Tests will not run on Travis in parallel
 # expect_output(print(tbats(woolyrnq, num.cores = 1)), regexp = "TBATS")
