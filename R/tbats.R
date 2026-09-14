@@ -511,6 +511,9 @@ tbats <- function(
     for (box.cox in use.box.cox) {
       for (trend in use.trend) {
         for (damping in use.damped.trend) {
+          if (!trend && damping) {
+            next
+          }
           if (all((model.params == c(box.cox, trend, damping)))) {
             new.model <- filterTBATSSpecifics(
               y,
@@ -527,7 +530,7 @@ tbats <- function(
               biasadj = biasadj,
               ...
             )
-          } else if (trend || !damping) {
+          } else {
             new.model <- filterTBATSSpecifics(
               y,
               box.cox,
