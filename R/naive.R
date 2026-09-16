@@ -48,6 +48,9 @@ rw_model <- function(
   lambda = NULL,
   biasadj = FALSE
 ) {
+  if (!is_count(lag)) {
+    stop("lag must be a positive integer")
+  }
   seriesname <- deparse1(substitute(y))
   if (!is.ts(y)) {
     y <- as.ts(y)
@@ -349,7 +352,7 @@ snaive <- function(
     lambda = lambda,
     drift = FALSE,
     biasadj = biasadj,
-    lag = frequency(x),
+    lag = max(1L, round(frequency(x))),
     ...
   )
   fc$model$call <- match.call()
