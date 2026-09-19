@@ -52,7 +52,7 @@ naive(
 
 snaive(
   y,
-  h = 2 * frequency(x),
+  h = 2L * max(1L, round(frequency(x))),
   level = c(80, 95),
   fan = FALSE,
   lambda = NULL,
