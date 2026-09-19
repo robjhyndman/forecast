@@ -417,7 +417,7 @@ ocsb.test <- function(
 ) {
   lag.method <- match.arg(lag.method)
   sname <- deparse1(substitute(x))
-  period <- round(frequency(x)) # Avoid non-integer seasonal period
+  period <- max(1L, round(frequency(x)))
 
   if (period == 1) {
     stop("Data must be seasonal to use `ocsb.test`. Check your ts frequency.")
@@ -438,8 +438,6 @@ ocsb.test <- function(
   }
 
   fitOCSB <- function(x, lag, maxlag) {
-    period <- round(frequency(x)) # Avoid non-integer seasonal period
-
     # Compute (1-B)(1-B^m)y_t
     y <- diff(diff(x, period))
     ylag <- genLags(y, lag)
