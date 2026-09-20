@@ -106,7 +106,8 @@ void etscalc_internal(const double *y, int n, const double *x_init, double *stat
     }
     if (!R_IsNA(e[i]))
       *lik = *lik + e[i] * e[i];
-    lik2 += log(fabs(f[0]));
+    if (error == MULT)
+      lik2 += log(fabs(f[0]));
   }
   *lik = n * log(*lik);
   if (error == MULT)
