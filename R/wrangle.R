@@ -51,7 +51,8 @@ datamat <- function(..., flatten = TRUE, functions = TRUE) {
 }
 
 recoverTSP <- function(times.x) {
-  freq <- sort(unique(round(times.x %% 1, digits = 6))) # The subset cannot increase frequency
-  freq <- length(freq)
-  c(min(times.x), min(times.x) + (length(times.x) - 1) / freq, freq)
+  # The subset cannot increase frequency
+  freq <- length(unique(round(times.x %% 1, digits = 6)))
+  start <- min(times.x)
+  c(start, start + (length(times.x) - 1) / freq, freq)
 }
