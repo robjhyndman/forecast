@@ -2622,7 +2622,6 @@ GeomForecast <- ggplot2::ggproto(
   },
 
   handle_na = function(self, data, params) {
-    ## TODO: Consider removing/changing
     data
   },
 
@@ -2635,13 +2634,11 @@ GeomForecast <- ggplot2::ggproto(
 
     # Draw forecasted points and intervals
     if (length(data) == 1) {
-      # PI=FALSE
       ggplot2:::ggname(
         "geom_forecast",
         GeomForecastPoint$draw_panel(data[[1]], panel_scales, coord)
       )
     } else {
-      # PI=TRUE
       ggplot2:::ggname(
         "geom_forecast",
         grid::addGrob(

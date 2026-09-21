@@ -182,7 +182,6 @@ forecast.ets <- function(
     # out$fitted <- InvBoxCox(out$fitted,lambda)
     out$mean <- InvBoxCox(out$mean, lambda, biasadj, out)
     if (PI) {
-      # PI = TRUE
       out$lower <- InvBoxCox(out$lower, lambda)
       out$upper <- InvBoxCox(out$upper, lambda)
     }
