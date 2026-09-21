@@ -21,7 +21,7 @@ SEXP etsforecast(SEXP x, SEXP m, SEXP trend, SEXP season, SEXP phi, SEXP h);
 // Internal functions
 static void forecast(double l, double b, const double *s, int m, int trend,
   int season, double phi, double *f, int h);
-static void update(const double *oldl, double *l, const double *oldb, double *b,
+static void update(double oldl, double *l, double oldb, double *b,
   const double *olds, double *s, int m, int trend, int season,
   double alpha, double beta, double gamma, double phi, double y);
 void etscalc_internal(const double *y, int n, const double *x_init, double *states, int m,
@@ -96,7 +96,7 @@ void etscalc_internal(const double *y, int n, const double *x_init, double *stat
     }
 
     // UPDATE STATE
-    update(&oldl, &l, &oldb, &b, olds, s, m, trend, season, alpha, beta, gamma, phi, y[i]);
+    update(oldl, &l, oldb, &b, olds, s, m, trend, season, alpha, beta, gamma, phi, y[i]);
 
     // STORE NEW STATE
     if (states != NULL) {
@@ -217,7 +217,7 @@ SEXP etssimulate(SEXP x, SEXP m, SEXP error, SEXP trend, SEXP season,
       y[i] = f[0] * (1.0 + e_ptr[i]);
 
     // UPDATE STATE
-    update(&oldl, &l, &oldb, &b, olds, s, m_val, trend_val, season_val,
+    update(oldl, &l, oldb, &b, olds, s, m_val, trend_val, season_val,
            alpha_val, beta_val, gamma_val, phi_val, y[i]);
   }
 
@@ -296,7 +296,7 @@ static void forecast(double l, double b, const double *s, int m, int trend,
 
 // *****************************************************************
 
-static void update(const double *oldl, double *l, const double *oldb, double *b,
+static void update(double oldl, double *l, double oldb, double *b,
                    const double *olds, double *s, int m, int trend, int season,
                    double alpha, double beta, double gamma, double phi,
                    double y) {
@@ -304,17 +304,17 @@ static void update(const double *oldl, double *l, const double *oldb, double *b,
 
   // NEW LEVEL
   if (trend == NONE) {
-    q = *oldl; // l(t-1)
+    q = oldl; // l(t-1)
     phib = 0.0;
   } else if (trend == ADD) {
-    phib = phi * (*oldb);
-    q = *oldl + phib; // l(t-1) + phi*b(t-1)
+    phib = phi * oldb;
+    q = oldl + phib; // l(t-1) + phi*b(t-1)
   } else if (fabs(phi - 1.0) < TOL) {
-    phib = *oldb;
-    q = *oldl * (*oldb); // l(t-1)*b(t-1)
+    phib = oldb;
+    q = oldl * oldb; // l(t-1)*b(t-1)
   } else {
-    phib = pow(*oldb, phi);
-    q = (*oldl) * phib; // l(t-1)*b(t-1)^phi
+    phib = pow(oldb, phi);
+    q = oldl * phib; // l(t-1)*b(t-1)^phi
   }
   if (R_IsNA(y))
     p = q;
@@ -333,12 +333,12 @@ static void update(const double *oldl, double *l, const double *oldb, double *b,
   // NEW GROWTH
   if (trend > NONE) {
     if (trend == ADD)
-      r = (*l) - (*oldl); // l[t]-l[t-1]
+      r = (*l) - oldl; // l[t]-l[t-1]
     else { // if(trend==MULT)
-      if (fabs(*oldl) < TOL)
+      if (fabs(oldl) < TOL)
         r = HUGEN;
       else
-        r = (*l) / (*oldl); // l[t]/l[t-1]
+        r = (*l) / oldl; // l[t]/l[t-1]
     }
     // b[t] = phi*b[t-1] + beta*(r - phi*b[t-1])
     // b[t] = b[t-1]^phi + beta*(r - b[t-1]^phi)
