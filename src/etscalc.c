@@ -8,6 +8,8 @@
 #define MULT 2
 #define TOL 1.0e-10
 #define HUGEN 1.0e10
+#define MAX_PERIOD 24
+#define MAX_NMSE 30
 
 // Functions called by R
 SEXP etscalc(SEXP y, SEXP x, SEXP m, SEXP error, SEXP trend, SEXP season,
@@ -31,15 +33,16 @@ void etscalc_internal(const double *y, int n, const double *x_init, double *stat
 void etscalc_internal(const double *y, int n, const double *x_init, double *states, int m,
                       int error, int trend, int season, double alpha, double beta, double gamma,
                       double phi, double *e, double *fits, double *lik, double *amse, int nmse) {
-  double oldl, l, oldb = 0.0, b = 0.0, olds[24], s[24], f[30], lik2, tmp, denom[30];
+  double oldl, l, oldb = 0.0, b = 0.0, olds[MAX_PERIOD], s[MAX_PERIOD],
+      f[MAX_NMSE], lik2, tmp, denom[MAX_NMSE];
 
-  if (m > 24 && season > NONE)
+  if (m > MAX_PERIOD && season > NONE)
     return;
   if (m < 1)
     m = 1;
 
-  if (nmse > 30)
-    nmse = 30;
+  if (nmse > MAX_NMSE)
+    nmse = MAX_NMSE;
 
   const int nstates = m * (season > NONE) + 1 + (trend > NONE);
 
@@ -127,8 +130,8 @@ SEXP etscalc(SEXP y, SEXP x, SEXP m, SEXP error, SEXP trend, SEXP season,
   const double phi_val = Rf_asReal(phi);
   int nmse_val = Rf_asInteger(nmse);
 
-  if (nmse_val > 30)
-    nmse_val = 30;
+  if (nmse_val > MAX_NMSE)
+    nmse_val = MAX_NMSE;
 
   const double *y_ptr = REAL_RO(y);
 
@@ -170,7 +173,7 @@ SEXP etssimulate(SEXP x, SEXP m, SEXP error, SEXP trend, SEXP season,
   const double phi_val = Rf_asReal(phi);
   const int h_val = Rf_asInteger(h);
 
-  if (m_val > 24 && season_val > NONE)
+  if (m_val > MAX_PERIOD && season_val > NONE)
     return R_NilValue;
   if (m_val < 1)
     m_val = 1;
@@ -183,7 +186,7 @@ SEXP etssimulate(SEXP x, SEXP m, SEXP error, SEXP trend, SEXP season,
   if (trend_val > NONE)
     b = x_ptr[1];
 
-  double s[24];
+  double s[MAX_PERIOD];
   if (season_val > NONE) {
     memcpy(s, &x_ptr[(trend_val > NONE) + 1], m_val * sizeof(double));
   }
@@ -191,7 +194,7 @@ SEXP etssimulate(SEXP x, SEXP m, SEXP error, SEXP trend, SEXP season,
   SEXP result = PROTECT(Rf_allocVector(REALSXP, h_val));
   double *y = REAL(result);
 
-  double oldl, oldb = 0.0, olds[24], f[10];
+  double oldl, oldb = 0.0, olds[MAX_PERIOD], f[1];
 
   for (int i = 0; i < h_val; i++) {
     oldl = l;
@@ -231,7 +234,7 @@ SEXP etsforecast(SEXP x, SEXP m, SEXP trend, SEXP season, SEXP phi, SEXP h) {
   const double phi_val = Rf_asReal(phi);
   const int h_val = Rf_asInteger(h);
 
-  if (m_val > 24 && season_val > NONE)
+  if (m_val > MAX_PERIOD && season_val > NONE)
     return R_NilValue;
   if (m_val < 1)
     m_val = 1;
@@ -243,7 +246,7 @@ SEXP etsforecast(SEXP x, SEXP m, SEXP trend, SEXP season, SEXP phi, SEXP h) {
   if (trend_val > NONE)
     b = x_ptr[1];
 
-  double s[24];
+  double s[MAX_PERIOD];
   if (season_val > NONE) {
     memcpy(s, &x_ptr[(trend_val > NONE) + 1], m_val * sizeof(double));
   }
