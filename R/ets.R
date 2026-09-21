@@ -910,16 +910,6 @@ etsTargetFunctionInitWrapper <- function(
     gamma <- 0
   }
 
-  #  cat("alpha: ", alpha)
-  #  cat(" beta: ", beta)
-  #  cat(" gamma: ", gamma)
-  #  cat(" phi: ", phi, "\n")
-  #
-  #  cat("useAlpha: ", useAlpha)
-  #  cat(" useBeta: ", useBeta)
-  #  cat(" useGamma: ", useGamma)
-  #  cat(" usePhi: ", usePhi, "\n")
-
   env <- new.env(parent = emptyenv())
 
   res <- etsTargetFunctionInit(
@@ -1248,9 +1238,6 @@ lik <- function(
     return(-1e10)
   }
 
-  #      cat("lik: ", e$lik, "\n")
-  #    points(alpha,e$lik,col=2)
-
   switch(
     opt.crit,
     lik = e$lik,
@@ -1312,12 +1299,6 @@ print.ets <- function(x, ...) {
     cat("\n\n")
     print(stats)
   }
-  #    cat("\n  AIC:    ")
-  #    cat(round(x$aic,4))
-  #    cat("\n  AICc:   ")
-  #    cat(round(x$aicc,4))
-  #    cat("\n  BIC:    ")
-  #    cat(round(x$bic,4))
 }
 
 pegelsresid.C <- function(
@@ -1415,8 +1396,6 @@ admissible <- function(alpha, beta, gamma, phi, m) {
       1
     )
     roots <- polyroot(P)
-
-    # cat("maxpolyroots: ", max(abs(roots)), "\n")
 
     if (max(abs(roots)) > 1 + 1e-10) {
       return(0)

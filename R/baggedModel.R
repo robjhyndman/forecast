@@ -206,9 +206,6 @@ print.baggedModel <- function(
   cat("Call:   ")
   print(x$call)
 
-  # print(x$model)
-  # cat("\nsigma^2 estimated as ", format(mean(residuals(x)^2,na.rm=TRUE), digits = digits), "\n", sep = "")
-
   invisible(x)
 }
 

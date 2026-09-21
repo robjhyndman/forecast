@@ -116,7 +116,6 @@ forecast.bats <- function(
   }
 
   variance <- object$variance * variance.multiplier
-  # print(variance)
   st.dev <- sqrt(variance)
   for (i in seq_along(level)) {
     marg.error <- st.dev * abs(qnorm((100 - level[i]) / 200))

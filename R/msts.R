@@ -53,15 +53,12 @@ print.msts <- function(x, ...) {
   cat("Multi-Seasonal Time Series:\n")
   cat("Start: ")
   cat(start(x))
-  # cat("\nEnd: ")
-  # cat(x$end)
   cat("\nSeasonal Periods: ")
   cat(attr(x, "msts"))
   cat("\nData:\n")
   xx <- unclass(x) # handles both univariate and multivariate ts
   attr(xx, "tsp") <- attr(xx, "msts") <- NULL
   print(xx)
-  # print(matrix(x, ncol=length(x)), nrow=1)
   cat("\n")
   invisible(x)
 }
