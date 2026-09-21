@@ -161,21 +161,6 @@ makeTBATSFMatrix <- function(
   F
 }
 
-# makeWMatrix <- function(small.phi=NULL, seasonal.periods=NULL, ar.coefs=NULL, ma.coefs=NULL) {
-#
-# 	the.list <- makeBATSWMatrix(smallPhi = small.phi, sPeriods = as.integer(seasonal.periods), arCoefs = ar.coefs, maCoefs = ma.coefs)
-#
-#
-# 	return(the.list)
-#
-# }
-
-# makeGMatrix <- function(alpha, beta=NULL, gamma.vector=NULL, seasonal.periods=NULL, p=0, q=0) {
-# 	li <- makeBATSGMatrix(alpha, beta, gamma.vector, as.integer(seasonal.periods), as.integer(p), as.integer(q))
-#
-# 	return(li)
-# }
-
 makeFMatrix <- function(
   alpha,
   beta = NULL,
