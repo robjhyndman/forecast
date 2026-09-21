@@ -36,8 +36,10 @@ void etscalc_internal(const double *y, int n, const double *x_init, double *stat
   double oldl, l, oldb = 0.0, b = 0.0, olds[MAX_PERIOD], s[MAX_PERIOD],
       f[MAX_NMSE], lik2, tmp, denom[MAX_NMSE];
 
-  if (m > MAX_PERIOD && season > NONE)
+  if (m > MAX_PERIOD && season > NONE) {
+    *lik = NA_REAL;
     return;
+  }
   if (m < 1)
     m = 1;
 
@@ -206,7 +208,8 @@ SEXP etssimulate(SEXP x, SEXP m, SEXP error, SEXP trend, SEXP season,
     // ONE STEP FORECAST
     forecast(oldl, oldb, olds, m_val, trend_val, season_val, phi_val, f, 1);
     if (R_IsNA(f[0])) {
-      y[0] = NA_REAL;
+      for (int k = 0; k < h_val; k++)
+        y[k] = NA_REAL;
       UNPROTECT(1);
       return result;
     }
