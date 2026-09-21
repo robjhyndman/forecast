@@ -38,11 +38,12 @@ ets(
 \item{model}{Usually a three-character string identifying method using the
 framework terminology of Hyndman et al. (2002) and Hyndman et al. (2008).
 The first letter denotes the error type ("A", "M" or "Z"); the second letter
-denotes the trend type ("N","A","M" or "Z"); and the third letter denotes
-the season type ("N","A","M" or "Z"). In all cases, "N"=none, "A"=additive,
-"M"=multiplicative and "Z"=automatically selected. So, for example, "ANN" is
-simple exponential smoothing with additive errors, "MAM" is multiplicative
-Holt-Winters' method with multiplicative errors, and so on.
+denotes the trend type ("N", "A", "M" or "Z"); and the third letter denotes
+the season type ("N", "A", "M" or "Z"). In all cases, "N" = none,
+"A" = additive, "M" = multiplicative and "Z" = automatically selected. So,
+for example, "ANN" is simple exponential smoothing with additive errors,
+"MAM" is multiplicative Holt-Winters' method with multiplicative errors, and
+so on.
 
 It is also possible for the model to be of class \code{ets}, and equal to
 the output from a previous call to \code{ets}. In this case, the same model
