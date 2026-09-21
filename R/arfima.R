@@ -220,7 +220,6 @@ arfima <- function(
   fit$call <- match.call()
   fit$series <- seriesname
   fit <- structure(fit, class = c("fc_model", "ARFIMA", "fracdiff"))
-  # fit$call$data <- data.frame(x=x) #Consider replacing fit$call with match.call for consistency and tidyness
   fit
 }
 
