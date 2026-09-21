@@ -108,7 +108,7 @@ void etscalc_internal(const double *y, int n, const double *x_init, double *stat
       }
     }
     if (!R_IsNA(e[i]))
-      *lik = *lik + e[i] * e[i];
+      *lik += e[i] * e[i];
     if (error == MULT)
       lik2 += log(fabs(f[0]));
   }
@@ -278,14 +278,14 @@ static void forecast(double l, double b, const double *s, int m, int trend,
     else
       f[i] = l * pow(b, phistar);
     if (season == ADD)
-      f[i] = f[i] + s[j];
+      f[i] += s[j];
     else if (season == MULT)
-      f[i] = f[i] * s[j];
+      f[i] *= s[j];
     if (--j < 0)
       j = m - 1;
     if (i < (h - 1)) {
       if (fabs(phi - 1.0) < TOL) {
-        phistar = phistar + 1.0;
+        phistar += 1.0;
       } else {
         phipow *= phi;
         phistar += phipow;
@@ -305,7 +305,7 @@ static void update(const double *oldl, double *l, const double *oldb, double *b,
   // NEW LEVEL
   if (trend == NONE) {
     q = *oldl; // l(t-1)
-    phib = 0;
+    phib = 0.0;
   } else if (trend == ADD) {
     phib = phi * (*oldb);
     q = *oldl + phib; // l(t-1) + phi*b(t-1)
