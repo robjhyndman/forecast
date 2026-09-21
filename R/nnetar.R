@@ -636,7 +636,6 @@ fitted.nnetar <- function(object, h = 1, ...) {
 print.nnetar <- function(x, digits = max(3, getOption("digits") - 3), ...) {
   cat("Series:", x$series, "\n")
   cat("Model: ", x$method, "\n")
-  # cat("  one hidden layer with",x$size,"nodes\n")
   cat("Call:   ")
   print(x$call)
   print(x$model)

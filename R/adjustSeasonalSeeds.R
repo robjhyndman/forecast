@@ -129,8 +129,6 @@ calcSeasonalSeeds <- function(
       new.x.nought <- rbind(new.x.nought, season)
     } else if (mask.vector[x.pos.counter] < 0) {
       extract <- coefs[(x.pos + 1):(x.pos + s + mask.vector[x.pos.counter])]
-      # print("extract:")
-      # print(extract)
       # Find k
       k <- sum(extract)
       # update sum.k
@@ -169,7 +167,6 @@ calcSeasonalSeeds <- function(
     # Adjust L(t)
     x.pos.counter <- x.pos.counter + 1
   }
-  # print(new.x.nought)
   # Lastly, get the arma error seed states, if they exist.
   if ((p != 0) || (q != 0)) {
     arma.seed.states <- numeric((p + q))

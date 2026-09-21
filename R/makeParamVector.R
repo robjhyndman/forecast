@@ -2,7 +2,6 @@
 ###############################################################################
 
 unParameteriseTBATS <- function(param.vector, control) {
-  # print(control)
   if (control$use.box.cox) {
     lambda <- param.vector[1]
     alpha <- param.vector[2]
@@ -167,16 +166,12 @@ parameterise <- function(
   ar.coefs = NULL,
   ma.coefs = NULL
 ) {
-  # print("urg")
-  # print(lambda)
   if (!is.null(lambda)) {
     param.vector <- cbind(lambda, alpha)
     use.box.cox <- TRUE
   } else {
-    # print("hello")
     param.vector <- alpha
     use.box.cox <- FALSE
-    # print(use.box.cox)
   }
   if (!is.null(beta.v)) {
     use.beta <- TRUE
@@ -214,7 +209,6 @@ parameterise <- function(
   } else {
     q <- 0
   }
-  # print(use.box.cox)
   control <- list(
     use.beta = use.beta,
     use.box.cox = use.box.cox,
@@ -227,7 +221,6 @@ parameterise <- function(
 }
 
 unParameterise <- function(param.vector, control) {
-  # print(control)
   if (control$use.box.cox) {
     lambda <- param.vector[1]
     alpha <- param.vector[2]

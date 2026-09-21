@@ -111,7 +111,6 @@ checkresiduals <- function(object, lag, test, plot = TRUE, ...) {
     # Do Breusch-Godfrey test
     BGtest <- lmtest::bgtest(object, order = lag)
     BGtest$data.name <- main
-    # print(BGtest)
     return(BGtest)
   } else {
     # Do Ljung-Box test
