@@ -46,13 +46,6 @@ seasadj.decomposed.ts <- function(object, ...) {
 #' @export
 seasadj.tbats <- function(object, ...) {
   object$y - seasonal(object)
-  # comp <- tbats.components(object)
-  # scols <- grep("season",colnames(comp))
-  # sa <- comp[,"observed"] - rowSums(comp[,scols,drop=FALSE])
-  # # Back transform if necessary
-  # if (!is.null(object$lambda))
-  #   sa <- InvBoxCox(sa, object$lambda)
-  # return(sa)
 }
 
 #' @rdname seasadj

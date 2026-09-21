@@ -287,17 +287,6 @@ forecast.lm <- function(
   } else {
     tspx <- NULL
   }
-  # if(!is.null(object$call$subset))
-  # {
-  #   j <- eval(object$call$subset)
-  #   origdata <- origdata[j,]
-  #   if(!is.null(tspx))
-  #   {
-  #     # Try to figure out times for subset. Assume they are contiguous.
-  #     timesx <- timesx[j]
-  #     tspx <- tsp(origdata) <- c(min(timesx),max(timesx),tspx[3])
-  #   }
-  # }
   # Add trend and seasonal to data frame
   oldterms <- terms(object)
   # Adjust terms for function variables and rename datamat colnames to match.
@@ -441,16 +430,7 @@ forecast.lm <- function(
     colnames(newdata) <- as.character(formula(object$model))[3]
   }
 
-  # Check regressors included in newdata.
-  # Not working so removed for now.
-  # xreg <- attributes(terms(object$model))$term.labels
-  # if(any(!is.element(xreg,colnames(newdata))))
-  #  stop("Predictor variables not included")
-
   object$x <- getResponse(object)
-  # responsevar <- as.character(formula(object$model))[2]
-  # responsevar <- gsub("`","",responsevar)
-  # object$x <- model.frame(object$model)[,responsevar]
 
   # Remove missing values from residuals
   predict_object <- object

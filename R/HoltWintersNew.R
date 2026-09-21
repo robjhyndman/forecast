@@ -86,7 +86,8 @@ HoltWintersZZ <- function(
   } else {
     trendtype <- "A"
   }
-  seasontype <- switch(seasonal,
+  seasontype <- switch(
+    seasonal,
     "additive" = "A",
     "multiplicative" = "M",
     "none" = "N"
@@ -210,26 +211,6 @@ HoltWintersZZ <- function(
   }
   states <- ts(states, frequency = tspx[3], start = tspx[1] - 1 / tspx[3])
 
-  # Package output as HoltWinters class
-  # structure(list(fitted    = fitted,
-  # 				x        = x,
-  # 				alpha    = alpha,
-  # 				beta     = beta,
-  # 				gamma    = gamma,
-  # 				coefficients = c(a = final.fit$level[lenx],
-  # 						b = if (!is.logical(beta) || beta) final.fit$trend[lenx],
-  # 						s = if (!is.logical(gamma) || gamma) final.fit$season[lenx - m + 1L:m]),
-  # 				seasonal  = seasonal,
-  # 				exponential = exponential,
-  # 				SSE       = final.fit$SSE,
-  # 				call      = match.call(),
-  # 				level = final.fit$level,
-  # 				trend = final.fit$trend,
-  # 				season = final.fit$season,
-  # 				phi = phi
-  # 		),
-  # 		class = "HoltWinters"
-  # )
   # Package output as ets class
   damped <- (phi < 1.0)
   if (seasonal == "additive") {

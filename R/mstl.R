@@ -630,7 +630,6 @@ forecast.stlm <- function(
   seascols <- grep("Seasonal", colnames(object$stl), fixed = TRUE)
   allseas <- rowSumsTS(object$stl[, seascols, drop = FALSE])
 
-  #  m <- frequency(object$stl$time.series)
   n <- NROW(xdata)
 
   # Reseasonalize
@@ -639,8 +638,6 @@ forecast.stlm <- function(
   fcast$lower <- fcast$lower + lastseas
   fcast$method <- paste("STL + ", fcast$method)
   fcast$series <- object$series
-  # fcast$seasonal <- ts(lastseas[1:m],frequency=m,start=tsp(object$stl$time.series)[2]-1+1/m)
-  # fcast$residuals <- residuals()
   fcast$fitted <- fitted(fcast) + allseas
   fcast$residuals <- residuals(fcast)
 
@@ -698,16 +695,6 @@ stlf <- function(
 
   fit <- mstl(x, s.window = s.window, t.window = t.window, robust = robust)
   fcast <- forecast(fit, h = h, lambda = lambda, biasadj = biasadj, ...)
-
-  # if (!is.null(lambda))
-  # {
-  #   fcast$x <- origx
-  #   fcast$fitted <- InvBoxCox(fcast$fitted, lambda)
-  #   fcast$mean <- InvBoxCox(fcast$mean, lambda)
-  #   fcast$lower <- InvBoxCox(fcast$lower, lambda)
-  #   fcast$upper <- InvBoxCox(fcast$upper, lambda)
-  #   fcast$lambda <- lambda
-  # }
 
   fcast$series <- seriesname
 

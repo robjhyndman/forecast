@@ -368,9 +368,6 @@ forecast.Arima <- function(
 
   if (use.drift) {
     n <- length(x)
-    #missing <- is.na(x)
-    #firstnonmiss <- head(which(!missing),1)
-    #n <- length(x) - firstnonmiss + 1
     if (!is.null(xreg)) {
       xreg <- `colnames<-`(
         cbind(drift = (1:h) + n, xreg),
@@ -1011,17 +1008,6 @@ print.forecast_ARIMA <- function(
     cat("Box Cox transformation: lambda=", x$lambda, "\n")
   }
 
-  # cat("\nCall:", deparse(x$call, width.cutoff=75), "\n", sep=" ")
-  #    if(!is.null(x$xreg))
-  #    {
-  #        cat("\nRegression variables fitted:\n")
-  #        xreg <- as.matrix(x$xreg)
-  #        for(i in 1:3)
-  #            cat("  ",xreg[i,],"\n")
-  #        cat("   . . .\n")
-  #        for(i in 1:3)
-  #            cat("  ",xreg[nrow(xreg)-3+i,],"\n")
-  #    }
   if (length(x$coef) > 0) {
     cat("\nCoefficients:\n")
     coef <- round(x$coef, digits = digits)

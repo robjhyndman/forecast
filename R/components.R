@@ -64,15 +64,8 @@ trendcycle <- function(object) {
   } else if (inherits(object, "stl")) {
     return(object$time.series[, "trend"])
   } else if (inherits(object, "decomposed.ts")) {
-    # 	else if("tbats" %in% class(object))
     return(object$trend)
   } else if (inherits(object, "seas")) {
-    # 	{
-    #     trnd <- tbats.components(object)[,"level"]
-    #     if (!is.null(object$lambda))
-    #       trnd <- InvBoxCox(trnd, object$lambda)
-    #     return(trnd)
-    #   }
     return(seasextract_w_na_action(object, "trend"))
   } else {
     stop("Unknown object type")
@@ -87,18 +80,8 @@ remainder <- function(object) {
   } else if (inherits(object, "stl")) {
     return(object$time.series[, "remainder"])
   } else if (inherits(object, "decomposed.ts")) {
-    # 	else if("tbats" %in% class(object))
     return(object$random)
   } else if (inherits(object, "seas")) {
-    # 	{
-    # 		comp <- tbats.components(object)
-    # 		trnd <- comp[,"level"]
-    # 		scols <- grep("season",colnames(comp))
-    #     season <- rowSums(comp[,scols,drop=FALSE])
-    #     irreg <- ts(comp[,'observed'] - trnd - season)
-    #     tsp(irreg) <- tsp(comp)
-    #     return(irreg)
-    #   }
     return(seasextract_w_na_action(object, "irregular"))
   } else {
     stop("Unknown object type")
