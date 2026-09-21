@@ -334,14 +334,15 @@ static void update(const double *oldl, double *l, const double *oldb, double *b,
   if (trend > NONE) {
     if (trend == ADD)
       r = (*l) - (*oldl); // l[t]-l[t-1]
-    else {                // if(trend==MULT)
+    else { // if(trend==MULT)
       if (fabs(*oldl) < TOL)
         r = HUGEN;
       else
         r = (*l) / (*oldl); // l[t]/l[t-1]
     }
-    *b = phib + (beta / alpha) * (r - phib); // b[t] = phi*b[t-1] + beta*(r - phi*b[t-1])
-                                // b[t] = b[t-1]^phi + beta*(r - b[t-1]^phi)
+    // b[t] = phi*b[t-1] + beta*(r - phi*b[t-1])
+    // b[t] = b[t-1]^phi + beta*(r - b[t-1]^phi)
+    *b = phib + (beta / alpha) * (r - phib);
   }
 
   // NEW SEASON
