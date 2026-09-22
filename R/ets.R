@@ -571,42 +571,6 @@ as.character.ets <- function(x, ...) {
   )
 }
 
-# myRequire <- function(libName) {
-
-#   req.suc <- require(libName, quietly=TRUE, character.only=TRUE)
-#   if(!req.suc) stop("The ",libName," package is not available.")
-
-#   req.suc
-# }
-
-# getNewBounds <- function(par, lower, upper, nstate) {
-
-#   myLower <- NULL
-#   myUpper <- NULL
-
-#   if("alpha" %in% names(par)) {
-#     myLower <- c(myLower, lower[1])
-#     myUpper <- c(myUpper, upper[1])
-#   }
-#   if("beta" %in% names(par)) {
-#     myLower <- c(myLower, lower[2])
-#     myUpper <- c(myUpper, upper[2])
-#   }
-#   if("gamma" %in% names(par)) {
-#     myLower <- c(myLower, lower[3])
-#     myUpper <- c(myUpper, upper[3])
-#   }
-#   if("phi" %in% names(par)) {
-#     myLower <- c(myLower, lower[4])
-#     myUpper <- c(myUpper, upper[4])
-#   }
-
-#   myLower <- c(myLower,rep(-1e8,nstate))
-#   myUpper <- c(myUpper,rep(1e8,nstate))
-
-#   list(lower=myLower, upper=myUpper)
-# }
-
 etsmodel <- function(
   y,
   errortype,

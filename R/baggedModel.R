@@ -177,24 +177,6 @@ forecast.baggedModel <- function(
   out
 }
 
-# fitted.baggedModel <- function(object, h=1, accum_func=mean, ...){
-#
-#  fitted_boot <- lapply(object$models, fitted, h)
-#  fitted_boot <- as.matrix(as.data.frame(fitted_boot))
-#  fitted_boot <- apply(fitted_boot, 2, accum_func)
-#  fitted_boot
-# }
-
-# residuals.baggedModel <- function(object, h=1, ...){
-#
-#  residuals_boot <- lapply(object$models, residuals, h)
-#  residuals_boot <- as.matrix(as.data.frame(residuals_boot))
-#  residuals_boot
-#
-#  #Alternative implementation:
-#  #object$x - fitted(object, h)
-# }
-
 #' @export
 print.baggedModel <- function(
   x,

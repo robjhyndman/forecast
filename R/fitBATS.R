@@ -211,14 +211,12 @@ fitSpecificBATS <- function(
   )
   par.scale <- makeParscaleBATS(param.vector$control)
 
-  # w <- makeWMatrix(small.phi=small.phi, seasonal.periods=seasonal.periods, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
   w <- makeBATSWMatrix(
     smallPhi = small.phi,
     sPeriods = seasonal.periods,
     arCoefs = ar.coefs,
     maCoefs = ma.coefs
   )
-  # g <- makeGMatrix(alpha=alpha, beta=beta.v, gamma.vector=gamma, seasonal.periods=seasonal.periods, p=p, q=q)
   g <- makeBATSGMatrix(
     as.numeric(alpha),
     beta.v,
@@ -352,14 +350,12 @@ fitSpecificBATS <- function(
 
     ## Calculate the variance:
     # 1. Re-set up the matrices
-    # w <- makeWMatrix(small.phi=small.phi, seasonal.periods=seasonal.periods, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
     w <- makeBATSWMatrix(
       smallPhi = small.phi,
       sPeriods = seasonal.periods,
       arCoefs = ar.coefs,
       maCoefs = ma.coefs
     )
-    # g <- makeGMatrix(alpha=alpha, beta=beta.v, gamma.vector=gamma, seasonal.periods=seasonal.periods, p=p, q=q)
     g <- makeBATSGMatrix(
       as.numeric(alpha),
       beta.v,
@@ -441,14 +437,12 @@ fitSpecificBATS <- function(
 
     ## Calculate the variance:
     # 1. Re-set up the matrices
-    # w <- makeWMatrix(small.phi=small.phi, seasonal.periods=seasonal.periods, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
     w <- makeBATSWMatrix(
       smallPhi = small.phi,
       sPeriods = seasonal.periods,
       arCoefs = ar.coefs,
       maCoefs = ma.coefs
     )
-    # g <- makeGMatrix(alpha=alpha, beta=beta.v, gamma.vector=gamma, seasonal.periods=seasonal.periods, p=p, q=q)
     g <- makeBATSGMatrix(
       as.numeric(alpha),
       beta.v,
@@ -585,8 +579,6 @@ calcLikelihood <- function(
     ma.coefs <- NULL
   }
   x.nought <- BoxCox(opt.env$x.nought.untransformed, lambda = box.cox.parameter)
-  # w <- makeWMatrix(small.phi=small.phi, seasonal.periods=seasonal.periods, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
-  # w <- makeBATSWMatrix(smallPhi = small.phi, sPeriods = seasonal.periods, arCoefs = ar.coefs, maCoefs = ma.coefs)
   updateWtransposeMatrix(
     wTranspose = opt.env$w.transpose,
     smallPhi = small.phi,
@@ -597,8 +589,6 @@ calcLikelihood <- function(
     q = as.integer(q)
   )
 
-  # g <- makeGMatrix(alpha=alpha, beta=beta, gamma.vector=gamma.vector, seasonal.periods=seasonal.periods, p=p, q=q)
-  # g <- makeBATSGMatrix(as.numeric(alpha), beta.v, gamma.vector, seasonal.periods, as.integer(p), as.integer(q))
   updateGMatrix(
     g = opt.env$g,
     gammaBold = opt.env$gamma.bold.matrix,
@@ -608,7 +598,6 @@ calcLikelihood <- function(
     seasonalPeriods = seasonal.periods
   )
 
-  # F <- makeFMatrix(alpha=alpha, beta=beta.v, small.phi=small.phi, seasonal.periods=seasonal.periods, gamma.bold.matrix=g$gamma.bold.matrix, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
   updateFMatrix(
     opt.env$F,
     small.phi,
@@ -721,8 +710,6 @@ calcLikelihoodNOTransformed <- function(
     ma.coefs <- NULL
   }
 
-  # w <- makeWMatrix(small.phi=small.phi, seasonal.periods=seasonal.periods, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
-  # w <- makeBATSWMatrix(smallPhi = small.phi, sPeriods = seasonal.periods, arCoefs = ar.coefs, maCoefs = ma.coefs)
   updateWtransposeMatrix(
     wTranspose = opt.env$w.transpose,
     smallPhi = small.phi,
@@ -732,8 +719,6 @@ calcLikelihoodNOTransformed <- function(
     p = as.integer(p),
     q = as.integer(q)
   )
-  # g <- makeGMatrix(alpha=alpha, beta=beta, gamma.vector=gamma.vector, seasonal.periods=seasonal.periods, p=p, q=q)
-  # g <- makeBATSGMatrix(alpha, beta.v, gamma.vector, seasonal.periods, as.integer(p), as.integer(q))
   updateGMatrix(
     g = opt.env$g,
     gammaBold = opt.env$gamma.bold.matrix,
@@ -743,7 +728,6 @@ calcLikelihoodNOTransformed <- function(
     seasonalPeriods = seasonal.periods
   )
 
-  # F <- makeFMatrix(alpha=alpha, beta=beta.v, small.phi=small.phi, seasonal.periods=seasonal.periods, gamma.bold.matrix=g$gamma.bold.matrix, ar.coefs=ar.coefs, ma.coefs=ma.coefs)
   updateFMatrix(
     opt.env$F,
     small.phi,
@@ -755,19 +739,6 @@ calcLikelihoodNOTransformed <- function(
     tau
   )
   n <- ncol(opt.env$y)
-
-  #########################################################################################
-  # e <- calcModel(y=y, x.nought=x.nought, F=F, g=g$g, w=w)$e
-  ######################
-  #### calcModel() code:
-  ##
-  # x <- matrix(0, nrow=length(x.nought), ncol=n)
-  # y.hat <- matrix(0,nrow=1, ncol=n)
-  # e <- matrix(0, nrow=1, ncol=n)
-  # opt.env$y.hat[,1] <- w$w.transpose %*% x.nought
-  # opt.env$e[,1] <- opt.env$y[,1]-opt.env$y.hat[,1]
-  # opt.env$x[,1] <- opt.env$F %*% x.nought + g$g %*% opt.env$e[,1]
-  # mat.y <- matrix(opt.env$y, nrow=1, ncol=n)
 
   calcBATSFaster(
     y = opt.env$y,
@@ -784,12 +755,8 @@ calcLikelihoodNOTransformed <- function(
     p = as.integer(p),
     q = as.integer(q)
   )
-  ##
-  ####
-  ####################################################################
 
   log.likelihood <- n * log(sum(opt.env$e * opt.env$e))
-  # D <- opt.env$F - g$g %*% w$w.transpose
   opt.env$D <- opt.env$F - opt.env$g %*% opt.env$w.transpose
 
   if (
