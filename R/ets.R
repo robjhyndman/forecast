@@ -346,7 +346,7 @@ ets <- function(
       if (!inherits(fit, "try-error")) {
         fit$call <- match.call()
         fit$method <- as.character(fit)
-        fit$series <- deparse1(substitute(y))
+        fit$series <- seriesname
         return(fit)
       } else {
         warning("Seasonal component could not be estimated")
@@ -370,7 +370,7 @@ ets <- function(
       if (!inherits(fit, "try-error")) {
         fit$call <- match.call()
         fit$method <- as.character(fit)
-        fit$series <- deparse1(substitute(y))
+        fit$series <- seriesname
         return(fit)
       } else {
         warning("Trend component could not be estimated")
@@ -392,7 +392,7 @@ ets <- function(
       if (!inherits(fit, "try-error")) {
         fit$call <- match.call()
         fit$method <- as.character(fit)
-        fit$series <- deparse1(substitute(y))
+        fit$series <- seriesname
         return(fit)
       }
     }
@@ -437,7 +437,7 @@ ets <- function(
     }
     fit$call <- match.call()
     fit$method <- as.character(fit)
-    fit$series <- deparse1(substitute(y))
+    fit$series <- seriesname
     return(fit)
   }
 
