@@ -67,6 +67,28 @@ test_that("CVar basic usage", {
   expect_equal(colnames(cv$CVsummary), c("Mean", "SD"))
 })
 
+test_that("CVar computes fold accuracy from actual minus fitted", {
+  set.seed(42)
+  cv <- CVar(lynx, k = 3)
+  fold <- cv$fold1
+  actual <- lynx[fold$testset]
+  e <- actual - fold$testfit[fold$testset]
+
+  expect_equal(unname(fold$accuracy[, "ME"]), mean(e, na.rm = TRUE))
+  expect_equal(
+    unname(fold$accuracy[, "MPE"]),
+    mean(100 * e / actual, na.rm = TRUE)
+  )
+})
+
+test_that("CVar accepts a numeric vector", {
+  set.seed(42)
+  cv <- CVar(as.numeric(lynx), k = 3)
+  expect_equal(nrow(cv$CVsummary), 7)
+  expect_s3_class(cv$testfit, "ts")
+  expect_equal(cv$series, "as.numeric(lynx)")
+})
+
 test_that("CVar with blocked folds", {
   set.seed(42)
   cv <- CVar(lynx, k = 3, blocked = TRUE)
