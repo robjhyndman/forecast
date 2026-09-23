@@ -90,6 +90,7 @@ forecast.ts <- function(
   model = NULL,
   ...
 ) {
+  seriesname <- deparse1(substitute(object))
   n <- length(object)
   if (find.frequency) {
     object <- ts(object, frequency = findfrequency(object))
@@ -172,7 +173,7 @@ forecast.ts <- function(
       ...
     )
   }
-  out$series <- deparse1(substitute(object))
+  out$series <- seriesname
   out
 }
 
