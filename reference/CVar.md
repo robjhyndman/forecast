@@ -89,13 +89,13 @@ print(modelcv)
 #> 
 #> 5-fold cross-validation
 #>                    Mean          SD
-#> ME        -7.399045e+01 209.5564198
+#> ME         7.399045e+01 209.5564198
 #> RMSE       1.008670e+03 255.8655599
 #> MAE        6.679454e+02 172.1851058
-#> MPE       -2.689215e+01  51.6590777
-#> MAPE       6.685048e+01  36.9979203
+#> MPE       -3.377894e+01  35.4850967
+#> MAPE       7.205939e+01  16.7020291
 #> ACF1      -4.401883e-03   0.1321075
-#> Theil's U  1.058446e+00   0.2532232
+#> Theil's U  1.285177e+00   0.6449227
 #> 
 #> p-value of Ljung-Box test of residuals is  0.1454125 
 #> if this value is significant (<0.05),
@@ -114,8 +114,8 @@ print(modelcv$fold1)
 #> sigma^2 estimated as 0.09578
 #> 
 #> $accuracy
-#>                ME     RMSE      MAE      MPE     MAPE       ACF1 Theil's U
-#> Test set 76.85482 1185.761 715.7763 2.319121 53.37024 0.03753834  1.303367
+#>                 ME     RMSE      MAE       MPE     MAPE       ACF1 Theil's U
+#> Test set -76.85482 1185.761 715.7763 -70.37079 96.66565 0.03753834 0.6560542
 #> 
 #> $testfit
 #> Time Series:

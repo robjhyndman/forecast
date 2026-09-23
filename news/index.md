@@ -21,6 +21,9 @@
 - [`bld.mbb.bootstrap()`](https://pkg.robjhyndman.com/forecast/reference/bld.mbb.bootstrap.md)
   no longer errors when `num = 1` and now validates that `num` is a
   positive integer.
+- [`CVar()`](https://pkg.robjhyndman.com/forecast/reference/CVar.md) now
+  computes fold accuracy with fitted and actual values in the correct
+  order.
 - [`croston_model()`](https://pkg.robjhyndman.com/forecast/reference/croston_model.md)
   and
   [`croston()`](https://pkg.robjhyndman.com/forecast/reference/forecast.croston_model.md)
