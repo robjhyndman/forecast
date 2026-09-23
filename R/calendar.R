@@ -74,15 +74,7 @@ bizdays <- function(
     # Grab business days
     biz <- days.len[timeDate::isBizday(days.len, holidays = holidays)]
     bizdays <- format(zoo::as.yearqtr(biz), format = "%Y Qtr%q")
-  } # else if (freq == 52L) {  # Weekly data
-  #   start <- paste0(start(x)[1L], "-01-01")
-  #   start <- as.Date(start) + start(x)[2L] * 7L
-  #   end <- start + length(time(x)) * 7L
-  #   days.len <- as.timeDate(seq(start, end, by = "days"), FinCenter = FinCenter)
-  #   biz <- days.len[isBizday(days.len,
-  #                            holidays = unique(format(days.len, "%Y")))]
-  #   bizdays <- format(biz, format = "%Y Wk%W")
-  # }
+  }
   num.days <- table(bizdays)
   out <- ts(num.days, start = tsp(x)[1L], frequency = freq)
   out
