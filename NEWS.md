@@ -6,6 +6,7 @@
 * `autolayer()` now labels an unnamed `msts` series with the name of the object instead of "NULL".
 * `autoplot.forecast()` no longer errors for cross-sectional regression models fitted without an intercept.
 * `bld.mbb.bootstrap()` no longer errors when `num = 1` and now validates that `num` is a positive integer.
+* `CVar()` now computes fold accuracy with fitted and actual values in the correct order.
 * `croston_model()` and `croston()` can now optimize and separately specify Croston smoothing parameters.
 * `croston_model()` now returns `NA` for fitted values before the first non-zero demand instead of 0.
 * `ets()` now keeps the series name for short series.

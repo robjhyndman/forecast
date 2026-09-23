@@ -197,6 +197,8 @@ CVar <- function(
   LBlags = 24,
   ...
 ) {
+  series <- deparse1(substitute(y))
+  y <- as.ts(y)
   nx <- length(y)
   # n-folds at most equal number of points
   k <- min(as.integer(k), nx)
@@ -221,7 +223,7 @@ CVar <- function(
     trainmodel <- FUN(y, subset = trainset, ...)
     testmodel <- FUN(y, model = trainmodel, xreg = trainmodel$xreg)
     testfit <- fitted(testmodel)
-    acc <- accuracy(y, testfit, test = testset)
+    acc <- accuracy(testfit, y, test = testset)
     cvacc[i, ] <- acc
     out[[paste0("fold", i)]]$model <- trainmodel
     out[[paste0("fold", i)]]$accuracy <- acc
@@ -256,7 +258,7 @@ CVar <- function(
     dimnames = list(colnames(acc), "SD")
   )
   out$CVsummary <- cbind(CVmean, CVsd)
-  out$series <- deparse1(substitute(y))
+  out$series <- series
   out$call <- match.call()
   structure(out, class = c("CVar", class(trainmodel)))
 }
