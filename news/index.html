@@ -74,6 +74,8 @@
 <li>
 <code><a href="../reference/croston_model.html">croston_model()</a></code> now returns <code>NA</code> for fitted values before the first non-zero demand instead of 0.</li>
 <li>
+<code><a href="../reference/ets.html">ets()</a></code> now keeps the series name for short series.</li>
+<li>
 <code><a href="../reference/forecast.Arima.html">forecast.Arima()</a></code> now correctly passes <code>xreg</code> when <code>bootstrap = TRUE</code> (<a href="https://github.com/robjhyndman/forecast/issues/1115" class="external-link">#1115</a>).</li>
 <li>
 <code><a href="../reference/forecast.StructTS.html">forecast.StructTS()</a></code> now uses the series frequency for its default forecast horizon.</li>
@@ -81,6 +83,8 @@
 <code><a href="../reference/forecast.ets.html">forecast.ets()</a></code> now uses the supplied <code>innov</code> matrix when <code>simulate = TRUE</code> instead of silently ignoring it.</li>
 <li>
 <code><a href="../reference/forecast.ets.html">forecast.ets()</a></code> now gives the intended error message when forecasting fails for a multiplicative trend model.</li>
+<li>
+<code><a href="../reference/forecast.ts.html">forecast.ts()</a></code> now keeps the series name in more cases.</li>
 <li>
 <code><a href="../reference/mstl.html">mstl()</a></code> now drops short seasonal periods from the <code>msts</code> attribute, so <code><a href="../reference/forecast.stl.html">forecast.stlm()</a></code> no longer errors.</li>
 <li>

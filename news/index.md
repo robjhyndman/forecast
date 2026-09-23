@@ -28,6 +28,8 @@
 - [`croston_model()`](https://pkg.robjhyndman.com/forecast/reference/croston_model.md)
   now returns `NA` for fitted values before the first non-zero demand
   instead of 0.
+- [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md) now
+  keeps the series name for short series.
 - [`forecast.Arima()`](https://pkg.robjhyndman.com/forecast/reference/forecast.Arima.md)
   now correctly passes `xreg` when `bootstrap = TRUE`
   ([\#1115](https://github.com/robjhyndman/forecast/issues/1115)).
@@ -39,6 +41,8 @@
 - [`forecast.ets()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ets.md)
   now gives the intended error message when forecasting fails for a
   multiplicative trend model.
+- [`forecast.ts()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ts.md)
+  now keeps the series name in more cases.
 - [`mstl()`](https://pkg.robjhyndman.com/forecast/reference/mstl.md) now
   drops short seasonal periods from the `msts` attribute, so
   [`forecast.stlm()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
