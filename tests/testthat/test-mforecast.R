@@ -54,6 +54,13 @@ test_that("tests for forecast.mlm()", {
   expect_equal(fcast$forecast[[1]]$residuals, fcast2$residuals)
 })
 
+test_that("forecast.mlm() uses the correct trend for functions of trend", {
+  fit <- tslm(cbind(mdeaths, fdeaths) ~ I(trend^2))
+  fcast <- forecast(fit, h = 3)
+  fcast1 <- forecast(tslm(mdeaths ~ I(trend^2)), h = 3)
+  expect_equal(fcast$forecast$mdeaths$mean, fcast1$mean)
+})
+
 test_that("tests for forecast.mts()", {
   lungDeaths <- cbind(mdeaths, fdeaths)
   fcast_b <- forecast(lungDeaths)
