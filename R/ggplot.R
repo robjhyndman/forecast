@@ -1683,9 +1683,7 @@ ggseasonplot <- function(
   if (year.labels.left) {
     yrlabL <- stats::aggregate(time ~ year, data = data, FUN = min)
     yrlabL <- cbind(yrlabL, offset = -labelgap)
-    if (year.labels) {
-      yrlab <- rbind(yrlab, yrlabL)
-    }
+    yrlab <- if (year.labels) rbind(yrlab, yrlabL) else yrlabL
   }
   if (year.labels || year.labels.left) {
     yrlab <- merge(yrlab, data)

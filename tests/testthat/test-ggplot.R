@@ -67,6 +67,7 @@ test_that("tests for autoplot/gg functions", {
   ggmonthplot(woolyrnq)
 
   ggseasonplot(woolyrnq, year.labels = TRUE, year.labels.left = TRUE)
+  ggseasonplot(woolyrnq, year.labels.left = TRUE)
   ggseasonplot(USAccDeaths, polar = TRUE, col = 1:5, continuous = TRUE)
 
   splinefit <- splinef(airmiles, h = 5)
