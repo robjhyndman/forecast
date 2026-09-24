@@ -254,7 +254,6 @@ forecast.lm <- function(
     }
   }
   if (!is.null(object$data)) {
-    # no longer exists
     origdata <- object$data
   } else if (!is.null(object$model)) {
     origdata <- object$model
