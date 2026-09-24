@@ -973,7 +973,7 @@ autoplot.mforecast <- function(
   if (is.ts(object$forecast[[1]]$mean)) {
     # ts forecasts
     p <- autoplot(getResponse(object), facets = facets, colour = colour) +
-      autolayer(object, ...)
+      autolayer(object, PI = PI, ...)
     if (facets) {
       p <- p +
         ggplot2::facet_wrap(
