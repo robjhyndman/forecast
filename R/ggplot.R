@@ -2962,7 +2962,8 @@ gghistogram <- function(
       binwidth = binwidth,
       boundary = boundary
     ) +
-    ggplot2::xlab(deparse1(substitute(x)))
+    ggplot2::xlab(deparse1(substitute(x))) +
+    ggplot2::ylab("count")
   # Add normal density estimate
   if (add.normal || add.kde) {
     x <- x[!is.na(x)]
