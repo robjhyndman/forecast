@@ -138,7 +138,10 @@ void EtsTargetFunction::eval(const double *p_par, int p_par_length) {
   // Avoid perfect fits
   this->lik = std::max(this->lik, -1e10);
 
-  if (ISNAN(this->lik)) this->lik = R_PosInf;
+  if (ISNAN(this->lik)) {
+    this->objval = R_PosInf;
+    return;
+  }
 
   if (this->opt_crit == "lik")
     this->objval = this->lik;
