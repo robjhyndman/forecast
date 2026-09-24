@@ -1248,8 +1248,9 @@ gglagplot <- function(
     continuous <- TRUE
   }
 
-  # Make sure lags is evaluated
+  # Make sure lags and continuous are evaluated
   force(lags)
+  force(continuous)
   x <- as.matrix(x)
 
   # Prepare data for plotting
