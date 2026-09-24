@@ -2966,6 +2966,7 @@ gghistogram <- function(
     ggplot2::xlab(deparse1(substitute(x)))
   # Add normal density estimate
   if (add.normal || add.kde) {
+    x <- x[!is.na(x)]
     xmin <- min(x, na.rm = TRUE)
     xmax <- max(x, na.rm = TRUE)
     if (add.kde) {
