@@ -724,8 +724,7 @@ autoplot.bats <- function(object, range.bars = FALSE, ...) {
   # Initialise ggplot object
   p <- ggplot2::ggplot(
     ggplot2::aes(x = .data[["datetime"]], y = .data[["y"]]),
-    data = data,
-    ylab = ""
+    data = data
   )
 
   # Add data
