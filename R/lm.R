@@ -407,7 +407,7 @@ forecast.lm <- function(
   if (!is.null(tspx)) {
     # Always generate trend series
     if (is.null(origdata$trend)) {
-      trend <- NCOL(origdata) + seq_len(h)
+      trend <- NROW(origdata) + seq_len(h)
     } else {
       trend <- max(origdata$trend) + seq_len(h)
     }
