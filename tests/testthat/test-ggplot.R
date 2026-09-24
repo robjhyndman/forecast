@@ -49,6 +49,9 @@ test_that("tests for autoplot/gg functions", {
   lmfit <- lm(mpg ~ disp, data = mtcars)
   lmfcast <- forecast(lmfit, newdata = data.frame(disp = 214))
   autoplot(lmfcast)
+  mlmfit <- lm(cbind(mpg, hp) ~ disp, data = mtcars)
+  mlmfcast <- forecast(mlmfit, newdata = data.frame(disp = 214))
+  autoplot(mlmfcast, PI = FALSE)
 
   mfcast <- forecast(lungDeaths)
   autoplot(mfcast)

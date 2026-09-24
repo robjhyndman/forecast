@@ -1001,9 +1001,7 @@ autoplot.mforecast <- function(
     }
 
     # Set up vector arguments
-    if (missing(PI)) {
-      PI <- rep(TRUE, K)
-    }
+    PI <- rep_len(PI, K)
 
     # Set up grid
     # ncol: Number of columns of plots
