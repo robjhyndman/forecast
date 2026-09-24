@@ -49,6 +49,9 @@ test_that("tests for autoplot/gg functions", {
   lmfit <- lm(mpg ~ disp, data = mtcars)
   lmfcast <- forecast(lmfit, newdata = data.frame(disp = 214))
   autoplot(lmfcast)
+  mlmfit <- lm(cbind(mpg, hp) ~ disp, data = mtcars)
+  mlmfcast <- forecast(mlmfit, newdata = data.frame(disp = 214))
+  autoplot(mlmfcast, PI = FALSE)
 
   mfcast <- forecast(lungDeaths)
   autoplot(mfcast)
@@ -67,6 +70,7 @@ test_that("tests for autoplot/gg functions", {
   ggmonthplot(woolyrnq)
 
   ggseasonplot(woolyrnq, year.labels = TRUE, year.labels.left = TRUE)
+  ggseasonplot(woolyrnq, year.labels.left = TRUE)
   ggseasonplot(USAccDeaths, polar = TRUE, col = 1:5, continuous = TRUE)
 
   splinefit <- splinef(airmiles, h = 5)
@@ -85,4 +89,9 @@ test_that("tests for autoplot/gg functions", {
   autoplot(lungDeaths, facets = TRUE) + geom_forecast()
 
   gghistogram(USAccDeaths, add.kde = TRUE)
+})
+
+test_that("autoplot.splineforecast() draws no intervals with PI = FALSE", {
+  layers <- ggplot2::ggplot_build(autoplot(splinef(WWWusage), PI = FALSE))$data
+  expect_false(any(vapply(layers, \(d) "ymin" %in% names(d), logical(1))))
 })

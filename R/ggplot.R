@@ -724,8 +724,7 @@ autoplot.bats <- function(object, range.bars = FALSE, ...) {
   # Initialise ggplot object
   p <- ggplot2::ggplot(
     ggplot2::aes(x = .data[["datetime"]], y = .data[["y"]]),
-    data = data,
-    ylab = ""
+    data = data
   )
 
   # Add data
@@ -973,7 +972,7 @@ autoplot.mforecast <- function(
   if (is.ts(object$forecast[[1]]$mean)) {
     # ts forecasts
     p <- autoplot(getResponse(object), facets = facets, colour = colour) +
-      autolayer(object, ...)
+      autolayer(object, PI = PI, ...)
     if (facets) {
       p <- p +
         ggplot2::facet_wrap(
@@ -1001,9 +1000,7 @@ autoplot.mforecast <- function(
     }
 
     # Set up vector arguments
-    if (missing(PI)) {
-      PI <- rep(TRUE, K)
-    }
+    PI <- rep_len(PI, K)
 
     # Set up grid
     # ncol: Number of columns of plots
@@ -1248,8 +1245,9 @@ gglagplot <- function(
     continuous <- TRUE
   }
 
-  # Make sure lags is evaluated
+  # Make sure lags and continuous are evaluated
   force(lags)
+  force(continuous)
   x <- as.matrix(x)
 
   # Prepare data for plotting
@@ -1683,9 +1681,7 @@ ggseasonplot <- function(
   if (year.labels.left) {
     yrlabL <- stats::aggregate(time ~ year, data = data, FUN = min)
     yrlabL <- cbind(yrlabL, offset = -labelgap)
-    if (year.labels) {
-      yrlab <- rbind(yrlab, yrlabL)
-    }
+    yrlab <- if (year.labels) rbind(yrlab, yrlabL) else yrlabL
   }
   if (year.labels || year.labels.left) {
     yrlab <- merge(yrlab, data)
@@ -1762,7 +1758,7 @@ ggseasonplot <- function(
 #' @rdname plot.forecast
 #' @export
 autoplot.splineforecast <- function(object, PI = TRUE, ...) {
-  p <- autoplot(object$x) + autolayer(object)
+  p <- autoplot(object$x) + autolayer(object, PI = PI)
   p <- p + ggplot2::geom_point(size = 2)
   fit <- data.frame(
     datetime = as.numeric(time(object$fitted)),
@@ -2966,9 +2962,11 @@ gghistogram <- function(
       binwidth = binwidth,
       boundary = boundary
     ) +
-    ggplot2::xlab(deparse1(substitute(x)))
+    ggplot2::xlab(deparse1(substitute(x))) +
+    ggplot2::ylab("count")
   # Add normal density estimate
   if (add.normal || add.kde) {
+    x <- x[!is.na(x)]
     xmin <- min(x, na.rm = TRUE)
     xmax <- max(x, na.rm = TRUE)
     if (add.kde) {
