@@ -1759,7 +1759,7 @@ ggseasonplot <- function(
 #' @rdname plot.forecast
 #' @export
 autoplot.splineforecast <- function(object, PI = TRUE, ...) {
-  p <- autoplot(object$x) + autolayer(object)
+  p <- autoplot(object$x) + autolayer(object, PI = PI)
   p <- p + ggplot2::geom_point(size = 2)
   fit <- data.frame(
     datetime = as.numeric(time(object$fitted)),

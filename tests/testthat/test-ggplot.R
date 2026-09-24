@@ -90,3 +90,8 @@ test_that("tests for autoplot/gg functions", {
 
   gghistogram(USAccDeaths, add.kde = TRUE)
 })
+
+test_that("autoplot.splineforecast() draws no intervals with PI = FALSE", {
+  layers <- ggplot2::ggplot_build(autoplot(splinef(WWWusage), PI = FALSE))$data
+  expect_false(any(vapply(layers, \(d) "ymin" %in% names(d), logical(1))))
+})
