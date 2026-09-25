@@ -112,8 +112,6 @@ calcSeasonalSeeds <- function(
   p = 0,
   q = 0
 ) {
-  x.pos.counter <- 1
-  sum.k <- 0
   if (use.beta) {
     x.pos <- 2
     new.x.nought <- matrix(coefs[1:2], nrow = 2, ncol = 1)
@@ -131,8 +129,6 @@ calcSeasonalSeeds <- function(
       extract <- coefs[(x.pos + 1):(x.pos + s + mask.vector[x.pos.counter])]
       # Find k
       k <- sum(extract)
-      # update sum.k
-      sum.k <- sum.k + k / s
       # create the current.periodicity vector
       current.periodicity <- extract - k / s
       current.periodicity <- matrix(
@@ -151,8 +147,6 @@ calcSeasonalSeeds <- function(
     } else {
       # Find k
       k <- sum(coefs[(x.pos + 1):(x.pos + s - 1)])
-      # update sum.k
-      sum.k <- sum.k + k / s
       # create the current.periodicity vector
       current.periodicity <- coefs[(x.pos + 1):(x.pos + s - 1)] - k / s
       current.periodicity <- c(current.periodicity, -k / s)

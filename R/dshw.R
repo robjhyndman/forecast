@@ -212,14 +212,6 @@ dshw <- function(
   mse <- mean(e^2)
   mape <- mean(abs(e) / y) * 100
 
-  end.y <- end(y)
-  if (end.y[2] == frequency(y)) {
-    end.y[1] <- end.y[1] + 1
-    end.y[2] <- 1
-  } else {
-    end.y[2] <- end.y[2] + 1
-  }
-
   fcast <- msts(fcast, c(period1, period2))
 
   if (!is.null(lambda)) {
