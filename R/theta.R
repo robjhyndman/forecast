@@ -83,7 +83,6 @@ theta_model <- function(
   }
   if (!is.null(lambda)) {
     fitted <- InvBoxCox(fitted, lambda, biasadj, var(res))
-    res <- y - fitted
   }
 
   # Return results

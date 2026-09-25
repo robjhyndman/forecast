@@ -616,9 +616,9 @@ forecast.stlm <- function(
     seasonal.periods <- frequency(object$stl)
   }
   seascomp <- matrix(0, ncol = length(seasonal.periods), nrow = h)
+  n <- NROW(object$stl)
   for (i in seq_along(seasonal.periods)) {
     mp <- seasonal.periods[i]
-    n <- NROW(object$stl)
     colname <- paste0("Seasonal", round(mp, 2))
     seascomp[, i] <- rep(
       object$stl[n - rev(seq_len(mp)) + 1, colname],
@@ -626,11 +626,8 @@ forecast.stlm <- function(
     )[seq_len(h)]
   }
   lastseas <- rowSums(seascomp)
-  xdata <- object$stl[, "Data"]
   seascols <- grep("Seasonal", colnames(object$stl), fixed = TRUE)
   allseas <- rowSumsTS(object$stl[, seascols, drop = FALSE])
-
-  n <- NROW(xdata)
 
   # Reseasonalize
   fcast$mean <- fcast$mean + lastseas
