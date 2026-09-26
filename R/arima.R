@@ -456,13 +456,7 @@ forecast.Arima <- function(
   upper <- ts(upper)
   tsp(lower) <- tsp(upper) <- tsp(pred$pred)
   method <- arima.string(object, padding = FALSE)
-  seriesname <- if (!is.null(object$series)) {
-    object$series
-  } else if (!is.null(object$call$x)) {
-    object$call$x
-  } else {
-    object$call$y
-  }
+  seriesname <- object$series %||% object$call$x %||% object$call$y
   fits <- fitted.Arima(object)
   if (!is.null(lambda) && is.null(object$constant)) {
     # Back-transform point forecasts and prediction intervals
