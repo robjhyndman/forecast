@@ -2156,7 +2156,7 @@ autolayer.msts <- function(object, series = NULL, ...) {
 autolayer.ts <- function(object, colour = TRUE, series = NULL, ...) {
   tsdata <- data.frame(
     timeVal = as.numeric(time(object)),
-    series = if (is.null(series)) deparse1(substitute(object)) else series,
+    series = series %||% deparse1(substitute(object)),
     seriesVal = as.numeric(object),
     check.names = FALSE
   )

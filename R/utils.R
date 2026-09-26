@@ -10,6 +10,10 @@ getConfLevel <- function(level, fan) {
   }
 }
 
+`%||%` <- function(x, y) {
+  if (is.null(x)) y else x
+}
+
 is_count <- function(x) {
   is.numeric(x) && length(x) == 1L && is.finite(x) && x == round(x) && x > 0
 }
