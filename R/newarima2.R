@@ -187,7 +187,6 @@ auto.arima <- function(
     m <- 1
   }
   if (m < 1) {
-    # warning("I can't handle data with frequency less than 1. Seasonality will be ignored.")
     m <- 1
   } else {
     m <- round(m)
@@ -423,7 +422,6 @@ auto.arima <- function(
       offset <- -2 * fit$loglik - serieslength * log(fit$sigma2)
     } else {
       # Not sure this should ever happen
-      # warning("Unable to calculate AIC offset")
       offset <- 0
     }
   } else {

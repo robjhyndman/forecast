@@ -127,7 +127,6 @@ search.arima <- function(
       if (trace) {
         cat("\n\n Now re-fitting the best model(s) without approximations...\n")
       }
-      # constant <- length(bestfit$coef) - ncol(xreg) > sum(bestfit$arma[1:4])
       newbestfit <- myarima(
         x,
         order = bestfit$arma[c(1, 6, 2)],
@@ -141,7 +140,6 @@ search.arima <- function(
       )
       if (newbestfit$ic == Inf) {
         # Final model is lousy. Better try again without approximation
-        # warning("Unable to fit final model using maximum likelihood. AIC value approximated")
         bestfit <- search.arima(
           x,
           d = d,
@@ -650,7 +648,6 @@ fitted.Arima <- function(object, h = 1, ...) {
     if (!is.null(object$fitted)) {
       return(object$fitted)
     } else if (is.null(x)) {
-      # warning("Fitted values are unavailable due to missing historical data")
       return(NULL)
     } else if (is.null(object$lambda)) {
       return(x - object$residuals)

@@ -510,7 +510,6 @@ forecast.lm <- function(
   }
 
   if (!is.null(lambda)) {
-    #fcast$x <- InvBoxCox(fcast$x, lambda)
     fcast$mean <- InvBoxCox(fcast$mean, lambda, biasadj, fcast)
     fcast$lower <- InvBoxCox(fcast$lower, lambda)
     fcast$upper <- InvBoxCox(fcast$upper, lambda)

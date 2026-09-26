@@ -350,7 +350,6 @@ filterSpecifics <- function(
       } else {
         ma.coefs <- NULL
       }
-      # printCASE(box.cox, trend, damping, seasonal.periods, ar.coefs, ma.coefs, p, q)
       second.model <- fitSpecificBATS(
         y,
         use.box.cox = box.cox,
@@ -445,7 +444,6 @@ parFilterSpecifics <- function(
       } else {
         ma.coefs <- NULL
       }
-      # printCASE(box.cox, trend, damping, seasonal.periods, ar.coefs, ma.coefs, p, q)
       second.model <- fitSpecificBATS(
         y,
         use.box.cox = box.cox,

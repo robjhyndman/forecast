@@ -110,8 +110,6 @@ testaccuracy <- function(f, x, test, d, D) {
 
 trainingaccuracy <- function(f, test, d, D) {
   # Make sure x is an element of f when f is a fitted model rather than a forecast
-  # if(!is.list(f))
-  #  stop("f must be a forecast object or a time series model object.")
   dx <- getResponse(f)
   if (is.splineforecast(f) || inherits(f, "spline_model")) {
     fits <- f$onestepf
