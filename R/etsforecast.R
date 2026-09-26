@@ -45,7 +45,6 @@ forecast.ets <- function(
   ...
 ) {
   # Check inputs
-  # if(h>2000 | h<=0)
   if (h <= 0) {
     stop("Forecast horizon out of bounds")
   }
@@ -178,8 +177,6 @@ forecast.ets <- function(
   out$residuals <- copy_msts(object$x, residuals(object))
 
   if (!is.null(lambda)) {
-    # out$x <- InvBoxCox(object$x,lambda)
-    # out$fitted <- InvBoxCox(out$fitted,lambda)
     out$mean <- InvBoxCox(out$mean, lambda, biasadj, out)
     if (PI) {
       out$lower <- InvBoxCox(out$lower, lambda)

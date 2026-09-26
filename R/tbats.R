@@ -239,8 +239,6 @@ tbats <- function(
       k.vector[i] <- max.k
       best.model$AIC <- Inf
       repeat {
-        # old.k <- k.vector[i]
-        # k.vector[i] <- k.vector[i]-1
         new.model <- try(
           fitSpecificTBATS(
             y,

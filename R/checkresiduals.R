@@ -92,9 +92,6 @@ checkresiduals <- function(object, lag, test, plot = TRUE, ...) {
   freq <- frequency(residuals)
 
   # Find model df
-  #if (grepl("STL \\+ ", method)) {
-  #  warning("The fitted degrees of freedom is based on the model used for the seasonally adjusted data.")
-  #}
   if (inherits(object, "Arima") || test == "BG") {
     df <- modeldf(object)
   } else {

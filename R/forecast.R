@@ -262,7 +262,6 @@ plotlmforecast <- function(
     nint <- length(object$level)
     idx <- rev(order(object$level))
     if (is.null(shadecols)) {
-      # require(colorspace)
       if (min(object$level) < 50) {
         # Using very small confidence levels.
         shadecols <- rev(colorspace::sequential_hcl(100)[object$level])
@@ -514,7 +513,6 @@ plot.forecast <- function(
     idx <- rev(order(x$level))
     nint <- length(x$level)
     if (is.null(shadecols)) {
-      # require(colorspace)
       if (min(x$level) < 50) {
         # Using very small confidence levels.
         shadecols <- rev(colorspace::sequential_hcl(100)[x$level])

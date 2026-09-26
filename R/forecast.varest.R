@@ -15,7 +15,6 @@ forecast.varest <- function(
   vfits <- fitted(object)
   method <- paste0("VAR(", object$p, ")")
   # Add forecasts with prediction intervals
-  # out$mean <- out$lower <- out$upper <- vector("list",object$K)
   for (i in seq_along(level)) {
     pr <- predict(object, n.ahead = h, ci = level[i] / 100, ...)
     for (j in seq_len(object$K)) {

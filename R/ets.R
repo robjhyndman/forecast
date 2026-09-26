@@ -265,7 +265,6 @@ ets <- function(
   }
 
   if (m < 1 || length(y) <= m) {
-    # warning("I can't handle data with frequency less than 1. Seasonality will be ignored.")
     seasontype <- "N"
   }
   if (m == 1) {
@@ -283,7 +282,6 @@ ets <- function(
         "I can't handle data with frequency greater than 24. Seasonality will be ignored. Try stlf() if you need seasonal forecasts."
       )
       substr(model, 3, 3) <- seasontype <- "N"
-      # m <- 1
     }
   }
 
@@ -645,8 +643,6 @@ etsmodel <- function(
     phi <- par["phi"]
   }
 
-  #    if(errortype=="M" | trendtype=="M" | seasontype=="M")
-  #        bounds="usual"
   if (!check.param(alpha, beta, gamma, phi, lower, upper, bounds, m)) {
     cat(
       "Model: ETS(",

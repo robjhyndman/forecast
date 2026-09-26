@@ -33,9 +33,6 @@ msts <- function(
   ts.frequency = floor(max(seasonal.periods)),
   ...
 ) {
-  # if(!is.element(ts.frequency, round(seasonal.periods-0.5+1e-12)))
-  #  stop("ts.frequency should be one of the seasonal periods")
-
   if (is.ts(data) && frequency(data) == ts.frequency && ...length() == 0) {
     object <- data
   } else {

@@ -497,8 +497,6 @@ ocsb.test <- function(
   }
 
   regression <- fitOCSB(x, maxlag, maxlag)
-  # if(anyNA(regression$coefficients))
-  #  stop("Model did not reach a solution. Check the time series data.")
 
   stat <- summary(regression)$coefficients[c("xregZ4", "xregZ5"), "t value"]
 
