@@ -394,8 +394,6 @@ wpacf <- function(x, lag.max = length(x) - 1) {
       phis[1:(k - 1)] <- old.phis - phis[k] * rev(old.phis)
       pacf[k] <- phis[k]
       pev[k + 1] <- pev[k] * (1 - phis[k]^2)
-      # if(abs(pacf[k]) > 1)
-      #  warning("PACF larger than 1 in absolute value")
     }
   }
   out$acf[,, 1] <- pacf
@@ -520,7 +518,6 @@ plot.mpacf <- function(
         border = FALSE
       )
     }
-    #    polygon(c(lagx,rev(lagx)),c(object$lower,rev(object$upper)),col=gray(.60),border=FALSE)
   }
   lines(lagx, object$z, lwd = 1.5)
   j <- (object$lower < 0 & object$upper > 0)

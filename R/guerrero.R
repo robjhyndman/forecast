@@ -126,7 +126,6 @@ BoxCox.lambda <- function(
   if (length(x) <= 2 * frequency(x)) {
     return(1)
   } # Not enough data to do much more than this
-  #   stop("All values must be positive")
   method <- match.arg(method)
   if (method == "loglik") {
     return(bcloglik(x, lower, upper))

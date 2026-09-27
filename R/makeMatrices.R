@@ -104,7 +104,6 @@ makeTBATSFMatrix <- function(
 
   # 4. AR() Rows
   if (!is.null(ar.coefs)) {
-    # p <- length(ar.coefs)
     ar.rows <- matrix(0, nrow = p, ncol = 1)
     if (!is.null(beta)) {
       ar.rows <- cbind(ar.rows, ar.rows)
@@ -243,7 +242,6 @@ makeFMatrix <- function(
 
   # 4. AR() Rows
   if (!is.null(ar.coefs)) {
-    # p <- length(ar.coefs)
     ar.rows <- matrix(0, nrow = p, ncol = 1)
     if (!is.null(beta)) {
       ar.rows <- cbind(ar.rows, ar.rows)

@@ -374,7 +374,6 @@ simulate.Arima <- function(
   flag.s.arma <- (sum(object$arma[c(3, 4)]) > 0)
   # Check for Seasonality in ARIMA model
   if (sum(object$arma[c(3, 4, 7)]) > 0) {
-    # return(simulateSeasonalArima(object, nsim=nsim, seed=seed, xreg=xreg, future=future, bootstrap=bootstrap, ...))
     if (sum(object$model$phi) == 0) {
       ar <- NULL
     } else {

@@ -37,16 +37,6 @@ datamat <- function(..., flatten = TRUE, functions = TRUE) {
   }
   class(vars) <- "data.frame"
   row.names(vars) <- seq_len(max(vapply(vars, NROW, integer(1))))
-  #   if(is.ts(vars[,1])){
-  #     if(NCOL(vars)>1){
-  #       class(vars) <- c(class(vars),"mts")
-  #     }
-  #     class(vars) <- c(class(vars),"ts")
-  #     tspx <- unique(sapply(vars,tsp), MARGIN = 2)
-  #     if(length(tspx)==3){
-  #       attr(vars, "tsp") <- tspx
-  #     }
-  #   }
   vars
 }
 

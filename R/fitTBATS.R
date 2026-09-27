@@ -205,8 +205,6 @@ fitSpecificTBATS <- function(
     } else {
       s.vector <- NULL
     }
-    # ar.coefs <- paramz$ar.coefs
-    # ma.coefs <- paramz$ma.coefs
     ## Check for the existence of ARMA() coefficients
     if (!is.null(ar.coefs)) {
       p <- length(ar.coefs)

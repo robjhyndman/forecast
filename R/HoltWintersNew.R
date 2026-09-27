@@ -74,8 +74,6 @@ HoltWintersZZ <- function(
   }
 
   # initialise smoothing parameters
-  # lower=c(rep(0.0001,3), 0.8)
-  # upper=c(rep(0.9999,3),0.98)
   lower <- c(0, 0, 0, 0)
   upper <- c(1, 1, 1, 1)
 
@@ -221,7 +219,6 @@ HoltWintersZZ <- function(
   } else if (seasonal == "none" && exponential) {
     components <- c("M", trendtype, seasontype, damped)
   } else {
-    # if(seasonal=="none" & !exponential)
     components <- c("A", trendtype, seasontype, damped)
   }
 
@@ -646,7 +643,6 @@ hw <- function(
         ...
       )
     } else {
-      # if(seasonal!="additive" & !exponential)
       fcast <- forecast(
         ets(
           x,

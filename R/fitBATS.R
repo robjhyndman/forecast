@@ -132,9 +132,6 @@ fitSpecificBATS <- function(
     if (!is.null(seasonal.periods)) {
       gamma.v <- rep(.001, length(seasonal.periods))
       s.vector <- numeric(sum(seasonal.periods))
-      # for(s in seasonal.periods) {
-      #  s.vector <- cbind(s.vector, numeric(s))
-      # }
     } else {
       gamma.v <- NULL
       s.vector <- NULL
@@ -164,8 +161,6 @@ fitSpecificBATS <- function(
     } else {
       s.vector <- NULL
     }
-    # ar.coefs <- paramz$ar.coefs
-    # ma.coefs <- paramz$ma.coefs
     ## Check for the existence of ARMA() coefficients
     if (!is.null(ar.coefs)) {
       p <- length(ar.coefs)
@@ -240,16 +235,12 @@ fitSpecificBATS <- function(
   if (use.box.cox) {
     y.transformed <- BoxCox(y, lambda = lambda)
     lambda <- attr(y.transformed, "lambda")
-    # x.nought <- BoxCox(x.nought, lambda=lambda)
     y.tilda <- calcModel(y.transformed, x.nought, F, g$g, w)$e
   } else {
     y.tilda <- calcModel(y, x.nought, F, g$g, w)$e
   }
   w.tilda.transpose <- matrix(0, nrow = length(y), ncol = ncol(w$w.transpose))
   w.tilda.transpose[1, ] <- w$w.transpose
-  # for(i in 2:length(y)) {
-  #  w.tilda.transpose[i,] <- w.tilda.transpose[(i-1),] %*% D
-  # }
   calcWTilda(wTildaTranspose = w.tilda.transpose, D = D)
   ## If there is a seasonal component in the model, then the follow adjustment need to be made so that the seed states can be found
   if (!is.null(seasonal.periods)) {
@@ -314,7 +305,6 @@ fitSpecificBATS <- function(
   ## Second pass of optimisation
   if (use.box.cox) {
     # Un-transform the seed states
-    # x.nought.untransformed <- InvBoxCox(x.nought, lambda=lambda)
     opt.env$x.nought.untransformed <- InvBoxCox(x.nought, lambda = lambda)
     # Optimise the likelihood function
     optim.like <- optim(
@@ -386,8 +376,6 @@ fitSpecificBATS <- function(
       variance
     )
     attr(lambda, "biasadj") <- biasadj
-    # e <- InvBoxCox(e, lambda=lambda)
-    # ee <- y-fitted.values
   } else {
     # else if we are not using the Box-Cox transformation
     # Optimise the likelihood function
