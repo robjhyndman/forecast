@@ -20,19 +20,12 @@ test_that("tests summary.forecast() and forecast.forecast()", {
   ))
 })
 
-# test_that("tests plot.forecast()", {
-#   # Fit several types of models for plotting
-#   batsmod <- bats(woolyrnq)
-#   nnetmod <- nnetar(woolyrnq)
-#   tslmmod <- tslm(woolyrnq ~ trend + season)
-#   nnetfc<- forecast(nnetmod)
-#   batsfc <- forecast(batsmod)
-#   tslmfc <- forecast(tslmmod)
-#   skip_on_travis()
-#   # Plot the forecasts
-#   expect_that(plot(nnetfc), not(throws_error()))
-#   expect_that(plot(batsfc), not(throws_error()))
-#   expect_that(plot(batsfc, shaded = FALSE), not(throws_error()))
-#   expect_that(plot(tslmfc, PI = FALSE), not(throws_error()))
-#   expect_that(plot(forecast(tslmmod, h = 0)), not(throws_error()))
-# })
+test_that("tests plot.forecast()", {
+  nnetfc <- forecast(nnetar(woolyrnq))
+  etsfc <- forecast(ets(woolyrnq))
+  tslmfc <- forecast(tslm(woolyrnq ~ trend + season))
+  expect_no_error(plot(nnetfc))
+  expect_no_error(plot(etsfc))
+  expect_no_error(plot(etsfc, shaded = FALSE))
+  expect_no_error(plot(tslmfc, PI = FALSE))
+})

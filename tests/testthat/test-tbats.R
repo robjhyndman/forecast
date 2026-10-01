@@ -38,7 +38,6 @@ test_that("Test tbats() and forecasts", {
   # Test length of forecast
   expect_length(forecast(tbatsfit1)$mean, 2 * frequency(wineind))
   expect_length(forecast(tbatsfit2)$mean, 10)
-  # expect_true(length(forecast(tbatsfit3)$mean) == 2 * frequency(woolyrnq))
   expect_length(forecast(tbatsfit4)$mean, 10)
   # Test inappropriate levels
   expect_error(forecast(tbatsfit1, level = -10))
@@ -71,9 +70,3 @@ test_that("tbats() selects harmonics independently of period order", {
   expect_equal(fits[[1]][fields], fits[[2]][fields])
   expect_equal(fits[[1]]$k.vector, c(1, 1))
 })
-
-#test_that("Test tbats() with parallel", {
-# Tests will not run on Travis in parallel
-# expect_output(print(tbats(woolyrnq, num.cores = 1)), regexp = "TBATS")
-# expect_output(print(tbats(elecsales, num.cores = 1, use.trend = FALSE)), regexp = "BATS")
-#})

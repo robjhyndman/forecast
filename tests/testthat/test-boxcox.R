@@ -41,12 +41,12 @@ test_that("tests for biasadj automatically set based on model fit", {
   expect_true(all.equal(forecast(fit), forecast(fit, biasadj = TRUE)))
 
   # bats
-  # fit <- bats(USAccDeaths, use.box.cox = TRUE, biasadj = TRUE)
-  # expect_true(all.equal(forecast(fit), forecast(fit, biasadj=TRUE)))
+  fit <- bats(USAccDeaths, use.box.cox = TRUE, biasadj = TRUE)
+  expect_equal(forecast(fit), forecast(fit, biasadj = TRUE))
 
   # tbats
-  # fit <- tbats(USAccDeaths, use.box.cox = TRUE, biasadj = TRUE)
-  # expect_true(all.equal(forecast(fit), forecast(fit, biasadj=TRUE)))
+  fit <- tbats(USAccDeaths, use.box.cox = TRUE, biasadj = TRUE)
+  expect_equal(forecast(fit), forecast(fit, biasadj = TRUE))
 })
 
 test_that("tests for automatic lambda selection in BoxCox transformation", {

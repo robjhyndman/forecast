@@ -323,7 +323,11 @@ test_that("Tests for modelAR", {
       FUN = avnnet2,
       predict.FUN = predict.avnnet2,
       scale.inputs = TRUE,
-      subset = c(rep(FALSE, 10), rep(TRUE, 10), rep(FALSE, length(airmiles) - 20)),
+      subset = c(
+        rep(FALSE, 10),
+        rep(TRUE, 10),
+        rep(FALSE, length(airmiles) - 20)
+      ),
       p = 1,
       size = 1,
       repeats = 10
@@ -331,7 +335,11 @@ test_that("Tests for modelAR", {
     set.seed(123)
     airnnet2 <- nnetar(
       airmiles,
-      subset = c(rep(FALSE, 10), rep(TRUE, 10), rep(FALSE, length(airmiles) - 20)),
+      subset = c(
+        rep(FALSE, 10),
+        rep(TRUE, 10),
+        rep(FALSE, length(airmiles) - 20)
+      ),
       p = 1,
       size = 1,
       repeats = 10
@@ -350,8 +358,8 @@ test_that("Tests for modelAR", {
     set.seed(456)
     f2 <- forecast(airnnet2, h = 5, PI = TRUE, npaths = 100)
   })
-  #expect_true(identical(f1$upper, f2$upper))
-  #expect_true(identical(f1$lower, f2$lower))
+  expect_equal(f1$upper, f2$upper, ignore_attr = "class")
+  expect_equal(f1$lower, f2$lower, ignore_attr = "class")
   ## Check short and constant data
   expect_warning(
     nnetfit <- modelAR(
