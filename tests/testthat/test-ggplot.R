@@ -39,9 +39,6 @@ test_that("tests for autoplot/gg functions", {
   stlfit <- stl(USAccDeaths, s.window = "periodic")
   autoplot(stlfit)
 
-  # seasfit <- seasonal::seas(USAccDeaths)
-  # autoplot(seasfit)
-
   etsfcast <- forecast(etsfit)
   autoplot(etsfcast)
   autoplot(etsfcast, PI = FALSE)
@@ -89,6 +86,11 @@ test_that("tests for autoplot/gg functions", {
   autoplot(lungDeaths, facets = TRUE) + geom_forecast()
 
   gghistogram(USAccDeaths, add.kde = TRUE)
+})
+
+test_that("autoplot.seas() works", {
+  skip_if_not_installed("seasonal")
+  expect_s3_class(autoplot(seasonal::seas(USAccDeaths)), "ggplot")
 })
 
 test_that("autoplot.splineforecast() draws no intervals with PI = FALSE", {
