@@ -2561,8 +2561,8 @@ GeomForecast <- ggplot2::ggproto(
     lwd <- min(data$size, min(size) / 4)
 
     # Calculate and set colour
-    linecol <- blendHex(data$col, "gray30", 1)
-    fillcol <- blendHex(data$col, "#CCCCCC", 0.8)
+    linecol <- blendHex(data$colour, "gray30", 1)
+    fillcol <- blendHex(data$colour, "#CCCCCC", 0.8)
 
     grid::grobTree(
       grid::rectGrob(
