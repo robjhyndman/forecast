@@ -562,7 +562,7 @@ CV <- function(obj) {
   aicc <- aic + 2 * (k + 2) * (k + 3) / (n - k - 3)
   bic <- aic + (k + 2) * (log(n) - 2)
   cv <- mean((residuals(obj) / (1 - hatvalues(obj)))^2, na.rm = TRUE)
-  adjr2 <- summary(obj)$adj
+  adjr2 <- summary(obj)$adj.r.squared
   out <- c(cv, aic, aicc, bic, adjr2)
   names(out) <- c("CV", "AIC", "AICc", "BIC", "AdjR2")
   out
