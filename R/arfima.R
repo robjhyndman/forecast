@@ -352,11 +352,7 @@ forecast.fracdiff <- function(
     }
   }
 
-  seriesname <- if (!is.null(object$series)) {
-    object$series
-  } else {
-    deparse(object$call$x)
-  }
+  seriesname <- object$series %||% deparse(object$call$x)
   structure(
     list(
       x = x,
