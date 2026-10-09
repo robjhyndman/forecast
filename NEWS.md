@@ -7,6 +7,7 @@
 * `autolayer()` now labels an unnamed `msts` series with the name of the object instead of "NULL".
 * `autolayer()` for `mts` and `mforecast` objects no longer errors when arguments are local variables.
 * `autoplot.forecast()` no longer errors for cross-sectional regression models fitted without an intercept.
+* `autoplot.mpacf()`, used by `ggtaperedacf()`, no longer inverts the significance legend.
 * `autoplot.tbats()` no longer errors.
 * `bld.mbb.bootstrap()` no longer errors when `num = 1` and now validates that `num` is a positive integer.
 * `CVar()` now computes fold accuracy with fitted and actual values in the correct order.
