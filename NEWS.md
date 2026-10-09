@@ -7,6 +7,7 @@
 * `autolayer()` now labels an unnamed `msts` series with the name of the object instead of "NULL".
 * `autolayer()` for `mts` and `mforecast` objects no longer errors when arguments are local variables.
 * `autoplot.forecast()` no longer errors for cross-sectional regression models fitted without an intercept.
+* `autoplot.mpacf()`, used by `ggtaperedacf()`, no longer inverts the significance legend.
 * `autoplot.tbats()` no longer errors.
 * `bld.mbb.bootstrap()` no longer errors when `num = 1` and now validates that `num` is a positive integer.
 * `CVar()` now computes fold accuracy with fitted and actual values in the correct order.
@@ -18,6 +19,7 @@
 * `forecast.ets()` now uses the supplied `innov` matrix when `simulate = TRUE` instead of silently ignoring it.
 * `forecast.ets()` now gives the intended error message when forecasting fails for a multiplicative trend model.
 * `forecast.ts()` now keeps the series name in more cases.
+* `forecast.varest()` now supports `fan = TRUE` and `level` values between 0 and 1.
 * `ggtaperedacf()` no longer errors when forecast is not attached.
 * `ggtsdisplay()` shows the series name as the default title again.
 * `mstl()` now drops short seasonal periods from the `msts` attribute, so `forecast.stlm()` no longer errors.
