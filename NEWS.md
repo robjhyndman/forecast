@@ -5,6 +5,7 @@
 * `auto.arima()` stepwise search now searches models without a constant when the null model without one is best.
 * `Arima()` no longer errors when the series is supplied via the deprecated `x` argument.
 * `autolayer()` now labels an unnamed `msts` series with the name of the object instead of "NULL".
+* `autolayer()` for `mts` and `mforecast` objects no longer errors when arguments are local variables.
 * `autoplot.forecast()` no longer errors for cross-sectional regression models fitted without an intercept.
 * `autoplot.tbats()` no longer errors.
 * `bld.mbb.bootstrap()` no longer errors when `num = 1` and now validates that `num` is a positive integer.

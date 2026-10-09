@@ -2108,9 +2108,6 @@ autoplot.seas <- function(object, labels = NULL, range.bars = NULL, ...) {
 #' @rdname autoplot.ts
 #' @export
 autolayer.mts <- function(object, colour = TRUE, series = NULL, ...) {
-  cl <- match.call()
-  cl[[1]] <- quote(autolayer)
-  cl$object <- quote(object[, i])
   if (length(series) != NCOL(object)) {
     if (colour) {
       message(
@@ -2121,8 +2118,12 @@ autolayer.mts <- function(object, colour = TRUE, series = NULL, ...) {
   }
   out <- vector("list", NCOL(object))
   for (i in seq_along(out)) {
-    cl$series <- series[i]
-    out[[i]] <- eval(cl)
+    out[[i]] <- autolayer(
+      object[, i],
+      colour = colour,
+      series = series[i],
+      ...
+    )
   }
   out
 }
@@ -2213,9 +2214,6 @@ autolayer.forecast <- function(
 #' @rdname plot.mforecast
 #' @export
 autolayer.mforecast <- function(object, series = NULL, PI = TRUE, ...) {
-  cl <- match.call()
-  cl[[1]] <- quote(autolayer)
-  cl$object <- quote(object$forecast[[i]])
   if (!is.null(series)) {
     if (length(series) != length(object$forecast)) {
       series <- names(object$forecast)
@@ -2223,8 +2221,12 @@ autolayer.mforecast <- function(object, series = NULL, PI = TRUE, ...) {
   }
   out <- vector("list", length(object$forecast))
   for (i in seq_along(out)) {
-    cl$series <- series[i]
-    out[[i]] <- eval(cl)
+    out[[i]] <- autolayer(
+      object$forecast[[i]],
+      series = series[i],
+      PI = PI,
+      ...
+    )
   }
   out
 }
