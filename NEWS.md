@@ -20,6 +20,7 @@
 * `forecast.ets()` now gives the intended error message when forecasting fails for a multiplicative trend model.
 * `forecast.ts()` now keeps the series name in more cases.
 * `forecast.varest()` now supports `fan = TRUE` and `level` values between 0 and 1.
+* `geom_forecast()` no longer errors for forecast objects when forecast is not attached.
 * `ggtaperedacf()` no longer errors when forecast is not attached.
 * `ggtsdisplay()` shows the series name as the default title again.
 * `mstl()` now drops short seasonal periods from the `msts` attribute, so `forecast.stlm()` no longer errors.
