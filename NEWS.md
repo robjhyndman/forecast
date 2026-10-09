@@ -2,6 +2,7 @@
 
 * `auto.arima()` parallel model search (`stepwise = FALSE`) now works on Windows (#1187).
 * `auto.arima()` now truncates `xreg` together with the series when `approximation = TRUE` and `truncate` is set, so model selection no longer fails.
+* `auto.arima()` stepwise search now searches models without a constant when the null model without one is best.
 * `Arima()` no longer errors when the series is supplied via the deprecated `x` argument.
 * `autolayer()` now labels an unnamed `msts` series with the name of the object instead of "NULL".
 * `autoplot.forecast()` no longer errors for cross-sectional regression models fitted without an intercept.
