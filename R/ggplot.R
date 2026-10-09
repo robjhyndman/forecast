@@ -283,13 +283,13 @@ autoplot.mpacf <- function(object, ...) {
   }
   if (!is.null(object$lower)) {
     data <- data.frame(
-      Lag = 1:object$lag,
+      Lag = seq_len(object$lag),
       z = object$z,
-      sig = (object$lower < 0 & object$upper > 0),
+      sig = object$lower > 0 | object$upper < 0,
       check.names = FALSE
     )
     cidata <- data.frame(
-      Lag = rep(1:object$lag, each = 2) + c(-0.5, 0.5),
+      Lag = rep(seq_len(object$lag), each = 2) + c(-0.5, 0.5),
       z = rep(object$z, each = 2),
       upper = rep(object$upper, each = 2),
       lower = rep(object$lower, each = 2),
@@ -297,7 +297,11 @@ autoplot.mpacf <- function(object, ...) {
     )
     plotpi <- TRUE
   } else {
-    data <- data.frame(Lag = 1:object$lag, z = object$z, check.names = FALSE)
+    data <- data.frame(
+      Lag = seq_len(object$lag),
+      z = object$z,
+      check.names = FALSE
+    )
     plotpi <- FALSE
   }
   # Initialise ggplot object
@@ -342,7 +346,7 @@ autoplot.mpacf <- function(object, ...) {
   if (msts) {
     periods <- attr(object$x, "msts")
     periods <- periods[periods != freq]
-    minorbreaks <- periods * seq(-20:20)
+    minorbreaks <- periods * seq_len(41)
   } else {
     minorbreaks <- NULL
   }
