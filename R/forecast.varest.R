@@ -7,6 +7,7 @@ forecast.varest <- function(
   fan = FALSE,
   ...
 ) {
+  level <- getConfLevel(level, fan)
   out <- list(model = object, forecast = vector("list", object$K))
   # Get residuals and fitted values and fix the times
 
