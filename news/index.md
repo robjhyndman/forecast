@@ -9,6 +9,9 @@
   now truncates `xreg` together with the series when
   `approximation = TRUE` and `truncate` is set, so model selection no
   longer fails.
+- [`auto.arima()`](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md)
+  stepwise search now searches models without a constant when the null
+  model without one is best.
 - [`Arima()`](https://pkg.robjhyndman.com/forecast/reference/Arima.md)
   no longer errors when the series is supplied via the deprecated `x`
   argument.
