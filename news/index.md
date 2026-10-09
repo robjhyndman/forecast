@@ -18,6 +18,9 @@
 - [`autolayer()`](https://ggplot2.tidyverse.org/reference/autolayer.html)
   now labels an unnamed `msts` series with the name of the object
   instead of “NULL”.
+- [`autolayer()`](https://ggplot2.tidyverse.org/reference/autolayer.html)
+  for `mts` and `mforecast` objects no longer errors when arguments are
+  local variables.
 - [`autoplot.forecast()`](https://pkg.robjhyndman.com/forecast/reference/plot.forecast.md)
   no longer errors for cross-sectional regression models fitted without
   an intercept.
