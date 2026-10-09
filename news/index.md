@@ -60,6 +60,8 @@
   now keeps the series name in more cases.
 - `forecast.varest()` now supports `fan = TRUE` and `level` values
   between 0 and 1.
+- [`geom_forecast()`](https://pkg.robjhyndman.com/forecast/reference/geom_forecast.md)
+  no longer errors for forecast objects when forecast is not attached.
 - [`ggtaperedacf()`](https://pkg.robjhyndman.com/forecast/reference/autoplot.acf.md)
   no longer errors when forecast is not attached.
 - [`ggtsdisplay()`](https://pkg.robjhyndman.com/forecast/reference/tsdisplay.md)
