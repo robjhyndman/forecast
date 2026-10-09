@@ -58,6 +58,10 @@
   multiplicative trend model.
 - [`forecast.ts()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ts.md)
   now keeps the series name in more cases.
+- `forecast.varest()` now supports `fan = TRUE` and `level` values
+  between 0 and 1.
+- [`ggtaperedacf()`](https://pkg.robjhyndman.com/forecast/reference/autoplot.acf.md)
+  no longer errors when forecast is not attached.
 - [`ggtsdisplay()`](https://pkg.robjhyndman.com/forecast/reference/tsdisplay.md)
   shows the series name as the default title again.
 - [`mstl()`](https://pkg.robjhyndman.com/forecast/reference/mstl.md) now
