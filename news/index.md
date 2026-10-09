@@ -51,6 +51,8 @@
   multiplicative trend model.
 - [`forecast.ts()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ts.md)
   now keeps the series name in more cases.
+- [`ggtsdisplay()`](https://pkg.robjhyndman.com/forecast/reference/tsdisplay.md)
+  shows the series name as the default title again.
 - [`mstl()`](https://pkg.robjhyndman.com/forecast/reference/mstl.md) now
   drops short seasonal periods from the `msts` attribute, so
   [`forecast.stlm()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
