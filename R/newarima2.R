@@ -605,6 +605,7 @@ auto.arima <- function(
     if (fit$ic < bestfit$ic) {
       bestfit <- fit
       p <- q <- P <- Q <- 0
+      constant <- FALSE
     }
     k <- k + 1
   }
@@ -1306,7 +1307,10 @@ myarima <- function(
       cat("\n", arima.string(fit, padding = TRUE), ":", fit$ic)
     }
 
-    return(structure(fit, class = c("fc_model", "forecast_ARIMA", "ARIMA", "Arima")))
+    return(structure(
+      fit,
+      class = c("fc_model", "forecast_ARIMA", "ARIMA", "Arima")
+    ))
   } else {
     # Catch errors due to unused arguments
     if (any(grepl("unused argument", fit, fixed = TRUE))) {

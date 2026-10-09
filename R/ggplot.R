@@ -283,13 +283,13 @@ autoplot.mpacf <- function(object, ...) {
   }
   if (!is.null(object$lower)) {
     data <- data.frame(
-      Lag = 1:object$lag,
+      Lag = seq_len(object$lag),
       z = object$z,
-      sig = (object$lower < 0 & object$upper > 0),
+      sig = object$lower > 0 | object$upper < 0,
       check.names = FALSE
     )
     cidata <- data.frame(
-      Lag = rep(1:object$lag, each = 2) + c(-0.5, 0.5),
+      Lag = rep(seq_len(object$lag), each = 2) + c(-0.5, 0.5),
       z = rep(object$z, each = 2),
       upper = rep(object$upper, each = 2),
       lower = rep(object$lower, each = 2),
@@ -297,7 +297,11 @@ autoplot.mpacf <- function(object, ...) {
     )
     plotpi <- TRUE
   } else {
-    data <- data.frame(Lag = 1:object$lag, z = object$z, check.names = FALSE)
+    data <- data.frame(
+      Lag = seq_len(object$lag),
+      z = object$z,
+      check.names = FALSE
+    )
     plotpi <- FALSE
   }
   # Initialise ggplot object
@@ -342,7 +346,7 @@ autoplot.mpacf <- function(object, ...) {
   if (msts) {
     periods <- attr(object$x, "msts")
     periods <- periods[periods != freq]
-    minorbreaks <- periods * seq(-20:20)
+    minorbreaks <- periods * seq_len(41)
   } else {
     minorbreaks <- NULL
   }
@@ -702,9 +706,7 @@ autoplot.ets <- function(object, range.bars = NULL, ...) {
 #' @rdname plot.bats
 #' @export
 autoplot.tbats <- function(object, range.bars = FALSE, ...) {
-  cl <- match.call()
-  cl[[1]] <- quote(autoplot.bats)
-  eval.parent(cl)
+  NextMethod()
 }
 
 #' @rdname plot.bats
@@ -1066,12 +1068,9 @@ ggtsdisplay <- function(
   }
 
   dots <- list(...)
-  if (is.null(dots$xlab)) {
-    dots$xlab <- ""
-  }
-  if (is.null(dots$ylab)) {
-    dots$ylab <- ""
-  }
+  dots$xlab <- dots$xlab %||% ""
+  dots$ylab <- dots$ylab %||% ""
+  dots$main <- dots$main %||% main
   labs <- match(c("xlab", "ylab", "main"), names(dots), nomatch = 0)
 
   # Set up grid for plots
@@ -1089,10 +1088,6 @@ ggtsdisplay <- function(
   }
   if (smooth) {
     tsplot <- tsplot + ggplot2::geom_smooth(method = "loess", se = FALSE)
-  }
-  if (is.null(tsplot$labels$title)) {
-    # Add title if missing
-    tsplot <- tsplot + ggplot2::ggtitle(main)
   }
   if (!is.null(theme)) {
     tsplot <- tsplot + theme
@@ -2117,9 +2112,6 @@ autoplot.seas <- function(object, labels = NULL, range.bars = NULL, ...) {
 #' @rdname autoplot.ts
 #' @export
 autolayer.mts <- function(object, colour = TRUE, series = NULL, ...) {
-  cl <- match.call()
-  cl[[1]] <- quote(autolayer)
-  cl$object <- quote(object[, i])
   if (length(series) != NCOL(object)) {
     if (colour) {
       message(
@@ -2130,8 +2122,12 @@ autolayer.mts <- function(object, colour = TRUE, series = NULL, ...) {
   }
   out <- vector("list", NCOL(object))
   for (i in seq_along(out)) {
-    cl$series <- series[i]
-    out[[i]] <- eval(cl)
+    out[[i]] <- autolayer(
+      object[, i],
+      colour = colour,
+      series = series[i],
+      ...
+    )
   }
   out
 }
@@ -2222,9 +2218,6 @@ autolayer.forecast <- function(
 #' @rdname plot.mforecast
 #' @export
 autolayer.mforecast <- function(object, series = NULL, PI = TRUE, ...) {
-  cl <- match.call()
-  cl[[1]] <- quote(autolayer)
-  cl$object <- quote(object$forecast[[i]])
   if (!is.null(series)) {
     if (length(series) != length(object$forecast)) {
       series <- names(object$forecast)
@@ -2232,8 +2225,12 @@ autolayer.mforecast <- function(object, series = NULL, PI = TRUE, ...) {
   }
   out <- vector("list", length(object$forecast))
   for (i in seq_along(out)) {
-    cl$series <- series[i]
-    out[[i]] <- eval(cl)
+    out[[i]] <- autolayer(
+      object$forecast[[i]],
+      series = series[i],
+      PI = PI,
+      ...
+    )
   }
   out
 }
