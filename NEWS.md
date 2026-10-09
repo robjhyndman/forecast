@@ -2,9 +2,12 @@
 
 * `auto.arima()` parallel model search (`stepwise = FALSE`) now works on Windows (#1187).
 * `auto.arima()` now truncates `xreg` together with the series when `approximation = TRUE` and `truncate` is set, so model selection no longer fails.
+* `auto.arima()` stepwise search now searches models without a constant when the null model without one is best.
 * `Arima()` no longer errors when the series is supplied via the deprecated `x` argument.
 * `autolayer()` now labels an unnamed `msts` series with the name of the object instead of "NULL".
+* `autolayer()` for `mts` and `mforecast` objects no longer errors when arguments are local variables.
 * `autoplot.forecast()` no longer errors for cross-sectional regression models fitted without an intercept.
+* `autoplot.tbats()` no longer errors.
 * `bld.mbb.bootstrap()` no longer errors when `num = 1` and now validates that `num` is a positive integer.
 * `CVar()` now computes fold accuracy with fitted and actual values in the correct order.
 * `croston_model()` and `croston()` can now optimize and separately specify Croston smoothing parameters.
@@ -16,6 +19,7 @@
 * `forecast.ets()` now gives the intended error message when forecasting fails for a multiplicative trend model.
 * `forecast.ts()` now keeps the series name in more cases.
 * `geom_forecast()` no longer errors for forecast objects when forecast is not attached.
+* `ggtsdisplay()` shows the series name as the default title again.
 * `mstl()` now drops short seasonal periods from the `msts` attribute, so `forecast.stlm()` no longer errors.
 * `meanf()` no longer errors with `bootstrap = TRUE` when a single confidence level is supplied.
 * `meanf()` no longer errors when `lambda = "auto"`.
