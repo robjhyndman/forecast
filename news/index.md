@@ -24,6 +24,10 @@
 - [`autoplot.forecast()`](https://pkg.robjhyndman.com/forecast/reference/plot.forecast.md)
   no longer errors for cross-sectional regression models fitted without
   an intercept.
+- [`autoplot.mpacf()`](https://pkg.robjhyndman.com/forecast/reference/autoplot.acf.md),
+  used by
+  [`ggtaperedacf()`](https://pkg.robjhyndman.com/forecast/reference/autoplot.acf.md),
+  no longer inverts the significance legend.
 - [`autoplot.tbats()`](https://pkg.robjhyndman.com/forecast/reference/plot.bats.md)
   no longer errors.
 - [`bld.mbb.bootstrap()`](https://pkg.robjhyndman.com/forecast/reference/bld.mbb.bootstrap.md)
