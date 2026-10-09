@@ -384,12 +384,15 @@ ggtaperedacf <- function(
   nsim = 100,
   ...
 ) {
-  cl <- match.call()
-  if (plot) {
-    cl$plot <- FALSE
-  }
-  cl[[1]] <- quote(taperedacf)
-  object <- eval.parent(cl)
+  object <- taperedacf(
+    x,
+    lag.max = lag.max,
+    type = type,
+    plot = FALSE,
+    calc.ci = calc.ci,
+    level = level,
+    nsim = nsim
+  )
   if (plot) {
     autoplot(object, ...)
   } else {
