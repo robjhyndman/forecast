@@ -1066,12 +1066,9 @@ ggtsdisplay <- function(
   }
 
   dots <- list(...)
-  if (is.null(dots$xlab)) {
-    dots$xlab <- ""
-  }
-  if (is.null(dots$ylab)) {
-    dots$ylab <- ""
-  }
+  dots$xlab <- dots$xlab %||% ""
+  dots$ylab <- dots$ylab %||% ""
+  dots$main <- dots$main %||% main
   labs <- match(c("xlab", "ylab", "main"), names(dots), nomatch = 0)
 
   # Set up grid for plots
@@ -1089,10 +1086,6 @@ ggtsdisplay <- function(
   }
   if (smooth) {
     tsplot <- tsplot + ggplot2::geom_smooth(method = "loess", se = FALSE)
-  }
-  if (is.null(tsplot$labels$title)) {
-    # Add title if missing
-    tsplot <- tsplot + ggplot2::ggtitle(main)
   }
   if (!is.null(theme)) {
     tsplot <- tsplot + theme
