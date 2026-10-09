@@ -2872,10 +2872,16 @@ geom_forecast <- function(
     warning(
       "Use autolayer instead of geom_forecast to add a forecast layer to your ggplot object."
     )
-    cl <- match.call()
-    cl[[1]] <- quote(autolayer)
-    names(cl)[names(cl) == "mapping"] <- "object"
-    return(eval.parent(cl))
+    return(autolayer(
+      mapping,
+      series = series,
+      PI = PI,
+      showgap = showgap,
+      position = position,
+      na.rm = na.rm,
+      show.legend = show.legend,
+      ...
+    ))
   }
   if (is.ts(mapping)) {
     data <- data.frame(
