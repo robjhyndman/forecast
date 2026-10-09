@@ -4,6 +4,7 @@
 * `auto.arima()` now truncates `xreg` together with the series when `approximation = TRUE` and `truncate` is set, so model selection no longer fails.
 * `Arima()` no longer errors when the series is supplied via the deprecated `x` argument.
 * `autolayer()` now labels an unnamed `msts` series with the name of the object instead of "NULL".
+* `autolayer()` for `mts` and `mforecast` objects no longer errors when arguments are local variables.
 * `autoplot.forecast()` no longer errors for cross-sectional regression models fitted without an intercept.
 * `bld.mbb.bootstrap()` no longer errors when `num = 1` and now validates that `num` is a positive integer.
 * `CVar()` now computes fold accuracy with fitted and actual values in the correct order.
