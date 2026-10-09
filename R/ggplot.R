@@ -702,9 +702,7 @@ autoplot.ets <- function(object, range.bars = NULL, ...) {
 #' @rdname plot.bats
 #' @export
 autoplot.tbats <- function(object, range.bars = FALSE, ...) {
-  cl <- match.call()
-  cl[[1]] <- quote(autoplot.bats)
-  eval.parent(cl)
+  NextMethod()
 }
 
 #' @rdname plot.bats

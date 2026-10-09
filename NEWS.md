@@ -6,6 +6,7 @@
 * `Arima()` no longer errors when the series is supplied via the deprecated `x` argument.
 * `autolayer()` now labels an unnamed `msts` series with the name of the object instead of "NULL".
 * `autoplot.forecast()` no longer errors for cross-sectional regression models fitted without an intercept.
+* `autoplot.tbats()` no longer errors.
 * `bld.mbb.bootstrap()` no longer errors when `num = 1` and now validates that `num` is a positive integer.
 * `CVar()` now computes fold accuracy with fitted and actual values in the correct order.
 * `croston_model()` and `croston()` can now optimize and separately specify Croston smoothing parameters.
