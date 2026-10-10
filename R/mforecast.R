@@ -199,7 +199,7 @@ forecast.mts <- function(
     )
     out$forecast[[i]]$series <- colnames(object)[i]
   }
-  out$method <- vapply(out$forecast, function(x) x$method, character(1))
+  out$method <- vapply(out$forecast, \(x) x$method, character(1))
   names(out$forecast) <- names(out$method) <- colnames(object)
   structure(out, class = "mforecast")
 }

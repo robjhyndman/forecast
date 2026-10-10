@@ -118,7 +118,7 @@ getResponse.bats <- function(object, ...) {
 #' @rdname getResponse
 #' @export
 getResponse.mforecast <- function(object, ...) {
-  do.call(cbind, lapply(object$forecast, function(x) x$x))
+  do.call(cbind, lapply(object$forecast, \(x) x$x))
 }
 
 #' @rdname getResponse
