@@ -500,7 +500,7 @@ autoplot.Arima <- function(object, type = c("both", "ar", "ma"), ...) {
   } else {
     p <- p +
       ggplot2::facet_wrap(~type, labeller = function(labels) {
-        lapply(labels, function(x) paste("Inverse", as.character(x), "roots"))
+        lapply(labels, \(x) paste("Inverse", as.character(x), "roots"))
       })
   }
   p
@@ -580,7 +580,7 @@ autoplot.decomposed.ts <- function(
   if (range.bars) {
     yranges <- vapply(
       split(data$y, data$parts),
-      function(x) range(x, na.rm = TRUE),
+      \(x) range(x, na.rm = TRUE),
       numeric(2)
     )
     xranges <- range(data$datetime)
@@ -665,7 +665,7 @@ autoplot.ets <- function(object, range.bars = NULL, ...) {
   if (range.bars) {
     yranges <- vapply(
       split(data$y, data$parts),
-      function(x) range(x, na.rm = TRUE),
+      \(x) range(x, na.rm = TRUE),
       numeric(2)
     )
     xranges <- range(data$datetime)
@@ -739,7 +739,7 @@ autoplot.bats <- function(object, range.bars = FALSE, ...) {
   if (range.bars) {
     yranges <- vapply(
       split(data$y, data$parts),
-      function(x) range(x, na.rm = TRUE),
+      \(x) range(x, na.rm = TRUE),
       numeric(2)
     )
     xranges <- range(data$datetime)
@@ -988,7 +988,7 @@ autoplot.mforecast <- function(
                 paste0(as.character(x), "\n", object$method[as.character(x)])
               })
             } else {
-              lapply(labels, function(x) paste0(as.character(x)))
+              lapply(labels, \(x) paste0(as.character(x)))
             }
           },
           ncol = 1,
@@ -1831,7 +1831,7 @@ autoplot.stl <- function(object, labels = NULL, range.bars = TRUE, ...) {
   if (range.bars) {
     yranges <- vapply(
       split(data$y, data$parts),
-      function(x) range(x, na.rm = TRUE),
+      \(x) range(x, na.rm = TRUE),
       numeric(2)
     )
     xranges <- range(data$datetime)
@@ -1924,7 +1924,7 @@ autoplot.StructTS <- function(object, labels = NULL, range.bars = TRUE, ...) {
   if (range.bars) {
     yranges <- vapply(
       split(data$y, data$parts),
-      function(x) range(x, na.rm = TRUE),
+      \(x) range(x, na.rm = TRUE),
       numeric(2)
     )
     xranges <- range(data$datetime)
@@ -2070,7 +2070,7 @@ autoplot.seas <- function(object, labels = NULL, range.bars = NULL, ...) {
   if (range.bars) {
     yranges <- vapply(
       split(data$y, data$parts),
-      function(x) range(x, na.rm = TRUE),
+      \(x) range(x, na.rm = TRUE),
       numeric(2)
     )
     xranges <- range(data$datetime)

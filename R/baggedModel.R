@@ -64,7 +64,7 @@ baggedModel <- function(
     fn <- utils::getFromNamespace(fn, "forecast")
   }
 
-  mod_boot <- lapply(bootstrapped_series, function(x) fn(x, ...))
+  mod_boot <- lapply(bootstrapped_series, \(x) fn(x, ...))
 
   # Return results
   out <- list()

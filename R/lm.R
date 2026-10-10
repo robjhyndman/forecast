@@ -53,7 +53,7 @@ tslm <- function(formula, data, subset, lambda = NULL, biasadj = FALSE, ...) {
   # Check for functions (which should be evaluated later, in lm)
   fnvar <- which(vapply(
     vars[-1],
-    function(x) !is.symbol(x) && typeof(eval(x[[1]])) == "closure",
+    \(x) !is.symbol(x) && typeof(eval(x[[1]])) == "closure",
     logical(1)
   )) +
     1L

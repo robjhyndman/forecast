@@ -429,7 +429,7 @@ ocsb.test <- function(
     }
     out <- do.call(
       cbind,
-      lapply(seq_len(maxlag), function(k) stats::lag(y, -k))
+      lapply(seq_len(maxlag), \(k) stats::lag(y, -k))
     )
     if (NCOL(out) > 1) {
       colnames(out) <- paste0("lag_", seq_len(maxlag))
@@ -475,7 +475,7 @@ ocsb.test <- function(
 
   # Estimate maxlag
   if (maxlag > 0 && lag.method != "fixed") {
-    fits <- lapply(0:maxlag, function(lag) fitOCSB(x, lag, maxlag))
+    fits <- lapply(0:maxlag, \(lag) fitOCSB(x, lag, maxlag))
     icvals <- switch(
       lag.method,
       AIC = vapply(fits, AIC, numeric(1)),
