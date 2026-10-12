@@ -112,7 +112,12 @@ nnetar <- function(
   ...
 ) {
   useoldmodel <- FALSE
-  yname <- deparse1(substitute(y))
+  if (missing(x)) {
+    yname <- deparse1(substitute(y))
+  } else {
+    yname <- deparse1(substitute(x))
+    y <- x
+  }
   if (!is.null(model)) {
     # Use previously fitted model
     useoldmodel <- TRUE
@@ -580,7 +585,12 @@ forecast.nnetar <- function(
     if (anyNA(newdata)) {
       fcast[i] <- NA_real_
     } else {
-      fcast[i] <- mean(vapply(object$model, predict, numeric(1), newdata = newdata))
+      fcast[i] <- mean(vapply(
+        object$model,
+        predict,
+        numeric(1),
+        newdata = newdata
+      ))
     }
     flag <- c(fcast[i], flag[-maxlag])
   }

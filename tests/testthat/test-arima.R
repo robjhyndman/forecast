@@ -16,6 +16,7 @@ test_that("deprecated x argument still works", {
   fit_x <- Arima(x = wineind, order = c(1, 0, 0))
   expect_equal(fit_x$coef, fit_y$coef)
   expect_identical(fit_x$x, wineind)
+  expect_identical(fit_x$series, "wineind")
 })
 
 test_that("tests for ARIMA errors", {

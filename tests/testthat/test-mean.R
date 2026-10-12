@@ -30,3 +30,7 @@ test_that("test mean_model", {
   expect_identical(f1$lower, f2$lower)
   expect_identical(f1$upper, f2$upper)
 })
+
+test_that("meanf() keeps series name with deprecated x argument", {
+  expect_identical(meanf(x = USAccDeaths)$series, "USAccDeaths")
+})

@@ -189,8 +189,9 @@ meanf <- function(
   npaths = 5000,
   x = y
 ) {
+  yname <- if (missing(x)) deparse1(substitute(y)) else deparse1(substitute(x))
   fit <- mean_model(y = x, lambda = lambda, biasadj = biasadj)
-  fit$series <- deparse1(substitute(y))
+  fit$series <- yname
   forecast(
     fit,
     h = h,

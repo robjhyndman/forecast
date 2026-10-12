@@ -181,3 +181,7 @@ test_that("croston shortcut with type variants", {
   expect_true(fc_cr$mean[1] > fc_sba$mean[1])
   expect_true(fc_sba$mean[1] > fc_sbj$mean[1])
 })
+
+test_that("croston() keeps series name with deprecated x argument", {
+  expect_identical(croston(x = USAccDeaths)$series, "USAccDeaths")
+})

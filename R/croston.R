@@ -353,6 +353,7 @@ croston <- function(
   opt_crit = c("mse", "mae"),
   init = c("naive", "mean")
 ) {
+  yname <- if (missing(x)) deparse1(substitute(y)) else deparse1(substitute(x))
   fit <- croston_model(
     x,
     alpha = alpha,
@@ -361,6 +362,6 @@ croston <- function(
     opt_crit = opt_crit,
     init = init
   )
-  fit$series <- deparse1(substitute(y))
+  fit$series <- yname
   forecast(fit, h = h)
 }

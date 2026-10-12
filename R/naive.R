@@ -274,6 +274,7 @@ rwf <- function(
   ...,
   x = y
 ) {
+  yname <- if (missing(x)) deparse1(substitute(y)) else deparse1(substitute(x))
   fit <- rw_model(
     x,
     lag = lag,
@@ -293,7 +294,7 @@ rwf <- function(
   )
 
   fc$model$call <- match.call()
-  fc$series <- deparse1(substitute(y))
+  fc$series <- yname
 
   if (drift) {
     fc$method <- "Random walk with drift"
@@ -316,6 +317,7 @@ naive <- function(
   ...,
   x = y
 ) {
+  yname <- if (missing(x)) deparse1(substitute(y)) else deparse1(substitute(x))
   fc <- rwf(
     x,
     h = h,
@@ -327,7 +329,7 @@ naive <- function(
     ...
   )
   fc$model$call <- match.call()
-  fc$series <- deparse1(substitute(y))
+  fc$series <- yname
   fc$method <- "Naive method"
   fc
 }
@@ -344,6 +346,7 @@ snaive <- function(
   ...,
   x = y
 ) {
+  yname <- if (missing(x)) deparse1(substitute(y)) else deparse1(substitute(x))
   fc <- rwf(
     x,
     h = h,
@@ -356,7 +359,7 @@ snaive <- function(
     ...
   )
   fc$model$call <- match.call()
-  fc$series <- deparse1(substitute(y))
+  fc$series <- yname
   fc$method <- "Seasonal naive method"
   fc
 }

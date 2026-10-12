@@ -259,3 +259,8 @@ test_that("Tests for nnetar", {
   )
   expect_null(nnetfit$scalexreg)
 })
+
+test_that("nnetar() works with deprecated x argument", {
+  set.seed(123)
+  expect_identical(nnetar(x = lynx, size = 1, repeats = 1)$series, "lynx")
+})
