@@ -2,6 +2,25 @@
 
 ## forecast (development version)
 
+- [`arfima()`](https://pkg.robjhyndman.com/forecast/reference/arfima.md),
+  [`Arima()`](https://pkg.robjhyndman.com/forecast/reference/Arima.md),
+  [`auto.arima()`](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md),
+  [`croston()`](https://pkg.robjhyndman.com/forecast/reference/forecast.croston_model.md),
+  [`holt()`](https://pkg.robjhyndman.com/forecast/reference/ses.md),
+  [`hw()`](https://pkg.robjhyndman.com/forecast/reference/ses.md),
+  [`meanf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.mean_model.md),
+  [`modelAR()`](https://pkg.robjhyndman.com/forecast/reference/modelAR.md),
+  [`naive()`](https://pkg.robjhyndman.com/forecast/reference/forecast.rw_model.md),
+  [`nnetar()`](https://pkg.robjhyndman.com/forecast/reference/nnetar.md),
+  [`rwf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.rw_model.md),
+  [`ses()`](https://pkg.robjhyndman.com/forecast/reference/ses.md),
+  [`snaive()`](https://pkg.robjhyndman.com/forecast/reference/forecast.rw_model.md),
+  [`splinef()`](https://pkg.robjhyndman.com/forecast/reference/forecast.spline_model.md),
+  [`stlf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md),
+  [`stlm()`](https://pkg.robjhyndman.com/forecast/reference/stlm.md) and
+  [`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
+  now keep the series name when it is supplied via the deprecated `x`
+  argument.
 - [`auto.arima()`](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md)
   parallel model search (`stepwise = FALSE`) now works on Windows
   ([\#1187](https://github.com/robjhyndman/forecast/issues/1187)).
@@ -12,8 +31,14 @@
 - [`auto.arima()`](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md)
   stepwise search now searches models without a constant when the null
   model without one is best.
-- [`Arima()`](https://pkg.robjhyndman.com/forecast/reference/Arima.md)
-  no longer errors when the series is supplied via the deprecated `x`
+- [`Arima()`](https://pkg.robjhyndman.com/forecast/reference/Arima.md),
+  [`holt()`](https://pkg.robjhyndman.com/forecast/reference/ses.md),
+  [`hw()`](https://pkg.robjhyndman.com/forecast/reference/ses.md),
+  [`modelAR()`](https://pkg.robjhyndman.com/forecast/reference/modelAR.md),
+  [`nnetar()`](https://pkg.robjhyndman.com/forecast/reference/nnetar.md)
+  and
+  [`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
+  no longer error when the series is supplied via the deprecated `x`
   argument.
 - [`autolayer()`](https://ggplot2.tidyverse.org/reference/autolayer.html)
   now labels an unnamed `msts` series with the name of the object
@@ -86,6 +111,10 @@
   models now displays the stored AICc and BIC values instead of
   recomputing them, which gave slightly different results for series
   with interior missing values.
+- [`splinef()`](https://pkg.robjhyndman.com/forecast/reference/forecast.spline_model.md)
+  and
+  [`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
+  now return the series name instead of “x”.
 - [`subset()`](https://rdrr.io/r/base/subset.html) no longer ignores the
   `subset` argument for `msts` objects.
 - [`tbats()`](https://pkg.robjhyndman.com/forecast/reference/tbats.md)

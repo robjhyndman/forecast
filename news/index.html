@@ -58,13 +58,15 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="forecast-development-version">forecast (development version)<a class="anchor" aria-label="anchor" href="#forecast-development-version"></a></h2>
 <ul><li>
+<code><a href="../reference/arfima.html">arfima()</a></code>, <code><a href="../reference/Arima.html">Arima()</a></code>, <code><a href="../reference/auto.arima.html">auto.arima()</a></code>, <code><a href="../reference/forecast.croston_model.html">croston()</a></code>, <code><a href="../reference/ses.html">holt()</a></code>, <code><a href="../reference/ses.html">hw()</a></code>, <code><a href="../reference/forecast.mean_model.html">meanf()</a></code>, <code><a href="../reference/modelAR.html">modelAR()</a></code>, <code><a href="../reference/forecast.rw_model.html">naive()</a></code>, <code><a href="../reference/nnetar.html">nnetar()</a></code>, <code><a href="../reference/forecast.rw_model.html">rwf()</a></code>, <code><a href="../reference/ses.html">ses()</a></code>, <code><a href="../reference/forecast.rw_model.html">snaive()</a></code>, <code><a href="../reference/forecast.spline_model.html">splinef()</a></code>, <code><a href="../reference/forecast.stl.html">stlf()</a></code>, <code><a href="../reference/stlm.html">stlm()</a></code> and <code><a href="../reference/forecast.theta_model.html">thetaf()</a></code> now keep the series name when it is supplied via the deprecated <code>x</code> argument.</li>
+<li>
 <code><a href="../reference/auto.arima.html">auto.arima()</a></code> parallel model search (<code>stepwise = FALSE</code>) now works on Windows (<a href="https://github.com/robjhyndman/forecast/issues/1187" class="external-link">#1187</a>).</li>
 <li>
 <code><a href="../reference/auto.arima.html">auto.arima()</a></code> now truncates <code>xreg</code> together with the series when <code>approximation = TRUE</code> and <code>truncate</code> is set, so model selection no longer fails.</li>
 <li>
 <code><a href="../reference/auto.arima.html">auto.arima()</a></code> stepwise search now searches models without a constant when the null model without one is best.</li>
 <li>
-<code><a href="../reference/Arima.html">Arima()</a></code> no longer errors when the series is supplied via the deprecated <code>x</code> argument.</li>
+<code><a href="../reference/Arima.html">Arima()</a></code>, <code><a href="../reference/ses.html">holt()</a></code>, <code><a href="../reference/ses.html">hw()</a></code>, <code><a href="../reference/modelAR.html">modelAR()</a></code>, <code><a href="../reference/nnetar.html">nnetar()</a></code> and <code><a href="../reference/forecast.theta_model.html">thetaf()</a></code> no longer error when the series is supplied via the deprecated <code>x</code> argument.</li>
 <li>
 <code><a href="https://ggplot2.tidyverse.org/reference/autolayer.html" class="external-link">autolayer()</a></code> now labels an unnamed <code>msts</code> series with the name of the object instead of “NULL”.</li>
 <li>
@@ -115,6 +117,8 @@
 <code><a href="../reference/ocsb.test.html">ocsb.test()</a></code> lag selection now considers lag 0 and returns the lag that minimises the criterion.</li>
 <li>
 <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code><a href="../reference/Arima.html">Arima()</a></code> models now displays the stored AICc and BIC values instead of recomputing them, which gave slightly different results for series with interior missing values.</li>
+<li>
+<code><a href="../reference/forecast.spline_model.html">splinef()</a></code> and <code><a href="../reference/forecast.theta_model.html">thetaf()</a></code> now return the series name instead of “x”.</li>
 <li>
 <code><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset()</a></code> no longer ignores the <code>subset</code> argument for <code>msts</code> objects.</li>
 <li>
