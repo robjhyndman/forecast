@@ -77,6 +77,13 @@ test_that("test holt()", {
   )
 })
 
+test_that("ses(), holt() and hw() work with deprecated x argument", {
+  expect_equal(holt(x = USAccDeaths)$mean, holt(USAccDeaths)$mean)
+  expect_identical(ses(x = USAccDeaths)$series, "USAccDeaths")
+  expect_identical(holt(x = USAccDeaths)$series, "USAccDeaths")
+  expect_identical(hw(x = USAccDeaths)$series, "USAccDeaths")
+})
+
 test_that("test naive() and snaive()", {
   # WWWusage has frequency = 1, so naive and snaive should match
   expect_true(all(snaive(WWWusage, h = 10)$mean == naive(WWWusage)$mean))

@@ -764,7 +764,7 @@ Arima <- function(
   x = y,
   ...
 ) {
-  series <- deparse1(substitute(y))
+  series <- if (missing(x)) deparse1(substitute(y)) else deparse1(substitute(x))
   if (is.null(biasadj)) {
     biasadj <- FALSE
   }

@@ -102,7 +102,12 @@ modelAR <- function(
   ...
 ) {
   useoldmodel <- FALSE
-  yname <- deparse1(substitute(y))
+  if (missing(x)) {
+    yname <- deparse1(substitute(y))
+  } else {
+    yname <- deparse1(substitute(x))
+    y <- x
+  }
   if (!is.null(model)) {
     # Use previously fitted model
     useoldmodel <- TRUE

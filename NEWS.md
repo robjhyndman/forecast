@@ -1,9 +1,10 @@
 # forecast (development version)
 
+* `arfima()`, `Arima()`, `auto.arima()`, `croston()`, `holt()`, `hw()`, `meanf()`, `modelAR()`, `naive()`, `nnetar()`, `rwf()`, `ses()`, `snaive()`, `splinef()`, `stlf()`, `stlm()` and `thetaf()` now keep the series name when it is supplied via the deprecated `x` argument.
 * `auto.arima()` parallel model search (`stepwise = FALSE`) now works on Windows (#1187).
 * `auto.arima()` now truncates `xreg` together with the series when `approximation = TRUE` and `truncate` is set, so model selection no longer fails.
 * `auto.arima()` stepwise search now searches models without a constant when the null model without one is best.
-* `Arima()` no longer errors when the series is supplied via the deprecated `x` argument.
+* `Arima()`, `holt()`, `hw()`, `modelAR()`, `nnetar()` and `thetaf()` no longer error when the series is supplied via the deprecated `x` argument.
 * `autolayer()` now labels an unnamed `msts` series with the name of the object instead of "NULL".
 * `autolayer()` for `mts` and `mforecast` objects no longer errors when arguments are local variables.
 * `autoplot.forecast()` no longer errors for cross-sectional regression models fitted without an intercept.
@@ -29,6 +30,7 @@
 * `nsdiffs()` now ignores extra arguments passed via `...` with `test = "seas"` instead of silently returning 0.
 * `ocsb.test()` lag selection now considers lag 0 and returns the lag that minimises the criterion.
 * `print()` for `Arima()` models now displays the stored AICc and BIC values instead of recomputing them, which gave slightly different results for series with interior missing values.
+* `splinef()` and `thetaf()` now return the series name instead of "x".
 * `subset()` no longer ignores the `subset` argument for `msts` objects.
 * `tbats()` results no longer depend on the order of `seasonal.periods`, and the harmonic search now retains `k = 1` when it minimizes AIC.
 * `theta_model()` and `thetaf()` gained a `type` argument to select additive or multiplicative seasonal decomposition.

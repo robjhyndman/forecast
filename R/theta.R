@@ -226,6 +226,13 @@ thetaf <- function(
   x = y,
   ...
 ) {
+  if (missing(x)) {
+    yname <- deparse1(substitute(y))
+  } else {
+    yname <- deparse1(substitute(x))
+    y <- x
+  }
   fit <- theta_model(x, lambda = lambda, biasadj = biasadj, type = type)
+  fit$series <- yname
   forecast(fit, h = h, level = level, fan = fan, ...)
 }

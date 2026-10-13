@@ -431,6 +431,7 @@ ses <- function(
   x = y,
   ...
 ) {
+  yname <- if (missing(x)) deparse1(substitute(y)) else deparse1(substitute(x))
   initial <- match.arg(initial)
 
   if (initial == "optimal") {
@@ -467,7 +468,7 @@ ses <- function(
 
   fcast$method <- fcast$model$method <- "Simple exponential smoothing"
   fcast$model$call <- match.call()
-  fcast$series <- deparse1(substitute(y))
+  fcast$series <- yname
 
   fcast
 }
@@ -490,6 +491,12 @@ holt <- function(
   x = y,
   ...
 ) {
+  if (missing(x)) {
+    yname <- deparse1(substitute(y))
+  } else {
+    yname <- deparse1(substitute(x))
+    y <- x
+  }
   initial <- match.arg(initial)
   if (sum(!is.na(y)) <= 1L) {
     stop("I need at least two observations to estimate trend.")
@@ -563,7 +570,7 @@ holt <- function(
   }
   fcast$model$method <- fcast$method
   fcast$model$call <- match.call()
-  fcast$series <- deparse1(substitute(y))
+  fcast$series <- yname
 
   fcast
 }
@@ -588,6 +595,12 @@ hw <- function(
   x = y,
   ...
 ) {
+  if (missing(x)) {
+    yname <- deparse1(substitute(y))
+  } else {
+    yname <- deparse1(substitute(x))
+    y <- x
+  }
   initial <- match.arg(initial)
   seasonal <- match.arg(seasonal)
   m <- frequency(x)
@@ -697,7 +710,7 @@ hw <- function(
   }
   fcast$model$method <- fcast$method
   fcast$model$call <- match.call()
-  fcast$series <- deparse1(substitute(y))
+  fcast$series <- yname
 
   fcast
 }

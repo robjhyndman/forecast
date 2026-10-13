@@ -13,3 +13,8 @@ test_that("Tests for splinef()", {
   expect_error(splinef(woolyrnq, level = 110))
   expect_error(splinef(woolyrnq, level = -10))
 })
+
+test_that("splinef() keeps series name", {
+  expect_identical(splinef(airmiles)$series, "airmiles")
+  expect_identical(splinef(x = airmiles)$series, "airmiles")
+})

@@ -9,3 +9,9 @@ test_that("test thetaf()", {
   constantForecast <- expect_no_error(thetaf(series))
   expect_true(is.constant(round(constantForecast$mean, 12)))
 })
+
+test_that("thetaf() works with deprecated x argument", {
+  fc <- thetaf(x = USAccDeaths)
+  expect_identical(fc$series, "USAccDeaths")
+  expect_length(fc$mean, 24L)
+})

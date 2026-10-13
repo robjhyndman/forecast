@@ -330,7 +330,9 @@ splinef <- function(
   method = c("gcv", "mle"),
   x = y
 ) {
+  yname <- if (missing(x)) deparse1(substitute(y)) else deparse1(substitute(x))
   fit <- spline_model(x, method = method, lambda = lambda, biasadj = biasadj)
+  fit$series <- yname
   forecast(fit, h = h, level = level, fan = fan)
 }
 

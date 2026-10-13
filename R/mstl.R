@@ -459,6 +459,7 @@ stlm <- function(
   x = y,
   ...
 ) {
+  yname <- if (missing(x)) deparse1(substitute(y)) else deparse1(substitute(x))
   method <- match.arg(method)
 
   # Check univariate
@@ -562,7 +563,7 @@ stlm <- function(
       modelfunction = modelfunction,
       lambda = lambda,
       x = origx,
-      series = deparse1(substitute(y)),
+      series = yname,
       m = frequency(origx),
       fitted = fits,
       residuals = res
@@ -668,7 +669,11 @@ stlf <- function(
   x = y,
   ...
 ) {
-  seriesname <- deparse1(substitute(y))
+  seriesname <- if (missing(x)) {
+    deparse1(substitute(y))
+  } else {
+    deparse1(substitute(x))
+  }
 
   # Check univariate
   if (NCOL(x) > 1L) {

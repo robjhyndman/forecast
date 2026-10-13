@@ -71,3 +71,7 @@ test_that("tests for nsdiffs()", {
   expect_true(nsdiffs(AirPassengers, test = "hegy") == 1)
   expect_true(nsdiffs(AirPassengers, test = "ch") == 0)
 })
+
+test_that("auto.arima() keeps series name with deprecated x argument", {
+  expect_identical(auto.arima(x = WWWusage)$series, "WWWusage")
+})

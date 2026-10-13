@@ -124,7 +124,11 @@ arfima <- function(
   ...
 ) {
   estim <- match.arg(estim)
-  seriesname <- deparse1(substitute(y))
+  seriesname <- if (missing(x)) {
+    deparse1(substitute(y))
+  } else {
+    deparse1(substitute(x))
+  }
 
   orig.x <- x
   if (!is.null(lambda)) {

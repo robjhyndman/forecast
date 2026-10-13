@@ -31,3 +31,7 @@ test_that("test forecast.fracdiff()", {
     regexp = "Forecast method: ARFIMA"
   )
 })
+
+test_that("arfima() keeps series name with deprecated x argument", {
+  expect_identical(arfima(x = WWWusage)$series, "WWWusage")
+})

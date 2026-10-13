@@ -54,3 +54,9 @@ test_that("rwf with lambda", {
   expect_s3_class(fc, "forecast")
   expect_false(is.null(fc$lambda))
 })
+
+test_that("rwf(), naive() and snaive() keep series name with deprecated x argument", {
+  expect_identical(rwf(x = USAccDeaths)$series, "USAccDeaths")
+  expect_identical(naive(x = USAccDeaths)$series, "USAccDeaths")
+  expect_identical(snaive(x = USAccDeaths)$series, "USAccDeaths")
+})
