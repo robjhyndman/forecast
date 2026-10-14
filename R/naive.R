@@ -201,7 +201,7 @@ forecast.rw_model <- function(
     (sum(!is.na(object$residuals)) - (object$par$drift != 0))
   se <- sqrt(mse * steps + (steps * object$par$drift.se)^2)
 
-  level <- getConfLevel(level, fan)
+  level <- get_conf_level(level, fan)
   nconf <- length(level)
 
   if (simulate || bootstrap) {

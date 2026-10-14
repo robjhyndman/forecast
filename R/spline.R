@@ -254,7 +254,7 @@ forecast.spline_model <- function(
   sd <- sqrt(object$sigma2 * diag(Omega0 - t(U) %*% mat$inv.Omega %*% U))
 
   # Compute prediction intervals.
-  level <- getConfLevel(level, fan)
+  level <- get_conf_level(level, fan)
   nconf <- length(level)
   startf <- tsp(y)[2] + 1 / freq
   lower <- upper <- ts(

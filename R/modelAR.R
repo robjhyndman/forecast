@@ -394,7 +394,7 @@ forecast.modelAR <- function(
 ) {
   out <- object
   tspx <- tsp(out$x)
-  level <- getConfLevel(level, fan)
+  level <- get_conf_level(level, fan)
   # Check if xreg was used in fitted model
   if (is.null(object$xreg)) {
     if (!is.null(xreg)) {

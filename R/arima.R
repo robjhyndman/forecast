@@ -361,7 +361,7 @@ forecast.Arima <- function(
     }
   }
 
-  level <- getConfLevel(level, fan)
+  level <- get_conf_level(level, fan)
   level <- sort(level)
 
   if (use.drift) {
@@ -502,7 +502,7 @@ forecast.ar <- function(
 ) {
   x <- getResponse(object)
   pred <- predict(object, newdata = x, n.ahead = h)
-  level <- getConfLevel(level, fan)
+  level <- get_conf_level(level, fan)
   nint <- length(level)
   if (simulate || bootstrap) {
     hilo <- simulate_forecast(

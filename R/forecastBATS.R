@@ -60,7 +60,7 @@ forecast.bats <- function(
     stop("Forecast horizon out of bounds")
   }
 
-  level <- getConfLevel(level, fan)
+  level <- get_conf_level(level, fan)
 
   # Set up the matrices
   x <- matrix(0, nrow = nrow(object$x), ncol = h)

@@ -66,7 +66,7 @@ forecast.ets <- function(
     } # Just to avoid errors
     level <- 90
   }
-  level <- getConfLevel(level, fan)
+  level <- get_conf_level(level, fan)
   # Order levels
   level <- sort(level)
 
