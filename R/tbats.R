@@ -798,33 +798,6 @@ filterTBATSSpecifics <- function(
   }
 }
 
-makeSingleFourier <- function(j, m, T) {
-  frier <- matrix(0, nrow = T, ncol = 2)
-  for (t in seq_len(T)) {
-    frier[t, 1] <- cos((2 * pi * j) / m)
-    frier[t, 2] <- sin((2 * pi * j) / m)
-  }
-  frier
-}
-
-calcFTest <- function(
-  r.sse,
-  ur.sse,
-  num.restrictions,
-  num.u.params,
-  num.observations
-) {
-  f.stat <- ((r.sse - ur.sse) / num.restrictions) /
-    (r.sse / (num.observations - num.u.params))
-  p.value <- pf(
-    f.stat,
-    num.restrictions,
-    (num.observations - num.u.params),
-    lower.tail = FALSE
-  )
-  p.value
-}
-
 #' @rdname fitted.Arima
 #' @export
 fitted.tbats <- function(object, h = 1, ...) {

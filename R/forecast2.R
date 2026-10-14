@@ -106,36 +106,6 @@ InvBoxCox <- function(x, lambda, biasadj = FALSE, fvar = NULL) {
   out
 }
 
-# Deprecated
-InvBoxCoxf <- function(x = NULL, fvar = NULL, lambda = NULL) {
-  .Deprecated("InvBoxCox")
-  if (is.null(lambda)) {
-    stop("Must specify lambda using lambda=numeric(1)")
-  }
-  if (is.null(fvar)) {
-    level <- max(x$level)
-    if (NCOL(x$upper) > 1 && NCOL(x$lower)) {
-      i <- match(level, x$level)
-      x$upper <- x$upper[, i]
-      x$lower <- x$lower[, i]
-    }
-    if (level > 1) {
-      level <- level / 100
-    }
-    level <- mean(c(level, 1))
-    # Note: Use BoxCox transformed upper and lower values
-    fvar <- ((x$upper - x$lower) / stats::qnorm(level) / 2)^2
-  } else {
-    x <- list(mean = x)
-  }
-  if (is.matrix(fvar)) {
-    fvar <- diag(fvar)
-  }
-
-  x$mean * (1 + 0.5 * fvar * (1 - lambda) / (x$mean)^(2 * lambda))
-}
-
-
 #' Forecasting using Structural Time Series models
 #'
 #' Returns forecasts and other information for univariate structural time

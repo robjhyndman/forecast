@@ -1,18 +1,5 @@
 # Bootstrap functions
 
-# Trend estimation like STL without seasonality.
-# Non-robust version
-tl <- function(x, ...) {
-  x <- as.ts(x)
-  n <- length(x)
-  tt <- 1:n
-  fit <- supsmu(tt, x)
-  out <- ts(cbind(trend = fit$y, remainder = x - fit$y))
-  tsp(out) <- tsp(x)
-
-  structure(list(time.series = out), class = "stl")
-}
-
 # Function to return some bootstrap samples of x
 # based on LPB
 lpb <- function(x, nsim = 100) {
