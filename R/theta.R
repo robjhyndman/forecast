@@ -167,7 +167,7 @@ forecast.theta_model <- function(
   ...
 ) {
   # Check inputs
-  level <- getConfLevel(level, fan)
+  level <- get_conf_level(level, fan)
   seasonal <- !is.null(object$seas_component)
   m <- frequency(object$y)
   n <- length(object$y)

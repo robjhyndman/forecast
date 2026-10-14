@@ -305,7 +305,7 @@ forecast.fracdiff <- function(
   # Compute forecast variances
   fse <- sqrt(cumsum(psi^2) * fit$sigma2)
   # Compute prediction intervals
-  level <- getConfLevel(level, fan)
+  level <- get_conf_level(level, fan)
   if (simulate || bootstrap) {
     # Compute prediction intervals using simulations
     hilo <- simulate_forecast(

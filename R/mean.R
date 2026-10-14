@@ -108,7 +108,7 @@ forecast.mean_model <- function(
 ) {
   n <- length(object$y)
   f <- rep(object$mu, h)
-  level <- getConfLevel(level, fan)
+  level <- get_conf_level(level, fan)
   nconf <- length(level)
   if (bootstrap) {
     res <- object$residuals

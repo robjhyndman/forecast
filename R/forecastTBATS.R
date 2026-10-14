@@ -43,7 +43,7 @@ forecast.tbats <- function(
     stop("Forecast horizon out of bounds")
   }
 
-  level <- getConfLevel(level, fan)
+  level <- get_conf_level(level, fan)
 
   if (!is.null(object$k.vector)) {
     tau <- 2 * sum(object$k.vector)

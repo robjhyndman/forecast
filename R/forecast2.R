@@ -168,7 +168,7 @@ forecast.StructTS <- function(
 ) {
   x <- object$data
   pred <- predict(object, n.ahead = h)
-  level <- getConfLevel(level, fan)
+  level <- get_conf_level(level, fan)
   nint <- length(level)
   upper <- lower <- matrix(NA_real_, ncol = nint, nrow = length(pred$pred))
   for (i in seq_len(nint)) {
@@ -267,7 +267,7 @@ forecast.HoltWinters <- function(
     }
   }
 
-  level <- getConfLevel(level, fan)
+  level <- get_conf_level(level, fan)
   nint <- length(level)
 
   pred <- predict(
