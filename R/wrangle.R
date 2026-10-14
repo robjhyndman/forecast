@@ -1,10 +1,3 @@
-toMat <- function(x) {
-  if (NCOL(x) > 1 && !is.matrix(x)) {
-    x <- matrix(x, ncol = NCOL(x))
-  }
-  x
-}
-
 # Converts arguments into data.frame, whilst retaining mts/ts/matrix properties
 datamat <- function(..., flatten = TRUE, functions = TRUE) {
   vars <- list(...)

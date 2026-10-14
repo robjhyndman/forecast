@@ -1,55 +1,5 @@
 ###############################################################################
 
-# TBATS code
-cutWTBATS <- function(
-  use.beta,
-  w.tilda.transpose,
-  seasonal.periods,
-  p = 0,
-  q = 0
-) {
-  mask.vector <- numeric(length(seasonal.periods))
-  i <- length(seasonal.periods)
-  while (i > 1) {
-    for (j in seq_len(i - 1)) {
-      if ((seasonal.periods[i] %% seasonal.periods[j]) == 0) {
-        mask.vector[j] <- 1
-      }
-    }
-    i <- i - 1
-  }
-
-  w.pos.counter <- 1
-  w.pos <- 1
-  if (use.beta) {
-    w.pos <- w.pos + 1
-  }
-  for (s in seasonal.periods) {
-    if (mask.vector[w.pos.counter] == 1) {
-      w.tilda.transpose <- w.tilda.transpose[, -((w.pos + 1):(w.pos + s))]
-    } else if (mask.vector[w.pos.counter] < 0) {
-      # Cut more than one off
-      w.pos <- w.pos + s
-      w.tilda.transpose <- w.tilda.transpose[,
-        -c((w.pos + mask.vector[w.pos.counter] + 1):w.pos)
-      ]
-      w.pos <- w.pos + mask.vector[w.pos.counter]
-    } else {
-      w.pos <- w.pos + s
-      w.tilda.transpose <- w.tilda.transpose[, -w.pos]
-      w.pos <- w.pos - 1
-    }
-    w.pos.counter <- w.pos.counter + 1
-  }
-  if ((p != 0) || (q != 0)) {
-    end.cut <- ncol(w.tilda.transpose)
-    start.cut <- end.cut - (p + q) + 1
-    w.tilda.transpose <- w.tilda.transpose[, -c(start.cut:end.cut)]
-  }
-
-  list(matrix = w.tilda.transpose, mask.vector = mask.vector)
-}
-
 # BATS code below
 #########
 cutW <- function(use.beta, w.tilda.transpose, seasonal.periods, p = 0, q = 0) {

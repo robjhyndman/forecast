@@ -137,7 +137,3 @@ dm.test <- function(
     class = "htest"
   )
 }
-
-is.htest <- function(x) {
-  inherits(x, "htest")
-}
