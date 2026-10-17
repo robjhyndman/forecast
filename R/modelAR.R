@@ -149,9 +149,9 @@ modelAR <- function(
     FUN <- model$FUN
     predict.FUN <- model$predict.FUN
     if (P > 0) {
-      lags <- sort(unique(c(1:p, m * (1:P))))
+      lags <- sort(unique(c(seq_len(p), m * seq_len(P))))
     } else {
-      lags <- 1:p
+      lags <- seq_len(p)
     }
     if (!is.null(model$scalex)) {
       scale.inputs <- TRUE
@@ -258,7 +258,7 @@ modelAR <- function(
         warning("Reducing number of lagged inputs due to short series")
         p <- n - 1
       }
-      lags <- 1:p
+      lags <- seq_len(p)
       if (P > 1) {
         warning("Non-seasonal data, ignoring seasonal lags")
       }
@@ -277,9 +277,9 @@ modelAR <- function(
         p <- n - 1
       }
       if (P > 0 && n >= m * P + 2) {
-        lags <- sort(unique(c(1:p, m * (1:P))))
+        lags <- sort(unique(c(seq_len(p), m * seq_len(P))))
       } else {
-        lags <- 1:p
+        lags <- seq_len(p)
         if (P > 0) {
           warning("Series too short for seasonal lags")
           P <- 0
