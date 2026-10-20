@@ -87,7 +87,7 @@ smoothing splines estimated with \code{\link[=spline_model]{spline_model()}}.
 The cubic smoothing spline model is equivalent to an ARIMA(0,2,2) model but
 with a restricted parameter space. The advantage of the spline model over
 the full ARIMA model is that it provides a smooth historical trend as well
-as a linear forecast function. Hyndman, King, Pitrun, and Billah (2002) show
+as a linear forecast function. Hyndman, King, Pitrun, and Billah (2005) show
 that the forecast performance of the method is hardly affected by the
 restricted parameter space.
 }

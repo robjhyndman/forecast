@@ -12,7 +12,7 @@ spline_model(y, method = c("gcv", "mle"), lambda = NULL, biasadj = FALSE)
 \item{method}{Method for selecting the smoothing parameter. If
 \code{method = "gcv"}, the generalized cross-validation method from
 \code{\link[stats:smooth.spline]{stats::smooth.spline()}} is used. If \code{method = "mle"}, the
-maximum likelihood method from Hyndman et al (2002) is used.}
+maximum likelihood method from Hyndman et al (2005) is used.}
 
 \item{lambda}{Box-Cox transformation parameter. If \code{lambda = "auto"},
 then a transformation is automatically selected using \code{BoxCox.lambda}.
@@ -33,7 +33,7 @@ Fits a state space model based on cubic smoothing splines.
 The cubic smoothing spline model is equivalent to an ARIMA(0,2,2) model but
 with a restricted parameter space. The advantage of the spline model over
 the full ARIMA model is that it provides a smooth historical trend as well
-as a linear forecast function. Hyndman, King, Pitrun, and Billah (2002) show
+as a linear forecast function. Hyndman, King, Pitrun, and Billah (2005) show
 that the forecast performance of the method is hardly affected by the
 restricted parameter space.
 }
