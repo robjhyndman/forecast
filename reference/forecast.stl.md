@@ -168,8 +168,8 @@ re-seasonalizes the results by adding back the last year of the
 estimated seasonal component.
 
 `stlf` combines
-[`stlm()`](https://pkg.robjhyndman.com/forecast/reference/stlm.md) and
-`forecast.stlm`. It takes a `ts` argument, applies an STL decomposition,
+[`mstl()`](https://pkg.robjhyndman.com/forecast/reference/mstl.md) and
+`forecast.mstl`. It takes a `ts` argument, applies an STL decomposition,
 models the seasonally adjusted data, reseasonalizes, and returns the
 forecasts. However, it allows more general forecasting methods to be
 specified via `forecastfunction`.

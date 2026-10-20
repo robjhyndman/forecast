@@ -132,8 +132,8 @@ The fitted model is a regression with ARIMA(p,d,q) errors
 \$\$y_t = c + \beta' x_t + z_t\$\$
 
 where \\x_t\\ is a vector of regressors at time \\t\\ and \\z_t\\ is an
-ARMA(p,d,q) error process. If there are no regressors, and \\d=0\\, then
-c is an estimate of the mean of \\y_t\\. For more information, see
+ARIMA(p,d,q) error process. If there are no regressors, and \\d=0\\,
+then c is an estimate of the mean of \\y_t\\. For more information, see
 Hyndman & Athanasopoulos (2018). For details of the estimation
 algorithm, see the
 [`stats::arima()`](https://rdrr.io/r/stats/arima.html) function in the

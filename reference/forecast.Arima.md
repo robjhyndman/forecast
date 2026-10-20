@@ -137,9 +137,8 @@ For `Arima` or `ar` objects, the function calls
 [`stats::predict.Arima()`](https://rdrr.io/r/stats/predict.arima.html)
 or [stats::predict.ar](https://rdrr.io/r/stats/ar.html) and constructs
 an object of class `forecast` from the results. For `fracdiff` objects,
-the calculations are all done within
-[`fracdiff::fracdiff()`](https://rdrr.io/pkg/fracdiff/man/fracdiff.html)
-using the equations given by Peiris and Perera (1988).
+the calculations are all done within `forecast.fracdiff()` using the
+equations given by Peiris and Perera (1988).
 
 ## forecast class
 

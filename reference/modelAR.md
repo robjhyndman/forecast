@@ -68,8 +68,8 @@ modelAR(
 
 - model:
 
-  Output from a previous call to `nnetar`. If model is passed, this same
-  model is fitted to `y` without re-estimating any parameters.
+  Output from a previous call to `modelAR`. If model is passed, this
+  same model is fitted to `y` without re-estimating any parameters.
 
 - subset:
 

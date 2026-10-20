@@ -79,7 +79,8 @@ Loess-based decomposition (BLD) bootstrap. The function
 [`forecast.baggedModel()`](https://pkg.robjhyndman.com/forecast/reference/forecast.baggedModel.md)
 can then be used to calculate forecasts.
 
-`baggedETS` is a wrapper for `baggedModel`, setting `fn` to "ets". This
+`baggedETS` is a wrapper for `baggedModel`, setting `fn` to
+[`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md). This
 function is included for backwards compatibility only, and may be
 deprecated in the future.
 

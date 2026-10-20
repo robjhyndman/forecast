@@ -61,7 +61,7 @@ auto.arima(
 - D:
 
   Order of seasonal-differencing. If missing, will choose a value based
-  on `season.test`.
+  on `seasonal.test`.
 
 - max.p:
 
