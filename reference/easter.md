@@ -19,7 +19,7 @@ easter(x, easter.mon = FALSE)
 
 - easter.mon:
 
-  If `TRUE`, the length of Easter holidays includes. Easter Monday.
+  If `TRUE`, the length of Easter holidays includes Easter Monday.
 
 ## Value
 

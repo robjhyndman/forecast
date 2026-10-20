@@ -34,7 +34,7 @@ autoplot(object, ...)
 
 - type:
 
-  Determines if both AR and MA roots are plotted, of if just one set is
+  Determines if both AR and MA roots are plotted, or if just one set is
   plotted.
 
 - main:

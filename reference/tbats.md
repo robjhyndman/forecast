@@ -103,14 +103,12 @@ An object with class `c("tbats", "bats")`. The generic accessor
 functions
 [`fitted.values()`](https://rdrr.io/r/stats/fitted.values.html) and
 [`residuals()`](https://rdrr.io/r/stats/residuals.html) extract useful
-features of the value returned by
-[`bats()`](https://pkg.robjhyndman.com/forecast/reference/bats.md) and
-associated functions. The fitted model is designated TBATS(omega, p,q,
-phi, \<m1,k1\>,...,\<mJ,kJ\>) where omega is the Box-Cox parameter and
-phi is the damping parameter; the error is modelled as an ARMA(p,q)
-process and m1,...,mJ list the seasonal periods used in the model and
-k1,...,kJ are the corresponding number of Fourier terms used for each
-seasonality.
+features of the value returned by `tbats()` and associated functions.
+The fitted model is designated TBATS(omega, p,q, phi,
+\<m1,k1\>,...,\<mJ,kJ\>) where omega is the Box-Cox parameter and phi is
+the damping parameter; the error is modelled as an ARMA(p,q) process and
+m1,...,mJ list the seasonal periods used in the model and k1,...,kJ are
+the corresponding number of Fourier terms used for each seasonality.
 
 ## References
 
