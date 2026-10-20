@@ -74,7 +74,7 @@ controlling the values of p and q will be used.)}
 \value{
 An object with class \code{c("tbats", "bats")}. The generic accessor
 functions \code{fitted.values()} and \code{residuals()} extract useful features
-of the value returned by \code{\link[=bats]{bats()}} and associated functions. The fitted
+of the value returned by \code{\link[=tbats]{tbats()}} and associated functions. The fitted
 model is designated TBATS(omega, p,q, phi, <m1,k1>,...,<mJ,kJ>) where omega
 is the Box-Cox parameter and phi is the damping parameter; the error is
 modelled as an ARMA(p,q) process and m1,...,mJ list the seasonal periods

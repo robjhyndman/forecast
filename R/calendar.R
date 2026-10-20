@@ -91,7 +91,7 @@ bizdays <- function(
 #' Useful for adjusting calendar effects.
 #'
 #' @param x Monthly or quarterly time series.
-#' @param easter.mon If `TRUE`, the length of Easter holidays includes.
+#' @param easter.mon If `TRUE`, the length of Easter holidays includes
 #' Easter Monday.
 #' @return Time series
 #' @author Earo Wang

@@ -70,7 +70,7 @@ minus the effect of the regression variables. If there are no regression
 variables, the errors will be identical to the original series (possibly
 adjusted to have zero mean). \code{arima.errors} is a deprecated function
 which is identical to \code{residuals.Arima(object, type="regression")}.
-For \code{nnetar} objects, when \code{type = "innovations"} and \code{lambda} is used, a
+For \code{nnetar} objects, when \code{type = "innovation"} and \code{lambda} is used, a
 matrix of time-series consisting of the residuals from each of the fitted neural networks is returned.
 }
 \examples{

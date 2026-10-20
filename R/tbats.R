@@ -16,7 +16,7 @@
 #' parameters.
 #' @return An object with class `c("tbats", "bats")`. The generic accessor
 #' functions `fitted.values()` and `residuals()` extract useful features
-#' of the value returned by [bats()] and associated functions. The fitted
+#' of the value returned by [tbats()] and associated functions. The fitted
 #' model is designated TBATS(omega, p,q, phi, <m1,k1>,...,<mJ,kJ>) where omega
 #' is the Box-Cox parameter and phi is the damping parameter; the error is
 #' modelled as an ARMA(p,q) process and m1,...,mJ list the seasonal periods

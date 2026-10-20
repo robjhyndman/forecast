@@ -13,7 +13,7 @@
 #' variables, the errors will be identical to the original series (possibly
 #' adjusted to have zero mean). `arima.errors` is a deprecated function
 #' which is identical to `residuals.Arima(object, type="regression")`.
-#' For `nnetar` objects, when `type = "innovations"` and `lambda` is used, a
+#' For `nnetar` objects, when `type = "innovation"` and `lambda` is used, a
 #' matrix of time-series consisting of the residuals from each of the fitted neural networks is returned.
 #'
 #' @param object An object containing a time series model of class `ar`,

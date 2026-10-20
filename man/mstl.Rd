@@ -29,7 +29,7 @@ and fitted values.}
 
 \item{iterate}{Number of iterations to use to refine the seasonal component.}
 
-\item{s.window}{Seasonal windows to be used in the  decompositions. If scalar,
+\item{s.window}{Seasonal windows to be used in the decompositions. If scalar,
 the same value is used for all seasonal components. Otherwise, it should be a vector
 of the same length as the number of seasonal components (or longer).}
 
