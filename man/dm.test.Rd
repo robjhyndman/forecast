@@ -81,7 +81,7 @@ accuracy. \emph{Journal of Business and Economic Statistics}, \bold{13},
 253-263.
 
 Harvey, D., Leybourne, S., & Newbold, P. (1997). Testing the equality of
-prediction mean squared errors. \emph{International Journal of forecasting},
+prediction mean squared errors. \emph{International Journal of Forecasting},
 \bold{13}(2), 281-291.
 }
 \author{

@@ -98,7 +98,7 @@ plot.armaroots <- function(x, xlab, ylab, main, ...) {
 #' @param x Object of class \dQuote{Arima} or \dQuote{ar}.
 #' @param object Object of class \dQuote{Arima} or \dQuote{ar}. Used for ggplot
 #' graphics (S3 method consistency).
-#' @param type Determines if both AR and MA roots are plotted, of if just one
+#' @param type Determines if both AR and MA roots are plotted, or if just one
 #' set is plotted.
 #' @param main Main title. Default is "Inverse AR roots" or "Inverse MA roots".
 #' @param xlab X-axis label.
