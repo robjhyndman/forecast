@@ -1969,7 +1969,7 @@ autoplot.StructTS <- function(object, labels = NULL, range.bars = TRUE, ...) {
 #' Plot time series decomposition components using ggplot
 #'
 #' Produces a ggplot object of seasonally decomposed time series for objects of
-#' class `stl` (created with [stats::stl()], class `seas` (created with
+#' class `stl` (created with [stats::stl()]), class `seas` (created with
 #' [seasonal::seas()]), or class `decomposed.ts` (created with
 #' [stats::decompose()]).
 #'

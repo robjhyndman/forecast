@@ -195,6 +195,8 @@ print.spline_model <- function(
   invisible(x)
 }
 
+#' Cubic spline forecasts
+#'
 #' Returns local linear forecasts and prediction intervals using cubic
 #' smoothing splines estimated with [spline_model()].
 #'

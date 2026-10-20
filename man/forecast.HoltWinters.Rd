@@ -50,7 +50,7 @@ series models.
 This function calls \code{\link[stats:predict.HoltWinters]{stats::predict.HoltWinters()}} and constructs
 an object of class \code{forecast} from the results.
 
-It is included for completeness, but the \code{\link[=ets]{ets()}} is recommended
+It is included for completeness, but \code{\link[=ets]{ets()}} is recommended
 for use instead of \link[stats:HoltWinters]{stats::HoltWinters}.
 }
 \section{forecast class}{

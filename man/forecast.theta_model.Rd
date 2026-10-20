@@ -3,7 +3,7 @@
 \name{forecast.theta_model}
 \alias{forecast.theta_model}
 \alias{thetaf}
-\title{Theta method forecasts.}
+\title{Theta method forecasts}
 \usage{
 \method{forecast}{theta_model}(
   object,

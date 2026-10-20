@@ -29,7 +29,7 @@ as the control.
 The number of dummy variables is determined from the time series
 characteristics of \code{x}. When \code{h} is missing, the length of
 \code{x} also determines the number of rows for the matrix returned by
-\code{seasonaldummy}. the value of \code{h} determines the number of rows
+\code{seasonaldummy}. Otherwise, the value of \code{h} determines the number of rows
 for the matrix returned by \code{seasonaldummy}, typically used for
 forecasting. The values within \code{x} are not used.
 }

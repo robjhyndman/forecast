@@ -3,8 +3,7 @@
 \name{forecast.spline_model}
 \alias{forecast.spline_model}
 \alias{splinef}
-\title{Returns local linear forecasts and prediction intervals using cubic
-smoothing splines estimated with \code{\link[=spline_model]{spline_model()}}.}
+\title{Cubic spline forecasts}
 \usage{
 \method{forecast}{spline_model}(
   object,
@@ -81,6 +80,10 @@ intervals.}
 An object of class \code{forecast}.
 }
 \description{
+Returns local linear forecasts and prediction intervals using cubic
+smoothing splines estimated with \code{\link[=spline_model]{spline_model()}}.
+}
+\details{
 The cubic smoothing spline model is equivalent to an ARIMA(0,2,2) model but
 with a restricted parameter space. The advantage of the spline model over
 the full ARIMA model is that it provides a smooth historical trend as well

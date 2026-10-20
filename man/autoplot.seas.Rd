@@ -34,7 +34,7 @@ Returns an object of class \code{ggplot}.
 }
 \description{
 Produces a ggplot object of seasonally decomposed time series for objects of
-class \code{stl} (created with \code{\link[stats:stl]{stats::stl()}}, class \code{seas} (created with
+class \code{stl} (created with \code{\link[stats:stl]{stats::stl()}}), class \code{seas} (created with
 \code{\link[seasonal:seas]{seasonal::seas()}}), or class \code{decomposed.ts} (created with
 \code{\link[stats:decompose]{stats::decompose()}}).
 }

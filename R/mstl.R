@@ -153,7 +153,7 @@ autoplot.mstl <- function(object, ...) {
 #' `forecastfunction`. The `method` argument provides a shorthand way
 #' of specifying `forecastfunction` for a few special cases. More
 #' generally, `forecastfunction` can be any function with first argument a
-#' `ts` object, and other `h` and `level`, which returns an
+#' `ts` object, and other arguments `h` and `level`, which returns an
 #' object of class [forecast()]. For example,
 #' `forecastfunction = thetaf` uses the [thetaf()] function for
 #' forecasting the seasonally adjusted series.
@@ -393,7 +393,7 @@ rowSumsTS <- function(mts) {
 #' models the seasonally adjusted data using the model passed as
 #' `modelfunction` or specified using `method`. It returns an object
 #' that includes the original STL decomposition and a time series model fitted
-#' to the seasonally adjusted data. This object can be passed to the
+#' to the seasonally adjusted data. This object can be passed to
 #' `forecast.stlm` for forecasting.
 #'
 #' The time series model for the seasonally adjusted data can be specified in

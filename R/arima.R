@@ -509,7 +509,7 @@ getxreg <- function(z) {
 #' Returns time series of the regression residuals from a fitted ARIMA model.
 #'
 #' This is a deprecated function
-#' which is identical to [`residuals.Arima(object, type="regression")`][residuals.Arima]
+#' which is identical to [`residuals.Arima(object, type="regression")`][residuals.Arima].
 #' Regression residuals are equal to the original data
 #' minus the effect of any regression variables. If there are no regression
 #' variables, the errors will be identical to the original series (possibly
@@ -529,7 +529,7 @@ arima.errors <- function(object) {
 
 # Return one-step fits
 
-#' h-step in-sample forecasts for time series models.
+#' h-step in-sample forecasts for time series models
 #'
 #' Returns h-step forecasts for the data used in fitting the model.
 #'
@@ -541,7 +541,7 @@ arima.errors <- function(object) {
 #' @author Rob J Hyndman & Mitchell O'Hara-Wild
 #' @seealso [forecast.Arima()], [forecast.bats()], [forecast.tbats()],
 #' [forecast.ets()], [forecast.nnetar()], [residuals.Arima()],
-#' [residuals.bats()] [residuals.tbats()], [residuals.ets()],
+#' [residuals.bats()], [residuals.tbats()], [residuals.ets()],
 #' [residuals.nnetar()].
 #' @keywords ts
 #' @aliases fitted.forecast_ARIMA

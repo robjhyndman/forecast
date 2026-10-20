@@ -17,7 +17,7 @@ Returns time series of the regression residuals from a fitted ARIMA model.
 }
 \details{
 This is a deprecated function
-which is identical to \code{\link[=residuals.Arima]{residuals.Arima(object, type="regression")}}
+which is identical to \code{\link[=residuals.Arima]{residuals.Arima(object, type="regression")}}.
 Regression residuals are equal to the original data
 minus the effect of any regression variables. If there are no regression
 variables, the errors will be identical to the original series (possibly

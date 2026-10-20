@@ -115,7 +115,7 @@ sindexf <- function(object, h) {
 #' The number of dummy variables is determined from the time series
 #' characteristics of `x`. When `h` is missing, the length of
 #' `x` also determines the number of rows for the matrix returned by
-#' `seasonaldummy`. the value of `h` determines the number of rows
+#' `seasonaldummy`. Otherwise, the value of `h` determines the number of rows
 #' for the matrix returned by `seasonaldummy`, typically used for
 #' forecasting. The values within `x` are not used.
 #'
