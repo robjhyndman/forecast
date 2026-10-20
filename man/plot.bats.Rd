@@ -45,7 +45,7 @@ autoplot(fit, range.bars = TRUE)
 
 }
 \seealso{
-\code{\link[=bats]{bats()}}], \code{\link[=tbats]{tbats()}}
+\code{\link[=bats]{bats()}}, \code{\link[=tbats]{tbats()}}
 }
 \author{
 Rob J Hyndman
