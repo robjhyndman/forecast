@@ -57,7 +57,6 @@ ggtsbreaks <- function(x) {
 #' If `autoplot` is given an `acf` or `mpacf` object, then an
 #' appropriate ggplot object will be created.
 #'
-#' ggtaperedpacf
 #' @param object Object of class `acf`.
 #' @param x a univariate or multivariate (not Ccf) numeric time series object
 #' or a numeric vector or matrix.
@@ -81,7 +80,7 @@ ggtsbreaks <- function(x) {
 #' @param ... Other plotting parameters to affect the plot.
 #' @return A ggplot object.
 #' @author Mitchell O'Hara-Wild
-#' @seealso [stats::plot.acf()] [Acf()], [stats::acf(), [taperedacf()]
+#' @seealso [stats::plot.acf()], [Acf()], [stats::acf()], [taperedacf()]
 #' @examples
 #'
 #' library(ggplot2)

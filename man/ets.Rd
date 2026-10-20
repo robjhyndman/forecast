@@ -6,7 +6,6 @@
 \alias{summary.ets}
 \alias{as.character.ets}
 \alias{coef.ets}
-\alias{tsdiag.ets}
 \title{Exponential smoothing state space model}
 \usage{
 ets(

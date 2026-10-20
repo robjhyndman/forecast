@@ -102,8 +102,6 @@ taperedpacf functions.
 \details{
 If \code{autoplot} is given an \code{acf} or \code{mpacf} object, then an
 appropriate ggplot object will be created.
-
-ggtaperedpacf
 }
 \examples{
 
@@ -119,7 +117,7 @@ ggCcf(mdeaths, fdeaths)
 
 }
 \seealso{
-\code{\link[stats:plot.acf]{stats::plot.acf()}} \code{\link[=Acf]{Acf()}}, [stats::acf(), \code{\link[=taperedacf]{taperedacf()}}
+\code{\link[stats:plot.acf]{stats::plot.acf()}}, \code{\link[=Acf]{Acf()}}, \code{\link[stats:acf]{stats::acf()}}, \code{\link[=taperedacf]{taperedacf()}}
 }
 \author{
 Mitchell O'Hara-Wild

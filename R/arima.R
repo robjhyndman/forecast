@@ -601,7 +601,7 @@ fitted.forecast_ARIMA <- fitted.Arima
 #' Athanasopoulos (2018). For details of the estimation algorithm, see the
 #' [stats::arima()] function in the stats package.
 #'
-#' @aliases print.ARIMA summary.Arima as.character.Arima
+#' @aliases print.forecast_ARIMA summary.Arima as.character.Arima
 #'
 #' @inheritParams stats::arima
 #' @inheritParams ses

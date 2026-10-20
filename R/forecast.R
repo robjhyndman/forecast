@@ -309,7 +309,6 @@ plotlmforecast <- function(
 #'
 #' `autoplot` will produce a ggplot object.
 #'
-#' plot.splineforecast autoplot.splineforecast
 #' @param x Forecast object produced by [forecast()].
 #' @param object Forecast object produced by [forecast()]. Used for
 #' ggplot graphics (S3 method consistency).

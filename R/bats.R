@@ -540,7 +540,7 @@ print.bats <- function(x, ...) {
 #' @param ... Other plotting parameters passed to [graphics::par()].
 #' @return None. Function produces a plot
 #' @author Rob J Hyndman
-#' @seealso [bats()]], [tbats()]
+#' @seealso [bats()], [tbats()]
 #' @keywords hplot
 #'
 #' @export

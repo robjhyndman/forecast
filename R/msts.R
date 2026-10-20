@@ -6,7 +6,7 @@
 #' contains the vector of seasonal periods. All methods that work on a ts
 #' class, should also work on a msts class.
 #'
-#' @aliases print.msts window.msts `[.msts`
+#' @aliases print.msts window.msts [.msts
 #'
 #' @param data A numeric vector, ts object, matrix or data frame. It is
 #' intended that the time series data is univariate, otherwise treated the same

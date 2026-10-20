@@ -23,7 +23,7 @@
 #' @param ... Additional arguments to be passed on to the unit root test
 #' @return An integer indicating the number of differences required for stationarity.
 #' @author Rob J Hyndman, Slava Razbash & Mitchell O'Hara-Wild
-#' @seealso [auto.arima()] and [ndiffs()]
+#' @seealso [auto.arima()] and [nsdiffs()]
 #' @references
 #' Dickey DA and Fuller WA (1979), "Distribution of the Estimators for
 #' Autoregressive Time Series with a Unit Root", \emph{Journal of the American
