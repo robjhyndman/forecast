@@ -50,7 +50,7 @@ auto.arima(
 on \code{test}.}
 
 \item{D}{Order of seasonal-differencing. If missing, will choose a value
-based on \code{season.test}.}
+based on \code{seasonal.test}.}
 
 \item{max.p}{Maximum value of p.}
 

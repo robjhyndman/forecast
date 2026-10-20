@@ -31,9 +31,9 @@ containing forecasts. It will also work with \code{Arima}, \code{ets} and
 measures are returned.}
 
 \item{x}{An optional numerical vector containing actual values of the same
-length as object, or a time series overlapping with the times of \code{f}.}
+length as object, or a time series overlapping with the times of \code{object}.}
 
-\item{test}{Indicator of which elements of \code{x} and \code{f} to test. If
+\item{test}{Indicator of which elements of \code{x} and \code{object} to test. If
 \code{test} is \code{NULL}, all elements are used. Otherwise test is a
 numeric vector containing the indices of the elements to use in the test.}
 
@@ -53,10 +53,10 @@ Matrix giving forecast accuracy measures.
 \description{
 Returns range of summary measures of the forecast accuracy. If \code{x} is
 provided, the function measures test set forecast accuracy
-based on \code{x - f}. If \code{x} is not provided, the function only produces
+based on \code{x - object}. If \code{x} is not provided, the function only produces
 training set accuracy measures of the forecasts based on
-\code{f["x"] - fitted(f)}. All measures are defined and discussed in Hyndman
-and Koehler (2006).
+\code{object[["x"]] - fitted(object)}. All measures are defined and discussed in
+Hyndman and Koehler (2006).
 }
 \details{
 The measures calculated are:
@@ -68,11 +68,12 @@ The measures calculated are:
 \item MAPE: Mean Absolute Percentage Error
 \item MASE: Mean Absolute Scaled Error
 \item ACF1: Autocorrelation of errors at lag 1.
+\item Theil's U: Theil's U statistic.
 }
 By default, the MASE calculation is scaled using MAE of training set naive
 forecasts for non-seasonal time series, training set seasonal naive forecasts
 for seasonal time series and training set mean forecasts for non-time series data.
-If \code{f} is a numerical vector rather than a \code{forecast} object, the MASE
+If \code{object} is a numerical vector rather than a \code{forecast} object, the MASE
 will not be returned as the training data will not be available.
 
 See Hyndman and Koehler (2006) and Hyndman and Athanasopoulos (2014, Section

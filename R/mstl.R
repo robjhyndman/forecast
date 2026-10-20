@@ -133,7 +133,7 @@ autoplot.mstl <- function(object, ...) {
 #' re-seasonalizes the results by adding back the last year of the estimated
 #' seasonal component.
 #'
-#' `stlf` combines [stlm()] and `forecast.stlm`. It takes a
+#' `stlf` combines [mstl()] and `forecast.mstl`. It takes a
 #' `ts` argument, applies an STL decomposition, models the seasonally
 #' adjusted data, reseasonalizes, and returns the forecasts. However, it allows
 #' more general forecasting methods to be specified via

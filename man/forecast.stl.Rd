@@ -126,7 +126,7 @@ year of the seasonal component.
 re-seasonalizes the results by adding back the last year of the estimated
 seasonal component.
 
-\code{stlf} combines \code{\link[=stlm]{stlm()}} and \code{forecast.stlm}. It takes a
+\code{stlf} combines \code{\link[=mstl]{mstl()}} and \code{forecast.mstl}. It takes a
 \code{ts} argument, applies an STL decomposition, models the seasonally
 adjusted data, reseasonalizes, and returns the forecasts. However, it allows
 more general forecasting methods to be specified via

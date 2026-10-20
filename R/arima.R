@@ -194,7 +194,7 @@ search.arima <- function(
 #' For `Arima` or `ar` objects, the function calls [stats::predict.Arima()] or
 #' [stats::predict.ar] and constructs an object of class `forecast` from the
 #' results. For `fracdiff` objects, the calculations are all done within
-#' [fracdiff::fracdiff()] using the equations given by Peiris and Perera (1988).
+#' `forecast.fracdiff()` using the equations given by Peiris and Perera (1988).
 #'
 #' @inheritParams forecast.ets
 #' @param object An object of class `Arima`, `ar` or `fracdiff`. Usually
@@ -596,7 +596,7 @@ fitted.forecast_ARIMA <- fitted.Arima
 #' \deqn{y_t = c + \beta' x_t + z_t}
 #'
 #' where \eqn{x_t} is a vector of regressors at time \eqn{t} and \eqn{z_t} is an
-#' ARMA(p,d,q) error process. If there are no regressors, and \eqn{d=0}, then c
+#' ARIMA(p,d,q) error process. If there are no regressors, and \eqn{d=0}, then c
 #' is an estimate of the mean of \eqn{y_t}. For more information, see Hyndman &
 #' Athanasopoulos (2018). For details of the estimation algorithm, see the
 #' [stats::arima()] function in the stats package.

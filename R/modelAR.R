@@ -32,7 +32,7 @@
 #' Must accept an object of class `FUN` as its first argument, and a
 #' data frame or matrix of new data for its second argument. Additionally,
 #' it should return fitted values when new data is omitted.
-#' @param model Output from a previous call to `nnetar`. If model is
+#' @param model Output from a previous call to `modelAR`. If model is
 #' passed, this same model is fitted to `y` without re-estimating any
 #' parameters.
 #' @param subset Optional vector specifying a subset of observations to be used
