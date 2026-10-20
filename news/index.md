@@ -547,8 +547,7 @@ CRAN release: 2017-02-23
   [`arfima()`](https://pkg.robjhyndman.com/forecast/reference/arfima.md)
   and [`stlm()`](https://pkg.robjhyndman.com/forecast/reference/stlm.md)
 - Better bias adjustment support after Box-Cox transformation
-- [`print.ARIMA()`](https://pkg.robjhyndman.com/forecast/reference/Arima.md)
-  has better labelling of constants
+- `print.ARIMA()` has better labelling of constants
 - Bug fixes
 - Removed fortify method for forecast objects
 
@@ -741,7 +740,7 @@ CRAN release: 2015-02-26
   give better handling of horizontal axis for seasonal data or when … is
   passed.
 - Removed `print.Arima()` and `predict.Arima()` and added
-  [`print.ARIMA()`](https://pkg.robjhyndman.com/forecast/reference/Arima.md)
+  `print.ARIMA()`
 - method argument now passed when re-fitting an ARIMA model.
 - Fixed error when CH test applied to short series
 

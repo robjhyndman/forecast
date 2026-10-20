@@ -83,7 +83,8 @@ Moving Average Models of Unknown Order", *Biometrika* **71**:599-607.
 ## See also
 
 [`auto.arima()`](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md)
-and `ndiffs()`
+and
+[`nsdiffs()`](https://pkg.robjhyndman.com/forecast/reference/nsdiffs.md)
 
 ## Author
 

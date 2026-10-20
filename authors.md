@@ -2,7 +2,7 @@
 
 ## Authors
 
-- **[Rob Hyndman](http://robjhyndman.com)**. Author, maintainer,
+- **[Rob Hyndman](https://robjhyndman.com)**. Author, maintainer,
   copyright holder. [](https://orcid.org/0000-0002-2140-5352)
 
 - **George Athanasopoulos**. Author.
@@ -29,7 +29,7 @@
 
 - **[Slava Razbash](https://github.com/slavarazbash)**. Author.
 
-- **[Earo Wang](http://earo.me)**. Author.
+- **[Earo Wang](https://earo.me)**. Author.
   [](https://orcid.org/0000-0001-6448-5260)
 
 - **Farah Yasmeen**. Author. [](https://orcid.org/0000-0002-1479-5401)

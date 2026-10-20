@@ -128,13 +128,11 @@ A ggplot object.
 If `autoplot` is given an `acf` or `mpacf` object, then an appropriate
 ggplot object will be created.
 
-ggtaperedpacf
-
 ## See also
 
-[`stats::plot.acf()`](https://rdrr.io/r/stats/plot.acf.html)
+[`stats::plot.acf()`](https://rdrr.io/r/stats/plot.acf.html),
 [`Acf()`](https://pkg.robjhyndman.com/forecast/reference/Acf.md),
-\[stats::acf(),
+[`stats::acf()`](https://rdrr.io/r/stats/acf.html),
 [`taperedacf()`](https://pkg.robjhyndman.com/forecast/reference/Acf.md)
 
 ## Author

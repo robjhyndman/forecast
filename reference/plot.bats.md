@@ -51,7 +51,7 @@ None. Function produces a plot
 
 ## See also
 
-[`bats()`](https://pkg.robjhyndman.com/forecast/reference/bats.md)\],
+[`bats()`](https://pkg.robjhyndman.com/forecast/reference/bats.md),
 [`tbats()`](https://pkg.robjhyndman.com/forecast/reference/tbats.md)
 
 ## Author

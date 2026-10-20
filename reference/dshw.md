@@ -112,6 +112,54 @@ that used in Hyndman et al (2008) and that used for the
 [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md)
 function.
 
+## forecast class
+
+An object of class `forecast` is a list usually containing at least the
+following elements:
+
+- model:
+
+  A list containing information about the fitted model
+
+- method:
+
+  The name of the forecasting method as a character string
+
+- mean:
+
+  Point forecasts as a time series
+
+- lower:
+
+  Lower limits for prediction intervals
+
+- upper:
+
+  Upper limits for prediction intervals
+
+- level:
+
+  The confidence values associated with the prediction intervals
+
+- x:
+
+  The original time series.
+
+- residuals:
+
+  Residuals from the fitted model. For models with additive errors, the
+  residuals will be x minus the fitted values.
+
+- fitted:
+
+  Fitted values (one-step forecasts)
+
+The function `summary` can be used to obtain and print a summary of the
+results, while the functions `plot` and `autoplot` produce plots of the
+forecasts and prediction intervals. The generic accessor functions
+`fitted.values` and `residuals` extract various useful features from the
+underlying model.
+
 ## References
 
 Taylor, J.W. (2003) Short-term electricity demand forecasting using

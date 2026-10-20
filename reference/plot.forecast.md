@@ -165,8 +165,6 @@ None.
 
 `autoplot` will produce a ggplot object.
 
-plot.splineforecast autoplot.splineforecast
-
 ## References
 
 Hyndman and Athanasopoulos (2018) *Forecasting: principles and
