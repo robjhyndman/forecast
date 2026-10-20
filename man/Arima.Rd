@@ -2,7 +2,7 @@
 % Please edit documentation in R/arima.R
 \name{Arima}
 \alias{Arima}
-\alias{print.ARIMA}
+\alias{print.forecast_ARIMA}
 \alias{summary.Arima}
 \alias{as.character.Arima}
 \title{Fit ARIMA model to univariate time series}

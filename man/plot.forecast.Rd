@@ -113,8 +113,6 @@ Plots historical data with forecasts and prediction intervals.
 }
 \details{
 \code{autoplot} will produce a ggplot object.
-
-plot.splineforecast autoplot.splineforecast
 }
 \examples{
 library(ggplot2)

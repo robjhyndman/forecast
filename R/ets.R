@@ -9,7 +9,7 @@
 #' methodology performed extremely well on the M3-competition data. (See
 #' Hyndman, et al, 2002, below.)
 #'
-#' @aliases print.ets summary.ets as.character.ets coef.ets tsdiag.ets
+#' @aliases print.ets summary.ets as.character.ets coef.ets
 #'
 #' @inheritParams forecast.ts
 #' @param y a numeric vector or univariate time series of class `ts`

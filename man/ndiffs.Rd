@@ -70,7 +70,7 @@ Moving Average Models of Unknown Order", \emph{Biometrika}
 \bold{71}:599-607.
 }
 \seealso{
-\code{\link[=auto.arima]{auto.arima()}} and \code{\link[=ndiffs]{ndiffs()}}
+\code{\link[=auto.arima]{auto.arima()}} and \code{\link[=nsdiffs]{nsdiffs()}}
 }
 \author{
 Rob J Hyndman, Slava Razbash & Mitchell O'Hara-Wild
