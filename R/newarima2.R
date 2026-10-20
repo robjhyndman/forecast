@@ -19,7 +19,7 @@
 #' @param d Order of first-differencing. If missing, will choose a value based
 #' on `test`.
 #' @param D Order of seasonal-differencing. If missing, will choose a value
-#' based on `season.test`.
+#' based on `seasonal.test`.
 #' @param max.p Maximum value of p.
 #' @param max.q Maximum value of q.
 #' @param max.P Maximum value of P.

@@ -12,7 +12,7 @@
 #' with the Box-Cox and Loess-based decomposition (BLD) bootstrap. The function
 #' [forecast.baggedModel()] can then be used to calculate forecasts.
 #'
-#' `baggedETS` is a wrapper for `baggedModel`, setting `fn` to "ets".
+#' `baggedETS` is a wrapper for `baggedModel`, setting `fn` to [ets()].
 #' This function is included for backwards compatibility only, and may be
 #' deprecated in the future.
 #'
@@ -121,7 +121,7 @@ baggedETS <- function(y, bootstrapped_series = bld.mbb.bootstrap(y, 100), ...) {
 #' plot(fcast)
 #'
 #' \dontrun{
-#' fit2 <- baggedModel(WWWusage, fn = "auto.arima")
+#' fit2 <- baggedModel(WWWusage, fn = auto.arima)
 #' fcast2 <- forecast(fit2)
 #' plot(fcast2)
 #' accuracy(fcast2)

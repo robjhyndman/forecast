@@ -46,7 +46,7 @@ parameter \code{fn}. Using the default parameters, the function
 with the Box-Cox and Loess-based decomposition (BLD) bootstrap. The function
 \code{\link[=forecast.baggedModel]{forecast.baggedModel()}} can then be used to calculate forecasts.
 
-\code{baggedETS} is a wrapper for \code{baggedModel}, setting \code{fn} to "ets".
+\code{baggedETS} is a wrapper for \code{baggedModel}, setting \code{fn} to \code{\link[=ets]{ets()}}.
 This function is included for backwards compatibility only, and may be
 deprecated in the future.
 }

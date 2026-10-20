@@ -189,10 +189,10 @@ trainingaccuracy <- function(f, test, d, D) {
 #'
 #' Returns range of summary measures of the forecast accuracy. If `x` is
 #' provided, the function measures test set forecast accuracy
-#' based on `x - f`. If `x` is not provided, the function only produces
+#' based on `x - object`. If `x` is not provided, the function only produces
 #' training set accuracy measures of the forecasts based on
-#' `f["x"] - fitted(f)`. All measures are defined and discussed in Hyndman
-#' and Koehler (2006).
+#' `object[["x"]] - fitted(object)`. All measures are defined and discussed in
+#' Hyndman and Koehler (2006).
 #'
 #' The measures calculated are:
 #' \itemize{
@@ -203,11 +203,12 @@ trainingaccuracy <- function(f, test, d, D) {
 #'   \item MAPE: Mean Absolute Percentage Error
 #'   \item MASE: Mean Absolute Scaled Error
 #'   \item ACF1: Autocorrelation of errors at lag 1.
+#'   \item Theil's U: Theil's U statistic.
 #' }
 #' By default, the MASE calculation is scaled using MAE of training set naive
 #' forecasts for non-seasonal time series, training set seasonal naive forecasts
 #' for seasonal time series and training set mean forecasts for non-time series data.
-#' If `f` is a numerical vector rather than a `forecast` object, the MASE
+#' If `object` is a numerical vector rather than a `forecast` object, the MASE
 #' will not be returned as the training data will not be available.
 #'
 #' See Hyndman and Koehler (2006) and Hyndman and Athanasopoulos (2014, Section
@@ -218,8 +219,8 @@ trainingaccuracy <- function(f, test, d, D) {
 #' `lm` objects if `x` is omitted -- in which case training set accuracy
 #' measures are returned.
 #' @param x An optional numerical vector containing actual values of the same
-#' length as object, or a time series overlapping with the times of `f`.
-#' @param test Indicator of which elements of `x` and `f` to test. If
+#' length as object, or a time series overlapping with the times of `object`.
+#' @param test Indicator of which elements of `x` and `object` to test. If
 #' `test` is `NULL`, all elements are used. Otherwise test is a
 #' numeric vector containing the indices of the elements to use in the test.
 #' @param d An integer indicating the number of lag-1 differences to be used
