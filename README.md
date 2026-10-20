@@ -8,7 +8,7 @@ forecast <img src="man/figures/logo.png" align="right" />
 
 The R package *forecast* provides methods and tools for displaying and analysing univariate time series forecasts including exponential smoothing via state space models and automatic ARIMA modelling.
 
-A complementary forecasting package is the [fable](http://fable.tidyverts.org/) package, which implements many of the same models but in a tidyverse framework.
+A complementary forecasting package is the [fable](https://fable.tidyverts.org/) package, which implements many of the same models but in a tidyverse framework.
 
 ## Installation
 
@@ -20,7 +20,7 @@ install.packages("forecast", dependencies = TRUE)
 ```
 
 You can install the **development** version from
-[Github](https://github.com/robjhyndman/forecast)
+[GitHub](https://github.com/robjhyndman/forecast)
 
 ```r
 # install.packages("pak")
@@ -81,11 +81,11 @@ taylor |>
 
 ## For more information
 
-  * Get started in forecasting with the online textbook at http://OTexts.org/fpp2/
+  * Get started in forecasting with the online textbook at https://otexts.com/fpp2/
   * Read the Hyndsight blog at https://robjhyndman.com/hyndsight/
-  * Ask forecasting questions on http://stats.stackexchange.com/tags/forecasting
-  * Ask R questions on http://stackoverflow.com/tags/forecasting+r
-  * Join the International Institute of Forecasters: http://forecasters.org/
+  * Ask forecasting questions on https://stats.stackexchange.com/tags/forecasting
+  * Ask R questions on https://stackoverflow.com/tags/forecasting+r
+  * Join the International Institute of Forecasters: https://forecasters.org/
 
 ## License
 
