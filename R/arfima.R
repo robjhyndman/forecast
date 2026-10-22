@@ -103,7 +103,7 @@ unfracdiff <- function(x, y, n, h, d) {
 #'
 #' Hyndman, R.J. and Khandakar, Y. (2008) "Automatic time series forecasting:
 #' The forecast package for R", \emph{Journal of Statistical Software},
-#' \bold{26}(3).
+#' \bold{27}(3), 1-22.
 #' @keywords ts
 #' @examples
 #'

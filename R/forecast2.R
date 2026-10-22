@@ -26,7 +26,7 @@
 #' @author Rob J Hyndman & Mitchell O'Hara-Wild
 #' @seealso [BoxCox.lambda()]
 #' @references Box, G. E. P. and Cox, D. R. (1964) An analysis of
-#' transformations. \emph{JRSS B} \bold{26} 211--246.
+#' transformations. \emph{JRSS B} \bold{26}(2), 211--243.
 #' Bickel, P. J. and Doksum K. A. (1981) An Analysis of Transformations Revisited. \emph{JASA} \bold{76} 296-311.
 #' @keywords ts
 #' @examples

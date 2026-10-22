@@ -76,8 +76,8 @@ for seasonal time series and training set mean forecasts for non-time series dat
 If \code{object} is a numerical vector rather than a \code{forecast} object, the MASE
 will not be returned as the training data will not be available.
 
-See Hyndman and Koehler (2006) and Hyndman and Athanasopoulos (2014, Section
-2.5) for further details.
+See Hyndman and Koehler (2006) and Hyndman and Athanasopoulos (2018, Section
+3.4) for further details.
 }
 \examples{
 fit1 <- rwf(EuStockMarkets[1:200, 1], h = 100)
