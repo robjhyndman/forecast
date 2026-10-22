@@ -55,7 +55,7 @@ if \\\lambda\ne0\\. For \\\lambda=0\\,
 ## References
 
 Box, G. E. P. and Cox, D. R. (1964) An analysis of transformations.
-*JRSS B* **26** 211–246. Bickel, P. J. and Doksum K. A. (1981) An
+*JRSS B* **26**(2), 211–243. Bickel, P. J. and Doksum K. A. (1981) An
 Analysis of Transformations Revisited. *JASA* **76** 296-311.
 
 ## See also

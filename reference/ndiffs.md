@@ -75,7 +75,7 @@ Osborn, D.R. (1990) "A survey of seasonality in UK macroeconomic
 variables", *International Journal of Forecasting*, **6**:327-336.
 
 Phillips, P.C.B. and Perron, P. (1988) "Testing for a unit root in time
-series regression", *Biometrika*, **72**(2), 335-346.
+series regression", *Biometrika*, **75**(2), 335-346.
 
 Said E and Dickey DA (1984), "Testing for Unit Roots in Autoregressive
 Moving Average Models of Unknown Order", *Biometrika* **71**:599-607.

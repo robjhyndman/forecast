@@ -254,7 +254,7 @@ to the algorithm described in Hyndman and Khandakar (2008).
 
 Hyndman, RJ and Khandakar, Y (2008) "Automatic time series forecasting:
 The forecast package for R", *Journal of Statistical Software*,
-**26**(3).
+**27**(3), 1-22.
 
 Wang, X, Smith, KA, Hyndman, RJ (2006) "Characteristic-based clustering
 for time series data", *Data Mining and Knowledge Discovery*, **13**(3),

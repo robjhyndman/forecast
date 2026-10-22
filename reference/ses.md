@@ -83,7 +83,7 @@ hw(
   [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md). If
   `simple`, the initial values are set to values obtained using simple
   calculations on the first few observations. See Hyndman &
-  Athanasopoulos (2014) for details.
+  Athanasopoulos (2018) for details.
 
 - alpha:
 

@@ -105,7 +105,7 @@ discussion); *Applied Statistics* **38**, 1-50.
 
 Hyndman, R.J. and Khandakar, Y. (2008) "Automatic time series
 forecasting: The forecast package for R", *Journal of Statistical
-Software*, **26**(3).
+Software*, **27**(3), 1-22.
 
 ## See also
 

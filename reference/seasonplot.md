@@ -1,6 +1,6 @@
 # Seasonal plot
 
-Plots a seasonal plot as described in Hyndman and Athanasopoulos (2014,
+Plots a seasonal plot as described in Hyndman and Athanasopoulos (2018,
 chapter 2). This is like a time plot except that the data are plotted
 against the seasons in separate years.
 

@@ -171,8 +171,8 @@ state space framework for automatic forecasting using exponential
 smoothing methods", *International J. Forecasting*, **18**(3), 439–454.
 
 Hyndman, R.J., Akram, Md., and Archibald, B. (2008) "The admissible
-parameter space for exponential smoothing models". *Annals of
-Statistical Mathematics*, **60**(2), 407–426.
+parameter space for exponential smoothing models". *Annals of the
+Institute of Statistical Mathematics*, **60**(2), 407–426.
 
 Hyndman, R.J., Koehler, A.B., Ord, J.K., and Snyder, R.D. (2008)
 *Forecasting with exponential smoothing: the state space approach*,

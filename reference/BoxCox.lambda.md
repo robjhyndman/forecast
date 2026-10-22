@@ -41,7 +41,7 @@ time trend with seasonal dummy variables is used.
 ## References
 
 Box, G. E. P. and Cox, D. R. (1964) An analysis of transformations.
-*JRSS B* **26** 211–246.
+*JRSS B* **26**(2), 211–243.
 
 Guerrero, V.M. (1993) Time-series analysis supported by power
 transformations. *Journal of Forecasting*, **12**, 37–48.

@@ -100,8 +100,8 @@ for non-time series data. If `object` is a numerical vector rather than
 a `forecast` object, the MASE will not be returned as the training data
 will not be available.
 
-See Hyndman and Koehler (2006) and Hyndman and Athanasopoulos (2014,
-Section 2.5) for further details.
+See Hyndman and Koehler (2006) and Hyndman and Athanasopoulos (2018,
+Section 3.4) for further details.
 
 ## References
 

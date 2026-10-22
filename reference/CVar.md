@@ -65,8 +65,8 @@ fold, plus other summary information computed across folds.
 ## References
 
 Bergmeir, C., Hyndman, R.J., Koo, B. (2018) A note on the validity of
-cross-validation for evaluating time series prediction. *Computational
-Statistics & Data Analysis*, **120**, 70-83.
+cross-validation for evaluating autoregressive time series prediction.
+*Computational Statistics & Data Analysis*, **120**, 70-83.
 <https://robjhyndman.com/publications/cv-time-series/>.
 
 ## See also
