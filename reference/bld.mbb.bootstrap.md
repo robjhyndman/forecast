@@ -1,4 +1,4 @@
-# Box-Cox and Loess-based decomposition bootstrap.
+# Box-Cox and Loess-based decomposition bootstrap
 
 Generates bootstrapped versions of a time series using the Box-Cox and
 Loess-based decomposition bootstrap.

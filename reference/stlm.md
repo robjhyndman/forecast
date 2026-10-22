@@ -7,7 +7,7 @@ series `y`, applies an STL decomposition, and models the seasonally
 adjusted data using the model passed as `modelfunction` or specified
 using `method`. It returns an object that includes the original STL
 decomposition and a time series model fitted to the seasonally adjusted
-data. This object can be passed to the `forecast.stlm` for forecasting.
+data. This object can be passed to `forecast.stlm` for forecasting.
 
 ## Usage
 

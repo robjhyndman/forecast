@@ -4,7 +4,7 @@ Fits a state space model based on cubic smoothing splines. The cubic
 smoothing spline model is equivalent to an ARIMA(0,2,2) model but with a
 restricted parameter space. The advantage of the spline model over the
 full ARIMA model is that it provides a smooth historical trend as well
-as a linear forecast function. Hyndman, King, Pitrun, and Billah (2002)
+as a linear forecast function. Hyndman, King, Pitrun, and Billah (2005)
 show that the forecast performance of the method is hardly affected by
 the restricted parameter space.
 
@@ -26,7 +26,7 @@ spline_model(y, method = c("gcv", "mle"), lambda = NULL, biasadj = FALSE)
   generalized cross-validation method from
   [`stats::smooth.spline()`](https://rdrr.io/r/stats/smooth.spline.html)
   is used. If `method = "mle"`, the maximum likelihood method from
-  Hyndman et al (2002) is used.
+  Hyndman et al (2005) is used.
 
 - lambda:
 

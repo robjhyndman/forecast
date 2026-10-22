@@ -68,7 +68,7 @@ This function calls
 [`stats::predict.HoltWinters()`](https://rdrr.io/r/stats/predict.HoltWinters.html)
 and constructs an object of class `forecast` from the results.
 
-It is included for completeness, but the
+It is included for completeness, but
 [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md) is
 recommended for use instead of
 [stats::HoltWinters](https://rdrr.io/r/stats/HoltWinters.html).

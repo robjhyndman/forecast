@@ -188,7 +188,8 @@ in `stlf` and `forecast.stl` using either `method` or
 `forecastfunction`. The `method` argument provides a shorthand way of
 specifying `forecastfunction` for a few special cases. More generally,
 `forecastfunction` can be any function with first argument a `ts`
-object, and other `h` and `level`, which returns an object of class
+object, and other arguments `h` and `level`, which returns an object of
+class
 [`forecast()`](https://generics.r-lib.org/reference/forecast.html). For
 example, `forecastfunction = thetaf` uses the
 [`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)

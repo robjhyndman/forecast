@@ -2,7 +2,7 @@
 
 Produces a ggplot object of seasonally decomposed time series for
 objects of class `stl` (created with
-[`stats::stl()`](https://rdrr.io/r/stats/stl.html), class `seas`
+[`stats::stl()`](https://rdrr.io/r/stats/stl.html)), class `seas`
 (created with
 [`seasonal::seas()`](https://rdrr.io/pkg/seasonal/man/seas.html)), or
 class `decomposed.ts` (created with

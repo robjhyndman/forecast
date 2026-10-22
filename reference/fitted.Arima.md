@@ -1,4 +1,4 @@
-# h-step in-sample forecasts for time series models.
+# h-step in-sample forecasts for time series models
 
 Returns h-step forecasts for the data used in fitting the model.
 
@@ -56,7 +56,7 @@ A time series of the h-step forecasts.
 [`forecast.ets()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ets.md),
 [`forecast.nnetar()`](https://pkg.robjhyndman.com/forecast/reference/forecast.nnetar.md),
 [`residuals.Arima()`](https://pkg.robjhyndman.com/forecast/reference/residuals.forecast.md),
-[`residuals.bats()`](https://pkg.robjhyndman.com/forecast/reference/residuals.forecast.md)
+[`residuals.bats()`](https://pkg.robjhyndman.com/forecast/reference/residuals.forecast.md),
 [`residuals.tbats()`](https://pkg.robjhyndman.com/forecast/reference/residuals.forecast.md),
 [`residuals.ets()`](https://pkg.robjhyndman.com/forecast/reference/residuals.forecast.md),
 [`residuals.nnetar()`](https://pkg.robjhyndman.com/forecast/reference/residuals.forecast.md).

@@ -22,7 +22,7 @@ A `ts` object
 ## Details
 
 This is a deprecated function which is identical to
-[`residuals.Arima(object, type="regression")`](https://pkg.robjhyndman.com/forecast/reference/residuals.forecast.md)
+[`residuals.Arima(object, type="regression")`](https://pkg.robjhyndman.com/forecast/reference/residuals.forecast.md).
 Regression residuals are equal to the original data minus the effect of
 any regression variables. If there are no regression variables, the
 errors will be identical to the original series (possibly adjusted to

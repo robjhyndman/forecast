@@ -14,7 +14,7 @@ Functions for working with time series
 - [`bizdays()`](https://pkg.robjhyndman.com/forecast/reference/bizdays.md)
   : Number of trading days in each season
 - [`bld.mbb.bootstrap()`](https://pkg.robjhyndman.com/forecast/reference/bld.mbb.bootstrap.md)
-  : Box-Cox and Loess-based decomposition bootstrap.
+  : Box-Cox and Loess-based decomposition bootstrap
 - [`BoxCox()`](https://pkg.robjhyndman.com/forecast/reference/BoxCox.md)
   [`InvBoxCox()`](https://pkg.robjhyndman.com/forecast/reference/BoxCox.md)
   : Box Cox Transformation
@@ -112,90 +112,64 @@ Functions for producing forecasts
 - [`forecast(`*`<croston_model>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.croston_model.md)
   [`croston()`](https://pkg.robjhyndman.com/forecast/reference/forecast.croston_model.md)
   : Forecasts for intermittent demand using Croston's method
-
 - [`dshw()`](https://pkg.robjhyndman.com/forecast/reference/dshw.md) :
   Double-Seasonal Holt-Winters Forecasting
-
 - [`ses()`](https://pkg.robjhyndman.com/forecast/reference/ses.md)
   [`holt()`](https://pkg.robjhyndman.com/forecast/reference/ses.md)
   [`hw()`](https://pkg.robjhyndman.com/forecast/reference/ses.md) :
   Exponential smoothing forecasts
-
 - [`forecast(`*`<mean_model>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.mean_model.md)
   [`meanf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.mean_model.md)
   : Mean Forecast
-
 - [`modelAR()`](https://pkg.robjhyndman.com/forecast/reference/modelAR.md)
   : Time Series Forecasts with a user-defined model
-
 - [`forecast(`*`<rw_model>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.rw_model.md)
   [`rwf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.rw_model.md)
   [`naive()`](https://pkg.robjhyndman.com/forecast/reference/forecast.rw_model.md)
   [`snaive()`](https://pkg.robjhyndman.com/forecast/reference/forecast.rw_model.md)
   : Naive and Random Walk Forecasts
-
 - [`sindexf()`](https://pkg.robjhyndman.com/forecast/reference/sindexf.md)
   : Forecast seasonal index
-
 - [`forecast(`*`<spline_model>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.spline_model.md)
   [`splinef()`](https://pkg.robjhyndman.com/forecast/reference/forecast.spline_model.md)
-  :
-
-  Returns local linear forecasts and prediction intervals using cubic
-  smoothing splines estimated with
-  [`spline_model()`](https://pkg.robjhyndman.com/forecast/reference/spline_model.md).
-
+  : Cubic spline forecasts
 - [`forecast(`*`<stl>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
   [`forecast(`*`<stlm>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
   [`stlf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
   : Forecasting using stl objects
-
 - [`forecast(`*`<theta_model>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
   [`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
-  : Theta method forecasts.
-
+  : Theta method forecasts
 - [`forecast(`*`<fracdiff>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.Arima.md)
   [`forecast(`*`<Arima>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.Arima.md)
   [`forecast(`*`<ar>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.Arima.md)
   : Forecasting using ARIMA or ARFIMA models
-
 - [`forecast(`*`<baggedModel>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.baggedModel.md)
   : Forecasting using a bagged model
-
 - [`forecast(`*`<bats>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.bats.md)
   [`forecast(`*`<tbats>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.bats.md)
   : Forecasting using BATS and TBATS models
-
 - [`forecast(`*`<ets>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.ets.md)
   : Forecasting using ETS models
-
 - [`forecast(`*`<HoltWinters>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.HoltWinters.md)
   : Forecasting using Holt-Winters objects
-
 - [`forecast(`*`<lm>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.lm.md)
   : Forecast a linear model with possible time series components
-
 - [`forecast(`*`<mlm>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.mlm.md)
   : Forecast a multiple linear model with possible time series
   components
-
 - [`forecast(`*`<modelAR>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.modelAR.md)
   : Forecasting using user-defined model
-
 - [`forecast(`*`<mts>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.mts.md)
   : Forecasting time series
-
 - [`forecast(`*`<nnetar>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.nnetar.md)
   : Forecasting using neural network models
-
 - [`forecast(`*`<StructTS>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.StructTS.md)
   : Forecasting using Structural Time Series models
-
 - [`forecast(`*`<ts>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.ts.md)
   [`forecast(`*`<default>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.ts.md)
   [`print(`*`<forecast>`*`)`](https://pkg.robjhyndman.com/forecast/reference/forecast.ts.md)
   : Forecasting time series
-
 - [`is.forecast()`](https://pkg.robjhyndman.com/forecast/reference/is.forecast.md)
   [`is.mforecast()`](https://pkg.robjhyndman.com/forecast/reference/is.forecast.md)
   [`is.splineforecast()`](https://pkg.robjhyndman.com/forecast/reference/is.forecast.md)
@@ -211,8 +185,6 @@ Functions for plotting time series and forecasts
   [`taperedacf()`](https://pkg.robjhyndman.com/forecast/reference/Acf.md)
   [`taperedpacf()`](https://pkg.robjhyndman.com/forecast/reference/Acf.md)
   : (Partial) Autocorrelation and Cross-Correlation Function Estimation
-- [`checkresiduals()`](https://pkg.robjhyndman.com/forecast/reference/checkresiduals.md)
-  : Check that residuals from a time series model look like white noise
 - [`autoplot(`*`<acf>`*`)`](https://pkg.robjhyndman.com/forecast/reference/autoplot.acf.md)
   [`ggAcf()`](https://pkg.robjhyndman.com/forecast/reference/autoplot.acf.md)
   [`ggPacf()`](https://pkg.robjhyndman.com/forecast/reference/autoplot.acf.md)
@@ -299,7 +271,7 @@ Functions for analysing time series models
 - [`checkresiduals()`](https://pkg.robjhyndman.com/forecast/reference/checkresiduals.md)
   : Check that residuals from a time series model look like white noise
 - [`getResponse()`](https://pkg.robjhyndman.com/forecast/reference/getResponse.md)
-  : Get response variable from time series model.
+  : Get response variable from time series model
 - [`modeldf()`](https://pkg.robjhyndman.com/forecast/reference/modeldf.md)
   : Compute model degrees of freedom
 - [`fitted(`*`<ARFIMA>`*`)`](https://pkg.robjhyndman.com/forecast/reference/fitted.Arima.md)
@@ -310,7 +282,7 @@ Functions for analysing time series models
   [`fitted(`*`<modelAR>`*`)`](https://pkg.robjhyndman.com/forecast/reference/fitted.Arima.md)
   [`fitted(`*`<nnetar>`*`)`](https://pkg.robjhyndman.com/forecast/reference/fitted.Arima.md)
   [`fitted(`*`<tbats>`*`)`](https://pkg.robjhyndman.com/forecast/reference/fitted.Arima.md)
-  : h-step in-sample forecasts for time series models.
+  : h-step in-sample forecasts for time series models
 - [`residuals(`*`<forecast>`*`)`](https://pkg.robjhyndman.com/forecast/reference/residuals.forecast.md)
   [`residuals(`*`<ar>`*`)`](https://pkg.robjhyndman.com/forecast/reference/residuals.forecast.md)
   [`residuals(`*`<Arima>`*`)`](https://pkg.robjhyndman.com/forecast/reference/residuals.forecast.md)
