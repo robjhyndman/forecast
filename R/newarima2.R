@@ -74,7 +74,7 @@
 #' @seealso [Arima()]
 #' @references Hyndman, RJ and Khandakar, Y (2008) "Automatic time series
 #' forecasting: The forecast package for R", \emph{Journal of Statistical
-#' Software}, \bold{26}(3).
+#' Software}, \bold{27}(3), 1-22.
 #'
 #' Wang, X, Smith, KA, Hyndman, RJ (2006) "Characteristic-based clustering
 #' for time series data", \emph{Data Mining and Knowledge Discovery},

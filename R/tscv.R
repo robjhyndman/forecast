@@ -171,7 +171,8 @@ tsCV <- function(
 #' @author Gabriel Caceres and Rob J Hyndman
 #' @seealso [CV()], [tsCV()].
 #' @references Bergmeir, C., Hyndman, R.J., Koo, B. (2018) A note on the
-#' validity of cross-validation for evaluating time series prediction.
+#' validity of cross-validation for evaluating autoregressive time series
+#' prediction.
 #' \emph{Computational Statistics & Data Analysis}, \bold{120}, 70-83.
 #' \url{https://robjhyndman.com/publications/cv-time-series/}.
 #' @keywords ts

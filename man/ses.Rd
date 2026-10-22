@@ -70,7 +70,7 @@ This is suitable for fan plots.}
 \code{optimal}, the initial values are optimized along with the smoothing
 parameters using \code{\link[=ets]{ets()}}. If \code{simple}, the initial values are
 set to values obtained using simple calculations on the first few
-observations. See Hyndman & Athanasopoulos (2014) for details.}
+observations. See Hyndman & Athanasopoulos (2018) for details.}
 
 \item{alpha}{Value of smoothing parameter for the level. If \code{NULL}, it
 will be estimated.}

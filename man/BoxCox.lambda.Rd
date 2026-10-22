@@ -42,7 +42,7 @@ plot(forecast(air.fit))
 }
 \references{
 Box, G. E. P. and Cox, D. R. (1964) An analysis of
-transformations. \emph{JRSS B} \bold{26} 211--246.
+transformations. \emph{JRSS B} \bold{26}(2), 211--243.
 
 Guerrero, V.M. (1993) Time-series analysis supported by power
 transformations. \emph{Journal of Forecasting}, \bold{12}, 37--48.

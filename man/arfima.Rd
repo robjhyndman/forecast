@@ -83,7 +83,7 @@ discussion); \emph{Applied Statistics} \bold{38}, 1-50.
 
 Hyndman, R.J. and Khandakar, Y. (2008) "Automatic time series forecasting:
 The forecast package for R", \emph{Journal of Statistical Software},
-\bold{26}(3).
+\bold{27}(3), 1-22.
 }
 \seealso{
 \code{\link[fracdiff:fracdiff]{fracdiff::fracdiff()}}, \code{\link[=auto.arima]{auto.arima()}}, \code{\link[=forecast.fracdiff]{forecast.fracdiff()}}.

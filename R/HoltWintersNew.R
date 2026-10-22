@@ -385,7 +385,7 @@ zzhw <- function(
 #' `optimal`, the initial values are optimized along with the smoothing
 #' parameters using [ets()]. If `simple`, the initial values are
 #' set to values obtained using simple calculations on the first few
-#' observations. See Hyndman & Athanasopoulos (2014) for details.
+#' observations. See Hyndman & Athanasopoulos (2018) for details.
 #' @param exponential If `TRUE`, an exponential trend is fitted.
 #' Otherwise, the trend is (locally) linear.
 #' @param alpha Value of smoothing parameter for the level. If `NULL`, it
