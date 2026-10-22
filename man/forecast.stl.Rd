@@ -146,7 +146,7 @@ The forecasting method for the seasonally adjusted data can be specified in
 \code{forecastfunction}. The \code{method} argument provides a shorthand way
 of specifying \code{forecastfunction} for a few special cases. More
 generally, \code{forecastfunction} can be any function with first argument a
-\code{ts} object, and other \code{h} and \code{level}, which returns an
+\code{ts} object, and other arguments \code{h} and \code{level}, which returns an
 object of class \code{\link[=forecast]{forecast()}}. For example,
 \code{forecastfunction = thetaf} uses the \code{\link[=thetaf]{thetaf()}} function for
 forecasting the seasonally adjusted series.

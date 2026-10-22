@@ -72,7 +72,7 @@ spline.loglik <- function(beta, y, cc = 1e2) {
 #' The cubic smoothing spline model is equivalent to an ARIMA(0,2,2) model but
 #' with a restricted parameter space. The advantage of the spline model over
 #' the full ARIMA model is that it provides a smooth historical trend as well
-#' as a linear forecast function. Hyndman, King, Pitrun, and Billah (2002) show
+#' as a linear forecast function. Hyndman, King, Pitrun, and Billah (2005) show
 #' that the forecast performance of the method is hardly affected by the
 #' restricted parameter space.
 #'
@@ -80,7 +80,7 @@ spline.loglik <- function(beta, y, cc = 1e2) {
 #' @param method Method for selecting the smoothing parameter. If
 #' `method = "gcv"`, the generalized cross-validation method from
 #' [stats::smooth.spline()] is used. If `method = "mle"`, the
-#' maximum likelihood method from Hyndman et al (2002) is used.
+#' maximum likelihood method from Hyndman et al (2005) is used.
 #' @return An object of class `spline_model`.
 #' @author Rob J Hyndman
 #' @seealso [stats::smooth.spline()], [stats::arima()], [holt()].
@@ -195,13 +195,15 @@ print.spline_model <- function(
   invisible(x)
 }
 
+#' Cubic spline forecasts
+#'
 #' Returns local linear forecasts and prediction intervals using cubic
 #' smoothing splines estimated with [spline_model()].
 #'
 #' The cubic smoothing spline model is equivalent to an ARIMA(0,2,2) model but
 #' with a restricted parameter space. The advantage of the spline model over
 #' the full ARIMA model is that it provides a smooth historical trend as well
-#' as a linear forecast function. Hyndman, King, Pitrun, and Billah (2002) show
+#' as a linear forecast function. Hyndman, King, Pitrun, and Billah (2005) show
 #' that the forecast performance of the method is hardly affected by the
 #' restricted parameter space.
 #'

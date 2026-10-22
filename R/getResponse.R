@@ -2,7 +2,7 @@
 # If a Box-Cox transformation is used, the series returned here should
 # be on the original scale, not the Box-Cox transformed scale.
 
-#' Get response variable from time series model.
+#' Get response variable from time series model
 #'
 #' `getResponse` is a generic function for extracting the historical data from
 #' a time series model (including `Arima`, `ets`, `ar`, `fracdiff`), a linear

@@ -11,7 +11,7 @@
 \alias{getResponse.bats}
 \alias{getResponse.mforecast}
 \alias{getResponse.baggedModel}
-\title{Get response variable from time series model.}
+\title{Get response variable from time series model}
 \usage{
 getResponse(object, ...)
 

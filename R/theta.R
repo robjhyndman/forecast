@@ -123,7 +123,7 @@ print.theta_model <- function(
   invisible(x)
 }
 
-#' Theta method forecasts.
+#' Theta method forecasts
 #'
 #' Returns forecasts and prediction intervals for a theta method forecast.
 #' `thetaf()` is a convenience function that combines `theta_model()` and

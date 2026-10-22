@@ -11,7 +11,7 @@
 \alias{fitted.modelAR}
 \alias{fitted.nnetar}
 \alias{fitted.tbats}
-\title{h-step in-sample forecasts for time series models.}
+\title{h-step in-sample forecasts for time series models}
 \usage{
 \method{fitted}{ARFIMA}(object, h = 1, ...)
 
@@ -55,7 +55,7 @@ legend("topleft", legend = paste("h =", 1:3), col = 2:4, lty = 1)
 \seealso{
 \code{\link[=forecast.Arima]{forecast.Arima()}}, \code{\link[=forecast.bats]{forecast.bats()}}, \code{\link[=forecast.tbats]{forecast.tbats()}},
 \code{\link[=forecast.ets]{forecast.ets()}}, \code{\link[=forecast.nnetar]{forecast.nnetar()}}, \code{\link[=residuals.Arima]{residuals.Arima()}},
-\code{\link[=residuals.bats]{residuals.bats()}} \code{\link[=residuals.tbats]{residuals.tbats()}}, \code{\link[=residuals.ets]{residuals.ets()}},
+\code{\link[=residuals.bats]{residuals.bats()}}, \code{\link[=residuals.tbats]{residuals.tbats()}}, \code{\link[=residuals.ets]{residuals.ets()}},
 \code{\link[=residuals.nnetar]{residuals.nnetar()}}.
 }
 \author{

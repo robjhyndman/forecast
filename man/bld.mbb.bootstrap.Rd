@@ -2,7 +2,7 @@
 % Please edit documentation in R/bootstrap.R
 \name{bld.mbb.bootstrap}
 \alias{bld.mbb.bootstrap}
-\title{Box-Cox and Loess-based decomposition bootstrap.}
+\title{Box-Cox and Loess-based decomposition bootstrap}
 \usage{
 bld.mbb.bootstrap(x, num, block_size = NULL)
 }

@@ -80,7 +80,7 @@ year of the seasonal component. \code{stlm} takes a time series \code{y}, applie
 models the seasonally adjusted data using the model passed as
 \code{modelfunction} or specified using \code{method}. It returns an object
 that includes the original STL decomposition and a time series model fitted
-to the seasonally adjusted data. This object can be passed to the
+to the seasonally adjusted data. This object can be passed to
 \code{forecast.stlm} for forecasting.
 }
 \details{

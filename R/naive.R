@@ -4,11 +4,11 @@
 #'
 #' The model assumes that
 #'
-#' \deqn{Y_t = Y_{t-p} + c + \varepsilon_{t}}{Y[t] = Y[t-p] + epsilon[t]}
+#' \deqn{Y_t = Y_{t-p} + c + \varepsilon_{t}}{Y[t] = Y[t-p] + c + epsilon[t]}
 #'
 #' where \eqn{p} is the lag parameter,
 #' \eqn{c} is the drift parameter, and
-#' \eqn{\varepsilon_t\sim N(0,\sigma^2)}{Y[t] ~ N(0, sigma^2)} are iid.
+#' \eqn{\varepsilon_t\sim N(0,\sigma^2)}{epsilon[t] ~ N(0, sigma^2)} are iid.
 #'
 #' The model without drift has \eqn{c=0}.
 #' In the model with drift, \eqn{c} is estimated

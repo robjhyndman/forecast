@@ -204,7 +204,7 @@ forecast.StructTS <- function(
 #' This function calls [stats::predict.HoltWinters()] and constructs
 #' an object of class `forecast` from the results.
 #'
-#' It is included for completeness, but the [ets()] is recommended
+#' It is included for completeness, but [ets()] is recommended
 #' for use instead of [stats::HoltWinters].
 #'
 #' @inheritParams forecast.ets
