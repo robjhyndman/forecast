@@ -48,7 +48,7 @@
 #' Forecasting}, \bold{24}, 389-402.
 #'
 #' Syntetos A.A., Boylan J.E. (2001). On the bias of intermittent demand estimates.
-#' \emph{International Journal of Production Economics}, \bold{71}, 457–466.
+#' \emph{International Journal of Production Economics}, \bold{71}, 457-466.
 #' @author Rob J Hyndman
 #' @return An object of class `croston_model`
 #' @examples
@@ -312,7 +312,7 @@ print.croston_model <- function(
 #' Forecasting}, \bold{24}, 389-402.
 #'
 #' Syntetos A.A., Boylan J.E. (2001). On the bias of intermittent demand estimates.
-#' \emph{International Journal of Production Economics}, \bold{71}, 457–466.
+#' \emph{International Journal of Production Economics}, \bold{71}, 457-466.
 #' @keywords ts
 #' @examples
 #' y <- rpois(20, lambda = 0.3)

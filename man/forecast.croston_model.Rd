@@ -116,7 +116,7 @@ Croston's method for intermittent demand forecasting". \emph{Journal of
 Forecasting}, \bold{24}, 389-402.
 
 Syntetos A.A., Boylan J.E. (2001). On the bias of intermittent demand estimates.
-\emph{International Journal of Production Economics}, \bold{71}, 457–466.
+\emph{International Journal of Production Economics}, \bold{71}, 457-466.
 }
 \seealso{
 \code{\link[=ses]{ses()}}.

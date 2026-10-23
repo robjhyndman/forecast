@@ -10,7 +10,7 @@ seasonaldummy(x, h = NULL)
 seasonaldummyf(x, h)
 }
 \arguments{
-\item{x}{Seasonal time series: a \code{ts} or a \code{msts} object}
+\item{x}{Seasonal time series: a \code{ts} or an \code{msts} object}
 
 \item{h}{Number of periods ahead to forecast (optional)}
 }

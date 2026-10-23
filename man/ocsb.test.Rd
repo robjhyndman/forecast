@@ -21,7 +21,7 @@ ocsb.test returns a list of class "OCSBtest" with the following components:
 \item pvalues the p-values for each test statistics.
 \item method a character string describing the type of test.
 \item data.name a character string giving the name of the data.
-\item fitted.model	the fitted regression model.
+\item fitted.model the fitted regression model.
 }
 }
 \description{

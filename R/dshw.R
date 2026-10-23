@@ -13,14 +13,14 @@
 #' are multiplied together. For example, with a series of half-hourly data, one
 #' would set `period1 = 48` for the daily period and `period2 = 336` for
 #' the weekly period. The smoothing parameter notation used here is different
-#' from that in Taylor (2003); instead it matches that used in Hyndman et al
+#' from that in Taylor (2003); instead it matches that used in Hyndman et al.
 #' (2008) and that used for the [ets()] function.
 #'
 #' @param y Either an [msts()] object with two seasonal periods or a
 #' numeric vector.
 #' @param period1 Period of the shorter seasonal period. Only used if `y`
 #' is not an [msts()] object.
-#' @param period2 Period of the longer seasonal period.  Only used if `y`
+#' @param period2 Period of the longer seasonal period. Only used if `y`
 #' is not an [msts()] object.
 #' @param h Number of periods for forecasting.
 #' @param alpha Smoothing parameter for the level. If `NULL`, the

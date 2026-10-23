@@ -239,7 +239,7 @@ trainingaccuracy <- function(f, test, d, D) {
 #' Hyndman, R.J. and Athanasopoulos, G. (2018)
 #' "Forecasting: principles and practice", 2nd ed., OTexts, Melbourne, Australia.
 #' Section 3.4 "Evaluating forecast accuracy".
-#' \url{https://otexts.com/fpp2/accuracy.html}.
+#' \url{https://otexts.com/fpp2/toolbox.html#sec-accuracy}.
 #' @keywords ts
 #' @examples
 #' fit1 <- rwf(EuStockMarkets[1:200, 1], h = 100)

@@ -40,7 +40,7 @@ modelling the seasonally adjusted series. If \code{modelfunction} is not
 \code{NULL}, then \code{method} is ignored. Otherwise \code{method} is used
 to specify the time series model to be used.}
 
-\item{model}{Output from a previous call to \code{stlm}. If a \code{stlm}
+\item{model}{Output from a previous call to \code{stlm}. If an \code{stlm}
 model is passed, this same model is fitted to y without re-estimating any
 parameters.}
 

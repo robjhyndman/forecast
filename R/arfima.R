@@ -71,7 +71,7 @@ unfracdiff <- function(x, y, n, h, d) {
 #'
 #' This function combines [fracdiff::fracdiff()] and
 #' [auto.arima()] to automatically select and estimate an ARFIMA
-#' model.  The fractional differencing parameter is chosen first assuming an
+#' model. The fractional differencing parameter is chosen first assuming an
 #' ARFIMA(2,d,0) model. Then the data are fractionally differenced using the
 #' estimated d and an ARMA model is selected for the resulting time series
 #' using [auto.arima()]. Finally, the full ARFIMA(p,d,q) model is

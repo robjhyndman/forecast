@@ -19,8 +19,8 @@ Returns number of trading days in each month or quarter of the observed time
 period in a major financial center.
 }
 \details{
-Useful for trading days length adjustments. More on how to define "business
-days", please refer to \code{\link[timeDate:isBizday]{timeDate::isBizday()}}.
+Useful for trading days length adjustments. For more on how to define
+business days, see \code{\link[timeDate:isBizday]{timeDate::isBizday()}}.
 }
 \examples{
 

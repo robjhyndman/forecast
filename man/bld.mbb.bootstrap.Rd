@@ -22,9 +22,9 @@ Generates bootstrapped versions of a time series using the Box-Cox and
 Loess-based decomposition bootstrap.
 }
 \details{
-The procedure is described in Bergmeir et al. Box-Cox decomposition is
-applied, together with STL or Loess (for non-seasonal time series), and the
-remainder is bootstrapped using a moving block bootstrap.
+The procedure is described in Bergmeir et al. (2016). Box-Cox decomposition
+is applied, together with STL or Loess (for non-seasonal time series), and
+the remainder is bootstrapped using a moving block bootstrap.
 }
 \examples{
 bootstrapped_series <- bld.mbb.bootstrap(WWWusage, 100)

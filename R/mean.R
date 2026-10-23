@@ -4,7 +4,7 @@
 #'
 #' Fits a Gaussian iid model to a univariate time series.
 #'
-#' The model assumes that the data are independent and identically distributed
+#' The model assumes that the data are independent and identically distributed:
 #'
 #' \deqn{Y_t \sim N(\mu,\sigma^2)}{Y[t] ~ N(mu, sigma^2)}
 #'
@@ -14,9 +14,9 @@
 #'
 #' where \eqn{\mu}{mu} is estimated by the sample mean.
 #'
-#' The function [summary()] is used to obtain and print a summary of the
-#' results, while the function [plot()] produces a plot of the forecasts and
-#' prediction intervals.
+#' The function [base::summary()] is used to obtain and print a summary of
+#' the results, while the function [base::plot()] produces a plot of the
+#' forecasts and prediction intervals.
 #' The generic accessor functions [stats::fitted()] and [stats::residuals()]
 #' extract useful features of the object returned by [mean_model()].
 #'

@@ -16,13 +16,13 @@
 \item{object}{Multivariate forecast object of class \code{mforecast}. Used
 for ggplot graphics (S3 method consistency).}
 
-\item{PI}{If \code{FALSE}, confidence intervals will not be plotted, giving
+\item{PI}{If \code{FALSE}, prediction intervals will not be plotted, giving
 only the forecast line.}
 
 \item{facets}{If \code{TRUE}, multiple time series will be faceted. If
 \code{FALSE}, each series will be assigned a colour.}
 
-\item{colour}{If \code{TRUE}, the time series will be assigned a colour aesthetic}
+\item{colour}{If \code{TRUE}, the time series will be assigned a colour aesthetic.}
 
 \item{...}{additional arguments to each individual \code{plot}.}
 

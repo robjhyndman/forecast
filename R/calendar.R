@@ -8,8 +8,8 @@ as.Date.timeDate <- timeDate::as.Date.timeDate
 #' Returns number of trading days in each month or quarter of the observed time
 #' period in a major financial center.
 #'
-#' Useful for trading days length adjustments. More on how to define "business
-#' days", please refer to [timeDate::isBizday()].
+#' Useful for trading days length adjustments. For more on how to define
+#' business days, see [timeDate::isBizday()].
 #'
 #' @param x Monthly or quarterly time series.
 #' @param FinCenter Major financial center.

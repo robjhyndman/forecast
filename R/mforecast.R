@@ -228,11 +228,11 @@ print.mforecast <- function(x, ...) {
 #' specify a vector of titles for each plot.
 #' @param xlab X-axis label. For autoplot, specify a vector of labels for each
 #' plot.
-#' @param PI If `FALSE`, confidence intervals will not be plotted, giving
+#' @param PI If `FALSE`, prediction intervals will not be plotted, giving
 #' only the forecast line.
 #' @param facets If `TRUE`, multiple time series will be faceted. If
 #' `FALSE`, each series will be assigned a colour.
-#' @param colour If `TRUE`, the time series will be assigned a colour aesthetic
+#' @param colour If `TRUE`, the time series will be assigned a colour aesthetic.
 #' @param series Matches an unidentified forecast layer with a coloured object
 #' on the plot.
 #' @param ... additional arguments to each individual `plot`.

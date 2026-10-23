@@ -39,7 +39,7 @@ The bagged model forecasting method.
 }
 \details{
 This function implements the bagged model forecasting method described in
-Bergmeir et al. By default, the \code{\link[=ets]{ets()}} function is applied to all
+Bergmeir et al. (2016). By default, the \code{\link[=ets]{ets()}} function is applied to all
 bootstrapped series. Base models other than \code{\link[=ets]{ets()}} can be given by the
 parameter \code{fn}. Using the default parameters, the function
 \code{\link[=bld.mbb.bootstrap]{bld.mbb.bootstrap()}} is used to calculate the bootstrapped series

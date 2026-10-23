@@ -101,7 +101,7 @@ Returns forecasts and other information for univariate ARIMA models.
 }
 \details{
 For \code{Arima} or \code{ar} objects, the function calls \code{\link[stats:predict.Arima]{stats::predict.Arima()}} or
-\link[stats:predict.ar]{stats::predict.ar} and constructs an object of class \code{forecast} from the
+\code{\link[stats:predict.ar]{stats::predict.ar()}} and constructs an object of class \code{forecast} from the
 results. For \code{fracdiff} objects, the calculations are all done within
 \code{forecast.fracdiff()} using the equations given by Peiris and Perera (1988).
 }

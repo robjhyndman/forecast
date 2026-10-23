@@ -27,7 +27,7 @@ numeric vector.}
 \item{period1}{Period of the shorter seasonal period. Only used if \code{y}
 is not an \code{\link[=msts]{msts()}} object.}
 
-\item{period2}{Period of the longer seasonal period.  Only used if \code{y}
+\item{period2}{Period of the longer seasonal period. Only used if \code{y}
 is not an \code{\link[=msts]{msts()}} object.}
 
 \item{h}{Number of periods for forecasting.}
@@ -75,7 +75,7 @@ multiplicative seasonality, where there are two seasonal components which
 are multiplied together. For example, with a series of half-hourly data, one
 would set \code{period1 = 48} for the daily period and \code{period2 = 336} for
 the weekly period. The smoothing parameter notation used here is different
-from that in Taylor (2003); instead it matches that used in Hyndman et al
+from that in Taylor (2003); instead it matches that used in Hyndman et al.
 (2008) and that used for the \code{\link[=ets]{ets()}} function.
 }
 \section{forecast class}{

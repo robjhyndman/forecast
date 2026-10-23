@@ -25,7 +25,8 @@ WWWusage |> auto.arima() |> arimaorder()
 
 }
 \seealso{
-\code{\link[stats:ar]{stats::ar()}}, \link{auto.arima}, \code{\link[=Arima]{Arima()}}, \code{\link[stats:arima]{stats::arima()}}, \code{\link[=arfima]{arfima()}}.
+\code{\link[stats:ar]{stats::ar()}}, \code{\link[=auto.arima]{auto.arima()}}, \code{\link[=Arima]{Arima()}}, \code{\link[stats:arima]{stats::arima()}},
+\code{\link[=arfima]{arfima()}}.
 }
 \author{
 Rob J Hyndman

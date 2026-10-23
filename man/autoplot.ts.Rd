@@ -68,7 +68,7 @@ None. Function produces a ggplot graph.
 }
 \description{
 \code{autoplot} takes an object of type \code{ts} or \code{mts} and creates
-a ggplot object suitable for usage with \code{stat_forecast}.
+a ggplot object suitable for usage with \code{\link[=geom_forecast]{geom_forecast()}}.
 }
 \details{
 \code{fortify.ts} takes a \code{ts} object and converts it into a data frame

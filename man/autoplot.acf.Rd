@@ -96,8 +96,8 @@ confidence intervals.}
 A ggplot object.
 }
 \description{
-Produces a ggplot object of their equivalent Acf, Pacf, Ccf, taperedacf and
-taperedpacf functions.
+Produces ggplot versions of the plots from \code{\link[=Acf]{Acf()}}, \code{\link[=Pacf]{Pacf()}}, \code{\link[=Ccf]{Ccf()}},
+\code{\link[=taperedacf]{taperedacf()}} and \code{\link[=taperedpacf]{taperedpacf()}}.
 }
 \details{
 If \code{autoplot} is given an \code{acf} or \code{mpacf} object, then an
