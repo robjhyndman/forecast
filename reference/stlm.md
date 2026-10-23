@@ -64,7 +64,7 @@ stlm(
 
 - model:
 
-  Output from a previous call to `stlm`. If a `stlm` model is passed,
+  Output from a previous call to `stlm`. If an `stlm` model is passed,
   this same model is fitted to y without re-estimating any parameters.
 
 - etsmodel:

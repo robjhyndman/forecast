@@ -1,7 +1,12 @@
 # ggplot (Partial) Autocorrelation and Cross-Correlation Function Estimation and Plotting
 
-Produces a ggplot object of their equivalent Acf, Pacf, Ccf, taperedacf
-and taperedpacf functions.
+Produces ggplot versions of the plots from
+[`Acf()`](https://pkg.robjhyndman.com/forecast/reference/Acf.md),
+[`Pacf()`](https://pkg.robjhyndman.com/forecast/reference/Acf.md),
+[`Ccf()`](https://pkg.robjhyndman.com/forecast/reference/Acf.md),
+[`taperedacf()`](https://pkg.robjhyndman.com/forecast/reference/Acf.md)
+and
+[`taperedpacf()`](https://pkg.robjhyndman.com/forecast/reference/Acf.md).
 
 ## Usage
 

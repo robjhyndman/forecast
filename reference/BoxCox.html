@@ -80,7 +80,8 @@ transformation. InvBoxCox() reverses the transformation.</p>
 
 <dt id="arg-lambda">lambda<a class="anchor" aria-label="anchor" href="#arg-lambda"></a></dt>
 <dd><p>transformation parameter. If <code>lambda = "auto"</code>, then
-the transformation parameter lambda is chosen using BoxCox.lambda (with a lower bound of -0.9)</p></dd>
+the transformation parameter lambda is chosen using BoxCox.lambda (with a
+lower bound of -0.9).</p></dd>
 
 
 <dt id="arg-biasadj">biasadj<a class="anchor" aria-label="anchor" href="#arg-biasadj"></a></dt>
@@ -104,15 +105,15 @@ and the corresponding <code>upper</code> and <code>lower</code> intervals.</p></
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The Box-Cox transformation (as given by Bickel &amp; Doksum 1981) is given by</p>
-<p>$$f_\lambda(x) =(sign(x)|x|^\lambda - 1)/\lambda$$</p>
+<p>$$f_\lambda(x) =(\mathrm{sign}(x)|x|^\lambda - 1)/\lambda$$</p>
 <p>if \(\lambda\ne0\). For \(\lambda=0\),</p>
-<p>$$f_0(x)=\log(x)$$.</p>
+<p>$$f_0(x)=\log(x)$$</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Box, G. E. P. and Cox, D. R. (1964) An analysis of
-transformations. <em>JRSS B</em> <b>26</b>(2), 211–243.
-Bickel, P. J. and Doksum K. A. (1981) An Analysis of Transformations Revisited. <em>JASA</em> <b>76</b> 296-311.</p>
+transformations. <em>JRSS B</em> <b>26</b>(2), 211–243.</p>
+<p>Bickel, P. J. and Doksum K. A. (1981) An Analysis of Transformations Revisited. <em>JASA</em> <b>76</b> 296-311.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

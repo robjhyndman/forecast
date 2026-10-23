@@ -82,10 +82,11 @@ None.
 
 ## Details
 
-"gglagplot" will plot time series against lagged versions of themselves.
-Helps visualising 'auto-dependence' even when auto-correlations vanish.
+`gglagplot()` will plot time series against lagged versions of
+themselves. Helps visualising 'auto-dependence' even when
+auto-correlations vanish.
 
-"gglagchull" will layer convex hulls of the lags, layered on a single
+`gglagchull()` will layer convex hulls of the lags, layered on a single
 plot. This helps visualise the change in 'auto-dependence' as lags
 increase.
 

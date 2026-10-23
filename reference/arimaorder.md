@@ -31,7 +31,7 @@ where \\m\\ is the period of seasonality.
 ## See also
 
 [`stats::ar()`](https://rdrr.io/r/stats/ar.html),
-[auto.arima](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md),
+[`auto.arima()`](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md),
 [`Arima()`](https://pkg.robjhyndman.com/forecast/reference/Arima.md),
 [`stats::arima()`](https://rdrr.io/r/stats/arima.html),
 [`arfima()`](https://pkg.robjhyndman.com/forecast/reference/arfima.md).

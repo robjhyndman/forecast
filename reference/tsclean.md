@@ -3,7 +3,7 @@
 Uses supsmu for non-seasonal series and a robust STL decomposition for
 seasonal series. To estimate missing values and outlier replacements,
 linear interpolation is used on the (possibly seasonally adjusted)
-series
+series.
 
 ## Usage
 

@@ -18,7 +18,7 @@ fourierf(x, K, h)
 
 - x:
 
-  Seasonal time series: a `ts` or a `msts` object
+  Seasonal time series: a `ts` or an `msts` object
 
 - K:
 
@@ -69,7 +69,7 @@ Rob J Hyndman
 library(ggplot2)
 
 # Using Fourier series for a "ts" object
-# K is chosen to minimize the AICc
+# In practice, K should be chosen to minimize the AICc
 deaths.model <- auto.arima(
   USAccDeaths,
   xreg = fourier(USAccDeaths, K = 5),

@@ -21,7 +21,7 @@ InvBoxCox(x, lambda, biasadj = FALSE, fvar = NULL)
 
   transformation parameter. If `lambda = "auto"`, then the
   transformation parameter lambda is chosen using BoxCox.lambda (with a
-  lower bound of -0.9)
+  lower bound of -0.9).
 
 - biasadj:
 
@@ -46,17 +46,19 @@ a numeric vector of the same length as x.
 The Box-Cox transformation (as given by Bickel & Doksum 1981) is given
 by
 
-\$\$f\_\lambda(x) =(sign(x)\|x\|^\lambda - 1)/\lambda\$\$
+\$\$f\_\lambda(x) =(\mathrm{sign}(x)\|x\|^\lambda - 1)/\lambda\$\$
 
 if \\\lambda\ne0\\. For \\\lambda=0\\,
 
-\$\$f_0(x)=\log(x)\$\$.
+\$\$f_0(x)=\log(x)\$\$
 
 ## References
 
 Box, G. E. P. and Cox, D. R. (1964) An analysis of transformations.
-*JRSS B* **26**(2), 211–243. Bickel, P. J. and Doksum K. A. (1981) An
-Analysis of Transformations Revisited. *JASA* **76** 296-311.
+*JRSS B* **26**(2), 211–243.
+
+Bickel, P. J. and Doksum K. A. (1981) An Analysis of Transformations
+Revisited. *JASA* **76** 296-311.
 
 ## See also
 

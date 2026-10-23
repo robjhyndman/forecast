@@ -30,9 +30,10 @@ list is the original series.
 
 ## Details
 
-The procedure is described in Bergmeir et al. Box-Cox decomposition is
-applied, together with STL or Loess (for non-seasonal time series), and
-the remainder is bootstrapped using a moving block bootstrap.
+The procedure is described in Bergmeir et al. (2016). Box-Cox
+decomposition is applied, together with STL or Loess (for non-seasonal
+time series), and the remainder is bootstrapped using a moving block
+bootstrap.
 
 ## References
 

@@ -164,7 +164,7 @@ Forecasting*, **24**, 389-402.
 
 Syntetos A.A., Boylan J.E. (2001). On the bias of intermittent demand
 estimates. *International Journal of Production Economics*, **71**,
-457–466.
+457-466.
 
 ## See also
 

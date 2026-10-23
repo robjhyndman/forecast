@@ -68,7 +68,7 @@ results.
 ## Details
 
 This function implements the bagged model forecasting method described
-in Bergmeir et al. By default, the
+in Bergmeir et al. (2016). By default, the
 [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md)
 function is applied to all bootstrapped series. Base models other than
 [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md) can be

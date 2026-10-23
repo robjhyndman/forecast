@@ -25,8 +25,8 @@ Time series
 
 ## Details
 
-Useful for trading days length adjustments. More on how to define
-"business days", please refer to
+Useful for trading days length adjustments. For more on how to define
+business days, see
 [`timeDate::isBizday()`](https://geobosh.github.io/timeDateDoc/reference/calendar-isBizday.html).
 
 ## See also

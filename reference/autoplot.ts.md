@@ -1,7 +1,8 @@
 # Automatically create a ggplot for time series objects
 
 `autoplot` takes an object of type `ts` or `mts` and creates a ggplot
-object suitable for usage with `stat_forecast`.
+object suitable for usage with
+[`geom_forecast()`](https://pkg.robjhyndman.com/forecast/reference/geom_forecast.md).
 
 ## Usage
 

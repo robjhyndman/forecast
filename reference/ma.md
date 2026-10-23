@@ -36,12 +36,12 @@ data, leaving a smooth trend-cycle component.
 
 \$\$\hat{T}\_{t} = \frac{1}{m} \sum\_{j=-k}^k y\_{t+j}\$\$
 
-where \\k=\frac{m-1}{2}\\.
+where \\m\\ is the `order` and \\k=\frac{m-1}{2}\\.
 
 When an even `order` is specified, the observations averaged will
 include one more observation from the future than the past (k is rounded
-up). If centre is `TRUE`, the value from two moving averages (where k is
-rounded up and down respectively) are averaged, centering the moving
+up). If `centre` is `TRUE`, the values from two moving averages (where k
+is rounded up and down respectively) are averaged, centering the moving
 average.
 
 ## See also

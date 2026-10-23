@@ -1,7 +1,8 @@
 # Forecast plot
 
 Generates forecasts from `forecast.ts` and adds them to the plot.
-Forecasts can be modified via sending forecast specific arguments above.
+Forecasts can be modified by passing forecast-specific arguments via
+`...`.
 
 ## Usage
 
@@ -82,7 +83,7 @@ geom_forecast(
 
 - PI:
 
-  If `FALSE`, confidence intervals will not be plotted, giving only the
+  If `FALSE`, prediction intervals will not be plotted, giving only the
   forecast line.
 
 - showgap:
@@ -117,7 +118,7 @@ different group.
 You can also pass `geom_forecast` a `forecast` object to add it to the
 plot.
 
-The aesthetics required for the forecasting to work includes forecast
+The aesthetics required for the forecasting to work include forecast
 observations on the y axis, and the `time` of the observations on the x
 axis. Refer to the examples below. To automatically set up aesthetics,
 use `autoplot`.

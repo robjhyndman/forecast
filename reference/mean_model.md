@@ -36,7 +36,7 @@ An object of class `mean_model`.
 ## Details
 
 The model assumes that the data are independent and identically
-distributed
+distributed:
 
 \$\$Y_t \sim N(\mu,\sigma^2)\$\$
 
@@ -46,11 +46,10 @@ Forecasts are given by
 
 where \\\mu\\ is estimated by the sample mean.
 
-The function [`summary()`](https://rdrr.io/r/base/summary.html) is used
-to obtain and print a summary of the results, while the function
-[`plot()`](https://rdrr.io/r/graphics/plot.default.html) produces a plot
-of the forecasts and prediction intervals. The generic accessor
-functions
+The function [`base::summary()`](https://rdrr.io/r/base/summary.html) is
+used to obtain and print a summary of the results, while the function
+[`base::plot()`](https://rdrr.io/r/base/plot.html) produces a plot of
+the forecasts and prediction intervals. The generic accessor functions
 [`stats::fitted()`](https://rdrr.io/r/stats/fitted.values.html) and
 [`stats::residuals()`](https://rdrr.io/r/stats/residuals.html) extract
 useful features of the object returned by `mean_model()`.

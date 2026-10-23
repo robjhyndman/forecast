@@ -108,7 +108,7 @@ which are multiplied together. For example, with a series of half-hourly
 data, one would set `period1 = 48` for the daily period and
 `period2 = 336` for the weekly period. The smoothing parameter notation
 used here is different from that in Taylor (2003); instead it matches
-that used in Hyndman et al (2008) and that used for the
+that used in Hyndman et al. (2008) and that used for the
 [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md)
 function.
 

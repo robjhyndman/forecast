@@ -18,7 +18,7 @@ seasonaldummyf(x, h)
 
 - x:
 
-  Seasonal time series: a `ts` or a `msts` object
+  Seasonal time series: a `ts` or an `msts` object
 
 - h:
 

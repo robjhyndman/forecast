@@ -144,7 +144,7 @@ are added to the list including <code>x</code> (the original time series), and t
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This function combines <code><a href="https://rdrr.io/pkg/fracdiff/man/fracdiff.html" class="external-link">fracdiff::fracdiff()</a></code> and
 <code><a href="auto.arima.html">auto.arima()</a></code> to automatically select and estimate an ARFIMA
-model.  The fractional differencing parameter is chosen first assuming an
+model. The fractional differencing parameter is chosen first assuming an
 ARFIMA(2,d,0) model. Then the data are fractionally differenced using the
 estimated d and an ARMA model is selected for the resulting time series
 using <code><a href="auto.arima.html">auto.arima()</a></code>. Finally, the full ARFIMA(p,d,q) model is

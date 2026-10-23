@@ -25,7 +25,7 @@ plot(x, main = paste("Forecasts from", unique(x$method)), xlab = "time", ...)
 
 - PI:
 
-  If `FALSE`, confidence intervals will not be plotted, giving only the
+  If `FALSE`, prediction intervals will not be plotted, giving only the
   forecast line.
 
 - facets:
@@ -35,7 +35,7 @@ plot(x, main = paste("Forecasts from", unique(x$method)), xlab = "time", ...)
 
 - colour:
 
-  If `TRUE`, the time series will be assigned a colour aesthetic
+  If `TRUE`, the time series will be assigned a colour aesthetic.
 
 - ...:
 

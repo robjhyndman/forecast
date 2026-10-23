@@ -111,7 +111,8 @@ forecast accuracy". *International Journal of Forecasting*, **22**(4),
 
 Hyndman, R.J. and Athanasopoulos, G. (2018) "Forecasting: principles and
 practice", 2nd ed., OTexts, Melbourne, Australia. Section 3.4
-"Evaluating forecast accuracy". <https://otexts.com/fpp2/accuracy.html>.
+"Evaluating forecast accuracy".
+<https://otexts.com/fpp2/toolbox.html#sec-accuracy>.
 
 ## Author
 
