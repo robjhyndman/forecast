@@ -3,7 +3,7 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 void updateTBATSGammaBold(NumericMatrix &gammaBold,
                           const IntegerVector &kVector,
                           const NumericVector &gammaOne,
@@ -21,7 +21,7 @@ void updateTBATSGammaBold(NumericMatrix &gammaBold,
   }
 }
 
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 void updateTBATSGMatrix(arma::mat &g,
                         const Nullable<arma::mat> &gammaBold,
                         double alpha,

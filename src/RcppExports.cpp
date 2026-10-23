@@ -15,7 +15,6 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 void calcBATS(const arma::mat& y, arma::mat& yHat, const arma::mat& wTranspose, const arma::mat& F, arma::mat& x, const arma::mat& g, arma::mat& e);
 RcppExport SEXP _forecast_calcBATS(SEXP ySEXP, SEXP yHatSEXP, SEXP wTransposeSEXP, SEXP FSEXP, SEXP xSEXP, SEXP gSEXP, SEXP eSEXP) {
 BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const arma::mat& >::type y(ySEXP);
     Rcpp::traits::input_parameter< arma::mat& >::type yHat(yHatSEXP);
     Rcpp::traits::input_parameter< const arma::mat& >::type wTranspose(wTransposeSEXP);
@@ -31,7 +30,6 @@ END_RCPP
 void calcBATSFaster(const arma::mat& y, arma::mat& yHat, const arma::mat& wTranspose, const arma::mat& F, arma::mat& x, const arma::mat& g, arma::mat& e, const arma::mat& xNought, const Nullable<IntegerVector>& sPeriods, const Nullable<double>& beta, int tau, int p, int q);
 RcppExport SEXP _forecast_calcBATSFaster(SEXP ySEXP, SEXP yHatSEXP, SEXP wTransposeSEXP, SEXP FSEXP, SEXP xSEXP, SEXP gSEXP, SEXP eSEXP, SEXP xNoughtSEXP, SEXP sPeriodsSEXP, SEXP betaSEXP, SEXP tauSEXP, SEXP pSEXP, SEXP qSEXP) {
 BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const arma::mat& >::type y(ySEXP);
     Rcpp::traits::input_parameter< arma::mat& >::type yHat(yHatSEXP);
     Rcpp::traits::input_parameter< const arma::mat& >::type wTranspose(wTransposeSEXP);
@@ -53,7 +51,6 @@ END_RCPP
 void calcWTilda(arma::mat& wTildaTranspose, const arma::mat& D);
 RcppExport SEXP _forecast_calcWTilda(SEXP wTildaTransposeSEXP, SEXP DSEXP) {
 BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::mat& >::type wTildaTranspose(wTildaTransposeSEXP);
     Rcpp::traits::input_parameter< const arma::mat& >::type D(DSEXP);
     calcWTilda(wTildaTranspose, D);
@@ -64,7 +61,6 @@ END_RCPP
 void calcTBATSFaster(const arma::mat& y, arma::mat& yHat, const arma::mat& wTranspose, const arma::mat& F, arma::mat& x, const arma::mat& g, arma::mat& e, const arma::mat& xNought);
 RcppExport SEXP _forecast_calcTBATSFaster(SEXP ySEXP, SEXP yHatSEXP, SEXP wTransposeSEXP, SEXP FSEXP, SEXP xSEXP, SEXP gSEXP, SEXP eSEXP, SEXP xNoughtSEXP) {
 BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const arma::mat& >::type y(ySEXP);
     Rcpp::traits::input_parameter< arma::mat& >::type yHat(yHatSEXP);
     Rcpp::traits::input_parameter< const arma::mat& >::type wTranspose(wTransposeSEXP);
@@ -82,7 +78,6 @@ Rcpp::Environment etsTargetFunctionInit(const Rcpp::NumericVector& y, int nstate
 RcppExport SEXP _forecast_etsTargetFunctionInit(SEXP ySEXP, SEXP nstateSEXP, SEXP errortypeSEXP, SEXP trendtypeSEXP, SEXP seasontypeSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP opt_critSEXP, SEXP nmseSEXP, SEXP boundsSEXP, SEXP mSEXP, SEXP optAlphaSEXP, SEXP optBetaSEXP, SEXP optGammaSEXP, SEXP optPhiSEXP, SEXP givenAlphaSEXP, SEXP givenBetaSEXP, SEXP givenGammaSEXP, SEXP givenPhiSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP gammaSEXP, SEXP phiSEXP, SEXP rhoSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type y(ySEXP);
     Rcpp::traits::input_parameter< int >::type nstate(nstateSEXP);
     Rcpp::traits::input_parameter< int >::type errortype(errortypeSEXP);
@@ -116,7 +111,6 @@ Rcpp::List etsNelderMead(Rcpp::NumericVector par, const Rcpp::Environment& env, 
 RcppExport SEXP _forecast_etsNelderMead(SEXP parSEXP, SEXP envSEXP, SEXP abstolSEXP, SEXP intolSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP gammaSEXP, SEXP traceSEXP, SEXP maxitSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type par(parSEXP);
     Rcpp::traits::input_parameter< const Rcpp::Environment& >::type env(envSEXP);
     Rcpp::traits::input_parameter< double >::type abstol(abstolSEXP);
@@ -135,7 +129,6 @@ List makeBATSWMatrix(const Nullable<double>& smallPhi, const Nullable<IntegerVec
 RcppExport SEXP _forecast_makeBATSWMatrix(SEXP smallPhiSEXP, SEXP sPeriodsSEXP, SEXP arCoefsSEXP, SEXP maCoefsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Nullable<double>& >::type smallPhi(smallPhiSEXP);
     Rcpp::traits::input_parameter< const Nullable<IntegerVector>& >::type sPeriods(sPeriodsSEXP);
     Rcpp::traits::input_parameter< const Nullable<NumericVector>& >::type arCoefs(arCoefsSEXP);
@@ -149,7 +142,6 @@ List makeBATSGMatrix(double alpha, const Nullable<double>& beta, const Nullable<
 RcppExport SEXP _forecast_makeBATSGMatrix(SEXP alphaSEXP, SEXP betaSEXP, SEXP gammaVectorSEXP, SEXP seasonalPeriodsSEXP, SEXP pSEXP, SEXP qSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
     Rcpp::traits::input_parameter< const Nullable<double>& >::type beta(betaSEXP);
     Rcpp::traits::input_parameter< const Nullable<NumericVector>& >::type gammaVector(gammaVectorSEXP);
@@ -165,7 +157,6 @@ List makeTBATSWMatrix(const Nullable<double>& smallPhi, const Nullable<IntegerVe
 RcppExport SEXP _forecast_makeTBATSWMatrix(SEXP smallPhiSEXP, SEXP kVectorSEXP, SEXP arCoefsSEXP, SEXP maCoefsSEXP, SEXP tauSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Nullable<double>& >::type smallPhi(smallPhiSEXP);
     Rcpp::traits::input_parameter< const Nullable<IntegerVector>& >::type kVector(kVectorSEXP);
     Rcpp::traits::input_parameter< const Nullable<NumericVector>& >::type arCoefs(arCoefsSEXP);
@@ -180,7 +171,6 @@ arma::mat makeCIMatrix(int k, double m);
 RcppExport SEXP _forecast_makeCIMatrix(SEXP kSEXP, SEXP mSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< int >::type k(kSEXP);
     Rcpp::traits::input_parameter< double >::type m(mSEXP);
     rcpp_result_gen = Rcpp::wrap(makeCIMatrix(k, m));
@@ -192,7 +182,6 @@ arma::mat makeSIMatrix(int k, double m);
 RcppExport SEXP _forecast_makeSIMatrix(SEXP kSEXP, SEXP mSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< int >::type k(kSEXP);
     Rcpp::traits::input_parameter< double >::type m(mSEXP);
     rcpp_result_gen = Rcpp::wrap(makeSIMatrix(k, m));
@@ -204,7 +193,6 @@ arma::mat makeAIMatrix(const arma::mat& C, const arma::mat& S, int k);
 RcppExport SEXP _forecast_makeAIMatrix(SEXP CSEXP, SEXP SSEXP, SEXP kSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const arma::mat& >::type C(CSEXP);
     Rcpp::traits::input_parameter< const arma::mat& >::type S(SSEXP);
     Rcpp::traits::input_parameter< int >::type k(kSEXP);
@@ -216,7 +204,6 @@ END_RCPP
 void updateFMatrix(arma::mat& F, const Nullable<double>& smallPhi, double alpha, const Nullable<double>& beta, const Nullable<arma::mat>& gammaBold, const Nullable<arma::mat>& ar, const Nullable<arma::mat>& ma, int tau);
 RcppExport SEXP _forecast_updateFMatrix(SEXP FSEXP, SEXP smallPhiSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP gammaBoldSEXP, SEXP arSEXP, SEXP maSEXP, SEXP tauSEXP) {
 BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::mat& >::type F(FSEXP);
     Rcpp::traits::input_parameter< const Nullable<double>& >::type smallPhi(smallPhiSEXP);
     Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
@@ -233,7 +220,6 @@ END_RCPP
 void updateWtransposeMatrix(NumericMatrix& wTranspose, const Nullable<double>& smallPhi, int tau, const Nullable<NumericVector>& arCoefs, const Nullable<NumericVector>& maCoefs, int p, int q);
 RcppExport SEXP _forecast_updateWtransposeMatrix(SEXP wTransposeSEXP, SEXP smallPhiSEXP, SEXP tauSEXP, SEXP arCoefsSEXP, SEXP maCoefsSEXP, SEXP pSEXP, SEXP qSEXP) {
 BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix& >::type wTranspose(wTransposeSEXP);
     Rcpp::traits::input_parameter< const Nullable<double>& >::type smallPhi(smallPhiSEXP);
     Rcpp::traits::input_parameter< int >::type tau(tauSEXP);
@@ -249,7 +235,6 @@ END_RCPP
 void updateGMatrix(NumericMatrix& g, const Nullable<NumericMatrix>& gammaBold, double alpha, const Nullable<double>& beta, const Nullable<NumericVector>& gammaVector, const Nullable<IntegerVector>& seasonalPeriods);
 RcppExport SEXP _forecast_updateGMatrix(SEXP gSEXP, SEXP gammaBoldSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP gammaVectorSEXP, SEXP seasonalPeriodsSEXP) {
 BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix& >::type g(gSEXP);
     Rcpp::traits::input_parameter< const Nullable<NumericMatrix>& >::type gammaBold(gammaBoldSEXP);
     Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
@@ -264,7 +249,6 @@ END_RCPP
 void updateTBATSGammaBold(NumericMatrix& gammaBold, const IntegerVector& kVector, const NumericVector& gammaOne, const NumericVector& gammaTwo);
 RcppExport SEXP _forecast_updateTBATSGammaBold(SEXP gammaBoldSEXP, SEXP kVectorSEXP, SEXP gammaOneSEXP, SEXP gammaTwoSEXP) {
 BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix& >::type gammaBold(gammaBoldSEXP);
     Rcpp::traits::input_parameter< const IntegerVector& >::type kVector(kVectorSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type gammaOne(gammaOneSEXP);
@@ -277,7 +261,6 @@ END_RCPP
 void updateTBATSGMatrix(arma::mat& g, const Nullable<arma::mat>& gammaBold, double alpha, const Nullable<double>& beta);
 RcppExport SEXP _forecast_updateTBATSGMatrix(SEXP gSEXP, SEXP gammaBoldSEXP, SEXP alphaSEXP, SEXP betaSEXP) {
 BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::mat& >::type g(gSEXP);
     Rcpp::traits::input_parameter< const Nullable<arma::mat>& >::type gammaBold(gammaBoldSEXP);
     Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);

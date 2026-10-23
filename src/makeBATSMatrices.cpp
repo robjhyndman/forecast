@@ -3,7 +3,7 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 List makeBATSWMatrix(const Nullable<double> &smallPhi,
                      const Nullable<IntegerVector> &sPeriods,
                      const Nullable<NumericVector> &arCoefs,
@@ -69,7 +69,7 @@ List makeBATSWMatrix(const Nullable<double> &smallPhi,
   return List::create(Named("w.transpose") = wTranspose);
 }
 
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 List makeBATSGMatrix(double alpha,
                      const Nullable<double> &beta,
                      const Nullable<NumericVector> &gammaVector,

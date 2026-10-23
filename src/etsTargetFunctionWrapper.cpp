@@ -12,7 +12,7 @@
 // to this object with name "ets.xptr"
 // to the environment submitted as rho
 //
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 Rcpp::Environment etsTargetFunctionInit(const Rcpp::NumericVector &y,
                                         int nstate,
                                         int errortype,
@@ -55,7 +55,7 @@ static double targetFunctionEtsNelderMead(int n, double *par, void *ex) {
   return sp->getObjVal();
 }
 
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 Rcpp::List etsNelderMead(Rcpp::NumericVector par,
                          const Rcpp::Environment &env,
                          double abstol,
