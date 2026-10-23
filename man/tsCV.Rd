@@ -50,14 +50,14 @@ series.
 }
 \examples{
 
-#Fit an AR(2) model to each rolling origin subset
+# Fit an AR(2) model to each rolling origin subset
 far2 <- function(x, h) forecast(Arima(x, order = c(2, 0, 0)), h = h)
 e <- tsCV(lynx, far2, h = 1)
 
-#Fit the same model with a rolling window of length 30
+# Fit the same model with a rolling window of length 30
 e <- tsCV(lynx, far2, h = 1, window = 30)
 
-#Example with exogenous predictors
+# Example with exogenous predictors
 far2_xreg <- function(x, h, xreg, newxreg) {
   forecast(Arima(x, order = c(2, 0, 0), xreg = xreg), xreg = newxreg)
 }

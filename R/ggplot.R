@@ -51,8 +51,8 @@ ggtsbreaks <- function(x) {
 #' ggplot (Partial) Autocorrelation and Cross-Correlation Function Estimation
 #' and Plotting
 #'
-#' Produces a ggplot object of their equivalent Acf, Pacf, Ccf, taperedacf and
-#' taperedpacf functions.
+#' Produces ggplot versions of the plots from [Acf()], [Pacf()], [Ccf()],
+#' [taperedacf()] and [taperedpacf()].
 #'
 #' If `autoplot` is given an `acf` or `mpacf` object, then an
 #' appropriate ggplot object will be created.
@@ -1181,11 +1181,11 @@ ggtsdisplay <- function(
 #'
 #' Plots a lag plot using ggplot.
 #'
-#' "gglagplot" will plot time series against lagged versions of
+#' `gglagplot()` will plot time series against lagged versions of
 #' themselves. Helps visualising 'auto-dependence' even when auto-correlations
 #' vanish.
 #'
-#' "gglagchull" will layer convex hulls of the lags, layered on a single
+#' `gglagchull()` will layer convex hulls of the lags, layered on a single
 #' plot. This helps visualise the change in 'auto-dependence' as lags increase.
 #'
 #' @param x a time series object (type `ts`).
@@ -2241,7 +2241,7 @@ autolayer.mforecast <- function(object, series = NULL, PI = TRUE, ...) {
 #' Automatically create a ggplot for time series objects
 #'
 #' `autoplot` takes an object of type `ts` or `mts` and creates
-#' a ggplot object suitable for usage with `stat_forecast`.
+#' a ggplot object suitable for usage with [geom_forecast()].
 #'
 #' `fortify.ts` takes a `ts` object and converts it into a data frame
 #' (for usage with ggplot2).
@@ -2771,7 +2771,7 @@ GeomForecastInterval <- ggplot2::ggproto(
 #' Forecast plot
 #'
 #' Generates forecasts from `forecast.ts` and adds them to the plot.
-#' Forecasts can be modified via sending forecast specific arguments above.
+#' Forecasts can be modified by passing forecast-specific arguments via `...`.
 #'
 #' Multivariate forecasting is supported by having each time series on a
 #' different group.
@@ -2779,7 +2779,7 @@ GeomForecastInterval <- ggplot2::ggproto(
 #' You can also pass `geom_forecast` a `forecast` object to add it to
 #' the plot.
 #'
-#' The aesthetics required for the forecasting to work includes forecast
+#' The aesthetics required for the forecasting to work include forecast
 #' observations on the y axis, and the `time` of the observations on the x
 #' axis. Refer to the examples below. To automatically set up aesthetics, use
 #' `autoplot`.
@@ -2809,7 +2809,7 @@ GeomForecastInterval <- ggplot2::ggproto(
 #' than combining with them. This is most useful for helper functions that
 #' define both data and aesthetics and shouldn't inherit behaviour from the
 #' default plot specification, e.g. [ggplot2::borders()].
-#' @param PI If `FALSE`, confidence intervals will not be plotted, giving
+#' @param PI If `FALSE`, prediction intervals will not be plotted, giving
 #' only the forecast line.
 #' @param showgap If `showgap = FALSE`, the gap between the historical
 #' observations and the forecasts is removed.

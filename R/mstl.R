@@ -411,7 +411,7 @@ rowSumsTS <- function(mts) {
 #' modelling the seasonally adjusted series. If `modelfunction` is not
 #' `NULL`, then `method` is ignored. Otherwise `method` is used
 #' to specify the time series model to be used.
-#' @param model Output from a previous call to `stlm`. If a `stlm`
+#' @param model Output from a previous call to `stlm`. If an `stlm`
 #' model is passed, this same model is fitted to y without re-estimating any
 #' parameters.
 #' @param etsmodel The ets model specification passed to

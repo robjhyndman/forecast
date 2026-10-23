@@ -176,8 +176,6 @@ From %s(): %s
 #' * If `test = "ocsb"`, the Osborn-Chui-Smith-Birchenhall
 #' (1988) test is used (with null hypothesis that a seasonal unit root exists).
 #'
-#' @md
-#'
 #' @inheritParams ndiffs
 #' @param x A univariate time series
 #' @param alpha Level of the test, possible values range from 0.01 to 0.1.
@@ -396,7 +394,7 @@ seas.heuristic <- function(x) {
 #' * pvalues the p-values for each test statistics.
 #' * method a character string describing the type of test.
 #' * data.name a character string giving the name of the data.
-#' * fitted.model	the fitted regression model.
+#' * fitted.model the fitted regression model.
 #'
 #' @references
 #' Osborn DR, Chui APL, Smith J, and Birchenhall CR (1988) "Seasonality and the

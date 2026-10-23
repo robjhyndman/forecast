@@ -5,7 +5,7 @@
 #' The bagged model forecasting method.
 #'
 #' This function implements the bagged model forecasting method described in
-#' Bergmeir et al. By default, the [ets()] function is applied to all
+#' Bergmeir et al. (2016). By default, the [ets()] function is applied to all
 #' bootstrapped series. Base models other than [ets()] can be given by the
 #' parameter `fn`. Using the default parameters, the function
 #' [bld.mbb.bootstrap()] is used to calculate the bootstrapped series

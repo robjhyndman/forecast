@@ -24,14 +24,14 @@ par(mfrow = c(2, 1))
 plot(
   ldeaths,
   xlab = "Year",
-  ylab = "pounds",
+  ylab = "Deaths",
   main = "Monthly deaths from lung disease (UK)"
 )
 ldeaths.adj <- ldeaths / monthdays(ldeaths) * 365.25 / 12
 plot(
   ldeaths.adj,
   xlab = "Year",
-  ylab = "pounds",
+  ylab = "Deaths",
   main = "Adjusted monthly deaths from lung disease (UK)"
 )
 

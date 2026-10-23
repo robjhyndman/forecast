@@ -60,7 +60,7 @@ than combining with them. This is most useful for helper functions that
 define both data and aesthetics and shouldn't inherit behaviour from the
 default plot specification, e.g. \code{\link[ggplot2:borders]{ggplot2::borders()}}.}
 
-\item{PI}{If \code{FALSE}, confidence intervals will not be plotted, giving
+\item{PI}{If \code{FALSE}, prediction intervals will not be plotted, giving
 only the forecast line.}
 
 \item{showgap}{If \code{showgap = FALSE}, the gap between the historical
@@ -79,7 +79,7 @@ A layer for a ggplot graph.
 }
 \description{
 Generates forecasts from \code{forecast.ts} and adds them to the plot.
-Forecasts can be modified via sending forecast specific arguments above.
+Forecasts can be modified by passing forecast-specific arguments via \code{...}.
 }
 \details{
 Multivariate forecasting is supported by having each time series on a
@@ -88,7 +88,7 @@ different group.
 You can also pass \code{geom_forecast} a \code{forecast} object to add it to
 the plot.
 
-The aesthetics required for the forecasting to work includes forecast
+The aesthetics required for the forecasting to work include forecast
 observations on the y axis, and the \code{time} of the observations on the x
 axis. Refer to the examples below. To automatically set up aesthetics, use
 \code{autoplot}.

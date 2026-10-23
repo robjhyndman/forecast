@@ -41,9 +41,9 @@ MBB <- function(x, window_size) {
 #' Generates bootstrapped versions of a time series using the Box-Cox and
 #' Loess-based decomposition bootstrap.
 #'
-#' The procedure is described in Bergmeir et al. Box-Cox decomposition is
-#' applied, together with STL or Loess (for non-seasonal time series), and the
-#' remainder is bootstrapped using a moving block bootstrap.
+#' The procedure is described in Bergmeir et al. (2016). Box-Cox decomposition
+#' is applied, together with STL or Loess (for non-seasonal time series), and
+#' the remainder is bootstrapped using a moving block bootstrap.
 #'
 #' @param x Original time series.
 #' @param num Number of bootstrapped versions to generate.

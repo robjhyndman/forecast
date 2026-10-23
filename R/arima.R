@@ -192,7 +192,7 @@ search.arima <- function(
 #' Returns forecasts and other information for univariate ARIMA models.
 #'
 #' For `Arima` or `ar` objects, the function calls [stats::predict.Arima()] or
-#' [stats::predict.ar] and constructs an object of class `forecast` from the
+#' [stats::predict.ar()] and constructs an object of class `forecast` from the
 #' results. For `fracdiff` objects, the calculations are all done within
 #' `forecast.fracdiff()` using the equations given by Peiris and Perera (1988).
 #'
@@ -962,7 +962,8 @@ print.forecast_ARIMA <- function(
 #' contains the values \eqn{p}, \eqn{d}, \eqn{q}, \eqn{P}, \eqn{D}, \eqn{Q} and
 #' \eqn{m}, where \eqn{m} is the period of seasonality.
 #' @author Rob J Hyndman
-#' @seealso [stats::ar()], [auto.arima], [Arima()], [stats::arima()], [arfima()].
+#' @seealso [stats::ar()], [auto.arima()], [Arima()], [stats::arima()],
+#' [arfima()].
 #' @keywords ts
 #' @examples
 #' WWWusage |> auto.arima() |> arimaorder()

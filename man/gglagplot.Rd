@@ -61,11 +61,11 @@ None.
 Plots a lag plot using ggplot.
 }
 \details{
-"gglagplot" will plot time series against lagged versions of
+\code{gglagplot()} will plot time series against lagged versions of
 themselves. Helps visualising 'auto-dependence' even when auto-correlations
 vanish.
 
-"gglagchull" will layer convex hulls of the lags, layered on a single
+\code{gglagchull()} will layer convex hulls of the lags, layered on a single
 plot. This helps visualise the change in 'auto-dependence' as lags increase.
 }
 \examples{

@@ -17,14 +17,14 @@
 #' plot(
 #'   ldeaths,
 #'   xlab = "Year",
-#'   ylab = "pounds",
+#'   ylab = "Deaths",
 #'   main = "Monthly deaths from lung disease (UK)"
 #' )
 #' ldeaths.adj <- ldeaths / monthdays(ldeaths) * 365.25 / 12
 #' plot(
 #'   ldeaths.adj,
 #'   xlab = "Year",
-#'   ylab = "pounds",
+#'   ylab = "Deaths",
 #'   main = "Adjusted monthly deaths from lung disease (UK)"
 #' )
 #'
@@ -213,7 +213,7 @@ seasonaldummyf <- function(x, h) {
 #' seasonal periods. Then the matrix returned will have `2*sum(K)`
 #' columns.
 #'
-#' @param x Seasonal time series: a `ts` or a `msts` object
+#' @param x Seasonal time series: a `ts` or an `msts` object
 #' @param K Maximum order(s) of Fourier terms
 #' @param h Number of periods ahead to forecast (optional)
 #' @return Numerical matrix.
@@ -225,7 +225,7 @@ seasonaldummyf <- function(x, h) {
 #' library(ggplot2)
 #'
 #' # Using Fourier series for a "ts" object
-#' # K is chosen to minimize the AICc
+#' # In practice, K should be chosen to minimize the AICc
 #' deaths.model <- auto.arima(
 #'   USAccDeaths,
 #'   xreg = fourier(USAccDeaths, K = 5),
@@ -323,11 +323,11 @@ fourierf <- function(x, K, h) {
 #'
 #' \deqn{\hat{T}_{t} = \frac{1}{m} \sum_{j=-k}^k y_{t+j}}{T[t]=1/m(y[t-k]+y[t-k+1]+\ldots+y[t]+\ldots+y[t+k-1]+y[t+k])}
 #'
-#' where \eqn{k=\frac{m-1}{2}}{k=(m-1)/2}.
+#' where \eqn{m}{m} is the `order` and \eqn{k=\frac{m-1}{2}}{k=(m-1)/2}.
 #'
 #' When an even `order` is specified, the observations averaged will
 #' include one more observation from the future than the past (k is rounded
-#' up). If centre is `TRUE`, the value from two moving averages (where k is
+#' up). If `centre` is `TRUE`, the values from two moving averages (where k is
 #' rounded up and down respectively) are averaged, centering the moving
 #' average.
 #'

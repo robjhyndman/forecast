@@ -10,7 +10,7 @@ fourier(x, K, h = NULL)
 fourierf(x, K, h)
 }
 \arguments{
-\item{x}{Seasonal time series: a \code{ts} or a \code{msts} object}
+\item{x}{Seasonal time series: a \code{ts} or an \code{msts} object}
 
 \item{K}{Maximum order(s) of Fourier terms}
 
@@ -50,7 +50,7 @@ columns.
 library(ggplot2)
 
 # Using Fourier series for a "ts" object
-# K is chosen to minimize the AICc
+# In practice, K should be chosen to minimize the AICc
 deaths.model <- auto.arima(
   USAccDeaths,
   xreg = fourier(USAccDeaths, K = 5),
