@@ -10,7 +10,7 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 void updateFMatrix(arma::mat &F,
                    const Nullable<double> &smallPhi,
                    double alpha,
@@ -73,7 +73,7 @@ void updateFMatrix(arma::mat &F,
   }
 }
 
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 void updateWtransposeMatrix(NumericMatrix &wTranspose,
                             const Nullable<double> &smallPhi,
                             int tau,
@@ -106,7 +106,7 @@ void updateWtransposeMatrix(NumericMatrix &wTranspose,
   }
 }
 
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 void updateGMatrix(NumericMatrix &g,
                    const Nullable<NumericMatrix> &gammaBold,
                    double alpha,

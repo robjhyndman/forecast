@@ -3,7 +3,7 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 List makeTBATSWMatrix(const Nullable<double> &smallPhi,
                       const Nullable<IntegerVector> &kVector,
                       const Nullable<NumericVector> &arCoefs,
@@ -70,19 +70,19 @@ List makeTBATSWMatrix(const Nullable<double> &smallPhi,
   return List::create(Named("w.transpose") = wTranspose);
 }
 
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 arma::mat makeCIMatrix(int k, double m) {
   const arma::vec j = arma::regspace(1, 1, k);
   return arma::diagmat(arma::cos((2 * arma::datum::pi / m) * j));
 }
 
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 arma::mat makeSIMatrix(int k, double m) {
   const arma::vec j = arma::regspace(1, 1, k);
   return arma::diagmat(arma::sin((2 * arma::datum::pi / m) * j));
 }
 
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 arma::mat makeAIMatrix(const arma::mat &C, const arma::mat &S, int k) {
   arma::mat A(k * 2, k * 2);
 

@@ -3,7 +3,7 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 void calcBATS(const arma::mat& y,
               arma::mat& yHat,
               const arma::mat& wTranspose,
@@ -18,7 +18,7 @@ void calcBATS(const arma::mat& y,
   }
 }
 
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 void calcBATSFaster(const arma::mat& y,
                     arma::mat& yHat,
                     const arma::mat& wTranspose,
@@ -171,7 +171,7 @@ void calcBATSFaster(const arma::mat& y,
   }
 }
 
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 void calcWTilda(arma::mat& wTildaTranspose, const arma::mat& D) {
   for (arma::uword t = 1; t < wTildaTranspose.n_rows; t++) {
     wTildaTranspose.row(t) = wTildaTranspose.row(t - 1) * D;

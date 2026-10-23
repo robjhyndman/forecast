@@ -1,7 +1,7 @@
 #include <RcppArmadillo.h>
 // [[Rcpp::depends(RcppArmadillo)]]
 
-// [[Rcpp::export]]
+// [[Rcpp::export(rng = false)]]
 void calcTBATSFaster(const arma::mat &y,
                      arma::mat &yHat,
                      const arma::mat &wTranspose,
