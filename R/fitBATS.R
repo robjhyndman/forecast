@@ -587,14 +587,14 @@ calcLikelihood <- function(
   )
 
   updateFMatrix(
-    opt.env$F,
-    small.phi,
-    alpha,
-    beta.v,
-    opt.env$gamma.bold.matrix,
-    ar.coefs,
-    ma.coefs,
-    tau
+    F = opt.env$F,
+    smallPhi = small.phi,
+    alpha = alpha,
+    beta = beta.v,
+    gammaBold = opt.env$gamma.bold.matrix,
+    ar = ar.coefs,
+    ma = ma.coefs,
+    tau = tau
   )
 
   mat.transformed.y <- BoxCox(opt.env$y, box.cox.parameter)
@@ -717,14 +717,14 @@ calcLikelihoodNOTransformed <- function(
   )
 
   updateFMatrix(
-    opt.env$F,
-    small.phi,
-    alpha,
-    beta.v,
-    opt.env$gamma.bold.matrix,
-    ar.coefs,
-    ma.coefs,
-    tau
+    F = opt.env$F,
+    smallPhi = small.phi,
+    alpha = alpha,
+    beta = beta.v,
+    gammaBold = opt.env$gamma.bold.matrix,
+    ar = ar.coefs,
+    ma = ma.coefs,
+    tau = tau
   )
   n <- ncol(opt.env$y)
 

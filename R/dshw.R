@@ -274,15 +274,15 @@ dshw.mse <- function(par, y, period1, period2, pars) {
   } else {
     return(
       dshw(
-        y,
-        period1,
-        period2,
+        y = y,
+        period1 = period1,
+        period2 = period2,
         h = 1,
-        pars[1],
-        pars[2],
-        pars[3],
-        pars[4],
-        pars[5],
+        alpha = pars[1],
+        beta = pars[2],
+        gamma = pars[3],
+        omega = pars[4],
+        phi = pars[5],
         armethod = (abs(pars[5]) > 1e-7)
       )$model$mse
     )

@@ -91,14 +91,14 @@ forecast.ets <- function(
       object$components[3] %in% c("N", "A")
   ) {
     f <- class1(
-      h,
-      object$states[n + 1, ],
-      object$components[2],
-      object$components[3],
-      damped,
-      object$m,
-      object$sigma2,
-      object$par
+      h = h,
+      last.state = object$states[n + 1, ],
+      trendtype = object$components[2],
+      seasontype = object$components[3],
+      damped = damped,
+      m = object$m,
+      sigma2 = object$sigma2,
+      par = object$par
     )
   } else if (
     object$components[1] == "M" &&
@@ -106,14 +106,14 @@ forecast.ets <- function(
       object$components[3] %in% c("N", "A")
   ) {
     f <- class2(
-      h,
-      object$states[n + 1, ],
-      object$components[2],
-      object$components[3],
-      damped,
-      object$m,
-      object$sigma2,
-      object$par
+      h = h,
+      last.state = object$states[n + 1, ],
+      trendtype = object$components[2],
+      seasontype = object$components[3],
+      damped = damped,
+      m = object$m,
+      sigma2 = object$sigma2,
+      par = object$par
     )
   } else if (
     object$components[1] == "M" &&
@@ -121,14 +121,14 @@ forecast.ets <- function(
       object$components[2] != "M"
   ) {
     f <- class3(
-      h,
-      object$states[n + 1, ],
-      object$components[2],
-      object$components[3],
-      damped,
-      object$m,
-      object$sigma2,
-      object$par
+      h = h,
+      last.state = object$states[n + 1, ],
+      trendtype = object$components[2],
+      seasontype = object$components[3],
+      damped = damped,
+      m = object$m,
+      sigma2 = object$sigma2,
+      par = object$par
     )
   } else {
     f <- pegelsfcast.C(
@@ -289,7 +289,16 @@ class2 <- function(
   sigma2,
   par
 ) {
-  tmp <- class1(h, last.state, trendtype, seasontype, damped, m, sigma2, par)
+  tmp <- class1(
+    h = h,
+    last.state = last.state,
+    trendtype = trendtype,
+    seasontype = seasontype,
+    damped = damped,
+    m = m,
+    sigma2 = sigma2,
+    par = par
+  )
   theta <- numeric(h)
   theta[1] <- tmp$mu[1]^2
   if (h > 1) {

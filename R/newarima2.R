@@ -439,18 +439,18 @@ auto.arima <- function(
 
   if (!stepwise) {
     bestfit <- search.arima(
-      x,
-      d,
-      D,
-      max.p,
-      max.q,
-      max.P,
-      max.Q,
-      max.order,
-      stationary,
-      ic,
-      trace,
-      approximation,
+      x = x,
+      d = d,
+      D = D,
+      max.p = max.p,
+      max.q = max.q,
+      max.P = max.P,
+      max.Q = max.Q,
+      max.order = max.order,
+      stationary = stationary,
+      ic = ic,
+      trace = trace,
+      approximation = approximation,
       method = method,
       xreg = xreg,
       offset = offset,
@@ -487,13 +487,13 @@ auto.arima <- function(
   results <- matrix(NA_real_, nrow = nmodels, ncol = 8)
 
   bestfit <- myarima(
-    x,
+    x = x,
     order = c(p, d, q),
     seasonal = c(P, D, Q),
     constant = constant,
-    ic,
-    trace,
-    approximation,
+    ic = ic,
+    trace = trace,
+    approximation = approximation,
     method = method,
     offset = offset,
     xreg = xreg,
@@ -502,13 +502,13 @@ auto.arima <- function(
   results[1, ] <- c(p, d, q, P, D, Q, constant, bestfit$ic)
   # Null model with possible constant
   fit <- myarima(
-    x,
+    x = x,
     order = c(0, d, 0),
     seasonal = c(0, D, 0),
     constant = constant,
-    ic,
-    trace,
-    approximation,
+    ic = ic,
+    trace = trace,
+    approximation = approximation,
     method = method,
     offset = offset,
     xreg = xreg,
@@ -523,13 +523,13 @@ auto.arima <- function(
   # Basic AR model
   if (max.p > 0 || max.P > 0) {
     fit <- myarima(
-      x,
+      x = x,
       order = c(max.p > 0, d, 0),
       seasonal = c((m > 1) && (max.P > 0), D, 0),
       constant = constant,
-      ic,
-      trace,
-      approximation,
+      ic = ic,
+      trace = trace,
+      approximation = approximation,
       method = method,
       offset = offset,
       xreg = xreg,
@@ -556,13 +556,13 @@ auto.arima <- function(
   # Basic MA model
   if (max.q > 0 || max.Q > 0) {
     fit <- myarima(
-      x,
+      x = x,
       order = c(0, d, max.q > 0),
       seasonal = c(0, D, (m > 1) && (max.Q > 0)),
       constant = constant,
-      ic,
-      trace,
-      approximation,
+      ic = ic,
+      trace = trace,
+      approximation = approximation,
       method = method,
       offset = offset,
       xreg = xreg,
@@ -589,13 +589,13 @@ auto.arima <- function(
   # Null model with no constant
   if (constant) {
     fit <- myarima(
-      x,
+      x = x,
       order = c(0, d, 0),
       seasonal = c(0, D, 0),
       constant = FALSE,
-      ic,
-      trace,
-      approximation,
+      ic = ic,
+      trace = trace,
+      approximation = approximation,
       method = method,
       offset = offset,
       xreg = xreg,
@@ -619,13 +619,13 @@ auto.arima <- function(
         next
       }
       fit <- myarima(
-        x,
+        x = x,
         order = c(p, d, q),
         seasonal = c(P - 1, D, Q),
         constant = constant,
-        ic,
-        trace,
-        approximation,
+        ic = ic,
+        trace = trace,
+        approximation = approximation,
         method = method,
         offset = offset,
         xreg = xreg,
@@ -644,13 +644,13 @@ auto.arima <- function(
         next
       }
       fit <- myarima(
-        x,
+        x = x,
         order = c(p, d, q),
         seasonal = c(P, D, Q - 1),
         constant = constant,
-        ic,
-        trace,
-        approximation,
+        ic = ic,
+        trace = trace,
+        approximation = approximation,
         method = method,
         offset = offset,
         xreg = xreg,
@@ -669,13 +669,13 @@ auto.arima <- function(
         next
       }
       fit <- myarima(
-        x,
+        x = x,
         order = c(p, d, q),
         seasonal = c(P + 1, D, Q),
         constant = constant,
-        ic,
-        trace,
-        approximation,
+        ic = ic,
+        trace = trace,
+        approximation = approximation,
         method = method,
         offset = offset,
         xreg = xreg,
@@ -694,13 +694,13 @@ auto.arima <- function(
         next
       }
       fit <- myarima(
-        x,
+        x = x,
         order = c(p, d, q),
         seasonal = c(P, D, Q + 1),
         constant = constant,
-        ic,
-        trace,
-        approximation,
+        ic = ic,
+        trace = trace,
+        approximation = approximation,
         method = method,
         offset = offset,
         xreg = xreg,
@@ -723,13 +723,13 @@ auto.arima <- function(
         next
       }
       fit <- myarima(
-        x,
+        x = x,
         order = c(p, d, q),
         seasonal = c(P - 1, D, Q - 1),
         constant = constant,
-        ic,
-        trace,
-        approximation,
+        ic = ic,
+        trace = trace,
+        approximation = approximation,
         method = method,
         offset = offset,
         xreg = xreg,
@@ -753,13 +753,13 @@ auto.arima <- function(
         next
       }
       fit <- myarima(
-        x,
+        x = x,
         order = c(p, d, q),
         seasonal = c(P - 1, D, Q + 1),
         constant = constant,
-        ic,
-        trace,
-        approximation,
+        ic = ic,
+        trace = trace,
+        approximation = approximation,
         method = method,
         offset = offset,
         xreg = xreg,
@@ -783,13 +783,13 @@ auto.arima <- function(
         next
       }
       fit <- myarima(
-        x,
+        x = x,
         order = c(p, d, q),
         seasonal = c(P + 1, D, Q - 1),
         constant = constant,
-        ic,
-        trace,
-        approximation,
+        ic = ic,
+        trace = trace,
+        approximation = approximation,
         method = method,
         offset = offset,
         xreg = xreg,
@@ -813,13 +813,13 @@ auto.arima <- function(
         next
       }
       fit <- myarima(
-        x,
+        x = x,
         order = c(p, d, q),
         seasonal = c(P + 1, D, Q + 1),
         constant = constant,
-        ic,
-        trace,
-        approximation,
+        ic = ic,
+        trace = trace,
+        approximation = approximation,
         method = method,
         offset = offset,
         xreg = xreg,
@@ -840,13 +840,13 @@ auto.arima <- function(
         next
       }
       fit <- myarima(
-        x,
+        x = x,
         order = c(p - 1, d, q),
         seasonal = c(P, D, Q),
         constant = constant,
-        ic,
-        trace,
-        approximation,
+        ic = ic,
+        trace = trace,
+        approximation = approximation,
         method = method,
         offset = offset,
         xreg = xreg,
@@ -865,13 +865,13 @@ auto.arima <- function(
         next
       }
       fit <- myarima(
-        x,
+        x = x,
         order = c(p, d, q - 1),
         seasonal = c(P, D, Q),
         constant = constant,
-        ic,
-        trace,
-        approximation,
+        ic = ic,
+        trace = trace,
+        approximation = approximation,
         method = method,
         offset = offset,
         xreg = xreg,
@@ -890,13 +890,13 @@ auto.arima <- function(
         next
       }
       fit <- myarima(
-        x,
+        x = x,
         order = c(p + 1, d, q),
         seasonal = c(P, D, Q),
         constant = constant,
-        ic,
-        trace,
-        approximation,
+        ic = ic,
+        trace = trace,
+        approximation = approximation,
         method = method,
         offset = offset,
         xreg = xreg,
@@ -915,13 +915,13 @@ auto.arima <- function(
         next
       }
       fit <- myarima(
-        x,
+        x = x,
         order = c(p, d, q + 1),
         seasonal = c(P, D, Q),
         constant = constant,
-        ic,
-        trace,
-        approximation,
+        ic = ic,
+        trace = trace,
+        approximation = approximation,
         method = method,
         offset = offset,
         xreg = xreg,
@@ -944,13 +944,13 @@ auto.arima <- function(
         next
       }
       fit <- myarima(
-        x,
+        x = x,
         order = c(p - 1, d, q - 1),
         seasonal = c(P, D, Q),
         constant = constant,
-        ic,
-        trace,
-        approximation,
+        ic = ic,
+        trace = trace,
+        approximation = approximation,
         method = method,
         offset = offset,
         xreg = xreg,
@@ -974,13 +974,13 @@ auto.arima <- function(
         next
       }
       fit <- myarima(
-        x,
+        x = x,
         order = c(p - 1, d, q + 1),
         seasonal = c(P, D, Q),
         constant = constant,
-        ic,
-        trace,
-        approximation,
+        ic = ic,
+        trace = trace,
+        approximation = approximation,
         method = method,
         offset = offset,
         xreg = xreg,
@@ -1004,13 +1004,13 @@ auto.arima <- function(
         next
       }
       fit <- myarima(
-        x,
+        x = x,
         order = c(p + 1, d, q - 1),
         seasonal = c(P, D, Q),
         constant = constant,
-        ic,
-        trace,
-        approximation,
+        ic = ic,
+        trace = trace,
+        approximation = approximation,
         method = method,
         offset = offset,
         xreg = xreg,
@@ -1034,13 +1034,13 @@ auto.arima <- function(
         next
       }
       fit <- myarima(
-        x,
+        x = x,
         order = c(p + 1, d, q + 1),
         seasonal = c(P, D, Q),
         constant = constant,
-        ic,
-        trace,
-        approximation,
+        ic = ic,
+        trace = trace,
+        approximation = approximation,
         method = method,
         offset = offset,
         xreg = xreg,
@@ -1061,13 +1061,13 @@ auto.arima <- function(
           next
         }
         fit <- myarima(
-          x,
+          x = x,
           order = c(p, d, q),
           seasonal = c(P, D, Q),
           constant = !constant,
-          ic,
-          trace,
-          approximation,
+          ic = ic,
+          trace = trace,
+          approximation = approximation,
           method = method,
           offset = offset,
           xreg = xreg,
@@ -1099,12 +1099,12 @@ auto.arima <- function(
     for (i in seq_len(nmodels)) {
       k <- icorder[i]
       fit <- myarima(
-        x,
+        x = x,
         order = c(results[k, 1], d, results[k, 3]),
         seasonal = c(results[k, 4], D, results[k, 6]),
         constant = results[k, 7] == 1,
-        ic,
-        trace,
+        ic = ic,
+        trace = trace,
         approximation = FALSE,
         method = method,
         xreg = xreg,
