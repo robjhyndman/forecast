@@ -192,7 +192,7 @@ tbats <- function(
 
   best.model <- try(
     fitSpecificTBATS(
-      y,
+      y = y,
       use.box.cox = model.params[1],
       use.beta = model.params[2],
       use.damping = model.params[3],
@@ -241,7 +241,7 @@ tbats <- function(
       repeat {
         new.model <- try(
           fitSpecificTBATS(
-            y,
+            y = y,
             use.box.cox = model.params[1],
             use.beta = model.params[2],
             use.damping = model.params[3],
@@ -303,7 +303,7 @@ tbats <- function(
       } else {
         up.model <- try(
           fitSpecificTBATS(
-            y,
+            y = y,
             use.box.cox = model.params[1],
             use.beta = model.params[2],
             use.damping = model.params[3],
@@ -321,7 +321,7 @@ tbats <- function(
         }
         level.model <- try(
           fitSpecificTBATS(
-            y,
+            y = y,
             use.box.cox = model.params[1],
             use.beta = model.params[2],
             use.damping = model.params[3],
@@ -339,7 +339,7 @@ tbats <- function(
         }
         down.model <- try(
           fitSpecificTBATS(
-            y,
+            y = y,
             use.box.cox = model.params[1],
             use.beta = model.params[2],
             use.damping = model.params[3],
@@ -405,12 +405,12 @@ tbats <- function(
           k.vector[i] <- k.vector[i] + 1
           up.model <- try(
             fitSpecificTBATS(
-              y,
-              model.params[1],
-              model.params[2],
-              model.params[3],
-              seasonal.periods,
-              k.vector,
+              y = y,
+              use.box.cox = model.params[1],
+              use.beta = model.params[2],
+              use.damping = model.params[3],
+              seasonal.periods = seasonal.periods,
+              k.vector = k.vector,
               init.box.cox = init.box.cox,
               bc.lower = bc.lower,
               bc.upper = bc.upper,
@@ -511,13 +511,13 @@ tbats <- function(
         for (damping in use.damped.trend) {
           if (all((model.params == c(box.cox, trend, damping)))) {
             new.model <- filterTBATSSpecifics(
-              y,
-              box.cox,
-              trend,
-              damping,
-              seasonal.periods,
-              k.vector,
-              use.arma.errors,
+              y = y,
+              box.cox = box.cox,
+              trend = trend,
+              damping = damping,
+              seasonal.periods = seasonal.periods,
+              k.vector = k.vector,
+              use.arma.errors = use.arma.errors,
               aux.model = aux.model,
               init.box.cox = init.box.cox,
               bc.lower = bc.lower,
@@ -527,13 +527,13 @@ tbats <- function(
             )
           } else if (trend || !damping) {
             new.model <- filterTBATSSpecifics(
-              y,
-              box.cox,
-              trend,
-              damping,
-              seasonal.periods,
-              k.vector,
-              use.arma.errors,
+              y = y,
+              box.cox = box.cox,
+              trend = trend,
+              damping = damping,
+              seasonal.periods = seasonal.periods,
+              k.vector = k.vector,
+              use.arma.errors = use.arma.errors,
               init.box.cox = init.box.cox,
               bc.lower = bc.lower,
               bc.upper = bc.upper,
@@ -581,7 +581,7 @@ parFilterTBATSSpecifics <- function(
   if (!all((model.params == c(box.cox, trend, damping)))) {
     first.model <- try(
       fitSpecificTBATS(
-        y,
+        y = y,
         use.box.cox = box.cox,
         use.beta = trend,
         use.damping = damping,
@@ -627,7 +627,7 @@ parFilterTBATSSpecifics <- function(
 
         second.model <- try(
           fitSpecificTBATS(
-            y,
+            y = y,
             use.box.cox = box.cox,
             use.beta = trend,
             use.damping = damping,
@@ -680,7 +680,7 @@ parFitSpecificTBATS <- function(
 
   model <- try(
     fitSpecificTBATS(
-      y,
+      y = y,
       use.box.cox = box.cox,
       use.beta = trend,
       use.damping = damping,
@@ -717,7 +717,7 @@ filterTBATSSpecifics <- function(
   if (is.null(aux.model)) {
     first.model <- try(
       fitSpecificTBATS(
-        y,
+        y = y,
         use.box.cox = box.cox,
         use.beta = trend,
         use.damping = damping,
@@ -762,7 +762,7 @@ filterTBATSSpecifics <- function(
 
         second.model <- try(
           fitSpecificTBATS(
-            y,
+            y = y,
             use.box.cox = box.cox,
             use.beta = trend,
             use.damping = damping,

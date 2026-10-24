@@ -184,18 +184,18 @@ ets <- function(
 
       # Recompute errors from pegelsresid.C
       e <- pegelsresid.C(
-        y,
-        m,
-        model$initstate,
-        errortype,
-        trendtype,
-        seasontype,
-        damped,
-        alpha,
-        beta,
-        gamma,
-        phi,
-        nmse
+        y = y,
+        m = m,
+        init.state = model$initstate,
+        errortype = errortype,
+        trendtype = trendtype,
+        seasontype = seasontype,
+        damped = damped,
+        alpha = alpha,
+        beta = beta,
+        gamma = gamma,
+        phi = phi,
+        nmse = nmse
       )
 
       # Compute error measures
@@ -490,15 +490,15 @@ ets <- function(
           }
           fit <- try(
             etsmodel(
-              y,
-              errortype[i],
-              trendtype[j],
-              seasontype[k],
-              damped[l],
-              alpha,
-              beta,
-              gamma,
-              phi,
+              y = y,
+              errortype = errortype[i],
+              trendtype = trendtype[j],
+              seasontype = seasontype[k],
+              damped = damped[l],
+              alpha = alpha,
+              beta = beta,
+              gamma = gamma,
+              phi = phi,
               lower = lower,
               upper = upper,
               opt.crit = opt.crit,
@@ -613,17 +613,17 @@ etsmodel <- function(
 
   # Initialize smoothing parameters
   par <- initparam(
-    alpha,
-    beta,
-    gamma,
-    phi,
-    trendtype,
-    seasontype,
-    damped,
-    lower,
-    upper,
-    m,
-    bounds
+    alpha = alpha,
+    beta = beta,
+    gamma = gamma,
+    phi = phi,
+    trendtype = trendtype,
+    seasontype = seasontype,
+    damped = damped,
+    lower = lower,
+    upper = upper,
+    m = m,
+    bounds = bounds
   )
   names(alpha) <- names(beta) <- names(gamma) <- names(phi) <- NULL
   par.noopt <- c(alpha = alpha, beta = beta, gamma = gamma, phi = phi)
@@ -700,15 +700,15 @@ etsmodel <- function(
   )
 
   fred <- etsNelderMead(
-    par,
-    env,
-    -Inf,
-    sqrt(.Machine$double.eps),
-    1.0,
-    0.5,
-    2.0,
-    trace,
-    maxit
+    par = par,
+    env = env,
+    abstol = -Inf,
+    intol = sqrt(.Machine$double.eps),
+    alpha = 1.0,
+    beta = 0.5,
+    gamma = 2.0,
+    trace = trace,
+    maxit = maxit
   )
   fit.par <- fred$par
   names(fit.par) <- names(par)
@@ -736,18 +736,18 @@ etsmodel <- function(
   }
 
   e <- pegelsresid.C(
-    y,
-    m,
-    init.state,
-    errortype,
-    trendtype,
-    seasontype,
-    damped,
-    alpha,
-    beta,
-    gamma,
-    phi,
-    nmse
+    y = y,
+    m = m,
+    init.state = init.state,
+    errortype = errortype,
+    trendtype = trendtype,
+    seasontype = seasontype,
+    damped = damped,
+    alpha = alpha,
+    beta = beta,
+    gamma = gamma,
+    phi = phi,
+    nmse = nmse
   )
 
   np <- np + 1
@@ -1177,18 +1177,18 @@ lik <- function(
   }
 
   e <- pegelsresid.C(
-    y,
-    m,
-    init.state,
-    errortype,
-    trendtype,
-    seasontype,
-    damped,
-    alpha,
-    beta,
-    gamma,
-    phi,
-    nmse
+    y = y,
+    m = m,
+    init.state = init.state,
+    errortype = errortype,
+    trendtype = trendtype,
+    seasontype = seasontype,
+    damped = damped,
+    alpha = alpha,
+    beta = beta,
+    gamma = gamma,
+    phi = phi,
+    nmse = nmse
   )
 
   if (is.na(e$lik)) {

@@ -436,14 +436,14 @@ fitSpecificTBATS <- function(
       beta = beta.v
     )
     updateFMatrix(
-      F,
-      small.phi,
-      alpha,
-      beta.v,
-      gamma.bold,
-      ar.coefs,
-      ma.coefs,
-      tau
+      F = F,
+      smallPhi = small.phi,
+      alpha = alpha,
+      beta = beta.v,
+      gammaBold = gamma.bold,
+      ar = ar.coefs,
+      ma = ma.coefs,
+      tau = tau
     )
 
     # 2. Calculate!
@@ -546,14 +546,14 @@ fitSpecificTBATS <- function(
       beta = beta.v
     )
     updateFMatrix(
-      F,
-      small.phi,
-      alpha,
-      beta.v,
-      gamma.bold,
-      ar.coefs,
-      ma.coefs,
-      tau
+      F = F,
+      smallPhi = small.phi,
+      alpha = alpha,
+      beta = beta.v,
+      gammaBold = gamma.bold,
+      ar = ar.coefs,
+      ma = ma.coefs,
+      tau = tau
     )
     # 2. Calculate!
     fitted.values.and.errors <- calcModel(y, x.nought, F, g, w)
@@ -665,14 +665,14 @@ calcLikelihoodTBATS <- function(
   )
 
   updateFMatrix(
-    opt.env$F,
-    small.phi,
-    alpha,
-    beta.v,
-    opt.env$gamma.bold,
-    ar.coefs,
-    ma.coefs,
-    tau
+    F = opt.env$F,
+    smallPhi = small.phi,
+    alpha = alpha,
+    beta = beta.v,
+    gammaBold = opt.env$gamma.bold,
+    ar = ar.coefs,
+    ma = ma.coefs,
+    tau = tau
   )
 
   mat.transformed.y <- BoxCox(opt.env$y, box.cox.parameter)
@@ -785,14 +785,14 @@ calcLikelihoodNOTransformedTBATS <- function(
   )
 
   updateFMatrix(
-    opt.env$F,
-    small.phi,
-    alpha,
-    beta.v,
-    opt.env$gamma.bold,
-    ar.coefs,
-    ma.coefs,
-    tau
+    F = opt.env$F,
+    smallPhi = small.phi,
+    alpha = alpha,
+    beta = beta.v,
+    gammaBold = opt.env$gamma.bold,
+    ar = ar.coefs,
+    ma = ma.coefs,
+    tau = tau
   )
 
   n <- ncol(opt.env$y)
