@@ -178,7 +178,6 @@ forecast.ts <- function(
 }
 
 #' @rdname forecast.ts
-#' @method forecast default
 #' @export
 forecast.default <- function(object, ...) forecast.ts(object, ...)
 
