@@ -70,6 +70,9 @@
   instead of 0.
 - [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md) now
   keeps the series name for short series.
+- [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md) no
+  longer treats parameters as admissible when the polynomial root search
+  fails.
 - [`forecast.Arima()`](https://pkg.robjhyndman.com/forecast/reference/forecast.Arima.md)
   now correctly passes `xreg` when `bootstrap = TRUE`
   ([\#1115](https://github.com/robjhyndman/forecast/issues/1115)).
