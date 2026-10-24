@@ -37,7 +37,7 @@ Rcpp::Environment etsTargetFunctionInit(const Rcpp::NumericVector &y,
                                         double gamma,
                                         double phi,
                                         Rcpp::Environment &rho) {
-  EtsTargetFunction* sp = new EtsTargetFunction();
+  Rcpp::XPtr<EtsTargetFunction> sp(new EtsTargetFunction(), true);
 
   sp->init(Rcpp::as<std::vector<double>>(y), nstate, errortype, trendtype,
            seasontype, Rcpp::as<std::vector<double>>(lower),
@@ -45,7 +45,7 @@ Rcpp::Environment etsTargetFunctionInit(const Rcpp::NumericVector &y,
            optAlpha, optBeta, optGamma, optPhi, givenAlpha, givenBeta,
            givenGamma, givenPhi, alpha, beta, gamma, phi);
 
-  rho["ets.xptr"] = Rcpp::XPtr<EtsTargetFunction>(sp, true);
+  rho["ets.xptr"] = sp;
   return rho;
 }
 
