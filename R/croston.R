@@ -150,15 +150,15 @@ croston_model <- function(
     }
   }
   res <- croston_estimate(
-    alpha_demand,
-    alpha_interval,
-    y_demand,
-    y_interval,
-    init_demand,
-    init_interval,
-    non_zero,
-    n,
-    type
+    alpha_demand = alpha_demand,
+    alpha_interval = alpha_interval,
+    y_demand = y_demand,
+    y_interval = y_interval,
+    init_demand = init_demand,
+    init_interval = init_interval,
+    non_zero = non_zero,
+    n = n,
+    type = type
   )
   output <- list(
     alpha = alpha,
@@ -230,15 +230,15 @@ croston_cost <- function(
   opt_crit
 ) {
   res <- croston_estimate(
-    alpha_demand,
-    alpha_interval,
-    y_demand,
-    y_interval,
-    init_demand,
-    init_interval,
-    non_zero,
-    n,
-    type
+    alpha_demand = alpha_demand,
+    alpha_interval = alpha_interval,
+    y_demand = y_demand,
+    y_interval = y_interval,
+    init_demand = init_demand,
+    init_interval = init_interval,
+    non_zero = non_zero,
+    n = n,
+    type = type
   )
   resid <- y - res$fitted
   if (opt_crit == "mae") {

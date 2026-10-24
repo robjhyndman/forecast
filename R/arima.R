@@ -45,7 +45,7 @@ search.arima <- function(
       K <- to.check[i, "K"]
       if (p + q + P + Q <= max.order) {
         fit <- myarima(
-          x,
+          x = x,
           order = c(p, d, q),
           seasonal = c(P, D, Q),
           constant = (K == 1),
@@ -72,7 +72,7 @@ search.arima <- function(
       K <- to.check[i, "K"]
       if (p + q + P + Q <= max.order) {
         fit <- myarima(
-          x,
+          x = x,
           order = c(p, d, q),
           seasonal = c(P, D, Q),
           constant = (K == 1),
@@ -128,7 +128,7 @@ search.arima <- function(
         cat("\n\n Now re-fitting the best model(s) without approximations...\n")
       }
       newbestfit <- myarima(
-        x,
+        x = x,
         order = bestfit$arma[c(1, 6, 2)],
         seasonal = bestfit$arma[c(3, 7, 4)],
         constant = constant,
@@ -141,7 +141,7 @@ search.arima <- function(
       if (newbestfit$ic == Inf) {
         # Final model is lousy. Better try again without approximation
         bestfit <- search.arima(
-          x,
+          x = x,
           d = d,
           D = D,
           max.p = max.p,
