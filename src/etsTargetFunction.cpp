@@ -243,6 +243,8 @@ bool EtsTargetFunction::admissible() {
     R_cpolyroot(opr.data(), opi.data(), &degree, zeror.data(), zeroi.data(),
                 &fail);
 
+    if (fail) return false;
+
     double max = 0;
     for (std::size_t i = 0; i < zeror.size(); i++) {
       const double abs_val = std::sqrt(zeror[i] * zeror[i] + zeroi[i] * zeroi[i]);

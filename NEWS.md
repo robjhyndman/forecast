@@ -15,6 +15,7 @@
 * `croston_model()` and `croston()` can now optimize and separately specify Croston smoothing parameters.
 * `croston_model()` now returns `NA` for fitted values before the first non-zero demand instead of 0.
 * `ets()` now keeps the series name for short series.
+* `ets()` no longer treats parameters as admissible when the polynomial root search fails.
 * `forecast.Arima()` now correctly passes `xreg` when `bootstrap = TRUE` (#1115).
 * `forecast.StructTS()` now uses the series frequency for its default forecast horizon.
 * `forecast.ets()` now uses the supplied `innov` matrix when `simulate = TRUE` instead of silently ignoring it.
