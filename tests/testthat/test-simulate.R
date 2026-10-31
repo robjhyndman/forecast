@@ -31,6 +31,24 @@ test_that("simulated_seasonal", {
   }
 })
 
+test_that("simulate.Arima() keeps coefficients that sum to zero", {
+  y <- ts(seq_len(40)^2, frequency = 4)
+  fit <- Arima(
+    y,
+    order = c(2, 0, 0),
+    seasonal = c(0, 1, 0),
+    fixed = c(0.25, -0.25)
+  )
+  expect_equal(simulate(fit, innov = rep(0, 8)), forecast(fit, h = 8)$mean)
+  fit <- Arima(
+    y,
+    order = c(0, 0, 2),
+    seasonal = c(0, 1, 0),
+    fixed = c(0.25, -0.25)
+  )
+  expect_equal(simulate(fit, innov = rep(0, 8)), forecast(fit, h = 8)$mean)
+})
+
 test_that("simulated_nonseasonal", {
   fitting_functions <- c(
     ar,
