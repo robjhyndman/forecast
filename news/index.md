@@ -114,6 +114,9 @@
   models now displays the stored AICc and BIC values instead of
   recomputing them, which gave slightly different results for series
   with interior missing values.
+- [`simulate.Arima()`](https://pkg.robjhyndman.com/forecast/reference/simulate.ets.md)
+  now retains nonzero AR and MA coefficients that sum to zero in
+  seasonal models.
 - [`splinef()`](https://pkg.robjhyndman.com/forecast/reference/forecast.spline_model.md)
   and
   [`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)

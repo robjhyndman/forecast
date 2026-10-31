@@ -120,6 +120,8 @@
 <li>
 <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code><a href="../reference/Arima.html">Arima()</a></code> models now displays the stored AICc and BIC values instead of recomputing them, which gave slightly different results for series with interior missing values.</li>
 <li>
+<code><a href="../reference/simulate.ets.html">simulate.Arima()</a></code> now retains nonzero AR and MA coefficients that sum to zero in seasonal models.</li>
+<li>
 <code><a href="../reference/forecast.spline_model.html">splinef()</a></code> and <code><a href="../reference/forecast.theta_model.html">thetaf()</a></code> now return the series name instead of “x”.</li>
 <li>
 <code><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset()</a></code> no longer ignores the <code>subset</code> argument for <code>msts</code> objects.</li>
