@@ -478,6 +478,7 @@ stlm <- function(
 
   if (!is.null(model) && is.null(lambda)) {
     lambda <- model$lambda
+    biasadj <- attr(lambda, "biasadj")
   }
 
   # Transform data if necessary
