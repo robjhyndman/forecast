@@ -466,6 +466,7 @@ forecast.modelAR <- function(
       npaths = npaths,
       bootstrap = bootstrap,
       innov = innov,
+      xreg = xreg,
       lambda = lambda,
       ...
     )
