@@ -84,6 +84,8 @@
 - [`forecast.ets()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ets.md)
   now gives the intended error message when forecasting fails for a
   multiplicative trend model.
+- [`forecast.modelAR()`](https://pkg.robjhyndman.com/forecast/reference/forecast.modelAR.md)
+  now computes prediction intervals for models with `xreg`.
 - [`forecast.ts()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ts.md)
   now keeps the series name in more cases.
 - `forecast.varest()` now supports `fan = TRUE` and `level` values
