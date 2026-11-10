@@ -980,9 +980,9 @@ arimaorder <- function(object) {
       return(order[1:3])
     }
   } else if (inherits(object, "ar")) {
-    return(c("p" = object$order, "d" = 0, "q" = 0))
+    return(c(p = object$order, d = 0, q = 0))
   } else if (inherits(object, "fracdiff")) {
-    return(c("p" = length(object$ar), "d" = object$d, "q" = length(object$ma)))
+    return(c(p = length(object$ar), d = object$d, q = length(object$ma)))
   } else {
     stop("object not of class Arima, ar or fracdiff")
   }

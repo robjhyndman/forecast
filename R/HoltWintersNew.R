@@ -86,9 +86,9 @@ HoltWintersZZ <- function(
   }
   seasontype <- switch(
     seasonal,
-    "additive" = "A",
-    "multiplicative" = "M",
-    "none" = "N"
+    additive = "A",
+    multiplicative = "M",
+    none = "N"
   )
   if (seasontype == "N") {
     m <- 1
