@@ -68,6 +68,10 @@
 - [`croston_model()`](https://pkg.robjhyndman.com/forecast/reference/croston_model.md)
   now returns `NA` for fitted values before the first non-zero demand
   instead of 0.
+- [`easter()`](https://pkg.robjhyndman.com/forecast/reference/easter.md)
+  now returns the correct fractions when Easter spans two months or
+  quarters and the series starts in April (or the second quarter) or
+  ends in March (or the first quarter).
 - [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md) now
   keeps the series name for short series.
 - [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md) no
