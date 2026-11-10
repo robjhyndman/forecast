@@ -326,7 +326,6 @@ wacf <- function(x, lag.max = length(x) - 1) {
     plot = FALSE,
     na.action = na.contiguous
   )
-  acfest$series <- deparse1(substitute(x))
 
   # Taper estimates
   s <- seq_along(acfest$acf[,, 1])

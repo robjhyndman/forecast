@@ -208,8 +208,6 @@ ggAcf <- function(
     demean = demean,
     plot = FALSE
   )
-  object$tsp <- tsp(x)
-  object$periods <- attr(x, "msts")
   object$series <- deparse1(substitute(x))
   if (plot) {
     autoplot(object, ...)
@@ -236,8 +234,6 @@ ggPacf <- function(
     demean = demean,
     plot = FALSE
   )
-  object$tsp <- tsp(x)
-  object$periods <- attr(x, "msts")
   object$series <- deparse1(substitute(x))
   if (plot) {
     autoplot(object, ...)
