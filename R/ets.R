@@ -839,14 +839,11 @@ etsTargetFunctionInitWrapper <- function(
   optGamma <- !is.null(gamma)
   optPhi <- !is.null(phi)
 
-  givenAlpha <- FALSE
   givenBeta <- FALSE
   givenGamma <- FALSE
-  givenPhi <- FALSE
 
   if (!is.null(par.noopt["alpha"]) && !is.na(par.noopt["alpha"])) {
     optAlpha <- FALSE
-    givenAlpha <- TRUE
   }
   if (!is.null(par.noopt["beta"]) && !is.na(par.noopt["beta"])) {
     optBeta <- FALSE
@@ -858,7 +855,6 @@ etsTargetFunctionInitWrapper <- function(
   }
   if (!is.null(par.noopt["phi"]) && !is.na(par.noopt["phi"])) {
     optPhi <- FALSE
-    givenPhi <- TRUE
   }
 
   if (!damped) {
@@ -889,10 +885,8 @@ etsTargetFunctionInitWrapper <- function(
     optBeta = optBeta,
     optGamma = optGamma,
     optPhi = optPhi,
-    givenAlpha = givenAlpha,
     givenBeta = givenBeta,
     givenGamma = givenGamma,
-    givenPhi = givenPhi,
     alpha = alpha,
     beta = beta,
     gamma = gamma,

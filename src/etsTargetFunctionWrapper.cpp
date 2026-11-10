@@ -28,10 +28,8 @@ Rcpp::Environment etsTargetFunctionInit(const Rcpp::NumericVector &y,
                                         bool optBeta,
                                         bool optGamma,
                                         bool optPhi,
-                                        bool givenAlpha,
                                         bool givenBeta,
                                         bool givenGamma,
-                                        bool givenPhi,
                                         double alpha,
                                         double beta,
                                         double gamma,
@@ -42,8 +40,8 @@ Rcpp::Environment etsTargetFunctionInit(const Rcpp::NumericVector &y,
   sp->init(Rcpp::as<std::vector<double>>(y), nstate, errortype, trendtype,
            seasontype, Rcpp::as<std::vector<double>>(lower),
            Rcpp::as<std::vector<double>>(upper), opt_crit, nmse, bounds, m,
-           optAlpha, optBeta, optGamma, optPhi, givenAlpha, givenBeta,
-           givenGamma, givenPhi, alpha, beta, gamma, phi);
+           optAlpha, optBeta, optGamma, optPhi, givenBeta, givenGamma, alpha,
+           beta, gamma, phi);
 
   rho["ets.xptr"] = sp;
   return rho;

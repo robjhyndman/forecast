@@ -20,10 +20,8 @@ void EtsTargetFunction::init(const std::vector<double> &p_y,
                              bool p_optBeta,
                              bool p_optGamma,
                              bool p_optPhi,
-                             bool p_givenAlpha,
                              bool p_givenBeta,
                              bool p_givenGamma,
-                             bool p_givenPhi,
                              double alpha,
                              double beta,
                              double gamma,
@@ -50,10 +48,8 @@ void EtsTargetFunction::init(const std::vector<double> &p_y,
   this->optGamma = p_optGamma;
   this->optPhi = p_optPhi;
 
-  this->givenAlpha = p_givenAlpha;
   this->givenBeta = p_givenBeta;
   this->givenGamma = p_givenGamma;
-  this->givenPhi = p_givenPhi;
 
   this->alpha = alpha;
   this->beta = beta;
