@@ -322,15 +322,18 @@ class3 <- function(
   par
 ) {
   p <- length(last.state)
-  H1 <- matrix(rep(1, 1 + (trendtype != "N")), nrow = 1)
-  H2 <- matrix(c(rep(0, m - 1), 1), nrow = 1)
   if (trendtype == "N") {
-    F1 <- 1
-    G1 <- par["alpha"]
+    H1 <- matrix(1)
+    F1 <- matrix(1)
+    g1 <- par["alpha"]
   } else {
-    F1 <- rbind(c(1, 1), c(0, if (damped) par["phi"] else 1))
-    G1 <- rbind(c(par["alpha"], par["alpha"]), c(par["beta"], par["beta"]))
+    phi <- if (damped) par[["phi"]] else 1
+    H1 <- matrix(c(1, phi), nrow = 1)
+    F1 <- rbind(c(1, phi), c(0, phi))
+    g1 <- par[c("alpha", "beta")]
   }
+  G1 <- g1 %*% H1
+  H2 <- matrix(c(rep(0, m - 1), 1), nrow = 1)
   F2 <- rbind(c(rep(0, m - 1), 1), cbind(diag(m - 1), rep(0, m - 1)))
 
   G2 <- matrix(0, m, m)

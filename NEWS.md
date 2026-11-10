@@ -18,6 +18,7 @@
 * `ets()` no longer treats parameters as admissible when the polynomial root search fails.
 * `forecast.Arima()` now correctly passes `xreg` when `bootstrap = TRUE` (#1115).
 * `forecast.StructTS()` now uses the series frequency for its default forecast horizon.
+* `forecast.ets()` now uses the damping parameter in forecasts and prediction intervals for ETS(M,Ad,M) models.
 * `forecast.ets()` now uses the supplied `innov` matrix when `simulate = TRUE` instead of silently ignoring it.
 * `forecast.ets()` now gives the intended error message when forecasting fails for a multiplicative trend model.
 * `forecast.modelAR()` now computes prediction intervals for models with `xreg`.

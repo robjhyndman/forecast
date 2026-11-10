@@ -85,3 +85,29 @@ test_that("forecast.ets()", {
   expect_true(!is.null(fcast$upper) && !is.null(fcast$lower))
   expect_true(all(fcast$upper > fcast$lower))
 })
+
+test_that("forecast.ets() uses phi for damped multiplicative seasonal models", {
+  fit <- ets(AirPassengers, "MAM", damped = TRUE, phi = 0.8)
+  # Within one seasonal period the analytic mean equals the recursive point
+  # forecast used by the simulation path
+  recursive <- forecast(fit, h = 12, simulate = TRUE, npaths = 5)$mean
+  expect_equal(forecast(fit, h = 12)$mean, recursive)
+})
+
+test_that("class3() uses phi in the forecast variance", {
+  out <- class3(
+    h = 4,
+    last.state = c(100, 2, 1.1, 0.9),
+    trendtype = "A",
+    seasontype = "M",
+    damped = TRUE,
+    m = 2,
+    sigma2 = 0.01,
+    par = c(alpha = 0.5, beta = 0.1, gamma = 0.1, phi = 0.8)
+  )
+  expect_equal(out$mu, c(91.44, 113.168, 93.57248736, 115.268400192))
+  expect_equal(
+    out$var,
+    c(83.612736, 170.507496977664, 163.890150274293, 310.920875239663)
+  )
+})
