@@ -33,7 +33,7 @@ HoltWintersZZ <- function(
     stop("cannot fit models without level ('alpha' must not be 0 or FALSE).")
   }
   if (
-    !all(is.null(c(alpha, beta, gamma))) &&
+    !is.null(c(alpha, beta, gamma)) &&
       any(c(alpha, beta, gamma) < 0 | c(alpha, beta, gamma) > 1)
   ) {
     stop("'alpha', 'beta' and 'gamma' must be within the unit interval.")
@@ -111,13 +111,13 @@ HoltWintersZZ <- function(
   ###################################################################################
   # optimisation: alpha, beta, gamma, if any of them is null, then optimise them
   error <- function(p, select) {
-    if (select[1] > 0) {
+    if (select[1]) {
       alpha <- p[1L]
     }
-    if (select[2] > 0) {
+    if (select[2]) {
       beta <- p[1L + select[1]]
     }
-    if (select[3] > 0) {
+    if (select[3]) {
       gamma <- p[1L + select[1] + select[2]]
     }
 
@@ -137,16 +137,16 @@ HoltWintersZZ <- function(
       s.start = s.start
     )$SSE
   }
-  select <- as.numeric(c(is.null(alpha), is.null(beta), is.null(gamma)))
+  select <- c(is.null(alpha), is.null(beta), is.null(gamma))
 
-  if (sum(select) > 0) {
+  if (any(select)) {
     # There are parameters to optimize
     sol <- optim(
       optim.start,
       error,
       method = "L-BFGS-B",
-      lower = lower[select],
-      upper = upper[select],
+      lower = lower[which(select)],
+      upper = upper[which(select)],
       select = select
     )
     if (sol$convergence || any(sol$par < 0 | sol$par > 1)) {
@@ -161,13 +161,13 @@ HoltWintersZZ <- function(
         stop("optimization failure")
       }
     }
-    if (select[1] > 0) {
+    if (select[1]) {
       alpha <- sol$par[1L]
     }
-    if (select[2] > 0) {
+    if (select[2]) {
       beta <- sol$par[1L + select[1]]
     }
-    if (select[3] > 0) {
+    if (select[3]) {
       gamma <- sol$par[1L + select[1] + select[2]]
     }
   }
