@@ -834,28 +834,13 @@ etsTargetFunctionInitWrapper <- function(
   }
 
   # determine which values to optimize and which ones are given by the user/not needed
-  optAlpha <- !is.null(alpha)
-  optBeta <- !is.null(beta)
-  optGamma <- !is.null(gamma)
-  optPhi <- !is.null(phi)
-
-  givenBeta <- FALSE
-  givenGamma <- FALSE
-
-  if (!is.null(par.noopt["alpha"]) && !is.na(par.noopt["alpha"])) {
-    optAlpha <- FALSE
-  }
-  if (!is.null(par.noopt["beta"]) && !is.na(par.noopt["beta"])) {
-    optBeta <- FALSE
-    givenBeta <- TRUE
-  }
-  if (!is.null(par.noopt["gamma"]) && !is.na(par.noopt["gamma"])) {
-    optGamma <- FALSE
-    givenGamma <- TRUE
-  }
-  if (!is.null(par.noopt["phi"]) && !is.na(par.noopt["phi"])) {
-    optPhi <- FALSE
-  }
+  given <- names(par.noopt)
+  optAlpha <- !"alpha" %in% given
+  givenBeta <- "beta" %in% given
+  optBeta <- !is.null(beta) && !givenBeta
+  givenGamma <- "gamma" %in% given
+  optGamma <- !is.null(gamma) && !givenGamma
+  optPhi <- !is.null(phi) && !"phi" %in% given
 
   if (!damped) {
     phi <- 1
