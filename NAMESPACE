@@ -390,8 +390,6 @@ importFrom(stats,
 importFrom(timeDate,
   Easter,
   as.Date.timeDate,
-  as.timeDate,
-  difftimeDate,
   isBizday
 )
 importFrom(urca,
