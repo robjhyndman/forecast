@@ -51,11 +51,11 @@ HoltWintersZZ <- function(
 
   ## initialise l0, b0, s0
   x_nonmiss <- na.interp(x)
-  if (!is.null(gamma) && is.logical(gamma) && !gamma) {
+  if (isFALSE(gamma)) {
     seasonal <- "none"
     l.start <- x_nonmiss[1L]
     s.start <- 0
-    if (is.null(beta) || !is.logical(beta) || beta) {
+    if (!isFALSE(beta)) {
       if (!exponential) {
         b.start <- x_nonmiss[2L] - x_nonmiss[1L]
       } else {
@@ -77,7 +77,7 @@ HoltWintersZZ <- function(
   lower <- c(0, 0, 0, 0)
   upper <- c(1, 1, 1, 1)
 
-  if (!is.null(beta) && is.logical(beta) && !beta) {
+  if (isFALSE(beta)) {
     trendtype <- "N"
   } else if (exponential) {
     trendtype <- "M"
@@ -128,8 +128,8 @@ HoltWintersZZ <- function(
       gamma = gamma,
       seasonal = seasonal,
       m = m,
-      dotrend = (!is.logical(beta) || beta),
-      doseasonal = (!is.logical(gamma) || gamma),
+      dotrend = !isFALSE(beta),
+      doseasonal = !isFALSE(gamma),
       exponential = exponential,
       phi = phi,
       l.start = l.start,
@@ -179,8 +179,8 @@ HoltWintersZZ <- function(
     gamma = gamma,
     seasonal = seasonal,
     m = m,
-    dotrend = (!is.logical(beta) || beta),
-    doseasonal = (!is.logical(gamma) || gamma),
+    dotrend = !isFALSE(beta),
+    doseasonal = !isFALSE(gamma),
     exponential = exponential,
     phi = phi,
     l.start = l.start,
