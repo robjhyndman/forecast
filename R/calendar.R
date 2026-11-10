@@ -101,63 +101,20 @@ bizdays <- function(
 #' easter(wineind, easter.mon = TRUE)
 #' @export
 easter <- function(x, easter.mon = FALSE) {
-  # Return a vector of 0's and 1's for easter holidays
-  #
-  # Args:
-  #   x: monthly, quarterly or weekly data
-  #   easter.mon: An option including easter.mon
-  if (is.null(tsp(x))) {
-    stop("We cannot handle a time series without time attributes.")
-  }
   freq <- frequency(x)
-  date <- zoo::as.Date(time(x))
-  start.yr <- start(x)[1L]
-  end.yr <- end(x)[1L]
-  yr.span <- seq(start.yr, end.yr)
-  gd.fri0 <- Easter(yr.span, -2L)
-  if (easter.mon) {
-    easter0 <- Easter(yr.span, 1L)
+  if (freq == 12) {
+    period <- function(date) format(date, "%Y-%m")
+  } else if (freq == 4) {
+    period <- function(date) format(zoo::as.yearqtr(date), "%Y-%q")
   } else {
-    easter0 <- Easter(yr.span)
+    stop("`x` must be a monthly or quarterly time series.")
   }
-  if (freq == 12L) {
-    fmat <- "%Y-%m"
-    yr.mon <- format(date, format = fmat)
-    gd.fri <- format(gd.fri0, format = fmat) # good fri
-    easter <- format(easter0, format = fmat) # easter mon
-  } else if (freq == 4L) {
-    fmat <- "%Y-%q"
-    yr.mon <- format(zoo::as.yearqtr(date), format = fmat) # yr.qtr
-    gd.fri <- format(zoo::as.yearqtr(gd.fri0), format = fmat)
-    easter <- format(zoo::as.yearqtr(easter0), format = fmat)
-  }
-  span <- cbind(gd.fri, easter) # the span of easter holidays
-  hdays <- unlist(apply(span, 1, unique))
-  dummies <- as.integer(yr.mon %in% hdays)
-  # Allow fractional results
-  denominator <- (easter0 - gd.fri0 + 1L)[1L]
-  last.mar <- as.timeDate(paste0(yr.span, "-03-31"))
-  dif <- difftimeDate(last.mar, gd.fri0, units = "days") + 1L
-  # Remove easter out of date range
-  if (date[1L] > as.character(last.mar[1L])) {
-    dif <- dif[-1L]
-  }
-  if (date[length(yr.mon)] < as.character(last.mar[length(last.mar)])) {
-    dif <- dif[-length(dif)]
-  }
-  replace <- dif > denominator | dif <= 0L
-  dif[replace] <- denominator # Easter in the same month
-  # Start to insert the remaining part falling in Apr
-  index <- which(dif != denominator)
-  if (length(index) != 0L) {
-    values <- denominator - dif[index]
-    new.index <- index[1L]
-    for (i in seq_along(index)) {
-      dif <- append(dif, values = values[i], new.index)
-      new.index <- index[i + 1L] + i
-    }
-    dummies[dummies == 1L] <- round(dif / unclass(denominator), digits = 2)
-  }
-  out <- ts(dummies, start = tsp(x)[1L], frequency = freq)
-  out
+  # Every day of the Easter holidays in the years covered by x
+  n_days <- if (easter.mon) 4L else 3L
+  good_friday <- as.Date(Easter(seq(start(x)[1L], end(x)[1L]), -2L))
+  holidays <- rep(good_friday, each = n_days) + seq_len(n_days) - 1L
+  # Fraction of each year's holidays falling in each period of x
+  periods <- period(zoo::as.Date(time(x)))
+  n_holidays <- tabulate(match(period(holidays), periods), length(periods))
+  ts(round(n_holidays / n_days, 2), start = tsp(x)[1L], frequency = freq)
 }
