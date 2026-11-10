@@ -149,7 +149,7 @@ forecast.bats <- function(
     residuals = copy_msts(object$y, object$errors)
   )
   if (is.null(object$series)) {
-    forecast.object$series <- deparse(object$call$y)
+    forecast.object$series <- deparse1(object$call$y)
   }
   class(forecast.object) <- "forecast"
   forecast.object

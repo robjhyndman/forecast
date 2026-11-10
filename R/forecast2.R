@@ -292,7 +292,7 @@ forecast.HoltWinters <- function(
       lower = lower,
       upper = upper,
       x = x,
-      series = deparse(object$call$x),
+      series = deparse1(object$call$x),
       fitted = fitted,
       residuals = x - fitted
     ),

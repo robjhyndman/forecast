@@ -356,7 +356,7 @@ forecast.fracdiff <- function(
     }
   }
 
-  seriesname <- object$series %||% deparse(object$call$x)
+  seriesname <- object$series %||% deparse1(object$call$x)
   structure(
     list(
       x = x,
