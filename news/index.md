@@ -83,6 +83,9 @@
 - [`forecast.StructTS()`](https://pkg.robjhyndman.com/forecast/reference/forecast.StructTS.md)
   now uses the series frequency for its default forecast horizon.
 - [`forecast.ets()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ets.md)
+  now uses the damping parameter in forecasts and prediction intervals
+  for ETS(M,Ad,M) models.
+- [`forecast.ets()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ets.md)
   now uses the supplied `innov` matrix when `simulate = TRUE` instead of
   silently ignoring it.
 - [`forecast.ets()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ets.md)
