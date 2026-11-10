@@ -370,12 +370,10 @@ simulate.spline_model <- function(
   ...
 ) {
   if (is.null(innov)) {
-    RNGstate <- get_seed()
     if (!is.null(seed)) {
-      R.seed <- RNGstate
+      old_seed <- get_seed()
       set.seed(seed)
-      RNGstate <- structure(seed, kind = as.list(RNGkind()))
-      on.exit(assign(".Random.seed", R.seed, envir = globalenv()))
+      on.exit(assign(".Random.seed", old_seed, envir = globalenv()))
     }
   } else {
     nsim <- length(innov)

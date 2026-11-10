@@ -53,12 +53,10 @@ simulate.ets <- function(
   ...
 ) {
   if (is.null(innov)) {
-    RNGstate <- get_seed()
     if (!is.null(seed)) {
-      R.seed <- RNGstate
+      old_seed <- get_seed()
       set.seed(seed)
-      RNGstate <- structure(seed, kind = as.list(RNGkind()))
-      on.exit(assign(".Random.seed", R.seed, envir = globalenv()))
+      on.exit(assign(".Random.seed", old_seed, envir = globalenv()))
     }
   } else {
     nsim <- length(innov)
@@ -358,12 +356,10 @@ simulate.Arima <- function(
 
   ######## Random Seed Code
   if (is.null(innov)) {
-    RNGstate <- get_seed()
     if (!is.null(seed)) {
-      R.seed <- RNGstate
+      old_seed <- get_seed()
       set.seed(seed)
-      RNGstate <- structure(seed, kind = as.list(RNGkind()))
-      on.exit(assign(".Random.seed", R.seed, envir = globalenv()))
+      on.exit(assign(".Random.seed", old_seed, envir = globalenv()))
     }
   } else {
     nsim <- length(innov)
@@ -529,12 +525,10 @@ simulate.ar <- function(
   ...
 ) {
   if (is.null(innov)) {
-    RNGstate <- get_seed()
     if (!is.null(seed)) {
-      R.seed <- RNGstate
+      old_seed <- get_seed()
       set.seed(seed)
-      RNGstate <- structure(seed, kind = as.list(RNGkind()))
-      on.exit(assign(".Random.seed", R.seed, envir = globalenv()))
+      on.exit(assign(".Random.seed", old_seed, envir = globalenv()))
     }
   } else {
     nsim <- length(innov)
@@ -597,12 +591,10 @@ simulate.rw_model <- function(
   ...
 ) {
   if (is.null(innov)) {
-    RNGstate <- get_seed()
     if (!is.null(seed)) {
-      R.seed <- RNGstate
+      old_seed <- get_seed()
       set.seed(seed)
-      RNGstate <- structure(seed, kind = as.list(RNGkind()))
-      on.exit(assign(".Random.seed", R.seed, envir = globalenv()))
+      on.exit(assign(".Random.seed", old_seed, envir = globalenv()))
     }
   } else {
     nsim <- length(innov)
@@ -754,12 +746,10 @@ simulate.nnetar <- function(
   ...
 ) {
   if (is.null(innov)) {
-    RNGstate <- get_seed()
     if (!is.null(seed)) {
-      R.seed <- RNGstate
+      old_seed <- get_seed()
       set.seed(seed)
-      RNGstate <- structure(seed, kind = as.list(RNGkind()))
-      on.exit(assign(".Random.seed", R.seed, envir = globalenv()))
+      on.exit(assign(".Random.seed", old_seed, envir = globalenv()))
     }
   } else {
     nsim <- length(innov)
@@ -879,12 +869,10 @@ simulate.modelAR <- function(
   ...
 ) {
   if (is.null(innov)) {
-    RNGstate <- get_seed()
     if (!is.null(seed)) {
-      R.seed <- RNGstate
+      old_seed <- get_seed()
       set.seed(seed)
-      RNGstate <- structure(seed, kind = as.list(RNGkind()))
-      on.exit(assign(".Random.seed", R.seed, envir = globalenv()))
+      on.exit(assign(".Random.seed", old_seed, envir = globalenv()))
     }
   } else {
     nsim <- length(innov)
