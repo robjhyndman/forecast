@@ -277,7 +277,7 @@ seasonplot <- function(
     ...
   )
   nn <- length(Season) / s
-  col <- rep(col, nn)[1:nn]
+  col <- rep_len(col, nn)
   for (i in 0:(nn - 1)) {
     lines(
       Season[(i * (s + 1) + 1):((s + 1) * (i + 1))],

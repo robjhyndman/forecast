@@ -1490,7 +1490,7 @@ ggsubseriesplot <- function(
     stop("Data are not seasonal")
   }
 
-  if ("1" %in% dimnames(table(table(phase)))[[1]]) {
+  if (any(table(phase) == 1)) {
     stop(paste(
       "Each season requires at least 2 observations.",
       if (frequency(x) %% 1 == 0) {
@@ -1664,9 +1664,7 @@ ggseasonplot <- function(
           ggplot2::scale_color_manual(guide = "none", values = rep(col, ncol))
       } else {
         p <- p +
-          ggplot2::scale_color_manual(
-            values = rep(col, ceiling(ncol / length(col)))[1:ncol]
-          )
+          ggplot2::scale_color_manual(values = rep(col, length.out = ncol))
       }
     }
   }
