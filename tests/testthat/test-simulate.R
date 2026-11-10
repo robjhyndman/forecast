@@ -129,3 +129,19 @@ test_that("simulated_ModelAR", {
   expect_equal(fc1$lower, fc2$lower, tolerance = 1e-0)
   expect_equal(fc1$upper, fc2$upper, tolerance = 1e-0)
 })
+
+test_that("simulate() with a seed is reproducible and restores the RNG state", {
+  fits <- list(
+    ets(USAccDeaths),
+    Arima(USAccDeaths, order = c(1, 0, 0)),
+    rw_model(USAccDeaths),
+    spline_model(USAccDeaths)
+  )
+  for (fit in fits) {
+    set.seed(1)
+    old_seed <- .Random.seed
+    sim <- simulate(fit, nsim = 5, seed = 123)
+    expect_identical(.Random.seed, old_seed)
+    expect_identical(simulate(fit, nsim = 5, seed = 123), sim)
+  }
+})
