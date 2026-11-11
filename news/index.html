@@ -132,6 +132,8 @@
 <li>
 <code><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset()</a></code> no longer ignores the <code>subset</code> argument for <code>msts</code> objects.</li>
 <li>
+<code><a href="../reference/tbats.html">tbats()</a></code> no longer errors when <code>use.damped.trend = TRUE</code> is set without <code>use.trend = TRUE</code>.</li>
+<li>
 <code><a href="../reference/tbats.html">tbats()</a></code> results no longer depend on the order of <code>seasonal.periods</code>, and the harmonic search now retains <code>k = 1</code> when it minimizes AIC.</li>
 <li>
 <code><a href="../reference/theta_model.html">theta_model()</a></code> and <code><a href="../reference/forecast.theta_model.html">thetaf()</a></code> gained a <code>type</code> argument to select additive or multiplicative seasonal decomposition.</li>

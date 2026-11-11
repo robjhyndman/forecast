@@ -133,6 +133,9 @@
 - [`subset()`](https://rdrr.io/r/base/subset.html) no longer ignores the
   `subset` argument for `msts` objects.
 - [`tbats()`](https://pkg.robjhyndman.com/forecast/reference/tbats.md)
+  no longer errors when `use.damped.trend = TRUE` is set without
+  `use.trend = TRUE`.
+- [`tbats()`](https://pkg.robjhyndman.com/forecast/reference/tbats.md)
   results no longer depend on the order of `seasonal.periods`, and the
   harmonic search now retains `k = 1` when it minimizes AIC.
 - [`theta_model()`](https://pkg.robjhyndman.com/forecast/reference/theta_model.md)
