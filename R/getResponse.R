@@ -22,15 +22,10 @@ getResponse <- function(object, ...) UseMethod("getResponse")
 #' @rdname getResponse
 #' @export
 getResponse.default <- function(object, ...) {
-  if (is.list(object)) {
-    output <- object$x
-    if (is.null(output)) {
-      output <- object$y
-    }
-    return(output)
-  } else {
+  if (!is.list(object)) {
     return(NULL)
   }
+  object$x %||% object$y
 }
 
 #' @rdname getResponse
@@ -101,12 +96,10 @@ getResponse.ar <- function(object, ...) {
 #' @rdname getResponse
 #' @export
 getResponse.tbats <- function(object, ...) {
-  if ("y" %in% names(object)) {
-    y <- object$y
-  } else {
+  if (is.null(object[["y"]])) {
     return(NULL)
   }
-  as.ts(y)
+  as.ts(object[["y"]])
 }
 
 #' @rdname getResponse
@@ -124,10 +117,8 @@ getResponse.mforecast <- function(object, ...) {
 #' @rdname getResponse
 #' @export
 getResponse.baggedModel <- function(object, ...) {
-  if ("y" %in% names(object)) {
-    y <- object$y
-  } else {
+  if (is.null(object[["y"]])) {
     return(NULL)
   }
-  as.ts(y)
+  as.ts(object[["y"]])
 }
