@@ -189,11 +189,10 @@ forecast.rw_model <- function(
   ...
 ) {
   lag <- object$par$lag
-  fullperiods <- (h - 1) / lag + 1
-  steps <- rep(seq_len(fullperiods), rep(lag, fullperiods))[seq_len(h)]
+  steps <- ceiling(seq_len(h) / lag)
 
   # Point forecasts
-  fc <- rep(object$future, fullperiods)[seq_len(h)] + steps * object$par$drift
+  fc <- rep_len(object$future, h) + steps * object$par$drift
 
   # Intervals
   # Adjust prediction intervals to allow for drift coefficient standard error

@@ -303,11 +303,7 @@ Ccf <- function(
 }
 
 kappa <- function(x) {
-  k <- rep(0, length(x))
-  x <- abs(x)
-  k[x <= 1] <- 1
-  k[x > 1 & x <= 2] <- 2 - x[x > 1 & x <= 2]
-  k
+  pmax(0, pmin(1, 2 - abs(x)))
 }
 
 # McMurry-Politis estimate of ACF

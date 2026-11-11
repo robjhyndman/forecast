@@ -369,25 +369,18 @@ forecast.lm <- function(
           # Check if it is a function
           if (fnvar[match(i, reqvars)]) {
             # Pre-evaluate function from data
-            tmpdata[[length(tmpdata) + 1]] <- eval(
-              parse(text = subvars)[[1]],
-              newdata
-            )
+            tmpdata[[length(tmpdata) + 1]] <- eval(str2lang(subvars), newdata)
             found <- TRUE
           }
         }
         if (found) {
-          names(tmpdata)[length(tmpdata)] <- paste0(
-            "solvedFN___",
-            match(i, reqvars)
-          )
+          fn_name <- paste0("solvedFN___", match(i, reqvars))
+          names(tmpdata)[length(tmpdata)] <- fn_name
           subvarloc <- match(i, lapply(attr(object$terms, "predvars"), deparse))
           attr(object$terms, "predvars")[[subvarloc]] <- attr(
             object$terms,
             "variables"
-          )[[subvarloc]] <- parse(
-            text = paste0("solvedFN___", match(i, reqvars))
-          )[[1]]
+          )[[subvarloc]] <- as.name(fn_name)
         } else {
           warning(
             "Could not find required variable ",

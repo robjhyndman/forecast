@@ -277,11 +277,11 @@ fourierf <- function(x, K, h) {
   labels <- character(0)
   for (j in seq_along(period)) {
     if (K[j] > 0) {
-      p <- c(p, (1:K[j]) / period[j])
+      p <- c(p, seq_len(K[j]) / period[j])
       labels <- c(
         labels,
         paste(
-          paste0(c("S", "C"), rep(1:K[j], rep(2, K[j]))),
+          paste0(c("S", "C"), rep(seq_len(K[j]), each = 2)),
           round(period[j]),
           sep = "-"
         )
@@ -291,7 +291,7 @@ fourierf <- function(x, K, h) {
   # Remove equivalent seasonal periods due to multiple seasonality
   k <- duplicated(p)
   p <- p[!k]
-  labels <- labels[!rep(k, rep(2, length(k)))]
+  labels <- labels[!rep(k, each = 2)]
 
   # Remove columns where sinpi=0
   k <- abs(2 * p - round(2 * p)) > .Machine$double.eps
