@@ -42,6 +42,41 @@ ggAddExtras <- function(xlab = NA, ylab = NA, main = NA) {
   extras
 }
 
+# Bars at the right of each facet showing the relative scale of the panels
+range_bars_layer <- function(data) {
+  yranges <- vapply(
+    split(data$y, data$parts),
+    \(x) range(x, na.rm = TRUE),
+    numeric(2)
+  )
+  xranges <- range(data$datetime)
+  barmid <- colMeans(yranges)
+  barlength <- min(apply(yranges, 2, diff))
+  barwidth <- (1 / 64) * diff(xranges)
+  barpos <- data.frame(
+    left = xranges[2] + barwidth,
+    right = xranges[2] + barwidth * 2,
+    top = barmid + barlength / 2,
+    bottom = barmid - barlength / 2,
+    parts = factor(colnames(yranges), levels = levels(data$parts)),
+    datetime = xranges[2],
+    y = barmid,
+    check.names = FALSE
+  )
+  ggplot2::geom_rect(
+    ggplot2::aes(
+      xmin = .data[["left"]],
+      xmax = .data[["right"]],
+      ymax = .data[["top"]],
+      ymin = .data[["bottom"]]
+    ),
+    data = barpos,
+    fill = "gray75",
+    colour = "black",
+    linewidth = 1 / 3
+  )
+}
+
 ggtsbreaks <- function(x) {
   # Make x axis contain only whole numbers (e.g., years)
   unique(round(pretty(floor(x[1]):ceiling(x[2]))))
@@ -573,38 +608,7 @@ autoplot.decomposed.ts <- function(
     range.bars <- object$type == "additive"
   }
   if (range.bars) {
-    yranges <- vapply(
-      split(data$y, data$parts),
-      \(x) range(x, na.rm = TRUE),
-      numeric(2)
-    )
-    xranges <- range(data$datetime)
-    barmid <- colMeans(yranges)
-    barlength <- min(apply(yranges, 2, diff))
-    barwidth <- (1 / 64) * diff(xranges)
-    barpos <- data.frame(
-      left = xranges[2] + barwidth,
-      right = xranges[2] + barwidth * 2,
-      top = barmid + barlength / 2,
-      bottom = barmid - barlength / 2,
-      parts = factor(colnames(yranges), levels = cn),
-      datetime = xranges[2],
-      y = barmid,
-      check.names = FALSE
-    )
-    p <- p +
-      ggplot2::geom_rect(
-        ggplot2::aes(
-          xmin = .data[["left"]],
-          xmax = .data[["right"]],
-          ymax = .data[["top"]],
-          ymin = .data[["bottom"]]
-        ),
-        data = barpos,
-        fill = "gray75",
-        colour = "black",
-        linewidth = 1 / 3
-      )
+    p <- p + range_bars_layer(data)
   }
 
   # Add axis labels
@@ -658,38 +662,7 @@ autoplot.ets <- function(object, range.bars = NULL, ...) {
     range.bars <- is.null(object$lambda)
   }
   if (range.bars) {
-    yranges <- vapply(
-      split(data$y, data$parts),
-      \(x) range(x, na.rm = TRUE),
-      numeric(2)
-    )
-    xranges <- range(data$datetime)
-    barmid <- colMeans(yranges)
-    barlength <- min(apply(yranges, 2, diff))
-    barwidth <- (1 / 64) * diff(xranges)
-    barpos <- data.frame(
-      left = xranges[2] + barwidth,
-      right = xranges[2] + barwidth * 2,
-      top = barmid + barlength / 2,
-      bottom = barmid - barlength / 2,
-      parts = factor(colnames(yranges), levels = cn),
-      datetime = xranges[2],
-      y = barmid,
-      check.names = FALSE
-    )
-    p <- p +
-      ggplot2::geom_rect(
-        ggplot2::aes(
-          xmin = .data[["left"]],
-          xmax = .data[["right"]],
-          ymax = .data[["top"]],
-          ymin = .data[["bottom"]]
-        ),
-        data = barpos,
-        fill = "gray75",
-        colour = "black",
-        linewidth = 1 / 3
-      )
+    p <- p + range_bars_layer(data)
   }
 
   p <- p +
@@ -732,38 +705,7 @@ autoplot.bats <- function(object, range.bars = FALSE, ...) {
   p <- p + ggplot2::facet_grid(parts ~ ., scales = "free_y", switch = "y")
 
   if (range.bars) {
-    yranges <- vapply(
-      split(data$y, data$parts),
-      \(x) range(x, na.rm = TRUE),
-      numeric(2)
-    )
-    xranges <- range(data$datetime)
-    barmid <- colMeans(yranges)
-    barlength <- min(apply(yranges, 2, diff))
-    barwidth <- (1 / 64) * diff(xranges)
-    barpos <- data.frame(
-      left = xranges[2] + barwidth,
-      right = xranges[2] + barwidth * 2,
-      top = barmid + barlength / 2,
-      bottom = barmid - barlength / 2,
-      parts = factor(colnames(yranges), levels = cn),
-      datetime = xranges[2],
-      y = barmid,
-      check.names = FALSE
-    )
-    p <- p +
-      ggplot2::geom_rect(
-        ggplot2::aes(
-          xmin = .data[["left"]],
-          xmax = .data[["right"]],
-          ymax = .data[["top"]],
-          ymin = .data[["bottom"]]
-        ),
-        data = barpos,
-        fill = "gray75",
-        colour = "black",
-        linewidth = 1 / 3
-      )
+    p <- p + range_bars_layer(data)
   }
 
   p <- p +
@@ -1822,38 +1764,7 @@ autoplot.stl <- function(object, labels = NULL, range.bars = TRUE, ...) {
 
   # Rangebars
   if (range.bars) {
-    yranges <- vapply(
-      split(data$y, data$parts),
-      \(x) range(x, na.rm = TRUE),
-      numeric(2)
-    )
-    xranges <- range(data$datetime)
-    barmid <- colMeans(yranges)
-    barlength <- min(apply(yranges, 2, diff))
-    barwidth <- (1 / 64) * diff(xranges)
-    barpos <- data.frame(
-      left = xranges[2] + barwidth,
-      right = xranges[2] + barwidth * 2,
-      top = barmid + barlength / 2,
-      bottom = barmid - barlength / 2,
-      parts = factor(colnames(yranges), levels = cn),
-      datetime = xranges[2],
-      y = barmid,
-      check.names = FALSE
-    )
-    p <- p +
-      ggplot2::geom_rect(
-        ggplot2::aes(
-          xmin = .data[["left"]],
-          xmax = .data[["right"]],
-          ymax = .data[["top"]],
-          ymin = .data[["bottom"]]
-        ),
-        data = barpos,
-        fill = "gray75",
-        colour = "black",
-        linewidth = 1 / 3
-      )
+    p <- p + range_bars_layer(data)
   }
 
   # Remainder
@@ -1915,38 +1826,7 @@ autoplot.StructTS <- function(object, labels = NULL, range.bars = TRUE, ...) {
   p <- p + ggplot2::facet_grid("parts ~ .", scales = "free_y", switch = "y")
 
   if (range.bars) {
-    yranges <- vapply(
-      split(data$y, data$parts),
-      \(x) range(x, na.rm = TRUE),
-      numeric(2)
-    )
-    xranges <- range(data$datetime)
-    barmid <- colMeans(yranges)
-    barlength <- min(apply(yranges, 2, diff))
-    barwidth <- (1 / 64) * diff(xranges)
-    barpos <- data.frame(
-      left = xranges[2] + barwidth,
-      right = xranges[2] + barwidth * 2,
-      top = barmid + barlength / 2,
-      bottom = barmid - barlength / 2,
-      parts = factor(colnames(yranges), levels = cn),
-      datetime = xranges[2],
-      y = barmid,
-      check.names = FALSE
-    )
-    p <- p +
-      ggplot2::geom_rect(
-        ggplot2::aes(
-          xmin = .data[["left"]],
-          xmax = .data[["right"]],
-          ymax = .data[["top"]],
-          ymin = .data[["bottom"]]
-        ),
-        data = barpos,
-        fill = "gray75",
-        colour = "black",
-        linewidth = 1 / 3
-      )
+    p <- p + range_bars_layer(data)
   }
 
   # Add axis labels
@@ -2061,38 +1941,7 @@ autoplot.seas <- function(object, labels = NULL, range.bars = NULL, ...) {
     range.bars <- object$spc$transform$`function` == "none"
   }
   if (range.bars) {
-    yranges <- vapply(
-      split(data$y, data$parts),
-      \(x) range(x, na.rm = TRUE),
-      numeric(2)
-    )
-    xranges <- range(data$datetime)
-    barmid <- colMeans(yranges)
-    barlength <- min(apply(yranges, 2, diff))
-    barwidth <- (1 / 64) * diff(xranges)
-    barpos <- data.frame(
-      left = xranges[2] + barwidth,
-      right = xranges[2] + barwidth * 2,
-      top = barmid + barlength / 2,
-      bottom = barmid - barlength / 2,
-      parts = factor(colnames(yranges), levels = cn),
-      datetime = xranges[2],
-      y = barmid,
-      check.names = FALSE
-    )
-    p <- p +
-      ggplot2::geom_rect(
-        ggplot2::aes(
-          xmin = .data[["left"]],
-          xmax = .data[["right"]],
-          ymax = .data[["top"]],
-          ymin = .data[["bottom"]]
-        ),
-        data = barpos,
-        fill = "gray75",
-        colour = "black",
-        linewidth = 1 / 3
-      )
+    p <- p + range_bars_layer(data)
   }
 
   # Add axis labels
