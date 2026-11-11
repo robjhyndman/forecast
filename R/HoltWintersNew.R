@@ -502,43 +502,24 @@ holt <- function(
     stop("I need at least two observations to estimate trend.")
   }
   if (initial == "optimal" || damped) {
-    if (exponential) {
-      fcast <- forecast(
-        ets(
-          x,
-          "MMN",
-          alpha = alpha,
-          beta = beta,
-          phi = phi,
-          damped = damped,
-          opt.crit = "mse",
-          lambda = lambda,
-          biasadj = biasadj
-        ),
-        h,
-        level = level,
-        fan = fan,
-        ...
-      )
-    } else {
-      fcast <- forecast(
-        ets(
-          x,
-          "AAN",
-          alpha = alpha,
-          beta = beta,
-          phi = phi,
-          damped = damped,
-          opt.crit = "mse",
-          lambda = lambda,
-          biasadj = biasadj
-        ),
-        h,
-        level = level,
-        fan = fan,
-        ...
-      )
-    }
+    model <- if (exponential) "MMN" else "AAN"
+    fcast <- forecast(
+      ets(
+        x,
+        model,
+        alpha = alpha,
+        beta = beta,
+        phi = phi,
+        damped = damped,
+        opt.crit = "mse",
+        lambda = lambda,
+        biasadj = biasadj
+      ),
+      h,
+      level = level,
+      fan = fan,
+      ...
+    )
   } else {
     fcast <- forecast(
       HoltWintersZZ(
@@ -615,66 +596,34 @@ hw <- function(
     ))
   }
   if (initial == "optimal" || damped) {
-    if (seasonal == "additive" && exponential) {
-      stop("Forbidden model combination")
-    } else if (seasonal == "additive" && !exponential) {
-      fcast <- forecast(
-        ets(
-          x,
-          "AAA",
-          alpha = alpha,
-          beta = beta,
-          gamma = gamma,
-          phi = phi,
-          damped = damped,
-          opt.crit = "mse",
-          lambda = lambda,
-          biasadj = biasadj
-        ),
-        h,
-        level = level,
-        fan = fan,
-        ...
-      )
-    } else if (seasonal != "additive" && exponential) {
-      fcast <- forecast(
-        ets(
-          x,
-          "MMM",
-          alpha = alpha,
-          beta = beta,
-          gamma = gamma,
-          phi = phi,
-          damped = damped,
-          opt.crit = "mse",
-          lambda = lambda,
-          biasadj = biasadj
-        ),
-        h,
-        level = level,
-        fan = fan,
-        ...
-      )
+    if (seasonal == "additive") {
+      if (exponential) {
+        stop("Forbidden model combination")
+      }
+      model <- "AAA"
+    } else if (exponential) {
+      model <- "MMM"
     } else {
-      fcast <- forecast(
-        ets(
-          x,
-          "MAM",
-          alpha = alpha,
-          beta = beta,
-          gamma = gamma,
-          phi = phi,
-          damped = damped,
-          opt.crit = "mse",
-          lambda = lambda,
-          biasadj = biasadj
-        ),
-        h,
-        level = level,
-        fan = fan,
-        ...
-      )
+      model <- "MAM"
     }
+    fcast <- forecast(
+      ets(
+        x,
+        model,
+        alpha = alpha,
+        beta = beta,
+        gamma = gamma,
+        phi = phi,
+        damped = damped,
+        opt.crit = "mse",
+        lambda = lambda,
+        biasadj = biasadj
+      ),
+      h,
+      level = level,
+      fan = fan,
+      ...
+    )
   } else {
     fcast <- forecast(
       HoltWintersZZ(
