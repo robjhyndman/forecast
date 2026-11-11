@@ -70,3 +70,42 @@ test_that("tbats() selects harmonics independently of period order", {
   expect_equal(fits[[1]][fields], fits[[2]][fields])
   expect_equal(fits[[1]]$k.vector, c(1, 1))
 })
+
+test_that("tbats() searches below and above six harmonics for long periods", {
+  fit <- function(y) {
+    tbats(
+      y,
+      use.box.cox = FALSE,
+      use.trend = FALSE,
+      use.arma.errors = FALSE,
+      use.parallel = FALSE
+    )
+  }
+  set.seed(42)
+  idx <- 1:360
+  y <- 100 + 10 * sin(2 * pi * idx / 24) + 4 * cos(2 * pi * 3 * idx / 24)
+  down <- fit(ts(y + rnorm(360, sd = 0.5), frequency = 24))
+  expect_gte(down$k.vector, 3)
+  expect_lt(down$k.vector, 6)
+
+  idx <- 1:260
+  y <- 10 + sin(2 * pi * idx / 52) + 0.5 * sin(2 * pi * 8 * idx / 52)
+  up <- fit(ts(y + rnorm(260, sd = 0.1), frequency = 52))
+  expect_gte(up$k.vector, 8)
+})
+
+test_that("tbats() selects the same model in parallel", {
+  skip_on_cran()
+  skip_on_ci()
+  set.seed(42)
+  idx <- 1:360
+  y <- 100 + 10 * sin(2 * pi * idx / 24) + 4 * cos(2 * pi * 3 * idx / 24)
+  y <- ts(y + rnorm(360), frequency = 24)
+  fields <- c("k.vector", "AIC")
+  expect_equal(
+    tbats(y, use.arma.errors = FALSE, use.parallel = TRUE, num.cores = 2)[
+      fields
+    ],
+    tbats(y, use.arma.errors = FALSE, use.parallel = FALSE)[fields]
+  )
+})

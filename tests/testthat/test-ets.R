@@ -74,6 +74,22 @@ test_that("test ets() for errors", {
   expect_error(ets(taylor, model = "ZZA"))
 })
 
+test_that("ets() fits simple models to very short series", {
+  fit <- ets(ts(c(3, 5, 4, 6, 7)))
+  expect_s3_class(fit, "ets")
+  expect_length(forecast(fit, h = 3)$mean, 3)
+
+  expect_identical(
+    ets(ts(c(3, 5, 4, 6, 7)), model = "AAN")$method,
+    "ETS(A,A,N)"
+  )
+
+  y <- ts(c(10, 12, 9, 14, 11, 13, 10, 15), frequency = 4)
+  expect_identical(ets(y, model = "AAA")$method, "ETS(A,A,A)")
+
+  expect_snapshot(fit <- ets(ts(c(3, 5, 4, 6, 7)), damped = TRUE))
+})
+
 test_that("forecast.ets()", {
   fit <- ets(airmiles, lambda = 0.15, biasadj = TRUE)
   fcast1 <- forecast(fit, PI = FALSE)
