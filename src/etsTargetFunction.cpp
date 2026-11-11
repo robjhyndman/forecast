@@ -65,21 +65,10 @@ void EtsTargetFunction::init(const std::vector<double> &p_y,
 }
 
 void EtsTargetFunction::eval(const double *p_par, int p_par_length) {
-  bool equal = true;
-
   // Check if the parameter configuration has changed, if not, just return.
-  if (p_par_length != this->par.size()) {
-    equal = false;
-  } else {
-    for (int j = 0; j < p_par_length; j++) {
-      if (p_par[j] != this->par[j]) {
-        equal = false;
-        break;
-      }
-    }
+  if (par.size() == static_cast<std::size_t>(p_par_length) && std::equal(par.begin(), par.end(), p_par)) {
+    return;
   }
-
-  if (equal) return;
 
   this->par.assign(p_par, p_par + p_par_length);
 
