@@ -42,6 +42,7 @@
 * `tbats()` no longer errors when `use.damped.trend = TRUE` is set without `use.trend = TRUE`.
 * `tbats()` results no longer depend on the order of `seasonal.periods`, and the harmonic search now retains `k = 1` when it minimizes AIC.
 * `theta_model()` and `thetaf()` gained a `type` argument to select additive or multiplicative seasonal decomposition.
+* `tslm()` and `forecast.lm()` no longer pick up unrelated variables named `dataname` or `oldnewdata` from the global environment.
 
 # forecast 9.0.2
 

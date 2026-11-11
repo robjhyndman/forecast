@@ -104,6 +104,21 @@ test_that("forecast.lm", {
   expect_s3_class(fc, "forecast")
 })
 
+test_that("tslm() and forecast.lm() ignore global dataname and oldnewdata", {
+  assign("dataname", "oops", envir = globalenv())
+  assign("oldnewdata", "oops", envir = globalenv())
+  on.exit(rm("dataname", "oldnewdata", envir = globalenv()), add = TRUE)
+  fit <- tslm(USAccDeaths ~ trend)
+  expect_null(fit$call$data)
+  expect_s3_class(forecast(fit, h = 2)$newdata, "data.frame")
+
+  fit <- tslm(USAccDeaths ~ trend, data = USAccDeaths)
+  expect_identical(fit$call$data, quote(USAccDeaths))
+  newdata <- data.frame(v_x = c(1, 2))
+  fc <- forecast(tslm(v_y ~ v_x), newdata = newdata)
+  expect_identical(fc$newdata, newdata)
+})
+
 test_that("tslm with function terms in formula", {
   expect_silent(tslm(v_y ~ trend + v_x + I(v_x^2) + fourier(v_x, 3)))
 })
