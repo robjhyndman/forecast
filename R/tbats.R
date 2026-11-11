@@ -58,6 +58,14 @@ tbats <- function(
   if (!is.numeric(y) || NCOL(y) > 1) {
     stop("y should be a univariate time series")
   }
+  if (!is.null(model)) {
+    if (!is.bats(model)) {
+      stop("model should be the output of a previous call to tbats() or bats()")
+    }
+    if (is.null(model$parameters)) {
+      stop("model was fitted to a constant series and cannot be refitted")
+    }
+  }
 
   seriesname <- deparse1(substitute(y))
 
@@ -99,13 +107,9 @@ tbats <- function(
   # Refit model if available
   if (!is.null(model)) {
     if (inherits(model, "tbats")) {
-      refitModel <- try(fitPreviousTBATSModel(y, model = model), silent = TRUE)
-    } else if (is.bats(model)) {
-      refitModel <- bats(origy, model = model)
-    } else {
-      stop("model should be the output of a previous call to tbats() or bats()")
+      return(fitPreviousTBATSModel(y, model = model))
     }
-    return(refitModel)
+    return(bats(origy, model = model))
   }
 
   # Return constant model if required

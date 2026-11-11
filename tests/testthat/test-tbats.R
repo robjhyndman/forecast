@@ -77,6 +77,13 @@ test_that("tbats() errors when model is not a tbats or bats object", {
   })
 })
 
+test_that("tbats() errors when refitting a model without parameters", {
+  expect_snapshot(error = TRUE, {
+    tbats(USAccDeaths, model = tbats(ts(rep(5, 30))))
+    tbats(USAccDeaths, model = structure(list(), class = c("tbats", "bats")))
+  })
+})
+
 test_that("tbats() works when only use.damped.trend is set", {
   fit <- tbats(UKgas, use.damped.trend = TRUE, use.parallel = FALSE)
   expect_s3_class(fit, "tbats")
