@@ -57,8 +57,7 @@ testaccuracy <- function(f, x, test, d, D) {
   mae <- mean(abs(error), na.rm = TRUE)
   mape <- mean(abs(pe), na.rm = TRUE)
   mpe <- mean(pe, na.rm = TRUE)
-  out <- c(me, sqrt(mse), mae, mpe, mape)
-  names(out) <- c("ME", "RMSE", "MAE", "MPE", "MAPE")
+  out <- c(ME = me, RMSE = sqrt(mse), MAE = mae, MPE = mpe, MAPE = mape)
 
   # Compute MASE if historical data available
   if (!is.null(dx)) {
@@ -82,8 +81,7 @@ testaccuracy <- function(f, x, test, d, D) {
       scale <- mean(abs(dx - mean(dx, na.rm = TRUE)), na.rm = TRUE)
     }
     mase <- mean(abs(error / scale), na.rm = TRUE)
-    out <- c(out, mase)
-    names(out)[length(out)] <- "MASE"
+    out <- c(out, MASE = mase)
   }
 
   # Additional time series measures
@@ -100,9 +98,7 @@ testaccuracy <- function(f, x, test, d, D) {
     } else {
       r1 <- NA
     }
-    nj <- length(out)
-    out <- c(out, r1, theil)
-    names(out)[nj + (1:2)] <- c("ACF1", "Theil's U")
+    out <- c(out, ACF1 = r1, "Theil's U" = theil)
   }
 
   out
@@ -138,8 +134,7 @@ trainingaccuracy <- function(f, test, d, D) {
   mae <- mean(abs(res), na.rm = TRUE)
   mape <- mean(abs(pe), na.rm = TRUE)
   mpe <- mean(pe, na.rm = TRUE)
-  out <- c(me, sqrt(mse), mae, mpe, mape)
-  names(out) <- c("ME", "RMSE", "MAE", "MPE", "MAPE")
+  out <- c(ME = me, RMSE = sqrt(mse), MAE = mae, MPE = mpe, MAPE = mape)
 
   # Compute MASE if historical data available
   if (!is.null(dx)) {
@@ -162,8 +157,7 @@ trainingaccuracy <- function(f, test, d, D) {
       scale <- mean(abs(dx - mean(dx, na.rm = TRUE)), na.rm = TRUE)
     }
     mase <- mean(abs(res / scale), na.rm = TRUE)
-    out <- c(out, mase)
-    names(out)[length(out)] <- "MASE"
+    out <- c(out, MASE = mase)
   }
 
   # Additional time series measures
@@ -177,9 +171,7 @@ trainingaccuracy <- function(f, test, d, D) {
     } else {
       r1 <- NA
     }
-    nj <- length(out)
-    out <- c(out, r1)
-    names(out)[nj + 1] <- "ACF1"
+    out <- c(out, ACF1 = r1)
   }
 
   out
@@ -278,19 +270,9 @@ accuracy.forecast <- function(object, x, test = NULL, d = NULL, D = NULL, ...) {
     }
   }
 
-  if (trainset) {
-    trainout <- trainingaccuracy(object, test, d, D)
-    trainnames <- names(trainout)
-  } else {
-    trainnames <- NULL
-  }
-  if (testset) {
-    testout <- testaccuracy(object, x, test, d, D)
-    testnames <- names(testout)
-  } else {
-    testnames <- NULL
-  }
-  outnames <- unique(c(trainnames, testnames))
+  trainout <- if (trainset) trainingaccuracy(object, test, d, D)
+  testout <- if (testset) testaccuracy(object, x, test, d, D)
+  outnames <- unique(c(names(trainout), names(testout)))
 
   out <- matrix(NA_real_, nrow = 2, ncol = length(outnames))
   colnames(out) <- outnames
