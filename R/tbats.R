@@ -102,6 +102,8 @@ tbats <- function(
       refitModel <- try(fitPreviousTBATSModel(y, model = model), silent = TRUE)
     } else if (is.bats(model)) {
       refitModel <- bats(origy, model = model)
+    } else {
+      stop("model should be the output of a previous call to tbats() or bats()")
     }
     return(refitModel)
   }
