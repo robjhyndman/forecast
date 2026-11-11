@@ -190,24 +190,30 @@ tbats <- function(
     on.exit(stopCluster(clus), add = TRUE)
   }
 
-  best.model <- try(
-    fitSpecificTBATS(
-      y = y,
-      use.box.cox = model.params[1],
-      use.beta = model.params[2],
-      use.damping = model.params[3],
-      seasonal.periods = seasonal.periods,
-      k.vector = k.vector,
-      init.box.cox = init.box.cox,
-      bc.lower = bc.lower,
-      bc.upper = bc.upper,
-      biasadj = biasadj
-    ),
-    silent = TRUE
-  )
-  if (inherits(best.model, "try-error")) {
-    best.model <- list(AIC = Inf)
+  # Fit a model for a given k.vector, with AIC = Inf if the fit fails
+  fit_k <- function(k.vector) {
+    model <- try(
+      fitSpecificTBATS(
+        y = y,
+        use.box.cox = model.params[1],
+        use.beta = model.params[2],
+        use.damping = model.params[3],
+        seasonal.periods = seasonal.periods,
+        k.vector = k.vector,
+        init.box.cox = init.box.cox,
+        bc.lower = bc.lower,
+        bc.upper = bc.upper,
+        biasadj = biasadj
+      ),
+      silent = TRUE
+    )
+    if (inherits(model, "try-error")) {
+      model <- list(AIC = Inf)
+    }
+    model
   }
+
+  best.model <- fit_k(k.vector)
 
   for (i in seq_along(seasonal.periods)) {
     if (seasonal.periods[i] == 2) {
@@ -239,24 +245,7 @@ tbats <- function(
       k.vector[i] <- max.k
       best.model$AIC <- Inf
       repeat {
-        new.model <- try(
-          fitSpecificTBATS(
-            y = y,
-            use.box.cox = model.params[1],
-            use.beta = model.params[2],
-            use.damping = model.params[3],
-            seasonal.periods = seasonal.periods,
-            k.vector = k.vector,
-            init.box.cox = init.box.cox,
-            bc.lower = bc.lower,
-            bc.upper = bc.upper,
-            biasadj = biasadj
-          ),
-          silent = TRUE
-        )
-        if (inherits(new.model, "try-error")) {
-          new.model <- list(AIC = Inf)
-        }
+        new.model <- fit_k(k.vector)
 
         if (new.model$AIC > best.model$AIC) {
           k.vector[i] <- k.vector[i] + 1
@@ -301,60 +290,9 @@ tbats <- function(
         level.model <- models.list[[3]]
         down.model <- models.list[[2]]
       } else {
-        up.model <- try(
-          fitSpecificTBATS(
-            y = y,
-            use.box.cox = model.params[1],
-            use.beta = model.params[2],
-            use.damping = model.params[3],
-            seasonal.periods = seasonal.periods,
-            k.vector = step.up.k,
-            init.box.cox = init.box.cox,
-            bc.lower = bc.lower,
-            bc.upper = bc.upper,
-            biasadj = biasadj
-          ),
-          silent = TRUE
-        )
-        if (inherits(up.model, "try-error")) {
-          up.model <- list(AIC = Inf)
-        }
-        level.model <- try(
-          fitSpecificTBATS(
-            y = y,
-            use.box.cox = model.params[1],
-            use.beta = model.params[2],
-            use.damping = model.params[3],
-            seasonal.periods = seasonal.periods,
-            k.vector = k.vector,
-            init.box.cox = init.box.cox,
-            bc.lower = bc.lower,
-            bc.upper = bc.upper,
-            biasadj = biasadj
-          ),
-          silent = TRUE
-        )
-        if (inherits(level.model, "try-error")) {
-          level.model <- list(AIC = Inf)
-        }
-        down.model <- try(
-          fitSpecificTBATS(
-            y = y,
-            use.box.cox = model.params[1],
-            use.beta = model.params[2],
-            use.damping = model.params[3],
-            seasonal.periods = seasonal.periods,
-            k.vector = step.down.k,
-            init.box.cox = init.box.cox,
-            bc.lower = bc.lower,
-            bc.upper = bc.upper,
-            biasadj = biasadj
-          ),
-          silent = TRUE
-        )
-        if (inherits(down.model, "try-error")) {
-          down.model <- list(AIC = Inf)
-        }
+        up.model <- fit_k(step.up.k)
+        level.model <- fit_k(k.vector)
+        down.model <- fit_k(step.down.k)
       }
       # Decide the best model of the three and then follow that direction to find the optimal k
       aic.vector <- c(up.model$AIC, level.model$AIC, down.model$AIC)
@@ -364,24 +302,7 @@ tbats <- function(
         k.vector[i] <- 5
         repeat {
           k.vector[i] <- k.vector[i] - 1
-          down.model <- try(
-            fitSpecificTBATS(
-              y = y,
-              use.box.cox = model.params[1],
-              use.beta = model.params[2],
-              use.damping = model.params[3],
-              seasonal.periods = seasonal.periods,
-              k.vector = k.vector,
-              init.box.cox = init.box.cox,
-              bc.lower = bc.lower,
-              bc.upper = bc.upper,
-              biasadj = biasadj
-            ),
-            silent = TRUE
-          )
-          if (inherits(down.model, "try-error")) {
-            down.model <- list(AIC = Inf)
-          }
+          down.model <- fit_k(k.vector)
           if (down.model$AIC > best.model$AIC) {
             k.vector[i] <- k.vector[i] + 1
             break
@@ -403,24 +324,7 @@ tbats <- function(
         k.vector[i] <- 7
         repeat {
           k.vector[i] <- k.vector[i] + 1
-          up.model <- try(
-            fitSpecificTBATS(
-              y = y,
-              use.box.cox = model.params[1],
-              use.beta = model.params[2],
-              use.damping = model.params[3],
-              seasonal.periods = seasonal.periods,
-              k.vector = k.vector,
-              init.box.cox = init.box.cox,
-              bc.lower = bc.lower,
-              bc.upper = bc.upper,
-              biasadj = biasadj
-            ),
-            silent = TRUE
-          )
-          if (inherits(up.model, "try-error")) {
-            up.model <- list(AIC = Inf)
-          }
+          up.model <- fit_k(k.vector)
           if (up.model$AIC > best.model$AIC) {
             k.vector[i] <- k.vector[i] - 1
             break
