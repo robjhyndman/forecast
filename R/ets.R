@@ -171,11 +171,7 @@ ets <- function(
     if (is.na(phi)) {
       phi <- NULL
     }
-    modelcomponents <- paste0(
-      model$components[1],
-      model$components[2],
-      model$components[3]
-    )
+    modelcomponents <- paste(model$components[1:3], collapse = "")
     damped <- (model$components[4] == "TRUE")
     if (use.initial.values) {
       errortype <- substr(modelcomponents, 1, 1)
