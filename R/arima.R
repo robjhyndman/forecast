@@ -735,7 +735,6 @@ Arima <- function(
     tmp <- arima2(x, model, xreg = xreg, method = method)
     xreg <- tmp$xreg
     tmp$fitted <- NULL
-    tmp$lambda <- model$lambda
   } else {
     if (include.drift) {
       xreg <- `colnames<-`(
@@ -750,30 +749,17 @@ Arima <- function(
         ))
       )
     }
-    if (is.null(xreg)) {
-      suppressWarnings(
-        tmp <- stats::arima(
-          x = x,
-          order = order,
-          seasonal = seasonal,
-          include.mean = include.mean,
-          method = method,
-          ...
-        )
+    suppressWarnings(
+      tmp <- stats::arima(
+        x = x,
+        order = order,
+        seasonal = seasonal,
+        xreg = xreg,
+        include.mean = include.mean,
+        method = method,
+        ...
       )
-    } else {
-      suppressWarnings(
-        tmp <- stats::arima(
-          x = x,
-          order = order,
-          seasonal = seasonal,
-          xreg = xreg,
-          include.mean = include.mean,
-          method = method,
-          ...
-        )
-      )
-    }
+    )
   }
 
   # Calculate aicc & bic based on tmp$aic
@@ -800,7 +786,6 @@ Arima <- function(
     class = c("fc_model", "forecast_ARIMA", "ARIMA", "Arima")
   )
   out$fitted <- fitted.Arima(out)
-  out$series <- series
   out
 }
 
@@ -835,46 +820,25 @@ arima2 <- function(x, model, xreg, method) {
 
   if (model$arma[5] > 1 && sum(abs(model$arma[c(3, 4, 7)])) > 0) {
     # Seasonal model
-    if (use.xreg) {
-      refit <- Arima(
-        x,
-        order = model$arma[c(1, 6, 2)],
-        seasonal = list(order = model$arma[c(3, 7, 4)], period = model$arma[5]),
-        include.mean = use.intercept,
-        xreg = xreg,
-        method = method,
-        fixed = model$coef
-      )
-    } else {
-      refit <- Arima(
-        x,
-        order = model$arma[c(1, 6, 2)],
-        seasonal = list(order = model$arma[c(3, 7, 4)], period = model$arma[5]),
-        include.mean = use.intercept,
-        method = method,
-        fixed = model$coef
-      )
-    }
+    refit <- Arima(
+      x,
+      order = model$arma[c(1, 6, 2)],
+      seasonal = list(order = model$arma[c(3, 7, 4)], period = model$arma[5]),
+      include.mean = use.intercept,
+      xreg = if (use.xreg) xreg,
+      method = method,
+      fixed = model$coef
+    )
   } else if (length(model$coef) > 0) {
     # Nonseasonal model with some parameters
-    if (use.xreg) {
-      refit <- Arima(
-        x,
-        order = model$arma[c(1, 6, 2)],
-        xreg = xreg,
-        include.mean = use.intercept,
-        method = method,
-        fixed = model$coef
-      )
-    } else {
-      refit <- Arima(
-        x,
-        order = model$arma[c(1, 6, 2)],
-        include.mean = use.intercept,
-        method = method,
-        fixed = model$coef
-      )
-    }
+    refit <- Arima(
+      x,
+      order = model$arma[c(1, 6, 2)],
+      xreg = if (use.xreg) xreg,
+      include.mean = use.intercept,
+      method = method,
+      fixed = model$coef
+    )
   } else {
     # No parameters
     refit <- Arima(
