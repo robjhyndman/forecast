@@ -7,12 +7,11 @@ search.arima <- function(
   max.P = 2,
   max.Q = 2,
   max.order = 5,
-  stationary = FALSE,
   ic = c("aic", "aicc", "bic"),
   trace = FALSE,
   approximation = FALSE,
   xreg = NULL,
-  offset = offset,
+  offset = 0,
   allowdrift = TRUE,
   allowmean = TRUE,
   parallel = FALSE,
@@ -149,7 +148,6 @@ search.arima <- function(
           max.P = max.P,
           max.Q = max.Q,
           max.order = max.order,
-          stationary = stationary,
           ic = ic,
           trace = trace,
           approximation = FALSE,
@@ -160,12 +158,6 @@ search.arima <- function(
           parallel = parallel,
           num.cores = num.cores,
           ...
-        )
-        bestfit$ic <- switch(
-          ic,
-          bic = bestfit$bic,
-          aic = bestfit$aic,
-          aicc = bestfit$aicc
         )
       } else {
         bestfit <- newbestfit
