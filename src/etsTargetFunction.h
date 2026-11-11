@@ -22,7 +22,7 @@ public:
 			const std::vector<double> &p_lower, const std::vector<double> &p_upper,
 			const std::string &p_opt_crit, int p_nmse, const std::string &p_bounds, int p_m,
 			bool p_optAlpha, bool p_optBeta, bool p_optGamma, bool p_optPhi,
-			bool p_givenAlpha, bool p_givenBeta, bool p_givenGamma, bool p_givenPhi,
+			bool p_givenBeta, bool p_givenGamma,
 			double alpha, double beta, double gamma, double phi);
 
 	double getObjVal() const { return objval; }
@@ -56,6 +56,6 @@ private:
 
 	double lik, objval;
 
-	bool optAlpha, optBeta, optGamma, optPhi, givenAlpha, givenBeta, givenGamma, givenPhi;
+	bool optAlpha, optBeta, optGamma, optPhi, givenBeta, givenGamma;
 
 };

@@ -74,8 +74,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // etsTargetFunctionInit
-Rcpp::Environment etsTargetFunctionInit(const Rcpp::NumericVector& y, int nstate, int errortype, int trendtype, int seasontype, const Rcpp::NumericVector& lower, const Rcpp::NumericVector& upper, const std::string& opt_crit, int nmse, const std::string& bounds, int m, bool optAlpha, bool optBeta, bool optGamma, bool optPhi, bool givenAlpha, bool givenBeta, bool givenGamma, bool givenPhi, double alpha, double beta, double gamma, double phi, Rcpp::Environment& rho);
-RcppExport SEXP _forecast_etsTargetFunctionInit(SEXP ySEXP, SEXP nstateSEXP, SEXP errortypeSEXP, SEXP trendtypeSEXP, SEXP seasontypeSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP opt_critSEXP, SEXP nmseSEXP, SEXP boundsSEXP, SEXP mSEXP, SEXP optAlphaSEXP, SEXP optBetaSEXP, SEXP optGammaSEXP, SEXP optPhiSEXP, SEXP givenAlphaSEXP, SEXP givenBetaSEXP, SEXP givenGammaSEXP, SEXP givenPhiSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP gammaSEXP, SEXP phiSEXP, SEXP rhoSEXP) {
+Rcpp::Environment etsTargetFunctionInit(const Rcpp::NumericVector& y, int nstate, int errortype, int trendtype, int seasontype, const Rcpp::NumericVector& lower, const Rcpp::NumericVector& upper, const std::string& opt_crit, int nmse, const std::string& bounds, int m, bool optAlpha, bool optBeta, bool optGamma, bool optPhi, bool givenBeta, bool givenGamma, double alpha, double beta, double gamma, double phi, Rcpp::Environment& rho);
+RcppExport SEXP _forecast_etsTargetFunctionInit(SEXP ySEXP, SEXP nstateSEXP, SEXP errortypeSEXP, SEXP trendtypeSEXP, SEXP seasontypeSEXP, SEXP lowerSEXP, SEXP upperSEXP, SEXP opt_critSEXP, SEXP nmseSEXP, SEXP boundsSEXP, SEXP mSEXP, SEXP optAlphaSEXP, SEXP optBetaSEXP, SEXP optGammaSEXP, SEXP optPhiSEXP, SEXP givenBetaSEXP, SEXP givenGammaSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP gammaSEXP, SEXP phiSEXP, SEXP rhoSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type y(ySEXP);
@@ -93,16 +93,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< bool >::type optBeta(optBetaSEXP);
     Rcpp::traits::input_parameter< bool >::type optGamma(optGammaSEXP);
     Rcpp::traits::input_parameter< bool >::type optPhi(optPhiSEXP);
-    Rcpp::traits::input_parameter< bool >::type givenAlpha(givenAlphaSEXP);
     Rcpp::traits::input_parameter< bool >::type givenBeta(givenBetaSEXP);
     Rcpp::traits::input_parameter< bool >::type givenGamma(givenGammaSEXP);
-    Rcpp::traits::input_parameter< bool >::type givenPhi(givenPhiSEXP);
     Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
     Rcpp::traits::input_parameter< double >::type beta(betaSEXP);
     Rcpp::traits::input_parameter< double >::type gamma(gammaSEXP);
     Rcpp::traits::input_parameter< double >::type phi(phiSEXP);
     Rcpp::traits::input_parameter< Rcpp::Environment& >::type rho(rhoSEXP);
-    rcpp_result_gen = Rcpp::wrap(etsTargetFunctionInit(y, nstate, errortype, trendtype, seasontype, lower, upper, opt_crit, nmse, bounds, m, optAlpha, optBeta, optGamma, optPhi, givenAlpha, givenBeta, givenGamma, givenPhi, alpha, beta, gamma, phi, rho));
+    rcpp_result_gen = Rcpp::wrap(etsTargetFunctionInit(y, nstate, errortype, trendtype, seasontype, lower, upper, opt_crit, nmse, bounds, m, optAlpha, optBeta, optGamma, optPhi, givenBeta, givenGamma, alpha, beta, gamma, phi, rho));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -279,7 +277,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_forecast_calcBATSFaster", (DL_FUNC) &_forecast_calcBATSFaster, 13},
     {"_forecast_calcWTilda", (DL_FUNC) &_forecast_calcWTilda, 2},
     {"_forecast_calcTBATSFaster", (DL_FUNC) &_forecast_calcTBATSFaster, 8},
-    {"_forecast_etsTargetFunctionInit", (DL_FUNC) &_forecast_etsTargetFunctionInit, 24},
+    {"_forecast_etsTargetFunctionInit", (DL_FUNC) &_forecast_etsTargetFunctionInit, 22},
     {"_forecast_etsNelderMead", (DL_FUNC) &_forecast_etsNelderMead, 9},
     {"_forecast_makeBATSWMatrix", (DL_FUNC) &_forecast_makeBATSWMatrix, 4},
     {"_forecast_makeBATSGMatrix", (DL_FUNC) &_forecast_makeBATSGMatrix, 6},
