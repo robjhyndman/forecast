@@ -29,3 +29,19 @@ test_that("tests plot.forecast()", {
   expect_no_error(plot(etsfc, shaded = FALSE))
   expect_no_error(plot(tslmfc, PI = FALSE))
 })
+
+test_that("as.data.frame() stacks the series of an mforecast object", {
+  set.seed(2)
+  y <- ts(cbind(a = rnorm(60) + 1:60, b = rnorm(60) - 1:60), frequency = 12)
+  fc <- forecast(tslm(y ~ trend), h = 3)
+
+  df <- as.data.frame(fc)
+  expect_identical(dim(df), c(6L, 7L))
+  expect_identical(df$Time, rep(c("Jan 6", "Feb 6", "Mar 6"), 2))
+  expect_identical(df$Series, rep(c("a", "b"), each = 3))
+  expect_equal(
+    df[["Point Forecast"]],
+    c(fc$forecast$a$mean, fc$forecast$b$mean),
+    ignore_attr = TRUE
+  )
+})

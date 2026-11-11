@@ -1317,20 +1317,9 @@ myarima <- function(
     }
 
     if (trace) {
-      cat("\n ARIMA(", order[1], ",", order[2], ",", order[3], ")", sep = "")
+      cat("\n ARIMA(", paste(order, collapse = ","), ")", sep = "")
       if (use.season) {
-        cat(
-          "(",
-          seasonal[1],
-          ",",
-          seasonal[2],
-          ",",
-          seasonal[3],
-          ")[",
-          m,
-          "]",
-          sep = ""
-        )
+        cat("(", paste(seasonal, collapse = ","), ")[", m, "]", sep = "")
       }
       if (constant && (order[2] + seasonal[2] == 0)) {
         cat(" with non-zero mean")
@@ -1362,20 +1351,10 @@ newmodel <- function(p, d, q, P, D, Q, constant, results) {
 arima.string <- function(object, padding = FALSE) {
   order <- object$arma[c(1, 6, 2, 3, 7, 4, 5)]
   m <- order[7]
-  result <- paste0("ARIMA(", order[1], ",", order[2], ",", order[3], ")")
+  result <- sprintf("ARIMA(%s)", paste(order[1:3], collapse = ","))
   if (m > 1 && sum(order[4:6]) > 0) {
-    result <- paste0(
-      result,
-      "(",
-      order[4],
-      ",",
-      order[5],
-      ",",
-      order[6],
-      ")[",
-      m,
-      "]"
-    )
+    seasonal <- paste(order[4:6], collapse = ",")
+    result <- sprintf("%s(%s)[%s]", result, seasonal, m)
   }
   if (padding && m > 1 && sum(order[4:6]) == 0) {
     result <- paste0(result, "         ")

@@ -88,6 +88,12 @@ test_that("tests for autoplot/gg functions", {
   gghistogram(USAccDeaths, add.kde = TRUE)
 })
 
+test_that("ggtaperedacf() and ggtaperedpacf() work", {
+  set.seed(1)
+  expect_s3_class(ggtaperedacf(wineind, lag.max = 10, nsim = 10), "ggplot")
+  expect_s3_class(ggtaperedpacf(wineind, lag.max = 10, nsim = 10), "ggplot")
+})
+
 test_that("autoplot.seas() works", {
   skip_if_not_installed("seasonal")
   expect_s3_class(autoplot(seasonal::seas(USAccDeaths)), "ggplot")

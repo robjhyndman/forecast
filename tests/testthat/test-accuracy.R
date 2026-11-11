@@ -96,3 +96,26 @@ test_that("accuracy fc_model", {
     )
   }
 })
+
+test_that("accuracy() works for mforecast objects", {
+  set.seed(2)
+  y <- ts(cbind(a = rnorm(60) + 1:60, b = rnorm(60) - 1:60), frequency = 12)
+  train <- window(y, end = c(5, 9))
+  test <- window(y, start = c(5, 10))
+  fc <- forecast(tslm(train ~ trend), h = 3)
+
+  acc <- accuracy(fc)
+  expect_identical(rownames(acc), c("a Training set", "b Training set"))
+  expect_equal(acc[1, ], accuracy(fc$forecast$a)[1, ])
+
+  acc <- accuracy(fc, test)
+  expect_identical(
+    rownames(acc),
+    c("a Training set", "a Test set", "b Training set", "b Test set")
+  )
+  expect_equal(acc[4, ], accuracy(fc$forecast$b, test[, "b"])[2, ])
+  expect_equal(
+    acc["a Test set", "ME"],
+    mean(test[, "a"] - fc$forecast$a$mean)
+  )
+})

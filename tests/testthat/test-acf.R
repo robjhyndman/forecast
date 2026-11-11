@@ -18,3 +18,26 @@ test_that("acf works with msts objects", {
   out <- Acf(x, plot = FALSE)
   expect_s3_class(out, "acf")
 })
+
+test_that("taperedacf() and taperedpacf() return tapered estimates", {
+  out <- taperedacf(wineind, lag.max = 10, plot = FALSE, calc.ci = FALSE)
+  expect_s3_class(out, "mpacf")
+  expect_length(out$z, 10)
+  expect_null(out$upper)
+
+  expect_identical(
+    taperedpacf(wineind, lag.max = 10, plot = FALSE, calc.ci = FALSE)$z,
+    taperedacf(
+      wineind,
+      lag.max = 10,
+      type = "partial",
+      plot = FALSE,
+      calc.ci = FALSE
+    )$z
+  )
+
+  set.seed(1)
+  out <- taperedacf(wineind, lag.max = 10, plot = FALSE, nsim = 20)
+  expect_length(out$upper, 10)
+  expect_all_true(out$lower <= out$upper)
+})
