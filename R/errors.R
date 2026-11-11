@@ -41,16 +41,13 @@ testaccuracy <- function(f, x, test, d, D) {
     test <- test[test >= 1 & test <= n]
   }
 
-  ff <- f
-  xx <- x
-
   # Check length of f
   if (length(f) < n) {
     stop("Not enough forecasts. Check that forecasts and test data match.")
   }
 
-  error <- (xx - ff[1:n])[test]
-  pe <- error / xx[test] * 100
+  error <- (x - f[1:n])[test]
+  pe <- error / x[test] * 100
 
   me <- mean(error, na.rm = TRUE)
   mse <- mean(error^2, na.rm = TRUE)
@@ -88,8 +85,8 @@ testaccuracy <- function(f, x, test, d, D) {
 
   # Additional time series measures
   if (!is.null(tsp(x)) && n > 1) {
-    fpe <- (c(ff[2:n]) / c(xx[1:(n - 1)]) - 1)[test - 1]
-    ape <- (c(xx[2:n]) / c(xx[1:(n - 1)]) - 1)[test - 1]
+    fpe <- (c(f[2:n]) / c(x[1:(n - 1)]) - 1)[test - 1]
+    ape <- (c(x[2:n]) / c(x[1:(n - 1)]) - 1)[test - 1]
     theil <- sqrt(sum((fpe - ape)^2, na.rm = TRUE) / sum(ape^2, na.rm = TRUE))
     if (length(error) > 1) {
       r1 <- acf(error, plot = FALSE, lag.max = 2, na.action = na.pass)$acf[
