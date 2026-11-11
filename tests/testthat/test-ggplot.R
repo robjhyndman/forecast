@@ -88,6 +88,11 @@ test_that("tests for autoplot/gg functions", {
   gghistogram(USAccDeaths, add.kde = TRUE)
 })
 
+test_that("gglagchull() labels an unnamed series with the object name", {
+  p <- gglagchull(woolyrnq, lags = 2)
+  expect_identical(unique(p$data$series), "woolyrnq")
+})
+
 test_that("ggtaperedacf() and ggtaperedpacf() work", {
   set.seed(1)
   expect_s3_class(ggtaperedacf(wineind, lag.max = 10, nsim = 10), "ggplot")
