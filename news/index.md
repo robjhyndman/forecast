@@ -99,6 +99,9 @@
   between 0 and 1.
 - [`geom_forecast()`](https://pkg.robjhyndman.com/forecast/reference/geom_forecast.md)
   no longer errors for forecast objects when forecast is not attached.
+- [`gglagchull()`](https://pkg.robjhyndman.com/forecast/reference/gglagplot.md)
+  now labels an unnamed series with the name of the object instead of
+  its deparsed values.
 - [`ggtaperedacf()`](https://pkg.robjhyndman.com/forecast/reference/autoplot.acf.md)
   no longer errors when forecast is not attached.
 - [`ggtsdisplay()`](https://pkg.robjhyndman.com/forecast/reference/tsdisplay.md)
@@ -132,6 +135,9 @@
   now return the series name instead of “x”.
 - [`subset()`](https://rdrr.io/r/base/subset.html) no longer ignores the
   `subset` argument for `msts` objects.
+- [`tbats()`](https://pkg.robjhyndman.com/forecast/reference/tbats.md)
+  now gives an informative error when `model` is not a `tbats` or `bats`
+  object.
 - [`tbats()`](https://pkg.robjhyndman.com/forecast/reference/tbats.md)
   no longer errors when `use.damped.trend = TRUE` is set without
   `use.trend = TRUE`.

@@ -110,6 +110,8 @@
 <li>
 <code><a href="../reference/geom_forecast.html">geom_forecast()</a></code> no longer errors for forecast objects when forecast is not attached.</li>
 <li>
+<code><a href="../reference/gglagplot.html">gglagchull()</a></code> now labels an unnamed series with the name of the object instead of its deparsed values.</li>
+<li>
 <code><a href="../reference/autoplot.acf.html">ggtaperedacf()</a></code> no longer errors when forecast is not attached.</li>
 <li>
 <code><a href="../reference/tsdisplay.html">ggtsdisplay()</a></code> shows the series name as the default title again.</li>
@@ -131,6 +133,8 @@
 <code><a href="../reference/forecast.spline_model.html">splinef()</a></code> and <code><a href="../reference/forecast.theta_model.html">thetaf()</a></code> now return the series name instead of “x”.</li>
 <li>
 <code><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset()</a></code> no longer ignores the <code>subset</code> argument for <code>msts</code> objects.</li>
+<li>
+<code><a href="../reference/tbats.html">tbats()</a></code> now gives an informative error when <code>model</code> is not a <code>tbats</code> or <code>bats</code> object.</li>
 <li>
 <code><a href="../reference/tbats.html">tbats()</a></code> no longer errors when <code>use.damped.trend = TRUE</code> is set without <code>use.trend = TRUE</code>.</li>
 <li>
