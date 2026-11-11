@@ -23,7 +23,6 @@ Imports:
   withr,
   zoo
 Suggests:
-  forecTheta,
   knitr,
   methods,
   rmarkdown,

@@ -283,8 +283,7 @@ import(parallel)
 importFrom(colorspace,sequential_hcl)
 importFrom(fracdiff,
   diffseries,
-  fracdiff,
-  fracdiff.sim
+  fracdiff
 )
 importFrom(generics,
   accuracy,
@@ -344,7 +343,6 @@ importFrom(stats,
   hatvalues,
   is.mts,
   is.ts,
-  ksmooth,
   lm,
   loess,
   logLik,
@@ -359,7 +357,6 @@ importFrom(stats,
   nobs,
   optim,
   optimize,
-  pf,
   plot.ts,
   poly,
   predict,
@@ -382,7 +379,6 @@ importFrom(stats,
   time,
   toeplitz,
   ts,
-  tsdiag,
   tsp,
   var,
   window
@@ -406,7 +402,6 @@ importFrom(utils,
 )
 importFrom(zoo,
   as.Date,
-  as.yearqtr,
-  rollmean
+  as.yearqtr
 )
 useDynLib(forecast, .registration = TRUE)
