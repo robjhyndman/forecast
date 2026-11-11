@@ -1323,17 +1323,15 @@ gglagchull <- function(
 ) {
   # Make sure lags is evaluated
   force(lags)
+  xname <- deparse1(substitute(x))
   x <- as.matrix(x)
 
   # Prepare data for plotting
   n <- NROW(x)
   data <- data.frame()
   for (i in seq_len(NCOL(x))) {
+    sname <- colnames(x)[i] %||% xname
     for (lag in set.lags) {
-      sname <- colnames(x)[i]
-      if (is.null(sname)) {
-        sname <- deparse1(substitute(x))
-      }
       data <- rbind(
         data,
         data.frame(
