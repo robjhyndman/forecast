@@ -77,7 +77,6 @@ tslm <- function(formula, data, subset, lambda = NULL, biasadj = FALSE, ...) {
   if (!missing(data)) {
     # Check for any missing variables in data
     vars <- vars[c(TRUE, !as.character(vars[-1]) %in% colnames(data))]
-    dataname <- substitute(data)
   }
   if (!missing(data)) {
     data <- datamat(
@@ -172,9 +171,6 @@ tslm <- function(formula, data, subset, lambda = NULL, biasadj = FALSE, ...) {
   ]) <- tspx
   fit$call <- cl
   fit$method <- "Linear regression model"
-  if (exists("dataname")) {
-    fit$call$data <- dataname
-  }
   if (!is.null(lambda)) {
     fit$lambda <- lambda
     fit$fitted.values <- InvBoxCox(
@@ -289,6 +285,7 @@ forecast.lm <- function(
   # Add trend and seasonal to data frame
   oldterms <- terms(object)
   # Adjust terms for function variables and rename datamat colnames to match.
+  oldnewdata <- NULL
   if (!missing(newdata)) {
     reqvars <- as.character(attr(object$terms, "variables")[-1])[
       -attr(object$terms, "response")
@@ -414,7 +411,7 @@ forecast.lm <- function(
     newdata <- cbind(newdata, season)
   }
   newdata <- as.data.frame(newdata)
-  if (!exists("oldnewdata")) {
+  if (is.null(oldnewdata)) {
     oldnewdata <- newdata
   }
   # If only one column, assume its name.
