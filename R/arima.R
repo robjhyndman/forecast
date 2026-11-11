@@ -469,7 +469,7 @@ forecast.ar <- function(
       lower = future_msts(x, lower),
       upper = future_msts(x, upper),
       x = x,
-      series = deparse(object$call$x),
+      series = deparse1(object$call$x),
       fitted = copy_msts(x, fits),
       residuals = copy_msts(x, res)
     ),

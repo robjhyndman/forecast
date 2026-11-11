@@ -301,7 +301,7 @@ forecast.stl <- function(
     xdata <- ts(rowSums(object$time.series))
     tsp(xdata) <- tsp(object$time.series)
     allseas <- seasonal(object)
-    series <- deparse(object$call$x)
+    series <- deparse1(object$call$x)
   } else {
     stop("Unknown object class")
   }
