@@ -157,43 +157,20 @@ forecast.bats <- function(
 
 #' @export
 as.character.bats <- function(x, ...) {
-  name <- "BATS("
-  if (!is.null(x$lambda)) {
-    name <- paste0(name, round(x$lambda, digits = 3))
-  } else {
-    name <- paste0(name, "1")
-  }
-  name <- paste0(name, ", {")
-  if (!is.null(x$ar.coefficients)) {
-    name <- paste0(name, length(x$ar.coefficients))
-  } else {
-    name <- paste0(name, "0")
-  }
-  name <- paste0(name, ",")
-  if (!is.null(x$ma.coefficients)) {
-    name <- paste0(name, length(x$ma.coefficients))
-  } else {
-    name <- paste0(name, "0")
-  }
-  name <- paste0(name, "}, ")
-  if (!is.null(x$damping.parameter)) {
-    name <- paste0(name, round(x$damping.parameter, digits = 3))
-  } else {
-    name <- paste0(name, "-")
-  }
-  name <- paste0(name, ", ")
-  if (!is.null(x$seasonal.periods)) {
-    name <- paste0(name, "{")
-    for (i in x$seasonal.periods) {
-      name <- paste0(name, i)
-      if (i != x$seasonal.periods[length(x$seasonal.periods)]) {
-        name <- paste0(name, ",")
-      } else {
-        name <- paste0(name, "})")
-      }
+  sprintf(
+    "BATS(%s, {%d,%d}, %s, %s)",
+    round(x$lambda %||% 1, digits = 3),
+    length(x$ar.coefficients),
+    length(x$ma.coefficients),
+    if (is.null(x$damping.parameter)) {
+      "-"
+    } else {
+      round(x$damping.parameter, digits = 3)
+    },
+    if (is.null(x$seasonal.periods)) {
+      "-"
+    } else {
+      sprintf("{%s}", paste(x$seasonal.periods, collapse = ","))
     }
-  } else {
-    name <- paste0(name, "-)")
-  }
-  name
+  )
 }

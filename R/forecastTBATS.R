@@ -185,51 +185,21 @@ forecast.tbats <- function(
 
 #' @export
 as.character.tbats <- function(x, ...) {
-  name <- "TBATS("
-  if (!is.null(x$lambda)) {
-    name <- paste0(name, round(x$lambda, digits = 3))
-  } else {
-    name <- paste0(name, "1")
-  }
-  name <- paste0(name, ", {")
-  if (!is.null(x$ar.coefficients)) {
-    name <- paste0(name, length(x$ar.coefficients))
-  } else {
-    name <- paste0(name, "0")
-  }
-  name <- paste0(name, ",")
-  if (!is.null(x$ma.coefficients)) {
-    name <- paste0(name, length(x$ma.coefficients))
-  } else {
-    name <- paste0(name, "0")
-  }
-  name <- paste0(name, "}, ")
-  if (!is.null(x$damping.parameter)) {
-    name <- paste0(name, round(x$damping.parameter, digits = 3), ",")
-  } else {
-    name <- paste0(name, "-,")
-  }
-
-  if (!is.null(x$seasonal.periods)) {
-    name <- paste0(name, " {")
-    M <- length(x$seasonal.periods)
-    for (i in seq_len(M)) {
-      name <- paste0(
-        name,
-        "<",
-        round(x$seasonal.periods[i], 2),
-        ",",
-        x$k.vector[i],
-        ">"
-      )
-      if (i < M) {
-        name <- paste0(name, ", ")
-      } else {
-        name <- paste0(name, "})")
-      }
+  sprintf(
+    "TBATS(%s, {%d,%d}, %s,%s)",
+    round(x$lambda %||% 1, digits = 3),
+    length(x$ar.coefficients),
+    length(x$ma.coefficients),
+    if (is.null(x$damping.parameter)) {
+      "-"
+    } else {
+      round(x$damping.parameter, digits = 3)
+    },
+    if (is.null(x$seasonal.periods)) {
+      "{-}"
+    } else {
+      seasons <- sprintf("<%s,%s>", round(x$seasonal.periods, 2), x$k.vector)
+      sprintf(" {%s}", paste(seasons, collapse = ", "))
     }
-  } else {
-    name <- paste0(name, "{-})")
-  }
-  name
+  )
 }
