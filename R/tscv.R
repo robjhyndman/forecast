@@ -107,13 +107,6 @@ tsCV <- function(
         silent = TRUE
       )
     } else {
-      if (is.null(window)) {
-        start <- 1L
-      } else if (i - window >= 0L) {
-        start <- i - window + 1L
-      } else {
-        stop("small window")
-      }
       xreg_subset <- subset(xreg, start = start, end = i)
       xreg_future <- subset(xreg, start = i + 1, end = i + h)
       fc <- try(

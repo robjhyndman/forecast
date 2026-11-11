@@ -77,16 +77,16 @@ mstl <- function(
       for (i in seq_along(msts)) {
         deseas <- deseas + seas[[i]]
         fit <- stl(ts(deseas, frequency = msts[i]), s.window = s.window[i], ...)
-        seas[[i]] <- msts(seasonal(fit), seasonal.periods = msts)
+        seas[[i]] <- seasonal(fit)
         attributes(seas[[i]]) <- attributes(x)
         deseas <- deseas - seas[[i]]
       }
     }
-    trend <- msts(trendcycle(fit), seasonal.periods = msts)
+    trend <- trendcycle(fit)
   } else {
     msts <- NULL
     deseas <- x
-    trend <- ts(stats::supsmu(seq_len(n), x)$y)
+    trend <- stats::supsmu(seq_len(n), x)$y
   }
   attributes(trend) <- attributes(x)
 
