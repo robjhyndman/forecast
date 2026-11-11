@@ -71,6 +71,12 @@ test_that("tbats() selects harmonics independently of period order", {
   expect_equal(fits[[1]]$k.vector, c(1, 1))
 })
 
+test_that("tbats() errors when model is not a tbats or bats object", {
+  expect_snapshot(error = TRUE, {
+    tbats(USAccDeaths, model = ses(USAccDeaths))
+  })
+})
+
 test_that("tbats() works when only use.damped.trend is set", {
   fit <- tbats(UKgas, use.damped.trend = TRUE, use.parallel = FALSE)
   expect_s3_class(fit, "tbats")
