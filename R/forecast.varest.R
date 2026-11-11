@@ -29,23 +29,16 @@ forecast.varest <- function(
       )
     }
   }
-  j <- 1
-  for (fcast in out$forecast) {
+  fstart <- tspx[2] + 1 / tspx[3]
+  for (j in seq_len(object$K)) {
+    fcast <- out$forecast[[j]]
     fcast$mean <- ts(
       pr$fcst[[j]][, "fcst"],
       frequency = tspx[3],
-      start = tspx[2] + 1 / tspx[3]
+      start = fstart
     )
-    fcast$lower <- ts(
-      fcast$lower,
-      frequency = tspx[3],
-      start = tspx[2] + 1 / tspx[3]
-    )
-    fcast$upper <- ts(
-      fcast$upper,
-      frequency = tspx[3],
-      start = tspx[2] + 1 / tspx[3]
-    )
+    fcast$lower <- ts(fcast$lower, frequency = tspx[3], start = fstart)
+    fcast$upper <- ts(fcast$upper, frequency = tspx[3], start = fstart)
     colnames(fcast$lower) <- colnames(fcast$upper) <- paste0(level, "%")
     fcast$residuals <- fcast$fitted <- ts(rep(NA_real_, nrow(object$y)))
     fcast$residuals[((1 - nrow(vres)):0) + length(fcast$residuals)] <- vres[, j]
@@ -57,9 +50,7 @@ forecast.varest <- function(
     tsp(fcast$residuals) <- tsp(fcast$fitted) <- tspx
     fcast <- structure(fcast, class = "forecast")
     out$forecast[[j]] <- fcast
-    j <- j + 1
   }
-  names(out$forecast) <- names(pr$fcst)
   out$method <- rep(method, object$K)
   names(out$forecast) <- names(out$method) <- names(pr$fcst)
   structure(out, class = "mforecast")
