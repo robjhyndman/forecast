@@ -77,7 +77,7 @@ residuals.Arima <- function(
     if (!is.null(object$lambda)) {
       x <- BoxCox(x, object$lambda)
     }
-    xreg <- getxreg(object)
+    xreg <- getxreg(object, env = parent.frame())
     # Remove intercept
     if ("intercept" %in% names(object$coef)) {
       xreg <- cbind(rep(1, length(x)), xreg)

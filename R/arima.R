@@ -472,29 +472,23 @@ forecast.ar <- function(
 
 # Find xreg matrix in an Arima object
 
-getxreg <- function(z) {
-  # Look in the obvious place first
+getxreg <- function(z, env = parent.frame()) {
   if ("xreg" %in% names(z)) {
     return(z$xreg)
-  } else if ("xreg" %in% names(z$coef)) {
-    # Next most obvious place
-    return(eval.parent(z$coef$xreg))
-  } else if ("xreg" %in% names(z$call)) {
-    # Now check under call
-    return(eval.parent(z$call$xreg))
-  } else {
-    # Otherwise check if it exists
-    armapar <- sum(z$arma[1:4]) + "intercept" %in% names(z$coef)
-    npar <- length(z$coef)
-    if (npar > armapar) {
-      stop(
-        "It looks like you have an xreg component but I don't know what it is.\n  Please use Arima() or auto.arima() rather than arima()."
-      )
-    } else {
-      # No xreg used
-      return(NULL)
-    }
   }
+  nxreg <- length(z$coef) - sum(z$arma[1:4]) - "intercept" %in% names(z$coef)
+  if (nxreg == 0) {
+    return(NULL)
+  }
+  # stats::arima() doesn't store the regressors, so re-evaluate them
+  xreg <- tryCatch(eval(z$call$xreg, env), error = function(e) NULL)
+  if (NROW(xreg) != length(z$residuals) || NCOL(xreg) != nxreg) {
+    stop(
+      "Could not find regressors matching the data this model was fitted to.\n  Please use Arima() or auto.arima() rather than arima().",
+      call. = FALSE
+    )
+  }
+  as.matrix(xreg)
 }
 
 #' Errors from a regression model with ARIMA errors

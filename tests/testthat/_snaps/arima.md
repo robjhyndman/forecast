@@ -1,3 +1,30 @@
+# ARIMA errors fail clearly when the regressors can't be found
+
+    Code
+      residuals(fit, type = "regression")
+    Condition
+      Error:
+      ! Could not find regressors matching the data this model was fitted to.
+        Please use Arima() or auto.arima() rather than arima().
+
+---
+
+    Code
+      residuals(fit, type = "regression")
+    Condition
+      Error:
+      ! Could not find regressors matching the data this model was fitted to.
+        Please use Arima() or auto.arima() rather than arima().
+
+---
+
+    Code
+      residuals(fit, type = "regression")
+    Condition
+      Error:
+      ! Could not find regressors matching the data this model was fitted to.
+        Please use Arima() or auto.arima() rather than arima().
+
 # forecast.Arima() warns once about unknown arguments
 
     Code
