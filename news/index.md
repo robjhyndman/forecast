@@ -149,6 +149,10 @@
   [`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
   gained a `type` argument to select additive or multiplicative seasonal
   decomposition.
+- [`tslm()`](https://pkg.robjhyndman.com/forecast/reference/tslm.md) and
+  [`forecast.lm()`](https://pkg.robjhyndman.com/forecast/reference/forecast.lm.md)
+  no longer pick up unrelated variables named `dataname` or `oldnewdata`
+  from the global environment.
 
 ## forecast 9.0.2
 
