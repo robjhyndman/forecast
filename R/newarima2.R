@@ -447,7 +447,6 @@ auto.arima <- function(
       max.P = max.P,
       max.Q = max.Q,
       max.order = max.order,
-      stationary = stationary,
       ic = ic,
       trace = trace,
       approximation = approximation,
