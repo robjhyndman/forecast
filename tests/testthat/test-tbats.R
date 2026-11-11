@@ -71,6 +71,11 @@ test_that("tbats() selects harmonics independently of period order", {
   expect_equal(fits[[1]]$k.vector, c(1, 1))
 })
 
+test_that("tbats() works when only use.damped.trend is set", {
+  fit <- tbats(UKgas, use.damped.trend = TRUE, use.parallel = FALSE)
+  expect_s3_class(fit, "tbats")
+})
+
 test_that("tbats() searches below and above six harmonics for long periods", {
   fit <- function(y) {
     tbats(

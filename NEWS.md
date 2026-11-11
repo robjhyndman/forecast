@@ -37,6 +37,7 @@
 * `simulate.Arima()` now retains nonzero AR and MA coefficients that sum to zero in seasonal models.
 * `splinef()` and `thetaf()` now return the series name instead of "x".
 * `subset()` no longer ignores the `subset` argument for `msts` objects.
+* `tbats()` no longer errors when `use.damped.trend = TRUE` is set without `use.trend = TRUE`.
 * `tbats()` results no longer depend on the order of `seasonal.periods`, and the harmonic search now retains `k = 1` when it minimizes AIC.
 * `theta_model()` and `thetaf()` gained a `type` argument to select additive or multiplicative seasonal decomposition.
 
