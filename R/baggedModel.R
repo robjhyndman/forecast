@@ -178,11 +178,7 @@ forecast.baggedModel <- function(
 }
 
 #' @export
-print.baggedModel <- function(
-  x,
-  digits = max(3, getOption("digits") - 3),
-  ...
-) {
+print.baggedModel <- function(x, ...) {
   cat("Series:", x$series, "\n")
   cat("Model: ", x$method, "\n")
   cat("Call:   ")
