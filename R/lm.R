@@ -303,7 +303,7 @@ forecast.lm <- function(
     )
     if (!is.data.frame(newdata)) {
       newdata <- datamat(newdata)
-      colnames(newdata)[1] <- if (sum(tsvar > 0)) {
+      colnames(newdata)[1] <- if (any(tsvar > 0)) {
         reqvars[-tsvar][1]
       } else {
         reqvars[1]
@@ -316,7 +316,7 @@ forecast.lm <- function(
     newvars <- make.names(colnames(newdata))
     # Check if variables are missing
     misvar <- match(make.names(reqvars), newvars, 0L) == 0L
-    if (any(!misvar & !fnvar)) {
+    if (!all(misvar | fnvar)) {
       # If any variables are not missing/functions, add them to data
       tmpdata <- datamat(newdata[reqvars[!misvar]])
       rm1 <- FALSE
@@ -326,7 +326,7 @@ forecast.lm <- function(
       rm1 <- TRUE
     }
     # Remove trend and seasonality from required variables
-    if (sum(tsvar) > 0) {
+    if (any(tsvar > 0)) {
       reqvars <- reqvars[-tsvar]
       fnvar <- fnvar[-tsvar]
       misvar <- match(make.names(reqvars), newvars, 0L) == 0L

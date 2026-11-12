@@ -1262,7 +1262,7 @@ myarima <- function(
     if (order[1] + seasonal[1] > 0) {
       testvec <- fit$model$phi
       k <- abs(testvec) > 1e-8
-      if (sum(k) > 0) {
+      if (any(k)) {
         last.nonzero <- max(which(k))
       } else {
         last.nonzero <- 0
@@ -1280,7 +1280,7 @@ myarima <- function(
     if (order[3] + seasonal[3] > 0 && fit$ic < Inf) {
       testvec <- fit$model$theta
       k <- abs(testvec) > 1e-8
-      if (sum(k) > 0) {
+      if (any(k)) {
         last.nonzero <- max(which(k))
       } else {
         last.nonzero <- 0

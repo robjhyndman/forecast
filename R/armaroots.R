@@ -81,7 +81,7 @@ plot.armaroots <- function(x, xlab, ylab, main, ...) {
   if (length(x$roots) > 0) {
     inside <- abs(x$roots) > 1
     points(1 / x$roots[inside], pch = 19, col = "black")
-    if (sum(!inside) > 0) {
+    if (!all(inside)) {
       points(1 / x$roots[!inside], pch = 19, col = "red")
     }
   }
