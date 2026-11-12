@@ -55,6 +55,10 @@
   no longer inverts the significance legend.
 - [`autoplot.tbats()`](https://pkg.robjhyndman.com/forecast/reference/plot.bats.md)
   no longer errors.
+- [`bats()`](https://pkg.robjhyndman.com/forecast/reference/bats.md) and
+  [`tbats()`](https://pkg.robjhyndman.com/forecast/reference/tbats.md)
+  now raise an error when refitting with `model` fails instead of
+  returning a `try-error` object.
 - [`bld.mbb.bootstrap()`](https://pkg.robjhyndman.com/forecast/reference/bld.mbb.bootstrap.md)
   no longer errors when `num = 1` and now validates that `num` is a
   positive integer.
