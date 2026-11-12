@@ -35,7 +35,7 @@ na.interp <- function(
 ) {
   missng <- is.na(x)
   # Do nothing if no missing values
-  if (sum(missng) == 0L) {
+  if (!any(missng)) {
     return(x)
   }
 

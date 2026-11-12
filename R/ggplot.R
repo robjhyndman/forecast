@@ -3,7 +3,7 @@ globalVariables(".data")
 ggAddExtras <- function(xlab = NA, ylab = NA, main = NA) {
   dots <- eval.parent(quote(list(...)))
   extras <- list()
-  if ("xlab" %in% names(dots) || is.null(xlab) || any(!is.na(xlab))) {
+  if ("xlab" %in% names(dots) || is.null(xlab) || !all(is.na(xlab))) {
     if ("xlab" %in% names(dots)) {
       extras[[length(extras) + 1]] <- ggplot2::xlab(dots$xlab)
     } else {
@@ -13,7 +13,7 @@ ggAddExtras <- function(xlab = NA, ylab = NA, main = NA) {
       ))
     }
   }
-  if ("ylab" %in% names(dots) || is.null(ylab) || any(!is.na(ylab))) {
+  if ("ylab" %in% names(dots) || is.null(ylab) || !all(is.na(ylab))) {
     if ("ylab" %in% names(dots)) {
       extras[[length(extras) + 1]] <- ggplot2::ylab(dots$ylab)
     } else {
@@ -23,7 +23,7 @@ ggAddExtras <- function(xlab = NA, ylab = NA, main = NA) {
       ))
     }
   }
-  if ("main" %in% names(dots) || is.null(main) || any(!is.na(main))) {
+  if ("main" %in% names(dots) || is.null(main) || !all(is.na(main))) {
     if ("main" %in% names(dots)) {
       extras[[length(extras) + 1]] <- ggplot2::ggtitle(dots$main)
     } else {
