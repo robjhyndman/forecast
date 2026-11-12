@@ -50,6 +50,21 @@ test_that("theta_model with biasadj", {
   fit1 <- theta_model(Nile, lambda = 0, biasadj = FALSE)
   fit2 <- theta_model(Nile, lambda = 0, biasadj = TRUE)
   expect_false(identical(fit1$fitted, fit2$fitted))
+  y_na <- Nile
+  y_na[50] <- NA
+  fit_na <- suppressWarnings(theta_model(y_na, lambda = 0, biasadj = TRUE))
+  expect_identical(which(is.na(fitted(fit_na))), integer())
+})
+
+test_that("forecast.theta_model and thetaf with biasadj", {
+  fit1 <- theta_model(Nile, lambda = 0, biasadj = FALSE)
+  fit2 <- theta_model(Nile, lambda = 0, biasadj = TRUE)
+  fc1 <- forecast(fit1)
+  fc2 <- forecast(fit2)
+  expect_all_true(as.numeric(fc2$mean) > as.numeric(fc1$mean))
+  expect_identical(fc2$lower, fc1$lower)
+  expect_identical(forecast(fit1, biasadj = TRUE)$mean, fc2$mean)
+  expect_identical(thetaf(Nile, lambda = 0, biasadj = TRUE)$mean, fc2$mean)
 })
 
 test_that("forecast.theta_model non-seasonal", {

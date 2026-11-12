@@ -9,6 +9,8 @@ test_that("test accuracy(), fitted(), and residuals().", {
   fitarfima <- fitted(arfima1)
   residarfima <- residuals(arfima2)
   expect_length(fitarfima, length(residarfima))
+  fit_na <- arfima(ts(c(NA, WWWusage)), lambda = 0.75, biasadj = TRUE)
+  expect_identical(which(is.na(fitted(fit_na))), 1L)
   expect_identical(getResponse(arfima1), WWWusage)
   expect_false(identical(arfimabc$fitted, arfimabc2$fitted))
   expect_no_error(accuracy(arfima1))
@@ -26,6 +28,7 @@ test_that("test forecast.fracdiff()", {
     forecast(arfimabc, biasadj = FALSE),
     forecast(arfimabc, biasadj = TRUE)
   ))
+  expect_equal(fitted(forecast(arfimabc2)), fitted(arfimabc2))
   expect_output(
     print(summary(forecast(arfimabc))),
     regexp = "Forecast method: ARFIMA"

@@ -323,7 +323,12 @@ forecast.stl <- function(
 
   if (!is.null(lambda)) {
     fcast$x <- InvBoxCox(fcast$x, lambda)
-    fcast$fitted <- InvBoxCox(fcast$fitted, lambda)
+    fcast$fitted <- InvBoxCox(
+      fcast$fitted,
+      lambda,
+      biasadj,
+      var(fcast$residuals, na.rm = TRUE)
+    )
     fcast$mean <- InvBoxCox(fcast$mean, lambda, biasadj, fcast)
     fcast$lower <- InvBoxCox(fcast$lower, lambda)
     fcast$upper <- InvBoxCox(fcast$upper, lambda)
@@ -553,7 +558,7 @@ stlm <- function(
   fits <- fitted(fit) + allseas
   res <- residuals(fit)
   if (!is.null(lambda)) {
-    fits <- InvBoxCox(fits, lambda, biasadj, var(res))
+    fits <- InvBoxCox(fits, lambda, biasadj, var(res, na.rm = TRUE))
   }
 
   structure(
@@ -640,7 +645,12 @@ forecast.stlm <- function(
   fcast$residuals <- residuals(fcast)
 
   if (!is.null(lambda)) {
-    fcast$fitted <- InvBoxCox(fcast$fitted, lambda)
+    fcast$fitted <- InvBoxCox(
+      fcast$fitted,
+      lambda,
+      biasadj,
+      var(object$residuals, na.rm = TRUE)
+    )
     fcast$mean <- InvBoxCox(fcast$mean, lambda, biasadj, fcast)
     fcast$lower <- InvBoxCox(fcast$lower, lambda)
     fcast$upper <- InvBoxCox(fcast$upper, lambda)

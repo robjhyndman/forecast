@@ -21,6 +21,10 @@ test_that("tests on model building with univariate time series", {
   fit2 <- tslm(v_y ~ trend + season, data = data, lambda = 2, biasadj = FALSE)
   fit3 <- tslm(v_y ~ trend + season, data = data, lambda = 2, biasadj = TRUE)
   expect_false(identical(fit2$fitted.values, fit3$fitted.values))
+  y_na <- v_y
+  y_na[5] <- NA
+  fit_na <- tslm(y_na ~ trend + season, lambda = 2, biasadj = TRUE)
+  expect_identical(which(is.na(fitted(fit_na))), 5L)
   fit2 <- tslm(v_y ~ trend + season, data = data.frame(trend = rnorm(120)))
   expect_false(identical(fit1$model, fit2$model))
   fit2 <- tslm(v_y ~ trend + season)

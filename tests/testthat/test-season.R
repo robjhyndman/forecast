@@ -46,6 +46,10 @@ test_that("tests for fourierf", {
 
 test_that("tests for stlm", {
   expect_warning(stlm(ts(rep(5, 24), frequency = 4), etsmodel = "ZZZ"))
+  fit1 <- stlm(wineind, modelfunction = ar, lambda = .2, biasadj = FALSE)
+  fit2 <- stlm(wineind, modelfunction = ar, lambda = .2, biasadj = TRUE)
+  expect_identical(is.na(fitted(fit2)), is.na(fitted(fit1)))
+  expect_equal(fitted(forecast(fit2)), fitted(fit2))
 })
 
 test_that("tests for forecast.stlm", {
@@ -71,6 +75,17 @@ test_that("tests for forecast.stlm", {
   ))
 })
 
+test_that("forecast.stlm with biasadj does not need forecast residuals", {
+  forecast_ets <- forecast.ets
+  local_mocked_bindings(forecast.ets = function(object, ...) {
+    fc <- forecast_ets(object, ...)
+    fc$residuals <- NULL
+    fc
+  })
+  fit <- stlm(wineind, lambda = .2, biasadj = TRUE)
+  expect_equal(fitted(forecast(fit)), fitted(fit))
+})
+
 test_that("tests for stlf", {
   expect_equal(forecast(stlm(wineind))$mean, stlf(wineind)$mean)
   expect_equal(
@@ -80,6 +95,9 @@ test_that("tests for stlf", {
   fit1 <- stlf(wineind, lambda = .2, biasadj = FALSE)
   fit2 <- stlf(wineind, lambda = .2, biasadj = TRUE)
   expect_false(identical(fit1$mean, fit2$mean))
+  stlmfit <- stlm(wineind, lambda = .2, biasadj = TRUE)
+  expect_all_true(as.numeric(fitted(fit2)) > as.numeric(fitted(fit1)))
+  expect_equal(fitted(forecast(stlmfit)), fitted(stlmfit))
   # Constant series should not error
   series <- ts(rep(950, 20), frequency = 4)
   constantForecast <- expect_no_error(stlf(series))

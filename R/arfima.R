@@ -218,7 +218,12 @@ arfima <- function(
   fit$residuals <- undo.na.ends(x, residuals(fit))
   fit$fitted <- x - fit$residuals
   if (!is.null(lambda)) {
-    fit$fitted <- InvBoxCox(fit$fitted, lambda, biasadj, var(fit$residuals))
+    fit$fitted <- InvBoxCox(
+      fit$fitted,
+      lambda,
+      biasadj,
+      var(fit$residuals, na.rm = TRUE)
+    )
   }
   fit$lambda <- lambda
   fit$call <- match.call()
@@ -342,7 +347,7 @@ forecast.fracdiff <- function(
   )
   if (!is.null(lambda)) {
     x <- InvBoxCox(x, lambda)
-    fits <- InvBoxCox(fits, lambda)
+    fits <- InvBoxCox(fits, lambda, biasadj, var(res, na.rm = TRUE))
     mean.fcast <- InvBoxCox(
       mean.fcast,
       lambda = lambda,
