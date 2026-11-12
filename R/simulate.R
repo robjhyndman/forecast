@@ -77,7 +77,7 @@ simulate.ets <- function(
     initstate <- object$states[length(object$x) + 1, ]
   } else {
     # choose a random starting point
-    initstate <- object$states[sample(seq_along(object$x), 1), ]
+    initstate <- object$states[sample.int(length(object$x), 1), ]
   }
 
   if (bootstrap) {
