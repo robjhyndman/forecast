@@ -115,7 +115,6 @@ test_that("class3() uses phi in the forecast variance", {
     h = 4,
     last.state = c(100, 2, 1.1, 0.9),
     trendtype = "A",
-    seasontype = "M",
     damped = TRUE,
     m = 2,
     sigma2 = 0.01,

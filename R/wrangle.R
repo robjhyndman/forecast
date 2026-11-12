@@ -1,5 +1,5 @@
 # Converts arguments into data.frame, whilst retaining mts/ts/matrix properties
-datamat <- function(..., flatten = TRUE, functions = TRUE) {
+datamat <- function(..., flatten = TRUE) {
   vars <- list(...)
   if (length(vars) == 0) {
     return(data.frame())
