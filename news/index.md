@@ -21,6 +21,12 @@
   [`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
   now keep the series name when it is supplied via the deprecated `x`
   argument.
+- [`arfima()`](https://pkg.robjhyndman.com/forecast/reference/arfima.md),
+  [`stlm()`](https://pkg.robjhyndman.com/forecast/reference/stlm.md),
+  [`theta_model()`](https://pkg.robjhyndman.com/forecast/reference/theta_model.md)
+  and [`tslm()`](https://pkg.robjhyndman.com/forecast/reference/tslm.md)
+  no longer return all-`NA` fitted values when `biasadj = TRUE` and some
+  residuals are missing.
 - [`auto.arima()`](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md)
   parallel model search (`stepwise = FALSE`) now works on Windows
   ([\#1187](https://github.com/robjhyndman/forecast/issues/1187)).
@@ -95,8 +101,18 @@
 - [`forecast.ets()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ets.md)
   now gives the intended error message when forecasting fails for a
   multiplicative trend model.
+- [`forecast.fracdiff()`](https://pkg.robjhyndman.com/forecast/reference/forecast.Arima.md),
+  [`forecast.stlm()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
+  and
+  [`stlf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
+  now return bias-adjusted fitted values when `biasadj = TRUE`.
 - [`forecast.modelAR()`](https://pkg.robjhyndman.com/forecast/reference/forecast.modelAR.md)
   now computes prediction intervals for models with `xreg`.
+- [`forecast.rw_model()`](https://pkg.robjhyndman.com/forecast/reference/forecast.rw_model.md)
+  and
+  [`forecast.theta_model()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
+  now use the model’s `biasadj` setting by default, so
+  `thetaf(biasadj = TRUE)` returns bias-adjusted forecasts.
 - [`forecast.ts()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ts.md)
   now keeps the series name in more cases.
 - `forecast.varest()` now supports `fan = TRUE` and `level` values
@@ -119,6 +135,12 @@
   level is supplied.
 - [`meanf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.mean_model.md)
   no longer errors when `lambda = "auto"`.
+- [`naive()`](https://pkg.robjhyndman.com/forecast/reference/forecast.rw_model.md),
+  [`rwf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.rw_model.md),
+  [`rw_model()`](https://pkg.robjhyndman.com/forecast/reference/rw_model.md)
+  and
+  [`snaive()`](https://pkg.robjhyndman.com/forecast/reference/forecast.rw_model.md)
+  no longer return all-`NA` fitted values when `biasadj = TRUE`.
 - [`nsdiffs()`](https://pkg.robjhyndman.com/forecast/reference/nsdiffs.md)
   now ignores extra arguments passed via `...` with `test = "seas"`
   instead of silently returning 0.

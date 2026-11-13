@@ -60,6 +60,8 @@
 <ul><li>
 <code><a href="../reference/arfima.html">arfima()</a></code>, <code><a href="../reference/Arima.html">Arima()</a></code>, <code><a href="../reference/auto.arima.html">auto.arima()</a></code>, <code><a href="../reference/forecast.croston_model.html">croston()</a></code>, <code><a href="../reference/ses.html">holt()</a></code>, <code><a href="../reference/ses.html">hw()</a></code>, <code><a href="../reference/forecast.mean_model.html">meanf()</a></code>, <code><a href="../reference/modelAR.html">modelAR()</a></code>, <code><a href="../reference/forecast.rw_model.html">naive()</a></code>, <code><a href="../reference/nnetar.html">nnetar()</a></code>, <code><a href="../reference/forecast.rw_model.html">rwf()</a></code>, <code><a href="../reference/ses.html">ses()</a></code>, <code><a href="../reference/forecast.rw_model.html">snaive()</a></code>, <code><a href="../reference/forecast.spline_model.html">splinef()</a></code>, <code><a href="../reference/forecast.stl.html">stlf()</a></code>, <code><a href="../reference/stlm.html">stlm()</a></code> and <code><a href="../reference/forecast.theta_model.html">thetaf()</a></code> now keep the series name when it is supplied via the deprecated <code>x</code> argument.</li>
 <li>
+<code><a href="../reference/arfima.html">arfima()</a></code>, <code><a href="../reference/stlm.html">stlm()</a></code>, <code><a href="../reference/theta_model.html">theta_model()</a></code> and <code><a href="../reference/tslm.html">tslm()</a></code> no longer return all-<code>NA</code> fitted values when <code>biasadj = TRUE</code> and some residuals are missing.</li>
+<li>
 <code><a href="../reference/auto.arima.html">auto.arima()</a></code> parallel model search (<code>stepwise = FALSE</code>) now works on Windows (<a href="https://github.com/robjhyndman/forecast/issues/1187" class="external-link">#1187</a>).</li>
 <li>
 <code><a href="../reference/auto.arima.html">auto.arima()</a></code> now truncates <code>xreg</code> together with the series when <code>approximation = TRUE</code> and <code>truncate</code> is set, so model selection no longer fails.</li>
@@ -104,7 +106,11 @@
 <li>
 <code><a href="../reference/forecast.ets.html">forecast.ets()</a></code> now gives the intended error message when forecasting fails for a multiplicative trend model.</li>
 <li>
+<code><a href="../reference/forecast.Arima.html">forecast.fracdiff()</a></code>, <code><a href="../reference/forecast.stl.html">forecast.stlm()</a></code> and <code><a href="../reference/forecast.stl.html">stlf()</a></code> now return bias-adjusted fitted values when <code>biasadj = TRUE</code>.</li>
+<li>
 <code><a href="../reference/forecast.modelAR.html">forecast.modelAR()</a></code> now computes prediction intervals for models with <code>xreg</code>.</li>
+<li>
+<code><a href="../reference/forecast.rw_model.html">forecast.rw_model()</a></code> and <code><a href="../reference/forecast.theta_model.html">forecast.theta_model()</a></code> now use the model’s <code>biasadj</code> setting by default, so <code>thetaf(biasadj = TRUE)</code> returns bias-adjusted forecasts.</li>
 <li>
 <code><a href="../reference/forecast.ts.html">forecast.ts()</a></code> now keeps the series name in more cases.</li>
 <li>
@@ -123,6 +129,8 @@
 <code><a href="../reference/forecast.mean_model.html">meanf()</a></code> no longer errors with <code>bootstrap = TRUE</code> when a single confidence level is supplied.</li>
 <li>
 <code><a href="../reference/forecast.mean_model.html">meanf()</a></code> no longer errors when <code>lambda = "auto"</code>.</li>
+<li>
+<code><a href="../reference/forecast.rw_model.html">naive()</a></code>, <code><a href="../reference/forecast.rw_model.html">rwf()</a></code>, <code><a href="../reference/rw_model.html">rw_model()</a></code> and <code><a href="../reference/forecast.rw_model.html">snaive()</a></code> no longer return all-<code>NA</code> fitted values when <code>biasadj = TRUE</code>.</li>
 <li>
 <code><a href="../reference/nsdiffs.html">nsdiffs()</a></code> now ignores extra arguments passed via <code>...</code> with <code>test = "seas"</code> instead of silently returning 0.</li>
 <li>
