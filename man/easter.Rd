@@ -13,7 +13,8 @@ easter(x, easter.mon = FALSE)
 Easter Monday.}
 }
 \value{
-Time series
+A time series of the fraction of the Easter holidays in each period
+of \code{x}.
 }
 \description{
 Returns a vector of 0's and 1's or fractional results if Easter spans March

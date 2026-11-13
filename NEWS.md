@@ -11,6 +11,8 @@
 * `autoplot.mpacf()`, used by `ggtaperedacf()`, no longer inverts the significance legend.
 * `autoplot.tbats()` no longer errors.
 * `bats()` and `tbats()` now raise an error when refitting with `model` fails instead of returning a `try-error` object.
+* `bizdays()` now gives an informative error when the series is not monthly or quarterly.
+* `bizdays()` now returns a plain time series, like `monthdays()` and `easter()`, instead of one carrying the period labels as `dim` and `dimnames` attributes.
 * `bld.mbb.bootstrap()` no longer errors when `num = 1` and now validates that `num` is a positive integer.
 * `CVar()` now computes fold accuracy with fitted and actual values in the correct order.
 * `croston_model()` and `croston()` can now optimize and separately specify Croston smoothing parameters.
