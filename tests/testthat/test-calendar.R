@@ -1,6 +1,4 @@
-# A unit test for calendar.R
-test_that("Tests for bizdays()", {
-  expect_error(bizdays(1:20))
+test_that("bizdays() differs across financial centers", {
   b1 <- bizdays(woolyrnq, FinCenter = "New York")
   b2 <- bizdays(woolyrnq, FinCenter = "London")
   b3 <- bizdays(woolyrnq, FinCenter = "Zurich")
@@ -16,7 +14,27 @@ test_that("Tests for bizdays()", {
   }
 })
 
-test_that("Tests for easter()", {
+test_that("bizdays() counts trading days in each period", {
+  x <- ts(1:3, start = c(2024, 1), frequency = 12)
+  expect_identical(
+    bizdays(x),
+    ts(c(21L, 20L, 20L), start = c(2024, 1), frequency = 12)
+  )
+  x <- ts(1:2, start = c(2023, 4), frequency = 4)
+  expect_identical(
+    bizdays(x),
+    ts(c(63L, 61L), start = c(2023, 4), frequency = 4)
+  )
+})
+
+test_that("bizdays() requires monthly or quarterly data", {
+  expect_snapshot(bizdays(ts(1:10, frequency = 7)), error = TRUE)
+  expect_snapshot(bizdays(1:20), error = TRUE)
+  x <- zoo::zooreg(1:3, start = zoo::as.yearmon(2020), frequency = 12)
+  expect_snapshot(bizdays(x), error = TRUE)
+})
+
+test_that("easter() returns one value per period of x", {
   expect_length(easter(woolyrnq), length(woolyrnq))
   expect_length(easter(wineind), length(wineind))
 })
@@ -71,4 +89,6 @@ test_that("easter() returns fractions for quarterly data", {
 test_that("easter() requires monthly or quarterly data", {
   expect_snapshot(easter(ts(1:10, frequency = 7)), error = TRUE)
   expect_snapshot(easter(1:10), error = TRUE)
+  x <- zoo::zooreg(1:3, start = zoo::as.yearmon(2020), frequency = 12)
+  expect_snapshot(easter(x), error = TRUE)
 })

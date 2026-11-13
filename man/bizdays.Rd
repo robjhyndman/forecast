@@ -12,11 +12,11 @@ bizdays(x, FinCenter = c("New York", "London", "NERC", "Toronto", "Zurich"))
 \item{FinCenter}{Major financial center.}
 }
 \value{
-Time series
+A time series of the number of trading days in each period of \code{x}.
 }
 \description{
-Returns number of trading days in each month or quarter of the observed time
-period in a major financial center.
+Returns the number of trading days in each month or quarter of the observed
+time period in a major financial center.
 }
 \details{
 Useful for trading days length adjustments. For more on how to define
