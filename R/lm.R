@@ -451,13 +451,15 @@ forecast.lm <- function(
   }
   fcast <- list(
     model = object,
-    mean = out[[1]]$fit[, 1],
-    lower = out[[1]]$fit[, 2],
-    upper = out[[1]]$fit[, 3],
+    # `fit[, 1]` drops the name for one-row newdata, so restore it
+    mean = stats::setNames(out[[1]]$fit[, 1], rownames(out[[1]]$fit)),
+    lower = do.call(cbind, lapply(out, \(x) x$fit[, 2, drop = FALSE])),
+    upper = do.call(cbind, lapply(out, \(x) x$fit[, 3, drop = FALSE])),
     level = level,
     x = object$x,
     series = object$series
   )
+  colnames(fcast$lower) <- colnames(fcast$upper) <- paste0(level, "%")
   fcast$method <- "Linear regression model"
   fcast$newdata <- oldnewdata
   fcast$residuals <- residuals(object)
@@ -470,18 +472,13 @@ forecast.lm <- function(
     tspx <- NULL
   }
   if (!is.null(tspx)) {
+    names(fcast$x) <- names(fcast$residuals) <- names(fcast$fitted) <- NULL
     fcast$x <- ts(fcast$x)
     fcast$residuals <- ts(fcast$residuals)
     fcast$fitted <- ts(fcast$fitted)
     tsp(fcast$x) <- tsp(fcast$residuals) <- tsp(fcast$fitted) <- tspx
-  }
-  if (nl > 1) {
-    for (i in 2:nl) {
-      fcast$lower <- cbind(fcast$lower, out[[i]]$fit[, 2])
-      fcast$upper <- cbind(fcast$upper, out[[i]]$fit[, 3])
-    }
-  }
-  if (!is.null(tspx)) {
+    names(fcast$mean) <- NULL
+    rownames(fcast$lower) <- rownames(fcast$upper) <- NULL
     fcast$mean <- ts(
       fcast$mean,
       start = tspx[2] + 1 / tspx[3],

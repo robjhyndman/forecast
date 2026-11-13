@@ -169,7 +169,7 @@ croston_model <- function(
     fit_demand = res$fit_demand,
     fit_interval = res$fit_interval,
     ratio = res$ratio,
-    fitted = res$fitted,
+    fitted = copy_msts(y, res$fitted),
     residuals = y - res$fitted,
     series = series
   )

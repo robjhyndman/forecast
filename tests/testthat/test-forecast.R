@@ -20,6 +20,19 @@ test_that("tests summary.forecast() and forecast.forecast()", {
   ))
 })
 
+test_that("forecast.forecast() accepts the levels used to compute the forecasts", {
+  fc <- naive(gold, h = 5, level = c(95, 80))
+  expect_identical(forecast(fc, h = 2, level = c(95, 80))$level, c(80, 95))
+  expect_identical(forecast(fc, h = 2, level = c(80L, 95L))$level, c(80, 95))
+  expect_snapshot(forecast(fc, level = 90), error = TRUE)
+})
+
+test_that("forecast.forecast() accepts forecasts with unsorted levels", {
+  fc <- naive(gold, h = 5, level = c(95, 80))
+  fc$level <- c(95, 80)
+  expect_identical(forecast(fc, h = 2, level = c(95, 80))$level, c(95, 80))
+})
+
 test_that("tests plot.forecast()", {
   nnetfc <- forecast(nnetar(woolyrnq))
   etsfc <- forecast(ets(woolyrnq))

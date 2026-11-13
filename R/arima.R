@@ -239,7 +239,7 @@ forecast.Arima <- function(
     error.args <- user.args[!check]
     warning(sprintf(
       "The non-existent %s arguments will be ignored.",
-      error.args
+      toString(error.args)
     ))
   }
 
@@ -272,7 +272,6 @@ forecast.Arima <- function(
   }
 
   level <- get_conf_level(level, fan)
-  level <- sort(level)
 
   if (use.drift) {
     n <- length(x)
@@ -314,6 +313,7 @@ forecast.Arima <- function(
       )
     }
     pred <- predict(object, n.ahead = h, newxreg = xreg)
+    names(pred$pred) <- NULL
   } else {
     pred <- predict(object, n.ahead = h)
   }

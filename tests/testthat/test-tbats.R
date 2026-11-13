@@ -84,6 +84,18 @@ test_that("tbats() errors when refitting a model without parameters", {
   })
 })
 
+test_that("tbats() seed states have no lambda attribute", {
+  fit <- tbats(
+    USAccDeaths,
+    use.box.cox = TRUE,
+    use.trend = FALSE,
+    use.arma.errors = FALSE,
+    use.parallel = FALSE
+  )
+  expect_s3_class(fit, "tbats")
+  expect_null(attr(fit$seed.states, "lambda"))
+})
+
 test_that("tbats() works when only use.damped.trend is set", {
   fit <- tbats(UKgas, use.damped.trend = TRUE, use.parallel = FALSE)
   expect_s3_class(fit, "tbats")

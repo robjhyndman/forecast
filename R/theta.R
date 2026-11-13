@@ -39,6 +39,7 @@ theta_model <- function(
 ) {
   type <- match.arg(type)
   series <- deparse1(substitute(y))
+  y <- as.ts(y)
   n <- length(y)
   origy <- y
 
@@ -141,6 +142,7 @@ print.theta_model <- function(
 #'
 #' @param object An object of class `theta_model` created by [theta_model()].
 #' @inheritParams ses
+#' @param ... Other arguments, currently ignored.
 #' @param type Type of seasonal decomposition. Either `"multiplicative"` (default) or `"additive"`.
 #' @return An object of class `forecast`.
 #' @inheritSection forecast.ts forecast class
@@ -172,7 +174,8 @@ forecast.theta_model <- function(
   m <- frequency(object$y)
   n <- length(object$y)
 
-  fcast <- forecast(object$ses_model, h = h, level = level, fan = fan, ...)
+  fcast <- forecast(object$ses_model, h = h, PI = FALSE)
+  fcast$level <- level
   fcast$mean <- fcast$mean +
     object$drift * (seq_len(h) - 1 + (1 - (1 - object$alpha)^n) / object$alpha)
 
@@ -191,6 +194,7 @@ forecast.theta_model <- function(
   nconf <- length(level)
   fcast$lower <- fcast$upper <- ts(matrix(NA_real_, nrow = h, ncol = nconf))
   tsp(fcast$lower) <- tsp(fcast$upper) <- tsp(fcast$mean)
+  colnames(fcast$lower) <- colnames(fcast$upper) <- paste0(level, "%")
   for (i in seq_len(nconf)) {
     zt <- -qnorm(0.5 - level[i] / 200)
     fcast$lower[, i] <- fcast$mean - zt * fcast.se

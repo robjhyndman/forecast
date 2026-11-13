@@ -6,6 +6,14 @@ test_that("rw_model works", {
   expect_length(residuals(fit), length(gold))
 })
 
+test_that("forecast.rw_model orders the intervals by level", {
+  fc <- naive(gold, h = 3)
+  fc_rev <- naive(gold, h = 3, level = c(95, 80))
+  expect_identical(fc_rev$level, c(80, 95))
+  expect_identical(fc_rev$lower, fc$lower)
+  expect_identical(fc_rev$upper, fc$upper)
+})
+
 test_that("rw_model with drift", {
   fit <- rw_model(gold, drift = TRUE)
   expect_true(fit$par$includedrift)

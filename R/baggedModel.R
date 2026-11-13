@@ -167,9 +167,10 @@ forecast.baggedModel <- function(
     start = start.f
   )
   out$median <- ts(apply(forecasts_boot, 1, median))
-  out$lower <- ts(apply(forecasts_boot, 1, min))
-  out$upper <- ts(apply(forecasts_boot, 1, max))
   out$level <- 100
+  out$lower <- ts(as.matrix(apply(forecasts_boot, 1, min)))
+  out$upper <- ts(as.matrix(apply(forecasts_boot, 1, max)))
+  colnames(out$lower) <- colnames(out$upper) <- paste0(out$level, "%")
 
   tsp(out$median) <- tsp(out$lower) <- tsp(out$upper) <- tsp(out$mean)
 

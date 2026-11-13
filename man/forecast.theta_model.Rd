@@ -49,7 +49,7 @@ values, a regular back transformation will result in median forecasts. If
 biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
 and fitted values.}
 
-\item{...}{Other arguments passed to \code{forecast.ets}.}
+\item{...}{Other arguments, currently ignored.}
 
 \item{y}{a numeric vector or univariate time series of class \code{ts}}
 

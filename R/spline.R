@@ -131,13 +131,12 @@ spline_model <- function(
     lss <- beta.est / (1 - 1 / n)^3
     spar <- (log(lss / r) / log(256) + 1) / 3
     splinefit <- smooth.spline(seq_len(n), y, spar = spar)
-    sfits <- splinefit$y
   } else {
     # Use GCV
     splinefit <- smooth.spline(seq_len(n), y, cv = FALSE, spar = NULL)
-    sfits <- ts(splinefit$y)
     beta.est <- pmax(1e-7, splinefit$lambda * (1 - 1 / n)^3)
   }
+  sfits <- ts(splinefit$y)
 
   # Compute matrices for optimal beta
   mat <- spline.matrices(n, beta.est, compute_inverse = FALSE)
@@ -247,12 +246,17 @@ forecast.spline_model <- function(
   }
   # Compute matrices for optimal beta
   mat <- spline.matrices(n, object$beta / n^3, compute_P = FALSE)
-  newmat <- spline.matrices(n, object$beta / n^3, n0 = h, compute_inverse = FALSE)
+  newmat <- spline.matrices(
+    n,
+    object$beta / n^3,
+    n0 = h,
+    compute_inverse = FALSE
+  )
 
   # Compute mean and var of forecasts
   U <- newmat$Omega[seq_len(n), n + seq_len(h)]
   Omega0 <- newmat$Omega[n + seq_len(h), n + seq_len(h)]
-  Yhat <- t(U) %*% mat$inv.Omega %*% y
+  Yhat <- drop(t(U) %*% mat$inv.Omega %*% y)
   sd <- sqrt(object$sigma2 * diag(Omega0 - t(U) %*% mat$inv.Omega %*% U))
 
   # Compute prediction intervals.
@@ -312,9 +316,9 @@ forecast.spline_model <- function(
       lower = lower,
       fitted = object$fitted,
       residuals = object$residuals,
-      onestepf = object$onestepf
+      onestepf = object$onestepf,
+      lambda = lambda
     ),
-    lambda = lambda,
     class = c("splineforecast", "forecast")
   )
 }
@@ -412,7 +416,12 @@ simulate.spline_model <- function(
   y <- c(y, rep(NA_real_, nsim))
   for (i in nhistory + seq_len(nsim) - 1) {
     mat <- spline.matrices(i, object$beta / i^3, compute_P = FALSE)
-    newmat <- spline.matrices(i, object$beta / i^3, n0 = 1, compute_inverse = FALSE)
+    newmat <- spline.matrices(
+      i,
+      object$beta / i^3,
+      n0 = 1,
+      compute_inverse = FALSE
+    )
     inv.Omega <- mat$inv.Omega
     Omega <- newmat$Omega
     U <- Omega[seq_len(i), i + 1]

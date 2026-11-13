@@ -14,6 +14,18 @@ test_that("Tests for splinef()", {
   expect_error(splinef(woolyrnq, level = -10))
 })
 
+test_that("splinef() returns univariate time series", {
+  expect_null(dim(splinef(uspop, h = 3)$mean))
+  expect_null(dim(splinef(uspop, h = 3, lambda = 0)$mean))
+  expect_s3_class(splinef(uspop, method = "mle")$fitted, "ts")
+})
+
+test_that("splinef() returns lambda as a component", {
+  fc <- splinef(uspop, h = 3, lambda = 0)
+  expect_equal(fc$lambda, 0, ignore_attr = TRUE)
+  expect_null(attr(fc, "lambda"))
+})
+
 test_that("splinef() keeps series name", {
   expect_identical(splinef(airmiles)$series, "airmiles")
   expect_identical(splinef(x = airmiles)$series, "airmiles")
