@@ -82,7 +82,7 @@ theta_model <- function(
     }
   }
   if (!is.null(lambda)) {
-    fitted <- InvBoxCox(fitted, lambda, biasadj, var(res))
+    fitted <- InvBoxCox(fitted, lambda, biasadj, var(res, na.rm = TRUE))
   }
 
   # Return results
@@ -163,7 +163,7 @@ forecast.theta_model <- function(
   level = c(80, 95),
   fan = FALSE,
   lambda = object$lambda,
-  biasadj = FALSE,
+  biasadj = attr(lambda, "biasadj"),
   ...
 ) {
   # Check inputs

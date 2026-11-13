@@ -1,6 +1,7 @@
 # forecast (development version)
 
 * `arfima()`, `Arima()`, `auto.arima()`, `croston()`, `holt()`, `hw()`, `meanf()`, `modelAR()`, `naive()`, `nnetar()`, `rwf()`, `ses()`, `snaive()`, `splinef()`, `stlf()`, `stlm()` and `thetaf()` now keep the series name when it is supplied via the deprecated `x` argument.
+* `arfima()`, `stlm()`, `theta_model()` and `tslm()` no longer return all-`NA` fitted values when `biasadj = TRUE` and some residuals are missing.
 * `auto.arima()` parallel model search (`stepwise = FALSE`) now works on Windows (#1187).
 * `auto.arima()` now truncates `xreg` together with the series when `approximation = TRUE` and `truncate` is set, so model selection no longer fails.
 * `auto.arima()` stepwise search now searches models without a constant when the null model without one is best.
@@ -23,7 +24,9 @@
 * `forecast.ets()` now uses the damping parameter in forecasts and prediction intervals for ETS(M,Ad,M) models.
 * `forecast.ets()` now uses the supplied `innov` matrix when `simulate = TRUE` instead of silently ignoring it.
 * `forecast.ets()` now gives the intended error message when forecasting fails for a multiplicative trend model.
+* `forecast.fracdiff()`, `forecast.stlm()` and `stlf()` now return bias-adjusted fitted values when `biasadj = TRUE`.
 * `forecast.modelAR()` now computes prediction intervals for models with `xreg`.
+* `forecast.rw_model()` and `forecast.theta_model()` now use the model's `biasadj` setting by default, so `thetaf(biasadj = TRUE)` returns bias-adjusted forecasts.
 * `forecast.ts()` now keeps the series name in more cases.
 * `forecast.varest()` now supports `fan = TRUE` and `level` values between 0 and 1.
 * `geom_forecast()` no longer errors for forecast objects when forecast is not attached.
@@ -33,6 +36,7 @@
 * `mstl()` now drops short seasonal periods from the `msts` attribute, so `forecast.stlm()` no longer errors.
 * `meanf()` no longer errors with `bootstrap = TRUE` when a single confidence level is supplied.
 * `meanf()` no longer errors when `lambda = "auto"`.
+* `naive()`, `rwf()`, `rw_model()` and `snaive()` no longer return all-`NA` fitted values when `biasadj = TRUE`.
 * `nsdiffs()` now ignores extra arguments passed via `...` with `test = "seas"` instead of silently returning 0.
 * `ocsb.test()` lag selection now considers lag 0 and returns the lag that minimises the criterion.
 * `print()` for `Arima()` models now displays the stored AICc and BIC values instead of recomputing them, which gave slightly different results for series with interior missing values.

@@ -177,7 +177,7 @@ tslm <- function(formula, data, subset, lambda = NULL, biasadj = FALSE, ...) {
       fit$fitted.values,
       lambda,
       biasadj,
-      var(fit$residuals)
+      var(fit$residuals, na.rm = TRUE)
     )
     fit$x <- InvBoxCox(fit$x, lambda)
   }

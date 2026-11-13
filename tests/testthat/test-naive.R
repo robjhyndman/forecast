@@ -55,6 +55,25 @@ test_that("rwf with lambda", {
   expect_false(is.null(fc$lambda))
 })
 
+test_that("rw_model with biasadj", {
+  fit1 <- rw_model(wineind, lambda = 0, biasadj = FALSE)
+  fit2 <- rw_model(wineind, lambda = 0, biasadj = TRUE)
+  expect_identical(is.na(fitted(fit2)), is.na(fitted(fit1)))
+  expect_all_true(fitted(fit2)[-1] > fitted(fit1)[-1])
+})
+
+test_that("forecast.rw_model with biasadj", {
+  fit1 <- rw_model(wineind, lambda = 0, biasadj = FALSE)
+  fit2 <- rw_model(wineind, lambda = 0, biasadj = TRUE)
+  expect_all_true(
+    as.numeric(forecast(fit2)$mean) > as.numeric(forecast(fit1)$mean)
+  )
+  expect_identical(
+    forecast(fit2)$mean,
+    rwf(wineind, lambda = 0, biasadj = TRUE)$mean
+  )
+})
+
 test_that("rwf(), naive() and snaive() keep series name with deprecated x argument", {
   expect_identical(rwf(x = USAccDeaths)$series, "USAccDeaths")
   expect_identical(naive(x = USAccDeaths)$series, "USAccDeaths")

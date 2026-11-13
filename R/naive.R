@@ -101,7 +101,7 @@ rw_model <- function(
   }
 
   if (!is.null(lambda)) {
-    fitted <- InvBoxCox(fitted, lambda, biasadj, var(res))
+    fitted <- InvBoxCox(fitted, lambda, biasadj, var(res, na.rm = TRUE))
   }
 
   structure(
@@ -185,7 +185,7 @@ forecast.rw_model <- function(
   npaths = 5000,
   innov = NULL,
   lambda = object$lambda,
-  biasadj = FALSE,
+  biasadj = attr(lambda, "biasadj"),
   ...
 ) {
   lag <- object$par$lag
