@@ -1,7 +1,7 @@
 # Number of trading days in each season
 
-Returns number of trading days in each month or quarter of the observed
-time period in a major financial center.
+Returns the number of trading days in each month or quarter of the
+observed time period in a major financial center.
 
 ## Usage
 
@@ -21,7 +21,7 @@ bizdays(x, FinCenter = c("New York", "London", "NERC", "Toronto", "Zurich"))
 
 ## Value
 
-Time series
+A time series of the number of trading days in each period of `x`.
 
 ## Details
 

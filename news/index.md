@@ -65,6 +65,16 @@
   [`tbats()`](https://pkg.robjhyndman.com/forecast/reference/tbats.md)
   now raise an error when refitting with `model` fails instead of
   returning a `try-error` object.
+- [`bizdays()`](https://pkg.robjhyndman.com/forecast/reference/bizdays.md)
+  now gives an informative error when the series is not monthly or
+  quarterly.
+- [`bizdays()`](https://pkg.robjhyndman.com/forecast/reference/bizdays.md)
+  now returns a plain time series, like
+  [`monthdays()`](https://pkg.robjhyndman.com/forecast/reference/monthdays.md)
+  and
+  [`easter()`](https://pkg.robjhyndman.com/forecast/reference/easter.md),
+  instead of one carrying the period labels as `dim` and `dimnames`
+  attributes.
 - [`bld.mbb.bootstrap()`](https://pkg.robjhyndman.com/forecast/reference/bld.mbb.bootstrap.md)
   no longer errors when `num = 1` and now validates that `num` is a
   positive integer.

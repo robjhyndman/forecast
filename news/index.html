@@ -82,6 +82,10 @@
 <li>
 <code><a href="../reference/bats.html">bats()</a></code> and <code><a href="../reference/tbats.html">tbats()</a></code> now raise an error when refitting with <code>model</code> fails instead of returning a <code>try-error</code> object.</li>
 <li>
+<code><a href="../reference/bizdays.html">bizdays()</a></code> now gives an informative error when the series is not monthly or quarterly.</li>
+<li>
+<code><a href="../reference/bizdays.html">bizdays()</a></code> now returns a plain time series, like <code><a href="../reference/monthdays.html">monthdays()</a></code> and <code><a href="../reference/easter.html">easter()</a></code>, instead of one carrying the period labels as <code>dim</code> and <code>dimnames</code> attributes.</li>
+<li>
 <code><a href="../reference/bld.mbb.bootstrap.html">bld.mbb.bootstrap()</a></code> no longer errors when <code>num = 1</code> and now validates that <code>num</code> is a positive integer.</li>
 <li>
 <code><a href="../reference/CVar.html">CVar()</a></code> now computes fold accuracy with fitted and actual values in the correct order.</li>

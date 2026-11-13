@@ -23,7 +23,8 @@ easter(x, easter.mon = FALSE)
 
 ## Value
 
-Time series
+A time series of the fraction of the Easter holidays in each period of
+`x`.
 
 ## Details
 
