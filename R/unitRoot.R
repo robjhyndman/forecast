@@ -116,9 +116,11 @@ ndiffs <- function(
         warning(
           call. = FALSE,
           sprintf(
-            "The chosen unit root test encountered an error when testing for the %s difference.
-From %s(): %s
-%i differences will be used. Consider using a different unit root test.",
+            paste0(
+              "The chosen unit root test encountered an error when testing for the %s difference.\n",
+              "From %s(): %s\n",
+              "%i differences will be used. Consider using a different unit root test."
+            ),
             switch(
               as.character(d),
               `0` = "first",
@@ -301,9 +303,11 @@ nsdiffs <- function(
         warning(
           call. = FALSE,
           sprintf(
-            "The chosen seasonal unit root test encountered an error when testing for the %s difference.
-From %s(): %s
-%i seasonal differences will be used. Consider using a different unit root test.",
+            paste0(
+              "The chosen seasonal unit root test encountered an error when testing for the %s difference.\n",
+              "From %s(): %s\n",
+              "%i seasonal differences will be used. Consider using a different unit root test."
+            ),
             switch(
               as.character(D),
               `0` = "first",
