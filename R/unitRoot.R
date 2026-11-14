@@ -119,7 +119,7 @@ ndiffs <- function(
             paste0(
               "The chosen unit root test encountered an error when testing for the %s difference.\n",
               "From %s(): %s\n",
-              "%i differences will be used. Consider using a different unit root test."
+              "%d differences will be used. Consider using a different unit root test."
             ),
             switch(
               as.character(d),
@@ -305,7 +305,7 @@ nsdiffs <- function(
             paste0(
               "The chosen seasonal unit root test encountered an error when testing for the %s difference.\n",
               "From %s(): %s\n",
-              "%i seasonal differences will be used. Consider using a different unit root test."
+              "%d seasonal differences will be used. Consider using a different unit root test."
             ),
             switch(
               as.character(D),
