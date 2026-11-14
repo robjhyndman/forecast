@@ -637,8 +637,7 @@ simulate.rw_model <- function(
   if (any(na_pos <- is.na(start))) {
     if (!is.null(innov)) {
       warning(
-        "Missing values encountered at simulation starting values,
-              simulating starting values from closest observed value."
+        "Missing values encountered at simulation starting values, simulating starting values from closest observed value."
       )
     }
     lag_grp <- rep_len(seq_len(object$par$lag), length(x))

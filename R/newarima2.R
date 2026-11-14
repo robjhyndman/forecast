@@ -1083,7 +1083,7 @@ auto.arima <- function(
 
   if (k > nmodels) {
     warning(sprintf(
-      "Stepwise search was stopped early due to reaching the model number limit: `nmodels = %i`",
+      "Stepwise search was stopped early due to reaching the model number limit: `nmodels = %d`",
       nmodels
     ))
   }

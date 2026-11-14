@@ -116,9 +116,11 @@ ndiffs <- function(
         warning(
           call. = FALSE,
           sprintf(
-            "The chosen unit root test encountered an error when testing for the %s difference.
-From %s(): %s
-%i differences will be used. Consider using a different unit root test.",
+            paste0(
+              "The chosen unit root test encountered an error when testing for the %s difference.\n",
+              "From %s(): %s\n",
+              "%d differences will be used. Consider using a different unit root test."
+            ),
             switch(
               as.character(d),
               `0` = "first",
@@ -238,11 +240,10 @@ nsdiffs <- function(
     alpha <- 0.05
   }
   if (test %in% c("hegy", "ch") && !requireNamespace("uroot", quietly = TRUE)) {
-    stop(
-      "Using a ",
-      test,
-      ' test requires the uroot package. Please install it using `install.packages("uroot")`'
-    )
+    stop(sprintf(
+      'Using a %s test requires the uroot package. Please install it using `install.packages("uroot")`.',
+      test
+    ))
   }
 
   if (is.constant(x)) {
@@ -301,9 +302,11 @@ nsdiffs <- function(
         warning(
           call. = FALSE,
           sprintf(
-            "The chosen seasonal unit root test encountered an error when testing for the %s difference.
-From %s(): %s
-%i seasonal differences will be used. Consider using a different unit root test.",
+            paste0(
+              "The chosen seasonal unit root test encountered an error when testing for the %s difference.\n",
+              "From %s(): %s\n",
+              "%d seasonal differences will be used. Consider using a different unit root test."
+            ),
             switch(
               as.character(D),
               `0` = "first",
