@@ -77,7 +77,7 @@ thetaf(
 
 - ...:
 
-  Other arguments passed to `forecast.ets`.
+  Other arguments, currently ignored.
 
 - y:
 

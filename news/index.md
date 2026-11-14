@@ -65,6 +65,10 @@
   [`tbats()`](https://pkg.robjhyndman.com/forecast/reference/tbats.md)
   now raise an error when refitting with `model` fails instead of
   returning a `try-error` object.
+- [`bats()`](https://pkg.robjhyndman.com/forecast/reference/bats.md) and
+  [`tbats()`](https://pkg.robjhyndman.com/forecast/reference/tbats.md)
+  no longer leave a `lambda` attribute on the seed states, which was
+  printed with models that use a Box-Cox transformation.
 - [`bizdays()`](https://pkg.robjhyndman.com/forecast/reference/bizdays.md)
   now gives an informative error when the series is not monthly or
   quarterly.
@@ -88,6 +92,10 @@
 - [`croston_model()`](https://pkg.robjhyndman.com/forecast/reference/croston_model.md)
   now returns `NA` for fitted values before the first non-zero demand
   instead of 0.
+- [`croston_model()`](https://pkg.robjhyndman.com/forecast/reference/croston_model.md)
+  and
+  [`croston()`](https://pkg.robjhyndman.com/forecast/reference/forecast.croston_model.md)
+  now return the fitted values as a time series.
 - [`easter()`](https://pkg.robjhyndman.com/forecast/reference/easter.md)
   now returns the correct fractions when Easter spans two months or
   quarters and the series starts in April (or the second quarter) or
@@ -97,11 +105,24 @@
 - [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md) no
   longer treats parameters as admissible when the polynomial root search
   fails.
+- [`forecast()`](https://generics.r-lib.org/reference/forecast.html)
+  methods now always sort prediction intervals by increasing `level`, so
+  [`plot.forecast()`](https://pkg.robjhyndman.com/forecast/reference/plot.forecast.md)
+  no longer swaps the shading when `level` is supplied out of order.
 - [`forecast.Arima()`](https://pkg.robjhyndman.com/forecast/reference/forecast.Arima.md)
   now correctly passes `xreg` when `bootstrap = TRUE`
   ([\#1115](https://github.com/robjhyndman/forecast/issues/1115)).
+- [`forecast.Arima()`](https://pkg.robjhyndman.com/forecast/reference/forecast.Arima.md)
+  now gives a single warning listing all unknown arguments instead of
+  running one message per argument together.
+- [`forecast.Arima()`](https://pkg.robjhyndman.com/forecast/reference/forecast.Arima.md)
+  no longer names the point forecasts by the row names of `xreg`.
 - [`forecast.StructTS()`](https://pkg.robjhyndman.com/forecast/reference/forecast.StructTS.md)
   now uses the series frequency for its default forecast horizon.
+- [`forecast.baggedModel()`](https://pkg.robjhyndman.com/forecast/reference/forecast.baggedModel.md)
+  now returns `lower` and `upper` as one-column matrices named by level,
+  so shortening the forecasts with `forecast(fc, h = )` no longer
+  errors.
 - [`forecast.ets()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ets.md)
   now uses the damping parameter in forecasts and prediction intervals
   for ETS(M,Ad,M) models.
@@ -116,6 +137,13 @@
   and
   [`stlf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
   now return bias-adjusted fitted values when `biasadj = TRUE`.
+- [`forecast.lm()`](https://pkg.robjhyndman.com/forecast/reference/forecast.lm.md)
+  now returns `lower` and `upper` as matrices with columns named by
+  level, including when a single `level` is used, so shortening time
+  series forecasts with `forecast(fc, h = )` no longer errors.
+- [`forecast.lm()`](https://pkg.robjhyndman.com/forecast/reference/forecast.lm.md)
+  no longer leaves the row numbers of the data as names on the time
+  series it returns.
 - [`forecast.modelAR()`](https://pkg.robjhyndman.com/forecast/reference/forecast.modelAR.md)
   now computes prediction intervals for models with `xreg`.
 - [`forecast.rw_model()`](https://pkg.robjhyndman.com/forecast/reference/forecast.rw_model.md)
@@ -123,6 +151,17 @@
   [`forecast.theta_model()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
   now use the model’s `biasadj` setting by default, so
   `thetaf(biasadj = TRUE)` returns bias-adjusted forecasts.
+- [`forecast.stl()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md),
+  [`forecast.stlm()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
+  and
+  [`stlf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
+  now pass `level` to `forecastfunction` as sorted percentages.
+- [`forecast.theta_model()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
+  and
+  [`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
+  now name the columns of `lower` and `upper` by level, and no longer
+  mislabel the prediction intervals when `level` is not in increasing
+  order.
 - [`forecast.ts()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ts.md)
   now keeps the series name in more cases.
 - `forecast.varest()` now supports `fan = TRUE` and `level` values
@@ -167,6 +206,18 @@
   seasonal models.
 - [`splinef()`](https://pkg.robjhyndman.com/forecast/reference/forecast.spline_model.md)
   and
+  [`forecast.spline_model()`](https://pkg.robjhyndman.com/forecast/reference/forecast.spline_model.md)
+  now return the point forecasts as a univariate time series instead of
+  a one-column matrix, and
+  [`spline_model()`](https://pkg.robjhyndman.com/forecast/reference/spline_model.md)
+  now returns the fitted values as a time series when `method = "mle"`.
+- [`splinef()`](https://pkg.robjhyndman.com/forecast/reference/forecast.spline_model.md)
+  and
+  [`forecast.spline_model()`](https://pkg.robjhyndman.com/forecast/reference/forecast.spline_model.md)
+  now return `lambda` as a component of the forecast object instead of
+  as an attribute.
+- [`splinef()`](https://pkg.robjhyndman.com/forecast/reference/forecast.spline_model.md)
+  and
   [`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
   now return the series name instead of “x”.
 - [`subset()`](https://rdrr.io/r/base/subset.html) no longer ignores the
@@ -180,6 +231,10 @@
 - [`tbats()`](https://pkg.robjhyndman.com/forecast/reference/tbats.md)
   results no longer depend on the order of `seasonal.periods`, and the
   harmonic search now retains `k = 1` when it minimizes AIC.
+- [`theta_model()`](https://pkg.robjhyndman.com/forecast/reference/theta_model.md)
+  and
+  [`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
+  now store a series supplied as a numeric vector as a time series.
 - [`theta_model()`](https://pkg.robjhyndman.com/forecast/reference/theta_model.md)
   and
   [`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)

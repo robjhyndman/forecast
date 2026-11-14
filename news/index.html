@@ -82,6 +82,8 @@
 <li>
 <code><a href="../reference/bats.html">bats()</a></code> and <code><a href="../reference/tbats.html">tbats()</a></code> now raise an error when refitting with <code>model</code> fails instead of returning a <code>try-error</code> object.</li>
 <li>
+<code><a href="../reference/bats.html">bats()</a></code> and <code><a href="../reference/tbats.html">tbats()</a></code> no longer leave a <code>lambda</code> attribute on the seed states, which was printed with models that use a Box-Cox transformation.</li>
+<li>
 <code><a href="../reference/bizdays.html">bizdays()</a></code> now gives an informative error when the series is not monthly or quarterly.</li>
 <li>
 <code><a href="../reference/bizdays.html">bizdays()</a></code> now returns a plain time series, like <code><a href="../reference/monthdays.html">monthdays()</a></code> and <code><a href="../reference/easter.html">easter()</a></code>, instead of one carrying the period labels as <code>dim</code> and <code>dimnames</code> attributes.</li>
@@ -94,15 +96,25 @@
 <li>
 <code><a href="../reference/croston_model.html">croston_model()</a></code> now returns <code>NA</code> for fitted values before the first non-zero demand instead of 0.</li>
 <li>
+<code><a href="../reference/croston_model.html">croston_model()</a></code> and <code><a href="../reference/forecast.croston_model.html">croston()</a></code> now return the fitted values as a time series.</li>
+<li>
 <code><a href="../reference/easter.html">easter()</a></code> now returns the correct fractions when Easter spans two months or quarters and the series starts in April (or the second quarter) or ends in March (or the first quarter).</li>
 <li>
 <code><a href="../reference/ets.html">ets()</a></code> now keeps the series name for short series.</li>
 <li>
 <code><a href="../reference/ets.html">ets()</a></code> no longer treats parameters as admissible when the polynomial root search fails.</li>
 <li>
+<code><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast()</a></code> methods now always sort prediction intervals by increasing <code>level</code>, so <code><a href="../reference/plot.forecast.html">plot.forecast()</a></code> no longer swaps the shading when <code>level</code> is supplied out of order.</li>
+<li>
 <code><a href="../reference/forecast.Arima.html">forecast.Arima()</a></code> now correctly passes <code>xreg</code> when <code>bootstrap = TRUE</code> (<a href="https://github.com/robjhyndman/forecast/issues/1115" class="external-link">#1115</a>).</li>
 <li>
+<code><a href="../reference/forecast.Arima.html">forecast.Arima()</a></code> now gives a single warning listing all unknown arguments instead of running one message per argument together.</li>
+<li>
+<code><a href="../reference/forecast.Arima.html">forecast.Arima()</a></code> no longer names the point forecasts by the row names of <code>xreg</code>.</li>
+<li>
 <code><a href="../reference/forecast.StructTS.html">forecast.StructTS()</a></code> now uses the series frequency for its default forecast horizon.</li>
+<li>
+<code><a href="../reference/forecast.baggedModel.html">forecast.baggedModel()</a></code> now returns <code>lower</code> and <code>upper</code> as one-column matrices named by level, so shortening the forecasts with <code>forecast(fc, h = )</code> no longer errors.</li>
 <li>
 <code><a href="../reference/forecast.ets.html">forecast.ets()</a></code> now uses the damping parameter in forecasts and prediction intervals for ETS(M,Ad,M) models.</li>
 <li>
@@ -112,9 +124,17 @@
 <li>
 <code><a href="../reference/forecast.Arima.html">forecast.fracdiff()</a></code>, <code><a href="../reference/forecast.stl.html">forecast.stlm()</a></code> and <code><a href="../reference/forecast.stl.html">stlf()</a></code> now return bias-adjusted fitted values when <code>biasadj = TRUE</code>.</li>
 <li>
+<code><a href="../reference/forecast.lm.html">forecast.lm()</a></code> now returns <code>lower</code> and <code>upper</code> as matrices with columns named by level, including when a single <code>level</code> is used, so shortening time series forecasts with <code>forecast(fc, h = )</code> no longer errors.</li>
+<li>
+<code><a href="../reference/forecast.lm.html">forecast.lm()</a></code> no longer leaves the row numbers of the data as names on the time series it returns.</li>
+<li>
 <code><a href="../reference/forecast.modelAR.html">forecast.modelAR()</a></code> now computes prediction intervals for models with <code>xreg</code>.</li>
 <li>
 <code><a href="../reference/forecast.rw_model.html">forecast.rw_model()</a></code> and <code><a href="../reference/forecast.theta_model.html">forecast.theta_model()</a></code> now use the model’s <code>biasadj</code> setting by default, so <code>thetaf(biasadj = TRUE)</code> returns bias-adjusted forecasts.</li>
+<li>
+<code><a href="../reference/forecast.stl.html">forecast.stl()</a></code>, <code><a href="../reference/forecast.stl.html">forecast.stlm()</a></code> and <code><a href="../reference/forecast.stl.html">stlf()</a></code> now pass <code>level</code> to <code>forecastfunction</code> as sorted percentages.</li>
+<li>
+<code><a href="../reference/forecast.theta_model.html">forecast.theta_model()</a></code> and <code><a href="../reference/forecast.theta_model.html">thetaf()</a></code> now name the columns of <code>lower</code> and <code>upper</code> by level, and no longer mislabel the prediction intervals when <code>level</code> is not in increasing order.</li>
 <li>
 <code><a href="../reference/forecast.ts.html">forecast.ts()</a></code> now keeps the series name in more cases.</li>
 <li>
@@ -144,6 +164,10 @@
 <li>
 <code><a href="../reference/simulate.ets.html">simulate.Arima()</a></code> now retains nonzero AR and MA coefficients that sum to zero in seasonal models.</li>
 <li>
+<code><a href="../reference/forecast.spline_model.html">splinef()</a></code> and <code><a href="../reference/forecast.spline_model.html">forecast.spline_model()</a></code> now return the point forecasts as a univariate time series instead of a one-column matrix, and <code><a href="../reference/spline_model.html">spline_model()</a></code> now returns the fitted values as a time series when <code>method = "mle"</code>.</li>
+<li>
+<code><a href="../reference/forecast.spline_model.html">splinef()</a></code> and <code><a href="../reference/forecast.spline_model.html">forecast.spline_model()</a></code> now return <code>lambda</code> as a component of the forecast object instead of as an attribute.</li>
+<li>
 <code><a href="../reference/forecast.spline_model.html">splinef()</a></code> and <code><a href="../reference/forecast.theta_model.html">thetaf()</a></code> now return the series name instead of “x”.</li>
 <li>
 <code><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset()</a></code> no longer ignores the <code>subset</code> argument for <code>msts</code> objects.</li>
@@ -153,6 +177,8 @@
 <code><a href="../reference/tbats.html">tbats()</a></code> no longer errors when <code>use.damped.trend = TRUE</code> is set without <code>use.trend = TRUE</code>.</li>
 <li>
 <code><a href="../reference/tbats.html">tbats()</a></code> results no longer depend on the order of <code>seasonal.periods</code>, and the harmonic search now retains <code>k = 1</code> when it minimizes AIC.</li>
+<li>
+<code><a href="../reference/theta_model.html">theta_model()</a></code> and <code><a href="../reference/forecast.theta_model.html">thetaf()</a></code> now store a series supplied as a numeric vector as a time series.</li>
 <li>
 <code><a href="../reference/theta_model.html">theta_model()</a></code> and <code><a href="../reference/forecast.theta_model.html">thetaf()</a></code> gained a <code>type</code> argument to select additive or multiplicative seasonal decomposition.</li>
 <li>
