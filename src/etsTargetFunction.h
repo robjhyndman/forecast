@@ -16,14 +16,15 @@ class EtsTargetFunction {
 
 public:
 
-	void eval(const double* p_par, int p_par_length);
-	void init(const std::vector<double> &p_y, int p_nstate, int p_errortype,
+	EtsTargetFunction(const std::vector<double> &p_y, int p_nstate, int p_errortype,
 			int p_trendtype, int p_seasontype,
 			const std::vector<double> &p_lower, const std::vector<double> &p_upper,
 			const std::string &p_opt_crit, int p_nmse, const std::string &p_bounds, int p_m,
 			bool p_optAlpha, bool p_optBeta, bool p_optGamma, bool p_optPhi,
 			bool p_givenBeta, bool p_givenGamma,
-			double alpha, double beta, double gamma, double phi);
+			double p_alpha, double p_beta, double p_gamma, double p_phi);
+
+	void eval(const double* p_par, int p_par_length);
 
 	double getObjVal() const { return objval; }
 

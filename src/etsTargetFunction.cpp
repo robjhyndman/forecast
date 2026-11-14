@@ -5,64 +5,54 @@
 #include <algorithm>
 #include <cmath>
 
-void EtsTargetFunction::init(const std::vector<double> &p_y,
-                             int p_nstate,
-                             int p_errortype,
-                             int p_trendtype,
-                             int p_seasontype,
-                             const std::vector<double> &p_lower,
-                             const std::vector<double> &p_upper,
-                             const std::string &p_opt_crit,
-                             int p_nmse,
-                             const std::string &p_bounds,
-                             int p_m,
-                             bool p_optAlpha,
-                             bool p_optBeta,
-                             bool p_optGamma,
-                             bool p_optPhi,
-                             bool p_givenBeta,
-                             bool p_givenGamma,
-                             double alpha,
-                             double beta,
-                             double gamma,
-                             double phi) {
-  this->y = p_y;
-  this->n = this->y.size();
-  this->nstate = p_nstate;
-  this->errortype = p_errortype;
-
-  this->trendtype = p_trendtype;
-  this->seasontype = p_seasontype;
-
-  this->lower = p_lower;
-  this->upper = p_upper;
-
-  this->opt_crit = p_opt_crit;
-  this->nmse = p_nmse;
-  this->bounds = p_bounds;
-
-  this->m = p_m;
-
-  this->optAlpha = p_optAlpha;
-  this->optBeta = p_optBeta;
-  this->optGamma = p_optGamma;
-  this->optPhi = p_optPhi;
-
-  this->givenBeta = p_givenBeta;
-  this->givenGamma = p_givenGamma;
-
-  this->alpha = alpha;
-  this->beta = beta;
-  this->gamma = gamma;
-  this->phi = phi;
-
-  this->lik = 0;
-  this->objval = 0;
-
-  this->amse.resize(30, 0);
-  this->e.resize(n, 0);
-  this->fits.resize(n, 0);
-}
+EtsTargetFunction::EtsTargetFunction(const std::vector<double> &p_y,
+                                     int p_nstate,
+                                     int p_errortype,
+                                     int p_trendtype,
+                                     int p_seasontype,
+                                     const std::vector<double> &p_lower,
+                                     const std::vector<double> &p_upper,
+                                     const std::string &p_opt_crit,
+                                     int p_nmse,
+                                     const std::string &p_bounds,
+                                     int p_m,
+                                     bool p_optAlpha,
+                                     bool p_optBeta,
+                                     bool p_optGamma,
+                                     bool p_optPhi,
+                                     bool p_givenBeta,
+                                     bool p_givenGamma,
+                                     double p_alpha,
+                                     double p_beta,
+                                     double p_gamma,
+                                     double p_phi)
+    : y(p_y),
+      nstate(p_nstate),
+      errortype(p_errortype),
+      trendtype(p_trendtype),
+      seasontype(p_seasontype),
+      lower(p_lower),
+      upper(p_upper),
+      opt_crit(p_opt_crit),
+      nmse(p_nmse),
+      bounds(p_bounds),
+      m(p_m),
+      n(static_cast<int>(p_y.size())),
+      alpha(p_alpha),
+      beta(p_beta),
+      gamma(p_gamma),
+      phi(p_phi),
+      e(n, 0),
+      fits(n, 0),
+      amse(30, 0),
+      lik(0),
+      objval(0),
+      optAlpha(p_optAlpha),
+      optBeta(p_optBeta),
+      optGamma(p_optGamma),
+      optPhi(p_optPhi),
+      givenBeta(p_givenBeta),
+      givenGamma(p_givenGamma) {}
 
 void EtsTargetFunction::eval(const double *p_par, int p_par_length) {
   // Check if the parameter configuration has changed, if not, just return.
