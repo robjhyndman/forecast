@@ -240,11 +240,10 @@ nsdiffs <- function(
     alpha <- 0.05
   }
   if (test %in% c("hegy", "ch") && !requireNamespace("uroot", quietly = TRUE)) {
-    stop(
-      "Using a ",
-      test,
-      ' test requires the uroot package. Please install it using `install.packages("uroot")`'
-    )
+    stop(sprintf(
+      'Using a %s test requires the uroot package. Please install it using `install.packages("uroot")`.',
+      test
+    ))
   }
 
   if (is.constant(x)) {

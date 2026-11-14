@@ -115,7 +115,7 @@ subset.ts <- function(
   } else if (is.null(season)) {
     stop("No subset specified")
   } else if (min(season) < 1L || max(season) > frequency(x)) {
-    stop(paste("Seasons must be between 1 and", frequency(x)))
+    stop(sprintf("Seasons must be between 1 and %s.", frequency(x)))
   }
 
   start <- utils::head(time(x)[cycle(x) %in% season], 1)

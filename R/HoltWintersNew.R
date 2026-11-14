@@ -589,10 +589,9 @@ hw <- function(
     stop("The time series should have frequency greater than 1.")
   }
   if (sum(!is.na(y)) < m + 3) {
-    stop(paste(
-      "I need at least",
-      m + 3,
-      "observations to estimate seasonality."
+    stop(sprintf(
+      "I need at least %s observations to estimate seasonality.",
+      m + 3
     ))
   }
   if (initial == "optimal" || damped) {

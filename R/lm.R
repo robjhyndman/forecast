@@ -379,11 +379,10 @@ forecast.lm <- function(
             "variables"
           )[[subvarloc]] <- as.name(fn_name)
         } else {
-          warning(
-            "Could not find required variable ",
-            i,
-            " in newdata. Specify newdata as a named data.frame"
-          )
+          warning(sprintf(
+            "Could not find required variable %s in newdata. Specify newdata as a named data.frame.",
+            i
+          ))
         }
       }
     }
