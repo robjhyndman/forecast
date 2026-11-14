@@ -184,6 +184,37 @@ test_that("forecast.lm with multiple levels", {
   expect_s3_class(fc$mean, "ts")
 })
 
+test_that("forecast.lm returns interval matrices named by level", {
+  fit <- tslm(USAccDeaths ~ trend + season)
+  fc <- forecast(fit, h = 12, level = 95)
+  expect_identical(dim(fc$lower), c(12L, 1L))
+  expect_identical(colnames(fc$upper), "95%")
+  expect_identical(dim(forecast(fc, h = 3)$upper), c(3L, 1L))
+  expect_identical(colnames(forecast(fit, h = 12)$lower), c("80%", "95%"))
+})
+
+test_that("forecast.lm keeps row names for non-time-series data", {
+  fc <- forecast(lm(mpg ~ wt, mtcars[1:25, ]), newdata = mtcars[26:28, ])
+  cars <- row.names(mtcars)[26:28]
+  expect_named(fc$mean, cars)
+  expect_identical(dimnames(fc$lower), list(cars, c("80%", "95%")))
+  expect_identical(dimnames(fc$upper), dimnames(fc$lower))
+
+  fc <- forecast(lm(mpg ~ wt, mtcars[1:25, ]), newdata = mtcars[26, ])
+  expect_named(fc$mean, cars[1])
+  expect_identical(dimnames(fc$lower), list(cars[1], c("80%", "95%")))
+  expect_identical(dimnames(fc$upper), dimnames(fc$lower))
+})
+
+test_that("forecast.lm returns time series without row names", {
+  fc <- forecast(tslm(USAccDeaths ~ trend + season), h = 3)
+  for (component in c("mean", "x", "fitted", "residuals")) {
+    expect_null(names(fc[[component]]))
+  }
+  expect_identical(dimnames(fc$lower), list(NULL, c("80%", "95%")))
+  expect_identical(dimnames(fc$upper), dimnames(fc$lower))
+})
+
 test_that("forecast.lm with fan", {
   fit <- tslm(USAccDeaths ~ trend + season)
   fc <- forecast(fit, h = 12, fan = TRUE)

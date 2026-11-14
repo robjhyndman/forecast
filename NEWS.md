@@ -12,23 +12,33 @@
 * `autoplot.mpacf()`, used by `ggtaperedacf()`, no longer inverts the significance legend.
 * `autoplot.tbats()` no longer errors.
 * `bats()` and `tbats()` now raise an error when refitting with `model` fails instead of returning a `try-error` object.
+* `bats()` and `tbats()` no longer leave a `lambda` attribute on the seed states, which was printed with models that use a Box-Cox transformation.
 * `bizdays()` now gives an informative error when the series is not monthly or quarterly.
 * `bizdays()` now returns a plain time series, like `monthdays()` and `easter()`, instead of one carrying the period labels as `dim` and `dimnames` attributes.
 * `bld.mbb.bootstrap()` no longer errors when `num = 1` and now validates that `num` is a positive integer.
 * `CVar()` now computes fold accuracy with fitted and actual values in the correct order.
 * `croston_model()` and `croston()` can now optimize and separately specify Croston smoothing parameters.
 * `croston_model()` now returns `NA` for fitted values before the first non-zero demand instead of 0.
+* `croston_model()` and `croston()` now return the fitted values as a time series.
 * `easter()` now returns the correct fractions when Easter spans two months or quarters and the series starts in April (or the second quarter) or ends in March (or the first quarter).
 * `ets()` now keeps the series name for short series.
 * `ets()` no longer treats parameters as admissible when the polynomial root search fails.
+* `forecast()` methods now always sort prediction intervals by increasing `level`, so `plot.forecast()` no longer swaps the shading when `level` is supplied out of order.
 * `forecast.Arima()` now correctly passes `xreg` when `bootstrap = TRUE` (#1115).
+* `forecast.Arima()` now gives a single warning listing all unknown arguments instead of running one message per argument together.
+* `forecast.Arima()` no longer names the point forecasts by the row names of `xreg`.
 * `forecast.StructTS()` now uses the series frequency for its default forecast horizon.
+* `forecast.baggedModel()` now returns `lower` and `upper` as one-column matrices named by level, so shortening the forecasts with `forecast(fc, h = )` no longer errors.
 * `forecast.ets()` now uses the damping parameter in forecasts and prediction intervals for ETS(M,Ad,M) models.
 * `forecast.ets()` now uses the supplied `innov` matrix when `simulate = TRUE` instead of silently ignoring it.
 * `forecast.ets()` now gives the intended error message when forecasting fails for a multiplicative trend model.
 * `forecast.fracdiff()`, `forecast.stlm()` and `stlf()` now return bias-adjusted fitted values when `biasadj = TRUE`.
+* `forecast.lm()` now returns `lower` and `upper` as matrices with columns named by level, including when a single `level` is used, so shortening time series forecasts with `forecast(fc, h = )` no longer errors.
+* `forecast.lm()` no longer leaves the row numbers of the data as names on the time series it returns.
 * `forecast.modelAR()` now computes prediction intervals for models with `xreg`.
 * `forecast.rw_model()` and `forecast.theta_model()` now use the model's `biasadj` setting by default, so `thetaf(biasadj = TRUE)` returns bias-adjusted forecasts.
+* `forecast.stl()`, `forecast.stlm()` and `stlf()` now pass `level` to `forecastfunction` as sorted percentages.
+* `forecast.theta_model()` and `thetaf()` now name the columns of `lower` and `upper` by level, and no longer mislabel the prediction intervals when `level` is not in increasing order.
 * `forecast.ts()` now keeps the series name in more cases.
 * `forecast.varest()` now supports `fan = TRUE` and `level` values between 0 and 1.
 * `geom_forecast()` no longer errors for forecast objects when forecast is not attached.
@@ -43,11 +53,14 @@
 * `ocsb.test()` lag selection now considers lag 0 and returns the lag that minimises the criterion.
 * `print()` for `Arima()` models now displays the stored AICc and BIC values instead of recomputing them, which gave slightly different results for series with interior missing values.
 * `simulate.Arima()` now retains nonzero AR and MA coefficients that sum to zero in seasonal models.
+* `splinef()` and `forecast.spline_model()` now return the point forecasts as a univariate time series instead of a one-column matrix, and `spline_model()` now returns the fitted values as a time series when `method = "mle"`.
+* `splinef()` and `forecast.spline_model()` now return `lambda` as a component of the forecast object instead of as an attribute.
 * `splinef()` and `thetaf()` now return the series name instead of "x".
 * `subset()` no longer ignores the `subset` argument for `msts` objects.
 * `tbats()` now gives an informative error when `model` is not a `tbats` or `bats` object.
 * `tbats()` no longer errors when `use.damped.trend = TRUE` is set without `use.trend = TRUE`.
 * `tbats()` results no longer depend on the order of `seasonal.periods`, and the harmonic search now retains `k = 1` when it minimizes AIC.
+* `theta_model()` and `thetaf()` now store a series supplied as a numeric vector as a time series.
 * `theta_model()` and `thetaf()` gained a `type` argument to select additive or multiplicative seasonal decomposition.
 * `tslm()` and `forecast.lm()` no longer pick up unrelated variables named `dataname` or `oldnewdata` from the global environment.
 

@@ -411,6 +411,7 @@ fitSpecificTBATS <- function(
     # Transform the seed states
     x.nought <- BoxCox(opt.env$x.nought.untransformed, lambda = lambda)
     lambda <- attr(x.nought, "lambda")
+    attr(x.nought, "lambda") <- NULL
 
     ## Calculate the variance:
     # 1. Re-set up the matrices

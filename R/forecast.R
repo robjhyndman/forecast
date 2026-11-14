@@ -655,7 +655,7 @@ forecast.forecast <- function(object, ...) {
   # Read level argument
   if ("level" %in% input_names) {
     level <- list(...)[["level"]]
-    if (!identical(level, object$level)) {
+    if (!isTRUE(all.equal(sort(level), sort(object$level)))) {
       stop(
         "Please set the level argument when the forecasts are first computed"
       )
@@ -670,7 +670,11 @@ forecast.forecast <- function(object, ...) {
       )
     }
     tspf <- tsp(object$mean)
-    object$mean <- ts(object$mean[seq_len(h)], start = tspf[1], frequency = tspf[3])
+    object$mean <- ts(
+      object$mean[seq_len(h)],
+      start = tspf[1],
+      frequency = tspf[3]
+    )
     if (!is.null(object$upper)) {
       object$upper <- ts(
         object$upper[seq_len(h), , drop = FALSE],
@@ -679,6 +683,20 @@ forecast.forecast <- function(object, ...) {
       )
       object$lower <- ts(
         object$lower[seq_len(h), , drop = FALSE],
+        start = tspf[1],
+        frequency = tspf[3]
+      )
+    }
+    if (!is.null(object$median)) {
+      object$median <- ts(
+        object$median[seq_len(h)],
+        start = tspf[1],
+        frequency = tspf[3]
+      )
+    }
+    if (!is.null(object$forecasts_boot)) {
+      object$forecasts_boot <- ts(
+        object$forecasts_boot[seq_len(h), , drop = FALSE],
         start = tspf[1],
         frequency = tspf[3]
       )
@@ -718,14 +736,14 @@ as.ts.forecast <- function(x, ...) {
 as.data.frame.mforecast <- function(x, ...) {
   dfs <- lapply(x$forecast, as.data.frame)
   series <- names(dfs)
-  times <- rownames(dfs[[1]])
+  times <- row.names(dfs[[1]])
   h <- NROW(dfs[[1]])
   out <- vector("list", length(dfs))
   for (i in seq_along(out)) {
     out[[i]] <- cbind(Time = times, Series = rep(series[i], h), dfs[[i]])
   }
   out <- do.call(rbind, out)
-  rownames(out) <- NULL
+  row.names(out) <- NULL
   out
 }
 

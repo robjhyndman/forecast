@@ -161,6 +161,8 @@ test_that("forecast.croston_model preserves ts attributes", {
   fit <- croston_model(yts)
   fc <- forecast(fit, h = 8)
   expect_equal(frequency(fc$mean), 4)
+  expect_identical(tsp(fit$fitted), tsp(yts))
+  expect_identical(tsp(fc$fitted), tsp(yts))
 })
 
 test_that("croston shortcut", {

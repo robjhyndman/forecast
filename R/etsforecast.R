@@ -67,8 +67,6 @@ forecast.ets <- function(
     level <- 90
   }
   level <- get_conf_level(level, fan)
-  # Order levels
-  level <- sort(level)
 
   n <- length(object$x)
   damped <- as.logical(object$components[4])

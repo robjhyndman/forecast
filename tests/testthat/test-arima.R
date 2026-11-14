@@ -149,6 +149,17 @@ test_that("tests for forecast.Arima", {
   expect_false(identical(fit1$coef, fit6$coef))
 })
 
+test_that("forecast.Arima() warns once about unknown arguments", {
+  fit <- Arima(lh, order = c(1, 0, 0))
+  expect_snapshot(fc <- forecast(fit, h = 2, foo = 1, bar = 2))
+})
+
+test_that("forecast.Arima() drops the row names of xreg from the forecasts", {
+  fit <- Arima(lh, order = c(1, 0, 0), xreg = cbind(x = seq_along(lh)))
+  xreg <- matrix(49:50, dimnames = list(c("a", "b"), "x"))
+  expect_null(names(forecast(fit, xreg = xreg)$mean))
+})
+
 test_that("tests for search.arima", {
   set.seed(444)
   arimasim <- arima.sim(

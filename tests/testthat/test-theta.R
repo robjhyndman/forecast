@@ -78,6 +78,24 @@ test_that("forecast.theta_model non-seasonal", {
   expect_identical(fc$x, Nile)
 })
 
+test_that("forecast.theta_model labels the intervals by level", {
+  fc <- forecast(theta_model(Nile), h = 3)
+  expect_identical(colnames(fc$lower), c("80%", "95%"))
+  expect_identical(colnames(fc$upper), c("80%", "95%"))
+  expect_identical(forecast(theta_model(Nile), h = 3, level = c(95, 80)), fc)
+})
+
+test_that("forecast.theta_model ignores additional arguments", {
+  fit <- theta_model(Nile)
+  expect_identical(forecast(fit, h = 3, PI = FALSE), forecast(fit, h = 3))
+})
+
+test_that("theta_model stores a numeric vector as a time series", {
+  fit <- theta_model(as.numeric(Nile))
+  expect_s3_class(fit$y, "ts")
+  expect_s3_class(forecast(fit, h = 3)$x, "ts")
+})
+
 test_that("forecast.theta_model seasonal", {
   fit <- theta_model(USAccDeaths)
   fc <- forecast(fit, h = 24)

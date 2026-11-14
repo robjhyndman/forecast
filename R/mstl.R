@@ -264,9 +264,7 @@ forecast.stl <- function(
       "newxreg should have the same number of rows as the forecast horizon h"
     )
   }
-  if (fan) {
-    level <- seq(51, 99, by = 3)
-  }
+  level <- get_conf_level(level, fan)
 
   if (inherits(object, "mstl")) {
     seasoncolumns <- grep("Season", colnames(object), fixed = TRUE)
@@ -595,9 +593,7 @@ forecast.stlm <- function(
       "newxreg should have the same number of rows as the forecast horizon h"
     )
   }
-  if (fan) {
-    level <- seq(51, 99, by = 3)
-  }
+  level <- get_conf_level(level, fan)
 
   # Forecast seasonally adjusted series
   if (is.Arima(object$model) && !is.null(newxreg)) {
