@@ -7,7 +7,6 @@ checkAdmissibility <- function(
   small.phi = NULL,
   ar.coefs = NULL,
   ma.coefs = NULL,
-  tau = 0,
   bc.lower = 0,
   bc.upper = 1
 ) {

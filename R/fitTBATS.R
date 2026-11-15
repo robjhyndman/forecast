@@ -367,12 +367,7 @@ fitSpecificTBATS <- function(
       fn = calcLikelihoodTBATS,
       method = "Nelder-Mead",
       opt.env = opt.env,
-      use.beta = use.beta,
-      use.small.phi = use.damping,
-      seasonal.periods = seasonal.periods,
       param.control = param.vector$control,
-      p = p,
-      q = q,
       tau = tau,
       bc.lower = bc.lower,
       bc.upper = bc.upper,
@@ -465,12 +460,7 @@ fitSpecificTBATS <- function(
         method = "Nelder-Mead",
         opt.env = opt.env,
         x.nought = x.nought,
-        use.beta = use.beta,
-        use.small.phi = use.damping,
-        seasonal.periods = seasonal.periods,
         param.control = param.vector$control,
-        p = p,
-        q = q,
         tau = tau,
         control = list(
           maxit = (100 * length(param.vector$vect)^2),
@@ -484,12 +474,7 @@ fitSpecificTBATS <- function(
         method = "BFGS",
         opt.env = opt.env,
         x.nought = x.nought,
-        use.beta = use.beta,
-        use.small.phi = use.damping,
-        seasonal.periods = seasonal.periods,
         param.control = param.vector$control,
-        p = p,
-        q = q,
         tau = tau,
         control = list(parscale = par.scale)
       )
@@ -598,12 +583,7 @@ fitSpecificTBATS <- function(
 calcLikelihoodTBATS <- function(
   param.vector,
   opt.env,
-  use.beta,
-  use.small.phi,
-  seasonal.periods,
   param.control,
-  p = 0,
-  q = 0,
   tau = 0,
   bc.lower = 0,
   bc.upper = 1
@@ -617,8 +597,6 @@ calcLikelihoodTBATS <- function(
   small.phi <- paramz$small.phi
   gamma.one.v <- paramz$gamma.one.v
   gamma.two.v <- paramz$gamma.two.v
-  ar.coefs <- paramz$ar.coefs
-  ma.coefs <- paramz$ma.coefs
   if (!is.null(paramz$ar.coefs)) {
     p <- length(paramz$ar.coefs)
     ar.coefs <- matrix(paramz$ar.coefs, nrow = 1, ncol = p)
@@ -705,7 +683,6 @@ calcLikelihoodTBATS <- function(
       small.phi = small.phi,
       ar.coefs = ar.coefs,
       ma.coefs = ma.coefs,
-      tau = sum(seasonal.periods),
       bc.lower = bc.lower,
       bc.upper = bc.upper
     )
@@ -720,12 +697,7 @@ calcLikelihoodNOTransformedTBATS <- function(
   param.vector,
   opt.env,
   x.nought,
-  use.beta,
-  use.small.phi,
-  seasonal.periods,
   param.control,
-  p = 0,
-  q = 0,
   tau = 0
 ) {
   # The likelihood function without the Box-Cox Transformation
@@ -821,8 +793,7 @@ calcLikelihoodNOTransformedTBATS <- function(
       box.cox = NULL,
       small.phi = small.phi,
       ar.coefs = ar.coefs,
-      ma.coefs = ma.coefs,
-      tau = tau
+      ma.coefs = ma.coefs
     )
   ) {
     return(log.likelihood)
