@@ -181,17 +181,17 @@ autoplot.acf <- function(object, ci = 0.95, ...) {
     ylab <- "CCF"
     ticktype <- "ccf"
     main <- paste("Series:", object$snames)
-    nlags <- round(dim(object$lag)[1] / 2)
+    nlags <- round(nrow(object$lag) / 2)
   } else if (object$type == "partial") {
     ylab <- "PACF"
     ticktype <- "acf"
     main <- paste("Series:", object$series)
-    nlags <- dim(object$lag)[1]
+    nlags <- nrow(object$lag)
   } else if (object$type == "correlation") {
     ylab <- "ACF"
     ticktype <- "acf"
     main <- paste("Series:", object$series)
-    nlags <- dim(object$lag)[1]
+    nlags <- nrow(object$lag)
   } else {
     ylab <- NULL
   }
