@@ -4,6 +4,8 @@
 
 #include <algorithm>
 #include <cmath>
+#include <cstddef>
+#include <numeric>
 
 EtsTargetFunction::EtsTargetFunction(const std::vector<double> &p_y,
                                      int p_nstate,
@@ -75,30 +77,19 @@ void EtsTargetFunction::eval(const double *p_par, int p_par_length) {
 
   this->state.assign(par.end() - nstate, par.end());
 
-  // Add extra state
   if (seasontype != 0) {
-    double sum = 0;
+    // Seasonal states follow the level and, if present, the trend
+    const int season_start = (trendtype != 0) ? 2 : 1;
 
-    for (int i = (1 + ((trendtype != 0) ? 1 : 0)); i < nstate; i++) {
-      sum += state[i];
-    }
-
-    const double new_state = m * ((seasontype == 2) ? 1 : 0) - sum;
+    // Add extra state so that the seasonal states sum to m (multiplicative) or 0 (additive)
+    const double sum = std::accumulate(state.begin() + season_start, state.end(), 0.0);
+    const double new_state = (seasontype == 2 ? m : 0) - sum;
 
     state.push_back(new_state);
-  }
 
-  // Check states
-  if (seasontype == 2) {
-    double min = R_PosInf;
-    int start = 1;
-    if (trendtype != 0) start = 2;
-
-    for (int i = start; i < state.size(); i++) {
-      min = std::min(min, state[i]);
-    }
-
-    if (min < 0) {
+    // Check states
+    if (seasontype == 2 &&
+        std::any_of(state.begin() + season_start, state.end(), [](double s) { return s < 0; })) {
       this->objval = R_PosInf;
       return;
     }
