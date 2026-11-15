@@ -28,6 +28,8 @@
   no longer return all-`NA` fitted values when `biasadj = TRUE` and some
   residuals are missing.
 - [`auto.arima()`](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md)
+  now gives an informative error when all data are missing.
+- [`auto.arima()`](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md)
   parallel model search (`stepwise = FALSE`) now works on Windows
   ([\#1187](https://github.com/robjhyndman/forecast/issues/1187)).
 - [`auto.arima()`](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md)

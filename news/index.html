@@ -62,6 +62,8 @@
 <li>
 <code><a href="../reference/arfima.html">arfima()</a></code>, <code><a href="../reference/stlm.html">stlm()</a></code>, <code><a href="../reference/theta_model.html">theta_model()</a></code> and <code><a href="../reference/tslm.html">tslm()</a></code> no longer return all-<code>NA</code> fitted values when <code>biasadj = TRUE</code> and some residuals are missing.</li>
 <li>
+<code><a href="../reference/auto.arima.html">auto.arima()</a></code> now gives an informative error when all data are missing.</li>
+<li>
 <code><a href="../reference/auto.arima.html">auto.arima()</a></code> parallel model search (<code>stepwise = FALSE</code>) now works on Windows (<a href="https://github.com/robjhyndman/forecast/issues/1187" class="external-link">#1187</a>).</li>
 <li>
 <code><a href="../reference/auto.arima.html">auto.arima()</a></code> now truncates <code>xreg</code> together with the series when <code>approximation = TRUE</code> and <code>truncate</code> is set, so model selection no longer fails.</li>
