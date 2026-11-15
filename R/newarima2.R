@@ -146,8 +146,7 @@ auto.arima <- function(
   orig.x <- x
   missing <- is.na(x)
   firstnonmiss <- head(which(!missing), 1)
-  lastnonmiss <- tail(which(!missing), 1)
-  serieslength <- sum(!missing[firstnonmiss:lastnonmiss])
+  serieslength <- sum(!missing)
 
   # Trim initial missing values
   x <- subset(x, start = firstnonmiss)
@@ -1157,11 +1156,8 @@ myarima <- function(
   method = NULL,
   ...
 ) {
-  # Length of non-missing interior
-  missing <- is.na(x)
-  firstnonmiss <- head(which(!missing), 1)
-  lastnonmiss <- tail(which(!missing), 1)
-  n <- sum(!missing[firstnonmiss:lastnonmiss])
+  # Number of non-missing observations
+  n <- sum(!is.na(x))
   m <- frequency(x)
   use.season <- (sum(seasonal) > 0) && m > 0
   diffs <- order[2] + seasonal[2]

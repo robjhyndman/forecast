@@ -94,11 +94,11 @@ dm.test <- function(
 
   if (varestimator == "acf" || h == 1L) {
     # Original estimator
-    d.var <- sum(c(d.cov[1], 2 * d.cov[-1])) / n
+    d.var <- (d.cov[1] + 2 * sum(d.cov[-1])) / n
   } else {
     # varestimator == "bartlett"
     # Using Bartlett weights to ensure a positive estimate of long-run-variance
-    d.var <- sum(c(d.cov[1], 2 * (1 - seq_len(h - 1) / h) * d.cov[-1])) / n
+    d.var <- (d.cov[1] + 2 * sum((1 - seq_len(h - 1) / h) * d.cov[-1])) / n
   }
   dv <- d.var
 
@@ -113,7 +113,7 @@ dm.test <- function(
     return(dm.test(e1, e2, alternative, h = 1, power, varestimator))
   }
 
-  k <- ((n + 1 - 2 * h + (h / n) * (h - 1)) / n)^(1 / 2)
+  k <- sqrt((n + 1 - 2 * h + (h / n) * (h - 1)) / n)
   STATISTIC <- STATISTIC * k
   names(STATISTIC) <- "DM"
   PVAL <- switch(
