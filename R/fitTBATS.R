@@ -94,7 +94,7 @@ fitPreviousTBATSModel <- function(y, model, biasadj = FALSE) {
   fitted.values.and.errors <- calcModel(y.touse, model$seed.states, F, g, w)
   e <- fitted.values.and.errors$e
   fitted.values <- fitted.values.and.errors$y.hat
-  variance <- sum(e * e) / length(y)
+  variance <- sum(e^2) / length(y)
   if (!is.null(lambda)) {
     fitted.values <- InvBoxCox(
       fitted.values,
@@ -452,7 +452,7 @@ fitSpecificTBATS <- function(
     lambda <- attr(y.transformed, "lambda")
     fitted.values.and.errors <- calcModel(y.transformed, x.nought, F, g, w)
     e <- fitted.values.and.errors$e
-    variance <- sum(e * e) / length(y)
+    variance <- sum(e^2) / length(y)
     fitted.values <- InvBoxCox(
       fitted.values.and.errors$y.hat,
       lambda = lambda,
@@ -560,7 +560,7 @@ fitSpecificTBATS <- function(
     fitted.values.and.errors <- calcModel(y, x.nought, F, g, w)
     e <- fitted.values.and.errors$e
     fitted.values <- fitted.values.and.errors$y.hat
-    variance <- sum(e * e) / length(y)
+    variance <- sum(e^2) / length(y)
   }
   # Get the likelihood
   likelihood <- optim.like$value
@@ -812,7 +812,7 @@ calcLikelihoodNOTransformedTBATS <- function(
   ####
   ####################################################################
 
-  log.likelihood <- n * log(sum(opt.env$e * opt.env$e))
+  log.likelihood <- n * log(sum(opt.env$e^2))
   if (is.na(log.likelihood)) {
     # Not sure why this would occur
     return(Inf)

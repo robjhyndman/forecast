@@ -52,7 +52,7 @@ fitPreviousBATSModel <- function(y, model, biasadj = FALSE) {
   fitted.values.and.errors <- calcModel(y.touse, model$seed.states, F, g$g, w)
   e <- fitted.values.and.errors$e
   fitted.values <- fitted.values.and.errors$y.hat
-  variance <- sum(e * e) / length(y)
+  variance <- sum(e^2) / length(y)
   if (!is.null(lambda)) {
     fitted.values <- InvBoxCox(
       fitted.values,
@@ -369,7 +369,7 @@ fitSpecificBATS <- function(
     lambda <- attr(y.transformed, "lambda")
     fitted.values.and.errors <- calcModel(y.transformed, x.nought, F, g$g, w)
     e <- fitted.values.and.errors$e
-    variance <- sum(e * e) / length(y)
+    variance <- sum(e^2) / length(y)
     fitted.values <- InvBoxCox(
       fitted.values.and.errors$y.hat,
       lambda = lambda,
@@ -453,7 +453,7 @@ fitSpecificBATS <- function(
     fitted.values.and.errors <- calcModel(y, x.nought, F, g$g, w)
     e <- fitted.values.and.errors$e
     fitted.values <- fitted.values.and.errors$y.hat
-    variance <- sum(e * e) / length(y)
+    variance <- sum(e^2) / length(y)
   }
   # Get the likelihood
   likelihood <- optim.like$value
@@ -745,7 +745,7 @@ calcLikelihoodNOTransformed <- function(
     q = as.integer(q)
   )
 
-  log.likelihood <- n * log(sum(opt.env$e * opt.env$e))
+  log.likelihood <- n * log(sum(opt.env$e^2))
   opt.env$D <- opt.env$F - opt.env$g %*% opt.env$w.transpose
 
   if (

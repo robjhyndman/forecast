@@ -13,7 +13,7 @@ make.Sigma <- function(n, n0 = 0) {
   Sigma <- matrix(0, nrow = nn, ncol = nn)
   for (i in seq_len(nn)) {
     inn <- i:nn
-    Sigma[i, inn] <- Sigma[inn, i] <- (i * i * (3 * (inn) - i)) / 6
+    Sigma[i, inn] <- Sigma[inn, i] <- i^2 * (3 * inn - i) / 6
   }
   Sigma / n^3
 }
