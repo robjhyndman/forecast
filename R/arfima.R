@@ -249,6 +249,7 @@ forecast.fracdiff <- function(
   biasadj = attr(lambda, "biasadj"),
   ...
 ) {
+  biasadj <- biasadj %||% FALSE
   if (abs(h - round(h)) > .Machine$double.eps^0.5 || h <= 0) {
     stop("h must be a positive integer")
   }

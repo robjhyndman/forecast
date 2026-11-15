@@ -347,12 +347,13 @@ forecast.mstl <- function(
   level = c(80, 95),
   fan = FALSE,
   lambda = attr(object, "lambda"),
-  biasadj = attr(attr(object, "lambda"), "biasadj"),
+  biasadj = attr(lambda, "biasadj"),
   xreg = NULL,
   newxreg = NULL,
   allow.multiplicative.trend = FALSE,
   ...
 ) {
+  biasadj <- biasadj %||% FALSE
   forecast.stl(
     object,
     method = method,
@@ -588,6 +589,7 @@ forecast.stlm <- function(
   allow.multiplicative.trend = FALSE,
   ...
 ) {
+  biasadj <- biasadj %||% FALSE
   if (!is.null(newxreg) && NROW(newxreg) != h) {
     stop(
       "newxreg should have the same number of rows as the forecast horizon h"

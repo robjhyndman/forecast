@@ -231,6 +231,7 @@ forecast.Arima <- function(
   biasadj = attr(lambda, "biasadj"),
   ...
 ) {
+  biasadj <- biasadj %||% FALSE
   # Check whether there are non-existent arguments
   all.args <- names(formals())
   user.args <- names(match.call())[-1L] # including arguments passed to 3 dots

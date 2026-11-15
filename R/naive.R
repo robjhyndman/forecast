@@ -188,6 +188,7 @@ forecast.rw_model <- function(
   biasadj = attr(lambda, "biasadj"),
   ...
 ) {
+  biasadj <- biasadj %||% FALSE
   lag <- object$par$lag
   steps <- ceiling(seq_len(h) / lag)
 

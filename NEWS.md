@@ -26,6 +26,7 @@
 * `ets()` no longer treats parameters as admissible when the polynomial root search fails.
 * `ets()` now uses the same degrees of freedom for `sigma2` as the original fit when refitting with `use.initial.values = TRUE`.
 * `forecast()` methods now always sort prediction intervals by increasing `level`, so `plot.forecast()` no longer swaps the shading when `level` is supplied out of order.
+* `forecast()` methods no longer warn that `biasadj` information was not found when `lambda` is supplied without `biasadj`. They now consistently use the `biasadj` setting stored with `lambda`, or `FALSE` if there is none.
 * `forecast.Arima()` now correctly passes `xreg` when `bootstrap = TRUE` (#1115).
 * `forecast.Arima()` now gives a single warning listing all unknown arguments instead of running one message per argument together.
 * `forecast.Arima()` no longer names the point forecasts by the row names of `xreg`.

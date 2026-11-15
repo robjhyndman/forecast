@@ -242,13 +242,7 @@ forecast.lm <- function(
     stop("The forecast horizon must be at least 1.")
   }
   level <- get_conf_level(level, fan)
-  if (is.null(biasadj)) {
-    if (!is.null(object$lambda)) {
-      biasadj <- attr(object$lambda, "biasadj")
-    } else {
-      biasadj <- FALSE
-    }
-  }
+  biasadj <- biasadj %||% FALSE
   if (!is.null(object$data)) {
     origdata <- object$data
   } else if (!is.null(object$model)) {

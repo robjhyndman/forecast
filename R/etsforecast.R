@@ -50,15 +50,8 @@ forecast.ets <- function(
   }
   if (is.null(lambda)) {
     biasadj <- FALSE
-  } else {
-    if (is.null(biasadj)) {
-      biasadj <- attr(lambda, "biasadj")
-    }
-    if (!is.logical(biasadj)) {
-      warning("biasadj information not found, defaulting to FALSE.")
-      biasadj <- FALSE
-    }
   }
+  biasadj <- biasadj %||% attr(lambda, "biasadj") %||% FALSE
   if (!PI && !biasadj) {
     simulate <- bootstrap <- fan <- FALSE
     if (!biasadj) {
