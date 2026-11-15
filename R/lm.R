@@ -335,18 +335,14 @@ forecast.lm <- function(
       # If any variables are missing/functions
       reqvars <- reqvars[misvar | fnvar] # They are required
       fnvar <- fnvar[misvar | fnvar] # Update required function variables
+      coefnames <- names(object$coefficients)
       for (i in reqvars) {
         found <- FALSE
-        subvars <- NULL
-        for (j in seq_along(object$coefficients)) {
-          subvars[j] <- pmatch(i, names(object$coefficients)[j])
-        }
-        subvars <- !is.na(subvars)
-        subvars <- names(object$coefficients)[subvars]
+        subvars <- coefnames[startsWith(coefnames, i)]
         # Detect if subvars if multivariate
         if (length(subvars) > 1) {
           # Extract prefix only
-          subvars <- substr(subvars, nchar(i) + 1, 999L)
+          subvars <- substring(subvars, nchar(i) + 1)
           fsub <- match(make.names(subvars), newvars, 0L)
           if (any(fsub == 0)) {
             # Check for misnamed columns
