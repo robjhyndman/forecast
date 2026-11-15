@@ -625,7 +625,6 @@ calcLikelihood <- function(
       small.phi = small.phi,
       ar.coefs = ar.coefs,
       ma.coefs = ma.coefs,
-      tau = tau,
       bc.lower = bc.lower,
       bc.upper = bc.upper
     )
@@ -749,8 +748,7 @@ calcLikelihoodNOTransformed <- function(
       box.cox = NULL,
       small.phi = small.phi,
       ar.coefs = ar.coefs,
-      ma.coefs = ma.coefs,
-      tau = tau
+      ma.coefs = ma.coefs
     )
   ) {
     return(log.likelihood)
