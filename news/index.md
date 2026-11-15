@@ -69,6 +69,10 @@
   [`tbats()`](https://pkg.robjhyndman.com/forecast/reference/tbats.md)
   no longer leave a `lambda` attribute on the seed states, which was
   printed with models that use a Box-Cox transformation.
+- [`bats()`](https://pkg.robjhyndman.com/forecast/reference/bats.md) and
+  [`tbats()`](https://pkg.robjhyndman.com/forecast/reference/tbats.md)
+  no longer error with `use.parallel = TRUE` when only one combination
+  of Box-Cox, trend and damping options is left to fit.
 - [`bizdays()`](https://pkg.robjhyndman.com/forecast/reference/bizdays.md)
   now gives an informative error when the series is not monthly or
   quarterly.

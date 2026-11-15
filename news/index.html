@@ -84,6 +84,8 @@
 <li>
 <code><a href="../reference/bats.html">bats()</a></code> and <code><a href="../reference/tbats.html">tbats()</a></code> no longer leave a <code>lambda</code> attribute on the seed states, which was printed with models that use a Box-Cox transformation.</li>
 <li>
+<code><a href="../reference/bats.html">bats()</a></code> and <code><a href="../reference/tbats.html">tbats()</a></code> no longer error with <code>use.parallel = TRUE</code> when only one combination of Box-Cox, trend and damping options is left to fit.</li>
+<li>
 <code><a href="../reference/bizdays.html">bizdays()</a></code> now gives an informative error when the series is not monthly or quarterly.</li>
 <li>
 <code><a href="../reference/bizdays.html">bizdays()</a></code> now returns a plain time series, like <code><a href="../reference/monthdays.html">monthdays()</a></code> and <code><a href="../reference/easter.html">easter()</a></code>, instead of one carrying the period labels as <code>dim</code> and <code>dimnames</code> attributes.</li>
