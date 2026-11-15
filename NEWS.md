@@ -24,6 +24,7 @@
 * `easter()` now returns the correct fractions when Easter spans two months or quarters and the series starts in April (or the second quarter) or ends in March (or the first quarter).
 * `ets()` now keeps the series name for short series.
 * `ets()` no longer treats parameters as admissible when the polynomial root search fails.
+* `ets()` now uses the same degrees of freedom for `sigma2` as the original fit when refitting with `use.initial.values = TRUE`.
 * `forecast()` methods now always sort prediction intervals by increasing `level`, so `plot.forecast()` no longer swaps the shading when `level` is supplied out of order.
 * `forecast.Arima()` now correctly passes `xreg` when `bootstrap = TRUE` (#1115).
 * `forecast.Arima()` now gives a single warning listing all unknown arguments instead of running one message per argument together.
