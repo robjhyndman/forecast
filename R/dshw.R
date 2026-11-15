@@ -86,8 +86,9 @@ dshw <- function(
     period1 <- model$period1
     period2 <- model$period2
   } else if (inherits(y, "msts") && length(attr(y, "msts")) == 2) {
-    period1 <- as.integer(sort(attr(y, "msts"))[1])
-    period2 <- as.integer(sort(attr(y, "msts"))[2])
+    periods <- as.integer(sort(attr(y, "msts")))
+    period1 <- periods[1]
+    period2 <- periods[2]
   } else if (is.null(period1) || is.null(period2)) {
     stop(
       "Error in dshw(): y must either be an msts object with two seasonal periods OR the seasonal periods should be specified with period1= and period2="
@@ -296,7 +297,7 @@ seasindex <- function(y, p) {
   shorty <- y[1:n2]
   average <- numeric(n)
   simplema <- zoo::rollmean.default(shorty, p)
-  if (identical(p %% 2, 0)) {
+  if (p %% 2 == 0) {
     # Even order
     centeredma <- zoo::rollmean.default(simplema[1:(n2 - p + 1)], 2)
     average[p / 2 + 1:p] <- shorty[p / 2 + 1:p] / centeredma[1:p]

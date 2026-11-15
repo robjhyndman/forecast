@@ -765,10 +765,7 @@ Arima <- function(
 
   # Calculate aicc & bic based on tmp$aic
   npar <- length(tmp$coef[tmp$mask]) + 1
-  missing <- is.na(tmp$residuals)
-  firstnonmiss <- head(which(!missing), 1)
-  lastnonmiss <- tail(which(!missing), 1)
-  n <- sum(!missing[firstnonmiss:lastnonmiss])
+  n <- sum(!is.na(tmp$residuals))
   nstar <- n - tmp$arma[6] - tmp$arma[7] * tmp$arma[5]
   tmp$aicc <- tmp$aic + 2 * npar * (nstar / (nstar - npar - 1) - 1)
   tmp$bic <- tmp$aic + npar * (log(nstar) - 2)

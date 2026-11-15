@@ -2,7 +2,7 @@
 na.ends <- function(x) {
   tspx <- tsp(x)
   # Strip initial and final missing values
-  nonmiss <- seq_along(x)[!is.na(x)]
+  nonmiss <- which(!is.na(x), useNames = FALSE)
   if (length(nonmiss) == 0) {
     stop("No non-missing data")
   }
@@ -20,7 +20,7 @@ na.ends <- function(x) {
 # returns y with the nas put back at beginning but not end.
 undo.na.ends <- function(x, y) {
   n <- length(x)
-  nonmiss <- seq_along(x)[!is.na(x)]
+  nonmiss <- which(!is.na(x), useNames = FALSE)
   j <- nonmiss[1]
   k <- nonmiss[length(nonmiss)]
   if (j > 1) {

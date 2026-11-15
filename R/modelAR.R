@@ -118,7 +118,7 @@ modelAR <- function(
     }
     # Check new data
     m <- max(round(frequency(model$x)), 1L)
-    minlength <- max(c(model$p, model$P * m)) + 1
+    minlength <- max(model$p, model$P * m) + 1
     if (length(x) < minlength) {
       stop(sprintf(
         "Series must be at least of length %d to use fitted model.",
