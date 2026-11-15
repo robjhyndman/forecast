@@ -126,8 +126,8 @@ makeParscale <- function(control) {
     parscale <- c(parscale, rep(1e-5, control$length.gamma))
   }
 
-  if ((control$p != 0) || (control$q != 0)) {
-    parscale <- c(parscale, rep(1e-1, (control$p + control$q)))
+  if (control$p != 0 || control$q != 0) {
+    parscale <- c(parscale, rep(1e-1, control$p + control$q))
   }
   parscale
 }
@@ -151,8 +151,8 @@ makeParscaleBATS <- function(control) {
     parscale <- c(parscale, rep(1e-2, control$length.gamma))
   }
 
-  if ((control$p != 0) || (control$q != 0)) {
-    parscale <- c(parscale, rep(1e-1, (control$p + control$q)))
+  if (control$p != 0 || control$q != 0) {
+    parscale <- c(parscale, rep(1e-1, control$p + control$q))
   }
   parscale
 }

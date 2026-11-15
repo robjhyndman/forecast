@@ -154,12 +154,12 @@ bats <- function(
   }
 
   # Check for non-positive data
-  if (any((y <= 0))) {
+  if (any(y <= 0)) {
     use.box.cox <- FALSE
   }
 
   if (!is.null(use.box.cox) && !is.null(use.trend) && use.parallel) {
-    if (use.trend && (!is.null(use.damped.trend))) {
+    if (use.trend && !is.null(use.damped.trend)) {
       # In this case, there is only one alternative.
       use.parallel <- FALSE
     } else if (!use.trend) {

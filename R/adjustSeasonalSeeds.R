@@ -7,7 +7,7 @@ cutW <- function(use.beta, w.tilda.transpose, seasonal.periods, p = 0, q = 0) {
   i <- length(seasonal.periods)
   while (i > 1) {
     for (j in seq_len(i - 1)) {
-      if ((seasonal.periods[i] %% seasonal.periods[j]) == 0) {
+      if (seasonal.periods[i] %% seasonal.periods[j] == 0) {
         mask.vector[j] <- 1
       }
     }
@@ -45,7 +45,7 @@ cutW <- function(use.beta, w.tilda.transpose, seasonal.periods, p = 0, q = 0) {
     }
     w.pos.counter <- w.pos.counter + 1
   }
-  if ((p != 0) || (q != 0)) {
+  if (p != 0 || q != 0) {
     end.cut <- ncol(w.tilda.transpose)
     start.cut <- end.cut - (p + q) + 1
     w.tilda.transpose <- w.tilda.transpose[, -c(start.cut:end.cut)]
@@ -88,7 +88,7 @@ calcSeasonalSeeds <- function(
       )
       additional <- matrix(
         -k / s,
-        nrow = (-1 * mask.vector[x.pos.counter]),
+        nrow = -1 * mask.vector[x.pos.counter],
         ncol = 1
       )
       current.periodicity <- rbind(current.periodicity, additional)
@@ -96,15 +96,10 @@ calcSeasonalSeeds <- function(
       x.pos <- x.pos + s + mask.vector[x.pos.counter]
     } else {
       # Find k
-      k <- sum(coefs[(x.pos + 1):(x.pos + s - 1)])
+      extract <- coefs[(x.pos + 1):(x.pos + s - 1)]
+      k <- sum(extract)
       # create the current.periodicity vector
-      current.periodicity <- coefs[(x.pos + 1):(x.pos + s - 1)] - k / s
-      current.periodicity <- c(current.periodicity, -k / s)
-      current.periodicity <- matrix(
-        current.periodicity,
-        nrow = length(current.periodicity),
-        ncol = 1
-      )
+      current.periodicity <- matrix(c(extract - k / s, -k / s), ncol = 1)
       new.x.nought <- rbind(new.x.nought, current.periodicity)
       x.pos <- x.pos + s - 1
     }
@@ -112,13 +107,8 @@ calcSeasonalSeeds <- function(
     x.pos.counter <- x.pos.counter + 1
   }
   # Lastly, get the arma error seed states, if they exist.
-  if ((p != 0) || (q != 0)) {
-    arma.seed.states <- numeric((p + q))
-    arma.seed.states <- matrix(
-      arma.seed.states,
-      nrow = length(arma.seed.states),
-      ncol = 1
-    )
+  if (p != 0 || q != 0) {
+    arma.seed.states <- matrix(0, nrow = p + q, ncol = 1)
     # Final value of x.nought
     x.nought <- rbind(new.x.nought, arma.seed.states)
   } else {

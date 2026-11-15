@@ -1321,11 +1321,11 @@ myarima <- function(
       if (use.season) {
         cat("(", paste(seasonal, collapse = ","), ")[", m, "]", sep = "")
       }
-      if (constant && (order[2] + seasonal[2] == 0)) {
+      if (constant && order[2] + seasonal[2] == 0) {
         cat(" with non-zero mean")
-      } else if (constant && (order[2] + seasonal[2] == 1)) {
+      } else if (constant && order[2] + seasonal[2] == 1) {
         cat(" with drift        ")
-      } else if (!constant && (order[2] + seasonal[2] == 0)) {
+      } else if (!constant && order[2] + seasonal[2] == 0) {
         cat(" with zero mean    ")
       } else {
         cat("                   ")

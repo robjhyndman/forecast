@@ -161,8 +161,8 @@ plot.Arima <- function(
     }
   }
   if (
-    (type == "ar" && (p == 0)) ||
-      (type == "ma" && (q == 0)) ||
+    (type == "ar" && p == 0) ||
+      (type == "ma" && q == 0) ||
       (p == 0 && q == 0)
   ) {
     warning("No roots to plot")

@@ -96,8 +96,8 @@ forecast.bats <- function(
 
   if (h > 1) {
     for (t in 2:h) {
-      x[, t] <- F %*% x[, (t - 1)]
-      y.forecast[t] <- w$w.transpose %*% x[, (t - 1)]
+      x[, t] <- F %*% x[, t - 1]
+      y.forecast[t] <- w$w.transpose %*% x[, t - 1]
     }
   }
   ## Make prediction intervals here
@@ -109,7 +109,7 @@ forecast.bats <- function(
     for (j in seq_len(h - 1)) {
       c.j <- w$w.transpose %*% f.running.g
       f.running.g <- F %*% f.running.g
-      variance.multiplier[(j + 1)] <- variance.multiplier[j] + c.j^2
+      variance.multiplier[j + 1] <- variance.multiplier[j] + c.j^2
     }
   }
 

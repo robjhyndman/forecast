@@ -78,12 +78,12 @@ forecast.tbats <- function(
   } else {
     gamma.bold <- NULL
   }
-  g <- matrix(0, nrow = (tau + 1 + adj.beta + object$p + object$q), ncol = 1)
+  g <- matrix(0, nrow = tau + 1 + adj.beta + object$p + object$q, ncol = 1)
   if (object$p != 0) {
-    g[(1 + adj.beta + tau + 1), 1] <- 1
+    g[1 + adj.beta + tau + 1, 1] <- 1
   }
   if (object$q != 0) {
-    g[(1 + adj.beta + tau + object$p + 1), 1] <- 1
+    g[1 + adj.beta + tau + object$p + 1, 1] <- 1
   }
   updateTBATSGMatrix(
     g = g,
@@ -112,8 +112,8 @@ forecast.tbats <- function(
   if (h > 1) {
     f.running.g <- g
     for (t in 2L:h) {
-      x[, t] <- F %*% x[, (t - 1)]
-      y.forecast[t] <- w$w.transpose %*% x[, (t - 1)]
+      x[, t] <- F %*% x[, t - 1]
+      y.forecast[t] <- w$w.transpose %*% x[, t - 1]
       c.j <- w$w.transpose %*% f.running.g
       f.running.g <- F %*% f.running.g
       variance.multiplier[t] <- variance.multiplier[t - 1] + c.j^2

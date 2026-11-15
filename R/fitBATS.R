@@ -52,7 +52,7 @@ fitPreviousBATSModel <- function(y, model, biasadj = FALSE) {
   fitted.values.and.errors <- calcModel(y.touse, model$seed.states, F, g$g, w)
   e <- fitted.values.and.errors$e
   fitted.values <- fitted.values.and.errors$y.hat
-  variance <- sum((e * e)) / length(y)
+  variance <- sum(e^2) / length(y)
   if (!is.null(lambda)) {
     fitted.values <- InvBoxCox(
       fitted.values,
@@ -267,7 +267,7 @@ fitSpecificBATS <- function(
     )
   } else {
     # Remove the AR() and MA() bits if they exist
-    if ((p != 0) || (q != 0)) {
+    if (p != 0 || q != 0) {
       end.cut <- ncol(w.tilda.transpose)
       start.cut <- end.cut - (p + q) + 1
       w.tilda.transpose <- w.tilda.transpose[, -c(start.cut:end.cut)]
@@ -275,13 +275,8 @@ fitSpecificBATS <- function(
     x.nought <- lm(t(y.tilda) ~ w.tilda.transpose - 1)$coefficients
     x.nought <- matrix(x.nought, nrow = length(x.nought), ncol = 1)
     ## Replace the AR() and MA() bits if they exist
-    if ((p != 0) || (q != 0)) {
-      arma.seed.states <- numeric((p + q))
-      arma.seed.states <- matrix(
-        arma.seed.states,
-        nrow = length(arma.seed.states),
-        ncol = 1
-      )
+    if (p != 0 || q != 0) {
+      arma.seed.states <- matrix(0, nrow = p + q, ncol = 1)
       x.nought <- rbind(x.nought, arma.seed.states)
     }
   }
@@ -369,7 +364,7 @@ fitSpecificBATS <- function(
     lambda <- attr(y.transformed, "lambda")
     fitted.values.and.errors <- calcModel(y.transformed, x.nought, F, g$g, w)
     e <- fitted.values.and.errors$e
-    variance <- sum((e * e)) / length(y)
+    variance <- sum(e^2) / length(y)
     fitted.values <- InvBoxCox(
       fitted.values.and.errors$y.hat,
       lambda = lambda,
@@ -453,7 +448,7 @@ fitSpecificBATS <- function(
     fitted.values.and.errors <- calcModel(y, x.nought, F, g$g, w)
     e <- fitted.values.and.errors$e
     fitted.values <- fitted.values.and.errors$y.hat
-    variance <- sum((e * e)) / length(y)
+    variance <- sum(e^2) / length(y)
   }
   # Get the likelihood
   likelihood <- optim.like$value
@@ -745,7 +740,7 @@ calcLikelihoodNOTransformed <- function(
     q = as.integer(q)
   )
 
-  log.likelihood <- n * log(sum(opt.env$e * opt.env$e))
+  log.likelihood <- n * log(sum(opt.env$e^2))
   opt.env$D <- opt.env$F - opt.env$g %*% opt.env$w.transpose
 
   if (

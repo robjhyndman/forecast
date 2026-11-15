@@ -228,8 +228,8 @@ tsoutliers <- function(x, iterate = 2, lambda = NULL) {
   limits <- resid.q + 3 * iqr * c(-1, 1)
 
   # Find residuals outside limits
-  if ((limits[2] - limits[1]) > 1e-14) {
-    outliers <- which((resid < limits[1]) | (resid > limits[2]))
+  if (limits[2] - limits[1] > 1e-14) {
+    outliers <- which(resid < limits[1] | resid > limits[2])
   } else {
     outliers <- numeric(0)
   }
