@@ -13,6 +13,9 @@ getResponse(object, ...)
 # Default S3 method
 getResponse(object, ...)
 
+# S3 method for class 'StructTS'
+getResponse(object, ...)
+
 # S3 method for class 'lm'
 getResponse(object, ...)
 

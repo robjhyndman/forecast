@@ -106,7 +106,11 @@
 <li>
 <code><a href="../reference/ets.html">ets()</a></code> no longer treats parameters as admissible when the polynomial root search fails.</li>
 <li>
+<code><a href="../reference/ets.html">ets()</a></code> now uses the same degrees of freedom for <code>sigma2</code> as the original fit when refitting with <code>use.initial.values = TRUE</code>.</li>
+<li>
 <code><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast()</a></code> methods now always sort prediction intervals by increasing <code>level</code>, so <code><a href="../reference/plot.forecast.html">plot.forecast()</a></code> no longer swaps the shading when <code>level</code> is supplied out of order.</li>
+<li>
+<code><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast()</a></code> methods no longer warn that <code>biasadj</code> information was not found when <code>lambda</code> is supplied without <code>biasadj</code>. They now consistently use the <code>biasadj</code> setting stored with <code>lambda</code>, or <code>FALSE</code> if there is none.</li>
 <li>
 <code><a href="../reference/forecast.Arima.html">forecast.Arima()</a></code> now correctly passes <code>xreg</code> when <code>bootstrap = TRUE</code> (<a href="https://github.com/robjhyndman/forecast/issues/1115" class="external-link">#1115</a>).</li>
 <li>
@@ -143,6 +147,8 @@
 <code>forecast.varest()</code> now supports <code>fan = TRUE</code> and <code>level</code> values between 0 and 1.</li>
 <li>
 <code><a href="../reference/geom_forecast.html">geom_forecast()</a></code> no longer errors for forecast objects when forecast is not attached.</li>
+<li>
+<code><a href="../reference/getResponse.html">getResponse()</a></code> now returns the original series for <code>StructTS</code> models instead of its time series attributes.</li>
 <li>
 <code><a href="../reference/gglagplot.html">gglagchull()</a></code> now labels an unnamed series with the name of the object instead of its deparsed values.</li>
 <li>
