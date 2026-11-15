@@ -19,6 +19,19 @@ test_that("Test parallel of bats", {
   expect_gt(bats(abc, use.box.cox = TRUE, use.parallel = TRUE)$lambda, 0.999)
 })
 
+test_that("bats() works in parallel with a single model combination", {
+  fit <- bats(
+    USAccDeaths,
+    use.box.cox = FALSE,
+    use.damped.trend = TRUE,
+    use.arma.errors = FALSE,
+    use.parallel = TRUE
+  )
+  expect_null(fit$lambda)
+  expect_gt(fit$damping.parameter, 0)
+  expect_equal(fit$seasonal.periods, 12)
+})
+
 test_that("bats() errors when model is not a bats object", {
   expect_snapshot(error = TRUE, {
     bats(USAccDeaths, model = ses(USAccDeaths))

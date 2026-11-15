@@ -139,3 +139,19 @@ test_that("tbats() selects the same model in parallel", {
     tbats(y, use.arma.errors = FALSE, use.parallel = FALSE)[fields]
   )
 })
+
+test_that("tbats() works in parallel with a single model combination", {
+  skip_on_cran()
+  skip_on_ci()
+  fit <- tbats(
+    USAccDeaths,
+    use.box.cox = FALSE,
+    use.damped.trend = TRUE,
+    use.arma.errors = FALSE,
+    use.parallel = TRUE,
+    num.cores = 2
+  )
+  expect_null(fit$lambda)
+  expect_gt(fit$damping.parameter, 0)
+  expect_equal(fit$seasonal.periods, 12)
+})
