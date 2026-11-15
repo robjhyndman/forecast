@@ -95,10 +95,11 @@ forecast.mlm <- function(
   level = c(80, 95),
   fan = FALSE,
   lambda = object$lambda,
-  biasadj = attr(object$lambda, "biasadj"),
+  biasadj = attr(lambda, "biasadj"),
   ts = TRUE,
   ...
 ) {
+  biasadj <- biasadj %||% FALSE
   out <- list(
     model = object,
     forecast = vector("list", NCOL(object$coefficients))

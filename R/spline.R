@@ -237,6 +237,7 @@ forecast.spline_model <- function(
   npaths = 5000,
   ...
 ) {
+  biasadj <- biasadj %||% FALSE
   n <- length(object$y)
   freq <- frequency(object$y)
   if (!is.null(lambda)) {

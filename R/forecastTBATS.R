@@ -26,13 +26,7 @@ forecast.tbats <- function(
     ts.frequency <- 1
   }
 
-  if (is.null(biasadj)) {
-    if (!is.null(object$lambda)) {
-      biasadj <- attr(object$lambda, "biasadj")
-    } else {
-      biasadj <- FALSE
-    }
-  }
+  biasadj <- biasadj %||% attr(object$lambda, "biasadj") %||% FALSE
   if (missing(h)) {
     if (is.null(object$seasonal.periods)) {
       h <- if (ts.frequency == 1) 10 else 2 * ts.frequency

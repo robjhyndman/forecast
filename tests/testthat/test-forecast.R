@@ -58,3 +58,71 @@ test_that("as.data.frame() stacks the series of an mforecast object", {
     ignore_attr = TRUE
   )
 })
+
+test_that("forecast() methods take biasadj from the lambda in use", {
+  y <- AirPassengers
+  fits <- list(
+    Arima = Arima(y, order = c(1, 1, 0), lambda = 0, biasadj = TRUE),
+    ets = ets(y, lambda = 0, biasadj = TRUE),
+    arfima = arfima(WWWusage, lambda = 0, biasadj = TRUE),
+    stlm = stlm(y, lambda = 0, biasadj = TRUE),
+    rw_model = rw_model(y, lambda = 0, biasadj = TRUE),
+    mean_model = mean_model(y, lambda = 0, biasadj = TRUE),
+    theta_model = theta_model(y, lambda = 0, biasadj = TRUE),
+    spline_model = spline_model(y, lambda = 0, biasadj = TRUE),
+    tslm = tslm(y ~ trend, lambda = 0, biasadj = TRUE)
+  )
+  for (name in names(fits)) {
+    fit <- fits[[name]]
+    adjusted <- forecast(fit, h = 2, biasadj = TRUE)$mean
+    unadjusted <- forecast(fit, h = 2, biasadj = FALSE)$mean
+    expect_equal(forecast(fit, h = 2)$mean, adjusted, info = name)
+    expect_no_warning(fc <- forecast(fit, h = 2, lambda = 0))
+    expect_equal(fc$mean, unadjusted, info = name)
+    fc <- forecast(fit, h = 2, lambda = structure(0, biasadj = TRUE))
+    expect_equal(fc$mean, adjusted, info = name)
+  }
+})
+
+test_that("forecast() methods default to no bias adjustment", {
+  y <- AirPassengers
+  fits <- list(
+    Arima = Arima(y, order = c(1, 1, 0)),
+    ets = ets(y, model = "ANN"),
+    arfima = arfima(WWWusage),
+    stlm = stlm(y),
+    rw_model = rw_model(y),
+    mean_model = mean_model(y),
+    theta_model = theta_model(y),
+    spline_model = spline_model(y),
+    tslm = tslm(y ~ trend)
+  )
+  for (name in names(fits)) {
+    fit <- fits[[name]]
+    expect_no_warning(fc <- forecast(fit, h = 2, lambda = 0))
+    expect_equal(
+      fc$mean,
+      forecast(fit, h = 2, lambda = 0, biasadj = FALSE)$mean,
+      info = name
+    )
+  }
+})
+
+test_that("forecast() uses the model's biasadj for bats, tbats, mstl and mlm", {
+  y <- AirPassengers
+  fits <- list(
+    bats = bats(y, use.box.cox = TRUE, biasadj = TRUE, use.parallel = FALSE),
+    tbats = tbats(y, use.box.cox = TRUE, biasadj = TRUE, use.parallel = FALSE),
+    mstl = mstl(y, lambda = 0, biasadj = TRUE),
+    mlm = tslm(cbind(mdeaths, fdeaths) ~ trend, lambda = 0, biasadj = TRUE)
+  )
+  for (name in names(fits)) {
+    fit <- fits[[name]]
+    expect_no_warning(fc <- forecast(fit, h = 2))
+    expect_equal(
+      fc$mean,
+      forecast(fit, h = 2, biasadj = TRUE)$mean,
+      info = name
+    )
+  }
+})

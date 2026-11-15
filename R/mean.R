@@ -101,11 +101,12 @@ forecast.mean_model <- function(
   level = c(80, 95),
   fan = FALSE,
   lambda = object$lambda,
-  biasadj = attr(object$lambda, "biasadj"),
+  biasadj = attr(lambda, "biasadj"),
   bootstrap = FALSE,
   npaths = 5000,
   ...
 ) {
+  biasadj <- biasadj %||% FALSE
   n <- length(object$y)
   f <- rep(object$mu, h)
   level <- get_conf_level(level, fan)
