@@ -15,7 +15,7 @@ make.Sigma <- function(n, n0 = 0) {
     inn <- i:nn
     Sigma[i, inn] <- Sigma[inn, i] <- (i * i * (3 * (inn) - i)) / 6
   }
-  Sigma / (n^3)
+  Sigma / n^3
 }
 
 ## Compute spline matrices

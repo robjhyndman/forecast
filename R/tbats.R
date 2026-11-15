@@ -131,7 +131,7 @@ tbats <- function(
   }
 
   # Check for observations are positive
-  if (any((y <= 0))) {
+  if (any(y <= 0)) {
     use.box.cox <- FALSE
   }
 
@@ -225,7 +225,7 @@ tbats <- function(
     if (seasonal.periods[i] == 2) {
       next
     }
-    max.k <- floor(((seasonal.periods[i] - 1) / 2))
+    max.k <- floor((seasonal.periods[i] - 1) / 2)
     if (i != 1) {
       current.k <- 2
       while (current.k <= max.k) {
@@ -235,7 +235,7 @@ tbats <- function(
         }
         latter <- seasonal.periods[i] / current.k
 
-        if (any(((seasonal.periods[1:(i - 1)] %% latter) == 0))) {
+        if (any(seasonal.periods[1:(i - 1)] %% latter == 0)) {
           max.k <- current.k - 1
           break
         } else {
@@ -422,7 +422,7 @@ tbats <- function(
           if (!trend && damping) {
             next
           }
-          if (all((model.params == c(box.cox, trend, damping)))) {
+          if (all(model.params == c(box.cox, trend, damping))) {
             new.model <- filterTBATSSpecifics(
               y = y,
               box.cox = box.cox,
@@ -491,7 +491,7 @@ parFilterTBATSSpecifics <- function(
   box.cox <- control.array[control.number, 1]
   trend <- control.array[control.number, 2]
   damping <- control.array[control.number, 3]
-  if (!all((model.params == c(box.cox, trend, damping)))) {
+  if (!all(model.params == c(box.cox, trend, damping))) {
     first.model <- try(
       fitSpecificTBATS(
         y = y,
@@ -525,7 +525,7 @@ parFilterTBATSSpecifics <- function(
     if (!inherits(arma, "try-error")) {
       p <- arma$arma[1]
       q <- arma$arma[2]
-      if ((p != 0) || (q != 0)) {
+      if (p != 0 || q != 0) {
         # Did auto.arima() find any AR() or MA() coefficients?
         if (p != 0) {
           ar.coefs <- numeric(p)
@@ -660,7 +660,7 @@ filterTBATSSpecifics <- function(
     if (!inherits(arma, "try-error")) {
       p <- arma$arma[1]
       q <- arma$arma[2]
-      if ((p != 0) || (q != 0)) {
+      if (p != 0 || q != 0) {
         # Did auto.arima() find any AR() or MA() coefficients?
         if (p != 0) {
           ar.coefs <- numeric(p)

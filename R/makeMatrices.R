@@ -84,10 +84,10 @@ makeTBATSFMatrix <- function(
         k = as.integer(k.vector[i])
       )
       A[
-        (last.pos + 1):(last.pos + (2 * k.vector[i])),
-        (last.pos + 1):(last.pos + (2 * k.vector[i]))
+        (last.pos + 1):(last.pos + 2 * k.vector[i]),
+        (last.pos + 1):(last.pos + 2 * k.vector[i])
       ] <- Ai
-      last.pos <- last.pos + (2 * k.vector[i])
+      last.pos <- last.pos + 2 * k.vector[i]
     }
     seasonal.row <- cbind(seasonal.row, A)
 
@@ -112,8 +112,8 @@ makeTBATSFMatrix <- function(
       ar.seasonal.zeros <- matrix(0, nrow = p, ncol = tau)
       ar.rows <- cbind(ar.rows, ar.seasonal.zeros)
     }
-    ident <- diag((p - 1))
-    ident <- cbind(ident, matrix(0, nrow = (p - 1), ncol = 1))
+    ident <- diag(p - 1)
+    ident <- cbind(ident, matrix(0, nrow = p - 1, ncol = 1))
     ar.part <- rbind(ar.coefs, ident)
     ar.rows <- cbind(ar.rows, ar.part)
 
@@ -140,8 +140,8 @@ makeTBATSFMatrix <- function(
       ar.in.ma <- matrix(0, nrow = q, ncol = p)
       ma.rows <- cbind(ma.rows, ar.in.ma)
     }
-    ident <- diag((q - 1))
-    ident <- cbind(ident, matrix(0, nrow = (q - 1), ncol = 1))
+    ident <- diag(q - 1)
+    ident <- cbind(ident, matrix(0, nrow = q - 1, ncol = 1))
     ma.part <- rbind(matrix(0, nrow = 1, ncol = q), ident)
     ma.rows <- cbind(ma.rows, ma.part)
     F <- rbind(F, ma.rows)
@@ -210,20 +210,20 @@ makeFMatrix <- function(
       if (i == seasonal.periods[1]) {
         a.row.one <- matrix(0, nrow = 1, ncol = i)
         a.row.one[i] <- 1
-        a.row.two <- cbind(diag((i - 1)), matrix(0, nrow = (i - 1), ncol = 1))
+        a.row.two <- cbind(diag(i - 1), matrix(0, nrow = i - 1, ncol = 1))
         A <- rbind(a.row.one, a.row.two)
       } else {
         old.A.rows <- nrow(A)
         old.A.columns <- ncol(A)
         a.row.one <- matrix(0, nrow = 1, ncol = i)
         a.row.one[i] <- 1
-        a.row.two <- cbind(diag((i - 1)), matrix(0, nrow = (i - 1), ncol = 1))
+        a.row.two <- cbind(diag(i - 1), matrix(0, nrow = i - 1, ncol = 1))
         Ai <- rbind(a.row.one, a.row.two)
         A <- rbind(A, matrix(0, nrow = nrow(Ai), ncol = old.A.columns))
         A <- cbind(A, matrix(0, nrow = nrow(A), ncol = ncol(Ai)))
         A[
-          ((old.A.rows + 1):(old.A.rows + nrow(Ai))),
-          ((old.A.columns + 1):(old.A.columns + ncol(Ai)))
+          (old.A.rows + 1):(old.A.rows + nrow(Ai)),
+          (old.A.columns + 1):(old.A.columns + ncol(Ai))
         ] <- Ai
       }
     }
@@ -250,8 +250,8 @@ makeFMatrix <- function(
       ar.seasonal.zeros <- matrix(0, nrow = p, ncol = tau)
       ar.rows <- cbind(ar.rows, ar.seasonal.zeros)
     }
-    ident <- diag((p - 1))
-    ident <- cbind(ident, matrix(0, nrow = (p - 1), ncol = 1))
+    ident <- diag(p - 1)
+    ident <- cbind(ident, matrix(0, nrow = p - 1, ncol = 1))
     ar.part <- rbind(ar.coefs, ident)
     ar.rows <- cbind(ar.rows, ar.part)
 
@@ -278,8 +278,8 @@ makeFMatrix <- function(
       ar.in.ma <- matrix(0, nrow = q, ncol = p)
       ma.rows <- cbind(ma.rows, ar.in.ma)
     }
-    ident <- diag((q - 1))
-    ident <- cbind(ident, matrix(0, nrow = (q - 1), ncol = 1))
+    ident <- diag(q - 1)
+    ident <- cbind(ident, matrix(0, nrow = q - 1, ncol = 1))
     ma.part <- rbind(matrix(0, nrow = 1, ncol = q), ident)
     ma.rows <- cbind(ma.rows, ma.part)
     F <- rbind(F, ma.rows)

@@ -85,7 +85,7 @@ dshw <- function(
   if (!is.null(model) && model$method == "DSHW") {
     period1 <- model$period1
     period2 <- model$period2
-  } else if (inherits(y, "msts") && (length(attr(y, "msts")) == 2)) {
+  } else if (inherits(y, "msts") && length(attr(y, "msts")) == 2) {
     period1 <- as.integer(sort(attr(y, "msts"))[1])
     period2 <- as.integer(sort(attr(y, "msts"))[2])
   } else if (is.null(period1) || is.null(period2)) {

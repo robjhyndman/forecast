@@ -7,7 +7,7 @@ cutW <- function(use.beta, w.tilda.transpose, seasonal.periods, p = 0, q = 0) {
   i <- length(seasonal.periods)
   while (i > 1) {
     for (j in seq_len(i - 1)) {
-      if ((seasonal.periods[i] %% seasonal.periods[j]) == 0) {
+      if (seasonal.periods[i] %% seasonal.periods[j] == 0) {
         mask.vector[j] <- 1
       }
     }
@@ -45,7 +45,7 @@ cutW <- function(use.beta, w.tilda.transpose, seasonal.periods, p = 0, q = 0) {
     }
     w.pos.counter <- w.pos.counter + 1
   }
-  if ((p != 0) || (q != 0)) {
+  if (p != 0 || q != 0) {
     end.cut <- ncol(w.tilda.transpose)
     start.cut <- end.cut - (p + q) + 1
     w.tilda.transpose <- w.tilda.transpose[, -c(start.cut:end.cut)]
@@ -88,7 +88,7 @@ calcSeasonalSeeds <- function(
       )
       additional <- matrix(
         -k / s,
-        nrow = (-1 * mask.vector[x.pos.counter]),
+        nrow = -1 * mask.vector[x.pos.counter],
         ncol = 1
       )
       current.periodicity <- rbind(current.periodicity, additional)
@@ -112,8 +112,8 @@ calcSeasonalSeeds <- function(
     x.pos.counter <- x.pos.counter + 1
   }
   # Lastly, get the arma error seed states, if they exist.
-  if ((p != 0) || (q != 0)) {
-    arma.seed.states <- numeric((p + q))
+  if (p != 0 || q != 0) {
+    arma.seed.states <- numeric(p + q)
     arma.seed.states <- matrix(
       arma.seed.states,
       nrow = length(arma.seed.states),

@@ -192,13 +192,13 @@ myarima.sim <- function(model, n, x, e, ...) {
   ## AR "filtering"
   len.ar <- length(model$ar)
 
-  if (length(model$ar) && (len.ar <= length(data))) {
-    if ((D != 0) && (d != 0)) {
+  if (length(model$ar) && len.ar <= length(data)) {
+    if (D != 0 && d != 0) {
       diff.data <- diff(data, lag = 1, differences = d)
       diff.data <- diff(diff.data, lag = m, differences = D)
-    } else if ((D != 0) && (d == 0)) {
+    } else if (D != 0 && d == 0) {
       diff.data <- diff(data, lag = model$seasonal.period, differences = D)
-    } else if ((D == 0) && (d != 0)) {
+    } else if (D == 0 && d != 0) {
       diff.data <- diff(data, lag = 1, differences = d)
     } else {
       diff.data <- data
@@ -223,7 +223,7 @@ myarima.sim <- function(model, n, x, e, ...) {
     # AR filtering for all other cases where AR is used.
     x <- stats::filter(x, model$ar, method = "recursive")
   }
-  if ((d == 0) && (D == 0) && !flag.noadjust) {
+  if (d == 0 && D == 0 && !flag.noadjust) {
     # Adjust to ensure end matches approximately
     # Last 20 diffs
     if (n.start >= 20) {
@@ -240,13 +240,13 @@ myarima.sim <- function(model, n, x, e, ...) {
     }
     x <- x + xdiff
   }
-  if ((n.start > 0) && !flag.noadjust) {
+  if (n.start > 0 && !flag.noadjust) {
     x <- x[-(1:n.start)]
   }
 
   ######## Undo all differences
 
-  if ((D > 0) && (d == 0)) {
+  if (D > 0 && d == 0) {
     # Seasonal undifferencing, if there is no regular differencing
     i <- length(data) - D * m + 1
     seasonal.xi <- data[i:length(data)]
@@ -254,12 +254,12 @@ myarima.sim <- function(model, n, x, e, ...) {
     x <- diffinv(x, lag = m, differences = D, xi = seasonal.xi)[
       -(1:length.s.xi)
     ]
-  } else if ((d > 0) && (D == 0)) {
+  } else if (d > 0 && D == 0) {
     # Regular undifferencing, if there is no seasonal differencing
     x <- diffinv(x, differences = d, xi = data[length(data) - (d:1) + 1])[
       -(1:d)
     ]
-  } else if ((d > 0) && (D > 0)) {
+  } else if (d > 0 && D > 0) {
     # Undifferencing for where the differencing is both Seasonal and Non-Seasonal
     # Regular first
     delta.four <- diff(data, lag = m, differences = D)
@@ -302,7 +302,7 @@ simulate.Arima <- function(
   # Error check:
   if (object$arma[7] < 0) {
     stop("Value for seasonal difference is < 0. Must be >= 0")
-  } else if ((sum(object$arma[c(3, 4, 7)]) > 0) && (object$arma[5] < 2)) {
+  } else if (sum(object$arma[c(3, 4, 7)]) > 0 && object$arma[5] < 2) {
     stop("Invalid value for seasonal period")
   }
 

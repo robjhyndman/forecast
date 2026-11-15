@@ -719,14 +719,14 @@ Arima <- function(
   if (!is.null(include.constant)) {
     if (isTRUE(include.constant)) {
       include.mean <- TRUE
-      if ((order[2] + seasonal$order[2]) == 1) {
+      if (order[2] + seasonal$order[2] == 1) {
         include.drift <- TRUE
       }
     } else {
       include.mean <- include.drift <- FALSE
     }
   }
-  if ((order[2] + seasonal$order[2]) > 1 && include.drift) {
+  if (order[2] + seasonal$order[2] > 1 && include.drift) {
     warning("No drift term fitted as the order of difference is 2 or more.")
     include.drift <- FALSE
   }

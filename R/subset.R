@@ -141,7 +141,7 @@ if (getRversion() < "4.5.0") {
     attr_x$names <- NULL
     if (NCOL(x) > 1) {
       hx <- head.matrix(as.matrix(x), n = n, ...)
-    } else if ((length(x) + n) > 0) {
+    } else if (length(x) + n > 0) {
       hx <- head(c(x), n = n, ...)
     } else {
       return(numeric(0))
@@ -158,7 +158,7 @@ if (getRversion() < "4.5.0") {
     attr_x$names <- NULL
     if (NCOL(x) > 1) {
       hx <- tail.matrix(as.matrix(x), n = n, ...)
-    } else if ((length(x) + n) > 0) {
+    } else if (length(x) + n > 0) {
       hx <- tail(c(x), n = n, ...)
     } else {
       return(numeric(0))
