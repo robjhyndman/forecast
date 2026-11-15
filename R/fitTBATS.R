@@ -353,12 +353,7 @@ fitSpecificTBATS <- function(
   x.nought <- matrix(x.nought, nrow = length(x.nought), ncol = 1)
   ## Replace the AR() and MA() bits if they exist
   if (p != 0 || q != 0) {
-    arma.seed.states <- numeric(p + q)
-    arma.seed.states <- matrix(
-      arma.seed.states,
-      nrow = length(arma.seed.states),
-      ncol = 1
-    )
+    arma.seed.states <- matrix(0, nrow = p + q, ncol = 1)
     x.nought <- rbind(x.nought, arma.seed.states)
   }
 

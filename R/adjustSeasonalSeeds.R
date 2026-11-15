@@ -96,15 +96,10 @@ calcSeasonalSeeds <- function(
       x.pos <- x.pos + s + mask.vector[x.pos.counter]
     } else {
       # Find k
-      k <- sum(coefs[(x.pos + 1):(x.pos + s - 1)])
+      extract <- coefs[(x.pos + 1):(x.pos + s - 1)]
+      k <- sum(extract)
       # create the current.periodicity vector
-      current.periodicity <- coefs[(x.pos + 1):(x.pos + s - 1)] - k / s
-      current.periodicity <- c(current.periodicity, -k / s)
-      current.periodicity <- matrix(
-        current.periodicity,
-        nrow = length(current.periodicity),
-        ncol = 1
-      )
+      current.periodicity <- matrix(c(extract - k / s, -k / s), ncol = 1)
       new.x.nought <- rbind(new.x.nought, current.periodicity)
       x.pos <- x.pos + s - 1
     }
@@ -113,12 +108,7 @@ calcSeasonalSeeds <- function(
   }
   # Lastly, get the arma error seed states, if they exist.
   if (p != 0 || q != 0) {
-    arma.seed.states <- numeric(p + q)
-    arma.seed.states <- matrix(
-      arma.seed.states,
-      nrow = length(arma.seed.states),
-      ncol = 1
-    )
+    arma.seed.states <- matrix(0, nrow = p + q, ncol = 1)
     # Final value of x.nought
     x.nought <- rbind(new.x.nought, arma.seed.states)
   } else {
