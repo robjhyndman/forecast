@@ -56,6 +56,12 @@ test_that("refit ets model to new data", {
   )
 })
 
+test_that("ets() refit with initial values keeps sigma2", {
+  fit <- ets(USAccDeaths)
+  refit <- ets(USAccDeaths, model = fit, use.initial.values = TRUE)
+  expect_equal(refit$sigma2, fit$sigma2)
+})
+
 test_that("class methods for ets work", {
   fit <- ets(wineind, model = "MAM", alpha = 0.1611)
   expect_output(print(summary(fit)), "Smoothing parameters")

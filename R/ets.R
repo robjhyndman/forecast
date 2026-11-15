@@ -195,11 +195,13 @@ ets <- function(
       )
 
       # Compute error measures
-      np <- length(model$par) + 1
+      np <- length(model$par)
+      # The information criteria also count the error variance
+      k <- np + 1
       model$loglik <- -0.5 * e$lik
-      model$aic <- e$lik + 2 * np
-      model$bic <- e$lik + log(ny) * np
-      model$aicc <- model$aic + 2 * np * (np + 1) / (ny - np - 1)
+      model$aic <- e$lik + 2 * k
+      model$bic <- e$lik + log(ny) * k
+      model$aicc <- model$aic + 2 * k * (k + 1) / (ny - k - 1)
       model$mse <- e$amse[1]
       model$amse <- mean(e$amse)
 
