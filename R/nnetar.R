@@ -463,7 +463,7 @@ oldmodel_avnnet <- function(x, y, size, model, parallel, num.cores) {
 
 #' @export
 print.nnetarmodels <- function(x, ...) {
-  cat(paste("\nAverage of", length(x), "networks, each of which is\n"))
+  cat("\nAverage of", length(x), "networks, each of which is\n")
   print(x[[1]])
   invisible(x)
 }

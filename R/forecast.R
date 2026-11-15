@@ -196,8 +196,8 @@ summary.forecast <- function(object, ...) {
 
 #' @export
 print.summary.forecast <- function(x, ...) {
-  cat(paste("\nForecast method:", x$method))
-  cat(paste("\n\nModel Information:\n"))
+  cat("\nForecast method:", x$method)
+  cat("\n\nModel Information:\n")
   print(x$model)
   cat("\nError measures:\n")
   print(accuracy(x))

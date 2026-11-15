@@ -1081,7 +1081,7 @@ initstate <- function(y, trendtype, seasontype) {
 
 #' @export
 print.ets <- function(x, ...) {
-  cat(paste(x$method, "\n\n"))
+  cat(x$method, "\n\n")
   if (!is.null(x$call)) {
     cat("Call:", deparse(x$call), "", sep = "\n")
   }
