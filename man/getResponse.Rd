@@ -3,6 +3,7 @@
 \name{getResponse}
 \alias{getResponse}
 \alias{getResponse.default}
+\alias{getResponse.StructTS}
 \alias{getResponse.lm}
 \alias{getResponse.Arima}
 \alias{getResponse.fracdiff}
@@ -16,6 +17,8 @@
 getResponse(object, ...)
 
 \method{getResponse}{default}(object, ...)
+
+\method{getResponse}{StructTS}(object, ...)
 
 \method{getResponse}{lm}(object, ...)
 
