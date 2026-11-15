@@ -2,6 +2,7 @@
 
 * `arfima()`, `Arima()`, `auto.arima()`, `croston()`, `holt()`, `hw()`, `meanf()`, `modelAR()`, `naive()`, `nnetar()`, `rwf()`, `ses()`, `snaive()`, `splinef()`, `stlf()`, `stlm()` and `thetaf()` now keep the series name when it is supplied via the deprecated `x` argument.
 * `arfima()`, `stlm()`, `theta_model()` and `tslm()` no longer return all-`NA` fitted values when `biasadj = TRUE` and some residuals are missing.
+* `auto.arima()` now gives an informative error when all data are missing.
 * `auto.arima()` parallel model search (`stepwise = FALSE`) now works on Windows (#1187).
 * `auto.arima()` now truncates `xreg` together with the series when `approximation = TRUE` and `truncate` is set, so model selection no longer fails.
 * `auto.arima()` stepwise search now searches models without a constant when the null model without one is best.

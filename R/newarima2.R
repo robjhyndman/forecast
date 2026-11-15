@@ -141,6 +141,9 @@ auto.arima <- function(
   if (NCOL(x) > 1) {
     stop("auto.arima can only handle univariate time series")
   }
+  if (all(is.na(x))) {
+    stop("All data are missing")
+  }
 
   # Trim leading NAs and find length of non-missing data
   orig.x <- x
@@ -161,9 +164,6 @@ auto.arima <- function(
 
   # Check for constant data
   if (is.constant(x)) {
-    if (all(is.na(x))) {
-      stop("All data are missing")
-    }
     if (allowmean) {
       fit <- Arima(x, order = c(0, 0, 0), fixed = mean(x, na.rm = TRUE), ...)
     } else {

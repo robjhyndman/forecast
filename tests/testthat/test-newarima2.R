@@ -47,6 +47,10 @@ test_that("auto.arima() truncates xreg alongside x with approximation", {
   expect_s3_class(fit, "Arima")
 })
 
+test_that("auto.arima() errors when all data are missing", {
+  expect_snapshot(auto.arima(ts(rep(NA_real_, 20))), error = TRUE)
+})
+
 test_that("test parallel = FALSE and stepwise = FALSE for auto.arima()", {
   skip_on_ci()
   expect_equal(
