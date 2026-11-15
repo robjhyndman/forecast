@@ -548,6 +548,6 @@ print.OCSBtest <- function(x, ...) {
   cat("\n")
   cat("alternative hypothesis: stationary")
   cat("\n\n")
-  cat(paste0("Lag order ", x$lag.order, " was selected using ", x$lag.method))
+  cat("Lag order ", x$lag.order, " was selected using ", x$lag.method, sep = "")
   invisible(x)
 }

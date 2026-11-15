@@ -207,7 +207,7 @@ forecast.mts <- function(
 #' @export
 print.mforecast <- function(x, ...) {
   for (fc in x$forecast) {
-    cat(paste0(fc$series, "\n"))
+    cat(fc$series, "\n", sep = "")
     print(fc)
     cat("\n")
   }
@@ -288,7 +288,7 @@ summary.mforecast <- function(object, ...) {
 #' @export
 print.summary.mforecast <- function(x, ...) {
   cat(paste("\nForecast method:", unique(x$method)))
-  cat(paste("\n\nModel Information:\n"))
+  cat("\n\nModel Information:\n")
   print(x$model)
   cat("\nError measures:\n")
   print(accuracy(x))
