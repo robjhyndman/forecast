@@ -97,7 +97,7 @@ Acf <- function(
   acf.out$series <- deparse1(substitute(x))
 
   # Make lags in integer units
-  nlags <- dim(acf.out$lag)[1]
+  nlags <- nrow(acf.out$lag)
   if (type == "partial") {
     acf.out$lag[] <- seq_len(nlags)
   } else {
@@ -239,7 +239,7 @@ Pacf <- function(
 
   # Plot if required
   if (plot) {
-    nlags <- dim(object$lag)[1]
+    nlags <- nrow(object$lag)
     plot.out <- object
     # Check if there is a ylim input
     if ("ylim" %in% ...names()) {
@@ -288,7 +288,7 @@ Ccf <- function(
   )
 
   # Make lags in integer units
-  nlags <- (dim(ccf.out$lag)[1] - 1) / 2
+  nlags <- (nrow(ccf.out$lag) - 1) / 2
   ccf.out$lag[, 1, 1] <- -nlags:nlags
   # Plot if required
   if (plot) {
