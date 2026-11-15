@@ -13,6 +13,7 @@
 * `autoplot.tbats()` no longer errors.
 * `bats()` and `tbats()` now raise an error when refitting with `model` fails instead of returning a `try-error` object.
 * `bats()` and `tbats()` no longer leave a `lambda` attribute on the seed states, which was printed with models that use a Box-Cox transformation.
+* `bats()` and `tbats()` no longer error with `use.parallel = TRUE` when only one combination of Box-Cox, trend and damping options is left to fit.
 * `bizdays()` now gives an informative error when the series is not monthly or quarterly.
 * `bizdays()` now returns a plain time series, like `monthdays()` and `easter()`, instead of one carrying the period labels as `dim` and `dimnames` attributes.
 * `bld.mbb.bootstrap()` no longer errors when `num = 1` and now validates that `num` is a positive integer.

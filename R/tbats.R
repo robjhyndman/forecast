@@ -350,43 +350,16 @@ tbats <- function(
     best.model <- non.seasonal.model
   }
 
-  if (
-    (length(use.box.cox) == 1) &&
-      use.trend[1] &&
-      (length(use.trend) == 1) &&
-      (length(use.damped.trend) == 1) &&
-      (use.parallel)
-  ) {
-    # In this case, there is only one alternative.
-    use.parallel <- FALSE
-  } else if (
-    (length(use.box.cox) == 1) &&
-      !use.trend[1] &&
-      (length(use.trend) == 1) &&
-      (use.parallel)
-  ) {
-    # As above, in this case, there is only one alternative.
-    use.parallel <- FALSE
-  }
+  # Set up the control array, one row per model to fit
+  control.array <- expand.grid(
+    damping = use.damped.trend,
+    trend = use.trend,
+    box.cox = use.box.cox
+  )
+  control.array <- control.array[control.array$trend | !control.array$damping, ]
 
-  if (use.parallel) {
-    # Set up the control array
-    control.array <- NULL
-    for (box.cox in use.box.cox) {
-      for (trend in use.trend) {
-        for (damping in use.damped.trend) {
-          if (!trend && damping) {
-            next
-          }
-          control.line <- c(box.cox, trend, damping)
-          if (!is.null(control.array)) {
-            control.array <- rbind(control.array, control.line)
-          } else {
-            control.array <- control.line
-          }
-        }
-      }
-    }
+  # With a single alternative there is nothing to parallelise
+  if (use.parallel && nrow(control.array) > 1) {
     models.list <- clusterApplyLB(
       clus,
       seq_len(nrow(control.array)),
@@ -405,59 +378,36 @@ tbats <- function(
       ...
     )
     ## Choose the best model
-    #### Get the AICs
-    aics <- numeric(nrow(control.array))
-    for (i in seq_len(nrow(control.array))) {
-      aics[i] <- models.list[[i]]$AIC
-    }
+    aics <- vapply(models.list, \(model) model$AIC, numeric(1))
     best.number <- which.min(aics)
     best.seasonal.model <- models.list[[best.number]]
     if (best.seasonal.model$AIC < best.model$AIC) {
       best.model <- best.seasonal.model
     }
   } else {
-    for (box.cox in use.box.cox) {
-      for (trend in use.trend) {
-        for (damping in use.damped.trend) {
-          if (!trend && damping) {
-            next
-          }
-          if (all(model.params == c(box.cox, trend, damping))) {
-            new.model <- filterTBATSSpecifics(
-              y = y,
-              box.cox = box.cox,
-              trend = trend,
-              damping = damping,
-              seasonal.periods = seasonal.periods,
-              k.vector = k.vector,
-              use.arma.errors = use.arma.errors,
-              aux.model = aux.model,
-              init.box.cox = init.box.cox,
-              bc.lower = bc.lower,
-              bc.upper = bc.upper,
-              biasadj = biasadj,
-              ...
-            )
-          } else {
-            new.model <- filterTBATSSpecifics(
-              y = y,
-              box.cox = box.cox,
-              trend = trend,
-              damping = damping,
-              seasonal.periods = seasonal.periods,
-              k.vector = k.vector,
-              use.arma.errors = use.arma.errors,
-              init.box.cox = init.box.cox,
-              bc.lower = bc.lower,
-              bc.upper = bc.upper,
-              biasadj = biasadj,
-              ...
-            )
-          }
-          if (new.model$AIC < best.model$AIC) {
-            best.model <- new.model
-          }
-        }
+    for (i in seq_len(nrow(control.array))) {
+      box.cox <- control.array[i, "box.cox"]
+      trend <- control.array[i, "trend"]
+      damping <- control.array[i, "damping"]
+      # Reuse the model already fitted with these options
+      reuse <- all(model.params == c(box.cox, trend, damping))
+      new.model <- filterTBATSSpecifics(
+        y = y,
+        box.cox = box.cox,
+        trend = trend,
+        damping = damping,
+        seasonal.periods = seasonal.periods,
+        k.vector = k.vector,
+        use.arma.errors = use.arma.errors,
+        aux.model = if (reuse) aux.model,
+        init.box.cox = init.box.cox,
+        bc.lower = bc.lower,
+        bc.upper = bc.upper,
+        biasadj = biasadj,
+        ...
+      )
+      if (new.model$AIC < best.model$AIC) {
+        best.model <- new.model
       }
     }
   }
@@ -488,9 +438,9 @@ parFilterTBATSSpecifics <- function(
   biasadj = FALSE,
   ...
 ) {
-  box.cox <- control.array[control.number, 1]
-  trend <- control.array[control.number, 2]
-  damping <- control.array[control.number, 3]
+  box.cox <- control.array[control.number, "box.cox"]
+  trend <- control.array[control.number, "trend"]
+  damping <- control.array[control.number, "damping"]
   if (!all(model.params == c(box.cox, trend, damping))) {
     first.model <- try(
       fitSpecificTBATS(

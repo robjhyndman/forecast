@@ -158,21 +158,11 @@ bats <- function(
     use.box.cox <- FALSE
   }
 
-  if (!is.null(use.box.cox) && !is.null(use.trend) && use.parallel) {
-    if (use.trend && !is.null(use.damped.trend)) {
-      # In this case, there is only one alternative.
-      use.parallel <- FALSE
-    } else if (!use.trend) {
-      # As above, in this case, there is only one alternative.
-      use.parallel <- FALSE
-    }
-  }
-
   if (!is.null(seasonal.periods)) {
     seasonal.mask <- (seasonal.periods == 1)
     seasonal.periods <- seasonal.periods[!seasonal.mask]
   }
-  # Check if there is anything to parallelise
+  # Non-seasonal fits with fixed options are too cheap to parallelise
   if (
     is.null(seasonal.periods) && !is.null(use.box.cox) && !is.null(use.trend)
   ) {
@@ -198,24 +188,16 @@ bats <- function(
 
   y <- as.numeric(y)
 
-  if (use.parallel) {
-    # Set up the control array
-    control.array <- NULL
-    for (box.cox in use.box.cox) {
-      for (trend in use.trend) {
-        for (damping in use.damped.trend) {
-          if (!trend && damping) {
-            next
-          }
-          control.line <- c(box.cox, trend, damping)
-          if (!is.null(control.array)) {
-            control.array <- rbind(control.array, control.line)
-          } else {
-            control.array <- control.line
-          }
-        }
-      }
-    }
+  # Set up the control array, one row per model to fit
+  control.array <- expand.grid(
+    damping = use.damped.trend,
+    trend = use.trend,
+    box.cox = use.box.cox
+  )
+  control.array <- control.array[control.array$trend | !control.array$damping, ]
+
+  # With a single alternative there is nothing to parallelise
+  if (use.parallel && nrow(control.array) > 1) {
     ## Fit the models
     if (is.null(num.cores)) {
       num.cores <- detectCores()
@@ -237,41 +219,33 @@ bats <- function(
       ...
     )
     ## Choose the best model
-    #### Get the AICs
-    aics <- numeric(nrow(control.array))
-    for (i in seq_len(nrow(control.array))) {
-      aics[i] <- models.list[[i]]$AIC
-    }
+    aics <- vapply(models.list, \(model) model$AIC, numeric(1))
     best.number <- which.min(aics)
     best.model <- models.list[[best.number]]
   } else {
     best.aic <- Inf
     best.model <- NULL
-    for (box.cox in use.box.cox) {
-      for (trend in use.trend) {
-        for (damping in use.damped.trend) {
-          current.model <- try(
-            filterSpecifics(
-              y,
-              box.cox = box.cox,
-              trend = trend,
-              damping = damping,
-              seasonal.periods = seasonal.periods,
-              use.arma.errors = use.arma.errors,
-              init.box.cox = init.box.cox,
-              bc.lower = bc.lower,
-              bc.upper = bc.upper,
-              biasadj = biasadj,
-              ...
-            ),
-            silent = TRUE
-          )
-          if (!inherits(current.model, "try-error")) {
-            if (current.model$AIC < best.aic) {
-              best.aic <- current.model$AIC
-              best.model <- current.model
-            }
-          }
+    for (i in seq_len(nrow(control.array))) {
+      current.model <- try(
+        filterSpecifics(
+          y,
+          box.cox = control.array[i, "box.cox"],
+          trend = control.array[i, "trend"],
+          damping = control.array[i, "damping"],
+          seasonal.periods = seasonal.periods,
+          use.arma.errors = use.arma.errors,
+          init.box.cox = init.box.cox,
+          bc.lower = bc.lower,
+          bc.upper = bc.upper,
+          biasadj = biasadj,
+          ...
+        ),
+        silent = TRUE
+      )
+      if (!inherits(current.model, "try-error")) {
+        if (current.model$AIC < best.aic) {
+          best.aic <- current.model$AIC
+          best.model <- current.model
         }
       }
     }
@@ -307,10 +281,6 @@ filterSpecifics <- function(
   biasadj = FALSE,
   ...
 ) {
-  if (!trend && damping) {
-    return(list(AIC = Inf))
-  }
-
   first.model <- fitSpecificBATS(
     y,
     use.box.cox = box.cox,
@@ -397,13 +367,9 @@ parFilterSpecifics <- function(
   biasadj = FALSE,
   ...
 ) {
-  box.cox <- control.array[control.number, 1]
-  trend <- control.array[control.number, 2]
-  damping <- control.array[control.number, 3]
-
-  if (!trend && damping) {
-    return(list(AIC = Inf))
-  }
+  box.cox <- control.array[control.number, "box.cox"]
+  trend <- control.array[control.number, "trend"]
+  damping <- control.array[control.number, "damping"]
 
   first.model <- fitSpecificBATS(
     y,
