@@ -25,7 +25,13 @@ getResponse.default <- function(object, ...) {
   if (!is.list(object)) {
     return(NULL)
   }
-  object$x %||% object$y
+  object[["x"]] %||% object[["y"]]
+}
+
+#' @rdname getResponse
+#' @export
+getResponse.StructTS <- function(object, ...) {
+  object[["data"]]
 }
 
 #' @rdname getResponse
