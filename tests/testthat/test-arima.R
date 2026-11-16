@@ -24,6 +24,52 @@ test_that("tests for ARIMA errors", {
   expect_identical(residuals(fit, type = "regression"), wineind)
 })
 
+test_that("ARIMA errors use the caller's regressors for stats::arima() fits", {
+  xreg <- x <- rep(0:1, 50)
+  expected <- residuals(
+    Arima(WWWusage, order = c(1, 1, 0), xreg = xreg),
+    type = "regression"
+  )
+  fit <- stats::arima(WWWusage, order = c(1, 1, 0), xreg = xreg)
+  expect_equal(residuals(fit, type = "regression"), expected)
+  fit <- stats::arima(WWWusage, order = c(1, 1, 0), xreg = x)
+  expect_equal(residuals(fit, type = "regression"), expected)
+})
+
+test_that("ARIMA errors handle stats::arima() fits with a data frame xreg", {
+  df <- data.frame(a = rep(0:1, 50), b = sin(1:100))
+  expected <- residuals(
+    Arima(WWWusage, order = c(1, 1, 0), xreg = as.matrix(df)),
+    type = "regression"
+  )
+  fit <- stats::arima(WWWusage, order = c(1, 1, 0), xreg = df)
+  expect_equal(residuals(fit, type = "regression"), expected)
+})
+
+test_that("ARIMA errors handle stats::arima() fits with xreg = NULL", {
+  fit <- stats::arima(WWWusage, order = c(1, 1, 0), xreg = NULL)
+  expect_identical(residuals(fit, type = "regression"), WWWusage)
+})
+
+test_that("ARIMA errors fail clearly when the regressors can't be found", {
+  fit_arima <- function() {
+    z <- rep(0:1, 50)
+    stats::arima(WWWusage, order = c(1, 1, 0), xreg = z)
+  }
+  fit <- fit_arima()
+  expect_snapshot(error = TRUE, {
+    residuals(fit, type = "regression")
+  })
+  z <- 1:3
+  expect_snapshot(error = TRUE, {
+    residuals(fit, type = "regression")
+  })
+  z <- cbind(rep(0:1, 50), 1:100)
+  expect_snapshot(error = TRUE, {
+    residuals(fit, type = "regression")
+  })
+})
+
 test_that("tests for arimaorder", {
   for (ar in 0:2) {
     for (i in 0:1) {
