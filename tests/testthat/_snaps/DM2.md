@@ -4,7 +4,12 @@
       dm.test(e, rev(e), h = 0)
     Condition
       Error in `dm.test()`:
-      ! h must be at least 1
+      ! h must be a positive integer
+    Code
+      dm.test(e, rev(e), h = 1.5)
+    Condition
+      Error in `dm.test()`:
+      ! h must be a positive integer
     Code
       dm.test(e, rev(e), h = 10)
     Condition

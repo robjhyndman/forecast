@@ -258,10 +258,10 @@ forecast.fracdiff <- function(
   ...
 ) {
   biasadj <- biasadj %||% FALSE
-  if (abs(h - round(h)) > .Machine$double.eps^0.5 || h <= 0) {
+  if (!is_count(h)) {
     stop("h must be a positive integer")
   }
-  h <- as.integer(round(h))
+  h <- as.integer(h)
   # Extract data
   x <- object$x <- getResponse(object)
   n <- length(x)

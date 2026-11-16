@@ -75,10 +75,10 @@ dm.test <- function(
   alternative <- match.arg(alternative)
   varestimator <- match.arg(varestimator)
 
-  h <- as.integer(h)
-  if (h < 1L) {
-    stop("h must be at least 1")
+  if (!is_count(h)) {
+    stop("h must be a positive integer")
   }
+  h <- as.integer(h)
   if (h > length(e1)) {
     stop("h cannot be longer than the number of forecast errors")
   }

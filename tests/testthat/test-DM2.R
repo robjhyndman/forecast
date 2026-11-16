@@ -63,6 +63,7 @@ test_that("dm.test() errors for invalid input", {
   e <- c(1, -2, 3, -1, 2)
   expect_snapshot(error = TRUE, {
     dm.test(e, rev(e), h = 0)
+    dm.test(e, rev(e), h = 1.5)
     dm.test(e, rev(e), h = 10)
     dm.test(e, e)
   })
