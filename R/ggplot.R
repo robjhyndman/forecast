@@ -1422,7 +1422,7 @@ ggsubseriesplot <- function(
     stop("ggsubseriesplot requires a ts object, use x=object")
   }
 
-  if (round(frequency(x)) <= 1) {
+  if (seasonal_period(x) == 1) {
     stop("Data are not seasonal")
   }
 
@@ -1541,8 +1541,8 @@ ggseasonplot <- function(
   }
 
   # Check data are seasonal and convert to integer seasonality
-  s <- round(frequency(x))
-  if (s <= 1) {
+  s <- seasonal_period(x)
+  if (s == 1) {
     stop("Data are not seasonal")
   }
 
