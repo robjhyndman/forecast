@@ -217,6 +217,10 @@
   models now displays the stored AICc and BIC values instead of
   recomputing them, which gave slightly different results for series
   with interior missing values.
+- [`residuals.Arima()`](https://pkg.robjhyndman.com/forecast/reference/residuals.forecast.md)
+  with `type = "regression"` now finds the regressors of
+  [`stats::arima()`](https://rdrr.io/r/stats/arima.html) models in the
+  calling environment, including data frames.
 - [`simulate.Arima()`](https://pkg.robjhyndman.com/forecast/reference/simulate.ets.md)
   now retains nonzero AR and MA coefficients that sum to zero in
   seasonal models.

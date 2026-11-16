@@ -172,6 +172,8 @@
 <li>
 <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code><a href="../reference/Arima.html">Arima()</a></code> models now displays the stored AICc and BIC values instead of recomputing them, which gave slightly different results for series with interior missing values.</li>
 <li>
+<code><a href="../reference/residuals.forecast.html">residuals.Arima()</a></code> with <code>type = "regression"</code> now finds the regressors of <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">stats::arima()</a></code> models in the calling environment, including data frames.</li>
+<li>
 <code><a href="../reference/simulate.ets.html">simulate.Arima()</a></code> now retains nonzero AR and MA coefficients that sum to zero in seasonal models.</li>
 <li>
 <code><a href="../reference/forecast.spline_model.html">splinef()</a></code> and <code><a href="../reference/forecast.spline_model.html">forecast.spline_model()</a></code> now return the point forecasts as a univariate time series instead of a one-column matrix, and <code><a href="../reference/spline_model.html">spline_model()</a></code> now returns the fitted values as a time series when <code>method = "mle"</code>.</li>
