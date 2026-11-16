@@ -78,11 +78,17 @@ dshw <- function(
   armethod = TRUE,
   model = NULL
 ) {
+  if (
+    !is.null(model) &&
+      !(is.forecast(model) && identical(model$method, "DSHW"))
+  ) {
+    stop("model should be the output of a previous call to dshw()")
+  }
   if (min(y, na.rm = TRUE) <= 0) {
     stop("dshw not suitable when data contain zeros or negative numbers")
   }
   seriesname <- deparse1(substitute(y))
-  if (!is.null(model) && model$method == "DSHW") {
+  if (!is.null(model)) {
     period1 <- model$period1
     period2 <- model$period2
   } else if (inherits(y, "msts") && length(attr(y, "msts")) == 2) {

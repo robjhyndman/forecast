@@ -114,7 +114,7 @@ modelAR <- function(
     # Check for conflicts between new and old data:
     # Check model class
     if (!is.modelAR(model)) {
-      stop("Model must be a modelAR object")
+      stop("model should be the output of a previous call to modelAR()")
     }
     # Check new data
     m <- max(round(frequency(model$x)), 1L)

@@ -154,3 +154,14 @@ test_that("class3() uses phi in the forecast variance", {
     c(83.612736, 170.507496977664, 163.890150274293, 310.920875239663)
   )
 })
+
+test_that("ets() checks the class of model", {
+  expect_snapshot(error = TRUE, {
+    ets(lh, model = Arima(lh))
+    ets(lh, model = ses(lh))
+    ets(lh, model = c("ANN", "AAN"))
+    ets(lh, model = NA_character_)
+    ets(lh, model = "ANNX")
+    ets(cbind(lh, lh), model = Arima(lh))
+  })
+})

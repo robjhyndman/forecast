@@ -264,3 +264,9 @@ test_that("tests for forecast.ar()", {
 test_that("tests for as.character.Arima()", {
   expect_match(as.character(auto.arima(woolyrnq)), regexp = "ARIMA")
 })
+
+test_that("Arima() checks the class of model", {
+  expect_snapshot(Arima(lh, model = ets(lh)), error = TRUE)
+  fit <- stats::arima(lh, order = c(1, 0, 0))
+  expect_identical(coef(Arima(lh, model = fit)), coef(fit))
+})

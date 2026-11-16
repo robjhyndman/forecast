@@ -130,6 +130,9 @@ arfima <- function(
     deparse1(substitute(x))
   }
 
+  if (!is.null(model) && !inherits(model, "ARFIMA")) {
+    stop("model should be the output of a previous call to arfima()")
+  }
   if (!is.null(model) && is.null(lambda)) {
     lambda <- model$lambda
   }

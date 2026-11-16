@@ -465,6 +465,9 @@ stlm <- function(
 ) {
   yname <- if (missing(x)) deparse1(substitute(y)) else deparse1(substitute(x))
   method <- match.arg(method)
+  if (!is.null(model) && !is.stlm(model)) {
+    stop("model should be the output of a previous call to stlm()")
+  }
 
   # Check univariate
   if (NCOL(x) > 1L) {

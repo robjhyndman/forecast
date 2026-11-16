@@ -115,6 +115,11 @@ ets <- function(
   bounds <- match.arg(bounds)
   ic <- match.arg(ic)
   seriesname <- deparse1(substitute(y))
+  if (!is.ets(model) && !(is_string(model) && nchar(model) == 3L)) {
+    stop(
+      "model should be a three-character string or the output of a previous call to ets()"
+    )
+  }
 
   if (inherits(y, c("data.frame", "list", "matrix", "mts"))) {
     stop("y should be a univariate time series")

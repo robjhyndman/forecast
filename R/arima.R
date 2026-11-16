@@ -670,6 +670,11 @@ Arima <- function(
   ...
 ) {
   series <- if (missing(x)) deparse1(substitute(y)) else deparse1(substitute(x))
+  if (!is.null(model) && !is.Arima(model)) {
+    stop(
+      "model should be the output of a previous call to Arima(), auto.arima() or arima()"
+    )
+  }
   if (!is.null(model) && is.null(lambda)) {
     lambda <- model$lambda
   }

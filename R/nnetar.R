@@ -124,7 +124,7 @@ nnetar <- function(
     # Check for conflicts between new and old data:
     # Check model class
     if (!is.nnetar(model)) {
-      stop("Model must be a nnetar object")
+      stop("model should be the output of a previous call to nnetar()")
     }
     # Check new data
     m <- max(round(frequency(model$x)), 1L)
