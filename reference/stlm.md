@@ -22,7 +22,7 @@ stlm(
   model = NULL,
   etsmodel = "ZZN",
   lambda = NULL,
-  biasadj = FALSE,
+  biasadj = NULL,
   xreg = NULL,
   allow.multiplicative.trend = FALSE,
   x = y,

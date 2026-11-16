@@ -17,7 +17,7 @@ dshw(
   omega = NULL,
   phi = NULL,
   lambda = NULL,
-  biasadj = FALSE,
+  biasadj = NULL,
   armethod = TRUE,
   model = NULL
 )

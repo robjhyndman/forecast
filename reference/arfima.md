@@ -13,7 +13,7 @@ arfima(
   estim = c("mle", "ls"),
   model = NULL,
   lambda = NULL,
-  biasadj = FALSE,
+  biasadj = NULL,
   xreg = NULL,
   x = y,
   ...

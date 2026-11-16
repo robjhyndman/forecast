@@ -15,7 +15,7 @@ ets(
   phi = NULL,
   additive.only = FALSE,
   lambda = NULL,
-  biasadj = FALSE,
+  biasadj = NULL,
   lower = c(rep(1e-04, 3), 0.8),
   upper = c(rep(0.9999, 3), 0.98),
   opt.crit = c("lik", "amse", "mse", "sigma", "mae"),

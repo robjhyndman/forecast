@@ -18,7 +18,7 @@ tbats(
   num.cores = 2,
   bc.lower = 0,
   bc.upper = 1,
-  biasadj = FALSE,
+  biasadj = NULL,
   model = NULL,
   ...
 )
