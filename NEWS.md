@@ -1,6 +1,7 @@
 # forecast (development version)
 
 * `arfima()`, `Arima()`, `auto.arima()`, `croston()`, `holt()`, `hw()`, `meanf()`, `modelAR()`, `naive()`, `nnetar()`, `rwf()`, `ses()`, `snaive()`, `splinef()`, `stlf()`, `stlm()` and `thetaf()` now keep the series name when it is supplied via the deprecated `x` argument.
+* `arfima()`, `Arima()`, `bats()`, `dshw()`, `ets()`, `stlm()` and `tbats()` now reuse the Box-Cox transformation and bias adjustment of `model` when refitting, unless `lambda` or `biasadj` is supplied.
 * `arfima()`, `stlm()`, `theta_model()` and `tslm()` no longer return all-`NA` fitted values when `biasadj = TRUE` and some residuals are missing.
 * `auto.arima()` now gives an informative error when all data are missing.
 * `auto.arima()` parallel model search (`stepwise = FALSE`) now works on Windows (#1187).

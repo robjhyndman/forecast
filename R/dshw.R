@@ -120,8 +120,11 @@ dshw <- function(
     stop("Seasonal periods are not nested")
   }
 
-  if (!is.null(model)) {
+  if (!is.null(model) && is.null(lambda)) {
     lambda <- model$model$lambda
+    if (missing(biasadj)) {
+      biasadj <- attr(lambda, "biasadj") %||% biasadj
+    }
   }
 
   if (!is.null(lambda)) {

@@ -21,3 +21,15 @@ test_that("Test dshw()", {
   expect_error(dshw(x, period1 = 2, period2 = 2))
   expect_error(dshw(x, period1 = 2, period2 = 4.1))
 })
+
+test_that("dshw() refit reuses lambda and biasadj unless supplied", {
+  y <- msts(taylor[1:700], c(48, 336))
+  fit <- dshw(y, lambda = 0, biasadj = TRUE)
+  refit <- dshw(y, model = fit)
+  expect_equal(refit$mean, fit$mean)
+  expect_equal(refit$model$lambda, fit$model$lambda)
+  refit <- dshw(y, model = fit, biasadj = FALSE)
+  expect_identical(attr(refit$model$lambda, "biasadj"), FALSE)
+  refit <- dshw(y, model = fit, lambda = 0.5)
+  expect_equal(refit$model$lambda, 0.5, ignore_attr = TRUE)
+})

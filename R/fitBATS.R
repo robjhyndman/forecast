@@ -1,7 +1,8 @@
 # Author: srazbash
 ###############################################################################
 
-fitPreviousBATSModel <- function(y, model, biasadj = FALSE) {
+fitPreviousBATSModel <- function(y, model, biasadj = NULL) {
+  biasadj <- biasadj %||% attr(model$lambda, "biasadj") %||% FALSE
   seasonal.periods <- model$seasonal.periods
   if (!is.null(seasonal.periods)) {
     seasonal.periods <- as.integer(sort(seasonal.periods))
@@ -63,6 +64,9 @@ fitPreviousBATSModel <- function(y, model, biasadj = FALSE) {
   }
 
   model.for.output <- model
+  if (!is.null(model$lambda)) {
+    attr(model.for.output$lambda, "biasadj") <- biasadj
+  }
   model.for.output$variance <- variance
   model.for.output$fitted.values <- c(fitted.values)
   model.for.output$errors <- c(e)

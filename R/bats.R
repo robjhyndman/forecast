@@ -132,7 +132,11 @@ bats <- function(
 
   # Refit model if available
   if (!is.null(model)) {
-    return(fitPreviousBATSModel(y, model = model))
+    return(fitPreviousBATSModel(
+      y,
+      model = model,
+      biasadj = if (!missing(biasadj)) biasadj
+    ))
   }
 
   # Check for constancy

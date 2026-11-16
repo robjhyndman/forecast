@@ -130,6 +130,13 @@ arfima <- function(
     deparse1(substitute(x))
   }
 
+  if (!is.null(model) && is.null(lambda)) {
+    lambda <- model$lambda
+    if (missing(biasadj)) {
+      biasadj <- attr(lambda, "biasadj") %||% biasadj
+    }
+  }
+
   orig.x <- x
   if (!is.null(lambda)) {
     x <- BoxCox(x, lambda)

@@ -19,6 +19,21 @@ test_that("deprecated x argument still works", {
   expect_identical(fit_x$series, "wineind")
 })
 
+test_that("Arima() refit keeps the bias adjustment of the model", {
+  fit <- Arima(
+    AirPassengers,
+    order = c(0, 1, 1),
+    seasonal = c(0, 1, 1),
+    lambda = 0,
+    biasadj = TRUE
+  )
+  refit <- Arima(AirPassengers, model = fit)
+  expect_equal(fitted(refit), fitted(fit))
+  expect_equal(refit$lambda, fit$lambda)
+  refit <- Arima(AirPassengers, model = fit, biasadj = FALSE)
+  expect_identical(attr(refit$lambda, "biasadj"), FALSE)
+})
+
 test_that("tests for ARIMA errors", {
   fit <- Arima(wineind, order = c(1, 1, 1), seasonal = c(0, 1, 1))
   expect_identical(residuals(fit, type = "regression"), wineind)

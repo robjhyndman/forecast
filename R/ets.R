@@ -130,6 +130,9 @@ ets <- function(
   orig.y <- y
   if (inherits(model, "ets") && is.null(lambda)) {
     lambda <- model$lambda
+    if (missing(biasadj)) {
+      biasadj <- attr(lambda, "biasadj") %||% biasadj
+    }
   }
   if (!is.null(lambda)) {
     y <- BoxCox(y, lambda)
@@ -227,12 +230,7 @@ ets <- function(
       model$x <- orig.y
       model$series <- seriesname
       if (!is.null(lambda)) {
-        model$fitted <- InvBoxCox(
-          model$fitted,
-          lambda,
-          biasadj,
-          var(model$residuals)
-        )
+        model$fitted <- InvBoxCox(model$fitted, lambda, biasadj, model$sigma2)
       }
       model$lambda <- lambda
 

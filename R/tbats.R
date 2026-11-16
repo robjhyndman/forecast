@@ -107,9 +107,13 @@ tbats <- function(
   # Refit model if available
   if (!is.null(model)) {
     if (inherits(model, "tbats")) {
-      return(fitPreviousTBATSModel(y, model = model))
+      return(fitPreviousTBATSModel(
+        y,
+        model = model,
+        biasadj = if (!missing(biasadj)) biasadj
+      ))
     }
-    return(bats(origy, model = model))
+    return(bats(origy, model = model, biasadj = if (!missing(biasadj)) biasadj))
   }
 
   # Return constant model if required

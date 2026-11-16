@@ -84,6 +84,21 @@ test_that("tbats() errors when refitting a model without parameters", {
   })
 })
 
+test_that("tbats() refit keeps the bias adjustment of the model", {
+  fit <- tbats(
+    AirPassengers,
+    use.box.cox = TRUE,
+    use.trend = FALSE,
+    use.arma.errors = FALSE,
+    use.parallel = FALSE,
+    biasadj = TRUE
+  )
+  expect_equal(fitted(tbats(AirPassengers, model = fit)), fitted(fit))
+  refit <- tbats(AirPassengers, model = fit, biasadj = FALSE)
+  expect_identical(attr(refit$lambda, "biasadj"), FALSE)
+  expect_lt(max(fitted(refit) - fitted(fit)), 0)
+})
+
 test_that("tbats() seed states have no lambda attribute", {
   fit <- tbats(
     USAccDeaths,

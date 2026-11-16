@@ -1,4 +1,5 @@
-fitPreviousTBATSModel <- function(y, model, biasadj = FALSE) {
+fitPreviousTBATSModel <- function(y, model, biasadj = NULL) {
+  biasadj <- biasadj %||% attr(model$lambda, "biasadj") %||% FALSE
   seasonal.periods <- model$seasonal.periods
   if (!is.null(seasonal.periods)) {
     seasonal.periods <- sort(seasonal.periods)
@@ -105,6 +106,9 @@ fitPreviousTBATSModel <- function(y, model, biasadj = FALSE) {
   }
 
   model.for.output <- model
+  if (!is.null(model$lambda)) {
+    attr(model.for.output$lambda, "biasadj") <- biasadj
+  }
   model.for.output$variance <- variance
   model.for.output$fitted.values <- ts(c(fitted.values))
   model.for.output$errors <- ts(c(e))

@@ -35,6 +35,15 @@ test_that("test forecast.fracdiff()", {
   )
 })
 
+test_that("arfima() refit keeps the Box-Cox transformation of the model", {
+  fit <- arfima(WWWusage, lambda = 0.75, biasadj = TRUE)
+  refit <- arfima(WWWusage, model = fit)
+  expect_equal(fitted(refit), fitted(fit))
+  expect_equal(refit$lambda, fit$lambda)
+  refit <- arfima(WWWusage, model = fit, biasadj = FALSE)
+  expect_identical(attr(refit$lambda, "biasadj"), FALSE)
+})
+
 test_that("arfima() keeps series name with deprecated x argument", {
   expect_identical(arfima(x = WWWusage)$series, "WWWusage")
 })
