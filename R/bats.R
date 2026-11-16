@@ -73,7 +73,7 @@ bats <- function(
   num.cores = 2,
   bc.lower = 0,
   bc.upper = 1,
-  biasadj = FALSE,
+  biasadj = NULL,
   model = NULL,
   ...
 ) {
@@ -132,12 +132,9 @@ bats <- function(
 
   # Refit model if available
   if (!is.null(model)) {
-    return(fitPreviousBATSModel(
-      y,
-      model = model,
-      biasadj = if (!missing(biasadj)) biasadj
-    ))
+    return(fitPreviousBATSModel(y, model = model, biasadj = biasadj))
   }
+  biasadj <- biasadj %||% FALSE
 
   # Check for constancy
   if (is.constant(y)) {

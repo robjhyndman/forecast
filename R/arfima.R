@@ -118,7 +118,7 @@ arfima <- function(
   estim = c("mle", "ls"),
   model = NULL,
   lambda = NULL,
-  biasadj = FALSE,
+  biasadj = NULL,
   xreg = NULL,
   x = y,
   ...
@@ -132,10 +132,8 @@ arfima <- function(
 
   if (!is.null(model) && is.null(lambda)) {
     lambda <- model$lambda
-    if (missing(biasadj)) {
-      biasadj <- attr(lambda, "biasadj") %||% biasadj
-    }
   }
+  biasadj <- biasadj %||% attr(lambda, "biasadj") %||% FALSE
 
   orig.x <- x
   if (!is.null(lambda)) {

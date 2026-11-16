@@ -74,7 +74,7 @@ dshw <- function(
   omega = NULL,
   phi = NULL,
   lambda = NULL,
-  biasadj = FALSE,
+  biasadj = NULL,
   armethod = TRUE,
   model = NULL
 ) {
@@ -122,10 +122,8 @@ dshw <- function(
 
   if (!is.null(model) && is.null(lambda)) {
     lambda <- model$model$lambda
-    if (missing(biasadj)) {
-      biasadj <- attr(lambda, "biasadj") %||% biasadj
-    }
   }
+  biasadj <- biasadj %||% attr(lambda, "biasadj") %||% FALSE
 
   if (!is.null(lambda)) {
     origy <- y

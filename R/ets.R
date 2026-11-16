@@ -99,7 +99,7 @@ ets <- function(
   phi = NULL,
   additive.only = FALSE,
   lambda = NULL,
-  biasadj = FALSE,
+  biasadj = NULL,
   lower = c(rep(0.0001, 3), 0.8),
   upper = c(rep(0.9999, 3), 0.98),
   opt.crit = c("lik", "amse", "mse", "sigma", "mae"),
@@ -130,10 +130,8 @@ ets <- function(
   orig.y <- y
   if (inherits(model, "ets") && is.null(lambda)) {
     lambda <- model$lambda
-    if (missing(biasadj)) {
-      biasadj <- attr(lambda, "biasadj") %||% biasadj
-    }
   }
+  biasadj <- biasadj %||% attr(lambda, "biasadj") %||% FALSE
   if (!is.null(lambda)) {
     y <- BoxCox(y, lambda)
     lambda <- attr(y, "lambda")

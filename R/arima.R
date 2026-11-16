@@ -669,7 +669,7 @@ Arima <- function(
   include.drift = FALSE,
   include.constant = NULL,
   lambda = NULL,
-  biasadj = FALSE,
+  biasadj = NULL,
   method = c("CSS-ML", "ML", "CSS"),
   model = NULL,
   x = y,
@@ -678,10 +678,8 @@ Arima <- function(
   series <- if (missing(x)) deparse1(substitute(y)) else deparse1(substitute(x))
   if (!is.null(model) && is.null(lambda)) {
     lambda <- model$lambda
-    if (missing(biasadj)) {
-      biasadj <- attr(lambda, "biasadj") %||% biasadj
-    }
   }
+  biasadj <- biasadj %||% attr(lambda, "biasadj") %||% FALSE
 
   origx <- x
   if (!is.null(lambda)) {
