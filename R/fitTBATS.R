@@ -179,11 +179,7 @@ fitSpecificTBATS <- function(
       s.vector <- NULL
     }
     if (use.box.cox) {
-      if (!is.null(init.box.cox)) {
-        lambda <- init.box.cox
-      } else {
-        lambda <- BoxCox.lambda(y, lower = 0, upper = 1.5)
-      }
+      lambda <- init.box.cox %||% BoxCox.lambda(y, lower = 0, upper = 1.5)
       y.transformed <- BoxCox(y, lambda = lambda)
       lambda <- attr(y.transformed, "lambda")
     } else {

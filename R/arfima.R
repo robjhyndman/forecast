@@ -53,10 +53,7 @@ unfracdiff <- function(x, y, n, h, d) {
       xnew[k] <- RHS[k] - LHS[k]
     }
   }
-  tspx <- tsp(x)
-  if (is.null(tspx)) {
-    tspx <- c(1, length(x), 1)
-  }
+  tspx <- tsp(x) %||% c(1, length(x), 1)
   ts(xnew, frequency = tspx[3], start = tspx[2] + 1 / tspx[3])
 }
 

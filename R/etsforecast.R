@@ -159,11 +159,7 @@ forecast.ets <- function(
 
   out$fitted <- copy_msts(object$x, fitted(object))
   out$method <- object$method
-  if (!is.null(object$series)) {
-    out$series <- object$series
-  } else {
-    out$series <- object$call$y
-  }
+  out$series <- object$series %||% object$call$y
   out$residuals <- copy_msts(object$x, residuals(object))
 
   if (!is.null(lambda)) {

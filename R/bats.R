@@ -170,9 +170,7 @@ bats <- function(
     use.parallel <- FALSE
   }
 
-  if (is.null(use.box.cox)) {
-    use.box.cox <- c(FALSE, TRUE)
-  }
+  use.box.cox <- use.box.cox %||% c(FALSE, TRUE)
   if (any(use.box.cox)) {
     init.box.cox <- BoxCox.lambda(y, lower = bc.lower, upper = bc.upper)
   } else {
@@ -183,9 +181,7 @@ bats <- function(
   } else if (!use.trend) {
     use.damped.trend <- FALSE
   }
-  if (is.null(use.damped.trend)) {
-    use.damped.trend <- c(FALSE, TRUE)
-  }
+  use.damped.trend <- use.damped.trend %||% c(FALSE, TRUE)
 
   y <- as.numeric(y)
 
@@ -200,9 +196,7 @@ bats <- function(
   # With a single alternative there is nothing to parallelise
   if (use.parallel && nrow(control.array) > 1) {
     ## Fit the models
-    if (is.null(num.cores)) {
-      num.cores <- detectCores()
-    }
+    num.cores <- num.cores %||% detectCores()
     clus <- makeCluster(num.cores)
     on.exit(stopCluster(clus), add = TRUE)
     models.list <- clusterApplyLB(

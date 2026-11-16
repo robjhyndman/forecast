@@ -56,12 +56,8 @@ subset.ts <- function(
       return(subset.default(x, subset))
     }
   } else if (!is.null(start) || !is.null(end)) {
-    if (is.null(start)) {
-      start <- 1
-    }
-    if (is.null(end)) {
-      end <- NROW(x)
-    }
+    start <- start %||% 1
+    end <- end %||% NROW(x)
     if (is.mts(x)) {
       xsub <- x[start:end, , drop = FALSE]
     } else {

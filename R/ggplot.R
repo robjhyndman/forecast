@@ -554,9 +554,7 @@ autoplot.decomposed.ts <- function(
     stop("autoplot.decomposed.ts requires a decomposed.ts object")
   }
 
-  if (is.null(labels)) {
-    labels <- c("trend", "seasonal", "remainder")
-  }
+  labels <- labels %||% c("trend", "seasonal", "remainder")
 
   cn <- c("data", labels)
 
@@ -740,11 +738,8 @@ autoplot.forecast <- function(
   if (!is.null(object$model$terms) && !is.null(object$model$model)) {
     # Initialise original dataset
     mt <- object$model$terms
-    if (!is.null(object$series)) {
-      yvar <- object$series
-    } else {
-      yvar <- deparse(mt[[2]])
-    } # Perhaps a better way to do this
+    # Perhaps a better way to do this
+    yvar <- object$series %||% deparse(mt[[2]])
     xvar <- attr(mt, "term.labels")
     vars <- c(yvar = yvar, xvar = xvar)
     data <- object$model$model
@@ -1719,9 +1714,7 @@ autoplot.stl <- function(object, labels = NULL, range.bars = TRUE, ...) {
     "seasonal",
     "remainder"
   )]
-  if (is.null(labels)) {
-    labels <- colnames(object$time.series)
-  }
+  labels <- labels %||% colnames(object$time.series)
 
   data <- object$time.series
   cn <- c("data", labels)
@@ -1794,9 +1787,7 @@ autoplot.StructTS <- function(object, labels = NULL, range.bars = TRUE, ...) {
     stop("autoplot.StructTS requires a StructTS object.")
   }
 
-  if (is.null(labels)) {
-    labels <- colnames(object$fitted)
-  }
+  labels <- labels %||% colnames(object$fitted)
 
   data <- object$fitted
   cn <- c("data", labels)
@@ -2176,10 +2167,7 @@ autoplot.mts <- function(
     return(autoplot.ts(object, ...))
   }
 
-  cn <- colnames(object)
-  if (is.null(cn)) {
-    cn <- paste("Series", seq_len(NCOL(object)))
-  }
+  cn <- colnames(object) %||% paste("Series", seq_len(NCOL(object)))
 
   data <- data.frame(
     y = as.numeric(object),
@@ -2790,9 +2778,7 @@ gghistogram <- function(
   bins = NULL,
   boundary = 0
 ) {
-  if (is.null(bins)) {
-    bins <- min(500, grDevices::nclass.FD(na.exclude(x)))
-  }
+  bins <- bins %||% min(500, grDevices::nclass.FD(na.exclude(x)))
   data <- data.frame(x = as.numeric(x), check.names = FALSE)
   # Initialise ggplot object and plot histogram
   binwidth <- (max(x, na.rm = TRUE) - min(x, na.rm = TRUE)) / bins

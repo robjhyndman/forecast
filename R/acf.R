@@ -413,9 +413,7 @@ taperedacf <- function(
 ) {
   type <- match.arg(type)
 
-  if (is.null(lag.max)) {
-    lag.max <- max(floor(20 * log10(length(x))), 4 * frequency(x))
-  }
+  lag.max <- lag.max %||% max(floor(20 * log10(length(x))), 4 * frequency(x))
   lag <- min(lag.max, length(x) - 1)
 
   if (type == "correlation") {
@@ -471,12 +469,8 @@ plot.mpacf <- function(
   object <- x
   lagx <- 1:object$lag
 
-  if (is.null(xlim)) {
-    xlim <- c(1, object$lag)
-  }
-  if (is.null(ylim)) {
-    ylim <- range(object$z, object$upper, object$lower)
-  }
+  xlim <- xlim %||% c(1, object$lag)
+  ylim <- ylim %||% range(object$z, object$upper, object$lower)
   if (ylab == "") {
     ylab <- if (object$type == "partial") "PACF" else "ACF"
   }

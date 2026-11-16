@@ -447,9 +447,7 @@ ets <- function(
   if (seasontype == "Z") {
     seasontype <- c("N", "A", "M")
   }
-  if (is.null(damped)) {
-    damped <- c(TRUE, FALSE)
-  }
+  damped <- damped %||% c(TRUE, FALSE)
   best.ic <- Inf
   for (i in seq_along(errortype)) {
     for (j in seq_along(trendtype)) {
@@ -583,10 +581,7 @@ etsmodel <- function(
   seed = NULL,
   trace = FALSE
 ) {
-  tsp.y <- tsp(y)
-  if (is.null(tsp.y)) {
-    tsp.y <- c(1, length(y), 1)
-  }
+  tsp.y <- tsp(y) %||% c(1, length(y), 1)
   if (seasontype != "N") {
     m <- tsp.y[3]
   } else {
@@ -1186,9 +1181,7 @@ pegelsresid.C <- function(
 }
 
 admissible <- function(alpha, beta, gamma, phi, m) {
-  if (is.null(phi)) {
-    phi <- 1
-  }
+  phi <- phi %||% 1
   if (phi < 0 || phi > 1 + 1e-8) {
     return(0)
   }
@@ -1203,9 +1196,7 @@ admissible <- function(alpha, beta, gamma, phi, m) {
     }
   } else if (m > 1) {
     # Seasonal model
-    if (is.null(beta)) {
-      beta <- 0
-    }
+    beta <- beta %||% 0
     if (gamma < max(1 - 1 / phi - alpha, 0) || gamma > 1 + 1 / phi - alpha) {
       return(0)
     }

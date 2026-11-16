@@ -164,9 +164,7 @@ tbats <- function(
     seasonal.periods <- seasonal.periods[!seasonal.mask]
   }
 
-  if (is.null(use.box.cox)) {
-    use.box.cox <- c(FALSE, TRUE)
-  }
+  use.box.cox <- use.box.cox %||% c(FALSE, TRUE)
   if (any(use.box.cox)) {
     init.box.cox <- BoxCox.lambda(y, lower = bc.lower, upper = bc.upper)
   } else {
@@ -177,9 +175,7 @@ tbats <- function(
   } else if (!use.trend) {
     use.damped.trend <- FALSE
   }
-  if (is.null(use.damped.trend)) {
-    use.damped.trend <- c(FALSE, TRUE)
-  }
+  use.damped.trend <- use.damped.trend %||% c(FALSE, TRUE)
   # Set a vector of model params for later comparison
   model.params <- logical(3)
   model.params[1] <- any(use.box.cox)
@@ -190,9 +186,7 @@ tbats <- function(
   k.vector <- rep(1, length(seasonal.periods))
 
   if (use.parallel) {
-    if (is.null(num.cores)) {
-      num.cores <- detectCores()
-    }
+    num.cores <- num.cores %||% detectCores()
     clus <- makeCluster(num.cores)
     on.exit(stopCluster(clus), add = TRUE)
   }
