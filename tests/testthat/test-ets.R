@@ -62,6 +62,28 @@ test_that("ets() refit with initial values keeps sigma2", {
   expect_equal(refit$sigma2, fit$sigma2)
 })
 
+test_that("ets() refit keeps the bias adjustment of the model", {
+  fit <- ets(AirPassengers, lambda = 0, biasadj = TRUE)
+  refit <- ets(AirPassengers, model = fit, use.initial.values = TRUE)
+  expect_equal(fitted(refit), fitted(fit))
+  expect_equal(refit$lambda, fit$lambda)
+  refit <- ets(
+    AirPassengers,
+    model = fit,
+    biasadj = FALSE,
+    use.initial.values = TRUE
+  )
+  expect_identical(attr(refit$lambda, "biasadj"), FALSE)
+})
+
+test_that("ets() uses the biasadj stored on a supplied lambda", {
+  lambda <- structure(0, biasadj = TRUE)
+  fit <- ets(AirPassengers, model = "ANA", lambda = lambda)
+  expect_identical(attr(fit$lambda, "biasadj"), TRUE)
+  fit <- ets(AirPassengers, model = "ANA", lambda = lambda, biasadj = FALSE)
+  expect_identical(attr(fit$lambda, "biasadj"), FALSE)
+})
+
 test_that("class methods for ets work", {
   fit <- ets(wineind, model = "MAM", alpha = 0.1611)
   expect_output(print(summary(fit)), "Smoothing parameters")

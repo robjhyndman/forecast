@@ -51,7 +51,7 @@ tbats <- function(
   num.cores = 2,
   bc.lower = 0,
   bc.upper = 1,
-  biasadj = FALSE,
+  biasadj = NULL,
   model = NULL,
   ...
 ) {
@@ -107,10 +107,11 @@ tbats <- function(
   # Refit model if available
   if (!is.null(model)) {
     if (inherits(model, "tbats")) {
-      return(fitPreviousTBATSModel(y, model = model))
+      return(fitPreviousTBATSModel(y, model = model, biasadj = biasadj))
     }
-    return(bats(origy, model = model))
+    return(bats(origy, model = model, biasadj = biasadj))
   }
+  biasadj <- biasadj %||% FALSE
 
   # Return constant model if required
   if (is.constant(y)) {

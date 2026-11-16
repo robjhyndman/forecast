@@ -50,3 +50,18 @@ test_that("bats() and tbats() refit a previous model", {
   expect_s3_class(bats(ldeaths, model = fit), "bats")
   expect_s3_class(tbats(ldeaths, model = fit), "bats")
 })
+
+test_that("bats() refit keeps the bias adjustment of the model", {
+  fit <- bats(
+    AirPassengers,
+    use.box.cox = TRUE,
+    use.trend = FALSE,
+    use.arma.errors = FALSE,
+    use.parallel = FALSE,
+    biasadj = TRUE
+  )
+  expect_equal(fitted(bats(AirPassengers, model = fit)), fitted(fit))
+  refit <- bats(AirPassengers, model = fit, biasadj = FALSE)
+  expect_identical(attr(refit$lambda, "biasadj"), FALSE)
+  expect_lt(max(fitted(refit) - fitted(fit)), 0)
+})

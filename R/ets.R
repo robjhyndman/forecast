@@ -99,7 +99,7 @@ ets <- function(
   phi = NULL,
   additive.only = FALSE,
   lambda = NULL,
-  biasadj = FALSE,
+  biasadj = NULL,
   lower = c(rep(0.0001, 3), 0.8),
   upper = c(rep(0.9999, 3), 0.98),
   opt.crit = c("lik", "amse", "mse", "sigma", "mae"),
@@ -131,6 +131,7 @@ ets <- function(
   if (inherits(model, "ets") && is.null(lambda)) {
     lambda <- model$lambda
   }
+  biasadj <- biasadj %||% attr(lambda, "biasadj") %||% FALSE
   if (!is.null(lambda)) {
     y <- BoxCox(y, lambda)
     lambda <- attr(y, "lambda")
@@ -227,12 +228,7 @@ ets <- function(
       model$x <- orig.y
       model$series <- seriesname
       if (!is.null(lambda)) {
-        model$fitted <- InvBoxCox(
-          model$fitted,
-          lambda,
-          biasadj,
-          var(model$residuals)
-        )
+        model$fitted <- InvBoxCox(model$fitted, lambda, biasadj, model$sigma2)
       }
       model$lambda <- lambda
 

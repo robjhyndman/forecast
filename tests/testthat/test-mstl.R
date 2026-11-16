@@ -29,3 +29,12 @@ test_that("forecast.stl and forecast.stlm order levels before forecasting", {
   fc <- forecast(stlm(USAccDeaths), h = 3, level = c(0.95, 0.8))
   expect_identical(fc$level, c(80, 95))
 })
+
+test_that("stlm() refit keeps the bias adjustment of the model", {
+  fit <- stlm(AirPassengers, lambda = 0, biasadj = TRUE)
+  refit <- stlm(AirPassengers, model = fit)
+  expect_equal(fitted(refit), fitted(fit))
+  expect_equal(refit$lambda, fit$lambda)
+  refit <- stlm(AirPassengers, model = fit, biasadj = FALSE)
+  expect_identical(attr(refit$lambda, "biasadj"), FALSE)
+})

@@ -457,7 +457,7 @@ stlm <- function(
   model = NULL,
   etsmodel = "ZZN",
   lambda = NULL,
-  biasadj = FALSE,
+  biasadj = NULL,
   xreg = NULL,
   allow.multiplicative.trend = FALSE,
   x = y,
@@ -483,6 +483,7 @@ stlm <- function(
   if (!is.null(model) && is.null(lambda)) {
     lambda <- model$lambda
   }
+  biasadj <- biasadj %||% attr(lambda, "biasadj") %||% FALSE
 
   # Transform data if necessary
   origx <- x

@@ -74,7 +74,7 @@ dshw <- function(
   omega = NULL,
   phi = NULL,
   lambda = NULL,
-  biasadj = FALSE,
+  biasadj = NULL,
   armethod = TRUE,
   model = NULL
 ) {
@@ -120,9 +120,10 @@ dshw <- function(
     stop("Seasonal periods are not nested")
   }
 
-  if (!is.null(model)) {
+  if (!is.null(model) && is.null(lambda)) {
     lambda <- model$model$lambda
   }
+  biasadj <- biasadj %||% attr(lambda, "biasadj") %||% FALSE
 
   if (!is.null(lambda)) {
     origy <- y

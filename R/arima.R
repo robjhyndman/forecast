@@ -662,25 +662,24 @@ Arima <- function(
   include.mean = TRUE,
   include.drift = FALSE,
   include.constant = NULL,
-  lambda = model$lambda,
-  biasadj = attr(lambda, "biasadj"),
+  lambda = NULL,
+  biasadj = NULL,
   method = c("CSS-ML", "ML", "CSS"),
   model = NULL,
   x = y,
   ...
 ) {
   series <- if (missing(x)) deparse1(substitute(y)) else deparse1(substitute(x))
-  if (is.null(biasadj)) {
-    biasadj <- FALSE
+  if (!is.null(model) && is.null(lambda)) {
+    lambda <- model$lambda
   }
+  biasadj <- biasadj %||% attr(lambda, "biasadj") %||% FALSE
 
   origx <- x
   if (!is.null(lambda)) {
     x <- BoxCox(x, lambda)
     lambda <- attr(x, "lambda")
-    if (is.null(attr(lambda, "biasadj"))) {
-      attr(lambda, "biasadj") <- biasadj
-    }
+    attr(lambda, "biasadj") <- biasadj
   }
 
   if (!is.null(xreg)) {

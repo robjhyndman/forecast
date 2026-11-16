@@ -118,7 +118,7 @@ arfima <- function(
   estim = c("mle", "ls"),
   model = NULL,
   lambda = NULL,
-  biasadj = FALSE,
+  biasadj = NULL,
   xreg = NULL,
   x = y,
   ...
@@ -129,6 +129,11 @@ arfima <- function(
   } else {
     deparse1(substitute(x))
   }
+
+  if (!is.null(model) && is.null(lambda)) {
+    lambda <- model$lambda
+  }
+  biasadj <- biasadj %||% attr(lambda, "biasadj") %||% FALSE
 
   orig.x <- x
   if (!is.null(lambda)) {
