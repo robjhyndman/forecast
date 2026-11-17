@@ -619,10 +619,7 @@ forecast.stlm <- function(
   # In-case forecast method uses different horizon length (such as using xregs)
   h <- NROW(fcast$mean)
   # Forecast seasonal series with seasonal naive
-  seasonal.periods <- attr(object$stl, "msts")
-  if (is.null(seasonal.periods)) {
-    seasonal.periods <- frequency(object$stl)
-  }
+  seasonal.periods <- attr(object$stl, "msts") %||% frequency(object$stl)
   seascomp <- matrix(0, ncol = length(seasonal.periods), nrow = h)
   n <- NROW(object$stl)
   for (i in seq_along(seasonal.periods)) {

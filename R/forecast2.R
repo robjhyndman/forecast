@@ -73,9 +73,7 @@ InvBoxCox <- function(x, lambda, biasadj = FALSE, fvar = NULL) {
     colnames(out) <- colnames(x)
   }
 
-  if (is.null(biasadj)) {
-    biasadj <- attr(lambda, "biasadj")
-  }
+  biasadj <- biasadj %||% attr(lambda, "biasadj")
   if (!is.logical(biasadj)) {
     warning("biasadj information not found, defaulting to FALSE.")
     biasadj <- FALSE

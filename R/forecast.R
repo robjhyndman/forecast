@@ -398,9 +398,7 @@ plot.forecast <- function(
   if (!shaded) {
     shadebars <- FALSE
   }
-  if (is.null(main)) {
-    main <- paste0("Forecasts from ", x$method)
-  }
+  main <- main %||% paste0("Forecasts from ", x$method)
   if (PI) {
     x$upper <- as.matrix(x$upper)
     x$lower <- as.matrix(x$lower)

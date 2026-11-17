@@ -250,12 +250,8 @@ seasonplot <- function(
     xLab <- "Season"
   }
 
-  if (is.null(xlab)) {
-    xlab <- xLab
-  }
-  if (is.null(season.labels)) {
-    season.labels <- labs
-  }
+  xlab <- xlab %||% xLab
+  season.labels <- season.labels %||% labs
   if (year.labels) {
     xlim <- c(1 - labelgap, s + 0.4 + labelgap)
   } else {

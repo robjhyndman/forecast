@@ -259,12 +259,8 @@ accuracy.forecast <- function(object, x, test = NULL, d = NULL, D = NULL, ...) {
     } else {
       frequency(getResponse(object))
     }
-    if (is.null(d)) {
-      d <- as.numeric(freq == 1)
-    }
-    if (is.null(D)) {
-      D <- as.numeric(freq > 1)
-    }
+    d <- d %||% as.numeric(freq == 1)
+    D <- D %||% as.numeric(freq > 1)
   }
 
   trainout <- if (trainset) trainingaccuracy(object, test, d, D)

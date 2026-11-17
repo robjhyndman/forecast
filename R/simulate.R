@@ -538,9 +538,7 @@ simulate.ar <- function(
   if (is.null(object$x)) {
     future <- FALSE
     x.mean <- 0
-    if (is.null(nsim)) {
-      nsim <- 100
-    }
+    nsim <- nsim %||% 100
   } else {
     x.mean <- object$x.mean
     object$x <- object$x - x.mean
@@ -686,9 +684,7 @@ simulate.fracdiff <- function(
   }
   if (is.null(x)) {
     future <- FALSE
-    if (is.null(nsim)) {
-      nsim <- 100
-    }
+    nsim <- nsim %||% 100
     x <- 0
   }
 

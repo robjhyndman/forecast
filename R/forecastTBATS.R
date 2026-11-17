@@ -162,16 +162,13 @@ forecast.tbats <- function(
     mean = future_msts(object$y, y.forecast),
     level = level,
     x = object$y,
-    series = object$series,
+    series = object$series %||% deparse1(object$call$y),
     upper = future_msts(object$y, upper.bounds),
     lower = future_msts(object$y, lower.bounds),
     fitted = copy_msts(object$y, object$fitted.values),
     method = as.character(object),
     residuals = copy_msts(object$y, object$errors)
   )
-  if (is.null(object$series)) {
-    forecast.object$series <- deparse1(object$call$y)
-  }
 
   class(forecast.object) <- "forecast"
   forecast.object

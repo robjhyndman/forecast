@@ -400,9 +400,7 @@ forecast.lm <- function(
     newdata <- cbind(newdata, season)
   }
   newdata <- as.data.frame(newdata)
-  if (is.null(oldnewdata)) {
-    oldnewdata <- newdata
-  }
+  oldnewdata <- oldnewdata %||% newdata
   # If only one column, assume its name.
   if (ncol(newdata) == 1 && colnames(newdata)[1] == "newdata") {
     colnames(newdata) <- as.character(formula(object$model))[3]

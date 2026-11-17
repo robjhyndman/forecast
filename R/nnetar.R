@@ -318,9 +318,7 @@ nnetar <- function(
   }
   # Add xreg into lagged matrix
   lags.X <- cbind(lags.X, xxreg[-(1:maxlag), , drop = FALSE])
-  if (is.null(size)) {
-    size <- round((NCOL(lags.X) + 1) / 2)
-  }
+  size <- size %||% round((NCOL(lags.X) + 1) / 2)
   # Remove missing values if present
   j <- complete.cases(lags.X, y)
   ## Remove values not in subset
@@ -413,9 +411,7 @@ avnnet <- function(
   ...
 ) {
   if (parallel) {
-    if (is.null(num.cores)) {
-      num.cores <- detectCores()
-    }
+    num.cores <- num.cores %||% detectCores()
     cl <- makeCluster(num.cores)
     on.exit(stopCluster(cl), add = TRUE)
     mods <- parLapply(cl, seq_len(repeats), function(i) {
@@ -441,9 +437,7 @@ oldmodel_avnnet <- function(x, y, size, model, parallel, num.cores) {
   args$maxit <- 0
 
   if (parallel) {
-    if (is.null(num.cores)) {
-      num.cores <- detectCores()
-    }
+    num.cores <- num.cores %||% detectCores()
     cl <- makeCluster(num.cores)
     on.exit(stopCluster(cl), add = TRUE)
     mods <- parLapply(cl, seq_len(repeats), function(i) {

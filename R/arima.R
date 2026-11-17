@@ -88,9 +88,7 @@ search.arima <- function(
       }
     }
 
-    if (is.null(num.cores)) {
-      num.cores <- detectCores()
-    }
+    num.cores <- num.cores %||% detectCores()
 
     clus <- makeCluster(num.cores)
     on.exit(stopCluster(clus), add = TRUE)
