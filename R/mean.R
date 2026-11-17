@@ -42,10 +42,10 @@ mean_model <- function(y, lambda = NULL, biasadj = FALSE) {
     lambda <- attr(y, "lambda")
     attr(lambda, "biasadj") <- biasadj
   }
-  n <- length(y)
+  n <- sum(!is.na(y))
   mu <- mean(y, na.rm = TRUE)
   s <- sd(y, na.rm = TRUE)
-  fits <- rep(mu, n)
+  fits <- rep(mu, length(y))
   res <- y - fits
   fits <- copy_msts(y, fits)
   res <- copy_msts(y, res)
@@ -107,7 +107,7 @@ forecast.mean_model <- function(
   ...
 ) {
   biasadj <- biasadj %||% FALSE
-  n <- length(object$y)
+  n <- sum(!is.na(object$residuals))
   f <- rep(object$mu, h)
   level <- get_conf_level(level, fan)
   nconf <- length(level)

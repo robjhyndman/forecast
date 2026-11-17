@@ -30,3 +30,12 @@ test_that("splinef() keeps series name", {
   expect_identical(splinef(airmiles)$series, "airmiles")
   expect_identical(splinef(x = airmiles)$series, "airmiles")
 })
+
+test_that("simulate.spline_model() works with future = FALSE", {
+  fit <- spline_model(AirPassengers, lambda = 0)
+  log_fit <- spline_model(log(AirPassengers))
+  sim <- simulate(fit, nsim = 3, seed = 123, future = FALSE)
+  expected <- exp(simulate(log_fit, nsim = 3, seed = 123, future = FALSE))
+  expect_all_true(is.finite(sim))
+  expect_equal(sim, expected)
+})

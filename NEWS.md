@@ -52,9 +52,10 @@
 * `gglagchull()` now labels an unnamed series with the name of the object instead of its deparsed values.
 * `ggtaperedacf()` no longer errors when forecast is not attached.
 * `ggtsdisplay()` shows the series name as the default title again.
-* `mstl()` now drops short seasonal periods from the `msts` attribute, so `forecast.stlm()` no longer errors.
+* `mean_model()` and `meanf()` now exclude missing observations when estimating uncertainty.
 * `meanf()` no longer errors with `bootstrap = TRUE` when a single confidence level is supplied.
 * `meanf()` no longer errors when `lambda = "auto"`.
+* `mstl()` now drops short seasonal periods from the `msts` attribute, so `forecast.stlm()` no longer errors.
 * `naive()`, `rwf()`, `rw_model()` and `snaive()` no longer return all-`NA` fitted values when `biasadj = TRUE`.
 * `nsdiffs()` now ignores extra arguments passed via `...` with `test = "seas"` instead of silently returning 0.
 * `ocsb.test()` lag selection now considers lag 0 and returns the lag that minimises the criterion.
@@ -62,6 +63,7 @@
 * `residuals.Arima()` with `type = "regression"` now finds the regressors of `stats::arima()` models in the calling environment, including data frames.
 * `simulate.Arima()` now retains nonzero AR and MA coefficients that sum to zero in seasonal models.
 * `simulate.rw_model()` now adds the drift once per seasonal period instead of every observation when `lag > 1`, which also corrects simulated and bootstrapped prediction intervals from `forecast.rw_model()`.
+* `simulate.spline_model()` with `future = FALSE` no longer errors for series longer than 100 observations, and now simulates on the transformed scale when `lambda` is used.
 * `splinef()` and `forecast.spline_model()` now return the point forecasts as a univariate time series instead of a one-column matrix, and `spline_model()` now returns the fitted values as a time series when `method = "mle"`.
 * `splinef()` and `forecast.spline_model()` now return `lambda` as a component of the forecast object instead of as an attribute.
 * `splinef()` and `thetaf()` now return the series name instead of "x".

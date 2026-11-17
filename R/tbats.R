@@ -82,11 +82,9 @@ tbats <- function(
       y <- as.ts(y)
       seasonal.periods <- 1
     }
-  } else {
+  } else if (!is.ts(y)) {
     # Add ts attributes
-    if (!is.ts(y)) {
-      y <- msts(y, seasonal.periods)
-    }
+    y <- msts(y, seasonal.periods)
   }
   seasonal.periods <- sort(unique(pmax(seasonal.periods, 1)))
   if (all(seasonal.periods == 1)) {

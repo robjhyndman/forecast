@@ -408,11 +408,12 @@ simulate.spline_model <- function(
   }
 
   # Construct simulated ts
-  nhistory <- min(length(object$y), 100)
+  nhistory <- min(length(y), 100)
   if (future) {
     y <- tail(y, nhistory)
   } else {
-    y <- object$y[sample(nhistory - length(object$y)) + seq_len(nhistory)]
+    start <- sample.int(length(y) - nhistory + 1L, 1L)
+    y <- y[start + seq_len(nhistory) - 1L]
   }
   y <- c(y, rep(NA_real_, nsim))
   for (i in nhistory + seq_len(nsim) - 1) {

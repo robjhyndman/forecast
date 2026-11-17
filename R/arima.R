@@ -261,13 +261,11 @@ forecast.Arima <- function(
 
     xreg <- as.matrix(xreg)
     h <- nrow(xreg)
-  } else {
-    if (!is.null(xreg)) {
-      warning(
-        "xreg not required by this model, ignoring the provided regressors"
-      )
-      xreg <- NULL
-    }
+  } else if (!is.null(xreg)) {
+    warning(
+      "xreg not required by this model, ignoring the provided regressors"
+    )
+    xreg <- NULL
   }
 
   level <- get_conf_level(level, fan)
