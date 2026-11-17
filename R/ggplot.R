@@ -851,10 +851,8 @@ autoplot.forecast <- function(
       if (NROW(object$model$coefficients) == 2) {
         coef$m <- object$model$coefficients[-i]
       }
-    } else {
-      if (NROW(object$model$coefficients) == 1) {
-        coef$m <- object$model$coefficients
-      }
+    } else if (NROW(object$model$coefficients) == 1) {
+      coef$m <- object$model$coefficients
     }
     p <- p + ggplot2::geom_abline(intercept = coef$int, slope = coef$m)
   } else {

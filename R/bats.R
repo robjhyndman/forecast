@@ -108,11 +108,9 @@ bats <- function(
     if (length(seasonal.periods) == 0L) {
       seasonal.periods <- 1
     }
-  } else {
+  } else if (!is.ts(y)) {
     # Add ts attributes
-    if (!is.ts(y)) {
-      y <- msts(y, seasonal.periods)
-    }
+    y <- msts(y, seasonal.periods)
   }
   seasonal.periods <- unique(pmax(seasonal.periods, 1))
   if (all(seasonal.periods == 1)) {
