@@ -264,3 +264,7 @@ test_that("nnetar() works with deprecated x argument", {
   set.seed(123)
   expect_identical(nnetar(x = lynx, size = 1, repeats = 1)$series, "lynx")
 })
+
+test_that("nnetar() checks the class of model", {
+  expect_snapshot(nnetar(lh, model = ets(lh)), error = TRUE)
+})

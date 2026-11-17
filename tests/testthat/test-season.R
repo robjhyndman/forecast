@@ -120,3 +120,10 @@ test_that("tests for ma", {
   expect_identical(which(is.na(maseries)), c(1L, 20L))
   expect_all_true(abs(maseries[2:19] - 2:19) < .Machine$double.eps^0.5)
 })
+
+test_that("ma() checks order", {
+  expect_snapshot(error = TRUE, {
+    ma(1:20, order = 0)
+    ma(1:20, order = 2.5)
+  })
+})

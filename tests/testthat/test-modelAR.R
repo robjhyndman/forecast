@@ -470,3 +470,7 @@ test_that("Tests for modelAR", {
   )
   expect_null(nnetfit$scalexreg)
 })
+
+test_that("modelAR() checks the class of model", {
+  expect_snapshot(modelAR(lh, model = ets(lh)), error = TRUE)
+})

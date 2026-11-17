@@ -33,3 +33,11 @@ test_that("dshw() refit reuses lambda and biasadj unless supplied", {
   refit <- dshw(y, model = fit, lambda = 0.5)
   expect_equal(refit$model$lambda, 0.5, ignore_attr = TRUE)
 })
+
+test_that("dshw() checks the class of model", {
+  expect_snapshot(error = TRUE, {
+    dshw(taylor, model = ets(lh))
+    dshw(taylor, model = ses(lh))
+    dshw(taylor - mean(taylor), model = ets(lh))
+  })
+})

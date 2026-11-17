@@ -33,3 +33,11 @@
       Warning in `forecast.forecast_ARIMA()`:
       The non-existent foo, bar arguments will be ignored.
 
+# Arima() checks the class of model
+
+    Code
+      Arima(lh, model = ets(lh))
+    Condition
+      Error in `Arima()`:
+      ! model should be the output of a previous call to Arima(), auto.arima() or arima()
+

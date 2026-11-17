@@ -355,7 +355,7 @@ snaive <- function(
     lambda = lambda,
     drift = FALSE,
     biasadj = biasadj,
-    lag = max(1L, round(frequency(x))),
+    lag = seasonal_period(x),
     ...
   )
   fc$model$call <- match.call()

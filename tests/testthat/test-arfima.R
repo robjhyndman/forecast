@@ -47,3 +47,16 @@ test_that("arfima() refit keeps the Box-Cox transformation of the model", {
 test_that("arfima() keeps series name with deprecated x argument", {
   expect_identical(arfima(x = WWWusage)$series, "WWWusage")
 })
+
+test_that("arfima() checks the class of model", {
+  expect_snapshot(arfima(lh, model = Arima(lh)), error = TRUE)
+})
+
+test_that("forecast.fracdiff() checks h", {
+  fit <- arfima(lh)
+  expect_snapshot(error = TRUE, {
+    forecast(fit, h = 0)
+    forecast(fit, h = 1.5)
+    forecast(fit, h = c(1, 2))
+  })
+})

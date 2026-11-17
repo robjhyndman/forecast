@@ -203,7 +203,7 @@ seasonplot <- function(
 
   # Check data are seasonal and convert to integer seasonality
   if (missing(s)) {
-    s <- round(frequency(x))
+    s <- seasonal_period(x)
   }
   if (s <= 1) {
     stop("Data are not seasonal")

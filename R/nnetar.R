@@ -124,10 +124,10 @@ nnetar <- function(
     # Check for conflicts between new and old data:
     # Check model class
     if (!is.nnetar(model)) {
-      stop("Model must be a nnetar object")
+      stop("model should be the output of a previous call to nnetar()")
     }
     # Check new data
-    m <- max(round(frequency(model$x)), 1L)
+    m <- seasonal_period(model$x)
     minlength <- max(model$p, model$P * m) + 1
     if (length(x) < minlength) {
       stop(sprintf(
@@ -259,7 +259,7 @@ nnetar <- function(
   # Set up lagged matrix
   n <- length(xx)
   xx <- as.ts(xx)
-  m <- max(round(frequency(xx)), 1L)
+  m <- seasonal_period(xx)
   if (!useoldmodel) {
     if (m == 1) {
       if (missing(p)) {

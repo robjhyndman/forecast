@@ -2,6 +2,7 @@
 
 * `arfima()`, `Arima()`, `auto.arima()`, `croston()`, `holt()`, `hw()`, `meanf()`, `modelAR()`, `naive()`, `nnetar()`, `rwf()`, `ses()`, `snaive()`, `splinef()`, `stlf()`, `stlm()` and `thetaf()` now keep the series name when it is supplied via the deprecated `x` argument.
 * `arfima()`, `Arima()`, `bats()`, `dshw()`, `ets()`, `stlm()` and `tbats()` now reuse the Box-Cox transformation and bias adjustment of `model` when refitting, unless `lambda` or `biasadj` is supplied. If `biasadj` is not supplied, `arfima()`, `dshw()`, `ets()` and `stlm()` now use the setting stored with `lambda`, as `Arima()` already did.
+* `arfima()`, `Arima()`, `dshw()`, `ets()` and `stlm()` now give an informative error when `model` is not a model of the right class, as `bats()`, `tbats()` and `nnetar()` already did.
 * `arfima()`, `stlm()`, `theta_model()` and `tslm()` no longer return all-`NA` fitted values when `biasadj = TRUE` and some residuals are missing.
 * `auto.arima()` now gives an informative error when all data are missing.
 * `auto.arima()` parallel model search (`stepwise = FALSE`) now works on Windows (#1187).

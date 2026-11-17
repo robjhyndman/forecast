@@ -38,3 +38,10 @@ test_that("stlm() refit keeps the bias adjustment of the model", {
   refit <- stlm(AirPassengers, model = fit, biasadj = FALSE)
   expect_identical(attr(refit$lambda, "biasadj"), FALSE)
 })
+
+test_that("stlm() checks the class of model", {
+  expect_snapshot(error = TRUE, {
+    stlm(USAccDeaths, model = ets(USAccDeaths))
+    stlm(lh, model = ets(lh))
+  })
+})

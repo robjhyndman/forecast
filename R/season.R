@@ -347,8 +347,8 @@ fourierf <- function(x, K, h) {
 #'
 #' @export
 ma <- function(x, order, centre = TRUE) {
-  if (abs(order - round(order)) > 1e-8) {
-    stop("order must be an integer")
+  if (!is_count(order)) {
+    stop("order must be a positive integer")
   }
 
   if (order %% 2 == 0 && centre) {

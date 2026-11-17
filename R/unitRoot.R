@@ -418,7 +418,7 @@ ocsb.test <- function(
 ) {
   lag.method <- match.arg(lag.method)
   sname <- deparse1(substitute(x))
-  period <- max(1L, round(frequency(x)))
+  period <- seasonal_period(x)
 
   if (period == 1) {
     stop("Data must be seasonal to use `ocsb.test`. Check your ts frequency.")
