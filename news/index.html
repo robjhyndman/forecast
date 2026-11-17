@@ -162,11 +162,13 @@
 <li>
 <code><a href="../reference/tsdisplay.html">ggtsdisplay()</a></code> shows the series name as the default title again.</li>
 <li>
-<code><a href="../reference/mstl.html">mstl()</a></code> now drops short seasonal periods from the <code>msts</code> attribute, so <code><a href="../reference/forecast.stl.html">forecast.stlm()</a></code> no longer errors.</li>
+<code><a href="../reference/mean_model.html">mean_model()</a></code> and <code><a href="../reference/forecast.mean_model.html">meanf()</a></code> now exclude missing observations when estimating uncertainty.</li>
 <li>
 <code><a href="../reference/forecast.mean_model.html">meanf()</a></code> no longer errors with <code>bootstrap = TRUE</code> when a single confidence level is supplied.</li>
 <li>
 <code><a href="../reference/forecast.mean_model.html">meanf()</a></code> no longer errors when <code>lambda = "auto"</code>.</li>
+<li>
+<code><a href="../reference/mstl.html">mstl()</a></code> now drops short seasonal periods from the <code>msts</code> attribute, so <code><a href="../reference/forecast.stl.html">forecast.stlm()</a></code> no longer errors.</li>
 <li>
 <code><a href="../reference/forecast.rw_model.html">naive()</a></code>, <code><a href="../reference/forecast.rw_model.html">rwf()</a></code>, <code><a href="../reference/rw_model.html">rw_model()</a></code> and <code><a href="../reference/forecast.rw_model.html">snaive()</a></code> no longer return all-<code>NA</code> fitted values when <code>biasadj = TRUE</code>.</li>
 <li>
@@ -179,6 +181,8 @@
 <code><a href="../reference/residuals.forecast.html">residuals.Arima()</a></code> with <code>type = "regression"</code> now finds the regressors of <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">stats::arima()</a></code> models in the calling environment, including data frames.</li>
 <li>
 <code><a href="../reference/simulate.ets.html">simulate.Arima()</a></code> now retains nonzero AR and MA coefficients that sum to zero in seasonal models.</li>
+<li>
+<code><a href="../reference/simulate.ets.html">simulate.spline_model()</a></code> with <code>future = FALSE</code> no longer errors for series longer than 100 observations, and now simulates on the transformed scale when <code>lambda</code> is used.</li>
 <li>
 <code><a href="../reference/forecast.spline_model.html">splinef()</a></code> and <code><a href="../reference/forecast.spline_model.html">forecast.spline_model()</a></code> now return the point forecasts as a univariate time series instead of a one-column matrix, and <code><a href="../reference/spline_model.html">spline_model()</a></code> now returns the fitted values as a time series when <code>method = "mle"</code>.</li>
 <li>

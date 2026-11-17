@@ -220,15 +220,19 @@
   no longer errors when forecast is not attached.
 - [`ggtsdisplay()`](https://pkg.robjhyndman.com/forecast/reference/tsdisplay.md)
   shows the series name as the default title again.
-- [`mstl()`](https://pkg.robjhyndman.com/forecast/reference/mstl.md) now
-  drops short seasonal periods from the `msts` attribute, so
-  [`forecast.stlm()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
-  no longer errors.
+- [`mean_model()`](https://pkg.robjhyndman.com/forecast/reference/mean_model.md)
+  and
+  [`meanf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.mean_model.md)
+  now exclude missing observations when estimating uncertainty.
 - [`meanf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.mean_model.md)
   no longer errors with `bootstrap = TRUE` when a single confidence
   level is supplied.
 - [`meanf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.mean_model.md)
   no longer errors when `lambda = "auto"`.
+- [`mstl()`](https://pkg.robjhyndman.com/forecast/reference/mstl.md) now
+  drops short seasonal periods from the `msts` attribute, so
+  [`forecast.stlm()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
+  no longer errors.
 - [`naive()`](https://pkg.robjhyndman.com/forecast/reference/forecast.rw_model.md),
   [`rwf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.rw_model.md),
   [`rw_model()`](https://pkg.robjhyndman.com/forecast/reference/rw_model.md)
@@ -253,6 +257,10 @@
 - [`simulate.Arima()`](https://pkg.robjhyndman.com/forecast/reference/simulate.ets.md)
   now retains nonzero AR and MA coefficients that sum to zero in
   seasonal models.
+- [`simulate.spline_model()`](https://pkg.robjhyndman.com/forecast/reference/simulate.ets.md)
+  with `future = FALSE` no longer errors for series longer than 100
+  observations, and now simulates on the transformed scale when `lambda`
+  is used.
 - [`splinef()`](https://pkg.robjhyndman.com/forecast/reference/forecast.spline_model.md)
   and
   [`forecast.spline_model()`](https://pkg.robjhyndman.com/forecast/reference/forecast.spline_model.md)
