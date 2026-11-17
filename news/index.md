@@ -257,6 +257,11 @@
 - [`simulate.Arima()`](https://pkg.robjhyndman.com/forecast/reference/simulate.ets.md)
   now retains nonzero AR and MA coefficients that sum to zero in
   seasonal models.
+- [`simulate.rw_model()`](https://pkg.robjhyndman.com/forecast/reference/simulate.ets.md)
+  now adds the drift once per seasonal period instead of every
+  observation when `lag > 1`, which also corrects simulated and
+  bootstrapped prediction intervals from
+  [`forecast.rw_model()`](https://pkg.robjhyndman.com/forecast/reference/forecast.rw_model.md).
 - [`simulate.spline_model()`](https://pkg.robjhyndman.com/forecast/reference/simulate.ets.md)
   with `future = FALSE` no longer errors for series longer than 100
   observations, and now simulates on the transformed scale when `lambda`

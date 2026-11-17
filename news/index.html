@@ -182,6 +182,8 @@
 <li>
 <code><a href="../reference/simulate.ets.html">simulate.Arima()</a></code> now retains nonzero AR and MA coefficients that sum to zero in seasonal models.</li>
 <li>
+<code><a href="../reference/simulate.ets.html">simulate.rw_model()</a></code> now adds the drift once per seasonal period instead of every observation when <code>lag &gt; 1</code>, which also corrects simulated and bootstrapped prediction intervals from <code><a href="../reference/forecast.rw_model.html">forecast.rw_model()</a></code>.</li>
+<li>
 <code><a href="../reference/simulate.ets.html">simulate.spline_model()</a></code> with <code>future = FALSE</code> no longer errors for series longer than 100 observations, and now simulates on the transformed scale when <code>lambda</code> is used.</li>
 <li>
 <code><a href="../reference/forecast.spline_model.html">splinef()</a></code> and <code><a href="../reference/forecast.spline_model.html">forecast.spline_model()</a></code> now return the point forecasts as a univariate time series instead of a one-column matrix, and <code><a href="../reference/spline_model.html">spline_model()</a></code> now returns the fitted values as a time series when <code>method = "mle"</code>.</li>
