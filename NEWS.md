@@ -52,9 +52,10 @@
 * `gglagchull()` now labels an unnamed series with the name of the object instead of its deparsed values.
 * `ggtaperedacf()` no longer errors when forecast is not attached.
 * `ggtsdisplay()` shows the series name as the default title again.
-* `mstl()` now drops short seasonal periods from the `msts` attribute, so `forecast.stlm()` no longer errors.
+* `mean_model()` and `meanf()` now exclude missing observations when estimating uncertainty.
 * `meanf()` no longer errors with `bootstrap = TRUE` when a single confidence level is supplied.
 * `meanf()` no longer errors when `lambda = "auto"`.
+* `mstl()` now drops short seasonal periods from the `msts` attribute, so `forecast.stlm()` no longer errors.
 * `naive()`, `rwf()`, `rw_model()` and `snaive()` no longer return all-`NA` fitted values when `biasadj = TRUE`.
 * `nsdiffs()` now ignores extra arguments passed via `...` with `test = "seas"` instead of silently returning 0.
 * `ocsb.test()` lag selection now considers lag 0 and returns the lag that minimises the criterion.

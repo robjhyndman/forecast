@@ -31,6 +31,14 @@ test_that("test mean_model", {
   expect_identical(f1$upper, f2$upper)
 })
 
+test_that("meanf() excludes missing values when estimating uncertainty", {
+  y <- ts(c(NA, 1, NA, 2, 3, NA), start = c(2000, 1), frequency = 4)
+  fc <- meanf(y, h = 2, level = 95)
+  width <- qt(0.975, df = 2) * sqrt(1 + 1 / 3)
+  expect_equal(c(fc$lower), rep(2 - width, 2))
+  expect_equal(c(fc$upper), rep(2 + width, 2))
+})
+
 test_that("meanf() keeps series name with deprecated x argument", {
   expect_identical(meanf(x = USAccDeaths)$series, "USAccDeaths")
 })
