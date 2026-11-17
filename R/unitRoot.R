@@ -63,12 +63,12 @@ ndiffs <- function(
 
   if (alpha < 0.01) {
     warning(
-      "Specified alpha value is less than the minimum, setting alpha=0.01"
+      "Specified `alpha` value is less than the minimum, setting `alpha = 0.01`."
     )
     alpha <- 0.01
   } else if (alpha > 0.1) {
     warning(
-      "Specified alpha value is larger than the maximum, setting alpha=0.1"
+      "Specified `alpha` value is larger than the maximum, setting `alpha = 0.1`."
     )
     alpha <- 0.1
   }
@@ -107,7 +107,7 @@ ndiffs <- function(
               ...
             )) >
               alpha,
-            stop("This shouldn't happen")
+            stop("Unknown unit root test.")
           )
         )
         diff
@@ -224,24 +224,24 @@ nsdiffs <- function(
 
   if (alpha < 0.01) {
     warning(
-      "Specified alpha value is less than the minimum, setting alpha=0.01"
+      "Specified `alpha` value is less than the minimum, setting `alpha = 0.01`."
     )
     alpha <- 0.01
   } else if (alpha > 0.1) {
     warning(
-      "Specified alpha value is larger than the maximum, setting alpha=0.1"
+      "Specified `alpha` value is larger than the maximum, setting `alpha = 0.1`."
     )
     alpha <- 0.1
   }
   if (test == "ocsb" && alpha != 0.05) {
     warning(
-      "Significance levels other than 5% are not currently supported by test='ocsb', defaulting to alpha = 0.05."
+      "Significance levels other than 5% are not currently supported by `test = \"ocsb\"`, defaulting to `alpha = 0.05`."
     )
     alpha <- 0.05
   }
   if (test %in% c("hegy", "ch") && !requireNamespace("uroot", quietly = TRUE)) {
     stop(sprintf(
-      'Using a %s test requires the uroot package. Please install it using `install.packages("uroot")`.',
+      'Using a %s test requires the uroot package. Install it with `install.packages("uroot")`.',
       test
     ))
   }
@@ -252,16 +252,16 @@ nsdiffs <- function(
 
   if (!missing(m)) {
     .Deprecated(
-      msg = "argument `m` is deprecated; please set the frequency in the ts object."
+      msg = "The `m` argument is deprecated. Set the frequency of the time series instead."
     )
     x <- ts(x, frequency = m)
   }
 
   if (frequency(x) == 1) {
-    stop("Non seasonal data")
+    stop("`x` must be a seasonal time series.")
   } else if (frequency(x) < 1) {
     warning(
-      "I can't handle data with frequency less than 1. Seasonality will be ignored."
+      "Seasonality is not supported for data with frequency less than 1, ignoring it."
     )
     return(0)
   }
@@ -352,7 +352,7 @@ nsdiffs <- function(
 # Adjusted from robjhyndman/tsfeatures
 seas.heuristic <- function(x) {
   if (!inherits(x, "msts") && !is.ts(x)) {
-    stop("The object provided must be a time-series object `msts` or `ts`)")
+    stop("`x` must be a `ts` or `msts` object.")
   }
   season <- NA
   stlfit <- mstl(x)
@@ -421,7 +421,7 @@ ocsb.test <- function(
   period <- seasonal_period(x)
 
   if (period == 1) {
-    stop("Data must be seasonal to use `ocsb.test`. Check your ts frequency.")
+    stop("`x` must be a seasonal time series.")
   }
 
   genLags <- function(y, maxlag) {

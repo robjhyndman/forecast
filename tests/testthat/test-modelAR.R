@@ -451,7 +451,7 @@ test_that("Tests for modelAR", {
       repeats = 1,
       lambda = 0.1
     ),
-    "Constant xreg"
+    "Constant `xreg`"
   )
   expect_null(nnetfit$scalexreg)
   expect_warning(
@@ -466,7 +466,7 @@ test_that("Tests for modelAR", {
       repeats = 1,
       lambda = 0.1
     ),
-    "Constant xreg"
+    "Constant `xreg`"
   )
   expect_null(nnetfit$scalexreg)
 })

@@ -51,7 +51,7 @@ na.interp <- function(
     if (NCOL(x) == 1) {
       x <- x[, 1]
     } else {
-      stop("The time series is not univariate.")
+      stop("`x` must be a univariate time series.")
     }
   }
 

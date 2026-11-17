@@ -4,7 +4,7 @@ na.ends <- function(x) {
   # Strip initial and final missing values
   nonmiss <- which(!is.na(x), useNames = FALSE)
   if (length(nonmiss) == 0) {
-    stop("No non-missing data")
+    stop("No non-missing data.")
   }
   j <- nonmiss[1]
   k <- nonmiss[length(nonmiss)]
@@ -128,7 +128,7 @@ arfima <- function(
   }
 
   if (!is.null(model) && !inherits(model, "ARFIMA")) {
-    stop("model should be the output of a previous call to arfima()")
+    stop("`model` must be the output of a previous call to `arfima()`.")
   }
   if (!is.null(model) && is.null(lambda)) {
     lambda <- model$lambda
@@ -213,7 +213,7 @@ arfima <- function(
         }
         fit$residuals <- fit2$residuals
       } else {
-        warning("MLE estimation failed. Returning LS estimates")
+        warning("MLE estimation failed, returning LS estimates.")
       }
     }
   }
@@ -256,7 +256,7 @@ forecast.fracdiff <- function(
 ) {
   biasadj <- biasadj %||% FALSE
   if (!is_count(h)) {
-    stop("h must be a positive integer")
+    stop("`h` must be a positive integer.")
   }
   h <- as.integer(h)
   # Extract data
@@ -265,7 +265,7 @@ forecast.fracdiff <- function(
   m <- frequency(x)
   endx <- tsp(x)[2]
   if (is.null(x)) {
-    stop("Unable to find original time series")
+    stop("Can't find the original time series.")
   }
   if (!is.null(lambda)) {
     x <- BoxCox(x, lambda)
@@ -400,7 +400,7 @@ fitted.ARFIMA <- function(object, h = 1, ...) {
   } else {
     if (h != 1) {
       warning(
-        "h-step fits are not supported for models produced by fracdiff(), returning one-step fits (h=1)"
+        "Multi-step fits are not supported for models produced by `fracdiff()`, returning one-step fits (`h = 1`)."
       )
     }
     x <- getResponse(object)

@@ -82,10 +82,10 @@ dshw <- function(
     !is.null(model) &&
       !(is.forecast(model) && identical(model$method, "DSHW"))
   ) {
-    stop("model should be the output of a previous call to dshw()")
+    stop("`model` must be the output of a previous call to `dshw()`.")
   }
   if (min(y, na.rm = TRUE) <= 0) {
-    stop("dshw not suitable when data contain zeros or negative numbers")
+    stop("`y` must not contain zeros or negative values.")
   }
   seriesname <- deparse1(substitute(y))
   if (!is.null(model)) {
@@ -97,7 +97,7 @@ dshw <- function(
     period2 <- periods[2]
   } else if (is.null(period1) || is.null(period2)) {
     stop(
-      "Error in dshw(): y must either be an msts object with two seasonal periods OR the seasonal periods should be specified with period1= and period2="
+      "`y` must be an `msts` object with two seasonal periods, or the seasonal periods must be specified with `period1` and `period2`."
     )
   } else if (period1 > period2) {
     tmp <- period2
@@ -109,7 +109,7 @@ dshw <- function(
   }
 
   if (length(y) < 2 * max(period2)) {
-    stop("Insufficient data to estimate model")
+    stop("Not enough data to fit the model.")
   }
 
   if (!armethod) {
@@ -117,11 +117,11 @@ dshw <- function(
   }
 
   if (period1 < 1 || period1 == period2) {
-    stop("Inappropriate periods")
+    stop("Seasonal periods must be at least 1 and distinct.")
   }
   ratio <- period2 / period1
   if (ratio - trunc(ratio) > 1e-10) {
-    stop("Seasonal periods are not nested")
+    stop("The larger seasonal period must be a multiple of the smaller one.")
   }
 
   if (!is.null(model) && is.null(lambda)) {

@@ -56,14 +56,16 @@ tbats <- function(
   ...
 ) {
   if (!is.numeric(y) || NCOL(y) > 1) {
-    stop("y should be a univariate time series")
+    stop("`y` must be a univariate time series.")
   }
   if (!is.null(model)) {
     if (!is.bats(model)) {
-      stop("model should be the output of a previous call to tbats() or bats()")
+      stop(
+        "`model` must be the output of a previous call to `tbats()` or `bats()`."
+      )
     }
     if (is.null(model$parameters)) {
-      stop("model was fitted to a constant series and cannot be refitted")
+      stop("`model` was fitted to a constant series and can't be refitted.")
     }
   }
 
@@ -95,7 +97,7 @@ tbats <- function(
   y <- na.contiguous(y)
   if (ny != length(y)) {
     warning(
-      "Missing values encountered. Using longest contiguous portion of time series"
+      "Missing values encountered, using the longest contiguous portion of the time series."
     )
     if (!is.null(attr_y$tsp)) {
       attr_y$tsp[1:2] <- range(time(y))

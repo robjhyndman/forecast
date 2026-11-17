@@ -75,12 +75,12 @@ InvBoxCox <- function(x, lambda, biasadj = FALSE, fvar = NULL) {
 
   biasadj <- biasadj %||% attr(lambda, "biasadj")
   if (!is.logical(biasadj)) {
-    warning("biasadj information not found, defaulting to FALSE.")
+    warning("`biasadj` information not found, defaulting to `FALSE`.")
     biasadj <- FALSE
   }
   if (biasadj) {
     if (is.null(fvar)) {
-      stop("fvar must be provided when biasadj=TRUE")
+      stop("`fvar` must be provided when `biasadj = TRUE`.")
     }
     if (is.list(fvar)) {
       # Create fvar from forecast interval

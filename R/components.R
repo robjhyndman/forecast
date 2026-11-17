@@ -51,7 +51,7 @@ seasonal <- function(object) {
   } else if (inherits(object, "seas")) {
     object$data[, "seasonal"]
   } else {
-    stop("Unknown object type")
+    stop("Can't extract the seasonal component from `object`.")
   }
 }
 
@@ -67,7 +67,7 @@ trendcycle <- function(object) {
   } else if (inherits(object, "seas")) {
     seasextract_w_na_action(object, "trend")
   } else {
-    stop("Unknown object type")
+    stop("Can't extract the trend component from `object`.")
   }
 }
 
@@ -83,7 +83,7 @@ remainder <- function(object) {
   } else if (inherits(object, "seas")) {
     seasextract_w_na_action(object, "irregular")
   } else {
-    stop("Unknown object type")
+    stop("Can't extract the remainder component from `object`.")
   }
 }
 

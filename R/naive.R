@@ -49,7 +49,7 @@ rw_model <- function(
   biasadj = FALSE
 ) {
   if (!is_count(lag)) {
-    stop("lag must be a positive integer")
+    stop("`lag` must be a positive integer.")
   }
   seriesname <- deparse1(substitute(y))
   if (!is.ts(y)) {
@@ -58,7 +58,7 @@ rw_model <- function(
   dimy <- dim(y)
   if (!is.null(dimy) && dimy[2] > 1) {
     stop(
-      "Multivariate time series detected. This function is designed for univariate time series only."
+      "`y` must be a univariate time series."
     )
   }
   origy <- y

@@ -117,7 +117,9 @@ forecast.ts <- function(
     } else if (inherits(model, "nnetar")) {
       fit <- nnetar(object, model = model, ...)
     } else {
-      stop("Unknown model class")
+      stop(
+        "`model` must be an `ets`, `Arima`, `bats`, `tbats` or `nnetar` object."
+      )
     }
     return(forecast(fit, h = h, level = level, fan = fan))
   }
@@ -228,7 +230,7 @@ plotlmforecast <- function(
   xvar <- attr(terms(object$model), "term.labels")
   if (length(xvar) > 1) {
     stop(
-      "Forecast plot for regression models only available for a single predictor"
+      "Forecast plots for regression models are only available for a single predictor."
     )
   } else if (ncol(object$newdata) == 1) {
     # Make sure column has correct name
@@ -467,7 +469,7 @@ plot.forecast <- function(
 
     if (!showgap) {
       warning(
-        "Removing the gap requires historical data, provide this via model$x. Defaulting showgap to TRUE."
+        "Removing the gap requires historical data, provide this via `model$x`. Defaulting to `showgap = TRUE`."
       )
     }
   }
@@ -591,7 +593,7 @@ hfitted.default <- function(object, h = 1, FUN = NULL, ...) {
   if (is.null(FUN)) {
     FUN <- Find(\(x) typeof(get0(x)) == "closure", class(object))
     if (is.null(FUN)) {
-      stop("Could not find appropriate function to refit, specify FUN=function")
+      stop("Can't find a function to refit the model, specify it with `FUN`.")
     }
   }
   x <- getResponse(object)
@@ -655,7 +657,7 @@ forecast.forecast <- function(object, ...) {
     level <- list(...)[["level"]]
     if (!isTRUE(all.equal(sort(level), sort(object$level)))) {
       stop(
-        "Please set the level argument when the forecasts are first computed"
+        "`level` can't differ from the levels used when the forecasts were first computed."
       )
     }
   }
@@ -664,7 +666,7 @@ forecast.forecast <- function(object, ...) {
     h <- list(...)[["h"]]
     if (h > length(object$mean)) {
       stop(
-        "Please select a longer horizon when the forecasts are first computed"
+        "`h` can't be longer than the horizon used when the forecasts were first computed."
       )
     }
     tspf <- tsp(object$mean)
@@ -785,19 +787,18 @@ as.data.frame.forecast <- function(x, ...) {
   calendar <- any(fr.x == c(4, 12)) && length(start(x)) == 2L
   Tsp <- tsp(x)
   if (is.null(Tsp)) {
-    warning("series is corrupt, with no 'tsp' attribute")
+    warning("Series is corrupt, with no `tsp` attribute.")
     print(unclass(x))
     return(invisible(x))
   }
   nn <- 1 + round((Tsp[2L] - Tsp[1L]) * Tsp[3L])
   if (NROW(x) != nn) {
     warning(
-      gettextf(
-        "series is corrupt: length %d with 'tsp' implying %d",
+      sprintf(
+        "Series is corrupt: length %d with `tsp` implying %d.",
         NROW(x),
         nn
       ),
-      domain = NA,
       call. = FALSE
     )
     calendar <- FALSE

@@ -4,5 +4,5 @@
       auto.arima(ts(rep(NA_real_, 20)))
     Condition
       Error in `auto.arima()`:
-      ! All data are missing
+      ! All data are missing.
 

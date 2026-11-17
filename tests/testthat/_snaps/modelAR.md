@@ -4,5 +4,5 @@
       modelAR(lh, model = ets(lh))
     Condition
       Error in `modelAR()`:
-      ! model should be the output of a previous call to modelAR()
+      ! `model` must be the output of a previous call to `modelAR()`.
 

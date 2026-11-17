@@ -45,7 +45,7 @@ checkresiduals <- function(object, lag, test, plot = TRUE, ...) {
   }
 
   if (length(residuals) == 0L) {
-    stop("No residuals found")
+    stop("No residuals found.")
   }
 
   if (inherits(object, "ar")) {
@@ -137,7 +137,7 @@ modeldf <- function(object, ...) {
 
 #' @export
 modeldf.default <- function(object, ...) {
-  warning("Could not find appropriate degrees of freedom for this model.")
+  warning("Can't find the degrees of freedom for this model.")
   NULL
 }
 

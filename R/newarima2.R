@@ -126,7 +126,7 @@ auto.arima <- function(
   # Only non-stepwise parallel implemented so far.
   if (stepwise && parallel) {
     warning(
-      "Parallel computer is only implemented when stepwise=FALSE, the model will be fit in serial."
+      "Parallel computation is only implemented when `stepwise = FALSE`, the model will be fit in serial."
     )
     parallel <- FALSE
   }
@@ -139,10 +139,10 @@ auto.arima <- function(
   series <- if (missing(x)) deparse1(substitute(y)) else deparse1(substitute(x))
   x <- as.ts(x)
   if (NCOL(x) > 1) {
-    stop("auto.arima can only handle univariate time series")
+    stop("`y` must be a univariate time series.")
   }
   if (all(is.na(x))) {
-    stop("All data are missing")
+    stop("All data are missing.")
   }
 
   # Trim leading NAs and find length of non-missing data
@@ -155,7 +155,7 @@ auto.arima <- function(
   x <- subset(x, start = firstnonmiss)
   if (!is.null(xreg)) {
     if (!is.numeric(xreg)) {
-      stop("xreg should be a numeric matrix or a numeric vector")
+      stop("`xreg` must be a numeric matrix or a numeric vector.")
     }
     xreg <- as.matrix(xreg)
     xreg <- xreg[firstnonmiss:NROW(xreg), , drop = FALSE]
@@ -234,7 +234,7 @@ auto.arima <- function(
       # Now check if it is rank deficient
       sv <- svd(na.omit(cbind(1, xregg)), nu = 0, nv = 0)$d
       if (min(sv) / sum(sv) < .Machine$double.eps) {
-        stop("xreg is rank deficient")
+        stop("`xreg` is rank deficient.")
       }
 
       # Finally find residuals from regression in order
@@ -308,11 +308,11 @@ auto.arima <- function(
   # Check number of differences selected
   if (D >= 2) {
     warning(
-      "Having more than one seasonal differences is not recommended. Please consider using only one seasonal difference."
+      "More than one seasonal difference is not recommended. Consider using only one seasonal difference."
     )
   } else if (D + d > 2) {
     warning(
-      "Having 3 or more differencing operations is not recommended. Please consider reducing the total number of differences."
+      "Three or more differences are not recommended. Consider reducing the total number of differences."
     )
   }
 
@@ -321,7 +321,7 @@ auto.arima <- function(
   }
 
   if (length(dx) == 0L) {
-    stop("Not enough data to proceed")
+    stop("Not enough data to proceed.")
   } else if (is.constant(dx)) {
     if (is.null(xreg)) {
       if (D > 0 && d == 0) {
@@ -1082,7 +1082,7 @@ auto.arima <- function(
 
   if (k > nmodels) {
     warning(sprintf(
-      "Stepwise search was stopped early due to reaching the model number limit: `nmodels = %d`",
+      "Stepwise search was stopped early due to reaching the model number limit: `nmodels = %d`.",
       nmodels
     ))
   }
@@ -1120,7 +1120,7 @@ auto.arima <- function(
     if (trace) {
       cat("\n")
     }
-    stop("No suitable ARIMA model found")
+    stop("No suitable ARIMA model found.")
   }
 
   # Return best fit

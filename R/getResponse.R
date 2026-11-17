@@ -77,7 +77,7 @@ getResponse.fracdiff <- function(object, ...) {
   } else {
     series.name <- as.character(object$call)[2]
     if (is.null(series.name)) {
-      stop("missing original time series")
+      stop("Can't find the original time series.")
     } else {
       x <- try(eval.parent(parse(text = series.name)), silent = TRUE)
       if (inherits(x, "try-error")) {

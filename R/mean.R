@@ -33,7 +33,7 @@
 mean_model <- function(y, lambda = NULL, biasadj = FALSE) {
   seriesname <- deparse1(substitute(y))
   if (inherits(y, c("data.frame", "list", "matrix", "mts"))) {
-    stop("y should be a univariate time series")
+    stop("`y` must be a univariate time series.")
   }
   y <- as.ts(y)
   orig.y <- y

@@ -88,7 +88,7 @@ simulate.ets <- function(
   } else if (length(innov) == nsim) {
     e <- innov
   } else {
-    stop("Length of innov must be equal to nsim")
+    stop("`innov` must have length `nsim`.")
   }
   if (object$components[1] == "M") {
     e <- pmax(-1, e)
@@ -116,7 +116,7 @@ simulate.ets <- function(
     }
   )
   if (is.na(tmp[1])) {
-    stop("Problem with multiplicative damped trend")
+    stop("Simulation failed for the multiplicative damped trend.")
   }
   if (!is.null(object$lambda)) {
     tmp <- InvBoxCox(tmp, object$lambda)
@@ -153,10 +153,10 @@ myarima.sim <- function(model, n, x, e, ...) {
     data <- ts(data, frequency = 1, start = 1)
   }
   if (!is.list(model)) {
-    stop("'model' must be list")
+    stop("`model` must be a list.")
   }
   if (n <= 0L) {
-    stop("'n' must be strictly positive")
+    stop("`nsim` must be positive.")
   }
   p <- length(model$ar)
   q <- length(model$ma)
@@ -165,23 +165,23 @@ myarima.sim <- function(model, n, x, e, ...) {
   m <- model$seasonal.period
   if (!is.null(ord <- model$order)) {
     if (length(ord) != 3L) {
-      stop("'model$order' must be of length 3")
+      stop("`model$order` must be of length 3.")
     }
     if (p != ord[1L]) {
-      stop("inconsistent specification of 'ar' order")
+      stop("Inconsistent specification of `ar` order.")
     }
     if (q != ord[3L]) {
-      stop("inconsistent specification of 'ma' order")
+      stop("Inconsistent specification of `ma` order.")
     }
     d <- ord[2L]
     if (d != round(d) || d < 0) {
-      stop("number of differences must be a positive integer")
+      stop("Number of differences must be a non-negative integer.")
     }
   }
   if (p) {
     minroots <- min(Mod(polyroot(c(1, -model$ar))))
     if (minroots <= 1) {
-      stop("'ar' part of model is not stationary")
+      stop("`ar` part of model is not stationary.")
     }
   }
   if (length(model$ma)) {
@@ -301,9 +301,9 @@ simulate.Arima <- function(
 ) {
   # Error check:
   if (object$arma[7] < 0) {
-    stop("Value for seasonal difference is < 0. Must be >= 0")
+    stop("Seasonal difference must be non-negative.")
   } else if (sum(object$arma[c(3, 4, 7)]) > 0 && object$arma[5] < 2) {
-    stop("Invalid value for seasonal period")
+    stop("Invalid value for seasonal period.")
   }
 
   # Check if data is included
@@ -346,11 +346,17 @@ simulate.Arima <- function(
   # Check xreg has the correct dimensions
   if (use.xreg) {
     if (is.null(xreg)) {
-      stop("xreg argument missing")
+      stop(
+        "`xreg` must be supplied as the model was fitted with external regressors."
+      )
     } else if (is.null(object$xreg)) {
-      stop("xreg not required")
+      stop(
+        "`xreg` must not be supplied as the model was fitted without external regressors."
+      )
     } else if (NCOL(xreg) != NCOL(object$xreg)) {
-      stop("xreg has incorrect dimension.")
+      stop(
+        "`xreg` must have the same number of columns as the regressors in the fitted model."
+      )
     }
   }
 
@@ -418,9 +424,9 @@ simulate.Arima <- function(
       ma <- NULL
     }
     if (object$arma[2] != length(ma)) {
-      stop("MA length wrong")
+      stop("Wrong number of MA coefficients.")
     } else if (object$arma[1] != length(ar)) {
-      stop("AR length wrong")
+      stop("Wrong number of AR coefficients.")
     }
 
     if (future) {
@@ -456,7 +462,7 @@ simulate.Arima <- function(
   } else if (length(innov) == nsim) {
     e <- innov
   } else {
-    stop("Length of innov must be equal to nsim")
+    stop("`innov` must have length `nsim`.")
   }
 
   narma <- sum(object$arma[1L:4L])
@@ -567,7 +573,7 @@ simulate.ar <- function(
   } else if (length(innov) == nsim) {
     e <- innov
   } else {
-    stop("Length of innov must be equal to nsim")
+    stop("`innov` must have length `nsim`.")
   }
   if (future) {
     return(myarima.sim(model, nsim, x = object$x, e = e) + x.mean)
@@ -754,7 +760,7 @@ simulate.nnetar <- function(
   }
   ## only future currently implemented
   if (!future) {
-    warning("simulate.nnetar() currently only supports future=TRUE")
+    warning("`simulate.nnetar()` currently only supports `future = TRUE`.")
   }
   ## set simulation innovations
   if (bootstrap) {
@@ -781,7 +787,7 @@ simulate.nnetar <- function(
     ## to pass innov=0 so simulation equals mean forecast
     e <- rep(innov, nsim)
   } else {
-    stop("Length of innov must be equal to nsim")
+    stop("`innov` must have length `nsim`.")
   }
   ##
   tspx <- tsp(object$x)
@@ -789,20 +795,24 @@ simulate.nnetar <- function(
   if (is.null(object$xreg)) {
     if (!is.null(xreg)) {
       warning(
-        "External regressors were not used in fitted model, xreg will be ignored"
+        "`xreg` is ignored as the model was fitted without external regressors."
       )
     }
     xreg <- NULL
   } else {
     if (is.null(xreg)) {
-      stop("No external regressors provided")
+      stop(
+        "`xreg` must be supplied as the model was fitted with external regressors."
+      )
     }
     xreg <- as.matrix(xreg)
     if (NCOL(xreg) != NCOL(object$xreg)) {
-      stop("Number of external regressors does not match fitted model")
+      stop(
+        "`xreg` must have the same number of columns as the regressors in the fitted model."
+      )
     }
     if (NROW(xreg) != nsim) {
-      stop("Number of rows in xreg does not match nsim")
+      stop("`xreg` must have `nsim` rows.")
     }
   }
   xx <- object$x
@@ -831,7 +841,7 @@ simulate.nnetar <- function(
     newdata <- c(flag[lags], xreg[i, ])
     if (anyNA(newdata)) {
       stop(
-        "I can't simulate when there are missing values near the end of the series."
+        "Can't simulate when there are missing values near the end of the series."
       )
     }
     path[i] <- mean(vapply(object$model, predict, numeric(1), newdata = newdata)) + e[i]
@@ -877,7 +887,7 @@ simulate.modelAR <- function(
   }
   ## only future currently implemented
   if (!future) {
-    warning("simulate.modelAR() currently only supports future=TRUE")
+    warning("`simulate.modelAR()` currently only supports `future = TRUE`.")
   }
   ## set simulation innovations
   if (bootstrap) {
@@ -904,7 +914,7 @@ simulate.modelAR <- function(
     ## to pass innov=0 so simulation equals mean forecast
     e <- rep(innov, nsim)
   } else {
-    stop("Length of innov must be equal to nsim")
+    stop("`innov` must have length `nsim`.")
   }
   ##
   tspx <- tsp(object$x)
@@ -912,20 +922,24 @@ simulate.modelAR <- function(
   if (is.null(object$xreg)) {
     if (!is.null(xreg)) {
       warning(
-        "External regressors were not used in fitted model, xreg will be ignored"
+        "`xreg` is ignored as the model was fitted without external regressors."
       )
     }
     xreg <- NULL
   } else {
     if (is.null(xreg)) {
-      stop("No external regressors provided")
+      stop(
+        "`xreg` must be supplied as the model was fitted with external regressors."
+      )
     }
     xreg <- as.matrix(xreg)
     if (NCOL(xreg) != NCOL(object$xreg)) {
-      stop("Number of external regressors does not match fitted model")
+      stop(
+        "`xreg` must have the same number of columns as the regressors in the fitted model."
+      )
     }
     if (NROW(xreg) != nsim) {
-      stop("Number of rows in xreg does not match nsim")
+      stop("`xreg` must have `nsim` rows.")
     }
   }
   xx <- object$x
@@ -954,7 +968,7 @@ simulate.modelAR <- function(
     newdata <- c(flag[lags], xreg[i, ])
     if (anyNA(newdata)) {
       stop(
-        "I can't simulate when there are missing values near the end of the series."
+        "Can't simulate when there are missing values near the end of the series."
       )
     }
     path[i] <- object$predict.FUN(object$model, newdata) + e[i]

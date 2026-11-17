@@ -312,7 +312,7 @@ wacf <- function(x, lag.max = length(x) - 1) {
   n <- length(x)
   lag.max <- min(lag.max, n - 1)
   if (lag.max < 0) {
-    stop("'lag.max' must be at least 0")
+    stop("`lag.max` must be at least 0.")
   }
 
   # Standard estimator

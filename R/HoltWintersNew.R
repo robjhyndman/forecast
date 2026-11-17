@@ -30,19 +30,19 @@ HoltWintersZZ <- function(
     phi <- 1
   }
   if (!is.null(alpha) && !is.numeric(alpha)) {
-    stop("cannot fit models without level ('alpha' must not be 0 or FALSE).")
+    stop("`alpha` must be numeric or `NULL`.")
   }
   if (
     !is.null(c(alpha, beta, gamma)) &&
       any(c(alpha, beta, gamma) < 0 | c(alpha, beta, gamma) > 1)
   ) {
-    stop("'alpha', 'beta' and 'gamma' must be within the unit interval.")
+    stop("`alpha`, `beta` and `gamma` must be within the unit interval.")
   }
   if (
     (is.null(gamma) || gamma > 0) &&
       (seasonal == "multiplicative" && any(x <= 0))
   ) {
-    stop("data must be positive for multiplicative Holt-Winters.")
+    stop("Data must be positive for multiplicative Holt-Winters.")
   }
 
   if (m <= 1) {
@@ -152,13 +152,10 @@ HoltWintersZZ <- function(
     if (sol$convergence || any(sol$par < 0 | sol$par > 1)) {
       if (sol$convergence > 50) {
         if (warnings) {
-          warning(
-            gettextf("optimization difficulties: %s", sol$message),
-            domain = NA
-          )
+          warning(sprintf("Optimization difficulties: %s.", sol$message))
         }
       } else {
-        stop("optimization failure")
+        stop("Optimization failure.")
       }
     }
     if (select[1]) {
@@ -499,7 +496,7 @@ holt <- function(
   }
   initial <- match.arg(initial)
   if (sum(!is.na(y)) <= 1L) {
-    stop("I need at least two observations to estimate trend.")
+    stop("At least two observations are required to estimate the trend.")
   }
   if (initial == "optimal" || damped) {
     model <- if (exponential) "MMN" else "AAN"
@@ -541,7 +538,7 @@ holt <- function(
   if (damped) {
     fcast$method <- "Damped Holt's method"
     if (initial == "simple") {
-      warning("Damped Holt's method requires optimal initialization")
+      warning("Damped Holt's method requires optimal initialization.")
     }
   } else {
     fcast$method <- "Holt's method"
@@ -586,18 +583,18 @@ hw <- function(
   seasonal <- match.arg(seasonal)
   m <- frequency(x)
   if (m <= 1L) {
-    stop("The time series should have frequency greater than 1.")
+    stop("`y` must be a seasonal time series.")
   }
   if (sum(!is.na(y)) < m + 3) {
     stop(sprintf(
-      "I need at least %s observations to estimate seasonality.",
+      "At least %s observations are required to estimate seasonality.",
       m + 3
     ))
   }
   if (initial == "optimal" || damped) {
     if (seasonal == "additive") {
       if (exponential) {
-        stop("Forbidden model combination")
+        stop("Forbidden model combination.")
       }
       model <- "AAA"
     } else if (exponential) {
@@ -653,7 +650,7 @@ hw <- function(
   if (damped) {
     fcast$method <- paste("Damped", fcast$method)
     if (initial == "simple") {
-      warning("Damped methods require optimal initialization")
+      warning("Damped methods require optimal initialization.")
     }
   }
   fcast$model$method <- fcast$method

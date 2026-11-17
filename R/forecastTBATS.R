@@ -34,7 +34,7 @@ forecast.tbats <- function(
       h <- 2 * max(object$seasonal.periods)
     }
   } else if (h <= 0) {
-    stop("Forecast horizon out of bounds")
+    stop("`h` must be positive.")
   }
 
   level <- get_conf_level(level, fan)

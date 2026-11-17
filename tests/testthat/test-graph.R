@@ -9,6 +9,11 @@ test_that("Tests for seasonplot()", {
   seasonplot(taylor)
 })
 
+test_that("seasonplot() errors for non-seasonal data", {
+  expect_snapshot(seasonplot(airmiles), error = TRUE)
+  expect_snapshot(seasonplot(AirPassengers, s = 1), error = TRUE)
+})
+
 test_that("Tests for tsdisplay()", {
   expect_silent(tsdisplay(airmiles, ci.type = "ma"))
   expect_silent(tsdisplay(1:20))

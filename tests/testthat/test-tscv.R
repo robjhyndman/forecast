@@ -30,7 +30,15 @@ test_that("tsCV with initial", {
 test_that("tsCV errors on bad input", {
   expect_error(
     tsCV(lynx, fnaive, h = 1, initial = length(lynx)),
-    "initial period too long"
+    "`initial` must be less than the length of `y`"
+  )
+})
+
+test_that("tsCV errors when initial is negative", {
+  expect_snapshot(tsCV(lynx, fnaive, h = 1, initial = -1), error = TRUE)
+  expect_snapshot(
+    tsCV(lynx, fnaive, h = 1, window = 5, initial = -10),
+    error = TRUE
   )
 })
 
@@ -51,7 +59,7 @@ test_that("tsCV errors when xreg wrong size", {
   xreg <- matrix(rnorm(40), ncol = 1)
   expect_error(
     tsCV(y, fnaive, h = 1, xreg = xreg),
-    "xreg must be of the same size as y"
+    "`xreg` must have the same number of rows"
   )
 })
 
@@ -96,7 +104,7 @@ test_that("CVar with blocked folds", {
 })
 
 test_that("CVar errors with k < 2", {
-  expect_error(CVar(lynx, k = 1), "k must be at least 2")
+  expect_error(CVar(lynx, k = 1), "`k` must be at least 2")
 })
 
 test_that("CVar k is capped at series length", {

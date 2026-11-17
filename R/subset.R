@@ -45,10 +45,10 @@ subset.ts <- function(
 ) {
   if (!is.null(subset)) {
     if (NROW(subset) != NROW(x)) {
-      stop("subset must be the same length as x")
+      stop("`subset` must be the same length as `x`.")
     }
     if (NCOL(subset) != 1) {
-      stop("subset must be a vector of rows to keep")
+      stop("`subset` must be a vector of rows to keep.")
     }
     if (is.mts(x)) {
       return(subset.matrix(x, subset))
@@ -70,11 +70,11 @@ subset.ts <- function(
       start = tspx[1L] + (start - 1) / tspx[3L]
     ))
   } else if (frequency(x) <= 1) {
-    stop("Data must be seasonal")
+    stop("`x` must be a seasonal time series.")
   }
   if (!is.null(month)) {
     if (frequency(x) != 12) {
-      stop("Data is not monthly")
+      stop("`x` must be a monthly time series.")
     }
     if (is.character(month)) {
       season <- pmatch(
@@ -87,14 +87,14 @@ subset.ts <- function(
     }
     season <- na.omit(season)
     if (length(season) == 0L) {
-      stop("No recognizable months")
+      stop("No recognizable months in `month`.")
     }
     if (min(season) < 1L || max(season) > 12L) {
-      stop("Months must be between 1 and 12")
+      stop("`month` must be between 1 and 12.")
     }
   } else if (!is.null(quarter)) {
     if (frequency(x) != 4) {
-      stop("Data is not quarterly")
+      stop("`x` must be a quarterly time series.")
     }
     if (is.character(quarter)) {
       season <- pmatch(tolower(quarter), paste0("q", 1:4), duplicates.ok = TRUE)
@@ -103,15 +103,15 @@ subset.ts <- function(
     }
     season <- na.omit(season)
     if (length(season) == 0L) {
-      stop("No recognizable quarters")
+      stop("No recognizable quarters in `quarter`.")
     }
     if (min(season) < 1L || max(season) > 4L) {
-      stop("Quarters must be between 1 and 4")
+      stop("`quarter` must be between 1 and 4.")
     }
   } else if (is.null(season)) {
-    stop("No subset specified")
+    stop("No subset specified.")
   } else if (min(season) < 1L || max(season) > frequency(x)) {
-    stop(sprintf("Seasons must be between 1 and %s.", frequency(x)))
+    stop(sprintf("`season` must be between 1 and %s.", frequency(x)))
   }
 
   start <- utils::head(time(x)[cycle(x) %in% season], 1)

@@ -204,9 +204,11 @@ seasonplot <- function(
   # Check data are seasonal and convert to integer seasonality
   if (missing(s)) {
     s <- seasonal_period(x)
-  }
-  if (s <= 1) {
-    stop("Data are not seasonal")
+    if (s <= 1) {
+      stop("`x` must be a seasonal time series.")
+    }
+  } else if (s <= 1) {
+    stop("`s` must be greater than 1.")
   }
 
   tspx <- tsp(x)

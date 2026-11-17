@@ -21,7 +21,7 @@ test_that("rw_model with drift", {
 })
 
 test_that("rw_model rejects multivariate ts", {
-  expect_error(rw_model(ts(matrix(1:10, ncol = 2))), "Multivariate")
+  expect_error(rw_model(ts(matrix(1:10, ncol = 2))), "univariate")
 })
 
 test_that("forecast.rw_model works", {

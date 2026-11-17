@@ -46,7 +46,7 @@ forecast.ets <- function(
 ) {
   # Check inputs
   if (h <= 0) {
-    stop("Forecast horizon out of bounds")
+    stop("`h` must be positive.")
   }
   if (is.null(lambda)) {
     biasadj <- FALSE
@@ -151,9 +151,9 @@ forecast.ets <- function(
       out$lower <- copy_msts(out$mean, f$lower)
       out$upper <- copy_msts(out$mean, f$upper)
     } else if (PI) {
-      warning("No prediction intervals for this model")
+      warning("No prediction intervals for this model.")
     } else if (any(biasadj)) {
-      warning("No bias adjustment possible")
+      warning("No bias adjustment possible.")
     }
   }
 
@@ -188,7 +188,7 @@ pegelsfcast.C <- function(h, obj, npaths, level, bootstrap, innov = NULL) {
     as.integer(h)
   )
   if (is.na(y.f[1])) {
-    stop("Problem with multiplicative damped trend")
+    stop("Forecasting failed for the multiplicative damped trend.")
   }
   hilo <- simulate_forecast(
     object = obj,

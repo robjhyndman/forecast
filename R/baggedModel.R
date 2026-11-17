@@ -57,7 +57,7 @@ baggedModel <- function(
     fn <- match.arg(fn, c("ets", "auto.arima"))
     .Deprecated(
       msg = sprintf(
-        "Using character specification for `fn` is deprecated. Please use `fn = %s`.",
+        "Using character specification for `fn` is deprecated. Use `fn = %s` instead.",
         fn
       )
     )

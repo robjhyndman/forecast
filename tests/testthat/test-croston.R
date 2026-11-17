@@ -125,8 +125,11 @@ test_that("croston_model type variants", {
 })
 
 test_that("croston_model errors on invalid input", {
-  expect_error(croston_model(y, alpha = -0.1), "alpha must be between 0 and 1")
-  expect_error(croston_model(y, alpha = 1.5), "alpha must be between 0 and 1")
+  expect_error(
+    croston_model(y, alpha = -0.1),
+    "`alpha` must be between 0 and 1"
+  )
+  expect_error(croston_model(y, alpha = 1.5), "`alpha` must be between 0 and 1")
   expect_error(croston_model(y, alpha = c(0.1, 0.2, 0.3)), "length 1 or 2")
   expect_error(croston_model(y, init = c(1, 2, 3)), "length 2")
   expect_error(croston_model(y, init = c(-1, 2)), "demand must be non-negative")

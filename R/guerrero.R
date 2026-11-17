@@ -27,7 +27,7 @@ guer.cv <- function(lam, x, nonseasonal.length = 2) {
 guerrero <- function(x, lower = -1, upper = 2, nonseasonal.length = 2) {
   if (any(x <= 0, na.rm = TRUE)) {
     warning(
-      "Guerrero's method for selecting a Box-Cox parameter (lambda) is given for strictly positive data."
+      "Guerrero's method for selecting a Box-Cox parameter (`lambda`) is given for strictly positive data."
     )
   }
   optimize(
@@ -42,7 +42,7 @@ guerrero <- function(x, lower = -1, upper = 2, nonseasonal.length = 2) {
 bcloglik <- function(x, lower = -1, upper = 2) {
   n <- length(x)
   if (any(x <= 0, na.rm = TRUE)) {
-    stop("x must be positive")
+    stop("`x` must be positive.")
   }
   logx <- log(na.omit(c(x)))
   xdot <- exp(mean(logx))
