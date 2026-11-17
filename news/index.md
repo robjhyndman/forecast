@@ -39,6 +39,18 @@
   [`Arima()`](https://pkg.robjhyndman.com/forecast/reference/Arima.md)
   already did.
 - [`arfima()`](https://pkg.robjhyndman.com/forecast/reference/arfima.md),
+  [`Arima()`](https://pkg.robjhyndman.com/forecast/reference/Arima.md),
+  [`dshw()`](https://pkg.robjhyndman.com/forecast/reference/dshw.md),
+  [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md) and
+  [`stlm()`](https://pkg.robjhyndman.com/forecast/reference/stlm.md) now
+  give an informative error when `model` is not a model of the right
+  class, as
+  [`bats()`](https://pkg.robjhyndman.com/forecast/reference/bats.md),
+  [`tbats()`](https://pkg.robjhyndman.com/forecast/reference/tbats.md)
+  and
+  [`nnetar()`](https://pkg.robjhyndman.com/forecast/reference/nnetar.md)
+  already did.
+- [`arfima()`](https://pkg.robjhyndman.com/forecast/reference/arfima.md),
   [`stlm()`](https://pkg.robjhyndman.com/forecast/reference/stlm.md),
   [`theta_model()`](https://pkg.robjhyndman.com/forecast/reference/theta_model.md)
   and [`tslm()`](https://pkg.robjhyndman.com/forecast/reference/tslm.md)
