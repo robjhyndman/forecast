@@ -49,6 +49,12 @@ test_that("simulate.Arima() keeps coefficients that sum to zero", {
   expect_equal(simulate(fit, innov = rep(0, 8)), forecast(fit, h = 8)$mean)
 })
 
+test_that("simulate.rw_model() adds drift once per lag", {
+  fit <- rw_model(ts(seq_len(20)^2, frequency = 4), lag = 4, drift = TRUE)
+  fit$par$drift.se <- 0
+  expect_equal(simulate(fit, innov = rep(0, 8)), forecast(fit, h = 8)$mean)
+})
+
 test_that("simulated_nonseasonal", {
   fitting_functions <- c(
     ar,

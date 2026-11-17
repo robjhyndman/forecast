@@ -654,7 +654,8 @@ simulate.rw_model <- function(
 
   # Construct simulated ts
   simdrift <- object$par$drift + rnorm(1, 0, object$par$drift.se)
-  sim <- rep_len(start, nsim) + seq_len(nsim) * simdrift + cumulative_e
+  steps <- ceiling(seq_len(nsim) / object$par$lag)
+  sim <- rep_len(start, nsim) + steps * simdrift + cumulative_e
   if (!is.null(lambda)) {
     sim <- InvBoxCox(sim, lambda)
   }
