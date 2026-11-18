@@ -106,6 +106,8 @@
 <li>
 <code><a href="../reference/CVar.html">CVar()</a></code> now computes fold accuracy with fitted and actual values in the correct order.</li>
 <li>
+<code><a href="../reference/CVar.html">CVar()</a></code> no longer returns <code>k</code> empty elements before the folds, so folds can again be accessed by position.</li>
+<li>
 <code><a href="../reference/easter.html">easter()</a></code> now returns the correct fractions when Easter spans two months or quarters and the series starts in April (or the second quarter) or ends in March (or the first quarter).</li>
 <li>
 <code><a href="../reference/ets.html">ets()</a></code> now keeps the series name for short series.</li>
@@ -113,6 +115,8 @@
 <code><a href="../reference/ets.html">ets()</a></code> no longer treats parameters as admissible when the polynomial root search fails.</li>
 <li>
 <code><a href="../reference/ets.html">ets()</a></code> now uses the same degrees of freedom for <code>sigma2</code> as the original fit when refitting with <code>use.initial.values = TRUE</code>.</li>
+<li>
+<code><a href="../reference/ets.html">ets()</a></code> now gives an error when refitting a seasonal model with <code>use.initial.values = TRUE</code> to data whose frequency differs from the seasonal period of the model, instead of returning a model with invalid fitted values and residuals.</li>
 <li>
 <code><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast()</a></code> methods now always sort prediction intervals by increasing <code>level</code>, so <code><a href="../reference/plot.forecast.html">plot.forecast()</a></code> no longer swaps the shading when <code>level</code> is supplied out of order.</li>
 <li>

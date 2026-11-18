@@ -131,6 +131,9 @@
 - [`CVar()`](https://pkg.robjhyndman.com/forecast/reference/CVar.md) now
   computes fold accuracy with fitted and actual values in the correct
   order.
+- [`CVar()`](https://pkg.robjhyndman.com/forecast/reference/CVar.md) no
+  longer returns `k` empty elements before the folds, so folds can again
+  be accessed by position.
 - [`easter()`](https://pkg.robjhyndman.com/forecast/reference/easter.md)
   now returns the correct fractions when Easter spans two months or
   quarters and the series starts in April (or the second quarter) or
@@ -143,6 +146,11 @@
 - [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md) now
   uses the same degrees of freedom for `sigma2` as the original fit when
   refitting with `use.initial.values = TRUE`.
+- [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md) now
+  gives an error when refitting a seasonal model with
+  `use.initial.values = TRUE` to data whose frequency differs from the
+  seasonal period of the model, instead of returning a model with
+  invalid fitted values and residuals.
 - [`forecast()`](https://generics.r-lib.org/reference/forecast.html)
   methods now always sort prediction intervals by increasing `level`, so
   [`plot.forecast()`](https://pkg.robjhyndman.com/forecast/reference/plot.forecast.md)
