@@ -68,6 +68,8 @@ test_that("CVar basic usage", {
   cv <- CVar(lynx, k = 3)
   expect_s3_class(cv, "CVar")
   expect_equal(cv$k, 3)
+  expect_identical(names(cv)[1:3], paste0("fold", 1:3))
+  expect_identical(cv[[1]], cv$fold1)
   expect_length(cv$testfit, length(lynx))
   expect_length(cv$residuals, length(lynx))
   expect_true(is.numeric(cv$LBpvalue))

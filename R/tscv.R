@@ -205,10 +205,9 @@ CVar <- function(
   }
 
   cvacc <- matrix(NA_real_, nrow = k, ncol = 7)
-  out <- vector("list", k)
+  out <- stats::setNames(vector("list", k), paste0("fold", seq_len(k)))
   alltestfit <- rep_len(NA, nx)
   for (i in seq_len(k)) {
-    out[[paste0("fold", i)]] <- list()
     testset <- ind[fold == i]
     trainset <- ind[fold != i]
     trainmodel <- FUN(y, subset = trainset, ...)
@@ -216,11 +215,12 @@ CVar <- function(
     testfit <- fitted(testmodel)
     acc <- accuracy(testfit, y, test = testset)
     cvacc[i, ] <- acc
-    out[[paste0("fold", i)]]$model <- trainmodel
-    out[[paste0("fold", i)]]$accuracy <- acc
-
-    out[[paste0("fold", i)]]$testfit <- testfit
-    out[[paste0("fold", i)]]$testset <- testset
+    out[[i]] <- list(
+      model = trainmodel,
+      accuracy = acc,
+      testfit = testfit,
+      testset = testset
+    )
 
     alltestfit[testset] <- testfit[testset]
 
