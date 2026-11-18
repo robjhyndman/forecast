@@ -140,8 +140,20 @@ test_that("simulate() with a seed is reproducible and restores the RNG state", {
   fits <- list(
     ets(USAccDeaths),
     Arima(USAccDeaths, order = c(1, 0, 0)),
+    ar(lynx),
     rw_model(USAccDeaths),
-    spline_model(USAccDeaths)
+    spline_model(USAccDeaths),
+    nnetar(USAccDeaths, size = 2, repeats = 1),
+    modelAR(
+      USAccDeaths,
+      FUN = nnet::nnet,
+      predict.FUN = predict,
+      p = 2,
+      size = 2,
+      linout = TRUE,
+      trace = FALSE
+    ),
+    tbats(USAccDeaths, use.parallel = FALSE)
   )
   for (fit in fits) {
     set.seed(1)

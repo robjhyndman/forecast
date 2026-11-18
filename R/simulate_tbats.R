@@ -11,9 +11,7 @@ simulate.tbats <- function(
 ) {
   if (is.null(innov)) {
     if (!is.null(seed)) {
-      old_seed <- get_seed()
-      set.seed(seed)
-      on.exit(assign(".Random.seed", old_seed, envir = globalenv()))
+      withr::local_seed(seed)
     }
   } else {
     nsim <- length(innov)

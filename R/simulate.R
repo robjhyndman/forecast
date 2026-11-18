@@ -54,9 +54,7 @@ simulate.ets <- function(
 ) {
   if (is.null(innov)) {
     if (!is.null(seed)) {
-      old_seed <- get_seed()
-      set.seed(seed)
-      on.exit(assign(".Random.seed", old_seed, envir = globalenv()))
+      withr::local_seed(seed)
     }
   } else {
     nsim <- length(innov)
@@ -360,17 +358,13 @@ simulate.Arima <- function(
     }
   }
 
-  ######## Random Seed Code
   if (is.null(innov)) {
     if (!is.null(seed)) {
-      old_seed <- get_seed()
-      set.seed(seed)
-      on.exit(assign(".Random.seed", old_seed, envir = globalenv()))
+      withr::local_seed(seed)
     }
   } else {
     nsim <- length(innov)
   }
-  ######## End Random seed code
 
   # Check for seasonal ARMA components and set flag accordingly. This will be used later in myarima.sim()
   flag.s.arma <- (sum(object$arma[c(3, 4)]) > 0)
@@ -532,9 +526,7 @@ simulate.ar <- function(
 ) {
   if (is.null(innov)) {
     if (!is.null(seed)) {
-      old_seed <- get_seed()
-      set.seed(seed)
-      on.exit(assign(".Random.seed", old_seed, envir = globalenv()))
+      withr::local_seed(seed)
     }
   } else {
     nsim <- length(innov)
@@ -596,9 +588,7 @@ simulate.rw_model <- function(
 ) {
   if (is.null(innov)) {
     if (!is.null(seed)) {
-      old_seed <- get_seed()
-      set.seed(seed)
-      on.exit(assign(".Random.seed", old_seed, envir = globalenv()))
+      withr::local_seed(seed)
     }
   } else {
     nsim <- length(innov)
@@ -749,9 +739,7 @@ simulate.nnetar <- function(
 ) {
   if (is.null(innov)) {
     if (!is.null(seed)) {
-      old_seed <- get_seed()
-      set.seed(seed)
-      on.exit(assign(".Random.seed", old_seed, envir = globalenv()))
+      withr::local_seed(seed)
     }
   } else {
     nsim <- length(innov)
@@ -876,9 +864,7 @@ simulate.modelAR <- function(
 ) {
   if (is.null(innov)) {
     if (!is.null(seed)) {
-      old_seed <- get_seed()
-      set.seed(seed)
-      on.exit(assign(".Random.seed", old_seed, envir = globalenv()))
+      withr::local_seed(seed)
     }
   } else {
     nsim <- length(innov)
