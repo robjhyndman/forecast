@@ -262,13 +262,7 @@ forecast.spline_model <- function(
 
   # Compute prediction intervals.
   level <- get_conf_level(level, fan)
-  nconf <- length(level)
   startf <- tsp(y)[2] + 1 / freq
-  lower <- upper <- ts(
-    matrix(NA_real_, nrow = h, ncol = nconf),
-    start = startf,
-    frequency = freq
-  )
   if (simulate || bootstrap) {
     # Compute prediction intervals using simulations
     hilo <- simulate_forecast(
@@ -283,11 +277,9 @@ forecast.spline_model <- function(
     lower <- hilo$lower
     upper <- hilo$upper
   } else {
-    conf.factor <- qnorm(0.5 + 0.005 * level)
-    for (i in seq_len(nconf)) {
-      upper[, i] <- Yhat + conf.factor[i] * sd
-      lower[, i] <- Yhat - conf.factor[i] * sd
-    }
+    hilo <- normal_intervals(Yhat, sd, level)
+    lower <- ts(hilo$lower, start = startf, frequency = freq)
+    upper <- ts(hilo$upper, start = startf, frequency = freq)
   }
 
   if (!is.null(lambda)) {
@@ -302,8 +294,6 @@ forecast.spline_model <- function(
       lower <- InvBoxCox(lower, lambda)
     }
   }
-
-  colnames(lower) <- colnames(upper) <- paste0(level, "%")
 
   structure(
     list(

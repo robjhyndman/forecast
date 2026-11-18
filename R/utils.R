@@ -25,3 +25,10 @@ get_conf_level <- function(level, fan) {
     sort(level)
   }
 }
+
+normal_intervals <- function(mean, se, level) {
+  margin <- outer(as.numeric(se), qnorm(0.5 + level / 200))
+  colnames(margin) <- paste0(level, "%")
+  mean <- as.numeric(mean)
+  list(lower = mean - margin, upper = mean + margin)
+}

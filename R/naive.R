@@ -202,7 +202,6 @@ forecast.rw_model <- function(
   se <- sqrt(mse * steps + (steps * object$par$drift.se)^2)
 
   level <- get_conf_level(level, fan)
-  nconf <- length(level)
 
   if (simulate || bootstrap) {
     # Compute prediction intervals using simulations
@@ -216,16 +215,11 @@ forecast.rw_model <- function(
       lambda = lambda,
       ...
     )
-    lower <- hilo$lower
-    upper <- hilo$upper
   } else {
-    z <- qnorm(.5 + level / 200)
-    lower <- upper <- matrix(NA_real_, nrow = h, ncol = nconf)
-    for (i in seq_len(nconf)) {
-      lower[, i] <- fc - z[i] * se
-      upper[, i] <- fc + z[i] * se
-    }
+    hilo <- normal_intervals(fc, se, level)
   }
+  lower <- hilo$lower
+  upper <- hilo$upper
 
   if (!is.null(lambda)) {
     fc <- InvBoxCox(fc, lambda, biasadj, se^2)
@@ -240,7 +234,6 @@ forecast.rw_model <- function(
   fc <- future_msts(object$x, fc)
   lower <- future_msts(object$x, lower)
   upper <- future_msts(object$x, upper)
-  colnames(lower) <- colnames(upper) <- paste0(level, "%")
 
   structure(
     list(
