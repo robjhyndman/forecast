@@ -139,14 +139,9 @@ forecast.StructTS <- function(
   x <- object$data
   pred <- predict(object, n.ahead = h)
   level <- get_conf_level(level, fan)
-  nint <- length(level)
-  upper <- lower <- matrix(NA_real_, ncol = nint, nrow = length(pred$pred))
-  for (i in seq_len(nint)) {
-    qq <- qnorm(0.5 * (1 + level[i] / 100))
-    lower[, i] <- pred$pred - qq * pred$se
-    upper[, i] <- pred$pred + qq * pred$se
-  }
-  colnames(lower) <- colnames(upper) <- paste0(level, "%")
+  hilo <- normal_intervals(pred$pred, pred$se, level)
+  lower <- hilo$lower
+  upper <- hilo$upper
   if ("seas" %in% names(object$coef)) {
     method <- "Basic structural model"
   } else if ("slope" %in% names(object$coef)) {
@@ -238,7 +233,6 @@ forecast.HoltWinters <- function(
   }
 
   level <- get_conf_level(level, fan)
-  nint <- length(level)
 
   pred <- predict(
     object,
@@ -247,14 +241,10 @@ forecast.HoltWinters <- function(
     level = level[1] / 100
   )
   pmean <- pred[, 1]
-  upper <- lower <- matrix(NA_real_, ncol = nint, nrow = length(pred[, 1]))
-  se <- (pred[, 2] - pred[, 3]) / (2 * qnorm(0.5 * (1 + level[1] / 100)))
-  for (i in seq_len(nint)) {
-    qq <- qnorm(0.5 * (1 + level[i] / 100))
-    lower[, i] <- pmean - qq * se
-    upper[, i] <- pmean + qq * se
-  }
-  colnames(lower) <- colnames(upper) <- paste0(level, "%")
+  se <- (pred[, 2] - pred[, 3]) / (2 * qnorm(0.5 + level[1] / 200))
+  hilo <- normal_intervals(pmean, se, level)
+  lower <- hilo$lower
+  upper <- hilo$upper
 
   if (!is.null(lambda)) {
     fitted <- InvBoxCox(object$fitted[, 1], lambda)

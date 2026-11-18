@@ -333,16 +333,9 @@ forecast.fracdiff <- function(
     upper <- hilo$upper
   } else {
     # Compute prediction intervals using normal approximation
-    nint <- length(level)
-    upper <- lower <- matrix(NA_real_, ncol = nint, nrow = h)
-    for (i in seq_len(nint)) {
-      qq <- qnorm(0.5 * (1 + level[i] / 100))
-      lower[, i] <- fcast.x - qq * fse
-      upper[, i] <- fcast.x + qq * fse
-    }
-    lower <- ts(lower + meanx, start = endx + 1 / m, frequency = m)
-    upper <- ts(upper + meanx, start = endx + 1 / m, frequency = m)
-    colnames(lower) <- colnames(upper) <- paste0(level, "%")
+    hilo <- normal_intervals(fcast.x + meanx, fse, level)
+    lower <- ts(hilo$lower, start = endx + 1 / m, frequency = m)
+    upper <- ts(hilo$upper, start = endx + 1 / m, frequency = m)
   }
   res <- undo.na.ends(x, residuals(fit))
   fits <- x - res

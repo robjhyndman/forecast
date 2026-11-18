@@ -138,15 +138,9 @@ forecast.ets <- function(
   )
   if (PI || biasadj) {
     if (!is.null(f$var)) {
-      out$lower <- out$upper <- ts(matrix(NA_real_, ncol = length(level), nrow = h))
-      colnames(out$lower) <- colnames(out$upper) <- paste0(level, "%")
-      for (i in seq_along(level)) {
-        marg.error <- sqrt(f$var) * abs(qnorm((100 - level[i]) / 200))
-        out$lower[, i] <- out$mean - marg.error
-        out$upper[, i] <- out$mean + marg.error
-      }
-      out$lower <- copy_msts(out$mean, out$lower)
-      out$upper <- copy_msts(out$mean, out$upper)
+      hilo <- normal_intervals(out$mean, sqrt(f$var), level)
+      out$lower <- copy_msts(out$mean, hilo$lower)
+      out$upper <- copy_msts(out$mean, hilo$upper)
     } else if (!is.null(f$lower)) {
       out$lower <- copy_msts(out$mean, f$lower)
       out$upper <- copy_msts(out$mean, f$upper)

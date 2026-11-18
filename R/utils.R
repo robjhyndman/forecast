@@ -26,6 +26,13 @@ get_conf_level <- function(level, fan) {
   }
 }
 
+normal_intervals <- function(mean, se, level) {
+  margin <- outer(as.numeric(se), qnorm(0.5 + level / 200))
+  colnames(margin) <- paste0(level, "%")
+  mean <- as.numeric(mean)
+  list(lower = mean - margin, upper = mean + margin)
+}
+
 get_seed <- function() {
   seed <- get0(".Random.seed", globalenv(), mode = "integer", inherits = FALSE)
   if (is.null(seed)) {
