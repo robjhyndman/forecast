@@ -24,6 +24,7 @@
 * `croston_model()` now returns `NA` for fitted values before the first non-zero demand instead of 0.
 * `croston_model()` and `croston()` now return the fitted values as a time series.
 * `CVar()` now computes fold accuracy with fitted and actual values in the correct order.
+* `CVar()` no longer returns `k` empty elements before the folds, so folds can again be accessed by position.
 * `easter()` now returns the correct fractions when Easter spans two months or quarters and the series starts in April (or the second quarter) or ends in March (or the first quarter).
 * `ets()` now keeps the series name for short series.
 * `ets()` no longer treats parameters as admissible when the polynomial root search fails.
