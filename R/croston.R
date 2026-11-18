@@ -67,13 +67,13 @@ croston_model <- function(
   type <- match.arg(type)
   opt_crit <- match.arg(opt_crit)
   if (!is.numeric(alpha) || length(alpha) < 1 || length(alpha) > 2) {
-    stop("alpha must be a numeric vector of length 1 or 2")
+    stop("`alpha` must be a numeric vector of length 1 or 2.")
   }
   if (any(alpha < 0 | alpha > 1)) {
-    stop("alpha must be between 0 and 1")
+    stop("`alpha` must be between 0 and 1.")
   }
   if (any(y < 0)) {
-    stop("Croston's model only applies to non-negative data")
+    stop("Croston's method only applies to non-negative data.")
   }
   non_zero <- which(y != 0)
   if (length(non_zero) < 2) {
@@ -86,13 +86,13 @@ croston_model <- function(
   n <- length(y)
   if (is.numeric(init)) {
     if (length(init) != 2) {
-      stop("init must be a numeric vector of length 2 (demand, interval)")
+      stop("`init` must be a numeric vector of length 2 (demand, interval).")
     }
     if (init[1] < 0) {
-      stop("initial demand must be non-negative")
+      stop("Initial demand must be non-negative.")
     }
     if (init[2] < 1) {
-      stop("initial interval must be at least 1")
+      stop("Initial interval must be at least 1.")
     }
     init_demand <- init[1]
     init_interval <- init[2]

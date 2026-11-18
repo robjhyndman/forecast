@@ -43,5 +43,5 @@ test_that("variance test on h-step fits", {
 test_that("hfitted errors when no model function found", {
   obj <- structure(list(), class = "nonexistent_model_class")
   obj$fitted <- ts(1:10)
-  expect_error(hfitted(obj, h = 2), "Could not find appropriate function")
+  expect_error(hfitted(obj, h = 2), "Can't find a function to refit the model")
 })

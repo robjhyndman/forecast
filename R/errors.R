@@ -12,14 +12,14 @@ testaccuracy <- function(f, x, test, d, D) {
     if (responsevar %in% colnames(x)) {
       x <- x[, responsevar]
     } else {
-      stop("I can't figure out what data to use.")
+      stop("Can't find the response variable in `x`.")
     }
   }
   if (is.list(f)) {
     if ("mean" %in% names(f)) {
       f <- f$mean
     } else {
-      stop("Unknown list structure")
+      stop("`object` must contain a `mean` component.")
     }
   }
   if (is.ts(x) && is.ts(f)) {
@@ -37,7 +37,7 @@ testaccuracy <- function(f, x, test, d, D) {
   if (is.null(test)) {
     test <- 1:n
   } else if (min(test) < 1 || max(test) > n) {
-    warning("test elements must be within sample")
+    warning("`test` elements must be within the sample.")
     test <- test[test >= 1 & test <= n]
   }
 
@@ -116,7 +116,7 @@ trainingaccuracy <- function(f, test, d, D) {
     test <- seq_len(n)
   }
   if (min(test) < 1 || max(test) > n) {
-    warning("test elements must be within sample")
+    warning("`test` elements must be within the sample.")
     test <- test[test >= 1 & test <= n]
   }
 
@@ -247,7 +247,7 @@ accuracy.forecast <- function(object, x, test = NULL, d = NULL, D = NULL, ...) {
     trainset <- FALSE
   }
   if (!trainset && !testset) {
-    stop("Unable to compute forecast accuracy measures")
+    stop("Can't compute forecast accuracy measures.")
   }
 
   # Find d and D

@@ -117,12 +117,12 @@ ets <- function(
   seriesname <- deparse1(substitute(y))
   if (!is.ets(model) && !(is_string(model) && nchar(model) == 3L)) {
     stop(
-      "model should be a three-character string or the output of a previous call to ets()"
+      "`model` must be a three-character string or the output of a previous call to `ets()`."
     )
   }
 
   if (inherits(y, c("data.frame", "list", "matrix", "mts"))) {
-    stop("y should be a univariate time series")
+    stop("`y` must be a univariate time series.")
   }
   y <- as.ts(y)
   ny <- length(y)
@@ -145,12 +145,12 @@ ets <- function(
   }
 
   if (nmse < 1 || nmse > 30) {
-    stop("nmse out of range")
+    stop("`nmse` must be between 1 and 30.")
   }
   m <- max(1, frequency(y))
   if (abs(m - round(m)) > 1e-4) {
     warning(
-      "Non-integer seasonal period. Only non-seasonal models will be considered."
+      "Non-integer seasonal period, only non-seasonal models will be considered."
     )
     m <- 1
   } else {
@@ -158,7 +158,7 @@ ets <- function(
   }
 
   if (any(upper < lower)) {
-    stop("Lower limits must be less than upper limits")
+    stop("`lower` must not be greater than `upper`.")
   }
 
   # If model is an ets object, re-fit model to new data
@@ -243,7 +243,7 @@ ets <- function(
       model <- modelcomponents
       if (missing(use.initial.values)) {
         message(
-          "Model is being refit with current smoothing parameters but initial states are being re-estimated.\nSet 'use.initial.values=TRUE' if you want to re-use existing initial values."
+          "Model is being refit with current smoothing parameters but initial states are being re-estimated. Set `use.initial.values = TRUE` to reuse the existing initial values."
         )
       }
     }
@@ -254,13 +254,13 @@ ets <- function(
   seasontype <- substr(model, 3, 3)
 
   if (!errortype %in% c("M", "A", "Z")) {
-    stop("Invalid error type")
+    stop("Invalid error type in `model`.")
   }
   if (!trendtype %in% c("N", "A", "M", "Z")) {
-    stop("Invalid trend type")
+    stop("Invalid trend type in `model`.")
   }
   if (!seasontype %in% c("N", "A", "M", "Z")) {
-    stop("Invalid season type")
+    stop("Invalid season type in `model`.")
   }
 
   if (m < 1 || length(y) <= m) {
@@ -268,17 +268,19 @@ ets <- function(
   }
   if (m == 1) {
     if (seasontype %in% c("A", "M")) {
-      stop("Nonseasonal data")
+      stop("Can't fit a seasonal model to non-seasonal data.")
     } else {
       substr(model, 3, 3) <- seasontype <- "N"
     }
   }
   if (m > 24) {
     if (seasontype %in% c("A", "M")) {
-      stop("Frequency too high")
+      stop(
+        "Seasonal models are not supported for data with frequency greater than 24. Try `stlf()` for seasonal forecasts."
+      )
     } else if (seasontype == "Z") {
       warning(
-        "I can't handle data with frequency greater than 24. Seasonality will be ignored. Try stlf() if you need seasonal forecasts."
+        "Seasonal models are not supported for data with frequency greater than 24, fitting a non-seasonal model. Try `stlf()` for seasonal forecasts."
       )
       substr(model, 3, 3) <- seasontype <- "N"
     }
@@ -292,18 +294,20 @@ ets <- function(
         (additive.only &&
           (errortype == "M" || trendtype == "M" || seasontype == "M"))
     ) {
-      stop("Forbidden model combination")
+      stop("Forbidden model combination.")
     }
   }
 
   data.positive <- (min(y, na.rm = TRUE) > 0)
 
   if (!data.positive && errortype == "M") {
-    stop("Inappropriate model for data with negative or zero values")
+    stop(
+      "Multiplicative error models are not appropriate for data with zero or negative values."
+    )
   }
 
   if (!is.null(damped) && damped && trendtype == "N") {
-    stop("Forbidden model combination")
+    stop("Forbidden model combination.")
   }
 
   n <- sum(!is.na(y))
@@ -322,7 +326,7 @@ ets <- function(
   # Produce something non-optimized for tiny data sets
   if (n <= npars + 4L) {
     if (!is.null(damped) && damped) {
-      warning("Not enough data to use damping")
+      warning("Not enough data to use damping.")
     }
     if (seasontype %in% c("A", "M")) {
       fit <- try(
@@ -346,7 +350,7 @@ ets <- function(
         fit$series <- seriesname
         return(fit)
       } else {
-        warning("Seasonal component could not be estimated")
+        warning("Seasonal component could not be estimated.")
       }
     }
     if (trendtype %in% c("A", "M")) {
@@ -370,7 +374,7 @@ ets <- function(
         fit$series <- seriesname
         return(fit)
       } else {
-        warning("Trend component could not be estimated")
+        warning("Trend component could not be estimated.")
       }
     }
     if (trendtype == "N" && seasontype == "N") {
@@ -430,7 +434,7 @@ ets <- function(
       fit <- fit2
     }
     if (inherits(fit, "try-error")) {
-      stop("Unable to estimate a model.")
+      stop("Can't estimate the model.")
     }
     fit$call <- match.call()
     fit$method <- as.character(fit)
@@ -523,7 +527,7 @@ ets <- function(
     }
   }
   if (best.ic == Inf) {
-    stop("No model able to be fitted")
+    stop("No model could be fitted.")
   }
 
   model$m <- m
@@ -649,7 +653,7 @@ etsmodel <- function(
       ")",
       sep = ""
     )
-    stop("Parameters out of range")
+    stop("Parameters out of range.")
   }
 
   # Initialize state
@@ -799,12 +803,12 @@ etsTargetFunctionInitWrapper <- function(
   names(par.noopt) <- pnames2
   alpha <- c(par["alpha"], par.noopt["alpha"])["alpha"]
   if (is.na(alpha)) {
-    stop("alpha problem!")
+    stop("Can't find `alpha` in the parameters.")
   }
   if (trendtype != "N") {
     beta <- c(par["beta"], par.noopt["beta"])["beta"]
     if (is.na(beta)) {
-      stop("beta Problem!")
+      stop("Can't find `beta` in the parameters.")
     }
   } else {
     beta <- NULL
@@ -812,7 +816,7 @@ etsTargetFunctionInitWrapper <- function(
   if (seasontype != "N") {
     gamma <- c(par["gamma"], par.noopt["gamma"])["gamma"]
     if (is.na(gamma)) {
-      stop("gamma Problem!")
+      stop("Can't find `gamma` in the parameters.")
     }
   } else {
     m <- 1
@@ -821,7 +825,7 @@ etsTargetFunctionInitWrapper <- function(
   if (damped) {
     phi <- c(par["phi"], par.noopt["phi"])["phi"]
     if (is.na(phi)) {
-      stop("phi Problem!")
+      stop("Can't find `phi` in the parameters.")
     }
   } else {
     phi <- NULL
@@ -892,7 +896,7 @@ initparam <- function(
     lower[1L:3L] <- lower[1L:3L] * 0
     upper[1L:3L] <- upper[1L:3L] * 0 + 1e-3
   } else if (any(lower > upper)) {
-    stop("Inconsistent parameter boundaries")
+    stop("`lower` must not be greater than `upper`.")
   }
 
   # Select alpha
@@ -978,7 +982,7 @@ initstate <- function(y, trendtype, seasontype) {
     n <- length(y)
     y <- na.interp(y)
     if (n < 4) {
-      stop("You've got to be joking (not enough data).")
+      stop("Not enough data to fit the model.")
     } else if (n < 3 * m) {
       # Fit simple Fourier model
       fouriery <- fourier(y, 1)

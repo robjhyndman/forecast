@@ -6,7 +6,7 @@ is.mforecast <- function(x) {
 
 mlmsplit <- function(x, index = NULL) {
   if (is.null(index)) {
-    stop("Must select lm using index=integer(1)")
+    stop("`index` must be a single integer selecting the `lm` model.")
   }
   mfit <- match(
     c("coefficients", "residuals", "effects", "fitted.values"),

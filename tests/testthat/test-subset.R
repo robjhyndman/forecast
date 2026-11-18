@@ -27,29 +27,41 @@ test_that("tests specifying correct argument", {
 })
 
 test_that("tests specifying wrong argument", {
-  expect_error(subset(wineind, quarter = 1), "Data is not quarterly")
-  expect_error(subset(woolyrnq, month = "January"), "Data is not monthly")
+  expect_error(
+    subset(wineind, quarter = 1),
+    "`x` must be a quarterly time series"
+  )
+  expect_error(
+    subset(woolyrnq, month = "January"),
+    "`x` must be a monthly time series"
+  )
 })
 
 test_that("test for bad input", {
-  expect_error(subset.ts(mtcars, quarter = 1), "Data must be seasonal")
+  expect_error(
+    subset.ts(mtcars, quarter = 1),
+    "`x` must be a seasonal time series"
+  )
   expect_error(
     subset(wineind, subset = c(1, 2)),
-    "subset must be the same length as x"
+    "`subset` must be the same length as `x`"
   )
   expect_error(
     subset(mtsobj, mtsobj < .5),
-    "subset must be a vector of rows to keep"
+    "`subset` must be a vector of rows to keep"
   )
   expect_error(subset(wineind, month = "Jaan"), "No recognizable months")
   expect_error(
     subset(wineind, season = 1:14),
-    "Seasons must be between 1 and 12"
+    "`season` must be between 1 and 12"
   )
-  expect_error(subset(wineind, month = 1:14), "Months must be between 1 and 12")
+  expect_error(
+    subset(wineind, month = 1:14),
+    "`month` must be between 1 and 12"
+  )
   expect_error(subset(woolyrnq, quarter = "qq1"), "No recognizable quarters")
   expect_error(
     subset(woolyrnq, quarter = 1:6),
-    "Quarters must be between 1 and 4"
+    "`quarter` must be between 1 and 4"
   )
 })

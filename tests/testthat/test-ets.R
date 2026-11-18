@@ -102,6 +102,12 @@ test_that("test ets() for errors", {
   expect_error(ets(taylor, model = "ZZA"))
 })
 
+test_that("ets() ignores seasonality for frequency greater than 24", {
+  y <- ts(sin(1:100) + 10, frequency = 48)
+  expect_snapshot(fit <- ets(y))
+  expect_snapshot(ets(y, model = "ZZA"), error = TRUE)
+})
+
 test_that("ets() fits simple models to very short series", {
   fit <- ets(ts(c(3, 5, 4, 6, 7)))
   expect_s3_class(fit, "ets")

@@ -4,5 +4,5 @@
       nnetar(lh, model = ets(lh))
     Condition
       Error in `nnetar()`:
-      ! model should be the output of a previous call to nnetar()
+      ! `model` must be the output of a previous call to `nnetar()`.
 

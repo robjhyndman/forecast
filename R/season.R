@@ -31,7 +31,7 @@
 #' @export
 monthdays <- function(x) {
   if (!is.ts(x)) {
-    stop("Not a time series")
+    stop("`x` must be a time series.")
   }
   f <- frequency(x)
   if (f == 12) {
@@ -39,7 +39,7 @@ monthdays <- function(x) {
   } else if (f == 4) {
     days <- c(90, 91, 92, 92)
   } else {
-    stop("Not monthly or quarterly data")
+    stop("`x` must be a monthly or quarterly time series.")
   }
   nyears <- round(length(x) / f + 1) + 1
   years <- (1:nyears) + (start(x)[1] - 1)
@@ -92,7 +92,7 @@ sindexf <- function(object, h) {
     ss <- ss[n - (m:1) + 1]
     tsp.x <- tsp(object$seasonal)
   } else {
-    stop("Object of unknown class")
+    stop("`object` must be an `stl` or `decomposed.ts` object.")
   }
   out <- ts(
     rep(ss, h / m + 1)[seq_len(h)],
@@ -146,12 +146,12 @@ sindexf <- function(object, h) {
 #' @export
 seasonaldummy <- function(x, h = NULL) {
   if (!is.ts(x)) {
-    stop("Not a time series")
+    stop("`x` must be a time series.")
   }
   fr.x <- frequency(x)
   if (is.null(h)) {
     if (fr.x == 1) {
-      stop("Non-seasonal time series")
+      stop("`x` must be a seasonal time series.")
     }
     dummy <- as.factor(cycle(x))
     dummy.mat <- matrix(0, ncol = frequency(x) - 1, nrow = length(x))
@@ -181,7 +181,7 @@ seasonaldummy <- function(x, h = NULL) {
 seasonaldummyf <- function(x, h) {
   .Deprecated("seasonaldummy")
   if (!is.ts(x)) {
-    stop("Not a time series")
+    stop("`x` must be a time series.")
   }
   f <- frequency(x)
   seasonaldummy(ts(rep(0, h), start = tsp(x)[2] + 1 / f, frequency = f))
@@ -266,10 +266,10 @@ fourierf <- function(x, K, h) {
   period <- if (inherits(x, "msts")) attr(x, "msts") else frequency(x)
 
   if (length(period) != length(K)) {
-    stop("Number of periods does not match number of orders")
+    stop("`K` must have one element per seasonal period.")
   }
   if (any(2 * K > period)) {
-    stop("K must not be greater than period/2")
+    stop("`K` must not be greater than half the seasonal period.")
   }
 
   # Compute periods of all Fourier terms
@@ -348,7 +348,7 @@ fourierf <- function(x, K, h) {
 #' @export
 ma <- function(x, order, centre = TRUE) {
   if (!is_count(order)) {
-    stop("order must be a positive integer")
+    stop("`order` must be a positive integer.")
   }
 
   if (order %% 2 == 0 && centre) {

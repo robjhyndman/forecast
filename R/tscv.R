@@ -70,15 +70,18 @@ tsCV <- function(
   y <- as.ts(y)
   n <- length(y)
   e <- ts(matrix(NA_real_, nrow = n, ncol = h))
+  if (initial < 0) {
+    stop("`initial` must be non-negative.")
+  }
   if (initial >= n) {
-    stop("initial period too long")
+    stop("`initial` must be less than the length of `y`.")
   }
   tsp(e) <- tsp(y)
   if (!is.null(xreg)) {
     # Make xreg a ts object to allow easy subsetting later
     xreg <- ts(as.matrix(xreg))
     if (NROW(xreg) != length(y)) {
-      stop("xreg must be of the same size as y")
+      stop("`xreg` must have the same number of rows as the length of `y`.")
     }
     # Pad xreg with NAs
     xreg <- ts(
@@ -93,13 +96,7 @@ tsCV <- function(
     indx <- seq(window + initial, n - 1L, by = 1L)
   }
   for (i in indx) {
-    if (is.null(window)) {
-      start <- 1L
-    } else if (i - window >= 0L) {
-      start <- i - window + 1L
-    } else {
-      stop("small window")
-    }
+    start <- if (is.null(window)) 1L else i - window + 1L
     y_subset <- subset(y, start = start, end = i)
     if (is.null(xreg)) {
       fc <- try(
@@ -197,7 +194,7 @@ CVar <- function(
   # n-folds at most equal number of points
   k <- min(as.integer(k), nx)
   if (k <= 1L) {
-    stop("k must be at least 2")
+    stop("`k` must be at least 2.")
   }
   # Set up folds
   ind <- seq_len(nx)

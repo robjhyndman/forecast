@@ -60,7 +60,9 @@ theta_model <- function(
   if (seasonal) {
     decomp <- decompose(y, type = type)
     if (type == "multiplicative" && any(abs(seasonal(decomp)) < 1e-4)) {
-      warning("Seasonal indexes close to zero. Using non-seasonal Theta method")
+      warning(
+        "Seasonal indexes close to zero, using the non-seasonal Theta method."
+      )
       seasonal <- FALSE
     } else {
       y <- seasadj(decomp)

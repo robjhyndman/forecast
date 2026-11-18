@@ -104,7 +104,7 @@ spline_model <- function(
   method <- match.arg(method)
   seriesname <- deparse1(substitute(y))
   if (inherits(y, c("data.frame", "list", "matrix", "mts"))) {
-    stop("y should be a univariate time series")
+    stop("`y` must be a univariate time series.")
   }
   y <- as.ts(y)
   n <- length(y)
@@ -145,7 +145,7 @@ spline_model <- function(
   # Get one-step predictors
   yfit <- e <- ts(rep(NA_real_, n))
   if (n > 1000) {
-    warning("Series too long to compute training set fits and residuals")
+    warning("Series too long to compute training set fits and residuals.")
   } else {
     # This is probably grossly inefficient but I can't think of a better way
     for (i in seq_len(n - 1)) {

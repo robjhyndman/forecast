@@ -4,5 +4,5 @@
       get_conf_level(c(80, 110), fan = FALSE)
     Condition
       Error in `get_conf_level()`:
-      ! Confidence limit out of range
+      ! `level` must be between 0 and 99.99.
 

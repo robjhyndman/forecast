@@ -114,20 +114,20 @@ modelAR <- function(
     # Check for conflicts between new and old data:
     # Check model class
     if (!is.modelAR(model)) {
-      stop("model should be the output of a previous call to modelAR()")
+      stop("`model` must be the output of a previous call to `modelAR()`.")
     }
     # Check new data
     m <- seasonal_period(model$x)
     minlength <- max(model$p, model$P * m) + 1
     if (length(x) < minlength) {
       stop(sprintf(
-        "Series must be at least of length %d to use fitted model.",
+        "`y` must have at least %d observations to use the fitted `model`.",
         minlength
       ))
     }
     if (tsp(as.ts(x))[3] != m) {
       warning(sprintf(
-        "Data frequency doesn't match fitted model, coercing to frequency = %d.",
+        "Data frequency doesn't match the fitted model, coercing to `frequency = %d`.",
         m
       ))
       x <- ts(x, frequency = m)
@@ -135,10 +135,14 @@ modelAR <- function(
     # Check xreg
     if (!is.null(model$xreg)) {
       if (is.null(xreg)) {
-        stop("No external regressors provided")
+        stop(
+          "`xreg` must be supplied as the model was fitted with external regressors."
+        )
       }
       if (NCOL(xreg) != NCOL(model$xreg)) {
-        stop("Number of external regressors does not match fitted model")
+        stop(
+          "`xreg` must have the same number of columns as the regressors in the fitted model."
+        )
       }
     }
     # Update parameters with previous model
@@ -158,13 +162,13 @@ modelAR <- function(
   } else {
     # when not using an old model
     if (length(y) < 3) {
-      stop("Not enough data to fit a model")
+      stop("Not enough data to fit the model.")
     }
     # Check for constant data in time series
     constant_data <- is.constant(na.interp(x))
     if (constant_data) {
       warning(
-        "Constant data, setting p=1, P=0, lambda=NULL, scale.inputs=FALSE"
+        "Constant data, setting `p = 1`, `P = 0`, `lambda = NULL` and `scale.inputs = FALSE`."
       )
       scale.inputs <- FALSE
       lambda <- NULL
@@ -177,7 +181,7 @@ modelAR <- function(
         is.constant(na.interp(x))
       }))
       if (constant_xreg) {
-        warning("Constant xreg column, setting scale.inputs=FALSE")
+        warning("Constant `xreg` column, setting `scale.inputs = FALSE`.")
         scale.inputs <- FALSE
       }
     }
@@ -185,7 +189,7 @@ modelAR <- function(
 
   # Check for NAs in x
   if (anyNA(x)) {
-    warning("Missing values in x, omitting rows")
+    warning("Missing values in `y`, omitting rows.")
   }
 
   # Transform data
@@ -224,11 +228,11 @@ modelAR <- function(
   if (!is.null(xreg)) {
     xxreg <- xreg <- as.matrix(xreg)
     if (length(x) != NROW(xreg)) {
-      stop("Number of rows in xreg does not match series length")
+      stop("`xreg` must have the same number of rows as the length of `y`.")
     }
     # Check for NAs in xreg
     if (anyNA(xreg)) {
-      warning("Missing values in xreg, omitting rows")
+      warning("Missing values in `xreg`, omitting rows.")
     }
     # Scale xreg
     if (scale.inputs) {
@@ -254,12 +258,12 @@ modelAR <- function(
         p <- max(length(ar(na.interp(xx))$ar), 1)
       }
       if (p >= n) {
-        warning("Reducing number of lagged inputs due to short series")
+        warning("Reducing number of lagged inputs due to short series.")
         p <- n - 1
       }
       lags <- seq_len(p)
       if (P > 1) {
-        warning("Non-seasonal data, ignoring seasonal lags")
+        warning("Non-seasonal data, ignoring seasonal lags.")
       }
       P <- 0
     } else {
@@ -272,7 +276,7 @@ modelAR <- function(
         p <- max(length(ar(x.sa)$ar), 1)
       }
       if (p >= n) {
-        warning("Reducing number of lagged inputs due to short series")
+        warning("Reducing number of lagged inputs due to short series.")
         p <- n - 1
       }
       if (P > 0 && n >= m * P + 2) {
@@ -280,7 +284,7 @@ modelAR <- function(
       } else {
         lags <- seq_len(p)
         if (P > 0) {
-          warning("Series too short for seasonal lags")
+          warning("Series too short for seasonal lags.")
           P <- 0
         }
       }
@@ -301,7 +305,7 @@ modelAR <- function(
   j <- j & xsub[-(1:maxlag)]
   ## Stop if there's no data to fit (e.g. due to NAs or NaNs)
   if (NROW(lags.X[j, , drop = FALSE]) == 0) {
-    stop("No data to fit (possibly due to NA or NaN)")
+    stop("No data to fit (possibly due to `NA` or `NaN`).")
   }
   ## Fit selected model
   if (useoldmodel) {
@@ -398,17 +402,21 @@ forecast.modelAR <- function(
   if (is.null(object$xreg)) {
     if (!is.null(xreg)) {
       warning(
-        "External regressors were not used in fitted model, xreg will be ignored"
+        "`xreg` is ignored as the model was fitted without external regressors."
       )
     }
     xreg <- NULL
   } else {
     if (is.null(xreg)) {
-      stop("No external regressors provided")
+      stop(
+        "`xreg` must be supplied as the model was fitted with external regressors."
+      )
     }
     xreg <- as.matrix(xreg)
     if (NCOL(xreg) != NCOL(object$xreg)) {
-      stop("Number of external regressors does not match fitted model")
+      stop(
+        "`xreg` must have the same number of columns as the regressors in the fitted model."
+      )
     }
     h <- NROW(xreg)
   }
@@ -440,7 +448,7 @@ forecast.modelAR <- function(
     newdata <- c(flag[lags], xxreg[i, ])
     if (anyNA(newdata)) {
       stop(
-        "I can't forecast when there are missing values near the end of the series."
+        "Can't forecast when there are missing values near the end of the series."
       )
     }
     fcast[i] <- object$predict.FUN(object$model, newdata)

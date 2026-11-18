@@ -131,7 +131,7 @@ ggtsbreaks <- function(x) {
 #' @export
 autoplot.acf <- function(object, ci = 0.95, ...) {
   if (!inherits(object, "acf")) {
-    stop("autoplot.acf requires a acf object, use object=object")
+    stop("`object` must be an `acf` object.")
   }
 
   acf <- `dimnames<-`(object$acf, list(NULL, object$snames, object$snames))
@@ -309,7 +309,7 @@ ggCcf <- function(
 #' @export
 autoplot.mpacf <- function(object, ...) {
   if (!inherits(object, "mpacf")) {
-    stop("autoplot.mpacf requires a mpacf object, use object=object")
+    stop("`object` must be an `mpacf` object.")
   }
   if (!is.null(object$lower)) {
     data <- data.frame(
@@ -464,7 +464,7 @@ autoplot.Arima <- function(object, type = c("both", "ar", "ma"), ...) {
     p <- length(arroots(object)$roots)
     q <- 0
   } else {
-    stop("autoplot.Arima requires an Arima object")
+    stop("`object` must be an `Arima` or `ar` object.")
   }
 
   # Remove NULL type
@@ -551,7 +551,7 @@ autoplot.decomposed.ts <- function(
   ...
 ) {
   if (!inherits(object, "decomposed.ts")) {
-    stop("autoplot.decomposed.ts requires a decomposed.ts object")
+    stop("`object` must be a `decomposed.ts` object.")
   }
 
   labels <- labels %||% c("trend", "seasonal", "remainder")
@@ -628,7 +628,7 @@ autoplot.decomposed.ts <- function(
 #' @export
 autoplot.ets <- function(object, range.bars = NULL, ...) {
   if (!is.ets(object)) {
-    stop("autoplot.ets requires an ets object, use object=object")
+    stop("`object` must be an `ets` object.")
   }
 
   names <- c(y = "observed", l = "level", b = "slope", s1 = "season")
@@ -727,7 +727,7 @@ autoplot.forecast <- function(
   ...
 ) {
   if (!is.forecast(object)) {
-    stop("autoplot.forecast requires a forecast object, use object=object")
+    stop("`object` must be a `forecast` object.")
   }
   if (is.null(object$lower) || is.null(object$upper) || is.null(object$level)) {
     PI <- FALSE
@@ -756,7 +756,7 @@ autoplot.forecast <- function(
         check.names = FALSE
       )
     } else {
-      stop("Could not find data")
+      stop("Can't find the data.")
     }
     if (!is.null(object$series)) {
       vars <- c(yvar = object$series)
@@ -777,7 +777,7 @@ autoplot.forecast <- function(
   if (!is.ts(object$mean)) {
     if (length(xvar) > 1) {
       stop(
-        "Forecast plot for regression models only available for a single predictor"
+        "Forecast plots for regression models are only available for a single predictor."
       )
     }
     if (NCOL(object$newdata) == 1) {
@@ -902,7 +902,7 @@ autoplot.mforecast <- function(
   ...
 ) {
   if (!is.mforecast(object)) {
-    stop("autoplot.mforecast requires a mforecast object, use object=object")
+    stop("`object` must be an `mforecast` object.")
   }
   if (is.ts(object$forecast[[1]]$mean)) {
     # ts forecasts
@@ -931,7 +931,7 @@ autoplot.mforecast <- function(
     # lm forecasts
     K <- length(object$forecast)
     if (K < 2) {
-      warning("Expected at least two plots but forecast required less.")
+      warning("Expected at least two plots but the forecast requires fewer.")
     }
 
     # Set up vector arguments
@@ -985,7 +985,7 @@ ggtsdisplay <- function(
   ...
 ) {
   if (NCOL(x) > 1) {
-    stop("ggtsdisplay is only for univariate time series")
+    stop("`x` must be a univariate time series.")
   }
   plot.type <- match.arg(plot.type)
   main <- deparse1(substitute(x))
@@ -1412,20 +1412,20 @@ ggsubseriesplot <- function(
   ...
 ) {
   if (!is.ts(x)) {
-    stop("ggsubseriesplot requires a ts object, use x=object")
+    stop("`x` must be a time series.")
   }
 
   if (seasonal_period(x) == 1) {
-    stop("Data are not seasonal")
+    stop("`x` must be a seasonal time series.")
   }
 
   if (any(table(phase) == 1)) {
     stop(paste(
       "Each season requires at least 2 observations.",
       if (frequency(x) %% 1 == 0) {
-        "Your series length may be too short for this graphic."
+        "The series may be too short for this graphic."
       } else {
-        "This may be caused from specifying a time-series with non-integer frequency."
+        "This may be caused by a time series with non-integer frequency."
       }
     ))
   }
@@ -1487,7 +1487,7 @@ ggsubseriesplot <- function(
   if (!is.null(labels)) {
     if (xfreq != length(labels)) {
       stop(
-        "The number of labels supplied is not the same as the number of seasons."
+        "The number of `labels` must match the number of seasons."
       )
     } else {
       xbreaks <- labels
@@ -1527,16 +1527,16 @@ ggseasonplot <- function(
   ...
 ) {
   if (!is.ts(x)) {
-    stop("autoplot.seasonplot requires a ts object, use x=object")
+    stop("`x` must be a time series.")
   }
   if (!is.null(type)) {
-    message("Plot types are not yet supported for seasonplot()")
+    message("`type` is not yet supported and will be ignored.")
   }
 
   # Check data are seasonal and convert to integer seasonality
   s <- seasonal_period(x)
   if (s == 1) {
-    stop("Data are not seasonal")
+    stop("`x` must be a seasonal time series.")
   }
 
   # Grab name for plot title
@@ -1649,7 +1649,7 @@ ggseasonplot <- function(
   if (!is.null(season.labels)) {
     if (length(season.labels) != length(labs)) {
       warning(sprintf(
-        "Provided season.labels have length %d, but %d are required. Ignoring season.labels.",
+        "Provided `season.labels` have length %d, but %d are required. Ignoring `season.labels`.",
         length(season.labels),
         length(labs)
       ))
@@ -1704,7 +1704,7 @@ autoplot.splineforecast <- function(object, PI = TRUE, ...) {
 #' @export
 autoplot.stl <- function(object, labels = NULL, range.bars = TRUE, ...) {
   if (!inherits(object, "stl")) {
-    stop("autoplot.stl requires a stl object, use x=object")
+    stop("`object` must be an `stl` object.")
   }
   # Re-order series as trend, seasonal, remainder
   object$time.series <- object$time.series[, c(
@@ -1782,7 +1782,7 @@ autoplot.stl <- function(object, labels = NULL, range.bars = TRUE, ...) {
 #' @export
 autoplot.StructTS <- function(object, labels = NULL, range.bars = TRUE, ...) {
   if (!inherits(object, "StructTS")) {
-    stop("autoplot.StructTS requires a StructTS object.")
+    stop("`object` must be a `StructTS` object.")
   }
 
   labels <- labels %||% colnames(object$fitted)
@@ -1859,7 +1859,7 @@ autoplot.StructTS <- function(object, labels = NULL, range.bars = TRUE, ...) {
 #' @export
 autoplot.seas <- function(object, labels = NULL, range.bars = NULL, ...) {
   if (!inherits(object, "seas")) {
-    stop("autoplot.seas requires a seas object")
+    stop("`object` must be a `seas` object.")
   }
   if (is.null(labels)) {
     if ("seasonal" %in% colnames(object$data)) {
@@ -1945,7 +1945,7 @@ autolayer.mts <- function(object, colour = TRUE, series = NULL, ...) {
   if (length(series) != NCOL(object)) {
     if (colour) {
       message(
-        "For a multivariate time series, specify a seriesname for each time series. Defaulting to column names."
+        "For a multivariate time series, specify a `series` name for each time series. Defaulting to column names."
       )
     }
     series <- colnames(object)
@@ -2107,7 +2107,7 @@ autoplot.ts <- function(
   ...
 ) {
   if (!is.ts(object)) {
-    stop("autoplot.ts requires a ts object, use object=object")
+    stop("`object` must be a time series.")
   }
 
   # Create data frame with time as a column labelled x
@@ -2159,7 +2159,7 @@ autoplot.mts <- function(
   ...
 ) {
   if (!stats::is.mts(object)) {
-    stop("autoplot.mts requires a mts object, use x=object")
+    stop("`object` must be an `mts` object.")
   }
   if (NCOL(object) <= 1) {
     return(autoplot.ts(object, ...))
@@ -2242,10 +2242,10 @@ forecast2plotdf <- function(
     # Cross-sectional forecasts
     xVals <- as.numeric(model[["newdata"]][, 1]) # Only display the first column of newdata, should be generalised.
     if (NCOL(model[["newdata"]]) > 1) {
-      message("Note: only extracting first column of data")
+      message("Only extracting the first column of `newdata`.")
     }
   } else {
-    stop("Could not find forecast x axis")
+    stop("Can't find the forecast x-axis.")
   }
   Hiloc <- grep("Hi ", names(data), fixed = TRUE)
   Loloc <- grep("Lo ", names(data), fixed = TRUE)
@@ -2270,7 +2270,7 @@ forecast2plotdf <- function(
         numInterval <- length(model$level)
       }
     } else {
-      warning("missing intervals detected, plotting point predictions only")
+      warning("Missing intervals detected, plotting point predictions only.")
       PI <- FALSE
     }
   }
@@ -2289,7 +2289,7 @@ forecast2plotdf <- function(
   if (!showgap) {
     if (is.null(model$x)) {
       warning(
-        "Removing the gap requires historical data, provide this via model$x. Defaulting showgap to TRUE."
+        "Removing the gap requires historical data, provide this via `model$x`. Defaulting to `showgap = TRUE`."
       )
     } else {
       intervalGap <- data.frame(
@@ -2354,7 +2354,7 @@ StatForecast <- ggplot2::ggproto(
     if (!is.null(series)) {
       if (data$group[1] > length(series)) {
         message(
-          "Recycling series argument, please provide a series name for each time series"
+          "Recycling `series`, provide a series name for each time series."
         )
       }
       extraInfo[["series"]] <- series[
@@ -2694,7 +2694,7 @@ geom_forecast <- function(
 ) {
   if (is.forecast(mapping) || is.mforecast(mapping)) {
     warning(
-      "Use autolayer instead of geom_forecast to add a forecast layer to your ggplot object."
+      "Use `autolayer()` instead of `geom_forecast()` to add a forecast layer to a ggplot object."
     )
     return(autolayer(
       mapping,

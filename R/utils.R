@@ -20,7 +20,7 @@ get_conf_level <- function(level, fan) {
   } else if (min(level) > 0 && max(level) < 1) {
     sort(100 * level)
   } else if (min(level) < 0 || max(level) > 99.99) {
-    stop("Confidence limit out of range")
+    stop("`level` must be between 0 and 99.99.")
   } else {
     sort(level)
   }

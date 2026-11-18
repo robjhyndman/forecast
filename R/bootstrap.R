@@ -62,7 +62,7 @@ MBB <- function(x, window_size) {
 #' @export
 bld.mbb.bootstrap <- function(x, num, block_size = NULL) {
   if (!is_count(num)) {
-    stop("num must be a positive integer")
+    stop("`num` must be a positive integer.")
   }
   if (length(x) <= 1L) {
     return(rep(list(x), num))

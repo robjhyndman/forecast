@@ -162,7 +162,7 @@ search.arima <- function(
       }
     }
   } else {
-    stop("No ARIMA model able to be estimated")
+    stop("No ARIMA model could be estimated.")
   }
 
   bestfit$x <- x
@@ -248,7 +248,7 @@ forecast.Arima <- function(
 
   if (!is.null(xreg) && use.xreg) {
     if (!is.numeric(xreg)) {
-      stop("xreg should be a numeric matrix or a numeric vector")
+      stop("`xreg` must be a numeric matrix or a numeric vector.")
     }
     xreg <- as.matrix(xreg)
     if (is.null(colnames(xreg))) {
@@ -263,7 +263,7 @@ forecast.Arima <- function(
     h <- nrow(xreg)
   } else if (!is.null(xreg)) {
     warning(
-      "xreg not required by this model, ignoring the provided regressors"
+      "`xreg` is ignored as the model was fitted without external regressors."
     )
     xreg <- NULL
   }
@@ -294,19 +294,23 @@ forecast.Arima <- function(
     if (object$constant) {
       pred <- list(pred = rep(x[1], h), se = rep(0, h))
     } else {
-      stop("Strange value of object$constant")
+      stop("`object$constant` has an unexpected value.")
     }
   } else if (use.xreg) {
     if (is.null(xreg)) {
-      stop("No regressors provided")
+      stop(
+        "`xreg` must be supplied as the model was fitted with external regressors."
+      )
     }
     object$call$xreg <- getxreg(object)
     if (NCOL(xreg) != NCOL(object$call$xreg)) {
-      stop("Number of regressors does not match fitted model")
+      stop(
+        "`xreg` must have the same number of columns as the regressors in the fitted model."
+      )
     }
     if (!identical(colnames(xreg), colnames(object$call$xreg))) {
       warning(
-        "xreg contains different column names from the xreg used in training. Please check that the regressors are in the same order."
+        "`xreg` has different column names from the regressors used in training. Check that the regressors are in the same order."
       )
     }
     pred <- predict(object, n.ahead = h, newxreg = xreg)
@@ -480,7 +484,7 @@ getxreg <- function(z, env = parent.frame()) {
   xreg <- tryCatch(eval(z$call$xreg, env), error = function(e) NULL)
   if (NROW(xreg) != length(z$residuals) || NCOL(xreg) != nxreg) {
     stop(
-      "Could not find regressors matching the data this model was fitted to.\n  Please use Arima() or auto.arima() rather than arima().",
+      "Can't find regressors matching the data this model was fitted to. Use `Arima()` or `auto.arima()` rather than `arima()`.",
       call. = FALSE
     )
   }
@@ -668,7 +672,7 @@ Arima <- function(
   series <- if (missing(x)) deparse1(substitute(y)) else deparse1(substitute(x))
   if (!is.null(model) && !is.Arima(model)) {
     stop(
-      "model should be the output of a previous call to Arima(), auto.arima() or arima()"
+      "`model` must be the output of a previous call to `Arima()`, `auto.arima()` or `arima()`."
     )
   }
   if (!is.null(model) && is.null(lambda)) {
@@ -685,7 +689,7 @@ Arima <- function(
 
   if (!is.null(xreg)) {
     if (!is.numeric(xreg)) {
-      stop("xreg should be a numeric matrix or a numeric vector")
+      stop("`xreg` must be a numeric matrix or a numeric vector.")
     }
     xreg <- as.matrix(xreg)
     if (is.null(colnames(xreg))) {
@@ -701,12 +705,12 @@ Arima <- function(
     if (frequency(x) <= 1) {
       seasonal <- list(order = c(0, 0, 0), period = NA)
       if (length(x) <= order[2L]) {
-        stop("Not enough data to fit the model")
+        stop("Not enough data to fit the model.")
       }
     } else {
       seasonal <- list(order = seasonal, period = frequency(x))
       if (length(x) <= order[2L] + seasonal$order[2L] * seasonal$period) {
-        stop("Not enough data to fit the model")
+        stop("Not enough data to fit the model.")
       }
     }
   }
@@ -803,10 +807,14 @@ arima2 <- function(x, model, xreg, method) {
 
   if (!is.null(model$xreg)) {
     if (is.null(xreg)) {
-      stop("No regressors provided")
+      stop(
+        "`xreg` must be supplied as the model was fitted with external regressors."
+      )
     }
     if (ncol(xreg) != ncol(model$xreg)) {
-      stop("Number of regressors does not match fitted model")
+      stop(
+        "`xreg` must have the same number of columns as the regressors in the fitted model."
+      )
     }
   }
 
@@ -932,7 +940,7 @@ arimaorder <- function(object) {
   } else if (inherits(object, "fracdiff")) {
     return(c(p = length(object$ar), d = object$d, q = length(object$ma)))
   } else {
-    stop("object not of class Arima, ar or fracdiff")
+    stop("`object` must be an `Arima`, `ar` or `fracdiff` object.")
   }
 }
 

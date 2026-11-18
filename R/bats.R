@@ -78,14 +78,14 @@ bats <- function(
   ...
 ) {
   if (!is.numeric(y) || NCOL(y) > 1) {
-    stop("y should be a univariate time series")
+    stop("`y` must be a univariate time series.")
   }
   if (!is.null(model)) {
     if (!is.bats(model) || inherits(model, "tbats")) {
-      stop("model should be the output of a previous call to bats()")
+      stop("`model` must be the output of a previous call to `bats()`.")
     }
     if (is.null(model$parameters)) {
-      stop("model was fitted to a constant series and cannot be refitted")
+      stop("`model` was fitted to a constant series and can't be refitted.")
     }
   }
 
@@ -121,7 +121,7 @@ bats <- function(
   y <- na.contiguous(y)
   if (ny != length(y)) {
     warning(
-      "Missing values encountered. Using longest contiguous portion of time series"
+      "Missing values encountered, using the longest contiguous portion of the time series."
     )
     if (!is.null(attr_y$tsp)) {
       attr_y$tsp[1:2] <- range(time(y))
@@ -244,11 +244,11 @@ bats <- function(
     }
   }
   if (is.null(best.model)) {
-    stop("Unable to fit a model")
+    stop("No model could be fitted.")
   }
   best.model$call <- match.call()
   if (best.model$optim.return.code != 0) {
-    warning("optim() did not converge.")
+    warning("`optim()` did not converge.")
   }
 
   attributes(best.model$fitted.values) <- attributes(

@@ -43,7 +43,7 @@ test_that("tests for mlmsplit()", {
   expect_identical(fit2$rank, fit4$rank)
   expect_equal(fit1$fitted.values, fit3$fitted.values)
   expect_equal(fit2$fitted.values, fit4$fitted.values)
-  expect_error(mlmsplit(fit), "Must select lm")
+  expect_error(mlmsplit(fit), "`index` must be a single integer")
 })
 
 test_that("tests for forecast.mlm()", {

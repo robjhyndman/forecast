@@ -11,11 +11,11 @@ simulate_forecast <- function(
 ) {
   if (!is.null(innov)) {
     if (length(innov) != h * npaths) {
-      stop("Incorrect number of innovations, need h*npaths values")
+      stop("`innov` must have `h * npaths` values.")
     }
     innov <- matrix(innov, nrow = h, ncol = npaths)
     if (bootstrap) {
-      warning("innov being used, not bootstrap")
+      warning("`bootstrap` is ignored when `innov` is supplied.")
     }
     bootstrap <- FALSE
   }

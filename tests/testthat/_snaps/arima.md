@@ -4,8 +4,7 @@
       residuals(fit, type = "regression")
     Condition
       Error:
-      ! Could not find regressors matching the data this model was fitted to.
-        Please use Arima() or auto.arima() rather than arima().
+      ! Can't find regressors matching the data this model was fitted to. Use `Arima()` or `auto.arima()` rather than `arima()`.
 
 ---
 
@@ -13,8 +12,7 @@
       residuals(fit, type = "regression")
     Condition
       Error:
-      ! Could not find regressors matching the data this model was fitted to.
-        Please use Arima() or auto.arima() rather than arima().
+      ! Can't find regressors matching the data this model was fitted to. Use `Arima()` or `auto.arima()` rather than `arima()`.
 
 ---
 
@@ -22,8 +20,7 @@
       residuals(fit, type = "regression")
     Condition
       Error:
-      ! Could not find regressors matching the data this model was fitted to.
-        Please use Arima() or auto.arima() rather than arima().
+      ! Can't find regressors matching the data this model was fitted to. Use `Arima()` or `auto.arima()` rather than `arima()`.
 
 # forecast.Arima() warns once about unknown arguments
 
@@ -39,5 +36,5 @@
       Arima(lh, model = ets(lh))
     Condition
       Error in `Arima()`:
-      ! model should be the output of a previous call to Arima(), auto.arima() or arima()
+      ! `model` must be the output of a previous call to `Arima()`, `auto.arima()` or `arima()`.
 

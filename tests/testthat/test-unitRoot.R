@@ -25,6 +25,11 @@ test_that("nsdiffs returns 0 for constant series", {
   expect_equal(nsdiffs(ts(rep(5, 100), frequency = 12)), 0)
 })
 
+test_that("nsdiffs warns and returns 0 for frequency less than 1", {
+  expect_snapshot(d <- nsdiffs(ts(1:20, frequency = 0.5)))
+  expect_equal(d, 0)
+})
+
 test_that("nsdiffs returns 0 for series shorter than frequency", {
   x <- ts(1:5, frequency = 12)
   expect_equal(nsdiffs(x), 0)

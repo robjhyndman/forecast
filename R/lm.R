@@ -40,7 +40,7 @@ tslm <- function(formula, data, subset, lambda = NULL, biasadj = FALSE, ...) {
   if (missing(data)) {
     mt <- try(terms(formula))
     if (inherits(mt, "try-error")) {
-      stop("Cannot extract terms from formula, please provide data argument.")
+      stop("Can't extract terms from `formula`, provide the `data` argument.")
     }
   } else {
     mt <- terms(formula, data = data)
@@ -105,7 +105,7 @@ tslm <- function(formula, data, subset, lambda = NULL, biasadj = FALSE, ...) {
     tspx <- tsp(data)
   }
   if (is.null(tspx)) {
-    stop("Not time series data, use lm()")
+    stop("Not time series data, use `lm()` instead.")
   }
   tsdat <- match(c("trend", "season"), cn, 0L)
 
@@ -120,7 +120,7 @@ tslm <- function(formula, data, subset, lambda = NULL, biasadj = FALSE, ...) {
     # &tsvar[2]!=0){#If "season" is not in data, but is in formula
     if (tsvar[2] != 0 && tspx[3] <= 1) {
       # Nonseasonal data, and season requested
-      stop("Non-seasonal data cannot be modelled using a seasonal factor")
+      stop("Non-seasonal data can't be modelled using a seasonal factor.")
     }
     season <- as.factor(cycle(data[, 1]))
     cn <- c(cn, "season")
@@ -131,19 +131,19 @@ tslm <- function(formula, data, subset, lambda = NULL, biasadj = FALSE, ...) {
   ## Subset the data according to subset argument
   if (!missing(subset)) {
     if (!is.logical(subset)) {
-      stop("subset must be logical")
+      stop("`subset` must be logical.")
     } else if (NCOL(subset) > 1) {
-      stop("subset must be a logical vector")
+      stop("`subset` must be a logical vector.")
     } else if (NROW(subset) != NROW(data)) {
       stop(
-        "Subset must be the same length as the number of rows in the dataset"
+        "`subset` must be the same length as the number of rows in `data`."
       )
     }
-    warning("Subset has been assumed contiguous")
+    warning("`subset` has been assumed contiguous.")
     timesx <- time(data[, 1])[subset]
     tspx <- recoverTSP(timesx)
     if (tspx[3] == 1 && tsdat[2] == 0 && tsvar[2] != 0) {
-      stop("Non-seasonal data cannot be modelled using a seasonal factor")
+      stop("Non-seasonal data can't be modelled using a seasonal factor.")
     }
     data <- data[subset, ] # model.frame(formula,as.data.frame(data[subsetTF,]))
   }
@@ -239,7 +239,7 @@ forecast.lm <- function(
   ...
 ) {
   if (h < 1) {
-    stop("The forecast horizon must be at least 1.")
+    stop("`h` must be at least 1.")
   }
   level <- get_conf_level(level, fan)
   biasadj <- biasadj %||% FALSE
@@ -251,7 +251,7 @@ forecast.lm <- function(
     origdata <- try(object$data <- eval(object$call$data), silent = TRUE)
     if (inherits(origdata, "try-error")) {
       stop(
-        "Could not find data. Try training your model using tslm() or attach data directly to the object via object$data<-modeldata for some object<-lm(formula,modeldata)."
+        "Can't find the data. Train the model using `tslm()` or attach the data to the object via `object$data <- modeldata` for some `object <- lm(formula, modeldata)`."
       )
     }
   } else {
@@ -261,7 +261,7 @@ forecast.lm <- function(
     origdata <- as.data.frame(origdata)
     if (!is.data.frame(origdata)) {
       stop(
-        "Could not find data.  Try training your model using tslm() or attach data directly to the object via object$data<-modeldata for some object<-lm(formula,modeldata)."
+        "Can't find the data. Train the model using `tslm()` or attach the data to the object via `object$data <- modeldata` for some `object <- lm(formula, modeldata)`."
       )
     }
   }
@@ -303,7 +303,7 @@ forecast.lm <- function(
         reqvars[1]
       }
       warning(
-        "newdata column names not specified, defaulting to first variable required."
+        "`newdata` column names not specified, defaulting to the first variable required."
       )
     }
     oldnewdata <- newdata
@@ -370,7 +370,7 @@ forecast.lm <- function(
           )[[subvarloc]] <- as.name(fn_name)
         } else {
           warning(sprintf(
-            "Could not find required variable %s in newdata. Specify newdata as a named data.frame.",
+            "Can't find required variable %s in `newdata`. Specify `newdata` as a named data frame.",
             i
           ))
         }
@@ -426,7 +426,7 @@ forecast.lm <- function(
   }
 
   if (nrow(newdata) != length(out[[1]]$fit[, 1])) {
-    stop("Variables not found in newdata")
+    stop("Variables not found in `newdata`.")
   }
 
   object$terms <- oldterms
@@ -528,7 +528,7 @@ summary.tslm <- function(object, ...) {
 #' @export
 CV <- function(obj) {
   if (!inherits(obj, "lm")) {
-    stop("This function is for objects of class lm")
+    stop("`obj` must be an `lm` object.")
   }
   n <- length(obj$residuals)
   k <- extractAIC(obj)[1] - 1 # number of predictors (constant removed)

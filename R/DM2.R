@@ -76,11 +76,11 @@ dm.test <- function(
   varestimator <- match.arg(varestimator)
 
   if (!is_count(h)) {
-    stop("h must be a positive integer")
+    stop("`h` must be a positive integer.")
   }
   h <- as.integer(h)
   if (h > length(e1)) {
-    stop("h cannot be longer than the number of forecast errors")
+    stop("`h` can't be longer than the number of forecast errors.")
   }
   d <- c(abs(e1))^power - c(abs(e2))^power
   d.cov <- acf(
@@ -105,10 +105,10 @@ dm.test <- function(
   if (dv > 0) {
     STATISTIC <- mean(d, na.rm = TRUE) / sqrt(dv)
   } else if (h == 1) {
-    stop("Variance of DM statistic is zero")
+    stop("Variance of DM statistic is zero.")
   } else {
     warning(
-      "Variance is negative. Try varestimator = bartlett. Proceeding with horizon h=1."
+      "Variance is negative, proceeding with horizon `h = 1`. Try `varestimator = \"bartlett\"`."
     )
     return(dm.test(e1, e2, alternative, h = 1, power, varestimator))
   }

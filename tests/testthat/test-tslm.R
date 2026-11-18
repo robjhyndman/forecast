@@ -58,14 +58,14 @@ test_that("tests on subsetting data", {
   a <- mv_y[, 1]
   expect_warning(
     tslm(mv_y ~ trend, subset = a < 20),
-    "Subset has been assumed contiguous"
+    "`subset` has been assumed contiguous"
   )
   expect_error(
     tslm(mv_y ~ trend, subset = subset(mv_y, mv_y[, 1] < 20))
   )
   expect_warning(
     tslm(v_y ~ trend + season + trend * season, subset = v_y < 100),
-    "Subset has been assumed contiguous"
+    "`subset` has been assumed contiguous"
   )
 })
 
@@ -81,11 +81,11 @@ test_that("tests on model building with multivariate time series", {
   expect_identical(fit1$coefficients, fit2$coefficients)
   expect_warning(
     fit3 <- tslm(mv_y ~ trend + season, subset = mv_y[, 1] < 1),
-    "Subset has been assumed contiguous"
+    "`subset` has been assumed contiguous"
   )
   expect_warning(
     fit4 <- tslm(mv_y ~ trend + season, data = data, subset = mv_y[, 1] < 1),
-    "Subset has been assumed contiguous"
+    "`subset` has been assumed contiguous"
   )
   expect_named(fit3, names(fit4))
   expect_identical(fit3$model, fit4$model, ignore_attr = "terms")
@@ -165,7 +165,7 @@ test_that("CV returns named numeric vector", {
 })
 
 test_that("CV errors for non-lm objects", {
-  expect_error(CV(1:10), "This function is for objects of class lm")
+  expect_error(CV(1:10), "`obj` must be an `lm` object")
 })
 
 test_that("CV works with plain lm", {
@@ -223,7 +223,7 @@ test_that("forecast.lm with fan", {
 
 test_that("forecast.lm errors with h < 1", {
   fit <- tslm(USAccDeaths ~ trend + season)
-  expect_error(forecast(fit, h = 0), "The forecast horizon must be at least 1")
+  expect_error(forecast(fit, h = 0), "`h` must be at least 1")
 })
 
 test_that("forecast.lm with newdata", {
@@ -255,7 +255,7 @@ test_that("tslm errors on non-seasonal data with season", {
   y <- ts(1:50 + rnorm(50), frequency = 1)
   expect_error(
     tslm(y ~ trend + season),
-    "Non-seasonal data cannot be modelled using a seasonal factor"
+    "Non-seasonal data can't be modelled using a seasonal factor"
   )
 })
 

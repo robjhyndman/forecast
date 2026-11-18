@@ -4,5 +4,5 @@
       forecast(fc, level = 90)
     Condition
       Error in `forecast.forecast()`:
-      ! Please set the level argument when the forecasts are first computed
+      ! `level` can't differ from the levels used when the forecasts were first computed.
 

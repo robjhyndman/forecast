@@ -222,13 +222,13 @@ forecast.stl <- function(
   method <- match.arg(method)
   if (is.null(forecastfunction)) {
     if (method != "arima" && (!is.null(xreg) || !is.null(newxreg))) {
-      stop("xreg and newxreg arguments can only be used with ARIMA models")
+      stop("`xreg` and `newxreg` can only be used with ARIMA models.")
     }
     if (method == "ets") {
       # Ensure non-seasonal model
       if (substr(etsmodel, 3, 3) != "N") {
         warning(
-          "The ETS model must be non-seasonal. I'm ignoring the seasonal component specified."
+          "The ETS model must be non-seasonal, ignoring the specified seasonal component."
         )
         substr(etsmodel, 3, 3) <- "N"
       }
@@ -257,11 +257,11 @@ forecast.stl <- function(
     }
   }
   if (is.null(xreg) != is.null(newxreg)) {
-    stop("xreg and newxreg arguments must both be supplied")
+    stop("`xreg` and `newxreg` must both be supplied.")
   }
   if (!is.null(newxreg) && NROW(newxreg) != h) {
     stop(
-      "newxreg should have the same number of rows as the forecast horizon h"
+      "`newxreg` must have the same number of rows as the forecast horizon `h`."
     )
   }
   level <- get_conf_level(level, fan)
@@ -301,7 +301,7 @@ forecast.stl <- function(
     allseas <- seasonal(object)
     series <- deparse1(object$call$x)
   } else {
-    stop("Unknown object class")
+    stop("`object` must be an `stl` or `mstl` object.")
   }
 
   # De-seasonalize
@@ -466,12 +466,12 @@ stlm <- function(
   yname <- if (missing(x)) deparse1(substitute(y)) else deparse1(substitute(x))
   method <- match.arg(method)
   if (!is.null(model) && !is.stlm(model)) {
-    stop("model should be the output of a previous call to stlm()")
+    stop("`model` must be the output of a previous call to `stlm()`.")
   }
 
   # Check univariate
   if (NCOL(x) > 1L) {
-    stop("y must be a univariate time series")
+    stop("`y` must be a univariate time series.")
   }
   if (!is.null(ncol(x)) && ncol(x) == 1L) {
     # Probably redundant check
@@ -480,7 +480,7 @@ stlm <- function(
   # Check x is a seasonal time series
   tspx <- tsp(x)
   if (is.null(tspx) || tspx[3] <= 1L) {
-    stop("y is not a seasonal ts object")
+    stop("`y` must be a seasonal time series.")
   }
 
   if (!is.null(model) && is.null(lambda)) {
@@ -517,18 +517,18 @@ stlm <- function(
       }
     }
     if (is.null(modelfunction)) {
-      stop("Unknown model type")
+      stop("Can't determine how to refit `model`.")
     }
   } else if (is.null(modelfunction)) {
     # Construct modelfunction if not passed as an argument
     if (method != "arima" && !is.null(xreg)) {
-      stop("xreg arguments can only be used with ARIMA models")
+      stop("`xreg` can only be used with ARIMA models.")
     }
     if (method == "ets") {
       # Ensure non-seasonal model
       if (substr(etsmodel, 3, 3) != "N") {
         warning(
-          "The ETS model must be non-seasonal. I'm ignoring the seasonal component specified."
+          "The ETS model must be non-seasonal, ignoring the specified seasonal component."
         )
         substr(etsmodel, 3, 3) <- "N"
       }
@@ -596,7 +596,7 @@ forecast.stlm <- function(
   biasadj <- biasadj %||% FALSE
   if (!is.null(newxreg) && NROW(newxreg) != h) {
     stop(
-      "newxreg should have the same number of rows as the forecast horizon h"
+      "`newxreg` must have the same number of rows as the forecast horizon `h`."
     )
   }
   level <- get_conf_level(level, fan)
@@ -686,7 +686,7 @@ stlf <- function(
 
   # Check univariate
   if (NCOL(x) > 1L) {
-    stop("y must be a univariate time series")
+    stop("`y` must be a univariate time series.")
   }
   if (!is.null(ncol(x)) && ncol(x) == 1L) {
     # Probably redundant check
@@ -695,7 +695,7 @@ stlf <- function(
   # Check x is a seasonal time series
   tspx <- tsp(x)
   if (is.null(tspx) || tspx[3] <= 1L) {
-    stop("y is not a seasonal ts object")
+    stop("`y` must be a seasonal time series.")
   }
 
   if (!is.null(lambda)) {

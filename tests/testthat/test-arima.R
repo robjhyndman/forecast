@@ -163,7 +163,7 @@ test_that("tests for forecast.Arima", {
     seasonal = c(0, 1, 1),
     method = "CSS"
   )
-  expect_warning(forecast.Arima(fit1, xreg = 1:10), "xreg not required")
+  expect_warning(forecast.Arima(fit1, xreg = 1:10), "`xreg` is ignored")
   expect_warning(forecast.Arima(fit1, include.drift = TRUE))
   expect_true(all.equal(
     forecast.Arima(fit1, bootstrap = TRUE, npaths = 100)$mean,
