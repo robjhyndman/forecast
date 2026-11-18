@@ -183,6 +183,12 @@ ets <- function(
       errortype <- substr(modelcomponents, 1, 1)
       trendtype <- substr(modelcomponents, 2, 2)
       seasontype <- substr(modelcomponents, 3, 3)
+      if (seasontype != "N" && m != model$m) {
+        stop(sprintf(
+          "The frequency of `y` must match the seasonal period of `model` (%s) when `use.initial.values = TRUE`.",
+          model$m
+        ))
+      }
 
       # Recompute errors from pegelsresid.C
       e <- pegelsresid.C(
