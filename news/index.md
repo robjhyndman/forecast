@@ -56,6 +56,15 @@
   and [`tslm()`](https://pkg.robjhyndman.com/forecast/reference/tslm.md)
   no longer return all-`NA` fitted values when `biasadj = TRUE` and some
   residuals are missing.
+- [`Arima()`](https://pkg.robjhyndman.com/forecast/reference/Arima.md),
+  [`holt()`](https://pkg.robjhyndman.com/forecast/reference/ses.md),
+  [`hw()`](https://pkg.robjhyndman.com/forecast/reference/ses.md),
+  [`modelAR()`](https://pkg.robjhyndman.com/forecast/reference/modelAR.md),
+  [`nnetar()`](https://pkg.robjhyndman.com/forecast/reference/nnetar.md)
+  and
+  [`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
+  no longer error when the series is supplied via the deprecated `x`
+  argument.
 - [`auto.arima()`](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md)
   now gives an informative error when all data are missing.
 - [`auto.arima()`](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md)
@@ -68,15 +77,6 @@
 - [`auto.arima()`](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md)
   stepwise search now searches models without a constant when the null
   model without one is best.
-- [`Arima()`](https://pkg.robjhyndman.com/forecast/reference/Arima.md),
-  [`holt()`](https://pkg.robjhyndman.com/forecast/reference/ses.md),
-  [`hw()`](https://pkg.robjhyndman.com/forecast/reference/ses.md),
-  [`modelAR()`](https://pkg.robjhyndman.com/forecast/reference/modelAR.md),
-  [`nnetar()`](https://pkg.robjhyndman.com/forecast/reference/nnetar.md)
-  and
-  [`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
-  no longer error when the series is supplied via the deprecated `x`
-  argument.
 - [`autolayer()`](https://ggplot2.tidyverse.org/reference/autolayer.html)
   now labels an unnamed `msts` series with the name of the object
   instead of “NULL”.
@@ -117,9 +117,6 @@
 - [`bld.mbb.bootstrap()`](https://pkg.robjhyndman.com/forecast/reference/bld.mbb.bootstrap.md)
   no longer errors when `num = 1` and now validates that `num` is a
   positive integer.
-- [`CVar()`](https://pkg.robjhyndman.com/forecast/reference/CVar.md) now
-  computes fold accuracy with fitted and actual values in the correct
-  order.
 - [`croston_model()`](https://pkg.robjhyndman.com/forecast/reference/croston_model.md)
   and
   [`croston()`](https://pkg.robjhyndman.com/forecast/reference/forecast.croston_model.md)
@@ -131,6 +128,9 @@
   and
   [`croston()`](https://pkg.robjhyndman.com/forecast/reference/forecast.croston_model.md)
   now return the fitted values as a time series.
+- [`CVar()`](https://pkg.robjhyndman.com/forecast/reference/CVar.md) now
+  computes fold accuracy with fitted and actual values in the correct
+  order.
 - [`easter()`](https://pkg.robjhyndman.com/forecast/reference/easter.md)
   now returns the correct fractions when Easter spans two months or
   quarters and the series starts in April (or the second quarter) or
@@ -159,8 +159,6 @@
   running one message per argument together.
 - [`forecast.Arima()`](https://pkg.robjhyndman.com/forecast/reference/forecast.Arima.md)
   no longer names the point forecasts by the row names of `xreg`.
-- [`forecast.StructTS()`](https://pkg.robjhyndman.com/forecast/reference/forecast.StructTS.md)
-  now uses the series frequency for its default forecast horizon.
 - [`forecast.baggedModel()`](https://pkg.robjhyndman.com/forecast/reference/forecast.baggedModel.md)
   now returns `lower` and `upper` as one-column matrices named by level,
   so shortening the forecasts with `forecast(fc, h = )` no longer
@@ -198,6 +196,8 @@
   and
   [`stlf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
   now pass `level` to `forecastfunction` as sorted percentages.
+- [`forecast.StructTS()`](https://pkg.robjhyndman.com/forecast/reference/forecast.StructTS.md)
+  now uses the series frequency for its default forecast horizon.
 - [`forecast.theta_model()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
   and
   [`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)

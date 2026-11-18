@@ -66,6 +66,8 @@
 <li>
 <code><a href="../reference/arfima.html">arfima()</a></code>, <code><a href="../reference/stlm.html">stlm()</a></code>, <code><a href="../reference/theta_model.html">theta_model()</a></code> and <code><a href="../reference/tslm.html">tslm()</a></code> no longer return all-<code>NA</code> fitted values when <code>biasadj = TRUE</code> and some residuals are missing.</li>
 <li>
+<code><a href="../reference/Arima.html">Arima()</a></code>, <code><a href="../reference/ses.html">holt()</a></code>, <code><a href="../reference/ses.html">hw()</a></code>, <code><a href="../reference/modelAR.html">modelAR()</a></code>, <code><a href="../reference/nnetar.html">nnetar()</a></code> and <code><a href="../reference/forecast.theta_model.html">thetaf()</a></code> no longer error when the series is supplied via the deprecated <code>x</code> argument.</li>
+<li>
 <code><a href="../reference/auto.arima.html">auto.arima()</a></code> now gives an informative error when all data are missing.</li>
 <li>
 <code><a href="../reference/auto.arima.html">auto.arima()</a></code> parallel model search (<code>stepwise = FALSE</code>) now works on Windows (<a href="https://github.com/robjhyndman/forecast/issues/1187" class="external-link">#1187</a>).</li>
@@ -73,8 +75,6 @@
 <code><a href="../reference/auto.arima.html">auto.arima()</a></code> now truncates <code>xreg</code> together with the series when <code>approximation = TRUE</code> and <code>truncate</code> is set, so model selection no longer fails.</li>
 <li>
 <code><a href="../reference/auto.arima.html">auto.arima()</a></code> stepwise search now searches models without a constant when the null model without one is best.</li>
-<li>
-<code><a href="../reference/Arima.html">Arima()</a></code>, <code><a href="../reference/ses.html">holt()</a></code>, <code><a href="../reference/ses.html">hw()</a></code>, <code><a href="../reference/modelAR.html">modelAR()</a></code>, <code><a href="../reference/nnetar.html">nnetar()</a></code> and <code><a href="../reference/forecast.theta_model.html">thetaf()</a></code> no longer error when the series is supplied via the deprecated <code>x</code> argument.</li>
 <li>
 <code><a href="https://ggplot2.tidyverse.org/reference/autolayer.html" class="external-link">autolayer()</a></code> now labels an unnamed <code>msts</code> series with the name of the object instead of “NULL”.</li>
 <li>
@@ -98,13 +98,13 @@
 <li>
 <code><a href="../reference/bld.mbb.bootstrap.html">bld.mbb.bootstrap()</a></code> no longer errors when <code>num = 1</code> and now validates that <code>num</code> is a positive integer.</li>
 <li>
-<code><a href="../reference/CVar.html">CVar()</a></code> now computes fold accuracy with fitted and actual values in the correct order.</li>
-<li>
 <code><a href="../reference/croston_model.html">croston_model()</a></code> and <code><a href="../reference/forecast.croston_model.html">croston()</a></code> can now optimize and separately specify Croston smoothing parameters.</li>
 <li>
 <code><a href="../reference/croston_model.html">croston_model()</a></code> now returns <code>NA</code> for fitted values before the first non-zero demand instead of 0.</li>
 <li>
 <code><a href="../reference/croston_model.html">croston_model()</a></code> and <code><a href="../reference/forecast.croston_model.html">croston()</a></code> now return the fitted values as a time series.</li>
+<li>
+<code><a href="../reference/CVar.html">CVar()</a></code> now computes fold accuracy with fitted and actual values in the correct order.</li>
 <li>
 <code><a href="../reference/easter.html">easter()</a></code> now returns the correct fractions when Easter spans two months or quarters and the series starts in April (or the second quarter) or ends in March (or the first quarter).</li>
 <li>
@@ -123,8 +123,6 @@
 <code><a href="../reference/forecast.Arima.html">forecast.Arima()</a></code> now gives a single warning listing all unknown arguments instead of running one message per argument together.</li>
 <li>
 <code><a href="../reference/forecast.Arima.html">forecast.Arima()</a></code> no longer names the point forecasts by the row names of <code>xreg</code>.</li>
-<li>
-<code><a href="../reference/forecast.StructTS.html">forecast.StructTS()</a></code> now uses the series frequency for its default forecast horizon.</li>
 <li>
 <code><a href="../reference/forecast.baggedModel.html">forecast.baggedModel()</a></code> now returns <code>lower</code> and <code>upper</code> as one-column matrices named by level, so shortening the forecasts with <code>forecast(fc, h = )</code> no longer errors.</li>
 <li>
@@ -145,6 +143,8 @@
 <code><a href="../reference/forecast.rw_model.html">forecast.rw_model()</a></code> and <code><a href="../reference/forecast.theta_model.html">forecast.theta_model()</a></code> now use the model’s <code>biasadj</code> setting by default, so <code>thetaf(biasadj = TRUE)</code> returns bias-adjusted forecasts.</li>
 <li>
 <code><a href="../reference/forecast.stl.html">forecast.stl()</a></code>, <code><a href="../reference/forecast.stl.html">forecast.stlm()</a></code> and <code><a href="../reference/forecast.stl.html">stlf()</a></code> now pass <code>level</code> to <code>forecastfunction</code> as sorted percentages.</li>
+<li>
+<code><a href="../reference/forecast.StructTS.html">forecast.StructTS()</a></code> now uses the series frequency for its default forecast horizon.</li>
 <li>
 <code><a href="../reference/forecast.theta_model.html">forecast.theta_model()</a></code> and <code><a href="../reference/forecast.theta_model.html">thetaf()</a></code> now name the columns of <code>lower</code> and <code>upper</code> by level, and no longer mislabel the prediction intervals when <code>level</code> is not in increasing order.</li>
 <li>
