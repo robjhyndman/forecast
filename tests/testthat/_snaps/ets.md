@@ -14,6 +14,30 @@
       Error in `ets()`:
       ! Seasonal models are not supported for data with frequency greater than 24. Try `stlf()` for seasonal forecasts.
 
+# ets() refit with initial values requires a matching seasonal period
+
+    Code
+      ets(ts(y, frequency = 24), model = fit, use.initial.values = TRUE)
+    Condition
+      Error in `ets()`:
+      ! The frequency of `y` must match the seasonal period of `model` (12) when `use.initial.values = TRUE`.
+
+---
+
+    Code
+      ets(ts(y, frequency = 4), model = fit, use.initial.values = TRUE)
+    Condition
+      Error in `ets()`:
+      ! The frequency of `y` must match the seasonal period of `model` (12) when `use.initial.values = TRUE`.
+
+---
+
+    Code
+      ets(y, model = fit, use.initial.values = TRUE)
+    Condition
+      Error in `ets()`:
+      ! The frequency of `y` must match the seasonal period of `model` (12) when `use.initial.values = TRUE`.
+
 # ets() fits simple models to very short series
 
     Code

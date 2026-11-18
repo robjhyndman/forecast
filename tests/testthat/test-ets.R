@@ -108,6 +108,23 @@ test_that("ets() ignores seasonality for frequency greater than 24", {
   expect_snapshot(ets(y, model = "ZZA"), error = TRUE)
 })
 
+test_that("ets() refit with initial values requires a matching seasonal period", {
+  fit <- ets(USAccDeaths, model = "AAA")
+  y <- sin(1:60) + 10
+  expect_snapshot(
+    ets(ts(y, frequency = 24), model = fit, use.initial.values = TRUE),
+    error = TRUE
+  )
+  expect_snapshot(
+    ets(ts(y, frequency = 4), model = fit, use.initial.values = TRUE),
+    error = TRUE
+  )
+  expect_snapshot(
+    ets(y, model = fit, use.initial.values = TRUE),
+    error = TRUE
+  )
+})
+
 test_that("ets() fits simple models to very short series", {
   fit <- ets(ts(c(3, 5, 4, 6, 7)))
   expect_s3_class(fit, "ets")
