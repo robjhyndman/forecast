@@ -134,8 +134,7 @@ dm.test(residuals(f1), residuals(f2), h = 1)
 f1 <- ets(WWWusage[1:80])
 f2 <- auto.arima(WWWusage[1:80])
 f1.out <- ets(WWWusage[81:100], model = f1)
-#> Model is being refit with current smoothing parameters but initial states are being re-estimated.
-#> Set 'use.initial.values=TRUE' if you want to re-use existing initial values.
+#> Model is being refit with current smoothing parameters but initial states are being re-estimated. Set `use.initial.values = TRUE` to reuse the existing initial values.
 f2.out <- Arima(WWWusage[81:100], model = f2)
 accuracy(f1.out)
 #>                     ME    RMSE      MAE       MPE     MAPE      MASE      ACF1

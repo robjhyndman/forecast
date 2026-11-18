@@ -193,6 +193,5 @@ WWWusage |> forecast() |> plot()
 
 fit <- ets(window(WWWusage, end = 60))
 fc <- forecast(WWWusage, model = fit)
-#> Model is being refit with current smoothing parameters but initial states are being re-estimated.
-#> Set 'use.initial.values=TRUE' if you want to re-use existing initial values.
+#> Model is being refit with current smoothing parameters but initial states are being re-estimated. Set `use.initial.values = TRUE` to reuse the existing initial values.
 ```
