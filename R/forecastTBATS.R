@@ -117,13 +117,9 @@ forecast.tbats <- function(
 
   if (!simulate && !bootstrap) {
     ## Make prediction intervals here
-    lower.bounds <- upper.bounds <- matrix(NA_real_, ncol = length(level), nrow = h)
-    st.dev <- sqrt(variance)
-    for (i in seq_along(level)) {
-      marg.error <- st.dev * abs(qnorm((100 - level[i]) / 200))
-      lower.bounds[, i] <- y.forecast - marg.error
-      upper.bounds[, i] <- y.forecast + marg.error
-    }
+    hilo <- normal_intervals(y.forecast, sqrt(variance), level)
+    lower.bounds <- hilo$lower
+    upper.bounds <- hilo$upper
     # Inv Box Cox transform if required
     if (!is.null(object$lambda)) {
       lower.bounds <- InvBoxCox(lower.bounds, object$lambda)
@@ -155,7 +151,6 @@ forecast.tbats <- function(
       fvar = variance
     )
   }
-  colnames(upper.bounds) <- colnames(lower.bounds) <- paste0(level, "%")
 
   forecast.object <- list(
     model = object,

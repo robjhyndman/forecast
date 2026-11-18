@@ -95,7 +95,6 @@ forecast.bats <- function(
     }
   }
   ## Make prediction intervals here
-  lower.bounds <- upper.bounds <- matrix(NA_real_, ncol = length(level), nrow = h)
   variance.multiplier <- numeric(h)
   variance.multiplier[1] <- 1
   if (h > 1) {
@@ -108,12 +107,9 @@ forecast.bats <- function(
   }
 
   variance <- object$variance * variance.multiplier
-  st.dev <- sqrt(variance)
-  for (i in seq_along(level)) {
-    marg.error <- st.dev * abs(qnorm((100 - level[i]) / 200))
-    lower.bounds[, i] <- y.forecast - marg.error
-    upper.bounds[, i] <- y.forecast + marg.error
-  }
+  hilo <- normal_intervals(y.forecast, sqrt(variance), level)
+  lower.bounds <- hilo$lower
+  upper.bounds <- hilo$upper
   # Inv Box Cox transform if required
   if (!is.null(object$lambda)) {
     y.forecast <- InvBoxCox(
@@ -128,7 +124,6 @@ forecast.bats <- function(
     }
     upper.bounds <- InvBoxCox(upper.bounds, object$lambda)
   }
-  colnames(upper.bounds) <- colnames(lower.bounds) <- paste0(level, "%")
 
   forecast.object <- list(
     model = object,

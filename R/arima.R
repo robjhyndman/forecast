@@ -332,7 +332,6 @@ forecast.Arima <- function(
   }
 
   # Compute prediction intervals
-  nint <- length(level)
   if (simulate || bootstrap) {
     # Compute prediction intervals using simulations
     hilo <- simulate_forecast(
@@ -345,25 +344,15 @@ forecast.Arima <- function(
       lambda = lambda,
       xreg = xreg
     )
-    lower <- hilo$lower
-    upper <- hilo$upper
   } else {
     # Compute prediction intervals via the normal distribution
-    lower <- matrix(NA_real_, ncol = nint, nrow = length(pred$pred))
-    upper <- lower
-    for (i in seq_len(nint)) {
-      qq <- qnorm(0.5 * (1 + level[i] / 100))
-      lower[, i] <- pred$pred - qq * pred$se
-      upper[, i] <- pred$pred + qq * pred$se
-    }
-    if (!is.finite(max(upper))) {
+    hilo <- normal_intervals(pred$pred, pred$se, level)
+    if (!is.finite(max(hilo$upper))) {
       warning("Upper prediction intervals are not finite.")
     }
   }
-  colnames(lower) <- colnames(upper) <- paste0(level, "%")
-  lower <- ts(lower)
-  upper <- ts(upper)
-  tsp(lower) <- tsp(upper) <- tsp(pred$pred)
+  lower <- hilo$lower
+  upper <- hilo$upper
   method <- arima.string(object, padding = FALSE)
   seriesname <- object$series %||% object$call$x %||% object$call$y
   fits <- fitted.Arima(object)
@@ -414,7 +403,6 @@ forecast.ar <- function(
   x <- getResponse(object)
   pred <- predict(object, newdata = x, n.ahead = h)
   level <- get_conf_level(level, fan)
-  nint <- length(level)
   if (simulate || bootstrap) {
     hilo <- simulate_forecast(
       object,
@@ -424,18 +412,11 @@ forecast.ar <- function(
       bootstrap = bootstrap,
       innov = innov
     )
-    lower <- hilo$lower
-    upper <- hilo$upper
   } else {
-    lower <- matrix(NA_real_, ncol = nint, nrow = length(pred$pred))
-    upper <- lower
-    for (i in seq_len(nint)) {
-      qq <- qnorm(0.5 * (1 + level[i] / 100))
-      lower[, i] <- pred$pred - qq * pred$se
-      upper[, i] <- pred$pred + qq * pred$se
-    }
+    hilo <- normal_intervals(pred$pred, pred$se, level)
   }
-  colnames(lower) <- colnames(upper) <- paste0(level, "%")
+  lower <- hilo$lower
+  upper <- hilo$upper
   method <- paste0("AR(", object$order, ")")
   res <- residuals.ar(object)
   fits <- fitted.ar(object)

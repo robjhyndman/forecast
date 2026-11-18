@@ -194,15 +194,10 @@ forecast.theta_model <- function(
 
   # Find prediction intervals
   fcast.se <- sqrt(object$sigma2) * sqrt((0:(h - 1)) * object$alpha^2 + 1)
-  nconf <- length(level)
-  fcast$lower <- fcast$upper <- ts(matrix(NA_real_, nrow = h, ncol = nconf))
+  hilo <- normal_intervals(fcast$mean, fcast.se, level)
+  fcast$lower <- ts(hilo$lower)
+  fcast$upper <- ts(hilo$upper)
   tsp(fcast$lower) <- tsp(fcast$upper) <- tsp(fcast$mean)
-  colnames(fcast$lower) <- colnames(fcast$upper) <- paste0(level, "%")
-  for (i in seq_len(nconf)) {
-    zt <- -qnorm(0.5 - level[i] / 200)
-    fcast$lower[, i] <- fcast$mean - zt * fcast.se
-    fcast$upper[, i] <- fcast$mean + zt * fcast.se
-  }
 
   # Back transform
   if (!is.null(lambda)) {
