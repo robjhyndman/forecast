@@ -4,11 +4,11 @@
 * `arfima()`, `Arima()`, `bats()`, `dshw()`, `ets()`, `stlm()` and `tbats()` now reuse the Box-Cox transformation and bias adjustment of `model` when refitting, unless `lambda` or `biasadj` is supplied. If `biasadj` is not supplied, `arfima()`, `dshw()`, `ets()` and `stlm()` now use the setting stored with `lambda`, as `Arima()` already did.
 * `arfima()`, `Arima()`, `dshw()`, `ets()` and `stlm()` now give an informative error when `model` is not a model of the right class, as `bats()`, `tbats()` and `nnetar()` already did.
 * `arfima()`, `stlm()`, `theta_model()` and `tslm()` no longer return all-`NA` fitted values when `biasadj = TRUE` and some residuals are missing.
+* `Arima()`, `holt()`, `hw()`, `modelAR()`, `nnetar()` and `thetaf()` no longer error when the series is supplied via the deprecated `x` argument.
 * `auto.arima()` now gives an informative error when all data are missing.
 * `auto.arima()` parallel model search (`stepwise = FALSE`) now works on Windows (#1187).
 * `auto.arima()` now truncates `xreg` together with the series when `approximation = TRUE` and `truncate` is set, so model selection no longer fails.
 * `auto.arima()` stepwise search now searches models without a constant when the null model without one is best.
-* `Arima()`, `holt()`, `hw()`, `modelAR()`, `nnetar()` and `thetaf()` no longer error when the series is supplied via the deprecated `x` argument.
 * `autolayer()` now labels an unnamed `msts` series with the name of the object instead of "NULL".
 * `autolayer()` for `mts` and `mforecast` objects no longer errors when arguments are local variables.
 * `autoplot.forecast()` no longer errors for cross-sectional regression models fitted without an intercept.
@@ -20,10 +20,10 @@
 * `bizdays()` now gives an informative error when the series is not monthly or quarterly.
 * `bizdays()` now returns a plain time series, like `monthdays()` and `easter()`, instead of one carrying the period labels as `dim` and `dimnames` attributes.
 * `bld.mbb.bootstrap()` no longer errors when `num = 1` and now validates that `num` is a positive integer.
-* `CVar()` now computes fold accuracy with fitted and actual values in the correct order.
 * `croston_model()` and `croston()` can now optimize and separately specify Croston smoothing parameters.
 * `croston_model()` now returns `NA` for fitted values before the first non-zero demand instead of 0.
 * `croston_model()` and `croston()` now return the fitted values as a time series.
+* `CVar()` now computes fold accuracy with fitted and actual values in the correct order.
 * `easter()` now returns the correct fractions when Easter spans two months or quarters and the series starts in April (or the second quarter) or ends in March (or the first quarter).
 * `ets()` now keeps the series name for short series.
 * `ets()` no longer treats parameters as admissible when the polynomial root search fails.
@@ -33,7 +33,6 @@
 * `forecast.Arima()` now correctly passes `xreg` when `bootstrap = TRUE` (#1115).
 * `forecast.Arima()` now gives a single warning listing all unknown arguments instead of running one message per argument together.
 * `forecast.Arima()` no longer names the point forecasts by the row names of `xreg`.
-* `forecast.StructTS()` now uses the series frequency for its default forecast horizon.
 * `forecast.baggedModel()` now returns `lower` and `upper` as one-column matrices named by level, so shortening the forecasts with `forecast(fc, h = )` no longer errors.
 * `forecast.ets()` now uses the damping parameter in forecasts and prediction intervals for ETS(M,Ad,M) models.
 * `forecast.ets()` now uses the supplied `innov` matrix when `simulate = TRUE` instead of silently ignoring it.
@@ -44,6 +43,7 @@
 * `forecast.modelAR()` now computes prediction intervals for models with `xreg`.
 * `forecast.rw_model()` and `forecast.theta_model()` now use the model's `biasadj` setting by default, so `thetaf(biasadj = TRUE)` returns bias-adjusted forecasts.
 * `forecast.stl()`, `forecast.stlm()` and `stlf()` now pass `level` to `forecastfunction` as sorted percentages.
+* `forecast.StructTS()` now uses the series frequency for its default forecast horizon.
 * `forecast.theta_model()` and `thetaf()` now name the columns of `lower` and `upper` by level, and no longer mislabel the prediction intervals when `level` is not in increasing order.
 * `forecast.ts()` now keeps the series name in more cases.
 * `forecast.varest()` now supports `fan = TRUE` and `level` values between 0 and 1.
