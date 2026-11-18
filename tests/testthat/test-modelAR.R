@@ -471,6 +471,21 @@ test_that("Tests for modelAR", {
   expect_null(nnetfit$scalexreg)
 })
 
+test_that("modelAR() residuals are unscaled when scale.inputs = TRUE", {
+  fun <- function(x, y, ...) lm(y ~ x)
+  pred <- function(object, newdata) {
+    if (missing(newdata)) fitted(object) else sum(coef(object) * c(1, newdata))
+  }
+  fit <- modelAR(
+    WWWusage,
+    p = 2,
+    FUN = fun,
+    predict.FUN = pred,
+    scale.inputs = TRUE
+  )
+  expect_equal(fit$residuals, residuals(fit), ignore_attr = TRUE)
+})
+
 test_that("modelAR() checks the class of model", {
   expect_snapshot(modelAR(lh, model = ets(lh)), error = TRUE)
 })
