@@ -57,6 +57,7 @@
 * `mean_model()` and `meanf()` now exclude missing observations when estimating uncertainty.
 * `meanf()` no longer errors with `bootstrap = TRUE` when a single confidence level is supplied.
 * `meanf()` no longer errors when `lambda = "auto"`.
+* `modelAR()` with `scale.inputs = TRUE` now returns unscaled residuals, fixing too-narrow prediction intervals when `lambda` is set.
 * `mstl()` now drops short seasonal periods from the `msts` attribute, so `forecast.stlm()` no longer errors.
 * `naive()`, `rwf()`, `rw_model()` and `snaive()` no longer return all-`NA` fitted values when `biasadj = TRUE`.
 * `nsdiffs()` now ignores extra arguments passed via `...` with `test = "seas"` instead of silently returning 0.

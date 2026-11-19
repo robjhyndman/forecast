@@ -338,6 +338,7 @@ modelAR <- function(
   }
   out$residuals <- xx - fits
   if (scale.inputs) {
+    out$residuals <- out$residuals * scalex$scale
     fits <- fits * scalex$scale + scalex$center
   }
   fits <- ts(fits)
