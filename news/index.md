@@ -237,6 +237,9 @@
   level is supplied.
 - [`meanf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.mean_model.md)
   no longer errors when `lambda = "auto"`.
+- [`modelAR()`](https://pkg.robjhyndman.com/forecast/reference/modelAR.md)
+  with `scale.inputs = TRUE` now returns unscaled residuals, fixing
+  too-narrow prediction intervals when `lambda` is set.
 - [`mstl()`](https://pkg.robjhyndman.com/forecast/reference/mstl.md) now
   drops short seasonal periods from the `msts` attribute, so
   [`forecast.stlm()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)

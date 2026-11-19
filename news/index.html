@@ -172,6 +172,8 @@
 <li>
 <code><a href="../reference/forecast.mean_model.html">meanf()</a></code> no longer errors when <code>lambda = "auto"</code>.</li>
 <li>
+<code><a href="../reference/modelAR.html">modelAR()</a></code> with <code>scale.inputs = TRUE</code> now returns unscaled residuals, fixing too-narrow prediction intervals when <code>lambda</code> is set.</li>
+<li>
 <code><a href="../reference/mstl.html">mstl()</a></code> now drops short seasonal periods from the <code>msts</code> attribute, so <code><a href="../reference/forecast.stl.html">forecast.stlm()</a></code> no longer errors.</li>
 <li>
 <code><a href="../reference/forecast.rw_model.html">naive()</a></code>, <code><a href="../reference/forecast.rw_model.html">rwf()</a></code>, <code><a href="../reference/rw_model.html">rw_model()</a></code> and <code><a href="../reference/forecast.rw_model.html">snaive()</a></code> no longer return all-<code>NA</code> fitted values when <code>biasadj = TRUE</code>.</li>
