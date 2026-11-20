@@ -214,6 +214,9 @@
   order.
 - [`forecast.ts()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ts.md)
   now keeps the series name in more cases.
+- `forecast.varest()` no longer errors for a
+  [`vars::VAR()`](https://rdrr.io/pkg/vars/man/VAR.html) model fitted to
+  a data frame.
 - `forecast.varest()` now supports `fan = TRUE` and `level` values
   between 0 and 1.
 - [`geom_forecast()`](https://pkg.robjhyndman.com/forecast/reference/geom_forecast.md)
