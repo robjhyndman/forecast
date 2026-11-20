@@ -29,7 +29,8 @@ Suggests:
   rticles,
   seasonal,
   testthat (>= 3.3.0),
-  uroot
+  uroot,
+  vars
 LinkingTo:
   Rcpp (>= 0.12.4),
   RcppArmadillo (>= 0.6.700.3.0)
