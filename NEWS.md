@@ -48,6 +48,7 @@
 * `forecast.StructTS()` now uses the series frequency for its default forecast horizon.
 * `forecast.theta_model()` and `thetaf()` now name the columns of `lower` and `upper` by level, and no longer mislabel the prediction intervals when `level` is not in increasing order.
 * `forecast.ts()` now keeps the series name in more cases.
+* `forecast.varest()` no longer errors for a `vars::VAR()` model fitted to a data frame.
 * `forecast.varest()` now supports `fan = TRUE` and `level` values between 0 and 1.
 * `geom_forecast()` no longer errors for forecast objects when forecast is not attached.
 * `getResponse()` now returns the original series for `StructTS` models instead of its time series attributes.

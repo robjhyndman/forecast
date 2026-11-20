@@ -11,7 +11,8 @@ forecast.varest <- function(
   out <- list(model = object, forecast = vector("list", object$K))
   # Get residuals and fitted values and fix the times
 
-  tspx <- tsp(object$y)
+  y <- as.ts(object$y)
+  tspx <- tsp(y)
   vres <- residuals(object)
   vfits <- fitted(object)
   method <- paste0("VAR(", object$p, ")")
@@ -40,13 +41,13 @@ forecast.varest <- function(
     fcast$lower <- ts(fcast$lower, frequency = tspx[3], start = fstart)
     fcast$upper <- ts(fcast$upper, frequency = tspx[3], start = fstart)
     colnames(fcast$lower) <- colnames(fcast$upper) <- paste0(level, "%")
-    fcast$residuals <- fcast$fitted <- ts(rep(NA_real_, nrow(object$y)))
+    fcast$residuals <- fcast$fitted <- ts(rep(NA_real_, nrow(y)))
     fcast$residuals[((1 - nrow(vres)):0) + length(fcast$residuals)] <- vres[, j]
     fcast$fitted[((1 - nrow(vfits)):0) + length(fcast$fitted)] <- vfits[, j]
     fcast$method <- method
     fcast$level <- level
-    fcast$x <- object$y[, j]
-    fcast$series <- colnames(object$y)[j]
+    fcast$x <- y[, j]
+    fcast$series <- colnames(y)[j]
     tsp(fcast$residuals) <- tsp(fcast$fitted) <- tspx
     fcast <- structure(fcast, class = "forecast")
     out$forecast[[j]] <- fcast
