@@ -21,6 +21,7 @@
 * `bizdays()` now returns a plain time series, like `monthdays()` and `easter()`, instead of one carrying the period labels as `dim` and `dimnames` attributes.
 * `bld.mbb.bootstrap()` no longer errors when `num = 1` and now validates that `num` is a positive integer.
 * `croston_model()` and `croston()` can now optimize and separately specify Croston smoothing parameters.
+* `croston_model()` and `croston()` now give an informative error when the series contains missing values.
 * `croston_model()` now returns `NA` for fitted values before the first non-zero demand instead of 0.
 * `croston_model()` and `croston()` now return the fitted values as a time series.
 * `CVar()` now computes fold accuracy with fitted and actual values in the correct order.
