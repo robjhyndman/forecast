@@ -152,7 +152,6 @@ object of class \code{\link[=forecast]{forecast()}}. For example,
 forecasting the seasonally adjusted series.
 }
 \examples{
-
 tsmod <- stlm(USAccDeaths, modelfunction = ar)
 plot(forecast(tsmod, h = 36))
 

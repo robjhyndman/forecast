@@ -50,7 +50,6 @@ lines(fitted(fit), col = "red")
 lines(fitted(fit, h = 2), col = "green")
 lines(fitted(fit, h = 3), col = "blue")
 legend("topleft", legend = paste("h =", 1:3), col = 2:4, lty = 1)
-
 }
 \seealso{
 \code{\link[=forecast.Arima]{forecast.Arima()}}, \code{\link[=forecast.bats]{forecast.bats()}}, \code{\link[=forecast.tbats]{forecast.tbats()}},

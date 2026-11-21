@@ -15,6 +15,5 @@ Daily morning gold prices in US dollars. 1 January 1985 -- 31 March 1989.
 }
 \examples{
 tsdisplay(gold)
-
 }
 \keyword{datasets}

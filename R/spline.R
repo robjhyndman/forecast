@@ -93,7 +93,6 @@ spline.loglik <- function(beta, y, cc = 1e2) {
 #' fit <- spline_model(uspop)
 #' fit
 #' fit |> forecast() |> autoplot()
-#'
 #' @export
 spline_model <- function(
   y,
@@ -222,7 +221,6 @@ print.spline_model <- function(
 #' fcast <- forecast(fit)
 #' autoplot(fcast)
 #' summary(fcast)
-#'
 #' @export
 forecast.spline_model <- function(
   object,
@@ -339,7 +337,6 @@ splinef <- function(
 #' fcast <- splinef(airmiles, h = 5)
 #' plot(fcast)
 #' autoplot(fcast)
-#'
 #' @export
 plot.splineforecast <- function(x, fitcol = 2, type = "o", pch = 19, ...) {
   plot.forecast(x, type = type, pch = pch, ...)

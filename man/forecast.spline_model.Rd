@@ -118,7 +118,6 @@ fit <- spline_model(uspop)
 fcast <- forecast(fit)
 autoplot(fcast)
 summary(fcast)
-
 }
 \references{
 Hyndman, King, Pitrun and Billah (2005) Local linear forecasts

@@ -30,7 +30,6 @@
 #'   facets = TRUE
 #' ) +
 #'   labs(x = "Year", y = "")
-#'
 #' @export
 seasonal <- function(object) {
   if (inherits(object, "mstl")) {

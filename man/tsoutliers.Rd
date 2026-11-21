@@ -25,10 +25,8 @@ Uses supsmu for non-seasonal series and a periodic stl decomposition with
 seasonal series to identify outliers and estimate their replacements.
 }
 \examples{
-
 data(gold)
 tsoutliers(gold)
-
 }
 \references{
 Hyndman (2021) "Detecting time series outliers" \url{https://robjhyndman.com/hyndsight/tsoutliers/}.

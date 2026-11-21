@@ -28,7 +28,6 @@ the remainder is bootstrapped using a moving block bootstrap.
 }
 \examples{
 bootstrapped_series <- bld.mbb.bootstrap(WWWusage, 100)
-
 }
 \references{
 Bergmeir, C., R. J. Hyndman, and J. M. Benitez (2016). Bagging

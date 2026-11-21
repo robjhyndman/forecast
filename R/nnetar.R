@@ -93,7 +93,6 @@
 #'
 #' ## Apply fitted model to later data, including all optional arguments
 #' fit2 <- nnetar(window(lynx, start = 1921), model = fit)
-#'
 #' @export
 nnetar <- function(
   y,
@@ -512,7 +511,6 @@ print.nnetarmodels <- function(x, ...) {
 #' fcast3 <- forecast(fit, h = 20, PI = TRUE, npaths = 100, innov = myinnovs)
 #' plot(fcast3)
 #' }
-#'
 #' @export
 forecast.nnetar <- function(
   object,

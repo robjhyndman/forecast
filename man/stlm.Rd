@@ -94,7 +94,6 @@ For example, \code{modelfunction = ar} uses the \code{\link[=ar]{ar()}} function
 for modelling the seasonally adjusted series.
 }
 \examples{
-
 tsmod <- stlm(USAccDeaths, modelfunction = ar)
 forecast(tsmod, h = 36) |> autoplot()
 

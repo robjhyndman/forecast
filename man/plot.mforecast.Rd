@@ -58,7 +58,6 @@ fit <- lm(carPower ~ carmpg)
 fcast <- forecast(fit, newdata = data.frame(carmpg = 30))
 plot(fcast, xlab = "Year")
 autoplot(fcast, xlab = rep("Year", 2))
-
 }
 \references{
 Hyndman and Athanasopoulos (2018) \emph{Forecasting: principles

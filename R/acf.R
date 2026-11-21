@@ -54,14 +54,12 @@
 #' Time Series Analysis}, 31(6), 471-482.
 #' @keywords ts
 #' @examples
-#'
 #' Acf(wineind)
 #' Pacf(wineind)
 #' \dontrun{
 #' taperedacf(wineind, nsim = 50)
 #' taperedpacf(wineind, nsim = 50)
 #' }
-#'
 #' @export
 Acf <- function(
   x,

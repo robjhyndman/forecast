@@ -27,7 +27,6 @@
 #' @examples
 #' fit <- ets(USAccDeaths)
 #' plot(forecast(fit, h = 48))
-#'
 #' @export forecast.ets
 #' @export
 forecast.ets <- function(

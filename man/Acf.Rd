@@ -108,14 +108,12 @@ described in Hyndman (2015), based on the banded and tapered estimates of
 autocovariance proposed by McMurry and Politis (2010).
 }
 \examples{
-
 Acf(wineind)
 Pacf(wineind)
 \dontrun{
 taperedacf(wineind, nsim = 50)
 taperedpacf(wineind, nsim = 50)
 }
-
 }
 \references{
 Hyndman, R.J. (2015). Discussion of ``High-dimensional

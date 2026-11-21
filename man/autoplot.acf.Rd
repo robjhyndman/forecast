@@ -104,7 +104,6 @@ If \code{autoplot} is given an \code{acf} or \code{mpacf} object, then an
 appropriate ggplot object will be created.
 }
 \examples{
-
 library(ggplot2)
 ggAcf(wineind)
 wineind |> Acf(plot = FALSE) |> autoplot()
@@ -114,7 +113,6 @@ ggtaperedacf(wineind)
 ggtaperedpacf(wineind)
 }
 ggCcf(mdeaths, fdeaths)
-
 }
 \seealso{
 \code{\link[stats:plot.acf]{stats::plot.acf()}}, \code{\link[=Acf]{Acf()}}, \code{\link[stats:acf]{stats::acf()}}, \code{\link[=taperedacf]{taperedacf()}}

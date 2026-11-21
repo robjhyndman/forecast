@@ -69,7 +69,6 @@ vanish.
 plot. This helps visualise the change in 'auto-dependence' as lags increase.
 }
 \examples{
-
 gglagplot(woolyrnq)
 gglagplot(woolyrnq, seasonal = FALSE)
 
@@ -78,7 +77,6 @@ gglagplot(lungDeaths, lags = 2)
 gglagchull(lungDeaths, lags = 6)
 
 gglagchull(woolyrnq)
-
 }
 \seealso{
 \code{\link[stats:lag.plot]{stats::lag.plot()}}

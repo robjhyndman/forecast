@@ -52,7 +52,6 @@
 #' \bold{106}(496), 1513-1527.
 #' @keywords ts
 #' @examples
-#'
 #' \dontrun{
 #' fit <- bats(USAccDeaths)
 #' plot(forecast(fit))
@@ -60,7 +59,6 @@
 #' taylor.fit <- bats(taylor)
 #' plot(forecast(taylor.fit))
 #' }
-#'
 #' @export
 bats <- function(
   y,

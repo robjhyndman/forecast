@@ -128,7 +128,6 @@ autoplot(fcast)
 fcast <- splinef(airmiles, h = 5)
 plot(fcast)
 autoplot(fcast)
-
 }
 \references{
 Hyndman and Athanasopoulos (2018) \emph{Forecasting: principles

@@ -46,7 +46,6 @@ cross-validated errors can underestimate the generalization error and should
 not be used.
 }
 \examples{
-
 modelcv <- CVar(lynx, k = 5, lambda = 0.15)
 print(modelcv)
 print(modelcv$fold1)
@@ -56,7 +55,6 @@ autoplot(lynx, series = "Data") +
   autolayer(modelcv$testfit, series = "Fits") +
   autolayer(modelcv$residuals, series = "Residuals")
 ggAcf(modelcv$residuals)
-
 }
 \references{
 Bergmeir, C., Hyndman, R.J., Koo, B. (2018) A note on the

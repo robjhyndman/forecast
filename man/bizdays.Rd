@@ -23,7 +23,6 @@ Useful for trading days length adjustments. For more on how to define
 business days, see \code{\link[timeDate:isBizday]{timeDate::isBizday()}}.
 }
 \examples{
-
 x <- ts(rnorm(30), start = c(2013, 2), frequency = 12)
 bizdays(x, FinCenter = "New York")
 }

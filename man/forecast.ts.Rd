@@ -115,7 +115,6 @@ extract various useful features from the underlying model.
 }
 
 \examples{
-
 WWWusage |> forecast() |> plot()
 fit <- ets(window(WWWusage, end = 60))
 fc <- forecast(WWWusage, model = fit)

@@ -18,7 +18,6 @@ as.Date.timeDate <- timeDate::as.Date.timeDate
 #' @seealso [monthdays()]
 #' @keywords ts
 #' @examples
-#'
 #' x <- ts(rnorm(30), start = c(2013, 2), frequency = 12)
 #' bizdays(x, FinCenter = "New York")
 #' @export
@@ -76,7 +75,6 @@ bizdays <- function(
 #' @author Earo Wang
 #' @keywords ts
 #' @examples
-#'
 #' easter(wineind, easter.mon = TRUE)
 #' @export
 easter <- function(x, easter.mon = FALSE) {

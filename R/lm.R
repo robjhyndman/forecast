@@ -26,11 +26,9 @@
 #' @seealso [forecast.lm()], [stats::lm()].
 #' @keywords stats
 #' @examples
-#'
 #' y <- ts(rnorm(120, 0, 3) + 1:120 + 20 * sin(2 * pi * (1:120) / 12), frequency = 12)
 #' fit <- tslm(y ~ trend + season)
 #' plot(forecast(fit, h = 20))
-#'
 #' @export
 tslm <- function(formula, data, subset, lambda = NULL, biasadj = FALSE, ...) {
   cl <- match.call()
@@ -221,11 +219,9 @@ fitted.tslm <- function(object, ...) {
 #' @seealso [tslm()], [stats::lm()].
 #' @keywords stats
 #' @examples
-#'
 #' y <- ts(rnorm(120, 0, 3) + 1:120 + 20 * sin(2 * pi * (1:120) / 12), frequency = 12)
 #' fit <- tslm(y ~ trend + season)
 #' plot(forecast(fit, h = 20))
-#'
 #' @export
 forecast.lm <- function(
   object,
@@ -518,13 +514,11 @@ summary.tslm <- function(object, ...) {
 #' @seealso [stats::AIC()]
 #' @keywords models
 #' @examples
-#'
 #' y <- ts(rnorm(120, 0, 3) + 20 * sin(2 * pi * (1:120) / 12), frequency = 12)
 #' fit1 <- tslm(y ~ trend + season)
 #' fit2 <- tslm(y ~ season)
 #' CV(fit1)
 #' CV(fit2)
-#'
 #' @export
 CV <- function(obj) {
   if (!inherits(obj, "lm")) {

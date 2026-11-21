@@ -32,14 +32,12 @@ model.
 \code{autoplot} will produce an equivalent plot as a ggplot object.
 }
 \examples{
-
 fit <- ets(USAccDeaths)
 plot(fit)
 plot(fit, plot.type = "single", ylab = "", col = 1:3)
 
 library(ggplot2)
 autoplot(fit)
-
 }
 \seealso{
 \code{\link[=ets]{ets()}}

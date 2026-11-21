@@ -78,7 +78,6 @@ extract various useful features from the underlying model.
 \examples{
 fit <- HoltWinters(WWWusage, gamma = FALSE)
 plot(forecast(fit))
-
 }
 \seealso{
 \link[stats:predict.HoltWinters]{stats::predict.HoltWinters}, \code{\link[stats:HoltWinters]{stats::HoltWinters()}}.

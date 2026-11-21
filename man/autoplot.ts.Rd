@@ -75,14 +75,12 @@ a ggplot object suitable for usage with \code{\link[=geom_forecast]{geom_forecas
 (for usage with ggplot2).
 }
 \examples{
-
 library(ggplot2)
 autoplot(USAccDeaths)
 
 lungDeaths <- cbind(mdeaths, fdeaths)
 autoplot(lungDeaths)
 autoplot(lungDeaths, facets = TRUE)
-
 }
 \seealso{
 \code{\link[stats:plot.ts]{stats::plot.ts()}}, \code{\link[ggplot2:fortify]{ggplot2::fortify()}}

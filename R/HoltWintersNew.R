@@ -406,12 +406,10 @@ zzhw <- function(
 #' \url{https://otexts.com/fpp2/}
 #' @keywords ts
 #' @examples
-#'
 #' fcast <- holt(airmiles)
 #' plot(fcast)
 #' deaths.fcast <- hw(USAccDeaths, h = 48)
 #' plot(deaths.fcast)
-#'
 #' @export
 ses <- function(
   y,

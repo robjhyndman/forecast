@@ -21,10 +21,8 @@
 #' @author Rob J Hyndman
 #' @seealso [ggtsdisplay()], [stats::Box.test()], [lmtest::bgtest()]
 #' @examples
-#'
 #' fit <- ets(WWWusage)
 #' checkresiduals(fit)
-#'
 #' @export
 checkresiduals <- function(object, lag, test, plot = TRUE, ...) {
   showtest <- TRUE

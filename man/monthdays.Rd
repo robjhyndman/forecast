@@ -19,7 +19,6 @@ Returns number of days in each month or quarter of the observed time period.
 Useful for month length adjustments
 }
 \examples{
-
 par(mfrow = c(2, 1))
 plot(
   ldeaths,
@@ -34,7 +33,6 @@ plot(
   ylab = "Deaths",
   main = "Adjusted monthly deaths from lung disease (UK)"
 )
-
 }
 \seealso{
 \code{\link[=bizdays]{bizdays()}}

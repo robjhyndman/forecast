@@ -19,6 +19,5 @@ Australian total wine sales by wine makers in bottles <= 1 litre. Jan 1980
 }
 \examples{
 tsdisplay(wineind)
-
 }
 \keyword{datasets}

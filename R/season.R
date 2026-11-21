@@ -12,7 +12,6 @@
 #' @seealso [bizdays()]
 #' @keywords ts
 #' @examples
-#'
 #' par(mfrow = c(2, 1))
 #' plot(
 #'   ldeaths,
@@ -27,7 +26,6 @@
 #'   ylab = "Deaths",
 #'   main = "Adjusted monthly deaths from lung disease (UK)"
 #' )
-#'
 #' @export
 monthdays <- function(x) {
   if (!is.ts(x)) {
@@ -76,7 +74,6 @@ monthdays <- function(x) {
 #' uk.fcast$upper <- uk.fcast$upper + cbind(seasf, seasf)
 #' uk.fcast$x <- UKDriverDeaths
 #' plot(uk.fcast, main = "Forecasts from Holt's method with seasonal adjustment")
-#'
 #' @export
 sindexf <- function(object, h) {
   if (inherits(object, "stl")) {
@@ -125,7 +122,6 @@ sindexf <- function(object, h) {
 #' @seealso [fourier()]
 #' @keywords ts
 #' @examples
-#'
 #' plot(ldeaths)
 #'
 #' # Using seasonal dummy variables
@@ -142,7 +138,6 @@ sindexf <- function(object, h) {
 #' deaths.lm <- tslm(ldeaths ~ season)
 #' ldeaths.fcast <- forecast(deaths.lm, h = 36)
 #' plot(ldeaths.fcast)
-#'
 #' @export
 seasonaldummy <- function(x, h = NULL) {
   if (!is.ts(x)) {
@@ -221,7 +216,6 @@ seasonaldummyf <- function(x, h) {
 #' @seealso [seasonaldummy()]
 #' @keywords ts
 #' @examples
-#'
 #' library(ggplot2)
 #'
 #' # Using Fourier series for a "ts" object
@@ -244,7 +238,6 @@ seasonaldummyf <- function(x, h) {
 #'   data.frame(fourier(taylor, K = c(3, 3), h = 270))
 #' )
 #' autoplot(taylor.fcast)
-#'
 #' @export
 fourier <- function(x, K, h = NULL) {
   if (is.null(h)) {
@@ -340,11 +333,9 @@ fourierf <- function(x, K, h) {
 #' @seealso [stats::decompose()]
 #' @keywords ts
 #' @examples
-#'
 #' plot(wineind)
 #' sm <- ma(wineind, order = 12)
 #' lines(sm, col = "red")
-#'
 #' @export
 ma <- function(x, order, centre = TRUE) {
   if (!is_count(order)) {

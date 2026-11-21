@@ -40,7 +40,6 @@ autoplot(
   facets = TRUE
 ) +
   labs(x = "Year", y = "")
-
 }
 \seealso{
 \code{\link[stats:stl]{stats::stl()}}, \code{\link[stats:decompose]{stats::decompose()}}, \code{\link[=tbats]{tbats()}}, \code{\link[=seasadj]{seasadj()}}.

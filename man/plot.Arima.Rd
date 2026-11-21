@@ -50,7 +50,6 @@ roots outside the unit circle are shown in red.
 \code{autoplot} will produce an equivalent plot as a ggplot object.
 }
 \examples{
-
 library(ggplot2)
 
 fit <- Arima(WWWusage, order = c(3, 1, 0))

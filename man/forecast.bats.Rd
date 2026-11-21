@@ -83,7 +83,6 @@ extract various useful features from the underlying model.
 }
 
 \examples{
-
 \dontrun{
 fit <- bats(USAccDeaths)
 plot(forecast(fit))
@@ -91,7 +90,6 @@ plot(forecast(fit))
 taylor.fit <- bats(taylor)
 plot(forecast(taylor.fit))
 }
-
 }
 \references{
 De Livera, A.M., Hyndman, R.J., & Snyder, R. D. (2011),

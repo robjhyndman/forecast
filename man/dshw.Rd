@@ -101,7 +101,6 @@ extract various useful features from the underlying model.
 }
 
 \examples{
-
 \dontrun{
 fcast <- dshw(taylor)
 plot(fcast)
@@ -111,7 +110,6 @@ x <- exp(sin(2 * pi * t) + cos(2 * pi * t * 4) + rnorm(length(t), 0, 0.1))
 fit <- dshw(x, 20, 5)
 plot(fit)
 }
-
 }
 \references{
 Taylor, J.W. (2003) Short-term electricity demand forecasting

@@ -36,13 +36,11 @@ Produces a plot of the level, slope and seasonal components from a BATS or
 TBATS model. The plotted components are Box-Cox transformed using the estimated transformation parameter.
 }
 \examples{
-
 \dontrun{
 fit <- tbats(USAccDeaths)
 plot(fit)
 autoplot(fit, range.bars = TRUE)
 }
-
 }
 \seealso{
 \code{\link[=bats]{bats()}}, \code{\link[=tbats]{tbats()}}

@@ -87,11 +87,9 @@ extract various useful features from the underlying model.
 }
 
 \examples{
-
 y <- ts(rnorm(120, 0, 3) + 1:120 + 20 * sin(2 * pi * (1:120) / 12), frequency = 12)
 fit <- tslm(y ~ trend + season)
 plot(forecast(fit, h = 20))
-
 }
 \seealso{
 \code{\link[=tslm]{tslm()}}, \code{\link[stats:lm]{stats::lm()}}.

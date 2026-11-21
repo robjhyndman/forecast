@@ -27,11 +27,9 @@ function at frequency \eqn{f}, then the function will return the period
 can be found, the function will return 1.
 }
 \examples{
-
 findfrequency(USAccDeaths) # Monthly data
 findfrequency(taylor) # Half-hourly data
 findfrequency(lynx) # Annual data
-
 }
 \author{
 Rob J Hyndman

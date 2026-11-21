@@ -10,7 +10,6 @@
 #' plot(gas)
 #' seasonplot(gas)
 #' tsdisplay(gas)
-#'
 "gas"
 
 #' Daily morning gold prices
@@ -22,7 +21,6 @@
 #' @keywords datasets
 #' @examples
 #' tsdisplay(gold)
-#'
 "gold"
 
 #' Half-hourly electricity demand
@@ -40,7 +38,6 @@
 #' @keywords datasets
 #' @examples
 #' plot(taylor)
-#'
 "taylor"
 
 #' Australian total wine sales
@@ -54,7 +51,6 @@
 #' @keywords datasets
 #' @examples
 #' tsdisplay(wineind)
-#'
 "wineind"
 
 #' Quarterly production of woollen yarn in Australia
@@ -68,5 +64,4 @@
 #' @keywords datasets
 #' @examples
 #' tsdisplay(woolyrnq)
-#'
 "woolyrnq"

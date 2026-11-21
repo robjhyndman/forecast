@@ -29,7 +29,6 @@ non-seasonal data, a linear time trend is fitted while for seasonal data, a
 linear time trend with seasonal dummy variables is used.
 }
 \examples{
-
 lambda <- BoxCox.lambda(AirPassengers, lower = 0)
 air.fit <- Arima(
   AirPassengers,
@@ -38,7 +37,6 @@ air.fit <- Arima(
   lambda = lambda
 )
 plot(forecast(air.fit))
-
 }
 \references{
 Box, G. E. P. and Cox, D. R. (1964) An analysis of

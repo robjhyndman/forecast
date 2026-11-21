@@ -101,7 +101,6 @@ extract various useful features from the underlying model.
 y <- rpois(20, lambda = 0.3)
 fcast <- croston(y)
 autoplot(fcast)
-
 }
 \references{
 Croston, J. (1972) "Forecasting and stock control for

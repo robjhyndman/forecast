@@ -43,11 +43,9 @@ if \eqn{\lambda\ne0}{lambda is not equal to 0}. For \eqn{\lambda=0}{lambda=0},
 \deqn{f_0(x)=\log(x)}{f(x;0)=log(x)}
 }
 \examples{
-
 lambda <- BoxCox.lambda(lynx)
 lynx.fit <- ar(BoxCox(lynx, lambda))
 plot(forecast(lynx.fit, h = 20, lambda = lambda))
-
 }
 \references{
 Box, G. E. P. and Cox, D. R. (1964) An analysis of

@@ -213,7 +213,6 @@ search.arima <- function(
 #' x <- fracdiff.sim(100, ma = -0.4, d = 0.3)$series
 #' fit <- arfima(x)
 #' plot(forecast(fit, h = 30))
-#'
 #' @export
 forecast.Arima <- function(
   object,
@@ -520,7 +519,6 @@ arima.errors <- function(object) {
 #' lines(fitted(fit, h = 2), col = "green")
 #' lines(fitted(fit, h = 3), col = "blue")
 #' legend("topleft", legend = paste("h =", 1:3), col = 2:4, lty = 1)
-#'
 #' @export
 fitted.Arima <- function(object, h = 1, ...) {
   if (h == 1) {
@@ -904,7 +902,6 @@ print.forecast_ARIMA <- function(
 #' @keywords ts
 #' @examples
 #' WWWusage |> auto.arima() |> arimaorder()
-#'
 #' @export
 arimaorder <- function(object) {
   if (is.Arima(object)) {

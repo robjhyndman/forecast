@@ -117,7 +117,6 @@ ggtsbreaks <- function(x) {
 #' @author Mitchell O'Hara-Wild
 #' @seealso [stats::plot.acf()], [Acf()], [stats::acf()], [taperedacf()]
 #' @examples
-#'
 #' library(ggplot2)
 #' ggAcf(wineind)
 #' wineind |> Acf(plot = FALSE) |> autoplot()
@@ -127,7 +126,6 @@ ggtsbreaks <- function(x) {
 #' ggtaperedpacf(wineind)
 #' }
 #' ggCcf(mdeaths, fdeaths)
-#'
 #' @export
 autoplot.acf <- function(object, ci = 0.95, ...) {
   if (!inherits(object, "acf")) {
@@ -972,7 +970,6 @@ autoplot.mforecast <- function(
 #' @examples
 #' library(ggplot2)
 #' ggtsdisplay(USAccDeaths, plot.type = "scatter", theme = theme_bw())
-#'
 #' @export
 ggtsdisplay <- function(
   x,
@@ -1137,14 +1134,12 @@ ggtsdisplay <- function(
 #' @author Mitchell O'Hara-Wild
 #' @seealso [stats::lag.plot()]
 #' @examples
-#'
 #' gglagplot(woolyrnq)
 #' gglagplot(woolyrnq, seasonal = FALSE)
 #'
 #' lungDeaths <- cbind(mdeaths, fdeaths)
 #' gglagplot(lungDeaths, lags = 2)
 #' gglagchull(lungDeaths, lags = 6)
-#'
 #' @export
 gglagplot <- function(
   x,
@@ -1304,7 +1299,6 @@ gglagplot <- function(
 #'
 #' @examples
 #' gglagchull(woolyrnq)
-#'
 #' @export
 gglagchull <- function(
   x,
@@ -1387,10 +1381,8 @@ gglagchull <- function(
 #' @author Mitchell O'Hara-Wild
 #' @seealso [stats::monthplot()]
 #' @examples
-#'
 #' ggsubseriesplot(AirPassengers)
 #' ggsubseriesplot(woolyrnq)
-#'
 #' @export
 ggmonthplot <- function(
   x,
@@ -1511,7 +1503,6 @@ ggsubseriesplot <- function(
 #' @examples
 #' ggseasonplot(AirPassengers, col = rainbow(12), year.labels = TRUE)
 #' ggseasonplot(AirPassengers, year.labels = TRUE, continuous = TRUE)
-#'
 #' @export
 ggseasonplot <- function(
   x,
@@ -1842,7 +1833,6 @@ autoplot.StructTS <- function(object, labels = NULL, range.bars = TRUE, ...) {
 #' @seealso [seasonal::seas()], [stats::stl()], [stats::decompose()],
 #' [stats::StructTS()], [stats::plot.stl()].
 #' @examples
-#'
 #' library(ggplot2)
 #' co2 |>
 #'   decompose() |>
@@ -1854,7 +1844,6 @@ autoplot.StructTS <- function(object, labels = NULL, range.bars = TRUE, ...) {
 #' library(seasonal)
 #' seas(USAccDeaths) |> autoplot()
 #' }
-#'
 #' @export
 autoplot.seas <- function(object, labels = NULL, range.bars = NULL, ...) {
   if (!inherits(object, "seas")) {
@@ -2088,14 +2077,12 @@ autolayer.mforecast <- function(object, series = NULL, PI = TRUE, ...) {
 #' @author Mitchell O'Hara-Wild
 #' @seealso [stats::plot.ts()], [ggplot2::fortify()]
 #' @examples
-#'
 #' library(ggplot2)
 #' autoplot(USAccDeaths)
 #'
 #' lungDeaths <- cbind(mdeaths, fdeaths)
 #' autoplot(lungDeaths)
 #' autoplot(lungDeaths, facets = TRUE)
-#'
 #' @export
 autoplot.ts <- function(
   object,
@@ -2647,7 +2634,6 @@ GeomForecastInterval <- ggplot2::ggproto(
 #' @author Mitchell O'Hara-Wild
 #' @seealso [generics::forecast()], [ggplot2::ggproto()]
 #' @examples
-#'
 #' \dontrun{
 #' library(ggplot2)
 #' autoplot(USAccDeaths) + geom_forecast()
@@ -2676,7 +2662,6 @@ GeomForecastInterval <- ggplot2::ggproto(
 #' lungDeaths <- cbind(mdeaths, fdeaths)
 #' autoplot(lungDeaths) + geom_forecast(forecast(mdeaths), series = "mdeaths")
 #' }
-#'
 #' @export
 geom_forecast <- function(
   mapping = NULL,
@@ -2763,9 +2748,7 @@ geom_forecast <- function(
 #' @author Rob J Hyndman
 #' @seealso [graphics::hist()], [ggplot2::geom_histogram()]
 #' @examples
-#'
 #' gghistogram(lynx, add.kde = TRUE)
-#'
 #' @export
 gghistogram <- function(
   x,

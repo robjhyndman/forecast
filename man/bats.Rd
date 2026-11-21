@@ -84,7 +84,6 @@ Snyder (2011). Parallel processing is used by default to speed up the
 computations.
 }
 \examples{
-
 \dontrun{
 fit <- bats(USAccDeaths)
 plot(forecast(fit))
@@ -92,7 +91,6 @@ plot(forecast(fit))
 taylor.fit <- bats(taylor)
 plot(forecast(taylor.fit))
 }
-
 }
 \references{
 De Livera, A.M., Hyndman, R.J., & Snyder, R. D. (2011),

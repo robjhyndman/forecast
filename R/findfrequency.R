@@ -20,11 +20,9 @@
 #' @author Rob J Hyndman
 #' @keywords ts
 #' @examples
-#'
 #' findfrequency(USAccDeaths) # Monthly data
 #' findfrequency(taylor) # Half-hourly data
 #' findfrequency(lynx) # Annual data
-#'
 #' @export
 findfrequency <- function(x) {
   x <- as.ts(x)

@@ -19,6 +19,5 @@ Quarterly production of woollen yarn in Australia: tonnes. Mar 1965 -- Sep
 }
 \examples{
 tsdisplay(woolyrnq)
-
 }
 \keyword{datasets}

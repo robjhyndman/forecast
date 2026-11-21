@@ -34,9 +34,7 @@ None.
 Plots a histogram and density estimates using ggplot.
 }
 \examples{
-
 gghistogram(lynx, add.kde = TRUE)
-
 }
 \seealso{
 \code{\link[graphics:hist]{graphics::hist()}}, \code{\link[ggplot2:geom_histogram]{ggplot2::geom_histogram()}}

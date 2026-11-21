@@ -103,7 +103,6 @@ bcloglik <- function(x, lower = -1, upper = 2) {
 #' transformations. \emph{Journal of Forecasting}, \bold{12}, 37--48.
 #' @keywords ts
 #' @examples
-#'
 #' lambda <- BoxCox.lambda(AirPassengers, lower = 0)
 #' air.fit <- Arima(
 #'   AirPassengers,
@@ -112,7 +111,6 @@ bcloglik <- function(x, lower = -1, upper = 2) {
 #'   lambda = lambda
 #' )
 #' plot(forecast(air.fit))
-#'
 #' @export
 BoxCox.lambda <- function(
   x,

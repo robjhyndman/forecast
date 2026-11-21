@@ -109,7 +109,6 @@ plot.armaroots <- function(x, xlab, ylab, main, ...) {
 #' @seealso [Arima()], [stats::ar()]
 #' @keywords hplot
 #' @examples
-#'
 #' library(ggplot2)
 #'
 #' fit <- Arima(WWWusage, order = c(3, 1, 0))

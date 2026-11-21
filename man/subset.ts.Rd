@@ -59,7 +59,6 @@ values for quarters are \code{"Q1"}, \code{"Q2"}, \code{"Q3"}, and \code{"Q4"}.
 plot(subset(gas, month = "November"))
 subset(woolyrnq, quarter = 3)
 subset(USAccDeaths, start = 49)
-
 }
 \seealso{
 \code{\link[=subset]{subset()}}, \code{\link[stats:window]{stats::window()}}

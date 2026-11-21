@@ -103,12 +103,10 @@ unfracdiff <- function(x, y, n, h, d) {
 #' \bold{27}(3), 1-22.
 #' @keywords ts
 #' @examples
-#'
 #' library(fracdiff)
 #' x <- fracdiff.sim(100, ma = -0.4, d = 0.3)$series
 #' fit <- arfima(x)
 #' tsdisplay(residuals(fit))
-#'
 arfima <- function(
   y,
   drange = c(0, 0.5),

@@ -54,7 +54,6 @@ deprecated in the future.
 fit <- baggedModel(WWWusage)
 fcast <- forecast(fit)
 plot(fcast)
-
 }
 \references{
 Bergmeir, C., R. J. Hyndman, and J. M. Benitez (2016). Bagging

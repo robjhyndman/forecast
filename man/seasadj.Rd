@@ -37,7 +37,6 @@ component.
 \examples{
 plot(AirPassengers)
 lines(seasadj(decompose(AirPassengers, "multiplicative")), col = 4)
-
 }
 \seealso{
 \code{\link[stats:stl]{stats::stl()}}, \code{\link[stats:decompose]{stats::decompose()}}, \code{\link[=tbats]{tbats()}}.

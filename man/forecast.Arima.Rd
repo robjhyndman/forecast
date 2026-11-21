@@ -135,7 +135,6 @@ library(fracdiff)
 x <- fracdiff.sim(100, ma = -0.4, d = 0.3)$series
 fit <- arfima(x)
 plot(forecast(fit, h = 30))
-
 }
 \references{
 Peiris, M. & Perera, B. (1988), On prediction with fractionally

@@ -93,7 +93,6 @@ extract various useful features from the underlying model.
 \examples{
 fit <- ets(USAccDeaths)
 plot(forecast(fit, h = 48))
-
 }
 \seealso{
 \code{\link[=ets]{ets()}}, \code{\link[=ses]{ses()}}, \code{\link[=holt]{holt()}}, \code{\link[=hw]{hw()}}.

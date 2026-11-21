@@ -83,7 +83,6 @@
 #' @examples
 #' fit <- auto.arima(WWWusage)
 #' plot(forecast(fit, h = 20))
-#'
 #' @export
 auto.arima <- function(
   y,

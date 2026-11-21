@@ -46,7 +46,6 @@ seasonal periods. Then the matrix returned will have \code{2*sum(K)}
 columns.
 }
 \examples{
-
 library(ggplot2)
 
 # Using Fourier series for a "ts" object
@@ -69,7 +68,6 @@ taylor.fcast <- forecast(
   data.frame(fourier(taylor, K = c(3, 3), h = 270))
 )
 autoplot(taylor.fcast)
-
 }
 \seealso{
 \code{\link[=seasonaldummy]{seasonaldummy()}}

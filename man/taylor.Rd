@@ -20,7 +20,6 @@ James W Taylor. Units: Megawatts
 }
 \examples{
 plot(taylor)
-
 }
 \references{
 Taylor, J.W. (2003) Short-term electricity demand forecasting

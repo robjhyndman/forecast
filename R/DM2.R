@@ -46,7 +46,6 @@
 #' \bold{13}(2), 281-291.
 #' @keywords htest ts
 #' @examples
-#'
 #' # Test on in-sample one-step forecasts
 #' f1 <- ets(WWWusage)
 #' f2 <- auto.arima(WWWusage)

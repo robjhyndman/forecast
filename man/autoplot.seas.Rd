@@ -39,7 +39,6 @@ class \code{stl} (created with \code{\link[stats:stl]{stats::stl()}}), class \co
 \code{\link[stats:decompose]{stats::decompose()}}).
 }
 \examples{
-
 library(ggplot2)
 co2 |>
   decompose() |>
@@ -51,7 +50,6 @@ nottem |>
 library(seasonal)
 seas(USAccDeaths) |> autoplot()
 }
-
 }
 \seealso{
 \code{\link[seasonal:seas]{seasonal::seas()}}, \code{\link[stats:stl]{stats::stl()}}, \code{\link[stats:decompose]{stats::decompose()}},

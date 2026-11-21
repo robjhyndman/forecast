@@ -94,7 +94,6 @@ axis. Refer to the examples below. To automatically set up aesthetics, use
 \code{autoplot}.
 }
 \examples{
-
 \dontrun{
 library(ggplot2)
 autoplot(USAccDeaths) + geom_forecast()
@@ -123,7 +122,6 @@ p + geom_forecast(level = c(70, 98), colour = "lightblue")
 lungDeaths <- cbind(mdeaths, fdeaths)
 autoplot(lungDeaths) + geom_forecast(forecast(mdeaths), series = "mdeaths")
 }
-
 }
 \seealso{
 \code{\link[generics:forecast]{generics::forecast()}}, \code{\link[ggplot2:ggproto]{ggplot2::ggproto()}}

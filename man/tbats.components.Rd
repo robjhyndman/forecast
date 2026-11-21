@@ -16,13 +16,11 @@ A multiple time series (\code{mts}) object. The first series is the observed tim
 Extract the level, slope and seasonal components of a TBATS model. The extracted components are Box-Cox transformed using the estimated transformation parameter.
 }
 \examples{
-
 \dontrun{
 fit <- tbats(USAccDeaths, use.parallel = FALSE)
 components <- tbats.components(fit)
 plot(components)
 }
-
 }
 \references{
 De Livera, A.M., Hyndman, R.J., & Snyder, R. D. (2011),

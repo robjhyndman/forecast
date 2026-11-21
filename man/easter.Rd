@@ -26,7 +26,6 @@ Good Friday to Easter Sunday inclusively, plus optionally Easter Monday if
 Useful for adjusting calendar effects.
 }
 \examples{
-
 easter(wineind, easter.mon = TRUE)
 }
 \author{

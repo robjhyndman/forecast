@@ -83,7 +83,6 @@ ggtsdisplay(USAccDeaths, plot.type = "scatter", theme = theme_bw())
 
 tsdisplay(diff(WWWusage))
 ggtsdisplay(USAccDeaths, plot.type = "scatter")
-
 }
 \references{
 Hyndman and Athanasopoulos (2018) \emph{Forecasting: principles

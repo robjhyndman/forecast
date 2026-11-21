@@ -141,12 +141,10 @@ extract various useful features from the underlying model.
 }
 
 \examples{
-
 fcast <- holt(airmiles)
 plot(fcast)
 deaths.fcast <- hw(USAccDeaths, h = 48)
 plot(deaths.fcast)
-
 }
 \references{
 Hyndman, R.J., Koehler, A.B., Ord, J.K., Snyder, R.D. (2008)

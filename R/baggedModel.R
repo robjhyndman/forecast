@@ -44,7 +44,6 @@
 #' fit <- baggedModel(WWWusage)
 #' fcast <- forecast(fit)
 #' plot(fcast)
-#'
 #' @export
 baggedModel <- function(
   y,
@@ -126,7 +125,6 @@ baggedETS <- function(y, bootstrapped_series = bld.mbb.bootstrap(y, 100), ...) {
 #' plot(fcast2)
 #' accuracy(fcast2)
 #' }
-#'
 #' @export
 forecast.baggedModel <- function(
   object,

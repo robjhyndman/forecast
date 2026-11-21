@@ -51,7 +51,6 @@
 #' Springer-Verlag. \url{https://robjhyndman.com/expsmooth/}.
 #' @keywords ts
 #' @examples
-#'
 #' \dontrun{
 #' fcast <- dshw(taylor)
 #' plot(fcast)
@@ -61,7 +60,6 @@
 #' fit <- dshw(x, 20, 5)
 #' plot(fit)
 #' }
-#'
 #' @export
 dshw <- function(
   y,

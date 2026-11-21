@@ -30,7 +30,6 @@
 #' \bold{106}(496), 1513-1527.
 #' @keywords ts
 #' @examples
-#'
 #' \dontrun{
 #' fit <- tbats(USAccDeaths)
 #' plot(forecast(fit))
@@ -38,7 +37,6 @@
 #' taylor.fit <- tbats(taylor)
 #' plot(forecast(taylor.fit))
 #' }
-#'
 #' @export
 tbats <- function(
   y,
@@ -715,13 +713,11 @@ print.tbats <- function(x, ...) {
 #' @rdname plot.bats
 #'
 #' @examples
-#'
 #' \dontrun{
 #' fit <- tbats(USAccDeaths)
 #' plot(fit)
 #' autoplot(fit, range.bars = TRUE)
 #' }
-#'
 #' @export
 plot.tbats <- function(x, main = "Decomposition by TBATS model", ...) {
   out <- tbats.components(x)
@@ -744,13 +740,11 @@ plot.tbats <- function(x, main = "Decomposition by TBATS model", ...) {
 #' \bold{106}(496), 1513-1527.
 #' @keywords ts
 #' @examples
-#'
 #' \dontrun{
 #' fit <- tbats(USAccDeaths, use.parallel = FALSE)
 #' components <- tbats.components(fit)
 #' plot(components)
 #' }
-#'
 #' @export
 tbats.components <- function(x) {
   # Get original data, transform if necessary

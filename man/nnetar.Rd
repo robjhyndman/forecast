@@ -129,7 +129,6 @@ lines(lynx)
 
 ## Apply fitted model to later data, including all optional arguments
 fit2 <- nnetar(window(lynx, start = 1921), model = fit)
-
 }
 \author{
 Rob J Hyndman and Gabriel Caceres

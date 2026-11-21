@@ -33,10 +33,8 @@ The \code{ggmonthplot} function is simply a wrapper for \code{ggsubseriesplot} a
 convenience for users familiar with \code{\link[stats:monthplot]{stats::monthplot()}}.
 }
 \examples{
-
 ggsubseriesplot(AirPassengers)
 ggsubseriesplot(woolyrnq)
-
 }
 \seealso{
 \code{\link[stats:monthplot]{stats::monthplot()}}

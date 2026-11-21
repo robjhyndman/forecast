@@ -34,7 +34,6 @@ for the matrix returned by \code{seasonaldummy}, typically used for
 forecasting. The values within \code{x} are not used.
 }
 \examples{
-
 plot(ldeaths)
 
 # Using seasonal dummy variables
@@ -51,7 +50,6 @@ plot(ldeaths.fcast)
 deaths.lm <- tslm(ldeaths ~ season)
 ldeaths.fcast <- forecast(deaths.lm, h = 36)
 plot(ldeaths.fcast)
-
 }
 \seealso{
 \code{\link[=fourier]{fourier()}}

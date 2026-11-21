@@ -87,7 +87,6 @@
 #' @examples
 #' fit <- ets(USAccDeaths)
 #' plot(forecast(fit))
-#'
 #' @export
 ets <- function(
   y,
@@ -1261,14 +1260,12 @@ admissible <- function(alpha, beta, gamma, phi, m) {
 #' @seealso [ets()]
 #' @keywords hplot
 #' @examples
-#'
 #' fit <- ets(USAccDeaths)
 #' plot(fit)
 #' plot(fit, plot.type = "single", ylab = "", col = 1:3)
 #'
 #' library(ggplot2)
 #' autoplot(fit)
-#'
 #' @export
 plot.ets <- function(x, ...) {
   if (!is.null(x$lambda)) {

@@ -20,6 +20,5 @@ Australian monthly gas production: 1956--1995.
 plot(gas)
 seasonplot(gas)
 tsdisplay(gas)
-
 }
 \keyword{datasets}

@@ -58,7 +58,6 @@ MBB <- function(x, window_size) {
 #' @keywords ts
 #' @examples
 #' bootstrapped_series <- bld.mbb.bootstrap(WWWusage, 100)
-#'
 #' @export
 bld.mbb.bootstrap <- function(x, num, block_size = NULL) {
   if (!is_count(num)) {

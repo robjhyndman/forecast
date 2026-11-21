@@ -75,7 +75,6 @@ extract various useful features from the underlying model.
 \examples{
 fit <- StructTS(WWWusage, "level")
 plot(forecast(fit))
-
 }
 \seealso{
 \code{\link[stats:StructTS]{stats::StructTS()}}.

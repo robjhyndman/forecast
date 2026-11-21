@@ -40,7 +40,6 @@
 #'
 #' @keywords ts
 #' @examples
-#'
 #' # Fit an AR(2) model to each rolling origin subset
 #' far2 <- function(x, h) forecast(Arima(x, order = c(2, 0, 0)), h = h)
 #' e <- tsCV(lynx, far2, h = 1)
@@ -56,7 +55,6 @@
 #' y <- ts(rnorm(50))
 #' xreg <- matrix(rnorm(100), ncol = 2)
 #' e <- tsCV(y, far2_xreg, h = 3, xreg = xreg)
-#'
 #' @export
 tsCV <- function(
   y,
@@ -167,7 +165,6 @@ tsCV <- function(
 #' \url{https://robjhyndman.com/publications/cv-time-series/}.
 #' @keywords ts
 #' @examples
-#'
 #' modelcv <- CVar(lynx, k = 5, lambda = 0.15)
 #' print(modelcv)
 #' print(modelcv$fold1)
@@ -177,7 +174,6 @@ tsCV <- function(
 #'   autolayer(modelcv$testfit, series = "Fits") +
 #'   autolayer(modelcv$residuals, series = "Residuals")
 #' ggAcf(modelcv$residuals)
-#'
 #' @export
 CVar <- function(
   y,

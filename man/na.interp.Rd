@@ -33,10 +33,8 @@ A more general and flexible approach is available using \code{na.approx} in
 the \CRANpkg{zoo} package.
 }
 \examples{
-
 data(gold)
 plot(na.interp(gold))
-
 }
 \seealso{
 \code{\link[=tsoutliers]{tsoutliers()}}

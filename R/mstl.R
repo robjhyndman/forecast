@@ -197,7 +197,6 @@ autoplot.mstl <- function(object, ...) {
 #' @seealso [stats::stl()], [forecast.ets()], [forecast.Arima()].
 #' @keywords ts
 #' @examples
-#'
 #' tsmod <- stlm(USAccDeaths, modelfunction = ar)
 #' plot(forecast(tsmod, h = 36))
 #'
@@ -440,7 +439,6 @@ rowSumsTS <- function(mts) {
 #' @seealso [stats::stl()], [ets()], [Arima()].
 #' @keywords ts
 #' @examples
-#'
 #' tsmod <- stlm(USAccDeaths, modelfunction = ar)
 #' forecast(tsmod, h = 36) |> autoplot()
 #'
@@ -664,7 +662,6 @@ forecast.stlm <- function(
 #' @rdname forecast.stl
 #'
 #' @examples
-#'
 #' plot(stlf(AirPassengers, lambda = 0))
 #' @export
 stlf <- function(

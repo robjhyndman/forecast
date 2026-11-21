@@ -41,7 +41,6 @@ restricted parameter space.
 fit <- spline_model(uspop)
 fit
 fit |> forecast() |> autoplot()
-
 }
 \references{
 Hyndman, King, Pitrun and Billah (2005) Local linear forecasts

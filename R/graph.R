@@ -38,7 +38,6 @@
 #' @examples
 #' tsdisplay(diff(WWWusage))
 #' ggtsdisplay(USAccDeaths, plot.type = "scatter")
-#'
 #' @export
 tsdisplay <- function(
   x,
@@ -181,7 +180,6 @@ tsdisplay <- function(
 #' @keywords ts
 #' @examples
 #' seasonplot(AirPassengers, col = rainbow(12), year.labels = TRUE)
-#'
 #' @export
 seasonplot <- function(
   x,

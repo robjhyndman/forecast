@@ -23,10 +23,8 @@
 #' @seealso [tsoutliers()]
 #' @keywords ts
 #' @examples
-#'
 #' data(gold)
 #' plot(na.interp(gold))
-#'
 #' @export
 na.interp <- function(
   x,
@@ -140,9 +138,7 @@ na.interp <- function(
 #' @seealso [na.interp()], [tsoutliers()], [stats::supsmu()]
 #' @keywords ts
 #' @examples
-#'
 #' cleangold <- tsclean(gold)
-#'
 #' @export
 tsclean <- function(x, replace.missing = TRUE, iterate = 2, lambda = NULL) {
   outliers <- tsoutliers(x, iterate = iterate, lambda = lambda)
@@ -171,10 +167,8 @@ tsclean <- function(x, replace.missing = TRUE, iterate = 2, lambda = NULL) {
 #' @references Hyndman (2021) "Detecting time series outliers" \url{https://robjhyndman.com/hyndsight/tsoutliers/}.
 #' @keywords ts
 #' @examples
-#'
 #' data(gold)
 #' tsoutliers(gold)
-#'
 #' @export
 tsoutliers <- function(x, iterate = 2, lambda = NULL) {
   n <- length(x)

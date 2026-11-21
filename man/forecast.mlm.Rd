@@ -82,7 +82,6 @@ allows forecasts to be generated on multiple series. Also, the output is
 reformatted into a \code{mforecast} object.
 }
 \examples{
-
 lungDeaths <- cbind(mdeaths, fdeaths)
 fit <- tslm(lungDeaths ~ trend + season)
 fcast <- forecast(fit, h = 10)
@@ -91,7 +90,6 @@ carPower <- as.matrix(mtcars[, c("qsec", "hp")])
 carmpg <- mtcars[, "mpg"]
 fit <- lm(carPower ~ carmpg)
 fcast <- forecast(fit, newdata = data.frame(carmpg = 30))
-
 }
 \seealso{
 \code{\link[=tslm]{tslm()}}, \code{\link[=forecast.lm]{forecast.lm()}}, \code{\link[stats:lm]{stats::lm()}}.

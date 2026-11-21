@@ -31,7 +31,6 @@
 #' plot(subset(gas, month = "November"))
 #' subset(woolyrnq, quarter = 3)
 #' subset(USAccDeaths, start = 49)
-#'
 #' @export
 subset.ts <- function(
   x,

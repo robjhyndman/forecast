@@ -22,7 +22,6 @@ Returns the order of a univariate ARIMA or ARFIMA model.
 }
 \examples{
 WWWusage |> auto.arima() |> arimaorder()
-
 }
 \seealso{
 \code{\link[stats:ar]{stats::ar()}}, \code{\link[=auto.arima]{auto.arima()}}, \code{\link[=Arima]{Arima()}}, \code{\link[stats:arima]{stats::arima()}},

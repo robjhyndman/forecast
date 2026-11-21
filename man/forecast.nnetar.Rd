@@ -110,7 +110,6 @@ myinnovs <- rnorm(20 * 100, mean = 0, sd = res_sd)
 fcast3 <- forecast(fit, h = 20, PI = TRUE, npaths = 100, innov = myinnovs)
 plot(fcast3)
 }
-
 }
 \seealso{
 \code{\link[=nnetar]{nnetar()}}.

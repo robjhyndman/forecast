@@ -32,11 +32,9 @@
 #' Bickel, P. J. and Doksum K. A. (1981) An Analysis of Transformations Revisited. \emph{JASA} \bold{76} 296-311.
 #' @keywords ts
 #' @examples
-#'
 #' lambda <- BoxCox.lambda(lynx)
 #' lynx.fit <- ar(BoxCox(lynx, lambda))
 #' plot(forecast(lynx.fit, h = 20, lambda = lambda))
-#'
 #' @export
 BoxCox <- function(x, lambda) {
   if (lambda == "auto") {
@@ -131,7 +129,6 @@ InvBoxCox <- function(x, lambda, biasadj = FALSE, fvar = NULL) {
 #' @examples
 #' fit <- StructTS(WWWusage, "level")
 #' plot(forecast(fit))
-#'
 #' @export
 forecast.StructTS <- function(
   object,
@@ -220,7 +217,6 @@ forecast.StructTS <- function(
 #' @examples
 #' fit <- HoltWinters(WWWusage, gamma = FALSE)
 #' plot(forecast(fit))
-#'
 #' @export
 forecast.HoltWinters <- function(
   object,

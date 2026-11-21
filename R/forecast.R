@@ -72,7 +72,6 @@
 #' [croston()], [ses()], [holt()], [hw()].
 #' @keywords ts
 #' @examples
-#'
 #' WWWusage |> forecast() |> plot()
 #' fit <- ets(window(WWWusage, end = 60))
 #' fc <- forecast(WWWusage, model = fit)
@@ -362,7 +361,6 @@ plotlmforecast <- function(
 #' fit <- tslm(wineind ~ fourier(wineind, 4))
 #' fcast <- forecast(fit, newdata = data.frame(fourier(wineind, 4, 20)))
 #' autoplot(fcast)
-#'
 #' @export
 plot.forecast <- function(
   x,

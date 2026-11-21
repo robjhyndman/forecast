@@ -129,7 +129,6 @@ Hyndman, et al, 2002, below.)
 \examples{
 fit <- ets(USAccDeaths)
 plot(forecast(fit))
-
 }
 \references{
 Hyndman, R.J., Koehler, A.B., Snyder, R.D., and Grose, S. (2002)

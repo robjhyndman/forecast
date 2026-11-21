@@ -16,7 +16,6 @@
 #' @examples
 #' plot(AirPassengers)
 #' lines(seasadj(decompose(AirPassengers, "multiplicative")), col = 4)
-#'
 #' @export
 seasadj <- function(object, ...) UseMethod("seasadj")
 

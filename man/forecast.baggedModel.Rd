@@ -64,7 +64,6 @@ fcast2 <- forecast(fit2)
 plot(fcast2)
 accuracy(fcast2)
 }
-
 }
 \references{
 Bergmeir, C., R. J. Hyndman, and J. M. Benitez (2016). Bagging

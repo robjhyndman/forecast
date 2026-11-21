@@ -34,10 +34,8 @@ corresponding ACF, and a histogram. If \code{test} is not \code{FALSE},
 the output from either a Ljung-Box test or Breusch-Godfrey test is printed.
 }
 \examples{
-
 fit <- ets(WWWusage)
 checkresiduals(fit)
-
 }
 \seealso{
 \code{\link[=ggtsdisplay]{ggtsdisplay()}}, \code{\link[stats:Box.test]{stats::Box.test()}}, \code{\link[lmtest:bgtest]{lmtest::bgtest()}}

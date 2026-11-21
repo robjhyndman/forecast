@@ -58,7 +58,6 @@ on Bartlett weights \code{varestimator = "bartlett"} which ensures a positive es
 Both long-run variance estimators are proposed in Diebold and Mariano (1995).
 }
 \examples{
-
 # Test on in-sample one-step forecasts
 f1 <- ets(WWWusage)
 f2 <- auto.arima(WWWusage)

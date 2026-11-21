@@ -321,7 +321,6 @@ print.croston_model <- function(
 #' y <- rpois(20, lambda = 0.3)
 #' fcast <- croston(y)
 #' autoplot(fcast)
-#'
 #' @export
 forecast.croston_model <- function(object, h = 10, ...) {
   m <- frequency(object$y)

@@ -77,7 +77,6 @@ mlmsplit <- function(x, index = NULL) {
 #' @author Mitchell O'Hara-Wild
 #' @seealso [tslm()], [forecast.lm()], [stats::lm()].
 #' @examples
-#'
 #' lungDeaths <- cbind(mdeaths, fdeaths)
 #' fit <- tslm(lungDeaths ~ trend + season)
 #' fcast <- forecast(fit, h = 10)
@@ -86,7 +85,6 @@ mlmsplit <- function(x, index = NULL) {
 #' carmpg <- mtcars[, "mpg"]
 #' fit <- lm(carPower ~ carmpg)
 #' fcast <- forecast(fit, newdata = data.frame(carmpg = 30))
-#'
 #' @export
 forecast.mlm <- function(
   object,
@@ -258,7 +256,6 @@ print.mforecast <- function(x, ...) {
 #' fcast <- forecast(fit, newdata = data.frame(carmpg = 30))
 #' plot(fcast, xlab = "Year")
 #' autoplot(fcast, xlab = rep("Year", 2))
-#'
 #' @export
 plot.mforecast <- function(
   x,

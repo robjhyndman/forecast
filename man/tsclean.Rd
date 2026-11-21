@@ -28,9 +28,7 @@ seasonal series. To estimate missing values and outlier replacements,
 linear interpolation is used on the (possibly seasonally adjusted) series.
 }
 \examples{
-
 cleangold <- tsclean(gold)
-
 }
 \references{
 Hyndman (2021) "Detecting time series outliers" \url{https://robjhyndman.com/hyndsight/tsoutliers/}.
