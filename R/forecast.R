@@ -227,7 +227,7 @@ plotlmforecast <- function(
   xlab,
   ...
 ) {
-  xvar <- attr(terms(object$model), "term.labels")
+  xvar <- labels(terms(object$model))
   if (length(xvar) > 1) {
     stop(
       "Forecast plots for regression models are only available for a single predictor."
@@ -477,7 +477,7 @@ plot.forecast <- function(
   pred.mean <- x$mean
 
   if (is.null(ylim)) {
-    ylim <- range(c(xx[(n - include + 1):n], pred.mean), na.rm = TRUE)
+    ylim <- range(xx[(n - include + 1):n], pred.mean, na.rm = TRUE)
     if (PI) {
       ylim <- range(ylim, x$lower, x$upper, na.rm = TRUE)
     }
@@ -755,7 +755,7 @@ as.data.frame.forecast <- function(x, ...) {
   fr.x <- frequency(x$mean)
   if (ists) {
     out <- ts(out)
-    attr(out, "tsp") <- attr(x$mean, "tsp")
+    tsp(out) <- tsp(x$mean)
   }
   names <- "Point Forecast"
   if (!is.null(x$lower) && !is.null(x$upper) && !is.null(x$level)) {

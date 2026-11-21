@@ -223,16 +223,13 @@ HoltWintersZZ <- function(
   param <- alpha
   names(param) <- "alpha"
   if (trendtype != "N") {
-    param <- c(param, beta = beta)
-    names(param)[length(param)] <- "beta"
+    param[["beta"]] <- beta
   }
   if (seasontype != "N") {
-    param <- c(param, gamma = gamma)
-    names(param)[length(param)] <- "gamma"
+    param[["gamma"]] <- gamma
   }
   if (damped) {
-    param <- c(param, phi = phi)
-    names(param)[length(param)] <- "phi"
+    param[["phi"]] <- phi
   }
 
   if (components[1] == "A") {
