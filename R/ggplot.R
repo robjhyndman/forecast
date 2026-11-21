@@ -1438,7 +1438,12 @@ ggsubseriesplot <- function(
   )
   seasonwidth <- (max(data$year) - min(data$year)) * 1.05
   data$time <- data$season + 0.025 + (data$year - min(data$year)) / seasonwidth
-  avgLines <- stats::aggregate(data$y, by = list(data$season), FUN = mean)
+  avgLines <- stats::aggregate(
+    data$y,
+    by = list(data$season),
+    FUN = mean,
+    na.rm = TRUE
+  )
   colnames(avgLines) <- c("season", "avg")
   data <- merge(data, avgLines, by = "season")
 
