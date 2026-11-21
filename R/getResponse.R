@@ -55,10 +55,10 @@ getResponse.Arima <- function(object, ...) {
     if (is.null(series.name)) {
       return(NULL)
     } else {
-      x <- try(eval.parent(parse(text = series.name)), silent = TRUE)
+      x <- try(eval.parent(str2lang(series.name)), silent = TRUE)
       if (inherits(x, "try-error")) {
         # Try one level further up the chain
-        x <- try(eval.parent(parse(text = series.name), 2), silent = TRUE)
+        x <- try(eval.parent(str2lang(series.name), 2), silent = TRUE)
       }
       if (inherits(x, "try-error")) {
         # Give up
@@ -79,10 +79,10 @@ getResponse.fracdiff <- function(object, ...) {
     if (is.null(series.name)) {
       stop("Can't find the original time series.")
     } else {
-      x <- try(eval.parent(parse(text = series.name)), silent = TRUE)
+      x <- try(eval.parent(str2lang(series.name)), silent = TRUE)
       if (inherits(x, "try-error")) {
         # Try one level further up the chain
-        x <- try(eval.parent(parse(text = series.name), 2), silent = TRUE)
+        x <- try(eval.parent(str2lang(series.name), 2), silent = TRUE)
       }
       if (inherits(x, "try-error")) {
         # Give up
