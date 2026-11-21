@@ -72,6 +72,9 @@ croston_model <- function(
   if (any(alpha < 0 | alpha > 1)) {
     stop("`alpha` must be between 0 and 1.")
   }
+  if (anyNA(y)) {
+    stop("Croston's method does not handle missing values.")
+  }
   if (any(y < 0)) {
     stop("Croston's method only applies to non-negative data.")
   }

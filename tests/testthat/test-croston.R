@@ -142,6 +142,10 @@ test_that("croston_model errors on invalid input", {
   expect_error(croston_model(c(0, 0, 0)), "At least two non-zero values")
 })
 
+test_that("croston_model errors on missing values", {
+  expect_snapshot(croston_model(c(1, NA, 0, 2)), error = TRUE)
+})
+
 test_that("print.croston_model", {
   fit <- croston_model(y)
   expect_output(print(fit), "alpha")
