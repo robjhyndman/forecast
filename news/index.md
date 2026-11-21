@@ -231,6 +231,9 @@
   no longer errors when forecast is not attached.
 - [`ggtsdisplay()`](https://pkg.robjhyndman.com/forecast/reference/tsdisplay.md)
   shows the series name as the default title again.
+- [`InvBoxCox()`](https://pkg.robjhyndman.com/forecast/reference/BoxCox.md)
+  no longer leaves stray names or attributes on single-value results,
+  such as forecasts with `h = 1` and a Box-Cox transformation.
 - [`mean_model()`](https://pkg.robjhyndman.com/forecast/reference/mean_model.md)
   and
   [`meanf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.mean_model.md)
