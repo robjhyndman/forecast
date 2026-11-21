@@ -93,6 +93,23 @@ test_that("gglagchull() labels an unnamed series with the object name", {
   expect_identical(unique(p$data$series), "woolyrnq")
 })
 
+test_that("ggsubseriesplot() ignores missing values in the seasonal means", {
+  y <- USAccDeaths
+  y[5] <- NA
+  data <- ggsubseriesplot(y)$data
+  expect_equal(
+    unique(data$avg[data$season == 5]),
+    mean(y[cycle(y) == 5], na.rm = TRUE)
+  )
+})
+
+test_that("ggsubseriesplot() drops observations without a season", {
+  phase <- cycle(USAccDeaths)
+  phase[5] <- NA
+  data <- ggsubseriesplot(USAccDeaths, phase = phase)$data
+  expect_equal(data$y, as.numeric(USAccDeaths)[-5])
+})
+
 test_that("ggtaperedacf() and ggtaperedpacf() work", {
   set.seed(1)
   expect_s3_class(ggtaperedacf(wineind, lag.max = 10, nsim = 10), "ggplot")

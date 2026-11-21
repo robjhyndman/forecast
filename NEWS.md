@@ -53,6 +53,7 @@
 * `geom_forecast()` no longer errors for forecast objects when forecast is not attached.
 * `getResponse()` now returns the original series for `StructTS` models instead of its time series attributes.
 * `gglagchull()` now labels an unnamed series with the name of the object instead of its deparsed values.
+* `ggsubseriesplot()` now draws the mean line for seasons that contain missing values.
 * `ggtaperedacf()` no longer errors when forecast is not attached.
 * `ggtsdisplay()` shows the series name as the default title again.
 * `mean_model()` and `meanf()` now exclude missing observations when estimating uncertainty.
