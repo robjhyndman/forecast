@@ -32,7 +32,7 @@ install:
 	R CMD INSTALL .
 
 pkgdown:
-	Rscript -e "pkgdown::build_site('.')"
+	FONTCONFIG_FILE=$(CURDIR)/pkgdown/fonts.conf Rscript -e "pkgdown::build_site('.')"
 
 revdep:
 	Rscript -e "revdepcheck::revdep_check(num_workers=3)"

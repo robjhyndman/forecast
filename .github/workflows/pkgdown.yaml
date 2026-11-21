@@ -37,6 +37,15 @@ jobs:
           extra-packages: any::pkgdown, local::.
           needs: website
 
+      - name: Install Fira Sans for figures
+        run: |
+          mkdir -p ~/.local/share/fonts
+          for f in Regular Bold Italic BoldItalic; do
+            curl -fsSL -o ~/.local/share/fonts/FiraSans-$f.ttf \
+              https://github.com/google/fonts/raw/main/ofl/firasans/FiraSans-$f.ttf
+          done
+          echo "FONTCONFIG_FILE=$GITHUB_WORKSPACE/pkgdown/fonts.conf" >> "$GITHUB_ENV"
+
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
