@@ -49,6 +49,14 @@ test_that("simulate.Arima() keeps coefficients that sum to zero", {
   expect_equal(simulate(fit, innov = rep(0, 8)), forecast(fit, h = 8)$mean)
 })
 
+test_that("simulate.ar() uses the intercept of models fitted by OLS", {
+  fit <- ar(lynx, method = "ols")
+  sim <- simulate(fit, innov = rep(0, 5))
+  expect_equal(sim, predict(fit, n.ahead = 5)$pred)
+  sim <- simulate(fit, innov = rep(0, 400), future = FALSE)
+  expect_equal(tail(c(sim), 1), tail(c(predict(fit, n.ahead = 400)$pred), 1))
+})
+
 test_that("simulate.rw_model() adds drift once per lag", {
   fit <- rw_model(ts(seq_len(20)^2, frequency = 4), lag = 4, drift = TRUE)
   fit$par$drift.se <- 0
