@@ -97,6 +97,8 @@ test_that("ggtsdisplay() uses na.action for the spectrum", {
   y <- USAccDeaths
   y[5] <- NA
   expect_no_error(ggtsdisplay(y, plot.type = "spectrum", points = FALSE))
+})
+
 test_that("ggsubseriesplot() ignores missing values in the seasonal means", {
   y <- USAccDeaths
   y[5] <- NA
