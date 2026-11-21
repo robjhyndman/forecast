@@ -236,6 +236,9 @@
 - [`ggtaperedacf()`](https://pkg.robjhyndman.com/forecast/reference/autoplot.acf.md)
   no longer errors when forecast is not attached.
 - [`ggtsdisplay()`](https://pkg.robjhyndman.com/forecast/reference/tsdisplay.md)
+  now uses `na.action` for the spectrum, so `plot.type = "spectrum"` no
+  longer errors for series with missing values.
+- [`ggtsdisplay()`](https://pkg.robjhyndman.com/forecast/reference/tsdisplay.md)
   shows the series name as the default title again.
 - [`InvBoxCox()`](https://pkg.robjhyndman.com/forecast/reference/BoxCox.md)
   no longer leaves stray names or attributes on single-value results,

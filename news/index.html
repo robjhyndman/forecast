@@ -170,6 +170,8 @@
 <li>
 <code><a href="../reference/autoplot.acf.html">ggtaperedacf()</a></code> no longer errors when forecast is not attached.</li>
 <li>
+<code><a href="../reference/tsdisplay.html">ggtsdisplay()</a></code> now uses <code>na.action</code> for the spectrum, so <code>plot.type = "spectrum"</code> no longer errors for series with missing values.</li>
+<li>
 <code><a href="../reference/tsdisplay.html">ggtsdisplay()</a></code> shows the series name as the default title again.</li>
 <li>
 <code><a href="../reference/BoxCox.html">InvBoxCox()</a></code> no longer leaves stray names or attributes on single-value results, such as forecasts with <code>h = 1</code> and a Box-Cox transformation.</li>
