@@ -54,7 +54,6 @@ Rob J Hyndman
 ## Examples
 
 ``` r
-
 data(gold)
 tsoutliers(gold)
 #> $index

@@ -135,7 +135,6 @@ Mitchell O'Hara-Wild
 ## Examples
 
 ``` r
-
 if (FALSE) { # \dontrun{
 library(ggplot2)
 autoplot(USAccDeaths) + geom_forecast()

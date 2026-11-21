@@ -71,7 +71,6 @@ Rob J Hyndman & Mitchell O'Hara-Wild
 ## Examples
 
 ``` r
-
 lambda <- BoxCox.lambda(lynx)
 lynx.fit <- ar(BoxCox(lynx, lambda))
 plot(forecast(lynx.fit, h = 20, lambda = lambda))

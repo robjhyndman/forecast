@@ -144,7 +144,6 @@ Mitchell O'Hara-Wild
 ## Examples
 
 ``` r
-
 lungDeaths <- cbind(mdeaths, fdeaths)
 fit <- tslm(lungDeaths ~ trend + season)
 fcast <- forecast(fit, h = 10)

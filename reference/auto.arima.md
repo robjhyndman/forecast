@@ -273,5 +273,4 @@ Rob J Hyndman
 ``` r
 fit <- auto.arima(WWWusage)
 plot(forecast(fit, h = 20))
-
 ```

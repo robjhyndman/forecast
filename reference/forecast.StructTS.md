@@ -128,5 +128,4 @@ Rob J Hyndman
 ``` r
 fit <- StructTS(WWWusage, "level")
 plot(forecast(fit))
-
 ```

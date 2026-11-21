@@ -61,7 +61,6 @@ Rob J Hyndman
 ## Examples
 
 ``` r
-
 if (FALSE) { # \dontrun{
 fit <- tbats(USAccDeaths)
 plot(fit)

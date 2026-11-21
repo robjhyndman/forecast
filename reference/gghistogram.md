@@ -59,7 +59,5 @@ Rob J Hyndman
 ## Examples
 
 ``` r
-
 gghistogram(lynx, add.kde = TRUE)
-
 ```

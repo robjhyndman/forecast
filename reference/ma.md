@@ -55,9 +55,7 @@ Rob J Hyndman
 ## Examples
 
 ``` r
-
 plot(wineind)
 sm <- ma(wineind, order = 12)
 lines(sm, col = "red")
-
 ```

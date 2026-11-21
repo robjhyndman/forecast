@@ -52,8 +52,6 @@ Rob J Hyndman
 ## Examples
 
 ``` r
-
 data(gold)
 plot(na.interp(gold))
-
 ```

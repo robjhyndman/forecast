@@ -57,7 +57,6 @@ Leanne Chhay and Rob J Hyndman
 ## Examples
 
 ``` r
-
 lambda <- BoxCox.lambda(AirPassengers, lower = 0)
 air.fit <- Arima(
   AirPassengers,
@@ -66,5 +65,4 @@ air.fit <- Arima(
   lambda = lambda
 )
 plot(forecast(air.fit))
-
 ```

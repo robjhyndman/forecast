@@ -135,5 +135,4 @@ Rob J Hyndman
 ``` r
 fit <- HoltWinters(WWWusage, gamma = FALSE)
 plot(forecast(fit))
-
 ```

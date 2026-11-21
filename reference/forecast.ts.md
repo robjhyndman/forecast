@@ -188,7 +188,6 @@ Rob J Hyndman
 ## Examples
 
 ``` r
-
 WWWusage |> forecast() |> plot()
 
 fit <- ets(window(WWWusage, end = 60))

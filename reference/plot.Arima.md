@@ -79,7 +79,6 @@ Rob J Hyndman & Mitchell O'Hara-Wild
 ## Examples
 
 ``` r
-
 library(ggplot2)
 
 fit <- Arima(WWWusage, order = c(3, 1, 0))

@@ -57,5 +57,4 @@ autoplot(
   facets = TRUE
 ) +
   labs(x = "Year", y = "")
-
 ```

@@ -108,7 +108,6 @@ George Athanasopoulos and Kirill Kuroptev
 ## Examples
 
 ``` r
-
 # Test on in-sample one-step forecasts
 f1 <- ets(WWWusage)
 f2 <- auto.arima(WWWusage)

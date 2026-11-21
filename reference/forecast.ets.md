@@ -160,5 +160,4 @@ Rob J Hyndman
 ``` r
 fit <- ets(USAccDeaths)
 plot(forecast(fit, h = 48))
-
 ```

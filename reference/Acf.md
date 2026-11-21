@@ -156,7 +156,6 @@ Rob J Hyndman
 ## Examples
 
 ``` r
-
 Acf(wineind)
 
 Pacf(wineind)

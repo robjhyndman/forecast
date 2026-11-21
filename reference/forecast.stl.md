@@ -208,7 +208,6 @@ Rob J Hyndman
 ## Examples
 
 ``` r
-
 tsmod <- stlm(USAccDeaths, modelfunction = ar)
 plot(forecast(tsmod, h = 36))
 

@@ -81,7 +81,6 @@ Gabriel Caceres and Rob J Hyndman
 ## Examples
 
 ``` r
-
 modelcv <- CVar(lynx, k = 5, lambda = 0.15)
 print(modelcv)
 #> Series: lynx 
@@ -157,5 +156,4 @@ autoplot(lynx, series = "Data") +
 #> (`geom_line()`).
 
 ggAcf(modelcv$residuals)
-
 ```

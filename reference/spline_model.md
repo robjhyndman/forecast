@@ -73,5 +73,4 @@ fit
 #> Call: spline_model(y = uspop) 
 #> Smoothing parameter: 0.0006859 
 fit |> forecast() |> autoplot()
-
 ```

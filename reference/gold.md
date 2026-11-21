@@ -16,5 +16,4 @@ Time series data
 
 ``` r
 tsdisplay(gold)
-
 ```

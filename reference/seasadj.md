@@ -56,5 +56,4 @@ Rob J Hyndman
 ``` r
 plot(AirPassengers)
 lines(seasadj(decompose(AirPassengers, "multiplicative")), col = 4)
-
 ```

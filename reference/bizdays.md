@@ -40,7 +40,6 @@ Earo Wang
 ## Examples
 
 ``` r
-
 x <- ts(rnorm(30), start = c(2013, 2), frequency = 12)
 bizdays(x, FinCenter = "New York")
 #>      Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec

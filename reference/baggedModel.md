@@ -100,5 +100,4 @@ Christoph Bergmeir, Fotios Petropoulos
 fit <- baggedModel(WWWusage)
 fcast <- forecast(fit)
 plot(fcast)
-
 ```

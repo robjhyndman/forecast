@@ -126,5 +126,4 @@ ggseasonplot(AirPassengers, year.labels = TRUE, continuous = TRUE)
 
 
 seasonplot(AirPassengers, col = rainbow(12), year.labels = TRUE)
-
 ```

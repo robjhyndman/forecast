@@ -51,7 +51,6 @@ Rob J Hyndman
 ## Examples
 
 ``` r
-
 plot(ldeaths)
 
 
@@ -71,5 +70,4 @@ plot(ldeaths.fcast)
 deaths.lm <- tslm(ldeaths ~ season)
 ldeaths.fcast <- forecast(deaths.lm, h = 36)
 plot(ldeaths.fcast)
-
 ```

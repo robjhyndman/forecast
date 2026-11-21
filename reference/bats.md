@@ -121,7 +121,6 @@ Slava Razbash and Rob J Hyndman
 ## Examples
 
 ``` r
-
 if (FALSE) { # \dontrun{
 fit <- bats(USAccDeaths)
 plot(forecast(fit))

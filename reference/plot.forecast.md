@@ -199,5 +199,4 @@ fcast <- splinef(airmiles, h = 5)
 plot(fcast)
 
 autoplot(fcast)
-
 ```

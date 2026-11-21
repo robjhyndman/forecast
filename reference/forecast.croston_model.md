@@ -180,5 +180,4 @@ Rob J Hyndman
 y <- rpois(20, lambda = 0.3)
 fcast <- croston(y)
 autoplot(fcast)
-
 ```

@@ -147,7 +147,6 @@ Mitchell O'Hara-Wild
 ## Examples
 
 ``` r
-
 library(ggplot2)
 ggAcf(wineind)
 
@@ -159,5 +158,4 @@ ggtaperedacf(wineind)
 ggtaperedpacf(wineind)
 } # }
 ggCcf(mdeaths, fdeaths)
-
 ```

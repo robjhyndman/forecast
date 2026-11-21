@@ -43,7 +43,6 @@ Slava Razbash and Rob J Hyndman
 ## Examples
 
 ``` r
-
 if (FALSE) { # \dontrun{
 fit <- tbats(USAccDeaths, use.parallel = FALSE)
 components <- tbats.components(fit)

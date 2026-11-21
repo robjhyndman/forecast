@@ -113,7 +113,6 @@ Mitchell O'Hara-Wild
 ## Examples
 
 ``` r
-
 library(ggplot2)
 autoplot(USAccDeaths)
 
@@ -122,5 +121,4 @@ lungDeaths <- cbind(mdeaths, fdeaths)
 autoplot(lungDeaths)
 
 autoplot(lungDeaths, facets = TRUE)
-
 ```

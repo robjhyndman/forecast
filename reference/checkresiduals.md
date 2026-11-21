@@ -59,7 +59,6 @@ Rob J Hyndman
 ## Examples
 
 ``` r
-
 fit <- ets(WWWusage)
 checkresiduals(fit)
 

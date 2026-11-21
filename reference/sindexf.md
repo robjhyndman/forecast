@@ -42,5 +42,4 @@ uk.fcast$lower <- uk.fcast$lower + cbind(seasf, seasf)
 uk.fcast$upper <- uk.fcast$upper + cbind(seasf, seasf)
 uk.fcast$x <- UKDriverDeaths
 plot(uk.fcast, main = "Forecasts from Holt's method with seasonal adjustment")
-
 ```

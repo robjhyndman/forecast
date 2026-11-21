@@ -138,7 +138,6 @@ Rob J Hyndman
 ## Examples
 
 ``` r
-
 tsmod <- stlm(USAccDeaths, modelfunction = ar)
 forecast(tsmod, h = 36) |> autoplot()
 

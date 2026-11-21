@@ -37,7 +37,6 @@ Rob J Hyndman
 ## Examples
 
 ``` r
-
 findfrequency(USAccDeaths) # Monthly data
 #> [1] 12
 findfrequency(taylor) # Half-hourly data

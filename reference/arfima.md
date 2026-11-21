@@ -120,10 +120,8 @@ Rob J Hyndman and Farah Yasmeen
 ## Examples
 
 ``` r
-
 library(fracdiff)
 x <- fracdiff.sim(100, ma = -0.4, d = 0.3)$series
 fit <- arfima(x)
 tsdisplay(residuals(fit))
-
 ```

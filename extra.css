@@ -1,25 +1,82 @@
-h1, .h1 {
-  font-size: 2rem;
+h1,
+.h1 {
+  font-size: 2.5rem;
   font-weight: 700;
 }
 
-h2, .h2 {
+h2,
+.h2 {
+  font-size: 2.0rem;
+  font-weight: 700;
+}
+
+h3,
+.h3 {
   font-size: 1.5rem;
   font-weight: 700;
 }
 
-h3, .h3 {
-  font-size: 1.2rem;
-  font-weight: 700;
+.bg-primary .navbar-nav .show>.nav-link,
+.bg-primary .navbar-nav .nav-link.active,
+.bg-primary .navbar-nav .nav-link:hover,
+.bg-primary .navbar-nav .nav-link:focus {
+  color: #ffb81c !important;
 }
 
-.nav-link:hover, .nav-link:focus {
-	color: #ffb81c !important;
+.nav-text {
+  color: #ffb81c !important;
 }
 
-.nav-text.text-muted {
-    color: #ffb81c !important;
+.text-muted:not(.nav-text) {
+  color: #777777 !important;
 }
+
 .algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
-  color: #234660;
+  color: #234460;
+}
+
+/* Syntax highlighting: Outback light (https://github.com/robjhyndman/outback) */
+pre {background-color: #f2f2f2; color: #2d2523;}
+pre code span.al /* Alert          */ {color: #736968; font-weight: normal; font-style: normal}
+pre code span.an /* Annotation     */ {color: #736968; font-weight: normal; font-style: normal}
+pre code span.at /* Attribute      */ {color: inherit; font-weight: normal; font-style: normal}
+pre code span.bn /* BaseN          */ {color: #436fb2; font-weight: normal; font-style: normal}
+pre code span.bu /* BuiltIn        */ {color: #457a50; font-weight: normal; font-style: normal}
+pre code span.cf /* ControlFlow    */ {color: #8061a3; font-weight: normal; font-style: normal}
+pre code span.ch /* Char           */ {color: #995c7a; font-weight: normal; font-style: normal}
+pre code span.cn /* Constant       */ {color: #436fb2; font-weight: normal; font-style: normal}
+pre code span.co /* Comment        */ {color: #736968; font-weight: normal; font-style: normal}
+pre code span.cv /* CommentVar     */ {color: #736968; font-weight: normal; font-style: normal}
+pre code span.do /* Documentation  */ {color: #736968; font-weight: normal; font-style: normal}
+pre code span.dt /* DataType       */ {color: #217b6e; font-weight: normal; font-style: normal}
+pre code span.dv /* DecVal         */ {color: #436fb2; font-weight: normal; font-style: normal}
+pre code span.er /* Error          */ {color: #b94e00; font-weight: normal; font-style: normal}
+pre code span.ex /* Extension      */ {color: #217b6e; font-weight: normal; font-style: normal}
+pre code span.fl /* Float          */ {color: #436fb2; font-weight: normal; font-style: normal}
+pre code span.fu /* Function       */ {color: #457a50; font-weight: normal; font-style: normal}
+pre code span.im /* Import         */ {color: #8061a3; font-weight: normal; font-style: normal}
+pre code span.in /* Information    */ {color: #736968; font-weight: normal; font-style: normal}
+pre code span.kw /* Keyword        */ {color: #8061a3; font-weight: normal; font-style: normal}
+pre code span.no /* Normal         */ {color: inherit; font-weight: normal; font-style: normal}
+pre code span.op /* Operator       */ {color: #b94e00; font-weight: normal; font-style: normal}
+pre code span.ot /* Other          */ {color: #b94e00; font-weight: normal; font-style: normal}
+pre code span.pp /* Preprocessor   */ {color: #8061a3; font-weight: normal; font-style: normal}
+pre code span.re /* RegionMarker   */ {color: #736968; font-weight: normal; font-style: normal}
+pre code span.sc /* SpecialChar    */ {color: #b94e00; font-weight: normal; font-style: normal}
+pre code span.ss /* SpecialString  */ {color: #b25235; font-weight: normal; font-style: normal}
+pre code span.st /* String         */ {color: #995c7a; font-weight: normal; font-style: normal}
+pre code span.va /* Variable       */ {color: inherit; font-weight: normal; font-style: normal}
+pre code span.vs /* VerbatimString */ {color: #995c7a; font-weight: normal; font-style: normal}
+pre code span.wa /* Warning        */ {color: #736968; font-weight: normal; font-style: normal}
+
+/* Example plots: a white band running edge to edge across the code box
+   (pkgdown's <pre> padding is 0.75rem, or 1rem at the sides on small screens),
+   rather than a white image floating inside the grey padding.
+   A plot that ends the example is followed by a newline, which makes an empty
+   line below the block; the extra -1lh removes it along with the padding. */
+pre .r-plt {display: block; margin: 0.75rem -0.75rem 0;}
+pre .r-plt:last-child {margin-bottom: calc(-0.75rem - 1lh);}
+pre .r-plt img {display: block; width: 100%; max-width: none; height: auto; margin: 0;}
+@media (max-width: 575.98px) {
+  pre .r-plt {margin-left: -1rem; margin-right: -1rem;}
 }

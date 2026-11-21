@@ -28,5 +28,4 @@ Research Society*, **54**, 799-805.
 
 ``` r
 plot(taylor)
-
 ```

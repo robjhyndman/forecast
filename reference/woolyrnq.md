@@ -21,5 +21,4 @@ Time Series Data Library. <https://pkg.yangzhuoranyang.com/tsdl/>
 
 ``` r
 tsdisplay(woolyrnq)
-
 ```
