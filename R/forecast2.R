@@ -60,6 +60,9 @@ BoxCox <- function(x, lambda) {
 #' @rdname BoxCox
 #' @export
 InvBoxCox <- function(x, lambda, biasadj = FALSE, fvar = NULL) {
+  biasadj <- biasadj %||% attr(lambda, "biasadj")
+  # Drop attributes so they don't propagate to the result
+  lambda <- as.numeric(lambda)
   if (lambda < 0) {
     x[x > -1 / lambda] <- NA
   }
@@ -73,7 +76,6 @@ InvBoxCox <- function(x, lambda, biasadj = FALSE, fvar = NULL) {
     colnames(out) <- colnames(x)
   }
 
-  biasadj <- biasadj %||% attr(lambda, "biasadj")
   if (!is.logical(biasadj)) {
     warning("`biasadj` information not found, defaulting to `FALSE`.")
     biasadj <- FALSE
@@ -102,6 +104,10 @@ InvBoxCox <- function(x, lambda, biasadj = FALSE, fvar = NULL) {
     }
     out <- out *
       (1 + 0.5 * as.numeric(fvar) * (1 - lambda) / (out)^(2 * lambda))
+  }
+  # Ops.ts() names the result of arithmetic on two single-value series
+  if (is.ts(out) && length(out) == 1L) {
+    names(out) <- NULL
   }
   out
 }
