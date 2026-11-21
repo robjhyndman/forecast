@@ -100,6 +100,8 @@
 <li>
 <code><a href="../reference/croston_model.html">croston_model()</a></code> and <code><a href="../reference/forecast.croston_model.html">croston()</a></code> can now optimize and separately specify Croston smoothing parameters.</li>
 <li>
+<code><a href="../reference/croston_model.html">croston_model()</a></code> and <code><a href="../reference/forecast.croston_model.html">croston()</a></code> now give an informative error when the series contains missing values.</li>
+<li>
 <code><a href="../reference/croston_model.html">croston_model()</a></code> now returns <code>NA</code> for fitted values before the first non-zero demand instead of 0.</li>
 <li>
 <code><a href="../reference/croston_model.html">croston_model()</a></code> and <code><a href="../reference/forecast.croston_model.html">croston()</a></code> now return the fitted values as a time series.</li>
@@ -164,6 +166,8 @@
 <li>
 <code><a href="../reference/gglagplot.html">gglagchull()</a></code> now labels an unnamed series with the name of the object instead of its deparsed values.</li>
 <li>
+<code><a href="../reference/ggmonthplot.html">ggsubseriesplot()</a></code> now draws the mean line for seasons that contain missing values.</li>
+<li>
 <code><a href="../reference/autoplot.acf.html">ggtaperedacf()</a></code> no longer errors when forecast is not attached.</li>
 <li>
 <code><a href="../reference/tsdisplay.html">ggtsdisplay()</a></code> shows the series name as the default title again.</li>
@@ -175,6 +179,8 @@
 <code><a href="../reference/forecast.mean_model.html">meanf()</a></code> no longer errors with <code>bootstrap = TRUE</code> when a single confidence level is supplied.</li>
 <li>
 <code><a href="../reference/forecast.mean_model.html">meanf()</a></code> no longer errors when <code>lambda = "auto"</code>.</li>
+<li>
+<code><a href="../reference/modelAR.html">modelAR()</a></code> now keeps the method name when refitting with <code>model</code> instead of replacing the function name with its source code.</li>
 <li>
 <code><a href="../reference/modelAR.html">modelAR()</a></code> with <code>scale.inputs = TRUE</code> now returns unscaled residuals, fixing too-narrow prediction intervals when <code>lambda</code> is set.</li>
 <li>
@@ -189,6 +195,8 @@
 <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code><a href="../reference/Arima.html">Arima()</a></code> models now displays the stored AICc and BIC values instead of recomputing them, which gave slightly different results for series with interior missing values.</li>
 <li>
 <code><a href="../reference/residuals.forecast.html">residuals.Arima()</a></code> with <code>type = "regression"</code> now finds the regressors of <code><a href="https://rdrr.io/r/stats/arima.html" class="external-link">stats::arima()</a></code> models in the calling environment, including data frames.</li>
+<li>
+<code><a href="../reference/simulate.ets.html">simulate.ar()</a></code> now uses the intercept of models fitted with <code>ar(method = "ols")</code>, which also corrects simulated and bootstrapped prediction intervals from <code><a href="../reference/forecast.Arima.html">forecast.ar()</a></code>.</li>
 <li>
 <code><a href="../reference/simulate.ets.html">simulate.Arima()</a></code> now retains nonzero AR and MA coefficients that sum to zero in seasonal models.</li>
 <li>
