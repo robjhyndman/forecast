@@ -1069,7 +1069,7 @@ ggtsdisplay <- function(
       ggplot2::geom_point() +
       ggplot2::labs(x = expression(Y[t - 1]), y = expression(Y[t]))
   } else if (plot.type == "spectrum") {
-    specData <- spec.ar(x, plot = FALSE)
+    specData <- spec.ar(x, plot = FALSE, na.action = na.action)
     specData <- data.frame(
       spectrum = specData$spec,
       frequency = specData$freq,

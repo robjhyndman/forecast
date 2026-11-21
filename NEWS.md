@@ -56,6 +56,7 @@
 * `gglagchull()` now labels an unnamed series with the name of the object instead of its deparsed values.
 * `ggsubseriesplot()` now draws the mean line for seasons that contain missing values.
 * `ggtaperedacf()` no longer errors when forecast is not attached.
+* `ggtsdisplay()` now uses `na.action` for the spectrum, so `plot.type = "spectrum"` no longer errors for series with missing values.
 * `ggtsdisplay()` shows the series name as the default title again.
 * `InvBoxCox()` no longer leaves stray names or attributes on single-value results, such as forecasts with `h = 1` and a Box-Cox transformation.
 * `mean_model()` and `meanf()` now exclude missing observations when estimating uncertainty.
