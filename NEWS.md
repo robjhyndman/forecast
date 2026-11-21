@@ -65,6 +65,7 @@
 * `ocsb.test()` lag selection now considers lag 0 and returns the lag that minimises the criterion.
 * `print()` for `Arima()` models now displays the stored AICc and BIC values instead of recomputing them, which gave slightly different results for series with interior missing values.
 * `residuals.Arima()` with `type = "regression"` now finds the regressors of `stats::arima()` models in the calling environment, including data frames.
+* `simulate.ar()` now uses the intercept of models fitted with `ar(method = "ols")`, which also corrects simulated and bootstrapped prediction intervals from `forecast.ar()`.
 * `simulate.Arima()` now retains nonzero AR and MA coefficients that sum to zero in seasonal models.
 * `simulate.rw_model()` now adds the drift once per seasonal period instead of every observation when `lag > 1`, which also corrects simulated and bootstrapped prediction intervals from `forecast.rw_model()`.
 * `simulate.spline_model()` with `future = FALSE` no longer errors for series longer than 100 observations, and now simulates on the transformed scale when `lambda` is used.
