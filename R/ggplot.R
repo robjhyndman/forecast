@@ -1438,6 +1438,7 @@ ggsubseriesplot <- function(
   )
   seasonwidth <- (max(data$year) - min(data$year)) * 1.05
   data$time <- data$season + 0.025 + (data$year - min(data$year)) / seasonwidth
+  data <- data[!is.na(data$season), ]
   data$avg <- stats::ave(data$y, data$season, FUN = \(x) mean(x, na.rm = TRUE))
 
   # Initialise ggplot object
