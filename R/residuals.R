@@ -162,7 +162,7 @@ residuals.ARFIMA <- function(object, type = c("innovation", "response"), ...) {
       if ("x" %in% names(object)) {
         x <- object$x
       } else {
-        x <- eval.parent(parse(text = as.character(object$call)[2]))
+        x <- eval.parent(str2lang(as.character(object$call)[2]))
       }
       if (!is.null(object$lambda)) {
         x <- BoxCox(x, object$lambda)

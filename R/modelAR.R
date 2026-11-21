@@ -349,14 +349,18 @@ modelAR <- function(
   tsp(out$fitted) <- tsp(out$x)
   out$lags <- lags
   out$series <- yname
-  out$method <- deparse1(substitute(FUN))
-  out$method <- paste0(out$method, "-AR(", p)
-  if (P > 0) {
-    out$method <- paste0(out$method, ",", P)
-  }
-  out$method <- paste0(out$method, ")")
-  if (P > 0) {
-    out$method <- paste0(out$method, "[", m, "]")
+  if (useoldmodel) {
+    out$method <- model$method
+  } else {
+    out$method <- deparse1(substitute(FUN))
+    out$method <- paste0(out$method, "-AR(", p)
+    if (P > 0) {
+      out$method <- paste0(out$method, ",", P)
+    }
+    out$method <- paste0(out$method, ")")
+    if (P > 0) {
+      out$method <- paste0(out$method, "[", m, "]")
+    }
   }
   out$call <- match.call()
   structure(out, class = c("fc_model", "modelAR"))

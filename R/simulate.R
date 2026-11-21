@@ -538,7 +538,8 @@ simulate.ar <- function(
     x.mean <- 0
     nsim <- nsim %||% 100
   } else {
-    x.mean <- object$x.mean
+    x.intercept <- object$x.intercept %||% 0
+    x.mean <- object$x.mean + x.intercept / (1 - sum(object$ar))
     object$x <- object$x - x.mean
   }
   if (future) {

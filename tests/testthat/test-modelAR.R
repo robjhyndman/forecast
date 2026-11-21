@@ -486,6 +486,19 @@ test_that("modelAR() residuals are unscaled when scale.inputs = TRUE", {
   expect_equal(fit$residuals, residuals(fit), ignore_attr = TRUE)
 })
 
+test_that("modelAR() keeps the method name when refitting", {
+  fun <- function(x, y, ...) lm(y ~ x)
+  pred <- function(object, newdata) {
+    if (missing(newdata)) {
+      return(fitted(object))
+    }
+    drop(cbind(1, rbind(newdata)) %*% coef(object))
+  }
+  fit <- modelAR(USAccDeaths, p = 2, FUN = fun, predict.FUN = pred)
+  expect_identical(fit$method, "fun-AR(2,1)[12]")
+  expect_identical(modelAR(USAccDeaths, model = fit)$method, fit$method)
+})
+
 test_that("modelAR() checks the class of model", {
   expect_snapshot(modelAR(lh, model = ets(lh)), error = TRUE)
 })

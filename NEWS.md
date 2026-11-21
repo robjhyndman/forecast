@@ -21,6 +21,7 @@
 * `bizdays()` now returns a plain time series, like `monthdays()` and `easter()`, instead of one carrying the period labels as `dim` and `dimnames` attributes.
 * `bld.mbb.bootstrap()` no longer errors when `num = 1` and now validates that `num` is a positive integer.
 * `croston_model()` and `croston()` can now optimize and separately specify Croston smoothing parameters.
+* `croston_model()` and `croston()` now give an informative error when the series contains missing values.
 * `croston_model()` now returns `NA` for fitted values before the first non-zero demand instead of 0.
 * `croston_model()` and `croston()` now return the fitted values as a time series.
 * `CVar()` now computes fold accuracy with fitted and actual values in the correct order.
@@ -53,12 +54,15 @@
 * `geom_forecast()` no longer errors for forecast objects when forecast is not attached.
 * `getResponse()` now returns the original series for `StructTS` models instead of its time series attributes.
 * `gglagchull()` now labels an unnamed series with the name of the object instead of its deparsed values.
+* `ggsubseriesplot()` now draws the mean line for seasons that contain missing values.
 * `ggtaperedacf()` no longer errors when forecast is not attached.
 * `ggtsdisplay()` now uses `na.action` for the spectrum, so `plot.type = "spectrum"` no longer errors for series with missing values.
 * `ggtsdisplay()` shows the series name as the default title again.
+* `InvBoxCox()` no longer leaves stray names or attributes on single-value results, such as forecasts with `h = 1` and a Box-Cox transformation.
 * `mean_model()` and `meanf()` now exclude missing observations when estimating uncertainty.
 * `meanf()` no longer errors with `bootstrap = TRUE` when a single confidence level is supplied.
 * `meanf()` no longer errors when `lambda = "auto"`.
+* `modelAR()` now keeps the method name when refitting with `model` instead of replacing the function name with its source code.
 * `modelAR()` with `scale.inputs = TRUE` now returns unscaled residuals, fixing too-narrow prediction intervals when `lambda` is set.
 * `mstl()` now drops short seasonal periods from the `msts` attribute, so `forecast.stlm()` no longer errors.
 * `naive()`, `rwf()`, `rw_model()` and `snaive()` no longer return all-`NA` fitted values when `biasadj = TRUE`.
@@ -66,6 +70,7 @@
 * `ocsb.test()` lag selection now considers lag 0 and returns the lag that minimises the criterion.
 * `print()` for `Arima()` models now displays the stored AICc and BIC values instead of recomputing them, which gave slightly different results for series with interior missing values.
 * `residuals.Arima()` with `type = "regression"` now finds the regressors of `stats::arima()` models in the calling environment, including data frames.
+* `simulate.ar()` now uses the intercept of models fitted with `ar(method = "ols")`, which also corrects simulated and bootstrapped prediction intervals from `forecast.ar()`.
 * `simulate.Arima()` now retains nonzero AR and MA coefficients that sum to zero in seasonal models.
 * `simulate.rw_model()` now adds the drift once per seasonal period instead of every observation when `lag > 1`, which also corrects simulated and bootstrapped prediction intervals from `forecast.rw_model()`.
 * `simulate.spline_model()` with `future = FALSE` no longer errors for series longer than 100 observations, and now simulates on the transformed scale when `lambda` is used.

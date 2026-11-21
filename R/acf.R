@@ -471,7 +471,7 @@ plot.mpacf <- function(
 
   xlim <- xlim %||% c(1, object$lag)
   ylim <- ylim %||% range(object$z, object$upper, object$lower)
-  if (ylab == "") {
+  if (!nzchar(ylab)) {
     ylab <- if (object$type == "partial") "PACF" else "ACF"
   }
 

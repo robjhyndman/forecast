@@ -740,7 +740,7 @@ autoplot.forecast <- function(
     mt <- object$model$terms
     # Perhaps a better way to do this
     yvar <- object$series %||% deparse(mt[[2]])
-    xvar <- attr(mt, "term.labels")
+    xvar <- labels(mt)
     vars <- c(yvar = yvar, xvar = xvar)
     data <- object$model$model
     colnames(data) <- names(vars)[match(colnames(data), vars)]
@@ -1050,7 +1050,7 @@ ggtsdisplay <- function(
     # Match y-axis
     acfplotrange <- ggplot2::layer_scales(acfplot)$y$range$range
     pacfplotrange <- ggplot2::layer_scales(lastplot)$y$range$range
-    yrange <- range(c(acfplotrange, pacfplotrange))
+    yrange <- range(acfplotrange, pacfplotrange)
     acfplot <- acfplot + ggplot2::ylim(yrange)
     lastplot <- lastplot + ggplot2::ylim(yrange)
   } else if (plot.type == "histogram") {
@@ -1438,9 +1438,8 @@ ggsubseriesplot <- function(
   )
   seasonwidth <- (max(data$year) - min(data$year)) * 1.05
   data$time <- data$season + 0.025 + (data$year - min(data$year)) / seasonwidth
-  avgLines <- stats::aggregate(data$y, by = list(data$season), FUN = mean)
-  colnames(avgLines) <- c("season", "avg")
-  data <- merge(data, avgLines, by = "season")
+  data <- data[!is.na(data$season), ]
+  data$avg <- stats::ave(data$y, data$season, FUN = \(x) mean(x, na.rm = TRUE))
 
   # Initialise ggplot object
   p <- ggplot2::ggplot(

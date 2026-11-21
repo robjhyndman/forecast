@@ -97,6 +97,21 @@ test_that("ggtsdisplay() uses na.action for the spectrum", {
   y <- USAccDeaths
   y[5] <- NA
   expect_no_error(ggtsdisplay(y, plot.type = "spectrum", points = FALSE))
+test_that("ggsubseriesplot() ignores missing values in the seasonal means", {
+  y <- USAccDeaths
+  y[5] <- NA
+  data <- ggsubseriesplot(y)$data
+  expect_equal(
+    unique(data$avg[data$season == 5]),
+    mean(y[cycle(y) == 5], na.rm = TRUE)
+  )
+})
+
+test_that("ggsubseriesplot() drops observations without a season", {
+  phase <- cycle(USAccDeaths)
+  phase[5] <- NA
+  data <- ggsubseriesplot(USAccDeaths, phase = phase)$data
+  expect_equal(data$y, as.numeric(USAccDeaths)[-5])
 })
 
 test_that("ggtaperedacf() and ggtaperedpacf() work", {
