@@ -93,6 +93,12 @@ test_that("gglagchull() labels an unnamed series with the object name", {
   expect_identical(unique(p$data$series), "woolyrnq")
 })
 
+test_that("ggtsdisplay() uses na.action for the spectrum", {
+  y <- USAccDeaths
+  y[5] <- NA
+  expect_no_error(ggtsdisplay(y, plot.type = "spectrum", points = FALSE))
+})
+
 test_that("ggtaperedacf() and ggtaperedpacf() work", {
   set.seed(1)
   expect_s3_class(ggtaperedacf(wineind, lag.max = 10, nsim = 10), "ggplot")

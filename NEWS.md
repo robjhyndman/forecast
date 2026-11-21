@@ -54,6 +54,7 @@
 * `getResponse()` now returns the original series for `StructTS` models instead of its time series attributes.
 * `gglagchull()` now labels an unnamed series with the name of the object instead of its deparsed values.
 * `ggtaperedacf()` no longer errors when forecast is not attached.
+* `ggtsdisplay()` now uses `na.action` for the spectrum, so `plot.type = "spectrum"` no longer errors for series with missing values.
 * `ggtsdisplay()` shows the series name as the default title again.
 * `mean_model()` and `meanf()` now exclude missing observations when estimating uncertainty.
 * `meanf()` no longer errors with `bootstrap = TRUE` when a single confidence level is supplied.
