@@ -133,7 +133,6 @@ Rob J Hyndman
 library(ggplot2)
 ggtsdisplay(USAccDeaths, plot.type = "scatter", theme = theme_bw())
 
-
 tsdisplay(diff(WWWusage))
 
 ggtsdisplay(USAccDeaths, plot.type = "scatter")
