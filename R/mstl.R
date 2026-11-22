@@ -292,9 +292,7 @@ forecast.stl <- function(
   } else if (inherits(object, "stl")) {
     m <- frequency(object$time.series)
     n <- NROW(object$time.series)
-    lastseas <- rep(seasonal(object)[n - (m:1) + 1], trunc(1 + (h - 1) / m))[
-      1:h
-    ]
+    lastseas <- rep_len(seasonal(object)[n - (m:1) + 1], h)
     xdata <- ts(rowSums(object$time.series))
     tsp(xdata) <- tsp(object$time.series)
     allseas <- seasonal(object)

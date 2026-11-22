@@ -304,10 +304,11 @@ forecast.fracdiff <- function(
   if (h > 1) {
     new.phi[2L:h] <- -bin.c[2L:h]
     for (i in 2L:h) {
+      j <- seq_len(i - 1)
       if (p > 0) {
-        new.phi[i] <- sum(phi[seq_len(i - 1)] * bin.c[rev(seq_len(i - 1))]) - bin.c[i]
+        new.phi[i] <- sum(phi[j] * bin.c[rev(j)]) - bin.c[i]
       }
-      psi[i] <- sum(new.phi[2L:i] * rev(psi[seq_len(i - 1)])) + theta[i - 1]
+      psi[i] <- sum(new.phi[2L:i] * rev(psi[j])) + theta[i - 1]
     }
   }
 

@@ -25,11 +25,10 @@ lpb <- function(x, nsim = 100) {
 
 MBB <- function(x, window_size) {
   bx <- array(0, (floor(length(x) / window_size) + 2) * window_size)
+  block <- seq_len(window_size)
   for (i in seq_len(floor(length(x) / window_size) + 2)) {
     c <- sample.int(length(x) - window_size + 1, 1)
-    bx[((i - 1) * window_size + 1):(i * window_size)] <- x[
-      c:(c + window_size - 1)
-    ]
+    bx[(i - 1) * window_size + block] <- x[c - 1 + block]
   }
   start_from <- sample.int(window_size, 1)
   bx[start_from:(start_from + length(x) - 1)]

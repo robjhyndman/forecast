@@ -536,10 +536,8 @@ calcLikelihood <- function(
     gamma.start <- 3
   }
   if (!is.null(seasonal.periods)) {
-    gamma.vector <- param.vector[
-      gamma.start:(gamma.start + length(seasonal.periods) - 1)
-    ]
-    final.gamma.pos <- gamma.start + length(gamma.vector) - 1
+    final.gamma.pos <- gamma.start + length(seasonal.periods) - 1
+    gamma.vector <- param.vector[gamma.start:final.gamma.pos]
   } else {
     gamma.vector <- NULL
     final.gamma.pos <- gamma.start - 1
@@ -666,10 +664,8 @@ calcLikelihoodNOTransformed <- function(
     gamma.start <- 2
   }
   if (!is.null(seasonal.periods)) {
-    gamma.vector <- param.vector[
-      gamma.start:(gamma.start + length(seasonal.periods) - 1)
-    ]
-    final.gamma.pos <- gamma.start + length(gamma.vector) - 1
+    final.gamma.pos <- gamma.start + length(seasonal.periods) - 1
+    gamma.vector <- param.vector[gamma.start:final.gamma.pos]
   } else {
     gamma.vector <- NULL
     final.gamma.pos <- gamma.start - 1

@@ -2343,9 +2343,8 @@ StatForecast <- ggplot2::ggproto(
           "Recycling `series`, provide a series name for each time series."
         )
       }
-      extraInfo[["series"]] <- series[
-        (abs(data$group[1]) - 1) %% length(series) + 1
-      ]
+      g <- abs(data$group[1])
+      extraInfo[["series"]] <- series[(g - 1) %% length(series) + 1]
     }
     do.call(transform, extraInfo)
   }

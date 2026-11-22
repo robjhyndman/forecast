@@ -277,9 +277,8 @@ forecast.lm <- function(
   # Adjust terms for function variables and rename datamat colnames to match.
   oldnewdata <- NULL
   if (!missing(newdata)) {
-    reqvars <- as.character(attr(object$terms, "variables")[-1])[
-      -attr(object$terms, "response")
-    ]
+    termvars <- as.character(attr(object$terms, "variables")[-1])
+    reqvars <- termvars[-attr(object$terms, "response")]
     # Search for time series variables
     tsvar <- match(c("trend", "season"), reqvars, 0L)
     # Check if required variables are functions
@@ -428,9 +427,8 @@ forecast.lm <- function(
   object$terms <- oldterms
   if (is.null(object$series)) {
     # Model produced via lm(), add series attribute
-    object$series <- deparse(attr(oldterms, "variables")[[
-      1 + attr(oldterms, "response")
-    ]])
+    response <- attr(oldterms, "variables")[[1 + attr(oldterms, "response")]]
+    object$series <- deparse(response)
   }
   fcast <- list(
     model = object,

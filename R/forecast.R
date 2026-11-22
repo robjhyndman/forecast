@@ -273,9 +273,8 @@ plotlmforecast <- function(
     if (length(shadecols) == 1) {
       if (shadecols == "oldstyle") {
         # Default behaviour up to v3.25.
-        shadecols <- heat.colors(nint + 2)[
-          switch(1 + (nint > 1), 2, nint:1) + 1
-        ]
+        shade <- if (nint > 1) nint:1 else 2
+        shadecols <- heat.colors(nint + 2)[shade + 1]
       }
     }
 
@@ -520,9 +519,8 @@ plot.forecast <- function(
     if (length(shadecols) == 1) {
       if (shadecols == "oldstyle") {
         # Default behaviour up to v3.25.
-        shadecols <- heat.colors(nint + 2)[
-          switch(1 + (nint > 1), 2, nint:1) + 1
-        ]
+        shade <- if (nint > 1) nint:1 else 2
+        shadecols <- heat.colors(nint + 2)[shade + 1]
       }
     }
     for (i in seq_len(nint)) {
