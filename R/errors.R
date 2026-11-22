@@ -87,11 +87,7 @@ testaccuracy <- function(f, x, test, d, D) {
     ape <- (c(x[2:n]) / c(x[1:(n - 1)]) - 1)[test - 1]
     theil <- sqrt(sum((fpe - ape)^2, na.rm = TRUE) / sum(ape^2, na.rm = TRUE))
     if (length(error) > 1) {
-      r1 <- acf(error, plot = FALSE, lag.max = 2, na.action = na.pass)$acf[
-        2,
-        1,
-        1
-      ]
+      r1 <- acf(error, plot = FALSE, lag.max = 2, na.action = na.pass)$acf[2]
     } else {
       r1 <- NA
     }
@@ -160,11 +156,7 @@ trainingaccuracy <- function(f, test, d, D) {
   # Additional time series measures
   if (!is.null(tspdx)) {
     if (length(res) > 1) {
-      r1 <- acf(res, plot = FALSE, lag.max = 2, na.action = na.pass)$acf[
-        2,
-        1,
-        1
-      ]
+      r1 <- acf(res, plot = FALSE, lag.max = 2, na.action = na.pass)$acf[2]
     } else {
       r1 <- NA
     }

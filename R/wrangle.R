@@ -4,12 +4,12 @@ datamat <- function(..., flatten = TRUE) {
   if (length(vars) == 0) {
     return(data.frame())
   }
+  argnames <- as.character(substitute(list(...))[-1])
   if (!is.null(names(vars))) {
-    names(vars)[!nzchar(names(vars))] <- as.character(substitute(list(...))[
-      -1
-    ])[!nzchar(names(vars))]
+    unnamed <- !nzchar(names(vars))
+    names(vars)[unnamed] <- argnames[unnamed]
   } else {
-    names(vars) <- as.character(substitute(list(...))[-1])
+    names(vars) <- argnames
   }
   if (flatten) {
     i <- 1

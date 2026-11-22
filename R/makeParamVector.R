@@ -21,31 +21,22 @@ unParameteriseTBATS <- function(param.vector, control) {
       gamma.start <- 3
     }
     if (control$length.gamma > 0) {
-      gamma.one.vector <- param.vector[
-        gamma.start:(gamma.start + (control$length.gamma / 2) - 1)
-      ]
-      gamma.two.vector <- param.vector[
-        (gamma.start + (control$length.gamma / 2)):(gamma.start +
-          (control$length.gamma) -
-          1)
-      ]
+      gamma.two.start <- gamma.start + control$length.gamma / 2
       final.gamma.pos <- gamma.start + control$length.gamma - 1
+      gamma.one.vector <- param.vector[gamma.start:(gamma.two.start - 1)]
+      gamma.two.vector <- param.vector[gamma.two.start:final.gamma.pos]
     } else {
       gamma.one.vector <- NULL
       gamma.two.vector <- NULL
       final.gamma.pos <- gamma.start - 1
     }
     if (control$p != 0) {
-      ar.coefs <- param.vector[
-        (final.gamma.pos + 1):(final.gamma.pos + control$p)
-      ]
+      ar.coefs <- param.vector[final.gamma.pos + seq_len(control$p)]
     } else {
       ar.coefs <- NULL
     }
     if (control$q != 0) {
-      ma.coefs <- param.vector[
-        (final.gamma.pos + control$p + 1):length(param.vector)
-      ]
+      ma.coefs <- param.vector[-seq_len(final.gamma.pos + control$p)]
     } else {
       ma.coefs <- NULL
     }
@@ -68,31 +59,22 @@ unParameteriseTBATS <- function(param.vector, control) {
       gamma.start <- 2
     }
     if (control$length.gamma > 0) {
-      gamma.one.vector <- param.vector[
-        gamma.start:(gamma.start + (control$length.gamma / 2) - 1)
-      ]
-      gamma.two.vector <- param.vector[
-        (gamma.start + (control$length.gamma / 2)):(gamma.start +
-          (control$length.gamma) -
-          1)
-      ]
+      gamma.two.start <- gamma.start + control$length.gamma / 2
       final.gamma.pos <- gamma.start + control$length.gamma - 1
+      gamma.one.vector <- param.vector[gamma.start:(gamma.two.start - 1)]
+      gamma.two.vector <- param.vector[gamma.two.start:final.gamma.pos]
     } else {
       gamma.one.vector <- NULL
       gamma.two.vector <- NULL
       final.gamma.pos <- gamma.start - 1
     }
     if (control$p != 0) {
-      ar.coefs <- param.vector[
-        (final.gamma.pos + 1):(final.gamma.pos + control$p)
-      ]
+      ar.coefs <- param.vector[final.gamma.pos + seq_len(control$p)]
     } else {
       ar.coefs <- NULL
     }
     if (control$q != 0) {
-      ma.coefs <- param.vector[
-        (final.gamma.pos + control$p + 1):length(param.vector)
-      ]
+      ma.coefs <- param.vector[-seq_len(final.gamma.pos + control$p)]
     } else {
       ma.coefs <- NULL
     }
@@ -240,25 +222,19 @@ unParameterise <- function(param.vector, control) {
       gamma.start <- 3
     }
     if (control$length.gamma > 0) {
-      gamma.vector <- param.vector[
-        gamma.start:(gamma.start + control$length.gamma - 1)
-      ]
       final.gamma.pos <- gamma.start + control$length.gamma - 1
+      gamma.vector <- param.vector[gamma.start:final.gamma.pos]
     } else {
       gamma.vector <- NULL
       final.gamma.pos <- gamma.start - 1
     }
     if (control$p != 0) {
-      ar.coefs <- param.vector[
-        (final.gamma.pos + 1):(final.gamma.pos + control$p)
-      ]
+      ar.coefs <- param.vector[final.gamma.pos + seq_len(control$p)]
     } else {
       ar.coefs <- NULL
     }
     if (control$q != 0) {
-      ma.coefs <- param.vector[
-        (final.gamma.pos + control$p + 1):length(param.vector)
-      ]
+      ma.coefs <- param.vector[-seq_len(final.gamma.pos + control$p)]
     } else {
       ma.coefs <- NULL
     }
@@ -281,25 +257,19 @@ unParameterise <- function(param.vector, control) {
       gamma.start <- 2
     }
     if (control$length.gamma > 0) {
-      gamma.vector <- param.vector[
-        gamma.start:(gamma.start + control$length.gamma - 1)
-      ]
       final.gamma.pos <- gamma.start + control$length.gamma - 1
+      gamma.vector <- param.vector[gamma.start:final.gamma.pos]
     } else {
       gamma.vector <- NULL
       final.gamma.pos <- gamma.start - 1
     }
     if (control$p != 0) {
-      ar.coefs <- param.vector[
-        (final.gamma.pos + 1):(final.gamma.pos + control$p)
-      ]
+      ar.coefs <- param.vector[final.gamma.pos + seq_len(control$p)]
     } else {
       ar.coefs <- NULL
     }
     if (control$q != 0) {
-      ma.coefs <- param.vector[
-        (final.gamma.pos + control$p + 1):length(param.vector)
-      ]
+      ma.coefs <- param.vector[-seq_len(final.gamma.pos + control$p)]
     } else {
       ma.coefs <- NULL
     }

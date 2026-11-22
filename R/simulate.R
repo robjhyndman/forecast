@@ -249,14 +249,12 @@ myarima.sim <- function(model, n, x, e, ...) {
     i <- length(data) - D * m + 1
     seasonal.xi <- data[i:length(data)]
     length.s.xi <- length(seasonal.xi)
-    x <- diffinv(x, lag = m, differences = D, xi = seasonal.xi)[
-      -(1:length.s.xi)
-    ]
+    x <- diffinv(x, lag = m, differences = D, xi = seasonal.xi)
+    x <- x[-seq_len(length.s.xi)]
   } else if (d > 0 && D == 0) {
     # Regular undifferencing, if there is no seasonal differencing
-    x <- diffinv(x, differences = d, xi = data[length(data) - (d:1) + 1])[
-      -(1:d)
-    ]
+    x <- diffinv(x, differences = d, xi = data[length(data) - (d:1) + 1])
+    x <- x[-seq_len(d)]
   } else if (d > 0 && D > 0) {
     # Undifferencing for where the differencing is both Seasonal and Non-Seasonal
     # Regular first
@@ -266,14 +264,14 @@ myarima.sim <- function(model, n, x, e, ...) {
       x,
       differences = d,
       xi = regular.xi[length(regular.xi) - (d:1) + 1]
-    )[-(1:d)]
+    )[-seq_len(d)]
 
     # Then seasonal
     i <- length(data) - D * m + 1
     seasonal.xi <- data[i:length(data)]
     length.s.xi <- length(seasonal.xi)
     x <- diffinv(x, lag = m, differences = D, xi = seasonal.xi)
-    x <- x[-(1:length.s.xi)]
+    x <- x[-seq_len(length.s.xi)]
   }
 
   x <- ts(
@@ -488,9 +486,8 @@ simulate.Arima <- function(
     if (flag.seasonal.diff) {
       zeros <- object$arma[5] * object$arma[7]
       sim <- arima.sim(model, nsim, innov = e)
-      sim <- diffinv(sim, lag = object$arma[5], differences = object$arma[7])[
-        -(1:zeros)
-      ]
+      sim <- diffinv(sim, lag = object$arma[5], differences = object$arma[7])
+      sim <- sim[-seq_len(zeros)]
       sim <- tail(sim, nsim) + xm
     } else {
       sim <- tail(arima.sim(model, nsim, innov = e), nsim) + xm
@@ -834,7 +831,8 @@ simulate.nnetar <- function(
         "Can't simulate when there are missing values near the end of the series."
       )
     }
-    path[i] <- mean(vapply(object$model, predict, numeric(1), newdata = newdata)) + e[i]
+    pred <- vapply(object$model, predict, numeric(1), newdata = newdata)
+    path[i] <- mean(pred) + e[i]
     flag <- c(path[i], flag[-maxlag])
   }
   ## Re-scale simulated points

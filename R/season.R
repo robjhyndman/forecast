@@ -41,9 +41,7 @@ monthdays <- function(x) {
   }
   nyears <- round(length(x) / f + 1) + 1
   years <- (1:nyears) + (start(x)[1] - 1)
-  leap.years <- ((years %% 4 == 0) & !(years %% 100 == 0 & years %% 400 != 0))[
-    1:nyears
-  ]
+  leap.years <- (years %% 4 == 0) & !(years %% 100 == 0 & years %% 400 != 0)
   dummy <- t(matrix(rep(days, nyears), nrow = f))
   if (f == 12) {
     dummy[leap.years, 2] <- 29

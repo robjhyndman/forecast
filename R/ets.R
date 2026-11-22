@@ -228,9 +228,8 @@ ets <- function(
         colnames(model$states)[2] <- "b"
       }
       if (seasontype != "N") {
-        colnames(model$states)[
-          (2 + (trendtype != "N")):ncol(model$states)
-        ] <- paste0("s", 1:m)
+        seascols <- (2 + (trendtype != "N")):ncol(model$states)
+        colnames(model$states)[seascols] <- paste0("s", 1:m)
       }
       model$fitted <- ts(e$fits, frequency = tsp.y[3], start = tsp.y[1])
       model$residuals <- ts(e$e, frequency = tsp.y[3], start = tsp.y[1])

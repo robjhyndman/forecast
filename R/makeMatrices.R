@@ -83,10 +83,8 @@ makeTBATSFMatrix <- function(
         S = S,
         k = as.integer(k.vector[i])
       )
-      A[
-        (last.pos + 1):(last.pos + 2 * k.vector[i]),
-        (last.pos + 1):(last.pos + 2 * k.vector[i])
-      ] <- Ai
+      idx <- last.pos + seq_len(2 * k.vector[i])
+      A[idx, idx] <- Ai
       last.pos <- last.pos + 2 * k.vector[i]
     }
     seasonal.row <- cbind(seasonal.row, A)
@@ -221,10 +219,9 @@ makeFMatrix <- function(
         Ai <- rbind(a.row.one, a.row.two)
         A <- rbind(A, matrix(0, nrow = nrow(Ai), ncol = old.A.columns))
         A <- cbind(A, matrix(0, nrow = nrow(A), ncol = ncol(Ai)))
-        A[
-          (old.A.rows + 1):(old.A.rows + nrow(Ai)),
-          (old.A.columns + 1):(old.A.columns + ncol(Ai))
-        ] <- Ai
+        rows <- old.A.rows + seq_len(nrow(Ai))
+        cols <- old.A.columns + seq_len(ncol(Ai))
+        A[rows, cols] <- Ai
       }
     }
     seasonal.row <- cbind(seasonal.row, A)
