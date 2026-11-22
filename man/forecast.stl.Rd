@@ -157,7 +157,6 @@ plot(forecast(tsmod, h = 36))
 
 decomp <- stl(USAccDeaths, s.window = "periodic")
 plot(forecast(decomp))
-
 plot(stlf(AirPassengers, lambda = 0))
 }
 \seealso{
