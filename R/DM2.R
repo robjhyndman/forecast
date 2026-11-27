@@ -78,10 +78,11 @@ dm.test <- function(
     stop("`h` must be a positive integer.")
   }
   h <- as.integer(h)
-  if (h > length(e1)) {
+  d <- c(abs(e1))^power - c(abs(e2))^power
+  n <- sum(!is.na(d))
+  if (h > n) {
     stop("`h` can't be longer than the number of forecast errors.")
   }
-  d <- c(abs(e1))^power - c(abs(e2))^power
   d.cov <- acf(
     d,
     na.action = na.omit,
@@ -89,7 +90,6 @@ dm.test <- function(
     type = "covariance",
     plot = FALSE
   )$acf[,, 1]
-  n <- length(d)
 
   if (varestimator == "acf" || h == 1L) {
     # Original estimator

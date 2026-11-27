@@ -68,3 +68,26 @@ test_that("dm.test() errors for invalid input", {
     dm.test(e, e)
   })
 })
+
+test_that("dm.test() ignores NA values in sample size and horizon checks", {
+  set.seed(1)
+  e1 <- rnorm(50)
+  e2 <- rnorm(50, sd = 2)
+  e1_na <- c(rep(NA_real_, 25), e1, NA_real_)
+  e2_na <- c(rep(NA_real_, 25), e2, NA_real_)
+
+  dm_clean <- dm.test(e1, e2, h = 1)
+  dm_na <- dm.test(e1_na, e2_na, h = 1)
+  expect_equal(dm_na$statistic, dm_clean$statistic)
+  expect_equal(dm_na$p.value, dm_clean$p.value)
+
+  dm_clean_h3 <- dm.test(e1, e2, h = 3, varestimator = "bartlett")
+  dm_na_h3 <- dm.test(e1_na, e2_na, h = 3, varestimator = "bartlett")
+  expect_equal(dm_na_h3$statistic, dm_clean_h3$statistic)
+  expect_equal(dm_na_h3$p.value, dm_clean_h3$p.value)
+
+  expect_error(
+    dm.test(c(rep(NA_real_, 10), e1[1:3]), c(rep(NA_real_, 10), e2[1:3]), h = 4),
+    "can't be longer than the number of forecast errors"
+  )
+})
