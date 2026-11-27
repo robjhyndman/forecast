@@ -51,6 +51,19 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="forecast-development-version">forecast (development version)<a class="anchor" aria-label="anchor" href="#forecast-development-version"></a></h2>
+<div class="section level3">
+<h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<ul><li>
+<code><a href="../reference/croston_model.html">croston_model()</a></code> and <code><a href="../reference/forecast.croston_model.html">croston()</a></code> can now optimize and separately specify Croston smoothing parameters.</li>
+<li>
+<code><a href="../reference/forecast.modelAR.html">forecast.modelAR()</a></code> now computes prediction intervals for models with <code>xreg</code>.</li>
+<li>
+<code>forecast.varest()</code> now supports <code>fan = TRUE</code> and <code>level</code> values between 0 and 1.</li>
+<li>
+<code><a href="../reference/theta_model.html">theta_model()</a></code> and <code><a href="../reference/forecast.theta_model.html">thetaf()</a></code> gained a <code>type</code> argument to select additive or multiplicative seasonal decomposition.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
 <ul><li>
 <code><a href="../reference/arfima.html">arfima()</a></code>, <code><a href="../reference/Arima.html">Arima()</a></code>, <code><a href="../reference/auto.arima.html">auto.arima()</a></code>, <code><a href="../reference/forecast.croston_model.html">croston()</a></code>, <code><a href="../reference/ses.html">holt()</a></code>, <code><a href="../reference/ses.html">hw()</a></code>, <code><a href="../reference/forecast.mean_model.html">meanf()</a></code>, <code><a href="../reference/modelAR.html">modelAR()</a></code>, <code><a href="../reference/forecast.rw_model.html">naive()</a></code>, <code><a href="../reference/nnetar.html">nnetar()</a></code>, <code><a href="../reference/forecast.rw_model.html">rwf()</a></code>, <code><a href="../reference/ses.html">ses()</a></code>, <code><a href="../reference/forecast.rw_model.html">snaive()</a></code>, <code><a href="../reference/forecast.spline_model.html">splinef()</a></code>, <code><a href="../reference/forecast.stl.html">stlf()</a></code>, <code><a href="../reference/stlm.html">stlm()</a></code> and <code><a href="../reference/forecast.theta_model.html">thetaf()</a></code> now keep the series name when it is supplied via the deprecated <code>x</code> argument.</li>
 <li>
@@ -92,15 +105,13 @@
 <li>
 <code><a href="../reference/bld.mbb.bootstrap.html">bld.mbb.bootstrap()</a></code> no longer errors when <code>num = 1</code> and now validates that <code>num</code> is a positive integer.</li>
 <li>
-<code><a href="../reference/croston_model.html">croston_model()</a></code> and <code><a href="../reference/forecast.croston_model.html">croston()</a></code> can now optimize and separately specify Croston smoothing parameters.</li>
-<li>
 <code><a href="../reference/croston_model.html">croston_model()</a></code> and <code><a href="../reference/forecast.croston_model.html">croston()</a></code> now give an informative error when the series contains missing values.</li>
 <li>
 <code><a href="../reference/croston_model.html">croston_model()</a></code> now returns <code>NA</code> for fitted values before the first non-zero demand instead of 0.</li>
 <li>
 <code><a href="../reference/croston_model.html">croston_model()</a></code> and <code><a href="../reference/forecast.croston_model.html">croston()</a></code> now return the fitted values as a time series.</li>
 <li>
-<code><a href="../reference/CVar.html">CVar()</a></code> now computes fold accuracy with fitted and actual values in the correct order.</li>
+<code><a href="../reference/CVar.html">CVar()</a></code> now computes fold accuracy with fitted and actual values in the correct order (<a href="https://github.com/robjhyndman/forecast/issues/1220" class="external-link">#1220</a>).</li>
 <li>
 <code><a href="../reference/CVar.html">CVar()</a></code> no longer returns <code>k</code> empty elements before the folds, so folds can again be accessed by position.</li>
 <li>
@@ -128,6 +139,8 @@
 <li>
 <code><a href="../reference/forecast.ets.html">forecast.ets()</a></code> now uses the damping parameter in forecasts and prediction intervals for ETS(M,Ad,M) models.</li>
 <li>
+<code><a href="../reference/forecast.ets.html">forecast.ets()</a></code> now adds the seasonal disturbance at the correct horizon in prediction intervals for ETS(A,N,A) and ETS(M,N,A) models.</li>
+<li>
 <code><a href="../reference/forecast.ets.html">forecast.ets()</a></code> now uses the supplied <code>innov</code> matrix when <code>simulate = TRUE</code> instead of silently ignoring it.</li>
 <li>
 <code><a href="../reference/forecast.ets.html">forecast.ets()</a></code> now gives the intended error message when forecasting fails for a multiplicative trend model.</li>
@@ -137,8 +150,6 @@
 <code><a href="../reference/forecast.lm.html">forecast.lm()</a></code> now returns <code>lower</code> and <code>upper</code> as matrices with columns named by level, including when a single <code>level</code> is used, so shortening time series forecasts with <code>forecast(fc, h = )</code> no longer errors.</li>
 <li>
 <code><a href="../reference/forecast.lm.html">forecast.lm()</a></code> no longer leaves the row numbers of the data as names on the time series it returns.</li>
-<li>
-<code><a href="../reference/forecast.modelAR.html">forecast.modelAR()</a></code> now computes prediction intervals for models with <code>xreg</code>.</li>
 <li>
 <code><a href="../reference/forecast.rw_model.html">forecast.rw_model()</a></code> and <code><a href="../reference/forecast.theta_model.html">forecast.theta_model()</a></code> now use the model’s <code>biasadj</code> setting by default, so <code>thetaf(biasadj = TRUE)</code> returns bias-adjusted forecasts.</li>
 <li>
@@ -151,8 +162,6 @@
 <code><a href="../reference/forecast.ts.html">forecast.ts()</a></code> now keeps the series name in more cases.</li>
 <li>
 <code>forecast.varest()</code> no longer errors for a <code><a href="https://rdrr.io/pkg/vars/man/VAR.html" class="external-link">vars::VAR()</a></code> model fitted to a data frame.</li>
-<li>
-<code>forecast.varest()</code> now supports <code>fan = TRUE</code> and <code>level</code> values between 0 and 1.</li>
 <li>
 <code><a href="../reference/geom_forecast.html">geom_forecast()</a></code> no longer errors for forecast objects when forecast is not attached.</li>
 <li>
@@ -216,10 +225,9 @@
 <li>
 <code><a href="../reference/theta_model.html">theta_model()</a></code> and <code><a href="../reference/forecast.theta_model.html">thetaf()</a></code> now store a series supplied as a numeric vector as a time series.</li>
 <li>
-<code><a href="../reference/theta_model.html">theta_model()</a></code> and <code><a href="../reference/forecast.theta_model.html">thetaf()</a></code> gained a <code>type</code> argument to select additive or multiplicative seasonal decomposition.</li>
-<li>
 <code><a href="../reference/tslm.html">tslm()</a></code> and <code><a href="../reference/forecast.lm.html">forecast.lm()</a></code> no longer pick up unrelated variables named <code>dataname</code> or <code>oldnewdata</code> from the global environment.</li>
 </ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="9.0.2" id="forecast-902">forecast 9.0.2<a class="anchor" aria-label="anchor" href="#forecast-902"></a></h2><p class="text-muted">CRAN release: 2026-03-18</p>
 <ul><li>

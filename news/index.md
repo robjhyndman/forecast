@@ -2,6 +2,24 @@
 
 ## forecast (development version)
 
+### New features
+
+- [`croston_model()`](https://pkg.robjhyndman.com/forecast/reference/croston_model.md)
+  and
+  [`croston()`](https://pkg.robjhyndman.com/forecast/reference/forecast.croston_model.md)
+  can now optimize and separately specify Croston smoothing parameters.
+- [`forecast.modelAR()`](https://pkg.robjhyndman.com/forecast/reference/forecast.modelAR.md)
+  now computes prediction intervals for models with `xreg`.
+- `forecast.varest()` now supports `fan = TRUE` and `level` values
+  between 0 and 1.
+- [`theta_model()`](https://pkg.robjhyndman.com/forecast/reference/theta_model.md)
+  and
+  [`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
+  gained a `type` argument to select additive or multiplicative seasonal
+  decomposition.
+
+### Minor improvements and bug fixes
+
 - [`arfima()`](https://pkg.robjhyndman.com/forecast/reference/arfima.md),
   [`Arima()`](https://pkg.robjhyndman.com/forecast/reference/Arima.md),
   [`auto.arima()`](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md),
@@ -120,10 +138,6 @@
 - [`croston_model()`](https://pkg.robjhyndman.com/forecast/reference/croston_model.md)
   and
   [`croston()`](https://pkg.robjhyndman.com/forecast/reference/forecast.croston_model.md)
-  can now optimize and separately specify Croston smoothing parameters.
-- [`croston_model()`](https://pkg.robjhyndman.com/forecast/reference/croston_model.md)
-  and
-  [`croston()`](https://pkg.robjhyndman.com/forecast/reference/forecast.croston_model.md)
   now give an informative error when the series contains missing values.
 - [`croston_model()`](https://pkg.robjhyndman.com/forecast/reference/croston_model.md)
   now returns `NA` for fitted values before the first non-zero demand
@@ -134,7 +148,7 @@
   now return the fitted values as a time series.
 - [`CVar()`](https://pkg.robjhyndman.com/forecast/reference/CVar.md) now
   computes fold accuracy with fitted and actual values in the correct
-  order.
+  order ([\#1220](https://github.com/robjhyndman/forecast/issues/1220)).
 - [`CVar()`](https://pkg.robjhyndman.com/forecast/reference/CVar.md) no
   longer returns `k` empty elements before the folds, so folds can again
   be accessed by position.
@@ -179,6 +193,9 @@
   now uses the damping parameter in forecasts and prediction intervals
   for ETS(M,Ad,M) models.
 - [`forecast.ets()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ets.md)
+  now adds the seasonal disturbance at the correct horizon in prediction
+  intervals for ETS(A,N,A) and ETS(M,N,A) models.
+- [`forecast.ets()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ets.md)
   now uses the supplied `innov` matrix when `simulate = TRUE` instead of
   silently ignoring it.
 - [`forecast.ets()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ets.md)
@@ -196,8 +213,6 @@
 - [`forecast.lm()`](https://pkg.robjhyndman.com/forecast/reference/forecast.lm.md)
   no longer leaves the row numbers of the data as names on the time
   series it returns.
-- [`forecast.modelAR()`](https://pkg.robjhyndman.com/forecast/reference/forecast.modelAR.md)
-  now computes prediction intervals for models with `xreg`.
 - [`forecast.rw_model()`](https://pkg.robjhyndman.com/forecast/reference/forecast.rw_model.md)
   and
   [`forecast.theta_model()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
@@ -221,8 +236,6 @@
 - `forecast.varest()` no longer errors for a
   [`vars::VAR()`](https://rdrr.io/pkg/vars/man/VAR.html) model fitted to
   a data frame.
-- `forecast.varest()` now supports `fan = TRUE` and `level` values
-  between 0 and 1.
 - [`geom_forecast()`](https://pkg.robjhyndman.com/forecast/reference/geom_forecast.md)
   no longer errors for forecast objects when forecast is not attached.
 - [`getResponse()`](https://pkg.robjhyndman.com/forecast/reference/getResponse.md)
@@ -331,11 +344,6 @@
   and
   [`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
   now store a series supplied as a numeric vector as a time series.
-- [`theta_model()`](https://pkg.robjhyndman.com/forecast/reference/theta_model.md)
-  and
-  [`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
-  gained a `type` argument to select additive or multiplicative seasonal
-  decomposition.
 - [`tslm()`](https://pkg.robjhyndman.com/forecast/reference/tslm.md) and
   [`forecast.lm()`](https://pkg.robjhyndman.com/forecast/reference/forecast.lm.md)
   no longer pick up unrelated variables named `dataname` or `oldnewdata`
