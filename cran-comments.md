@@ -1,11 +1,9 @@
-As requested, fixed errors showing on fedora-clang
-
 ## Test environments
 
-* KDE neon 6.6.2 based on ubuntu 24.04 (local): R 4.5.3
-* macOS (on GitHub Actions): release
-* windows (on GitHub Actions): release
-* ubuntu 24.04.3 (on GitHub Actions): devel, release, oldrel
+* Ubuntu 26.04.1 (local): R 4.6.2 patched
+* macOS Tahoe 26 arm64 (on GitHub Actions): R 4.6.2
+* Windows Server 2025 (on GitHub Actions): R 4.6.2
+* Ubuntu 26.04.1 (on GitHub Actions): R-devel (4.7.0), R 4.6.2, R 4.5.3
 * win-builder: devel, release, oldrelease
 
 ## R CMD check results
