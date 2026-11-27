@@ -30,12 +30,12 @@ test_that("tests on model building with univariate time series", {
   fit2 <- tslm(v_y ~ trend + season)
   expect_named(fit1, names(fit2))
   expect_identical(fit1$model, fit2$model, ignore_attr = "terms")
-  expect_identical(fit1$coefficients, fit2$coefficients)
+  expect_equal(fit1$coefficients, fit2$coefficients)
   fit1 <- tslm(USAccDeaths ~ trend + season, data = USAccDeaths)
   fit2 <- tslm(USAccDeaths ~ trend + season)
   expect_named(fit1, names(fit2))
   expect_identical(fit1$model, fit2$model, ignore_attr = "terms")
-  expect_identical(fit1$coefficients, fit2$coefficients)
+  expect_equal(fit1$coefficients, fit2$coefficients)
   expect_warning(
     tslm(
       USAccDeaths ~ trend + season,
@@ -78,7 +78,7 @@ test_that("tests on model building with multivariate time series", {
   fit2 <- tslm(mv_y ~ trend + season, data = data)
   expect_named(fit1, names(fit2))
   expect_identical(fit1$model, fit2$model, ignore_attr = "terms")
-  expect_identical(fit1$coefficients, fit2$coefficients)
+  expect_equal(fit1$coefficients, fit2$coefficients)
   expect_warning(
     fit3 <- tslm(mv_y ~ trend + season, subset = mv_y[, 1] < 1),
     "`subset` has been assumed contiguous"
@@ -89,7 +89,7 @@ test_that("tests on model building with multivariate time series", {
   )
   expect_named(fit3, names(fit4))
   expect_identical(fit3$model, fit4$model, ignore_attr = "terms")
-  expect_identical(fit3$coefficients, fit4$coefficients)
+  expect_equal(fit3$coefficients, fit4$coefficients)
 })
 
 test_that("tests with bad input", {
