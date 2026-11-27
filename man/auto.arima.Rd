@@ -105,7 +105,8 @@ seasonal period to avoid excessive computation times.}
 model selection. The last \code{truncate} values of the series are used to
 select a model when \code{truncate} is not \code{NULL} and
 \code{approximation = TRUE}. All observations are used if either
-\code{truncate = NULL} or \code{approximation = FALSE}.}
+\code{truncate = NULL} or \code{approximation = FALSE}. The selected model is
+fitted to all observations.}
 
 \item{xreg}{Optionally, a numerical vector or matrix of external regressors,
 which must have the same number of rows as \code{y}. It should not be a data frame.}

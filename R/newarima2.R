@@ -50,7 +50,8 @@
 #' model selection. The last `truncate` values of the series are used to
 #' select a model when `truncate` is not `NULL` and
 #' `approximation = TRUE`. All observations are used if either
-#' `truncate = NULL` or `approximation = FALSE`.
+#' `truncate = NULL` or `approximation = FALSE`. The selected model is
+#' fitted to all observations.
 #' @param test Type of unit root test to use. See [ndiffs()] for details.
 #' @param test.args Additional arguments to be passed to the unit root test.
 #' @param seasonal.test This determines which method is used to select the number of seasonal differences.
@@ -388,6 +389,12 @@ auto.arima <- function(
     }
   }
 
+  # Truncated data is only used for model selection; the final model is
+  # refitted to all data
+  x.full <- x
+  xreg.full <- xreg
+  orig.x.full <- orig.x
+
   # Find constant offset for AIC calculation using white noise model
   if (approximation) {
     if (!is.null(truncate)) {
@@ -457,8 +464,13 @@ auto.arima <- function(
       allowmean = allowmean,
       parallel = parallel,
       num.cores = num.cores,
+      x.full = x.full,
+      xreg.full = xreg.full,
       ...
     )
+    # search.arima() returns a model fitted to all data (or errors)
+    x <- x.full
+    orig.x <- orig.x.full
     bestfit$call <- match.call()
     bestfit$call$x <- data.frame(x = x, check.names = FALSE)
     bestfit$lambda <- lambda
@@ -1098,7 +1110,7 @@ auto.arima <- function(
     for (i in seq_len(nmodels)) {
       k <- icorder[i]
       fit <- myarima(
-        x = x,
+        x = x.full,
         order = c(results[k, 1], d, results[k, 3]),
         seasonal = c(results[k, 4], D, results[k, 6]),
         constant = results[k, 7] == 1,
@@ -1106,11 +1118,15 @@ auto.arima <- function(
         trace = trace,
         approximation = FALSE,
         method = method,
-        xreg = xreg,
+        xreg = xreg.full,
         ...
       )
       if (fit$ic < Inf) {
         bestfit <- fit
+        # Store the data the model is now fitted to; if all refits fail,
+        # the fit to the truncated data is kept along with that data
+        x <- x.full
+        orig.x <- orig.x.full
         break
       }
     }

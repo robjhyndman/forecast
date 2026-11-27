@@ -47,12 +47,11 @@ test_that("auto.arima() truncates xreg alongside x with approximation", {
   expect_s3_class(fit, "Arima")
 })
 
-test_that("auto.arima() with truncate returns a model consistent with its data", {
+test_that("auto.arima() refits the selected model to all data when truncating", {
   set.seed(2)
   n <- 300
   xreg <- matrix(rnorm(n), dimnames = list(NULL, "z"))
   y <- ts(cumsum(rnorm(n, mean = 1)) + 2 * xreg[, 1])
-  idx <- (n - 49):n
   for (stepwise in c(TRUE, FALSE)) {
     fit <- auto.arima(
       y,
@@ -62,15 +61,15 @@ test_that("auto.arima() with truncate returns a model consistent with its data",
       truncate = 50,
       stepwise = stepwise
     )
-    # The model is fitted to the truncated series, so it is what is stored
-    expect_equal(getResponse(fit), window(y, start = n - 49))
-    expect_length(residuals(fit), 50)
+    expect_equal(getResponse(fit), y)
+    expect_length(residuals(fit), n)
     ref <- Arima(
-      window(y, start = n - 49),
+      y,
       order = arimaorder(fit),
-      xreg = xreg[idx, , drop = FALSE],
+      xreg = xreg,
       include.drift = "drift" %in% names(coef(fit))
     )
+    expect_equal(coef(fit), coef(ref), tolerance = 1e-6)
     newxreg <- matrix(rnorm(5), dimnames = list(NULL, "z"))
     expect_equal(
       forecast(fit, xreg = newxreg)$mean,
