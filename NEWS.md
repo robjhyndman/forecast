@@ -15,6 +15,7 @@
 * `arfima()`, `stlm()`, `theta_model()` and `tslm()` no longer return all-`NA` fitted values when `biasadj = TRUE` and some residuals are missing.
 * `Arima()`, `holt()`, `hw()`, `modelAR()`, `nnetar()` and `thetaf()` no longer error when the series is supplied via the deprecated `x` argument.
 * `auto.arima()` now gives an informative error when all data are missing.
+* `auto.arima()` now stores the series without leading missing values, as fitted. Previously drift forecasts were shifted by the number of leading `NA`s, constant series forecast `NA`, and refitting with `Arima(model = )` failed.
 * `auto.arima()` parallel model search (`stepwise = FALSE`) now works on Windows (#1187).
 * `auto.arima()` now truncates `xreg` together with the series when `approximation = TRUE` and `truncate` is set, so model selection no longer fails.
 * `auto.arima()` stepwise search now searches models without a constant when the null model without one is best.

@@ -79,3 +79,27 @@ test_that("tests for nsdiffs()", {
 test_that("auto.arima() keeps series name with deprecated x argument", {
   expect_identical(auto.arima(x = WWWusage)$series, "WWWusage")
 })
+
+test_that("auto.arima() handles leading missing values with drift", {
+  set.seed(1)
+  y <- ts(cumsum(rnorm(60, mean = 1)))
+  y_na <- ts(c(rep(NA, 20), y))
+  fit <- auto.arima(y, d = 1, stepwise = FALSE)
+  fit_na <- auto.arima(y_na, d = 1, stepwise = FALSE)
+  expect_true("drift" %in% names(coef(fit_na)))
+  # Leading NAs must not shift the drift term of the forecasts
+  expect_equal(
+    as.numeric(forecast(fit_na, h = 5)$mean),
+    as.numeric(forecast(fit, h = 5)$mean)
+  )
+  expect_length(fitted(fit_na), length(getResponse(fit_na)))
+  expect_length(residuals(fit_na), length(getResponse(fit_na)))
+  # Refitting the model to the same data keeps the coefficients
+  refit <- Arima(y_na, model = fit_na)
+  expect_equal(coef(refit), coef(fit_na))
+})
+
+test_that("auto.arima() forecasts a constant series with leading missing values", {
+  fit <- auto.arima(ts(c(NA, 5, 5, 5, 5, 5)))
+  expect_equal(as.numeric(forecast(fit, h = 2)$mean), c(5, 5))
+})

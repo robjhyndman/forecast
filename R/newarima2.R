@@ -145,13 +145,14 @@ auto.arima <- function(
   }
 
   # Trim leading NAs and find length of non-missing data
-  orig.x <- x
   missing <- is.na(x)
   firstnonmiss <- head(which(!missing), 1)
   serieslength <- sum(!missing)
 
-  # Trim initial missing values
+  # Trim initial missing values. The trimmed series is the data the model is
+  # fitted to, so it is also what is stored (drift and residuals align with it).
   x <- subset(x, start = firstnonmiss)
+  orig.x <- x
   if (!is.null(xreg)) {
     if (!is.numeric(xreg)) {
       stop("`xreg` must be a numeric matrix or a numeric vector.")
