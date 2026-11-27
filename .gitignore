@@ -18,3 +18,4 @@ docs/*
 .vscode/*
 .history
 .comments/
+tasks/
