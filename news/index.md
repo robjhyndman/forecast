@@ -169,6 +169,10 @@
   `use.initial.values = TRUE` to data whose frequency differs from the
   seasonal period of the model, instead of returning a model with
   invalid fitted values and residuals.
+- [`fitted()`](https://rdrr.io/r/stats/fitted.values.html) for ARIMA
+  models with `h > 1` now returns fits on the original scale when
+  `lambda` is used. Previously it mixed the original and transformed
+  scales.
 - [`forecast()`](https://generics.r-lib.org/reference/forecast.html)
   methods now always sort prediction intervals by increasing `level`, so
   [`plot.forecast()`](https://pkg.robjhyndman.com/forecast/reference/plot.forecast.md)
