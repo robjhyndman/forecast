@@ -16,6 +16,8 @@ search.arima <- function(
   allowmean = TRUE,
   parallel = FALSE,
   num.cores = 2,
+  x.full = x,
+  xreg.full = xreg,
   ...
 ) {
   ic <- match.arg(ic)
@@ -125,20 +127,20 @@ search.arima <- function(
         cat("\n\n Now re-fitting the best model(s) without approximations...\n")
       }
       newbestfit <- myarima(
-        x = x,
+        x = x.full,
         order = bestfit$arma[c(1, 6, 2)],
         seasonal = bestfit$arma[c(3, 7, 4)],
         constant = constant,
         ic = ic,
         trace = FALSE,
         approximation = FALSE,
-        xreg = xreg,
+        xreg = xreg.full,
         ...
       )
       if (newbestfit$ic == Inf) {
         # Final model is lousy. Better try again without approximation
         bestfit <- search.arima(
-          x = x,
+          x = x.full,
           d = d,
           D = D,
           max.p = max.p,
@@ -149,7 +151,7 @@ search.arima <- function(
           ic = ic,
           trace = trace,
           approximation = FALSE,
-          xreg = xreg,
+          xreg = xreg.full,
           offset = offset,
           allowdrift = allowdrift,
           allowmean = allowmean,

@@ -47,6 +47,38 @@ test_that("auto.arima() truncates xreg alongside x with approximation", {
   expect_s3_class(fit, "Arima")
 })
 
+test_that("auto.arima() refits the selected model to all data when truncating", {
+  set.seed(2)
+  n <- 300
+  xreg <- matrix(rnorm(n), dimnames = list(NULL, "z"))
+  y <- ts(cumsum(rnorm(n, mean = 1)) + 2 * xreg[, 1])
+  for (stepwise in c(TRUE, FALSE)) {
+    fit <- auto.arima(
+      y,
+      d = 1,
+      xreg = xreg,
+      approximation = TRUE,
+      truncate = 50,
+      stepwise = stepwise
+    )
+    expect_equal(getResponse(fit), y)
+    expect_length(residuals(fit), n)
+    ref <- Arima(
+      y,
+      order = arimaorder(fit),
+      xreg = xreg,
+      include.drift = "drift" %in% names(coef(fit))
+    )
+    expect_equal(coef(fit), coef(ref), tolerance = 1e-6)
+    newxreg <- matrix(rnorm(5), dimnames = list(NULL, "z"))
+    expect_equal(
+      forecast(fit, xreg = newxreg)$mean,
+      forecast(ref, xreg = newxreg)$mean,
+      tolerance = 1e-6
+    )
+  }
+})
+
 test_that("auto.arima() errors when all data are missing", {
   expect_snapshot(auto.arima(ts(rep(NA_real_, 20))), error = TRUE)
 })
