@@ -394,6 +394,8 @@ auto.arima <- function(
       tspx <- tsp(x)
       if (length(x) > truncate) {
         x <- ts(tail(x, truncate), end = tspx[2], frequency = tspx[3])
+        # The model is fitted to the truncated series, so store that
+        orig.x <- ts(tail(orig.x, truncate), end = tspx[2], frequency = tspx[3])
         if (!is.null(xreg)) {
           xreg <- tail(xreg, truncate)
         }

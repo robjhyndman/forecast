@@ -17,6 +17,7 @@
 * `auto.arima()` now gives an informative error when all data are missing.
 * `auto.arima()` parallel model search (`stepwise = FALSE`) now works on Windows (#1187).
 * `auto.arima()` now truncates `xreg` together with the series when `approximation = TRUE` and `truncate` is set, so model selection no longer fails.
+* `auto.arima()` with `truncate` now stores the truncated series the model was fitted to. Previously it stored the full series, so drift forecasts did not continue from the end of the data and `fitted()` and `residuals()` were shorter than the stored series.
 * `auto.arima()` stepwise search now searches models without a constant when the null model without one is best.
 * `autolayer()` now labels an unnamed `msts` series with the name of the object instead of "NULL".
 * `autolayer()` for `mts` and `mforecast` objects no longer errors when arguments are local variables.
