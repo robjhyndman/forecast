@@ -152,6 +152,11 @@
 - [`CVar()`](https://pkg.robjhyndman.com/forecast/reference/CVar.md) no
   longer returns `k` empty elements before the folds, so folds can again
   be accessed by position.
+- [`dm.test()`](https://pkg.robjhyndman.com/forecast/reference/dm.test.md)
+  now excludes missing forecast errors from the sample size used for the
+  test statistic and for checking `h`
+  ([@chenyangsu](https://github.com/chenyangsu),
+  [\#1342](https://github.com/robjhyndman/forecast/issues/1342)).
 - [`easter()`](https://pkg.robjhyndman.com/forecast/reference/easter.md)
   now returns the correct fractions when Easter spans two months or
   quarters and the series starts in April (or the second quarter) or
@@ -172,7 +177,8 @@
 - [`fitted()`](https://rdrr.io/r/stats/fitted.values.html) for ARIMA
   models with `h > 1` now returns fits on the original scale when
   `lambda` is used. Previously it mixed the original and transformed
-  scales.
+  scales ([@sunsided](https://github.com/sunsided),
+  [\#1343](https://github.com/robjhyndman/forecast/issues/1343)).
 - [`forecast()`](https://generics.r-lib.org/reference/forecast.html)
   methods now always sort prediction intervals by increasing `level`, so
   [`plot.forecast()`](https://pkg.robjhyndman.com/forecast/reference/plot.forecast.md)
