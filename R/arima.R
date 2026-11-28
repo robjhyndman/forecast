@@ -945,7 +945,11 @@ hfitted.Arima <- function(object, h, ...) {
   if (h == 1) {
     return(object$fitted)
   }
-  y <- object$fitted + residuals(object, "innovation")
+  # Work on the transformed scale, as the model was fitted there
+  y <- getResponse(object)
+  if (!is.null(object$lambda)) {
+    y <- BoxCox(y, object$lambda)
+  }
   yx <- residuals(object, "regression")
   # Get fitted model
   mod <- object$model
@@ -953,14 +957,19 @@ hfitted.Arima <- function(object, h, ...) {
   mod <- stats::makeARIMA(mod$phi, mod$theta, mod$Delta)
   # Calculate regression component
   xm <- y - yx
-  fits <- rep_len(NA_real_, length(y))
+  fits <- fvar <- rep_len(NA_real_, length(y))
 
   start <- length(mod$Delta) + 1
   end <- length(yx) - h
   idx <- if (start > end) integer(0L) else start:end
   for (i in idx) {
     fc_mod <- attr(stats::KalmanRun(yx[seq_len(i)], mod, update = TRUE), "mod")
-    fits[i + h] <- stats::KalmanForecast(h, fc_mod)$pred[h] + xm[i + h]
+    fc <- stats::KalmanForecast(h, fc_mod)
+    fits[i + h] <- fc$pred[h] + xm[i + h]
+    fvar[i + h] <- fc$var[h] * object$sigma2
+  }
+  if (!is.null(object$lambda)) {
+    fits <- InvBoxCox(fits, object$lambda, NULL, fvar)
   }
   fits <- ts(fits)
   tsp(fits) <- tsp(object$x)

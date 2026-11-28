@@ -45,3 +45,35 @@ test_that("hfitted errors when no model function found", {
   obj$fitted <- ts(1:10)
   expect_error(hfitted(obj, h = 2), "Can't find a function to refit the model")
 })
+
+test_that("multi-step ARIMA fits are back-transformed when lambda is used", {
+  fit_lambda <- Arima(
+    AirPassengers,
+    order = c(0, 1, 1),
+    seasonal = c(0, 1, 1),
+    lambda = 0
+  )
+  fit_log <- Arima(
+    log(AirPassengers),
+    order = c(0, 1, 1),
+    seasonal = c(0, 1, 1)
+  )
+  # Same model fitted on the log scale; h-step fits must agree after exp()
+  expect_equal(fitted(fit_lambda, h = 2), exp(fitted(fit_log, h = 2)))
+  expect_equal(fitted(fit_lambda, h = 3), exp(fitted(fit_log, h = 3)))
+})
+
+test_that("multi-step ARIMA fits are bias-adjusted when biasadj = TRUE", {
+  fit <- Arima(
+    AirPassengers,
+    order = c(0, 1, 1),
+    seasonal = c(0, 1, 1),
+    lambda = 0,
+    biasadj = TRUE
+  )
+  # The refit-based method forecasts with bias adjustment from each origin
+  expect_equal(
+    fitted(fit, h = 2),
+    forecast:::hfitted.default(fit, h = 2, FUN = "Arima")
+  )
+})
