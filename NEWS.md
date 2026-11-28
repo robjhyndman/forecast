@@ -34,12 +34,13 @@
 * `croston_model()` and `croston()` now return the fitted values as a time series.
 * `CVar()` now computes fold accuracy with fitted and actual values in the correct order (#1220).
 * `CVar()` no longer returns `k` empty elements before the folds, so folds can again be accessed by position.
+* `dm.test()` now excludes missing forecast errors from the sample size used for the test statistic and for checking `h` (@chenyangsu, #1342).
 * `easter()` now returns the correct fractions when Easter spans two months or quarters and the series starts in April (or the second quarter) or ends in March (or the first quarter).
 * `ets()` now keeps the series name for short series.
 * `ets()` no longer treats parameters as admissible when the polynomial root search fails.
 * `ets()` now uses the same degrees of freedom for `sigma2` as the original fit when refitting with `use.initial.values = TRUE`.
 * `ets()` now gives an error when refitting a seasonal model with `use.initial.values = TRUE` to data whose frequency differs from the seasonal period of the model, instead of returning a model with invalid fitted values and residuals.
-* `fitted()` for ARIMA models with `h > 1` now returns fits on the original scale when `lambda` is used. Previously it mixed the original and transformed scales.
+* `fitted()` for ARIMA models with `h > 1` now returns fits on the original scale when `lambda` is used. Previously it mixed the original and transformed scales (@sunsided, #1343).
 * `forecast()` methods now always sort prediction intervals by increasing `level`, so `plot.forecast()` no longer swaps the shading when `level` is supplied out of order.
 * `forecast()` methods no longer warn that `biasadj` information was not found when `lambda` is supplied without `biasadj`. They now consistently use the `biasadj` setting stored with `lambda`, or `FALSE` if there is none.
 * `forecast.Arima()` now correctly passes `xreg` when `bootstrap = TRUE` (#1115).
